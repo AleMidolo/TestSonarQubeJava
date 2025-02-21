@@ -1,4 +1,4 @@
-package org.class6367667d1a6d9265ec01741d;
+package org.typeresolver;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

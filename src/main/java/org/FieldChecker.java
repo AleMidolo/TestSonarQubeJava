@@ -1,35 +1,31 @@
 package org;
 
+import java.io.IOException;
+
 public class FieldChecker {
 
-    private Fields storedFields;
+    private boolean isPackedField;
 
-    /**
-     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+    /** 
+     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
+     * @throws IOException
      */
-    private boolean containsAllFields(Fields fields) {
-        if (storedFields == null || fields == null) {
-            return false;
+    private void checkIfPackedField() throws IOException {
+        // Simulazione di controllo se il campo è compresso
+        // In un caso reale, qui ci sarebbe la logica per verificare il campo
+
+        // Esempio di logica per determinare se il campo è compresso
+        boolean packedFieldCondition = true; // Questa condizione dovrebbe essere basata su logica reale
+
+        if (packedFieldCondition) {
+            isPackedField = true;
+            // Logica aggiuntiva per gestire il campo compresso
+        } else {
+            isPackedField = false;
         }
-        
-        // Assuming Fields class has a method to get all field values
-        return storedFields.equals(fields);
     }
 
-    // Method to set stored fields for testing purposes
-    public void setStoredFields(Fields fields) {
-        this.storedFields = fields;
-    }
-    
-    // Fields class for demonstration purposes
-    public static class Fields {
-        // Implement fields and methods as necessary
-        // For example, you might have a list of field values
-        
-        @Override
-        public boolean equals(Object obj) {
-            // Implement equality check based on your fields
-            return super.equals(obj);
-        }
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

@@ -1,14 +1,4 @@
-package org;
-
-public class ListNodeImpl<E> {
-    E value;
-    ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
-
-    public ListNodeImpl(E value) {
-        this.value = value;
-    }
-}
+package org.listnodeimpl;
 
 public class LinkedList<E> {
     private ListNodeImpl<E> head;

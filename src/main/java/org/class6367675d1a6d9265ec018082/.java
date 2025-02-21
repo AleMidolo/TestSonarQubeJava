@@ -1,4 +1,4 @@
-package org;
+package org.class6367675d1a6d9265ec018082;
 
 import java.util.Objects;
 

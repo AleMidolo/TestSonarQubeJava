@@ -5,17 +5,19 @@ public class ParameterSeparatorChecker {
      */
     private static boolean isParameterSeparator(final char c) {
         // Define the separator characters
-        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t';
+        return c == ',' || c == ';' || Character.isWhitespace(c);
     }
 
     public static void main(String[] args) {
         // Test the isParameterSeparator method
         char testChar1 = ',';
-        char testChar2 = 'a';
-        char testChar3 = ';';
-        
+        char testChar2 = ';';
+        char testChar3 = ' ';
+        char testChar4 = 'a';
+
         System.out.println(isParameterSeparator(testChar1)); // true
-        System.out.println(isParameterSeparator(testChar2)); // false
+        System.out.println(isParameterSeparator(testChar2)); // true
         System.out.println(isParameterSeparator(testChar3)); // true
+        System.out.println(isParameterSeparator(testChar4)); // false
     }
 }

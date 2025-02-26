@@ -3,7 +3,7 @@ import java.util.List;
 
 public class SequenceRangeBuilder {
 
-    /**
+    /** 
      * 构建当前配置文件段快照搜索序列范围
      */
     public List<SequenceRange> buildSequenceRanges() {

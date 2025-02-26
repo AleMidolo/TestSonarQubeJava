@@ -11,7 +11,7 @@ public class Stack {
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Elements to pop must be non-negative.");
+            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
         }
         for (int i = 0; i < elements; i++) {
             if (!stack.isEmpty()) {
@@ -22,12 +22,12 @@ public class Stack {
         }
     }
 
-    // Method to push an element onto the stack for testing purposes
+    // Method to push elements onto the stack for testing purposes
     public void push(Object element) {
         stack.push(element);
     }
 
-    // Method to check the size of the stack for testing purposes
+    // Method to check the current size of the stack for testing purposes
     public int size() {
         return stack.size();
     }

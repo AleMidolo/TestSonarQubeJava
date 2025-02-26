@@ -24,7 +24,7 @@ public class GraphSeparator {
 
     // Placeholder method to compute the separator for a given edge
     private List<Pair<Integer, Integer>> computeSeparatorForEdge(E edge) {
-        // Implement the logic to find the minimum separator for the given edge
+        // Implement the logic to compute the minimum separator for the given edge
         // This is a placeholder and should be replaced with actual logic
         return new ArrayList<>();
     }

@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MetricsHandler implements java.util.function.Consumer<METRICS> {
-    private final Map<String, Double> metricsCache = new HashMap<>();
+    private final Map<String, Integer> metricsCache = new HashMap<>();
 
     /**
      * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
@@ -11,21 +11,21 @@ public class MetricsHandler implements java.util.function.Consumer<METRICS> {
     @Override
     public void accept(final METRICS data) {
         if (data != null) {
-            for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
-                metricsCache.merge(entry.getKey(), entry.getValue(), Double::sum);
+            for (Map.Entry<String, Integer> entry : data.getMetrics().entrySet()) {
+                metricsCache.merge(entry.getKey(), entry.getValue(), Integer::sum);
             }
         }
     }
 }
 
 class METRICS {
-    private final Map<String, Double> metrics;
+    private final Map<String, Integer> metrics;
 
-    public METRICS(Map<String, Double> metrics) {
+    public METRICS(Map<String, Integer> metrics) {
         this.metrics = metrics;
     }
 
-    public Map<String, Double> getMetrics() {
+    public Map<String, Integer> getMetrics() {
         return metrics;
     }
 }

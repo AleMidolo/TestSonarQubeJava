@@ -10,22 +10,14 @@ class TreeNode<T> {
     }
 }
 
-public class BinaryTree<T> {
-    
-    /**
-     * 执行右旋转操作。
-     * @param node 要旋转的节点
-     * @return {@code node} 的新父节点
-     */
-    private TreeNode<T> rotateRight(TreeNode<T> node) {
-        if (node == null || node.left == null) {
-            return node; // 无法旋转
-        }
-
-        TreeNode<T> newRoot = node.left; // 新的根节点
-        node.left = newRoot.right; // 将新根的右子树赋给当前节点的左子树
-        newRoot.right = node; // 当前节点成为新根的右子树
-
-        return newRoot; // 返回新的根节点
+private TreeNode<T> rotateRight(TreeNode<T> node) {
+    if (node == null || node.left == null) {
+        return node; // Cannot rotate right if node is null or has no left child
     }
+
+    TreeNode<T> newRoot = node.left; // The new root will be the left child
+    node.left = newRoot.right; // The right child of the new root becomes the left child of the old root
+    newRoot.right = node; // The old root becomes the right child of the new root
+
+    return newRoot; // Return the new root
 }

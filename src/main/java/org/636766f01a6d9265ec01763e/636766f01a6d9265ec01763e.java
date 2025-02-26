@@ -17,7 +17,7 @@ public class CharsetConverter {
         try {
             return Charset.forName(charset).name();
         } catch (IllegalArgumentException e) {
-            // If the charset is not recognized, return null or handle accordingly
+            // If the charset is not recognized, return null or handle as needed
             return null;
         }
     }
@@ -26,6 +26,6 @@ public class CharsetConverter {
         // Example usage
         String mimeCharset = "UTF-8";
         String javaCharsetName = javaCharset(mimeCharset);
-        System.out.println("Java equivalent of " + mimeCharset + " is: " + javaCharsetName);
+        System.out.println("Java Charset Name: " + javaCharsetName);
     }
 }

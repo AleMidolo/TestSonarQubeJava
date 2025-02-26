@@ -1,5 +1,4 @@
 public class ArrayUtil {
-
     public static final Double[] EMPTY_ARRAY = new Double[0];
 
     /** 

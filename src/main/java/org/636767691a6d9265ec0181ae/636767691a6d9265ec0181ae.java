@@ -24,13 +24,13 @@ public class EnumToStringArray {
     public static void main(String[] args) {
         // 示例用法
         Vector<String> vector = new Vector<>();
-        vector.add("one");
-        vector.add("two");
-        vector.add("three");
-        
+        vector.add("Apple");
+        vector.add("Banana");
+        vector.add("Cherry");
+
         Enumeration<String> enumeration = vector.elements();
         String[] result = toStringArray(enumeration);
-        
+
         for (String str : result) {
             System.out.println(str);
         }

@@ -6,8 +6,8 @@ public class SymbolTable {
     private int currentIndex;
 
     public SymbolTable() {
-        this.typeTable = new HashMap<>();
-        this.currentIndex = 0;
+        typeTable = new HashMap<>();
+        currentIndex = 0;
     }
 
     /**

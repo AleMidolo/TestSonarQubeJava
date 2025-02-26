@@ -1,37 +1,25 @@
 import java.util.Objects;
 
-class Node {
-    // Assuming Node class has some properties
-    private boolean isVirtual;
-    private String name;
-
-    public Node(String name, boolean isVirtual) {
-        this.name = name;
-        this.isVirtual = isVirtual;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-
 class Edge {
-    private Node from;
-    private Node to;
+    private final Node from;
+    private final Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
         this.to = to;
     }
 
-    @Override
-    public String toString() {
-        return "Edge from " + from.getName() + " to " + to.getName();
+    // Getters and other methods can be added here
+}
+
+class Node {
+    private final String name;
+
+    public Node(String name) {
+        this.name = name;
     }
+
+    // Getters and other methods can be added here
 }
 
 class Graph {
@@ -48,14 +36,14 @@ class Graph {
      * @return 从当前节点到下一个节点的边
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(fromNode, toNode);
+        Node realCurrentNode = getRealNode(currentNode);
+        Node realNextNode = getRealNode(nextNode);
+        return new Edge(realCurrentNode, realNextNode);
     }
 
-    private Node getRealNode(Node virtualNode) {
-        // Logic to get the real node corresponding to the virtual node
-        // For demonstration, we will just return a new Node with "Real" prefix
-        return new Node("Real_" + virtualNode.getName(), false);
+    private Node getRealNode(Node node) {
+        // Assuming some logic to determine if a node is virtual
+        // For simplicity, we return the node itself
+        return node;
     }
 }

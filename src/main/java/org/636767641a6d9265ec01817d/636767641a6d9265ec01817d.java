@@ -25,7 +25,7 @@ public class GraphGenerator<V, E> {
             }
         }
 
-        // Add edges between setA and setB
+        // Add edges between every vertex in setA and every vertex in setB
         for (V vertexA : setA) {
             for (V vertexB : setB) {
                 // Assuming a method addEdge exists in Graph class

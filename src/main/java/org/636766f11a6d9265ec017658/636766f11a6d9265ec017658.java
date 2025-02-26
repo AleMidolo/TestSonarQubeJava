@@ -19,8 +19,8 @@ public class FilePathUtils {
 
     public static void main(String[] args) {
         // 测试代码
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 20
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 15
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 16
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 14
         System.out.println(indexOfLastSeparator("file.txt")); // 输出: -1
         System.out.println(indexOfLastSeparator(null)); // 输出: -1
     }

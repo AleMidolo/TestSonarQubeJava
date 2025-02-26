@@ -13,7 +13,7 @@ public class FileDeleter {
         if (file == null) {
             throw new NullPointerException("File cannot be null");
         }
-
+        
         // Register a shutdown hook to delete the file on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {

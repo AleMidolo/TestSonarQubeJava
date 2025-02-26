@@ -6,9 +6,8 @@ public class ModelChecker {
      */
     private void check(String modelName) throws IllegalStateException {
         // Simulated logic for checking shard key continuity
-        // In a real scenario, this would involve checking the model's shard key indices
-        int[] shardKeys = getShardKeys(modelName); // Assume this method retrieves shard keys for the model
-
+        // In a real scenario, this would involve checking the actual model's shard key indices
+        int[] shardKeys = getShardKeys(modelName); // Assume this method retrieves the shard keys for the model
         for (int i = 0; i < shardKeys.length - 1; i++) {
             if (shardKeys[i] + 1 != shardKeys[i + 1]) {
                 throw new IllegalStateException("分片键索引不连续: " + modelName);
@@ -18,7 +17,7 @@ public class ModelChecker {
 
     // Mock method to simulate retrieval of shard keys
     private int[] getShardKeys(String modelName) {
-        // This is just a placeholder. In a real implementation, this would fetch actual shard keys.
+        // This is just a placeholder. In a real implementation, this would fetch the actual shard keys.
         return new int[]{1, 2, 3}; // Example of continuous shard keys
     }
 

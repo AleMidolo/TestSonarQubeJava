@@ -1,4 +1,5 @@
 import org.apache.commons.beanutils.BeanMap;
+import java.util.Map;
 
 public class BeanMapUtil {
 
@@ -21,8 +22,8 @@ public class BeanMapUtil {
 
     private boolean isWritable(Object property, BeanMap map) {
         // Implement logic to check if the property is writable
-        // This is a placeholder for actual writable check logic
-        return true; // Assume all properties are writable for this example
+        // This is a placeholder for actual writable check
+        return true; // Replace with actual check
     }
 
     private void put(Object property, Object value) {

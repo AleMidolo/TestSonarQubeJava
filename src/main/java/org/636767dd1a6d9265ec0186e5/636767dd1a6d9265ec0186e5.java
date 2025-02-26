@@ -41,7 +41,7 @@ public class ChannelManager {
         };
 
         manager.addNewTarget(channels, consumer);
-        // Test the added consumer
+        // Test the consumer
         for (IConsumer c : channels.getConsumers()) {
             c.consume("Hello, World!");
         }

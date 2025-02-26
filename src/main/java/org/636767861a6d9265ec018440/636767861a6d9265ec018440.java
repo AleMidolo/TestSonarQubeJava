@@ -20,18 +20,18 @@ public class AbbreviationUtil {
             }
         }
 
-        // Remove the last space and dot
+        // Remove the last space and dot if exists
         if (abbreviation.length() > 0) {
             abbreviation.setLength(abbreviation.length() - 1);
         }
 
-        buf.append(abbreviation.toString().trim());
+        buf.replace(nameStart, name.length(), abbreviation.toString().trim());
     }
 
     public static void main(String[] args) {
-        AbbreviationUtil util = new AbbreviationUtil();
         StringBuffer buffer = new StringBuffer("John Doe Smith");
+        AbbreviationUtil util = new AbbreviationUtil();
         util.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: John D. S.
+        System.out.println(buffer); // Output: J. D. S.
     }
 }

@@ -15,14 +15,16 @@ public class Accumulatore {
         mappa.put(chiave, mappa.getOrDefault(chiave, 0L) + valore);
     }
 
-    public Long getValore(String chiave) {
-        return mappa.getOrDefault(chiave, 0L);
+    public Map<String, Long> getMappa() {
+        return mappa;
     }
 
     public static void main(String[] args) {
         Accumulatore accumulatore = new Accumulatore();
         accumulatore.accumulazioneValore("chiave1", 10L);
         accumulatore.accumulazioneValore("chiave1", 5L);
-        System.out.println("Valore accumulato per chiave1: " + accumulatore.getValore("chiave1")); // Output: 15
+        accumulatore.accumulazioneValore("chiave2", 20L);
+        
+        System.out.println(accumulatore.getMappa()); // Output: {chiave1=15, chiave2=20}
     }
 }

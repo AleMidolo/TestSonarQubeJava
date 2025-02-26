@@ -14,17 +14,12 @@ public class SuffixSumCalculator {
         long totalSum = 0;
         int n = bounds.size();
 
-        for (int i = 0; i < n; i++) {
-            totalSum += bounds.get(i);
-        }
-
-        int currentSuffixSum = 0;
         for (int i = n - 1; i >= 0; i--) {
-            currentSuffixSum += bounds.get(i);
-            suffixSums.add(currentSuffixSum);
+            totalSum += bounds.get(i);
+            suffixSums.add(totalSum);
         }
 
-        // Reverse the suffix sums list to maintain the original order
+        // Reverse the suffix sums to match the original order
         List<Integer> reversedSuffixSums = new ArrayList<>();
         for (int i = suffixSums.size() - 1; i >= 0; i--) {
             reversedSuffixSums.add(suffixSums.get(i));

@@ -1,5 +1,5 @@
-import org.json.JSONObject;
-import org.json.JSONWriter;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class JsonSerializer {
 
@@ -10,22 +10,36 @@ public class JsonSerializer {
      */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        JSONObject jsonObject = new JSONObject();
+        // Example object to serialize
+        MyObject obj = new MyObject("example", 123);
         
-        // Example data to serialize
-        jsonObject.put("exampleKey", "exampleValue");
-        
-        // Apply features if needed (this is just a placeholder for demonstration)
-        for (JSONWriter.Feature feature : features) {
-            // Implement feature handling logic here if necessary
+        // Convert features to SerializerFeature
+        SerializerFeature[] serializerFeatures = new SerializerFeature[features.length];
+        for (int i = 0; i < features.length; i++) {
+            serializerFeatures[i] = SerializerFeature.valueOf(features[i].name());
         }
         
-        return jsonObject.toString();
+        // Serialize the object to JSON
+        return JSON.toJSONString(obj, serializerFeatures);
     }
 
+    // Example class to serialize
+    public static class MyObject {
+        private String name;
+        private int value;
+
+        public MyObject(String name, int value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        // Getters and setters (if needed)
+    }
+    
+    // Example usage
     public static void main(String[] args) {
         JsonSerializer serializer = new JsonSerializer();
-        String jsonString = serializer.toString();
-        System.out.println(jsonString);
+        String json = serializer.toString(JSONWriter.Feature.PrettyFormat);
+        System.out.println(json);
     }
 }

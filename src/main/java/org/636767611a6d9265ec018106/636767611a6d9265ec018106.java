@@ -9,12 +9,8 @@ public class Graph<V> {
     }
 
     // Assuming an Edge class that has a method to get the weight
-    private static class Edge<V> {
+    private class Edge<V> {
         private double weight;
-
-        public Edge(double weight) {
-            this.weight = weight;
-        }
 
         public double getWeight() {
             return weight;

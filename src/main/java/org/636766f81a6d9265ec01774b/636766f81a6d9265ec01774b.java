@@ -3,15 +3,9 @@ import java.io.InputStream;
 
 public class ByteReader {
     private InputStream buffer;
-    private byte[] byteBuffer;
-    private int bufferSize;
-    private int currentIndex;
 
-    public ByteReader(InputStream buffer, int bufferSize) {
+    public ByteReader(InputStream buffer) {
         this.buffer = buffer;
-        this.bufferSize = bufferSize;
-        this.byteBuffer = new byte[bufferSize];
-        this.currentIndex = 0;
     }
 
     /** 
@@ -20,13 +14,10 @@ public class ByteReader {
      * @throws IOException se non ci sono più dati disponibili.
      */
     public byte readByte() throws IOException {
-        if (currentIndex >= byteBuffer.length) {
-            int bytesRead = buffer.read(byteBuffer);
-            if (bytesRead == -1) {
-                throw new IOException("No more data available.");
-            }
-            currentIndex = 0;
+        int data = buffer.read();
+        if (data == -1) {
+            throw new IOException("No more data available.");
         }
-        return byteBuffer[currentIndex++];
+        return (byte) data;
     }
 }

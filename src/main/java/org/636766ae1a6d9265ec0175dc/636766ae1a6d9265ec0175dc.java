@@ -16,9 +16,9 @@ public class HttpResponseChecker {
 
     public static void main(String[] args) {
         HttpResponseChecker responseChecker = new HttpResponseChecker(206);
-        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse());
-        
+        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse()); // Should print true
+
         responseChecker = new HttpResponseChecker(200);
-        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse());
+        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse()); // Should print false
     }
 }

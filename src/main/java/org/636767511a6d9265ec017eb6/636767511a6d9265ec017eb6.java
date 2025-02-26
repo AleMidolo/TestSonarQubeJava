@@ -1,7 +1,7 @@
 import java.util.function.Predicate;
 
 class Node {
-    // Assume Node class has necessary properties and methods
+    // Node implementation
 }
 
 class OuterFaceCirculator {
@@ -20,7 +20,7 @@ class OuterFaceCirculator {
     }
 
     public boolean hasNext() {
-        // Logic to determine if there is a next node
+        // Logic to determine if there are more nodes to traverse
         return true; // Placeholder
     }
 }
@@ -44,6 +44,6 @@ public class Graph {
             circulator.advance();
         } while (circulator.hasNext() && circulator.getCurrentNode() != stop);
         
-        return circulator; // Return circulator at stop if predicate not satisfied
+        return circulator; // Return circulator at stop if no node satisfies the predicate
     }
 }

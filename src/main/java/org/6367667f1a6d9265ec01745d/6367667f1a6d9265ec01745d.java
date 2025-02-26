@@ -1,4 +1,5 @@
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class PathSegmentDecoder {
             path = path.substring(1);
         }
         
-        // Split the path into segments
         String[] pathSegments = path.split("/");
         
         for (String segment : pathSegments) {
@@ -33,11 +33,14 @@ public class PathSegmentDecoder {
     }
 
     private static String decodeSegment(String segment) {
-        // Implement decoding logic here (e.g., using URLDecoder)
-        return segment; // Placeholder for actual decoding logic
+        try {
+            return java.net.URLDecoder.decode(segment, "UTF-8");
+        } catch (Exception e) {
+            // Handle exception (e.g., log it)
+            return segment; // Return the original segment if decoding fails
+        }
     }
 
-    // Placeholder for PathSegmentImpl class
     public static class PathSegmentImpl {
         private String segment;
 

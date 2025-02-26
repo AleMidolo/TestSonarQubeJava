@@ -1,9 +1,8 @@
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class LoggingBuffer {
-    private final Queue<LoggingEvent> buffer;
-    private final int capacity;
+    private LinkedList<LoggingEvent> buffer;
+    private int capacity;
 
     public LoggingBuffer(int capacity) {
         this.capacity = capacity;
@@ -16,21 +15,12 @@ public class LoggingBuffer {
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
-            buffer.offer(o);
+            buffer.add(o);
         }
         // If the buffer is full, the event is silently dropped
-    }
-
-    // Additional methods for demonstration purposes
-    public int size() {
-        return buffer.size();
-    }
-
-    public boolean isFull() {
-        return buffer.size() >= capacity;
     }
 }
 
 class LoggingEvent {
-    // Implementation of LoggingEvent class
+    // Assume this class has some properties and methods relevant to logging events
 }

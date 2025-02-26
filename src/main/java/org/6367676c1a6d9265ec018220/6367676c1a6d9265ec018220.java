@@ -24,6 +24,6 @@ public class FilenameStripper {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
         System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
-        System.out.println(stripFilenameExtension("mypath/myfile."));   // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile."));    // Output: mypath/myfile
     }
 }

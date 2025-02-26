@@ -1,6 +1,7 @@
 import java.awt.geom.Point2D;
 
-public class PointComparator {
+public class PointComparison {
+
     /** 
      * Compare two points for equality using tolerance 1e-9.
      * @param p1 the first point
@@ -12,8 +13,7 @@ public class PointComparator {
             return false;
         }
         double tolerance = 1e-9;
-        return Math.abs(p1.getX() - p2.getX()) < tolerance && 
-               Math.abs(p1.getY() - p2.getY()) < tolerance;
+        return Math.abs(p1.getX() - p2.getX()) < tolerance && Math.abs(p1.getY() - p2.getY()) < tolerance;
     }
 
     public static void main(String[] args) {

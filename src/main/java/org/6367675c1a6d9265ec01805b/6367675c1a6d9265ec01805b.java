@@ -1,49 +1,40 @@
 public void removeFromTreeEdgeList() {
-    // Assuming there are two doubly linked lists for tree edges
-    // and we have references to the head and tail of both lists.
+    // Assuming we have a class Edge that represents the edge in the tree
+    // and a class Tree that contains the doubly linked lists of edges.
     
-    // Example structure for a doubly linked list node
-    class EdgeNode {
-        EdgeNode prev;
-        EdgeNode next;
-        // Other properties of the edge can be added here
+    // Example structure for Edge
+    class Edge {
+        Edge next; // next edge in the list
+        Edge prev; // previous edge in the list
+        // other properties of the edge
     }
 
-    EdgeNode treeEdgeList1Head = null; // Head of the first tree edge list
-    EdgeNode treeEdgeList1Tail = null; // Tail of the first tree edge list
-    EdgeNode treeEdgeList2Head = null; // Head of the second tree edge list
-    EdgeNode treeEdgeList2Tail = null; // Tail of the second tree edge list
+    // Example structure for Tree
+    class Tree {
+        Edge head; // head of the doubly linked list
+        Edge tail; // tail of the doubly linked list
 
-    // Assuming 'this' refers to the edge we want to remove
-    EdgeNode edgeToRemove = this; // The edge to be removed
-
-    // Remove from the first tree edge list
-    if (edgeToRemove.prev != null) {
-        edgeToRemove.prev.next = edgeToRemove.next;
-    } else {
-        treeEdgeList1Head = edgeToRemove.next; // Update head if needed
+        public void removeEdge(Edge edge) {
+            if (edge.prev != null) {
+                edge.prev.next = edge.next; // bypass the edge to remove it
+            } else {
+                head = edge.next; // edge is the head
+            }
+            if (edge.next != null) {
+                edge.next.prev = edge.prev; // bypass the edge to remove it
+            } else {
+                tail = edge.prev; // edge is the tail
+            }
+            edge.next = null; // clear references
+            edge.prev = null; // clear references
+        }
     }
 
-    if (edgeToRemove.next != null) {
-        edgeToRemove.next.prev = edgeToRemove.prev;
-    } else {
-        treeEdgeList1Tail = edgeToRemove.prev; // Update tail if needed
-    }
+    // Assuming we have access to the tree edges
+    Tree treeEdges = new Tree();
+    // Assuming 'this' refers to the current edge to be removed
+    Edge currentEdge = this; // 'this' should be an instance of Edge
 
-    // Remove from the second tree edge list
-    if (edgeToRemove.prev != null) {
-        edgeToRemove.prev.next = edgeToRemove.next;
-    } else {
-        treeEdgeList2Head = edgeToRemove.next; // Update head if needed
-    }
-
-    if (edgeToRemove.next != null) {
-        edgeToRemove.next.prev = edgeToRemove.prev;
-    } else {
-        treeEdgeList2Tail = edgeToRemove.prev; // Update tail if needed
-    }
-
-    // Clear the references of the removed edge
-    edgeToRemove.prev = null;
-    edgeToRemove.next = null;
+    // Remove from the tree edge list
+    treeEdges.removeEdge(currentEdge);
 }

@@ -14,11 +14,12 @@ public class UTF8SizeCalculator {
         }
 
         String substring = str.subSequence(index, index + len).toString();
-        return substring.getBytes(StandardCharsets.UTF_8).length;
+        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
+        return utf8Bytes.length;
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, 世界"; // Example string
+        String testString = "Hello, 世界!";
         int size = computeUTF8Size(testString, 0, testString.length());
         System.out.println("UTF-8 size: " + size);
     }

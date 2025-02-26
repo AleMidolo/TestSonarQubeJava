@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+public class ArrayConcatenation {
 
-public class StringArrayConcatenator {
-    
     /** 
      * Concatenate the given String arrays into one, with overlapping array elements included twice. 
      * The order of elements in the original arrays is preserved.
@@ -15,30 +12,32 @@ public class StringArrayConcatenator {
             return null;
         }
 
-        List<String> resultList = new ArrayList<>();
+        int length1 = (array1 != null) ? array1.length : 0;
+        int length2 = (array2 != null) ? array2.length : 0;
+        String[] result = new String[length1 + length2];
 
+        int index = 0;
         if (array1 != null) {
             for (String s : array1) {
-                resultList.add(s);
+                result[index++] = s;
             }
         }
-
         if (array2 != null) {
             for (String s : array2) {
-                resultList.add(s);
+                result[index++] = s;
             }
         }
 
-        return resultList.toArray(new String[0]);
+        return result;
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"b", "c", "d"};
+        String[] array1 = {"Hello", "World"};
+        String[] array2 = {"World", "Java"};
         String[] result = concatenateStringArrays(array1, array2);
         
         for (String s : result) {
-            System.out.print(s + " ");
+            System.out.println(s);
         }
     }
 }

@@ -1,6 +1,6 @@
-public class ArrayDetailAppender {
+public class DetailAppender {
 
-    /**
+    /** 
      * <p>Append to the <code>toString</code> the detail of a <code>byte</code> array.</p>
      * @param buffer  the <code>StringBuffer</code> to populate
      * @param fieldName  the field name, typically not used as already appended
@@ -21,10 +21,10 @@ public class ArrayDetailAppender {
     }
 
     public static void main(String[] args) {
-        ArrayDetailAppender appender = new ArrayDetailAppender();
         StringBuffer buffer = new StringBuffer();
+        DetailAppender appender = new DetailAppender();
         byte[] byteArray = {1, 2, 3, 4, 5};
-        appender.appendDetail(buffer, "byteArray", byteArray);
+        appender.appendDetail(buffer, "ByteArrayField", byteArray);
         System.out.println(buffer.toString());
     }
 }

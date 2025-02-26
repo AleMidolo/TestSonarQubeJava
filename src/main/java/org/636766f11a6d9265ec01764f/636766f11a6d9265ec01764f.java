@@ -18,12 +18,8 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Additional methods to add and manage entries in the BeanMap
+    // Additional methods to add and manipulate the map can be added here
     public void put(String key, Object value) {
         map.put(key, value);
-    }
-
-    public Object get(String key) {
-        return map.get(key);
     }
 }

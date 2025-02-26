@@ -19,7 +19,7 @@ class DataStructure {
     private List<Bucket> buckets;
 
     public DataStructure() {
-        buckets = new ArrayList<>();
+        this.buckets = new ArrayList<>();
     }
 
     public void addBucket(Bucket bucket) {

@@ -4,7 +4,7 @@ public class EventBuffer {
     private LinkedList<LoggingEvent> buffer;
 
     public EventBuffer() {
-        this.buffer = new LinkedList<>();
+        buffer = new LinkedList<>();
     }
 
     /** 
@@ -13,17 +13,8 @@ public class EventBuffer {
     public void add(LoggingEvent event) {
         buffer.addLast(event);
     }
+}
 
-    // Assuming LoggingEvent is a class defined elsewhere
-    public static class LoggingEvent {
-        private String message;
-
-        public LoggingEvent(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
+class LoggingEvent {
+    // Assume this class has necessary fields and methods
 }

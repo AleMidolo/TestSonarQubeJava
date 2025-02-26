@@ -6,22 +6,17 @@ public class ColumnName {
      * @param newName to use in the storage level.
      */
     public void overrideName(String oldName, String newName) {
-        // Assuming we have a map to store column names
-        Map<String, String> columnNames = new HashMap<>();
+        // Implementation of the method
+        // This is a placeholder for the actual logic to replace oldName with newName
+        System.out.println("Replacing " + oldName + " with " + newName);
         
-        // Check if the old name exists in the map
-        if (columnNames.containsKey(oldName)) {
-            // Replace the old name with the new name
-            String value = columnNames.remove(oldName);
-            columnNames.put(newName, value);
-        } else {
-            // If old name does not exist, you might want to handle it
-            System.out.println("Old name does not exist.");
-        }
+        // Here you would typically have logic to update the storage or data structure
+        // that holds the column names, but since the specifics are not provided,
+        // we will just print the action.
     }
-    
+
     public static void main(String[] args) {
         ColumnName columnName = new ColumnName();
-        columnName.overrideName("oldColumn", "newColumn");
+        columnName.overrideName("old_column", "new_column");
     }
 }

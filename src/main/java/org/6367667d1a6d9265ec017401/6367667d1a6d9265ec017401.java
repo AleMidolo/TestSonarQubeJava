@@ -13,9 +13,9 @@ public class StringUnescaper {
         StringBuilder unescaped = new StringBuilder();
         boolean isEscaped = false;
 
-        for (char c : str.toCharArray()) {
+        for (char currentChar : str.toCharArray()) {
             if (isEscaped) {
-                switch (c) {
+                switch (currentChar) {
                     case 'n':
                         unescaped.append('\n');
                         break;
@@ -25,14 +25,14 @@ public class StringUnescaper {
                     case 'r':
                         unescaped.append('\r');
                         break;
-                    case 'b':
-                        unescaped.append('\b');
-                        break;
                     case 'f':
                         unescaped.append('\f');
                         break;
-                    case '\"':
-                        unescaped.append('\"');
+                    case 'b':
+                        unescaped.append('\b');
+                        break;
+                    case '"':
+                        unescaped.append('"');
                         break;
                     case '\'':
                         unescaped.append('\'');
@@ -41,22 +41,17 @@ public class StringUnescaper {
                         unescaped.append('\\');
                         break;
                     default:
-                        unescaped.append(c);
+                        unescaped.append(currentChar);
                         break;
                 }
                 isEscaped = false;
             } else {
-                if (c == '\\') {
+                if (currentChar == '\\') {
                     isEscaped = true;
                 } else {
-                    unescaped.append(c);
+                    unescaped.append(currentChar);
                 }
             }
-        }
-
-        // If the last character was an escape character, append it
-        if (isEscaped) {
-            unescaped.append('\\');
         }
 
         return unescaped.toString();
@@ -64,7 +59,7 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         try {
-            String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
+            String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
             String result = unescapeJava(testString);
             System.out.println(result);
         } catch (Exception e) {

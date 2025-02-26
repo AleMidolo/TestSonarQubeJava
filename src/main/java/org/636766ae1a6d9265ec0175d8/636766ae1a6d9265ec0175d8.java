@@ -5,8 +5,8 @@ public class ContentRangeBuilder {
      * @return 'Content-Range' मान
      */
     private String buildContentRange() {
-        long start = 0; // प्रारंभिक बाइट
-        long end = 499; // अंतिम बाइट
+        long start = 0; // प्रारंभ बाइट
+        long end = 499; // समाप्त बाइट
         long total = 1234; // कुल बाइट
 
         return String.format("bytes %d-%d/%d", start, end, total);

@@ -1,7 +1,7 @@
 import java.io.File;
 
-public class ClassPathExample {
-
+public class ClassPathUtil {
+    
     /** 
      * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
      */

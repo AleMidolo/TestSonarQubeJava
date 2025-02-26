@@ -1,22 +1,24 @@
 public class Bucket {
     
-    // Assuming there is a data structure to hold the elements of the bucket
-    private List<Object> elements;
+    // Assuming there is a data structure to hold the bucket's data
+    private Object data;
 
-    public Bucket() {
-        elements = new ArrayList<>();
+    public Bucket(Object data) {
+        this.data = data;
     }
 
     /** 
      * इस बकेट को डेटा संरचना से हटा देता है।
      */
-    public void removeSelf() {
-        // Logic to remove this bucket from its data structure
-        // This is a placeholder as the actual removal logic depends on the context
-        // For example, if this bucket is part of a larger collection, we would need a reference to that collection
+    void removeSelf() {
+        // Logic to remove this bucket from the data structure
+        // This is a placeholder for the actual removal logic
         System.out.println("Removing this bucket from the data structure.");
-        // Here you would implement the actual removal logic
+        this.data = null; // Clear the data to signify removal
     }
-    
-    // Additional methods to manage the bucket can be added here
+
+    public static void main(String[] args) {
+        Bucket bucket = new Bucket("Sample Data");
+        bucket.removeSelf();
+    }
 }

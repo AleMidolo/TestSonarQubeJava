@@ -6,7 +6,7 @@ public class ColumnNameOverride {
      * @param newName जिसे संग्रहण स्तर में उपयोग करना है।
      */
     public void overrideName(String oldName, String newName) {
-        // Assuming we have a map to store the column names
+        // Assuming we have a map to hold the column names
         java.util.Map<String, String> columnNames = new java.util.HashMap<>();
 
         // Replace the old name with the new name
@@ -14,5 +14,10 @@ public class ColumnNameOverride {
             String value = columnNames.remove(oldName);
             columnNames.put(newName, value);
         }
+    }
+    
+    public static void main(String[] args) {
+        ColumnNameOverride columnNameOverride = new ColumnNameOverride();
+        columnNameOverride.overrideName("old_column", "new_column");
     }
 }

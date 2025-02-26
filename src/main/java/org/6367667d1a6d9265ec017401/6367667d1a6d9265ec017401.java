@@ -28,11 +28,11 @@ public class UnescapeJava {
                     case 'r':
                         result.append('\r');
                         break;
-                    case 'f':
-                        result.append('\f');
-                        break;
                     case 'b':
                         result.append('\b');
+                        break;
+                    case 'f':
+                        result.append('\f');
                         break;
                     case '\\':
                         result.append('\\');
@@ -66,7 +66,7 @@ public class UnescapeJava {
     }
 
     public static void main(String[] args) throws Exception {
-        String input = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\";
+        String input = "Hello\\nWorld! This is a test string with a tab\\t and a backslash\\\\.";
         String output = unescapeJava(input);
         System.out.println(output);
     }

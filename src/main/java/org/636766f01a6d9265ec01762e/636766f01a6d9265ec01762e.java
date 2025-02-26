@@ -1,4 +1,5 @@
 public class ArrayUtils {
+    
     /** 
      * <p>जांचता है कि क्या प्राइमिटिव डबल्स का एक एरे खाली है या <code>null</code> है।</p>
      * @param array  परीक्षण के लिए एरे
@@ -10,6 +11,7 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
+        // Test cases
         double[] testArray1 = null;
         double[] testArray2 = {};
         double[] testArray3 = {1.0, 2.0, 3.0};

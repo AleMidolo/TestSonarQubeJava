@@ -7,21 +7,19 @@ public class CustomOutputStream extends OutputStream {
         if (b == null) {
             throw new IOException("Byte array is null");
         }
-        // Here you would implement the logic to write the byte array to the output stream
-        // For demonstration, we will just print the bytes to the console
+        // Here you would implement the logic to write the byte array to the output stream.
+        // For demonstration, we will just print the bytes to the console.
         for (byte value : b) {
-            System.out.print((char) value);
+            System.out.print((char) value); // Print each byte as a character
         }
-        System.out.flush();
     }
 
     @Override
     public void write(int b) throws IOException {
-        // Implementing the write method for a single byte
-        System.out.print((char) b);
-        System.out.flush();
+        // Implementing the abstract method from OutputStream
+        System.out.print((char) b); // Print the single byte as a character
     }
-    
+
     public static void main(String[] args) {
         CustomOutputStream customOutputStream = new CustomOutputStream();
         try {

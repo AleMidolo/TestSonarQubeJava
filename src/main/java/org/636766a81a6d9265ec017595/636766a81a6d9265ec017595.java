@@ -11,13 +11,9 @@ class ByteVector {
 
     public void put(byte value) {
         if (size == data.length) {
-            resize();
+            data = Arrays.copyOf(data, data.length * 2); // Double the size
         }
         data[size++] = value;
-    }
-
-    private void resize() {
-        data = Arrays.copyOf(data, data.length * 2);
     }
 
     public byte[] toArray() {
@@ -42,6 +38,6 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         ByteVector result = main.put11(10, 20);
-        System.out.println(Arrays.toString(result.toArray()));
+        System.out.println(Arrays.toString(result.toArray())); // Output the byte vector
     }
 }

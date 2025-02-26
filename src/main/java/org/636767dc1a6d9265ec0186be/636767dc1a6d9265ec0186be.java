@@ -20,7 +20,7 @@ public class TimeBucketCompressor {
     }
 
     private static int getDayOfYear(int year, int month, int day) {
-        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        int[] daysInMonth = { 31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int dayOfYear = day;
         for (int i = 0; i < month - 1; i++) {
             dayOfYear += daysInMonth[i];
@@ -33,7 +33,7 @@ public class TimeBucketCompressor {
     }
 
     private static long convertDayOfYearToDate(int year, int dayOfYear) {
-        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        int[] daysInMonth = { 31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int month = 0;
         while (dayOfYear > daysInMonth[month]) {
             dayOfYear -= daysInMonth[month];
@@ -43,9 +43,13 @@ public class TimeBucketCompressor {
     }
 
     public static void main(String[] args) {
-        long timeBucket = 20000115;
+        long timeBucket1 = 20000105;
+        long timeBucket2 = 20000115;
+        long timeBucket3 = 20000123;
         int dayStep = 11;
-        long compressedBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedBucket); // Output: 20000112
+
+        System.out.println(compressTimeBucket(timeBucket1, dayStep)); // Output: 20000101
+        System.out.println(compressTimeBucket(timeBucket2, dayStep)); // Output: 20000112
+        System.out.println(compressTimeBucket(timeBucket3, dayStep)); // Output: 20000123
     }
 }

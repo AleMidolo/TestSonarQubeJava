@@ -22,7 +22,11 @@ public class GenericTypeResolver {
         Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+            if (actualTypeArguments[i] instanceof Class) {
+                resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+            } else {
+                return null; // Cannot resolve non-class type arguments
+            }
         }
 
         return resolvedArguments;

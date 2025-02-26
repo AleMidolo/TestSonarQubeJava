@@ -17,11 +17,11 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(isAsciiAlphaUpper('a'));  // false
-        System.out.println(isAsciiAlphaUpper('A'));  // true
-        System.out.println(isAsciiAlphaUpper('3'));  // false
-        System.out.println(isAsciiAlphaUpper('-'));  // false
+        System.out.println(isAsciiAlphaUpper('a')); // false
+        System.out.println(isAsciiAlphaUpper('A')); // true
+        System.out.println(isAsciiAlphaUpper('3')); // false
+        System.out.println(isAsciiAlphaUpper('-')); // false
         System.out.println(isAsciiAlphaUpper('\n')); // false
-        System.out.println(isAsciiAlphaUpper('©'));  // false
+        System.out.println(isAsciiAlphaUpper('©')); // false
     }
 }

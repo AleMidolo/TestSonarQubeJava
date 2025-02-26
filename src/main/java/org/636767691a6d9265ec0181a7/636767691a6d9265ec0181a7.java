@@ -7,8 +7,8 @@ public class StringCleaner {
      * @return la Stringa ripulita
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null || str.isEmpty()) {
-            return str;
+        if (str == null) {
+            return null;
         }
         
         StringBuilder result = new StringBuilder();

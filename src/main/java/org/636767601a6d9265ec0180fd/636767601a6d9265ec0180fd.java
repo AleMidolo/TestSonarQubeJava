@@ -19,7 +19,6 @@ public class Graph<V, E> {
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
         adjacencyList.putIfAbsent(sourceVertex, new HashSet<>());
         adjacencyList.putIfAbsent(targetVertex, new HashSet<>());
-        
         adjacencyList.get(sourceVertex).add(e);
     }
 }

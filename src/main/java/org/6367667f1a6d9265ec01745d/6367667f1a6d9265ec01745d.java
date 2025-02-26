@@ -24,7 +24,7 @@ public class PathSegmentDecoder {
         
         for (String segment : pathSegments) {
             if (decode) {
-                segment = decodeSegment(segment);
+                segment = decodeURIComponent(segment);
             }
             segments.add(new PathSegmentImpl(segment));
         }
@@ -32,12 +32,11 @@ public class PathSegmentDecoder {
         return segments;
     }
 
-    private static String decodeSegment(String segment) {
+    private static String decodeURIComponent(String component) {
         try {
-            return java.net.URLDecoder.decode(segment, "UTF-8");
+            return java.net.URLDecoder.decode(component, "UTF-8");
         } catch (Exception e) {
-            // In caso di errore nel decoding, restituisce il segmento originale
-            return segment;
+            return component; // In caso di errore, restituisce il componente originale
         }
     }
 

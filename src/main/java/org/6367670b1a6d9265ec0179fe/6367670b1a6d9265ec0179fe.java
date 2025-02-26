@@ -7,9 +7,9 @@ public class CustomOutputStream extends OutputStream {
         if (b == null) {
             throw new IOException("Byte array cannot be null");
         }
-        // Here you would implement the logic to write the bytes to the output stream.
+        // Here you would implement the logic to write the byte array to the output stream.
         // For demonstration purposes, we will just print the length of the byte array.
-        System.out.println("Writing " + b.length + " bytes.");
+        System.out.println("Writing " + b.length + " bytes to the output stream.");
     }
 
     @Override

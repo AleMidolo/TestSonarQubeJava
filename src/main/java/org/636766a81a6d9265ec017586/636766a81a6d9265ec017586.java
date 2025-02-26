@@ -11,7 +11,7 @@ public class StackFrame {
      */
     private void pop(final int elements) {
         if (elements <= 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be positive.");
+            throw new IllegalArgumentException("Number of elements to pop must be greater than zero.");
         }
         for (int i = 0; i < elements; i++) {
             if (!stack.isEmpty()) {

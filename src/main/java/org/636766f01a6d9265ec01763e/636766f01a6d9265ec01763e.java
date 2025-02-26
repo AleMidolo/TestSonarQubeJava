@@ -1,5 +1,4 @@
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public class CharsetTranslator {
 
@@ -9,15 +8,10 @@ public class CharsetTranslator {
      * @return L'equivalente Java per questo nome.
      */
     private static String javaCharset(String charset) {
-        if (charset == null || charset.isEmpty()) {
-            return null;
-        }
-        
-        try {
-            Charset javaCharset = Charset.forName(charset);
-            return javaCharset.name();
-        } catch (IllegalArgumentException e) {
-            return null; // Return null if the charset is not valid
+        if (Charset.isSupported(charset)) {
+            return Charset.forName(charset).name();
+        } else {
+            throw new IllegalArgumentException("Charset not supported: " + charset);
         }
     }
 
@@ -25,6 +19,6 @@ public class CharsetTranslator {
         // Example usage
         String mimeCharset = "UTF-8";
         String javaCharset = javaCharset(mimeCharset);
-        System.out.println("Java Charset for " + mimeCharset + ": " + javaCharset);
+        System.out.println("Java Charset: " + javaCharset);
     }
 }

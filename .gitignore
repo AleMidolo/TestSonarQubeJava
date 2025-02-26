@@ -1,0 +1,95 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+.target/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# SonarCloud
+.sonar/
+
+# PMD and Checkstyle
+pmd.xml
+checkstyle.xml
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# Binary files
+*.bin
+
+# Test outputs
+/test-output/
+
+# Generated files
+/target/
+/out/
+
+# Java-specific
+*.jpi
+*.hpi
+*.jdl
+
+# Other IDEs and Tools
+/.idea/
+/.classpath
+/.project
+/.settings/
+/.factorypath
+
+# Local environment settings
+.env
+
+# Coverage reports
+/coverage/
+*.exec
+*.ec
+
+ruleset_full.xml

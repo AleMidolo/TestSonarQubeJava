@@ -23,6 +23,6 @@ public class CharUtils {
         System.out.println(toCharacterObject(' ')); // Output: ' '
         System.out.println(toCharacterObject('A')); // Output: 'A'
         System.out.println(toCharacterObject('Z')); // Output: 'Z'
-        System.out.println(toCharacterObject('ñ')); // Output: 'ñ'
+        System.out.println(toCharacterObject((char) 128)); // Output: (Character for ASCII 128)
     }
 }

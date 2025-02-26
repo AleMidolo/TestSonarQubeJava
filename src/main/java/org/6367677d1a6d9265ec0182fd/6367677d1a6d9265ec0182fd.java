@@ -20,8 +20,8 @@ public class BooleanConverter {
     public static void main(String[] args) {
         System.out.println(toBoolean("true", false));  // true
         System.out.println(toBoolean("false", true));  // false
-        System.out.println(toBoolean("unknown", true)); // true
-        System.out.println(toBoolean("unknown", false)); // false
-        System.out.println(toBoolean(null, true));      // true
+        System.out.println(toBoolean("other", true));   // true
+        System.out.println(toBoolean("other", false));  // false
+        System.out.println(toBoolean(null, true));       // true
     }
 }

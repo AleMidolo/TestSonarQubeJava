@@ -17,7 +17,7 @@ public class StringArrayTrimmer {
     }
 
     public static void main(String[] args) {
-        String[] input = {"  Hello  ", "  World  ", null, "  Java  "};
+        String[] input = {"  hello  ", "  world  ", null, "  java  "};
         String[] trimmed = trimArrayElements(input);
         System.out.println(Arrays.toString(trimmed));
     }

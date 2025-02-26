@@ -13,21 +13,21 @@ public class TimeBucketCompressor {
         
         // Calculate the number of days since the start of the month
         int daysInMonth = getDaysInMonth(year, month);
-        int dayOfMonth = day - 1; // Convert to 0-based index
-        
-        // Calculate the new day based on the dayStep
-        int newDayOfMonth = (dayOfMonth / dayStep) * dayStep;
-        
-        // If the new day exceeds the number of days in the month, adjust it
-        if (newDayOfMonth >= daysInMonth) {
-            newDayOfMonth = daysInMonth - 1; // Last day of the month
+        int dayOfMonth = day;
+
+        // Calculate the number of complete daySteps
+        int completeSteps = dayOfMonth / dayStep;
+
+        // Calculate the new day based on the complete steps
+        int newDay = completeSteps * dayStep + 1;
+
+        // If the new day exceeds the days in the month, adjust the month and year
+        if (newDay > daysInMonth) {
+            newDay = daysInMonth;
         }
-        
-        // Convert back to 1-based index
-        newDayOfMonth += 1;
-        
+
         // Reconstruct the time bucket
-        return year * 10000 + month * 100 + newDayOfMonth;
+        return year * 10000 + month * 100 + newDay;
     }
 
     // Helper method to get the number of days in a month
@@ -51,9 +51,8 @@ public class TimeBucketCompressor {
 
     public static void main(String[] args) {
         // Example usage
-        long timeBucket = 20000115;
-        int dayStep = 11;
-        long compressedBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedBucket); // Output: 20000112
+        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
     }
 }

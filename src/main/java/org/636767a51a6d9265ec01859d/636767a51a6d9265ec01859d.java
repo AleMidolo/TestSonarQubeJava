@@ -14,7 +14,7 @@ public class ArrayComparer {
         if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
-        if (len != internalArray.length) {
+        if (len > internalArray.length) {
             return false;
         }
         for (int i = 0; i < len; i++) {
@@ -28,11 +28,8 @@ public class ArrayComparer {
     public static void main(String[] args) {
         byte[] internal = {1, 2, 3, 4, 5};
         ArrayComparer comparer = new ArrayComparer(internal);
-        
         byte[] external = {0, 1, 2, 3, 4, 5};
         System.out.println(comparer.equals(external, 1, 5)); // Should print true
-
-        byte[] external2 = {1, 2, 3, 4, 6};
-        System.out.println(comparer.equals(external2, 0, 5)); // Should print false
+        System.out.println(comparer.equals(external, 0, 5)); // Should print false
     }
 }

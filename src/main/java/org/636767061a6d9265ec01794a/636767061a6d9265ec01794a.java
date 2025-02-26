@@ -21,21 +21,26 @@ public class FileExtensionUtil {
         return -1;
     }
 
+    /**
+     * Returns the index of the last path separator character, which can be either '/' or '\'.
+     * @param filename the filename to find the last path separator in, null returns -1
+     * @return the index of the last path separator character, or -1 if there is no such character
+     */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
+
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
+
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example")); // Output: -1
-        System.out.println(indexOfExtension("folder\\example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder\\example")); // Output: -1
-        System.out.println(indexOfExtension(null)); // Output: -1
+        // Example usage
+        String filename = "example/path/to/file.txt";
+        int index = indexOfExtension(filename);
+        System.out.println("Index of last extension separator: " + index);
     }
 }

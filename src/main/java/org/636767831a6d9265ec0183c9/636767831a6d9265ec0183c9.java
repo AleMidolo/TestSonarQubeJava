@@ -3,7 +3,7 @@ import java.util.Stack;
 public class DiagnosticContext {
     private static Stack<String> contextStack = new Stack<>();
 
-    /** 
+    /**
      * Looks at the last diagnostic context at the top of this NDC without removing it. 
      * The returned value is the value that was pushed last. If no context is available, 
      * then the empty string "" is returned.
@@ -13,24 +13,24 @@ public class DiagnosticContext {
         return contextStack.isEmpty() ? "" : contextStack.peek();
     }
 
-    // Method to push a new context onto the stack
+    // Method to push a new context for testing purposes
     public static void push(String context) {
         contextStack.push(context);
     }
 
-    // Method to pop the top context from the stack
+    // Method to pop a context for testing purposes
     public static String pop() {
         return contextStack.isEmpty() ? "" : contextStack.pop();
     }
 
     public static void main(String[] args) {
         // Example usage
-        push("Context 1");
-        push("Context 2");
-        System.out.println(peek()); // Output: Context 2
+        push("Context1");
+        push("Context2");
+        System.out.println(peek()); // Should print "Context2"
         pop();
-        System.out.println(peek()); // Output: Context 1
+        System.out.println(peek()); // Should print "Context1"
         pop();
-        System.out.println(peek()); // Output: (empty string)
+        System.out.println(peek()); // Should print ""
     }
 }

@@ -1,7 +1,6 @@
 import java.util.List;
 
 public class StringUtils {
-
     /** 
      * Case in-sensitive Checks if the String contains any character in the given set of string. 
      */
@@ -20,7 +19,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrArray = List.of("a", "b", "C");
+        List<String> searchStrArray = List.of("a", "b", "c");
         String str = "Hello World";
         boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println(result); // Output: true

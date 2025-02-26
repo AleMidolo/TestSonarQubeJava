@@ -9,7 +9,7 @@ public class PackedFieldChecker {
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Logic to check if the field is packed
+        // Logic to determine if the field is packed
         // This is a placeholder for the actual implementation
         // For example, we might read a byte and check its value
         int fieldType = readFieldType(); // Hypothetical method to read field type

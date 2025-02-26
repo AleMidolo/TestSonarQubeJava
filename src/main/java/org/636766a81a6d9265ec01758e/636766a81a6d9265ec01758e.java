@@ -11,37 +11,29 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        if (desiredCapacity == 2) {
-            return 2;
-        }
+        int prime = desiredCapacity;
+        boolean found = false;
 
-        int upperLimit = desiredCapacity;
-        if (desiredCapacity >= 1000) {
-            upperLimit = (int) (desiredCapacity * 1.11);
-        }
+        // Calculate the upper limit for the search
+        int upperLimit = desiredCapacity >= 1000 ? (int) (desiredCapacity * 1.11) : Integer.MAX_VALUE;
 
-        for (int i = desiredCapacity; i <= upperLimit; i++) {
-            if (isPrime(i)) {
-                return i;
+        while (!found) {
+            if (isPrime(prime) && prime <= upperLimit) {
+                found = true;
+            } else {
+                prime++;
             }
         }
-        return upperLimit; // Fallback, should not reach here
+        return prime;
     }
 
-    private static boolean isPrime(int number) {
-        if (number <= 1) {
-            return false;
-        }
-        if (number <= 3) {
-            return true;
-        }
-        if (number % 2 == 0 || number % 3 == 0) {
-            return false;
-        }
-        for (int i = 5; i * i <= number; i += 6) {
-            if (number % i == 0 || number % (i + 2) == 0) {
-                return false;
-            }
+    private static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
+
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) return false;
         }
         return true;
     }

@@ -3,11 +3,11 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.util.Enumeration;
 import org.apache.log4j.Logger;
 
-public class LoggerUtil {
+public class LoggerAppender {
     private Logger logger;
 
-    public LoggerUtil(Logger logger) {
-        this.logger = logger;
+    public LoggerAppender() {
+        logger = Logger.getLogger(LoggerAppender.class);
     }
 
     /** 

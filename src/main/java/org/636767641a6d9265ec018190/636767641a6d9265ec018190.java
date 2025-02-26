@@ -14,16 +14,16 @@ public class VertexMover {
         // Get the bucket with the minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
         
-        // Move all vertices from minLabel bucket to the bucket with label 0
+        // Get the bucket with label 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-        zeroLabelBucket.addAll(minLabelBucket);
         
-        // Update the labels of the vertices moved
+        // Move all vertices from minLabel bucket to the zero label bucket
         for (Integer vertex : minLabelBucket) {
-            labels.set(vertex, 0); // Update the label to 0
+            zeroLabelBucket.add(vertex);
+            labels.set(vertex, 0); // Update the label of the vertex to 0
         }
         
-        // Clear the bucket with label minLabel
+        // Clear the minLabel bucket
         minLabelBucket.clear();
     }
 }

@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-public class ArrayUtils {
+public class ArrayUtil {
 
     private static final Character[] EMPTY_ARRAY = new Character[0];
 
@@ -13,16 +11,19 @@ public class ArrayUtils {
      * @since 2.5
      */
     public static Character[] nullToEmpty(final Character[] array) {
-        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
+        if (array == null || array.length == 0) {
+            return EMPTY_ARRAY;
+        }
+        return array;
     }
 
     public static void main(String[] args) {
         Character[] nullArray = null;
         Character[] emptyArray = {};
-        Character[] nonEmptyArray = {'a', 'b', 'c'};
+        Character[] nonEmptyArray = {'A', 'B', 'C'};
 
-        System.out.println(Arrays.toString(nullToEmpty(nullArray))); // Output: []
-        System.out.println(Arrays.toString(nullToEmpty(emptyArray))); // Output: []
-        System.out.println(Arrays.toString(nullToEmpty(nonEmptyArray))); // Output: [a, b, c]
+        System.out.println(nullToEmpty(nullArray).length); // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
+        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
     }
 }

@@ -10,7 +10,9 @@ public class ArrayCloner {
         if (array == null) {
             return null;
         }
-        return array.clone();
+        char[] clonedArray = new char[array.length];
+        System.arraycopy(array, 0, clonedArray, 0, array.length);
+        return clonedArray;
     }
 
     public static void main(String[] args) {

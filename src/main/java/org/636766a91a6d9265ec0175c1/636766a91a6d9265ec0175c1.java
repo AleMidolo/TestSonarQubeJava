@@ -23,7 +23,7 @@ public class ByteVector {
 
     // Additional methods for demonstration purposes
     public void add(byte b) {
-        if (currentSize >= data.length) {
+        if (currentSize == data.length) {
             enlarge(1);
         }
         data[currentSize++] = b;

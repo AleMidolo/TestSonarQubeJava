@@ -1,4 +1,5 @@
 public class FactorialCalculator {
+    
     /** 
      * Calculate the factorial of $n$.
      * @param n the input number

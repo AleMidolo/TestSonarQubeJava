@@ -1,5 +1,5 @@
 public class SubstringMatcher {
-    
+
     /** 
      * Returns  {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
      * @param str the original string (or StringBuilder)
@@ -24,11 +24,9 @@ public class SubstringMatcher {
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
-        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
-        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello, World!", 5, ", W")); // true
-        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
-        System.out.println(substringMatch("Hello, World!", 13, "!")); // false
+        String original = "Hello, world!";
+        String sub = "world";
+        boolean result = substringMatch(original, 7, sub);
+        System.out.println(result); // Output: true
     }
 }

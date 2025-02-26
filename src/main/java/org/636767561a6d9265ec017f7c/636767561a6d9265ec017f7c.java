@@ -20,14 +20,29 @@ public class GraphUtils<V, E> {
 
         V startVertex = graph.getEdgeSource(tour.iterator().next());
         V endVertex = graph.getEdgeTarget(tour.iterator().next());
+        List<V> vertexList = new ArrayList<>();
+        vertexList.add(startVertex);
+
         for (E edge : tour) {
-            endVertex = graph.getEdgeTarget(edge);
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            if (!vertexList.contains(source)) {
+                vertexList.add(source);
+            }
+            if (!vertexList.contains(target)) {
+                vertexList.add(target);
+            }
         }
 
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
                 return graph;
+            }
+
+            @Override
+            public List<E> getEdgeList() {
+                return new ArrayList<>(tour);
             }
 
             @Override
@@ -41,17 +56,20 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<E> getEdgeList() {
-                return new ArrayList<>(tour);
-            }
-
-            @Override
             public double getWeight() {
                 double weight = 0.0;
                 for (E edge : tour) {
                     weight += graph.getEdgeWeight(edge);
                 }
                 return weight;
+            }
+
+            @Override
+            public String toString() {
+                return "GraphPath{" +
+                        "vertices=" + vertexList +
+                        ", edges=" + tour +
+                        '}';
             }
         };
     }

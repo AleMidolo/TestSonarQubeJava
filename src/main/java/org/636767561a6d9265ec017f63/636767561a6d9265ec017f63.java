@@ -27,16 +27,5 @@ public class GraphIterator implements Iterator<Vertex> {
         return false;
     }
 
-    @Override
-    public Vertex next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        Vertex vertex = vertices.get(currentIndex);
-        visited[currentIndex] = true;
-        currentIndex++;
-        return vertex;
-    }
-    
-    // Additional methods and class definitions can be added here
+    // Other methods like next() and remove() would be implemented here
 }

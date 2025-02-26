@@ -37,24 +37,32 @@ public class TypeResolver {
 
     public static void main(String[] args) {
         // Example usage
-        Class<?>[] resolvedArgs = resolveArguments(new ParameterizedTypeImpl(), MyClass.class);
-        System.out.println(Arrays.toString(resolvedArgs));
+        Type genericType = new ParameterizedTypeImpl(List.class, new Type[]{String.class});
+        Class<?> targetType = List.class;
+
+        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
+        System.out.println(Arrays.toString(resolvedArgs)); // Output: [class java.lang.String]
     }
 }
 
-// Dummy class for demonstration
-class MyClass<T, U> {}
-
-// Dummy implementation of ParameterizedType for demonstration
+// A simple implementation of ParameterizedType for demonstration purposes
 class ParameterizedTypeImpl implements ParameterizedType {
+    private final Class<?> raw;
+    private final Type[] actualTypeArguments;
+
+    public ParameterizedTypeImpl(Class<?> raw, Type[] actualTypeArguments) {
+        this.raw = raw;
+        this.actualTypeArguments = actualTypeArguments;
+    }
+
     @Override
     public Type[] getActualTypeArguments() {
-        return new Type[]{String.class, Integer.class};
+        return actualTypeArguments;
     }
 
     @Override
     public Type getRawType() {
-        return MyClass.class;
+        return raw;
     }
 
     @Override

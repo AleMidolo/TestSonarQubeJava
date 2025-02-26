@@ -9,7 +9,7 @@ public class AppenderManager {
         this.appenders = new ArrayList<>();
     }
 
-    /**
+    /** 
      * Remove the appender with the name passed as parameter from the list of appenders.  
      */
     public void removeAppender(String name) {
@@ -18,17 +18,15 @@ public class AppenderManager {
             String appender = iterator.next();
             if (appender.equals(name)) {
                 iterator.remove();
-                break; // Exit after removing the first matching appender
+                break;
             }
         }
     }
 
-    // Method to add appenders for testing purposes
     public void addAppender(String name) {
         appenders.add(name);
     }
 
-    // Method to get the list of appenders for testing purposes
     public List<String> getAppenders() {
         return appenders;
     }
@@ -37,10 +35,9 @@ public class AppenderManager {
         AppenderManager manager = new AppenderManager();
         manager.addAppender("ConsoleAppender");
         manager.addAppender("FileAppender");
-        manager.addAppender("DatabaseAppender");
-
+        
         System.out.println("Appenders before removal: " + manager.getAppenders());
-        manager.removeAppender("FileAppender");
+        manager.removeAppender("ConsoleAppender");
         System.out.println("Appenders after removal: " + manager.getAppenders());
     }
 }

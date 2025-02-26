@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
     private int size;
@@ -15,21 +17,17 @@ public class ByteVector {
      * @return this byte vector.
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
-        }
-        if (byteArrayValue != null) {
-            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+        if (byteArrayValue == null) {
+            ensureCapacity(size + byteLength);
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+            size += byteLength;
+        } else {
+            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
             size += byteLength;
-        } else {
-            ensureCapacity(size + byteLength);
-            for (int i = 0; i < byteLength; i++) {
-                data[size++] = 0; // fill with null bytes
-            }
         }
         return this;
     }
@@ -37,9 +35,7 @@ public class ByteVector {
     private void ensureCapacity(int requiredCapacity) {
         if (requiredCapacity > data.length) {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
-            byte[] newData = new byte[newCapacity];
-            System.arraycopy(data, 0, newData, 0, size);
-            data = newData;
+            data = Arrays.copyOf(data, newCapacity);
         }
     }
 }

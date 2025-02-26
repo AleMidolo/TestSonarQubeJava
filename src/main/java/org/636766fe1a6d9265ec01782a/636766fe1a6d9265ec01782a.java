@@ -22,13 +22,13 @@ public class UtfReader {
     }
 
     private int getUtf8Offset(int index) {
-        // Logic to retrieve the offset of the UTF-8 entry in the classFileBuffer
+        // Logic to determine the offset of the UTF-8 entry in classFileBuffer
         // This is a placeholder implementation
         return index; // Replace with actual logic
     }
 
     private int getUtf8Length(int index) {
-        // Logic to retrieve the length of the UTF-8 entry in the classFileBuffer
+        // Logic to determine the length of the UTF-8 entry in classFileBuffer
         // This is a placeholder implementation
         return 5; // Replace with actual logic
     }

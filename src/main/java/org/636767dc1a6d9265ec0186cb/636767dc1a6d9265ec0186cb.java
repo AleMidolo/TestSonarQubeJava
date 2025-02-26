@@ -10,12 +10,8 @@ public class ConfigInitializer {
         if (!path.exists()) {
             System.out.println("分发路径不存在: " + distributionPath);
             // 可以在这里添加创建路径的逻辑
-            boolean created = path.mkdirs();
-            if (created) {
-                System.out.println("成功创建分发路径: " + distributionPath);
-            } else {
-                System.out.println("无法创建分发路径: " + distributionPath);
-            }
+            path.mkdirs();
+            System.out.println("已创建分发路径: " + distributionPath);
         } else {
             System.out.println("分发路径已存在: " + distributionPath);
         }

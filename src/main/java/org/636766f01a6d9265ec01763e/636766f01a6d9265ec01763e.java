@@ -18,7 +18,7 @@ public class CharsetConverter {
             Charset javaCharset = Charset.forName(charset);
             return javaCharset.name();
         } catch (IllegalArgumentException e) {
-            // If the charset is not valid, return null or handle accordingly
+            // If the charset is not recognized, return null or handle accordingly
             return null;
         }
     }

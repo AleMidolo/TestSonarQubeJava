@@ -12,20 +12,14 @@ public class TemplateEncoder {
             return null;
         }
         
-        StringBuilder encodedString = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '{' || c == '}') {
-                try {
-                    encodedString.append(URLEncoder.encode(String.valueOf(c), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    // This should never happen since UTF-8 is a standard encoding
-                    throw new RuntimeException("UTF-8 encoding not supported", e);
-                }
-            } else {
-                encodedString.append(c);
-            }
+        try {
+            // Encode the string using UTF-8 and replace '{' and '}' with their percent-encoded values
+            String encoded = URLEncoder.encode(s, "UTF-8");
+            encoded = encoded.replace("+", "%20"); // Replace spaces encoded as '+' with '%20'
+            return encoded.replace("%7B", "{").replace("%7D", "}");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
         }
-        return encodedString.toString();
     }
 
     public static void main(String[] args) {

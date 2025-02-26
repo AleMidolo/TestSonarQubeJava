@@ -1,5 +1,4 @@
 public class SubstringCounter {
-
     /**
      * 返回子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
      * @param str 要搜索的字符串。如果为空，则返回 0。

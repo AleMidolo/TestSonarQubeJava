@@ -10,15 +10,12 @@ public class MessageWriter {
      * @return 消息的大小
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using the provided schema
+        // Serialize the message
         int size = schema.getSerializedSize(message);
-        
-        // Write the size of the message to the output stream
+        // Write the size of the message
         out.write(intToByteArray(size));
-        
-        // Write the actual message to the output stream
+        // Write the message itself
         schema.writeTo(message, out, buffer);
-        
         return size;
     }
 

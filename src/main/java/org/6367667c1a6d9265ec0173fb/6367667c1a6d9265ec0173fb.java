@@ -6,8 +6,8 @@ public class MyAtmosphereResource implements AtmosphereResource {
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
         // Implementation to add the event listener
-        // This is a placeholder for the actual logic to add the listener
-        // In a real scenario, you would store the listener in a collection
+        // This is a placeholder for the actual logic
+        // You would typically store the listener in a list or map for later use
         System.out.println("Event listener added: " + e);
         return this; // Returning the current instance for method chaining
     }

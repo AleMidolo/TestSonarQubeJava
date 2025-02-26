@@ -1,6 +1,6 @@
 public class LineParser {
 
-    /** 
+    /**
      * 跳过字节直到当前行的末尾。
      * @param headerPart 正在解析的头部。
      * @param end 尚未处理的最后一个字节的索引。
@@ -24,7 +24,7 @@ public class LineParser {
 
     public static void main(String[] args) {
         LineParser parser = new LineParser();
-        String header = "This is a test header\r\nThis is the next line";
+        String header = "This is a test header\r\nThis is the next line.";
         int endIndex = parser.parseEndOfLine(header, 0);
         System.out.println("End of line index: " + endIndex);
     }

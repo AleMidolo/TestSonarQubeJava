@@ -16,6 +16,6 @@ public class TypeManager {
             initializedTypes.add(abstractType);
         }
     }
-    
+
     // Additional methods can be added here for managing types
 }

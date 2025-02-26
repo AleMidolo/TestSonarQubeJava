@@ -1,15 +1,16 @@
+import java.util.Arrays;
+
 public class StringArrayTrimmer {
     
     /** 
-     * Rimuove gli spazi bianchi dagli elementi dell'array di Stringhe fornito, chiamando <code>String.trim()</code> su ciascuno di essi.
-     * @param array l'array di Stringhe originale
-     * @return l'array risultante (della stessa dimensione) con elementi privati degli spazi bianchi
+     * Trim the elements of the given String array, calling <code>String.trim()</code> on each of them.
+     * @param array the original String array
+     * @return the resulting array (of the same size) with trimmed elements
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
             return null;
         }
-        
         String[] trimmedArray = new String[array.length];
         for (int i = 0; i < array.length; i++) {
             trimmedArray[i] = array[i] != null ? array[i].trim() : null;
@@ -18,11 +19,8 @@ public class StringArrayTrimmer {
     }
 
     public static void main(String[] args) {
-        String[] originalArray = {"  Hello  ", "  World  ", null, "  Java  "};
-        String[] trimmedArray = trimArrayElements(originalArray);
-        
-        for (String str : trimmedArray) {
-            System.out.println(str);
-        }
+        String[] testArray = {"  Hello  ", "  World  ", null, "  Java  "};
+        String[] trimmedArray = trimArrayElements(testArray);
+        System.out.println(Arrays.toString(trimmedArray));
     }
 }

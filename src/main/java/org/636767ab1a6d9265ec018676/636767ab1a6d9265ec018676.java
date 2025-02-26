@@ -1,20 +1,18 @@
-public class HexChecker {
+public class HexDigitChecker {
     
     /** 
-     * È una cifra esadecimale?
+     * Is this a hex digit?
      */
     private static boolean isHex(final char c) {
-        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+        return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
     }
 
     public static void main(String[] args) {
         // Test the isHex function
-        char testChar1 = 'a';
-        char testChar2 = 'G';
-        char testChar3 = '5';
-
-        System.out.println(testChar1 + " is hex: " + isHex(testChar1)); // true
-        System.out.println(testChar2 + " is hex: " + isHex(testChar2)); // false
-        System.out.println(testChar3 + " is hex: " + isHex(testChar3)); // true
+        System.out.println(isHex('A')); // true
+        System.out.println(isHex('g')); // false
+        System.out.println(isHex('5')); // true
+        System.out.println(isHex('f')); // true
+        System.out.println(isHex('Z')); // false
     }
 }

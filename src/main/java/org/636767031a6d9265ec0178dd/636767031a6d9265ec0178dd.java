@@ -1,21 +1,21 @@
 public class Request {
-    private String content;
+    private long contentLength;
 
-    public Request(String content) {
-        this.content = content;
+    public Request(long contentLength) {
+        this.contentLength = contentLength;
     }
 
     /** 
-     * Recupera la lunghezza del contenuto della richiesta.
-     * @return La lunghezza del contenuto della richiesta.
+     * Retrieve the content length of the request.
+     * @return The content length of the request.
      * @since 1.3
      */
     public long contentLength() {
-        return content != null ? content.length() : 0;
+        return contentLength;
     }
 
     public static void main(String[] args) {
-        Request request = new Request("Hello, World!");
+        Request request = new Request(1024);
         System.out.println("Content Length: " + request.contentLength());
     }
 }

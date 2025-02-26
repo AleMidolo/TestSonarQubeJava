@@ -1,36 +1,27 @@
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-    @Override
+public class CustomByteArrayOutputStream extends ByteArrayOutputStream {
+
+    /** 
+     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to this byte array output stream.
+     * @param b   the data.
+     * @param off the start offset in the data.
+     * @param len the number of bytes to write.
+     */
+    @Override 
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Byte array is null");
+            throw new NullPointerException();
         }
         if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException("Invalid offset or length");
+            throw new IndexOutOfBoundsException();
         }
-        
-        // Here you would implement the logic to write the bytes to the output stream.
-        // For demonstration, we will just print the bytes being written.
-        for (int i = off; i < off + len; i++) {
-            System.out.print((char) b[i]); // Print each byte as a character
+        if (len == 0) {
+            return;
         }
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        // Implement the method to write a single byte if needed
-        System.out.print((char) b);
-    }
-
-    public static void main(String[] args) {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
-        byte[] data = "Hello, World!".getBytes();
-        try {
-            customOutputStream.write(data, 0, data.length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ensureCapacity(count + len);
+        System.arraycopy(b, off, buf, count, len);
+        count += len;
     }
 }

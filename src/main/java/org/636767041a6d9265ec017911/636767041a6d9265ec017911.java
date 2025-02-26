@@ -5,8 +5,8 @@ public class ObjectRegistry {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /** 
-     * <p> Registra l'oggetto fornito. Utilizzato dai metodi di riflessione per evitare loop infiniti. </p>
-     * @param value L'oggetto da registrare.
+     * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
+     * @param value The object to register.
      */
     static void register(Object value) {
         if (value != null) {

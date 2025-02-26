@@ -1,29 +1,28 @@
-public class ArrayUtil {
+import java.util.Arrays;
+
+public class ArrayUtils {
 
     private static final Character[] EMPTY_ARRAY = new Character[0];
 
     /** 
-     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p> 
-     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p> 
-     * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
-     * @param array  l'array da controllare per <code>null</code> o vuoto
-     * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
+     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p> 
+     * <p>This method returns an empty array for a <code>null</code> input array.</p> 
+     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty <code>public static</code> references in this class.</p>
+     * @param array  the array to check for <code>null</code> or empty
+     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
      * @since 2.5
      */
     public static Character[] nullToEmpty(final Character[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
 
     public static void main(String[] args) {
         Character[] nullArray = null;
-        Character[] emptyArray = new Character[0];
-        Character[] nonEmptyArray = new Character[]{'a', 'b', 'c'};
+        Character[] emptyArray = {};
+        Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(nullToEmpty(nullArray).length); // Output: 0
-        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
+        System.out.println(Arrays.toString(nullToEmpty(nullArray))); // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(emptyArray))); // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(nonEmptyArray))); // Output: [a, b, c]
     }
 }

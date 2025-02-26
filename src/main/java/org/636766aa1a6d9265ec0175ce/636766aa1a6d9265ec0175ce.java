@@ -1,23 +1,26 @@
-public class FrameVisitor {
-    private int currentFrame;
+public class StackMapFrameVisitor {
+    private int currentFrameOffset;
+    private int currentNumLocal;
+    private int currentNumStack;
 
     /**
-     * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
-     * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
-     * @param numLocal il numero di variabili locali nel frame.
-     * @param numStack il numero di elementi nello stack nel frame.
-     * @return l'indice del prossimo elemento da scrivere in questo frame.
+     * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
+     * @param offset   the bytecode offset of the instruction to which the frame corresponds.
+     * @param numLocal the number of local variables in the frame.
+     * @param numStack the number of stack elements in the frame.
+     * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Logica per iniziare la visita del frame
-        currentFrame = offset; // Esempio di memorizzazione dell'offset nel frame corrente
-        // Potrebbe essere necessario gestire numLocal e numStack in base alla logica dell'applicazione
-        return currentFrame + numLocal + numStack; // Restituisce l'indice del prossimo elemento
+        this.currentFrameOffset = offset;
+        this.currentNumLocal = numLocal;
+        this.currentNumStack = numStack;
+        // Assuming the next index to write is the sum of local and stack elements
+        return numLocal + numStack;
     }
 
     public static void main(String[] args) {
-        FrameVisitor visitor = new FrameVisitor();
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
         int nextIndex = visitor.visitFrameStart(10, 5, 3);
-        System.out.println("Next index to write in the frame: " + nextIndex);
+        System.out.println("Next index to write: " + nextIndex);
     }
 }

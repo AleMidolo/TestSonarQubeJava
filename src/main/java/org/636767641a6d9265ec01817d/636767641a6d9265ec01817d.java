@@ -3,7 +3,7 @@ import java.util.Map;
 public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * Costruisce un grafo bipartito completo
+     * Construct a complete bipartite graph
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {

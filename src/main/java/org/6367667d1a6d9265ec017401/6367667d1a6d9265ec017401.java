@@ -1,47 +1,47 @@
 public class StringUnescaper {
 
     /** 
-     * <p>Rimuove l'escape da qualsiasi letterale Java trovato nella <code>String</code>. Ad esempio, trasformerà una sequenza di <code>'\'</code> e <code>'n'</code> in un carattere di nuova linea, a meno che il <code>'\'</code> non sia preceduto da un altro <code>'\'</code>.</p>
-     * @param str la <code>String</code> da desescapare, può essere null
-     * @return una nuova <code>String</code> desescapata, <code>null</code> se l'input è una stringa null
+     * <p>Unescapes any Java literals found in the <code>String</code>. For example, it will turn a sequence of <code>'\'</code> and <code>'n'</code> into a newline character, unless the <code>'\'</code> is preceded by another <code>'\'</code>.</p>
+     * @param str the <code>String</code> to unescape, may be null
+     * @return a new unescaped <code>String</code>, <code>null</code> if null string input
      */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
-        StringBuilder result = new StringBuilder();
+        StringBuilder unescaped = new StringBuilder();
         boolean isEscaped = false;
 
         for (char c : str.toCharArray()) {
             if (isEscaped) {
                 switch (c) {
                     case 'n':
-                        result.append('\n');
+                        unescaped.append('\n');
                         break;
                     case 't':
-                        result.append('\t');
+                        unescaped.append('\t');
                         break;
                     case 'r':
-                        result.append('\r');
-                        break;
-                    case 'f':
-                        result.append('\f');
+                        unescaped.append('\r');
                         break;
                     case 'b':
-                        result.append('\b');
+                        unescaped.append('\b');
                         break;
-                    case '\\':
-                        result.append('\\');
+                    case 'f':
+                        unescaped.append('\f');
                         break;
-                    case '"':
-                        result.append('"');
+                    case '\"':
+                        unescaped.append('\"');
                         break;
                     case '\'':
-                        result.append('\'');
+                        unescaped.append('\'');
+                        break;
+                    case '\\':
+                        unescaped.append('\\');
                         break;
                     default:
-                        result.append(c);
+                        unescaped.append(c);
                         break;
                 }
                 isEscaped = false;
@@ -49,26 +49,22 @@ public class StringUnescaper {
                 if (c == '\\') {
                     isEscaped = true;
                 } else {
-                    result.append(c);
+                    unescaped.append(c);
                 }
             }
         }
 
-        // If the string ends with an escape character, we need to append it
+        // If the last character was an escape character, append it
         if (isEscaped) {
-            result.append('\\');
+            unescaped.append('\\');
         }
 
-        return result.toString();
+        return unescaped.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String escapedString = "Hello\\nWorld! This is a test\\tstring.";
-            String unescapedString = unescapeJava(escapedString);
-            System.out.println(unescapedString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
+        String result = unescapeJava(testString);
+        System.out.println(result);
     }
 }

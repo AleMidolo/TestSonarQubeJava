@@ -1,28 +1,28 @@
 public class DigitValueInterpreter {
 
     /** 
-     * Interpreta un carattere come una cifra (in qualsiasi base fino a 36) e restituisce il valore numerico. 
-     * Questo è simile a {@code Character.digit()} ma non accettiamo cifre non-ASCII.
+     * Interpret a character as a digit (in any base up to 36) and return the numeric value. This is like {@code Character.digit()} but we don't accept non-ASCII digits.
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
-            return c - '0'; // Valore per le cifre da 0 a 9
+            return c - '0'; // ASCII '0' to '9'
         } else if (c >= 'A' && c <= 'Z') {
-            return c - 'A' + 10; // Valore per le lettere da A a Z
+            return c - 'A' + 10; // ASCII 'A' to 'Z'
         } else if (c >= 'a' && c <= 'z') {
-            return c - 'a' + 10; // Valore per le lettere da a a z
+            return c - 'a' + 10; // ASCII 'a' to 'z'
         } else {
-            throw new IllegalArgumentException("Carattere non valido: " + c);
+            return -1; // Non-ASCII digit
         }
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(digitValue('0')); // Output: 0
-        System.out.println(digitValue('9')); // Output: 9
-        System.out.println(digitValue('A')); // Output: 10
-        System.out.println(digitValue('Z')); // Output: 35
-        System.out.println(digitValue('a')); // Output: 10
-        System.out.println(digitValue('z')); // Output: 35
+        // Test cases
+        System.out.println(digitValue('0')); // 0
+        System.out.println(digitValue('9')); // 9
+        System.out.println(digitValue('A')); // 10
+        System.out.println(digitValue('Z')); // 35
+        System.out.println(digitValue('a')); // 10
+        System.out.println(digitValue('z')); // 35
+        System.out.println(digitValue('@')); // -1 (non-ASCII digit)
     }
 }

@@ -2,51 +2,35 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 
-    /**
-     * Recupera un'istanza di {@link Meteor} basata su {@link HttpServletRequest}.
+    /** 
+     * Retrieve an instance of  {@link Meteor} based on the {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
-     * @return un {@link Meteor} o null se non trovato
+     * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Simulazione di recupero di un'istanza di Meteor
+        // Example implementation, replace with actual logic to retrieve Meteor instance
         String meteorId = r.getParameter("meteorId");
-        
-        if (meteorId == null || meteorId.isEmpty()) {
-            return null; // Se non c'è un ID meteor, restituisce null
+        if (meteorId != null) {
+            // Assuming a method getMeteorById exists to fetch Meteor instance
+            return getMeteorById(meteorId);
         }
-        
-        // Logica per cercare un'istanza di Meteor basata sull'ID
-        // Questo è solo un esempio, in un'applicazione reale si potrebbe cercare in un database
-        Meteor meteor = findMeteorById(meteorId);
-        
-        return meteor;
+        return null;
     }
 
-    private static Meteor findMeteorById(String meteorId) {
-        // Simulazione di ricerca di un Meteor
-        // In un'applicazione reale, qui ci sarebbe la logica per accedere a un database o a un'altra fonte di dati
-        if ("123".equals(meteorId)) {
-            return new Meteor("123", "Meteor Example");
-        }
-        return null; // Se non trovato
+    private static Meteor getMeteorById(String meteorId) {
+        // Placeholder for actual retrieval logic
+        // This should interact with a database or data source to find the Meteor
+        // For demonstration, returning a new Meteor instance
+        return new Meteor(meteorId);
     }
 }
 
 class Meteor {
     private String id;
-    private String name;
 
-    public Meteor(String id, String name) {
+    public Meteor(String id) {
         this.id = id;
-        this.name = name;
     }
 
-    // Getters e Setters
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
+    // Additional properties and methods for the Meteor class
 }

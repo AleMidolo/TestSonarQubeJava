@@ -2,10 +2,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ArrayUtils {
+public class ArrayToList {
+
     /** 
-     * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
-     * @return una lista supportata dall'array.
+     * Array to List. <p> Works like  {@link Arrays#asList(Object)}, but handles null arrays.
+     * @return a list backed by the array.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
@@ -15,12 +16,11 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Test the asList method
+        // Example usage
         String[] array = {"Hello", "World"};
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
-        // Test with null array
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Output: []

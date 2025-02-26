@@ -1,17 +1,17 @@
 import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
-public class AtmosphereHandlerManager {
+public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
-    public AtmosphereHandlerManager(AtmosphereFramework atmosphereFramework) {
-        this.atmosphereFramework = atmosphereFramework;
+    public AtmosphereManager() {
+        atmosphereFramework = new AtmosphereFramework();
     }
 
     /** 
-     * Rimuove un {@link AtmosphereHandler}.
-     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String,AtmosphereHandler)};
-     * @return true se rimosso
+     * Remove an  {@link AtmosphereHandler}.
+     * @param mapping the mapping used when invoking {@link #addAtmosphereHandler(String,AtmosphereHandler)};
+     * @return true if removed
      */
     public boolean removeAtmosphereHandler(String mapping) {
         AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);

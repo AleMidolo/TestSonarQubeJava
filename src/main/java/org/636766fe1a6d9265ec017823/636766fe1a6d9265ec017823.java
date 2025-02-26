@@ -11,24 +11,26 @@ public class SymbolTable {
     }
 
     /**
-     * Aggiunge un CONSTANT_NameAndType_info al pool di costanti di questa tabella dei simboli. Non fa nulla se il pool di costanti contiene già un elemento simile.
-     * @param name il nome di un campo o di un metodo.
-     * @param descriptor un descrittore di campo o di metodo.
-     * @return un nuovo simbolo o un simbolo già esistente con il valore fornito.
+     * Adds a CONSTANT_NameAndType_info to the constant pool of this symbol table. Does nothing if the constant pool already contains a similar item.
+     * @param name a field or method name.
+     * @param descriptor a field or method descriptor.
+     * @return a new or already existing Symbol with the given value.
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!constantPool.containsKey(key)) {
-            constantPool.put(key, nextIndex++);
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
+        } else {
+            constantPool.put(key, nextIndex);
+            return nextIndex++;
         }
-        return constantPool.get(key);
     }
 
     public static void main(String[] args) {
         SymbolTable symbolTable = new SymbolTable();
         int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
         int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        System.out.println("Index of myMethod: " + index1);
-        System.out.println("Index of myMethod (duplicate): " + index2);
+        System.out.println("Index of first addition: " + index1);
+        System.out.println("Index of second addition (should be the same): " + index2);
     }
 }

@@ -11,24 +11,19 @@ public class BeanMap {
     }
 
     /**
-     * Restituisce i valori per il BeanMap.
-     * @return valori per il BeanMap. La collezione restituita non è modificabile.
+     * Returns the values for the BeanMap.
+     * @return values for the BeanMap. The returned collection is not modifiable.
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Additional methods to add values to the map for demonstration purposes
+    // Additional methods to add and manage entries in the BeanMap
     public void put(String key, Object value) {
         map.put(key, value);
     }
-    
-    public static void main(String[] args) {
-        BeanMap beanMap = new BeanMap();
-        beanMap.put("key1", "value1");
-        beanMap.put("key2", 42);
-        
-        Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, 42]
+
+    public Object get(String key) {
+        return map.get(key);
     }
 }

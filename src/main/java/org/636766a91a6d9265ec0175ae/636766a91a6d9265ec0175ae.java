@@ -5,35 +5,30 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.data = new byte[10]; // initial capacity
         this.size = 0;
     }
 
     /** 
-     * Inserisce un array di byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
-     * @param byteArrayValue un array di byte. Può essere {@literal null} per inserire {@code byteLength} byte null in questo vettore di byte.
-     * @param byteOffset     indice del primo byte di byteArrayValue che deve essere copiato.
-     * @param byteLength     numero di byte di byteArrayValue che devono essere copiati.
-     * @return questo vettore di byte.
+     * Puts an array of bytes into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param byteArrayValue an array of bytes. May be {@literal null} to put {@code byteLength} nullbytes into this byte vector.
+     * @param byteOffset     index of the first byte of byteArrayValue that must be copied.
+     * @param byteLength     number of bytes of byteArrayValue that must be copied.
+     * @return this byte vector.
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
-        }
-        
         if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-        }
-
-        ensureCapacity(size + byteLength);
-        
-        if (byteArrayValue != null) {
+            ensureCapacity(size + byteLength);
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+            size += byteLength;
+        } else {
+            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
+                throw new IndexOutOfBoundsException("Invalid offset or length");
+            }
+            ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+            size += byteLength;
         }
-        
-        size += byteLength;
         return this;
     }
 
@@ -48,7 +43,7 @@ public class ByteVector {
         return size;
     }
 
-    public byte[] toArray() {
+    public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }
 }

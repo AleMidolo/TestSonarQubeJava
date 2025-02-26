@@ -1,30 +1,42 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] bytes;
+    private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.bytes = new byte[0];
+        this.data = new byte[10]; // initial capacity
         this.size = 0;
     }
 
-    /**
-     * Inserisce due byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
-     * @param byteValue1 un byte.
-     * @param byteValue2 un altro byte.
-     * @return questo vettore di byte.
+    /** 
+     * Puts two bytes into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param byteValue1 a byte.
+     * @param byteValue2 another byte.
+     * @return this byte vector.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        if (size + 2 > bytes.length) {
-            bytes = Arrays.copyOf(bytes, Math.max(size + 2, bytes.length * 2));
-        }
-        bytes[size++] = (byte) byteValue1;
-        bytes[size++] = (byte) byteValue2;
+        ensureCapacity(size + 2);
+        data[size++] = (byte) byteValue1;
+        data[size++] = (byte) byteValue2;
         return this;
     }
 
-    public byte[] getBytes() {
-        return Arrays.copyOf(bytes, size);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - data.length > 0) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
+            data = Arrays.copyOf(data, newCapacity);
+        }
+    }
+
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
+    }
+
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.put11(1, 2);
+        byteVector.put11(3, 4);
+        System.out.println(Arrays.toString(byteVector.toArray())); // Output: [1, 2, 3, 4]
     }
 }

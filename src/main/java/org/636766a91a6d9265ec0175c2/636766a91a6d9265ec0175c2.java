@@ -1,37 +1,36 @@
-public class StackFrame {
-    private int[] stack;
-    private int top;
+import java.util.Stack;
 
-    public StackFrame(int size) {
-        stack = new int[size];
-        top = -1;
+public class AbstractTypeStack {
+    private Stack<Integer> outputFrameStack;
+
+    public AbstractTypeStack() {
+        outputFrameStack = new Stack<>();
     }
 
-    public void push(int value) {
-        if (top < stack.length - 1) {
-            stack[++top] = value;
-        } else {
-            throw new StackOverflowError("Stack is full");
-        }
-    }
-
-    /**
-     * Estrae un tipo astratto dallo stack del frame di output e restituisce il suo valore.
-     * @return il tipo astratto che è stato estratto dallo stack del frame di output.
+    /** 
+     * Pops an abstract type from the output frame stack and returns its value.
+     * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
-        if (top >= 0) {
-            return stack[top--];
-        } else {
-            throw new IllegalStateException("Stack is empty");
+        if (outputFrameStack.isEmpty()) {
+            throw new IllegalStateException("Stack is empty. Cannot pop from an empty stack.");
         }
+        return outputFrameStack.pop();
     }
 
+    // Method to push an integer onto the stack for testing purposes
+    public void push(int value) {
+        outputFrameStack.push(value);
+    }
+
+    // Main method for testing
     public static void main(String[] args) {
-        StackFrame frame = new StackFrame(5);
-        frame.push(10);
-        frame.push(20);
-        System.out.println("Popped value: " + frame.pop()); // Should print 20
-        System.out.println("Popped value: " + frame.pop()); // Should print 10
+        AbstractTypeStack stack = new AbstractTypeStack();
+        stack.push(10);
+        stack.push(20);
+        System.out.println("Popped value: " + stack.pop()); // Should print 20
+        System.out.println("Popped value: " + stack.pop()); // Should print 10
+        // Uncommenting the next line will throw an exception
+        // System.out.println("Popped value: " + stack.pop()); // Should throw exception
     }
 }

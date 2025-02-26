@@ -1,18 +1,16 @@
 public class ArrayCloner {
     
     /** 
-     * <p>Clona un array restituendo un risultato di tipo cast e gestendo <code>null</code>.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  l'array da clonare, può essere <code>null</code>
-     * @return l'array clonato, <code>null</code> se l'input è <code>null</code>
+     * <p>Clones an array returning a typecast result and handling <code>null</code>.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  the array to clone, may be <code>null</code>
+     * @return the cloned array, <code>null</code> if <code>null</code> input
      */
     public static char[] clone(final char[] array) {
         if (array == null) {
             return null;
         }
-        char[] clonedArray = new char[array.length];
-        System.arraycopy(array, 0, clonedArray, 0, array.length);
-        return clonedArray;
+        return array.clone();
     }
 
     public static void main(String[] args) {

@@ -6,8 +6,8 @@ public class StringBuilderExample {
     }
 
     /** 
-     * <p> Ottiene la String costruita da questo builder. </p>
-     * @return la stringa costruita
+     * <p> Gets the String built by this builder. </p>
+     * @return the built string
      */
     public String toString() {
         return builder.toString();

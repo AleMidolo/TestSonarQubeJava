@@ -34,6 +34,11 @@ class Node {
     public boolean isVirtual() {
         return isVirtual;
     }
+
+    public Node getRealNode() {
+        // Assuming the real counterpart is the same node without the virtual flag
+        return new Node(name, false);
+    }
 }
 
 class Graph {
@@ -45,19 +50,13 @@ class Graph {
         this.nextNode = nextNode;
     }
 
-    /**
-     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
-     * @return un arco dal nodo corrente al nodo successivo
+    /** 
+     * Returns an edge connecting previously returned node with node, which will be returned next. If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
+     * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(fromNode, toNode);
-    }
-
-    private Node getRealNode(Node virtualNode) {
-        // Logic to get the real node corresponding to the virtual node
-        // This is a placeholder implementation
-        return new Node(virtualNode.getName() + "_real", false);
     }
 }

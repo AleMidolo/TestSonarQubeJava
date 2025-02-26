@@ -1,28 +1,28 @@
-import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class ClassReader {
-    private byte[] data;
+    private ByteBuffer buffer;
 
     public ClassReader(byte[] data) {
-        this.data = data;
+        this.buffer = ByteBuffer.wrap(data);
     }
 
-    /**
-     * Legge un valore long firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o adattatori.</i>
-     * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
-     * @return il valore letto.
+    /** 
+     * Reads a signed long value in this  {@link ClassReader}. <i>This method is intended for  {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
+     * @param offset the start offset of the value to be read in this {@link ClassReader}.
+     * @return the read value.
      */
     public long readLong(final int offset) {
-        if (offset < 0 || offset + 8 > data.length) {
-            throw new IndexOutOfBoundsException("Offset is out of bounds");
-        }
-        return ((long) (data[offset] & 0xFF) << 56) |
-               ((long) (data[offset + 1] & 0xFF) << 48) |
-               ((long) (data[offset + 2] & 0xFF) << 40) |
-               ((long) (data[offset + 3] & 0xFF) << 32) |
-               ((long) (data[offset + 4] & 0xFF) << 24) |
-               ((data[offset + 5] & 0xFF) << 16) |
-               ((data[offset + 6] & 0xFF) << 8) |
-               (data[offset + 7] & 0xFF);
+        buffer.position(offset);
+        return buffer.getLong();
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        byte[] data = new byte[16];
+        ByteBuffer.wrap(data).putLong(0, 1234567890123456789L);
+        ClassReader classReader = new ClassReader(data);
+        long value = classReader.readLong(0);
+        System.out.println("Read long value: " + value);
     }
 }

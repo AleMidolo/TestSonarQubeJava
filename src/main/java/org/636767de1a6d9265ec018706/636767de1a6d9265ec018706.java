@@ -15,50 +15,34 @@ public class Mappings {
     public Map<String, String> getFields() {
         return fields;
     }
-}
 
-public class MappingDiff {
+    public static Mappings diffStructure(String tableName, Mappings mappings) {
+        // Simulated existing mappings for the current index
+        Mappings existingMappings = new Mappings();
+        existingMappings.addField("id", "integer");
+        existingMappings.addField("name", "string");
+        existingMappings.addField("created_at", "date");
 
-    /**
-     * Restituisce le mappature con i campi che non esistono nelle mappature di input. 
-     * Le mappature di input devono essere le mappature storiche dall'indice corrente. 
-     * Non restituire la configurazione _source per evitare conflitti di aggiornamento dell'indice corrente.
-     */
-    public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulazione delle mappature storiche
-        Mappings historicalMappings = getHistoricalMappings(tableName);
-        
         Mappings diffMappings = new Mappings();
-        
-        for (String field : historicalMappings.getFields().keySet()) {
-            if (!mappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, historicalMappings.getFields().get(field));
+
+        for (String field : mappings.getFields().keySet()) {
+            if (!existingMappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
-        
+
         return diffMappings;
     }
 
-    private Mappings getHistoricalMappings(String tableName) {
-        // Simulazione di recupero delle mappature storiche
-        Mappings historicalMappings = new Mappings();
-        historicalMappings.addField("id", "integer");
-        historicalMappings.addField("name", "string");
-        historicalMappings.addField("email", "string");
-        historicalMappings.addField("created_at", "date");
-        return historicalMappings;
-    }
-
     public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings currentMappings = new Mappings();
-        currentMappings.addField("id", "integer");
-        currentMappings.addField("name", "string");
+        Mappings newMappings = new Mappings();
+        newMappings.addField("email", "string");
+        newMappings.addField("address", "string");
 
-        Mappings diff = mappingDiff.diffStructure("users", currentMappings);
-        System.out.println("Fields missing in current mappings:");
-        for (String field : diff.getFields().keySet()) {
-            System.out.println(field + ": " + diff.getFields().get(field));
+        Mappings result = diffStructure("users", newMappings);
+        System.out.println("New fields that do not exist in the current mappings:");
+        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }

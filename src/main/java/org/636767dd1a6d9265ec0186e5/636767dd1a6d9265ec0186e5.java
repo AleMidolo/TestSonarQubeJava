@@ -1,49 +1,55 @@
 import java.util.ArrayList;
 import java.util.List;
 
-interface IConsumer {
-    void consume(String message);
-}
-
 class Channels {
-    private List<IConsumer> consumers;
+    private List<String> targetChannels;
 
     public Channels() {
-        this.consumers = new ArrayList<>();
+        this.targetChannels = new ArrayList<>();
     }
 
-    public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+    public void addChannel(String channel) {
+        targetChannels.add(channel);
     }
 
-    public List<IConsumer> getConsumers() {
-        return consumers;
+    public List<String> getTargetChannels() {
+        return targetChannels;
     }
+}
+
+interface IConsumer {
+    void consume(String channel);
 }
 
 public class ChannelManager {
+    private Channels channels;
+
+    public ChannelManager(Channels channels) {
+        this.channels = channels;
+    }
+
     /** 
-     * Aggiungi un nuovo canale di destinazione.
+     * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        channels.addConsumer(consumer);
+        for (String channel : channels.getTargetChannels()) {
+            consumer.consume(channel);
+        }
     }
 
     public static void main(String[] args) {
         Channels channels = new Channels();
-        ChannelManager manager = new ChannelManager();
+        channels.addChannel("Sports");
+        channels.addChannel("News");
 
         IConsumer consumer = new IConsumer() {
             @Override
-            public void consume(String message) {
-                System.out.println("Consuming message: " + message);
+            public void consume(String channel) {
+                System.out.println("Consuming channel: " + channel);
             }
         };
 
+        ChannelManager manager = new ChannelManager(channels);
         manager.addNewTarget(channels, consumer);
-        // Test the consumer
-        for (IConsumer c : channels.getConsumers()) {
-            c.consume("Hello, World!");
-        }
     }
 }

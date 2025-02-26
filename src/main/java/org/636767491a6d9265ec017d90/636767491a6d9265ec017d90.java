@@ -1,15 +1,14 @@
-public class ArrayUtils {
-
+public class ArrayReverser {
     /** 
-     * Inverte l'ordine degli elementi nell'intervallo specificato all'interno dell'array fornito.
-     * @param <V> il tipo di elementi nell'array
-     * @param arr l'array
-     * @param from l'indice del primo elemento (inclusivo) all'interno dell'intervallo da invertire
-     * @param to l'indice dell'ultimo elemento (inclusivo) all'interno dell'intervallo da invertire
+     * Reverses the order of the elements in the specified range within the given array.
+     * @param < V > the type of elements in the array
+     * @param arr the array
+     * @param from the index of the first element (inclusive) inside the range to reverse
+     * @param to the index of the last element (inclusive) inside the range to reverse
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {
-            throw new IllegalArgumentException("Invalid indices or array is null");
+            throw new IllegalArgumentException("Invalid range or array");
         }
         
         while (from < to) {

@@ -1,51 +1,70 @@
 import java.util.Stack;
 
-public class StackManipulator {
-    private Stack<String> stack;
+public class FrameStack {
+    private Stack<Object> outputFrameStack;
 
-    public StackManipulator() {
-        this.stack = new Stack<>();
+    public FrameStack() {
+        this.outputFrameStack = new Stack<>();
     }
 
-    /** 
-     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
-     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+    /**
+     * Pops as many abstract types from the output frame stack as described by the given descriptor.
+     * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (int i = args.length() - 1; i >= 0; i--) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each argument type
-                }
+        if (descriptor == null || descriptor.isEmpty()) {
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
+        }
+
+        int count = 0;
+        boolean isMethodDescriptor = descriptor.startsWith("(");
+        
+        if (isMethodDescriptor) {
+            // Method descriptor, count argument types
+            int index = 1; // Start after '('
+            while (descriptor.charAt(index) != ')') {
+                char typeChar = descriptor.charAt(index);
+                count += getTypeSize(typeChar);
+                index += getTypeLength(typeChar);
             }
         } else {
-            // If it's a single type, just pop once
-            if (!stack.isEmpty()) {
-                stack.pop();
+            // Type descriptor, count based on the type
+            count = getTypeSize(descriptor.charAt(0));
+        }
+
+        // Pop the types from the stack
+        for (int i = 0; i < count; i++) {
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
+            } else {
+                throw new IllegalStateException("Not enough elements in the stack to pop");
             }
         }
     }
 
-    public void push(String type) {
-        stack.push(type);
+    private int getTypeSize(char typeChar) {
+        switch (typeChar) {
+            case 'I': // int
+            case 'B': // byte
+            case 'C': // char
+            case 'S': // short
+            case 'Z': // boolean
+            case 'F': // float
+                return 1;
+            case 'J': // long
+            case 'D': // double
+                return 2;
+            case 'L': // object reference
+                return 1; // reference types are treated as 1
+            default:
+                throw new IllegalArgumentException("Unknown type: " + typeChar);
+        }
     }
 
-    public Stack<String> getStack() {
-        return stack;
-    }
-
-    public static void main(String[] args) {
-        StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
-
-        System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
-        System.out.println("Stack after pop: " + sm.getStack());
+    private int getTypeLength(char typeChar) {
+        if (typeChar == 'L') {
+            return 1; // Object reference type
+        }
+        return 1; // All other types are single character
     }
 }

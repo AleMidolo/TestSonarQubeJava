@@ -13,9 +13,9 @@ public class Template {
     }
 
     /** 
-     * Verifica se una variabile di template è un membro di questo template.
-     * @param name nome La variabile di template.
-     * @return true se la variabile di template è un membro del template, altrimenti false.
+     * Ascertain if a template variable is a member of this template.
+     * @param name name The template variable.
+     * @return true if the template variable is a member of the template, otherwise false.
      */
     public final boolean isTemplateVariablePresent(String name) {
         return templateVariables.contains(name);
@@ -23,8 +23,8 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        template.addTemplateVariable("var1");
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var2")); // false
+        template.addTemplateVariable("variable1");
+        System.out.println(template.isTemplateVariablePresent("variable1")); // true
+        System.out.println(template.isTemplateVariablePresent("variable2")); // false
     }
 }

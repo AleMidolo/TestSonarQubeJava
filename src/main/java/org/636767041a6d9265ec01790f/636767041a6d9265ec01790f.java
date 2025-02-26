@@ -1,29 +1,26 @@
+import java.util.Arrays;
+
 public class ArrayConverter {
-    
     /** 
-     * <p>Converte un array di int primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>int</code>
-     * @return un array di <code>Integer</code>, <code>null</code> se l'array di input è nullo
+     * <p>Converts an array of primitive ints to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  an <code>int</code> array
+     * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
             return null;
         }
-        
-        Integer[] result = new Integer[array.length];
-        for (int i = 0; i < array.length; i++) {
-            result[i] = Integer.valueOf(array[i]);
-        }
-        return result;
+        return Arrays.stream(array)
+                     .boxed()
+                     .toArray(Integer[]::new);
     }
 
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
+        System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
         
-        // Print the result
-        for (Integer num : objectArray) {
-            System.out.println(num);
-        }
+        Integer[] nullArray = toObject(null);
+        System.out.println(nullArray); // Output: null
     }
 }

@@ -3,8 +3,8 @@ import java.io.IOException;
 
 public class ByteArrayExample {
     
-    /**
-     * Copia i byte in un {@code byte[]}.
+    /** 
+     * Copies bytes to a  {@code byte[]}.
      */
     public byte[] toByteArray() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

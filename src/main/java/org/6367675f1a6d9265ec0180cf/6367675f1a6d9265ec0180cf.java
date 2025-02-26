@@ -1,17 +1,18 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphType;
+import org.jgrapht.alg.clique.CliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.util.Set;
 
-public class CliqueChecker {
+public class GraphUtils {
 
     /** 
-     * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
-     * @param graph il grafo.
-     * @param vertices i vertici da cui indurre il sottografo.
-     * @return true se il sottografo indotto è un clique.
+     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
+     * @param graph the graph.
+     * @param vertices the vertices to induce the subgraph from.
+     * @return true if the induced subgraph is a clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         if (vertices.size() < 2) {
@@ -25,7 +26,7 @@ public class CliqueChecker {
                 }
             }
         }
-        return true; // All pairs are connected, it's a clique
+        return true; // All pairs are connected, so it's a clique
     }
 
     public static void main(String[] args) {

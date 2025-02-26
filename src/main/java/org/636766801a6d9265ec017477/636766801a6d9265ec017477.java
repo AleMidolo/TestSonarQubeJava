@@ -1,29 +1,28 @@
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.Stack;
 
-public class FileAdder {
+private void addReverse(final InputStream[] files) {
+    Stack<InputStream> stack = new Stack<>();
     
-    /**
-     * Aggiungi i file specificati in ordine inverso.
-     */
-    private void addReverse(final InputStream[] files) {
-        Stack<InputStream> stack = new Stack<>();
-        
-        // Push all files onto the stack
-        for (InputStream file : files) {
-            stack.push(file);
-        }
-        
-        // Pop files from the stack to add them in reverse order
-        while (!stack.isEmpty()) {
-            InputStream fileToAdd = stack.pop();
-            // Add the file (implementation depends on the context)
-            addFile(fileToAdd);
-        }
+    // Push all InputStreams onto the stack
+    for (InputStream file : files) {
+        stack.push(file);
     }
     
-    private void addFile(InputStream file) {
-        // Implementation for adding the file goes here
-        // For example, reading the file or processing it
+    // Pop from the stack to process in reverse order
+    while (!stack.isEmpty()) {
+        InputStream file = stack.pop();
+        try {
+            // Process the file (this is a placeholder for actual file processing logic)
+            processFile(file);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception as needed
+        }
     }
+}
+
+// Placeholder method for processing the InputStream
+private void processFile(InputStream file) throws IOException {
+    // Implement the logic to read from the InputStream and add the file
 }

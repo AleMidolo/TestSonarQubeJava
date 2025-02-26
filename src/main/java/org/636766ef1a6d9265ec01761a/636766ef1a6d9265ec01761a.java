@@ -11,9 +11,9 @@ public class SymbolTable {
     }
 
     /**
-     * Aggiunge un tipo nella tabella dei tipi di questa tabella dei simboli. Non fa nulla se la tabella dei tipi contiene già un tipo simile.
-     * @param value un nome di classe interno.
-     * @return l'indice di un nuovo tipo o di un tipo già esistente con il valore fornito.
+     * Adds a type in the type table of this symbol table. Does nothing if the type table already contains a similar type.
+     * @param value an internal class name.
+     * @return the index of a new or already existing type Symbol with the given value.
      */
     public int addType(final String value) {
         if (typeTable.containsKey(value)) {

@@ -6,29 +6,32 @@ import com.google.protobuf.LinkedBuffer;
 public class MessageSerializer {
 
     /** 
-     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
-     * @return la dimensione del messaggio
+     * Serializes the  {@code message}, prefixed with its length, into an  {@link OutputStream}.
+     * @return the size of the message
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message to a byte array
-        int size = schema.getSerializedSize(message);
-        byte[] serializedMessage = new byte[size];
-        schema.writeTo(message, serializedMessage, 0, size);
-
-        // Write the size of the message
-        out.write(intToByteArray(size));
-
-        // Write the serialized message
-        out.write(serializedMessage);
-
-        return size;
+        byte[] messageBytes = schema.encode(message, buffer);
+        
+        // Get the length of the message
+        int length = messageBytes.length;
+        
+        // Write the length as a prefix
+        out.write(intToByteArray(length));
+        
+        // Write the message bytes
+        out.write(messageBytes);
+        
+        // Return the size of the message
+        return length;
     }
 
+    // Helper method to convert an integer to a byte array
     private static byte[] intToByteArray(int value) {
         return new byte[] {
-            (byte) (value >>> 24),
-            (byte) (value >>> 16),
-            (byte) (value >>> 8),
+            (byte) (value >> 24),
+            (byte) (value >> 16),
+            (byte) (value >> 8),
             (byte) value
         };
     }

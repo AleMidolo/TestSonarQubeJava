@@ -1,16 +1,16 @@
 public class Entity {
     
     /**
-     * @return l'id della riga
+     * @return the row id
      */
     public String id(String entityId) {
-        // Assuming the entityId is the row id we want to return
-        return entityId;
+        // Assuming the row id is simply the entityId prefixed with "row_"
+        return "row_" + entityId;
     }
 
     public static void main(String[] args) {
         Entity entity = new Entity();
-        String rowId = entity.id("12345");
-        System.out.println("L'id della riga è: " + rowId);
+        String result = entity.id("12345");
+        System.out.println(result); // Output: row_12345
     }
 }

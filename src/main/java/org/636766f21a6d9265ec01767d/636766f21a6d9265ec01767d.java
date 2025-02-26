@@ -1,16 +1,17 @@
-public class ObjectConverter {
+public class ObjectToStringConverter {
 
     /** 
-     * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString(); 
+     * Object to String, when null object then null else return toString(); 
      */
     public static String toString(Object object) {
         return object == null ? null : object.toString();
     }
 
     public static void main(String[] args) {
-        Object obj1 = null;
-        Object obj2 = new Object();
-        System.out.println(toString(obj1)); // Output: null
-        System.out.println(toString(obj2)); // Output: java.lang.Object@<hashcode>
+        Object obj1 = new Object();
+        Object obj2 = null;
+
+        System.out.println(toString(obj1)); // Prints the object's string representation
+        System.out.println(toString(obj2)); // Prints null
     }
 }

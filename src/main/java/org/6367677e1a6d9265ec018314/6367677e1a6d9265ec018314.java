@@ -23,14 +23,14 @@ public class CategoryTree {
         this.root = root;
     }
 
-    /**
-     * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
+    /** 
+     * Removes any inactive nodes from the Category tree.
      */
     protected int removeUnusedNodes() {
-        return removeUnusedNodes(root);
+        return removeInactiveNodes(root);
     }
 
-    private int removeUnusedNodes(CategoryNode node) {
+    private int removeInactiveNodes(CategoryNode node) {
         if (node == null) {
             return 0;
         }
@@ -41,7 +41,7 @@ public class CategoryTree {
         Iterator<CategoryNode> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();
-            removedCount += removeUnusedNodes(child);
+            removedCount += removeInactiveNodes(child);
             if (!child.isActive) {
                 iterator.remove();
                 removedCount++;
@@ -57,9 +57,10 @@ public class CategoryTree {
         CategoryNode child1 = new CategoryNode(false);
         CategoryNode child2 = new CategoryNode(true);
         CategoryNode grandChild1 = new CategoryNode(false);
-        child2.addChild(grandChild1);
+        
         root.addChild(child1);
         root.addChild(child2);
+        child2.addChild(grandChild1);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();

@@ -2,12 +2,15 @@ import java.util.Collection;
 
 public class CollectionUtils {
     /** 
-     * Controlla se la Collection fornita contiene l'istanza dell'elemento dato. <p>Imporre che l'istanza fornita sia presente, piuttosto che restituire <code>true</code> per un elemento uguale.
-     * @param collection la Collection da controllare
-     * @param element l'elemento da cercare
-     * @return <code>true</code> se trovato, <code>false</code> altrimenti
+     * Check whether the given Collection contains the given element instance. <p>Enforces the given instance to be present, rather than returning <code>true</code> for an equal element as well.
+     * @param collection the Collection to check
+     * @param element the element to look for
+     * @return <code>true</code> if found, <code>false</code> else
      */
-    public static boolean containsInstance(Collection<?> collection, Object element) {
+    public static boolean containsInstance(Collection collection, Object element) {
+        if (collection == null || element == null) {
+            return false;
+        }
         for (Object obj : collection) {
             if (obj == element) {
                 return true;

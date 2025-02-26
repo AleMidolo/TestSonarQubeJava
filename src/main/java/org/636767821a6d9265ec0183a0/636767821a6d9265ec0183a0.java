@@ -3,7 +3,7 @@ import java.io.File;
 public class FileUtils {
 
     /** 
-     * Elimina il file specificato se esiste 
+     * Delete's the specified file if it exists 
      */
     protected static void deleteFile(String fileName) {
         File file = new File(fileName);

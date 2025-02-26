@@ -1,10 +1,10 @@
 public class StringSplitter {
     
     /** 
-     * Divide una Stringa alla prima occorrenza del delimitatore. Non include il delimitatore nel risultato.
-     * @param toSplit la stringa da dividere
-     * @param delimiter il delimitatore con cui dividere la stringa
-     * @return un array di due elementi con l'indice 0 che rappresenta la parte prima del delimitatore, e l'indice 1 che rappresenta la parte dopo il delimitatore (nessun elemento include il delimitatore); oppure <code>null</code> se il delimitatore non è stato trovato nella Stringa di input fornita
+     * Split a String at the first occurrence of the delimiter. Does not include the delimiter in the result.
+     * @param toSplit the string to split
+     * @param delimiter to split the string up with
+     * @return a two element array with index 0 being before the delimiter, and index 1 being after the delimiter (neither element includes the delimiter); or <code>null</code> if the delimiter wasn't found in the given input String
      */
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
@@ -25,8 +25,8 @@ public class StringSplitter {
     public static void main(String[] args) {
         String[] result = split("Hello,World", ",");
         if (result != null) {
-            System.out.println("Before: " + result[0]);
-            System.out.println("After: " + result[1]);
+            System.out.println("Before delimiter: " + result[0]);
+            System.out.println("After delimiter: " + result[1]);
         } else {
             System.out.println("Delimiter not found.");
         }

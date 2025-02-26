@@ -7,8 +7,8 @@ public class ByteArrayChecker {
     }
 
     /** 
-     * Restituisce true se il corpo è un array di byte
-     * @return true se il corpo è un array di byte
+     * True is the body is a byte array
+     * @return True is the body is a byte array
      */
     public boolean hasBytes() {
         return body instanceof byte[];

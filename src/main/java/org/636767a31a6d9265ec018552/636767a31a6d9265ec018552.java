@@ -11,7 +11,7 @@ public class StringReader {
     }
 
     /** 
-     * Leggi un valore di campo {@code string} dallo stream.
+     * Read a  {@code string} field value from the stream.
      */
     @Override 
     public String readString() throws IOException {
@@ -21,7 +21,7 @@ public class StringReader {
     public static void main(String[] args) {
         StringReader stringReader = new StringReader();
         try {
-            System.out.println("Please enter a string:");
+            System.out.println("Enter a string:");
             String input = stringReader.readString();
             System.out.println("You entered: " + input);
         } catch (IOException e) {

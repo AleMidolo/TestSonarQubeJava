@@ -1,46 +1,43 @@
 import java.util.LinkedList;
+import java.util.Queue;
 
-public class Queue<T> {
-    private LinkedList<T> elements;
+public class QueueRepresentation {
+    private Queue<Object> queue;
 
-    public Queue() {
-        elements = new LinkedList<>();
+    public QueueRepresentation() {
+        this.queue = new LinkedList<>();
     }
 
-    public void enqueue(T element) {
-        elements.addLast(element);
-    }
-
-    public T dequeue() {
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    /**
-     * Restituisce una rappresentazione testuale della coda.
-     * @return una rappresentazione testuale della coda.
+    /** 
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Queue: [");
-        for (int i = 0; i < elements.size(); i++) {
-            sb.append(elements.get(i));
-            if (i < elements.size() - 1) {
-                sb.append(", ");
-            }
+        for (Object item : queue) {
+            sb.append(item.toString()).append(", ");
+        }
+        if (!queue.isEmpty()) {
+            sb.setLength(sb.length() - 2); // Remove the last comma and space
         }
         sb.append("]");
         return sb.toString();
     }
 
+    public void enqueue(Object item) {
+        queue.add(item);
+    }
+
+    public Object dequeue() {
+        return queue.poll();
+    }
+
     public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
+        QueueRepresentation qr = new QueueRepresentation();
+        qr.enqueue("First");
+        qr.enqueue("Second");
+        qr.enqueue("Third");
+        System.out.println(qr.toString()); // Output: Queue: [First, Second, Third]
     }
 }

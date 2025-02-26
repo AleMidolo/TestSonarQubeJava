@@ -1,30 +1,48 @@
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class CustomAppender extends AppenderSkeleton {
+public class LogAppender {
+    private List<Client> connectedClients = new CopyOnWriteArrayList<>();
 
-    @Override
+    /** 
+     * Handles a log event. For this appender, that means writing the message to each connected client.  
+     */
     protected void append(LoggingEvent event) {
-        // Get the message from the logging event
-        String message = event.getRenderedMessage();
-        
-        // Here you would implement the logic to send the message to each connected client
-        // For demonstration purposes, we'll just print it to the console
-        System.out.println("Logging to clients: " + message);
-        
-        // Example: Iterate over connected clients and send the message
-        // for (Client client : connectedClients) {
-        //     client.sendMessage(message);
-        // }
+        String message = event.getMessage();
+        for (Client client : connectedClients) {
+            client.sendMessage(message);
+        }
     }
 
-    @Override
-    public void close() {
-        // Clean up resources if necessary
+    public void addClient(Client client) {
+        connectedClients.add(client);
     }
 
-    @Override
-    public boolean requiresLayout() {
-        return false; // Change to true if you are using a layout
+    public void removeClient(Client client) {
+        connectedClients.remove(client);
+    }
+}
+
+class LoggingEvent {
+    private String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
+class Client {
+    private String clientId;
+
+    public Client(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void sendMessage(String message) {
+        System.out.println("Sending to " + clientId + ": " + message);
     }
 }

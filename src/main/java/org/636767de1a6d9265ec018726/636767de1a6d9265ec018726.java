@@ -4,13 +4,13 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     /** 
-     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
+     * build current profiles segment snapshot search sequence ranges
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
-        // Example logic to create sequence ranges
-        // This should be replaced with actual logic to build the ranges
+        // Example logic to build sequence ranges
+        // This is a placeholder and should be replaced with actual logic
         for (int i = 0; i < 10; i++) {
             SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
             sequenceRanges.add(range);

@@ -1,44 +1,30 @@
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class GraphIterator implements Iterator<Vertex> {
-    private List<Vertex> vertices;
-    private boolean[] visited;
-    private int currentIndex;
+public class Graph {
+    private Set<Integer> visited;
+    private Set<Integer> allVertices;
 
-    public GraphIterator(List<Vertex> vertices) {
-        this.vertices = vertices;
-        this.visited = new boolean[vertices.size()];
-        this.currentIndex = 0;
+    public Graph(Set<Integer> allVertices) {
+        this.allVertices = allVertices;
+        this.visited = new HashSet<>();
     }
 
     /** 
-     * Controlla se esistono vertici non visitati.
-     * @return true se esistono vertici non visitati.
+     * Checks whether there exist unvisited vertices.
+     * @return true if there exist unvisited vertices.
      */
-    @Override
+    @Override 
     public boolean hasNext() {
-        while (currentIndex < vertices.size()) {
-            if (!visited[currentIndex]) {
+        for (Integer vertex : allVertices) {
+            if (!visited.contains(vertex)) {
                 return true;
             }
-            currentIndex++;
         }
         return false;
     }
 
-    @Override
-    public Vertex next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        Vertex vertex = vertices.get(currentIndex);
-        visited[currentIndex] = true;
-        currentIndex++;
-        return vertex;
+    public void visitVertex(int vertex) {
+        visited.add(vertex);
     }
-}
-
-class Vertex {
-    // Vertex implementation
 }

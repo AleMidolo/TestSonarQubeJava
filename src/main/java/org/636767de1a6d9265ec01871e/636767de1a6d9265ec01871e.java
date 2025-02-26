@@ -1,13 +1,14 @@
-public class ShardingChecker {
+public class ShardingKeyChecker {
 
     /**
-     * @param modelName nome del modello dell'entità
-     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
+     * @param modelName model name of the entity
+     * @throws IllegalStateException if sharding key indices are not continuous
      */
     private void check(String modelName) throws IllegalStateException {
-        // Simulated sharding key indices for demonstration purposes
-        int[] shardingKeyIndices = {0, 1, 2, 4}; // Example of non-continuous indices
+        // Example of sharding key indices for demonstration
+        int[] shardingKeyIndices = {0, 1, 2, 4}; // Non-continuous example
 
+        // Check for continuity in sharding key indices
         for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
             if (shardingKeyIndices[i] + 1 != shardingKeyIndices[i + 1]) {
                 throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
@@ -16,7 +17,7 @@ public class ShardingChecker {
     }
 
     public static void main(String[] args) {
-        ShardingChecker checker = new ShardingChecker();
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
             checker.check("ExampleModel");
         } catch (IllegalStateException e) {

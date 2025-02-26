@@ -1,14 +1,14 @@
 public class BooleanUtils {
 
     /** 
-     * <p>Controlla se un valore <code>Boolean</code> è <i>non</i> <code>true</code>, gestendo <code>null</code> restituendo <code>true</code>.</p> 
+     * <p>Checks if a <code>Boolean</code> value is <i>not</i> <code>true</code>, handling <code>null</code> by returning <code>true</code>.</p> 
      * <pre> 
-     * BooleanUtils.isNotTrue(Boolean.TRUE)  = false 
-     * BooleanUtils.isNotTrue(Boolean.FALSE) = true 
-     * BooleanUtils.isNotTrue(null)          = true 
+     *  BooleanUtils.isNotTrue(Boolean.TRUE)  = false 
+     *  BooleanUtils.isNotTrue(Boolean.FALSE) = true 
+     *  BooleanUtils.isNotTrue(null)          = true 
      * </pre>
-     * @param bool  il booleano da controllare, null restituisce <code>true</code>
-     * @return <code>true</code> se l'input è null o false
+     * @param bool  the boolean to check, null returns <code>true</code>
+     * @return <code>true</code> if the input is null or false
      * @since 2.3
      */
     public static boolean isNotTrue(Boolean bool) {
@@ -16,8 +16,8 @@ public class BooleanUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(isNotTrue(Boolean.TRUE));  // false
-        System.out.println(isNotTrue(Boolean.FALSE)); // true
-        System.out.println(isNotTrue(null));          // true
+        System.out.println(isNotTrue(Boolean.TRUE));  // Output: false
+        System.out.println(isNotTrue(Boolean.FALSE)); // Output: true
+        System.out.println(isNotTrue(null));          // Output: true
     }
 }

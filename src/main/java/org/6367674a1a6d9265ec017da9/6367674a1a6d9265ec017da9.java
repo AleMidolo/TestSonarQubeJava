@@ -14,6 +14,11 @@ class DoublyLinkedList<E> {
     private ListNode<E> head;
     private ListNode<E> tail;
 
+    public DoublyLinkedList() {
+        head = null;
+        tail = null;
+    }
+
     public void addListNode(ListNode<E> node) {
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -53,14 +58,15 @@ class DoublyLinkedList<E> {
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         if (list == null || list.head == null) {
-            return;
+            return; // Nothing to move
         }
+        
         ListNode<E> current = list.head;
         while (current != null) {
-            ListNode<E> nextNode = current.next;
-            this.addListNode(current);
-            list.removeListNode(current);
-            current = nextNode;
+            ListNode<E> nextNode = current.next; // Store next node
+            list.removeListNode(current); // Remove from the original list
+            this.addListNode(current); // Add to this list
+            current = nextNode; // Move to the next node
         }
     }
 }

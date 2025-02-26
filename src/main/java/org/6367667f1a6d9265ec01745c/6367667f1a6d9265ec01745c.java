@@ -1,12 +1,11 @@
 import java.io.File;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.Vector;
 
 public class ClassPathAdder {
 
     /** 
-     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
+     * Add all the jar files in a dir to the classpath, represented as a Vector of URLs.
      */
     @SuppressWarnings("unchecked") 
     public static void addToClassPath(Vector<URL> cpV, String dir) {
@@ -17,20 +16,20 @@ public class ClassPathAdder {
                 for (File file : files) {
                     try {
                         cpV.add(file.toURI().toURL());
-                    } catch (MalformedURLException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
         } else {
-            System.out.println("Directory does not exist or is not a directory: " + dir);
+            System.out.println("The specified directory does not exist or is not a directory.");
         }
     }
 
     public static void main(String[] args) {
-        Vector<URL> classpath = new Vector<>();
-        addToClassPath(classpath, "path/to/your/jar/directory");
-        // Print the classpath URLs
-        classpath.forEach(System.out::println);
+        Vector<URL> classpathVector = new Vector<>();
+        addToClassPath(classpathVector, "path/to/your/jar/directory");
+        // Print the URLs added to the classpath
+        classpathVector.forEach(System.out::println);
     }
 }

@@ -1,35 +1,35 @@
-public class ByteFinder {
+public class ByteSearcher {
     
     private byte[] buffer;
 
-    public ByteFinder(byte[] buffer) {
+    public ByteSearcher(byte[] buffer) {
         this.buffer = buffer;
     }
 
     /** 
-     * Cerca un byte di valore specificato nel <code>buffer</code>, partendo dalla <code>posizione</code> specificata.
-     * @param value Il valore da cercare.
-     * @param pos   La posizione di partenza per la ricerca.
-     * @return La posizione del byte trovato, contando dall'inizio del <code>buffer</code>, oppure <code>-1</code> se non trovato.
+     * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
+     * @param value The value to find.
+     * @param pos   The starting position for searching.
+     * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
      */
     protected int findByte(byte value, int pos) {
         if (pos < 0 || pos >= buffer.length) {
-            return -1; // posizione non valida
+            return -1; // Invalid starting position
         }
         
         for (int i = pos; i < buffer.length; i++) {
             if (buffer[i] == value) {
-                return i; // byte trovato
+                return i; // Return the position of the found byte
             }
         }
         
-        return -1; // byte non trovato
+        return -1; // Byte not found
     }
 
     public static void main(String[] args) {
-        byte[] data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        ByteFinder finder = new ByteFinder(data);
-        int position = finder.findByte((byte) 5, 0);
-        System.out.println("Position of byte: " + position); // Output: Position of byte: 4
+        byte[] data = {1, 2, 3, 4, 5, 2};
+        ByteSearcher searcher = new ByteSearcher(data);
+        int position = searcher.findByte((byte) 2, 0);
+        System.out.println("Position of byte: " + position); // Output: Position of byte: 1
     }
 }

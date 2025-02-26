@@ -1,23 +1,24 @@
-public class ConfigurationInitializer {
+import java.io.File;
 
-    /**
-     * inizializza la configurazione, ad esempio controlla il percorso di distribuzione
+public class ConfigInitializer {
+
+    /** 
+     * initialize config, such as check dist path
      */
     public void init() {
-        String distributionPath = System.getProperty("distribution.path");
+        String distPath = "path/to/dist"; // Specify your distribution path here
+        File distDirectory = new File(distPath);
         
-        if (distributionPath == null || distributionPath.isEmpty()) {
-            throw new IllegalArgumentException("Il percorso di distribuzione non è stato configurato.");
+        if (!distDirectory.exists()) {
+            System.out.println("Distribution path does not exist: " + distPath);
+            // You can add code here to create the directory or handle the error
+        } else {
+            System.out.println("Distribution path is valid: " + distPath);
         }
-        
-        // Logica per inizializzare la configurazione
-        System.out.println("Inizializzazione della configurazione con il percorso di distribuzione: " + distributionPath);
-        
-        // Ulteriori operazioni di inizializzazione possono essere aggiunte qui
     }
 
     public static void main(String[] args) {
-        ConfigurationInitializer initializer = new ConfigurationInitializer();
-        initializer.init();
+        ConfigInitializer configInitializer = new ConfigInitializer();
+        configInitializer.init();
     }
 }

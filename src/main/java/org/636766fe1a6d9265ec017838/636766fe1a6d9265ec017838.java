@@ -1,11 +1,11 @@
 public class CharacterArrayConverter {
 
     /** 
-     * <p>Converte un array di oggetti Character in primitivi.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Character</code>, può essere <code>null</code>
-     * @return un array di <code>char</code>, <code>null</code> se l'array di input è null
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Converts an array of object Characters to primitives.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>Character</code> array, may be <code>null</code>
+     * @return a <code>char</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
     public static char[] toPrimitive(final Character[] array) {
         if (array == null) {
@@ -14,7 +14,7 @@ public class CharacterArrayConverter {
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Element at index " + i + " is null");
+                throw new NullPointerException("Array content is null at index " + i);
             }
             result[i] = array[i];
         }

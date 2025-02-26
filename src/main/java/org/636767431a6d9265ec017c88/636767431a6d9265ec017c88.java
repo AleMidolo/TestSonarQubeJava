@@ -6,17 +6,18 @@ import java.util.Map;
 public class LowerBoundCalculator<K> {
 
     /** 
-     * Trova un limite inferiore massimo per ogni chiave.
-     * @param keys lista delle chiavi.
-     * @return i limiti inferiori delle chiavi calcolati.
+     * Finds a maximum lower bound for every key.
+     * @param keys list of keys.
+     * @return the computed key lower bounds.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         Map<K, Integer> lowerBoundsMap = new HashMap<>();
         List<Integer> lowerBounds = new ArrayList<>();
 
         for (K key : keys) {
-            // Simuliamo il calcolo di un limite inferiore per ogni chiave
-            int lowerBound = calculateLowerBound(key);
+            // Assuming some logic to compute the lower bound for each key
+            // Here we just use the hash code as a placeholder for the lower bound
+            int lowerBound = key.hashCode(); // Replace with actual logic
             lowerBoundsMap.put(key, lowerBound);
         }
 
@@ -25,11 +26,5 @@ public class LowerBoundCalculator<K> {
         }
 
         return lowerBounds;
-    }
-
-    private int calculateLowerBound(K key) {
-        // Logica per calcolare il limite inferiore per la chiave
-        // Qui si può implementare la logica specifica per il calcolo
-        return key.hashCode() % 100; // Esempio di calcolo
     }
 }

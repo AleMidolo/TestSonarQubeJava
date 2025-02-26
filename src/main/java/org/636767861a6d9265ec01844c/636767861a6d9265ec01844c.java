@@ -9,8 +9,8 @@ public class AppenderManager {
         this.appenders = new ArrayList<>();
     }
 
-    /** 
-     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.  
+    /**
+     * Remove the appender with the name passed as parameter from the list of appenders.  
      */
     public void removeAppender(String name) {
         Iterator<String> iterator = appenders.iterator();
@@ -23,11 +23,22 @@ public class AppenderManager {
         }
     }
 
+    // Method to add appenders for testing purposes
     public void addAppender(String name) {
         appenders.add(name);
     }
 
+    // Method to get the list of appenders for testing purposes
     public List<String> getAppenders() {
         return appenders;
+    }
+
+    public static void main(String[] args) {
+        AppenderManager manager = new AppenderManager();
+        manager.addAppender("ConsoleAppender");
+        manager.addAppender("FileAppender");
+        System.out.println("Before removal: " + manager.getAppenders());
+        manager.removeAppender("ConsoleAppender");
+        System.out.println("After removal: " + manager.getAppenders());
     }
 }

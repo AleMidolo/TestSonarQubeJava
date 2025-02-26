@@ -1,10 +1,10 @@
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-public class Graph<V> {
-    private final Iterator<V> vertexIterator;
+public class VertexProvider<V> {
+    
+    private Iterator<V> vertexIterator;
 
-    public Graph(Iterator<V> vertexIterator) {
+    public VertexProvider(Iterator<V> vertexIterator) {
         this.vertexIterator = vertexIterator;
     }
 
@@ -12,11 +12,11 @@ public class Graph<V> {
      * {@inheritDoc}
      */
     @Override 
-    protected V fornireProssimoVertice() {
+    protected V provideNextVertex() {
         if (vertexIterator.hasNext()) {
             return vertexIterator.next();
         } else {
-            throw new NoSuchElementException("No more vertices available.");
+            return null; // or throw an exception based on your design
         }
     }
 }

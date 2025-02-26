@@ -1,32 +1,24 @@
 import java.util.Arrays;
 
-public class ByteArrayExpander {
-    private byte[] byteArray;
-    private int currentSize;
+public class ByteVector {
+    private byte[] data;
+    private int capacity;
 
-    public ByteArrayExpander(int initialSize) {
-        this.byteArray = new byte[initialSize];
-        this.currentSize = initialSize;
+    public ByteVector(int initialCapacity) {
+        this.capacity = initialCapacity;
+        this.data = new byte[initialCapacity];
     }
 
-    /**
-     * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
-     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+    /** 
+     * Enlarges this byte vector so that it can receive 'size' more bytes.
+     * @param size number of additional bytes that this byte vector should be able to receive.
      */
     private void enlarge(final int size) {
         if (size < 0) {
             throw new IllegalArgumentException("Size must be non-negative");
         }
-        int newSize = currentSize + size;
-        byteArray = Arrays.copyOf(byteArray, newSize);
-        currentSize = newSize;
-    }
-
-    public byte[] getByteArray() {
-        return byteArray;
-    }
-
-    public int getCurrentSize() {
-        return currentSize;
+        int newCapacity = capacity + size;
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 }

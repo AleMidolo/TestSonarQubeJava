@@ -9,7 +9,7 @@ public class VarintReader {
     }
 
     /** 
-     * Leggi un Varint "raw" dallo stream.
+     * Read a raw Varint from the stream.
      */
     public long readRawVarint64() throws IOException {
         long result = 0;
@@ -17,7 +17,7 @@ public class VarintReader {
         while (true) {
             int b = input.read();
             if (b == -1) {
-                throw new IOException("End of stream reached before reading Varint");
+                throw new IOException("End of stream reached");
             }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {

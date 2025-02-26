@@ -13,7 +13,7 @@ public class LinkedList<E> {
     private ListNodeImpl<E> tail;
 
     /** 
-     * Rimuove il nodo non nullo {@code node} dalla lista. 
+     * Remove the non null  {@code node} from the list. 
      */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {

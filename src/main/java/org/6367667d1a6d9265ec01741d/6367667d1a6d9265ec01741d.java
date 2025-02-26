@@ -4,7 +4,7 @@ import java.lang.reflect.TypeVariable;
 public class TypeResolver {
 
     /** 
-     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
+     * Resolves the first bound for the {@code typeVariable}, returning {@code Unknown.class} if none can be resolved.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();

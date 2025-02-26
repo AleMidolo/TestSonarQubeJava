@@ -1,44 +1,32 @@
 import java.util.function.Predicate;
 
 class Node {
-    // Assume Node class has necessary properties and methods
+    // Node implementation
 }
 
 class OuterFaceCirculator {
-    private Node currentNode;
-
-    public OuterFaceCirculator(Node start) {
-        this.currentNode = start;
-    }
-
-    public Node getCurrentNode() {
-        return currentNode;
-    }
-
-    public void moveToNext() {
-        // Logic to move to the next node in the outer face
-    }
+    // OuterFaceCirculator implementation
 }
 
-public class GraphTraversal {
-
-    /**
-     * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
-     * @param predicate la condizione che il nodo desiderato deve soddisfare
-     * @param start il nodo da cui iniziare la ricerca
-     * @param stop il nodo con cui terminare la ricerca
-     * @param dir la direzione da cui iniziare la traversata
-     * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
-     */
+public class Graph {
+    
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        
-        while (true) {
-            Node currentNode = circulator.getCurrentNode();
-            if (currentNode.equals(stop) || predicate.test(currentNode)) {
-                return circulator;
+        OuterFaceCirculator circulator = new OuterFaceCirculator();
+        Node currentNode = start;
+
+        // Assuming we have a way to get the next node in the specified direction
+        while (!currentNode.equals(stop)) {
+            if (predicate.test(currentNode)) {
+                return circulator; // Return circulator to the node satisfying the predicate
             }
-            circulator.moveToNext();
+            currentNode = getNextNode(currentNode, dir); // Method to get the next node
         }
+        
+        return circulator; // Return circulator to the stop node if no node satisfies the predicate
+    }
+
+    private Node getNextNode(Node currentNode, int dir) {
+        // Logic to get the next node based on the direction
+        return new Node(); // Placeholder for the actual next node
     }
 }

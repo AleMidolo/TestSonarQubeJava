@@ -1,27 +1,23 @@
 import java.util.function.Supplier;
 
-public class StringSupplier {
-    /** 
-     * Crea un fornitore di stringhe che restituisce stringhe uniche. Le stringhe restituite sono semplicemente interi che partono da start.
-     * @param start da dove iniziare la sequenza
-     * @return un fornitore di stringhe
-     */
-    @SuppressWarnings("unchecked") 
-    public static Supplier<String> createStringSupplier(int start) {
-        return new Supplier<String>() {
-            private int current = start;
+public class UniqueStringSupplier {
 
-            @Override
-            public String get() {
-                return String.valueOf(current++);
-            }
-        };
+    /**
+     * Create a string supplier which returns unique strings. The returns strings are simply integers starting from start.
+     * @param start where to start the sequence
+     * @return a string supplier
+     */
+    @SuppressWarnings("unchecked")
+    public static Supplier<String> createStringSupplier(int start) {
+        final int[] current = {start}; // Using an array to hold the mutable integer
+
+        return () -> String.valueOf(current[0]++); // Return the current value and increment
     }
 
     public static void main(String[] args) {
-        Supplier<String> stringSupplier = createStringSupplier(5);
-        System.out.println(stringSupplier.get()); // Output: 5
-        System.out.println(stringSupplier.get()); // Output: 6
-        System.out.println(stringSupplier.get()); // Output: 7
+        Supplier<String> supplier = createStringSupplier(5);
+        System.out.println(supplier.get()); // Outputs: 5
+        System.out.println(supplier.get()); // Outputs: 6
+        System.out.println(supplier.get()); // Outputs: 7
     }
 }

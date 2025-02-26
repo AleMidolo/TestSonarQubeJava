@@ -3,32 +3,27 @@ import java.util.Set;
 
 public class VertexMover {
 
-    /**
-     * Sposta tutti i vertici dal bucket con etichetta {@code minLabel} al bucket con etichetta 0. 
-     * Pulisce il bucket con etichetta {@code minLabel}. Aggiorna le etichette di conseguenza.
-     * @param bucketsByLabel i buckets in cui sono memorizzati i vertici
-     * @param labels le etichette dei vertici
-     * @param minLabel il valore minimo del bucket non vuoto
+    /** 
+     * Moves all vertices from the bucket with label  {@code minLabel} to the bucket with label 0.
+     * Clears the bucket with label  {@code minLabel}. Updates the labeling accordingly.
+     * @param bucketsByLabel the buckets vertices are stored in
+     * @param labels the labels of the vertices
+     * @param minLabel the minimum value of the non-empty bucket
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Controlla se il bucket con etichetta minLabel è vuoto
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size() || bucketsByLabel.get(minLabel).isEmpty()) {
-            return; // Non fare nulla se il bucket è vuoto o l'etichetta è fuori range
-        }
-
-        // Ottieni il bucket con etichetta minLabel
+        // Get the bucket with the minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
         
-        // Sposta i vertici dal bucket minLabel al bucket 0
+        // Move all vertices from minLabel bucket to the bucket with label 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
         zeroLabelBucket.addAll(minLabelBucket);
         
-        // Aggiorna le etichette dei vertici spostati
+        // Update the labels of the vertices moved
         for (Integer vertex : minLabelBucket) {
-            labels.set(vertex, 0); // Aggiorna l'etichetta del vertice a 0
+            labels.set(vertex, 0); // Update the label to 0
         }
-
-        // Pulisci il bucket con etichetta minLabel
+        
+        // Clear the bucket with minLabel
         minLabelBucket.clear();
     }
 }

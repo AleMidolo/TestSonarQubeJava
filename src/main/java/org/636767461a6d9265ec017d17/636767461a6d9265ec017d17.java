@@ -1,41 +1,24 @@
-public class DotIdentifierDecompressor {
+public class StringUnescaper {
 
     /** 
-     * Decomprime un identificatore di stringa DOT.
-     * @param input l'input
-     * @return l'output decompresso
+     * Unescape a string DOT identifier.
+     * @param input the input
+     * @return the unescaped output
      */
     private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
-        
         StringBuilder output = new StringBuilder();
-        boolean escape = false;
+        boolean isEscaped = false;
 
         for (char c : input.toCharArray()) {
-            if (escape) {
-                switch (c) {
-                    case 'n':
-                        output.append('\n');
-                        break;
-                    case 't':
-                        output.append('\t');
-                        break;
-                    case '\\':
-                        output.append('\\');
-                        break;
-                    case '"':
-                        output.append('"');
-                        break;
-                    default:
-                        output.append(c);
-                        break;
-                }
-                escape = false;
+            if (isEscaped) {
+                output.append(c);
+                isEscaped = false;
             } else {
                 if (c == '\\') {
-                    escape = true;
+                    isEscaped = true;
                 } else {
                     output.append(c);
                 }
@@ -46,9 +29,9 @@ public class DotIdentifierDecompressor {
     }
 
     public static void main(String[] args) {
-        DotIdentifierDecompressor decompressor = new DotIdentifierDecompressor();
-        String input = "Hello\\nWorld\\t!";
-        String output = decompressor.unescapeId(input);
-        System.out.println(output);
+        StringUnescaper unescaper = new StringUnescaper();
+        String input = "some\\ identifier\\ with\\ escapes";
+        String output = unescaper.unescapeId(input);
+        System.out.println(output); // Output: some identifier with escapes
     }
 }

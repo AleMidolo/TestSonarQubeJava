@@ -2,20 +2,20 @@ public class CharUtils {
     private static final String[] CACHE = new String[128];
 
     static {
-        for (int i = 0; i < CACHE.length; i++) {
-            CACHE[i] = String.valueOf((char) i);
+        for (char c = 0; c < CACHE.length; c++) {
+            CACHE[c] = String.valueOf(c);
         }
     }
 
     /**
-     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p> 
-     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p> 
+     * <p>Converts the character to a String that contains the one character.</p>
+     * <p>For ASCII 7 bit characters, this uses a cache that will return the same String object each time.</p>
      * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  il carattere da convertire
-     * @return una Stringa contenente il carattere specificato
+     * @param ch  the character to convert
+     * @return a String containing the one specified character
      */
     public static String toString(final char ch) {
-        if (ch >= 0 && ch < CACHE.length) {
+        if (ch < 128) {
             return CACHE[ch];
         }
         return String.valueOf(ch);

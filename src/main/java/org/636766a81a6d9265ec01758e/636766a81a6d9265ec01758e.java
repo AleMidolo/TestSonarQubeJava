@@ -2,8 +2,16 @@ import java.util.Arrays;
 
 public class PrimeCapacity {
 
+    /**
+     * Returns a prime number which is <code>&gt;= desiredCapacity</code> and very close to <code>desiredCapacity</code> (within 11% if <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity the capacity desired by the user.
+     * @return the capacity which should be used for a hashtable.
+     */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity < 2) {
+        if (desiredCapacity <= 1) {
+            return 2;
+        }
+        if (desiredCapacity == 2) {
             return 2;
         }
 
@@ -17,7 +25,7 @@ public class PrimeCapacity {
                 return i;
             }
         }
-        return upperLimit; // Fallback, should not reach here for valid input
+        return upperLimit; // Fallback, should not reach here
     }
 
     private static boolean isPrime(int number) {
@@ -39,7 +47,7 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(10)); // Example usage
         System.out.println(nextPrime(1000)); // Example usage
+        System.out.println(nextPrime(15));   // Example usage
     }
 }

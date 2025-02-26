@@ -1,14 +1,14 @@
 public class ArrayDetailAppender {
 
-    /** 
-     * <p>Aggiunge al <code>toString</code> i dettagli di un array di <code>byte</code>.</p>
-     * @param buffer  il <code>StringBuffer</code> da popolare
-     * @param fieldName  il nome del campo, tipicamente non utilizzato poiché già aggiunto
-     * @param array  l'array da aggiungere al <code>toString</code>, non <code>null</code>
+    /**
+     * <p>Append to the <code>toString</code> the detail of a <code>byte</code> array.</p>
+     * @param buffer  the <code>StringBuffer</code> to populate
+     * @param fieldName  the field name, typically not used as already appended
+     * @param array  the array to add to the <code>toString</code>, not <code>null</code>
      */
     protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array) {
         if (array == null) {
-            throw new IllegalArgumentException("Array cannot be null");
+            throw new IllegalArgumentException("Array must not be null");
         }
         buffer.append(fieldName).append(": [");
         for (int i = 0; i < array.length; i++) {

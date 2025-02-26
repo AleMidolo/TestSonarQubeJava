@@ -1,20 +1,30 @@
-public class TemplateEncoder {
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
+public class TemplateEncoder {
+    
     /** 
-     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
-     * @param s la stringa con zero o più nomi di parametri di template
-     * @return la stringa con i nomi di parametri di template codificati.
+     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+     * @param s the string with zero or more template parameters names
+     * @return the string with encoded template parameters names.
      */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
-        return s.replace("{", "%7B").replace("}", "%7D");
+        try {
+            // Encode the string using UTF-8 and replace '{' and '}' with their percent-encoded values
+            String encoded = URLEncoder.encode(s, "UTF-8");
+            encoded = encoded.replace("+", "%20"); // Replace spaces encoded as '+' with '%20'
+            return encoded.replace("%7B", "{").replace("%7D", "}");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
     }
 
     public static void main(String[] args) {
-        String input = "Hello {name}, welcome to {place}!";
-        String encoded = encodeTemplateNames(input);
-        System.out.println(encoded); // Output: Hello %7Bname%7D, welcome to %7Bplace%7D!
+        String testString = "Hello {name}, welcome to {place}!";
+        String encodedString = encodeTemplateNames(testString);
+        System.out.println(encodedString);
     }
 }

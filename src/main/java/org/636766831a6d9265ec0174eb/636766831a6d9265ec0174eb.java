@@ -1,9 +1,9 @@
 import java.io.File;
 
-public class FileManager {
-    
-    /**
-     * Aggiungi i file specificati in ordine inverso.
+public class FileAdder {
+
+    /** 
+     * Add the specified files in reverse order.
      */
     private void addReverse(final File[] files) {
         if (files == null || files.length == 0) {
@@ -14,15 +14,15 @@ public class FileManager {
             addFile(files[i]);
         }
     }
-    
+
     private void addFile(File file) {
-        // Implementazione per aggiungere il file
-        System.out.println("Aggiunto file: " + file.getName());
+        // Implementation for adding a file
+        System.out.println("Adding file: " + file.getName());
     }
-    
+
     public static void main(String[] args) {
-        FileManager fileManager = new FileManager();
+        FileAdder fileAdder = new FileAdder();
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        fileManager.addReverse(files);
+        fileAdder.addReverse(files);
     }
 }

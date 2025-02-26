@@ -1,25 +1,25 @@
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PathSegmentDecoder {
 
     /** 
-     * Decodifica il componente di percorso di un URI come segmenti di percorso.
-     * @param u l'URI. Se il componente di percorso è un componente di percorso assoluto, il '/' iniziale viene ignorato e non è considerato un delimitatore di un segmento di percorso.
-     * @param decode vero se i segmenti di percorso del componente di percorso devono essere in forma decodificata.
-     * @return la lista dei segmenti di percorso.
+     * Decode the path component of a URI as path segments.
+     * @param u the URI. If the path component is an absolute path component then the leading '/' is ignored and is not considered a delimiter of a path segment.
+     * @param decode true if the path segments of the path component should be in decoded form.
+     * @return the list of path segments.
      */
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
         
-        // Ignora il primo '/' se presente
+        // Remove leading '/' if it's an absolute path
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
         
+        // Split the path into segments
         String[] pathSegments = path.split("/");
         
         for (String segment : pathSegments) {
@@ -31,16 +31,16 @@ public class PathSegmentDecoder {
         
         return segments;
     }
-    
+
     private static String decodeSegment(String segment) {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (Exception e) {
-            // In caso di errore nel decoding, restituisce il segmento originale
-            return segment;
+            // Handle exception (e.g., log it)
+            return segment; // Return the original segment if decoding fails
         }
     }
-    
+
     public static class PathSegmentImpl {
         private String segment;
 

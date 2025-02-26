@@ -1,27 +1,33 @@
+import java.util.Properties;
+
 public class FieldChecker {
+    private Properties properties;
 
-    private Fields storedFields;
+    public FieldChecker(Properties properties) {
+        this.properties = properties;
+    }
 
-    /**
-     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+    /** 
+     * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
-        if (storedFields == null) {
-            return false;
+        for (String field : fields.getFieldNames()) {
+            if (!properties.containsKey(field)) {
+                return false;
+            }
         }
-        return storedFields.equals(fields);
+        return true;
+    }
+}
+
+class Fields {
+    private String[] fieldNames;
+
+    public Fields(String[] fieldNames) {
+        this.fieldNames = fieldNames;
     }
 
-    // Assuming Fields class has been defined elsewhere
-    public void setStoredFields(Fields fields) {
-        this.storedFields = fields;
-    }
-    
-    public static void main(String[] args) {
-        FieldChecker checker = new FieldChecker();
-        // Example usage
-        Fields fields = new Fields(); // Assuming Fields has a default constructor
-        checker.setStoredFields(fields);
-        System.out.println(checker.containsAllFields(fields)); // Should print true
+    public String[] getFieldNames() {
+        return fieldNames;
     }
 }

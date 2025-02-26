@@ -1,51 +1,54 @@
 import java.util.Stack;
 
-public class DescriptorPopper {
-    private Stack<String> stack;
+public class FrameStack {
+    private Stack<Object> outputFrameStack;
 
-    public DescriptorPopper() {
-        this.stack = new Stack<>();
+    public FrameStack() {
+        this.outputFrameStack = new Stack<>();
     }
 
     /**
-     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
-     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+     * Pops as many abstract types from the output frame stack as described by the given descriptor.
+     * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (char arg : args.toCharArray()) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the corresponding argument type from the stack
-                }
-            }
-        } else {
-            // If it's a single type descriptor, just pop it from the stack
-            if (!stack.isEmpty()) {
-                stack.pop();
+        int count = getTypeCount(descriptor);
+        for (int i = 0; i < count; i++) {
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
+            } else {
+                throw new IllegalStateException("Not enough elements in the stack to pop.");
             }
         }
     }
 
-    // Method to push types onto the stack for testing purposes
-    public void push(String type) {
-        stack.push(type);
+    private int getTypeCount(String descriptor) {
+        // This method should parse the descriptor and return the number of types to pop.
+        // For simplicity, let's assume a basic implementation that counts the number of argument types.
+        int count = 0;
+        boolean inArray = false;
+        for (char c : descriptor.toCharArray()) {
+            if (c == '(') {
+                inArray = true; // Start of method arguments
+            } else if (c == ')') {
+                inArray = false; // End of method arguments
+            } else if (inArray) {
+                if (c == 'L') {
+                    // Object type, consume until the next ';'
+                    count++;
+                    while (c != ';') {
+                        c = descriptor.charAt(++count);
+                    }
+                } else {
+                    // Primitive type
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
-    // Method to view the current stack for testing purposes
-    public Stack<String> getStack() {
-        return stack;
-    }
-
-    public static void main(String[] args) {
-        DescriptorPopper popper = new DescriptorPopper();
-        popper.push("I"); // Push an int type
-        popper.push("Ljava/lang/String;"); // Push a String type
-        System.out.println("Stack before pop: " + popper.getStack());
-        popper.pop("(I)V"); // Pop types according to the descriptor
-        System.out.println("Stack after pop: " + popper.getStack());
+    public void push(Object item) {
+        outputFrameStack.push(item);
     }
 }

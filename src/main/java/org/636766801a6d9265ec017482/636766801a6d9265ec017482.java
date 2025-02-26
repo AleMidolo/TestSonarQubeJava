@@ -5,15 +5,19 @@ import java.io.InputStream;
 public class ClassFileBuffer {
     private byte[] buffer;
 
-    /**
-     * Svuota e riempie il buffer di questo {@code ClassFileBuffer} con il flusso di byte fornito. 
-     * Il puntatore di lettura viene ripristinato all'inizio dell'array di byte.
+    public ClassFileBuffer() {
+        this.buffer = new byte[0];
+    }
+
+    /** 
+     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
+     * The read pointer is reset to the start of the byte array.
      */
     public void readFrom(final InputStream in) throws IOException {
-        if (in == null) {
-            throw new IllegalArgumentException("InputStream cannot be null");
-        }
+        // Clear the existing buffer
+        this.buffer = new byte[0];
 
+        // Use ByteArrayOutputStream to read the InputStream
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] tempBuffer = new byte[1024];
         int bytesRead;
@@ -24,6 +28,6 @@ public class ClassFileBuffer {
         }
 
         // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
-        buffer = byteArrayOutputStream.toByteArray();
+        this.buffer = byteArrayOutputStream.toByteArray();
     }
 }

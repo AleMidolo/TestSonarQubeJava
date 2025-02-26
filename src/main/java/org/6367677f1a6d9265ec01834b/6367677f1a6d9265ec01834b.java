@@ -17,15 +17,12 @@ public class LoggingBuffer {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // If the buffer is full, the event is silently discarded
+        // 如果缓冲区已满，事件将被静默丢弃
     }
 
-    // Additional methods for demonstration purposes
-    public int size() {
-        return buffer.size();
-    }
+    // 其他可能的方法，例如获取缓冲区内容等
+}
 
-    public static class LoggingEvent {
-        // Implementation of LoggingEvent class
-    }
+class LoggingEvent {
+    // 假设 LoggingEvent 类的实现
 }

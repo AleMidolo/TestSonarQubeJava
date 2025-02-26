@@ -9,7 +9,7 @@ public class LoggerFormatter {
     public String format(LoggingEvent event) {
         StringBuilder formattedString = new StringBuilder();
         
-        // Example of formatting the log message
+        // Example of formatting: timestamp, log level, message
         formattedString.append("[")
                        .append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp())))
                        .append("] ")

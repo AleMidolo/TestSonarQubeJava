@@ -1,4 +1,5 @@
-public class ArrayComparer {
+public class ArrayComparator {
+    
     /** 
      * 比较数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节。
      * @param a     第一个要比较的数组。
@@ -20,10 +21,11 @@ public class ArrayComparer {
 
     public static void main(String[] args) {
         byte[] array1 = {1, 2, 3, 4, 5};
-        byte[] array2 = {1, 2, 3, 4, 6};
-        int count = 4;
+        byte[] array2 = {1, 2, 3, 4, 5};
+        byte[] array3 = {1, 2, 3, 0, 5};
 
-        boolean result = arrayequals(array1, array2, count);
-        System.out.println("Arrays are equal: " + result);
+        System.out.println(arrayequals(array1, array2, 5)); // true
+        System.out.println(arrayequals(array1, array3, 3)); // true
+        System.out.println(arrayequals(array1, array3, 4)); // false
     }
 }

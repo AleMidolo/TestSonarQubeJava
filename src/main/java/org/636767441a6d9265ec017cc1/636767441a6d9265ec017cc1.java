@@ -15,9 +15,9 @@ private TreeNode<T> rotateRight(TreeNode<T> node) {
         return node; // Cannot rotate right if node is null or has no left child
     }
 
-    TreeNode<T> newRoot = node.left; // The new root will be the left child
-    node.left = newRoot.right; // The right child of the new root becomes the left child of the old root
-    newRoot.right = node; // The old root becomes the right child of the new root
+    TreeNode<T> newRoot = node.left; // New root will be the left child
+    node.left = newRoot.right; // Right child of new root becomes left child of node
+    newRoot.right = node; // Node becomes the right child of new root
 
     return newRoot; // Return the new root
 }

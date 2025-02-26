@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class QueueToString {
-    private Queue<Object> queue;
+    private Queue<String> queue;
 
     public QueueToString() {
         this.queue = new LinkedList<>();
@@ -15,29 +15,29 @@ public class QueueToString {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (Object item : queue) {
-            sb.append(item.toString()).append(", ");
+        for (String item : queue) {
+            sb.append(item).append(", ");
         }
-        if (!queue.isEmpty()) {
+        if (sb.length() > 1) {
             sb.setLength(sb.length() - 2); // Remove the last comma and space
         }
         sb.append("]");
         return sb.toString();
     }
 
-    public void enqueue(Object item) {
+    public void enqueue(String item) {
         queue.add(item);
     }
 
-    public Object dequeue() {
+    public String dequeue() {
         return queue.poll();
     }
 
     public static void main(String[] args) {
         QueueToString queueToString = new QueueToString();
-        queueToString.enqueue("First");
-        queueToString.enqueue("Second");
-        queueToString.enqueue("Third");
-        System.out.println(queueToString.toString()); // Output: [First, Second, Third]
+        queueToString.enqueue("first");
+        queueToString.enqueue("second");
+        queueToString.enqueue("third");
+        System.out.println(queueToString.toString()); // Output: [first, second, third]
     }
 }

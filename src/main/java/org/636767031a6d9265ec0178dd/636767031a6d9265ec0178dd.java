@@ -1,8 +1,8 @@
 public class Request {
-    private byte[] content;
+    private long contentLength;
 
-    public Request(byte[] content) {
-        this.content = content;
+    public Request(long contentLength) {
+        this.contentLength = contentLength;
     }
 
     /** 
@@ -11,11 +11,11 @@ public class Request {
      * @since 1.3
      */
     public long contentLength() {
-        return content != null ? content.length : 0;
+        return contentLength;
     }
 
     public static void main(String[] args) {
-        Request request = new Request("Hello, World!".getBytes());
-        System.out.println("Content Length: " + request.contentLength());
+        Request request = new Request(1024);
+        System.out.println("请求的内容长度: " + request.contentLength());
     }
 }

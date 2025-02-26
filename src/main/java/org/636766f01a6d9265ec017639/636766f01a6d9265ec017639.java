@@ -11,12 +11,10 @@ public class ArrayToListConverter {
     }
 
     public static void main(String[] args) {
-        // Example usage
         String[] array = {"Hello", "World"};
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
-        // Example with empty array
         String[] emptyArray = {};
         List<String> emptyList = asList(emptyArray);
         System.out.println(emptyList); // Output: []

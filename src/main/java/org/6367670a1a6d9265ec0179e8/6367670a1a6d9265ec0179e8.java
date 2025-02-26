@@ -1,4 +1,5 @@
 public class ArrayUtil {
+
     public static final Boolean[] EMPTY_ARRAY = new Boolean[0];
 
     /** 

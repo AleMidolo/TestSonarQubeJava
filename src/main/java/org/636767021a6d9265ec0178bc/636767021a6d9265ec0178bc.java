@@ -13,7 +13,7 @@ public class StringSearch {
     public static void main(String[] args) {
         System.out.println(indexOf("hello world", "world")); // Output: 6
         System.out.println(indexOf("hello world", "java"));  // Output: -1
-        System.out.println(indexOf(null, "java"));           // Output: -1
-        System.out.println(indexOf("hello world", null));    // Output: -1
+        System.out.println(indexOf(null, "test"));           // Output: -1
+        System.out.println(indexOf("test", null));           // Output: -1
     }
 }

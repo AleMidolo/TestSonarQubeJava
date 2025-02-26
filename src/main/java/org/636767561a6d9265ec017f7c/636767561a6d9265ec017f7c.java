@@ -1,8 +1,8 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Triple;
+import org.jgrapht.alg.util.Triplet;
 import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ public class GraphUtils<V, E> {
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
         for (E edge : tour) {
+            // Assuming the edge has a method to get its source and target vertices
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             if (!vertexList.contains(source)) {
@@ -51,7 +52,7 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+                return 0; // Implement weight calculation if needed
             }
 
             @Override

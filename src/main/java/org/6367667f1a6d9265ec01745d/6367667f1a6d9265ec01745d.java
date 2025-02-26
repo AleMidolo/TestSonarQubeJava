@@ -21,7 +21,6 @@ public class PathSegmentDecoder {
         }
 
         String[] pathParts = path.split("/");
-
         for (String part : pathParts) {
             if (decode) {
                 part = decodeURIComponent(part);
@@ -57,11 +56,15 @@ public class PathSegmentDecoder {
         }
     }
 
-    public static void main(String[] args) throws URISyntaxException {
-        URI uri = new URI("http://example.com/path/to/resource");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
+    public static void main(String[] args) {
+        try {
+            URI uri = new URI("http://example.com/path/to/resource");
+            List<PathSegmentImpl> segments = decodePath(uri, true);
+            for (PathSegmentImpl segment : segments) {
+                System.out.println(segment);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 }

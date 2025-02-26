@@ -19,9 +19,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Verify PMD Installation
-        run: pmd --version
-
       - name: Run PMD
         uses: pmd/pmd-github-action@v2
         with:

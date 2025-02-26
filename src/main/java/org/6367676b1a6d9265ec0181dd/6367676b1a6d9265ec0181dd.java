@@ -10,15 +10,15 @@ public class SubstringCounter {
         if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
             return 0;
         }
-
+        
         int count = 0;
         int index = 0;
-
+        
         while ((index = str.indexOf(sub, index)) != -1) {
             count++;
             index += sub.length();
         }
-
+        
         return count;
     }
 

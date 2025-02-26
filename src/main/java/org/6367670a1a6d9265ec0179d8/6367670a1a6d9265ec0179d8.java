@@ -20,14 +20,4 @@ public class CustomOutputStream extends OutputStream {
         // Implementation for writing a single byte
         System.out.write(b);
     }
-    
-    public static void main(String[] args) {
-        try {
-            CustomOutputStream customOutputStream = new CustomOutputStream();
-            byte[] data = {65, 66, 67}; // ASCII for A, B, C
-            customOutputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

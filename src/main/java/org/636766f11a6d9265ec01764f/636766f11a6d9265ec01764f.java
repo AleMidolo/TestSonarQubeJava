@@ -27,9 +27,9 @@ public class BeanMap {
     public static void main(String[] args) {
         BeanMap beanMap = new BeanMap();
         beanMap.put("key1", "value1");
-        beanMap.put("key2", 2);
+        beanMap.put("key2", 42);
         
         Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, 2]
+        System.out.println(values); // Output: [value1, 42]
     }
 }

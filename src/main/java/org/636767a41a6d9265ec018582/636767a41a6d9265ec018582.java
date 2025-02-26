@@ -15,7 +15,7 @@ public class MessageWriter {
         // Write the size of the message
         out.write(intToByteArray(size));
         // Write the message itself
-        schema.writeTo(out, message, buffer);
+        schema.writeTo(message, out, buffer);
         return size;
     }
 

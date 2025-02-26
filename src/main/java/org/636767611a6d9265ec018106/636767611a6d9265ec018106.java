@@ -15,11 +15,7 @@ public class Graph<V> {
         }
     }
 
-    private Set<Edge> getEdges(V vertex) {
-        // This method should return the edges connected to the vertex
-        // For the sake of this example, let's assume it returns an empty set
-        return Set.of(); // Replace with actual edge retrieval logic
-    }
+    private Set<Edge> edges; // This should be initialized properly in the actual implementation
 
     /**
      * 计算进入一个顶点的权重总和
@@ -28,12 +24,13 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-        for (V vertex : v) {
-            Set<Edge> edges = getEdges(vertex);
-            for (Edge edge : edges) {
+        
+        for (Edge edge : edges) {
+            if (v.contains(edge.target)) {
                 totalWeight += edge.weight;
             }
         }
+        
         return totalWeight;
     }
 }

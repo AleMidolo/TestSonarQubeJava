@@ -16,39 +16,32 @@ public class StackManipulator {
 
     private int getTypeCount(String descriptor) {
         // 这里假设 descriptor 是一个有效的类型或方法描述符
-        // 例如： "I" 表示 int, "D" 表示 double, "(II)V" 表示两个 int 参数的方法
         if (descriptor.startsWith("(")) {
             // 方法描述符，计算参数类型数量
-            int paramCount = 0;
-            int i = 1; // 跳过开括号
-            while (descriptor.charAt(i) != ')') {
-                if (descriptor.charAt(i) == 'L') {
-                    // 对象类型
-                    while (descriptor.charAt(i) != ';') {
-                        i++;
-                    }
-                    i++; // 跳过分号
+            int count = 0;
+            for (char c : descriptor.toCharArray()) {
+                if (c == '(') {
+                    continue;
+                } else if (c == ')') {
+                    break;
                 } else {
-                    // 基本类型
-                    i++;
+                    count++;
                 }
-                paramCount++;
             }
-            return paramCount;
+            return count;
         } else {
-            // 类型描述符，返回基本类型的数量
+            // 类型描述符，返回相应的类型大小
             switch (descriptor) {
-                case "V": return 0; // void
-                case "Z": return 1; // boolean
-                case "B": return 1; // byte
-                case "C": return 1; // char
-                case "S": return 1; // short
-                case "I": return 1; // int
-                case "J": return 2; // long
-                case "F": return 1; // float
-                case "D": return 2; // double
-                case "L": return 1; // 对象类型
-                default: throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+                case "I": // int
+                case "F": // float
+                    return 1;
+                case "J": // long
+                case "D": // double
+                    return 2;
+                case "L": // 对象类型
+                    return 1; // 对象类型视为1个
+                default:
+                    throw new IllegalArgumentException("未知的描述符: " + descriptor);
             }
         }
     }

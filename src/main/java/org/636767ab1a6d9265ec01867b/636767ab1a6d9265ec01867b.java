@@ -14,15 +14,13 @@ public class UTF8Writer {
     }
 
     public static class LinkedBuffer {
-        private final LinkedList<byte[]> buffers = new LinkedList<>();
+        private LinkedList<byte[]> buffers = new LinkedList<>();
 
-        public void write(byte[] bytes) {
-            buffers.add(bytes);
+        public void write(byte[] data) {
+            buffers.add(data);
         }
 
-        public LinkedList<byte[]> getBuffers() {
-            return buffers;
-        }
+        // Additional methods for LinkedBuffer can be added here
     }
 
     public static class WriteSession {
@@ -33,10 +31,6 @@ public class UTF8Writer {
         WriteSession session = new WriteSession();
         LinkedBuffer lb = new LinkedBuffer();
         writeUTF8("Hello, 世界", session, lb);
-        
-        // Output the buffers for demonstration
-        for (byte[] buffer : lb.getBuffers()) {
-            System.out.println(new String(buffer, StandardCharsets.UTF_8));
-        }
+        // Further processing can be done with lb
     }
 }

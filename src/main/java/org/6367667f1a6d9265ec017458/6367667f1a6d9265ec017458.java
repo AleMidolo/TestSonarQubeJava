@@ -5,7 +5,7 @@ public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
     public AtmosphereManager() {
-        this.atmosphereFramework = new AtmosphereFramework();
+        atmosphereFramework = new AtmosphereFramework();
     }
 
     /**
@@ -14,12 +14,10 @@ public class AtmosphereManager {
      * @return 如果成功移除则返回真
      */
     public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (mapping == null || mapping.isEmpty()) {
+        if (atmosphereFramework.getAtmosphereHandlers().containsKey(mapping)) {
+            atmosphereFramework.removeAtmosphereHandler(mapping);
             return atmosphereFramework;
         }
-        
-        // Assuming there's a method to remove the handler by mapping
-        boolean removed = atmosphereFramework.removeAtmosphereHandler(mapping);
-        return removed ? atmosphereFramework : null;
+        return null; // or throw an exception based on your design choice
     }
 }

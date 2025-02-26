@@ -20,9 +20,11 @@ public class TableRowSelector {
         table.setRowSelectionInterval(row, row);
         
         // Scorre il JScrollPane fino alla riga selezionata
+        Rectangle rect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(rect);
+        
+        // Ritarda la chiamata a repaint
         SwingUtilities.invokeLater(() -> {
-            Rectangle rect = table.getCellRect(row, 0, true);
-            table.scrollRectToVisible(rect);
             pane.repaint();
         });
     }
@@ -45,10 +47,12 @@ public class TableRowSelector {
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
         frame.add(pane, BorderLayout.CENTER);
-
+        
         frame.setVisible(true);
 
         // Seleziona la riga 2 dopo 2 secondi
-        new Timer(2000, e -> selectRow(2, table, pane)).start();
+        Timer timer = new Timer(2000, e -> selectRow(2, table, pane));
+        timer.setRepeats(false);
+        timer.start();
     }
 }

@@ -16,7 +16,7 @@ public class CliqueChecker {
      * @return true se il sottografo indotto è un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Check if the vertices set is empty or contains only one vertex
+        // Check if the vertices set is empty or has only one vertex
         if (vertices.isEmpty() || vertices.size() == 1) {
             return true;
         }

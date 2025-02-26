@@ -36,21 +36,5 @@ public class TimeRangeBuilder {
         public long getEnd() {
             return end;
         }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeBuilder builder = new TimeRangeBuilder();
-        List<TimeRange> ranges = builder.buildTimeRanges(0, 10000000); // Example usage
-        for (TimeRange range : ranges) {
-            System.out.println(range);
-        }
     }
 }

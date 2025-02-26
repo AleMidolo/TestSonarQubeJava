@@ -9,6 +9,6 @@ public class SessionUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println("Generated Session ID: " + sessionId());
+        System.out.println("Session ID: " + sessionId());
     }
 }

@@ -8,10 +8,10 @@ public class Graph<V> {
         this.vertexIterator = vertexIterator;
     }
 
-    /**
+    /** 
      * {@inheritDoc}
      */
-    @Override
+    @Override 
     protected V fornireProssimoVertice() {
         if (vertexIterator.hasNext()) {
             return vertexIterator.next();

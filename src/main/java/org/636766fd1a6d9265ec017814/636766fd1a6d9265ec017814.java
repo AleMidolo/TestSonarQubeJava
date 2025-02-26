@@ -1,5 +1,5 @@
 public class ArrayComparator {
-    
+
     /** 
      * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
      * @param a     Il primo array da confrontare.
@@ -21,7 +21,7 @@ public class ArrayComparator {
 
     public static void main(String[] args) {
         byte[] array1 = {1, 2, 3, 4, 5};
-        byte[] array2 = {1, 2, 3, 4, 6};
+        byte[] array2 = {1, 2, 3, 6, 7};
         int count = 3;
 
         boolean result = arrayequals(array1, array2, count);

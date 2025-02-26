@@ -10,14 +10,14 @@ public class StackFrame {
      * @param elements il numero di tipi astratti che devono essere rimossi.
      */
     private void pop(final int elements) {
-        if (elements <= 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be greater than zero.");
+        if (elements < 0) {
+            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
         }
         for (int i = 0; i < elements; i++) {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                throw new EmptyStackException();
+                break; // Stop if the stack is empty
             }
         }
     }
@@ -27,7 +27,7 @@ public class StackFrame {
     }
 
     public String peek() {
-        return stack.peek();
+        return stack.isEmpty() ? null : stack.peek();
     }
 
     public boolean isEmpty() {

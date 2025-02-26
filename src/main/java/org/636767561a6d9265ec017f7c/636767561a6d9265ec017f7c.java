@@ -3,7 +3,7 @@ import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
-import org.jgrapht.path.GraphPath;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,49 +18,38 @@ public class GraphTour<V, E extends DefaultEdge> {
      * @return un percorso di grafo
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        List<V> vertexList = new ArrayList<>();
+        List<V> vertices = new ArrayList<>();
         for (E edge : tour) {
-            vertexList.add(graph.getEdgeSource(edge));
-            vertexList.add(graph.getEdgeTarget(edge));
-        }
-        
-        // Remove duplicates while maintaining order
-        List<V> uniqueVertices = new ArrayList<>();
-        for (V vertex : vertexList) {
-            if (!uniqueVertices.contains(vertex)) {
-                uniqueVertices.add(vertex);
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            if (!vertices.contains(source)) {
+                vertices.add(source);
+            }
+            if (!vertices.contains(target)) {
+                vertices.add(target);
             }
         }
-
-        // Create a path from the unique vertices
+        
         return new GraphPath<V, E>() {
             @Override
             public List<E> getEdgeList() {
-                List<E> edges = new ArrayList<>();
-                for (int i = 0; i < uniqueVertices.size() - 1; i++) {
-                    edges.add(graph.getEdge(uniqueVertices.get(i), uniqueVertices.get(i + 1)));
-                }
-                return edges;
+                List<E> edgeList = new ArrayList<>(tour);
+                return edgeList;
             }
 
             @Override
             public V getStartVertex() {
-                return uniqueVertices.get(0);
+                return vertices.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return uniqueVertices.get(uniqueVertices.size() - 1);
+                return vertices.get(vertices.size() - 1);
             }
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be added if needed
-            }
-
-            @Override
-            public Graph<V, E> getGraph() {
-                return graph;
+                return 0; // Weight calculation can be implemented if needed
             }
         };
     }

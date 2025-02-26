@@ -16,14 +16,14 @@ public class FileAdder {
         
         // Pop files from the stack to add them in reverse order
         while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
+            InputStream fileToAdd = stack.pop();
             // Add the file (implementation depends on the context)
-            addFile(file);
+            addFile(fileToAdd);
         }
     }
     
     private void addFile(InputStream file) {
         // Implementation for adding the file goes here
-        // For example, reading from the InputStream and processing it
+        // For example, reading the file or processing it
     }
 }

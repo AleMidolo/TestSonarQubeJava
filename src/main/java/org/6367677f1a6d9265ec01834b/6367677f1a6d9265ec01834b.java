@@ -16,10 +16,12 @@ public class LoggingBuffer {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // If the buffer is full, the event is silently discarded.
+        // If the buffer is full, the event is silently discarded
     }
+
+    // Additional methods for the LoggingBuffer can be added here
 }
 
 class LoggingEvent {
-    // Assume this class has necessary fields and methods for logging events.
+    // Implementation of LoggingEvent class
 }

@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Set;
 
-public class GraphManager {
+public class BucketManager {
 
     /**
      * Sposta tutti i vertici dal bucket con etichetta {@code minLabel} al bucket con etichetta 0. 
@@ -11,22 +11,20 @@ public class GraphManager {
      * @param minLabel il valore minimo del bucket non vuoto
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Controlla se il bucket con etichetta minLabel è vuoto
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size() || bucketsByLabel.get(minLabel).isEmpty()) {
-            return; // Non fare nulla se il bucket è vuoto o l'etichetta è fuori range
+        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
+            throw new IllegalArgumentException("minLabel is out of bounds");
         }
 
-        // Ottieni il bucket con etichetta minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
-        
-        // Sposta i vertici dal bucket minLabel al bucket 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
+
+        // Sposta i vertici dal bucket minLabel a bucket 0
         for (Integer vertex : minLabelBucket) {
             zeroLabelBucket.add(vertex);
             labels.set(vertex, 0); // Aggiorna l'etichetta del vertice
         }
 
-        // Pulisci il bucket con etichetta minLabel
+        // Pulisce il bucket con etichetta minLabel
         minLabelBucket.clear();
     }
 }

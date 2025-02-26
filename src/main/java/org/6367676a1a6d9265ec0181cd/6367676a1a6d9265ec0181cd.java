@@ -10,16 +10,18 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
+        
         int index = 0;
         while (index < str.length() && Character.isWhitespace(str.charAt(index))) {
             index++;
         }
+        
         return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String testString = "   Hello World!";
+        String testString = "   Hello, World!";
         String result = trimLeadingWhitespace(testString);
-        System.out.println("'" + result + "'"); // Output: 'Hello World!'
+        System.out.println(result); // Output: "Hello, World!"
     }
 }

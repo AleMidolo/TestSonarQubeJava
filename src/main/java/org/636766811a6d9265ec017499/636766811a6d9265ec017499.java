@@ -16,9 +16,8 @@ public class InterceptorChecker {
         }
         return true; // Non esiste alcuna istanza della classe
     }
-    
-    // Dummy AtmosphereInterceptor class for demonstration purposes
-    public static class AtmosphereInterceptor {
-        // Implementation details for AtmosphereInterceptor
-    }
+}
+
+class AtmosphereInterceptor {
+    // Implementazione della classe AtmosphereInterceptor
 }

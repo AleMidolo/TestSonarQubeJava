@@ -11,7 +11,6 @@ public class CharacterArrayConverter {
         if (array == null) {
             return null;
         }
-        
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {

@@ -18,8 +18,8 @@ public class BroadcastFilterExample {
         // Example filter logic
         for (Object filter : filters) {
             // Assuming filter is a functional interface that takes an Object and returns a boolean
-            if (filter instanceof FilterFunction) {
-                if (!((FilterFunction) filter).apply(msg)) {
+            if (filter instanceof Filter) {
+                if (!((Filter) filter).apply(msg)) {
                     return null; // Message filtered out
                 }
             }
@@ -27,12 +27,11 @@ public class BroadcastFilterExample {
         return msg; // Message passed all filters
     }
 
-    public void addFilter(FilterFunction filter) {
+    public void addFilter(Filter filter) {
         filters.add(filter);
     }
 
-    @FunctionalInterface
-    public interface FilterFunction {
+    public interface Filter {
         boolean apply(Object msg);
     }
 

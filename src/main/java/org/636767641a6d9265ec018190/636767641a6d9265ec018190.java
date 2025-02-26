@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Set;
 
-public class BucketManager {
+public class VertexMover {
 
     /**
      * Sposta tutti i vertici dal bucket con etichetta {@code minLabel} al bucket con etichetta 0. 

@@ -1,10 +1,9 @@
 import java.util.Stack;
 
-public class DescriptorStack {
-
+public class DescriptorPopper {
     private Stack<String> stack;
 
-    public DescriptorStack() {
+    public DescriptorPopper() {
         this.stack = new Stack<>();
     }
 
@@ -15,18 +14,19 @@ public class DescriptorStack {
     private void pop(final String descriptor) {
         // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            // Extract argument types from the descriptor
-            String args = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
-            String[] argTypes = args.split(",");
-            for (String argType : argTypes) {
-                // Remove the argument type from the stack if it exists
-                if (!argType.isEmpty() && stack.contains(argType)) {
-                    stack.remove(argType);
+            int start = descriptor.indexOf('(') + 1;
+            int end = descriptor.indexOf(')');
+            String args = descriptor.substring(start, end);
+            for (char arg : args.toCharArray()) {
+                if (!stack.isEmpty()) {
+                    stack.pop(); // Remove the corresponding argument type from the stack
                 }
             }
         } else {
-            // If it's a single type, remove it directly
-            stack.remove(descriptor);
+            // If it's a single type descriptor, just pop it from the stack
+            if (!stack.isEmpty()) {
+                stack.pop();
+            }
         }
     }
 
@@ -35,19 +35,17 @@ public class DescriptorStack {
         stack.push(type);
     }
 
-    // Method to display the current stack for testing purposes
-    public void displayStack() {
-        System.out.println(stack);
+    // Method to view the current stack for testing purposes
+    public Stack<String> getStack() {
+        return stack;
     }
 
     public static void main(String[] args) {
-        DescriptorStack ds = new DescriptorStack();
-        ds.push("I");
-        ds.push("J");
-        ds.push("V");
-        ds.displayStack(); // Output: [I, J, V]
-
-        ds.pop("(I)V");
-        ds.displayStack(); // Output: [J]
+        DescriptorPopper popper = new DescriptorPopper();
+        popper.push("I"); // Push an int type
+        popper.push("Ljava/lang/String;"); // Push a String type
+        System.out.println("Stack before pop: " + popper.getStack());
+        popper.pop("(I)V"); // Pop types according to the descriptor
+        System.out.println("Stack after pop: " + popper.getStack());
     }
 }

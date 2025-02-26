@@ -1,5 +1,5 @@
 public class SubstringUtil {
-
+    
     /** 
      * Ottiene una sottostringa dalla Stringa specificata evitando eccezioni. 
      */
@@ -20,11 +20,11 @@ public class SubstringUtil {
     }
 
     public static void main(String[] args) {
-        // Test examples
+        // Test the sub method
         System.out.println(sub("Hello, World!", 7, 12)); // Output: World
-        System.out.println(sub("Hello, World!", -5, 5)); // Output: Hello
-        System.out.println(sub("Hello, World!", 0, 20)); // Output: Hello, World!
-        System.out.println(sub(null, 0, 5)); // Output: null
-        System.out.println(sub("Hello", 3, 2)); // Output: ""
+        System.out.println(sub("Hello, World!", -5, 5));  // Output: Hello
+        System.out.println(sub("Hello, World!", 0, 20));  // Output: Hello, World!
+        System.out.println(sub(null, 0, 5));               // Output: null
+        System.out.println(sub("Hello", 3, 2));            // Output: (empty string)
     }
 }

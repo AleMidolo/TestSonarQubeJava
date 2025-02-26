@@ -1,7 +1,7 @@
-class Bucket {
+public class Bucket {
     // Assuming Bucket has some properties
     private String data;
-    Bucket next;
+    private Bucket next;
 
     public Bucket(String data) {
         this.data = data;
@@ -11,16 +11,24 @@ class Bucket {
     public String getData() {
         return data;
     }
+
+    public Bucket getNext() {
+        return next;
+    }
+
+    public void setNext(Bucket next) {
+        this.next = next;
+    }
 }
 
-class BucketList {
+public class BucketList {
     private Bucket head;
 
     public BucketList() {
         this.head = null;
     }
 
-    /** 
+    /**
      * Inserisce questo bucket nella struttura dati prima del {@code bucket}.
      * @param bucket il bucket, che sarà il successivo a questo bucket.
      */
@@ -29,21 +37,21 @@ class BucketList {
             return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket("New Data"); // Create a new bucket with some data
+        Bucket newBucket = new Bucket("New Bucket"); // Create a new bucket to insert
         if (head == bucket) {
-            newBucket.next = head;
-            head = newBucket;
+            newBucket.setNext(head);
+            head = newBucket; // Insert at the head
             return;
         }
 
         Bucket current = head;
-        while (current != null && current.next != bucket) {
-            current = current.next;
+        while (current != null && current.getNext() != bucket) {
+            current = current.getNext();
         }
 
         if (current != null) {
-            newBucket.next = current.next;
-            current.next = newBucket;
+            newBucket.setNext(bucket);
+            current.setNext(newBucket); // Insert before the specified bucket
         }
     }
 
@@ -52,39 +60,28 @@ class BucketList {
         Bucket current = head;
         while (current != null) {
             System.out.print(current.getData() + " -> ");
-            current = current.next;
+            current = current.getNext();
         }
         System.out.println("null");
     }
 
-    public void addBucket(String data) {
-        Bucket newBucket = new Bucket(data);
-        if (head == null) {
-            head = newBucket;
-        } else {
-            Bucket current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newBucket;
-        }
-    }
-}
-
-public class Main {
     public static void main(String[] args) {
-        BucketList bucketList = new BucketList();
-        bucketList.addBucket("Bucket 1");
-        bucketList.addBucket("Bucket 2");
-        bucketList.addBucket("Bucket 3");
+        BucketList list = new BucketList();
+        Bucket bucket1 = new Bucket("Bucket 1");
+        Bucket bucket2 = new Bucket("Bucket 2");
+        list.insertBefore(bucket1); // Should not insert anything
+        list.insertBefore(bucket2); // Should not insert anything
+
+        // Manually linking for demonstration
+        list.head = bucket1;
+        bucket1.setNext(bucket2);
 
         System.out.println("Before insertion:");
-        bucketList.printList();
+        list.printList();
 
-        Bucket bucketToInsertBefore = bucketList.head.next; // This is "Bucket 2"
-        bucketList.insertBefore(bucketToInsertBefore);
+        list.insertBefore(bucket2); // Insert before bucket2
 
         System.out.println("After insertion:");
-        bucketList.printList();
+        list.printList();
     }
 }

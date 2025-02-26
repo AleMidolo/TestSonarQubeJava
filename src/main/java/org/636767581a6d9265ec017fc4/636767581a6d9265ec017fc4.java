@@ -1,4 +1,4 @@
-public class FactorialCalculator {
+public class FattorialeCalculator {
 
     /** 
      * Calcola il fattoriale di $n$.
@@ -17,8 +17,8 @@ public class FactorialCalculator {
     }
 
     public static void main(String[] args) {
-        int numero = 5; // Esempio di utilizzo
-        long fatt = fattoriale(numero);
-        System.out.println("Il fattoriale di " + numero + " è " + fatt);
+        int numero = 5; // Esempio di input
+        long fattorialeRisultato = fattoriale(numero);
+        System.out.println("Il fattoriale di " + numero + " è " + fattorialeRisultato);
     }
 }

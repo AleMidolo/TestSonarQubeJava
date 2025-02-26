@@ -25,6 +25,7 @@ public class SubstringCounter {
     public static void main(String[] args) {
         String str = "hello world, hello universe";
         String sub = "hello";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
+        int occurrences = countOccurrencesOf(str, sub);
+        System.out.println("Occurrences of '" + sub + "': " + occurrences);
     }
 }

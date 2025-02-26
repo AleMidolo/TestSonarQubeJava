@@ -8,14 +8,16 @@ public class CustomOutputStream extends OutputStream {
         if (b == null) {
             throw new NullPointerException("Byte array is null");
         }
-        // Example implementation: write each byte to the console
+        // Example implementation: write bytes to a hypothetical output
         for (byte value : b) {
-            System.out.write(value);
+            // Here you would write the byte to the actual output destination
+            System.out.write(value); // This is just for demonstration
         }
     }
 
     @Override
     public void write(int b) throws IOException {
-        System.out.write(b);
+        // Implementation for writing a single byte
+        System.out.write(b); // This is just for demonstration
     }
 }

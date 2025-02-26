@@ -7,18 +7,17 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String directoryPath = userHome + File.separator + "lf5";
-        File directory = new File(directoryPath);
+        File configDir = new File(userHome, "lf5");
 
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
+        if (!configDir.exists()) {
+            boolean created = configDir.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + directoryPath);
+                System.out.println("Directory created: " + configDir.getAbsolutePath());
             } else {
-                System.out.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create directory: " + configDir.getAbsolutePath());
             }
         } else {
-            System.out.println("Directory already exists: " + directoryPath);
+            System.out.println("Directory already exists: " + configDir.getAbsolutePath());
         }
     }
 

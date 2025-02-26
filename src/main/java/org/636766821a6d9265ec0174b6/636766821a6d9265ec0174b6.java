@@ -13,58 +13,26 @@ public class TypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
-        if (!targetType.isAssignableFrom((Class<?>) rawType)) {
-            return null;
-        }
-
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-
-        for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type arg = actualTypeArguments[i];
-            if (arg instanceof Class) {
-                resolvedArguments[i] = (Class<?>) arg;
-            } else if (arg instanceof ParameterizedType) {
-                resolvedArguments[i] = (Class<?>) ((ParameterizedType) arg).getRawType();
-            } else {
-                return null; // Cannot resolve the type
+        if (rawType instanceof Class<?>) {
+            Class<?> rawClass = (Class<?>) rawType;
+            if (targetType.isAssignableFrom(rawClass)) {
+                return Arrays.stream(actualTypeArguments)
+                        .map(TypeResolver::getRawClass)
+                        .toArray(Class<?>[]::new);
             }
         }
-
-        return resolvedArguments;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Class<?>[] resolved = resolveArguments(new ParameterizedTypeImpl(List.class, new Type[]{String.class}), List.class);
-        System.out.println(Arrays.toString(resolved)); // Should print [class java.lang.String]
-    }
-}
-
-// Helper class to create a ParameterizedType for testing
-class ParameterizedTypeImpl implements ParameterizedType {
-    private final Class<?> raw;
-    private final Type[] actualTypeArguments;
-
-    public ParameterizedTypeImpl(Class<?> raw, Type[] actualTypeArguments) {
-        this.raw = raw;
-        this.actualTypeArguments = actualTypeArguments;
-    }
-
-    @Override
-    public Type[] getActualTypeArguments() {
-        return actualTypeArguments;
-    }
-
-    @Override
-    public Type getRawType() {
-        return raw;
-    }
-
-    @Override
-    public Type getOwnerType() {
         return null;
+    }
+
+    private static Class<?> getRawClass(Type type) {
+        if (type instanceof Class<?>) {
+            return (Class<?>) type;
+        } else if (type instanceof ParameterizedType) {
+            return (Class<?>) ((ParameterizedType) type).getRawType();
+        }
+        return Object.class; // Fallback
     }
 }

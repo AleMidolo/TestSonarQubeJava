@@ -1,7 +1,7 @@
 import java.util.function.Predicate;
 
 class Node {
-    // Node implementation
+    // Assume Node class has necessary properties and methods
 }
 
 class OuterFaceCirculator {
@@ -15,17 +15,13 @@ class OuterFaceCirculator {
         return currentNode;
     }
 
-    public void advance() {
+    public void moveToNext() {
         // Logic to move to the next node in the outer face
-    }
-
-    public boolean hasNext() {
-        // Logic to determine if there are more nodes to traverse
-        return true; // Placeholder
     }
 }
 
-public class Graph {
+public class GraphTraversal {
+
     /**
      * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
      * @param predicate la condizione che il nodo desiderato deve soddisfare
@@ -37,13 +33,12 @@ public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        do {
-            if (predicate.test(circulator.getCurrentNode())) {
+        while (true) {
+            Node currentNode = circulator.getCurrentNode();
+            if (currentNode.equals(stop) || predicate.test(currentNode)) {
                 return circulator;
             }
-            circulator.advance();
-        } while (circulator.hasNext() && circulator.getCurrentNode() != stop);
-        
-        return circulator; // Return circulator at stop if no node satisfies the predicate
+            circulator.moveToNext();
+        }
     }
 }

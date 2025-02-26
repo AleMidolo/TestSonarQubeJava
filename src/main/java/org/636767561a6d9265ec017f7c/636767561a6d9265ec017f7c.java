@@ -20,27 +20,21 @@ public class GraphTour<V, E> {
      * @return un percorso di grafo
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        List<V> path = new ArrayList<>();
-        Set<V> visited = new HashSet<>();
-
+        List<V> vertices = new ArrayList<>();
         for (E edge : tour) {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
-
-            if (!visited.contains(source)) {
-                path.add(source);
-                visited.add(source);
+            if (!vertices.contains(source)) {
+                vertices.add(source);
             }
-            if (!visited.contains(target)) {
-                path.add(target);
-                visited.add(target);
+            if (!vertices.contains(target)) {
+                vertices.add(target);
             }
         }
-
-        return new GraphPathImpl<>(graph, path);
+        return new GraphPathImpl<>(graph, vertices);
     }
 
-    private static class GraphPathImpl<V, E> implements GraphPath<V, E> {
+    private class GraphPathImpl<V, E> implements GraphPath<V, E> {
         private final Graph<V, E> graph;
         private final List<V> vertices;
 
@@ -74,13 +68,12 @@ public class GraphTour<V, E> {
         }
 
         @Override
-        public Graph<V, E> getGraph() {
-            return graph;
-        }
-
-        @Override
         public double getWeight() {
-            return 0; // Implement weight calculation if needed
+            double weight = 0.0;
+            for (E edge : getEdgeList()) {
+                weight += graph.getEdgeWeight(edge);
+            }
+            return weight;
         }
     }
 }

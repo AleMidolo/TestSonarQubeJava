@@ -1,5 +1,4 @@
 public class ArrayConverter {
-    
     /** 
      * <p>将基本数据类型的 int 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
      * @param array  一个 <code>int</code> 数组

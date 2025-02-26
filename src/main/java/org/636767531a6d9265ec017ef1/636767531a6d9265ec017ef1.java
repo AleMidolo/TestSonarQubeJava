@@ -1,6 +1,6 @@
 import java.awt.geom.Point2D;
 
-public class PointComparison {
+public class PointComparator {
     /** 
      * 使用容差 1e-9 比较两个点是否相等。
      * @param p1 第一个点

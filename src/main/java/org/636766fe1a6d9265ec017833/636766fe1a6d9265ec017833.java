@@ -26,9 +26,9 @@ public class FileDeleter {
 
     private static void deleteRecursively(File file) throws IOException {
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File child : files) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) {
                     deleteRecursively(child);
                 }
             }

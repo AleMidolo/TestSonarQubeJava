@@ -18,12 +18,8 @@ public class AtmosphereManager {
             return atmosphereFramework;
         }
         
-        AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
-        if (handler != null) {
-            atmosphereFramework.removeAtmosphereHandler(mapping);
-            return atmosphereFramework;
-        }
-        
-        return atmosphereFramework; // Return the framework even if nothing was removed
+        // Assuming there's a method to remove the handler by mapping
+        boolean removed = atmosphereFramework.removeAtmosphereHandler(mapping);
+        return removed ? atmosphereFramework : null;
     }
 }

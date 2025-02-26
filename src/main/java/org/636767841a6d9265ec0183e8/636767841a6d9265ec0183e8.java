@@ -13,8 +13,17 @@ public class EventBuffer {
     public void add(LoggingEvent event) {
         buffer.addLast(event);
     }
-}
 
-class LoggingEvent {
-    // Assume this class has necessary fields and methods
+    // Assuming LoggingEvent is a class defined elsewhere
+    public static class LoggingEvent {
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 }

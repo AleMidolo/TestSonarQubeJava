@@ -31,7 +31,7 @@ public class PathSegmentDecoder {
         
         return segments;
     }
-    
+
     private static String decodeURIComponent(String component) {
         try {
             return java.net.URLDecoder.decode(component, "UTF-8");
@@ -39,7 +39,7 @@ public class PathSegmentDecoder {
             return component; // 返回原始组件以防解码失败
         }
     }
-    
+
     public static class PathSegmentImpl {
         private String segment;
 

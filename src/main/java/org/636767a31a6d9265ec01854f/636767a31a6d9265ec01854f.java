@@ -16,10 +16,9 @@ public class PackedFieldChecker {
         if (packedFieldCondition) {
             isPackedField = true;
             // Update internal state to reflect that we are reading a packed field
-            System.out.println("The field is packed. Updating internal state.");
+            // Additional logic can be added here as needed
         } else {
             isPackedField = false;
-            System.out.println("The field is not packed.");
         }
     }
 }

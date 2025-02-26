@@ -1,4 +1,5 @@
 public class CharUtils {
+
     /** 
      * <p>将 Character 转换为 char，并处理 <code>null</code> 的情况。</p> 
      * <pre> CharUtils.toChar(null, 'X') = 'X' CharUtils.toChar(' ', 'X')  = ' ' CharUtils.toChar('A', 'X')  = 'A' </pre>

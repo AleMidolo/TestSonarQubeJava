@@ -1,9 +1,7 @@
 public class TypeManager {
     
-    // List to hold initialized types
     private List<Integer> initializedTypes;
 
-    // Constructor
     public TypeManager() {
         initializedTypes = new ArrayList<>();
     }
@@ -17,8 +15,7 @@ public class TypeManager {
             initializedTypes.add(abstractType);
         }
     }
-
-    // Method to get the list of initialized types
+    
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
     }
@@ -27,8 +24,8 @@ public class TypeManager {
         TypeManager manager = new TypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        manager.addInitializedType(1); // This will not be added again
-
+        manager.addInitializedType(1); // Duplicate, should not be added
+        
         System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }
 }

@@ -6,7 +6,7 @@ public class CustomOutputStream extends OutputStream {
     @Override 
     public void write(final byte[] b) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Byte array cannot be null");
+            throw new NullPointerException("Byte array is null");
         }
         // Example implementation: write bytes to a hypothetical output
         for (byte value : b) {

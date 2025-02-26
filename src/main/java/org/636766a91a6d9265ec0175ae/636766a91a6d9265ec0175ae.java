@@ -20,26 +20,24 @@ public class ByteVector {
         if (byteLength < 0) {
             throw new IllegalArgumentException("byteLength cannot be negative");
         }
-
+        
         if (byteArrayValue == null) {
-            byteLength = Math.max(byteLength, 0);
-            ensureCapacity(size + byteLength);
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
-            size += byteLength;
-        } else {
-            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-            }
-            ensureCapacity(size + byteLength);
-            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-            size += byteLength;
+            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
+            Arrays.fill(byteArrayValue, (byte) 0);
+        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
+
+        ensureCapacity(size + byteLength);
+        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        size += byteLength;
+
         return this;
     }
 
-    private void ensureCapacity(int newSize) {
-        if (newSize > data.length) {
-            int newCapacity = Math.max(data.length * 2, newSize);
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
     }
@@ -48,7 +46,7 @@ public class ByteVector {
         return size;
     }
 
-    public byte[] toByteArray() {
+    public byte[] toArray() {
         return Arrays.copyOf(data, size);
     }
 }

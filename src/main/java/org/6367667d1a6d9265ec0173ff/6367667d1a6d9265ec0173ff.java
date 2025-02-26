@@ -16,7 +16,7 @@ public class MeteorLookup {
         }
         
         // Logica per cercare un'istanza di Meteor basata sull'ID
-        // Questo è solo un esempio, in un'applicazione reale si dovrebbe cercare in un database o in una collezione
+        // Questo è solo un esempio, in un'applicazione reale si interagirebbe con un database o un altro sistema
         Meteor meteor = findMeteorById(meteorId);
         
         return meteor;
@@ -26,7 +26,7 @@ public class MeteorLookup {
         // Simulazione di ricerca di un Meteor
         // In un'applicazione reale, qui ci sarebbe la logica per recuperare l'oggetto Meteor da un database
         if ("123".equals(meteorId)) {
-            return new Meteor(meteorId, "Meteor Name"); // Restituisce un esempio di Meteor
+            return new Meteor(meteorId, "Meteor Example");
         }
         return null; // Se non trovato
     }

@@ -4,7 +4,6 @@ import org.jgrapht.alg.clique.CliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class CliqueChecker {
@@ -16,20 +15,28 @@ public class CliqueChecker {
      * @return true se il sottografo indotto è un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Check if the vertices set is empty or contains only one vertex
-        if (vertices.isEmpty() || vertices.size() == 1) {
-            return true;
+        // Check if the number of edges in the induced subgraph is equal to the number of vertices choose 2
+        int vertexCount = vertices.size();
+        if (vertexCount < 2) {
+            return true; // A single vertex or empty set is trivially a clique
         }
 
-        // Check if all pairs of vertices are connected
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Found a pair that is not connected
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2;
+        int actualEdges = 0;
+
+        for (V vertex : vertices) {
+            for (E edge : graph.outgoingEdgesOf(vertex)) {
+                V targetVertex = graph.getEdgeTarget(edge);
+                if (vertices.contains(targetVertex)) {
+                    actualEdges++;
                 }
             }
         }
-        return true; // All pairs are connected
+
+        // Each edge is counted twice (once from each vertex), so divide by 2
+        actualEdges /= 2;
+
+        return actualEdges == expectedEdges;
     }
 
     public static void main(String[] args) {
@@ -39,15 +46,11 @@ public class CliqueChecker {
         graph.addVertex("B");
         graph.addVertex("C");
         graph.addEdge("A", "B");
-        graph.addEdge("B", "C");
         graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
 
-        Set<String> vertices = new HashSet<>();
-        vertices.add("A");
-        vertices.add("B");
-        vertices.add("C");
-
+        Set<String> vertices = Set.of("A", "B", "C");
         boolean result = isClique(graph, vertices);
-        System.out.println("Is the induced subgraph a clique? " + result);
+        System.out.println("Is clique: " + result); // Should print true
     }
 }

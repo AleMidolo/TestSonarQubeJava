@@ -15,7 +15,7 @@ public class ByteVector {
      * @return questo vettore di byte.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // An integer takes 4 bytes
+        ensureCapacity(size + 4); // An int takes 4 bytes
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);
@@ -31,6 +31,6 @@ public class ByteVector {
     }
 
     public byte[] getData() {
-        return Arrays.copyOf(data, size); // Return only the used portion of the array
+        return Arrays.copyOf(data, size); // Return a copy of the current data
     }
 }

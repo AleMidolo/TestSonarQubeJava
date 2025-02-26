@@ -18,7 +18,7 @@ public class CharUtils {
         if (ch >= 0 && ch < 128) {
             return cache[ch];
         }
-        return Character.valueOf(ch);
+        return new Character(ch);
     }
 
     public static void main(String[] args) {

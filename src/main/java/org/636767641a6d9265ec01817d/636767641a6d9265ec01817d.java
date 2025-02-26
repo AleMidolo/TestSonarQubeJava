@@ -23,8 +23,3 @@ public class BipartiteGraphGenerator<V, E> {
         }
     }
 }
-
-// Assuming a simple Graph interface for demonstration purposes
-interface Graph<V, E> {
-    void addEdge(V source, V destination);
-}

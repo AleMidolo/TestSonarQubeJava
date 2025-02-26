@@ -1,15 +1,15 @@
 public class Bucket {
-    // Assuming Bucket has some properties
-    private String data;
+    // Assuming Bucket has some properties, for example:
+    private int value;
     private Bucket next;
 
-    public Bucket(String data) {
-        this.data = data;
+    public Bucket(int value) {
+        this.value = value;
         this.next = null;
     }
 
-    public String getData() {
-        return data;
+    public int getValue() {
+        return value;
     }
 
     public Bucket getNext() {
@@ -37,49 +37,21 @@ public class BucketList {
             return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket("New Bucket"); // Create a new bucket to insert
+        Bucket newBucket = new Bucket(0); // Create a new bucket with a default value
         if (head == bucket) {
             newBucket.setNext(head);
-            head = newBucket; // Insert at the head
-        } else {
-            Bucket current = head;
-            while (current.getNext() != null && current.getNext() != bucket) {
-                current = current.getNext();
-            }
-            if (current.getNext() == bucket) {
-                newBucket.setNext(bucket);
-                current.setNext(newBucket); // Insert before the specified bucket
-            }
+            head = newBucket;
+            return;
         }
-    }
 
-    // Additional methods for testing purposes
-    public void printList() {
         Bucket current = head;
-        while (current != null) {
-            System.out.print(current.getData() + " -> ");
+        while (current != null && current.getNext() != bucket) {
             current = current.getNext();
         }
-        System.out.println("null");
-    }
 
-    public static void main(String[] args) {
-        BucketList list = new BucketList();
-        Bucket bucket1 = new Bucket("Bucket 1");
-        Bucket bucket2 = new Bucket("Bucket 2");
-        list.insertBefore(bucket1); // Should not insert anything
-        list.insertBefore(bucket2); // Should not insert anything
-
-        // Manually linking for demonstration
-        list.head = bucket1;
-        bucket1.setNext(bucket2);
-
-        System.out.println("Before insertion:");
-        list.printList();
-
-        list.insertBefore(bucket2); // Insert before bucket2
-
-        System.out.println("After insertion:");
-        list.printList();
+        if (current != null) {
+            newBucket.setNext(bucket);
+            current.setNext(newBucket);
+        }
     }
 }

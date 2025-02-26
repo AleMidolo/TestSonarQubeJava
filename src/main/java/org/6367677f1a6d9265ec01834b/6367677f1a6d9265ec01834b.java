@@ -19,9 +19,12 @@ public class LoggingBuffer {
         // If the buffer is full, the event is silently discarded
     }
 
-    // Additional methods for the LoggingBuffer can be added here
-}
+    // Additional methods for demonstration purposes
+    public int size() {
+        return buffer.size();
+    }
 
-class LoggingEvent {
-    // Implementation of LoggingEvent class
+    public static class LoggingEvent {
+        // Implementation of LoggingEvent class
+    }
 }

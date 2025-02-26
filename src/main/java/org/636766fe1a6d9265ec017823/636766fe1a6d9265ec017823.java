@@ -31,7 +31,7 @@ public class ConstantPool {
         int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
 
         System.out.println("Index of myField: " + index1); // Should print 1
-        System.out.println("Index of myField again: " + index2); // Should print 1
+        System.out.println("Index of myField (duplicate): " + index2); // Should print 1
         System.out.println("Index of myMethod: " + index3); // Should print 2
     }
 }

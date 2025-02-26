@@ -12,16 +12,16 @@ public class FrameStack {
      * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is a string representation of types
+        // Assuming descriptor is a string representation of the types to pop
         String[] types = descriptor.split(",");
         for (String type : types) {
             if (!stack.isEmpty()) {
                 Object poppedValue = stack.pop();
-                // Here you can add logic to check if poppedValue matches the type
-                // For simplicity, we are just printing the popped value
-                System.out.println("Popped: " + poppedValue + " for type: " + type);
+                // Here you can add logic to check the type of poppedValue against the expected type
+                System.out.println("Popped: " + poppedValue + " of type: " + poppedValue.getClass().getSimpleName());
             } else {
-                System.out.println("Stack is empty, cannot pop for type: " + type);
+                System.out.println("Stack is empty, cannot pop.");
+                break;
             }
         }
     }
@@ -32,10 +32,10 @@ public class FrameStack {
 
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.push("Integer");
-        frameStack.push("String");
-        frameStack.push("Double");
-
-        frameStack.pop("Integer,String");
+        frameStack.push(1);
+        frameStack.push("Hello");
+        frameStack.push(3.14);
+        
+        frameStack.pop("Integer,String"); // Example usage
     }
 }

@@ -11,11 +11,11 @@ public class BooleanArrayConverter {
             return null;
         }
         
-        Boolean[] result = new Boolean[array.length];
+        Boolean[] objectArray = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i]; // Autoboxing from boolean to Boolean
+            objectArray[i] = Boolean.valueOf(array[i]);
         }
-        return result;
+        return objectArray;
     }
 
     public static void main(String[] args) {

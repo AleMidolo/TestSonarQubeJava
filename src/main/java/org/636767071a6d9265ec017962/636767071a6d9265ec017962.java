@@ -12,23 +12,23 @@ public class BeanMapUtil {
         }
 
         for (Object property : map.keySet()) {
-            if (isWriteable(property, map)) {
-                // Assuming we have a method to get the value to put
+            if (isWriteable(property)) {
+                // Assuming we have a method to get the value for the property
                 Object value = getValueForProperty(property);
                 map.put(property, value);
             }
         }
     }
 
-    private boolean isWriteable(Object property, BeanMap map) {
-        // Logic to check if the property is writeable
-        // This is a placeholder; actual implementation may vary
+    private boolean isWriteable(Object property) {
+        // Logic to determine if the property is writable
+        // This is a placeholder; actual implementation will depend on the BeanMap's capabilities
         return true; // Replace with actual check
     }
 
     private Object getValueForProperty(Object property) {
         // Logic to get the value for the property
-        // This is a placeholder; actual implementation may vary
+        // This is a placeholder; actual implementation will depend on the context
         return new Object(); // Replace with actual value retrieval
     }
 }

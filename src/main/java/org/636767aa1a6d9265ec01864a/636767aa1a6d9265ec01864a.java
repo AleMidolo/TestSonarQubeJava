@@ -1,17 +1,13 @@
-import java.nio.ByteBuffer;
-
 public class ByteArrayConverter {
-    
-    /** 
+
+    /**
      * बाइट्स को {@code byte[]} में कॉपी करता है।
+     * @return एक {@code byte[]} जो बाइट्स को दर्शाता है।
      */
     public byte[] toByteArray() {
-        // Example byte array for demonstration
-        byte[] byteArray = new byte[10];
-        for (int i = 0; i < byteArray.length; i++) {
-            byteArray[i] = (byte) i;
-        }
-        return byteArray;
+        // उदाहरण के लिए, हम कुछ बाइट्स को एक स्थिरांक के रूप में परिभाषित कर रहे हैं।
+        byte[] bytes = new byte[] { 1, 2, 3, 4, 5 };
+        return bytes;
     }
 
     public static void main(String[] args) {

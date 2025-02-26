@@ -7,23 +7,18 @@ public class CustomAppender extends AppenderSkeleton {
     protected void append(LoggingEvent event) {
         // यहाँ पर लॉग इवेंट को सभी जुड़े हुए क्लाइंट्स को भेजने की प्रक्रिया होगी
         String message = event.getRenderedMessage();
-        // सभी जुड़े हुए क्लाइंट्स को संदेश भेजने के लिए कस्टम लॉजिक
-        sendToClients(message);
-    }
-
-    private void sendToClients(String message) {
-        // यहाँ पर लॉजिक होगा जो सभी जुड़े हुए क्लाइंट्स को संदेश भेजेगा
-        // उदाहरण के लिए, WebSocket या अन्य नेटवर्किंग तकनीक का उपयोग कर सकते हैं
-        System.out.println("Sending message to clients: " + message);
+        // सभी जुड़े हुए क्लाइंट्स को संदेश भेजने के लिए कोड यहाँ लिखें
+        // उदाहरण के लिए, एक सॉकेट कनेक्शन का उपयोग करके संदेश भेजना
+        System.out.println("Sending log message to clients: " + message);
     }
 
     @Override
     public void close() {
-        // क्लोज़िंग लॉजिक अगर आवश्यक हो
+        // क्लोज़िंग संसाधनों की प्रक्रिया
     }
 
     @Override
     public boolean requiresLayout() {
-        return false;
+        return false; // यदि लेआउट की आवश्यकता नहीं है
     }
 }

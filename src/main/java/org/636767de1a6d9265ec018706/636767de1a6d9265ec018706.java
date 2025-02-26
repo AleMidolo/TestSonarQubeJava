@@ -9,14 +9,14 @@ public class MappingDiffer {
      * वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming Mappings is a class that holds a map of field names to their configurations
-        Mappings currentMappings = getCurrentMappings(tableName); // Fetch current mappings from the index
+        // Assuming Mappings is a class that holds a map of fields
+        Mappings currentMappings = getCurrentMappings(tableName);
         Mappings diffMappings = new Mappings();
 
-        for (Map.Entry<String, FieldMapping> entry : mappings.getFieldMappings().entrySet()) {
+        for (Map.Entry<String, Field> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!currentMappings.hasField(fieldName)) {
-                diffMappings.addFieldMapping(fieldName, entry.getValue());
+            if (!currentMappings.getFields().containsKey(fieldName)) {
+                diffMappings.addField(fieldName, entry.getValue());
             }
         }
 
@@ -24,29 +24,26 @@ public class MappingDiffer {
     }
 
     private Mappings getCurrentMappings(String tableName) {
-        // This method should implement the logic to retrieve current mappings from the index
+        // This method should retrieve the current mappings for the given tableName
         // For the sake of this example, we will return an empty Mappings object
         return new Mappings();
     }
 
-    // Assuming FieldMapping is a class that represents the mapping of a single field
-    public static class Mappings {
-        private Map<String, FieldMapping> fieldMappings = new HashMap<>();
-
-        public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
-            fieldMappings.put(fieldName, fieldMapping);
-        }
-
-        public boolean hasField(String fieldName) {
-            return fieldMappings.containsKey(fieldName);
-        }
-
-        public Map<String, FieldMapping> getFieldMappings() {
-            return fieldMappings;
-        }
+    // Assuming a simple Field class for demonstration purposes
+    public static class Field {
+        // Field properties can be defined here
     }
 
-    public static class FieldMapping {
-        // Define the properties of FieldMapping as needed
+    // Assuming a simple Mappings class for demonstration purposes
+    public static class Mappings {
+        private Map<String, Field> fields = new HashMap<>();
+
+        public Map<String, Field> getFields() {
+            return fields;
+        }
+
+        public void addField(String name, Field field) {
+            fields.put(name, field);
+        }
     }
 }

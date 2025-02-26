@@ -19,26 +19,25 @@ public class AbbreviationUtil {
         abbreviatedName.append(name.substring(0, nameStart)); // Add the part before the abbreviation
 
         // Abbreviate the name
-        String[] parts = name.substring(nameStart).split(" ");
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                abbreviatedName.append(part.charAt(0)).append("."); // Add the first character of each part
+        for (int i = nameStart; i < name.length(); i++) {
+            if (i == nameStart || name.charAt(i - 1) == ' ') {
+                abbreviatedName.append(name.charAt(i)).append("."); // Add the first letter of each word followed by a dot
             }
         }
 
-        // Remove the last dot if exists
+        // Remove the last dot if it exists
         if (abbreviatedName.length() > 0 && abbreviatedName.charAt(abbreviatedName.length() - 1) == '.') {
             abbreviatedName.setLength(abbreviatedName.length() - 1);
         }
 
         buf.setLength(0); // Clear the buffer
-        buf.append(abbreviatedName); // Set the abbreviated name
+        buf.append(abbreviatedName); // Add the abbreviated name to the buffer
     }
 
     public static void main(String[] args) {
         AbbreviationUtil util = new AbbreviationUtil();
         StringBuffer buffer = new StringBuffer("John Doe Smith");
         util.abbreviate(5, buffer);
-        System.out.println(buffer); // Output: John D.S
+        System.out.println(buffer.toString()); // Output: John D.S
     }
 }

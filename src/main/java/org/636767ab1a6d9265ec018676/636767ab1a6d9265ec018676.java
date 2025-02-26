@@ -4,17 +4,14 @@ public class HexChecker {
      * क्या यह एक हेक्स अंक है?
      */
     private static boolean isHex(final char c) {
-        return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
     }
 
     public static void main(String[] args) {
         // Test the isHex function
-        char testChar1 = 'A';
-        char testChar2 = 'g';
-        char testChar3 = '5';
-        
-        System.out.println(testChar1 + " is hex: " + isHex(testChar1)); // true
-        System.out.println(testChar2 + " is hex: " + isHex(testChar2)); // false
-        System.out.println(testChar3 + " is hex: " + isHex(testChar3)); // true
+        System.out.println(isHex('a')); // true
+        System.out.println(isHex('G')); // false
+        System.out.println(isHex('5')); // true
+        System.out.println(isHex('F')); // true
     }
 }

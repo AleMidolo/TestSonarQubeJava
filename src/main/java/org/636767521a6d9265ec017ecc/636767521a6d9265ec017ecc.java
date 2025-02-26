@@ -32,9 +32,9 @@ class Box2D {
 
 public class BoxSplitter {
     /** 
-     * 沿 x 轴将一个矩形框拆分为两个相等的矩形框。
-     * @param box 要拆分的矩形框
-     * @return 包含两个拆分后矩形框的对
+     * एक बॉक्स को x अक्ष के साथ दो समान बॉक्स में विभाजित करें।
+     * @param box वह बॉक्स जिसे विभाजित करना है
+     * @return दो परिणामी बॉक्स के साथ एक जोड़ी
      */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
         double newWidth = box.getWidth() / 2;

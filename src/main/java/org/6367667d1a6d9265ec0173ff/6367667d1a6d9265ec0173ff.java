@@ -1,31 +1,37 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class Meteor {
-    // Assuming Meteor has some properties and methods
-}
-
 public class MeteorLookup {
 
-    /**
-     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
-     * @param r {@link HttpServletRequest}
-     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
-     */
     public static Meteor lookup(HttpServletRequest r) {
-        // Implementation logic to retrieve a Meteor instance based on the request
-        // This is a placeholder for the actual logic
+        // Assuming there's a method to get Meteor instance based on HttpServletRequest
+        // This is a placeholder for the actual implementation
         if (r == null) {
             return null;
         }
 
-        // Example logic to find a Meteor instance
+        // Example logic to retrieve a Meteor instance
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
-            // Here you would typically look up the Meteor instance from a database or a cache
-            // For demonstration, we return a new instance if the meteorId is found
-            return new Meteor(); // Replace with actual lookup logic
+            return findMeteorById(meteorId);
         }
 
-        return null; // Return null if no Meteor instance is found
+        return null;
     }
+
+    private static Meteor findMeteorById(String meteorId) {
+        // Placeholder for actual logic to find a Meteor by its ID
+        // This could involve querying a database or some other data source
+        // For demonstration, returning a new Meteor instance
+        return new Meteor(meteorId);
+    }
+}
+
+class Meteor {
+    private String id;
+
+    public Meteor(String id) {
+        this.id = id;
+    }
+
+    // Additional methods and properties for the Meteor class
 }

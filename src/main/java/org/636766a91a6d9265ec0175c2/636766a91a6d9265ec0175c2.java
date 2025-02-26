@@ -1,30 +1,34 @@
-public class StackExample {
-    private java.util.Stack<Integer> outputFrameStack;
+import java.util.Stack;
 
-    public StackExample() {
-        outputFrameStack = new java.util.Stack<>();
+public class OutputFrameStack {
+    private Stack<Integer> stack;
+
+    public OutputFrameStack() {
+        stack = new Stack<>();
     }
 
-    /** 
-     * 从输出帧栈中弹出一个抽象类型并返回其值。
-     * @return 从输出帧栈中弹出的抽象类型。
+    /**
+     * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
+     * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
      */
     private int pop() {
-        if (outputFrameStack.isEmpty()) {
-            throw new java.util.EmptyStackException();
+        if (stack.isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
         }
-        return outputFrameStack.pop();
+        return stack.pop();
     }
 
+    // Method to push an element onto the stack for testing purposes
     public void push(int value) {
-        outputFrameStack.push(value);
+        stack.push(value);
     }
 
+    // Main method for testing
     public static void main(String[] args) {
-        StackExample stackExample = new StackExample();
-        stackExample.push(10);
-        stackExample.push(20);
-        System.out.println(stackExample.pop()); // Outputs: 20
-        System.out.println(stackExample.pop()); // Outputs: 10
+        OutputFrameStack outputFrameStack = new OutputFrameStack();
+        outputFrameStack.push(10);
+        outputFrameStack.push(20);
+        System.out.println(outputFrameStack.pop()); // Should print 20
+        System.out.println(outputFrameStack.pop()); // Should print 10
     }
 }

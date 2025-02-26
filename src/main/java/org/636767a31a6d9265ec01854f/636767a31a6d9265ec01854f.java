@@ -1,24 +1,26 @@
 import java.io.IOException;
 
-public class PackedFieldChecker {
+public class FieldChecker {
 
-    private boolean isPackedField;
+    private boolean isPacked;
+    private int internalPosition;
 
     /**
-     * 检查该字段是否已被打包为长度限定字段。如果是，则更新内部状态以反映正在读取打包字段。
+     * जांचें कि क्या यह फ़ील्ड लंबाई-सीमित फ़ील्ड में पैक किया गया है। यदि हाँ, तो आंतरिक स्थिति को अपडेट करें ताकि यह दर्शा सके कि पैक किए गए फ़ील्ड पढ़े जा रहे हैं।
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Simulate checking if the field is packed
-        // This is a placeholder for the actual logic to determine if the field is packed
-        boolean packedFieldCondition = /* logic to determine if packed */ false;
-
-        if (packedFieldCondition) {
-            isPackedField = true;
-            // Update internal state to reflect that we are reading a packed field
-            // Additional logic can be added here as needed
+        if (isPacked) {
+            // Update internal position to indicate that packed fields are being read
+            internalPosition++;
         } else {
-            isPackedField = false;
+            throw new IOException("Field is not packed.");
         }
+    }
+
+    // Constructor and other methods can be added here
+    public FieldChecker(boolean isPacked) {
+        this.isPacked = isPacked;
+        this.internalPosition = 0;
     }
 }

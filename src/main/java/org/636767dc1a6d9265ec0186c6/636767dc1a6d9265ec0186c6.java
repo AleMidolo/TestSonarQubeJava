@@ -1,17 +1,19 @@
+import java.util.Set;
+
 public class FieldChecker {
     
-    private Fields storedFields;
+    private Set<String> properties;
 
-    public FieldChecker(Fields storedFields) {
-        this.storedFields = storedFields;
+    public FieldChecker(Set<String> properties) {
+        this.properties = properties;
     }
 
-    /**
-     * 当输入字段已经存储在属性中时返回真。
+    /** 
+     * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
      */
     private boolean containsAllFields(Fields fields) {
-        for (Field field : fields.getAllFields()) {
-            if (!storedFields.contains(field)) {
+        for (String field : fields.getFieldNames()) {
+            if (!properties.contains(field)) {
                 return false;
             }
         }
@@ -20,38 +22,13 @@ public class FieldChecker {
 }
 
 class Fields {
-    private Set<Field> fieldSet;
+    private Set<String> fieldNames;
 
-    public Fields(Set<Field> fieldSet) {
-        this.fieldSet = fieldSet;
+    public Fields(Set<String> fieldNames) {
+        this.fieldNames = fieldNames;
     }
 
-    public Set<Field> getAllFields() {
-        return fieldSet;
-    }
-
-    public boolean contains(Field field) {
-        return fieldSet.contains(field);
-    }
-}
-
-class Field {
-    private String name;
-
-    public Field(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Field)) return false;
-        Field other = (Field) obj;
-        return name.equals(other.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
+    public Set<String> getFieldNames() {
+        return fieldNames;
     }
 }

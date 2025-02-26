@@ -1,24 +1,26 @@
-public class FilePathUtils {
+public class FilePathSeparator {
 
     /** 
-     * 返回最后一个目录分隔符字符的索引。<p> 此方法将处理Unix或Windows格式的文件。返回最后一个正斜杠或反斜杠的位置。<p> 无论代码运行在哪台机器上，输出都是相同的。
-     * @param filename  要查找最后一个路径分隔符的文件名，如果为null则返回-1
-     * @return 最后一个分隔符字符的索引，如果没有这样的字符则返回-1
+     * अंतिम निर्देशिका विभाजक वर्ण का अनुक्रमांक लौटाता है। <p> यह विधि फ़ाइल को यूनिक्स या विंडोज़ प्रारूप में संभालेगी। अंतिम फॉरवर्ड या बैकस्लैश की स्थिति लौटाई जाती है। <p> आउटपुट उस मशीन के अनुसार समान होगा जिस पर कोड चल रहा है।
+     * @param filename  वह फ़ाइल नाम जिसमें अंतिम पथ विभाजक को खोजना है, null होने पर -1 लौटाता है
+     * @return अंतिम विभाजक वर्ण का अनुक्रमांक, या -1 यदि ऐसा कोई वर्ण नहीं है
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
-        int lastUnixSeparator = filename.lastIndexOf('/');
-        int lastWindowsSeparator = filename.lastIndexOf('\\');
-        return Math.max(lastUnixSeparator, lastWindowsSeparator);
+        
+        int lastForwardSlash = filename.lastIndexOf('/');
+        int lastBackSlash = filename.lastIndexOf('\\');
+        
+        return Math.max(lastForwardSlash, lastBackSlash);
     }
 
     public static void main(String[] args) {
-        // 测试代码
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 17
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 14
-        System.out.println(indexOfLastSeparator("file.txt")); // 输出: -1
-        System.out.println(indexOfLastSeparator(null)); // 输出: -1
+        // Test cases
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // Output: 20
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // Output: 15
+        System.out.println(indexOfLastSeparator("file.txt")); // Output: -1
+        System.out.println(indexOfLastSeparator(null)); // Output: -1
     }
 }

@@ -8,15 +8,15 @@ public class ByteReader {
         this.buffer = buffer;
     }
 
-    /**
-     * 从<code>buffer</code>中读取一个字节，并在必要时进行填充。
-     * @return 输入流中的下一个字节。
-     * @throws IOException 如果没有更多数据可用。
+    /** 
+     * <code>buffer</code> से एक बाइट पढ़ता है, और आवश्यकतानुसार इसे फिर से भरता है।
+     * @return इनपुट स्ट्रीम से अगली बाइट।
+     * @throws IOException यदि कोई और डेटा उपलब्ध नहीं है।
      */
     public byte readByte() throws IOException {
         int data = buffer.read();
         if (data == -1) {
-            throw new IOException("没有更多数据可用");
+            throw new IOException("No more data available");
         }
         return (byte) data;
     }

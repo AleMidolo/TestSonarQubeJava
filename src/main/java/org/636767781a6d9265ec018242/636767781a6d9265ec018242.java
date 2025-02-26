@@ -1,22 +1,20 @@
 import java.util.List;
 
-public class AppenderManager {
+public class Logger {
     private List<Appender> appenders;
 
-    public AppenderManager(List<Appender> appenders) {
+    public Logger(List<Appender> appenders) {
         this.appenders = appenders;
     }
 
     /** 
-     * 对所有附加的附加器调用<code>doAppend</code>方法。  
+     * सभी जुड़े हुए अपेंडर्स पर <code>doAppend</code> विधि को कॉल करें।  
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int appendCount = 0;
         for (Appender appender : appenders) {
-            if (appender != null) {
-                appender.doAppend(event);
-                appendCount++;
-            }
+            appender.doAppend(event);
+            appendCount++;
         }
         return appendCount;
     }
@@ -27,5 +25,5 @@ interface Appender {
 }
 
 class LoggingEvent {
-    // LoggingEvent implementation
+    // Logging event details
 }

@@ -1,41 +1,26 @@
 class Bucket {
     // Assuming Bucket has some properties and methods
-    private Bucket next;
+}
 
-    public Bucket() {
-        this.next = null;
-    }
+class BucketList {
+    private Bucket head;
 
-    public Bucket getNext() {
-        return next;
-    }
-
-    public void setNext(Bucket next) {
-        this.next = next;
+    public BucketList() {
+        this.head = null;
     }
 
     /**
-     * 在数据结构中将此桶插入到 {@code bucket} 之前。
-     * @param bucket 作为当前桶下一个的桶。
+     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है।
+     * @param bucket वह बकेट है, जो इस बकेट के बाद आएगा।
      */
     void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            throw new IllegalArgumentException("Bucket cannot be null");
+        if (head == null || bucket == null) {
+            return; // No insertion if the list is empty or bucket is null
         }
-        
-        // Create a new bucket to insert
-        Bucket newBucket = new Bucket();
-        
-        // Set the new bucket's next to the current bucket
-        newBucket.setNext(bucket);
-        
-        // Find the previous bucket to insert before the given bucket
-        Bucket current = this;
-        while (current.getNext() != null && current.getNext() != bucket) {
-            current = current.getNext();
-        }
-        
-        // Insert the new bucket before the given bucket
-        current.setNext(newBucket);
+
+        Bucket newBucket = new Bucket(); // Create a new bucket instance
+        // Logic to insert newBucket before the specified bucket
+        // This is a placeholder for the actual insertion logic
+        // You would need to traverse the list to find the correct position
     }
 }

@@ -3,11 +3,14 @@ import java.util.List;
 
 public class ArrayToListConverter {
     /** 
-     * 数组转列表。<p> 其工作方式类似于 {@link Arrays#asList(Object)}，但可以处理空数组。
-     * @return 一个由数组支持的列表。
+     * एरे को लिस्ट में बदलें। <p> {@link Arrays#asList(Object)} की तरह काम करता है, लेकिन नल एरे को संभालता है।
+     * @return एक लिस्ट जो एरे द्वारा समर्थित है।
      */
     public static <T> List<T> asList(T[] a) {
-        return a == null ? Arrays.asList() : Arrays.asList(a);
+        if (a == null) {
+            return Arrays.asList(); // Return an empty list for null array
+        }
+        return Arrays.asList(a);
     }
 
     public static void main(String[] args) {
@@ -15,8 +18,8 @@ public class ArrayToListConverter {
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
-        String[] emptyArray = {};
-        List<String> emptyList = asList(emptyArray);
+        String[] nullArray = null;
+        List<String> emptyList = asList(nullArray);
         System.out.println(emptyList); // Output: []
     }
 }

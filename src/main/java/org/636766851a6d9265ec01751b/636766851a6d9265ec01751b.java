@@ -1,9 +1,9 @@
 public class HexDecoder {
 
     /** 
-     * 辅助函数，用于从字符串中解码十六进制数字的一半。
-     * @param c 要解码的十六进制数字的ASCII字符。必须在 {@code [0-9a-fA-F]} 范围内。
-     * @return 由给定的ASCII字符表示的十六进制值，如果字符无效，则返回 {@link Character#MAX_VALUE}。
+     * एक सहायक जो एक स्ट्रिंग से हेक्साडेसिमल संख्या के आधे को डिकोड करता है।
+     * @param c वह ASCII वर्ण है जिसे डिकोड करना है। इसे {@code [0-9a-fA-F]} के रेंज में होना चाहिए।
+     * @return ASCII वर्ण में प्रदर्शित हेक्साडेसिमल मान, या {@link Character#MAX_VALUE} यदि वर्ण अमान्य है।
      */
     private static char decodeHexNibble(final char c) {
         if (c >= '0' && c <= '9') {
@@ -13,12 +13,12 @@ public class HexDecoder {
         } else if (c >= 'A' && c <= 'F') {
             return (char) (c - 'A' + 10);
         } else {
-            return Character.MAX_VALUE;
+            return Character.MAX_VALUE; // Invalid character
         }
     }
 
     public static void main(String[] args) {
-        // Test the decodeHexNibble function
+        // Test the decodeHexNibble method
         System.out.println(decodeHexNibble('0')); // Output: 0
         System.out.println(decodeHexNibble('a')); // Output: 10
         System.out.println(decodeHexNibble('F')); // Output: 15

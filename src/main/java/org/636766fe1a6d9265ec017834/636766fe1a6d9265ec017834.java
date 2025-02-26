@@ -1,8 +1,8 @@
 import java.util.UUID;
 
-public class SessionUtil {
+public class SessionIdGenerator {
     /** 
-     * 会话 ID。 
+     * सत्र आईडी। 
      */
     public static String sessionId() {
         return UUID.randomUUID().toString();

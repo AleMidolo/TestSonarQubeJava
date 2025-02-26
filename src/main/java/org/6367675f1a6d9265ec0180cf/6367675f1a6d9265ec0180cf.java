@@ -1,28 +1,32 @@
-import org.jgrapht.Graph;
 import java.util.Set;
+import org.jgrapht.Graph;
 
 public class GraphUtils {
 
-    /**
-     * 检查由给定的 <code>vertices</code> 诱导的 <code>graph</code> 的子图是否为完全图，即一个团。
-     * @param graph 图。
-     * @param vertices 用于诱导子图的顶点。
-     * @return 如果诱导的子图是一个团，则返回真。
+    /** 
+     * जांचें कि <code>graph</code> द्वारा दिए गए <code>vertices</code> से प्रेरित उपग्राफ पूर्ण है, अर्थात् एक क्लिक है।
+     * @param graph ग्राफ।
+     * @param vertices उपग्राफ को प्रेरित करने के लिए वर्टिस।
+     * @return यदि प्रेरित उपग्राफ एक क्लिक है तो true।
      */
-    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+        // Check if the number of edges in the induced subgraph equals the number of edges in a complete graph
         int vertexCount = vertices.size();
-        if (vertexCount < 2) {
-            return true; // A single vertex or empty set is trivially a clique
-        }
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2; // Complete graph edges formula
 
-        // Check if every pair of vertices in the set is connected
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Found a pair of vertices that are not connected
+        int actualEdges = 0;
+        for (V vertex : vertices) {
+            for (E edge : graph.outgoingEdgesOf(vertex)) {
+                V targetVertex = graph.getEdgeTarget(edge);
+                if (vertices.contains(targetVertex)) {
+                    actualEdges++;
                 }
             }
         }
-        return true; // All pairs are connected, thus it's a clique
+
+        // Each edge is counted twice (once from each vertex), so divide by 2
+        actualEdges /= 2;
+
+        return actualEdges == expectedEdges;
     }
 }

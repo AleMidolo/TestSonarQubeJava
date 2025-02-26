@@ -1,37 +1,37 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class MessagePrinter {
-    private HashMap<String, Integer> messageTimestamps;
+    private Map<String, Integer> messageTimestamps;
 
     public MessagePrinter() {
         messageTimestamps = new HashMap<>();
     }
 
-    /** 
-     * 如果在给定的时间戳下应该打印消息，则返回真，否则返回假。如果此方法返回假，则消息将不会被打印。时间戳的粒度为秒。
+    /**
+     * यदि संदेश को दिए गए टाइमस्टैम्प में प्रिंट किया जाना चाहिए, तो true लौटाता है, अन्यथा false लौटाता है। 
+     * यदि यह विधि false लौटाती है, तो संदेश प्रिंट नहीं किया जाएगा। 
+     * टाइमस्टैम्प सेकंड की ग्रैन्युलैरिटी में है। 
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (!messageTimestamps.containsKey(message)) {
             messageTimestamps.put(message, timestamp);
             return true;
-        } else {
-            int lastTimestamp = messageTimestamps.get(message);
-            if (timestamp - lastTimestamp >= 10) {
-                messageTimestamps.put(message, timestamp);
-                return true;
-            } else {
-                return false;
-            }
         }
+        
+        int lastTimestamp = messageTimestamps.get(message);
+        if (timestamp - lastTimestamp >= 10) {
+            messageTimestamps.put(message, timestamp);
+            return true;
+        }
+        
+        return false;
     }
 
     public static void main(String[] args) {
         MessagePrinter printer = new MessagePrinter();
-        System.out.println(printer.shouldPrintMessage(1, "foo")); // true
-        System.out.println(printer.shouldPrintMessage(2, "bar")); // true
-        System.out.println(printer.shouldPrintMessage(3, "foo")); // false
-        System.out.println(printer.shouldPrintMessage(8, "bar")); // false
-        System.out.println(printer.shouldPrintMessage(10, "foo")); // true
-        System.out.println(printer.shouldPrintMessage(11, "bar")); // true
+        System.out.println(printer.shouldPrintMessage(1, "Hello")); // true
+        System.out.println(printer.shouldPrintMessage(2, "Hello")); // false
+        System.out.println(printer.shouldPrintMessage(11, "Hello")); // true
     }
 }

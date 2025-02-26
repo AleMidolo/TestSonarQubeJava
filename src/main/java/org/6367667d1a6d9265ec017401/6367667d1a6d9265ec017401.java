@@ -1,9 +1,12 @@
-public class StringUnescaper {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    /** 
-     * <p>对<code>String</code>中找到的任何Java字面量进行反转义。例如，它将把一系列<code>'\'</code>和<code>'n'</code>转换为换行符，除非<code>'\'</code>前面有另一个<code>'\'</code>。</p>
-     * @param str 要反转义的<code>String</code>，可以为空
-     * @return 一个新的反转义<code>String</code>，如果输入字符串为空，则返回<code>null</code>
+public class UnescapeJava {
+
+    /**
+     * <p>किसी भी Java लिटरल को <code>String</code> में अनएस्केप करता है। उदाहरण के लिए, यह <code>'\'</code> और <code>'n'</code> के अनुक्रम को एक नई पंक्ति के चर में बदल देगा, जब तक कि <code>'\'</code> के पहले कोई अन्य <code>'\'</code> न हो।</p>
+     * @param str वह <code>String</code> जिसे अनएस्केप करना है, यह null हो सकता है
+     * @return एक नई अनएस्केप की गई <code>String</code>, यदि इनपुट स्ट्रिंग null है तो <code>null</code>
      */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
@@ -25,14 +28,20 @@ public class StringUnescaper {
                     case 'r':
                         result.append('\r');
                         break;
-                    case '\"':
-                        result.append('\"');
+                    case 'b':
+                        result.append('\b');
+                        break;
+                    case 'f':
+                        result.append('\f');
+                        break;
+                    case '\\':
+                        result.append('\\');
                         break;
                     case '\'':
                         result.append('\'');
                         break;
-                    case '\\':
-                        result.append('\\');
+                    case '\"':
+                        result.append('\"');
                         break;
                     default:
                         result.append(c);
@@ -48,12 +57,17 @@ public class StringUnescaper {
             }
         }
 
+        // If the last character was an escape character, append it
+        if (isEscaped) {
+            result.append('\\');
+        }
+
         return result.toString();
     }
 
     public static void main(String[] args) throws Exception {
-        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\";
-        String unescapedString = unescapeJava(testString);
-        System.out.println(unescapedString);
+        String input = "Hello\\nWorld! This is a test string with a tab\\tcharacter.";
+        String output = unescapeJava(input);
+        System.out.println(output);
     }
 }

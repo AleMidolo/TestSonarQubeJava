@@ -1,19 +1,23 @@
-public class FrameVisitor {
-    private int[] currentFrame;
-    private int currentIndex;
+public class StackMapFrameVisitor {
+    private int currentFrame;
 
     /**
-     * 开始访问一个新的栈映射帧，该帧存储在 {@link #currentFrame} 中。
-     * @param offset   与该帧对应的指令的字节码偏移量。
-     * @param numLocal 当前帧中的局部变量数量。
-     * @param numStack 当前帧中的栈元素数量。
-     * @return 下一个要写入该帧的元素的索引。
+     * एक नए स्टैक मैप फ्रेम की यात्रा शुरू करता है, जो {@link #currentFrame} में संग्रहीत है।
+     * @param offset   उस निर्देश का बाइटकोड ऑफसेट, जिसके लिए फ्रेम संबंधित है।
+     * @param numLocal फ्रेम में स्थानीय चर की संख्या।
+     * @param numStack फ्रेम में स्टैक तत्वों की संख्या।
+     * @return इस फ्रेम में लिखे जाने वाले अगले तत्व का अनुक्रमांक।
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Initialize the current frame with the size of local variables and stack
-        currentFrame = new int[numLocal + numStack];
-        currentIndex = 0; // Reset the index for writing to the frame
-        // You can add logic here to handle the offset if needed
-        return currentIndex; // Return the index for the next element to write
+        // Logic to handle the start of a new stack map frame
+        // For demonstration, we will just update the currentFrame and return the next index
+        currentFrame = offset + numLocal + numStack; // Example logic
+        return currentFrame;
+    }
+
+    public static void main(String[] args) {
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
+        int nextIndex = visitor.visitFrameStart(10, 2, 3);
+        System.out.println("Next index to write: " + nextIndex);
     }
 }

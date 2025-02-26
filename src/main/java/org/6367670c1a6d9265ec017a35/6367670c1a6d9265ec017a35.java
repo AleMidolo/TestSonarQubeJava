@@ -1,12 +1,12 @@
 public class StringUtils {
 
     /** 
-     * <p>检查一个字符串是否以指定的后缀结尾（可选是否区分大小写）。</p>
+     * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग के साथ समाप्त होता है (वैकल्पिक रूप से केस संवेदनशीलता को अनदेखा करते हुए)।</p>
      * @see String#endsWith(String)
-     * @param str  要检查的字符串，可以为空
-     * @param suffix 要查找的后缀，可以为空
-     * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
-     * @return 如果字符串以前缀开头或两个都是 <code>null</code>则返回<code>true</code>
+     * @param str  वह String जिसे जांचना है, यह null हो सकता है
+     * @param suffix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
+     * @param ignoreCase यह दर्शाता है कि तुलना में केस को अनदेखा करना चाहिए या नहीं (केस संवेदनशीलता को अनदेखा करना)।
+     * @return <code>true</code> यदि String उपसर्ग के साथ शुरू होता है या दोनों <code>null</code> हैं
      */
     private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
         if (str == null && suffix == null) {
@@ -23,10 +23,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(endsWith("HelloWorld", "world", true)); // true
         System.out.println(endsWith("HelloWorld", "World", false)); // true
-        System.out.println(endsWith("HelloWorld", "Hello", false)); // false
-        System.out.println(endsWith(null, null, true)); // true
-        System.out.println(endsWith(null, "test", true)); // false
+        System.out.println(endsWith("HelloWorld", "world", true));  // true
+        System.out.println(endsWith(null, null, false));            // true
+        System.out.println(endsWith("HelloWorld", null, false));    // false
+        System.out.println(endsWith(null, "World", false));         // false
     }
 }

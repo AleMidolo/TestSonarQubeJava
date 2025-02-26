@@ -10,24 +10,27 @@ import java.util.Set;
 
 public class GraphUtils<V, E> {
 
-    /** 
-     * 将集合表示转换为图路径。
-     * @param tour 包含可巡回边的集合
-     * @param graph 图
-     * @return 图路径
+    /**
+     * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
+     * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
+     * @param graph ग्राफ
+     * @return एक ग्राफ पथ
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
+        V previousVertex = null;
+
         for (E edge : tour) {
-            V source = graph.getEdgeSource(edge);
-            V target = graph.getEdgeTarget(edge);
-            if (!vertexList.contains(source)) {
-                vertexList.add(source);
+            V sourceVertex = graph.getEdgeSource(edge);
+            V targetVertex = graph.getEdgeTarget(edge);
+
+            if (previousVertex == null) {
+                vertexList.add(sourceVertex);
             }
-            if (!vertexList.contains(target)) {
-                vertexList.add(target);
-            }
+            vertexList.add(targetVertex);
+            previousVertex = targetVertex;
         }
+
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -51,15 +54,17 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+                return 0; // Weight calculation can be added if needed
             }
 
             @Override
-            public String toString() {
-                return "GraphPath{" +
-                        "vertices=" + vertexList +
-                        ", edges=" + tour +
-                        '}';
+            public int getLength() {
+                return vertexList.size() - 1;
+            }
+
+            @Override
+            public List<V> getVertexList() {
+                return vertexList;
             }
         };
     }

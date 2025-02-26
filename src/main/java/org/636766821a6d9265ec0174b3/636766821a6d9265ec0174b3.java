@@ -1,34 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 
-public class BroadcastFilter {
-
-    private List<Object> filters;
-
-    public BroadcastFilter() {
-        this.filters = new ArrayList<>();
-    }
+public class BroadcastFilter implements Processor {
 
     /**
-     * 调用 {@link BroadcastFilter}
+     * {@link BroadcastFilter} को कॉल करें
      * @param msg
      * @return
      */
     protected Object filter(Object msg) {
-        for (Object filter : filters) {
-            // Assuming filter is a functional interface that takes an Object and returns an Object
-            msg = applyFilter(filter, msg);
+        // Implement your filtering logic here
+        if (msg instanceof String) {
+            String message = (String) msg;
+            // Example filter: only allow messages that contain "valid"
+            if (message.contains("valid")) {
+                return msg; // return the message if it passes the filter
+            }
         }
-        return msg;
+        return null; // return null if the message does not pass the filter
     }
 
-    private Object applyFilter(Object filter, Object msg) {
-        // Implement the logic to apply the filter to the message
-        // This is a placeholder for actual filter logic
-        return msg; // Return the modified message after applying the filter
-    }
-
-    public void addFilter(Object filter) {
-        filters.add(filter);
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        Object msg = exchange.getIn().getBody();
+        Object filteredMsg = filter(msg);
+        if (filteredMsg != null) {
+            exchange.getIn().setBody(filteredMsg);
+        } else {
+            exchange.getIn().setBody("Message filtered out");
+        }
     }
 }

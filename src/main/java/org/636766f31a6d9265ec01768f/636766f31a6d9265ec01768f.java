@@ -1,25 +1,29 @@
 public class ArrayCloner {
+    
     /** 
-     * <p>克隆一个数组，返回类型转换的结果并能处理 <code>null</code>。</p> <p>对于 <code>null</code> 输入数组，此方法返回 <code>null</code>。</p>
-     * @param array  要克隆的数组，可以是 <code>null</code>
-     * @return 克隆后的数组，如果输入为 <code>null</code> 则返回 <code>null</code>
+     * <p>एक ऐरे को क्लोन करता है और टाइपकास्ट परिणाम लौटाता है और <code>null</code> को संभालता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  क्लोन करने के लिए ऐरे, यह <code>null</code> हो सकता है
+     * @return क्लोन किया गया ऐरे, <code>null</code> यदि <code>null</code> इनपुट हो
      */
     public static char[] clone(final char[] array) {
         if (array == null) {
             return null;
         }
-        char[] clonedArray = new char[array.length];
-        System.arraycopy(array, 0, clonedArray, 0, array.length);
-        return clonedArray;
+        return array.clone();
     }
 
     public static void main(String[] args) {
         char[] original = {'a', 'b', 'c'};
         char[] cloned = clone(original);
-        System.out.println(cloned); // Output: abc
-
-        char[] nullArray = null;
-        char[] clonedNull = clone(nullArray);
-        System.out.println(clonedNull); // Output: null
+        
+        // Print the cloned array
+        if (cloned != null) {
+            for (char c : cloned) {
+                System.out.print(c + " ");
+            }
+        } else {
+            System.out.println("Cloned array is null");
+        }
     }
 }

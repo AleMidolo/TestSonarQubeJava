@@ -1,16 +1,15 @@
 public class BooleanConverter {
+
     /** 
-     * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。  
+     * यदि <code>value</code> "true" है, तो <code>true</code> लौटाया जाता है। यदि <code>value</code> "false" है, तो <code>false</code> लौटाया जाता है। अन्यथा, <code>default</code> लौटाया जाता है। <p>value का केस महत्वपूर्ण नहीं है।  
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
             return dEfault;
         }
         switch (value.toLowerCase()) {
-            case "真":
             case "true":
                 return true;
-            case "假":
             case "false":
                 return false;
             default:
@@ -19,9 +18,9 @@ public class BooleanConverter {
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean("真", false)); // true
-        System.out.println(toBoolean("假", true));  // false
-        System.out.println(toBoolean("其他", true)); // true
-        System.out.println(toBoolean("其他", false)); // false
+        System.out.println(toBoolean("true", false));  // Output: true
+        System.out.println(toBoolean("false", true));  // Output: false
+        System.out.println(toBoolean("other", true));   // Output: true
+        System.out.println(toBoolean(null, false));      // Output: false
     }
 }

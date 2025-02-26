@@ -1,9 +1,8 @@
 public class ArrayUtils {
-
     /** 
-     * <p>检查一个原始双精度数组是否为空或<code>null</code>。</p>
-     * @param array  要测试的数组
-     * @return 如果数组为空或<code>null</code>则返回<code>true</code>
+     * <p>जांचता है कि क्या प्राइमिटिव डबल्स का एक एरे खाली है या <code>null</code> है।</p>
+     * @param array  परीक्षण के लिए एरे
+     * @return <code>true</code> यदि एरे खाली है या <code>null</code> है
      * @since 2.1
      */
     public static boolean isEmpty(final double[] array) {

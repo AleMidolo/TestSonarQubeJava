@@ -1,24 +1,14 @@
 public class NonZeroCounter {
     
-    private int[][] matrix; // Assuming a 2D array to represent the matrix
-
-    public NonZeroCounter(int[][] matrix) {
-        this.matrix = matrix;
-    }
-
-    /** 
-     * 获取一行中非零条目的数量。
-     * @param row 行号
-     * @return 一行中非零条目的数量
+    /**
+     * एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या प्राप्त करें।
+     * @param row पंक्ति
+     * @return एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या
      */
-    public int nonZeros(int row) {
-        if (row < 0 || row >= matrix.length) {
-            throw new IllegalArgumentException("Invalid row index");
-        }
-        
+    public int nonZeros(int[] row) {
         int count = 0;
-        for (int value : matrix[row]) {
-            if (value != 0) {
+        for (int num : row) {
+            if (num != 0) {
                 count++;
             }
         }
@@ -26,15 +16,8 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        int[][] sampleMatrix = {
-            {1, 0, 2, 0},
-            {0, 0, 0, 0},
-            {3, 4, 0, 5}
-        };
-        
-        NonZeroCounter counter = new NonZeroCounter(sampleMatrix);
-        System.out.println("Non-zero entries in row 0: " + counter.nonZeros(0)); // Output: 2
-        System.out.println("Non-zero entries in row 1: " + counter.nonZeros(1)); // Output: 0
-        System.out.println("Non-zero entries in row 2: " + counter.nonZeros(2)); // Output: 3
+        NonZeroCounter counter = new NonZeroCounter();
+        int[] row = {1, 0, 2, 0, 3, 4, 0};
+        System.out.println("गैर-शून्य प्रविष्टियों की संख्या: " + counter.nonZeros(row));
     }
 }

@@ -2,10 +2,10 @@ import java.util.Collection;
 
 public class MatchFinder {
     /** 
-     * 返回在 '<code>source</code>' 中包含的 '<code>candidates</code>' 的第一个元素。如果 '<code>candidates</code>' 中没有任何元素出现在 '<code>source</code>' 中，则返回 <code>null</code>。迭代顺序取决于 {@link Collection} 的具体实现。
-     * @param source 源集合
-     * @param candidates 要搜索的候选项
-     * @return 第一个匹配的对象，如果未找到则返回 <code>null</code>
+     * '<code>candidates</code>' में से पहला तत्व लौटाएं जो '<code>source</code>' में मौजूद है। यदि '<code>candidates</code>' में कोई तत्व '<code>source</code>' में नहीं है, तो <code>null</code> लौटाएं। पुनरावृत्ति का क्रम {@link Collection} कार्यान्वयन विशिष्ट है।
+     * @param source स्रोत संग्रह
+     * @param candidates खोजने के लिए उम्मीदवार
+     * @return पहला मौजूद वस्तु, या यदि नहीं मिला तो <code>null</code>
      */
     public static Object findFirstMatch(Collection source, Collection candidates) {
         for (Object candidate : candidates) {

@@ -1,31 +1,30 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class SymbolTable {
+public class TypeSymbolTable {
     private Map<String, Integer> typeTable;
     private int currentIndex;
 
-    public SymbolTable() {
+    public TypeSymbolTable() {
         this.typeTable = new HashMap<>();
         this.currentIndex = 0;
     }
 
     /**
-     * 在此符号表的类型表中添加一个类型。如果类型表已经包含类似类型，则不执行任何操作。
-     * @param value 一个内部类名。
-     * @return 具有给定值的新类型符号或已存在类型符号的索引。
+     * इस प्रतीक तालिका के प्रकार तालिका में एक प्रकार जोड़ता है। यदि प्रकार तालिका में पहले से ही एक समान प्रकार मौजूद है, तो कुछ नहीं करता है।
+     * @param value एक आंतरिक वर्ग का नाम।
+     * @return दिए गए मान के साथ एक नए या पहले से मौजूद प्रकार प्रतीक का अनुक्रमांक।
      */
     public int addType(final String value) {
-        if (typeTable.containsKey(value)) {
-            return typeTable.get(value);
-        } else {
+        if (!typeTable.containsKey(value)) {
             typeTable.put(value, currentIndex);
-            return currentIndex++;
+            currentIndex++;
         }
+        return typeTable.get(value);
     }
 
     public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable();
+        TypeSymbolTable symbolTable = new TypeSymbolTable();
         System.out.println(symbolTable.addType("MyClass")); // Output: 0
         System.out.println(symbolTable.addType("MyClass")); // Output: 0
         System.out.println(symbolTable.addType("AnotherClass")); // Output: 1

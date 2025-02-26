@@ -3,10 +3,14 @@ import org.apache.log4j.spi.LoggingEvent;
 public class Logger {
     
     /**
-     * 此方法执行实际的写入操作
+     * यह विधि वास्तविक लेखन करती है
      */
     protected void subAppend(LoggingEvent event) {
-        // 实际的写入操作，例如将日志事件写入文件或控制台
-        System.out.println("Logging event: " + event.getMessage());
+        if (event != null) {
+            // यहाँ लॉगिंग इवेंट को संभालने का कोड लिखें
+            System.out.println("Logging Event: " + event.getMessage());
+        } else {
+            System.out.println("No event to log.");
+        }
     }
 }

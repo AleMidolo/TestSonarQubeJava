@@ -1,9 +1,9 @@
 public class FilePathUtil {
     
     /** 
-     * 从给定路径中去除文件名扩展名，例如 "mypath/myfile.txt" -&gt; "mypath/myfile"。
-     * @param path 文件路径（可能为 <code>null</code>）
-     * @return 去除文件名扩展名后的路径，如果没有扩展名则返回 <code>null</code>
+     * दिए गए पथ से फ़ाइल नाम का एक्सटेंशन हटा दें, जैसे "mypath/myfile.txt" -&gt; "mypath/myfile"।
+     * @param path फ़ाइल का पथ (यह <code>null</code> हो सकता है)
+     * @return फ़ाइल नाम के एक्सटेंशन के बिना पथ, या <code>null</code> यदि कोई नहीं है
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
@@ -17,12 +17,11 @@ public class FilePathUtil {
             return path.substring(0, lastDotIndex);
         }
         
-        return null;
+        return path;
     }
 
     public static void main(String[] args) {
-        System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: null
-        System.out.println(stripFilenameExtension(null));                // Output: null
+        String path = "mypath/myfile.txt";
+        System.out.println(stripFilenameExtension(path)); // Output: mypath/myfile
     }
 }

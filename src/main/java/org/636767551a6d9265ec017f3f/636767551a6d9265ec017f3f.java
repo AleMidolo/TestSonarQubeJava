@@ -1,14 +1,14 @@
 public class ArrayUtils {
-    /**
-     * 交换给定数组中指定索引的两个元素。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param i 第一个元素的索引
-     * @param j 第二个元素的索引
+    /** 
+     * दिए गए ऐरे में निर्दिष्ट अनुक्रमांक पर दो तत्वों का आदान-प्रदान करता है।
+     * @param < V > ऐरे में तत्वों का प्रकार
+     * @param arr ऐरे
+     * @param i पहले तत्व का अनुक्रमांक
+     * @param j दूसरे तत्व का अनुक्रमांक
      */
     public static final <V> void swap(V[] arr, int i, int j) {
         if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
-            throw new IllegalArgumentException("Invalid index or array is null");
+            throw new IllegalArgumentException("Invalid index or null array");
         }
         V temp = arr[i];
         arr[i] = arr[j];
@@ -17,9 +17,8 @@ public class ArrayUtils {
 
     public static void main(String[] args) {
         Integer[] array = {1, 2, 3, 4, 5};
+        System.out.println("Before swap: " + java.util.Arrays.toString(array));
         swap(array, 1, 3);
-        for (Integer num : array) {
-            System.out.print(num + " ");
-        }
+        System.out.println("After swap: " + java.util.Arrays.toString(array));
     }
 }

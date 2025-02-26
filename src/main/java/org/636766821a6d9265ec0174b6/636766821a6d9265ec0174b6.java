@@ -3,8 +3,8 @@ import java.lang.reflect.Type;
 
 public class GenericTypeResolver {
 
-    /**
-     * 使用 {@code targetType} 的类型变量信息解析 {@code genericType} 的参数。如果 {@code genericType} 不是参数化的，或者无法解析参数，则返回 {@code null}。
+    /** 
+     * {@code genericType} के लिए तर्कों को {@code targetType} के प्रकार चर जानकारी का उपयोग करके हल करता है। यदि {@code genericType} पैरामीटराइज्ड नहीं है या यदि तर्कों को हल नहीं किया जा सकता है, तो {@code null} लौटाता है।
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -12,19 +12,19 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
-        if (rawType instanceof Class<?>) {
-            Class<?> rawClass = (Class<?>) rawType;
-            if (targetType.isAssignableFrom(rawClass)) {
-                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-                for (int i = 0; i < actualTypeArguments.length; i++) {
-                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
-                }
-                return resolvedArguments;
-            }
+        if (!rawType.equals(targetType)) {
+            return null;
         }
-        return null;
+
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+
+        for (int i = 0; i < actualTypeArguments.length; i++) {
+            resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+        }
+
+        return resolvedArguments;
     }
 }

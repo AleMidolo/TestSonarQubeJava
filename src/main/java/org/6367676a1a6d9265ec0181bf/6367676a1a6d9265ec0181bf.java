@@ -1,9 +1,8 @@
-public class QuoteIfStringExample {
-
+public class Main {
     /**
-     * 如果给定的对象是字符串，则将其转换为带单引号的字符串；否则保持对象不变。
-     * @param obj 输入对象（例如："myString"）
-     * @return 带引号的字符串（例如："‘myString’"），如果不是字符串，则返回输入对象本身
+     * दिए गए ऑब्जेक्ट को एक स्ट्रिंग में बदलें यदि यह एक स्ट्रिंग है; अन्यथा ऑब्जेक्ट को जैसा है वैसा ही रखें।
+     * @param obj इनपुट ऑब्जेक्ट (जैसे "myString")
+     * @return उद्धृत स्ट्रिंग (जैसे "'myString'"), या यदि यह स्ट्रिंग नहीं है तो इनपुट ऑब्जेक्ट को जैसा है वैसा ही
      */
     public static Object quoteIfString(Object obj) {
         if (obj instanceof String) {
@@ -13,8 +12,8 @@ public class QuoteIfStringExample {
     }
 
     public static void main(String[] args) {
-        System.out.println(quoteIfString("myString")); // 输出: 'myString'
-        System.out.println(quoteIfString(123));        // 输出: 123
-        System.out.println(quoteIfString(null));       // 输出: null
+        System.out.println(quoteIfString("myString")); // Output: 'myString'
+        System.out.println(quoteIfString(123));        // Output: 123
+        System.out.println(quoteIfString(null));       // Output: null
     }
 }

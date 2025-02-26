@@ -2,11 +2,11 @@ import org.objectweb.asm.Label;
 
 public class LabelManager {
 
-    /**
-     * 返回与给定字节码偏移量对应的标签。如果该标签尚未被创建，该方法的默认实现会为给定的偏移量创建一个标签。
-     * @param bytecodeOffset 方法中的字节码偏移量。
-     * @param labels 已创建的标签数组，按其偏移量索引。如果bytecodeOffset已经存在标签，则此方法不得创建新的标签。否则，它必须将新标签存储在此数组中。
-     * @return 一个非空的标签，必须等于labels[bytecodeOffset]。
+    /** 
+     * दिए गए बाइटकोड ऑफसेट के लिए संबंधित लेबल लौटाता है। इस विधि का डिफ़ॉल्ट कार्यान्वयन दिए गए ऑफसेट के लिए एक लेबल बनाता है यदि यह पहले से नहीं बनाया गया है।
+     * @param bytecodeOffset एक विधि में बाइटकोड ऑफसेट।
+     * @param labels पहले से बनाए गए लेबल, जो उनके ऑफसेट द्वारा अनुक्रमित हैं। यदि bytecodeOffset के लिए एक लेबल पहले से मौजूद है, तो इस विधि को एक नया लेबल नहीं बनाना चाहिए। अन्यथा, इसे इस ऐरे में नया लेबल संग्रहीत करना चाहिए।
+     * @return एक नॉन-नल लेबल, जो labels[bytecodeOffset] के बराबर होना चाहिए।
      */
     protected Label readLabel(final int bytecodeOffset, final Label[] labels) {
         if (labels[bytecodeOffset] == null) {

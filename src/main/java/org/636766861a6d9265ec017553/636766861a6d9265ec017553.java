@@ -5,7 +5,7 @@ public class Template {
     private Set<String> templateVariables;
 
     public Template() {
-        this.templateVariables = new HashSet<>();
+        templateVariables = new HashSet<>();
     }
 
     public void addTemplateVariable(String name) {
@@ -13,9 +13,9 @@ public class Template {
     }
 
     /** 
-     * 确定模板变量是否是该模板的成员。
-     * @param name 模板变量的名称。
-     * @return 如果模板变量是模板的成员，则返回真；否则返回假。
+     * यह सुनिश्चित करें कि एक टेम्पलेट वेरिएबल इस टेम्पलेट का सदस्य है या नहीं।
+     * @param name नाम टेम्पलेट वेरिएबल।
+     * @return यदि टेम्पलेट वेरिएबल टेम्पलेट का सदस्य है, तो true, अन्यथा false।
      */
     public final boolean isTemplateVariablePresent(String name) {
         return templateVariables.contains(name);
@@ -23,8 +23,8 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        template.addTemplateVariable("var1");
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var2")); // false
+        template.addTemplateVariable("variable1");
+        System.out.println(template.isTemplateVariablePresent("variable1")); // true
+        System.out.println(template.isTemplateVariablePresent("variable2")); // false
     }
 }

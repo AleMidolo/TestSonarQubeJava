@@ -5,24 +5,24 @@ import java.util.Vector;
 public class ClassPathAdder {
 
     /** 
-     * 将目录中的所有jar文件添加到类路径中，表示为URL的Vector。
+     * किसी निर्देशिका में सभी जार फ़ाइलों को क्लासपाथ में जोड़ें, जिसे URL के एक वेक्टर के रूप में दर्शाया गया है।
      */
     @SuppressWarnings("unchecked") 
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("The provided directory does not exist or is not a directory.");
-        }
-
-        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
-        if (files != null) {
-            for (File file : files) {
-                try {
-                    cpV.add(file.toURI().toURL());
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
+            if (files != null) {
+                for (File file : files) {
+                    try {
+                        cpV.add(file.toURI().toURL());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+        } else {
+            System.out.println("The specified directory does not exist or is not a directory.");
         }
     }
 

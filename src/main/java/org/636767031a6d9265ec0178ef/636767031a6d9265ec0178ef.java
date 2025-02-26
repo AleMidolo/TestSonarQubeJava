@@ -2,21 +2,23 @@ import java.lang.reflect.Array;
 
 public class ArrayUtils {
 
-    /**
-     * 返回给定数组的副本，大小比参数大1。数组的最后一个值保留为默认值。
-     * @param array 要复制的数组，不能为 <code>null</code>。
-     * @param newArrayComponentType 如果 <code>array</code> 为 <code>null</code>，则创建一个该类型的大小为1的数组。
-     * @return 一个新复制的数组，大小比输入数组大1。
+    /** 
+     * दिए गए ऐरे की एक प्रति लौटाता है, जो तर्क से 1 बड़ा होता है। ऐरे का अंतिम मान डिफ़ॉल्ट मान पर छोड़ दिया जाता है।
+     * @param array कॉपी करने के लिए ऐरे, <code>null</code> नहीं होना चाहिए।
+     * @param newArrayComponentType यदि <code>array</code> <code>null</code> है, तो इस प्रकार का आकार 1 का ऐरे बनाएं।
+     * @return इनपुट से 1 बड़ा आकार का ऐरे की एक नई प्रति।
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array == null) {
             return Array.newInstance(newArrayComponentType, 1);
         }
-
+        
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
         
-        System.arraycopy(array, 0, newArray, 0, length);
+        for (int i = 0; i < length; i++) {
+            Array.set(newArray, i, Array.get(array, i));
+        }
         
         return newArray;
     }
@@ -24,11 +26,11 @@ public class ArrayUtils {
     public static void main(String[] args) {
         // Example usage
         Integer[] originalArray = {1, 2, 3};
-        Integer[] newArray = (Integer[]) copyArrayGrow1(originalArray, Integer.class);
+        Object newArray = copyArrayGrow1(originalArray, Integer.class);
         
         // Print the new array
-        for (Integer value : newArray) {
-            System.out.print(value + " ");
+        for (int i = 0; i < Array.getLength(newArray); i++) {
+            System.out.println(Array.get(newArray, i));
         }
     }
 }

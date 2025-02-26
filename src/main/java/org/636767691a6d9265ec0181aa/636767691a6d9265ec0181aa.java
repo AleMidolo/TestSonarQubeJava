@@ -2,9 +2,9 @@ import java.util.Arrays;
 
 public class HashCodeUtil {
     /** 
-     * 根据指定数组的内容返回一个哈希码。如果 <code>array</code> 为 <code>null</code>，则此方法返回 0。
-     * @param array 要获取哈希码的长整型数组
-     * @return 长整型数组的哈希码，如果数组为 null，则为 0。
+     * निर्दिष्ट एरे की सामग्री के आधार पर एक हैश कोड लौटाता है। यदि <code>array</code> <code>null</code> है, तो यह विधि 0 लौटाती है।
+     * @param array वह लॉन्ग एरे जिससे हैशकोड प्राप्त करना है
+     * @return लॉन्ग एरे का हैशकोड, जो कि 0 हो सकता है यदि एरे null है।
      */
     public static int nullSafeHashCode(long[] array) {
         if (array == null) {

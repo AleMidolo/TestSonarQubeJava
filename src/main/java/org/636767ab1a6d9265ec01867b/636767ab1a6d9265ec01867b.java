@@ -4,25 +4,23 @@ import java.util.LinkedList;
 public class UTF8Writer {
 
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || lb == null) {
-            throw new IllegalArgumentException("Input string and LinkedBuffer cannot be null");
+        if (str == null || session == null || lb == null) {
+            throw new IllegalArgumentException("Arguments cannot be null");
         }
 
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
+        byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+        lb.write(bytes);
         return lb;
     }
 
     public static class LinkedBuffer {
-        private final LinkedList<byte[]> buffers = new LinkedList<>();
+        private LinkedList<byte[]> buffers = new LinkedList<>();
 
         public void write(byte[] data) {
             buffers.add(data);
         }
 
-        public LinkedList<byte[]> getBuffers() {
-            return buffers;
-        }
+        // Additional methods for LinkedBuffer can be added here
     }
 
     public static class WriteSession {
@@ -30,15 +28,9 @@ public class UTF8Writer {
     }
 
     public static void main(String[] args) {
+        // Example usage
         WriteSession session = new WriteSession();
         LinkedBuffer lb = new LinkedBuffer();
-        String testString = "Hello, UTF-8!";
-        
-        writeUTF8(testString, session, lb);
-        
-        // Output the buffers for verification
-        for (byte[] buffer : lb.getBuffers()) {
-            System.out.println(new String(buffer, StandardCharsets.UTF_8));
-        }
+        writeUTF8("Hello, World!", session, lb);
     }
 }

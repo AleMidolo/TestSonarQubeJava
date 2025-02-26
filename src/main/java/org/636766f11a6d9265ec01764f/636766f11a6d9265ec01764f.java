@@ -11,8 +11,8 @@ public class BeanMap {
     }
 
     /**
-     * 返回 BeanMap 的值。
-     * @return BeanMap 的值。返回的集合是不可修改的。
+     * BeanMap के लिए मान लौटाता है।
+     * @return BeanMap के लिए मान। लौटाई गई संग्रह को संशोधित नहीं किया जा सकता है।
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());
@@ -27,9 +27,9 @@ public class BeanMap {
     public static void main(String[] args) {
         BeanMap beanMap = new BeanMap();
         beanMap.put("key1", "value1");
-        beanMap.put("key2", 42);
-        
+        beanMap.put("key2", "value2");
+
         Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, 42]
+        System.out.println(values); // Output: [value1, value2]
     }
 }

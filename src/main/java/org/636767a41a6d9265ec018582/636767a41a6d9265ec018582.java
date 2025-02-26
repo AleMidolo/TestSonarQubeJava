@@ -3,28 +3,26 @@ import java.io.OutputStream;
 import com.google.protobuf.Schema;
 import com.google.protobuf.LinkedBuffer;
 
-public class MessageWriter {
+public class MessageSerializer {
 
-    /**
-     * 将 {@code message} 序列化，并在前面加上其长度，写入 {@link OutputStream}。
-     * @return 消息的大小
+    /** 
+     * {@code message} को इसके आकार के साथ प्रारंभ करते हुए {@link OutputStream} में सीरियलाइज़ करता है।
+     * @return संदेश का आकार
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message
+        // Serialize the message to a byte array
         int size = schema.getSerializedSize(message);
-        // Write the size of the message
         out.write(intToByteArray(size));
-        // Write the message itself
         schema.writeTo(out, message, buffer);
         return size;
     }
 
     private static byte[] intToByteArray(int value) {
         return new byte[] {
-            (byte) (value >>> 24),
-            (byte) (value >>> 16),
-            (byte) (value >>> 8),
-            (byte) value
+            (byte) (value & 0xFF),
+            (byte) ((value >> 8) & 0xFF),
+            (byte) ((value >> 16) & 0xFF),
+            (byte) ((value >> 24) & 0xFF)
         };
     }
 }

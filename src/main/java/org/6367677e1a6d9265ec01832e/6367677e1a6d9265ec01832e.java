@@ -3,8 +3,8 @@ import java.util.logging.Logger;
 public class LoggerChecker {
     
     /**
-     * 检查指定名称的日志记录器是否存在于层次结构中。如果存在，则返回其引用；否则返回 <code>null</code>。
-     * @param name 要搜索的日志记录器的名称。
+     * जांचें कि क्या नामित लॉगर पदानुक्रम में मौजूद है। यदि हाँ, तो इसका संदर्भ लौटाएँ, अन्यथा <code>null</code> लौटाएँ।
+     * @param name उस लॉगर का नाम जिसे खोजा जाना है।
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);

@@ -1,26 +1,28 @@
 public class BooleanArrayConverter {
     
     /** 
-     * <p>将基本数据类型的 boolean 数组转换为对象。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>boolean</code> 数组
-     * @return 一个 <code>Boolean</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>प्राथमिक बूलियन के एक ऐरे को ऑब्जेक्ट में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>boolean</code> ऐरे
+     * @return एक <code>Boolean</code> ऐरे, <code>null</code> यदि इनपुट ऐरे null है
      */
     public static Boolean[] toObject(final boolean[] array) {
         if (array == null) {
             return null;
         }
         
-        Boolean[] objectArray = new Boolean[array.length];
+        Boolean[] result = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            objectArray[i] = Boolean.valueOf(array[i]);
+            result[i] = array[i]; // Autoboxing from boolean to Boolean
         }
-        return objectArray;
+        return result;
     }
 
     public static void main(String[] args) {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
         
+        // Print the result
         for (Boolean b : objectArray) {
             System.out.println(b);
         }

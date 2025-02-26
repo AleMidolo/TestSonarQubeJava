@@ -1,18 +1,17 @@
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 public class ClassPathExample {
 
-    /**
-     * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
+    /** 
+     * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
      */
     private static File[] classPath() {
-        URL[] urls = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
-        File[] files = new File[urls.length];
+        String classPath = System.getProperty("java.class.path");
+        String[] paths = classPath.split(System.getProperty("path.separator"));
+        File[] files = new File[paths.length];
         
-        for (int i = 0; i < urls.length; i++) {
-            files[i] = new File(urls[i].getFile());
+        for (int i = 0; i < paths.length; i++) {
+            files[i] = new File(paths[i]);
         }
         
         return files;

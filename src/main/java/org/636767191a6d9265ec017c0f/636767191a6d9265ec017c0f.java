@@ -1,36 +1,29 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
     private int currentSize;
 
-    public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
-        this.currentSize = 0;
+    public ByteVector(int initialCapacity) {
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /**
-     * 扩展此字节向量，以便能够接收 'size' 个额外的字节。
-     * @param size 此字节向量应该能够接收的额外字节数。
+     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
+     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
      */
     private void enlarge(final int size) {
-        int requiredSize = currentSize + size;
-        if (requiredSize > data.length) {
-            int newSize = Math.max(data.length * 2, requiredSize);
-            byte[] newData = new byte[newSize];
-            System.arraycopy(data, 0, newData, 0, currentSize);
-            data = newData;
-        }
+        int newSize = currentSize + size;
+        data = Arrays.copyOf(data, newSize);
     }
 
     // Additional methods for demonstration purposes
     public void add(byte b) {
-        if (currentSize >= data.length) {
+        if (currentSize == data.length) {
             enlarge(1);
         }
         data[currentSize++] = b;
-    }
-
-    public int size() {
-        return currentSize;
     }
 
     public byte get(int index) {
@@ -38,5 +31,9 @@ public class ByteVector {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
         }
         return data[index];
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

@@ -1,10 +1,12 @@
-public class ArrayConverter {
+import java.util.Objects;
 
+public class ArrayConverter {
     /** 
-     * <p>将对象类型的 Integer 数组转换为基本类型。</p> <p>如果输入数组为 <code>null</code>，则此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>Integer</code> 数组，可以为 <code>null</code>
-     * @return 一个 <code>int</code> 数组，如果输入数组为空则返回 <code>null</code>
-     * @throws NullPointerException 如果数组内容为 <code>null</code>
+     * <p>एक ऑब्जेक्ट इंटीजर के एरे को प्राइमिटिव में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Integer</code> एरे, जो <code>null</code> हो सकता है
+     * @return एक <code>int</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
      */
     public static int[] toPrimitive(final Integer[] array) {
         if (array == null) {
@@ -13,19 +15,10 @@ public class ArrayConverter {
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null");
+                throw new NullPointerException("Array contains null element at index " + i);
             }
             result[i] = array[i];
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Integer[] integerArray = {1, 2, 3, null};
-        try {
-            int[] primitiveArray = toPrimitive(integerArray);
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

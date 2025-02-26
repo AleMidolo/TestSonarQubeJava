@@ -1,18 +1,18 @@
 import java.util.List;
 
 public class AppenderManager {
-    private List<Appender> appenders;
+    private List<Appender> attachedAppenders;
 
-    public AppenderManager(List<Appender> appenders) {
-        this.appenders = appenders;
+    public AppenderManager(List<Appender> attachedAppenders) {
+        this.attachedAppenders = attachedAppenders;
     }
 
     /** 
-     * 如果指定的Appender在Appender列表中，则返回<code>true</code>，否则返回<code>false</code>。
+     * यदि निर्दिष्ट ऐपेंडर संलग्न ऐपेंडरों की सूची में है, तो <code>true</code> लौटाता है, अन्यथा <code>false</code>।
      * @since 1.2 
      */
     public boolean isAttached(Appender appender) {
-        return appenders.contains(appender);
+        return attachedAppenders.contains(appender);
     }
 }
 

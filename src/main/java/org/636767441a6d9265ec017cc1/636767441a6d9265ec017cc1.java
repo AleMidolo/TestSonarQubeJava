@@ -12,7 +12,7 @@ class TreeNode<T> {
 
 private TreeNode<T> rotateRight(TreeNode<T> node) {
     if (node == null || node.left == null) {
-        return node; // Cannot rotate right if node is null or has no left child
+        return node; // Cannot rotate right if node is null or left child is null
     }
 
     TreeNode<T> newRoot = node.left; // New root will be the left child

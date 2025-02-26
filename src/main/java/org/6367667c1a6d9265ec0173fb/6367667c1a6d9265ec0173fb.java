@@ -1,16 +1,19 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
-public class MyAtmosphereResource implements AtmosphereResource {
+public class MyAtmosphereResource {
 
+    private AtmosphereResourceEventListener eventListener;
+
+    /**
+     * एक {@link AtmosphereResourceEventListener} जोड़ें।
+     * @param e AtmosphereResourceEventListener का एक उदाहरण
+     */
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Implementation to add the event listener
-        // This is a placeholder for the actual logic to add the listener
-        // In a real scenario, you would store the listener in a collection
-        System.out.println("Event listener added: " + e);
-        return this; // Returning the current instance for method chaining
+        this.eventListener = e;
+        // Logic to add the event listener to the AtmosphereResource
+        // This is a placeholder for actual implementation
+        return null; // Return the AtmosphereResource instance
     }
-
-    // Other methods and properties of AtmosphereResource would be implemented here
 }

@@ -1,38 +1,24 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.List;
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class LogAppender {
-    private List<Socket> clientSockets;
+public class CustomAppender extends AppenderSkeleton {
 
-    public LogAppender(List<Socket> clientSockets) {
-        this.clientSockets = clientSockets;
-    }
-
-    /**
-     * 处理日志事件。对于这个appender，这意味着将消息写入每个连接的客户端。
-     */
+    @Override
     protected void append(LoggingEvent event) {
-        String message = event.getMessage();
-        for (Socket socket : clientSockets) {
-            try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-                out.println(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-}
-
-class LoggingEvent {
-    private String message;
-
-    public LoggingEvent(String message) {
-        this.message = message;
+        // यहाँ पर लॉग इवेंट को सभी जुड़े हुए क्लाइंट्स को भेजने की प्रक्रिया होगी
+        String message = event.getRenderedMessage();
+        // सभी जुड़े हुए क्लाइंट्स को संदेश भेजने के लिए कोड यहाँ लिखें
+        // उदाहरण के लिए, एक सॉकेट कनेक्शन का उपयोग करके संदेश भेजना
+        System.out.println("Sending log message to clients: " + message);
     }
 
-    public String getMessage() {
-        return message;
+    @Override
+    public void close() {
+        // क्लोज़िंग संसाधनों की प्रक्रिया
+    }
+
+    @Override
+    public boolean requiresLayout() {
+        return false; // यदि लेआउट की आवश्यकता नहीं है
     }
 }

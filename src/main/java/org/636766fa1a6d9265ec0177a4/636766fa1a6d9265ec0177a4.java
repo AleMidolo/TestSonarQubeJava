@@ -1,13 +1,16 @@
 public class ArrayConverter {
+    
     /** 
-     * <p>将基本数据类型的 double 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>double</code> 数组
-     * @return 一个 <code>Double</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>प्राथमिक डबल्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>double</code> एरे
+     * @return एक <code>Double</code> एरे, <code>null</code> यदि इनपुट एरे null है
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {
             return null;
         }
+        
         Double[] objectArray = new Double[array.length];
         for (int i = 0; i < array.length; i++) {
             objectArray[i] = array[i]; // Autoboxing from double to Double
@@ -16,8 +19,10 @@ public class ArrayConverter {
     }
 
     public static void main(String[] args) {
-        double[] primitiveArray = {1.1, 2.2, 3.3};
+        double[] primitiveArray = {1.0, 2.0, 3.0};
         Double[] objectArray = toObject(primitiveArray);
+        
+        // Print the result
         for (Double d : objectArray) {
             System.out.println(d);
         }

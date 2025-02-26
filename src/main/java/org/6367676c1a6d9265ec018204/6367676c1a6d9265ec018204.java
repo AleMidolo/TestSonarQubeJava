@@ -1,41 +1,43 @@
-public class StringArrayConcatenator {
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * 将给定的字符串数组连接成一个数组，重复的数组元素也会包含在内。<p>原始数组中的元素顺序得以保留。
-     * @param array1 第一个数组（可以为<code>null</code>）
-     * @param array2 第二个数组（可以为<code>null</code>）
-     * @return 新数组（如果两个给定数组都为<code>null</code>，则返回<code>null</code>）
+public class ArrayConcatenation {
+
+    /** 
+     * दिए गए String arrays को एक में जोड़ें, जिसमें ओवरलैपिंग array तत्वों को दो बार शामिल किया गया है। <p> मूल arrays में तत्वों का क्रम संरक्षित रहता है।
+     * @param array1 पहला array (यह <code>null</code> हो सकता है)
+     * @param array2 दूसरा array (यह <code>null</code> हो सकता है)
+     * @return नया array (<code>null</code> यदि दोनों दिए गए arrays <code>null</code> थे)
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
             return null;
         }
 
-        int length1 = (array1 != null) ? array1.length : 0;
-        int length2 = (array2 != null) ? array2.length : 0;
-        String[] result = new String[length1 + length2];
+        List<String> resultList = new ArrayList<>();
 
         if (array1 != null) {
-            System.arraycopy(array1, 0, result, 0, length1);
-        }
-        if (array2 != null) {
-            System.arraycopy(array2, 0, result, length1, length2);
+            for (String s : array1) {
+                resultList.add(s);
+            }
         }
 
-        return result;
+        if (array2 != null) {
+            for (String s : array2) {
+                resultList.add(s);
+            }
+        }
+
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"Hello", "World"};
-        String[] array2 = {"Java", "Programming"};
-        String[] result = concatenateStringArrays(array1, array2);
+        String[] array1 = {"apple", "banana", "cherry"};
+        String[] array2 = {"banana", "date", "fig"};
         
-        if (result != null) {
-            for (String str : result) {
-                System.out.println(str);
-            }
-        } else {
-            System.out.println("Result is null");
+        String[] result = concatenateStringArrays(array1, array2);
+        for (String s : result) {
+            System.out.println(s);
         }
     }
 }

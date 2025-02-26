@@ -1,39 +1,23 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int size;
+    private int readPointer;
 
-    public ClassFileBuffer() {
-        this.buffer = new byte[0];
-        this.size = 0;
+    public ClassFileBuffer(int size) {
+        this.buffer = new byte[size];
+        this.readPointer = 0;
     }
 
-    /**
-     * 清空并用提供的字节流填充此 {@code ClassFileBuffer} 的缓冲区。读取指针重置为字节数组的起始位置。
+    /** 
+     * इस {@code ClassFileBuffer} के बफर को प्रदान किए गए बाइट स्ट्रीम से साफ़ और भरें। पढ़ने का पॉइंटर बाइट एरे के शुरू में रीसेट किया जाता है।
      */
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the existing buffer
-        this.buffer = new byte[0];
-        this.size = 0;
-
-        // Use ByteArrayOutputStream to read the InputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] tempBuffer = new byte[1024];
-        int bytesRead;
-
-        // Read from the InputStream and write to ByteArrayOutputStream
-        while ((bytesRead = in.read(tempBuffer)) != -1) {
-            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
+        readPointer = 0; // Reset the read pointer
+        int bytesRead = in.read(buffer);
+        if (bytesRead == -1) {
+            throw new IOException("End of stream reached");
         }
-
-        // Convert ByteArrayOutputStream to byte array
-        this.buffer = byteArrayOutputStream.toByteArray();
-        this.size = this.buffer.length;
-
-        // Reset the read pointer (if applicable, depending on how you manage reading)
-        // In this case, we just ensure the buffer is ready to be read from the start
     }
 }

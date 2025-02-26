@@ -8,16 +8,17 @@ public class AtmosphereManager {
         atmosphereFramework = new AtmosphereFramework();
     }
 
-    /**
-     * 移除一个 {@link AtmosphereHandler}。
-     * @param mapping 在调用 {@link #addAtmosphereHandler(String,AtmosphereHandler)} 时使用的映射；
-     * @return 如果成功移除则返回真
+    /** 
+     * एक {@link AtmosphereHandler} को हटाएं।
+     * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String,AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
+     * @return यदि हटाया गया है तो true
      */
-    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (atmosphereFramework.getAtmosphereHandlers().containsKey(mapping)) {
+    public boolean removeAtmosphereHandler(String mapping) {
+        AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
+        if (handler != null) {
             atmosphereFramework.removeAtmosphereHandler(mapping);
-            return atmosphereFramework;
+            return true;
         }
-        return null; // or throw an exception based on your design choice
+        return false;
     }
 }

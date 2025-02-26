@@ -2,7 +2,7 @@ import java.util.List;
 
 public class StringUtils {
     /** 
-     * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
+     * केस-संवेदनशीलता की परवाह किए बिना जांच करता है कि स्ट्रिंग में दिए गए स्ट्रिंग सेट में कोई भी वर्ण है या नहीं। 
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null) {
@@ -18,10 +18,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // 示例用法
-        List<String> searchStrArray = List.of("a", "b", "c");
-        String str = "Hello World";
-        boolean result = containsAnyIgnoreCase(str, searchStrArray);
-        System.out.println(result); // 输出: true
+        // Example usage
+        List<String> searchStrings = List.of("hello", "world", "java");
+        String testString = "Hello there!";
+        boolean result = containsAnyIgnoreCase(testString, searchStrings);
+        System.out.println(result); // Output: true
     }
 }

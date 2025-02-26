@@ -3,9 +3,9 @@ import com.alibaba.fastjson.JSONWriter;
 
 public class JsonSerializer {
 
-    /**
-     * 序列化为 JSON {@link String}
-     * @param features 在序列化中启用的特性
+    /** 
+     * JSON में सीरियलाइज़ करें {@link String}
+     * @param features सीरियलाइज़ेशन में सक्षम करने के लिए विशेषताएँ
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")
@@ -17,7 +17,7 @@ public class JsonSerializer {
         return JSON.toJSONString(obj, features);
     }
 
-    // Example class to serialize
+    // Example class to demonstrate serialization
     public static class MyObject {
         private String name;
         private int value;

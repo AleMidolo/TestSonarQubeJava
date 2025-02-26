@@ -1,23 +1,17 @@
-import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
+import javax.swing.SwingUtilities;
 
-public class LogManager {
-    
+public class LogTable {
+
     public void addMessage(final LogRecord lr) {
-        // Ensure that the log message is processed on the Swing thread
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Here you would add the log record to your LogTable
-                // For example, assuming you have a method to update the LogTable
-                updateLogTable(lr);
+                // Code to add the log record message to the log table
+                // For example, you might want to append it to a JTextArea or a JTable
+                System.out.println("Log Message: " + lr.getMessage());
+                // Here you would typically update your UI component with the log message
             }
         });
-    }
-
-    private void updateLogTable(LogRecord lr) {
-        // Implementation to update the LogTable with the log record
-        // This is a placeholder for the actual log table update logic
-        System.out.println("Log Message: " + lr.getMessage());
     }
 }

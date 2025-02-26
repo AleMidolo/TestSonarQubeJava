@@ -1,43 +1,44 @@
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class QueueToString {
-    private Queue<Object> queue;
+public class QueueRepresentation {
+    private LinkedList<Object> queue;
 
-    public QueueToString() {
-        this.queue = new LinkedList<>();
+    public QueueRepresentation() {
+        queue = new LinkedList<>();
     }
 
-    /**
-     * 返回队列的文本表示。
-     * @return 队列的文本表示。
+    /** 
+     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
+     * @return कतार का पाठ्य प्रतिनिधित्व।
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (Object item : queue) {
-            sb.append(item.toString()).append(", ");
-        }
-        if (sb.length() > 1) {
-            sb.setLength(sb.length() - 2); // Remove the last comma and space
+        sb.append("Queue: [");
+        for (int i = 0; i < queue.size(); i++) {
+            sb.append(queue.get(i));
+            if (i < queue.size() - 1) {
+                sb.append(", ");
+            }
         }
         sb.append("]");
         return sb.toString();
     }
 
     public void enqueue(Object item) {
-        queue.add(item);
+        queue.addLast(item);
     }
 
     public Object dequeue() {
-        return queue.poll();
+        return queue.isEmpty() ? null : queue.removeFirst();
     }
 
     public static void main(String[] args) {
-        QueueToString queueToString = new QueueToString();
-        queueToString.enqueue("First");
-        queueToString.enqueue("Second");
-        queueToString.enqueue("Third");
-        System.out.println(queueToString.toString()); // Output: [First, Second, Third]
+        QueueRepresentation queue = new QueueRepresentation();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
+        queue.dequeue();
+        System.out.println(queue.toString()); // Output: Queue: [2, 3]
     }
 }

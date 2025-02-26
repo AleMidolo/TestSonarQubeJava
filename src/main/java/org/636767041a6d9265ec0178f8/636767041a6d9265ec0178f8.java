@@ -1,26 +1,28 @@
-import java.util.Arrays;
-
 public class StringArrayCopy {
-
-    /**
-     * 此方法创建提供数组的一个副本，并确保新创建的数组中的所有字符串仅包含小写字母。<p> 使用此方法复制字符串数组意味着对源数组的更改不会修改目标数组。
+    
+    /** 
+     * यह विधि प्रदान किए गए ऐरे की एक प्रति बनाती है, और सुनिश्चित करती है कि नए बनाए गए ऐरे में सभी स्ट्रिंग केवल छोटे अक्षरों में हों। 
+     * <p> इस विधि का उपयोग स्ट्रिंग ऐरे की नकल करने के लिए करने का मतलब है कि src ऐरे में किए गए परिवर्तन dst ऐरे को संशोधित नहीं करते हैं।
      */
     private static String[] copyStrings(final String[] src) {
         if (src == null) {
             return null;
         }
-        String[] dest = new String[src.length];
+        
+        String[] dst = new String[src.length];
         for (int i = 0; i < src.length; i++) {
-            dest[i] = src[i] != null ? src[i].toLowerCase() : null;
+            dst[i] = src[i] != null ? src[i].toLowerCase() : null;
         }
-        return dest;
+        return dst;
     }
 
     public static void main(String[] args) {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copyStrings(original);
-
-        System.out.println("Original: " + Arrays.toString(original));
-        System.out.println("Copied: " + Arrays.toString(copied));
+        
+        // Print the copied array
+        for (String str : copied) {
+            System.out.println(str);
+        }
     }
 }

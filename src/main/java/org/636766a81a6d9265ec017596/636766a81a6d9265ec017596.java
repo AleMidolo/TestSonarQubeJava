@@ -9,17 +9,16 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /** 
-     * 将一个整数放入此字节向量中。如有必要，字节向量会自动扩展。
-     * @param intValue 一个整数。
-     * @return 此字节向量。
+    /**
+     * इस बाइट वेक्टर में एक int डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
+     * @param intValue एक int।
+     * @return यह बाइट वेक्टर।
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // An int takes 4 bytes
-        data[size++] = (byte) (intValue >> 24);
-        data[size++] = (byte) (intValue >> 16);
-        data[size++] = (byte) (intValue >> 8);
-        data[size++] = (byte) intValue;
+        ensureCapacity(size + Integer.BYTES);
+        for (int i = 0; i < Integer.BYTES; i++) {
+            data[size++] = (byte) (intValue >> (i * 8));
+        }
         return this;
     }
 
@@ -30,13 +29,13 @@ public class ByteVector {
         }
     }
 
-    public byte[] toByteArray() {
+    public byte[] getData() {
         return Arrays.copyOf(data, size);
     }
 
     public static void main(String[] args) {
         ByteVector byteVector = new ByteVector();
         byteVector.putInt(123456);
-        System.out.println(Arrays.toString(byteVector.toByteArray()));
+        System.out.println(Arrays.toString(byteVector.getData()));
     }
 }

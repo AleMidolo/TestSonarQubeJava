@@ -1,25 +1,28 @@
 import java.util.Arrays;
 
-public class StringArrayAppender {
+public class StringArrayUtil {
+    
     /** 
-     * 将给定的字符串附加到给定的字符串数组中，返回一个新数组，该数组由输入数组的内容加上给定的字符串组成。
-     * @param array 要附加到的数组（可以是 <code>null</code>）
-     * @param str 要附加的字符串
-     * @return 新数组（绝不会是 <code>null</code>）
+     * दिए गए स्ट्रिंग को दिए गए स्ट्रिंग एरे में जोड़ें, एक नया एरे लौटाते हुए जिसमें इनपुट एरे की सामग्री और दिया गया स्ट्रिंग शामिल हो।
+     * @param array वह एरे जिसमें जोड़ना है (यह <code>null</code> हो सकता है)
+     * @param str वह स्ट्रिंग जिसे जोड़ना है
+     * @return नया एरे (कभी भी <code>null</code> नहीं)
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null) {
             return new String[]{str};
         }
+        
         String[] newArray = Arrays.copyOf(array, array.length + 1);
         newArray[array.length] = str;
         return newArray;
     }
-
+    
     public static void main(String[] args) {
         String[] originalArray = {"Hello", "World"};
         String newString = "!";
-        String[] resultArray = addStringToArray(originalArray, newString);
-        System.out.println(Arrays.toString(resultArray)); // Output: [Hello, World, !]
+        String[] updatedArray = addStringToArray(originalArray, newString);
+        
+        System.out.println(Arrays.toString(updatedArray)); // Output: [Hello, World, !]
     }
 }

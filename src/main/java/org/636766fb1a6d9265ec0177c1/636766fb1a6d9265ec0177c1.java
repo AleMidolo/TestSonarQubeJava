@@ -1,6 +1,6 @@
 public class CharUtils {
     /** 
-     * <p>检查字符是否为 ASCII 7 位字母大写字母。</p> 
+     * <p>जांचता है कि क्या वर्ण ASCII 7 बिट वर्णमाला के बड़े अक्षर हैं।</p> 
      * <pre> 
      * CharUtils.isAsciiAlphaUpper('a')  = false 
      * CharUtils.isAsciiAlphaUpper('A')  = true 
@@ -9,8 +9,8 @@ public class CharUtils {
      * CharUtils.isAsciiAlphaUpper('\n') = false 
      * CharUtils.isAsciiAlphaUpper('&copy;') = false 
      * </pre>
-     * @param ch  要检查的字符
-     * @return 如果在 65 到 90 之间（包括 65 和 90），则返回真
+     * @param ch  जांचने के लिए वर्ण
+     * @return 65 और 90 के बीच (समावेशी) होने पर true
      */
     public static boolean isAsciiAlphaUpper(final char ch) {
         return ch >= 65 && ch <= 90;
@@ -22,6 +22,6 @@ public class CharUtils {
         System.out.println(isAsciiAlphaUpper('3')); // false
         System.out.println(isAsciiAlphaUpper('-')); // false
         System.out.println(isAsciiAlphaUpper('\n')); // false
-        System.out.println(isAsciiAlphaUpper('&copy;')); // false
+        System.out.println(isAsciiAlphaUpper('©')); // false
     }
 }

@@ -15,32 +15,27 @@ public class LinkedList<E> {
         this.head = null;
     }
 
-    /**
-     * 从列表中移除非空的 {@code node}。
+    /** 
+     * सूची से गैर-शून्य {@code node} को हटा दें। 
      */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null || head == null) {
             return false;
         }
 
-        // If the node to unlink is the head
         if (node == head) {
             head = head.next;
             return true;
         }
 
-        // Find the previous node
         ListNodeImpl<E> current = head;
-        while (current != null && current.next != node) {
+        while (current.next != null) {
+            if (current.next == node) {
+                current.next = node.next;
+                return true;
+            }
             current = current.next;
         }
-
-        // If the node was found
-        if (current != null) {
-            current.next = node.next;
-            return true;
-        }
-
-        return false; // Node not found
+        return false;
     }
 }

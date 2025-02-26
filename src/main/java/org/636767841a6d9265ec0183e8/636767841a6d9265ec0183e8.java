@@ -8,7 +8,7 @@ public class EventBuffer {
     }
 
     /** 
-     * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
+     * एक <code>event</code> को बफर में अंतिम घटना के रूप में जोड़ें।
      */
     public void add(LoggingEvent event) {
         buffer.addLast(event);
@@ -16,5 +16,14 @@ public class EventBuffer {
 }
 
 class LoggingEvent {
-    // Assume this class has some properties and methods
+    // Assuming LoggingEvent has some properties and methods
+    private String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

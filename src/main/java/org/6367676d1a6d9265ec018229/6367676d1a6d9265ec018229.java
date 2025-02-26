@@ -1,10 +1,10 @@
 import java.util.Arrays;
 
-public class StringArrayTrimmer {
+public class TrimArray {
     /** 
-     * 修剪给定字符串数组的元素，对每个元素调用 <code>String.trim()</code> 方法。
-     * @param array 原始字符串数组
-     * @return 包含修剪后的元素的结果数组（大小相同）
+     * दिए गए String array के तत्वों को ट्रिम करें, प्रत्येक पर <code>String.trim()</code> कॉल करते हुए।
+     * @param array मूल String array
+     * @return परिणामस्वरूप array (उसी आकार का) जिसमें ट्रिम किए गए तत्व हैं
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
@@ -16,8 +16,8 @@ public class StringArrayTrimmer {
     }
 
     public static void main(String[] args) {
-        String[] originalArray = {"  Hello  ", "  World  ", "  Java  "};
-        String[] trimmedArray = trimArrayElements(originalArray);
-        System.out.println(Arrays.toString(trimmedArray));
+        String[] input = {"  Hello  ", "  World  ", "  Java  "};
+        String[] trimmed = trimArrayElements(input);
+        System.out.println(Arrays.toString(trimmed)); // Output: [Hello, World, Java]
     }
 }

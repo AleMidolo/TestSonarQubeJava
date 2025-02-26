@@ -1,10 +1,11 @@
 public class SubstringMatcher {
-    /**
-     * 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
-     * @param str 原始字符串（或 StringBuilder）
-     * @param index 在原始字符串中开始匹配的索引
-     * @param substring 要在给定索引处匹配的子字符串
-     * @return 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
+
+    /** 
+     * यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, तो {@code true} लौटाता है, अन्यथा {@code false}।
+     * @param str मूल स्ट्रिंग (या StringBuilder)
+     * @param index मूल स्ट्रिंग में मेल शुरू करने के लिए इंडेक्स
+     * @param substring दी गई इंडेक्स पर मेल करने के लिए उपस्ट्रिंग
+     * @return {@code true} यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, अन्यथा {@code false}।
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
@@ -22,12 +23,12 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(substringMatch("hello world", 6, "world")); // true
-        System.out.println(substringMatch("hello world", 0, "hello")); // true
-        System.out.println(substringMatch("hello world", 6, "hello")); // false
-        System.out.println(substringMatch("hello world", 11, "world")); // false
-        System.out.println(substringMatch(null, 0, "test")); // false
-        System.out.println(substringMatch("test", -1, "test")); // false
+        // Example usage
+        String str = "Hello, World!";
+        String substring = "World";
+        int index = 7;
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println("Does the substring match? " + result); // Output: true
     }
 }

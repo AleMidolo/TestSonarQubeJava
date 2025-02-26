@@ -1,38 +1,25 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CollectionToStringArray {
+public class CollectionUtils {
 
     /** 
-     * 将给定的集合转换为字符串数组。返回的数组不包含 <code>null</code> 条目。请注意，{@link Arrays#sort(Object[])} 如果数组元素为 <code>null</code> 将抛出 {@link NullPointerException}。
-     * @param collection 要转换的集合
-     * @return 一个新的字符串数组。
+     * दिए गए संग्रह को स्ट्रिंग्स के एक ऐरे में परिवर्तित करता है। लौटाया गया ऐरे <code>null</code> प्रविष्टियाँ नहीं रखता है। ध्यान दें कि {@link Arrays#sort(Object[])} एक {@link NullPointerException} फेंकेगा यदि ऐरे का कोई तत्व <code>null</code> है।
+     * @param collection परिवर्तित करने के लिए संग्रह
+     * @return स्ट्रिंग्स का एक नया ऐरे।
      */
     static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
         
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> stringList = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                list.add(obj.toString());
+                stringList.add(obj.toString());
             }
         }
         
-        return list.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<Object> collection = new ArrayList<>();
-        collection.add("Hello");
-        collection.add(null);
-        collection.add("World");
-        
-        String[] result = toNoNullStringArray(collection);
-        for (String str : result) {
-            System.out.println(str);
-        }
+        return stringList.toArray(new String[0]);
     }
 }

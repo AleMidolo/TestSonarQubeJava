@@ -24,6 +24,6 @@ public class MyComparator implements Comparator<Object> {
         if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
             return ((Comparable) aObj1).compareTo(aObj2);
         }
-        throw new IllegalArgumentException("Both objects must be comparable");
+        throw new IllegalArgumentException("Objects are not comparable");
     }
 }

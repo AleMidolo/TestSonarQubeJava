@@ -1,33 +1,38 @@
 import java.util.Stack;
 
-public class NDC {
-    private static Stack<String> contextStack = new Stack<>();
+public class DiagnosisStack {
+    private static Stack<String> diagnosisStack = new Stack<>();
 
-    /**
-     * 查看此 NDC 顶部的最后诊断上下文，而不将其移除。<p>返回的值是最后推入的值。如果没有可用的上下文，则返回空字符串 ""。
-     * @return String 最内层的诊断上下文。
+    /** 
+     * इस NDC के शीर्ष पर अंतिम निदान संदर्भ को देखता है बिना उसे हटाए। <p> लौटाई गई मान वह मान है जो अंतिम बार डाला गया था। यदि कोई संदर्भ उपलब्ध नहीं है, तो खाली स्ट्रिंग "" लौटाई जाती है।
+     * @return String सबसे आंतरिक निदान संदर्भ।
      */
     public static String peek() {
-        return contextStack.isEmpty() ? "" : contextStack.peek();
+        if (diagnosisStack.isEmpty()) {
+            return "";
+        }
+        return diagnosisStack.peek();
     }
 
-    // Method to push a new context onto the stack
-    public static void push(String context) {
-        contextStack.push(context);
+    // Method to push a diagnosis reference onto the stack
+    public static void push(String diagnosis) {
+        diagnosisStack.push(diagnosis);
     }
 
-    // Method to pop the top context from the stack
+    // Method to pop a diagnosis reference from the stack
     public static String pop() {
-        return contextStack.isEmpty() ? "" : contextStack.pop();
+        if (!diagnosisStack.isEmpty()) {
+            return diagnosisStack.pop();
+        }
+        return "";
     }
 
     public static void main(String[] args) {
-        // Example usage
-        push("Context 1");
-        push("Context 2");
-        System.out.println(peek()); // Output: Context 2
+        push("Diagnosis 1");
+        push("Diagnosis 2");
+        System.out.println(peek()); // Output: Diagnosis 2
         pop();
-        System.out.println(peek()); // Output: Context 1
+        System.out.println(peek()); // Output: Diagnosis 1
         pop();
         System.out.println(peek()); // Output: (empty string)
     }

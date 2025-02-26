@@ -1,40 +1,25 @@
 import java.util.Iterator;
-import java.util.List;
 
-public class GraphIterator implements Iterator<Vertex> {
-    private List<Vertex> vertices;
+public class GraphIterator implements Iterator<Integer> {
     private boolean[] visited;
-    private int currentIndex;
+    private int currentVertex;
+    private int totalVertices;
 
-    public GraphIterator(List<Vertex> vertices) {
-        this.vertices = vertices;
-        this.visited = new boolean[vertices.size()];
-        this.currentIndex = 0;
+    public GraphIterator(int totalVertices) {
+        this.totalVertices = totalVertices;
+        this.visited = new boolean[totalVertices];
+        this.currentVertex = 0; // Start from the first vertex
     }
 
     @Override
     public boolean hasNext() {
-        while (currentIndex < vertices.size()) {
-            if (!visited[currentIndex]) {
-                return true;
+        for (int i = currentVertex; i < totalVertices; i++) {
+            if (!visited[i]) {
+                return true; // Found an unvisited vertex
             }
-            currentIndex++;
         }
-        return false;
+        return false; // No unvisited vertices found
     }
 
-    @Override
-    public Vertex next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        Vertex vertex = vertices.get(currentIndex);
-        visited[currentIndex] = true;
-        currentIndex++;
-        return vertex;
-    }
-}
-
-class Vertex {
-    // Vertex implementation
+    // Other methods like next() would be implemented here
 }

@@ -1,17 +1,16 @@
 import java.util.Properties;
 
-public class VariableSubstitutor {
-
+public class PropertyFinder {
     /** 
-     * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
+     * <code>props</code> में <code>key</code> के अनुसार मान खोजें। फिर पाए गए मान पर वेरिएबल प्रतिस्थापन करें।
      */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // या कोई डिफ़ॉल्ट मान लौटाएं
         }
         
-        // Perform variable substitution
+        // वेरिएबल प्रतिस्थापन
         for (String propKey : props.stringPropertyNames()) {
             String placeholder = "${" + propKey + "}";
             value = value.replace(placeholder, props.getProperty(propKey));
@@ -26,6 +25,6 @@ public class VariableSubstitutor {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // "Hello, John!"
     }
 }

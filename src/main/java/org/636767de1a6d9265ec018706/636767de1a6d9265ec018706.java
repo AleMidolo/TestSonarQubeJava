@@ -1,57 +1,49 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Mappings {
-    private Map<String, String> fields;
-
-    public Mappings() {
-        this.fields = new HashMap<>();
-    }
-
-    public void addField(String fieldName, String fieldType) {
-        fields.put(fieldName, fieldType);
-    }
-
-    public Map<String, String> getFields() {
-        return fields;
-    }
-}
-
-public class MappingDiff {
-
+public class MappingDiffer {
+    
     /**
-     * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
+     * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। 
+     * इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। 
+     * वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulating the current index structure for demonstration purposes
-        Mappings currentMappings = new Mappings();
-        currentMappings.addField("id", "integer");
-        currentMappings.addField("name", "string");
-        currentMappings.addField("email", "string");
-
+        // Assuming Mappings is a class that holds a map of fields
+        Mappings currentMappings = getCurrentMappings(tableName);
         Mappings diffMappings = new Mappings();
 
-        for (String field : mappings.getFields().keySet()) {
-            if (!currentMappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, mappings.getFields().get(field));
+        for (Map.Entry<String, Field> entry : mappings.getFields().entrySet()) {
+            String fieldName = entry.getKey();
+            if (!currentMappings.getFields().containsKey(fieldName)) {
+                diffMappings.addField(fieldName, entry.getValue());
             }
         }
 
         return diffMappings;
     }
 
-    public static void main(String[] args) {
-        Mappings historicalMappings = new Mappings();
-        historicalMappings.addField("id", "integer");
-        historicalMappings.addField("address", "string");
-        historicalMappings.addField("phone", "string");
+    private Mappings getCurrentMappings(String tableName) {
+        // This method should retrieve the current mappings for the given tableName
+        // For the sake of this example, we will return an empty Mappings object
+        return new Mappings();
+    }
 
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings result = mappingDiff.diffStructure("exampleTable", historicalMappings);
+    // Assuming a simple Field class for demonstration purposes
+    public static class Field {
+        // Field properties
+    }
 
-        System.out.println("Fields not in current mappings:");
-        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+    // Assuming a simple Mappings class for demonstration purposes
+    public static class Mappings {
+        private Map<String, Field> fields = new HashMap<>();
+
+        public Map<String, Field> getFields() {
+            return fields;
+        }
+
+        public void addField(String name, Field field) {
+            fields.put(name, field);
         }
     }
 }

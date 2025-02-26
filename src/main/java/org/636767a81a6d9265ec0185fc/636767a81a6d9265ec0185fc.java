@@ -9,13 +9,13 @@ public class TagReader {
     }
 
     /** 
-     * 尝试读取一个字段标签，如果到达文件末尾则返回零。协议消息解析器使用此方法读取标签，因为协议消息可以合法地在任何标签出现的地方结束，而零不是有效的标签编号。
+     * एक फ़ील्ड टैग पढ़ने का प्रयास करें, यदि हम EOF पर पहुँच गए हैं तो शून्य लौटाएँ। प्रोटोकॉल संदेश पार्सर टैग पढ़ने के लिए इसका उपयोग करते हैं, क्योंकि एक प्रोटोकॉल संदेश वैध रूप से किसी भी टैग के स्थान पर समाप्त हो सकता है, और शून्य एक मान्य टैग संख्या नहीं है।
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();
         if (tag == -1) {
-            return 0; // End of file reached
+            return 0; // EOF reached
         }
-        return tag; // Return the read tag
+        return tag;
     }
 }

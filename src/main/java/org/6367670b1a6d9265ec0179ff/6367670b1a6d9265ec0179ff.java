@@ -1,21 +1,27 @@
 public class ArrayUtil {
-    public static final Byte[] EMPTY_ARRAY = new Byte[0];
+
+    // Public static empty array for optimization
+    public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /** 
-     * <p>防御性编程技术，将 <code>null</code> 引用转换为一个空引用。</p> 
-     * <p>对于 <code>null</code> 输入数组，该方法返回一个空数组。</p> 
-     * <p>作为一种内存优化技术，传入的空数组将被本类中的空 <code>public static</code> 引用覆盖。</p>
-     * @param array  要检查是否为 <code>null</code> 或空的数组
-     * @return 相同的数组，如果输入为 <code>null</code> 或空，则返回 <code>public static</code> 空数组
+     * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए एक खाली ऐरे लौटाती है।</p> 
+     * <p>एक मेमोरी ऑप्टिमाइजेशन तकनीक के रूप में, एक खाली ऐरे जो पास किया गया है, इसे इस वर्ग में खाली <code>public static</code> संदर्भों के साथ ओवरराइड किया जाएगा।</p>
+     * @param array  वह ऐरे जिसे <code>null</code> या खाली के लिए जांचना है
+     * @return वही ऐरे, <code>public static</code> खाली ऐरे यदि <code>null</code> या खाली इनपुट हो
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
-        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
+        if (array == null || array.length == 0) {
+            return EMPTY_BYTE_ARRAY;
+        }
+        return array;
     }
 
     public static void main(String[] args) {
+        // Test cases
         Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
+        Byte[] emptyArray = {};
         Byte[] nonEmptyArray = {1, 2, 3};
 
         System.out.println(nullToEmpty(nullArray)); // Should print: []

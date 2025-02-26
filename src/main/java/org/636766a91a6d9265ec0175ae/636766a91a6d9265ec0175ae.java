@@ -10,31 +10,28 @@ public class ByteVector {
     }
 
     /** 
-     * 将一个字节数组放入此字节向量中。如有必要，字节向量会自动扩展。
-     * @param byteArrayValue 字节数组。如果为 {@literal null}，则在字节向量中添加 {@code byteLength} 个空字节。
-     * @param byteOffset     要复制的 byteArrayValue 的第一个字节的索引。
-     * @param byteLength     要复制的 byteArrayValue 的字节数。
-     * @return 此字节向量。
+     * इस बाइट वेक्टर में बाइट्स का एक एरे डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
+     * @param byteArrayValue बाइट्स का एक एरे। {@code byteLength} नल बाइट्स डालने के लिए {@literal null} हो सकता है।
+     * @param byteOffset     byteArrayValue का पहला बाइट का इंडेक्स जो कॉपी किया जाना चाहिए।
+     * @param byteLength     byteArrayValue के बाइट्स की संख्या जो कॉपी की जानी चाहिए।
+     * @return यह बाइट वेक्टर।
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteArrayValue == null) {
-            ensureCapacity(size + byteLength);
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
-            size += byteLength;
-        } else {
-            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid offset or length");
-            }
-            ensureCapacity(size + byteLength);
-            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-            size += byteLength;
+        if (byteArrayValue == null || byteLength <= 0) {
+            return this;
         }
+        
+        ensureCapacity(size + byteLength);
+        
+        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        size += byteLength;
+        
         return this;
     }
 
-    private void ensureCapacity(int newSize) {
-        if (newSize > data.length) {
-            int newCapacity = Math.max(data.length * 2, newSize);
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
     }

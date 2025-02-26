@@ -1,21 +1,34 @@
-public class TypeManager {
+public class AbstractTypeManager {
     
-    // Assuming there's a list to hold initialized types
+    // List to hold initialized types
     private List<Integer> initializedTypes;
 
-    public TypeManager() {
+    // Constructor to initialize the list
+    public AbstractTypeManager() {
         initializedTypes = new ArrayList<>();
     }
 
-    /**
-     * 将一个抽象类型添加到基本块中调用构造函数的类型列表中。
-     * @param abstractType 一个调用了构造函数的抽象类型。
+    /** 
+     * एक अमूर्त प्रकार को उन प्रकारों की सूची में जोड़ता है जिन पर एक कंस्ट्रक्टर मूलभूत ब्लॉक में लागू होता है।
+     * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {
             initializedTypes.add(abstractType);
         }
     }
-    
-    // Additional methods can be added here for managing types
+
+    // Method to get the list of initialized types
+    public List<Integer> getInitializedTypes() {
+        return initializedTypes;
+    }
+
+    public static void main(String[] args) {
+        AbstractTypeManager manager = new AbstractTypeManager();
+        manager.addInitializedType(1);
+        manager.addInitializedType(2);
+        manager.addInitializedType(1); // Duplicate, should not be added
+
+        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
+    }
 }

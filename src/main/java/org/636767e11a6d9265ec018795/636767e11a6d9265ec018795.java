@@ -1,37 +1,46 @@
 public class DataTable {
-    // Assuming DataTable has a method to get the bucket
-    private String bucket;
+    // Assuming DataTable has a method to get buckets
+    private String[] buckets;
 
-    public DataTable(String bucket) {
-        this.bucket = bucket;
+    public DataTable(String[] buckets) {
+        this.buckets = buckets;
     }
 
-    public String getBucket() {
-        return bucket;
+    public String[] getBuckets() {
+        return buckets;
     }
 }
 
 public class CompatibilityChecker {
-    private DataTable currentDataset;
+    private String[] myBuckets;
 
-    public CompatibilityChecker(DataTable dataset) {
-        this.currentDataset = dataset;
+    public CompatibilityChecker(String[] myBuckets) {
+        this.myBuckets = myBuckets;
     }
 
     /** 
-     * @return 如果桶相同则返回真。
+     * @return यदि बकेट समान है तो true लौटाता है।
      */
     public boolean isCompatible(DataTable dataset) {
-        return this.currentDataset.getBucket().equals(dataset.getBucket());
+        String[] datasetBuckets = dataset.getBuckets();
+        if (myBuckets.length != datasetBuckets.length) {
+            return false;
+        }
+        for (int i = 0; i < myBuckets.length; i++) {
+            if (!myBuckets[i].equals(datasetBuckets[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
-        DataTable dataset1 = new DataTable("bucket1");
-        DataTable dataset2 = new DataTable("bucket1");
-        DataTable dataset3 = new DataTable("bucket2");
+        String[] myBuckets = {"bucket1", "bucket2", "bucket3"};
+        CompatibilityChecker checker = new CompatibilityChecker(myBuckets);
 
-        CompatibilityChecker checker = new CompatibilityChecker(dataset1);
-        System.out.println(checker.isCompatible(dataset2)); // true
-        System.out.println(checker.isCompatible(dataset3)); // false
+        String[] datasetBuckets = {"bucket1", "bucket2", "bucket3"};
+        DataTable dataset = new DataTable(datasetBuckets);
+
+        System.out.println(checker.isCompatible(dataset)); // Should print true
     }
 }

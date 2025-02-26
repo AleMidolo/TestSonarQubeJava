@@ -4,17 +4,17 @@ import java.io.IOException;
 public class FileDeleter {
 
     /**
-     * 安排在JVM退出时删除指定文件。如果文件是目录，则删除该目录及所有子目录。
-     * @param file 要删除的文件或目录，不能为空 {@code null}
-     * @throws NullPointerException 如果文件为 {@code null}
-     * @throws IOException 如果删除不成功
+     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
+     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
+     * @throws NullPointerException यदि फ़ाइल {@code null} है
+     * @throws IOException यदि हटाना असफल हो जाता है
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
             throw new NullPointerException("File cannot be null");
         }
 
-        // Register a shutdown hook to delete the file on JVM exit
+        // Schedule the file for deletion on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 deleteRecursively(file);
@@ -26,10 +26,10 @@ public class FileDeleter {
 
     private static void deleteRecursively(File file) throws IOException {
         if (file.isDirectory()) {
-            File[] children = file.listFiles();
-            if (children != null) {
-                for (File child : children) {
-                    deleteRecursively(child);
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File subFile : files) {
+                    deleteRecursively(subFile);
                 }
             }
         }

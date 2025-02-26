@@ -1,22 +1,22 @@
 public class CharUtils {
-    private static final String[] CACHE = new String[128];
+    private static final String[] cache = new String[128];
 
     static {
-        for (char i = 0; i < CACHE.length; i++) {
-            CACHE[i] = String.valueOf(i);
+        for (int i = 0; i < cache.length; i++) {
+            cache[i] = String.valueOf((char) i);
         }
     }
 
     /**
-     * <p>将字符转换为仅包含该字符的字符串。</p> 
-     * <p>对于 ASCII 7 位字符，此方法将使用一个缓存，每次返回相同的字符串对象。</p> 
+     * <p>एक वर्ण को एक स्ट्रिंग में परिवर्तित करता है जिसमें केवल वही वर्ण होता है।</p> 
+     * <p>ASCII 7 बिट वर्णों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही स्ट्रिंग ऑब्जेक्ट लौटाता है।</p> 
      * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  要转换的字符
-     * @return 包含指定字符的字符串
+     * @param ch  वह वर्ण जिसे परिवर्तित करना है
+     * @return एक स्ट्रिंग जो निर्दिष्ट वर्ण को समाहित करती है
      */
     public static String toString(final char ch) {
-        if (ch >= 0 && ch < CACHE.length) {
-            return CACHE[ch];
+        if (ch >= 0 && ch < 128) {
+            return cache[ch];
         }
         return String.valueOf(ch);
     }
@@ -25,6 +25,6 @@ public class CharUtils {
         System.out.println(CharUtils.toString(' ')); // Output: " "
         System.out.println(CharUtils.toString('A')); // Output: "A"
         System.out.println(CharUtils.toString('Z')); // Output: "Z"
-        System.out.println(CharUtils.toString('中')); // Output: "中"
+        System.out.println(CharUtils.toString('ñ')); // Output: "ñ"
     }
 }

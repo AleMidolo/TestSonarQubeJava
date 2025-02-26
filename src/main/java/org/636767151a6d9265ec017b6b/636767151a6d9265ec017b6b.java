@@ -1,12 +1,12 @@
 public class StringUtils {
 
     /** 
-     * <p>检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。</p>
+     * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग से शुरू होता है (वैकल्पिक रूप से केस-इंसेंसिटिव)।</p>
      * @see String#startsWith(String)
-     * @param str  要检查的字符串，可能为空
-     * @param prefix 要查找的前缀，可能为空
-     * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
-     * @return 如果字符串以前缀开头或两者都是 <code>null</code>则返回<code>true</code>
+     * @param str  वह String जिसे जांचना है, यह null हो सकता है
+     * @param prefix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
+     * @param ignoreCase यह दर्शाता है कि तुलना में केस को नजरअंदाज करना चाहिए या नहीं (केस-इंसेंसिटिव)।
+     * @return <code>true</code> यदि String उपसर्ग से शुरू होता है या दोनों <code>null</code> हैं
      */
     private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
         if (str == null && prefix == null) {

@@ -1,35 +1,38 @@
-public class UtfReader {
-    private byte[] classFileBuffer;
+public class Utf8Reader {
+    private final byte[] classFileBuffer;
 
-    public UtfReader(byte[] classFileBuffer) {
+    public Utf8Reader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
     /**
-     * 读取 {@link #classFileBuffer} 中的 CONSTANT_Utf8 常量池条目。
-     * @param constantPoolEntryIndex 类的常量池表中 CONSTANT_Utf8 条目的索引。
-     * @param charBuffer 用于读取字符串的缓冲区。此缓冲区必须足够大。不会自动调整大小。
-     * @return 与指定的 CONSTANT_Utf8 条目对应的字符串。
+     * {@link #classFileBuffer} में एक CONSTANT_Utf8 स्थायी पूल प्रविष्टि को पढ़ता है।
+     * @param constantPoolEntryIndex कक्षा के स्थायी पूल तालिका में एक CONSTANT_Utf8 प्रविष्टि का अनुक्रमांक।
+     * @param charBuffer वह बफर है जिसका उपयोग स्ट्रिंग पढ़ने के लिए किया जाएगा। यह बफर पर्याप्त बड़ा होना चाहिए। इसे स्वचालित रूप से आकार नहीं दिया जाता है।
+     * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // 假设 classFileBuffer 中的常量池条目格式为：
-        // 1. 先是一个 u2 的长度字段
-        // 2. 然后是长度字段指定的字节数的 UTF-8 字节
-        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
-        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
+        // Assuming the classFileBuffer contains the constant pool and the necessary offsets
+        int offset = getUtf8Offset(constantPoolEntryIndex);
+        int length = getUtf8Length(constantPoolEntryIndex);
         
-        // 读取 UTF-8 字节并转换为字符
-        int charCount = 0;
+        // Read the UTF-8 bytes and convert to characters
         for (int i = 0; i < length; i++) {
-            charBuffer[charCount++] = (char) classFileBuffer[offset + 2 + i];
+            charBuffer[i] = (char) classFileBuffer[offset + i];
         }
         
-        return new String(charBuffer, 0, charCount);
+        return new String(charBuffer, 0, length);
     }
 
-    private int getConstantPoolEntryOffset(int index) {
-        // 这里需要实现获取常量池条目的偏移量的逻辑
-        // 这只是一个占位符，具体实现取决于 classFileBuffer 的结构
-        return index; // 需要根据实际常量池结构进行调整
+    private int getUtf8Offset(int constantPoolEntryIndex) {
+        // Logic to get the offset of the UTF-8 entry in the classFileBuffer
+        // This is a placeholder implementation
+        return 0; // Replace with actual logic
+    }
+
+    private int getUtf8Length(int constantPoolEntryIndex) {
+        // Logic to get the length of the UTF-8 entry in the classFileBuffer
+        // This is a placeholder implementation
+        return 0; // Replace with actual logic
     }
 }

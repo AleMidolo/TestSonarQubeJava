@@ -1,31 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-class Node {
-    boolean isActive;
-    List<Node> children;
+class TreeNode {
+    int value;
+    Set<TreeNode> children;
 
-    Node(boolean isActive) {
-        this.isActive = isActive;
-        this.children = new ArrayList<>();
+    TreeNode(int value) {
+        this.value = value;
+        this.children = new HashSet<>();
+    }
+
+    void addChild(TreeNode child) {
+        children.add(child);
     }
 }
 
-public class CategoryTree {
-    private Node root;
+class Tree {
+    private TreeNode root;
 
-    public CategoryTree(Node root) {
+    public Tree(TreeNode root) {
         this.root = root;
     }
 
     /** 
-     * 从类别树中移除所有不活跃的节点。
+     * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
      */
     protected int removeUnusedNodes() {
         return removeUnusedNodes(root);
     }
 
-    private int removeUnusedNodes(Node node) {
+    private int removeUnusedNodes(TreeNode node) {
         if (node == null) {
             return 0;
         }
@@ -33,22 +37,18 @@ public class CategoryTree {
         int removedCount = 0;
 
         // Recursively remove unused nodes from children
-        List<Node> activeChildren = new ArrayList<>();
-        for (Node child : node.children) {
-            int count = removeUnusedNodes(child);
-            removedCount += count;
-            if (child.isActive || count == 0) {
-                activeChildren.add(child);
+        Set<TreeNode> toRemove = new HashSet<>();
+        for (TreeNode child : node.children) {
+            removedCount += removeUnusedNodes(child);
+            if (child.children.isEmpty()) {
+                toRemove.add(child);
             }
         }
-        node.children = activeChildren;
 
-        // If the current node is not active and has no active children, it should be removed
-        if (!node.isActive && activeChildren.isEmpty()) {
-            removedCount++;
-            return removedCount; // This node is considered removed
-        }
+        // Remove unused children
+        node.children.removeAll(toRemove);
+        removedCount += toRemove.size();
 
-        return removedCount; // This node is kept
+        return removedCount;
     }
 }

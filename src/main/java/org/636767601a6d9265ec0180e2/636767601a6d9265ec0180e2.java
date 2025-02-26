@@ -2,35 +2,38 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 
-public class GraphSeparator {
+public class Graph {
+    // Assuming E is a placeholder for the edge type
+    private List<Edge> edges; // List of edges in the graph
+    private List<Vertex> vertices; // List of vertices in the graph
 
-    // Assuming E is a class representing an edge in the graph
-    private List<E> edges; // List of edges in the graph
+    // Method to compute the global separator list
+    private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
 
-    /**
-     * 计算图 {@code graph} 的全局分隔符列表。更准确地说，对于图 $G = (V, E)$ 中的每条边 $e$，计算边 $e$ 邻域中的最小分隔符列表 $S_e$，然后将这些列表连接起来。注意：结果可能包含重复项。
-     * @return 被检查图中每条边 $e$ 的最小分隔符列表
-     */
-    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
-
-        for (E edge : edges) {
-            List<Pair<Integer, Integer>> separatorList = computeSeparatorForEdge(edge);
-            globalSeparatorList.add(new Pair<>(separatorList, edge));
+        for (Edge edge : edges) {
+            List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
+            globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
         return globalSeparatorList;
     }
 
-    // Placeholder method to compute the separator for a given edge
-    private List<Pair<Integer, Integer>> computeSeparatorForEdge(E edge) {
-        // Implement the logic to find the minimum separator for the given edge
+    // Placeholder method to compute separators for a given edge
+    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(Edge edge) {
+        List<Pair<Integer, Integer>> separators = new ArrayList<>();
+        // Logic to compute the minimum separators for the given edge
         // This is a placeholder and should be replaced with actual logic
-        return new ArrayList<>();
+        // Example: separators.add(new Pair<>(vertex1, vertex2));
+        return separators;
     }
 
-    // Placeholder class for edge representation
-    private static class E {
-        // Edge properties and methods
+    // Placeholder classes for Edge and Vertex
+    private class Edge {
+        // Edge properties
+    }
+
+    private class Vertex {
+        // Vertex properties
     }
 }

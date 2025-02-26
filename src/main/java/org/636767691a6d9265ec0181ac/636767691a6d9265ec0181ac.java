@@ -3,10 +3,10 @@ import java.nio.file.Paths;
 
 public class PathUtil {
     /** 
-     * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即“/”分隔符）。
-     * @param path 起始路径（通常是完整的文件路径）
-     * @param relativePath 要应用的相对路径（相对于上述完整文件路径）
-     * @return 应用相对路径后得到的完整文件路径
+     * दिए गए पथ पर दिए गए सापेक्ष पथ को लागू करें, मानते हुए कि मानक जावा फ़ोल्डर विभाजन (यानी "/" विभाजक) है।
+     * @param path वह पथ जिससे शुरू करना है (आमतौर पर एक पूर्ण फ़ाइल पथ)
+     * @param relativePath लागू करने के लिए सापेक्ष पथ (ऊपर दिए गए पूर्ण फ़ाइल पथ के सापेक्ष)
+     * @return वह पूर्ण फ़ाइल पथ जो सापेक्ष पथ को लागू करने से प्राप्त होता है
      */
     public static String applyRelativePath(String path, String relativePath) {
         Path basePath = Paths.get(path);

@@ -1,22 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpperBoundCalculator<K extends Comparable<K>> {
-
+public class UpperBoundCalculator<K> {
+    
     /** 
-     * 为每个键找到一个最小上界。
-     * @param keys 键的列表。
-     * @return 计算得到的键上界。
+     * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
+     * @param keys कुंजियों की एक सूची।
+     * @return गणना की गई कुंजी की ऊपरी सीमा।
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         List<Integer> upperBounds = new ArrayList<>();
-        if (keys == null || keys.isEmpty()) {
-            return upperBounds;
-        }
-
+        
         for (K key : keys) {
-            // Assuming the upper bound is the next integer greater than the key's hash code
-            int upperBound = key.hashCode() + 1;
+            // यहाँ पर कुंजी के लिए ऊपरी सीमा की गणना करें
+            // यह एक उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार होनी चाहिए
+            int upperBound = key.hashCode(); // उदाहरण के लिए, कुंजी का हैश कोड
             upperBounds.add(upperBound);
         }
         

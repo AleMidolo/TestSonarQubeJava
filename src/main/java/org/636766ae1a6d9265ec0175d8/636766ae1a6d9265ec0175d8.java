@@ -1,13 +1,13 @@
 public class ContentRangeBuilder {
 
     /**
-     * 构建 'Content-Range' HTTP 头部值。
-     * @return 'Content-Range' 值
+     * 'Content-Range' HTTP हेडर मान बनाएं।
+     * @return 'Content-Range' मान
      */
     private String buildContentRange() {
-        long start = 0; // 起始字节
-        long end = 1023; // 结束字节
-        long total = 2048; // 总字节数
+        long start = 0; // प्रारंभिक बाइट
+        long end = 499; // अंतिम बाइट
+        long total = 1234; // कुल बाइट्स
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

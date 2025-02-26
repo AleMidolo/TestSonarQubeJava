@@ -4,23 +4,26 @@ import java.util.Map;
 import java.util.Set;
 
 public class Graph<V, E> {
-    private Map<V, Set<E>> index;
+    private Map<V, Set<Edge<E>>> adjacencyList;
 
     public Graph() {
-        index = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
-    /** 
-     * 将边添加到索引中。
-     * @param sourceVertex 源顶点
-     * @param targetVertex 目标顶点
-     * @param e 边
-     */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        index.putIfAbsent(sourceVertex, new HashSet<>());
-        index.putIfAbsent(targetVertex, new HashSet<>());
+        adjacencyList.putIfAbsent(sourceVertex, new HashSet<>());
+        adjacencyList.putIfAbsent(targetVertex, new HashSet<>());
         
-        index.get(sourceVertex).add(e);
-        index.get(targetVertex).add(e);
+        adjacencyList.get(sourceVertex).add(new Edge<>(targetVertex, e));
+    }
+
+    private static class Edge<E> {
+        V targetVertex;
+        E edge;
+
+        Edge(V targetVertex, E edge) {
+            this.targetVertex = targetVertex;
+            this.edge = edge;
+        }
     }
 }

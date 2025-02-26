@@ -1,34 +1,33 @@
+import org.apache.commons.beanutils.BeanMap;
 import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Method;
 
-public class BeanMap {
-    private Map<String, Object> properties = new HashMap<>();
+public class BeanMapUtil {
 
+    /**
+     * दिए गए BeanMap से सभी लिखने योग्य गुणों को इस BeanMap में डालता है। केवल पढ़ने योग्य और केवल लिखने योग्य गुणों को नजरअंदाज किया जाएगा।
+     * @param map  वह BeanMap जिसके गुणों को डालना है
+     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            return;
+            throw new IllegalArgumentException("BeanMap cannot be null");
         }
-        
-        for (String propertyName : map.properties.keySet()) {
-            try {
-                PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, this.getClass());
-                if (descriptor.getWriteMethod() != null) {
-                    this.properties.put(propertyName, map.properties.get(propertyName));
+
+        Object bean = map.getBean();
+        PropertyDescriptor[] propertyDescriptors = java.beans.Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
+
+        for (PropertyDescriptor descriptor : propertyDescriptors) {
+            Method writeMethod = descriptor.getWriteMethod();
+            if (writeMethod != null) {
+                try {
+                    Object value = map.get(descriptor.getName());
+                    if (value != null) {
+                        writeMethod.invoke(bean, value);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                // Ignore properties that do not have a corresponding PropertyDescriptor
             }
         }
-    }
-
-    // Example method to set properties for testing
-    public void setProperty(String name, Object value) {
-        properties.put(name, value);
-    }
-
-    // Example method to get properties for testing
-    public Object getProperty(String name) {
-        return properties.get(name);
     }
 }

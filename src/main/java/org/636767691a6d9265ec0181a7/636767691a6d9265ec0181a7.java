@@ -1,26 +1,25 @@
-public class StringTrimmer {
-    
+public class Main {
     /**
-     * 从给定的字符串中修剪所有出现的指定前导字符。
-     * @param str 要检查的字符串
-     * @param leadingCharacter 要修剪的前导字符
-     * @return 修剪后的字符串
+     * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
+     * @param str वह स्ट्रिंग जिसे जांचना है
+     * @param leadingCharacter वह अग्रणी वर्ण जिसे हटाना है
+     * @return हटाई गई स्ट्रिंग
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
         
-        int index = 0;
-        while (index < str.length() && str.charAt(index) == leadingCharacter) {
-            index++;
+        int startIndex = 0;
+        while (startIndex < str.length() && str.charAt(startIndex) == leadingCharacter) {
+            startIndex++;
         }
         
-        return str.substring(index);
+        return str.substring(startIndex);
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("///Hello World", '/');
-        System.out.println(result); // Output: "Hello World"
+        String result = trimLeadingCharacter("aaabbbccc", 'a');
+        System.out.println(result); // Output: bbbccc
     }
 }

@@ -1,7 +1,19 @@
-import java.util.Objects;
-
 class Node {
-    // Assume Node class has necessary properties and methods
+    private Node next;
+    private boolean isVirtual;
+
+    public Node(Node next, boolean isVirtual) {
+        this.next = next;
+        this.isVirtual = isVirtual;
+    }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
 }
 
 class Edge {
@@ -13,31 +25,37 @@ class Edge {
         this.to = to;
     }
 
-    // Getters and other methods
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
+    }
 }
 
-class Graph {
+class GraphNode {
     private Node currentNode;
-    private Node nextNode;
 
-    public Graph(Node currentNode, Node nextNode) {
+    public GraphNode(Node currentNode) {
         this.currentNode = currentNode;
-        this.nextNode = nextNode;
     }
 
     /**
-     * 返回一个连接之前返回的节点与下一个将要返回的节点之间的边。如果提到的任一节点是虚拟的，则该边将与其真实对应节点相连。
-     * @return 从当前节点到下一个节点的边
+     * एक किनारे लौटाता है जो पहले लौटाए गए नोड को अगले लौटाए जाने वाले नोड से जोड़ता है। यदि इनमें से कोई भी नोड आभासी है, तो किनारा इसके वास्तविक समकक्ष पर होगा।
+     * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        Node realCurrentNode = getRealNode(currentNode);
-        Node realNextNode = getRealNode(nextNode);
-        return new Edge(realCurrentNode, realNextNode);
+        Node nextNode = currentNode.getNext();
+        Node realFrom = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node realTo = nextNode != null && nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+
+        return new Edge(realFrom, realTo);
     }
 
     private Node getRealNode(Node node) {
-        // Logic to determine if the node is virtual and return the real node
-        // For simplicity, we assume the node is already real in this example
-        return Objects.requireNonNull(node, "Node cannot be null");
+        // Logic to get the real equivalent of a virtual node
+        // This is a placeholder; actual implementation may vary
+        return node; // Assuming the node itself is returned for simplicity
     }
 }

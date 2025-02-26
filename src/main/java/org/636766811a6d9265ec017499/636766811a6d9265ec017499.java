@@ -3,22 +3,22 @@ import java.util.List;
 public class InterceptorChecker {
 
     /** 
-     * <p>检查指定列表中是否至少存在一个给定的 {@link AtmosphereInterceptor 拦截器} 实现类的实例。</p>
-     * @param interceptorList 拦截器列表
-     * @param c               拦截器类
-     * @return 如果列表中已经存在该类的实例，则返回 {@code false}，否则返回 {@code true}
+     * <p> निर्दिष्ट सूची में यह जांचता है कि क्या दिए गए {@link AtmosphereInterceptor इंटरसेप्टर} कार्यान्वयन वर्ग का कम से कम एक उदाहरण मौजूद है।</p>
+     * @param interceptorList इंटरसेप्टर्स की सूची
+     * @param c               इंटरसेप्टर वर्ग
+     * @return {@code false} यदि सूची में पहले से ही वर्ग का एक उदाहरण मौजूद है, {@code true} अन्यथा
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
-                return false; // 已经存在该类的实例
+                return false; // Duplicate found
             }
         }
-        return true; // 不存在该类的实例
+        return true; // No duplicate found
     }
     
-    // Assuming AtmosphereInterceptor is defined somewhere
-    public interface AtmosphereInterceptor {
-        // Interface methods
+    // Assuming AtmosphereInterceptor is defined somewhere in your codebase
+    public static abstract class AtmosphereInterceptor {
+        // Implementation of AtmosphereInterceptor
     }
 }

@@ -1,8 +1,32 @@
 import java.util.HashMap;
 import java.util.Map;
 
+public class GraphUtils {
+
+    /** 
+     * एक पहचान स्वचालन (यानी एक ग्राफ का आत्म-मैपिंग जिसमें प्रत्येक शीर्षक स्वयं को भी मैप करता है) की गणना करता है।
+     * @param graph इनपुट ग्राफ
+     * @param <V> ग्राफ शीर्षक प्रकार
+     * @param <E> ग्राफ किनारा प्रकार
+     * @return ग्राफ से ग्राफ तक का एक मैपिंग
+     */
+    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
+        Map<V, V> mapping = new HashMap<>();
+        
+        for (V vertex : graph.getVertices()) {
+            mapping.put(vertex, vertex);
+        }
+        
+        return new IsomorphicGraphMapping<>(mapping);
+    }
+}
+
 class Graph<V, E> {
-    // Graph implementation details
+    // Assume this class has necessary methods like getVertices()
+    public Iterable<V> getVertices() {
+        // Implementation here
+        return null; // Placeholder
+    }
 }
 
 class IsomorphicGraphMapping<V, E> {
@@ -14,23 +38,5 @@ class IsomorphicGraphMapping<V, E> {
 
     public Map<V, V> getMapping() {
         return mapping;
-    }
-}
-
-public class GraphUtils {
-    /** 
-     * 计算一个恒等自同构（即图的自映射，其中每个顶点也映射到自身）。
-     * @param graph 输入图
-     * @param <V> 图的顶点类型
-     * @param <E> 图的边类型
-     * @return 从图到图的映射
-     */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        Map<V, V> mapping = new HashMap<>();
-        // Assuming graph has a method to get vertices
-        for (V vertex : graph.getVertices()) {
-            mapping.put(vertex, vertex);
-        }
-        return new IsomorphicGraphMapping<>(mapping);
     }
 }

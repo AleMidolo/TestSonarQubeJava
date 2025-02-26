@@ -5,11 +5,11 @@ public class ValueAccumulator {
     private Map<String, Long> map;
 
     public ValueAccumulator() {
-        this.map = new HashMap<>();
+        map = new HashMap<>();
     }
 
     /** 
-     * 将给定键的值与现有值累加。
+     * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
      */
     public void valueAccumulation(String key, Long value) {
         map.put(key, map.getOrDefault(key, 0L) + value);

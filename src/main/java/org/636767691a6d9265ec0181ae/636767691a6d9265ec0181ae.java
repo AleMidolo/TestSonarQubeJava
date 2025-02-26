@@ -1,12 +1,12 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class EnumToStringArray {
+public class EnumerationToStringArray {
 
     /** 
-     * 将给定的枚举值复制到字符串数组中。枚举值必须仅包含字符串元素。
-     * @param enumeration 要复制的枚举值
-     * @return 字符串数组（如果传入的枚举为 <code>null</code>，则返回 <code>null</code>）
+     * दिए गए Enumeration को एक String array में कॉपी करें। Enumeration में केवल String तत्व होने चाहिए।
+     * @param enumeration कॉपी करने के लिए Enumeration
+     * @return String array (<code>null</code> यदि पास किया गया Enumeration <code>null</code> था)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
@@ -22,15 +22,13 @@ public class EnumToStringArray {
     }
 
     public static void main(String[] args) {
-        // 示例用法
+        // Example usage
         Vector<String> vector = new Vector<>();
-        vector.add("Apple");
-        vector.add("Banana");
-        vector.add("Cherry");
-
+        vector.add("Hello");
+        vector.add("World");
         Enumeration<String> enumeration = vector.elements();
+        
         String[] result = toStringArray(enumeration);
-
         for (String str : result) {
             System.out.println(str);
         }

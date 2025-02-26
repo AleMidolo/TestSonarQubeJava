@@ -1,46 +1,42 @@
-import java.util.ArrayList;
 import java.util.List;
 
+public class ChannelManager {
+    
+    public void addNewTarget(Channels channels, IConsumer consumer) {
+        if (channels == null || consumer == null) {
+            throw new IllegalArgumentException("Channels and consumer cannot be null");
+        }
+        
+        List<Channel> channelList = channels.getChannelList();
+        Channel newChannel = new Channel(consumer);
+        channelList.add(newChannel);
+        
+        channels.setChannelList(channelList);
+    }
+}
+
 class Channels {
-    private List<IConsumer> consumers;
+    private List<Channel> channelList;
 
-    public Channels() {
-        this.consumers = new ArrayList<>();
+    public List<Channel> getChannelList() {
+        return channelList;
     }
 
-    public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+    public void setChannelList(List<Channel> channelList) {
+        this.channelList = channelList;
+    }
+}
+
+class Channel {
+    private IConsumer consumer;
+
+    public Channel(IConsumer consumer) {
+        this.consumer = consumer;
     }
 
-    public List<IConsumer> getConsumers() {
-        return consumers;
-    }
+    // Additional methods for Channel can be added here
 }
 
 interface IConsumer {
-    void consume();
-}
-
-public class TargetChannelManager {
-    /** 
-     * 添加新的目标通道。
-     */
-    public void addNewTarget(Channels channels, IConsumer consumer) {
-        channels.addConsumer(consumer);
-    }
-
-    public static void main(String[] args) {
-        Channels channels = new Channels();
-        TargetChannelManager manager = new TargetChannelManager();
-
-        IConsumer consumer = new IConsumer() {
-            @Override
-            public void consume() {
-                System.out.println("Consuming data...");
-            }
-        };
-
-        manager.addNewTarget(channels, consumer);
-        System.out.println("New target added. Total consumers: " + channels.getConsumers().size());
-    }
+    // Define methods for IConsumer
 }

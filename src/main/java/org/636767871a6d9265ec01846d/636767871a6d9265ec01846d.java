@@ -3,7 +3,7 @@ import java.io.File;
 public class ConfigurationDirectoryCreator {
 
     /**
-     * 创建将要写入MRU文件列表的目录。在Windows 2000机器上，"lf5"目录会在“文档和设置”目录中创建，而在其他平台上则会在user.home变量指向的位置创建。
+     * वह निर्देशिका बनाता है जहाँ MRU फ़ाइल सूची लिखी जाएगी। "lf5" निर्देशिका Windows 2000 मशीनों पर Documents और Settings निर्देशिका में बनाई जाती है और सभी अन्य प्लेटफार्मों पर जहाँ भी user.home वेरिएबल इंगित करता है।
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
@@ -11,7 +11,7 @@ public class ConfigurationDirectoryCreator {
         String directoryPath;
 
         if (osName.contains("windows") && osName.contains("2000")) {
-            directoryPath = System.getenv("USERPROFILE") + "\\lf5";
+            directoryPath = System.getenv("USERPROFILE") + "\\Documents and Settings\\lf5";
         } else {
             directoryPath = userHome + File.separator + "lf5";
         }
@@ -20,12 +20,12 @@ public class ConfigurationDirectoryCreator {
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + directoryPath);
+                System.out.println("Configuration directory created at: " + directoryPath);
             } else {
-                System.out.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create configuration directory at: " + directoryPath);
             }
         } else {
-            System.out.println("Directory already exists: " + directoryPath);
+            System.out.println("Configuration directory already exists at: " + directoryPath);
         }
     }
 

@@ -1,30 +1,19 @@
-public class LineParser {
-
-    /**
-     * 跳过字节直到当前行的末尾。
-     * @param headerPart 正在解析的头部。
-     * @param end 尚未处理的最后一个字节的索引。
-     * @return \r\n 表示行结束的 \r\n 序列的索引。
-     */
-    private int parseEndOfLine(String headerPart, int end) {
-        int length = headerPart.length();
-        for (int i = end; i < length; i++) {
-            if (headerPart.charAt(i) == '\r') {
-                if (i + 1 < length && headerPart.charAt(i + 1) == '\n') {
-                    return i + 1; // Return the index after \r\n
-                }
-            }
-            if (headerPart.charAt(i) == '\n') {
-                return i; // Return the index after \n
-            }
-        }
-        return length; // If no end of line found, return the length of the string
+private int parseEndOfLine(String headerPart, int end) {
+    // Check if the end index is within the bounds of the headerPart string
+    if (end < 0 || end >= headerPart.length()) {
+        throw new IllegalArgumentException("End index is out of bounds");
     }
 
-    public static void main(String[] args) {
-        LineParser parser = new LineParser();
-        String header = "This is a test header\r\nThis is the next line";
-        int endIndex = parser.parseEndOfLine(header, 0);
-        System.out.println("End of line index: " + endIndex);
+    // Find the end of the line by searching for the line terminators
+    int lineEnd = headerPart.indexOf("\r\n", end);
+    if (lineEnd == -1) {
+        lineEnd = headerPart.indexOf('\n', end);
     }
+    if (lineEnd == -1) {
+        // If no line end is found, return the length of the headerPart
+        return headerPart.length();
+    }
+
+    // Return the index of the end of the line
+    return lineEnd + 2; // +2 to include the length of the line terminators
 }

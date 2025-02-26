@@ -1,15 +1,15 @@
 public class StringUtils {
     
-    /**
-     * <p>根据 {@link StringBuilder#reverse()} 方法反转字符串。</p>
-     * <p>一个 <code>null</code> 字符串返回 <code>null</code>。</p>
+    /** 
+     * <p>एक स्ट्रिंग को {@link StringBuilder#reverse()} के अनुसार उलटता है।</p> 
+     * <p>एक <code>null</code> स्ट्रिंग <code>null</code> लौटाता है।</p> 
      * <pre> 
      * StringUtils.reverse(null)  = null 
      * StringUtils.reverse("")    = "" 
      * StringUtils.reverse("bat") = "tab" 
      * </pre>
-     * @param str  要反转的字符串，可以为空
-     * @return 反转后的字符串，如果输入字符串为空，则返回 <code>null</code>
+     * @param str  वह स्ट्रिंग जिसे उलटना है, यह null हो सकता है
+     * @return उलटी हुई स्ट्रिंग, यदि इनपुट स्ट्रिंग null है तो <code>null</code>
      */
     public static String reverse(final String str) {
         if (str == null) {
@@ -19,8 +19,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(reverse(null));  // 输出: null
-        System.out.println(reverse(""));    // 输出: ""
-        System.out.println(reverse("bat")); // 输出: "tab"
+        System.out.println(reverse(null));  // Output: null
+        System.out.println(reverse(""));     // Output: ""
+        System.out.println(reverse("bat"));  // Output: "tab"
     }
 }

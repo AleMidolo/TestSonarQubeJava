@@ -1,13 +1,13 @@
-public class ExceptionChecker {
+public class Example {
     
     private Throwable thrown;
 
-    public ExceptionChecker(Throwable thrown) {
+    public Example(Throwable thrown) {
         this.thrown = thrown;
     }
 
     /** 
-     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
+     * @return यदि getThrown().toString() एक गैर-खाली स्ट्रिंग है तो true लौटाता है।
      */
     public boolean hasThrown() {
         return thrown != null && !thrown.toString().isEmpty();
@@ -18,10 +18,10 @@ public class ExceptionChecker {
     }
 
     public static void main(String[] args) {
-        ExceptionChecker checker = new ExceptionChecker(new Exception("An error occurred"));
-        System.out.println(checker.hasThrown()); // Output: true
+        Example example = new Example(new Exception("An error occurred"));
+        System.out.println(example.hasThrown()); // Output: true
 
-        ExceptionChecker emptyChecker = new ExceptionChecker(null);
-        System.out.println(emptyChecker.hasThrown()); // Output: false
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Output: false
     }
 }

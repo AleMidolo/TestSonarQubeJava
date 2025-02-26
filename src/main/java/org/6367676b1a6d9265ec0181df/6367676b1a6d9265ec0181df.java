@@ -1,9 +1,10 @@
 public class StringUtils {
+
     /** 
-     * 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
-     * @param str 要检查的字符串
-     * @param prefix 要查找的前缀
-     * @return 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
+     * यदि दिया गया स्ट्रिंग निर्दिष्ट केस-इंसेंसिटिव प्रीफिक्स से शुरू होता है, तो {@code true} लौटाता है, अन्यथा {@code false}।
+     * @param str वह स्ट्रिंग जिसे जांचना है
+     * @param prefix वह प्रीफिक्स जिसे खोजना है
+     * @return {@code true} यदि दिया गया स्ट्रिंग निर्दिष्ट केस-इंसेंसिटिव प्रीफिक्स से शुरू होता है, अन्यथा {@code false}।
      * @see java.lang.String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {
@@ -21,6 +22,6 @@ public class StringUtils {
         System.out.println(startsWithIgnoreCase("HelloWorld", "WORLD")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "Hello")); // true
         System.out.println(startsWithIgnoreCase(null, "prefix")); // false
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
+        System.out.println(startsWithIgnoreCase("string", null)); // false
     }
 }

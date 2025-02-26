@@ -1,35 +1,26 @@
 import java.util.LinkedList;
 
-class TreeNode {
-    int value;
-    LinkedList<TreeNode> children;
+public class TreeEdgeRemover {
+    private LinkedList<Edge> edgeList1;
+    private LinkedList<Edge> edgeList2;
 
-    public TreeNode(int value) {
-        this.value = value;
-        this.children = new LinkedList<>();
-    }
-}
-
-public class TreeEdgeList {
-    private TreeNode root;
-
-    public TreeEdgeList(TreeNode root) {
-        this.root = root;
+    public TreeEdgeRemover() {
+        edgeList1 = new LinkedList<>();
+        edgeList2 = new LinkedList<>();
     }
 
-    /**
-     * 从树的双向链表中移除该边。
+    /** 
+     * इस किनारे को पेड़ के किनारों की दोनों डबल लिंक्ड सूचियों से हटा देता है।
      */
-    public void removeFromTreeEdgeList(TreeNode parent, TreeNode child) {
-        if (parent == null || child == null) {
-            return;
-        }
-        if (parent.children.contains(child)) {
-            parent.children.remove(child);
-        }
-        // Assuming it's a bidirectional edge, we also need to remove the parent reference from the child
-        if (child.children.contains(parent)) {
-            child.children.remove(parent);
-        }
+    public void removeFromTreeEdgeList() {
+        Edge edgeToRemove = new Edge(); // Assume this edge is defined or passed as a parameter
+
+        edgeList1.remove(edgeToRemove);
+        edgeList2.remove(edgeToRemove);
+    }
+
+    // Assuming Edge is a class that represents an edge in the tree
+    private class Edge {
+        // Edge properties and methods
     }
 }

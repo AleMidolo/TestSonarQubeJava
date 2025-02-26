@@ -1,14 +1,14 @@
 import java.util.HashSet;
 
-public class MyCollection {
+public class CustomSet {
     private HashSet<Integer> set;
 
-    public MyCollection() {
+    public CustomSet() {
         set = new HashSet<>();
     }
 
-    /**
-     * 从集合中移除一个值。如果集合中包含指定的元素，则返回真。
+    /** 
+     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
      */
     public boolean remove(int val) {
         return set.remove(val);
@@ -20,5 +20,13 @@ public class MyCollection {
 
     public boolean contains(int val) {
         return set.contains(val);
+    }
+
+    public static void main(String[] args) {
+        CustomSet customSet = new CustomSet();
+        customSet.add(1);
+        customSet.add(2);
+        System.out.println(customSet.remove(1)); // true
+        System.out.println(customSet.remove(3)); // false
     }
 }

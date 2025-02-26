@@ -1,7 +1,6 @@
-public class StringUtil {
-    
-    /**
-     * 查找字符串中的最后一个索引，能够处理 <code>null</code>。此方法使用 {@link String#lastIndexOf(String)}。
+public class StringSearch {
+    /** 
+     * एक स्ट्रिंग के भीतर अंतिम अनुक्रमांक खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#lastIndexOf(String)} का उपयोग करती है। 
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -11,10 +10,10 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(lastIndexOf("hello world", "o")); // Output: 7
-        System.out.println(lastIndexOf("hello world", "l")); // Output: 9
-        System.out.println(lastIndexOf("hello world", "x")); // Output: -1
-        System.out.println(lastIndexOf(null, "o")); // Output: -1
-        System.out.println(lastIndexOf("hello world", null)); // Output: -1
+        // उदाहरण के लिए परीक्षण
+        String str = "Hello, world! Hello, universe!";
+        String searchStr = "Hello";
+        int index = lastIndexOf(str, searchStr);
+        System.out.println("The last index of '" + searchStr + "' is: " + index);
     }
 }

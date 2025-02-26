@@ -1,21 +1,21 @@
 public class StringBuilderExample {
     
-    private StringBuilder builder;
+    private StringBuilder stringBuilder;
 
     public StringBuilderExample() {
-        this.builder = new StringBuilder();
+        stringBuilder = new StringBuilder();
     }
 
     public void append(String str) {
-        builder.append(str);
+        stringBuilder.append(str);
     }
 
     /** 
-     * <p> 获取由此构建器构建的字符串。 </p>
-     * @return 构建的字符串
+     * <p> इस बिल्डर द्वारा निर्मित स्ट्रिंग प्राप्त करता है। </p>
+     * @return निर्मित स्ट्रिंग
      */
     public String toString() {
-        return builder.toString();
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) {

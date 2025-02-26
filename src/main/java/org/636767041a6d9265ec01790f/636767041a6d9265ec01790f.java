@@ -1,20 +1,21 @@
 public class ArrayConverter {
     
     /** 
-     * <p>将基本数据类型的 int 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>int</code> 数组
-     * @return 一个 <code>Integer</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>प्राथमिक int के एक ऐरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>int</code> ऐरे
+     * @return एक <code>Integer</code> ऐरे, <code>null</code> यदि null ऐरे इनपुट है
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
             return null;
         }
         
-        Integer[] objectArray = new Integer[array.length];
+        Integer[] result = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
-            objectArray[i] = Integer.valueOf(array[i]);
+            result[i] = array[i]; // Autoboxing from int to Integer
         }
-        return objectArray;
+        return result;
     }
 
     public static void main(String[] args) {

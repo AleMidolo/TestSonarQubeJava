@@ -1,29 +1,32 @@
 public class ByteArrayConverter {
 
     /** 
-     * <p>将对象类型的 Byte 数组转换为基本数据类型的 byte 数组。</p> 
-     * <p>对于 <code>null</code> 输入数组，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>Byte</code> 数组，可以是 <code>null</code>
-     * @return 一个 <code>byte</code> 数组，如果输入数组为 null 则返回 <code>null</code>
-     * @throws NullPointerException 如果数组内容为 <code>null</code>
+     * <p>एक ऑब्जेक्ट बाइट्स के एरे को प्रिमिटिव में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Byte</code> एरे, यह <code>null</code> हो सकता है
+     * @return एक <code>byte</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
      */
     public static byte[] toPrimitive(final Byte[] array) {
         if (array == null) {
             return null;
         }
-        byte[] result = new byte[array.length];
+        byte[] primitiveArray = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("Array element at index " + i + " is null");
             }
-            result[i] = array[i];
+            primitiveArray[i] = array[i];
         }
-        return result;
+        return primitiveArray;
     }
 
     public static void main(String[] args) {
         // Example usage
         Byte[] byteArray = {1, 2, 3, null}; // This will throw NullPointerException
         byte[] primitiveArray = toPrimitive(byteArray);
+        for (byte b : primitiveArray) {
+            System.out.print(b + " ");
+        }
     }
 }

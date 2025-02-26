@@ -1,50 +1,47 @@
-import java.util.Stack;
+public class StackPopper {
+    
+    // Assuming we have a stack to pop from
+    private Stack<Object> stack;
 
-public class DescriptorPopper {
-    private Stack<Object> outputFrameStack;
-
-    public DescriptorPopper() {
-        this.outputFrameStack = new Stack<>();
+    public StackPopper() {
+        this.stack = new Stack<>();
     }
 
-    /**
-     * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
+    /** 
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        int count = getCountFromDescriptor(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!outputFrameStack.isEmpty()) {
-                outputFrameStack.pop();
+        // Example logic to pop based on descriptor
+        // This is a placeholder for actual type checking and popping logic
+        int argCount = getArgumentCountFromDescriptor(descriptor);
+        
+        for (int i = 0; i < argCount; i++) {
+            if (!stack.isEmpty()) {
+                Object poppedElement = stack.pop();
+                // Process the popped element based on its type
+                System.out.println("Popped: " + poppedElement);
             } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
+                System.out.println("Stack is empty, cannot pop more elements.");
+                break;
             }
         }
     }
 
-    private int getCountFromDescriptor(String descriptor) {
-        // This is a simplified version of counting based on descriptor.
-        // In a real scenario, you would parse the descriptor string properly.
-        if (descriptor.startsWith("(")) {
-            // Method descriptor, count parameters
-            return (descriptor.split(";").length - 1) / 2; // Simplified count
-        } else {
-            // Type descriptor, count based on type length
-            return descriptor.length(); // Simplified count
-        }
+    private int getArgumentCountFromDescriptor(String descriptor) {
+        // Placeholder for actual logic to determine argument count from descriptor
+        // For simplicity, let's assume it returns a fixed number
+        return 2; // Example: assuming 2 arguments for demonstration
     }
 
     public void push(Object item) {
-        outputFrameStack.push(item);
+        stack.push(item);
     }
 
     public static void main(String[] args) {
-        DescriptorPopper popper = new DescriptorPopper();
-        popper.push(new Object());
-        popper.push(new Object());
-        popper.push(new Object());
-
-        // Example usage
-        popper.pop("(II)V"); // Assuming this pops 2 items for the method descriptor
+        StackPopper stackPopper = new StackPopper();
+        stackPopper.push("First");
+        stackPopper.push("Second");
+        stackPopper.pop("methodDescriptor");
     }
 }

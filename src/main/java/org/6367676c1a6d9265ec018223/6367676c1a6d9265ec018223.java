@@ -1,29 +1,18 @@
 import java.util.Collection;
 
-public class InstanceChecker {
+public class CollectionUtils {
     /** 
-     * 检查给定的集合是否包含给定的元素实例。<p>此方法要求集合中存在该具体实例，而不仅仅是一个相等的元素。
-     * @param collection 要检查的集合
-     * @param element 要查找的元素
-     * @return 如果找到则返回 <code>true</code>，否则返回 <code>false</code>
+     * जांचें कि दी गई संग्रह में दी गई तत्व उदाहरण मौजूद है या नहीं। <p>सुनिश्चित करता है कि दी गई उदाहरण मौजूद है, न कि समान तत्व के लिए <code>true</code> लौटाने के लिए।
+     * @param collection जांचने के लिए संग्रह
+     * @param element खोजने के लिए तत्व
+     * @return <code>true</code> यदि पाया गया, <code>false</code> अन्यथा
      */
-    public static boolean containsInstance(Collection collection, Object element) {
+    public static boolean containsInstance(Collection<?> collection, Object element) {
         for (Object obj : collection) {
             if (obj == element) {
                 return true;
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        // 示例用法
-        Collection<Object> collection = new java.util.ArrayList<>();
-        String str1 = new String("test");
-        String str2 = new String("test");
-        collection.add(str1);
-
-        System.out.println(containsInstance(collection, str1)); // 输出: true
-        System.out.println(containsInstance(collection, str2)); // 输出: false
     }
 }

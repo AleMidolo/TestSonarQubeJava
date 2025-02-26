@@ -1,10 +1,10 @@
 public class ArrayReverser {
     /** 
-     * 反转给定数组中指定范围内元素的顺序。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param from 要反转的范围内第一个元素的索引（包含）
-     * @param to 要反转的范围内最后一个元素的索引（包含）
+     * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
+     * @param < V > ऐरे में तत्वों का प्रकार
+     * @param arr ऐरे
+     * @param from उलटने के लिए सीमा के भीतर पहले तत्व का अनुक्रमांक (समावेशी)
+     * @param to उलटने के लिए सीमा के भीतर अंतिम तत्व का अनुक्रमांक (समावेशी)
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {

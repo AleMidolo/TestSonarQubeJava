@@ -1,34 +1,25 @@
-public class ModelChecker {
+public class ShardingKeyChecker {
 
     /**
-     * @param modelName 实体的模型名称
-     * @throws IllegalStateException 如果分片键索引不连续
+     * @param modelName एंटिटी का मॉडल नाम
+     * @throws IllegalStateException यदि शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं
      */
     private void check(String modelName) throws IllegalStateException {
-        // Example logic to check for continuity of shard key indices
-        // This is a placeholder for the actual implementation
-        int[] shardKeyIndices = getShardKeyIndices(modelName);
-        
-        for (int i = 0; i < shardKeyIndices.length - 1; i++) {
-            if (shardKeyIndices[i] + 1 != shardKeyIndices[i + 1]) {
-                throw new IllegalStateException("分片键索引不连续: " + modelName);
-            }
+        // Dummy implementation for demonstration
+        // In a real scenario, you would check the sharding keys for continuity
+        boolean isShardingKeyContinuous = false; // This should be replaced with actual logic
+
+        if (!isShardingKeyContinuous) {
+            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं: " + modelName);
         }
     }
 
-    // Placeholder method to simulate fetching shard key indices
-    private int[] getShardKeyIndices(String modelName) {
-        // This should return the actual shard key indices based on the modelName
-        return new int[]{0, 1, 2}; // Example continuous indices
-    }
-
     public static void main(String[] args) {
-        ModelChecker checker = new ModelChecker();
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("exampleModel");
-            System.out.println("检查通过");
+            checker.check("ExampleModel");
         } catch (IllegalStateException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

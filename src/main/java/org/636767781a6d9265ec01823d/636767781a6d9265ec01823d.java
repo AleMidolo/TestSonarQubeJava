@@ -6,11 +6,11 @@ public class Logger {
      * यह विधि वास्तविक लेखन करती है
      */
     protected void subAppend(LoggingEvent event) {
+        // यहाँ पर लॉगिंग इवेंट को संभालने का कोड लिखें
         if (event != null) {
-            // यहाँ पर लॉगिंग इवेंट को संभालने का कोड लिखें
-            System.out.println("Logging event: " + event.getMessage());
+            System.out.println("Logging Event: " + event.getMessage());
         } else {
-            System.out.println("No logging event provided.");
+            System.out.println("No event to log.");
         }
     }
 }

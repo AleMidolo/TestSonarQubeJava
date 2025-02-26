@@ -1,11 +1,8 @@
-public class MetricsHandler {
+import java.util.HashMap;
+import java.util.Map;
 
-    // Assuming METRICS is a class that holds some data
-    private METRICS currentMetrics;
-
-    public MetricsHandler() {
-        this.currentMetrics = new METRICS();
-    }
+public class MetricsCache {
+    private final Map<String, Integer> cache = new HashMap<>();
 
     /** 
      * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
@@ -13,25 +10,30 @@ public class MetricsHandler {
      */
     @Override 
     public void accept(final METRICS data) {
-        // Merge the incoming data with the current metrics
-        if (data != null) {
-            // Assuming METRICS has a method to merge data
-            this.currentMetrics.merge(data);
-        }
+        // Assuming METRICS has a method getKey() to get the key and getValue() to get the value
+        String key = data.getKey();
+        int value = data.getValue();
+
+        // Merge the value with the existing value in the cache
+        cache.merge(key, value, Integer::sum);
     }
-
-    // Assuming METRICS class definition
+    
+    // Assuming a METRICS class for demonstration purposes
     public static class METRICS {
-        // Example fields
-        private int value;
+        private final String key;
+        private final int value;
 
-        public METRICS() {
-            this.value = 0;
+        public METRICS(String key, int value) {
+            this.key = key;
+            this.value = value;
         }
 
-        public void merge(METRICS other) {
-            // Example merge logic
-            this.value += other.value;
+        public String getKey() {
+            return key;
+        }
+
+        public int getValue() {
+            return value;
         }
     }
 }

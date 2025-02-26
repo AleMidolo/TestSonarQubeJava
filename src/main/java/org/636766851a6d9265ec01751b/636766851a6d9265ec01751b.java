@@ -20,6 +20,7 @@ public class HexDecoder {
     public static void main(String[] args) {
         // परीक्षण के लिए कुछ उदाहरण
         System.out.println(decodeHexNibble('0')); // 0
+        System.out.println(decodeHexNibble('9')); // 9
         System.out.println(decodeHexNibble('a')); // 10
         System.out.println(decodeHexNibble('F')); // 15
         System.out.println(decodeHexNibble('g')); // 65535 (Character.MAX_VALUE)

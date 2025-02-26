@@ -13,8 +13,7 @@ public class TreeEdgeRemover {
      * इस किनारे को पेड़ के किनारों की दोनों डबल लिंक्ड सूचियों से हटा देता है।
      */
     public void removeFromTreeEdgeList() {
-        Edge edgeToRemove = new Edge(); // Assume this edge is defined or passed as a parameter
-
+        Edge edgeToRemove = new Edge(); // Assume this is the edge we want to remove
         edgeList1.remove(edgeToRemove);
         edgeList2.remove(edgeToRemove);
     }

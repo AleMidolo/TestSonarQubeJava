@@ -12,7 +12,7 @@ public class StringSearch {
 
     public static void main(String[] args) {
         // उदाहरण के लिए परीक्षण
-        String str = "Hello, world! Hello, universe!";
+        String str = "Hello, world! Hello again!";
         String searchStr = "Hello";
         int index = lastIndexOf(str, searchStr);
         System.out.println("The last index of '" + searchStr + "' is: " + index);

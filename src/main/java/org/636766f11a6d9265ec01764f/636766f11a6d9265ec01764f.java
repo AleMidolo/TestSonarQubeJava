@@ -31,8 +31,5 @@ public class BeanMap {
         
         Collection<Object> values = beanMap.values();
         System.out.println(values); // Output: [value1, 42]
-        
-        // Uncommenting the next line will throw an UnsupportedOperationException
-        // values.add("newValue");
     }
 }

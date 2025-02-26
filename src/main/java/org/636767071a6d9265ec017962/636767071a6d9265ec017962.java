@@ -21,14 +21,14 @@ public class BeanMapUtil {
     }
 
     private boolean isWriteable(Object property, BeanMap map) {
-        // Logic to check if the property is writable
+        // Logic to determine if the property is writable
         // This is a placeholder; actual implementation may vary
-        return map.getPropertyDescriptor(property).getWriteMethod() != null;
+        return true; // Replace with actual check
     }
 
     private Object getValueForProperty(Object property) {
         // Logic to get the value for the property
         // This is a placeholder; actual implementation may vary
-        return new Object(); // Replace with actual value retrieval logic
+        return new Object(); // Replace with actual value retrieval
     }
 }

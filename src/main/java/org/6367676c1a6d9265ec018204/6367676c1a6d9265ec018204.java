@@ -17,14 +17,14 @@ public class ArrayConcatenation {
         List<String> resultList = new ArrayList<>();
 
         if (array1 != null) {
-            for (String element : array1) {
-                resultList.add(element);
+            for (String s : array1) {
+                resultList.add(s);
             }
         }
 
         if (array2 != null) {
-            for (String element : array2) {
-                resultList.add(element);
+            for (String s : array2) {
+                resultList.add(s);
             }
         }
 

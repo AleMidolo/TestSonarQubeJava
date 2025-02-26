@@ -23,10 +23,9 @@ public class AbbreviationUtil {
             }
         }
 
-        // Remove the last added space and dot if exists
+        // Remove the last space and dot if exists
         if (abbreviatedName.length() > 0) {
-            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last space
-            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last dot
+            abbreviatedName.setLength(abbreviatedName.length() - 1);
         }
 
         buf.setLength(0); // Clear the buffer
@@ -34,8 +33,8 @@ public class AbbreviationUtil {
     }
 
     public static void main(String[] args) {
-        StringBuffer buffer = new StringBuffer("John Doe Smith");
         AbbreviationUtil util = new AbbreviationUtil();
+        StringBuffer buffer = new StringBuffer("John Doe Smith");
         util.abbreviate(0, buffer);
         System.out.println(buffer.toString()); // Output: J. D. S.
     }

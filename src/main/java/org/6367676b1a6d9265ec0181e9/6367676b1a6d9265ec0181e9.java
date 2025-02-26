@@ -1,5 +1,5 @@
 public class SubstringMatcher {
-
+    
     /** 
      * यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, तो {@code true} लौटाता है, अन्यथा {@code false}।
      * @param str मूल स्ट्रिंग (या StringBuilder)
@@ -27,7 +27,7 @@ public class SubstringMatcher {
         String str = "Hello, world!";
         String substring = "world";
         int index = 7;
-
+        
         boolean result = substringMatch(str, index, substring);
         System.out.println("Does the substring match? " + result); // Output: true
     }

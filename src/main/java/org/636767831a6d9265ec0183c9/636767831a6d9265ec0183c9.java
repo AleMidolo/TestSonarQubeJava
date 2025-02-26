@@ -3,7 +3,7 @@ import java.util.Stack;
 public class DiagnosisReference {
     private static Stack<String> diagnosisStack = new Stack<>();
 
-    /** 
+    /**
      * इस NDC के शीर्ष पर अंतिम निदान संदर्भ को देखता है बिना उसे हटाए। <p> लौटाई गई मान वह मान है जो अंतिम बार डाला गया था। यदि कोई संदर्भ उपलब्ध नहीं है, तो खाली स्ट्रिंग "" लौटाई जाती है।
      * @return String सबसे आंतरिक निदान संदर्भ।
      */

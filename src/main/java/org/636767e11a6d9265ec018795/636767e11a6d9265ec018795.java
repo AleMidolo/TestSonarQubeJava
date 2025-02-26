@@ -1,5 +1,5 @@
 public class DataTable {
-    // Assuming DataTable has a method to get the bucket
+    // Assuming DataTable has a bucket property for demonstration purposes
     private String bucket;
 
     public DataTable(String bucket) {
@@ -26,14 +26,9 @@ public class CompatibilityChecker {
     }
 
     public static void main(String[] args) {
-        DataTable dataset1 = new DataTable("bucket1");
-        DataTable dataset2 = new DataTable("bucket1");
-        DataTable dataset3 = new DataTable("bucket2");
-
         CompatibilityChecker checker = new CompatibilityChecker("bucket1");
-
-        System.out.println(checker.isCompatible(dataset1)); // true
-        System.out.println(checker.isCompatible(dataset2)); // true
-        System.out.println(checker.isCompatible(dataset3)); // false
+        DataTable dataset = new DataTable("bucket1");
+        
+        System.out.println(checker.isCompatible(dataset)); // Should print true
     }
 }

@@ -11,23 +11,15 @@ public class TimeRangeBuilder {
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
         
-        // Validate input
-        if (start >= end) {
-            return timeRanges; // Return empty list if start is not less than end
+        while (start < end) {
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
-
-        // Create time ranges
-        long currentStart = start;
-        while (currentStart < end) {
-            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd; // Move to the next range
-        }
-
+        
         return timeRanges;
     }
 
-    // Inner class to represent a time range
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -43,14 +35,6 @@ public class TimeRangeBuilder {
 
         public long getEnd() {
             return end;
-        }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
         }
     }
 }

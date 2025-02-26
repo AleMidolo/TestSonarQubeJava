@@ -1,10 +1,6 @@
 public class LineNumberManager {
     
-    private List<Integer> lineNumbers;
-
-    public LineNumberManager() {
-        lineNumbers = new ArrayList<>();
-    }
+    private int lineNumber;
 
     /** 
      * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
@@ -14,17 +10,16 @@ public class LineNumberManager {
         if (lineNumber <= 0) {
             throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo.");
         }
-        lineNumbers.add(lineNumber);
+        this.lineNumber = lineNumber;
     }
 
-    public List<Integer> getLineNumbers() {
-        return new ArrayList<>(lineNumbers);
+    public int getLineNumber() {
+        return lineNumber;
     }
 
     public static void main(String[] args) {
         LineNumberManager manager = new LineNumberManager();
         manager.addLineNumber(5);
-        manager.addLineNumber(10);
-        System.out.println(manager.getLineNumbers());
+        System.out.println("Numero di riga aggiunto: " + manager.getLineNumber());
     }
 }

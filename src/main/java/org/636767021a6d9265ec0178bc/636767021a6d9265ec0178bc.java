@@ -1,5 +1,5 @@
-public class StringIndexFinder {
-    
+public class StringSearch {
+
     /** 
      * Trova il primo indice all'interno di una Stringa, gestendo <code>null</code>. Questo metodo utilizza {@link String#indexOf(String)}. 
      */
@@ -16,5 +16,6 @@ public class StringIndexFinder {
         System.out.println(indexOf("Hello, world!", "Java"));  // Output: -1
         System.out.println(indexOf(null, "test"));              // Output: -1
         System.out.println(indexOf("test", null));              // Output: -1
+        System.out.println(indexOf("", ""));                     // Output: 0
     }
 }

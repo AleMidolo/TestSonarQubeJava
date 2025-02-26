@@ -1,4 +1,4 @@
-public class ArrayUtil {
+public class DefensiveProgramming {
 
     private static final Character[] EMPTY_ARRAY = new Character[0];
 
@@ -18,12 +18,12 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
-        Character[] nullArray = null;
-        Character[] emptyArray = new Character[0];
-        Character[] nonEmptyArray = new Character[]{'a', 'b', 'c'};
+        Character[] result1 = nullToEmpty(null);
+        Character[] result2 = nullToEmpty(new Character[]{});
+        Character[] result3 = nullToEmpty(new Character[]{'a', 'b', 'c'});
 
-        System.out.println(nullToEmpty(nullArray).length); // Output: 0
-        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
+        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
     }
 }

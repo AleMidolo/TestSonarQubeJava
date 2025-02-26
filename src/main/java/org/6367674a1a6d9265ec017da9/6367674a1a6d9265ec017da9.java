@@ -53,14 +53,15 @@ class DoublyLinkedList<E> {
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         if (list == null || list.head == null) {
-            return;
+            return; // Nothing to move
         }
+        
         ListNode<E> current = list.head;
         while (current != null) {
-            ListNode<E> nextNode = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
-            current = nextNode;
+            ListNode<E> nextNode = current.next; // Store next node
+            this.addListNode(current); // Move current node to this list
+            list.removeListNode(current); // Remove current node from the original list
+            current = nextNode; // Move to the next node
         }
     }
 }

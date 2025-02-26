@@ -1,6 +1,6 @@
-public class DefensiveProgramming {
+public class ArrayUtil {
 
-    private static final Boolean[] EMPTY_ARRAY = new Boolean[0];
+    private static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /** 
      * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p> 
@@ -11,13 +11,15 @@ public class DefensiveProgramming {
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
-        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
+        if (array == null || array.length == 0) {
+            return EMPTY_BOOLEAN_ARRAY;
+        }
+        return array;
     }
 
     public static void main(String[] args) {
-        // Test cases
         Boolean[] testArray1 = null;
-        Boolean[] testArray2 = {};
+        Boolean[] testArray2 = new Boolean[0];
         Boolean[] testArray3 = {true, false};
 
         System.out.println(nullToEmpty(testArray1).length); // Output: 0

@@ -1,4 +1,5 @@
 public class ArrayConverter {
+    
     /** 
      * <p>将基本数据类型的 int 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
      * @param array  一个 <code>int</code> 数组
@@ -8,18 +9,21 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        Integer[] result = new Integer[array.length];
+        
+        Integer[] objectArray = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Integer.valueOf(array[i]);
+            objectArray[i] = Integer.valueOf(array[i]);
         }
-        return result;
+        return objectArray;
     }
 
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
+        
+        // Print the result
         for (Integer num : objectArray) {
-            System.out.println(num);
+            System.out.print(num + " ");
         }
     }
 }

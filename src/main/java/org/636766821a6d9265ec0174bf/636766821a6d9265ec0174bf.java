@@ -1,5 +1,5 @@
 public class StringUtil {
-    
+
     /**
      * Introspector.decapitalize 的反向操作
      * 

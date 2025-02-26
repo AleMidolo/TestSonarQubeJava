@@ -1,7 +1,7 @@
-public class Stack {
+public class StackExample {
     private java.util.Stack<Object> stack;
 
-    public Stack() {
+    public StackExample() {
         stack = new java.util.Stack<>();
     }
 
@@ -11,7 +11,7 @@ public class Stack {
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
+            throw new IllegalArgumentException("Elements to pop must be non-negative.");
         }
         for (int i = 0; i < elements; i++) {
             if (!stack.isEmpty()) {
@@ -27,8 +27,19 @@ public class Stack {
         stack.push(element);
     }
 
-    // Method to check the current size of the stack for testing purposes
+    // Method to get the current size of the stack for testing purposes
     public int size() {
         return stack.size();
+    }
+
+    public static void main(String[] args) {
+        StackExample example = new StackExample();
+        example.push("Element 1");
+        example.push("Element 2");
+        example.push("Element 3");
+        
+        System.out.println("Stack size before pop: " + example.size());
+        example.pop(2);
+        System.out.println("Stack size after popping 2 elements: " + example.size());
     }
 }

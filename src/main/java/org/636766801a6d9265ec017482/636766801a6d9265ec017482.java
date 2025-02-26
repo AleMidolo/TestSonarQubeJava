@@ -34,6 +34,6 @@ public class ClassFileBuffer {
         this.size = this.buffer.length;
 
         // Reset the read pointer (if applicable, depending on how you manage reading)
-        // In this case, we just reset the size to indicate the buffer is filled
+        // In this case, we just ensure the buffer is ready to be read from the start
     }
 }

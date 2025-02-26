@@ -17,7 +17,7 @@ public class HashCodeUtil {
         long[] array1 = {1L, 2L, 3L};
         long[] array2 = null;
 
-        System.out.println(nullSafeHashCode(array1)); // 输出哈希码
-        System.out.println(nullSafeHashCode(array2)); // 输出 0
+        System.out.println(nullSafeHashCode(array1)); // Example usage
+        System.out.println(nullSafeHashCode(array2)); // Example usage
     }
 }

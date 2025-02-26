@@ -18,28 +18,44 @@ public class StackManipulator {
         int count = 0;
         if (descriptor.startsWith("(")) {
             // Method descriptor, count parameters
-            int index = 1; // Start after '('
-            while (descriptor.charAt(index) != ')') {
-                if (descriptor.charAt(index) == 'L') {
+            int i = 1;
+            while (descriptor.charAt(i) != ')') {
+                if (descriptor.charAt(i) == 'L') {
                     // Object type
-                    while (descriptor.charAt(index) != ';') {
-                        index++;
+                    while (descriptor.charAt(i) != ';') {
+                        i++;
                     }
-                    index++; // Move past ';'
+                    i++; // Move past ';'
+                } else if (descriptor.charAt(i) == '[') {
+                    // Array type
+                    while (descriptor.charAt(i) == '[') {
+                        i++;
+                    }
+                    if (descriptor.charAt(i) == 'L') {
+                        while (descriptor.charAt(i) != ';') {
+                            i++;
+                        }
+                        i++; // Move past ';'
+                    }
                 } else {
                     // Primitive type
-                    index++;
+                    i++;
                 }
                 count++;
             }
         } else {
-            // Type descriptor
-            if (descriptor.charAt(0) == 'L') {
-                // Object type
-                count = 1;
-            } else {
-                // Primitive type
-                count = 1;
+            // Type descriptor, count based on type
+            if (descriptor.equals("V")) {
+                count = 0; // Void type
+            } else if (descriptor.equals("Z") || descriptor.equals("B") || descriptor.equals("C") || 
+                       descriptor.equals("S") || descriptor.equals("I")) {
+                count = 1; // 1 for primitive types
+            } else if (descriptor.equals("F") || descriptor.equals("D")) {
+                count = 1; // 1 for float/double
+            } else if (descriptor.startsWith("L")) {
+                count = 1; // Object type
+            } else if (descriptor.startsWith("[")) {
+                count = 1; // Array type
             }
         }
         return count;

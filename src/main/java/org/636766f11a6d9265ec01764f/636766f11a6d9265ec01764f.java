@@ -18,7 +18,7 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Method to put values into the map for testing purposes
+    // Method to add values to the map for testing purposes
     public void put(String key, Object value) {
         map.put(key, value);
     }

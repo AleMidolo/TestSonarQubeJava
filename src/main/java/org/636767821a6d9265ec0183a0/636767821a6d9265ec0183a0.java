@@ -9,7 +9,7 @@ public class FileUtils {
         File file = new File(fileName);
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("文件已删除: " + fileName);
+                System.out.println("文件已成功删除: " + fileName);
             } else {
                 System.out.println("无法删除文件: " + fileName);
             }

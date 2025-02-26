@@ -11,8 +11,9 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
+        
         try {
-            // Encode the string and replace '{' and '}' with their percent-encoded values
+            // Encode the string using UTF-8 and replace '{' and '}' with their percent-encoded values
             String encoded = URLEncoder.encode(s, "UTF-8");
             encoded = encoded.replace("+", "%20"); // Replace spaces with %20
             return encoded.replace("%7B", "{").replace("%7D", "}");

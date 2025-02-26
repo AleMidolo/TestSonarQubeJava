@@ -1,10 +1,11 @@
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-public class ByteArrayConverter {
+public class ByteArrayExample {
     
     private byte[] data;
 
-    public ByteArrayConverter(byte[] data) {
+    public ByteArrayExample(byte[] data) {
         this.data = data;
     }
 
@@ -12,15 +13,21 @@ public class ByteArrayConverter {
      * 将字节复制到 {@code byte[]} 中。
      */
     public byte[] toByteArray() {
-        return data.clone();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            outputStream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
 
     public static void main(String[] args) {
         byte[] originalData = {1, 2, 3, 4, 5};
-        ByteArrayConverter converter = new ByteArrayConverter(originalData);
-        byte[] copiedData = converter.toByteArray();
-
-        // Print the copied data
+        ByteArrayExample example = new ByteArrayExample(originalData);
+        byte[] copiedData = example.toByteArray();
+        
+        // Print copied data
         for (byte b : copiedData) {
             System.out.print(b + " ");
         }

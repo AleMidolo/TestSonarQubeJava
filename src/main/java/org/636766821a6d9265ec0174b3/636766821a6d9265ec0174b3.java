@@ -16,16 +16,16 @@ public class BroadcastFilter {
      */
     protected Object filter(Object msg) {
         for (Object filter : filters) {
-            // Assuming filter is a function that takes an Object and returns an Object
+            // Assuming filter is a functional interface that takes an Object and returns an Object
             msg = applyFilter(filter, msg);
         }
         return msg;
     }
 
     private Object applyFilter(Object filter, Object msg) {
-        // Placeholder for actual filter logic
-        // In a real implementation, you would invoke the filter on the msg
-        return msg; // Return msg unchanged for this example
+        // Implement the logic to apply the filter to the message
+        // This is a placeholder for actual filter logic
+        return msg; // Return the modified message after applying the filter
     }
 
     public void addFilter(Object filter) {

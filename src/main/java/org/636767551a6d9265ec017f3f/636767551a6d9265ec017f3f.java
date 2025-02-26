@@ -8,7 +8,7 @@ public class ArrayUtils {
      */
     public static final <V> void swap(V[] arr, int i, int j) {
         if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
-            throw new IllegalArgumentException("Invalid index or null array");
+            throw new IllegalArgumentException("Invalid index or array is null");
         }
         V temp = arr[i];
         arr[i] = arr[j];
@@ -17,8 +17,9 @@ public class ArrayUtils {
 
     public static void main(String[] args) {
         Integer[] array = {1, 2, 3, 4, 5};
-        System.out.println("Before swap: " + java.util.Arrays.toString(array));
         swap(array, 1, 3);
-        System.out.println("After swap: " + java.util.Arrays.toString(array));
+        for (Integer num : array) {
+            System.out.print(num + " ");
+        }
     }
 }

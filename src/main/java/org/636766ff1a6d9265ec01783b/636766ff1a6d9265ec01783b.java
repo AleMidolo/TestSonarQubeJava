@@ -21,10 +21,7 @@ public class SubstringUtil {
 
     public static void main(String[] args) {
         // Example usage
-        String example = "Hello, World!";
-        System.out.println(sub(example, 7, 12)); // Output: World
-        System.out.println(sub(example, -5, 5));  // Output: Hello
-        System.out.println(sub(example, 0, 20));  // Output: Hello, World!
-        System.out.println(sub(null, 0, 5));      // Output: null
+        String result = sub("Hello, World!", 7, 12);
+        System.out.println(result); // Output: World
     }
 }

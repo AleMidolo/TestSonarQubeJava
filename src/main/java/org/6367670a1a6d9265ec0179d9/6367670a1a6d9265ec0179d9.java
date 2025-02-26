@@ -1,5 +1,5 @@
 public class StringUtils {
-    
+
     /** 
      * Gets a String's length or <code>0</code> if the String is <code>null</code>.
      * @param str a String or <code>null</code>

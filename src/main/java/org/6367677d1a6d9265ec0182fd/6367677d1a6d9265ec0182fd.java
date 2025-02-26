@@ -23,5 +23,6 @@ public class BooleanConverter {
         System.out.println(toBoolean("unknown", true)); // true
         System.out.println(toBoolean("unknown", false)); // false
         System.out.println(toBoolean(null, true));      // true
+        System.out.println(toBoolean(null, false));     // false
     }
 }

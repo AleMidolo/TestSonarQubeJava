@@ -1,23 +1,5 @@
 import java.util.Objects;
 
-class Node {
-    private final boolean isVirtual;
-    private final Node realNode;
-
-    public Node(boolean isVirtual, Node realNode) {
-        this.isVirtual = isVirtual;
-        this.realNode = realNode;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    public Node getRealNode() {
-        return isVirtual ? realNode : this;
-    }
-}
-
 class Edge {
     private final Node from;
     private final Node to;
@@ -27,13 +9,39 @@ class Edge {
         this.to = to;
     }
 
-    @Override
-    public String toString() {
-        return "Edge from " + from + " to " + to;
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
     }
 }
 
-class Graph {
+class Node {
+    private final String name;
+    private final boolean isVirtual;
+
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
+        this.isVirtual = isVirtual;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public Node getRealNode() {
+        // Assuming the real counterpart is the same node without the virtual flag
+        return new Node(name, false);
+    }
+}
+
+public class Graph {
     private Node currentNode;
     private Node nextNode;
 
@@ -50,5 +58,13 @@ class Graph {
         Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
         Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(fromNode, toNode);
+    }
+
+    public static void main(String[] args) {
+        Node node1 = new Node("A", false);
+        Node node2 = new Node("B", true);
+        Graph graph = new Graph(node1, node2);
+        Edge edge = graph.edgeToNext();
+        System.out.println("Edge from " + edge.getFrom().getName() + " to " + edge.getTo().getName());
     }
 }

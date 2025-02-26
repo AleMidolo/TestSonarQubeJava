@@ -1,6 +1,7 @@
 import java.awt.geom.Point2D;
 
 public class PointComparator {
+    
     /** 
      * Compare two points for equality using tolerance 1e-9.
      * @param p1 the first point

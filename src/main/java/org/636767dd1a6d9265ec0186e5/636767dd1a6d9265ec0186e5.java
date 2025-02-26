@@ -2,45 +2,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Channels {
-    private List<IConsumer> consumers;
+    private List<String> channelList;
 
     public Channels() {
-        this.consumers = new ArrayList<>();
+        this.channelList = new ArrayList<>();
     }
 
-    public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+    public void addChannel(String channel) {
+        channelList.add(channel);
     }
 
-    public List<IConsumer> getConsumers() {
-        return consumers;
+    public List<String> getChannels() {
+        return channelList;
     }
 }
 
 interface IConsumer {
-    void consume(String message);
+    void consume(String channel);
 }
 
-public class TargetChannelManager {
+public class TargetManager {
+    private Channels channels;
+    private IConsumer consumer;
+
+    public TargetManager(Channels channels, IConsumer consumer) {
+        this.channels = channels;
+        this.consumer = consumer;
+    }
+
     /** 
      * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        channels.addConsumer(consumer);
+        // Example of adding a new channel
+        String newChannel = "New Channel";
+        channels.addChannel(newChannel);
+        
+        // Consume the new channel
+        consumer.consume(newChannel);
     }
 
     public static void main(String[] args) {
         Channels channels = new Channels();
-        TargetChannelManager manager = new TargetChannelManager();
-
         IConsumer consumer = new IConsumer() {
             @Override
-            public void consume(String message) {
-                System.out.println("Consuming message: " + message);
+            public void consume(String channel) {
+                System.out.println("Consuming channel: " + channel);
             }
         };
 
-        manager.addNewTarget(channels, consumer);
-        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
+        TargetManager targetManager = new TargetManager(channels, consumer);
+        targetManager.addNewTarget(channels, consumer);
     }
 }

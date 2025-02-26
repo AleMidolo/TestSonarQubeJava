@@ -4,11 +4,9 @@ import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int readPointer;
 
     public ClassFileBuffer() {
         this.buffer = new byte[0];
-        this.readPointer = 0;
     }
 
     /** 
@@ -18,20 +16,18 @@ public class ClassFileBuffer {
     public void readFrom(final InputStream in) throws IOException {
         // Clear the existing buffer
         this.buffer = new byte[0];
-        this.readPointer = 0;
 
         // Use ByteArrayOutputStream to read the InputStream
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] tempBuffer = new byte[1024];
         int bytesRead;
 
-        // Read from the InputStream until the end
+        // Read from the InputStream and write to the ByteArrayOutputStream
         while ((bytesRead = in.read(tempBuffer)) != -1) {
             byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
-        // Convert the ByteArrayOutputStream to a byte array
+        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
         this.buffer = byteArrayOutputStream.toByteArray();
-        this.readPointer = 0; // Reset read pointer to the start
     }
 }

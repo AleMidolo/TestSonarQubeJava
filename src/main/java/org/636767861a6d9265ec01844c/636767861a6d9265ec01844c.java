@@ -3,41 +3,33 @@ import java.util.Iterator;
 import java.util.List;
 
 public class AppenderManager {
-    private List<String> appenders;
+    private List<Appender> appenders;
 
     public AppenderManager() {
         this.appenders = new ArrayList<>();
     }
 
-    /** 
-     * Remove the appender with the name passed as parameter from the list of appenders.  
-     */
     public void removeAppender(String name) {
-        Iterator<String> iterator = appenders.iterator();
+        Iterator<Appender> iterator = appenders.iterator();
         while (iterator.hasNext()) {
-            String appender = iterator.next();
-            if (appender.equals(name)) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
                 iterator.remove();
-                break;
+                break; // Exit after removing the first matching appender
             }
         }
     }
 
-    public void addAppender(String name) {
-        appenders.add(name);
-    }
+    // Example Appender class for demonstration purposes
+    private class Appender {
+        private String name;
 
-    public List<String> getAppenders() {
-        return appenders;
-    }
+        public Appender(String name) {
+            this.name = name;
+        }
 
-    public static void main(String[] args) {
-        AppenderManager manager = new AppenderManager();
-        manager.addAppender("ConsoleAppender");
-        manager.addAppender("FileAppender");
-        
-        System.out.println("Appenders before removal: " + manager.getAppenders());
-        manager.removeAppender("ConsoleAppender");
-        System.out.println("Appenders after removal: " + manager.getAppenders());
+        public String getName() {
+            return name;
+        }
     }
 }

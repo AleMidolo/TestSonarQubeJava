@@ -1,28 +1,24 @@
-import java.util.HashMap;
-import java.util.Map;
+import org.atmosphere.cpr.AtmosphereFramework;
+import org.atmosphere.cpr.AtmosphereHandler;
 
-public class AtmosphereFramework {
-    private Map<String, AtmosphereHandler> handlers = new HashMap<>();
+public class AtmosphereHandlerManager {
+    private AtmosphereFramework atmosphereFramework;
 
-    /**
+    public AtmosphereHandlerManager() {
+        this.atmosphereFramework = new AtmosphereFramework();
+    }
+
+    /** 
      * Remove an  {@link AtmosphereHandler}.
      * @param mapping the mapping used when invoking {@link #addAtmosphereHandler(String,AtmosphereHandler)};
      * @return true if removed
      */
     public boolean removeAtmosphereHandler(String mapping) {
-        if (handlers.containsKey(mapping)) {
-            handlers.remove(mapping);
+        AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
+        if (handler != null) {
+            atmosphereFramework.removeAtmosphereHandler(mapping);
             return true;
         }
         return false;
-    }
-
-    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
-        handlers.put(mapping, handler);
-    }
-
-    // Dummy AtmosphereHandler class for demonstration purposes
-    public static class AtmosphereHandler {
-        // Implementation of AtmosphereHandler
     }
 }

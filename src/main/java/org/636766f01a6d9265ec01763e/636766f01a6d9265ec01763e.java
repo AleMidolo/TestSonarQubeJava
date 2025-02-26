@@ -16,7 +16,7 @@ public class CharsetTranslator {
         // Convert the charset name to lowercase to handle case insensitivity
         String lowerCharset = charset.toLowerCase();
         
-        // Check for common MIME charset names and return the corresponding Java charset
+        // Check for common MIME to Java charset mappings
         switch (lowerCharset) {
             case "utf-8":
                 return StandardCharsets.UTF_8.name();
@@ -29,13 +29,17 @@ public class CharsetTranslator {
             case "iso-8859-1":
                 return StandardCharsets.ISO_8859_1.name();
             case "windows-1252":
-                return "windows-1252"; // Not in StandardCharsets, but commonly used
+                return "windows-1252"; // Not in StandardCharsets but commonly used
             case "us-ascii":
                 return StandardCharsets.US_ASCII.name();
             // Add more mappings as needed
             default:
-                // If the charset is not recognized, return the original charset name
-                return charset;
+                // Check if the charset is a valid Java charset
+                if (Charset.isSupported(charset)) {
+                    return charset;
+                } else {
+                    return null; // Return null if charset is not recognized
+                }
         }
     }
 
@@ -44,5 +48,6 @@ public class CharsetTranslator {
         System.out.println(javaCharset("UTF-8")); // Output: UTF-8
         System.out.println(javaCharset("ISO-8859-1")); // Output: ISO-8859-1
         System.out.println(javaCharset("windows-1252")); // Output: windows-1252
+        System.out.println(javaCharset("unknown-charset")); // Output: null
     }
 }

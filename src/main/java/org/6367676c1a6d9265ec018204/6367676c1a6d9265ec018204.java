@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StringArrayConcatenator {
-
+    
     /** 
      * Concatenate the given String arrays into one, with overlapping array elements included twice. 
      * The order of elements in the original arrays is preserved.
@@ -26,6 +26,17 @@ public class StringArrayConcatenator {
         if (array2 != null) {
             for (String s : array2) {
                 resultList.add(s);
+            }
+        }
+
+        // Handle overlapping elements
+        if (array1 != null && array2 != null) {
+            for (String s : array2) {
+                for (String s1 : array1) {
+                    if (s.equals(s1)) {
+                        resultList.add(s);
+                    }
+                }
             }
         }
 

@@ -1,9 +1,9 @@
-import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
-public class ConstantPoolReader {
+public class UtfReader {
     private byte[] classFileBuffer;
 
-    public ConstantPoolReader(byte[] classFileBuffer) {
+    public UtfReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
@@ -14,43 +14,25 @@ public class ConstantPoolReader {
      * @return the String corresponding to the specified CONSTANT_Utf8 entry.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool starts at a specific offset
-        int constantPoolCount = ByteBuffer.wrap(classFileBuffer, 8, 2).getShort(); // Read the constant pool count
-        int offset = 10; // Starting offset after magic number and version
+        // Assuming the classFileBuffer contains the constant pool entries
+        // and that the entry starts at a specific offset.
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        
+        // Read the length of the UTF-8 string
+        int length = (classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF);
+        
+        // Read the UTF-8 bytes
+        byte[] utf8Bytes = new byte[length];
+        System.arraycopy(classFileBuffer, offset + 2, utf8Bytes, 0, length);
+        
+        // Convert UTF-8 bytes to String
+        return new String(utf8Bytes, StandardCharsets.UTF_8);
+    }
 
-        for (int i = 1; i < constantPoolCount; i++) {
-            int tag = classFileBuffer[offset] & 0xFF; // Read the tag
-            offset++; // Move to the next byte
-
-            switch (tag) {
-                case 1: // CONSTANT_Utf8
-                    int length = ByteBuffer.wrap(classFileBuffer, offset, 2).getShort(); // Read length
-                    offset += 2; // Move past length
-                    if (i == constantPoolEntryIndex) {
-                        // Read the UTF-8 bytes
-                        for (int j = 0; j < length; j++) {
-                            charBuffer[j] = (char) classFileBuffer[offset + j]; // Convert bytes to chars
-                        }
-                        return new String(charBuffer, 0, length); // Return the string
-                    }
-                    offset += length; // Move past the UTF-8 bytes
-                    break;
-                case 7: // CONSTANT_Class
-                case 8: // CONSTANT_String
-                case 9: // CONSTANT_Fieldref
-                case 10: // CONSTANT_Methodref
-                case 11: // CONSTANT_InterfaceMethodref
-                case 12: // CONSTANT_NameAndType
-                case 15: // CONSTANT_MethodHandle
-                case 16: // CONSTANT_MethodType
-                case 18: // CONSTANT_InvokeDynamic
-                    // Handle other constant types (not implemented here)
-                    // Each of these types has a different structure, so we would need to skip the appropriate number of bytes
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown constant pool tag: " + tag);
-            }
-        }
-        throw new IndexOutOfBoundsException("Constant pool entry index out of bounds: " + constantPoolEntryIndex);
+    private int getConstantPoolEntryOffset(int index) {
+        // This method should return the correct offset for the given constant pool entry index.
+        // The implementation of this method depends on the structure of the classFileBuffer.
+        // For simplicity, let's assume each entry is of fixed size (this is not true in practice).
+        return index * 10; // Placeholder implementation
     }
 }

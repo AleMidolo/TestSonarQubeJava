@@ -23,7 +23,7 @@ public class VariableSubstitution {
             result.append(value.substring(startIndex, startVar));
             int endVar = value.indexOf("}", startVar);
             if (endVar == -1) {
-                result.append(value.substring(startVar)); // No closing brace found
+                result.append(value.substring(startIndex));
                 break;
             }
             String varKey = value.substring(startVar + 2, endVar);
@@ -31,7 +31,7 @@ public class VariableSubstitution {
             if (varValue != null) {
                 result.append(varValue);
             } else {
-                result.append(value.substring(startVar, endVar + 1)); // Keep the original variable if not found
+                result.append(value.substring(startVar, endVar + 1)); // keep the original if not found
             }
             startIndex = endVar + 1;
         }

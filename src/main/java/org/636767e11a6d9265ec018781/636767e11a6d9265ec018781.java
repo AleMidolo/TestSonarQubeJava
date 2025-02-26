@@ -18,17 +18,21 @@ public class MetricsCache {
             });
         }
     }
-}
+    
+    // Assuming METRICS class is defined somewhere
+    public static class METRICS {
+        private String key;
 
-class METRICS {
-    private String key;
-    // Other fields...
+        public METRICS(String key) {
+            this.key = key;
+        }
 
-    public String getKey() {
-        return key;
-    }
+        public String getKey() {
+            return key;
+        }
 
-    public void merge(METRICS other) {
-        // Implement merging logic here
+        public void merge(METRICS other) {
+            // Implement merging logic here
+        }
     }
 }

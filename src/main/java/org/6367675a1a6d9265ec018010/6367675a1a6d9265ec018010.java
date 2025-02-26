@@ -14,7 +14,6 @@ public class Bucket {
 }
 
 class DataStructure {
-    // Assume there's a list or set of buckets
     private List<Bucket> buckets;
 
     public DataStructure() {

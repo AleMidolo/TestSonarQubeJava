@@ -4,12 +4,10 @@ import java.io.InputStream;
 public class ByteReader {
     private InputStream buffer;
     private int currentByte;
-    private boolean endOfStream;
+    private boolean endOfStream = false;
 
     public ByteReader(InputStream buffer) {
         this.buffer = buffer;
-        this.currentByte = -1;
-        this.endOfStream = false;
     }
 
     /** 
@@ -22,16 +20,11 @@ public class ByteReader {
             throw new IOException("No more data available.");
         }
 
+        currentByte = buffer.read();
         if (currentByte == -1) {
-            currentByte = buffer.read();
-            if (currentByte == -1) {
-                endOfStream = true;
-                throw new IOException("No more data available.");
-            }
+            endOfStream = true;
+            throw new IOException("No more data available.");
         }
-
-        byte result = (byte) currentByte;
-        currentByte = -1; // Reset for the next read
-        return result;
+        return (byte) currentByte;
     }
 }

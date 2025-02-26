@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
     private int currentSize;
@@ -16,9 +18,7 @@ public class ByteVector {
             throw new IllegalArgumentException("Size must be non-negative");
         }
         int newSize = currentSize + size;
-        byte[] newData = new byte[newSize];
-        System.arraycopy(data, 0, newData, 0, currentSize);
-        data = newData;
+        data = Arrays.copyOf(data, newSize);
     }
 
     // Additional methods for demonstration purposes
@@ -29,14 +29,14 @@ public class ByteVector {
         data[currentSize++] = b;
     }
 
-    public int size() {
-        return currentSize;
-    }
-
     public byte get(int index) {
         if (index < 0 || index >= currentSize) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
         return data[index];
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

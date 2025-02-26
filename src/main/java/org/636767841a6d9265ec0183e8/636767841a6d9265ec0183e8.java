@@ -4,7 +4,7 @@ public class EventBuffer {
     private LinkedList<LoggingEvent> buffer;
 
     public EventBuffer() {
-        buffer = new LinkedList<>();
+        this.buffer = new LinkedList<>();
     }
 
     /** 

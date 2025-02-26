@@ -13,7 +13,7 @@ public class AbstractTypeStack {
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
+            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
         }
         for (int i = 0; i < elements; i++) {
             if (!outputFrameStack.isEmpty()) {
@@ -24,7 +24,7 @@ public class AbstractTypeStack {
         }
     }
 
-    // Method to push elements onto the stack for testing purposes
+    // Method to push elements for testing purposes
     public void push(Object element) {
         outputFrameStack.push(element);
     }

@@ -17,13 +17,13 @@ public class MessagePrinter {
             messageTimestamps.put(message, timestamp);
             return true;
         }
-
+        
         int lastTimestamp = messageTimestamps.get(message);
         if (timestamp - lastTimestamp >= 10) {
             messageTimestamps.put(message, timestamp);
             return true;
         }
-
+        
         return false;
     }
 

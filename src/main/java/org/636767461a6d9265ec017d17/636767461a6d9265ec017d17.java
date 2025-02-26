@@ -16,12 +16,10 @@ public class StringUnescaper {
             if (isEscaped) {
                 output.append(c);
                 isEscaped = false;
+            } else if (c == '\\') {
+                isEscaped = true;
             } else {
-                if (c == '\\') {
-                    isEscaped = true;
-                } else {
-                    output.append(c);
-                }
+                output.append(c);
             }
         }
 

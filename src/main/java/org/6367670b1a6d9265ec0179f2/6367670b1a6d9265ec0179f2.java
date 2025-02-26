@@ -8,22 +8,10 @@ public class MyMap<K, V> {
         this.map = new HashMap<>();
     }
 
-    /** 
-     * Return <code>true</code> if this map contains a mapping for the specified key.
-     * @param key  the key to be searched for
-     * @return true if the map contains the key
-     */
-    @Override 
+    @Override
     public boolean containsKey(final Object key) {
         return map.containsKey(key);
     }
 
-    // Additional methods to put and get values for testing purposes
-    public void put(K key, V value) {
-        map.put(key, value);
-    }
-
-    public V get(K key) {
-        return map.get(key);
-    }
+    // Additional methods to add and retrieve values can be added here
 }

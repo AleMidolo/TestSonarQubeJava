@@ -7,13 +7,13 @@ public class AbstractTypeStack {
         outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Pops an abstract type from the output frame stack and returns its value.
      * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
         if (outputFrameStack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty. Cannot pop.");
+            throw new IllegalStateException("Stack is empty. Cannot pop from an empty stack.");
         }
         return outputFrameStack.pop();
     }

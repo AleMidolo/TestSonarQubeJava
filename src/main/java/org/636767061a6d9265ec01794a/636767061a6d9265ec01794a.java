@@ -25,15 +25,12 @@ public class FileExtensionUtil {
         if (filename == null) {
             return -1;
         }
-
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
-
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(indexOfExtension("example.txt")); // Output: 7
         System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
         System.out.println(indexOfExtension("folder/example")); // Output: -1

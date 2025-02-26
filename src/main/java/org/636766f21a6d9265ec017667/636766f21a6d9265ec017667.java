@@ -1,8 +1,9 @@
 public class ClassReader {
-    private byte[] data;
+    
+    private byte[] classData;
 
-    public ClassReader(byte[] data) {
-        this.data = data;
+    public ClassReader(byte[] classData) {
+        this.classData = classData;
     }
 
     /** 
@@ -11,15 +12,16 @@ public class ClassReader {
      * @return पढ़ा गया मान।
      */
     public short readShort(final int offset) {
-        if (offset < 0 || offset + 2 > data.length) {
+        if (offset < 0 || offset + 2 > classData.length) {
             throw new IndexOutOfBoundsException("Invalid offset: " + offset);
         }
-        return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
+        return (short) ((classData[offset] << 8) | (classData[offset + 1] & 0xFF));
     }
 
     public static void main(String[] args) {
-        byte[] exampleData = {0x01, 0x02, 0x03, 0x04};
-        ClassReader reader = new ClassReader(exampleData);
+        // Example usage
+        byte[] data = {0x00, 0x01, 0x02, 0x03};
+        ClassReader reader = new ClassReader(data);
         short value = reader.readShort(0);
         System.out.println("Read short value: " + value);
     }

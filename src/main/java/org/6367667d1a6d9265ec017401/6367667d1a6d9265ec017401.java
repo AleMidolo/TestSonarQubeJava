@@ -57,7 +57,7 @@ public class UnescapeJava {
             }
         }
 
-        // If the last character was an escape character, append it
+        // If the last character was a backslash, we need to append it
         if (isEscaped) {
             result.append('\\');
         }
@@ -66,7 +66,7 @@ public class UnescapeJava {
     }
 
     public static void main(String[] args) throws Exception {
-        String input = "Hello\\nWorld! This is a test string with a tab\\tcharacter.";
+        String input = "Hello\\nWorld! This is a test string with a tab\\t and a backslash\\\\.";
         String output = unescapeJava(input);
         System.out.println(output);
     }

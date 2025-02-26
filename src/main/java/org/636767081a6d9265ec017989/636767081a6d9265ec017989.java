@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class BooleanArrayConverter {
-    
+
     /** 
      * <p>एक ऑब्जेक्ट बूलियन के ऐरे को प्राइमिटिव में परिवर्तित करता है।</p> 
      * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
@@ -21,5 +21,14 @@ public class BooleanArrayConverter {
             primitiveArray[i] = array[i];
         }
         return primitiveArray;
+    }
+
+    public static void main(String[] args) {
+        Boolean[] booleanArray = {true, false, null, true};
+        try {
+            boolean[] result = toPrimitive(booleanArray);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

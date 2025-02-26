@@ -20,6 +20,6 @@ public class LineNumberManager {
     public static void main(String[] args) {
         LineNumberManager manager = new LineNumberManager();
         manager.addLineNumber(5);
-        System.out.println("Added line number: " + manager.getLineNumber());
+        System.out.println("Line Number: " + manager.getLineNumber());
     }
 }

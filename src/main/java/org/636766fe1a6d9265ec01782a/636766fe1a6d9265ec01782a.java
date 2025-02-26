@@ -1,9 +1,5 @@
-public class Utf8Reader {
-    private final byte[] classFileBuffer;
-
-    public Utf8Reader(byte[] classFileBuffer) {
-        this.classFileBuffer = classFileBuffer;
-    }
+public class UtfReader {
+    private final char[] classFileBuffer; // Assuming this is initialized elsewhere
 
     /**
      * {@link #classFileBuffer} में एक CONSTANT_Utf8 स्थायी पूल प्रविष्टि को पढ़ता है।
@@ -12,27 +8,18 @@ public class Utf8Reader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer contains the constant pool and the necessary offsets
-        int offset = getUtf8Offset(constantPoolEntryIndex);
-        int length = getUtf8Length(constantPoolEntryIndex);
+        // Assuming the classFileBuffer contains the necessary data
+        // and the constantPoolEntryIndex points to the correct entry.
         
-        // Read the UTF-8 bytes and convert to characters
+        // Read the length of the UTF-8 string
+        int length = (classFileBuffer[constantPoolEntryIndex] << 8) | classFileBuffer[constantPoolEntryIndex + 1];
+        
+        // Read the UTF-8 string into the charBuffer
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) classFileBuffer[offset + i];
+            charBuffer[i] = classFileBuffer[constantPoolEntryIndex + 2 + i];
         }
         
+        // Return the string constructed from the charBuffer
         return new String(charBuffer, 0, length);
-    }
-
-    private int getUtf8Offset(int constantPoolEntryIndex) {
-        // Logic to get the offset of the UTF-8 entry in the classFileBuffer
-        // This is a placeholder implementation
-        return 0; // Replace with actual logic
-    }
-
-    private int getUtf8Length(int constantPoolEntryIndex) {
-        // Logic to get the length of the UTF-8 entry in the classFileBuffer
-        // This is a placeholder implementation
-        return 0; // Replace with actual logic
     }
 }

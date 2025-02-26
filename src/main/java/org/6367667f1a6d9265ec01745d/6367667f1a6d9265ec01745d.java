@@ -23,24 +23,25 @@ public class PathSegmentDecoder {
         String[] parts = path.split("/");
         
         for (String part : parts) {
-            if (decode) {
-                part = decodeURIComponent(part);
+            if (!part.isEmpty()) {
+                String segment = decode ? decodeURIComponent(part) : part;
+                segments.add(new PathSegmentImpl(segment));
             }
-            segments.add(new PathSegmentImpl(part));
         }
         
         return segments;
     }
-    
+
     private static String decodeURIComponent(String component) {
         try {
             return java.net.URLDecoder.decode(component, "UTF-8");
         } catch (Exception e) {
+            // Handle exception (e.g., log it)
             return component; // Return the original if decoding fails
         }
     }
-    
-    // Dummy implementation of PathSegmentImpl for demonstration purposes
+
+    // Dummy PathSegmentImpl class for demonstration purposes
     public static class PathSegmentImpl {
         private String segment;
 

@@ -13,7 +13,7 @@ public class BooleanArrayConverter {
         
         Boolean[] result = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i]; // Autoboxing from boolean to Boolean
+            result[i] = Boolean.valueOf(array[i]);
         }
         return result;
     }
@@ -22,7 +22,6 @@ public class BooleanArrayConverter {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
         
-        // Print the result
         for (Boolean b : objectArray) {
             System.out.println(b);
         }

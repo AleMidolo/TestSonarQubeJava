@@ -10,11 +10,9 @@ public class LinkedBufferWriter {
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;
         while (node != null) {
-            // Assuming LinkedBuffer has a method to get its data and size
-            byte[] data = node.getData();
-            int size = data.length;
+            byte[] data = node.getData(); // Assuming LinkedBuffer has a method to get data
             out.write(data);
-            totalSize += size;
+            totalSize += data.length;
             node = node.getNext(); // Assuming LinkedBuffer has a method to get the next node
         }
         return totalSize;
@@ -25,9 +23,9 @@ class LinkedBuffer {
     private byte[] data;
     private LinkedBuffer next;
 
-    public LinkedBuffer(byte[] data) {
+    public LinkedBuffer(byte[] data, LinkedBuffer next) {
         this.data = data;
-        this.next = null;
+        this.next = next;
     }
 
     public byte[] getData() {
@@ -36,9 +34,5 @@ class LinkedBuffer {
 
     public LinkedBuffer getNext() {
         return next;
-    }
-
-    public void setNext(LinkedBuffer next) {
-        this.next = next;
     }
 }

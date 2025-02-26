@@ -18,9 +18,20 @@ class BucketList {
             return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket(); // Create a new bucket instance
+        Bucket newBucket = new Bucket(); // Create a new bucket to insert
         // Logic to insert newBucket before the specified bucket
-        // This is a placeholder for the actual insertion logic
-        // You would need to traverse the list to find the correct position
+        if (head == bucket) {
+            newBucket.next = head; // Point new bucket to the current head
+            head = newBucket; // Update head to new bucket
+        } else {
+            Bucket current = head;
+            while (current != null && current.next != bucket) {
+                current = current.next; // Traverse to find the bucket
+            }
+            if (current != null) {
+                newBucket.next = current.next; // Link new bucket to the next of current
+                current.next = newBucket; // Link current to new bucket
+            }
+        }
     }
 }

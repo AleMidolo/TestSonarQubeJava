@@ -14,10 +14,13 @@ public class TemplateEncoder {
         
         StringBuilder encodedString = new StringBuilder();
         for (char c : s.toCharArray()) {
-            if (c == '{') {
-                encodedString.append(URLEncoder.encode("{", java.nio.charset.StandardCharsets.UTF_8));
-            } else if (c == '}') {
-                encodedString.append(URLEncoder.encode("}", java.nio.charset.StandardCharsets.UTF_8));
+            if (c == '{' || c == '}') {
+                try {
+                    encodedString.append(URLEncoder.encode(String.valueOf(c), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    // This should never happen since UTF-8 is a standard encoding
+                    throw new RuntimeException("UTF-8 encoding not supported", e);
+                }
             } else {
                 encodedString.append(c);
             }

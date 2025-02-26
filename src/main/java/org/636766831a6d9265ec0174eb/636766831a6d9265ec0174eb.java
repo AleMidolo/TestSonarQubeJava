@@ -1,11 +1,10 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.List;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 
-public class FileReverser {
+public class FileMerger {
 
     /** 
      * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
@@ -15,21 +14,18 @@ public class FileReverser {
             return;
         }
 
-        List<File> fileList = List.of(files);
-        Collections.reverse(fileList);
+        Arrays.sort(files, (f1, f2) -> f2.getName().compareTo(f1.getName())); // Sort files in reverse order
 
-        StringBuilder contentBuilder = new StringBuilder();
-        for (File file : fileList) {
-            try {
-                List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
-                for (String line : lines) {
-                    contentBuilder.append(line).append(System.lineSeparator());
+        File outputFile = new File("merged_output.txt");
+        try {
+            for (File file : files) {
+                if (file.exists() && file.isFile()) {
+                    byte[] content = Files.readAllBytes(file.toPath());
+                    Files.write(outputFile.toPath(), content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        System.out.println(contentBuilder.toString());
     }
 }

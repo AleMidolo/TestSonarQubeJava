@@ -16,6 +16,7 @@ public class CustomOutputStream extends OutputStream {
         for (int i = off; i < off + len; i++) {
             System.out.print((char) b[i]); // Print as characters for demonstration
         }
+        System.out.println(); // New line after writing
     }
 
     @Override
@@ -23,10 +24,10 @@ public class CustomOutputStream extends OutputStream {
         // Implement the method to write a single byte if needed
         System.out.print((char) b); // Print as character for demonstration
     }
-
+    
     public static void main(String[] args) throws IOException {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
+        CustomOutputStream cos = new CustomOutputStream();
         byte[] data = "Hello, World!".getBytes();
-        customOutputStream.write(data, 0, data.length);
+        cos.write(data, 0, data.length);
     }
 }

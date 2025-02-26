@@ -2,50 +2,54 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Mappings {
-    private Map<String, Object> fields;
+    private Map<String, String> fields;
 
     public Mappings() {
         this.fields = new HashMap<>();
     }
 
-    public void addField(String fieldName, Object fieldValue) {
-        fields.put(fieldName, fieldValue);
+    public void addField(String fieldName, String fieldType) {
+        fields.put(fieldName, fieldType);
     }
 
-    public Map<String, Object> getFields() {
+    public Map<String, String> getFields() {
         return fields;
     }
+}
 
-    public static Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulated existing fields in the current index for the given tableName
-        Map<String, Object> existingFields = getExistingFieldsForTable(tableName);
-        
+public class MappingDiff {
+
+    /**
+     * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
+     */
+    public Mappings diffStructure(String tableName, Mappings mappings) {
+        // Simulating the current index structure for demonstration purposes
+        Mappings currentMappings = new Mappings();
+        currentMappings.addField("id", "integer");
+        currentMappings.addField("name", "string");
+        currentMappings.addField("email", "string");
+
         Mappings diffMappings = new Mappings();
-        
+
         for (String field : mappings.getFields().keySet()) {
-            if (!existingFields.containsKey(field)) {
+            if (!currentMappings.getFields().containsKey(field)) {
                 diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
-        
+
         return diffMappings;
     }
 
-    private static Map<String, Object> getExistingFieldsForTable(String tableName) {
-        // This method should return the existing fields for the given tableName.
-        // For demonstration purposes, we will return a static map.
-        Map<String, Object> existingFields = new HashMap<>();
-        existingFields.put("existingField1", "value1");
-        existingFields.put("existingField2", "value2");
-        return existingFields;
-    }
-
     public static void main(String[] args) {
-        Mappings inputMappings = new Mappings();
-        inputMappings.addField("newField1", "value1");
-        inputMappings.addField("existingField1", "value2");
+        MappingDiff mappingDiff = new MappingDiff();
+        Mappings historicalMappings = new Mappings();
+        historicalMappings.addField("id", "integer");
+        historicalMappings.addField("address", "string");
 
-        Mappings result = diffStructure("exampleTable", inputMappings);
-        System.out.println("Diff Mappings: " + result.getFields());
+        Mappings result = mappingDiff.diffStructure("exampleTable", historicalMappings);
+        System.out.println("Missing fields in current mappings:");
+        for (String field : result.getFields().keySet()) {
+            System.out.println(field + ": " + result.getFields().get(field));
+        }
     }
 }

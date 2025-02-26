@@ -4,17 +4,17 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     /**
-     * build current profiles segment snapshot search sequence ranges
+     * 构建当前配置文件段快照搜索序列范围
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
-        
+
         // Example logic to populate sequenceRanges
-        // This should be replaced with actual logic to build the ranges
+        // This is just a placeholder; actual logic will depend on specific requirements
         sequenceRanges.add(new SequenceRange(1, 10));
         sequenceRanges.add(new SequenceRange(11, 20));
         sequenceRanges.add(new SequenceRange(21, 30));
-        
+
         return sequenceRanges;
     }
 

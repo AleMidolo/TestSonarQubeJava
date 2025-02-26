@@ -1,39 +1,37 @@
 public class DataTable {
-    // Assuming DataTable has some properties to compare
-    private String name;
-    private int size;
+    // Assuming DataTable has a method to get the bucket
+    private String bucket;
 
-    public DataTable(String name, int size) {
-        this.name = name;
-        this.size = size;
+    public DataTable(String bucket) {
+        this.bucket = bucket;
     }
 
-    public String getName() {
-        return name;
+    public String getBucket() {
+        return bucket;
     }
-
-    public int getSize() {
-        return size;
-    }
-
-    // Other methods and properties of DataTable
 }
 
-public class Bucket {
-    private DataTable dataTable;
+public class CompatibilityChecker {
+    private DataTable currentDataset;
 
-    public Bucket(DataTable dataTable) {
-        this.dataTable = dataTable;
+    public CompatibilityChecker(DataTable dataset) {
+        this.currentDataset = dataset;
     }
 
-    /**
-     * @return true if the bucket is same.
+    /** 
+     * @return 如果桶相同则返回真。
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
-        return this.dataTable.getName().equals(dataset.getName()) &&
-               this.dataTable.getSize() == dataset.getSize();
+        return this.currentDataset.getBucket().equals(dataset.getBucket());
+    }
+
+    public static void main(String[] args) {
+        DataTable dataset1 = new DataTable("bucket1");
+        DataTable dataset2 = new DataTable("bucket1");
+        DataTable dataset3 = new DataTable("bucket2");
+
+        CompatibilityChecker checker = new CompatibilityChecker(dataset1);
+        System.out.println(checker.isCompatible(dataset2)); // true
+        System.out.println(checker.isCompatible(dataset3)); // false
     }
 }

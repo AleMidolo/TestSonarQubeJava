@@ -1,25 +1,25 @@
 public class ArrayUtil {
-
-    private static final Double[] EMPTY_ARRAY = new Double[0];
+    public static final Double[] EMPTY_ARRAY = new Double[0];
 
     /** 
-     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p> 
-     * <p>This method returns an empty array for a <code>null</code> input array.</p> 
-     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty <code>public static</code> references in this class.</p>
-     * @param array  the array to check for <code>null</code> or empty
-     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
+     * <p>防御性编程技术，将 <code>null</code> 引用转换为一个空引用。</p> 
+     * <p>该方法对于 <code>null</code> 输入数组返回一个空数组。</p> 
+     * <p>作为内存优化技术，传入的空数组将被本类中的空 <code>public static</code> 引用覆盖。</p>
+     * @param array  要检查是否为 <code>null</code> 或空的数组
+     * @return 相同的数组，如果输入为 <code>null</code> 或空，则返回 <code>public static</code> 空数组
      * @since 2.5
      */
     public static Double[] nullToEmpty(final Double[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
 
     public static void main(String[] args) {
-        Double[] testArray = null;
-        Double[] result = nullToEmpty(testArray);
-        System.out.println("Result: " + (result.length == 0 ? "Empty Array" : "Not Empty"));
+        Double[] result1 = nullToEmpty(null);
+        Double[] result2 = nullToEmpty(new Double[]{});
+        Double[] result3 = nullToEmpty(new Double[]{1.0, 2.0, 3.0});
+
+        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
     }
 }

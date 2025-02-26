@@ -1,17 +1,22 @@
 public class ObjectToStringConverter {
 
     /** 
-     * Object to String, when null object then null else return toString(); 
+     * 对象转字符串，当对象为空时返回空字符串，否则返回toString(); 
      */
     public static String toString(Object object) {
-        return object == null ? null : object.toString();
+        return object == null ? "" : object.toString();
     }
 
     public static void main(String[] args) {
-        Object obj1 = new Object();
-        Object obj2 = null;
+        Object obj1 = null;
+        Object obj2 = new Object() {
+            @Override
+            public String toString() {
+                return "Custom Object String";
+            }
+        };
 
-        System.out.println(toString(obj1)); // Prints the object's string representation
-        System.out.println(toString(obj2)); // Prints null
+        System.out.println(toString(obj1)); // Output: ""
+        System.out.println(toString(obj2)); // Output: "Custom Object String"
     }
 }

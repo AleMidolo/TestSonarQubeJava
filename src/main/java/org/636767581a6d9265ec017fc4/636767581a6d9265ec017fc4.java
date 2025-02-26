@@ -1,13 +1,12 @@
 public class FactorialCalculator {
-
-    /** 
-     * Calculate the factorial of $n$.
-     * @param n the input number
-     * @return the factorial
+    /**
+     * 计算 $n$ 的阶乘。
+     * @param n 输入的数字
+     * @return 阶乘
      */
     public static long factorial(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Input must be a non-negative integer.");
+            throw new IllegalArgumentException("n must be non-negative");
         }
         long result = 1;
         for (int i = 2; i <= n; i++) {
@@ -18,7 +17,7 @@ public class FactorialCalculator {
 
     public static void main(String[] args) {
         int number = 5; // Example input
-        long fact = factorial(number);
-        System.out.println("Factorial of " + number + " is: " + fact);
+        long result = factorial(number);
+        System.out.println("Factorial of " + number + " is: " + result);
     }
 }

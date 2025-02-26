@@ -3,28 +3,21 @@ import java.io.InputStream;
 
 public class ByteReader {
     private InputStream buffer;
-    private int currentByte;
-    private boolean endOfStream = false;
 
     public ByteReader(InputStream buffer) {
         this.buffer = buffer;
     }
 
-    /** 
-     * Reads a byte from the <code>buffer</code>, and refills it as necessary.
-     * @return The next byte from the input stream.
-     * @throws IOException if there is no more data available.
+    /**
+     * 从<code>buffer</code>中读取一个字节，并在必要时进行填充。
+     * @return 输入流中的下一个字节。
+     * @throws IOException 如果没有更多数据可用。
      */
     public byte readByte() throws IOException {
-        if (endOfStream) {
-            throw new IOException("No more data available.");
+        int data = buffer.read();
+        if (data == -1) {
+            throw new IOException("没有更多数据可用");
         }
-
-        currentByte = buffer.read();
-        if (currentByte == -1) {
-            endOfStream = true;
-            throw new IOException("No more data available.");
-        }
-        return (byte) currentByte;
+        return (byte) data;
     }
 }

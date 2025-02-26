@@ -1,17 +1,17 @@
-public class DigitValueInterpreter {
+public class CharacterDigitValue {
 
-    /** 
-     * Interpret a character as a digit (in any base up to 36) and return the numeric value. This is like {@code Character.digit()} but we don't accept non-ASCII digits.
+    /**
+     * 将字符解释为数字（在任何基数下最多为36），并返回其数值。这类似于 {@code Character.digit()}，但我们不接受非ASCII数字。
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
-            return c - '0'; // ASCII '0' to '9'
+            return c - '0';
         } else if (c >= 'A' && c <= 'Z') {
-            return c - 'A' + 10; // ASCII 'A' to 'Z'
+            return c - 'A' + 10;
         } else if (c >= 'a' && c <= 'z') {
-            return c - 'a' + 10; // ASCII 'a' to 'z'
+            return c - 'a' + 10;
         } else {
-            return -1; // Non-ASCII digit
+            throw new IllegalArgumentException("Invalid character: " + c);
         }
     }
 
@@ -23,6 +23,5 @@ public class DigitValueInterpreter {
         System.out.println(digitValue('Z')); // 35
         System.out.println(digitValue('a')); // 10
         System.out.println(digitValue('z')); // 35
-        System.out.println(digitValue('@')); // -1 (non-ASCII digit)
     }
 }

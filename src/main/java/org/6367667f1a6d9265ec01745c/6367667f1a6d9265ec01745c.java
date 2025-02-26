@@ -5,7 +5,7 @@ import java.util.Vector;
 public class ClassPathAdder {
 
     /** 
-     * Add all the jar files in a dir to the classpath, represented as a Vector of URLs.
+     * 将目录中的所有jar文件添加到类路径中，表示为URL的Vector。
      */
     @SuppressWarnings("unchecked") 
     public static void addToClassPath(Vector<URL> cpV, String dir) {
@@ -27,9 +27,9 @@ public class ClassPathAdder {
     }
 
     public static void main(String[] args) {
-        Vector<URL> classpathVector = new Vector<>();
-        addToClassPath(classpathVector, "path/to/your/jar/directory");
+        Vector<URL> classPathVector = new Vector<>();
+        addToClassPath(classPathVector, "path/to/your/directory");
         // Print the URLs added to the classpath
-        classpathVector.forEach(System.out::println);
+        classPathVector.forEach(System.out::println);
     }
 }

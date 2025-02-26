@@ -4,21 +4,19 @@ public class PackedFieldChecker {
 
     private boolean isPackedField;
 
-    /** 
-     * Check if this field have been packed into a length-delimited field. If so, update internal state to reflect that packed fields are being read.
+    /**
+     * 检查该字段是否已被打包为长度限定字段。如果是，则更新内部状态以反映正在读取打包字段。
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Logic to determine if the field is packed
-        // This is a placeholder for the actual implementation
-        // For example, we might check a certain condition or read from a stream
+        // Simulate checking if the field is packed
+        // This is a placeholder for the actual logic to determine if the field is packed
+        boolean packedFieldCondition = /* logic to determine if packed field */ false;
 
-        // Simulating a condition check
-        boolean packedCondition = /* some condition to check if packed */ false;
-
-        if (packedCondition) {
+        if (packedFieldCondition) {
             isPackedField = true;
-            // Update internal state as necessary
+            // Update internal state to reflect that we are reading a packed field
+            // Additional logic can be added here as needed
         } else {
             isPackedField = false;
         }

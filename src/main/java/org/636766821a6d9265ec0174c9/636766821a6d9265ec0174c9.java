@@ -1,20 +1,22 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClassPathRetriever {
+public class ClassPathUtil {
 
-    /** 
-     * Returns the class path of the current JVM instance as an array of  {@link File} objects.
+    /**
+     * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
-        String[] paths = classPath.split(System.getProperty("path.separator"));
-        File[] files = new File[paths.length];
-        
-        for (int i = 0; i < paths.length; i++) {
-            files[i] = new File(paths[i]);
+        String[] paths = classPath.split(File.pathSeparator);
+        List<File> fileList = new ArrayList<>();
+
+        for (String path : paths) {
+            fileList.add(new File(path));
         }
-        
-        return files;
+
+        return fileList.toArray(new File[0]);
     }
 
     public static void main(String[] args) {

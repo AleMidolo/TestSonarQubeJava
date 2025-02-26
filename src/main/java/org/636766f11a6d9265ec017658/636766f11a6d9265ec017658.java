@@ -1,29 +1,27 @@
 public class FilePathUtils {
 
     /** 
-     * Returns the index of the last directory separator character. <p> 
-     * This method will handle a file in either Unix or Windows format. 
-     * The position of the last forward or backslash is returned. <p> 
-     * The output will be the same irrespective of the machine that the code is running on.
-     * @param filename  the filename to find the last path separator in, null returns -1
-     * @return the index of the last separator character, or -1 if there is no such character
+     * 返回最后一个目录分隔符字符的索引。<p> 此方法将处理Unix或Windows格式的文件。返回最后一个正斜杠或反斜杠的位置。<p> 
+     * 无论代码运行在哪台机器上，输出都是相同的。
+     * @param filename  要查找最后一个路径分隔符的文件名，如果为null则返回-1
+     * @return 最后一个分隔符字符的索引，如果没有这样的字符则返回-1
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
         
-        int lastForwardSlash = filename.lastIndexOf('/');
-        int lastBackSlash = filename.lastIndexOf('\\');
+        int lastUnixSeparator = filename.lastIndexOf('/');
+        int lastWindowsSeparator = filename.lastIndexOf('\\');
         
-        return Math.max(lastForwardSlash, lastBackSlash);
+        return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // Output: 20
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // Output: 15
-        System.out.println(indexOfLastSeparator("file.txt")); // Output: -1
-        System.out.println(indexOfLastSeparator(null)); // Output: -1
+        // 测试代码
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 20
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 15
+        System.out.println(indexOfLastSeparator("file.txt")); // 输出: -1
+        System.out.println(indexOfLastSeparator(null)); // 输出: -1
     }
 }

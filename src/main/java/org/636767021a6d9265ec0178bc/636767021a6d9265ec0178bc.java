@@ -1,7 +1,7 @@
-public class StringUtils {
-
+public class StringSearch {
+    
     /** 
-     * Finds the first index within a String, handling <code>null</code>. This method uses  {@link String#indexOf(String)}. 
+     * 在字符串中查找第一个索引，能处理 <code>null</code>。此方法使用 {@link String#indexOf(String)}。
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -11,9 +11,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOf("Hello, world!", "world")); // Output: 7
-        System.out.println(indexOf("Hello, world!", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "test"));              // Output: -1
-        System.out.println(indexOf("test", null));              // Output: -1
+        System.out.println(indexOf("hello world", "world")); // Output: 6
+        System.out.println(indexOf("hello world", "java"));  // Output: -1
+        System.out.println(indexOf(null, "test"));           // Output: -1
+        System.out.println(indexOf("test", null));           // Output: -1
     }
 }

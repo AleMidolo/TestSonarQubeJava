@@ -1,19 +1,19 @@
-public class LogarithmCalculator {
-
+public class LogCalculator {
+    
     /** 
-     * Computes floor($\log_2 (n)$) $+ 1$
+     * 计算 $\log_2 (n)$ 的下限值 + 1
      */
     private int computeBinaryLog(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Input must be a positive integer.");
+            throw new IllegalArgumentException("n must be greater than 0");
         }
-        return (int)(Math.log(n) / Math.log(2)) + 1;
+        return (int) (Math.log(n) / Math.log(2)) + 1;
     }
 
     public static void main(String[] args) {
-        LogarithmCalculator calculator = new LogarithmCalculator();
-        int n = 16; // Example input
+        LogCalculator calculator = new LogCalculator();
+        int n = 8; // Example input
         int result = calculator.computeBinaryLog(n);
-        System.out.println("The result of computeBinaryLog(" + n + ") is: " + result);
+        System.out.println("The result is: " + result);
     }
 }

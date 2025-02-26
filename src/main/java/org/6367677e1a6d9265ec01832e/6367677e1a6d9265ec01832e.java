@@ -1,11 +1,10 @@
 import java.util.logging.Logger;
 
 public class LoggerChecker {
-
+    
     /**
-     * Check if the named logger exists in the hierarchy. If so return its reference, otherwise returns <code>null</code>.
-     * @param name The name of the logger to search for.
-     * @return The logger if it exists, otherwise null.
+     * 检查指定名称的日志记录器是否存在于层次结构中。如果存在，则返回其引用；否则返回 <code>null</code>。
+     * @param name 要搜索的日志记录器的名称。
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);

@@ -1,10 +1,10 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public class TypeResolver {
+public class GenericTypeResolver {
 
-    /** 
-     * Resolves the arguments for the  {@code genericType} using the type variable information for the{@code targetType}. Returns  {@code null} if {@code genericType} is not parameterized or if arguments cannot be resolved.
+    /**
+     * 使用 {@code targetType} 的类型变量信息解析 {@code genericType} 的参数。如果 {@code genericType} 不是参数化的，或者无法解析参数，则返回 {@code null}。
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -12,24 +12,29 @@ public class TypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
-            Class<?>[] typeArguments = new Class[actualTypeArguments.length];
+            if (rawClass.equals(targetType)) {
+                return (Class<?>[]) parameterizedType.getActualTypeArguments();
+            }
 
-            for (int i = 0; i < actualTypeArguments.length; i++) {
-                Type arg = actualTypeArguments[i];
-                if (arg instanceof Class<?>) {
-                    typeArguments[i] = (Class<?>) arg;
-                } else {
-                    // Handle other types like TypeVariable or Wildcard
-                    return null;
+            Type superType = rawClass.getGenericSuperclass();
+            if (superType != null) {
+                Class<?>[] resolvedArguments = resolveArguments(superType, targetType);
+                if (resolvedArguments != null) {
+                    return resolvedArguments;
                 }
             }
 
-            return typeArguments;
+            Type[] interfaces = rawClass.getGenericInterfaces();
+            for (Type iface : interfaces) {
+                Class<?>[] resolvedArguments = resolveArguments(iface, targetType);
+                if (resolvedArguments != null) {
+                    return resolvedArguments;
+                }
+            }
         }
 
         return null;

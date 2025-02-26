@@ -1,34 +1,30 @@
-import java.util.Stack;
+public class StackExample {
+    private java.util.Stack<Integer> outputFrameStack;
 
-public class AbstractTypeStack {
-    private Stack<Integer> outputFrameStack;
-
-    public AbstractTypeStack() {
-        outputFrameStack = new Stack<>();
+    public StackExample() {
+        outputFrameStack = new java.util.Stack<>();
     }
 
     /** 
-     * Pops an abstract type from the output frame stack and returns its value.
-     * @return the abstract type that has been popped from the output frame stack.
+     * 从输出帧栈中弹出一个抽象类型并返回其值。
+     * @return 从输出帧栈中弹出的抽象类型。
      */
     private int pop() {
         if (outputFrameStack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty. Cannot pop.");
+            throw new java.util.EmptyStackException();
         }
         return outputFrameStack.pop();
     }
 
-    // Method to push an integer onto the stack for testing purposes
     public void push(int value) {
         outputFrameStack.push(value);
     }
 
-    // Main method for testing
     public static void main(String[] args) {
-        AbstractTypeStack stack = new AbstractTypeStack();
-        stack.push(10);
-        stack.push(20);
-        System.out.println(stack.pop()); // Should print 20
-        System.out.println(stack.pop()); // Should print 10
+        StackExample stackExample = new StackExample();
+        stackExample.push(10);
+        stackExample.push(20);
+        System.out.println(stackExample.pop()); // Outputs: 20
+        System.out.println(stackExample.pop()); // Outputs: 10
     }
 }

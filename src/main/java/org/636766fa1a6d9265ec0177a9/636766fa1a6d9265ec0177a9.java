@@ -1,22 +1,21 @@
-import java.util.HashSet;
-import java.util.Set;
-
 public class TypeManager {
-    private Set<Integer> initializedTypes;
+    
+    // Assuming there's a list to hold initialized types
+    private List<Integer> initializedTypes;
 
     public TypeManager() {
-        initializedTypes = new HashSet<>();
+        initializedTypes = new ArrayList<>();
     }
 
-    /** 
-     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
-     * @param abstractType an abstract type on a which a constructor is invoked.
+    /**
+     * 将一个抽象类型添加到基本块中调用构造函数的类型列表中。
+     * @param abstractType 一个调用了构造函数的抽象类型。
      */
     private void addInitializedType(final int abstractType) {
-        initializedTypes.add(abstractType);
+        if (!initializedTypes.contains(abstractType)) {
+            initializedTypes.add(abstractType);
+        }
     }
-
-    public Set<Integer> getInitializedTypes() {
-        return initializedTypes;
-    }
+    
+    // Additional methods can be added here for managing types
 }

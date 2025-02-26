@@ -1,21 +1,14 @@
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.Filter;
 
-public class DecisionMaker {
+public class Filter {
+    public static final int NEUTRAL = 0;
 
-    /** 
-     * Returns {@link Filter#NEUTRAL} if there is no string match.
+    /**
+     * 如果没有字符串匹配，则返回 {@link Filter#NEUTRAL}。
      */
     public int decide(LoggingEvent event) {
-        // Assuming we are checking for a specific string match in the message
-        String message = event.getMessage().toString();
-        String targetString = "match"; // Example target string
-
-        if (!message.contains(targetString)) {
-            return Filter.NEUTRAL;
-        }
-        
-        // Additional logic can be added here for other conditions
-        return Filter.ACCEPT; // Assuming we accept if there's a match
+        // Implement your logic here
+        // For demonstration, we will return NEUTRAL if no specific condition is met
+        return NEUTRAL;
     }
 }

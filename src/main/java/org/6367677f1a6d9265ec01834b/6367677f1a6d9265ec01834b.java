@@ -15,12 +15,34 @@ public class LoggingBuffer {
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
             buffer.add(o);
-        } else {
-            // Buffer is full, silently discard the event
+        }
+        // If the buffer is full, the event is silently discarded
+    }
+
+    // Additional methods for demonstration purposes
+    public int size() {
+        return buffer.size();
+    }
+
+    public static class LoggingEvent {
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
-}
 
-class LoggingEvent {
-    // Assume this class has necessary fields and methods
+    public static void main(String[] args) {
+        LoggingBuffer loggingBuffer = new LoggingBuffer(3);
+        loggingBuffer.put(new LoggingEvent("Event 1"));
+        loggingBuffer.put(new LoggingEvent("Event 2"));
+        loggingBuffer.put(new LoggingEvent("Event 3"));
+        loggingBuffer.put(new LoggingEvent("Event 4")); // This will be discarded
+
+        System.out.println("Buffer size: " + loggingBuffer.size()); // Should print 3
+    }
 }

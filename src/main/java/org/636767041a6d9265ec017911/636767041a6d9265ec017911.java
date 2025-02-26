@@ -8,7 +8,7 @@ public class ObjectRegistrar {
      */
     static void register(Object value) {
         if (value == null) {
-            throw new IllegalArgumentException("Cannot register null object");
+            throw new IllegalArgumentException("Cannot register a null object.");
         }
 
         Class<?> clazz = value.getClass();

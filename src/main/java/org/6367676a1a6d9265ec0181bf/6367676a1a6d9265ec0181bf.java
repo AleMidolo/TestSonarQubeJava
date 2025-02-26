@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(quoteIfString("myString")); // Output: 'myString'
-        System.out.println(quoteIfString(123)); // Output: 123
-        System.out.println(quoteIfString(null)); // Output: null
+        System.out.println(quoteIfString(123));        // Output: 123
+        System.out.println(quoteIfString(null));       // Output: null
     }
 }

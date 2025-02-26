@@ -20,7 +20,7 @@ public class ClassReader {
 
     public static void main(String[] args) {
         // Example usage
-        byte[] data = {0x01, 0x02, 0x03, 0x04};
+        byte[] data = {0x00, 0x01, 0x02, 0x03};
         ClassReader reader = new ClassReader(data);
         short value = reader.readShort(0);
         System.out.println("Read short value: " + value);

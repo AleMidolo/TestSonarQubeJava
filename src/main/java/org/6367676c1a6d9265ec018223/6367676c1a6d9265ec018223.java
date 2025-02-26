@@ -7,7 +7,7 @@ public class CollectionUtils {
      * @param element खोजने के लिए तत्व
      * @return <code>true</code> यदि पाया गया, <code>false</code> अन्यथा
      */
-    public static boolean containsInstance(Collection collection, Object element) {
+    public static boolean containsInstance(Collection<?> collection, Object element) {
         for (Object obj : collection) {
             if (obj == element) {
                 return true;

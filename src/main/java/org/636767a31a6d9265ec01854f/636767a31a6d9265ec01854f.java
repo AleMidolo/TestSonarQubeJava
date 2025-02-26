@@ -19,8 +19,4 @@ public class FieldChecker {
     }
 
     // Constructor and other methods can be added here
-    public FieldChecker(boolean isPacked) {
-        this.isPacked = isPacked;
-        this.internalPosition = 0;
-    }
 }

@@ -1,7 +1,11 @@
 import java.util.Set;
 import org.jgrapht.Graph;
+import org.jgrapht.GraphType;
+import org.jgrapht.alg.clique.CliqueFinder;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
-public class GraphUtils {
+public class CliqueChecker {
 
     /** 
      * जांचें कि <code>graph</code> द्वारा दिए गए <code>vertices</code> से प्रेरित उपग्राफ पूर्ण है, अर्थात् एक क्लिक है।
@@ -9,8 +13,8 @@ public class GraphUtils {
      * @param vertices उपग्राफ को प्रेरित करने के लिए वर्टिस।
      * @return यदि प्रेरित उपग्राफ एक क्लिक है तो true।
      */
-    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        // Check if the number of edges in the induced subgraph equals the number of edges in a complete graph
+    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Check if the number of edges in the induced subgraph is equal to the number of edges in a complete graph
         int vertexCount = vertices.size();
         int expectedEdges = vertexCount * (vertexCount - 1) / 2; // Complete graph edges formula
 
@@ -28,5 +32,20 @@ public class GraphUtils {
         actualEdges /= 2;
 
         return actualEdges == expectedEdges;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
+
+        Set<String> vertices = Set.of("A", "B", "C");
+        boolean result = isClique(graph, vertices);
+        System.out.println("Is the induced subgraph a clique? " + result);
     }
 }

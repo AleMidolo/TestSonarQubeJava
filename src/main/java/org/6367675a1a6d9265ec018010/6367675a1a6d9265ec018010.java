@@ -10,7 +10,7 @@ public class Bucket {
     /** 
      * इस बकेट को डेटा संरचना से हटा देता है।
      */
-    void removeSelf() {
+    public void removeSelf() {
         // Logic to remove this bucket from the data structure
         // This is a placeholder for the actual removal logic
         System.out.println("Removing this bucket from the data structure.");

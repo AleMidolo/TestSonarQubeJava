@@ -1,10 +1,10 @@
 import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
-public class AtmosphereHandlerManager {
+public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
-    public AtmosphereHandlerManager() {
+    public AtmosphereManager() {
         atmosphereFramework = new AtmosphereFramework();
     }
 
@@ -13,12 +13,12 @@ public class AtmosphereHandlerManager {
      * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String,AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
      * @return यदि हटाया गया है तो true
      */
-    public boolean removeAtmosphereHandler(String mapping) {
+    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
         AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
         if (handler != null) {
             atmosphereFramework.removeAtmosphereHandler(mapping);
-            return true;
+            return atmosphereFramework;
         }
-        return false;
+        return null;
     }
 }

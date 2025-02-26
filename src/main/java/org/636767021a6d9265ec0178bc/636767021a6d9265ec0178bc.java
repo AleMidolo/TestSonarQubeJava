@@ -5,16 +5,16 @@ public class StringSearch {
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
-            return -1; // यदि कोई भी स्ट्रिंग null है, तो -1 लौटाएं
+            return -1; // Return -1 if either string is null
         }
-        return str.indexOf(searchStr); // स्ट्रिंग के भीतर खोजें और इंडेक्स लौटाएं
+        return str.indexOf(searchStr); // Use String's indexOf method
     }
 
     public static void main(String[] args) {
-        // परीक्षण के लिए कुछ उदाहरण
-        System.out.println(indexOf("Hello, world!", "world")); // 7
-        System.out.println(indexOf("Hello, world!", "Java"));  // -1
-        System.out.println(indexOf(null, "test"));              // -1
-        System.out.println(indexOf("test", null));              // -1
+        // Example usage
+        String str = "Hello, world!";
+        String searchStr = "world";
+        int index = indexOf(str, searchStr);
+        System.out.println("Index of '" + searchStr + "' in '" + str + "': " + index);
     }
 }

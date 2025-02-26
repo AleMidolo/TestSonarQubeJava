@@ -8,7 +8,7 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
     if (jsonObject.has("ats")) {
         content.put("ats", jsonObject.get("ats").getAsString());
     } else {
-        content.put("message", "No ATS set");
+        content.put("message", "No ats set");
     }
     
     return content;

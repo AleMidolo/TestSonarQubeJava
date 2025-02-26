@@ -8,14 +8,14 @@ public class TimeBucketCompressor {
         int year = (int) (timeBucket / 10000);
         int month = (int) ((timeBucket % 10000) / 100);
         int day = (int) (timeBucket % 100);
-
+        
         // Calculate the day of the year
         int dayOfYear = getDayOfYear(year, month, day);
-
-        // Calculate the new day of the year based on the dayStep
+        
+        // Calculate the new day of the year based on dayStep
         int newDayOfYear = (dayOfYear / dayStep) * dayStep;
-
-        // Convert the new day of the year back to a date
+        
+        // Convert back to the date format
         return convertDayOfYearToDate(year, newDayOfYear);
     }
 
@@ -44,12 +44,13 @@ public class TimeBucketCompressor {
 
     public static void main(String[] args) {
         long timeBucket1 = 20000105;
-        long timeBucket2 = 20000115;
-        long timeBucket3 = 20000123;
-        int dayStep = 11;
+        int dayStep1 = 11;
+        System.out.println(compressTimeBucket(timeBucket1, dayStep1)); // Output: 20000101
 
-        System.out.println(compressTimeBucket(timeBucket1, dayStep)); // Output: 20000101
-        System.out.println(compressTimeBucket(timeBucket2, dayStep)); // Output: 20000112
-        System.out.println(compressTimeBucket(timeBucket3, dayStep)); // Output: 20000123
+        long timeBucket2 = 20000115;
+        System.out.println(compressTimeBucket(timeBucket2, dayStep1)); // Output: 20000112
+
+        long timeBucket3 = 20000123;
+        System.out.println(compressTimeBucket(timeBucket3, dayStep1)); // Output: 20000123
     }
 }

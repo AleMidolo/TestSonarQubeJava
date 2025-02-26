@@ -21,10 +21,10 @@ public class DiagnosisStack {
 
     // Method to pop a diagnosis reference from the stack
     public static String pop() {
-        if (diagnosisStack.isEmpty()) {
-            return "";
+        if (!diagnosisStack.isEmpty()) {
+            return diagnosisStack.pop();
         }
-        return diagnosisStack.pop();
+        return "";
     }
 
     public static void main(String[] args) {

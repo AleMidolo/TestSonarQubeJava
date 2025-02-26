@@ -3,76 +3,55 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+
+class E {
+    // Define the properties of edge E here
+}
+
 class Graph {
-    private List<Pair<Integer, Integer>> vertices;
-    private List<Edge> edges;
+    private List<E> edges;
+    private Map<E, List<Pair<Integer, Integer>>> edgeToSeparatorsMap;
 
     public Graph() {
-        this.vertices = new ArrayList<>();
-        this.edges = new ArrayList<>();
+        edges = new ArrayList<>();
+        edgeToSeparatorsMap = new HashMap<>();
     }
 
-    public void addVertex(int x, int y) {
-        vertices.add(new Pair<>(x, y));
-    }
+    // Method to compute the global separator list
+    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
-    public void addEdge(Edge edge) {
-        edges.add(edge);
-    }
-
-    private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparators = new ArrayList<>();
-
-        for (Edge edge : edges) {
-            List<Pair<Integer, Integer>> separators = findMinSeparators(edge);
-            globalSeparators.add(new Pair<>(separators, edge));
+        for (E edge : edges) {
+            List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
+            globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
-        return globalSeparators;
+        return globalSeparatorList;
     }
 
-    private List<Pair<Integer, Integer>> findMinSeparators(Edge edge) {
-        // Placeholder for actual logic to find minimum separators for the given edge
+    // Dummy method to compute separators for a given edge
+    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(E edge) {
+        // Implement the logic to compute the minimum separators for the edge
+        // This is a placeholder implementation
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Add logic to compute minimum separators based on the edge
+        // Add logic to populate separators based on the edge
         return separators;
-    }
-
-    // Pair class to hold two values
-    public static class Pair<K, V> {
-        private K key;
-        private V value;
-
-        public Pair(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-    }
-
-    // Edge class to represent an edge in the graph
-    public static class Edge {
-        private int start;
-        private int end;
-
-        public Edge(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
     }
 }

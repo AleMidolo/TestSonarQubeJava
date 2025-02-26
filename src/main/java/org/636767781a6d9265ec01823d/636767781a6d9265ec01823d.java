@@ -10,7 +10,7 @@ public class CustomAppender {
             // यहाँ पर लॉगिंग इवेंट को संभालने का कोड लिखें
             System.out.println("Logging Event: " + event.getMessage());
         } else {
-            System.out.println("Logging event is null.");
+            System.out.println("No event to log.");
         }
     }
 }

@@ -33,12 +33,9 @@ public class FileExtensionUtil {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfExtension("example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example")); // Output: -1
-        System.out.println(indexOfExtension(null)); // Output: -1
-        System.out.println(indexOfExtension("folder\\example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder\\example")); // Output: -1
+        // Example usage
+        String filename = "example/path/to/file.txt";
+        int index = indexOfExtension(filename);
+        System.out.println("Index of last extension separator: " + index);
     }
 }

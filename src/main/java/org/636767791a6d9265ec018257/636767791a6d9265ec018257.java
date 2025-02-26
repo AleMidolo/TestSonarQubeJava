@@ -8,15 +8,9 @@ public class Logger {
             @Override
             public void run() {
                 // Here you would add the log record to your LogTable
-                // For example, assuming you have a method to update the LogTable:
-                updateLogTable(lr);
+                // For demonstration, we will just print the message
+                System.out.println(lr.getMessage());
             }
         });
-    }
-
-    private void updateLogTable(LogRecord lr) {
-        // Implementation to update the LogTable with the log record
-        // This is a placeholder for the actual log table update logic
-        System.out.println("Log Message: " + lr.getMessage());
     }
 }

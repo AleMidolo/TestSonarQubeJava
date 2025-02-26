@@ -1,7 +1,8 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 
-public class TypeResolver {
+public class GenericTypeResolver {
 
     /** 
      * Risolve gli argomenti per il {@code genericType} utilizzando le informazioni sulle variabili di tipo per il {@code targetType}. Restituisce {@code null} se {@code genericType} non è parametrizzato o se gli argomenti non possono essere risolti.
@@ -12,29 +13,31 @@ public class TypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
-        if (rawType instanceof Class<?>) {
-            Class<?> rawClass = (Class<?>) rawType;
-            if (targetType.isAssignableFrom(rawClass)) {
-                return resolveFromTargetType(actualTypeArguments, targetType);
+        if (!targetType.isAssignableFrom((Class<?>) rawType)) {
+            return null;
+        }
+
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+
+        for (int i = 0; i < actualTypeArguments.length; i++) {
+            Type argument = actualTypeArguments[i];
+            if (argument instanceof Class) {
+                resolvedArguments[i] = (Class<?>) argument;
+            } else if (argument instanceof ParameterizedType) {
+                resolvedArguments[i] = (Class<?>) ((ParameterizedType) argument).getRawType();
+            } else {
+                return null; // Cannot resolve the type
             }
         }
-        return null;
+
+        return resolvedArguments;
     }
 
-    private static Class<?>[] resolveFromTargetType(Type[] actualTypeArguments, Class<?> targetType) {
-        Class<?>[] resolvedClasses = new Class<?>[actualTypeArguments.length];
-        for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type typeArgument = actualTypeArguments[i];
-            if (typeArgument instanceof Class<?>) {
-                resolvedClasses[i] = (Class<?>) typeArgument;
-            } else {
-                // Handle other types like ParameterizedType or WildcardType if necessary
-                resolvedClasses[i] = Object.class; // Fallback for unresolved types
-            }
-        }
-        return resolvedClasses;
+    public static void main(String[] args) {
+        // Example usage
+        // Assuming you have a class with generics to test the method
     }
 }

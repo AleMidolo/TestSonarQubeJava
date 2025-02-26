@@ -8,14 +8,17 @@ public class CharsetTranslator {
      * @return L'equivalente Java per questo nome.
      */
     private static String javaCharset(String charset) {
-        Charset javaCharset = Charset.forName(charset);
-        return javaCharset.name();
+        if (Charset.isSupported(charset)) {
+            return Charset.forName(charset).name();
+        } else {
+            throw new IllegalArgumentException("Charset not supported: " + charset);
+        }
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
+        // Example usage
         String mimeCharset = "UTF-8";
-        String javaEquivalent = javaCharset(mimeCharset);
-        System.out.println("L'equivalente Java per " + mimeCharset + " è " + javaEquivalent);
+        String javaCharset = javaCharset(mimeCharset);
+        System.out.println("Java Charset: " + javaCharset);
     }
 }

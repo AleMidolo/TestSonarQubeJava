@@ -21,7 +21,8 @@ public class Graph<V> {
     }
 
     /** 
-     * Calcola tutti i vertici che hanno un grado positivo iterando intenzionalmente sugli archi. Questo mantiene la complessità a $O(m)$ dove $m$ è il numero di archi.
+     * Calcola tutti i vertici che hanno un grado positivo iterando intenzionalmente sugli archi. 
+     * Questo mantiene la complessità a $O(m)$ dove $m$ è il numero di archi.
      * @return insieme di vertici con grado positivo
      */
     private Set<V> initVisibleVertices() {

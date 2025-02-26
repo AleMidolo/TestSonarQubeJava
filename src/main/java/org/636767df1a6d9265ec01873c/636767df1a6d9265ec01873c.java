@@ -11,6 +11,6 @@ public class Entity {
     public static void main(String[] args) {
         Entity entity = new Entity();
         String rowId = entity.id("12345");
-        System.out.println("Row ID: " + rowId);
+        System.out.println("L'id della riga è: " + rowId);
     }
 }

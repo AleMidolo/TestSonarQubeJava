@@ -23,9 +23,9 @@ public class TableRowSelector {
         Rectangle rect = table.getCellRect(row, 0, true);
         table.scrollRectToVisible(rect);
         
-        // Ritarda la chiamata a repaint
+        // Ritarda la chiamata a repaint per permettere alla tabella di dipingere correttamente
         SwingUtilities.invokeLater(() -> {
-            pane.repaint();
+            table.repaint();
         });
     }
 
@@ -33,8 +33,6 @@ public class TableRowSelector {
         // Esempio di utilizzo
         JFrame frame = new JFrame("Table Row Selector Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
             {"Row 1", "Data 1"},
@@ -43,15 +41,14 @@ public class TableRowSelector {
             {"Row 4", "Data 4"},
             {"Row 5", "Data 5"},
         };
-
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
         frame.add(pane, BorderLayout.CENTER);
-        
+        frame.setSize(300, 200);
         frame.setVisible(true);
 
-        // Seleziona la riga 2 dopo 2 secondi
-        Timer timer = new Timer(2000, e -> selectRow(2, table, pane));
+        // Seleziona la riga 2 dopo 1 secondo
+        Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
         timer.setRepeats(false);
         timer.start();
     }

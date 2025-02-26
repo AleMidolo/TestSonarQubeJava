@@ -33,11 +33,10 @@ public class FileExtensionUtil {
     }
 
     public static void main(String[] args) {
-        // Test del metodo
-        System.out.println(indexOfExtension("example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example")); // Output: -1
-        System.out.println(indexOfExtension("folder/example.")); // Output: 8
+        // Esempi di utilizzo
+        System.out.println(indexOfExtension("document.txt")); // Output: 8
+        System.out.println(indexOfExtension("folder/document.txt")); // Output: 8
+        System.out.println(indexOfExtension("folder/document")); // Output: -1
         System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

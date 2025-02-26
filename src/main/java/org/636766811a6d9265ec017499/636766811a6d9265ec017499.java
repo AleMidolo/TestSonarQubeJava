@@ -11,13 +11,14 @@ public class InterceptorChecker {
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (interceptor.getClass().equals(c)) {
-                return false; // Un'istanza della classe esiste già nella lista
+                return false;
             }
         }
-        return true; // Nessuna istanza della classe trovata
+        return true;
     }
-}
-
-class AtmosphereInterceptor {
-    // Implementazione della classe AtmosphereInterceptor
+    
+    // Assuming AtmosphereInterceptor is defined somewhere in your codebase
+    public static abstract class AtmosphereInterceptor {
+        // Implementation details for AtmosphereInterceptor
+    }
 }

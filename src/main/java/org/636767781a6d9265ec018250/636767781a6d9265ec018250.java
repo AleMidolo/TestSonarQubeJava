@@ -8,14 +8,8 @@ public class FilterDecider {
      */
     public int decide(LoggingEvent event) {
         // Implementazione della logica per decidere il filtro
-        String message = event.getRenderedMessage();
-        String searchString = "corrispondenza"; // Stringa da cercare
-
-        if (message == null || !message.contains(searchString)) {
-            return Filter.NEUTRAL; // Nessuna corrispondenza
-        }
-
-        // Altre logiche di decisione possono essere aggiunte qui
-        return Filter.ACCEPT; // Esempio di accettazione se c'è corrispondenza
+        // Se non c'è corrispondenza con la stringa, restituisce Filter.NEUTRAL
+        // Qui si può aggiungere la logica per la corrispondenza della stringa
+        return Filter.NEUTRAL;
     }
 }

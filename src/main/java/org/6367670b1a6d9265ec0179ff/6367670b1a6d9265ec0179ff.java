@@ -18,8 +18,9 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
+        // Test cases
         Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
+        Byte[] emptyArray = {};
         Byte[] nonEmptyArray = {1, 2, 3};
 
         System.out.println(nullToEmpty(nullArray).length); // Output: 0

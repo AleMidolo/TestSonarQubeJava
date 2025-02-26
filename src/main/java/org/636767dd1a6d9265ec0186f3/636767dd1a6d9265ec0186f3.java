@@ -6,17 +6,13 @@ public class ColumnName {
      * @param newName da utilizzare a livello di archiviazione.
      */
     public void overrideName(String oldName, String newName) {
-        // Implementazione della logica per sostituire il nome
-        // Questo è un esempio di come potrebbe essere implementato
-        // In un contesto reale, potresti voler aggiornare un database o una mappa di nomi
+        // Logica per sostituire il nome
+        // Questo è un esempio di implementazione
         System.out.println("Sostituzione del nome: " + oldName + " con " + newName);
         
-        // Logica per la sostituzione del nome
-        // Ad esempio, se si utilizza una mappa per memorizzare i nomi
-        // Map<String, String> nameMap = new HashMap<>();
-        // nameMap.put(oldName, newName);
+        // Qui si potrebbe aggiungere la logica per aggiornare un database o una struttura dati
     }
-    
+
     public static void main(String[] args) {
         ColumnName columnName = new ColumnName();
         columnName.overrideName("vecchioNome", "nuovoNome");

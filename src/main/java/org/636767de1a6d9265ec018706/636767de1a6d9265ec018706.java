@@ -51,11 +51,11 @@ public class MappingDiff {
     public static void main(String[] args) {
         MappingDiff mappingDiff = new MappingDiff();
         Mappings currentMappings = new Mappings();
-        currentMappings.addField("name", "string");
-
-        Mappings result = mappingDiff.diffStructure("example_table", currentMappings);
+        currentMappings.addField("id", "integer");
+        
+        Mappings diff = mappingDiff.diffStructure("example_table", currentMappings);
         System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
+        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
             System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
         }
     }

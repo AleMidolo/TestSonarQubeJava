@@ -1,5 +1,5 @@
 public class ArrayComparator {
-
+    
     /** 
      * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
      * @param a     Il primo array da confrontare.

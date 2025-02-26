@@ -57,8 +57,8 @@ class DoublyLinkedList<E> {
         ListNode<E> current = list.head;
         while (current != null) {
             ListNode<E> nextNode = current.next; // Store next node
-            list.removeListNode(current); // Remove from the source list
-            this.addListNode(current); // Add to the current list
+            this.addListNode(current); // Move current node to this list
+            list.removeListNode(current); // Remove current node from the original list
             current = nextNode; // Move to the next node
         }
     }

@@ -17,6 +17,6 @@ class ListNode<E> {
         if (this.next == null) {
             throw new NoSuchElementException("No previous node exists.");
         }
-        return this.next; // Assuming this method is supposed to return the next node for demonstration
+        return this.next;
     }
 }

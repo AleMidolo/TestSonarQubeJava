@@ -20,8 +20,8 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        String testString = "   Hello, World!";
+        String testString = "   Hello World!";
         String result = trimLeadingWhitespace(testString);
-        System.out.println(result); // Output: "Hello, World!"
+        System.out.println("'" + result + "'"); // Output: 'Hello World!'
     }
 }

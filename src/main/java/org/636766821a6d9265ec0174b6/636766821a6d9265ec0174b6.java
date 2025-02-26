@@ -25,7 +25,7 @@ public class TypeResolver {
                 if (arg instanceof Class<?>) {
                     typeArguments[i] = (Class<?>) arg;
                 } else {
-                    return null; // Cannot resolve type argument
+                    return null; // Cannot resolve non-class type arguments
                 }
             }
 
@@ -38,12 +38,14 @@ public class TypeResolver {
     public static void main(String[] args) {
         // Example usage
         Type genericType = new ParameterizedTypeImpl(List.class, new Type[]{String.class});
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
+        Class<?> targetType = List.class;
+
+        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
         System.out.println(Arrays.toString(resolvedArgs)); // Output: [class java.lang.String]
     }
 }
 
-// Helper class to create a ParameterizedType for demonstration
+// A simple implementation of ParameterizedType for demonstration purposes
 class ParameterizedTypeImpl implements ParameterizedType {
     private final Class<?> raw;
     private final Type[] actualTypeArguments;

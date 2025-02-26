@@ -5,19 +5,18 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(final byte[] b) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Byte array cannot be null");
+            throw new NullPointerException("Byte array is null");
         }
-        // Example implementation: write bytes to a hypothetical destination
+        // Implementation of writing the byte array to the output stream
         for (byte value : b) {
-            // Here you would write the byte to your output destination
-            // For demonstration, we will just print the byte value
-            System.out.print((char) value);
+            write(value); // Call the single byte write method
         }
     }
 
     @Override
     public void write(int b) throws IOException {
-        // Implement the single byte write method if needed
-        System.out.print((char) b);
+        // Implementation for writing a single byte
+        // This is just a placeholder; actual implementation would depend on the specific output stream
+        System.out.write(b);
     }
 }

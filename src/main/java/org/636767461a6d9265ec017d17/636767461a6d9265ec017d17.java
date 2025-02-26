@@ -1,5 +1,5 @@
 public class StringUnescaper {
-
+    
     /** 
      * Unescape a string DOT identifier.
      * @param input the input
@@ -10,15 +10,15 @@ public class StringUnescaper {
             return null;
         }
         StringBuilder output = new StringBuilder();
-        boolean escaping = false;
+        boolean isEscaped = false;
 
         for (char c : input.toCharArray()) {
-            if (escaping) {
+            if (isEscaped) {
                 output.append(c);
-                escaping = false;
+                isEscaped = false;
             } else {
                 if (c == '\\') {
-                    escaping = true;
+                    isEscaped = true;
                 } else {
                     output.append(c);
                 }

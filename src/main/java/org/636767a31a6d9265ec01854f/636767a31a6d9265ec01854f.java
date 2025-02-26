@@ -11,19 +11,29 @@ public class PackedFieldChecker {
     private void checkIfPackedField() throws IOException {
         // Logic to determine if the field is packed
         // This is a placeholder for the actual implementation
-        // For example, we might read a byte and check its value
-        int fieldType = readFieldType(); // Hypothetical method to read field type
-
-        if (fieldType == 1) { // Assuming 1 indicates a packed field
-            isPackedField = true;
+        // For example, we might check a certain condition or flag
+        if (isPackedField) {
+            // Update internal state if packed field is detected
+            // This could involve setting a flag or performing some action
+            System.out.println("Packed field detected. Updating internal state.");
         } else {
-            isPackedField = false;
+            // If not packed, we might throw an exception or handle it differently
+            throw new IOException("Field is not packed.");
         }
     }
 
-    // Hypothetical method to simulate reading a field type
-    private int readFieldType() {
-        // This would normally read from a data source
-        return 1; // Placeholder return value
+    // Method to simulate setting the packed field state
+    public void setPackedField(boolean packed) {
+        this.isPackedField = packed;
+    }
+
+    public static void main(String[] args) {
+        PackedFieldChecker checker = new PackedFieldChecker();
+        checker.setPackedField(true); // Simulate setting the packed field
+        try {
+            checker.checkIfPackedField(); // Check if packed field
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

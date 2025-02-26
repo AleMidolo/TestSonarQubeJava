@@ -1,5 +1,5 @@
 public class FilenameStripper {
-    
+
     /** 
      * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -&gt; "mypath/myfile".
      * @param path the file path (may be <code>null</code>)

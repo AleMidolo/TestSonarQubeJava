@@ -23,7 +23,7 @@ public class ArrayConverter {
     }
 
     public static void main(String[] args) {
-        Double[] objectArray = {1.0, 2.0, 3.0};
+        Double[] objectArray = {1.1, 2.2, 3.3};
         double[] primitiveArray = toPrimitive(objectArray);
         for (double d : primitiveArray) {
             System.out.println(d);

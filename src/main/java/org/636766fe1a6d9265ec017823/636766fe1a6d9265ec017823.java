@@ -18,17 +18,18 @@ public class SymbolTable {
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!constantPool.containsKey(key)) {
-            constantPool.put(key, nextIndex++);
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
+        } else {
+            constantPool.put(key, nextIndex);
+            return nextIndex++;
         }
-        return constantPool.get(key);
     }
 
     public static void main(String[] args) {
         SymbolTable symbolTable = new SymbolTable();
         int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
         int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        
         System.out.println("Index of first addition: " + index1);
         System.out.println("Index of second addition (should be the same): " + index2);
     }

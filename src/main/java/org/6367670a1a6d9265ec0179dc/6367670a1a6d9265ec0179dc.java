@@ -1,30 +1,35 @@
-import java.util.List;
+import java.util.Arrays;
 
 public class StackMapTable {
 
-    private List<Object> currentFrame; // Assuming currentFrame is a list of some abstract types
-    private List<Object> stackMapTableEntries; // Assuming this is where we store the entries
+    private Object[] currentFrame; // Assuming currentFrame is an array of some abstract types
+    private Object[] stackMapTableEntries; // Assuming this is where we want to put the types
 
-    /** 
+    /**
      * Puts some abstract types of  {@link #currentFrame} in {@link #stackMapTableEntries} , using the JVMS verification_type_info format used in StackMapTable attributes.
      * @param start index of the first type in {@link #currentFrame} to write.
      * @param end index of last type in {@link #currentFrame} to write (exclusive).
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
+        if (start < 0 || end > currentFrame.length || start >= end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
-        
-        for (int i = start; i < end; i++) {
-            Object type = currentFrame.get(i);
-            // Convert type to verification_type_info format and add to stackMapTableEntries
-            stackMapTableEntries.add(convertToVerificationTypeInfo(type));
-        }
+
+        // Assuming stackMapTableEntries is initialized to the appropriate size
+        int length = end - start;
+        System.arraycopy(currentFrame, start, stackMapTableEntries, 0, length);
     }
 
-    private Object convertToVerificationTypeInfo(Object type) {
-        // Placeholder for conversion logic to verification_type_info format
-        // This should be replaced with actual conversion logic based on the type
-        return type; // Returning the type as is for now
+    // Example constructor and methods for demonstration purposes
+    public StackMapTable(int size) {
+        currentFrame = new Object[size];
+        stackMapTableEntries = new Object[size]; // Adjust size as needed
+        // Initialize currentFrame with some values for testing
+        Arrays.fill(currentFrame, new Object()); // Fill with dummy objects
+    }
+
+    public static void main(String[] args) {
+        StackMapTable table = new StackMapTable(10);
+        table.putAbstractTypes(2, 5); // Example usage
     }
 }

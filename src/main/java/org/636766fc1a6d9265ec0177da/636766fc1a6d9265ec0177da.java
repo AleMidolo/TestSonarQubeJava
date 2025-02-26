@@ -13,7 +13,7 @@ public class ParameterSeparatorChecker {
         System.out.println(isParameterSeparator(',')); // true
         System.out.println(isParameterSeparator(';')); // true
         System.out.println(isParameterSeparator(' ')); // true
-        System.out.println(isParameterSeparator('\n')); // true
         System.out.println(isParameterSeparator('a')); // false
+        System.out.println(isParameterSeparator(')')); // true
     }
 }

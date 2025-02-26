@@ -1,42 +1,48 @@
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class ClientAppender extends AppenderSkeleton {
-    private List<Client> clients = new ArrayList<>();
+public class LogAppender {
+    private List<Client> connectedClients = new CopyOnWriteArrayList<>();
 
-    public void addClient(Client client) {
-        clients.add(client);
-    }
-
-    public void removeClient(Client client) {
-        clients.remove(client);
-    }
-
-    @Override
+    /** 
+     * Handles a log event. For this appender, that means writing the message to each connected client.  
+     */
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
-        for (Client client : clients) {
+        String message = event.getMessage();
+        for (Client client : connectedClients) {
             client.sendMessage(message);
         }
     }
 
-    @Override
-    public void close() {
-        // Close resources if needed
+    public void addClient(Client client) {
+        connectedClients.add(client);
     }
 
-    @Override
-    public boolean requiresLayout() {
-        return false;
+    public void removeClient(Client client) {
+        connectedClients.remove(client);
+    }
+}
+
+class LoggingEvent {
+    private String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
     }
 
-    // Client class for demonstration purposes
-    public static class Client {
-        public void sendMessage(String message) {
-            // Logic to send message to the client
-            System.out.println("Sending message to client: " + message);
-        }
+    public String getMessage() {
+        return message;
+    }
+}
+
+class Client {
+    private String clientId;
+
+    public Client(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void sendMessage(String message) {
+        System.out.println("Sending message to " + clientId + ": " + message);
     }
 }

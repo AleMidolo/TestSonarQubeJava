@@ -1,22 +1,20 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URL;
+import java.net.URLClassLoader;
 
-public class ClassPathUtil {
-
+public class ClassPathExample {
     /**
      * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
      */
     private static File[] classPath() {
-        String classPath = System.getProperty("java.class.path");
-        String[] paths = classPath.split(File.pathSeparator);
-        List<File> fileList = new ArrayList<>();
-
-        for (String path : paths) {
-            fileList.add(new File(path));
+        URL[] urls = ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs();
+        File[] files = new File[urls.length];
+        
+        for (int i = 0; i < urls.length; i++) {
+            files[i] = new File(urls[i].getFile());
         }
-
-        return fileList.toArray(new File[0]);
+        
+        return files;
     }
 
     public static void main(String[] args) {

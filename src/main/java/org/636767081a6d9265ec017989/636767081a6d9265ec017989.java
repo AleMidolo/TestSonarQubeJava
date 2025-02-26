@@ -11,23 +11,20 @@ public class BooleanArrayConverter {
         if (array == null) {
             return null;
         }
-        boolean[] primitiveArray = new boolean[array.length];
+        boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("Array element at index " + i + " is null");
             }
-            primitiveArray[i] = array[i];
+            result[i] = array[i];
         }
-        return primitiveArray;
+        return result;
     }
 
     public static void main(String[] args) {
         Boolean[] booleanArray = {true, false, null, true};
         try {
-            boolean[] result = toPrimitive(booleanArray);
-            for (boolean b : result) {
-                System.out.println(b);
-            }
+            boolean[] primitiveArray = toPrimitive(booleanArray);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }

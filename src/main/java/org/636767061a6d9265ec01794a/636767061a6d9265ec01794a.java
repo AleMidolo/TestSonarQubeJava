@@ -26,7 +26,7 @@ public class FileNameUtils {
      * @param path 要查找的路径
      * @return 最后一个分隔符的索引，如果没有找到则返回-1
      */
-    private static int indexOfLastSeparator(String path) {
+    public static int indexOfLastSeparator(String path) {
         if (path == null || path.isEmpty()) {
             return -1;
         }
@@ -40,9 +40,9 @@ public class FileNameUtils {
     public static void main(String[] args) {
         // 测试代码
         System.out.println(indexOfExtension("example.txt")); // 输出: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // 输出: 14
+        System.out.println(indexOfExtension("example.tar.gz")); // 输出: 11
+        System.out.println(indexOfExtension("folder/example.txt")); // 输出: 7
         System.out.println(indexOfExtension("folder/example")); // 输出: -1
-        System.out.println(indexOfExtension("folder/example.")); // 输出: 14
         System.out.println(indexOfExtension(null)); // 输出: -1
     }
 }

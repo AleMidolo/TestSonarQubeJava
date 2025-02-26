@@ -12,31 +12,19 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
-            if (rawClass.equals(targetType)) {
-                return (Class<?>[]) parameterizedType.getActualTypeArguments();
-            }
-
-            Type superType = rawClass.getGenericSuperclass();
-            if (superType != null) {
-                Class<?>[] resolvedArguments = resolveArguments(superType, targetType);
-                if (resolvedArguments != null) {
-                    return resolvedArguments;
+            if (targetType.isAssignableFrom(rawClass)) {
+                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+                for (int i = 0; i < actualTypeArguments.length; i++) {
+                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
                 }
-            }
-
-            Type[] interfaces = rawClass.getGenericInterfaces();
-            for (Type iface : interfaces) {
-                Class<?>[] resolvedArguments = resolveArguments(iface, targetType);
-                if (resolvedArguments != null) {
-                    return resolvedArguments;
-                }
+                return resolvedArguments;
             }
         }
-
         return null;
     }
 }

@@ -11,7 +11,7 @@ public class PackedFieldChecker {
     private void checkIfPackedField() throws IOException {
         // Simulate checking if the field is packed
         // This is a placeholder for the actual logic to determine if the field is packed
-        boolean packedFieldCondition = /* logic to determine if packed field */ false;
+        boolean packedFieldCondition = /* logic to determine if packed */ false;
 
         if (packedFieldCondition) {
             isPackedField = true;

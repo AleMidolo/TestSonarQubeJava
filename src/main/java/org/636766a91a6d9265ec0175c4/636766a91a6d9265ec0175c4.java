@@ -22,23 +22,16 @@ public class DescriptorPopper {
 
     private int getCountFromDescriptor(String descriptor) {
         // 这里可以根据描述符解析出需要弹出的数量
-        // 简单示例：假设 descriptor 是一个简单的类型字符
+        // 简化处理：假设 descriptor 是一个简单的类型描述符
         switch (descriptor) {
             case "I": // int
-            case "Z": // boolean
+            case "F": // float
                 return 1;
-            case "D": // double
             case "J": // long
+            case "D": // double
                 return 2;
-            case "V": // void (方法返回类型)
-                return 0;
-            default:
-                // 处理方法描述符
-                if (descriptor.startsWith("(") && descriptor.contains(")")) {
-                    String paramTypes = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
-                    return paramTypes.length(); // 每个参数类型都弹出一个
-                }
-                return 1; // 默认情况
+            default: // 其他类型
+                return 1; // 默认返回1
         }
     }
 
@@ -48,9 +41,9 @@ public class DescriptorPopper {
 
     public static void main(String[] args) {
         DescriptorPopper popper = new DescriptorPopper();
-        popper.push(new Object());
-        popper.push(new Object());
+        popper.push(1);
+        popper.push(2.0);
         popper.pop("I"); // 弹出一个int类型
-        System.out.println("Remaining items in stack: " + popper.frameStack.size());
+        System.out.println("Pop operation completed.");
     }
 }

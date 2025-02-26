@@ -19,7 +19,6 @@ public class ThreadSnapshotLoader {
                 snapshots.add(snapshot);
             }
         }
-
         return snapshots;
     }
 

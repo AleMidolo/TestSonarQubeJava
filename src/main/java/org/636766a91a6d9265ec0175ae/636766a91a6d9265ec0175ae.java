@@ -23,7 +23,7 @@ public class ByteVector {
             size += byteLength;
         } else {
             if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+                throw new IndexOutOfBoundsException("Invalid offset or length");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);

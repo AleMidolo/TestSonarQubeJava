@@ -11,7 +11,7 @@ public class InterceptorChecker {
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
-                return false; // 已存在该类的实例
+                return false; // 已经存在该类的实例
             }
         }
         return true; // 不存在该类的实例

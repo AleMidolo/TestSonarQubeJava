@@ -16,7 +16,7 @@ public class FileIterator {
         this.currentIndex = 0;
     }
 
-    /** 
+    /**
      * 返回下一个 {@link java.io.File} 对象，如果没有更多文件可用，则返回 {@code null}。
      */
     public InputStream next() throws IOException {

@@ -13,9 +13,7 @@ public class DoublyLinkedList<E> {
     }
 
     /**
-     * 原子性地将所有 {@link ListNode ListNodes} 从 {@code list} 移动到此列表，
-     * 就像每个节点都是通过 {@link #removeListNode(ListNodeImpl)} 从 {@code list} 中移除的，
-     * 然后依次通过 {@link #addListNode(ListNodeImpl)} 添加到此列表中。
+     * 原子性地将所有 {@link ListNode ListNodes} 从 {@code list} 移动到此列表，就像每个节点都是通过 {@link #removeListNode(ListNodeImpl)} 从 {@code list} 中移除的，然后依次通过 {@link #addListNode(ListNodeImpl)} 添加到此列表中。
      */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         if (list.head == null) {
@@ -29,8 +27,6 @@ public class DoublyLinkedList<E> {
             addListNode(current); // Add to this list
             current = nextNode; // Move to the next node
         }
-        list.head = null; // Clear the source list
-        list.tail = null;
     }
 
     private void removeListNode(ListNode<E> node) {
@@ -39,11 +35,13 @@ public class DoublyLinkedList<E> {
         } else {
             head = node.next; // Node is head
         }
+
         if (node.next != null) {
             node.next.prev = node.prev;
         } else {
             tail = node.prev; // Node is tail
         }
+
         node.next = null;
         node.prev = null;
     }
@@ -54,7 +52,7 @@ public class DoublyLinkedList<E> {
         } else {
             tail.next = node;
             node.prev = tail;
-            tail = node; // Update tail
+            tail = node;
         }
         node.next = null; // Ensure next is null
     }

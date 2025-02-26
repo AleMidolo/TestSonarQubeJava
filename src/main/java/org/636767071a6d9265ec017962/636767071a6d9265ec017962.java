@@ -22,13 +22,5 @@ public class BeanMap {
         }
     }
 
-    // Example method to set properties for testing
-    public void setProperty(String name, Object value) {
-        properties.put(name, value);
-    }
-
-    // Example method to get properties for testing
-    public Object getProperty(String name) {
-        return properties.get(name);
-    }
+    // Additional methods for BeanMap (like getters and setters) can be added here
 }

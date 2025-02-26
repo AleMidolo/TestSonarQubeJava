@@ -15,29 +15,25 @@ public class ByteVector {
      * @return 此字节向量。
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
-        }
-        
         if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength]; // Create an array of empty bytes
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-        }
-
-        ensureCapacity(size + byteLength);
-        
-        if (byteArrayValue != null) {
+            ensureCapacity(size + byteLength);
+            for (int i = 0; i < byteLength; i++) {
+                data[size++] = 0; // Fill with empty bytes
+            }
+        } else {
+            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
+                throw new IndexOutOfBoundsException("Invalid offset or length");
+            }
+            ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+            size += byteLength;
         }
-        
-        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
+    private void ensureCapacity(int newSize) {
+        if (newSize > data.length) {
+            int newCapacity = Math.max(data.length * 2, newSize);
             byte[] newData = new byte[newCapacity];
             System.arraycopy(data, 0, newData, 0, size);
             data = newData;

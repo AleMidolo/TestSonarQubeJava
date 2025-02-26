@@ -10,13 +10,13 @@ public class TimeRangeSplitter {
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        
+
         while (start < end) {
             long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
             timeRanges.add(new TimeRange(start, rangeEnd));
             start = rangeEnd;
         }
-        
+
         return timeRanges;
     }
 

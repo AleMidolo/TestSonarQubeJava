@@ -8,13 +8,13 @@ public class SequenceRangeBuilder {
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
-
+        
         // Example logic to populate sequenceRanges
-        // This is just a placeholder; actual logic will depend on specific requirements
+        // This should be replaced with actual logic to build the sequence ranges
         sequenceRanges.add(new SequenceRange(1, 10));
         sequenceRanges.add(new SequenceRange(11, 20));
         sequenceRanges.add(new SequenceRange(21, 30));
-
+        
         return sequenceRanges;
     }
 

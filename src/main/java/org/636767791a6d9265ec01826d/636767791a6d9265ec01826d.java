@@ -8,35 +8,16 @@ public class VariableSubstitutor {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // 或者抛出异常，视需求而定
         }
 
-        // Perform variable substitution
-        StringBuilder result = new StringBuilder();
-        int startIndex = 0;
-        while (startIndex < value.length()) {
-            int startVar = value.indexOf("${", startIndex);
-            if (startVar == -1) {
-                result.append(value.substring(startIndex));
-                break;
-            }
-            result.append(value.substring(startIndex, startVar));
-            int endVar = value.indexOf("}", startVar);
-            if (endVar == -1) {
-                result.append(value.substring(startIndex));
-                break;
-            }
-            String varKey = value.substring(startVar + 2, endVar);
-            String varValue = props.getProperty(varKey);
-            if (varValue != null) {
-                result.append(varValue);
-            } else {
-                result.append("${").append(varKey).append("}");
-            }
-            startIndex = endVar + 1;
+        // 进行变量替换
+        for (String propKey : props.stringPropertyNames()) {
+            String placeholder = "${" + propKey + "}";
+            value = value.replace(placeholder, props.getProperty(propKey));
         }
 
-        return result.toString();
+        return value;
     }
 
     public static void main(String[] args) {
@@ -45,6 +26,6 @@ public class VariableSubstitutor {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // 输出: Hello, John!
     }
 }

@@ -15,7 +15,7 @@ public class LinkedList<E> {
         this.head = null;
     }
 
-    /** 
+    /**
      * 从列表中移除非空的 {@code node}。
      */
     private boolean unlink(ListNodeImpl<E> node) {

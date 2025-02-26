@@ -13,35 +13,12 @@ public class UTF8SizeCalculator {
             throw new IndexOutOfBoundsException("Index or length is out of bounds");
         }
 
-        int size = 0;
-        for (int i = index; i < index + len; i++) {
-            char c = str.charAt(i);
-            if (c <= 0x7F) {
-                size += 1; // 1 byte for ASCII
-            } else if (c <= 0x7FF) {
-                size += 2; // 2 bytes for characters in range 0x80 to 0x7FF
-            } else if (c >= 0xD800 && c <= 0xDFFF) {
-                // Surrogate pair
-                if (i + 1 < index + len) {
-                    char next = str.charAt(i + 1);
-                    if (next >= 0xDC00 && next <= 0xDFFF) {
-                        size += 4; // 4 bytes for surrogate pairs
-                        i++; // Skip the next character
-                    } else {
-                        throw new IllegalArgumentException("Invalid surrogate pair");
-                    }
-                } else {
-                    throw new IllegalArgumentException("Invalid surrogate pair");
-                }
-            } else {
-                size += 3; // 3 bytes for characters in range 0x800 to 0xFFFF
-            }
-        }
-        return size;
+        String substring = str.subSequence(index, index + len).toString();
+        return substring.getBytes(StandardCharsets.UTF_8).length;
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, 你好!";
+        String testString = "Hello, 世界!";
         int size = computeUTF8Size(testString, 0, testString.length());
         System.out.println("UTF-8 size: " + size);
     }

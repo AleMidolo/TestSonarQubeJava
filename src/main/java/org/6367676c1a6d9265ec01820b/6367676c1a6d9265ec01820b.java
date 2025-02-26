@@ -21,9 +21,9 @@ public class StringManipulator {
     }
 
     public static void main(String[] args) {
-        String original = "Hello World!";
-        String charsToRemove = "lo";
-        String result = deleteAny(original, charsToRemove);
-        System.out.println(result); // Output: "He Wr!"
+        String original = "Hello, World!";
+        String charsToDelete = "lo";
+        String result = deleteAny(original, charsToDelete);
+        System.out.println(result); // Output: "He, Wr!"
     }
 }

@@ -11,13 +11,14 @@ public class FilePathUtil {
         }
         
         int lastDotIndex = path.lastIndexOf('.');
-        int lastSlashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+        int lastSeparatorIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
         
-        if (lastDotIndex > lastSlashIndex) {
-            return path.substring(0, lastDotIndex);
+        // If there is no dot or the dot is before the last separator, return null
+        if (lastDotIndex == -1 || lastDotIndex < lastSeparatorIndex) {
+            return null;
         }
         
-        return null;
+        return path.substring(0, lastDotIndex);
     }
 
     public static void main(String[] args) {

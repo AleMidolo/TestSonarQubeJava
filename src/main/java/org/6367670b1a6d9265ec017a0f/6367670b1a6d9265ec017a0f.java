@@ -1,6 +1,7 @@
 import java.util.List;
 
 public class StringUtils {
+
     /** 
      * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
      */
@@ -18,10 +19,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // 示例用法
+        // Example usage
         List<String> searchStrArray = List.of("a", "b", "c");
         String str = "Hello World";
         boolean result = containsAnyIgnoreCase(str, searchStrArray);
-        System.out.println(result); // 输出: true
+        System.out.println(result); // Output: true
     }
 }

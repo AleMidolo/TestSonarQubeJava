@@ -5,26 +5,30 @@ public class ModelChecker {
      * @throws IllegalStateException 如果分片键索引不连续
      */
     private void check(String modelName) throws IllegalStateException {
-        // Example implementation: Check if the modelName is valid and if the shard keys are continuous
-        if (modelName == null || modelName.isEmpty()) {
-            throw new IllegalStateException("Model name cannot be null or empty.");
-        }
-
-        // Simulated shard key index check (for demonstration purposes)
-        int[] shardKeys = {0, 1, 2, 4}; // Example of non-continuous shard keys
+        // Simulated logic for checking shard key continuity
+        // In a real scenario, this would involve checking the actual model's shard key indices
+        int[] shardKeys = getShardKeys(modelName); // Assume this method retrieves the shard keys for the model
         for (int i = 0; i < shardKeys.length - 1; i++) {
             if (shardKeys[i] + 1 != shardKeys[i + 1]) {
-                throw new IllegalStateException("Shard key indices are not continuous.");
+                throw new IllegalStateException("分片键索引不连续: " + modelName);
             }
         }
+    }
+
+    // Mock method to simulate retrieval of shard keys
+    private int[] getShardKeys(String modelName) {
+        // This is just a placeholder. In a real implementation, this would fetch the actual shard keys.
+        return new int[]{1, 2, 3}; // Example of continuous keys
+        // return new int[]{1, 3}; // Example of non-continuous keys to trigger exception
     }
 
     public static void main(String[] args) {
         ModelChecker checker = new ModelChecker();
         try {
             checker.check("ExampleModel");
+            System.out.println("Shard keys are continuous.");
         } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }

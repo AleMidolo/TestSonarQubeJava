@@ -15,10 +15,10 @@ public class ByteFinder {
         
         for (int i = pos; i < buffer.length; i++) {
             if (buffer[i] == value) {
-                return i; // 找到字节，返回位置
+                return i;
             }
         }
         
-        return -1; // 未找到字节
+        return -1;
     }
 }

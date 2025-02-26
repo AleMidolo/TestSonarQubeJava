@@ -3,9 +3,12 @@ import java.io.InputStream;
 
 public class ByteReader {
     private InputStream buffer;
+    private int currentByte;
+    private boolean hasMoreData;
 
     public ByteReader(InputStream buffer) {
         this.buffer = buffer;
+        this.hasMoreData = true;
     }
 
     /**
@@ -14,10 +17,16 @@ public class ByteReader {
      * @throws IOException 如果没有更多数据可用。
      */
     public byte readByte() throws IOException {
-        int data = buffer.read();
-        if (data == -1) {
-            throw new IOException("没有更多数据可用");
+        if (!hasMoreData) {
+            throw new IOException("没有更多数据可用。");
         }
-        return (byte) data;
+        
+        currentByte = buffer.read();
+        if (currentByte == -1) {
+            hasMoreData = false;
+            throw new IOException("没有更多数据可用。");
+        }
+        
+        return (byte) currentByte;
     }
 }

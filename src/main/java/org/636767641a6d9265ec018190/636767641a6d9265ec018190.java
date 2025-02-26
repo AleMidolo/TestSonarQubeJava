@@ -10,19 +10,20 @@ public class BucketRelocator {
      * @param minLabel 非空桶的最小值
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // 获取标签为 minLabel 的桶
+        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
+            throw new IllegalArgumentException("minLabel is out of bounds");
+        }
+
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
-        
-        // 获取标签为 0 的桶
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-        
-        // 将标签为 minLabel 的桶中的顶点移动到标签为 0 的桶中
+
+        // Move vertices from minLabel bucket to zero label bucket
         for (Integer vertex : minLabelBucket) {
             zeroLabelBucket.add(vertex);
-            labels.set(vertex, 0); // 更新标签为 0
+            labels.set(vertex, 0); // Update the label of the vertex to 0
         }
-        
-        // 清空标签为 minLabel 的桶
+
+        // Clear the minLabel bucket
         minLabelBucket.clear();
     }
 }

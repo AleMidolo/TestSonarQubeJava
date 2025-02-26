@@ -11,18 +11,17 @@ public class CharacterDigitValue {
         } else if (c >= 'a' && c <= 'z') {
             return c - 'a' + 10;
         } else {
-            return -1; // 非法字符
+            throw new IllegalArgumentException("Invalid character: " + c);
         }
     }
 
     public static void main(String[] args) {
-        // 测试
-        System.out.println(digitValue('0')); // 输出: 0
-        System.out.println(digitValue('9')); // 输出: 9
-        System.out.println(digitValue('A')); // 输出: 10
-        System.out.println(digitValue('Z')); // 输出: 35
-        System.out.println(digitValue('a')); // 输出: 10
-        System.out.println(digitValue('z')); // 输出: 35
-        System.out.println(digitValue('@')); // 输出: -1
+        // Test cases
+        System.out.println(digitValue('0')); // 0
+        System.out.println(digitValue('9')); // 9
+        System.out.println(digitValue('A')); // 10
+        System.out.println(digitValue('Z')); // 35
+        System.out.println(digitValue('a')); // 10
+        System.out.println(digitValue('z')); // 35
     }
 }

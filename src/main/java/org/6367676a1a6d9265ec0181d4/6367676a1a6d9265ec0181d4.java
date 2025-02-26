@@ -17,9 +17,9 @@ public class StringArrayAppender {
     }
 
     public static void main(String[] args) {
-        String[] originalArray = {"Hello", "World"};
-        String newString = "!";
+        String[] originalArray = {"apple", "banana"};
+        String newString = "cherry";
         String[] updatedArray = addStringToArray(originalArray, newString);
-        System.out.println(Arrays.toString(updatedArray)); // Output: [Hello, World, !]
+        System.out.println(Arrays.toString(updatedArray)); // Output: [apple, banana, cherry]
     }
 }

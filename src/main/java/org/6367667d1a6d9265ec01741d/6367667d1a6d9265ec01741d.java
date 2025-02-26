@@ -14,5 +14,6 @@ public class TypeResolver {
         return Unknown.class;
     }
 
+    // Placeholder for Unknown class
     public static class Unknown {}
 }

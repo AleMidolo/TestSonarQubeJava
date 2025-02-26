@@ -7,7 +7,7 @@ public class AbstractTypeStack {
         outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Pops an abstract type from the output frame stack and returns its value.
      * @return the abstract type that has been popped from the output frame stack.
      */
@@ -28,7 +28,7 @@ public class AbstractTypeStack {
         AbstractTypeStack stack = new AbstractTypeStack();
         stack.push(10);
         stack.push(20);
-        System.out.println(stack.pop()); // Should print 20
-        System.out.println(stack.pop()); // Should print 10
+        System.out.println("Popped value: " + stack.pop()); // Should print 20
+        System.out.println("Popped value: " + stack.pop()); // Should print 10
     }
 }

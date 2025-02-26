@@ -1,5 +1,5 @@
 public class FilenameStripper {
-
+    
     /** 
      * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -&gt; "mypath/myfile".
      * @param path the file path (may be <code>null</code>)
@@ -22,9 +22,8 @@ public class FilenameStripper {
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null)); // Output: null
-        System.out.println(stripFilenameExtension("mypath/myfile.")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile.tar.gz")); // Output: mypath/myfile.tar
+        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(null));                // Output: null
+        System.out.println(stripFilenameExtension("mypath/myfile."));   // Output: mypath/myfile
     }
 }

@@ -1,4 +1,5 @@
 public class BooleanUtils {
+
     /** 
      * <p>Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.</p> 
      * <pre> 

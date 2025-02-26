@@ -64,7 +64,7 @@ public class ThreadSnapshotParser {
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
                     if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
                         snapshots.add(new ThreadSnapshot(threadName, timestamp));
-                        break;
+                        break; // No need to check other ranges if already added
                     }
                 }
             }

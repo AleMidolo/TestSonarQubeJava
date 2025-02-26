@@ -11,10 +11,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(indexOf("Hello, World!", "World")); // Output: 7
         System.out.println(indexOf("Hello, World!", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "World"));            // Output: -1
+        System.out.println(indexOf(null, "World"));             // Output: -1
         System.out.println(indexOf("Hello, World!", null));    // Output: -1
     }
 }

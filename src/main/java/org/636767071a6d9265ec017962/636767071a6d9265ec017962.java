@@ -12,23 +12,15 @@ public class BeanMap {
 
         for (String propertyName : map.properties.keySet()) {
             try {
-                PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, this.getClass());
+                PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, map.getClass());
                 if (descriptor.getWriteMethod() != null) {
                     this.properties.put(propertyName, map.properties.get(propertyName));
                 }
             } catch (Exception e) {
-                // Ignore properties that do not have a corresponding PropertyDescriptor
+                // Ignore properties that cannot be accessed
             }
         }
     }
 
-    // Example method to set properties for testing
-    public void setProperty(String name, Object value) {
-        properties.put(name, value);
-    }
-
-    // Example method to get properties for testing
-    public Object getProperty(String name) {
-        return properties.get(name);
-    }
+    // Additional methods to manage properties can be added here
 }

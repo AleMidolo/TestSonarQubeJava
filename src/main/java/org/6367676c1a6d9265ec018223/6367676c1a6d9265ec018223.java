@@ -7,10 +7,7 @@ public class InstanceChecker {
      * @param element the element to look for
      * @return <code>true</code> if found, <code>false</code> else
      */
-    public static boolean containsInstance(Collection collection, Object element) {
-        if (collection == null || element == null) {
-            return false;
-        }
+    public static boolean containsInstance(Collection<?> collection, Object element) {
         for (Object obj : collection) {
             if (obj == element) {
                 return true;
@@ -22,11 +19,11 @@ public class InstanceChecker {
     public static void main(String[] args) {
         // Example usage
         Collection<Object> myCollection = new java.util.ArrayList<>();
-        Object myElement = new Object();
-        myCollection.add(myElement);
-        myCollection.add(new Object());
+        String str1 = new String("Hello");
+        String str2 = new String("Hello");
+        myCollection.add(str1);
 
-        System.out.println(containsInstance(myCollection, myElement)); // true
-        System.out.println(containsInstance(myCollection, new Object())); // false
+        System.out.println(containsInstance(myCollection, str1)); // true
+        System.out.println(containsInstance(myCollection, str2)); // false
     }
 }

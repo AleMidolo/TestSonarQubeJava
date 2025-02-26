@@ -1,4 +1,5 @@
 public class CharUtils {
+
     /** 
      * <p>Checks whether the character is ASCII 7 bit control.</p> 
      * <pre> 
@@ -17,6 +18,7 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(isAsciiControl('a'));  // false
         System.out.println(isAsciiControl('A'));  // false
         System.out.println(isAsciiControl('3'));  // false

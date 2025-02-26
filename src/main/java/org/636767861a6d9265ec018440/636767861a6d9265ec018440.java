@@ -22,8 +22,8 @@ public class NameAbbreviator {
     }
 
     public static void main(String[] args) {
-        NameAbbreviator abbreviator = new NameAbbreviator();
         StringBuffer buffer = new StringBuffer();
+        NameAbbreviator abbreviator = new NameAbbreviator();
         abbreviator.abbreviate(0, buffer);
         System.out.println(buffer.toString().trim()); // Output: J. Doe
     }

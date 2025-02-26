@@ -7,7 +7,7 @@ public class StringSearch {
         if (str == null || searchStr == null) {
             return -1; // यदि कोई भी स्ट्रिंग null है, तो -1 लौटाएं
         }
-        return str.indexOf(searchStr); // स्ट्रिंग के भीतर खोजें और इंडेक्स लौटाएं
+        return str.indexOf(searchStr); // स्ट्रिंग के भीतर खोजें
     }
 
     public static void main(String[] args) {

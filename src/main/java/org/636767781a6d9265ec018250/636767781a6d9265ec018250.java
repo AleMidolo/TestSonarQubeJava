@@ -8,15 +8,14 @@ public class Filter {
      */
     public int decide(LoggingEvent event) {
         // यहाँ पर लॉजिक जोड़े जो यह निर्धारित करता है कि क्या कोई स्ट्रिंग मेल खाता है
-        // उदाहरण के लिए, हम मान लेते हैं कि हम एक विशेष स्ट्रिंग की जांच कर रहे हैं
+        // उदाहरण के लिए, हम एक सरल चेक कर सकते हैं
         String message = event.getMessage().toString();
-        String targetString = "target"; // यहाँ पर लक्षित स्ट्रिंग डालें
-
-        if (!message.contains(targetString)) {
-            return NEUTRAL;
+        
+        // मान लीजिए कि हम "ERROR" शब्द की तलाश कर रहे हैं
+        if (message.contains("ERROR")) {
+            return 1; // मेल खाता है
+        } else {
+            return NEUTRAL; // मेल नहीं खाता
         }
-
-        // यदि मेल खाता है तो कुछ और लौटाएँ (उदाहरण के लिए, 1)
-        return 1; // या कोई अन्य मान जो मेल खाने पर लौटाना हो
     }
 }

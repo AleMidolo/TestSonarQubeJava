@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class GraphUtils<V, E> {
 
-    /** 
+    /**
      * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
      * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
      * @param graph ग्राफ
@@ -18,17 +18,22 @@ public class GraphUtils<V, E> {
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
-        V previousVertex = null;
+        V startVertex = null;
 
         for (E edge : tour) {
-            V sourceVertex = graph.getEdgeSource(edge);
-            V targetVertex = graph.getEdgeTarget(edge);
-
-            if (previousVertex == null) {
-                vertexList.add(sourceVertex);
+            if (startVertex == null) {
+                startVertex = graph.getEdgeSource(edge);
             }
-            vertexList.add(targetVertex);
-            previousVertex = targetVertex;
+            vertexList.add(graph.getEdgeSource(edge));
+            vertexList.add(graph.getEdgeTarget(edge));
+        }
+
+        // Remove duplicates while maintaining order
+        List<V> uniqueVertices = new ArrayList<>();
+        for (V vertex : vertexList) {
+            if (!uniqueVertices.contains(vertex)) {
+                uniqueVertices.add(vertex);
+            }
         }
 
         return new GraphPath<V, E>() {
@@ -44,25 +49,22 @@ public class GraphUtils<V, E> {
 
             @Override
             public V getStartVertex() {
-                return vertexList.get(0);
+                return uniqueVertices.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return vertexList.get(vertexList.size() - 1);
+                return uniqueVertices.get(uniqueVertices.size() - 1);
             }
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be added if needed
+                return 0; // Weight calculation can be implemented if needed
             }
 
             @Override
-            public String toString() {
-                return "GraphPath{" +
-                        "vertices=" + vertexList +
-                        ", edges=" + tour +
-                        '}';
+            public List<V> getVertexList() {
+                return uniqueVertices;
             }
         };
     }

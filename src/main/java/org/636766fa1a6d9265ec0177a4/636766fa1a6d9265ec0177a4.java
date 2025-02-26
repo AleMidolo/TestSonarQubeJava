@@ -19,10 +19,10 @@ public class ArrayConverter {
     }
 
     public static void main(String[] args) {
-        double[] primitiveArray = {1.0, 2.0, 3.0};
+        double[] primitiveArray = {1.1, 2.2, 3.3};
         Double[] objectArray = toObject(primitiveArray);
         
-        // Print the result
+        // Print the object array
         for (Double d : objectArray) {
             System.out.println(d);
         }

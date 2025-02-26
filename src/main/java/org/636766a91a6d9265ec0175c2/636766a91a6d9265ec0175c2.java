@@ -23,10 +23,10 @@ public class OutputFrameStack {
     }
 
     public static void main(String[] args) {
-        OutputFrameStack ofs = new OutputFrameStack();
-        ofs.push(10);
-        ofs.push(20);
-        System.out.println(ofs.pop()); // Outputs: 20
-        System.out.println(ofs.pop()); // Outputs: 10
+        OutputFrameStack outputFrameStack = new OutputFrameStack();
+        outputFrameStack.push(10);
+        outputFrameStack.push(20);
+        System.out.println(outputFrameStack.pop()); // Outputs: 20
+        System.out.println(outputFrameStack.pop()); // Outputs: 10
     }
 }

@@ -17,7 +17,7 @@ public class FilePathUtil {
             return path.substring(0, lastDotIndex);
         }
         
-        return path;
+        return path; // No extension found
     }
 
     public static void main(String[] args) {

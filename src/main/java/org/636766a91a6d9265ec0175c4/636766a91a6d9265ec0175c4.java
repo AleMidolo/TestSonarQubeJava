@@ -22,7 +22,7 @@ public class StackPopper {
         }
     }
 
-    // Method to push elements onto the stack for testing
+    // Method to push elements onto the stack for testing purposes
     public void push(Object element) {
         stack.push(element);
     }

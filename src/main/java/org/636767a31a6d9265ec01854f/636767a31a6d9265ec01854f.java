@@ -12,15 +12,16 @@ public class FieldChecker {
     private void checkIfPackedField() throws IOException {
         if (isPacked) {
             // Update internal position to indicate that packed fields are being read
-            internalPosition++;
+            internalPosition += getPackedFieldLength();
         } else {
             throw new IOException("Field is not packed.");
         }
     }
 
-    // Constructor and other methods can be added here
-    public FieldChecker(boolean isPacked) {
-        this.isPacked = isPacked;
-        this.internalPosition = 0;
+    private int getPackedFieldLength() {
+        // Placeholder for actual logic to determine the length of the packed field
+        return 10; // Example length
     }
+
+    // Additional methods and fields can be added here
 }

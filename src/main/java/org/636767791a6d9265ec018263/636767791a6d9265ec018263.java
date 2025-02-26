@@ -19,7 +19,7 @@ public class ClassFinder {
             Class<?> clazz = finder.findClass("java.lang.String");
             System.out.println("Class found: " + clazz.getName());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("Class not found: " + e.getMessage());
         }
     }
 }

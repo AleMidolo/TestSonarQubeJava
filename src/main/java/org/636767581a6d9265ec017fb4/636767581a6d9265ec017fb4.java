@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpperBoundCalculator<K> {
+public class UpperBoundCalculator<K extends Comparable<K>> {
 
     /** 
      * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
@@ -10,14 +10,24 @@ public class UpperBoundCalculator<K> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         List<Integer> upperBounds = new ArrayList<>();
-        
         for (K key : keys) {
-            // यहाँ पर कुंजी के लिए ऊपरी सीमा की गणना करें
-            // उदाहरण के लिए, हम कुंजी के हैश को ऊपरी सीमा मान सकते हैं
-            int upperBound = key.hashCode(); // यह एक साधारण उदाहरण है
+            // Assuming the upper bound is the index of the next greater element
+            int upperBound = findUpperBound(key, keys);
             upperBounds.add(upperBound);
         }
-        
         return upperBounds;
+    }
+
+    private int findUpperBound(K key, List<K> keys) {
+        int low = 0, high = keys.size();
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (keys.get(mid).compareTo(key) <= 0) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low < keys.size() ? low : -1; // Return -1 if no upper bound found
     }
 }

@@ -18,15 +18,4 @@ public final class Buffer {
     public final byte[] toByteArray() {
         return outputStream.toByteArray();
     }
-
-    public static void main(String[] args) {
-        try {
-            Buffer buffer = new Buffer();
-            buffer.write("Hello, World!".getBytes());
-            byte[] byteArray = buffer.toByteArray();
-            System.out.println(new String(byteArray));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

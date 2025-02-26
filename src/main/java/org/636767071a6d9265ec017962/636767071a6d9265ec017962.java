@@ -1,4 +1,6 @@
 import org.apache.commons.beanutils.BeanMap;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 public class BeanMapUtil {
 
@@ -11,24 +13,34 @@ public class BeanMapUtil {
             throw new IllegalArgumentException("BeanMap cannot be null");
         }
 
-        for (Object property : map.keySet()) {
-            if (isWriteable(property, map)) {
-                // Assuming we have a method to get the value to put
-                Object value = getValueForProperty(property);
-                map.put(property, value);
+        Object bean = map.getBean();
+        PropertyDescriptor[] propertyDescriptors = java.beans.Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
+
+        for (PropertyDescriptor descriptor : propertyDescriptors) {
+            Method writeMethod = descriptor.getWriteMethod();
+            if (writeMethod != null) {
+                try {
+                    // Assuming we want to set a default value or some logic to populate the writable properties
+                    // Here we just set a default value for demonstration purposes
+                    writeMethod.invoke(bean, getDefaultValue(descriptor.getPropertyType()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    private boolean isWriteable(Object property, BeanMap map) {
-        // Logic to check if the property is writeable
-        // This is a placeholder; actual implementation may vary
-        return true; // Replace with actual check
-    }
-
-    private Object getValueForProperty(Object property) {
-        // Logic to get the value for the property
-        // This is a placeholder; actual implementation may vary
-        return new Object(); // Replace with actual value retrieval
+    private Object getDefaultValue(Class<?> type) {
+        if (type == int.class) {
+            return 0;
+        } else if (type == boolean.class) {
+            return false;
+        } else if (type == double.class) {
+            return 0.0;
+        } else if (type == String.class) {
+            return "";
+        }
+        // Add more types as needed
+        return null;
     }
 }

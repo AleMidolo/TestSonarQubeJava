@@ -1,15 +1,15 @@
 public class Bucket {
-    // Assuming Bucket has some properties, for example:
-    private int value;
+    // Assuming Bucket has some properties
+    private String data;
     private Bucket next;
 
-    public Bucket(int value) {
-        this.value = value;
+    public Bucket(String data) {
+        this.data = data;
         this.next = null;
     }
 
-    public int getValue() {
-        return value;
+    public String getData() {
+        return data;
     }
 
     public Bucket getNext() {
@@ -37,10 +37,10 @@ public class BucketList {
             return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket(0); // Create a new bucket with a default value
+        Bucket newBucket = new Bucket("New Bucket"); // Create a new bucket to insert
         if (head == bucket) {
             newBucket.setNext(head);
-            head = newBucket;
+            head = newBucket; // Insert at the head
             return;
         }
 
@@ -51,7 +51,7 @@ public class BucketList {
 
         if (current != null) {
             newBucket.setNext(bucket);
-            current.setNext(newBucket);
+            current.setNext(newBucket); // Insert before the specified bucket
         }
     }
 }

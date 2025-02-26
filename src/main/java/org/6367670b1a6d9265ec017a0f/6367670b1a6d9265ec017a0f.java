@@ -20,9 +20,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrings = List.of("abc", "def", "ghi");
-        String testString = "Hello ABC World";
+        List<String> searchStrings = List.of("hello", "world", "java");
+        String testString = "Hello there!";
         boolean result = containsAnyIgnoreCase(testString, searchStrings);
-        System.out.println("Contains any: " + result); // Should print true
+        System.out.println("Contains any: " + result); // Output: Contains any: true
     }
 }

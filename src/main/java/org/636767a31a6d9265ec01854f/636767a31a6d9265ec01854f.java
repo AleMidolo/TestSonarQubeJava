@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class FieldChecker {
 
-    private boolean isPackedField;
+    private boolean packedFieldState;
 
     /** 
      * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
@@ -10,20 +10,19 @@ public class FieldChecker {
      */
     private void checkIfPackedField() throws IOException {
         // Simulazione di controllo se il campo è compresso
-        // In un caso reale, qui ci sarebbe la logica per verificare il campo
+        boolean isPacked = checkCompression(); // Metodo fittizio per controllare la compressione
 
-        // Esempio di logica per determinare se il campo è compresso
-        boolean fieldIsPacked = true; // Questa condizione dovrebbe essere basata su logica reale
-
-        if (fieldIsPacked) {
-            isPackedField = true;
-            // Logica aggiuntiva per gestire il campo compresso
+        if (isPacked) {
+            packedFieldState = true; // Aggiorna lo stato interno
         } else {
-            isPackedField = false;
+            packedFieldState = false; // Aggiorna lo stato interno
         }
     }
 
-    public boolean isPackedField() {
-        return isPackedField;
+    // Metodo fittizio per simulare il controllo della compressione
+    private boolean checkCompression() {
+        // Logica per determinare se il campo è compresso
+        // Restituisce true se compresso, false altrimenti
+        return true; // Modificare in base alla logica reale
     }
 }

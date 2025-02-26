@@ -12,7 +12,7 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
+        lb.addBytes(utf8Bytes);
         return lb;
     }
 
@@ -20,8 +20,10 @@ public class UTF8Writer {
         // Example usage
         WriteSession session = new WriteSession();
         LinkedBuffer lb = new LinkedBuffer();
-        writeUTF8("Hello, World!", session, lb);
-        System.out.println(lb);
+        CharSequence str = "Hello, World!";
+        
+        writeUTF8(str, session, lb);
+        System.out.println("Written bytes: " + lb.getBytes());
     }
 }
 
@@ -32,16 +34,11 @@ class WriteSession {
 class LinkedBuffer {
     private LinkedList<byte[]> buffer = new LinkedList<>();
 
-    public void write(byte[] bytes) {
+    public void addBytes(byte[] bytes) {
         buffer.add(bytes);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (byte[] bytes : buffer) {
-            sb.append(new String(bytes, StandardCharsets.UTF_8));
-        }
-        return sb.toString();
+    public LinkedList<byte[]> getBytes() {
+        return buffer;
     }
 }

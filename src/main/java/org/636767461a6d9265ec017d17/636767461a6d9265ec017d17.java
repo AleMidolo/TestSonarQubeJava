@@ -1,4 +1,4 @@
-public class StringDecompressor {
+public class DotIdentifierDecompressor {
 
     /** 
      * Decomprime un identificatore di stringa DOT.
@@ -46,7 +46,7 @@ public class StringDecompressor {
     }
 
     public static void main(String[] args) {
-        StringDecompressor decompressor = new StringDecompressor();
+        DotIdentifierDecompressor decompressor = new DotIdentifierDecompressor();
         String input = "Hello\\nWorld\\t!";
         String output = decompressor.unescapeId(input);
         System.out.println(output);

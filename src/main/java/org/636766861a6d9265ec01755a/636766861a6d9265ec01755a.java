@@ -10,7 +10,7 @@ public class UriMatcher {
         this.pattern = Pattern.compile(regex);
     }
 
-    /**
+    /** 
      * Confronta un URI con il modello.
      * @param uri l'uri da confrontare con il template.
      * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
@@ -36,10 +36,10 @@ public class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("/users/{userId}/posts/{postId}");
+        UriMatcher uriMatcher = new UriMatcher("/users/{id}/posts/{postId}");
         MatchResult result = uriMatcher.match("/users/123/posts/456");
         if (result != null) {
-            System.out.println("Matched userId: " + result.getGroup("userId"));
+            System.out.println("Matched id: " + result.getGroup("id"));
             System.out.println("Matched postId: " + result.getGroup("postId"));
         } else {
             System.out.println("No match found.");

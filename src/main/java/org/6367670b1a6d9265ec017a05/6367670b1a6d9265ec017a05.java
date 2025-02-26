@@ -1,9 +1,10 @@
 public class CharUtils {
+    
     private static final String[] CACHE = new String[128];
 
     static {
-        for (char i = 0; i < CACHE.length; i++) {
-            CACHE[i] = String.valueOf(i);
+        for (int i = 0; i < CACHE.length; i++) {
+            CACHE[i] = String.valueOf((char) i);
         }
     }
 
@@ -15,7 +16,7 @@ public class CharUtils {
      * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {
-        if (ch >= 0 && ch < CACHE.length) {
+        if (ch >= 0 && ch < 128) {
             return CACHE[ch];
         }
         return String.valueOf(ch);
@@ -24,7 +25,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(CharUtils.toString(' ')); // Output: " "
         System.out.println(CharUtils.toString('A')); // Output: "A"
-        System.out.println(CharUtils.toString('Z')); // Output: "Z"
         System.out.println(CharUtils.toString('ñ')); // Output: "ñ"
     }
 }

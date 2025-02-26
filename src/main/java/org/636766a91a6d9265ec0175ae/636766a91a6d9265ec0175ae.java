@@ -22,16 +22,21 @@ public class ByteVector {
         }
         
         if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
-            Arrays.fill(byteArrayValue, (byte) 0);
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            byte[] nullBytes = new byte[byteLength];
+            return putBytes(nullBytes, 0, byteLength);
+        }
+
+        if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
             throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
 
+        return putBytes(byteArrayValue, byteOffset, byteLength);
+    }
+
+    private ByteVector putBytes(byte[] byteArrayValue, int byteOffset, int byteLength) {
         ensureCapacity(size + byteLength);
         System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         size += byteLength;
-
         return this;
     }
 

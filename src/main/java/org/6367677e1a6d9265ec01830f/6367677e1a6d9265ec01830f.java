@@ -15,6 +15,8 @@ public class LoggerFormatter {
                        .append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimeStamp())))
                        .append(" | Level: ")
                        .append(event.getLevel())
+                       .append(" | Logger: ")
+                       .append(event.getLoggerName())
                        .append(" | Message: ")
                        .append(event.getRenderedMessage());
         

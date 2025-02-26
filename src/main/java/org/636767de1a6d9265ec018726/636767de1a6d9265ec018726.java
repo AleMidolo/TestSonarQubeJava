@@ -9,8 +9,8 @@ public class SequenceRangeBuilder {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
-        // Example logic to build sequence ranges
-        // This is just a placeholder; the actual logic will depend on the specific requirements
+        // Example logic to create sequence ranges
+        // This should be replaced with actual logic to build the ranges
         for (int i = 0; i < 10; i++) {
             SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
             sequenceRanges.add(range);

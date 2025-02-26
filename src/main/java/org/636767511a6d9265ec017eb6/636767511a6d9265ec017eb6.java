@@ -44,6 +44,6 @@ public class Graph {
             circulator.advance();
         } while (circulator.hasNext() && circulator.getCurrentNode() != stop);
         
-        return circulator; // Return circulator at stop if no node satisfies the predicate
+        return circulator; // Return circulator at stop if predicate not satisfied
     }
 }

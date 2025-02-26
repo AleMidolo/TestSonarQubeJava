@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphUtils {
+public class GraphIsomorphism {
 
     /** 
      * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).

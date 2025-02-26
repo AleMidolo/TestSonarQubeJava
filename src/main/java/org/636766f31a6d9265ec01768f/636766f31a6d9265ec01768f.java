@@ -19,13 +19,13 @@ public class ArrayCloner {
         char[] original = {'a', 'b', 'c'};
         char[] cloned = clone(original);
         
-        // Print the cloned array
-        if (cloned != null) {
-            for (char c : cloned) {
-                System.out.print(c + " ");
-            }
-        } else {
-            System.out.println("Cloned array is null");
-        }
+        // Print original and cloned arrays
+        System.out.println("Original: " + java.util.Arrays.toString(original));
+        System.out.println("Cloned: " + java.util.Arrays.toString(cloned));
+        
+        // Test with null
+        char[] nullArray = null;
+        char[] clonedNull = clone(nullArray);
+        System.out.println("Cloned null array: " + clonedNull);
     }
 }

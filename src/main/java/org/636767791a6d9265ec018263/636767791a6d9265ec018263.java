@@ -8,7 +8,7 @@ public class ClassFinder {
      */
     private Class<?> findClass(final String className) throws ClassNotFoundException {
         if (className == null) {
-            throw new IllegalArgumentException("Il nome della classe non può essere nullo.");
+            throw new IllegalArgumentException("className cannot be null");
         }
         return Class.forName(className);
     }
@@ -17,9 +17,9 @@ public class ClassFinder {
         ClassFinder finder = new ClassFinder();
         try {
             Class<?> clazz = finder.findClass("java.lang.String");
-            System.out.println("Classe trovata: " + clazz.getName());
+            System.out.println("Class found: " + clazz.getName());
         } catch (ClassNotFoundException e) {
-            System.err.println("Classe non trovata: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

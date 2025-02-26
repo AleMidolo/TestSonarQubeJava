@@ -11,15 +11,11 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        if (desiredCapacity == 2) {
-            return 2;
-        }
-
         int upperLimit = desiredCapacity;
         if (desiredCapacity >= 1000) {
             upperLimit = (int) (desiredCapacity * 1.11);
         }
-
+        
         for (int i = desiredCapacity; i <= upperLimit; i++) {
             if (isPrime(i)) {
                 return i;
@@ -47,6 +43,8 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // Example usage
+        int desiredCapacity = 1000;
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + nextPrimeCapacity);
     }
 }

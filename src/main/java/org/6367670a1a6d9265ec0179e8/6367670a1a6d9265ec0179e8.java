@@ -1,5 +1,4 @@
 public class ArrayUtil {
-
     public static final Boolean[] EMPTY_ARRAY = new Boolean[0];
 
     /** 
@@ -12,16 +11,5 @@ public class ArrayUtil {
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
         return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
-    }
-
-    public static void main(String[] args) {
-        // Test cases
-        Boolean[] testArray1 = null;
-        Boolean[] testArray2 = {};
-        Boolean[] testArray3 = {true, false};
-
-        System.out.println(nullToEmpty(testArray1).length); // Output: 0
-        System.out.println(nullToEmpty(testArray2).length); // Output: 0
-        System.out.println(nullToEmpty(testArray3).length); // Output: 2
     }
 }

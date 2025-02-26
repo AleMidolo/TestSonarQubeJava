@@ -11,9 +11,10 @@ public class StringSearch {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOf("hello world", "world")); // Output: 6
-        System.out.println(indexOf("hello world", "java"));  // Output: -1
-        System.out.println(indexOf(null, "java"));           // Output: -1
-        System.out.println(indexOf("hello world", null));    // Output: -1
+        // 测试代码
+        System.out.println(indexOf("Hello, world!", "world")); // 输出: 7
+        System.out.println(indexOf("Hello, world!", "Java"));  // 输出: -1
+        System.out.println(indexOf(null, "world"));             // 输出: -1
+        System.out.println(indexOf("Hello, world!", null));     // 输出: -1
     }
 }

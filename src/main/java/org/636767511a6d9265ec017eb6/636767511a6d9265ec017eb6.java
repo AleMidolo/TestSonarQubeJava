@@ -1,11 +1,11 @@
 import java.util.function.Predicate;
 
-public class Graph {
-    
+public class GraphUtils {
+
     private class Node {
         // Node implementation
     }
-    
+
     private class OuterFaceCirculator {
         private Node current;
 
@@ -20,7 +20,7 @@ public class Graph {
         public void moveNext() {
             // Logic to move to the next node in the outer face
         }
-        
+
         public boolean hasNext() {
             // Logic to determine if there is a next node
             return true; // Placeholder
@@ -40,11 +40,11 @@ public class Graph {
         
         do {
             if (predicate.test(circulator.getCurrent())) {
-                return circulator;
+                return circulator; // Return if the current node satisfies the predicate
             }
-            circulator.moveNext();
+            circulator.moveNext(); // Move to the next node
         } while (circulator.hasNext() && circulator.getCurrent() != stop);
         
-        return circulator; // Return circulator pointing to stop if no match found
+        return circulator; // Return the circulator pointing to stop if no node satisfies the predicate
     }
 }

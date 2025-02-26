@@ -7,7 +7,7 @@ public class ByteFinder {
      * @return 找到的字节位置，从 <code>buffer</code> 开始计数，如果未找到则返回 <code>-1</code>。
      */
     protected int findByte(byte value, int pos) {
-        byte[] buffer = { /* 假设这里有一些字节数据 */ };
+        byte[] buffer = {/* 假设这里是你的字节数组 */};
         
         if (pos < 0 || pos >= buffer.length) {
             throw new IndexOutOfBoundsException("起始位置超出范围");
@@ -15,10 +15,10 @@ public class ByteFinder {
         
         for (int i = pos; i < buffer.length; i++) {
             if (buffer[i] == value) {
-                return i; // 找到字节，返回位置
+                return i; // 找到值，返回位置
             }
         }
         
-        return -1; // 未找到字节
+        return -1; // 未找到值
     }
 }

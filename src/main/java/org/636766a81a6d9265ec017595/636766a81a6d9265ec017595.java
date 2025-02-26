@@ -1,29 +1,32 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-class ByteVector {
-    private byte[] data;
-    private int size;
+public class ByteVector {
+    private List<Integer> bytes;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
-        this.size = 0;
+        this.bytes = new ArrayList<>();
     }
 
-    public ByteVector put11(final int byteValue1, final int byteValue2) {
-        ensureCapacity(size + 2);
-        data[size++] = (byte) byteValue1;
-        data[size++] = (byte) byteValue2;
+    /**
+     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
+     * @param byteValue1 一个字节。
+     * @param byteValue2 另一个字节。
+     * @return 此字节向量。
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        bytes.add(byteValue1);
+        bytes.add(byteValue2);
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
-        }
+    public List<Integer> getBytes() {
+        return bytes;
     }
 
-    public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.put11(1, 2);
+        System.out.println(byteVector.getBytes()); // Output: [1, 2]
     }
 }

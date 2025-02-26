@@ -26,9 +26,9 @@ class LinkedBuffer {
     private byte[] data;
     private LinkedBuffer next;
 
-    public LinkedBuffer(byte[] data, LinkedBuffer next) {
+    public LinkedBuffer(byte[] data) {
         this.data = data;
-        this.next = next;
+        this.next = null;
     }
 
     public byte[] getData() {
@@ -37,5 +37,9 @@ class LinkedBuffer {
 
     public LinkedBuffer getNext() {
         return next;
+    }
+
+    public void setNext(LinkedBuffer next) {
+        this.next = next;
     }
 }

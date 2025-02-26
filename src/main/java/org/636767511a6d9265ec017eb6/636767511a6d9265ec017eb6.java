@@ -23,7 +23,7 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator();
         
         Node currentNode = start;
-        while (currentNode != stop) {
+        while (currentNode != null && !currentNode.equals(stop)) {
             if (predicate.test(currentNode)) {
                 return circulator; // Return circulator for the node that satisfies the predicate
             }
@@ -36,6 +36,6 @@ public class Graph {
     
     private Node getNextNode(Node currentNode, int dir) {
         // Logic to get the next node based on the direction
-        return currentNode; // Placeholder return
+        return null; // Placeholder return
     }
 }

@@ -21,6 +21,10 @@ class ProfileAnalyzeTimeRange {
     public long getEndTime() {
         return endTime;
     }
+
+    public boolean isInRange(long time) {
+        return time >= startTime && time <= endTime;
+    }
 }
 
 class ThreadSnapshot {
@@ -41,7 +45,7 @@ class ThreadSnapshot {
     }
 }
 
-public class ThreadSnapshotLoader {
+public class ThreadSnapshotParser {
 
     /** 
      * निर्दिष्ट समय सीमा में थ्रेड स्नैपशॉट लोड करें
@@ -53,13 +57,15 @@ public class ThreadSnapshotLoader {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                long timestamp = Long.parseLong(parts[0]);
-                String threadInfo = parts[1];
-
+                if (parts.length < 2) continue; // Skip invalid lines
+                
+                long timestamp = Long.parseLong(parts[0].trim());
+                String threadInfo = parts[1].trim();
+                
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
+                    if (range.isInRange(timestamp)) {
                         snapshots.add(new ThreadSnapshot(timestamp, threadInfo));
-                        break; // No need to check other ranges if already added
+                        break; // No need to check other ranges
                     }
                 }
             }

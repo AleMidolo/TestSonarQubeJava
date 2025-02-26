@@ -22,8 +22,8 @@ public class ArrayUtil {
         Character[] emptyArray = {};
         Character[] filledArray = {'A', 'B', 'C'};
 
-        System.out.println(nullToEmpty(nullArray)); // Should print: []
-        System.out.println(nullToEmpty(emptyArray)); // Should print: []
-        System.out.println(nullToEmpty(filledArray)); // Should print: [A, B, C]
+        System.out.println(nullToEmpty(nullArray).length); // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
+        System.out.println(nullToEmpty(filledArray).length); // Output: 3
     }
 }

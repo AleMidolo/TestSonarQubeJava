@@ -13,8 +13,8 @@ public class UpperBoundCalculator<K> {
         
         for (K key : keys) {
             // यहाँ पर कुंजी के लिए ऊपरी सीमा की गणना करें
-            // यह एक साधारण उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार हो सकती है
-            int upperBound = key.hashCode() % 100; // उदाहरण के लिए, हैश कोड का उपयोग करना
+            // उदाहरण के लिए, हम कुंजी के हैश को ऊपरी सीमा मान सकते हैं
+            int upperBound = key.hashCode(); // यह एक साधारण उदाहरण है
             upperBounds.add(upperBound);
         }
         

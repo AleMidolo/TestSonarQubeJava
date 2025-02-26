@@ -1,9 +1,9 @@
 import java.util.HashSet;
 
-public class MySet {
+public class CustomSet {
     private HashSet<Integer> set;
 
-    public MySet() {
+    public CustomSet() {
         set = new HashSet<>();
     }
 
@@ -15,8 +15,8 @@ public class MySet {
     }
 
     public static void main(String[] args) {
-        MySet mySet = new MySet();
-        System.out.println(mySet.insert(5)); // true
-        System.out.println(mySet.insert(5)); // false
+        CustomSet customSet = new CustomSet();
+        System.out.println(customSet.insert(5)); // true
+        System.out.println(customSet.insert(5)); // false
     }
 }

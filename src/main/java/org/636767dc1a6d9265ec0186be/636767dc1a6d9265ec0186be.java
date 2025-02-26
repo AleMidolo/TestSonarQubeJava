@@ -16,7 +16,7 @@ public class TimeBucketCompressor {
         int newDayOfYear = (dayOfYear / dayStep) * dayStep;
         
         // Convert the new day of the year back to a date
-        return convertDayOfYearToDate(year, newDayOfYear);
+        return convertToDate(year, newDayOfYear);
     }
 
     private static int getDayOfYear(int year, int month, int day) {
@@ -35,16 +35,18 @@ public class TimeBucketCompressor {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
-    private static long convertDayOfYearToDate(int year, int dayOfYear) {
+    private static long convertToDate(int year, int dayOfYear) {
         int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if (isLeapYear(year)) {
             daysInMonth[2] = 29;
         }
+        
         int month = 1;
         while (dayOfYear > daysInMonth[month]) {
             dayOfYear -= daysInMonth[month];
             month++;
         }
+        
         return year * 10000 + month * 100 + dayOfYear;
     }
 

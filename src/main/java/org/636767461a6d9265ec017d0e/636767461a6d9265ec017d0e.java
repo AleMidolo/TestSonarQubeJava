@@ -20,6 +20,12 @@ public class SuffixSumCalculator {
             suffixSum.add(0, totalSum); // Add to the front to maintain order
         }
 
-        return new Pair<>(suffixSum, totalSum);
+        // Calculate the sum of all elements in bounds
+        long boundsSum = 0;
+        for (Integer value : bounds) {
+            boundsSum += value;
+        }
+
+        return new Pair<>(suffixSum, boundsSum);
     }
 }

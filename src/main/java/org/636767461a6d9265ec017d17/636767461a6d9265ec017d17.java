@@ -9,7 +9,6 @@ public class StringUnescaper {
         if (input == null) {
             return null;
         }
-        
         StringBuilder output = new StringBuilder();
         boolean isEscaped = false;
 

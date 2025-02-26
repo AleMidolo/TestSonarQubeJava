@@ -18,17 +18,15 @@ public class OutputFrameStack {
         return stack.pop();
     }
 
-    // Method to push an element onto the stack for testing purposes
     public void push(int value) {
         stack.push(value);
     }
 
-    // Main method for testing
     public static void main(String[] args) {
-        OutputFrameStack outputFrameStack = new OutputFrameStack();
-        outputFrameStack.push(10);
-        outputFrameStack.push(20);
-        System.out.println(outputFrameStack.pop()); // Should print 20
-        System.out.println(outputFrameStack.pop()); // Should print 10
+        OutputFrameStack ofs = new OutputFrameStack();
+        ofs.push(10);
+        ofs.push(20);
+        System.out.println(ofs.pop()); // Outputs: 20
+        System.out.println(ofs.pop()); // Outputs: 10
     }
 }

@@ -6,8 +6,8 @@ public class ClassFileBuffer {
     private int readPointer;
 
     public ClassFileBuffer(int size) {
-        this.buffer = new byte[size];
-        this.readPointer = 0;
+        buffer = new byte[size];
+        readPointer = 0;
     }
 
     /** 

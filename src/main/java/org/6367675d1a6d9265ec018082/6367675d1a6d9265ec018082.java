@@ -37,11 +37,11 @@ class Edge {
     }
 }
 
-class GraphNode {
+public class Graph {
     private Node currentNode;
 
-    public GraphNode(Node currentNode) {
-        this.currentNode = currentNode;
+    public Graph(Node startNode) {
+        this.currentNode = startNode;
     }
 
     /**
@@ -50,15 +50,20 @@ class GraphNode {
      */
     public Edge edgeToNext() {
         Node nextNode = currentNode.getNext();
-        if (currentNode.isVirtual()) {
-            // Logic to find the real equivalent of the current node
-            // For simplicity, we assume the current node is not virtual in this example
-            // In a real scenario, you would implement the logic to find the real node
+        if (nextNode == null) {
+            return null; // या कोई अन्य हैंडलिंग
         }
-        if (nextNode != null && nextNode.isVirtual()) {
-            // Logic to find the real equivalent of the next node
-            // For simplicity, we assume the next node is not virtual in this example
-        }
-        return new Edge(currentNode, nextNode);
+
+        // यदि वर्तमान नोड या अगला नोड आभासी है, तो वास्तविक समकक्ष पर जाएं
+        Node fromNode = currentNode.isVirtual() ? getRealEquivalent(currentNode) : currentNode;
+        Node toNode = nextNode.isVirtual() ? getRealEquivalent(nextNode) : nextNode;
+
+        return new Edge(fromNode, toNode);
+    }
+
+    private Node getRealEquivalent(Node node) {
+        // यहाँ वास्तविक समकक्ष प्राप्त करने की लॉजिक लागू करें
+        // यह एक प्लेसहोल्डर है, वास्तविक कार्यान्वयन आवश्यक है
+        return node; // अस्थायी रूप से खुद को लौटाता है
     }
 }

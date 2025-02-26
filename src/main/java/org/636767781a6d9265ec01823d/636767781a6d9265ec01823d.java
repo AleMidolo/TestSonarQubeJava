@@ -1,7 +1,7 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-public class Logger {
-    
+public class CustomAppender {
+
     /**
      * यह विधि वास्तविक लेखन करती है
      */

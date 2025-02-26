@@ -21,13 +21,13 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implement the single byte write method if needed
+        // Implement the method to write a single byte if needed
         System.out.print((char) b); // Print the single byte as a character
     }
     
     public static void main(String[] args) throws IOException {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
+        CustomOutputStream outputStream = new CustomOutputStream();
         byte[] data = "Hello, World!".getBytes();
-        customOutputStream.write(data, 0, data.length);
+        outputStream.write(data, 0, data.length);
     }
 }

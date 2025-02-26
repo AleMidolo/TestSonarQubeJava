@@ -15,6 +15,10 @@ public class QueueRepresentation {
         return queue.removeFirst();
     }
 
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
+
     /** 
      * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
      * @return कतार का पाठ्य प्रतिनिधित्व।

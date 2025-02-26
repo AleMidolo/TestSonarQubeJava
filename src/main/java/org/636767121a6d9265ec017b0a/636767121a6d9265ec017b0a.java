@@ -1,14 +1,19 @@
 private int parseEndOfLine(String headerPart, int end) {
-    if (headerPart == null || end < 0 || end >= headerPart.length()) {
-        throw new IllegalArgumentException("Invalid headerPart or end index");
+    // Check if the end index is within the bounds of the headerPart string
+    if (end < 0 || end >= headerPart.length()) {
+        throw new IllegalArgumentException("End index is out of bounds");
     }
 
-    int lineEndIndex = headerPart.indexOf("\r\n", end);
-    if (lineEndIndex == -1) {
-        lineEndIndex = headerPart.length(); // If no CRLF found, return the length of the string
-    } else {
-        lineEndIndex += 2; // Include the length of "\r\n"
+    // Find the end of the line by searching for the line terminators
+    int lineEnd = headerPart.indexOf("\r\n", end);
+    if (lineEnd == -1) {
+        lineEnd = headerPart.indexOf('\n', end);
+    }
+    if (lineEnd == -1) {
+        // If no line end is found, return the length of the headerPart
+        return headerPart.length();
     }
 
-    return lineEndIndex;
+    // Return the index of the end of the line
+    return lineEnd + 2; // +2 to include the length of "\r\n"
 }

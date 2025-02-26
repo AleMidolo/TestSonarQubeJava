@@ -29,23 +29,24 @@ class ProfileAnalyzeTimeRange {
 
 class ThreadSnapshot {
     private long timestamp;
-    private String threadInfo;
+    private String data;
 
-    public ThreadSnapshot(long timestamp, String threadInfo) {
+    public ThreadSnapshot(long timestamp, String data) {
         this.timestamp = timestamp;
-        this.threadInfo = threadInfo;
+        this.data = data;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public String getThreadInfo() {
-        return threadInfo;
+    public String getData() {
+        return data;
     }
 }
 
-public class ThreadSnapshotLoader {
+public class ThreadSnapshotParser {
+
     /** 
      * निर्दिष्ट समय सीमा में थ्रेड स्नैपशॉट लोड करें
      */
@@ -56,13 +57,15 @@ public class ThreadSnapshotLoader {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                long timestamp = Long.parseLong(parts[0]);
-                String threadInfo = parts[1];
-
+                if (parts.length < 2) continue; // Skip invalid lines
+                
+                long timestamp = Long.parseLong(parts[0].trim());
+                String data = parts[1].trim();
+                
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
                     if (range.isInRange(timestamp)) {
-                        snapshots.add(new ThreadSnapshot(timestamp, threadInfo));
-                        break; // No need to check other ranges if already added
+                        snapshots.add(new ThreadSnapshot(timestamp, data));
+                        break; // No need to check other ranges
                     }
                 }
             }

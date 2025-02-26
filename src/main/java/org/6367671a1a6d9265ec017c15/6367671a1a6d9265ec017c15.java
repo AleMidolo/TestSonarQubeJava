@@ -21,18 +21,11 @@ public class ByteVector {
             return this;
         }
         
-        // Ensure the byteOffset is within bounds
-        if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-        }
-
-        // Resize the array if necessary
         ensureCapacity(size + byteLength);
-
-        // Copy the bytes into the vector
+        
         System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         size += byteLength;
-
+        
         return this;
     }
 

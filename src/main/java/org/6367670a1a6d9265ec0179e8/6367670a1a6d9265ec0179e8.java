@@ -11,7 +11,10 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
-        return (array == null || array.length == 0) ? EMPTY_BOOLEAN_ARRAY : array;
+        if (array == null || array.length == 0) {
+            return EMPTY_BOOLEAN_ARRAY;
+        }
+        return array;
     }
 
     public static void main(String[] args) {

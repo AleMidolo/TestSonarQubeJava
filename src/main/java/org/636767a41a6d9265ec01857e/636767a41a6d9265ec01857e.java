@@ -14,6 +14,6 @@ public class LongComparator {
         long num1 = 10L;
         long num2 = 20L;
         int result = compareSigned(num1, num2);
-        System.out.println("Comparison result: " + result);
+        System.out.println("Comparison result: " + result); // Output will be negative
     }
 }

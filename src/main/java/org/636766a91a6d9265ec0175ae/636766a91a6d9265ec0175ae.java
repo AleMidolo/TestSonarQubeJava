@@ -9,7 +9,7 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /** 
+    /**
      * इस बाइट वेक्टर में बाइट्स का एक एरे डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
      * @param byteArrayValue बाइट्स का एक एरे। {@code byteLength} नल बाइट्स डालने के लिए {@literal null} हो सकता है।
      * @param byteOffset     byteArrayValue का पहला बाइट का इंडेक्स जो कॉपी किया जाना चाहिए।
@@ -26,18 +26,14 @@ public class ByteVector {
             throw new IndexOutOfBoundsException("byteOffset is out of bounds");
         }
 
-        // Ensure we do not exceed the bounds of the byteArrayValue
-        if (byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("byteLength exceeds byteArrayValue bounds");
-        }
-
-        // Resize the internal array if necessary
-        ensureCapacity(size + byteLength);
-
+        // Calculate the actual length to copy
+        int actualLength = Math.min(byteLength, byteArrayValue.length - byteOffset);
+        ensureCapacity(size + actualLength);
+        
         // Copy the bytes into the vector
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        size += byteLength;
-
+        System.arraycopy(byteArrayValue, byteOffset, data, size, actualLength);
+        size += actualLength;
+        
         return this;
     }
 
@@ -47,6 +43,4 @@ public class ByteVector {
             data = Arrays.copyOf(data, newCapacity);
         }
     }
-
-    // Additional methods for ByteVector can be added here
 }

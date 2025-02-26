@@ -12,7 +12,7 @@ public class CharsetConverter {
     }
 
     public static void main(String[] args) {
-        // उदाहरण के लिए उपयोग
+        // Example usage
         String mimeCharset = "UTF-8";
         String javaCharset = javaCharset(mimeCharset);
         System.out.println("Java Charset: " + javaCharset);

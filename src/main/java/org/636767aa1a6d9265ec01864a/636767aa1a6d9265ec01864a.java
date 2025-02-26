@@ -7,16 +7,17 @@ public class ByteArrayConverter {
      */
     public byte[] toByteArray() {
         // Example byte array for demonstration
-        byte[] exampleBytes = {1, 2, 3, 4, 5};
-        return exampleBytes;
+        byte[] byteArray = new byte[10];
+        for (int i = 0; i < byteArray.length; i++) {
+            byteArray[i] = (byte) i;
+        }
+        return byteArray;
     }
 
     public static void main(String[] args) {
         ByteArrayConverter converter = new ByteArrayConverter();
-        byte[] byteArray = converter.toByteArray();
-        
-        // Print the byte array
-        for (byte b : byteArray) {
+        byte[] result = converter.toByteArray();
+        for (byte b : result) {
             System.out.print(b + " ");
         }
     }

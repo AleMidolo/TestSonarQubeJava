@@ -17,7 +17,8 @@ public class UTF8SizeCalculator {
         }
 
         String substring = str.subSequence(index, index + len).toString();
-        return substring.getBytes(StandardCharsets.UTF_8).length;
+        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
+        return utf8Bytes.length;
     }
 
     public static void main(String[] args) {

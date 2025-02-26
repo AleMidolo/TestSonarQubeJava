@@ -21,10 +21,9 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        Example example = new Example();
         StringBuffer buffer = new StringBuffer();
-        byte[] byteArray = {1, 2, 3, 4, 5};
-        example.appendDetail(buffer, "byteArray", byteArray);
+        byte[] array = {1, 2, 3, 4, 5};
+        new Example().appendDetail(buffer, "byteArray", array);
         System.out.println(buffer.toString());
     }
 }

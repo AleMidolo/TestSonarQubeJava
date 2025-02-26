@@ -20,8 +20,18 @@ public class CustomByteArrayOutputStream extends ByteArrayOutputStream {
         if (len == 0) {
             return;
         }
-        ensureCapacity(count + len);
-        System.arraycopy(b, off, buf, count, len);
-        count += len;
+        super.write(b, off, len);
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        CustomByteArrayOutputStream baos = new CustomByteArrayOutputStream();
+        byte[] data = {1, 2, 3, 4, 5};
+        try {
+            baos.write(data, 1, 3); // Writes bytes 2, 3, 4
+            System.out.println("Written bytes: " + baos.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

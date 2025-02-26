@@ -13,12 +13,12 @@ public class DiagnosticContext {
         return contextStack.isEmpty() ? "" : contextStack.peek();
     }
 
-    // Method to push a new context onto the stack
+    // Method to push a new context for testing purposes
     public static void push(String context) {
         contextStack.push(context);
     }
 
-    // Method to pop the top context from the stack
+    // Method to pop a context for testing purposes
     public static String pop() {
         return contextStack.isEmpty() ? "" : contextStack.pop();
     }
@@ -27,10 +27,10 @@ public class DiagnosticContext {
         // Example usage
         push("Context 1");
         push("Context 2");
-        System.out.println(peek()); // Output: Context 2
+        System.out.println(peek()); // Should print "Context 2"
         pop();
-        System.out.println(peek()); // Output: Context 1
+        System.out.println(peek()); // Should print "Context 1"
         pop();
-        System.out.println(peek()); // Output: (empty string)
+        System.out.println(peek()); // Should print ""
     }
 }

@@ -10,7 +10,7 @@ public class Logger {
             // Example of writing the logging event to the console
             System.out.println("Logging Event: " + event.getMessage());
         } else {
-            System.out.println("No logging event provided.");
+            System.out.println("No event to log.");
         }
     }
 }

@@ -1,7 +1,11 @@
 public class StackMapFrameVisitor {
-    private int currentFrameOffset;
-    private int currentNumLocal;
-    private int currentNumStack;
+    private StackMapFrame currentFrame;
+    private int nextElementIndex;
+
+    public StackMapFrameVisitor() {
+        this.currentFrame = new StackMapFrame();
+        this.nextElementIndex = 0;
+    }
 
     /**
      * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
@@ -11,16 +15,29 @@ public class StackMapFrameVisitor {
      * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        this.currentFrameOffset = offset;
-        this.currentNumLocal = numLocal;
-        this.currentNumStack = numStack;
-        // Assuming the next index to write is the sum of local and stack elements
-        return numLocal + numStack;
+        currentFrame.setOffset(offset);
+        currentFrame.setNumLocal(numLocal);
+        currentFrame.setNumStack(numStack);
+        nextElementIndex = 0; // Reset index for new frame
+        return nextElementIndex;
     }
 
-    public static void main(String[] args) {
-        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
-        int nextIndex = visitor.visitFrameStart(10, 5, 3);
-        System.out.println("Next index to write: " + nextIndex);
+    // Inner class to represent a stack map frame
+    private class StackMapFrame {
+        private int offset;
+        private int numLocal;
+        private int numStack;
+
+        public void setOffset(int offset) {
+            this.offset = offset;
+        }
+
+        public void setNumLocal(int numLocal) {
+            this.numLocal = numLocal;
+        }
+
+        public void setNumStack(int numStack) {
+            this.numStack = numStack;
+        }
     }
 }

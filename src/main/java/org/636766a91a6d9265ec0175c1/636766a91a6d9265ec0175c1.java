@@ -2,11 +2,11 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
-    private int capacity;
+    private int currentSize;
 
     public ByteVector(int initialCapacity) {
-        this.capacity = initialCapacity;
-        this.data = new byte[initialCapacity];
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /** 
@@ -17,8 +17,26 @@ public class ByteVector {
         if (size < 0) {
             throw new IllegalArgumentException("Size must be non-negative");
         }
-        int newCapacity = capacity + size;
+        int newCapacity = currentSize + size;
         data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+    }
+
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        return data[index];
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

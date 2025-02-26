@@ -19,16 +19,12 @@ class Edge {
 }
 
 class Node {
-    private final String name;
     private final boolean isVirtual;
+    private final Node realNode;
 
-    public Node(String name, boolean isVirtual) {
-        this.name = name;
+    public Node(boolean isVirtual, Node realNode) {
         this.isVirtual = isVirtual;
-    }
-
-    public String getName() {
-        return name;
+        this.realNode = realNode;
     }
 
     public boolean isVirtual() {
@@ -36,12 +32,11 @@ class Node {
     }
 
     public Node getRealNode() {
-        // Assuming the real counterpart is the same node without the virtual flag
-        return new Node(name, false);
+        return realNode;
     }
 }
 
-class Graph {
+public class Graph {
     private Node currentNode;
     private Node nextNode;
 

@@ -23,8 +23,8 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        template.addTemplateVariable("variable1");
-        System.out.println(template.isTemplateVariablePresent("variable1")); // true
-        System.out.println(template.isTemplateVariablePresent("variable2")); // false
+        template.addTemplateVariable("var1");
+        System.out.println(template.isTemplateVariablePresent("var1")); // true
+        System.out.println(template.isTemplateVariablePresent("var2")); // false
     }
 }

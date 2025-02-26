@@ -16,5 +16,5 @@ public class EventBuffer {
 }
 
 class LoggingEvent {
-    // Assume this class has some properties and methods
+    // Assume this class has necessary fields and methods
 }

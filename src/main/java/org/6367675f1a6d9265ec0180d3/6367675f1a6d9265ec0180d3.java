@@ -18,7 +18,6 @@ class IsomorphicGraphMapping<V, E> {
 }
 
 public class GraphUtils {
-
     /** 
      * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
      * @param graph the input graph

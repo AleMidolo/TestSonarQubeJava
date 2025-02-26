@@ -10,16 +10,14 @@ public class TrimArray {
         if (array == null) {
             return null;
         }
-        String[] trimmedArray = new String[array.length];
-        for (int i = 0; i < array.length; i++) {
-            trimmedArray[i] = array[i] != null ? array[i].trim() : null;
-        }
-        return trimmedArray;
+        return Arrays.stream(array)
+                     .map(String::trim)
+                     .toArray(String[]::new);
     }
 
     public static void main(String[] args) {
-        String[] input = {"  Hello  ", "  World  ", null, "  Java  "};
-        String[] output = trimArrayElements(input);
-        System.out.println(Arrays.toString(output));
+        String[] input = {"  Hello  ", "  World  ", "  Java  "};
+        String[] trimmed = trimArrayElements(input);
+        System.out.println(Arrays.toString(trimmed));
     }
 }

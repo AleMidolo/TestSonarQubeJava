@@ -17,8 +17,8 @@ public class InterceptorChecker {
         return true; // No duplicate found
     }
     
-    // Assuming AtmosphereInterceptor is defined somewhere in your codebase
+    // Assuming AtmosphereInterceptor is defined somewhere
     public static abstract class AtmosphereInterceptor {
-        // Implementation of AtmosphereInterceptor
+        // Implementation details for AtmosphereInterceptor
     }
 }

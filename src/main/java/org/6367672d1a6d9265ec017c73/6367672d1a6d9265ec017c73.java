@@ -1,13 +1,14 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class MessagePrinter {
-    private HashMap<String, Integer> messageTimestamps;
+    private Map<String, Integer> messageTimestamps;
 
     public MessagePrinter() {
         messageTimestamps = new HashMap<>();
     }
 
-    /** 
+    /**
      * यदि संदेश को दिए गए टाइमस्टैम्प में प्रिंट किया जाना चाहिए, तो true लौटाता है, अन्यथा false लौटाता है। 
      * यदि यह विधि false लौटाती है, तो संदेश प्रिंट नहीं किया जाएगा। 
      * टाइमस्टैम्प सेकंड की ग्रैन्युलैरिटी में है। 

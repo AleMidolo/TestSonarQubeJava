@@ -14,14 +14,16 @@ public class WriteTimeTracker {
         return lastWriteTime;
     }
 
-    public void writeData() {
-        // Simulate a write operation
+    public void updateWriteTime() {
         lastWriteTime = System.currentTimeMillis();
     }
 
     public static void main(String[] args) {
         WriteTimeTracker tracker = new WriteTimeTracker();
-        tracker.writeData();
-        System.out.println("Last write timestamp in milliseconds: " + tracker.lastWriteTimeStampInMilliseconds());
+        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
+        
+        // Simulate a write operation
+        tracker.updateWriteTime();
+        System.out.println("Updated write timestamp: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
     }
 }

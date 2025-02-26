@@ -13,9 +13,9 @@ public class MappingDiffer {
         Mappings currentMappings = getCurrentMappings(tableName);
         Mappings diffMappings = new Mappings();
 
-        for (Map.Entry<String, FieldMapping> entry : currentMappings.getFieldMappings().entrySet()) {
+        for (Map.Entry<String, FieldMapping> entry : mappings.getFieldMappings().entrySet()) {
             String fieldName = entry.getKey();
-            if (!mappings.getFieldMappings().containsKey(fieldName)) {
+            if (!currentMappings.getFieldMappings().containsKey(fieldName)) {
                 diffMappings.addFieldMapping(fieldName, entry.getValue());
             }
         }
@@ -25,23 +25,24 @@ public class MappingDiffer {
 
     private Mappings getCurrentMappings(String tableName) {
         // This method should retrieve the current mappings for the given table name
-        // Placeholder for actual implementation
+        // For the sake of this example, we will return an empty Mappings object
         return new Mappings();
     }
-}
 
-class Mappings {
-    private Map<String, FieldMapping> fieldMappings = new HashMap<>();
+    // Assuming FieldMapping is a class that represents the mapping of a single field
+    public static class Mappings {
+        private Map<String, FieldMapping> fieldMappings = new HashMap<>();
 
-    public Map<String, FieldMapping> getFieldMappings() {
-        return fieldMappings;
+        public Map<String, FieldMapping> getFieldMappings() {
+            return fieldMappings;
+        }
+
+        public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
+            fieldMappings.put(fieldName, fieldMapping);
+        }
     }
 
-    public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
-        fieldMappings.put(fieldName, fieldMapping);
+    public static class FieldMapping {
+        // Define the properties of FieldMapping as needed
     }
-}
-
-class FieldMapping {
-    // Placeholder for field mapping properties
 }

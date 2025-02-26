@@ -1,6 +1,7 @@
 public class ArrayUtil {
 
-    private static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
+    // Public static empty array for optimization
+    public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /** 
      * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p> 
@@ -18,8 +19,9 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
+        // Test cases
         Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
+        Byte[] emptyArray = {};
         Byte[] nonEmptyArray = {1, 2, 3};
 
         System.out.println(nullToEmpty(nullArray)); // Should print: []

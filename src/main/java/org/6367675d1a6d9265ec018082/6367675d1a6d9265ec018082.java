@@ -52,6 +52,6 @@ class Graph {
     private Node getRealNode(Node virtualNode) {
         // Placeholder for logic to get the real node corresponding to a virtual node
         // This should be replaced with actual implementation
-        return new Node(false); // Assuming a real node is not virtual
+        return new Node(false); // Assuming a new real node is created for demonstration
     }
 }

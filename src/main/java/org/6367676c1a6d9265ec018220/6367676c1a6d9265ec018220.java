@@ -17,11 +17,12 @@ public class FilePathUtil {
             return path.substring(0, lastDotIndex);
         }
         
-        return path;
+        return path; // Return the original path if no extension is found
     }
 
     public static void main(String[] args) {
         String path = "mypath/myfile.txt";
-        System.out.println(stripFilenameExtension(path)); // Output: mypath/myfile
+        String result = stripFilenameExtension(path);
+        System.out.println(result); // Output: mypath/myfile
     }
 }

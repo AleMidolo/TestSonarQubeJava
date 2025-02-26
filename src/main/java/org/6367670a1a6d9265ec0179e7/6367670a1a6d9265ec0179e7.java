@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterRegistry {
-    private final Map<Class<?>, Converter> converterMap = new HashMap<>();
+    private Map<Class<?>, Converter> converterMap = new HashMap<>();
 
     /**
      * निर्दिष्ट गंतव्य वर्ग के लिए किसी भी पंजीकृत {@link Converter} को देखें और उसे लौटाएं; यदि कोई पंजीकृत Converter नहीं है, तो <code>null</code> लौटाएं।

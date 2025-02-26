@@ -51,12 +51,4 @@ public class PathDecoder {
             return component; // Return the original if decoding fails
         }
     }
-
-    public static void main(String[] args) {
-        URI uri = URI.create("http://example.com/path/to/resource");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
-        }
-    }
 }

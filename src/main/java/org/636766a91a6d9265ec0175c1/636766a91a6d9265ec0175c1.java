@@ -16,12 +16,11 @@ public class ByteVector {
     private void enlarge(final int size) {
         int newSize = currentSize + size;
         data = Arrays.copyOf(data, newSize);
-        currentSize = newSize;
     }
 
     // Additional methods for demonstration purposes
     public void add(byte b) {
-        if (currentSize >= data.length) {
+        if (currentSize == data.length) {
             enlarge(1);
         }
         data[currentSize++] = b;

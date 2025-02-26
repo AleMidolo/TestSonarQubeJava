@@ -1,5 +1,5 @@
 public class StringManipulator {
-    
+
     /** 
      * दिए गए String में से किसी भी चरित्र को हटाएं।
      * @param inString मूल String
@@ -17,7 +17,6 @@ public class StringManipulator {
                 result.append(c); // Append character if it's not in charsToDelete
             }
         }
-        
         return result.toString(); // Return the modified string
     }
 
@@ -25,6 +24,6 @@ public class StringManipulator {
         String original = "Hello World!";
         String charsToRemove = "lo";
         String modified = deleteAny(original, charsToRemove);
-        System.out.println(modified); // Output: "He Wrld!"
+        System.out.println(modified); // Output: "He Wr!"
     }
 }

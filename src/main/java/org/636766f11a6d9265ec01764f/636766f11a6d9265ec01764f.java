@@ -18,8 +18,17 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Metodo per aggiungere valori al BeanMap (opzionale)
+    // Additional methods to add values to the map for demonstration purposes
     public void put(String key, Object value) {
         map.put(key, value);
+    }
+    
+    public static void main(String[] args) {
+        BeanMap beanMap = new BeanMap();
+        beanMap.put("key1", "value1");
+        beanMap.put("key2", "value2");
+        
+        Collection<Object> values = beanMap.values();
+        System.out.println(values); // Output: [value1, value2]
     }
 }

@@ -9,17 +9,17 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /** 
+    /**
      * Inserisce due byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
      * @param byteValue1 un byte.
      * @param byteValue2 un altro byte.
      * @return questo vettore di byte.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        ensureCapacity(size + 2); // Assicurati che ci sia spazio sufficiente
-        bytes[size++] = (byte) byteValue1; // Aggiungi il primo byte
-        bytes[size++] = (byte) byteValue2; // Aggiungi il secondo byte
-        return this; // Restituisci il vettore di byte
+        ensureCapacity(size + 2);
+        bytes[size++] = (byte) byteValue1;
+        bytes[size++] = (byte) byteValue2;
+        return this;
     }
 
     private void ensureCapacity(int minCapacity) {
@@ -29,7 +29,7 @@ public class ByteVector {
         }
     }
 
-    public byte[] getBytes() {
-        return Arrays.copyOf(bytes, size); // Restituisci una copia del vettore di byte attuale
+    public byte[] toArray() {
+        return Arrays.copyOf(bytes, size);
     }
 }

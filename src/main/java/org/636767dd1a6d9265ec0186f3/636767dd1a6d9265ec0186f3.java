@@ -1,20 +1,33 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class ColumnName {
-    
-    /**
+    private Map<String, String> nameMapping;
+
+    public ColumnName() {
+        nameMapping = new HashMap<>();
+    }
+
+    /** 
      * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String,String)}
      * @param oldName da sostituire.
      * @param newName da utilizzare a livello di archiviazione.
      */
     public void overrideName(String oldName, String newName) {
-        // Logica per sostituire il nome
-        // Questo è un esempio di implementazione
-        System.out.println("Sostituzione del nome: " + oldName + " con " + newName);
-        
-        // Qui si potrebbe aggiungere la logica per aggiornare un database o una struttura dati
+        if (oldName == null || newName == null) {
+            throw new IllegalArgumentException("Names cannot be null");
+        }
+        nameMapping.put(oldName, newName);
+    }
+
+    public String getNewName(String oldName) {
+        return nameMapping.getOrDefault(oldName, oldName);
     }
 
     public static void main(String[] args) {
         ColumnName columnName = new ColumnName();
-        columnName.overrideName("vecchioNome", "nuovoNome");
+        columnName.overrideName("old_column", "new_column");
+        System.out.println(columnName.getNewName("old_column")); // Output: new_column
+        System.out.println(columnName.getNewName("another_column")); // Output: another_column
     }
 }

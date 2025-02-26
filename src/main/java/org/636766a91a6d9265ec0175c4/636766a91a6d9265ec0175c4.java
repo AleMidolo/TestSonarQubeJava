@@ -12,18 +12,20 @@ public class StackManipulator {
      * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is a method descriptor like "(I)V" for int parameter
+        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
             String parameters = descriptor.substring(start, end);
-            for (String type : parameters.split("")) {
-                if (!type.isEmpty() && !stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each parameter type
+            for (int i = parameters.length() - 1; i >= 0; i--) {
+                char param = parameters.charAt(i);
+                // Pop the corresponding type from the stack
+                if (!stack.isEmpty()) {
+                    stack.pop();
                 }
             }
         } else {
-            // If it's a single type, just pop it
+            // If it's a single type descriptor, just pop it
             if (!stack.isEmpty()) {
                 stack.pop();
             }
@@ -40,12 +42,12 @@ public class StackManipulator {
 
     public static void main(String[] args) {
         StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
+        sm.push("int");
         sm.push("String");
-        sm.push("Double");
-
+        sm.push("double");
+        
         System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method with one int parameter
+        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
         System.out.println("Stack after pop: " + sm.getStack());
     }
 }

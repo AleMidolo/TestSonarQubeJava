@@ -1,5 +1,5 @@
 public class StringUtils {
-
+    
     /** 
      * <p>Inverte una Stringa come per {@link StringBuilder#reverse()}.</p> 
      * <p>Una Stringa <code>null</code> restituisce <code>null</code>.</p> 
@@ -16,7 +16,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println(reverse(null));  // Output: null
-        System.out.println(reverse(""));     // Output: ""
+        System.out.println(reverse(""));    // Output: ""
         System.out.println(reverse("bat"));  // Output: "tab"
     }
 }

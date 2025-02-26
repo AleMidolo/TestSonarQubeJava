@@ -22,7 +22,7 @@ public class ByteVector {
         }
         
         if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength];
+            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
             Arrays.fill(byteArrayValue, (byte) 0);
         } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
             throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
@@ -46,7 +46,7 @@ public class ByteVector {
         return size;
     }
 
-    public byte[] toByteArray() {
+    public byte[] toArray() {
         return Arrays.copyOf(data, size);
     }
 }

@@ -8,7 +8,7 @@ public class AbbreviationUtil {
     public void abbreviate(final int nameStart, final StringBuffer buf) {
         String name = buf.toString();
         if (nameStart < 0 || nameStart >= name.length()) {
-            throw new IllegalArgumentException("Invalid nameStart index");
+            throw new IllegalArgumentException("nameStart is out of bounds");
         }
 
         String[] parts = name.substring(nameStart).split(" ");
@@ -32,6 +32,6 @@ public class AbbreviationUtil {
         StringBuffer buffer = new StringBuffer("John Doe Smith");
         AbbreviationUtil util = new AbbreviationUtil();
         util.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: John D. S.
+        System.out.println(buffer.toString()); // Output: J. D. S.
     }
 }

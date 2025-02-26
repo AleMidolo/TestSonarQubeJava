@@ -21,6 +21,8 @@ public class WriteOperationTracker {
     public static void main(String[] args) {
         WriteOperationTracker tracker = new WriteOperationTracker();
         System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
+        
+        // Simulate a write operation
         tracker.performWriteOperation();
         System.out.println("Last write timestamp after write: " + tracker.lastWriteTimeStampInMilliseconds());
     }

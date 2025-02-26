@@ -21,12 +21,13 @@ public class VarintReader {
             }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
-                return result;
+                break;
             }
             shift += 7;
             if (shift >= 64) {
                 throw new IOException("Varint is too long");
             }
         }
+        return result;
     }
 }

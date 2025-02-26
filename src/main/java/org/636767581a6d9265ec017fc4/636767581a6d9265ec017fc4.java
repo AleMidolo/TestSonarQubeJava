@@ -18,7 +18,7 @@ public class FactorialCalculator {
 
     public static void main(String[] args) {
         int numero = 5; // Esempio di utilizzo
-        long fattorialeDiNumero = fattoriale(numero);
-        System.out.println("Il fattoriale di " + numero + " è " + fattorialeDiNumero);
+        long fatt = fattoriale(numero);
+        System.out.println("Il fattoriale di " + numero + " è " + fatt);
     }
 }

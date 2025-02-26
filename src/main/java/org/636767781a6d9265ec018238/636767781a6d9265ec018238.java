@@ -28,5 +28,22 @@ public class AppenderManager {
 }
 
 class Appender {
-    // Implementation of Appender class
+    private String name;
+
+    public Appender(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Appender appender = (Appender) obj;
+        return name.equals(appender.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

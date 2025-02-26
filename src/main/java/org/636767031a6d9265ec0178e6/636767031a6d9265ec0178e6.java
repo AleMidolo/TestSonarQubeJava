@@ -15,14 +15,18 @@ public class ByteArrayConverter {
         }
         byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Element at index " + i + " is null");
+            result[i] = Objects.requireNonNull(array[i], "Element at index " + i + " is null").byteValue();
         }
         return result;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Byte[] byteArray = {1, 2, 3, null}; // This will throw NullPointerException
-        byte[] primitiveArray = toPrimitive(byteArray);
+        // Test the method
+        Byte[] byteArray = {1, 2, 3, null, 5};
+        try {
+            byte[] primitiveArray = toPrimitive(byteArray);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

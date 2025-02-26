@@ -8,7 +8,8 @@ public class ArrayDetailAppender {
      */
     protected void appendDetail(StringBuffer buffer, String fieldName, int[] array) {
         if (array == null) {
-            throw new IllegalArgumentException("Array must not be null");
+            buffer.append(fieldName).append(": null");
+            return;
         }
         buffer.append(fieldName).append(": [");
         for (int i = 0; i < array.length; i++) {

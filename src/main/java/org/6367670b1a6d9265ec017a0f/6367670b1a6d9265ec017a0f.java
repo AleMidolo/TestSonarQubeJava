@@ -11,21 +11,18 @@ public class StringUtils {
         }
         
         String lowerStr = str.toLowerCase();
-        
         for (String searchStr : searchStrArray) {
             if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
                 return true;
             }
         }
-        
         return false;
     }
 
     public static void main(String[] args) {
         // Example usage
         List<String> searchStrings = List.of("a", "b", "c");
-        String testString = "Hello World!";
-        
+        String testString = "Hello World";
         boolean result = containsAnyIgnoreCase(testString, searchStrings);
         System.out.println("Contains any: " + result); // Output: Contains any: true
     }

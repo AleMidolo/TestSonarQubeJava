@@ -26,12 +26,11 @@ public class MessageSerializer {
         return length;
     }
 
-    // Helper method to convert an integer to a byte array
     private static byte[] intToByteArray(int value) {
         return new byte[] {
-            (byte) (value >> 24),
-            (byte) (value >> 16),
-            (byte) (value >> 8),
+            (byte) (value >>> 24),
+            (byte) (value >>> 16),
+            (byte) (value >>> 8),
             (byte) value
         };
     }

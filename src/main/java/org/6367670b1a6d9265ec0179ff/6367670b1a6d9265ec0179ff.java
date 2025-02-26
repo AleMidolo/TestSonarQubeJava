@@ -11,16 +11,14 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_BYTE_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_BYTE_ARRAY : array;
     }
 
     public static void main(String[] args) {
+        // Test cases
         Byte[] nullArray = null;
         Byte[] emptyArray = new Byte[0];
-        Byte[] nonEmptyArray = {1, 2, 3};
+        Byte[] nonEmptyArray = new Byte[]{1, 2, 3};
 
         System.out.println(nullToEmpty(nullArray).length); // Output: 0
         System.out.println(nullToEmpty(emptyArray).length); // Output: 0

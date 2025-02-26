@@ -9,6 +9,7 @@ public class StringArrayCopy {
         if (src == null) {
             return null;
         }
+        
         String[] dst = new String[src.length];
         for (int i = 0; i < src.length; i++) {
             dst[i] = src[i] != null ? src[i].toLowerCase() : null;
@@ -20,7 +21,7 @@ public class StringArrayCopy {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copyStrings(original);
         
-        System.out.println("Original Array: " + Arrays.toString(original));
-        System.out.println("Copied Array: " + Arrays.toString(copied));
+        System.out.println("Original: " + Arrays.toString(original));
+        System.out.println("Copied: " + Arrays.toString(copied));
     }
 }

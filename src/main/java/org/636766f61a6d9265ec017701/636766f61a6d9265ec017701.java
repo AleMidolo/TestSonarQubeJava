@@ -1,5 +1,5 @@
 public class StringUtil {
-    
+
     /** 
      * Finds the last index within a String, handling <code>null</code>. This method uses  {@link String#lastIndexOf(String)}. 
      */

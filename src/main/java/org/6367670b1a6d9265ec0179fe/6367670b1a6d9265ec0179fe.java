@@ -14,17 +14,7 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implement the logic for writing a single byte if needed
+        // Implement the method to write a single byte if needed
         throw new UnsupportedOperationException("Single byte write not implemented.");
-    }
-    
-    public static void main(String[] args) {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
-        try {
-            byte[] data = {1, 2, 3, 4, 5};
-            customOutputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -15,7 +15,7 @@ public class TemplateEncoder {
         try {
             // Encode the string using UTF-8 and replace the encoded characters for '{' and '}'
             String encoded = URLEncoder.encode(s, "UTF-8");
-            return encoded.replace("+", "%20").replace("%7B", "{").replace("%7D", "}");
+            return encoded.replace("+", "%20").replace("%7B", "%7B").replace("%7D", "%7D");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 encoding not supported", e);
         }

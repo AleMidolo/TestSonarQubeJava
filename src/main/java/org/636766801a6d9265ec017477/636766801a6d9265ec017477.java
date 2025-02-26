@@ -30,5 +30,6 @@ public class FileAdder {
     private void processFile(InputStream file) throws IOException {
         // Placeholder for file processing logic
         // For example, read from the InputStream and perform necessary operations
+        // This could involve reading bytes, converting to a string, etc.
     }
 }

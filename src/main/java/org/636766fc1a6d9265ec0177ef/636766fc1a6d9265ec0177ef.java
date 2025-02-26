@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class ArrayUtils {
-
+    
     /** 
      * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists (arrays and collections). Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException}if an array element is <code>null</code>.
      * @param array The array to check

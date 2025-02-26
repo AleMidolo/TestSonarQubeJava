@@ -17,7 +17,7 @@ public class InterceptorChecker {
         return true;
     }
     
-    // Assuming AtmosphereInterceptor is defined somewhere
+    // Assuming AtmosphereInterceptor is defined somewhere in your codebase
     public interface AtmosphereInterceptor {
         // Interface methods
     }

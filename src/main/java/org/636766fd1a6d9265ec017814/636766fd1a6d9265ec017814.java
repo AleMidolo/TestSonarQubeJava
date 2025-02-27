@@ -8,7 +8,10 @@ public class ArrayComparator {
      * @return <code>true</code> si los <code>count</code> primeros bytes en los arreglos <code>a</code> y <code>b</code> son iguales.
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
-        if (a == null || b == null || count < 0 || count > a.length || count > b.length) {
+        if (a == null || b == null || count < 0) {
+            return false;
+        }
+        if (a.length < count || b.length < count) {
             return false;
         }
         for (int i = 0; i < count; i++) {

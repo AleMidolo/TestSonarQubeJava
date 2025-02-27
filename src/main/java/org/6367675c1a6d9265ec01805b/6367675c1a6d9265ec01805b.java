@@ -14,7 +14,7 @@ public class DoublyLinkedList {
 
     public void removeFromTreeEdgeList() {
         if (head == null) {
-            return; // List is empty
+            return; // List is empty, nothing to remove
         }
 
         // Remove the head node
@@ -36,5 +36,5 @@ public class DoublyLinkedList {
         }
     }
 
-    // Additional methods for adding nodes, displaying the list, etc., can be added here
+    // Additional methods for the doubly linked list can be added here
 }

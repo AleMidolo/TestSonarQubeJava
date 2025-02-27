@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class ArrayConverter {
-
+    
     /** 
      * <p>Convierte un arreglo de objetos "Integer" a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * @param array  un arreglo de <code>Integer</code>, puede ser <code>null</code>
@@ -17,11 +17,11 @@ public class ArrayConverter {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            result[i] = array[i].intValue();
+            result[i] = array[i];
         }
         return result;
     }
-
+    
     public static void main(String[] args) {
         Integer[] integerArray = {1, 2, 3, null};
         try {

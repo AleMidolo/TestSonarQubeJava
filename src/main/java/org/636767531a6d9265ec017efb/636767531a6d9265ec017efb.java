@@ -40,18 +40,16 @@ class BucketList {
         Bucket newBucket = new Bucket("New Bucket Data"); // Create a new bucket to insert
         if (head == bucket) {
             newBucket.setNext(head);
-            head = newBucket; // Insert at the head
-            return;
-        }
-
-        Bucket current = head;
-        while (current != null && current.getNext() != bucket) {
-            current = current.getNext();
-        }
-
-        if (current != null) {
-            newBucket.setNext(bucket);
-            current.setNext(newBucket); // Insert before the specified bucket
+            head = newBucket; // Insert before the head
+        } else {
+            Bucket current = head;
+            while (current != null && current.getNext() != bucket) {
+                current = current.getNext();
+            }
+            if (current != null) {
+                newBucket.setNext(bucket);
+                current.setNext(newBucket); // Insert before the specified bucket
+            }
         }
     }
 

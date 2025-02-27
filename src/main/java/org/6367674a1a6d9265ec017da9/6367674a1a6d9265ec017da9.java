@@ -15,68 +15,51 @@ class DoublyLinkedList<E> {
     private ListNode<E> tail;
 
     public void addListNode(ListNode<E> node) {
-        if (node == null) return;
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         if (head == null) {
             head = node;
             tail = node;
-            node.next = null;
-            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
             tail = node;
-            tail.next = null;
         }
     }
 
     public void removeListNode(ListNode<E> node) {
-        if (node == null) return;
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
+        if (node == null || head == null) {
+            throw new NoSuchElementException("Node not found or list is empty");
         }
-        if (node.next != null) {
-            node.next.prev = node.prev;
+        if (node == head) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            }
+        } else if (node == tail) {
+            tail = tail.prev;
+            if (tail != null) {
+                tail.next = null;
+            }
         } else {
-            tail = node.prev;
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
         node.next = null;
         node.prev = null;
     }
 
-    public ListNode<E> getHead() {
-        return head;
-    }
-    
-    public boolean isEmpty() {
-        return head == null;
-    }
-}
-
-public class Main<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.isEmpty()) {
+        if (list == null || list.head == null) {
             return;
         }
-        
-        ListNode<E> currentNode = list.getHead();
-        while (currentNode != null) {
-            ListNode<E> nextNode = currentNode.next; // Store next node
-            list.removeListNode(currentNode); // Remove from original list
-            addListNode(currentNode); // Add to this list
-            currentNode = nextNode; // Move to next node
+        ListNode<E> current = list.head;
+        while (current != null) {
+            ListNode<E> nextNode = current.next;
+            removeListNode(current);
+            addListNode(current);
+            current = nextNode;
         }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        DoublyLinkedList<Integer> sourceList = new DoublyLinkedList<>();
-        sourceList.addListNode(new ListNode<>(1));
-        sourceList.addListNode(new ListNode<>(2));
-        sourceList.addListNode(new ListNode<>(3));
-
-        Main<Integer> destinationList = new Main<>();
-        destinationList.moveAllListNodes(sourceList);
     }
 }

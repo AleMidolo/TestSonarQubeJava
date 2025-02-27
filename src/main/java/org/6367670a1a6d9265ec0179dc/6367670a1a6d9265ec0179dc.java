@@ -24,12 +24,10 @@ public class StackMapTable {
         }
     }
 
-    public static void main(String[] args) {
-        StackMapTable stackMapTable = new StackMapTable();
-        stackMapTable.currentFrame = new Object[]{"Type1", "Type2", "Type3", "Type4"};
-        stackMapTable.stackMapTableEntries = new Object[4]; // Initialize with a size
-
-        stackMapTable.putAbstractTypes(1, 3); // This will copy Type2 and Type3
-        System.out.println(Arrays.toString(stackMapTable.stackMapTableEntries));
+    public StackMapTable(int frameSize, int stackMapSize) {
+        this.currentFrame = new Object[frameSize];
+        this.stackMapTableEntries = new Object[stackMapSize];
+        // Initialize currentFrame with some dummy data for demonstration
+        Arrays.fill(currentFrame, new Object());
     }
 }

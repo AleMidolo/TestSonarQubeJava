@@ -2,6 +2,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public final class BufferToByteArray {
+
     private ByteArrayOutputStream outputStream;
 
     public BufferToByteArray() {

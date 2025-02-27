@@ -30,7 +30,7 @@ class Edge {
     // Additional methods can be added here
 }
 
-public class Graph {
+class Graph {
     private Node currentNode;
     private Node nextNode;
 
@@ -48,14 +48,5 @@ public class Graph {
         Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
         Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(fromNode, toNode);
-    }
-
-    public static void main(String[] args) {
-        Node realNode1 = new Node(false, null);
-        Node virtualNode1 = new Node(true, realNode1);
-        Node realNode2 = new Node(false, null);
-        Graph graph = new Graph(virtualNode1, realNode2);
-        Edge edge = graph.edgeToNext();
-        // Further processing can be done with the edge
     }
 }

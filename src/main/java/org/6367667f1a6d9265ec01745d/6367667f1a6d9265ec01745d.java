@@ -31,7 +31,7 @@ public class PathDecoder {
         
         return segments;
     }
-
+    
     private static String decodeSegment(String segment) {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
@@ -40,21 +40,21 @@ public class PathDecoder {
             return segment;
         }
     }
-}
+    
+    public static class PathSegmentImpl {
+        private String segment;
 
-class PathSegmentImpl {
-    private String segment;
+        public PathSegmentImpl(String segment) {
+            this.segment = segment;
+        }
 
-    public PathSegmentImpl(String segment) {
-        this.segment = segment;
-    }
+        public String getSegment() {
+            return segment;
+        }
 
-    public String getSegment() {
-        return segment;
-    }
-
-    @Override
-    public String toString() {
-        return segment;
+        @Override
+        public String toString() {
+            return segment;
+        }
     }
 }

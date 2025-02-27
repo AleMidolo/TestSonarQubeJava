@@ -3,7 +3,8 @@ import java.util.Arrays;
 public class ArrayCopier {
 
     /** 
-     * Este método crea una copia del array proporcionado y asegura que todas las cadenas en el nuevo array contengan solo letras minúsculas. <p> Utilizar este método para copiar arrays de cadenas significa que los cambios en el array src no modifican el array dst.
+     * Este método crea una copia del array proporcionado y asegura que todas las cadenas en el nuevo array contengan solo letras minúsculas. 
+     * Utilizar este método para copiar arrays de cadenas significa que los cambios en el array src no modifican el array dst.
      */
     private static String[] copiarCadenas(final String[] src) {
         if (src == null) {

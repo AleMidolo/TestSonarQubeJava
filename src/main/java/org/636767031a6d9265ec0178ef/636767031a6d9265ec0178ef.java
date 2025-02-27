@@ -12,7 +12,7 @@ public class ArrayUtils {
         if (array == null) {
             return Array.newInstance(newArrayComponentType, 1);
         }
-        
+
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
         

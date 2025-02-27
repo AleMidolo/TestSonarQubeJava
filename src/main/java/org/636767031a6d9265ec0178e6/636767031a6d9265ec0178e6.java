@@ -22,10 +22,7 @@ public class ByteArrayConverter {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        Byte[] byteArray = {1, 2, 3, 4, 5};
+        Byte[] byteArray = {1, 2, 3, null}; // Esto lanzará una excepción
         byte[] primitiveArray = toPrimitive(byteArray);
-        for (byte b : primitiveArray) {
-            System.out.print(b + " ");
-        }
     }
 }

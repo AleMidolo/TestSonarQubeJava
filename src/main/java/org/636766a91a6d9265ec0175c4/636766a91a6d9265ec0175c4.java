@@ -11,33 +11,24 @@ public class StackExtractor {
      */
     private void pop(final String descriptor) {
         // Simulación de la extracción de tipos abstractos de la "frame stack"
-        // Aquí se puede implementar la lógica para analizar el descriptor y extraer los tipos correspondientes.
-        
-        // Ejemplo de cómo se podría extraer tipos basados en el descriptor
-        if (descriptor.startsWith("L")) { // Tipo de objeto
-            String type = descriptor.substring(1, descriptor.length() - 1).replace('/', '.');
-            stack.add(type);
-        } else if (descriptor.startsWith("(")) { // Método
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(1, endIndex);
-            for (String arg : args.split(",")) {
-                if (!arg.isEmpty()) {
-                    String type = arg.replace('L', ' ').trim();
-                    stack.add(type);
-                }
-            }
+        // Basado en el descriptor proporcionado, se extraen los tipos correspondientes
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
         }
-        // Aquí se pueden agregar más condiciones para otros tipos de descriptores
-    }
 
-    public List<String> getStack() {
-        return stack;
+        // Aquí se simula la lógica de extracción de tipos
+        // En un caso real, esto podría implicar análisis de bytecode o estructuras de datos complejas
+        String[] types = descriptor.split(",");
+        for (String type : types) {
+            stack.add(type.trim());
+        }
+
+        // Imprimir los tipos extraídos para verificación
+        System.out.println("Tipos extraídos: " + stack);
     }
 
     public static void main(String[] args) {
         StackExtractor extractor = new StackExtractor();
-        extractor.pop("Ljava/lang/String;");
-        extractor.pop("(Ljava/lang/String;I)V");
-        System.out.println(extractor.getStack());
+        extractor.pop("int, String, double");
     }
 }

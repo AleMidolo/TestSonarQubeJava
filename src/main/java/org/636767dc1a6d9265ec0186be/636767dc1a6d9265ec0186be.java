@@ -7,7 +7,7 @@ public class TimeBucketCompressor {
      * y el "bucket" de tiempo reformateado 20000123 es 20000123.
      */
     static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
-        // Extraer el año, mes y día del bucket de tiempo
+        // Extraer la fecha en formato YYYYMMDD
         int year = (int) (bucketDeTiempo / 10000);
         int month = (int) ((bucketDeTiempo % 10000) / 100);
         int day = (int) (bucketDeTiempo % 100);
@@ -22,7 +22,7 @@ public class TimeBucketCompressor {
         // Obtener la nueva fecha
         java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
         
-        // Reformatear la nueva fecha a formato YYYYMMDD
+        // Reformatear la fecha a formato YYYYMMDD
         return newDate.getYear() * 10000 + newDate.getMonthValue() * 100 + newDate.getDayOfMonth();
     }
 

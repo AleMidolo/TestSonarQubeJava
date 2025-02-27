@@ -13,11 +13,10 @@ public class MessageSerializer {
         // Serialize the message to a byte array
         int size = schema.getSerializedSize(message);
         byte[] bytes = new byte[size];
-        schema.writeTo(message, bytes, buffer);
-        
+        schema.writeTo(message, bytes, 0, size);
+
         // Write the size of the message
         out.write(intToByteArray(size));
-        
         // Write the message itself
         out.write(bytes);
         

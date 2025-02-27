@@ -28,13 +28,13 @@ public class ByteVector {
         }
 
         ensureCapacity(size + byteLength);
-
+        
         if (byteArrayValue != null) {
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         } else {
             Arrays.fill(data, size, size + byteLength, (byte) 0);
         }
-
+        
         size += byteLength;
         return this;
     }

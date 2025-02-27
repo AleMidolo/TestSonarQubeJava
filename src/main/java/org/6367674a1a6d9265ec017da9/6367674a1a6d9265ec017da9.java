@@ -21,13 +21,10 @@ class DoublyLinkedList<E> {
         if (head == null) {
             head = node;
             tail = node;
-            node.next = null;
-            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
             tail = node;
-            tail.next = null;
         }
     }
 
@@ -39,16 +36,18 @@ class DoublyLinkedList<E> {
             head = head.next;
             if (head != null) {
                 head.prev = null;
-            } else {
-                tail = null;
             }
         } else if (node == tail) {
             tail = tail.prev;
-            tail.next = null;
+            if (tail != null) {
+                tail.next = null;
+            }
         } else {
             node.prev.next = node.next;
             node.next.prev = node.prev;
         }
+        node.next = null;
+        node.prev = null;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
@@ -58,8 +57,8 @@ class DoublyLinkedList<E> {
         ListNode<E> current = list.head;
         while (current != null) {
             ListNode<E> nextNode = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
+            removeListNode(current);
+            addListNode(current);
             current = nextNode;
         }
     }

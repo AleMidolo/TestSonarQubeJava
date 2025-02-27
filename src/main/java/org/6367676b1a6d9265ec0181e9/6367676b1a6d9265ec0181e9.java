@@ -17,7 +17,6 @@ public class SubstringMatcher {
                 return false;
             }
         }
-        
         return true;
     }
 

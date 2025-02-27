@@ -11,10 +11,10 @@ public class InterceptorChecker {
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
-                return false; // Ya existe una instancia de la clase en la lista
+                return false;
             }
         }
-        return true; // No existe ninguna instancia de la clase en la lista
+        return true;
     }
 }
 

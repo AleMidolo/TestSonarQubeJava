@@ -3,8 +3,8 @@ public class ByteVectorEnlarger {
     private int currentSize;
 
     public ByteVectorEnlarger(int initialSize) {
-        byteArray = new byte[initialSize];
-        currentSize = initialSize;
+        this.byteArray = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
     /**
@@ -25,10 +25,14 @@ public class ByteVectorEnlarger {
         return byteArray;
     }
 
+    public int getCurrentSize() {
+        return currentSize;
+    }
+
     public static void main(String[] args) {
         ByteVectorEnlarger vector = new ByteVectorEnlarger(10);
-        System.out.println("Initial size: " + vector.getByteArray().length);
+        System.out.println("Current size: " + vector.getCurrentSize());
         vector.enlarge(5);
-        System.out.println("New size after enlargement: " + vector.getByteArray().length);
+        System.out.println("New size: " + vector.getCurrentSize());
     }
 }

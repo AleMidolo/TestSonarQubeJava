@@ -5,7 +5,7 @@ public class Graph<V> {
     // Assuming there's a method to get the incoming edges for a vertex
     private double getIncomingWeight(V vertex) {
         // Placeholder for actual implementation
-        return 0.0; // Replace with actual weight calculation
+        return 0.0;
     }
 
     /** 

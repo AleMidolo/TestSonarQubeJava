@@ -19,10 +19,10 @@ public class ArrayToList {
         // Ejemplo de uso
         String[] array = {"uno", "dos", "tres"};
         List<String> lista = asList(array);
-        System.out.println(lista); // Imprime: [uno, dos, tres]
+        System.out.println(lista); // Salida: [uno, dos, tres]
 
-        // Manejo de arreglo nulo
-        List<String> listaNula = asList(null);
-        System.out.println(listaNula); // Imprime: []
+        String[] nullArray = null;
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // Salida: []
     }
 }

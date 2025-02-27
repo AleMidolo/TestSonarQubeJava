@@ -19,7 +19,7 @@ public class FieldChecker {
         return true;
     }
 
-    // Assuming a Fields class exists with the necessary methods
+    // Assuming a Fields class exists with necessary methods
     public static class Fields {
         private Set<String> fieldNames;
 

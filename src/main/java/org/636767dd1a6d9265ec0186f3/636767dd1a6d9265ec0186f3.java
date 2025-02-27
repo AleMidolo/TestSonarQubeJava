@@ -9,11 +9,8 @@ public class ColumnName {
         // Implementación del método para reemplazar el nombre
         // Aquí se puede agregar la lógica para manejar el reemplazo de nombres
         System.out.println("Reemplazando el nombre: " + oldName + " con " + newName);
-        
         // Ejemplo de lógica de reemplazo (puede ser diferente según el contexto)
         // Se podría almacenar en un mapa, base de datos, etc.
-        // Map<String, String> nameMap = new HashMap<>();
-        // nameMap.put(oldName, newName);
     }
 
     public static void main(String[] args) {

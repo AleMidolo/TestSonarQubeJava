@@ -26,7 +26,7 @@ class Logger {
 
     protected void append(LoggingEvent event) {
         for (Client client : clients) {
-            client.sendMessage(event.getMessage());
+            client.receiveMessage(event.getMessage());
         }
     }
 }
@@ -38,7 +38,7 @@ class Client {
         this.name = name;
     }
 
-    public void sendMessage(String message) {
+    public void receiveMessage(String message) {
         System.out.println(name + " received: " + message);
     }
 }

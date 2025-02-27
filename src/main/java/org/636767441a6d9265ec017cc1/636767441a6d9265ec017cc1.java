@@ -12,7 +12,7 @@ class TreeNode<T> {
 
 public class BinaryTree<T> {
 
-    /** 
+    /**
      * Realiza una rotación a la derecha de un nodo.
      * @param node un nodo a rotar
      * @return un nuevo padre del {@code node}

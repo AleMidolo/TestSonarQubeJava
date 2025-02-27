@@ -32,14 +32,17 @@ public class Bucket {
         // Create a new bucket to insert
         Bucket newBucket = new Bucket(this.data);
         
-        // Find the previous bucket
+        // Link the new bucket to the next bucket
+        newBucket.setNext(bucket);
+        
+        // Find the previous bucket to link to the new bucket
         Bucket current = this;
-        while (current.next != null && current.next != bucket) {
-            current = current.next;
+        while (current != null) {
+            if (current.getNext() == bucket) {
+                current.setNext(newBucket);
+                break;
+            }
+            current = current.getNext();
         }
-
-        // Insert the new bucket before the specified bucket
-        newBucket.next = bucket;
-        current.next = newBucket;
     }
 }

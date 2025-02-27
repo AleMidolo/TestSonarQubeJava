@@ -3,7 +3,7 @@ public class MyClass {
     private StringBuilder stringBuilder;
 
     public MyClass() {
-        this.stringBuilder = new StringBuilder();
+        stringBuilder = new StringBuilder();
     }
 
     /** 
@@ -14,6 +14,7 @@ public class MyClass {
         return stringBuilder.toString();
     }
 
+    // Method to append a string to the builder for demonstration purposes
     public void append(String str) {
         stringBuilder.append(str);
     }

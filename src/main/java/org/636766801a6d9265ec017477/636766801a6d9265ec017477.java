@@ -18,7 +18,7 @@ public class FileAdder {
         while (!stack.isEmpty()) {
             InputStream file = stack.pop();
             // Here you would add the file to your desired location
-            // For demonstration, we will just print the reference
+            // For demonstration, we will just print the file reference
             System.out.println("Adding file: " + file);
         }
     }

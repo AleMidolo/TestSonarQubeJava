@@ -47,16 +47,16 @@ public class BoxSplitter {
      * @return un par con las dos cajas resultantes
      */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        double newWidth = box.getWidth() / 2;
-        Box2D box1 = new Box2D(box.getX(), box.getY(), newWidth, box.getHeight());
-        Box2D box2 = new Box2D(box.getX() + newWidth, box.getY(), newWidth, box.getHeight());
+        double halfWidth = box.getWidth() / 2;
+        Box2D box1 = new Box2D(box.getX(), box.getY(), halfWidth, box.getHeight());
+        Box2D box2 = new Box2D(box.getX() + halfWidth, box.getY(), halfWidth, box.getHeight());
         return new Pair<>(box1, box2);
     }
 
     public static void main(String[] args) {
         Box2D originalBox = new Box2D(0, 0, 4, 2);
         Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
-        System.out.println("Box 1: " + splitBoxes.getKey());
-        System.out.println("Box 2: " + splitBoxes.getValue());
+        System.out.println("Original Box: " + originalBox);
+        System.out.println("Split Boxes: " + splitBoxes.getKey() + ", " + splitBoxes.getValue());
     }
 }

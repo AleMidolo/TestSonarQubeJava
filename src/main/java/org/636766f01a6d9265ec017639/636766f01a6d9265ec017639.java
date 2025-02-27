@@ -18,8 +18,8 @@ public class ArrayToList {
     public static void main(String[] args) {
         // Ejemplo de uso
         String[] array = {"uno", "dos", "tres"};
-        List<String> lista = asList(array);
-        System.out.println(lista); // Salida: [uno, dos, tres]
+        List<String> list = asList(array);
+        System.out.println(list); // Salida: [uno, dos, tres]
 
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);

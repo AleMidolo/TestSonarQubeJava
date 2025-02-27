@@ -21,7 +21,7 @@ public class StringUtils {
     public static void main(String[] args) {
         System.out.println(isDigits("12345")); // true
         System.out.println(isDigits("123a5")); // false
-        System.out.println(isDigits(""));      // false
-        System.out.println(isDigits(null));    // false
+        System.out.println(isDigits("")); // false
+        System.out.println(isDigits(null)); // false
     }
 }

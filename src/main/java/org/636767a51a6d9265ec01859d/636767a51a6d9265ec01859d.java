@@ -24,7 +24,7 @@ public class ArrayComparer {
     }
     
     private byte[] getInternalArray() {
-        // This is a placeholder for the actual internal array
+        // This method should return the internal byte array for comparison
         return new byte[] {1, 2, 3, 4, 5}; // Example internal array
     }
 }

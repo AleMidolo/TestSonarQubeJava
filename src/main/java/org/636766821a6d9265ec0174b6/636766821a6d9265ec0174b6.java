@@ -22,11 +22,11 @@ public class GenericTypeResolver {
         Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type arg = actualTypeArguments[i];
-            if (arg instanceof Class) {
-                resolvedArguments[i] = (Class<?>) arg;
-            } else if (arg instanceof ParameterizedType) {
-                resolvedArguments[i] = (Class<?>) ((ParameterizedType) arg).getRawType();
+            Type argument = actualTypeArguments[i];
+            if (argument instanceof Class) {
+                resolvedArguments[i] = (Class<?>) argument;
+            } else if (argument instanceof ParameterizedType) {
+                resolvedArguments[i] = (Class<?>) ((ParameterizedType) argument).getRawType();
             } else {
                 return null; // No se puede resolver el argumento
             }

@@ -20,14 +20,4 @@ public class CustomOutputStream extends OutputStream {
         // Implementación del método write para un solo byte
         System.out.print((char) b);
     }
-
-    public static void main(String[] args) {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
-        try {
-            byte[] data = "Hola, mundo!".getBytes();
-            customOutputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

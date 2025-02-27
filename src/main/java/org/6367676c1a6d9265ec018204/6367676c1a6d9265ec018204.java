@@ -1,4 +1,4 @@
-public class ArrayConcatenator {
+public class ArrayConcatenation {
 
     /** 
      * Concatenar los arreglos de cadenas dados en uno solo, incluyendo los elementos de los arreglos que se superponen dos veces. 
@@ -18,13 +18,13 @@ public class ArrayConcatenator {
 
         int index = 0;
         if (array1 != null) {
-            for (String s : array1) {
-                result[index++] = s;
+            for (String str : array1) {
+                result[index++] = str;
             }
         }
         if (array2 != null) {
-            for (String s : array2) {
-                result[index++] = s;
+            for (String str : array2) {
+                result[index++] = str;
             }
         }
 
@@ -32,12 +32,12 @@ public class ArrayConcatenator {
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"c", "d", "e"};
+        String[] array1 = {"Hello", "World"};
+        String[] array2 = {"World", "Java"};
         String[] result = concatenateStringArrays(array1, array2);
         
-        for (String s : result) {
-            System.out.print(s + " ");
+        for (String str : result) {
+            System.out.println(str);
         }
     }
 }

@@ -1,13 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BroadcastFilter {
-
-    private List<Object> filters;
-
-    public BroadcastFilter() {
-        this.filters = new ArrayList<>();
-    }
+public class BroadcastFilterExample {
 
     /**
      * Invoca el {@link BroadcastFilter}
@@ -15,30 +9,23 @@ public class BroadcastFilter {
      * @return
      */
     protected Object filter(Object msg) {
-        for (Object filter : filters) {
-            // Apply each filter to the message
-            // This is a placeholder for actual filter logic
-            // For example, you might want to check if the message passes certain criteria
-            if (filter instanceof String && msg instanceof String) {
-                String filterStr = (String) filter;
-                String msgStr = (String) msg;
-                if (msgStr.contains(filterStr)) {
-                    return msg; // Return the message if it passes the filter
-                }
+        // Example implementation of a BroadcastFilter
+        List<Object> filteredMessages = new ArrayList<>();
+        
+        // Simulate filtering logic
+        if (msg instanceof String) {
+            String message = (String) msg;
+            if (!message.isEmpty()) {
+                filteredMessages.add(message);
             }
         }
-        return null; // Return null if no filters matched
-    }
-
-    public void addFilter(Object filter) {
-        filters.add(filter);
+        
+        return filteredMessages.isEmpty() ? null : filteredMessages;
     }
 
     public static void main(String[] args) {
-        BroadcastFilter broadcastFilter = new BroadcastFilter();
-        broadcastFilter.addFilter("test");
-        
-        Object result = broadcastFilter.filter("this is a test message");
-        System.out.println(result); // Should print the message if it contains "test"
+        BroadcastFilterExample example = new BroadcastFilterExample();
+        Object result = example.filter("Hello, World!");
+        System.out.println(result);
     }
 }

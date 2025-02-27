@@ -5,12 +5,12 @@ public class ContentRangeBuilder {
      * @return valor de 'Content-Range'
      */
     private String buildContentRange() {
-        // Ejemplo de valores para el rango
+        // Ejemplo de valores para el rango y el tamaño total
         long start = 0;
         long end = 99;
-        long total = 1000;
+        long totalSize = 200;
 
-        return String.format("bytes %d-%d/%d", start, end, total);
+        return String.format("bytes %d-%d/%d", start, end, totalSize);
     }
 
     public static void main(String[] args) {

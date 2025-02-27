@@ -9,7 +9,7 @@ public class HeaderParser {
     private int parseEndOfLine(String headerPart, int end) {
         int index = headerPart.indexOf("\r\n", 0);
         if (index == -1 || index > end) {
-            return end; // No se encontró el final de la línea o está fuera de rango
+            return end; // No se encontró el final de la línea o está fuera del rango
         }
         return index; // Retorna el índice donde se encuentra \r\n
     }

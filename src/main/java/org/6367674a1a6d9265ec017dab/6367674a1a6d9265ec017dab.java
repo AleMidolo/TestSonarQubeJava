@@ -1,7 +1,7 @@
 import java.util.Comparator;
 
 public class FloatComparator implements Comparator<Double> {
-    
+
     /** 
      * Compara dos valores de punto flotante. Devuelve 0 si son iguales, -1 si {@literal o1 < o2},1 en caso contrario.
      * @param o1 el primer valor

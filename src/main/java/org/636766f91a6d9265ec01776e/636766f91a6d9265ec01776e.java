@@ -12,11 +12,11 @@ public class CustomOutputStream extends OutputStream {
         }
         
         // Here you would implement the logic to write the bytes to the output stream.
-        // For demonstration, we will just print the bytes being written.
+        // For demonstration, we will just print the bytes to the console.
         for (int i = off; i < off + len; i++) {
-            System.out.print((char) b[i]); // Print each byte as a character
+            System.out.print((char) b[i]);
         }
-        System.out.println(); // New line after writing
+        System.out.flush();
     }
 
     @Override

@@ -11,7 +11,7 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-
+        
         int upperLimit = desiredCapacity;
         if (desiredCapacity >= 1000) {
             upperLimit = (int) (desiredCapacity * 1.11);
@@ -22,7 +22,8 @@ public class PrimeCapacity {
                 return i;
             }
         }
-        return upperLimit; // Fallback, should not reach here for valid inputs
+        
+        return upperLimit; // Fallback, should not reach here
     }
 
     private static boolean isPrime(int number) {
@@ -44,8 +45,6 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        int desiredCapacity = 1000;
-        int nextPrimeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + nextPrimeCapacity);
+        System.out.println(nextPrime(1000)); // Example usage
     }
 }

@@ -1,4 +1,5 @@
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class CharsetTranslator {
 
@@ -8,17 +9,22 @@ public class CharsetTranslator {
      * @return El equivalente en Java para este nombre.
      */
     private static String javaCharset(String charset) {
-        if (Charset.isSupported(charset)) {
-            return Charset.forName(charset).name();
-        } else {
-            throw new IllegalArgumentException("Charset not supported: " + charset);
+        if (charset == null || charset.isEmpty()) {
+            return StandardCharsets.UTF_8.name(); // Default to UTF-8 if input is null or empty
+        }
+        
+        try {
+            Charset javaCharset = Charset.forName(charset);
+            return javaCharset.name();
+        } catch (IllegalArgumentException e) {
+            return StandardCharsets.UTF_8.name(); // Return UTF-8 if the charset is not valid
         }
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        String mimeCharset = "UTF-8";
-        String javaCharset = javaCharset(mimeCharset);
-        System.out.println("El equivalente en Java para " + mimeCharset + " es: " + javaCharset);
+        // Example usage
+        System.out.println(javaCharset("UTF-8")); // Output: UTF-8
+        System.out.println(javaCharset("ISO-8859-1")); // Output: ISO-8859-1
+        System.out.println(javaCharset("invalid-charset")); // Output: UTF-8
     }
 }

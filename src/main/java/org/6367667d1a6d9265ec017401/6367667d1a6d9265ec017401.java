@@ -1,6 +1,6 @@
 public class StringUnescaper {
 
-    /** 
+    /**
      * <p>Remueve el "escape" de cualquier literal de Java encontrado en el <code>String</code>. Por ejemplo, convertirá una secuencia de <code>'\'</code> y <code>'n'</code> en un carácter de nueva línea, a menos que el <code>'\'</code> esté precedido por otro <code>'\'</code>.</p>
      * @param str el <code>String</code> a procesar, puede ser nulo
      * @return un nuevo <code>String</code> sin carácteres "escape", <code>null</code> si la entrada es un string nulo
@@ -13,9 +13,9 @@ public class StringUnescaper {
         StringBuilder result = new StringBuilder();
         boolean isEscaped = false;
 
-        for (char c : str.toCharArray()) {
+        for (char currentChar : str.toCharArray()) {
             if (isEscaped) {
-                switch (c) {
+                switch (currentChar) {
                     case 'n':
                         result.append('\n');
                         break;
@@ -25,11 +25,11 @@ public class StringUnescaper {
                     case 'r':
                         result.append('\r');
                         break;
-                    case 'b':
-                        result.append('\b');
-                        break;
                     case 'f':
                         result.append('\f');
+                        break;
+                    case 'b':
+                        result.append('\b');
                         break;
                     case '\\':
                         result.append('\\');
@@ -41,15 +41,15 @@ public class StringUnescaper {
                         result.append('\'');
                         break;
                     default:
-                        result.append(c);
+                        result.append(currentChar);
                         break;
                 }
                 isEscaped = false;
             } else {
-                if (c == '\\') {
+                if (currentChar == '\\') {
                     isEscaped = true;
                 } else {
-                    result.append(c);
+                    result.append(currentChar);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         try {
-            String input = "Hello\\nWorld! This is a test\\tstring with escaped characters.";
+            String input = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
             String output = unescapeJava(input);
             System.out.println(output);
         } catch (Exception e) {

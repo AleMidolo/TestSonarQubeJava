@@ -16,18 +16,18 @@ public class CubeMover {
             return; // No hay vértices que mover
         }
 
-        // Obtiene el cubo con la etiqueta minLabel
+        // Obtiene los vértices del cubo con etiqueta minLabel
         Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
-        
+
         // Mueve los vértices al cubo con etiqueta 0
-        Set<Integer> targetBucket = bucketsByLabel.get(0);
-        targetBucket.addAll(verticesToMove);
-        
+        Set<Integer> bucketZero = bucketsByLabel.get(0);
+        bucketZero.addAll(verticesToMove);
+
         // Limpia el cubo con etiqueta minLabel
         verticesToMove.clear();
-        
+
         // Actualiza las etiquetas de los vértices movidos
-        for (Integer vertex : targetBucket) {
+        for (Integer vertex : bucketZero) {
             labels.set(vertex, 0); // Asigna la etiqueta 0 a los vértices movidos
         }
     }

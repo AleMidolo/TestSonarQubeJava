@@ -26,9 +26,9 @@ public class StackExample {
     }
 
     public static void main(String[] args) {
-        StackExample stackExample = new StackExample(5);
-        stackExample.push(10);
-        stackExample.push(20);
-        System.out.println("Popped value: " + stackExample.pop());
+        StackExample stack = new StackExample(5);
+        stack.push(10);
+        stack.push(20);
+        System.out.println("Popped value: " + stack.pop());
     }
 }

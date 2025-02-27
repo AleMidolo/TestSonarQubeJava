@@ -2,7 +2,7 @@ public class LineNumberManager {
     
     private int lineNumber;
 
-    /** 
+    /**
      * Agrega un número de línea de origen correspondiente a esta etiqueta.
      * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
      */

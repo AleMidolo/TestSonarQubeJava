@@ -1,6 +1,6 @@
 public class TokenParser {
     
-    /** 
+    /**
      * Analiza un token hasta que se encuentra con cualquiera de los terminadores dados.
      * @param terminators el arreglo de caracteres terminadores. Cualquiera de estos caracteres, al ser encontrado, indica el final del token.
      * @return el token
@@ -23,7 +23,7 @@ public class TokenParser {
         
         return token.toString();
     }
-    
+
     private boolean isTerminator(char currentChar, char[] terminators) {
         for (char terminator : terminators) {
             if (currentChar == terminator) {

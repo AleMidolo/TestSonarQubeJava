@@ -23,11 +23,11 @@ public class TimeBucketCompressor {
         java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
         
         // Reformatear la nueva fecha a formato YYYYMMDD
-        return Long.parseLong(newDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")));
+        return newDate.getYear() * 10000 + newDate.getMonthValue() * 100 + newDate.getDayOfMonth();
     }
 
     public static void main(String[] args) {
-        long bucketDeTiempo = 20000115;
+        long bucketDeTiempo = 20000123;
         int pasoDiario = 11;
         long resultado = comprimirBucketDeTiempo(bucketDeTiempo, pasoDiario);
         System.out.println("Bucket de tiempo reformateado: " + resultado);

@@ -25,9 +25,16 @@ public class StackMapTable {
     }
 
     public StackMapTable(int frameSize, int stackMapSize) {
-        currentFrame = new Object[frameSize];
-        stackMapTableEntries = new Object[stackMapSize];
-        // Initialize currentFrame with some dummy data for demonstration
-        Arrays.fill(currentFrame, new Object());
+        this.currentFrame = new Object[frameSize];
+        this.stackMapTableEntries = new Object[stackMapSize];
+    }
+
+    public static void main(String[] args) {
+        StackMapTable smt = new StackMapTable(10, 10);
+        // Example usage
+        smt.currentFrame[0] = "Type1";
+        smt.currentFrame[1] = "Type2";
+        smt.putAbstractTypes(0, 2);
+        System.out.println(Arrays.toString(smt.stackMapTableEntries));
     }
 }

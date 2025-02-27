@@ -18,12 +18,11 @@ public class ArrayToList {
     public static void main(String[] args) {
         // Ejemplo de uso
         String[] array = {"uno", "dos", "tres"};
-        List<String> list = asList(array);
-        System.out.println(list); // Salida: [uno, dos, tres]
+        List<String> lista = asList(array);
+        System.out.println(lista); // Imprime: [uno, dos, tres]
 
         // Manejo de arreglo nulo
-        String[] nullArray = null;
-        List<String> nullList = asList(nullArray);
-        System.out.println(nullList); // Salida: []
+        List<String> listaNula = asList(null);
+        System.out.println(listaNula); // Imprime: []
     }
 }

@@ -33,7 +33,7 @@ class DoublyLinkedList<E> {
 
     public void removeListNode(ListNode<E> node) {
         if (node == null || head == null) {
-            throw new NoSuchElementException("Node or list is empty");
+            throw new NoSuchElementException("Node not found or list is empty");
         }
         if (node == head) {
             head = head.next;
@@ -49,8 +49,6 @@ class DoublyLinkedList<E> {
             node.prev.next = node.next;
             node.next.prev = node.prev;
         }
-        node.next = null;
-        node.prev = null;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {

@@ -1,5 +1,5 @@
 public class ArrayUtils {
-
+    
     /** 
      * <p>Verifica si un arreglo de números decimales primitivos está vacío o es <code>null</code>.</p>
      * @param array  el arreglo a probar

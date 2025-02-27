@@ -9,11 +9,11 @@ public class SequenceRangeBuilder {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
-        // Aquí se puede agregar la lógica para construir los rangos de secuencias
-        // Por ejemplo, se pueden agregar rangos de secuencias ficticias
-        sequenceRanges.add(new SequenceRange(1, 10));
-        sequenceRanges.add(new SequenceRange(11, 20));
-        sequenceRanges.add(new SequenceRange(21, 30));
+        // Example logic to build sequence ranges
+        // This is a placeholder and should be replaced with actual logic
+        for (int i = 0; i < 10; i++) {
+            sequenceRanges.add(new SequenceRange(i, i + 1));
+        }
         
         return sequenceRanges;
     }

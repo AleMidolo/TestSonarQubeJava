@@ -26,7 +26,7 @@ public class Bucket {
      */
     public void insertBefore(Bucket bucket) {
         if (bucket == null) {
-            throw new IllegalArgumentException("El bucket no puede ser nulo");
+            throw new IllegalArgumentException("Bucket cannot be null");
         }
 
         // Create a new bucket to insert
@@ -39,7 +39,11 @@ public class Bucket {
         }
 
         // Insert the new bucket before the specified bucket
-        newBucket.next = bucket;
-        current.next = newBucket;
+        if (current.next == bucket) {
+            newBucket.next = bucket;
+            current.next = newBucket;
+        } else {
+            throw new IllegalArgumentException("The specified bucket is not in the list");
+        }
     }
 }

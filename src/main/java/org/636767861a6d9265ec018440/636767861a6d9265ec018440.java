@@ -13,11 +13,10 @@ public class NameAbbreviator {
 
         String[] parts = name.split(" ");
         for (int i = nameStart; i < parts.length; i++) {
-            if (i == nameStart) {
-                buf.append(parts[i].charAt(0)).append(". ");
-            } else {
-                buf.append(parts[i]).append(" ");
+            if (i > nameStart) {
+                buf.append(". "); // Add space between abbreviations
             }
+            buf.append(parts[i].charAt(0)).append("."); // Append first letter and dot
         }
     }
 
@@ -25,6 +24,6 @@ public class NameAbbreviator {
         NameAbbreviator abbreviator = new NameAbbreviator();
         StringBuffer buffer = new StringBuffer();
         abbreviator.abbreviate(0, buffer);
-        System.out.println(buffer.toString().trim()); // Output: J. Doe
+        System.out.println(buffer.toString()); // Output: J. D.
     }
 }

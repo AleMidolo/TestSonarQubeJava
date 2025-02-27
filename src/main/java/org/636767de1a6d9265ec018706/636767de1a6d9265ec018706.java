@@ -25,14 +25,14 @@ public class MappingDiff {
      * No devolver la configuración _source para evitar conflictos de actualización del índice actual.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulando un mapeo de referencia que representa la estructura actual
+        // Simulación de mapeos actuales del índice
         Mappings currentMappings = getCurrentMappings(tableName);
         
         Mappings diffMappings = new Mappings();
         
-        for (String field : currentMappings.getFields().keySet()) {
-            if (!mappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, currentMappings.getFields().get(field));
+        for (String field : mappings.getFields().keySet()) {
+            if (!currentMappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
         
@@ -42,19 +42,20 @@ public class MappingDiff {
     private Mappings getCurrentMappings(String tableName) {
         // Simulación de la obtención de mapeos actuales
         Mappings currentMappings = new Mappings();
-        // Aquí se agregarían los campos actuales del índice
-        currentMappings.addField("field1", "value1");
-        currentMappings.addField("field2", "value2");
-        currentMappings.addField("field3", "value3");
+        // Aquí se agregarían los campos existentes en el índice actual
+        // Ejemplo:
+        currentMappings.addField("existingField1", "value1");
+        currentMappings.addField("existingField2", "value2");
         return currentMappings;
     }
 
     public static void main(String[] args) {
         MappingDiff mappingDiff = new MappingDiff();
-        Mappings inputMappings = new Mappings();
-        inputMappings.addField("field1", "value1"); // Este campo existe en los mapeos actuales
+        Mappings newMappings = new Mappings();
+        newMappings.addField("newField1", "value1");
+        newMappings.addField("existingField1", "value2");
 
-        Mappings result = mappingDiff.diffStructure("exampleTable", inputMappings);
-        System.out.println("Campos que no existen en los mapeos de entrada: " + result.getFields());
+        Mappings diff = mappingDiff.diffStructure("exampleTable", newMappings);
+        System.out.println("Diff Mappings: " + diff.getFields());
     }
 }

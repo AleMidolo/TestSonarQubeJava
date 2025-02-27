@@ -23,6 +23,6 @@ public class DigitValueInterpreter {
         System.out.println(valorDígito('Z')); // 35
         System.out.println(valorDígito('a')); // 10
         System.out.println(valorDígito('z')); // 35
-        System.out.println(valorDígito('@')); // -1
+        System.out.println(valorDígito('@')); // -1 (carácter no válido)
     }
 }

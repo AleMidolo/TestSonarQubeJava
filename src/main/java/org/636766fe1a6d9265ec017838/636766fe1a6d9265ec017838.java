@@ -16,7 +16,7 @@ public class CharacterArrayConverter {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            result[i] = array[i].charValue();
+            result[i] = array[i];
         }
         return result;
     }

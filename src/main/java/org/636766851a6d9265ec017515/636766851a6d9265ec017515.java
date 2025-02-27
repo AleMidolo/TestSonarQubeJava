@@ -13,9 +13,7 @@ public class MyAtmosphereHandler {
         // Aquí se puede agregar lógica para suspender el recurso basado en el transporte
         // Por ejemplo, si el transporte es HTTP, se puede suspender el recurso
         if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // Lógica para manejar WebSocket
-        } else {
-            // Lógica para otros transportes
+            r.suspend();
         }
         return Action.CONTINUE;
     }

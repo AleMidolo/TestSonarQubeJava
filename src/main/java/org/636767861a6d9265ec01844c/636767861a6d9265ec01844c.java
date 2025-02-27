@@ -23,10 +23,12 @@ public class AppenderManager {
         }
     }
 
+    // Method to add appenders for testing purposes
     public void addAppender(String name) {
         appenders.add(name);
     }
 
+    // Method to get the list of appenders for testing purposes
     public List<String> getAppenders() {
         return appenders;
     }

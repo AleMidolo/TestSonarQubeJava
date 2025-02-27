@@ -1,8 +1,27 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphUtils {
+class Graph<V, E> {
+    // Assume this class has necessary methods and properties for a graph
+}
 
+class IsomorphicGraphMapping<V, E> {
+    private Map<V, V> mapping;
+
+    public IsomorphicGraphMapping() {
+        this.mapping = new HashMap<>();
+    }
+
+    public void addMapping(V original, V mapped) {
+        mapping.put(original, mapped);
+    }
+
+    public Map<V, V> getMapping() {
+        return mapping;
+    }
+}
+
+public class GraphUtils {
     /** 
      * Calcula un automorfismo de identidad (es decir, un mapeo propio de un grafo en el que cada vértice también se mapea a sí mismo).
      * @param graph el grafo de entrada
@@ -11,32 +30,13 @@ public class GraphUtils {
      * @return un mapeo de grafo a grafo
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> grafo) {
-        Map<V, V> mapping = new HashMap<>();
+        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>();
         
+        // Assuming the graph has a method to get vertices
         for (V vertex : grafo.getVertices()) {
-            mapping.put(vertex, vertex); // Mapeo de cada vértice a sí mismo
+            mapping.addMapping(vertex, vertex);
         }
         
-        return new IsomorphicGraphMapping<>(mapping);
-    }
-}
-
-class Graph<V, E> {
-    // Implementación del grafo
-    public Iterable<V> getVertices() {
-        // Retornar los vértices del grafo
-        return null; // Placeholder
-    }
-}
-
-class IsomorphicGraphMapping<V, E> {
-    private final Map<V, V> mapping;
-
-    public IsomorphicGraphMapping(Map<V, V> mapping) {
-        this.mapping = mapping;
-    }
-
-    public Map<V, V> getMapping() {
         return mapping;
     }
 }

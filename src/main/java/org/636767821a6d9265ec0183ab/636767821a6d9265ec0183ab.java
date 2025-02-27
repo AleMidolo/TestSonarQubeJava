@@ -2,8 +2,8 @@ public class Example {
     
     private Throwable thrown;
 
-    public Throwable getThrown() {
-        return thrown;
+    public Example(Throwable thrown) {
+        this.thrown = thrown;
     }
 
     /** 
@@ -13,16 +13,15 @@ public class Example {
         return thrown != null && !thrown.toString().isEmpty();
     }
 
-    public void setThrown(Throwable thrown) {
-        this.thrown = thrown;
+    public Throwable getThrown() {
+        return thrown;
     }
 
     public static void main(String[] args) {
-        Example example = new Example();
-        example.setThrown(new Exception("An error occurred"));
+        Example example = new Example(new Exception("Error occurred"));
         System.out.println(example.hasThrown()); // Output: true
 
-        example.setThrown(null);
-        System.out.println(example.hasThrown()); // Output: false
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Output: false
     }
 }

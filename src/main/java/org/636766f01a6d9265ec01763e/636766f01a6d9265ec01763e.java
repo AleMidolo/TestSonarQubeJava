@@ -17,7 +17,7 @@ public class CharsetTranslator {
             Charset javaCharset = Charset.forName(charset);
             return javaCharset.name();
         } catch (IllegalArgumentException e) {
-            return StandardCharsets.UTF_8.name(); // Return UTF-8 if the charset is not valid
+            return StandardCharsets.UTF_8.name(); // Return UTF-8 if the charset is not recognized
         }
     }
 
@@ -25,6 +25,6 @@ public class CharsetTranslator {
         // Example usage
         System.out.println(javaCharset("UTF-8")); // Output: UTF-8
         System.out.println(javaCharset("ISO-8859-1")); // Output: ISO-8859-1
-        System.out.println(javaCharset("invalid-charset")); // Output: UTF-8
+        System.out.println(javaCharset("non-existent-charset")); // Output: UTF-8
     }
 }

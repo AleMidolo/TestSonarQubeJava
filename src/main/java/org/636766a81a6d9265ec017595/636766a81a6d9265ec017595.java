@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ByteVector {
+class ByteVector {
     private byte[] bytes;
     private int size;
 
@@ -9,13 +9,7 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /** 
-     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
-     * @param byteValue1 un byte.
-     * @param byteValue2 otro byte.
-     * @return este vector de bytes.
-     */
-    final ByteVector put11(final int byteValue1, final int byteValue2) {
+    public final ByteVector put11(final int byteValue1, final int byteValue2) {
         ensureCapacity(size + 2);
         bytes[size++] = (byte) byteValue1;
         bytes[size++] = (byte) byteValue2;

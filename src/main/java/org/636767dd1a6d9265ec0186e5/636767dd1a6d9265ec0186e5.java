@@ -24,13 +24,5 @@ interface IConsumer {
 }
 
 class Channels {
-    private String name;
-
-    public Channels(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    // Implementation of Channels class
 }

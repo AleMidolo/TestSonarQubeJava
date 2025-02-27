@@ -11,12 +11,15 @@ public class NameAbbreviator {
             throw new IllegalArgumentException("Invalid nameStart index");
         }
 
-        String[] parts = name.split(" ");
-        for (int i = nameStart; i < parts.length; i++) {
+        String[] nameParts = name.split(" ");
+        for (int i = nameStart; i < nameParts.length; i++) {
             if (i > nameStart) {
-                buf.append(". "); // Add space between initials
+                buf.append(". "); // Add a period and space for subsequent names
             }
-            buf.append(parts[i].charAt(0)).append("."); // Append initial with dot
+            String part = nameParts[i];
+            if (part.length() > 0) {
+                buf.append(part.charAt(0)).append("."); // Append the first letter and a period
+            }
         }
     }
 

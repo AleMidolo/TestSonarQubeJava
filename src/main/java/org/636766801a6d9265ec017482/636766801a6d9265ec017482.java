@@ -23,7 +23,12 @@ public class ClassFileBuffer {
             byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
-        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
+        // Convert the ByteArrayOutputStream to a byte array
         buffer = byteArrayOutputStream.toByteArray();
+        
+        // Reset the pointer to the start of the buffer (not needed in byte array, but for clarity)
+        // In this case, we just ensure that we can access the buffer from the start.
     }
+
+    // Additional methods to access the buffer can be added here
 }

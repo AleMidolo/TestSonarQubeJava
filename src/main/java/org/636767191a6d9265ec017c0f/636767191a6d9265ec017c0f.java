@@ -15,10 +15,11 @@ public class ByteVectorEnlarger {
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than zero.");
         }
-        byte[] newByteArray = new byte[currentSize + size];
+        int newSize = currentSize + size;
+        byte[] newByteArray = new byte[newSize];
         System.arraycopy(byteArray, 0, newByteArray, 0, currentSize);
         byteArray = newByteArray;
-        currentSize += size;
+        currentSize = newSize;
     }
 
     public byte[] getByteArray() {
@@ -26,9 +27,8 @@ public class ByteVectorEnlarger {
     }
 
     public static void main(String[] args) {
-        ByteVectorEnlarger vector = new ByteVectorEnlarger(10);
-        System.out.println("Initial size: " + vector.getByteArray().length);
-        vector.enlarge(5);
-        System.out.println("New size after enlargement: " + vector.getByteArray().length);
+        ByteVectorEnlarger vector = new ByteVectorEnlarger(5);
+        vector.enlarge(10);
+        System.out.println("New size of byte array: " + vector.getByteArray().length);
     }
 }

@@ -1,14 +1,15 @@
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<Object> {
+public class MyComparator implements Comparator<Object> {
     /**
-     * Compares two objects for order. Returns a negative integer, zero, or a positive integer 
-     * as the first argument is less than, equal to, or greater than the second.
+     * Compares two objects for order. Returns a negative integer, zero, or a 
+     * positive integer as the first argument is less than, equal to, or greater 
+     * than the second.
      *
      * @param aObj1 the first object to be compared
      * @param aObj2 the second object to be compared
-     * @return a negative integer, zero, or a positive integer as the first argument is less than, 
-     *         equal to, or greater than the second
+     * @return a negative integer, zero, or a positive integer as the first 
+     *         argument is less than, equal to, or greater than the second
      */
     @Override
     public int compare(Object aObj1, Object aObj2) {

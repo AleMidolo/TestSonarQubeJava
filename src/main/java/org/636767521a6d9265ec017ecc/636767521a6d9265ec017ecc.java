@@ -47,9 +47,9 @@ public class BoxSplitter {
      * @return un par con las dos cajas resultantes
      */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        double halfWidth = box.getWidth() / 2;
-        Box2D box1 = new Box2D(box.getX(), box.getY(), halfWidth, box.getHeight());
-        Box2D box2 = new Box2D(box.getX() + halfWidth, box.getY(), halfWidth, box.getHeight());
+        double newWidth = box.getWidth() / 2;
+        Box2D box1 = new Box2D(box.getX(), box.getY(), newWidth, box.getHeight());
+        Box2D box2 = new Box2D(box.getX() + newWidth, box.getY(), newWidth, box.getHeight());
         return new Pair<>(box1, box2);
     }
 

@@ -3,7 +3,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentDecoder {
+public class PathDecoder {
 
     /** 
      * Decodifica el componente de ruta de una URI como segmentos de ruta.
@@ -40,33 +40,21 @@ public class PathSegmentDecoder {
             return segment;
         }
     }
+}
 
-    public static class PathSegmentImpl {
-        private String segment;
+class PathSegmentImpl {
+    private String segment;
 
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
-        }
-
-        public String getSegment() {
-            return segment;
-        }
-
-        @Override
-        public String toString() {
-            return segment;
-        }
+    public PathSegmentImpl(String segment) {
+        this.segment = segment;
     }
 
-    public static void main(String[] args) {
-        try {
-            URI uri = new URI("http://example.com/path/to/resource");
-            List<PathSegmentImpl> segments = decodePath(uri, true);
-            for (PathSegmentImpl segment : segments) {
-                System.out.println(segment);
-            }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public String getSegment() {
+        return segment;
+    }
+
+    @Override
+    public String toString() {
+        return segment;
     }
 }

@@ -8,7 +8,7 @@ public class LoggerFormatter {
      * Produce una cadena formateada según lo especificado por el patrón de conversión.
      */
     public String format(LoggingEvent event) {
-        StringBuilder formattedMessage = new StringBuilder();
+        StringBuilder formattedString = new StringBuilder();
         
         // Get the timestamp of the logging event
         long timestamp = event.getTimeStamp();
@@ -23,15 +23,15 @@ public class LoggerFormatter {
         // Get the message
         String message = event.getRenderedMessage();
         
-        // Format the message
-        formattedMessage.append(date)
-                        .append(" [")
-                        .append(level)
-                        .append("] ")
-                        .append(loggerName)
-                        .append(": ")
-                        .append(message);
+        // Format the string
+        formattedString.append(date)
+                       .append(" [")
+                       .append(level)
+                       .append("] ")
+                       .append(loggerName)
+                       .append(": ")
+                       .append(message);
         
-        return formattedMessage.toString();
+        return formattedString.toString();
     }
 }

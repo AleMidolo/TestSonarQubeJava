@@ -1,7 +1,6 @@
 public class LogCalculator {
     /**
      * Calcula el piso($\log_2 (n)$) $+ 1$
-     * 
      * @param n el número del cual se calculará el logaritmo
      * @return el resultado de floor(log2(n)) + 1
      */
@@ -13,7 +12,7 @@ public class LogCalculator {
     }
 
     public static void main(String[] args) {
-        int n = 8; // Ejemplo de uso
+        int n = 16; // Ejemplo de uso
         int result = calculateLogPlusOne(n);
         System.out.println("El resultado de floor(log2(" + n + ")) + 1 es: " + result);
     }

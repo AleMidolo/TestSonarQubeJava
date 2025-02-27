@@ -5,25 +5,18 @@ protected V proporcionarSiguienteVertice() {
     // Por ejemplo, se puede utilizar una lista o un conjunto de vértices y devolver el siguiente en la secuencia
 
     // Suponiendo que tenemos una lista de vértices
-    List<V> vertices = obtenerListaDeVertices();
-    int indiceActual = obtenerIndiceActual(); // Método que obtiene el índice del vértice actual
-
-    // Verificamos si hay un siguiente vértice
-    if (indiceActual + 1 < vertices.size()) {
-        return vertices.get(indiceActual + 1);
-    } else {
-        // Si no hay siguiente, se puede lanzar una excepción o devolver null
-        return null; // O lanzar una excepción según la lógica de la aplicación
-    }
+    List<V> vertices = obtenerListaDeVertices(); // Método que obtiene la lista de vértices
+    int siguienteIndice = (indiceActual + 1) % vertices.size(); // Calcular el siguiente índice
+    V siguienteVertice = vertices.get(siguienteIndice); // Obtener el siguiente vértice
+    indiceActual = siguienteIndice; // Actualizar el índice actual
+    return siguienteVertice; // Devolver el siguiente vértice
 }
 
-// Métodos auxiliares que podrían ser necesarios
+// Método auxiliar para obtener la lista de vértices (ejemplo)
 private List<V> obtenerListaDeVertices() {
-    // Implementar la lógica para obtener la lista de vértices
+    // Aquí se debe implementar la lógica para obtener la lista de vértices
     return new ArrayList<>(); // Retornar una lista vacía como ejemplo
 }
 
-private int obtenerIndiceActual() {
-    // Implementar la lógica para obtener el índice actual
-    return 0; // Retornar 0 como ejemplo
-}
+// Variable para llevar el índice actual
+private int indiceActual = -1; // Inicializar en -1 para que el primer llamado devuelva el índice 0

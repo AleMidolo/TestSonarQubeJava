@@ -1,11 +1,10 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public final class BufferToByteArray {
-
+public final class Buffer {
     private ByteArrayOutputStream outputStream;
 
-    public BufferToByteArray() {
+    public Buffer() {
         outputStream = new ByteArrayOutputStream();
     }
 
@@ -13,22 +12,10 @@ public final class BufferToByteArray {
         outputStream.write(data);
     }
 
-    /** 
+    /**
      * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
      */
     public final byte[] toByteArray() {
         return outputStream.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        try {
-            BufferToByteArray buffer = new BufferToByteArray();
-            buffer.write("Hello, ".getBytes());
-            buffer.write("World!".getBytes());
-            byte[] result = buffer.toByteArray();
-            System.out.println(new String(result)); // Output: Hello, World!
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

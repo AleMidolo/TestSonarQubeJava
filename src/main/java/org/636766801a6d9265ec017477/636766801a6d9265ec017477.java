@@ -14,18 +14,12 @@ public class FileAdder {
             stack.push(file);
         }
         
-        // Pop files from the stack to process them in reverse order
+        // Pop files from the stack to add them in reverse order
         while (!stack.isEmpty()) {
             InputStream file = stack.pop();
-            // Here you would add the logic to process the file
-            // For example, read from the InputStream and add it to a collection
-            processFile(file);
+            // Here you would add the file to your desired location
+            // For demonstration, we will just print the file reference
+            System.out.println("Adding file: " + file);
         }
-    }
-
-    private void processFile(InputStream file) {
-        // Implement the logic to process the InputStream
-        // This is a placeholder for demonstration purposes
-        System.out.println("Processing file: " + file);
     }
 }

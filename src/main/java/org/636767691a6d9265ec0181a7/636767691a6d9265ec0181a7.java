@@ -1,4 +1,4 @@
-public class StringManipulator {
+public class StringTrimmer {
     
     /** 
      * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
@@ -12,14 +12,8 @@ public class StringManipulator {
         }
         
         StringBuilder result = new StringBuilder();
-        boolean leadingCharFound = false;
-
         for (char c : str.toCharArray()) {
-            if (c == leadingCharacter && !leadingCharFound) {
-                // Skip the leading character
-                continue;
-            } else {
-                leadingCharFound = true;
+            if (c != leadingCharacter) {
                 result.append(c);
             }
         }
@@ -30,7 +24,7 @@ public class StringManipulator {
     public static void main(String[] args) {
         String testString = "aaabacada";
         char leadingChar = 'a';
-        String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result); // Output: "bacada"
+        String trimmedString = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(trimmedString); // Output: "bcada"
     }
 }

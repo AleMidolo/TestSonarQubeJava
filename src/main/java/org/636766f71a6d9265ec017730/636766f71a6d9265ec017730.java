@@ -13,8 +13,15 @@ public class CollectionConverter {
             return new String[0];
         }
         return collection.stream()
-                         .filter(item -> item != null)
-                         .map(Object::toString)
-                         .toArray(String[]::new);
+                .filter(item -> item != null)
+                .map(Object::toString)
+                .toArray(String[]::new);
+    }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Collection<Object> collection = List.of("Hello", null, "World", 123);
+        String[] result = toNoNullStringArray(collection);
+        System.out.println(Arrays.toString(result)); // Salida: [Hello, World, 123]
     }
 }

@@ -21,6 +21,7 @@ public class ArrayToList {
         List<String> list = asList(array);
         System.out.println(list); // Salida: [uno, dos, tres]
 
+        // Manejo de arreglo nulo
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Salida: []

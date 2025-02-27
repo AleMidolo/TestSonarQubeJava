@@ -12,10 +12,9 @@ public class StackFrameExtractor {
         
         // Simulación de la extracción de tipos a partir del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int startIndex = descriptor.indexOf('(') + 1;
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(startIndex, endIndex);
-            
+            int start = descriptor.indexOf('(') + 1;
+            int end = descriptor.indexOf(')');
+            String args = descriptor.substring(start, end);
             if (!args.isEmpty()) {
                 String[] types = args.split(",");
                 for (String type : types) {
@@ -27,14 +26,14 @@ public class StackFrameExtractor {
             extractedTypes.add(descriptor);
         }
 
-        // Aquí se podría realizar alguna acción con los tipos extraídos
+        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
         for (String type : extractedTypes) {
-            System.out.println("Tipo extraído: " + type);
+            System.out.println("Extracted type: " + type);
         }
     }
 
     public static void main(String[] args) {
         StackFrameExtractor extractor = new StackFrameExtractor();
-        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
+        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
     }
 }

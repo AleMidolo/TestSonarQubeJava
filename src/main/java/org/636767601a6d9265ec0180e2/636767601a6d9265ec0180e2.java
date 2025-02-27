@@ -4,20 +4,17 @@ import javafx.util.Pair;
 
 public class GraphSeparator {
 
-    private List<Edge> edges; // Assuming Edge is a class that represents an edge in the graph
-
-    public GraphSeparator(List<Edge> edges) {
-        this.edges = edges;
-    }
+    // Assuming E is a placeholder for an edge type in the graph
+    private List<E> edges; // List of edges in the graph
 
     /** 
      * Calcula la lista de separadores globales del {@code grafo}. Más precisamente, para cada arista $e$ en el $G = (V, E)$, calcula la lista de separadores mínimos $S_e$ en el vecindario de $e$ y luego concatena estas listas. Nota: el resultado puede contener duplicados.
      * @return la lista de separadores mínimos de cada arista $e$ en el grafo inspeccionado
      */
-    private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
+    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
-        for (Edge edge : edges) {
+        for (E edge : edges) {
             List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
             globalSeparatorList.add(new Pair<>(separators, edge));
         }
@@ -25,21 +22,14 @@ public class GraphSeparator {
         return globalSeparatorList;
     }
 
-    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(Edge edge) {
-        // Implementación de la lógica para calcular los separadores mínimos en el vecindario de la arista
-        List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Lógica para encontrar separadores mínimos
-        return separators;
+    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(E edge) {
+        // Placeholder for the actual logic to compute separators for the given edge
+        // This should return a list of pairs representing the separators
+        return new ArrayList<>(); // Return an empty list for now
     }
 
-    // Clase de ejemplo para representar una arista
-    private static class Edge {
-        int start;
-        int end;
-
-        public Edge(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
+    // Placeholder for the edge type
+    private static class E {
+        // Edge properties and methods
     }
 }

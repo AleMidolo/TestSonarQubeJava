@@ -14,20 +14,14 @@ public class CustomOutputStream extends OutputStream {
         // Here you would implement the logic to write the bytes to the output stream.
         // For demonstration, we will just print the bytes being written.
         for (int i = off; i < off + len; i++) {
-            System.out.print((char) b[i]); // Print as characters for demonstration
+            System.out.print((char) b[i]); // Print each byte as a character
         }
-        System.out.flush(); // Ensure all data is flushed
+        System.out.println(); // New line after writing
     }
 
     @Override
     public void write(int b) throws IOException {
         // Implement the method to write a single byte if needed
-        System.out.print((char) b); // Print as character for demonstration
-    }
-    
-    public static void main(String[] args) throws IOException {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
-        byte[] data = "Hello, World!".getBytes();
-        customOutputStream.write(data, 0, data.length);
+        System.out.print((char) b); // Print the single byte as a character
     }
 }

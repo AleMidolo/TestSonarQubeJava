@@ -44,16 +44,4 @@ public final class UriMatcher {
             return matcher.groupCount();
         }
     }
-
-    public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(https?://)(www\\.)?example\\.com(/.*)?$");
-        MatchResult result = uriMatcher.match("https://www.example.com/path");
-
-        if (result != null) {
-            System.out.println("Match found!");
-            System.out.println("Group 0: " + result.group(0));
-        } else {
-            System.out.println("No match found.");
-        }
-    }
 }

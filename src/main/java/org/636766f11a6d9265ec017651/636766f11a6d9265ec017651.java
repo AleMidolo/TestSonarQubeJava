@@ -18,8 +18,12 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
-        Character[] testArray = null;
-        Character[] result = nullToEmpty(testArray);
-        System.out.println("Result: " + (result.length == 0 ? "Empty Array" : "Not Empty"));
+        Character[] nullArray = null;
+        Character[] emptyArray = {};
+        Character[] filledArray = {'a', 'b', 'c'};
+
+        System.out.println(nullToEmpty(nullArray).length); // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
+        System.out.println(nullToEmpty(filledArray).length); // Output: 3
     }
 }

@@ -22,7 +22,7 @@ public class FileDeleter {
             }
         }
         
-        // Register the file for deletion on JVM exit
+        // Programar la eliminación al salir
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 if (file.exists()) {

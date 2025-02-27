@@ -1,7 +1,7 @@
-class Bucket {
+public class Bucket {
     // Assuming Bucket has some properties and methods
     private String data;
-    Bucket next;
+    private Bucket next;
 
     public Bucket(String data) {
         this.data = data;
@@ -11,41 +11,39 @@ class Bucket {
     public String getData() {
         return data;
     }
-}
 
-class BucketList {
-    private Bucket head;
+    public Bucket getNext() {
+        return next;
+    }
 
-    public BucketList() {
-        this.head = null;
+    public void setNext(Bucket next) {
+        this.next = next;
     }
 
     /**
      * Inserta este "bucket" en la estructura de datos antes del {@code bucket}.
      * @param bucket el "bucket", que será el siguiente a este "bucket".
      */
-    void insertBefore(Bucket bucket) {
-        if (head == null || bucket == null) {
-            return; // No hay nada que insertar antes de un bucket nulo o si la lista está vacía
+    public void insertBefore(Bucket bucket) {
+        if (bucket == null) {
+            throw new IllegalArgumentException("Bucket cannot be null");
         }
 
-        Bucket newBucket = new Bucket("New Bucket"); // Create a new bucket to insert
-        if (head == bucket) {
-            newBucket.next = head;
-            head = newBucket; // Insert at the head
-            return;
-        }
-
-        Bucket current = head;
-        while (current != null && current.next != bucket) {
+        // Create a new bucket to insert
+        Bucket newBucket = new Bucket(this.data);
+        
+        // Find the previous bucket
+        Bucket current = this;
+        while (current.next != null && current.next != bucket) {
             current = current.next;
         }
 
-        if (current != null) {
-            newBucket.next = current.next;
-            current.next = newBucket; // Insert before the specified bucket
+        // Insert the new bucket before the specified bucket
+        if (current.next == bucket) {
+            newBucket.next = bucket;
+            current.next = newBucket;
+        } else {
+            throw new IllegalArgumentException("The specified bucket is not in the list");
         }
     }
-
-    // Additional methods for the BucketList can be added here
 }

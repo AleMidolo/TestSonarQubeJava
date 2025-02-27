@@ -45,3 +45,17 @@ class Client {
         System.out.println(name + " received: " + message);
     }
 }
+
+public class Main {
+    public static void main(String[] args) {
+        Logger logger = new Logger();
+        Client client1 = new Client("Client1");
+        Client client2 = new Client("Client2");
+
+        logger.addClient(client1);
+        logger.addClient(client2);
+
+        LoggingEvent event = new LoggingEvent("This is a log message.");
+        logger.append(event);
+    }
+}

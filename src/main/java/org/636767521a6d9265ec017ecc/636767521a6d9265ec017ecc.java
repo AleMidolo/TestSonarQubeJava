@@ -28,16 +28,6 @@ class Box2D {
     public double getHeight() {
         return height;
     }
-
-    @Override
-    public String toString() {
-        return "Box2D{" +
-                "x=" + x +
-                ", y=" + y +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
-    }
 }
 
 public class BoxSplitter {
@@ -56,7 +46,7 @@ public class BoxSplitter {
     public static void main(String[] args) {
         Box2D originalBox = new Box2D(0, 0, 4, 2);
         Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
-        System.out.println("Box 1: " + splitBoxes.getKey());
-        System.out.println("Box 2: " + splitBoxes.getValue());
+        System.out.println("Box 1: (" + splitBoxes.getKey().getX() + ", " + splitBoxes.getKey().getY() + ", " + splitBoxes.getKey().getWidth() + ", " + splitBoxes.getKey().getHeight() + ")");
+        System.out.println("Box 2: (" + splitBoxes.getValue().getX() + ", " + splitBoxes.getValue().getY() + ", " + splitBoxes.getValue().getWidth() + ", " + splitBoxes.getValue().getHeight() + ")");
     }
 }

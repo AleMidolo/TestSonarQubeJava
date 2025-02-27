@@ -40,10 +40,6 @@ class ProfileAnalyzeTimeRange {
     public long getEndTime() {
         return endTime;
     }
-
-    public boolean isInRange(long timestamp) {
-        return timestamp >= startTime && timestamp <= endTime;
-    }
 }
 
 public class ThreadSnapshotParser {
@@ -70,7 +66,7 @@ public class ThreadSnapshotParser {
                 }
 
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (range.isInRange(timestamp)) {
+                    if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
                         snapshots.add(new ThreadSnapshot(threadName, timestamp));
                         break; // No need to check other ranges once added
                     }

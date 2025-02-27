@@ -19,13 +19,10 @@ class DoublyLinkedList<E> {
         if (head == null) {
             head = node;
             tail = node;
-            node.next = null;
-            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
             tail = node;
-            tail.next = null;
         }
     }
 
@@ -45,35 +42,15 @@ class DoublyLinkedList<E> {
         node.prev = null;
     }
 
-    public ListNode<E> getHead() {
-        return head;
-    }
-    
-    public boolean isEmpty() {
-        return head == null;
-    }
-}
-
-public class Main<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.isEmpty()) {
-            return;
+        if (list == null || list.head == null) return;
+
+        ListNode<E> current = list.head;
+        while (current != null) {
+            ListNode<E> nextNode = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = nextNode;
         }
-
-        ListNode<E> currentNode = list.getHead();
-        while (currentNode != null) {
-            ListNode<E> nextNode = currentNode.next; // Store next node
-            list.removeListNode(currentNode); // Remove from the original list
-            addListNode(currentNode); // Add to this list
-            currentNode = nextNode; // Move to the next node
-        }
-    }
-
-    public void addListNode(ListNode<E> node) {
-        // Implementation of adding node to this list
-    }
-
-    public static void main(String[] args) {
-        // Example usage
     }
 }

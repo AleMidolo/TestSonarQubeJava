@@ -11,17 +11,22 @@ public class MetricsCache {
         if (existingData == null) {
             existingData = data;
         } else {
-            // Combina existingData con data
+            // Combine existingData with new data
             existingData.combine(data);
         }
     }
 
-    // Suponiendo que METRICS tiene un método combine
+    // Assuming METRICS class has a combine method
     public static class METRICS {
-        // Atributos de METRICS
+        // Example fields
+        private int value;
+
+        public METRICS(int value) {
+            this.value = value;
+        }
 
         public void combine(METRICS other) {
-            // Lógica para combinar dos objetos METRICS
+            this.value += other.value; // Example combination logic
         }
     }
 }

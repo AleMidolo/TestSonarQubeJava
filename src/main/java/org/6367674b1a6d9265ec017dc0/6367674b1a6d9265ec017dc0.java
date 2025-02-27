@@ -21,7 +21,8 @@ public class Graph<V> {
     }
 
     /** 
-     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+     * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
      * @return conjunto de vértices con grado positivo
      */
     private Set<V> initVisibleVertices() {

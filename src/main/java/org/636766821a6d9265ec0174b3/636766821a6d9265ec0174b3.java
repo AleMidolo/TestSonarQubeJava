@@ -16,19 +16,29 @@ public class BroadcastFilter {
      */
     protected Object filter(Object msg) {
         for (Object filter : filters) {
-            // Assuming filter is a functional interface that takes an Object and returns an Object
-            msg = applyFilter(filter, msg);
+            // Apply each filter to the message
+            // This is a placeholder for actual filter logic
+            // For example, you might want to check if the message passes certain criteria
+            if (filter instanceof String && msg instanceof String) {
+                String filterStr = (String) filter;
+                String msgStr = (String) msg;
+                if (msgStr.contains(filterStr)) {
+                    return msg; // Return the message if it passes the filter
+                }
+            }
         }
-        return msg;
-    }
-
-    private Object applyFilter(Object filter, Object msg) {
-        // Placeholder for filter application logic
-        // This should be replaced with actual filter logic
-        return msg; // Return the message unmodified for now
+        return null; // Return null if no filters matched
     }
 
     public void addFilter(Object filter) {
         filters.add(filter);
+    }
+
+    public static void main(String[] args) {
+        BroadcastFilter broadcastFilter = new BroadcastFilter();
+        broadcastFilter.addFilter("test");
+        
+        Object result = broadcastFilter.filter("this is a test message");
+        System.out.println(result); // Should print the message if it contains "test"
     }
 }

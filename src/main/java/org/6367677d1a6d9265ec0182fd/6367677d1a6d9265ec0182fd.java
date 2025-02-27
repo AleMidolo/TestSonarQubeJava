@@ -18,11 +18,9 @@ public class BooleanConverter {
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean("true", false));  // true
-        System.out.println(toBoolean("false", true));  // false
-        System.out.println(toBoolean("other", true));   // true
-        System.out.println(toBoolean("other", false));  // false
-        System.out.println(toBoolean(null, true));       // true
-        System.out.println(toBoolean(null, false));      // false
+        System.out.println(toBoolean("true", false));  // Output: true
+        System.out.println(toBoolean("false", true));  // Output: false
+        System.out.println(toBoolean("other", true));  // Output: true
+        System.out.println(toBoolean(null, false));     // Output: false
     }
 }

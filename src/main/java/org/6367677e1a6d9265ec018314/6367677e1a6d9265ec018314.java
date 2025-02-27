@@ -3,17 +3,17 @@ import java.util.LinkedList;
 
 class Category {
     private String name;
-    private boolean isActive;
+    private boolean active;
     private LinkedList<Category> children;
 
-    public Category(String name, boolean isActive) {
+    public Category(String name, boolean active) {
         this.name = name;
-        this.isActive = isActive;
+        this.active = active;
         this.children = new LinkedList<>();
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void addChild(Category child) {
@@ -44,9 +44,10 @@ public class CategoryTree {
             return 0;
         }
 
-        Iterator<Category> iterator = node.getChildren().iterator();
         int removedCount = 0;
 
+        // Iterate through children and remove inactive nodes
+        Iterator<Category> iterator = node.getChildren().iterator();
         while (iterator.hasNext()) {
             Category child = iterator.next();
             removedCount += removeUnusedNodes(child);
@@ -64,12 +65,10 @@ public class CategoryTree {
         Category child1 = new Category("Child1", false);
         Category child2 = new Category("Child2", true);
         Category grandChild1 = new Category("GrandChild1", false);
-        Category grandChild2 = new Category("GrandChild2", true);
-
+        
         root.addChild(child1);
         root.addChild(child2);
         child2.addChild(grandChild1);
-        child2.addChild(grandChild2);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();

@@ -16,18 +16,20 @@ public class LowerBoundsCalculator<K> {
 
         for (K key : keys) {
             // Simulate the computation of a lower bound for each key
-            int lowerBound = computeLowerBoundForKey(key);
+            int lowerBound = calculateLowerBound(key);
             lowerBoundsMap.put(key, lowerBound);
-            lowerBounds.add(lowerBound);
+        }
+
+        for (K key : keys) {
+            lowerBounds.add(lowerBoundsMap.get(key));
         }
 
         return lowerBounds;
     }
 
-    private int computeLowerBoundForKey(K key) {
-        // Placeholder for actual lower bound computation logic
-        // For demonstration, we return a random value
-        return key.hashCode() % 100; // Example computation
+    private int calculateLowerBound(K key) {
+        // Placeholder for actual lower bound calculation logic
+        return key.hashCode() % 100; // Example logic
     }
 
     public static void main(String[] args) {

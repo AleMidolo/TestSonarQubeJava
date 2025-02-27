@@ -28,7 +28,7 @@ public class ClassPathAdder {
 
     public static void main(String[] args) {
         Vector<URL> classpath = new Vector<>();
-        addToClassPath(classpath, "ruta/al/directorio");
+        addToClassPath(classpath, "ruta/al/directorio/de/jars");
         // Imprimir los URLs añadidos al classpath
         classpath.forEach(System.out::println);
     }

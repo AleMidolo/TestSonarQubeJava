@@ -1,9 +1,9 @@
 @Override
 public int hashCode() {
-    // Implementación del código hash
-    int result = 17; // Valor inicial
-    // Supongamos que tenemos dos atributos: 'field1' y 'field2'
+    // Implementación de un código hash simple basado en un campo de ejemplo
+    int result = 17; // Número primo inicial
     result = 31 * result + (field1 != null ? field1.hashCode() : 0);
-    result = 31 * result + (field2 != null ? field2.hashCode() : 0);
+    result = 31 * result + field2; // Suponiendo que field2 es un int
+    // Agregar más campos según sea necesario
     return result;
 }

@@ -24,11 +24,11 @@ public class GraphSeparator {
     private List<Pair<Integer, Integer>> computeSeparatorsForEdge(Edge edge) {
         // Implementación de la lógica para calcular los separadores mínimos en el vecindario de la arista
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Lógica para encontrar los separadores mínimos
+        // Lógica para encontrar separadores mínimos
         return separators;
     }
 
-    // Clase de ejemplo para representar una arista
+    // Clase de ejemplo para Edge
     private class Edge {
         int start;
         int end;

@@ -1,5 +1,4 @@
 public class LogCalculator {
-
     /**
      * Calcula el piso($\log_2 (n)$) $+ 1$
      * @param n el número del cual se calculará el logaritmo

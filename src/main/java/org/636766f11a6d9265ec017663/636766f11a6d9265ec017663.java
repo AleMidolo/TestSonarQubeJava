@@ -1,5 +1,5 @@
 public class ArrayLengthChecker {
-
+    
     /** 
      * <p>Verifica si dos arreglos tienen la misma longitud, tratando los arreglos <code>null</code> como longitud <code>0</code>.</p>
      * @param array1 el primer arreglo, puede ser <code>null</code>
@@ -16,7 +16,7 @@ public class ArrayLengthChecker {
         double[] arr1 = {1.0, 2.0, 3.0};
         double[] arr2 = {4.0, 5.0, 6.0};
         double[] arr3 = null;
-
+        
         System.out.println(isSameLength(arr1, arr2)); // true
         System.out.println(isSameLength(arr1, arr3)); // false
         System.out.println(isSameLength(arr3, arr3)); // true

@@ -18,7 +18,7 @@ public class FilePathSeparator {
 
     public static void main(String[] args) {
         // Ejemplos de uso
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 17
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 20
         System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 14
         System.out.println(indexOfLastSeparator("file.txt")); // -1
         System.out.println(indexOfLastSeparator(null)); // -1

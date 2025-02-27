@@ -10,11 +10,11 @@ public class FieldChecker {
      */
     private void checkIfPackedField() throws IOException {
         // Simulación de la verificación de un campo empaquetado
-        // Aquí se puede incluir la lógica para determinar si el campo está empaquetado
-        // Por ejemplo, se puede leer un byte o un conjunto de bytes y verificar su formato
+        // Aquí se debería incluir la lógica real para determinar si el campo está empaquetado
+        // Por ejemplo, podríamos leer un byte o un conjunto de bytes de un flujo de datos
 
-        // Supongamos que hemos leído un byte que indica si el campo está empaquetado
-        byte fieldIndicator = readFieldIndicator(); // Método simulado para leer el indicador del campo
+        // Supongamos que hemos leído un byte y verificamos si indica un campo empaquetado
+        byte fieldIndicator = readFieldIndicator(); // Método simulado para leer un indicador de campo
 
         if (fieldIndicator == 1) { // Supongamos que 1 indica un campo empaquetado
             isPackedField = true;
@@ -23,9 +23,14 @@ public class FieldChecker {
         }
     }
 
+    // Método simulado para leer un indicador de campo
     private byte readFieldIndicator() {
-        // Simulación de lectura de un indicador de campo
-        // En una implementación real, esto podría leer de un flujo de datos
-        return 1; // Retornamos 1 para simular que el campo está empaquetado
+        // Lógica para leer el indicador de campo desde un flujo de datos
+        // Retornamos un valor simulado
+        return 1; // Simulando que el campo está empaquetado
+    }
+
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

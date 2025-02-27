@@ -23,11 +23,11 @@ public class StackFrameExtractor {
                 }
             }
         } else {
-            // Si no es un descriptor de método, se puede tratar como un tipo simple
+            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
             extractedTypes.add(descriptor);
         }
 
-        // Aquí se podría realizar alguna acción con los tipos extraídos
+        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
         for (String type : extractedTypes) {
             System.out.println("Tipo extraído: " + type);
         }
@@ -35,7 +35,6 @@ public class StackFrameExtractor {
 
     public static void main(String[] args) {
         StackFrameExtractor extractor = new StackFrameExtractor();
-        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
-        extractor.pop("Ljava/lang/String;"); // Ejemplo de un tipo simple
+        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
     }
 }

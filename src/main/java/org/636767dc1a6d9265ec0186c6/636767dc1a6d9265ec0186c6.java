@@ -2,7 +2,7 @@ public class FieldChecker {
 
     private Fields storedFields;
 
-    /** 
+    /**
      * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
@@ -19,7 +19,7 @@ public class FieldChecker {
         return true;
     }
 
-    // Assuming a Fields class exists with necessary methods
+    // Assuming a Fields class exists with the necessary methods
     public static class Fields {
         private Set<String> fieldNames;
 

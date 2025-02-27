@@ -15,22 +15,28 @@ public class GraphUtils {
      * @return true si el subgrafo inducido es un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        if (vertices.size() < 2) {
-            return true; // Un solo vértice o ninguno siempre es un clique
-        }
+        // Check if the number of edges in the induced subgraph is equal to the number of edges in a complete graph
+        int vertexCount = vertices.size();
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2;
 
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Si no hay una arista entre dos vértices, no es un clique
+        int actualEdges = 0;
+        for (V vertex : vertices) {
+            for (E edge : graph.outgoingEdgesOf(vertex)) {
+                V targetVertex = graph.getEdgeTarget(edge);
+                if (vertices.contains(targetVertex)) {
+                    actualEdges++;
                 }
             }
         }
-        return true; // Todos los pares de vértices están conectados
+
+        // Each edge is counted twice (once from each vertex), so divide by 2
+        actualEdges /= 2;
+
+        return actualEdges == expectedEdges;
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
+        // Example usage
         Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
         graph.addVertex("A");
         graph.addVertex("B");
@@ -40,6 +46,7 @@ public class GraphUtils {
         graph.addEdge("B", "C");
 
         Set<String> vertices = Set.of("A", "B", "C");
-        System.out.println(isClique(graph, vertices)); // Debería imprimir true
+        boolean result = isClique(graph, vertices);
+        System.out.println("Is clique: " + result); // Should print true
     }
 }

@@ -1,7 +1,6 @@
 import java.util.List;
 
 public class StringUtils {
-
     /** 
      * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado. 
      */
@@ -20,8 +19,8 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        List<String> searchStrArray = List.of("abc", "def", "ghi");
-        String str = "Abcdef";
+        List<String> searchStrArray = List.of("abc", "def", "GHI");
+        String str = "Hello, this is a test string containing ABC.";
         boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println("Contains any: " + result); // Debería imprimir: Contains any: true
     }

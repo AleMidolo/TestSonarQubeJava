@@ -3,7 +3,7 @@ public class MyClass {
     private StringBuilder stringBuilder;
 
     public MyClass() {
-        stringBuilder = new StringBuilder();
+        this.stringBuilder = new StringBuilder();
     }
 
     /** 
@@ -14,5 +14,14 @@ public class MyClass {
         return stringBuilder.toString();
     }
 
-    // Additional methods to manipulate the stringBuilder can be added here
+    public void append(String str) {
+        stringBuilder.append(str);
+    }
+
+    public static void main(String[] args) {
+        MyClass myClass = new MyClass();
+        myClass.append("Hello, ");
+        myClass.append("World!");
+        System.out.println(myClass.toString()); // Output: Hello, World!
+    }
 }

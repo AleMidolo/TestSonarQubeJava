@@ -44,17 +44,4 @@ public final class UriMatcher {
             return matcher.groupCount();
         }
     }
-
-    public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(https?://)([\\w.-]+)(/.*)?$");
-        MatchResult result = uriMatcher.match("https://example.com/path");
-
-        if (result != null) {
-            System.out.println("Match found!");
-            System.out.println("Full match: " + result.group(0));
-            System.out.println("Host: " + result.group(2));
-        } else {
-            System.out.println("No match found.");
-        }
-    }
 }

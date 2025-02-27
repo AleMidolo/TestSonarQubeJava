@@ -18,7 +18,7 @@ public class StringTrimmer {
             if (c == leadingCharacter && !leadingCharFound) {
                 continue; // Skip leading character
             }
-            leadingCharFound = true; // Mark that we have found a non-leading character
+            leadingCharFound = true; // After the first non-leading character is found
             result.append(c);
         }
 

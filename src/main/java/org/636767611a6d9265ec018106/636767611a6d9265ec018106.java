@@ -2,9 +2,10 @@ import java.util.Set;
 
 public class Graph<V> {
     
-    // Assuming there's a method to get incoming edges for a vertex
+    // Assuming there's a method to get the incoming edges for a vertex
     private double getIncomingWeight(V vertex) {
-        // Placeholder for actual implementation
+        // This method should return the sum of weights of incoming edges to the vertex
+        // Placeholder implementation
         return 0.0;
     }
 

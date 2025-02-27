@@ -19,7 +19,7 @@ public class TimeBucketCompressor {
         // Calcular el nuevo día del año basado en el paso diario
         int newDayOfYear = (dayOfYear / pasoDiario) * pasoDiario;
         
-        // Obtener la nueva fecha a partir del nuevo día del año
+        // Obtener la nueva fecha
         java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
         
         // Reformatear la nueva fecha a formato largo

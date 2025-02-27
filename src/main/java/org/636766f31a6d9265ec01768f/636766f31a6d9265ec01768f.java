@@ -22,5 +22,10 @@ public class ArrayCloner {
         // Print original and cloned arrays
         System.out.println("Original: " + java.util.Arrays.toString(original));
         System.out.println("Cloned: " + java.util.Arrays.toString(cloned));
+        
+        // Test with null
+        char[] nullArray = null;
+        char[] clonedNull = clone(nullArray);
+        System.out.println("Cloned null array: " + clonedNull);
     }
 }

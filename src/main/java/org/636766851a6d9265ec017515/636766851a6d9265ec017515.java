@@ -1,7 +1,7 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Action;
 
-public class MyAtmosphereResourceInspector {
+public class MyAtmosphereHandler {
 
     /**
      * Suspende automáticamente el {@link AtmosphereResource} basado en el valor de {@link AtmosphereResource.TRANSPORT}.
@@ -13,12 +13,8 @@ public class MyAtmosphereResourceInspector {
         // Aquí se puede agregar lógica para suspender el recurso basado en el transporte
         // Por ejemplo, si el transporte es HTTP, se puede suspender el recurso
         if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // Lógica para manejar WebSocket
-        } else {
-            // Lógica para manejar otros transportes
+            r.suspend();
         }
-        
-        // Retornar CONTINUE como se indica en la documentación
         return Action.CONTINUE;
     }
 }

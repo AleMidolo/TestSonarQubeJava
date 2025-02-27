@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class StackMapTable {
 
-    private Object[] currentFrame; // Simulating the current frame with an Object array
+    private Object[] currentFrame; // Simulating the current frame with an array
     private Object[] stackMapTableEntries; // Simulating the stack map table entries
 
     /**
@@ -15,7 +15,7 @@ public class StackMapTable {
             throw new IllegalArgumentException("Invalid start or end indices");
         }
 
-        // Assuming stackMapTableEntries is initialized with a sufficient size
+        // Assuming stackMapTableEntries is initialized to the appropriate size
         int index = 0;
         for (int i = start; i < end; i++) {
             // Here we would convert the currentFrame types to the appropriate verification_type_info format
@@ -24,16 +24,12 @@ public class StackMapTable {
         }
     }
 
-    public StackMapTable(int currentFrameSize, int stackMapTableSize) {
-        this.currentFrame = new Object[currentFrameSize];
-        this.stackMapTableEntries = new Object[stackMapTableSize];
-    }
-
     public static void main(String[] args) {
-        StackMapTable stackMapTable = new StackMapTable(10, 10);
-        // Example usage
-        stackMapTable.currentFrame = new Object[]{"Type1", "Type2", "Type3", "Type4", "Type5"};
-        stackMapTable.putAbstractTypes(1, 4); // This will copy Type2, Type3, Type4
+        StackMapTable stackMapTable = new StackMapTable();
+        stackMapTable.currentFrame = new Object[]{"Type1", "Type2", "Type3", "Type4"};
+        stackMapTable.stackMapTableEntries = new Object[4]; // Initialize with a size
+
+        stackMapTable.putAbstractTypes(1, 3); // This will copy Type2 and Type3
         System.out.println(Arrays.toString(stackMapTable.stackMapTableEntries));
     }
 }

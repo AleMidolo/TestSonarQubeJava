@@ -20,9 +20,9 @@ public class Example {
     public static void main(String[] args) {
         Example example = new Example();
         example.setThrown(new Exception("An error occurred"));
-        System.out.println(example.hasThrown()); // Output: true
+        System.out.println(example.hasThrown()); // Should print true
 
         example.setThrown(null);
-        System.out.println(example.hasThrown()); // Output: false
+        System.out.println(example.hasThrown()); // Should print false
     }
 }

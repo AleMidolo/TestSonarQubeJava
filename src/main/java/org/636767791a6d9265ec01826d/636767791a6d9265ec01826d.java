@@ -8,10 +8,10 @@ public class VariableSubstitutor {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // or throw an exception based on your needs
+            return null;
         }
 
-        // Perform variable substitution
+        // Realiza la sustitución de variables
         for (String propKey : props.stringPropertyNames()) {
             String placeholder = "${" + propKey + "}";
             value = value.replace(placeholder, props.getProperty(propKey));

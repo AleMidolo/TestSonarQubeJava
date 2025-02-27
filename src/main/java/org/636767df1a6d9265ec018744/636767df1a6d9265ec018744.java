@@ -12,7 +12,7 @@ public class TimeRangeBuilder {
         List<TimeRange> timeRanges = new ArrayList<>();
 
         if (inicio >= fin) {
-            return timeRanges; // Return empty list if the start time is not less than the end time
+            return timeRanges; // Return empty list if the start time is not less than end time
         }
 
         long currentStart = inicio;
@@ -25,10 +25,9 @@ public class TimeRangeBuilder {
         return timeRanges;
     }
 
-    // Inner class to represent a time range
     public static class TimeRange {
-        private long start;
-        private long end;
+        private final long start;
+        private final long end;
 
         public TimeRange(long start, long end) {
             this.start = start;

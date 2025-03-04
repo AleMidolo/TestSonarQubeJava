@@ -15,7 +15,7 @@ public class CollectionUtils {
         }
         
         for (Object obj : collection) {
-            if (obj == element) {
+            if (obj == element) { // Check reference equality, not equals()
                 return true;
             }
         }

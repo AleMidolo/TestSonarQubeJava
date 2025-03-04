@@ -35,7 +35,7 @@ public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
             }
         }
 
-        // Add edges between all vertices of different partitions
+        // Add edges between all vertices in partition1 and partition2
         for(V v1 : partition1) {
             for(V v2 : partition2) {
                 target.addEdge(v1, v2);

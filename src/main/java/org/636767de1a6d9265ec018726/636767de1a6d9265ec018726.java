@@ -39,10 +39,11 @@ public class SequenceRangeBuilder {
         
         return ranges;
     }
-    
+
+    // Helper method to get current sequence
     private long getCurrentSequence() {
-        // Implementation to get current sequence number
-        // This could come from a database or other source
-        return System.currentTimeMillis(); 
+        // Implementation would depend on how sequences are tracked
+        // This is just a placeholder
+        return 5000;
     }
 }

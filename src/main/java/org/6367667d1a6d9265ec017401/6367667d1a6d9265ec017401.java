@@ -28,17 +28,14 @@ public class StringEscapeUtils {
             if (ch == '\\') {
                 if (i + 1 < str.length()) {
                     // Check for unicode escape sequence
-                    if (str.charAt(i + 1) == 'u') {
-                        if (i + 5 < str.length()) {
-                            // Get 4 hex digits
-                            String hex = str.substring(i + 2, i + 6);
-                            try {
-                                result.append((char) Integer.parseInt(hex, 16));
-                                i += 5;
-                                continue;
-                            } catch (NumberFormatException e) {
-                                throw new Exception("Invalid unicode escape sequence: \\u" + hex);
-                            }
+                    if (str.charAt(i + 1) == 'u' && i + 5 < str.length()) {
+                        String hex = str.substring(i + 2, i + 6);
+                        try {
+                            result.append((char) Integer.parseInt(hex, 16));
+                            i += 5;
+                            continue;
+                        } catch (NumberFormatException e) {
+                            throw new Exception("Invalid unicode escape sequence: \\u" + hex);
                         }
                     }
                     

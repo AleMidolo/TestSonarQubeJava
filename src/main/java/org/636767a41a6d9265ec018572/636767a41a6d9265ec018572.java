@@ -16,7 +16,7 @@ public class VarintReader {
         while (shift < 64) {
             int b = input.read();
             if (b == -1) {
-                throw new IOException("Malformed varint - reached end of stream");
+                throw new IOException("Malformed varint - unexpected end of stream");
             }
             position++;
             result |= (long)(b & 0x7F) << shift;

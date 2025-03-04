@@ -12,12 +12,12 @@ public class DotUtils {
             return input;
         }
 
-        // Check if the string starts and ends with quotes
+        // Check if string is quoted
         if (input.startsWith("\"") && input.endsWith("\"")) {
-            // Remove the surrounding quotes
+            // Remove quotes
             String unquoted = input.substring(1, input.length() - 1);
             
-            // Replace escaped quotes with regular quotes
+            // Replace escaped quotes
             unquoted = unquoted.replace("\\\"", "\"");
             
             // Replace escaped newlines
@@ -32,7 +32,6 @@ public class DotUtils {
             return unquoted;
         }
 
-        // If not quoted, return as is
         return input;
     }
 }

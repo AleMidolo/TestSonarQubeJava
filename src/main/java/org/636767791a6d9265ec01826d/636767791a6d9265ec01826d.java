@@ -22,17 +22,17 @@ public class PropertyUtils {
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
+        // Replace each ${variable} with its value from properties
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
+            String varValue = props.getProperty(varName);
             
-            // If no replacement found, leave original ${var} text
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
+            // If variable not found, leave as is
+            if (varValue == null) {
+                varValue = "${" + varName + "}";
             }
             
-            // Quote replacement string to handle special regex chars
-            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
         }
         matcher.appendTail(result);
 

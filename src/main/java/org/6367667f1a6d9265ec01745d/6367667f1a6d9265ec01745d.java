@@ -25,16 +25,21 @@ public class URIPathDecoder {
             return segments;
         }
 
-        // Get path and remove leading slash if present
         String path = u.getPath();
+        
+        // Remove leading '/' for absolute paths
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-
+        
+        // Handle empty path
+        if (path.isEmpty()) {
+            return segments;
+        }
+        
         // Split path into segments
         String[] rawSegments = path.split("/");
-
-        // Process each segment
+        
         for (String segment : rawSegments) {
             if (segment.isEmpty()) {
                 continue;
@@ -51,7 +56,7 @@ public class URIPathDecoder {
             
             segments.add(new PathSegmentImpl(segment));
         }
-
+        
         return segments;
     }
 }

@@ -1,6 +1,7 @@
-package utils;
+import java.util.Objects;
 
 public class StringUtils {
+
     /**
      * Returns {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.
      * @param str the String to check
@@ -12,9 +13,11 @@ public class StringUtils {
         if (str == null || prefix == null) {
             return false;
         }
+        
         if (prefix.length() > str.length()) {
             return false;
         }
+        
         return str.regionMatches(true, 0, prefix, 0, prefix.length());
     }
 }

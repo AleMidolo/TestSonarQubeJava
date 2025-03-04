@@ -11,28 +11,26 @@ public class ShardingKeyValidator {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
         
-        // Assuming sharding key indices are stored in a list/array
-        // This is a sample implementation - actual logic would depend on how indices are stored
-        int[] indices = getShardingKeyIndices(modelName);
-        
-        if (indices.length == 0) {
-            return; // No sharding keys to validate
+        // Validate that model name follows expected format
+        if (!modelName.matches("^[a-zA-Z0-9_]+$")) {
+            throw new IllegalStateException("Model name contains invalid characters");
         }
         
-        // Check if indices are continuous (no gaps)
-        for (int i = 0; i < indices.length - 1; i++) {
-            if (indices[i + 1] != indices[i] + 1) {
-                throw new IllegalStateException(
-                    String.format("Non-continuous sharding key indices found for model %s", modelName)
-                );
+        // Check if sharding key indices are continuous
+        // This is a placeholder implementation - actual logic would depend on how indices are stored/retrieved
+        int[] indices = getShardingKeyIndices(modelName);
+        if (indices != null && indices.length > 0) {
+            for (int i = 0; i < indices.length - 1; i++) {
+                if (indices[i + 1] - indices[i] != 1) {
+                    throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
+                }
             }
         }
     }
     
-    // Helper method to get sharding indices
+    // Helper method to get sharding indices - implementation would depend on actual data source
     private int[] getShardingKeyIndices(String modelName) {
-        // Implementation would depend on how indices are actually stored
-        // This is just a placeholder
-        return new int[0];
+        // Placeholder implementation
+        return new int[]{0, 1, 2, 3};
     }
 }

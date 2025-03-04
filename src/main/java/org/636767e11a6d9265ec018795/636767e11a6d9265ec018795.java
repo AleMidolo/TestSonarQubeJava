@@ -1,24 +1,19 @@
 import java.util.Objects;
 
-public class DataTable {
-    private String bucket;
+public class DataTableUtils {
+    private List<String> buckets;
     
-    public DataTable(String bucket) {
-        this.bucket = bucket;
-    }
-
     /**
-     * @return true if the bucket is same.
+     * Checks if the bucket is compatible with the given dataset
+     * @param dataset The dataset to compare buckets with
+     * @return true if the bucket is same
      */
     public boolean isCompatible(DataTable dataset) {
         if (dataset == null) {
             return false;
         }
-        return Objects.equals(this.bucket, dataset.bucket);
-    }
-
-    // Getter for bucket
-    public String getBucket() {
-        return bucket;
+        
+        // Compare buckets
+        return Objects.equals(this.buckets, dataset.getBuckets());
     }
 }

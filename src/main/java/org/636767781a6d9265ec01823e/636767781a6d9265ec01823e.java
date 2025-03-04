@@ -21,29 +21,30 @@ public class SocketAppender extends AppenderSkeleton {
         
         // Remove any disconnected clients
         List<Integer> disconnectedIndexes = new ArrayList<>();
-        
-        // Write message to each connected client
-        for (int i = 0; i < clientWriters.size(); i++) {
-            PrintWriter writer = clientWriters.get(i);
-            try {
-                writer.println(message);
-                writer.flush();
-            } catch (Exception e) {
-                // Client likely disconnected, mark for removal
+        for (int i = 0; i < connectedClients.size(); i++) {
+            Socket client = connectedClients.get(i);
+            if (client.isClosed() || !client.isConnected()) {
                 disconnectedIndexes.add(i);
             }
         }
         
-        // Remove disconnected clients
+        // Remove from end to avoid index shifting
         for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
             int index = disconnectedIndexes.get(i);
-            try {
-                connectedClients.get(index).close();
-            } catch (IOException e) {
-                // Ignore close errors
-            }
             connectedClients.remove(index);
             clientWriters.remove(index);
+        }
+
+        // Write message to all connected clients
+        for (PrintWriter writer : clientWriters) {
+            try {
+                writer.println(message);
+                writer.flush();
+            } catch (Exception e) {
+                // Handle failed write
+                errorHandler.error("Failed to write to client", e, 
+                    ErrorCode.WRITE_FAILURE);
+            }
         }
     }
 
@@ -54,9 +55,9 @@ public class SocketAppender extends AppenderSkeleton {
 
     @Override
     public void close() {
-        for (Socket socket : connectedClients) {
+        for (Socket client : connectedClients) {
             try {
-                socket.close();
+                client.close();
             } catch (IOException e) {
                 // Ignore close errors
             }

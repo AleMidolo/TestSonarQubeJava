@@ -31,7 +31,7 @@ public class Logger {
                     lr.getSourceMethodName()
                 });
                 
-                // Auto scroll to latest entry
+                // Auto scroll to the bottom
                 int lastRow = logTable.getModel().getRowCount() - 1;
                 if (lastRow >= 0) {
                     logTable.scrollRectToVisible(

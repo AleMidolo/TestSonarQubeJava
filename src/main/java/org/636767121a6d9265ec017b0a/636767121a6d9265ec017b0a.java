@@ -13,6 +13,7 @@ public class HeaderParser {
         
         // Search for \r\n sequence
         while (index < headerPart.length()) {
+            // Check for \r\n sequence
             if (index + 1 < headerPart.length() && 
                 headerPart.charAt(index) == '\r' && 
                 headerPart.charAt(index + 1) == '\n') {

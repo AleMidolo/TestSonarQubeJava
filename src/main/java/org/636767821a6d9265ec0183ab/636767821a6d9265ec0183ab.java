@@ -5,11 +5,11 @@ public class Exception {
      * @return true if getThrown().toString() is a non-empty string.
      */
     public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
+        if (thrown != null) {
+            String thrownString = thrown.toString();
+            return thrownString != null && !thrownString.isEmpty();
         }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+        return false;
     }
 
     public Throwable getThrown() {

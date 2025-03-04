@@ -14,16 +14,15 @@ public class BeanMapUtils {
             String propertyName = (String) entry.getKey();
             
             // Check if property is writable
-            if (map.getWriteMethod(propertyName) != null) {
+            if (map.isWriteable(propertyName)) {
                 Object value = entry.getValue();
                 try {
                     // Only put if property exists and is writable
-                    if (this.containsKey(propertyName) && 
-                        this.getWriteMethod(propertyName) != null) {
+                    if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
                         this.put(propertyName, value);
                     }
-                } catch (Exception e) {
-                    // Skip property if there's an error setting it
+                } catch (IllegalArgumentException e) {
+                    // Skip properties that can't be written
                     continue;
                 }
             }

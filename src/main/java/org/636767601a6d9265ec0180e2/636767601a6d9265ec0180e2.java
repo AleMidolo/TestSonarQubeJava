@@ -37,13 +37,13 @@ public class MinimalSeparators {
                 }
             }
             
-            // Also check pairs of common neighbors
-            List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < commonNeighborsList.size(); i++) {
-                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
+            // Check pairs of common neighbors
+            List<Integer> neighborsList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < neighborsList.size(); i++) {
+                for (int j = i + 1; j < neighborsList.size(); j++) {
                     Set<Integer> potentialSeparator = new HashSet<>();
-                    potentialSeparator.add(commonNeighborsList.get(i));
-                    potentialSeparator.add(commonNeighborsList.get(j));
+                    potentialSeparator.add(neighborsList.get(i));
+                    potentialSeparator.add(neighborsList.get(j));
                     
                     if (isMinimalSeparator(u, v, potentialSeparator)) {
                         globalSeparators.add(new HashSet<>(potentialSeparator));
@@ -57,23 +57,31 @@ public class MinimalSeparators {
     
     private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
         // Create a graph copy without the separator vertices
-        Graph tempGraph = graph.copy();
+        Graph reducedGraph = graph.copy();
         for (Integer v : separator) {
-            tempGraph.removeVertex(v);
+            reducedGraph.removeVertex(v);
         }
         
         // Check if source and target are disconnected
-        return !hasPath(tempGraph, source, target, new HashSet<>());
+        return !hasPath(reducedGraph, source, target);
     }
     
-    private boolean hasPath(Graph g, int current, int target, Set<Integer> visited) {
-        if (current == target) return true;
-        visited.add(current);
+    private boolean hasPath(Graph g, int source, int target) {
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(source);
+        visited.add(source);
         
-        for (Integer neighbor : g.getNeighbors(current)) {
-            if (!visited.contains(neighbor)) {
-                if (hasPath(g, neighbor, target, visited)) {
-                    return true;
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            if (current == target) {
+                return true;
+            }
+            
+            for (Integer neighbor : g.getNeighbors(current)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
                 }
             }
         }
@@ -81,9 +89,8 @@ public class MinimalSeparators {
         return false;
     }
     
-    // Helper classes
-    
-    class Edge {
+    // Helper class for representing edges
+    private static class Edge {
         private int source;
         private int target;
         
@@ -92,47 +99,20 @@ public class MinimalSeparators {
             this.target = target;
         }
         
-        public int getSource() { return source; }
-        public int getTarget() { return target; }
+        public int getSource() {
+            return source;
+        }
+        
+        public int getTarget() {
+            return target;
+        }
     }
     
-    class Graph {
-        private Map<Integer, Set<Integer>> adjacencyList;
-        
-        public Graph() {
-            adjacencyList = new HashMap<>();
-        }
-        
-        public Set<Edge> getEdges() {
-            Set<Edge> edges = new HashSet<>();
-            for (int v : adjacencyList.keySet()) {
-                for (int u : adjacencyList.get(v)) {
-                    if (v < u) { // avoid duplicates
-                        edges.add(new Edge(v, u));
-                    }
-                }
-            }
-            return edges;
-        }
-        
-        public Set<Integer> getNeighbors(int vertex) {
-            return adjacencyList.getOrDefault(vertex, new HashSet<>());
-        }
-        
-        public void removeVertex(int vertex) {
-            // Remove vertex and all its edges
-            adjacencyList.remove(vertex);
-            for (Set<Integer> neighbors : adjacencyList.values()) {
-                neighbors.remove(vertex);
-            }
-        }
-        
-        public Graph copy() {
-            Graph newGraph = new Graph();
-            for (Map.Entry<Integer, Set<Integer>> entry : adjacencyList.entrySet()) {
-                newGraph.adjacencyList.put(entry.getKey(), new HashSet<>(entry.getValue()));
-            }
-            return newGraph;
-        }
+    // Interface for the graph implementation
+    private interface Graph {
+        Set<Edge> getEdges();
+        Set<Integer> getNeighbors(int vertex);
+        void removeVertex(int vertex);
+        Graph copy();
     }
 }

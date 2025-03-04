@@ -22,8 +22,8 @@ public class SymbolTable {
             }
         }
         
-        // Add new type and return its index
+        // Add new type
         types.add(value);
-        return types.size() - 1;
+        return types.size() - 1; // Return new index
     }
 }

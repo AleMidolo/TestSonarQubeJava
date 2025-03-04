@@ -44,6 +44,7 @@ public class ConverterRegistry {
     }
 }
 
+// Interfaccia Converter necessaria per il funzionamento
 interface Converter {
     Object convert(Object source);
 }

@@ -62,6 +62,6 @@ public class TourConverter {
             weight += graph.getEdgeWeight(edge);
         }
         
-        return new GraphWalk<>(graph, vertexList, weight);
+        return new GraphWalk<>(graph, vertexList, edgeList, weight);
     }
 }

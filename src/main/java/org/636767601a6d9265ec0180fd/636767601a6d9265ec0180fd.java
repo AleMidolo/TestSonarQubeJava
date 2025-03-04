@@ -1,24 +1,20 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Graph<V,E> {
-    // Internal map to store adjacency lists
-    private Map<V, List<Edge<V,E>>> adjacencyMap;
-    
-    // Edge class to store edge information
-    private static class Edge<V,E> {
-        private V source;
-        private V target;
-        private E data;
-        
-        public Edge(V source, V target, E data) {
-            this.source = source;
-            this.target = target;
-            this.data = data;
-        }
-    }
-    
+    // Internal maps to store graph data
+    private Map<V, Set<E>> outgoingEdges;
+    private Map<V, Set<E>> incomingEdges;
+    private Map<E, V> edgeSource;
+    private Map<E, V> edgeTarget;
+
     public Graph() {
-        adjacencyMap = new HashMap<>();
+        outgoingEdges = new HashMap<>();
+        incomingEdges = new HashMap<>();
+        edgeSource = new HashMap<>();
+        edgeTarget = new HashMap<>();
     }
 
     /**
@@ -28,16 +24,22 @@ public class Graph<V,E> {
      * @param e the edge
      */
     public void addEdge(V sourceVertex, V targetVertex, E e) {
-        // Create new edge
-        Edge<V,E> edge = new Edge<>(sourceVertex, targetVertex, e);
-        
-        // Add source vertex if it doesn't exist
-        adjacencyMap.putIfAbsent(sourceVertex, new ArrayList<>());
-        
-        // Add target vertex if it doesn't exist
-        adjacencyMap.putIfAbsent(targetVertex, new ArrayList<>());
-        
-        // Add edge to source vertex's adjacency list
-        adjacencyMap.get(sourceVertex).add(edge);
+        // Add vertices if they don't exist
+        if (!outgoingEdges.containsKey(sourceVertex)) {
+            outgoingEdges.put(sourceVertex, new HashSet<>());
+        }
+        if (!incomingEdges.containsKey(targetVertex)) {
+            incomingEdges.put(targetVertex, new HashSet<>());
+        }
+
+        // Add edge to outgoing edges of source vertex
+        outgoingEdges.get(sourceVertex).add(e);
+
+        // Add edge to incoming edges of target vertex  
+        incomingEdges.get(targetVertex).add(e);
+
+        // Store edge source and target
+        edgeSource.put(e, sourceVertex);
+        edgeTarget.put(e, targetVertex);
     }
 }

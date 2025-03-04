@@ -18,41 +18,35 @@ public class ProtocolParser {
      * @throws IOException If there is an error reading from the input stream
      */
     public int readTag() throws IOException {
-        // Check if we've reached EOF
-        int firstByte = input.read();
-        if (firstByte == -1) {
+        if (input.available() == 0) {
             return 0;
         }
+
+        int tag = 0;
+        int shift = 0;
         
-        position++;
-        
-        // For simple tags that fit in 1 byte
-        if ((firstByte & 0x80) == 0) {
-            return firstByte;
-        }
-        
-        // Handle multi-byte varint encoded tags
-        int result = firstByte & 0x7f;
-        int shift = 7;
-        
-        while (true) {
-            int nextByte = input.read();
-            if (nextByte == -1) {
-                throw new IOException("Malformed tag: truncated");
+        while (shift < 32) {
+            int b = input.read();
+            
+            // Check for EOF
+            if (b == -1) {
+                return shift == 0 ? 0 : tag;
             }
             
-            position++;
-            result |= (nextByte & 0x7f) << shift;
+            // Add the current byte to the tag
+            tag |= (b & 0x7F) << shift;
             
-            if ((nextByte & 0x80) == 0) {
-                return result;
+            // If the high bit is not set, we're done reading the tag
+            if ((b & 0x80) == 0) {
+                position += shift/7 + 1;
+                return tag;
             }
             
             shift += 7;
-            if (shift >= 32) {
-                throw new IOException("Malformed tag: too many bytes");
-            }
         }
+        
+        // Tag is too long - protocol error
+        throw new IOException("Invalid tag: too many bytes");
     }
     
     /**

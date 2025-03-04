@@ -3,11 +3,11 @@ import java.util.List;
 
 public class Bucket {
     private List<Object> items;
-    private boolean removed;
+    private boolean isRemoved;
 
     public Bucket() {
         items = new ArrayList<>();
-        removed = false;
+        isRemoved = false;
     }
 
     /**
@@ -15,6 +15,6 @@ public class Bucket {
      */
     public void remove() {
         items.clear();
-        removed = true;
+        isRemoved = true;
     }
 }

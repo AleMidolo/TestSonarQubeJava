@@ -24,8 +24,8 @@ public class CharsetConverter {
   return Charset.defaultCharset().name();
   }
   
-  String normalized = charset.trim().toUpperCase();
-  String javaCharset = MIME_TO_JAVA_CHARSET.get(normalized);
+  String normalizedCharset = charset.trim().toUpperCase();
+  String javaCharset = MIME_TO_JAVA_CHARSET.get(normalizedCharset);
   
   if (javaCharset != null) {
   return javaCharset;

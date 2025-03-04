@@ -13,7 +13,7 @@ public class SetOperations<V> {
   // Create new set for result
   Set<V> result = new HashSet<>();
   
-  // Get smaller set to iterate over for better performance
+  // Get smaller set to iterate over
   Set<V> smaller = set1.size() < set2.size() ? set1 : set2;
   Set<V> larger = set1.size() < set2.size() ? set2 : set1;
 

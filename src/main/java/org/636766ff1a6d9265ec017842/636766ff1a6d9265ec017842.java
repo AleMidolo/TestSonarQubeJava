@@ -1,9 +1,6 @@
-package org.apache.commons.lang3;
+import java.util.Objects;
 
-/**
- * Utility class for converting between primitive and wrapper arrays
- */
-public class ArrayUtils {
+public class ArrayConverter {
 
   /**
   * <p>Converte un array di oggetti Double in primitivi.</p>
@@ -16,10 +13,11 @@ public class ArrayUtils {
   if (array == null) {
   return null;
   }
-  
+
   final double[] result = new double[array.length];
   for (int i = 0; i < array.length; i++) {
-  result[i] = array[i].doubleValue();
+  result[i] = Objects.requireNonNull(array[i], 
+  "Array element at index " + i + " is null");
   }
   return result;
   }

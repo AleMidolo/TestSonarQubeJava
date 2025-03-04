@@ -9,59 +9,52 @@ import org.elasticsearch.index.mapper.Mappings;
 public class MappingDiffer {
 
   public Mappings diffStructure(String tableName, Mappings mappings) {
+  try {
+  // Create empty mappings to store the diff
+  Mappings diffMappings = new Mappings.Builder().build();
+  
   if (mappings == null) {
-  return null;
+  return diffMappings;
   }
 
-  // Create new mappings builder
-  Mappings.Builder diffMappings = new Mappings.Builder();
-
-  // Get properties from input mappings
+  // Get the properties from input mappings
   Map<String, Object> properties = mappings.getSourceAsMap();
+  
   if (properties == null || properties.isEmpty()) {
-  return null;
+  return diffMappings;
   }
 
   // Get current index mappings
-  ImmutableOpenMap<String, MappingMetadata> currentMappings = getCurrentIndexMappings(tableName);
+  GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
+  GetMappingsResponse currentMappings = client.admin().indices()
+  .getMappings(request).actionGet();
   
-  // Compare and add fields that don't exist in current mappings
+  ImmutableOpenMap<String, MappingMetadata> indexMappings = 
+  currentMappings.getMappings().get(tableName);
+
+  if (indexMappings == null || indexMappings.isEmpty()) {
+  // If no current mappings exist, return input mappings without _source
+  Map<String, Object> newProps = new HashMap<>(properties);
+  newProps.remove("_source");
+  return new Mappings.Builder().sourceAsMap(newProps).build();
+  }
+
+  // Compare and build diff mappings
+  Map<String, Object> currentProps = indexMappings.get("_doc")
+  .getSourceAsMap();
+  Map<String, Object> diffProps = new HashMap<>();
+
   for (Map.Entry<String, Object> entry : properties.entrySet()) {
-  String fieldName = entry.getKey();
-  
-  if (!fieldExists(fieldName, currentMappings)) {
-  // Add field to diff mappings
-  diffMappings.field(fieldName, entry.getValue());
+  String field = entry.getKey();
+  if (!currentProps.containsKey(field) && !"_source".equals(field)) {
+  diffProps.put(field, entry.getValue());
   }
   }
 
-  // Remove _source field to avoid conflicts
-  diffMappings.removeField("_source");
+  return new Mappings.Builder().sourceAsMap(diffProps).build();
 
-  return diffMappings.build();
-  }
-
-  private ImmutableOpenMap<String, MappingMetadata> getCurrentIndexMappings(String indexName) {
-  try {
-  GetMappingsRequest request = new GetMappingsRequest().indices(indexName);
-  GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
-  return response.getMappings().get(indexName);
   } catch (Exception e) {
-  return ImmutableOpenMap.of();
+  throw new RuntimeException("Error calculating mapping differences", e);
   }
-  }
-
-  private boolean fieldExists(String fieldName, ImmutableOpenMap<String, MappingMetadata> currentMappings) {
-  try {
-  for (ObjectObjectCursor<String, MappingMetadata> cursor : currentMappings) {
-  Map<String, Object> sourceMap = cursor.value.getSourceAsMap();
-  if (sourceMap.containsKey(fieldName)) {
-  return true;
-  }
-  }
-  } catch (Exception e) {
-  return false;
-  }
-  return false;
   }
 }

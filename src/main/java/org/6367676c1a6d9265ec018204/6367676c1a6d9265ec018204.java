@@ -10,12 +10,12 @@ public class ArrayUtils {
   * @return il nuovo array (<code>null</code> se entrambi gli array forniti erano <code>null</code>)
   */
   public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-  // If both arrays are null, return null
+  // Return null if both arrays are null
   if (array1 == null && array2 == null) {
   return null;
   }
   
-  // If one array is null, return copy of the non-null array
+  // If one array is null, return copy of the other array
   if (array1 == null) {
   return array2.clone();
   }
@@ -28,19 +28,15 @@ public class ArrayUtils {
   
   // Add all elements from first array
   for (String s : array1) {
-  if (s != null) {
   result.add(s);
-  }
   }
   
   // Add all elements from second array
   for (String s : array2) {
-  if (s != null) {
   result.add(s);
   }
-  }
 
-  // Convert list to array and return
+  // Convert list back to array and return
   return result.toArray(new String[0]);
   }
 }

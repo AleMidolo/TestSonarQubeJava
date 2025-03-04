@@ -12,17 +12,16 @@ public class GraphUtils {
   // Per ogni coppia di vertici nel set
   for (V v1 : vertices) {
   for (V v2 : vertices) {
-  // Salta il confronto di un vertice con se stesso
-  if (v1.equals(v2)) {
-  continue;
-  }
-  // Se non esiste un arco tra i due vertici, non è un clique
+  // Se sono vertici diversi
+  if (!v1.equals(v2)) {
+  // Se non esiste un arco tra loro, non è un clique
   if (!graph.containsEdge(v1, v2)) {
   return false;
   }
   }
   }
-  // Se arriviamo qui, tutti i vertici sono collegati tra loro
+  }
+  // Se arriviamo qui, ogni coppia di vertici è collegata
   return true;
   }
 }

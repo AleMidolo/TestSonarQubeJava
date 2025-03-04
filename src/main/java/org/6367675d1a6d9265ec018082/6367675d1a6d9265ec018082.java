@@ -24,7 +24,7 @@ public class Graph {
   Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
   Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-  // Find edge between real nodes
+  // Find edge connecting the nodes
   for (Edge edge : edges) {
   if ((edge.getSource().equals(realCurrentNode) && edge.getDestination().equals(realNextNode)) ||
   (edge.getSource().equals(realNextNode) && edge.getDestination().equals(realCurrentNode))) {
@@ -39,11 +39,11 @@ public class Graph {
 class Node {
   private boolean isVirtual;
   private Node realNode;
-  
+
   public boolean isVirtual() {
   return isVirtual;
   }
-  
+
   public Node getRealNode() {
   return realNode;
   }
@@ -52,11 +52,11 @@ class Node {
 class Edge {
   private Node source;
   private Node destination;
-  
+
   public Node getSource() {
   return source;
   }
-  
+
   public Node getDestination() {
   return destination;
   }

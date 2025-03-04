@@ -14,19 +14,26 @@ public class FileHandler {
   }
   
   List<File> fileList = new ArrayList<>();
+  
+  // Add files to list
   for (File file : files) {
+  if (file != null) {
   fileList.add(file);
   }
+  }
   
+  // Reverse the list
   Collections.reverse(fileList);
   
+  // Process files in reverse order
   for (File file : fileList) {
-  add(file); // Assuming there's an add() method in the class
+  processFile(file);
   }
   }
   
-  // Placeholder for add method
-  private void add(File file) {
-  // Implementation of add method would go here
+  // Helper method to process individual files
+  private void processFile(File file) {
+  // Implementation for processing individual files would go here
+  // Left empty as it wasn't part of the original requirements
   }
 }

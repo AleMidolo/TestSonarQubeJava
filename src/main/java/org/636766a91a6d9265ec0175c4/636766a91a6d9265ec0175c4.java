@@ -1,11 +1,7 @@
 import java.util.Stack;
 
-public class FrameHandler {
-  private Stack<String> outputStack;
-
-  public FrameHandler() {
-  this.outputStack = new Stack<>();
-  }
+public class FrameStack {
+  private Stack<String> stack;
 
   /**
   * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
@@ -26,43 +22,54 @@ public class FrameHandler {
   index++;
   continue;
   case ')':
-  // Stop at closing parenthesis
+  // End of method arguments
   return;
   case 'B':
-  case 'C':
-  case 'D':
-  case 'F':
+  case 'C': 
   case 'I':
-  case 'J':
   case 'S':
   case 'Z':
-  // Pop primitive types
-  if (!outputStack.isEmpty()) {
-  outputStack.pop();
+  case 'F':
+  // Pop single slot types
+  if (!stack.isEmpty()) {
+  stack.pop();
   }
-  if (c == 'D' || c == 'J') {
-  // Double and Long take two stack slots
-  if (!outputStack.isEmpty()) {
-  outputStack.pop();
+  index++;
+  break;
+  case 'D':
+  case 'J':
+  // Pop double slot types
+  if (!stack.isEmpty()) {
+  stack.pop();
+  if (!stack.isEmpty()) {
+  stack.pop();
   }
   }
   index++;
   break;
   case 'L':
-  // Pop object reference type
-  if (!outputStack.isEmpty()) {
-  outputStack.pop();
+  // Skip until semicolon for object types
+  if (!stack.isEmpty()) {
+  stack.pop();
   }
-  // Skip to semicolon
   index = descriptor.indexOf(';', index) + 1;
   break;
   case '[':
-  // Skip array dimension
+  // Skip array dimensions
+  while (index < descriptor.length() && descriptor.charAt(index) == '[') {
   index++;
+  }
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
+  index = descriptor.indexOf(';', index) + 1;
+  } else {
+  index++;
+  }
   break;
   default:
   index++;
-  break;
   }
   }
   }

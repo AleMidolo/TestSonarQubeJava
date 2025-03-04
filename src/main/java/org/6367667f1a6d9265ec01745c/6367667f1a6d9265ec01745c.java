@@ -18,11 +18,8 @@ public class ClassPathUtils {
 
   // Ottiene la lista di tutti i file nella directory
   File[] files = directory.listFiles();
-  if (files == null) {
-  return;
-  }
-
-  // Itera su tutti i file
+  
+  if (files != null) {
   for (File file : files) {
   // Controlla se il file è un file JAR
   if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
@@ -33,8 +30,9 @@ public class ClassPathUtils {
   cpV.add(jarUrl);
   }
   } catch (Exception e) {
-  // Ignora eventuali errori di conversione
+  // Gestisce silenziosamente eventuali errori di conversione URL
   e.printStackTrace();
+  }
   }
   }
   }

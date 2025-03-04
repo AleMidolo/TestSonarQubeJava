@@ -1,12 +1,12 @@
 import java.util.Objects;
 
 public class ArrayUtils {
-
+  
   /**
-  * Empty array constant used for optimization
+  * Array vuoto statico di Double da riutilizzare
   */
   public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
-
+  
   /**
   * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
   * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>

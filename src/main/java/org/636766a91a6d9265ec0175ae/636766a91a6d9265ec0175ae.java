@@ -20,10 +20,10 @@ public class ByteVector {
   throw new IndexOutOfBoundsException("Invalid offset or length");
   }
   
-  // Copy bytes from input array
+  // Copy the bytes from byteArrayValue
   System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
   } else {
-  // Fill with null bytes if input array is null
+  // Fill with null bytes if byteArrayValue is null
   Arrays.fill(data, size, size + byteLength, (byte) 0);
   }
   
@@ -44,7 +44,7 @@ public class ByteVector {
   }
 
   // Getter for underlying array
-  public byte[] getData() {
+  public byte[] toByteArray() {
   return Arrays.copyOf(data, size);
   }
 }

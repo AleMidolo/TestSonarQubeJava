@@ -8,8 +8,8 @@ public class ByteReader {
   private InputStream input;
   private static final int BUFFER_SIZE = 8192;
 
-  public ByteReader(InputStream input) {
-  this.input = input;
+  public ByteReader(InputStream in) {
+  this.input = in;
   this.buffer = new byte[BUFFER_SIZE];
   this.position = 0;
   this.count = 0;

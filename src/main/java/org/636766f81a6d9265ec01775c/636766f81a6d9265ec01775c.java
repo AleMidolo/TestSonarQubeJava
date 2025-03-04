@@ -13,6 +13,7 @@ public class ObjectUtils {
   * ObjectUtils.toString("bat")  = "bat"
   * ObjectUtils.toString(Boolean.TRUE) = "true"
   * </pre>
+  *
   * @see StringUtils#defaultString(String)
   * @see String#valueOf(Object)
   * @param obj l'oggetto da <code>toString</code>, può essere null

@@ -12,28 +12,23 @@ public class ArrayUtils {
   return new String[0];
   }
   
-  // Count non-null elements
-  int nonNullCount = 0;
+  // Check if array contains any null elements
+  boolean hasNull = false;
   for (String element : array) {
-  if (element != null) {
-  nonNullCount++;
+  if (element == null) {
+  hasNull = true;
+  break;
   }
   }
   
   // If no null elements, return original array
-  if (nonNullCount == array.length) {
+  if (!hasNull) {
   return array;
   }
   
-  // Create new array with only non-null elements
-  String[] result = new String[nonNullCount];
-  int index = 0;
-  for (String element : array) {
-  if (element != null) {
-  result[index++] = element;
-  }
-  }
-  
-  return result;
+  // Create new array without null elements
+  return Arrays.stream(array)
+  .filter(Objects::nonNull)
+  .toArray(String[]::new);
   }
 }

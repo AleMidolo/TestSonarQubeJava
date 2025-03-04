@@ -10,7 +10,7 @@ public class ArrayMatcher {
   /**
   * Returns true if the contents of the internal array and the provided array match.
   * @param otherArray The array to compare against the internal array
-  * @return boolean True if arrays match, false otherwise
+  * @return boolean indicating if arrays match
   */
   public boolean matches(int[] otherArray) {
   if (otherArray == null || internalArray == null) {

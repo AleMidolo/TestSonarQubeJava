@@ -63,54 +63,53 @@ public class StringFormatter {
   }
   
   private static String formatArg(Object arg, String flags, String width, String precision, String conversion) {
-  String result;
+  if (arg == null) {
+  return "null";
+  }
   
+  String result;
   switch (conversion.charAt(0)) {
   case 's':
-  result = String.valueOf(arg);
-  if (precision != null) {
-  result = result.substring(0, Math.min(result.length(), Integer.parseInt(precision)));
-  }
+  result = arg.toString();
   break;
-  
   case 'd':
-  DecimalFormat df = new DecimalFormat();
-  df.setGroupingUsed(flags != null && flags.contains(","));
-  result = df.format(((Number)arg).longValue());
+  result = formatNumber(arg, flags, "#,##0");
   break;
-  
   case 'f':
-  DecimalFormat ff = new DecimalFormat();
-  ff.setGroupingUsed(flags != null && flags.contains(","));
-  if (precision != null) {
-  ff.setMaximumFractionDigits(Integer.parseInt(precision));
-  ff.setMinimumFractionDigits(Integer.parseInt(precision));
+  String pattern = "#,##0" + (precision != null ? "." + "0".repeat(Integer.parseInt(precision)) : ".0");
+  result = formatNumber(arg, flags, pattern);
+  break;
+  case 'x':
+  case 'X':
+  result = Integer.toHexString(((Number)arg).intValue());
+  if (conversion.equals("X")) {
+  result = result.toUpperCase();
   }
-  result = ff.format(((Number)arg).doubleValue());
   break;
-  
-  case 't':
-  SimpleDateFormat sdf = new SimpleDateFormat();
-  result = sdf.format((Date)arg);
-  break;
-  
   default:
-  result = String.valueOf(arg);
+  result = arg.toString();
   }
   
-  // Handle width padding
+  // Apply width padding
   if (width != null) {
-  int w = Integer.parseInt(width);
-  if (result.length() < w) {
-  String padding = flags != null && flags.contains("0") ? "0" : " ";
-  while (result.length() < w) {
-  result = flags != null && flags.contains("-") ? 
-  result + padding : 
-  padding + result;
-  }
+  int padWidth = Integer.parseInt(width);
+  if (result.length() < padWidth) {
+  char padChar = flags != null && flags.contains("0") ? '0' : ' ';
+  boolean leftAlign = flags != null && flags.contains("-");
+  String padding = String.valueOf(padChar).repeat(padWidth - result.length());
+  result = leftAlign ? result + padding : padding + result;
   }
   }
   
   return result;
+  }
+  
+  private static String formatNumber(Object number, String flags, String pattern) {
+  DecimalFormat df = new DecimalFormat(pattern);
+  if (flags != null && flags.contains("+") && number instanceof Number) {
+  double value = ((Number)number).doubleValue();
+  return value >= 0 ? "+" + df.format(value) : df.format(value);
+  }
+  return df.format(number);
   }
 }

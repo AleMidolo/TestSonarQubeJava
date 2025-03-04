@@ -9,11 +9,6 @@ public class FloatComparator {
   if (o1 == o2) {
   return 0;
   }
-  else if (o1 < o2) {
-  return -1;
-  }
-  else {
-  return 1;
-  }
+  return o1 < o2 ? -1 : 1;
   }
 }

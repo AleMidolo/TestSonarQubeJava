@@ -14,17 +14,16 @@ public class BucketLabeler {
   return;
   }
 
-  // Create bucket 0 if it doesn't exist
-  bucketsByLabel.putIfAbsent(0, new HashSet<>());
-  Set<Integer> zeroBucket = bucketsByLabel.get(0);
-
-  // Move vertices to bucket 0 and update labels
+  // Get or create bucket 0
+  Set<Integer> zeroBucket = bucketsByLabel.computeIfAbsent(0, k -> new HashSet<>());
+  
+  // Move all vertices to bucket 0 and update their labels
   for (Integer vertex : verticesToMove) {
   zeroBucket.add(vertex);
   labels.put(vertex, 0);
   }
-
-  // Clear min label bucket
+  
+  // Clear the min label bucket
   verticesToMove.clear();
   bucketsByLabel.remove(minLabel);
   }

@@ -10,7 +10,7 @@ public class KeyBoundCalculator {
   if (keys == null || keys.isEmpty()) {
   return 0;
   }
-
+  
   int minBound = Integer.MAX_VALUE;
   
   for (Integer key : keys) {
@@ -18,7 +18,7 @@ public class KeyBoundCalculator {
   minBound = key;
   }
   }
-
+  
   return minBound == Integer.MAX_VALUE ? 0 : minBound;
   }
 }

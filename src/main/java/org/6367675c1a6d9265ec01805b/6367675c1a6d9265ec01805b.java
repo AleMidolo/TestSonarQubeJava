@@ -5,7 +5,7 @@ public class TreeEdge {
   private TreeEdge next;
   private TreeNode source;
   private TreeNode target;
-  
+
   /**
   * Removes this edge from both doubly linked lists of tree edges.
   */

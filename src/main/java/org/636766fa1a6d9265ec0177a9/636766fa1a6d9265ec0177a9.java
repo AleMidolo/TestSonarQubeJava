@@ -17,17 +17,17 @@ public class ConstructorTracker {
   constructorTypes.add(abstractType);
   }
   }
-}
-
-// Abstract type class for demonstration
-abstract class AbstractType {
+  
+  // Abstract type class for demonstration
+  public static class AbstractType {
   private String typeName;
   
-  public AbstractType(String typeName) {
-  this.typeName = typeName;
+  public AbstractType(String name) {
+  this.typeName = name;
   }
   
   public String getTypeName() {
   return typeName;
+  }
   }
 }

@@ -16,7 +16,7 @@ public class ContentBuilder {
   }
 
   // Pattern to match @mentions
-  Pattern pattern = Pattern.compile("@(\\w+)");
+  Pattern pattern = Pattern.compile("@([\\w]+)");
   Matcher matcher = pattern.matcher(content);
   
   List<String> mentions = new ArrayList<>();
@@ -28,9 +28,10 @@ public class ContentBuilder {
 
   // If mentions found, process them
   if (!mentions.isEmpty()) {
-  // Replace @mentions with proper formatting
+  // Replace @mentions with HTML/markdown formatting
   for (String mention : mentions) {
-  content = content.replace("@" + mention, "<@" + mention + ">");
+  content = content.replace("@" + mention, 
+  String.format("<mention>%s</mention>", mention));
   }
   }
 

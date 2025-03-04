@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class OutputStreamWriter {
+  
   /**
   * @see OutputStream#write(byte[])
   */
@@ -38,6 +39,6 @@ public class OutputStreamWriter {
   */
   private void write(int b) throws IOException {
   // Implementation would depend on underlying output stream
-  throw new UnsupportedOperationException("Not implemented");
+  throw new UnsupportedOperationException("write() not implemented");
   }
 }

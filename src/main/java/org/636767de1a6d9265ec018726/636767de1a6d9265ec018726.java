@@ -4,17 +4,18 @@ import java.util.List;
 public class ProfileSegmentSearchRanges {
 
   /**
-  * Build current profiles segment snapshot search sequence ranges
-  * @return List of search range pairs
+  * build current profiles segment snapshot search sequence ranges
+  * @return List of search ranges for profile segments
   */
-  public List<SearchRange> buildSearchRanges() {
+  public List<SearchRange> buildProfileSegmentSearchRanges() {
   List<SearchRange> ranges = new ArrayList<>();
   
   // Add search ranges in sequence
-  ranges.add(new SearchRange(0, 100));
-  ranges.add(new SearchRange(100, 1000)); 
-  ranges.add(new SearchRange(1000, 10000));
-  ranges.add(new SearchRange(10000, Integer.MAX_VALUE));
+  ranges.add(new SearchRange(0, 100));  // First 100 segments
+  ranges.add(new SearchRange(100, 500)); // Next 400 segments
+  ranges.add(new SearchRange(500, 1000)); // Next 500 segments
+  ranges.add(new SearchRange(1000, 5000)); // Next 4000 segments
+  ranges.add(new SearchRange(5000, Integer.MAX_VALUE)); // Remaining segments
   
   return ranges;
   }

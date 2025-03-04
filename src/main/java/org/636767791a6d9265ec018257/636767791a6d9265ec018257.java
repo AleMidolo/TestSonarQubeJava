@@ -16,17 +16,18 @@ public class LogManager {
   */
   public void addLogRecord(final String message) {
   if (message == null || message.isEmpty()) {
+  LOGGER.log(Level.WARNING, "Attempted to log empty or null message");
   return;
   }
 
-  // Post to Event Dispatch Thread to ensure thread safety
+  // Ensure thread safety by running on EDT
   SwingUtilities.invokeLater(new Runnable() {
   @Override
   public void run() {
   try {
   logTable.addRow(message);
   } catch (Exception e) {
-  LOGGER.log(Level.SEVERE, "Error adding log record: " + e.getMessage(), e);
+  LOGGER.log(Level.SEVERE, "Error adding log message to table", e);
   }
   }
   });

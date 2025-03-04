@@ -23,11 +23,6 @@ public class PathUtils {
   return path;
   }
 
-  // Handle absolute relative path
-  if (relativePath.startsWith("/")) {
-  return relativePath;
-  }
-
   // Split the paths into components
   String[] pathParts = path.split("/");
   String[] relativeParts = relativePath.split("/");
@@ -42,9 +37,9 @@ public class PathUtils {
   }
   }
 
-  // Build result path
+  // Build new path
   StringBuilder result = new StringBuilder();
-  
+
   // Add path components minus the number of "../"
   for (int i = 0; i < pathParts.length - backCount; i++) {
   result.append(pathParts[i]).append("/");

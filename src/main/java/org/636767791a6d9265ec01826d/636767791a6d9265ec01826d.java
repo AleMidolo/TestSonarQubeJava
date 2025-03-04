@@ -30,13 +30,14 @@ public class PropertyResolver {
   String varName = matcher.group(1);
   String replacement = props.getProperty(varName);
   
-  // If no replacement found, leave original ${var} text
+  // If variable not found, leave as-is
   if (replacement == null) {
   replacement = "${" + varName + "}";
   }
   
-  // Quote replacement string to handle special regex chars
-  matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+  // Escape $ and \ in replacement string
+  replacement = replacement.replace("\\", "\\\\").replace("$", "\\$");
+  matcher.appendReplacement(result, replacement);
   }
   matcher.appendTail(result);
 

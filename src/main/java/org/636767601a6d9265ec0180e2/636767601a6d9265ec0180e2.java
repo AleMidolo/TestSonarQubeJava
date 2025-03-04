@@ -31,13 +31,13 @@ public class MinimalSeparators {
                 Set<Integer> potentialSeparator = new HashSet<>();
                 potentialSeparator.add(w);
                 
-                // Check if removing the potential separator disconnects u and v
+                // Check if removing potentialSeparator disconnects u and v
                 if (isMinimalSeparator(u, v, potentialSeparator)) {
-                    globalSeparators.add(potentialSeparator);
+                    globalSeparators.add(new HashSet<>(potentialSeparator));
                 }
             }
             
-            // Also check pairs of common neighbors
+            // Check pairs of common neighbors
             List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
             for (int i = 0; i < commonNeighborsList.size(); i++) {
                 for (int j = i + 1; j < commonNeighborsList.size(); j++) {
@@ -46,7 +46,7 @@ public class MinimalSeparators {
                     potentialSeparator.add(commonNeighborsList.get(j));
                     
                     if (isMinimalSeparator(u, v, potentialSeparator)) {
-                        globalSeparators.add(potentialSeparator);
+                        globalSeparators.add(new HashSet<>(potentialSeparator));
                     }
                 }
             }
@@ -56,32 +56,24 @@ public class MinimalSeparators {
     }
     
     private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a copy of the graph without the separator vertices
+        // Create a graph copy without the separator vertices
         Graph tempGraph = graph.copy();
         for (Integer v : separator) {
             tempGraph.removeVertex(v);
         }
         
         // Check if source and target are disconnected
-        return !hasPath(tempGraph, source, target);
+        return !hasPath(tempGraph, source, target, new HashSet<>());
     }
     
-    private boolean hasPath(Graph g, int source, int target) {
-        Set<Integer> visited = new HashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(source);
-        visited.add(source);
+    private boolean hasPath(Graph g, int current, int target, Set<Integer> visited) {
+        if (current == target) return true;
+        visited.add(current);
         
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            if (current == target) {
-                return true;
-            }
-            
-            for (Integer neighbor : g.getNeighbors(current)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
+        for (Integer neighbor : g.getNeighbors(current)) {
+            if (!visited.contains(neighbor)) {
+                if (hasPath(g, neighbor, target, visited)) {
+                    return true;
                 }
             }
         }
@@ -133,12 +125,10 @@ public class MinimalSeparators {
         }
         
         public void removeVertex(int vertex) {
-            // Remove the vertex and all its edges
-            Set<Integer> neighbors = adjacencyList.remove(vertex);
-            if (neighbors != null) {
-                for (int neighbor : neighbors) {
-                    adjacencyList.get(neighbor).remove(vertex);
-                }
+            // Remove vertex and all its edges
+            adjacencyList.remove(vertex);
+            for (Set<Integer> neighbors : adjacencyList.values()) {
+                neighbors.remove(vertex);
             }
         }
         

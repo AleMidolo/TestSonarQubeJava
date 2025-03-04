@@ -19,7 +19,7 @@ public class ConstructorTracker {
     }
 }
 
-// Abstract type class for demonstration
+// Abstract class to represent an abstract type
 abstract class AbstractType {
     private String typeName;
     

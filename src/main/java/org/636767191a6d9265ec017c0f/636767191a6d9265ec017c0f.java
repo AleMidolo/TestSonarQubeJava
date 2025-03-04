@@ -16,10 +16,10 @@ public class ByteVector {
         }
         
         int currentCapacity = buffer.length;
-        int requiredCapacity = this.size + size;
+        int neededCapacity = this.size + size;
         
-        if (requiredCapacity > currentCapacity) {
-            int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
+        if (neededCapacity > currentCapacity) {
+            int newCapacity = Math.max(currentCapacity * 2, neededCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

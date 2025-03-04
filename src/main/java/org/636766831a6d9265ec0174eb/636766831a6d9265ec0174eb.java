@@ -10,16 +10,16 @@ public class FileHandler {
      * @return List of files in reverse order
      */
     public List<File> addFilesInReverseOrder(File[] files) {
-        List<File> fileList = new ArrayList<>();
+        List<File> reversedFiles = new ArrayList<>();
         
         // Add files to list
         for (File file : files) {
-            fileList.add(file);
+            reversedFiles.add(file);
         }
         
         // Reverse the list
-        Collections.reverse(fileList);
+        Collections.reverse(reversedFiles);
         
-        return fileList;
+        return reversedFiles;
     }
 }

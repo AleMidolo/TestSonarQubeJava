@@ -10,9 +10,9 @@ public class ProtocolParser {
     }
 
     /**
-     * Attempt to read a field tag, returning zero if we have reached EOF. Protocol message parsers 
-     * use this to read tags, since a protocol message may legally end wherever a tag occurs, 
-     * and zero is not a valid tag number.
+     * Attempt to read a field tag, returning zero if we have reached EOF. 
+     * Protocol message parsers use this to read tags, since a protocol message 
+     * may legally end wherever a tag occurs, and zero is not a valid tag number.
      *
      * @return The tag number read, or 0 if EOF is reached
      * @throws IOException If there is an error reading from the input stream
@@ -26,36 +26,38 @@ public class ProtocolParser {
         
         position++;
         
-        // For protocol buffers, tags are encoded as varint
-        int tag = firstByte & 0x7F;
+        // For simple tags that fit in 1 byte
         if ((firstByte & 0x80) == 0) {
-            return tag;
+            return firstByte;
         }
         
-        // Handle multi-byte tag
+        // Handle multi-byte varint encoded tags
+        int result = firstByte & 0x7f;
         int shift = 7;
-        while (shift < 32) {
+        
+        while (true) {
             int nextByte = input.read();
             if (nextByte == -1) {
                 throw new IOException("Malformed tag: truncated");
             }
             
             position++;
-            tag |= (nextByte & 0x7F) << shift;
+            result |= (nextByte & 0x7f) << shift;
             
             if ((nextByte & 0x80) == 0) {
-                return tag;
+                return result;
             }
             
             shift += 7;
+            if (shift >= 32) {
+                throw new IOException("Malformed tag: too many bytes");
+            }
         }
-        
-        // Tag is too long
-        throw new IOException("Malformed tag: too many bytes");
     }
     
     /**
      * Gets the current position in the input stream
+     * @return Current position
      */
     public int getPosition() {
         return position;

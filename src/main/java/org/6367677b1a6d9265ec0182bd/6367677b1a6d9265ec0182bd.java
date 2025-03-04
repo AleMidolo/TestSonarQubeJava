@@ -31,12 +31,13 @@ public class LogFormatter {
         Throwable throwable = event.getThrowable();
         if (throwable != null) {
             sb.append("\n");
+            sb.append(throwable.toString());
             for (StackTraceElement element : throwable.getStackTrace()) {
-                sb.append("\tat ").append(element.toString()).append("\n");
+                sb.append("\n\tat ").append(element.toString());
             }
         }
         
-        // Add newline
+        // Add new line
         sb.append("\n");
         
         try {

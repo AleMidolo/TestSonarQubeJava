@@ -20,7 +20,7 @@ public class HashCapacity {
         while (!isPrime(num)) {
             num += 2;
             
-            // Check if we've exceeded the 11% threshold for large capacities
+            // Check if we're exceeding 11% threshold for large capacities
             if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
                 // Go back to desired capacity and find previous prime
                 num = desiredCapacity;

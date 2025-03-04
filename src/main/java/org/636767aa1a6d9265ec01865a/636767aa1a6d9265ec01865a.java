@@ -7,14 +7,16 @@ public class LinkedBuffer {
     private int offset;
     private int size;
 
-    public int writeTo(final DataOutput out) throws IOException {
+    public int writeTo(DataOutput out) throws IOException {
         int totalSize = 0;
-        LinkedBuffer node = this;
+        LinkedBuffer current = this;
         
-        while (node != null && node.size > 0) {
-            out.write(node.buffer, node.offset, node.size);
-            totalSize += node.size;
-            node = node.next;
+        while (current != null) {
+            if (current.size > 0) {
+                out.write(current.buffer, current.offset, current.size);
+                totalSize += current.size;
+            }
+            current = current.next;
         }
         
         return totalSize;

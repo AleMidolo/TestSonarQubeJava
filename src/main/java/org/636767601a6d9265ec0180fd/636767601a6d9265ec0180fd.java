@@ -4,25 +4,42 @@ import java.util.Map;
 import java.util.Set;
 
 public class Graph<V,E> {
-    // Maps vertices to their adjacent edges
-    private Map<V, Set<E>> vertexMap;
+    // Internal maps to store graph data
+    private Map<V, Set<E>> outgoingEdges;
+    private Map<V, Set<E>> incomingEdges;
+    private Map<E, V> edgeSource;
+    private Map<E, V> edgeTarget;
 
     public Graph() {
-        vertexMap = new HashMap<>();
+        outgoingEdges = new HashMap<>();
+        incomingEdges = new HashMap<>();
+        edgeSource = new HashMap<>();
+        edgeTarget = new HashMap<>();
     }
 
     /**
      * Add an edge to the index.
-     * @param sourceVertex the source vertex  
-     * @param targetVertex the target vertex
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex  
      * @param e the edge
      */
     public void addEdge(V sourceVertex, V targetVertex, E e) {
-        // Create sets for vertices if they don't exist
-        vertexMap.putIfAbsent(sourceVertex, new HashSet<>());
-        vertexMap.putIfAbsent(targetVertex, new HashSet<>());
+        // Add vertices if they don't exist
+        if (!outgoingEdges.containsKey(sourceVertex)) {
+            outgoingEdges.put(sourceVertex, new HashSet<>());
+        }
+        if (!incomingEdges.containsKey(targetVertex)) {
+            incomingEdges.put(targetVertex, new HashSet<>());
+        }
 
-        // Add edge to source vertex's edge set
-        vertexMap.get(sourceVertex).add(e);
+        // Add edge to outgoing edges of source vertex
+        outgoingEdges.get(sourceVertex).add(e);
+
+        // Add edge to incoming edges of target vertex  
+        incomingEdges.get(targetVertex).add(e);
+
+        // Store edge source and target
+        edgeSource.put(e, sourceVertex);
+        edgeTarget.put(e, targetVertex);
     }
 }

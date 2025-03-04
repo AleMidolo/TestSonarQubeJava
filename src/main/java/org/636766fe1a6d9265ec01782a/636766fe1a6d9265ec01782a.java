@@ -1,40 +1,38 @@
 import java.nio.ByteBuffer;
 
-public class ClassReader {
-    private ByteBuffer classFileBuffer;
-    private char[] charBuffer;
+public class ConstantPoolReader {
+    private byte[] classFileBuffer;
+    private int[] cpInfoOffsets;
     
-    public String readUTF8(final int constantPoolEntryIndex, final char[] charBuffer) {
-        int currentIndex = classFileBuffer.position();
-        int utfLength = classFileBuffer.getShort(currentIndex) & 0xFFFF;
+    public String readUtf8(final int constantPoolEntryIndex, final char[] charBuffer) {
+        int currentOffset = cpInfoOffsets[constantPoolEntryIndex];
+        int utfLength = readUnsignedShort(currentOffset);
+        currentOffset += 2;
+        int charLength = 0;
+        int currentByte;
         
-        if (utfLength == 0) {
-            return "";
-        }
-        
-        int endIndex = currentIndex + 2 + utfLength;
-        int strLength = 0;
-        int index = currentIndex + 2;
-        byte[] classBuffer = classFileBuffer.array();
-        
-        while (index < endIndex) {
-            int currentByte = classBuffer[index++] & 0xFF;
+        // Compute the length of the UTF8 string in characters
+        int endOffset = currentOffset + utfLength;
+        while (currentOffset < endOffset) {
+            currentByte = classFileBuffer[currentOffset++] & 0xFF;
             if ((currentByte & 0x80) == 0) {
-                // Single byte character
-                charBuffer[strLength++] = (char) currentByte;
+                charBuffer[charLength++] = (char) currentByte;
             } else if ((currentByte & 0xE0) == 0xC0) {
-                // 2-byte character
-                charBuffer[strLength++] = (char) (((currentByte & 0x1F) << 6) 
-                    | (classBuffer[index++] & 0x3F));
+                charBuffer[charLength++] = 
+                    (char) (((currentByte & 0x1F) << 6) + 
+                           (classFileBuffer[currentOffset++] & 0x3F));
             } else {
-                // 3-byte character
-                charBuffer[strLength++] = (char) (((currentByte & 0xF) << 12)
-                    | ((classBuffer[index++] & 0x3F) << 6) 
-                    | (classBuffer[index++] & 0x3F));
+                charBuffer[charLength++] = 
+                    (char) (((currentByte & 0xF) << 12) + 
+                           ((classFileBuffer[currentOffset++] & 0x3F) << 6) + 
+                           (classFileBuffer[currentOffset++] & 0x3F));
             }
         }
         
-        classFileBuffer.position(endIndex);
-        return new String(charBuffer, 0, strLength);
+        return new String(charBuffer, 0, charLength);
+    }
+    
+    private int readUnsignedShort(final int offset) {
+        return ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
     }
 }

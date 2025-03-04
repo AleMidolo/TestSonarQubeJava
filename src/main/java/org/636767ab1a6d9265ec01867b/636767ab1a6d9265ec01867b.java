@@ -12,37 +12,33 @@ public class StringUtils {
             return 0;
         }
 
-        byte[] utf8Bytes = str.getBytes(StandardCharsets.UTF_8);
-        buffer.write(utf8Bytes);
-        return utf8Bytes.length;
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        buffer.write(bytes, 0, bytes.length);
+        return bytes.length;
     }
 }
 
 class LinkedBuffer {
     private byte[] buffer;
     private int position;
-    private static final int DEFAULT_CAPACITY = 256;
-
-    public LinkedBuffer() {
-        this(DEFAULT_CAPACITY);
-    }
-
+    
     public LinkedBuffer(int size) {
         buffer = new byte[size];
         position = 0;
     }
-
-    public void write(byte[] bytes) {
-        if (position + bytes.length > buffer.length) {
+    
+    public void write(byte[] bytes, int offset, int length) {
+        if (position + length > buffer.length) {
             // Resize buffer if needed
-            byte[] newBuffer = new byte[Math.max(buffer.length * 2, position + bytes.length)];
+            byte[] newBuffer = new byte[Math.max(buffer.length * 2, position + length)];
             System.arraycopy(buffer, 0, newBuffer, 0, position);
             buffer = newBuffer;
         }
-        System.arraycopy(bytes, 0, buffer, position, bytes.length);
-        position += bytes.length;
+        
+        System.arraycopy(bytes, offset, buffer, position, length);
+        position += length;
     }
-
+    
     public byte[] toByteArray() {
         byte[] result = new byte[position];
         System.arraycopy(buffer, 0, result, 0, position);

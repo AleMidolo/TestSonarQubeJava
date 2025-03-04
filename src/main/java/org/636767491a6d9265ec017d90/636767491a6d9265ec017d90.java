@@ -10,7 +10,7 @@ public class ArrayReverser {
         while (from < to) {
             // Swap elements at from and to indices
             V temp = arr[from];
-            arr[from] = arr[to]; 
+            arr[from] = arr[to];
             arr[to] = temp;
             
             from++;

@@ -14,21 +14,21 @@ public class Graph {
      * @return set of vertices with positive degree
      */
     public Set<Integer> getVerticesWithPositiveDegree() {
-        Set<Integer> verticesWithDegree = new HashSet<>();
+        Set<Integer> verticesWithEdges = new HashSet<>();
         
-        // Iterate through all edges in adjacency list
+        // Iterate through all adjacency lists
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
             int vertex = entry.getKey();
             List<Integer> neighbors = entry.getValue();
             
             // If vertex has any neighbors, add it to result set
             if (!neighbors.isEmpty()) {
-                verticesWithDegree.add(vertex);
+                verticesWithEdges.add(vertex);
                 // Also add all neighbors since they must have positive degree
-                verticesWithDegree.addAll(neighbors);
+                verticesWithEdges.addAll(neighbors);
             }
         }
         
-        return verticesWithDegree;
+        return verticesWithEdges;
     }
 }

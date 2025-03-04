@@ -19,6 +19,7 @@ public class DirectoryCreator {
         
         File directory = new File(mruDirectory);
         
+        // Create directory if it doesn't exist
         if (!directory.exists()) {
             directory.mkdirs();
         }

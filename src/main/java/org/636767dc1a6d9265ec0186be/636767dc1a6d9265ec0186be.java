@@ -19,7 +19,7 @@ public class TimeFormatter {
         // Get day of month
         int dayOfMonth = date.getDayOfMonth();
         
-        // Calculate which step period this date falls into
+        // Calculate which step period the day falls into
         int period = (dayOfMonth - 1) / dayStep;
         
         // Calculate the first day of that period

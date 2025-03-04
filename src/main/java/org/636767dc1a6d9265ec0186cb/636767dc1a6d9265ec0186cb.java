@@ -22,7 +22,7 @@ public class ConfigInitializer {
                 logger.info("Created dist directory at: " + distPath.toAbsolutePath());
             }
 
-            // Verify dist directory is writable
+            // Verify directory is writable
             if (!Files.isWritable(distPath)) {
                 throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
             }

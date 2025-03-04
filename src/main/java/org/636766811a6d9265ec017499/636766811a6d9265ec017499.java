@@ -1,7 +1,6 @@
 import java.util.List;
 
-public class AtmosphereInterceptorChecker {
-
+public class InterceptorChecker {
     /**
      * <p> Checks in the specified list if there is at least one instance of the given {@link AtmosphereInterceptor interceptor} implementation class.</p>
      * @param interceptorList the interceptors

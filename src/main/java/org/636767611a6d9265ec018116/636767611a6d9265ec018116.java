@@ -10,7 +10,7 @@ public class SetOperations<V> {
   * @return intersezione dell'insieme $1$ e $2$
   */
   private Set<V> intersection(Set<V> set1, Set<V> set2) {
-  // Create new set for result
+  // Create new set to store intersection
   Set<V> intersection = new HashSet<>();
   
   // Iterate over smaller set for efficiency

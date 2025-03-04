@@ -9,8 +9,8 @@ public class LogBuffer {
   this(DEFAULT_BUFFER_SIZE);
   }
 
-  public LogBuffer(int capacity) {
-  buffer = new ArrayBlockingQueue<>(capacity);
+  public LogBuffer(int bufferSize) {
+  buffer = new ArrayBlockingQueue<>(bufferSize);
   }
 
   /**

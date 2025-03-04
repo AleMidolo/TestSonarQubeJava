@@ -5,7 +5,7 @@ public class BooleanUtils {
   *
   * <pre>
   * BooleanUtils.isNotTrue(Boolean.TRUE)  = false
-  * BooleanUtils.isNotTrue(Boolean.FALSE) = true
+  * BooleanUtils.isNotTrue(Boolean.FALSE) = true 
   * BooleanUtils.isNotTrue(null)  = true
   * </pre>
   *

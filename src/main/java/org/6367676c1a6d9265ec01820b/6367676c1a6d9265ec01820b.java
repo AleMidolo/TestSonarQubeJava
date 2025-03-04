@@ -1,4 +1,4 @@
-package org.utils;
+package org.example.utils;
 
 public class StringUtils {
   /**

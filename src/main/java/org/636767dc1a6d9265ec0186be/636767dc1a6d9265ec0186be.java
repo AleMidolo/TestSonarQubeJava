@@ -9,7 +9,7 @@ public class TimeCompressor {
   // Extract year, month and day
   int year = Integer.parseInt(timeStr.substring(0, 4));
   int month = Integer.parseInt(timeStr.substring(4, 6));
-  int day = Integer.parseInt(timeStr.substring(6, 8));
+  int day = Integer.parseInt(timeStr.substring(6));
   
   // Calculate compressed day based on dayStep
   int compressedDay;
@@ -20,7 +20,7 @@ public class TimeCompressor {
   }
   
   // Format back to long
-  String compressedTimeStr = String.format("%04d%02d%02d", year, month, compressedDay);
-  return Long.parseLong(compressedTimeStr);
+  String compressedTime = String.format("%04d%02d%02d", year, month, compressedDay);
+  return Long.parseLong(compressedTime);
   }
 }

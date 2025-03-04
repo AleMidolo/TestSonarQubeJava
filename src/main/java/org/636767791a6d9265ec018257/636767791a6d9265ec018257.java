@@ -17,7 +17,6 @@ public class Logger {
   @Override
   public void run() {
   try {
-  // Add the log record to the table on the Event Dispatch Thread
   logTable.addLogRecord(lr);
   } catch (Exception e) {
   System.err.println("Error adding log record: " + e.getMessage());

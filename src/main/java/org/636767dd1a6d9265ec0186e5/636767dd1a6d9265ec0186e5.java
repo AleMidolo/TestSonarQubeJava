@@ -22,7 +22,8 @@ public class ChannelManager {
   }
 }
 
-// Assumed supporting interfaces/classes
+// Assumed supporting interfaces/classes:
+
 interface IConsumer {
   void consume();
 }
@@ -30,5 +31,6 @@ interface IConsumer {
 enum Channels {
   EMAIL,
   SMS,
-  PUSH_NOTIFICATION
+  PUSH_NOTIFICATION,
+  WEBHOOK
 }

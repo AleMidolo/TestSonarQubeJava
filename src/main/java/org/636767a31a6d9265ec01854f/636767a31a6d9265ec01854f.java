@@ -24,7 +24,7 @@ public class FieldReader {
   ((buffer[currentPosition + 4] & 0xFF) << 8) |
   (buffer[currentPosition + 5] & 0xFF);
   
-  // Move position past length bytes
+  // Update position to start of compressed data
   currentPosition += 6;
   } else {
   isCompressed = false;

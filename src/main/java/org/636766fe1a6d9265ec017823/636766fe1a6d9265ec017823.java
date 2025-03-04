@@ -12,33 +12,37 @@ public class SymbolTable {
 
   int addConstantNameAndType(final String name, final String descriptor) {
   int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-  Symbol symbol = lookupSymbol(hashCode);
   
-  if (symbol != null) {
+  // Check if symbol already exists
+  Symbol symbol = lookupSymbol(hashCode);
+  while (symbol != null) {
   if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
   && symbol.name.equals(name)
   && symbol.value.equals(descriptor)) {
   return symbol.index;
   }
+  symbol = lookupSymbol(hashCode + 1);
   }
-
+  
+  // Create new symbol
   symbol = new Symbol(
-  size++, 
+  size++,
   Symbol.CONSTANT_NAME_AND_TYPE_TAG,
   name,
   descriptor,
-  hashCode);
+  hashCode
+  );
   
-  symbols[symbol.index] = symbol;
+  // Add to symbol table
+  int index = hashCode % symbols.length;
+  symbol.next = symbols[index];
+  symbols[index] = symbol;
+  
   return symbol.index;
   }
-
+  
   private Symbol lookupSymbol(int hashCode) {
-  for (int i = 1; i < size; i++) {
-  if (symbols[i] != null && symbols[i].hashCode == hashCode) {
-  return symbols[i];
-  }
-  }
-  return null;
+  int index = hashCode % symbols.length;
+  return symbols[index];
   }
 }

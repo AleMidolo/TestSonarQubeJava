@@ -19,7 +19,7 @@ public class ArrayUtils {
   
   final byte[] result = new byte[array.length];
   for (int i = 0; i < array.length; i++) {
-  result[i] = array[i].byteValue();
+  result[i] = array[i]; // Throws NPE if array[i] is null
   }
   return result;
   }

@@ -18,8 +18,8 @@ public class UTF8Decoder {
   // 2 byte character (128-2047)
   if ((b1 & 0xE0) == 0xC0) {
   int b2 = bb.get(i + 1) & 0xFF;
-  int cp = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
-  sb.append((char)cp);
+  int ch = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+  sb.append((char)ch);
   return i + 2;
   }
   
@@ -27,8 +27,8 @@ public class UTF8Decoder {
   if ((b1 & 0xF0) == 0xE0) {
   int b2 = bb.get(i + 1) & 0xFF;
   int b3 = bb.get(i + 2) & 0xFF;
-  int cp = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
-  sb.append((char)cp);
+  int ch = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+  sb.append((char)ch);
   return i + 3;
   }
   
@@ -37,11 +37,13 @@ public class UTF8Decoder {
   int b2 = bb.get(i + 1) & 0xFF;
   int b3 = bb.get(i + 2) & 0xFF;
   int b4 = bb.get(i + 3) & 0xFF;
-  int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+  int ch = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | 
+  ((b3 & 0x3F) << 6) | (b4 & 0x3F);
   
   // Convert to surrogate pair for characters above U+FFFF
-  sb.append(Character.highSurrogate(cp));
-  sb.append(Character.lowSurrogate(cp));
+  ch -= 0x10000;
+  sb.append((char)((ch >>> 10) + 0xD800));
+  sb.append((char)((ch & 0x3FF) + 0xDC00));
   return i + 4;
   }
   

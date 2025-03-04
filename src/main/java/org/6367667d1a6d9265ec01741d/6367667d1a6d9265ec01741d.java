@@ -36,6 +36,6 @@ public class TypeResolver {
   }
   
   private static class Unknown {
-  // Placeholder class for unknown type
+  // Marker class for unresolvable bounds
   }
 }

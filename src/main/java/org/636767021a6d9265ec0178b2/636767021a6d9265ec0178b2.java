@@ -3,6 +3,14 @@ import java.util.Stack;
 public class FrameStack {
   private Stack<String> stack;
 
+  public FrameStack() {
+  stack = new Stack<>();
+  }
+
+  /**
+  * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+  * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+  */
   private void pop(final String descriptor) {
   int index = 0;
   while (index < descriptor.length()) {
@@ -13,48 +21,48 @@ public class FrameStack {
   index++;
   break;
   case ')':
-  // End of method arguments
+  // Stop at closing parenthesis
   return;
-  case 'L':
-  // Object type - pop one element and skip to semicolon
-  stack.pop();
-  while (descriptor.charAt(index) != ';') {
-  index++;
-  }
-  index++;
-  break;
   case '[':
-  // Array type - skip brackets
+  // Skip array dimensions
   while (descriptor.charAt(index) == '[') {
   index++;
   }
-  if (descriptor.charAt(index) == 'L') {
-  // Skip object type name
+  // Pop array reference
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  index++;
+  break;
+  case 'L':
+  // Skip to end of object type
   while (descriptor.charAt(index) != ';') {
   index++;
   }
+  // Pop object reference
+  if (!stack.isEmpty()) {
+  stack.pop();
   }
-  stack.pop();
   index++;
   break;
-  case 'B':
-  case 'C': 
   case 'D':
-  case 'F':
-  case 'I':
   case 'J':
-  case 'S':
-  case 'Z':
-  // Primitive type - pop one element
+  // Pop double/long (takes 2 slots)
+  if (!stack.isEmpty()) {
   stack.pop();
-  index++;
-  break;
-  case 'V':
-  // Void type - no pop needed
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  }
   index++;
   break;
   default:
-  throw new IllegalArgumentException("Invalid descriptor character: " + c);
+  // Pop single-slot primitive
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  index++;
+  break;
   }
   }
   }

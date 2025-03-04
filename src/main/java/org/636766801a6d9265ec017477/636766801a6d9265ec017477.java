@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
-    
+
     /**
      * Aggiungi i file specificati in ordine inverso.
      */
@@ -12,7 +12,7 @@ public class FileHandler {
         if (files == null || files.length == 0) {
             return;
         }
-        
+
         List<InputStream> fileList = new ArrayList<>();
         
         // Add files to list
@@ -21,13 +21,14 @@ public class FileHandler {
                 fileList.add(file);
             }
         }
-        
+
         // Reverse the list
         Collections.reverse(fileList);
-        
+
         // Process files in reverse order
         for (InputStream file : fileList) {
             try {
+                // Add file contents (implementation depends on specific requirements)
                 processFile(file);
             } finally {
                 try {
@@ -38,9 +39,10 @@ public class FileHandler {
             }
         }
     }
-    
+
     // Helper method to process individual files
     private void processFile(InputStream file) {
-        // Implementation for processing individual files would go here
+        // Implementation depends on specific requirements
+        // Example: read file contents and add to collection/database etc.
     }
 }

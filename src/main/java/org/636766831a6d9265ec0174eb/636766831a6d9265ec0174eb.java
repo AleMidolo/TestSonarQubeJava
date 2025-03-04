@@ -31,7 +31,7 @@ public class FileHandler {
     
     // Helper method to process individual files
     private void processFile(File file) {
-        // Implementation for processing individual files would go here
+        // Implementation of file processing logic would go here
         // Left empty as it wasn't part of the original requirements
     }
 }

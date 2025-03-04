@@ -35,17 +35,16 @@ public class CharsetConverter {
             return javaCharset;
         }
         
-        // If not found in map, check if it's a supported charset
+        // If not found in map, check if it's a valid charset
         try {
             if (Charset.isSupported(charset)) {
                 return Charset.forName(charset).name();
             }
         } catch (IllegalArgumentException e) {
-            // Invalid charset name, return default
+            // Invalid charset, return default
             return Charset.defaultCharset().name();
         }
         
-        // If all else fails, return default charset
         return Charset.defaultCharset().name();
     }
 }

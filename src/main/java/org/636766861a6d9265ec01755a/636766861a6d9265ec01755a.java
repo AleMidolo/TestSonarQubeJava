@@ -6,7 +6,7 @@ public class UriMatcher {
     
     public UriMatcher(String template) {
         // Convert template to regex pattern
-        String regex = template.replaceAll("\\{[^/]+\\}", "([^/]+)");
+        String regex = template.replaceAll("\\{[^}]+\\}", "([^/]+)");
         this.pattern = Pattern.compile(regex);
     }
 

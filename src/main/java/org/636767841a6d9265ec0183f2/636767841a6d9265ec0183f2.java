@@ -15,6 +15,7 @@ public class CustomComparator implements Comparator<Object> {
             return 1;
         }
         
+        // Compare using toString() if objects are not null
         return aObj1.toString().compareTo(aObj2.toString());
     }
 }

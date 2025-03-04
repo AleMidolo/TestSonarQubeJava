@@ -12,20 +12,20 @@ public class ConfigurationManager {
         File configDir;
         
         if (System.getProperty("os.name").startsWith("Windows")) {
-            // For Windows systems
+            // For Windows, create in Documents and Settings
             configDir = new File(userHome + File.separator + "Documents and Settings" + 
                                File.separator + "lf5");
         } else {
-            // For all other operating systems
+            // For all other platforms, create in user home directory
             configDir = new File(userHome + File.separator + "lf5");
         }
-
+        
         // Create directory if it doesn't exist
         if (!configDir.exists()) {
             boolean created = configDir.mkdirs();
             if (!created) {
                 throw new RuntimeException("Failed to create configuration directory at: " + 
-                                         configDir.getAbsolutePath());
+                                        configDir.getAbsolutePath());
             }
         }
     }

@@ -17,7 +17,6 @@ public class RequestWrapper {
 
         return AtmosphereRequest.wrap(request)
                 .build()
-                .configure(AtmosphereConfig.newInstance())
-                .request(request);
+                .configure(AtmosphereConfig.newInstance());
     }
 }

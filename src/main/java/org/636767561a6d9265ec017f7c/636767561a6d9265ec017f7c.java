@@ -57,11 +57,6 @@ public class TourTransformer<V,E> {
             }
         }
 
-        // Verify tour is complete (ends where it started)
-        if (!current.equals(start)) {
-            throw new IllegalArgumentException("Tour does not end at starting vertex");
-        }
-
         // Calculate total weight
         double weight = edges.stream()
             .mapToDouble(graph::getEdgeWeight)

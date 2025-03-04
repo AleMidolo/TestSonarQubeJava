@@ -5,7 +5,7 @@ public class ByteArrayConverter {
     private ByteArrayOutputStream outputStream;
 
     public ByteArrayConverter() {
-        this.outputStream = new ByteArrayOutputStream();
+        outputStream = new ByteArrayOutputStream();
     }
 
     /**

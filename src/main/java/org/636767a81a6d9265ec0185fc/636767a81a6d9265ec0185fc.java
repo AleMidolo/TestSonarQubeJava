@@ -6,11 +6,13 @@ public class CodedInputStream {
     private int lastTag = 0;
     private int pos = 0;
     private byte[] buffer;
+    private int bufferSize;
     private static final int BUFFER_SIZE = 4096;
 
     public CodedInputStream(InputStream input) {
         this.input = input;
         this.buffer = new byte[BUFFER_SIZE];
+        this.bufferSize = 0;
     }
 
     public int readTag() throws IOException {
@@ -33,15 +35,17 @@ public class CodedInputStream {
     }
 
     private boolean isAtEnd() throws IOException {
-        if (pos < buffer.length) {
+        if (pos < bufferSize) {
             return false;
         }
         
-        int count = input.read(buffer);
-        if (count <= 0) {
+        int n = input.read(buffer, 0, BUFFER_SIZE);
+        if (n <= 0) {
             return true;
         }
+        
         pos = 0;
+        bufferSize = n;
         return false;
     }
 
@@ -57,16 +61,18 @@ public class CodedInputStream {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint");
+        
+        throw new IOException("Malformed varint32");
     }
 
     private byte readRawByte() throws IOException {
-        if (pos >= buffer.length) {
-            int count = input.read(buffer);
-            if (count <= 0) {
-                throw new IOException("EOF");
+        if (pos == bufferSize) {
+            int n = input.read(buffer, 0, BUFFER_SIZE);
+            if (n <= 0) {
+                throw new IOException("EOF reached");
             }
             pos = 0;
+            bufferSize = n;
         }
         return buffer[pos++];
     }

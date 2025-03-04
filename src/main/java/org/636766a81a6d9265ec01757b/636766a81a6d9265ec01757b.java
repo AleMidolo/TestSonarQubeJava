@@ -2,25 +2,23 @@ import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.JSON;
 
 public class JsonSerializer {
-
+    
     private Object value;
-
+    
     public JsonSerializer(Object value) {
         this.value = value;
     }
 
+    /**
+     * Serialize to JSON {@link String}
+     * @param features features to be enabled in serialization
+     * @return JSON {@link String}
+     */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        if (value == null) {
-            return null;
+        if (features == null || features.length == 0) {
+            return JSON.toJSONString(value);
         }
-
-        try {
-            // Use FastJSON to serialize object to JSON string with specified features
-            return JSON.toJSONString(value, features);
-        } catch (Exception e) {
-            // Return empty string if serialization fails
-            return "";
-        }
+        return JSON.toJSONString(value, features);
     }
 }

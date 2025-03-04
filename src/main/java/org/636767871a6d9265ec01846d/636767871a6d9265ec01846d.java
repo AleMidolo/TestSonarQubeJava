@@ -7,21 +7,20 @@ public class DirectoryCreator {
   String fileSeparator = System.getProperty("file.separator");
   String os = System.getProperty("os.name").toLowerCase();
   
-  String mruDirectory;
+  File mruDirectory;
   
-  // Check if Windows 2000
   if (os.contains("windows") && os.contains("2000")) {
-  mruDirectory = System.getenv("USERPROFILE") + fileSeparator + 
-  "Documents and Settings" + fileSeparator + "lf5";
+  // For Windows 2000, create in Documents and Settings
+  mruDirectory = new File(userHome + fileSeparator + 
+  "Documents and Settings" + fileSeparator + "lf5");
   } else {
-  mruDirectory = userHome + fileSeparator + "lf5";
+  // For all other platforms, create in user home directory
+  mruDirectory = new File(userHome + fileSeparator + "lf5");
   }
-  
-  File directory = new File(mruDirectory);
-  
+
   // Create directory if it doesn't exist
-  if (!directory.exists()) {
-  directory.mkdirs();
+  if (!mruDirectory.exists()) {
+  mruDirectory.mkdirs();
   }
   }
 }

@@ -9,11 +9,6 @@ public class LogCalculator {
   throw new IllegalArgumentException("Input must be positive");
   }
   
-  int result = 0;
-  while (n > 1) {
-  n = n >> 1; // Divide by 2 using bit shift
-  result++;
-  }
-  return result + 1;
+  return 32 - Integer.numberOfLeadingZeros(n);
   }
 }

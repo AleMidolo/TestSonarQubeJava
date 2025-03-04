@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class BooleanUtils {
-
+  
   public static Boolean[] toObject(boolean[] array) {
   if (array == null) {
   return null;

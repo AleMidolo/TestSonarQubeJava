@@ -12,7 +12,7 @@ public class Accumulator {
   * Accumulate the value with existing value in the same given key.
   * @param key The key to accumulate value for
   * @param value The value to accumulate
-  * @return The updated accumulated value
+  * @return The new accumulated value
   */
   public int accumulate(String key, int value) {
   int currentValue = accumulatorMap.getOrDefault(key, 0);

@@ -17,44 +17,41 @@ public class PathUtils {
   if (path.endsWith("/")) {
   path = path.substring(0, path.length() - 1);
   }
-  
+
   // Handle empty relative path
   if (relativePath.isEmpty()) {
   return path;
   }
 
+  // Handle absolute relative path
+  if (relativePath.startsWith("/")) {
+  return relativePath;
+  }
+
   // Split the paths into components
   String[] pathParts = path.split("/");
   String[] relativeParts = relativePath.split("/");
-  
-  // Count how many levels to go up
-  int upCount = 0;
-  int relativeStartIndex = 0;
-  
+
+  // Count number of "../" at start of relative path
+  int backCount = 0;
   for (String part : relativeParts) {
   if (part.equals("..")) {
-  upCount++;
-  relativeStartIndex++;
-  } else if (!part.equals(".")) {
-  break;
+  backCount++;
   } else {
-  relativeStartIndex++;
+  break;
   }
   }
 
-  // Calculate new path length
-  int newPathLength = Math.max(0, pathParts.length - upCount);
-  
-  // Build new path
+  // Build result path
   StringBuilder result = new StringBuilder();
   
-  // Add remaining path parts
-  for (int i = 0; i < newPathLength; i++) {
+  // Add path components minus the number of "../"
+  for (int i = 0; i < pathParts.length - backCount; i++) {
   result.append(pathParts[i]).append("/");
   }
-  
-  // Add remaining relative parts
-  for (int i = relativeStartIndex; i < relativeParts.length; i++) {
+
+  // Add remaining relative path components
+  for (int i = backCount; i < relativeParts.length; i++) {
   if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
   result.append(relativeParts[i]);
   if (i < relativeParts.length - 1) {
@@ -67,7 +64,7 @@ public class PathUtils {
   if (result.length() > 0 && result.charAt(result.length() - 1) == '/') {
   result.setLength(result.length() - 1);
   }
-  
+
   return result.toString();
   }
 }

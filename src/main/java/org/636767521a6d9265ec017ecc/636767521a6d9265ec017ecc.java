@@ -25,8 +25,8 @@ public class BoxSplitter {
   // Create right box
   Rectangle2D rightBox = new Rectangle2D.Double(
   x + width/2,
-  y, 
-  width/2,
+  y,
+  width/2, 
   height
   );
   

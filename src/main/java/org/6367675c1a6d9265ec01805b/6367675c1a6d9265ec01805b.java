@@ -15,7 +15,7 @@ public class TreeEdge {
   prev.next = next;
   }
   
-  // Handle next edge's previous pointer 
+  // Handle next edge's previous pointer
   if (next != null) {
   next.prev = prev;
   }

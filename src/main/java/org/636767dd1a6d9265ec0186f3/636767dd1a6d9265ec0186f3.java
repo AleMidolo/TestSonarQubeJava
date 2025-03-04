@@ -17,7 +17,7 @@ public class ColumnName {
   }
   
   // Store the name mapping
-  columnNameMap.put(oldName.toLowerCase(), newName);
+  columnNameMap.put(oldName.toLowerCase(), newName.toLowerCase());
   }
   
   // Map to store column name mappings

@@ -8,15 +8,14 @@ public class StringUtils {
   return inString;
   }
   
-  // Convert charsToDelete to Set for O(1) lookup
-  Set<Character> deleteSet = new HashSet<>();
+  Set<Character> deleteChars = new HashSet<>();
   for (char c : charsToDelete.toCharArray()) {
-  deleteSet.add(c);
+  deleteChars.add(c);
   }
   
   StringBuilder result = new StringBuilder();
   for (char c : inString.toCharArray()) {
-  if (!deleteSet.contains(c)) {
+  if (!deleteChars.contains(c)) {
   result.append(c);
   }
   }

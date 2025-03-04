@@ -26,7 +26,7 @@ public class LogManager {
   try {
   logTable.addRow(message);
   } catch (Exception e) {
-  LOGGER.log(Level.SEVERE, "Error adding log record: " + message, e);
+  LOGGER.log(Level.SEVERE, "Error adding log record: " + e.getMessage(), e);
   }
   }
   });

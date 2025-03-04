@@ -13,17 +13,19 @@ public class KeyBounds {
   Map<Integer, Integer> lowerBounds = new HashMap<>();
   
   // For each key, find largest value less than it
-  for (int i = 0; i < keys.size(); i++) {
-  int currentKey = keys.get(i);
+  for (int key : keys) {
+  int maxLowerBound = Integer.MIN_VALUE;
   
-  // If first element, no lower bound exists
-  if (i == 0) {
-  lowerBounds.put(currentKey, null);
-  continue;
+  for (int possibleBound : keys) {
+  if (possibleBound < key && possibleBound > maxLowerBound) {
+  maxLowerBound = possibleBound;
+  }
   }
   
-  // Get previous element as lower bound
-  lowerBounds.put(currentKey, keys.get(i-1));
+  // Only add if we found a valid lower bound
+  if (maxLowerBound != Integer.MIN_VALUE) {
+  lowerBounds.put(key, maxLowerBound);
+  }
   }
   
   return lowerBounds;

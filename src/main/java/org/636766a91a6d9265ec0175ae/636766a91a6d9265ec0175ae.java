@@ -31,8 +31,12 @@ public class ByteVector {
   return this;
   }
 
-  // Getter for testing
+  // Helper methods for testing/verification
   public byte[] getData() {
   return Arrays.copyOf(data, length);
+  }
+
+  public int getLength() {
+  return length;
   }
 }

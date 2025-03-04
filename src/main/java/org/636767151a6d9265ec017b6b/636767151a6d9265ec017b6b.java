@@ -16,7 +16,8 @@ public class StringUtils {
   if (prefix.length() > str.length()) {
   return false;
   }
-  return ignoreCase ? str.regionMatches(true, 0, prefix, 0, prefix.length()) 
-  : str.startsWith(prefix);
+  return ignoreCase ? 
+  str.regionMatches(true, 0, prefix, 0, prefix.length()) :
+  str.startsWith(prefix);
   }
 }

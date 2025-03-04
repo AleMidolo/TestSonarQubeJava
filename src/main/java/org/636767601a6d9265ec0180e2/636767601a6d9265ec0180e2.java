@@ -37,7 +37,7 @@ public class MinimalSeparators {
   }
   }
   
-  // Check pairs of common neighbors
+  // Also check pairs of common neighbors
   List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
   for (int i = 0; i < commonNeighborsList.size(); i++) {
   for (int j = i + 1; j < commonNeighborsList.size(); j++) {
@@ -92,13 +92,8 @@ public class MinimalSeparators {
   this.target = target;
   }
   
-  public int getSource() {
-  return source;
-  }
-  
-  public int getTarget() {
-  return target;
-  }
+  public int getSource() { return source; }
+  public int getTarget() { return target; }
   }
   
   class Graph {
@@ -125,12 +120,10 @@ public class MinimalSeparators {
   }
   
   public void removeVertex(int vertex) {
-  // Remove the vertex and all its edges
-  Set<Integer> neighbors = adjacencyList.remove(vertex);
-  if (neighbors != null) {
-  for (int neighbor : neighbors) {
-  adjacencyList.get(neighbor).remove(vertex);
-  }
+  // Remove vertex and all its edges
+  adjacencyList.remove(vertex);
+  for (Set<Integer> neighbors : adjacencyList.values()) {
+  neighbors.remove(vertex);
   }
   }
   

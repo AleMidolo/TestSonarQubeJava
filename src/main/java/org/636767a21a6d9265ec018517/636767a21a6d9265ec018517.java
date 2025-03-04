@@ -22,15 +22,15 @@ public class ByteArrayBuffer {
   }
 
   // Additional methods for writing to buffer would go here
-  public void write(byte[] bytes) throws IOException {
-  buffer.write(bytes);
+  public void write(byte[] data) throws IOException {
+  buffer.write(data);
   }
 
   public void write(int b) throws IOException {
   buffer.write(b);
   }
 
-  public void write(byte[] bytes, int offset, int length) throws IOException {
-  buffer.write(bytes, offset, length);
+  public void write(byte[] data, int offset, int length) throws IOException {
+  buffer.write(data, offset, length);
   }
 }

@@ -23,8 +23,8 @@ public class FrameStack {
                 case 'B': // byte
                 case 'C': // char 
                 case 'I': // int
-                case 'Z': // boolean
                 case 'S': // short
+                case 'Z': // boolean
                 case 'F': // float
                     operandStack.pop();
                     index++;
@@ -37,22 +37,27 @@ public class FrameStack {
                     index++;
                     break;
                     
-                case 'L': // Object reference
+                case 'L':
+                    // Skip until semicolon for object types
+                    while (descriptor.charAt(index) != ';') {
+                        index++;
+                    }
                     operandStack.pop();
-                    index = descriptor.indexOf(';', index) + 1;
+                    index++;
                     break;
                     
-                case '[': // Array
-                    // Skip array dimensions
+                case '[':
+                    // Array type - continue to element type
                     while (descriptor.charAt(index) == '[') {
                         index++;
                     }
                     if (descriptor.charAt(index) == 'L') {
-                        index = descriptor.indexOf(';', index) + 1;
-                    } else {
-                        index++;
+                        while (descriptor.charAt(index) != ';') {
+                            index++;
+                        }
                     }
                     operandStack.pop();
+                    index++;
                     break;
                     
                 default:

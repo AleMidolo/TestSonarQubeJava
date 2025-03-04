@@ -16,7 +16,7 @@ public class VarintReader {
         while (shift < 64) {
             final int b = input.read();
             if (b == -1) {
-                throw new IOException("Malformed varint - EOF");
+                throw new IOException("Reached EOF while reading varint");
             }
             position++;
             result |= (long)(b & 0x7F) << shift;
@@ -25,6 +25,6 @@ public class VarintReader {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint - too long");
+        throw new IOException("Malformed varint - too many bytes");
     }
 }

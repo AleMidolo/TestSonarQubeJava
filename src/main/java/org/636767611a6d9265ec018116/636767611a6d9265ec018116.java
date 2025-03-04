@@ -13,16 +13,17 @@ public class SetOperations<V> {
         Set<V> intersection = new HashSet<>();
         
         // Iterate over the smaller set for efficiency
-        if (set1.size() > set2.size()) {
-            Set<V> temp = set1;
-            set1 = set2;
-            set2 = temp;
-        }
-        
-        // Add elements that exist in both sets
-        for (V element : set1) {
-            if (set2.contains(element)) {
-                intersection.add(element);
+        if (set1.size() < set2.size()) {
+            for (V element : set1) {
+                if (set2.contains(element)) {
+                    intersection.add(element);
+                }
+            }
+        } else {
+            for (V element : set2) {
+                if (set1.contains(element)) {
+                    intersection.add(element);
+                }
             }
         }
         

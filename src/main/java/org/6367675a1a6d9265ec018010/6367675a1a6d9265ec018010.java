@@ -3,34 +3,33 @@ import java.util.List;
 
 public class Bucket<T> {
     private List<T> elements;
-    private BucketCollection<T> parent;
+    private BucketCollection<T> collection;
 
-    public Bucket(BucketCollection<T> parent) {
+    public Bucket(BucketCollection<T> collection) {
         this.elements = new ArrayList<>();
-        this.parent = parent;
+        this.collection = collection;
     }
 
     /**
      * Elimina este bucket de la estructura de datos.
      */
     public void removeSelf() {
-        if (parent != null) {
-            parent.removeBucket(this);
-            parent = null;
+        if (collection != null) {
+            collection.removeBucket(this);
+            elements.clear();
+            collection = null;
         }
-        elements.clear();
-        elements = null;
     }
 }
 
-// Helper class to represent the collection that contains buckets
+// Helper class to demonstrate context
 class BucketCollection<T> {
     private List<Bucket<T>> buckets;
-
+    
     public BucketCollection() {
         buckets = new ArrayList<>();
     }
-
+    
     public void removeBucket(Bucket<T> bucket) {
         buckets.remove(bucket);
     }

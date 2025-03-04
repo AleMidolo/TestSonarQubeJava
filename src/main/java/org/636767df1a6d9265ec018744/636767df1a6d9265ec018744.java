@@ -12,9 +12,9 @@ public class TimeRangeBuilder {
         List<TimeRange> rangos = new ArrayList<>();
         
         while (inicio < fin) {
-            long rangoFin = Math.min(inicio + FETCH_DATA_DURATION, fin);
-            rangos.add(new TimeRange(inicio, rangoFin));
-            inicio = rangoFin;
+            long siguienteFin = Math.min(inicio + FETCH_DATA_DURATION, fin);
+            rangos.add(new TimeRange(inicio, siguienteFin));
+            inicio = siguienteFin;
         }
         
         return rangos;

@@ -3,7 +3,7 @@ import java.util.Objects;
 public class ArrayUtils {
 
     /**
-     * Array vacío constante de Double para optimizar memoria
+     * Array vacío constante de tipo Double
      */
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 

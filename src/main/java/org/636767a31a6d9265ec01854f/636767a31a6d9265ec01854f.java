@@ -16,12 +16,21 @@ public class FieldReader {
             throw new IOException("Buffer overflow - unable to check for packed field");
         }
         
-        // Verifica si el byte actual es el marcador de campo empaquetado
         if (buffer[currentPosition] == PACKED_FIELD_MARKER) {
             isPackedField = true;
-            currentPosition++; // Avanza la posición para saltarse el marcador
-        } else {
-            isPackedField = false;
+            currentPosition++; // Skip the packed field marker
+            
+            // Read the length bytes
+            int length = 0;
+            while (currentPosition < buffer.length && 
+                   Character.isDigit((char)buffer[currentPosition])) {
+                length = length * 10 + (buffer[currentPosition] - '0');
+                currentPosition++;
+            }
+            
+            if (currentPosition >= buffer.length || length <= 0) {
+                throw new IOException("Invalid packed field format");
+            }
         }
     }
 }

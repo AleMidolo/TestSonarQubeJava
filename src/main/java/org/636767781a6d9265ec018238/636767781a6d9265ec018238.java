@@ -9,26 +9,17 @@ public class Logger {
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
-        if (appender == null) {
-            return false;
-        }
-
-        if (appenderList == null) {
+        if (appender == null || appenderList == null) {
             return false;
         }
 
         Enumeration<Appender> appenders = appenderList.getAllAppenders();
-        if (appenders == null) {
-            return false;
-        }
-
         while (appenders.hasMoreElements()) {
             Appender currentAppender = appenders.nextElement();
             if (currentAppender == appender) {
                 return true;
             }
         }
-
         return false;
     }
 }

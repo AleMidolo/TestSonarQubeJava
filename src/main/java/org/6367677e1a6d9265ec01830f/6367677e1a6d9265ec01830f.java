@@ -4,45 +4,39 @@ import java.util.Date;
 
 public class CustomLogFormatter {
 
-    private static final String DEFAULT_PATTERN = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] %c - %m%n";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     public String format(LoggingEvent event) {
-        if (event == null) {
-            return "";
-        }
-
         StringBuilder formattedMessage = new StringBuilder();
         
         // Add timestamp
-        formattedMessage.append("[")
-            .append(dateFormat.format(new Date(event.getTimeStamp())))
-            .append("] ");
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        formattedMessage.append(timestamp);
+        
         // Add log level
-        formattedMessage.append("[")
-            .append(event.getLevel().toString())
-            .append("] ");
-
+        formattedMessage.append(" [");
+        formattedMessage.append(event.getLevel().toString());
+        formattedMessage.append("] ");
+        
         // Add logger name
-        formattedMessage.append(event.getLoggerName())
-            .append(" - ");
-
+        formattedMessage.append(event.getLoggerName());
+        formattedMessage.append(" - ");
+        
         // Add message
         formattedMessage.append(event.getRenderedMessage());
-
-        // Add new line
-        formattedMessage.append(System.lineSeparator());
-
-        // Add throwable information if exists
-        String[] throwableInfo = event.getThrowableStrRep();
-        if (throwableInfo != null) {
-            for (String throwableLine : throwableInfo) {
-                formattedMessage.append(throwableLine)
-                    .append(System.lineSeparator());
+        
+        // Add throwable if exists
+        String[] throwableStrRep = event.getThrowableStrRep();
+        if (throwableStrRep != null) {
+            formattedMessage.append("\n");
+            for (String throwableLine : throwableStrRep) {
+                formattedMessage.append(throwableLine);
+                formattedMessage.append("\n");
             }
         }
-
+        
+        // Add new line
+        formattedMessage.append("\n");
+        
         return formattedMessage.toString();
     }
 }

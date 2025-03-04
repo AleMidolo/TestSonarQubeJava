@@ -21,8 +21,12 @@ public class FilenameUtils {
         int extensionPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
         int lastSeparator = indexOfLastSeparator(filename);
         
-        // Retorna -1 si no hay punto o si el último punto está antes del último separador
-        return (extensionPos > lastSeparator) ? extensionPos : -1;
+        // Si no hay punto o el último separador está después del último punto
+        // entonces no hay extensión válida
+        if (extensionPos == -1 || lastSeparator > extensionPos) {
+            return -1;
+        }
+        return extensionPos;
     }
     
     /**
@@ -32,7 +36,6 @@ public class FilenameUtils {
         if (filename == null) {
             return -1;
         }
-        
         int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
         int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
         return Math.max(lastUnixPos, lastWindowsPos);

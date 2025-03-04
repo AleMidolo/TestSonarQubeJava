@@ -23,7 +23,7 @@ public class SocketAppender extends AppenderSkeleton {
                 client.println(message);
                 client.flush();
             } catch (Exception e) {
-                // Si hay un error al escribir, remover el cliente
+                // Si hay error al escribir, remover el cliente
                 clients.remove(client);
             }
         }

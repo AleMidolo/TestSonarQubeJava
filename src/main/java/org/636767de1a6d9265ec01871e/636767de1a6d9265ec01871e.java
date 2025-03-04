@@ -8,18 +8,33 @@ public class ModelChecker {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        // Check for continuous sharding key indices using regex
-        Pattern pattern = Pattern.compile("\\{(\\d+)\\}");
+        // Pattern to match numbers at the end of model name (e.g. "model_1", "model_2")
+        Pattern pattern = Pattern.compile("_(\\d+)$");
         Matcher matcher = pattern.matcher(modelName);
-        
-        int expectedIndex = 0;
-        while (matcher.find()) {
+
+        if (matcher.find()) {
             int currentIndex = Integer.parseInt(matcher.group(1));
-            if (currentIndex != expectedIndex) {
-                throw new IllegalStateException("Sharding key indices must be continuous. Expected index " 
-                    + expectedIndex + " but found " + currentIndex);
+            
+            // Check if index is less than 1
+            if (currentIndex < 1) {
+                throw new IllegalStateException("Sharding index must be greater than 0 for model: " + modelName);
             }
-            expectedIndex++;
+
+            // Check if there are gaps in the sequence by verifying previous model exists
+            String baseModelName = modelName.substring(0, matcher.start());
+            String previousModelName = baseModelName + "_" + (currentIndex - 1);
+            
+            // If current index is greater than 1, previous model should exist
+            if (currentIndex > 1 && !modelExists(previousModelName)) {
+                throw new IllegalStateException("Non-continuous sharding index detected. Missing model: " + previousModelName);
+            }
         }
+    }
+
+    // Helper method to check if a model exists
+    private boolean modelExists(String modelName) {
+        // Implementation would depend on how models are stored/managed
+        // This is just a placeholder
+        return true;
     }
 }

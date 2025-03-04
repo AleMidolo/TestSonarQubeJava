@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class FrameStack {
+public class MethodFrameHandler {
     private Stack<Object> operandStack;
 
     private void pop(final String descriptor) {
@@ -15,53 +15,46 @@ public class FrameStack {
                     // Skip opening parenthesis for method descriptors
                     index++;
                     continue;
-                    
                 case ')':
                     // End of method arguments
                     return;
-                    
-                case 'B': // byte
-                case 'C': // char 
-                case 'I': // int
-                case 'Z': // boolean
-                case 'S': // short
-                case 'F': // float
-                    operandStack.pop();
-                    index++;
-                    break;
-                    
-                case 'J': // long
-                case 'D': // double
-                    operandStack.pop();
-                    operandStack.pop(); // Pop twice for long/double
-                    index++;
-                    break;
-                    
-                case 'L':
-                    // Skip until semicolon for object types
-                    while (descriptor.charAt(index) != ';') {
-                        index++;
-                    }
-                    operandStack.pop();
-                    index++;
-                    break;
-                    
                 case '[':
-                    // Array type - continue to element type
+                    // Skip array dimensions
                     while (descriptor.charAt(index) == '[') {
                         index++;
                     }
-                    if (descriptor.charAt(index) == 'L') {
-                        while (descriptor.charAt(index) != ';') {
-                            index++;
-                        }
-                    }
+                    // Pop array reference
                     operandStack.pop();
                     index++;
                     break;
-                    
+                case 'L':
+                    // Skip to end of object type
+                    while (descriptor.charAt(index) != ';') {
+                        index++;
+                    }
+                    // Pop object reference
+                    operandStack.pop();
+                    index++;
+                    break;
+                case 'J':
+                case 'D':
+                    // Pop long/double (takes 2 slots)
+                    operandStack.pop();
+                    operandStack.pop();
+                    index++;
+                    break;
+                case 'I':
+                case 'F':
+                case 'B':
+                case 'C':
+                case 'S':
+                case 'Z':
+                    // Pop int/float/byte/char/short/boolean
+                    operandStack.pop();
+                    index++;
+                    break;
                 default:
-                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+                    index++;
             }
         }
     }

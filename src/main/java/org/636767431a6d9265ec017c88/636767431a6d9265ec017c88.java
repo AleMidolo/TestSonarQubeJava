@@ -11,25 +11,26 @@ public class BoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         List<Integer> lowerBounds = new ArrayList<>(keys.size());
         
+        // Para cada llave, encontrar su límite inferior
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int maxLowerBound = 0;
+            int lowerBound = 0;
             
+            // Comparar con todas las llaves anteriores
             for (int j = 0; j < i; j++) {
-                K previousKey = keys.get(j);
-                if (previousKey.compareTo(currentKey) <= 0) {
-                    maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
+                if (keys.get(j).compareTo(currentKey) <= 0) {
+                    lowerBound = Math.max(lowerBound, j + 1);
                 }
             }
             
-            lowerBounds.add(maxLowerBound);
+            lowerBounds.add(lowerBound);
         }
-        
+
         return lowerBounds;
     }
 }

@@ -37,7 +37,7 @@ public class FrameStack {
                     break;
                     
                 case ')':
-                    // End of method arguments
+                    // End of parameter list
                     return;
                     
                 default:

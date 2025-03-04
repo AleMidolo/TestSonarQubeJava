@@ -15,7 +15,7 @@ public class TypeResolver {
         if (bounds == null || bounds.length == 0) {
             return Unknown.class;
         }
-        
+
         Type bound = bounds[0];
         
         if (bound instanceof TypeVariable) {
@@ -34,14 +34,10 @@ public class TypeResolver {
             return Unknown.class;
         }
         
-        if (bound instanceof Class) {
-            return bound;
-        }
-        
-        return Unknown.class;
+        return bound;
     }
     
     private static class Unknown {
-        private Unknown() {}
+        // Placeholder class for unknown types
     }
 }

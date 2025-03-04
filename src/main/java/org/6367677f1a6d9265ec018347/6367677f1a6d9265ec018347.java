@@ -26,7 +26,7 @@ public class TelnetServer {
                 writer.print(telnetMessage);
                 writer.flush();
             } catch (Exception e) {
-                // Si hay error al escribir, agregar cliente a lista de desconectados
+                // Si hay error al enviar, agregar cliente a lista de desconectados
                 disconnectedClients.add(writer);
             }
         }

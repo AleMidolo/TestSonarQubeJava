@@ -3,7 +3,6 @@ import java.io.InputStream;
 
 public class VarintReader {
     private final InputStream input;
-    private int position = 0;
     
     public VarintReader(InputStream input) {
         this.input = input;
@@ -15,15 +14,14 @@ public class VarintReader {
         while (shift < 64) {
             final int b = input.read();
             if (b == -1) {
-                throw new IOException("Malformed varint - EOF");
+                throw new IOException("Premature EOF");
             }
-            position++;
-            result |= (long)(b & 0x7F) << shift;
+            result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint - too long");
+        throw new IOException("Malformed varint");
     }
 }

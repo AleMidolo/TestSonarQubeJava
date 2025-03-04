@@ -30,7 +30,7 @@ public class MessageSerializer {
         // Write the actual message
         LinkedBuffer.writeTo(out, buffer);
         
-        // Return the total size
+        // Return total size
         return output.getSize();
     }
 }

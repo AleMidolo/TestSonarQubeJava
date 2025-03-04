@@ -20,14 +20,14 @@ public class SocketAppender extends AppenderSkeleton {
     protected void append(LoggingEvent event) {
         String message = layout.format(event);
         
-        // Iterate through all connected clients and send the log message
+        // Iterate through all connected clients and send the message
         for (int i = clientWriters.size() - 1; i >= 0; i--) {
             try {
                 PrintWriter writer = clientWriters.get(i);
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // If there's an error writing to client, remove the connection
+                // If there's an error writing to client, remove them from lists
                 try {
                     clientWriters.get(i).close();
                     connectedClients.get(i).close();

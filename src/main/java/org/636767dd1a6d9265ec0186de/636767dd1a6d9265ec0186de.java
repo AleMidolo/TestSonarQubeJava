@@ -9,10 +9,6 @@ public class CacheMetric {
      * @return true significa que esta métrica debe ser eliminada de la caché.
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        if (timestamp < 0 || expiredThreshold < 0) {
-            throw new IllegalArgumentException("Timestamp and threshold must be non-negative values");
-        }
-        
         long timeDifference = timestamp - lastUpdateTime;
         return timeDifference >= expiredThreshold;
     }

@@ -23,7 +23,7 @@ public class StringSerializer {
             return newBuffer;
         }
 
-        // Copy bytes to current buffer
+        // Copy bytes to existing buffer
         System.arraycopy(utf8Bytes, 0, lb.buffer, lb.offset, size);
         lb.offset += size;
         return lb;

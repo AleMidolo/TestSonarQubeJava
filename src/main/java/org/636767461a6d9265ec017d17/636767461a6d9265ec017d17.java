@@ -1,5 +1,4 @@
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 public class DotUtils {
 
@@ -19,18 +18,10 @@ public class DotUtils {
         }
 
         // Replace escaped characters
-        StringBuilder result = new StringBuilder();
-        Pattern pattern = Pattern.compile("\\\\(.)");
-        Matcher matcher = pattern.matcher(input);
-        
-        int lastEnd = 0;
-        while (matcher.find()) {
-            result.append(input.substring(lastEnd, matcher.start()));
-            result.append(matcher.group(1));
-            lastEnd = matcher.end();
-        }
-        result.append(input.substring(lastEnd));
-        
-        return result.toString();
+        return input.replaceAll(Pattern.quote("\\\""), "\"")  // Escaped quotes
+                   .replaceAll(Pattern.quote("\\\\"), "\\")   // Escaped backslashes
+                   .replaceAll(Pattern.quote("\\n"), "\n")    // Escaped newlines
+                   .replaceAll(Pattern.quote("\\r"), "\r")    // Escaped carriage returns
+                   .replaceAll(Pattern.quote("\\t"), "\t");   // Escaped tabs
     }
 }

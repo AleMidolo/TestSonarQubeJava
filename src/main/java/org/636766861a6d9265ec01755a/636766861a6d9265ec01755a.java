@@ -1,11 +1,10 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-public class UriMatcher {
-
+public class URIMatcher {
     private final Pattern pattern;
-
-    public UriMatcher(String uriPattern) {
+    
+    public URIMatcher(String uriPattern) {
         this.pattern = Pattern.compile(uriPattern);
     }
 

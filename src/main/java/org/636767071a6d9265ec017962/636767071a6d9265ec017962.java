@@ -18,18 +18,10 @@ public class BeanMapUtils {
             BeanMap.Entry entry = (BeanMap.Entry) entries.next();
             String propertyName = entry.getKey().toString();
             
-            // Verifica si la propiedad es escribible
-            if (map.isWriteable(propertyName)) {
+            // Verifica si la propiedad es escribible en ambos BeanMaps
+            if (map.isWriteable(propertyName) && this.isWriteable(propertyName)) {
                 Object value = entry.getValue();
-                try {
-                    // Solo coloca la propiedad si es escribible
-                    if (this.isWriteable(propertyName)) {
-                        this.put(propertyName, value);
-                    }
-                } catch (IllegalArgumentException e) {
-                    // Ignora propiedades que no se pueden escribir
-                    continue;
-                }
+                this.put(propertyName, value);
             }
         }
     }

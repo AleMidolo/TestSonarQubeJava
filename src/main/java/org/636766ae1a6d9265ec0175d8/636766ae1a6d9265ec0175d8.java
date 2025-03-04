@@ -20,15 +20,26 @@ public class ContentRangeBuilder {
         StringBuilder contentRange = new StringBuilder();
         contentRange.append("items ");
         
-        if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
-            contentRange.append("*/");
-            contentRange.append(Objects.isNull(total) ? "*" : total);
+        if (Objects.nonNull(start)) {
+            contentRange.append(start);
         } else {
-            contentRange.append(start)
-                       .append("-")
-                       .append(end)
-                       .append("/")
-                       .append(total);
+            contentRange.append("*");
+        }
+        
+        contentRange.append("-");
+        
+        if (Objects.nonNull(end)) {
+            contentRange.append(end);
+        } else {
+            contentRange.append("*"); 
+        }
+        
+        contentRange.append("/");
+        
+        if (Objects.nonNull(total)) {
+            contentRange.append(total);
+        } else {
+            contentRange.append("*");
         }
         
         return contentRange.toString();

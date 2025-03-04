@@ -16,20 +16,21 @@ public class MeteorLookup {
         
         try {
             // Intenta obtener el Meteor desde el request
-            Meteor meteor = Meteor.build(r);
+            Meteor meteor = (Meteor) r.getAttribute(Meteor.class.getName());
             
-            if (meteor != null) {
-                AtmosphereResource resource = meteor.getAtmosphereResource();
-                if (resource != null && !resource.isCancelled()) {
-                    return meteor;
+            if (meteor == null) {
+                // Si no existe, intenta obtenerlo desde el AtmosphereResource
+                AtmosphereResource resource = (AtmosphereResource) 
+                    r.getAttribute(AtmosphereResource.class.getName());
+                    
+                if (resource != null) {
+                    meteor = Meteor.build(resource);
                 }
             }
             
-            // Si no se encuentra un Meteor válido, retorna null
-            return null;
+            return meteor;
             
         } catch (Exception e) {
-            // En caso de error retorna null
             return null;
         }
     }

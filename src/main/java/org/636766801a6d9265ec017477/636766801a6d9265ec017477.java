@@ -14,7 +14,7 @@ public class FileProcessor {
 
         Stack<InputStream> stack = new Stack<>();
         
-        // Push all files onto stack
+        // Push files to stack to reverse order
         for (InputStream file : files) {
             if (file != null) {
                 stack.push(file);

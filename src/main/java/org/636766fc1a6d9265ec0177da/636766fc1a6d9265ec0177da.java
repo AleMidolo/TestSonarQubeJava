@@ -7,13 +7,13 @@ public class ParameterParser {
         // Parameter name ends if character is:
         // - whitespace
         // - closing bracket )
-        // - comma ,
         // - semicolon ;
         // - equals sign =
+        // - comma ,
         return Character.isWhitespace(c) || 
                c == ')' ||
-               c == ',' ||
                c == ';' ||
-               c == '=';
+               c == '=' ||
+               c == ',';
     }
 }

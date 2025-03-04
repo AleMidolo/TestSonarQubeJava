@@ -18,15 +18,16 @@ public class DoublyLinkedList<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list);
         
-        if (list == this || list.size == 0) {
+        if (list.size == 0 || list == this) {
             return;
         }
 
-        // Connect the lists
-        if (this.size == 0) {
+        // If this list is empty
+        if (size == 0) {
             this.head = list.head;
             this.tail = list.tail;
         } else {
+            // Connect the tail of this list to head of other list
             this.tail.next = list.head;
             list.head.prev = this.tail;
             this.tail = list.tail;
@@ -35,7 +36,7 @@ public class DoublyLinkedList<E> {
         // Update size
         this.size += list.size;
 
-        // Clear the source list
+        // Clear the other list
         list.head = null;
         list.tail = null;
         list.size = 0;

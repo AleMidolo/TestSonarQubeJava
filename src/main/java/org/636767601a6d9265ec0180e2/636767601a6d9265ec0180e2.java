@@ -1,7 +1,6 @@
 import java.util.*;
 
-public class MinimalSeparatorFinder {
-
+public class MinimalSeparators {
     private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
     
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
@@ -19,18 +18,21 @@ public class MinimalSeparatorFinder {
             Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
             commonNeighbors.retainAll(targetNeighbors);
             
-            // Find minimal separators in the neighborhood of the edge
+            // For each common neighbor pair, check if they form a minimal separator
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
-            
-            // For each pair of common neighbors
             List<V> neighborList = new ArrayList<>(commonNeighbors);
+            
             for (int i = 0; i < neighborList.size(); i++) {
                 for (int j = i + 1; j < neighborList.size(); j++) {
                     V v1 = neighborList.get(i);
                     V v2 = neighborList.get(j);
                     
-                    // Check if {v1,v2} forms a minimal separator
-                    if (isMinimalSeparator(v1, v2)) {
+                    // Check if {v1,v2} is a minimal separator
+                    Set<V> separator = new HashSet<>();
+                    separator.add(v1);
+                    separator.add(v2);
+                    
+                    if (isMinimalSeparator(separator)) {
                         edgeSeparators.add(new Pair<>(
                             graph.getVertexIndex(v1),
                             graph.getVertexIndex(v2)
@@ -39,7 +41,7 @@ public class MinimalSeparatorFinder {
                 }
             }
             
-            // Add edge separators to global list
+            // Add the edge separators to global list
             if (!edgeSeparators.isEmpty()) {
                 globalSeparators.add(new Pair<>(edgeSeparators, edge));
             }
@@ -48,51 +50,66 @@ public class MinimalSeparatorFinder {
         return globalSeparators;
     }
     
-    // Helper method to check if two vertices form a minimal separator
-    private boolean isMinimalSeparator(V v1, V v2) {
-        // Remove v1 and v2 from graph temporarily
-        Set<V> separator = new HashSet<>();
-        separator.add(v1);
-        separator.add(v2);
+    // Helper method to check if a set of vertices is a minimal separator
+    private boolean isMinimalSeparator(Set<V> separator) {
+        // Remove separator vertices from graph
+        Set<V> remainingVertices = new HashSet<>(graph.vertexSet());
+        remainingVertices.removeAll(separator);
         
-        // Check if removing these vertices increases number of connected components
-        int originalComponents = countConnectedComponents(graph);
-        int newComponents = countConnectedComponents(removeVertices(graph, separator));
+        // Get connected components
+        List<Set<V>> components = getConnectedComponents(remainingVertices);
         
-        return newComponents > originalComponents;
-    }
-    
-    // Helper method to count connected components in a graph
-    private int countConnectedComponents(Graph<V,E> g) {
-        Set<V> visited = new HashSet<>();
-        int count = 0;
-        
-        for (V vertex : g.vertexSet()) {
-            if (!visited.contains(vertex)) {
-                dfs(g, vertex, visited);
-                count++;
+        // Check if removing any vertex from separator would still separate components
+        if (components.size() >= 2) {
+            for (V v : separator) {
+                Set<V> smallerSeparator = new HashSet<>(separator);
+                smallerSeparator.remove(v);
+                
+                Set<V> remaining = new HashSet<>(graph.vertexSet());
+                remaining.removeAll(smallerSeparator);
+                
+                List<Set<V>> newComponents = getConnectedComponents(remaining);
+                
+                // If components are still separated, this is not minimal
+                if (newComponents.size() >= 2) {
+                    return false;
+                }
             }
+            return true;
+        }
+        return false;
+    }
+    
+    // Helper method to get connected components
+    private List<Set<V>> getConnectedComponents(Set<V> vertices) {
+        List<Set<V>> components = new ArrayList<>();
+        Set<V> unvisited = new HashSet<>(vertices);
+        
+        while (!unvisited.isEmpty()) {
+            V start = unvisited.iterator().next();
+            Set<V> component = new HashSet<>();
+            
+            // DFS to find component
+            Stack<V> stack = new Stack<>();
+            stack.push(start);
+            
+            while (!stack.isEmpty()) {
+                V current = stack.pop();
+                if (unvisited.contains(current)) {
+                    component.add(current);
+                    unvisited.remove(current);
+                    
+                    for (V neighbor : graph.neighborListOf(current)) {
+                        if (unvisited.contains(neighbor)) {
+                            stack.push(neighbor);
+                        }
+                    }
+                }
+            }
+            
+            components.add(component);
         }
         
-        return count;
-    }
-    
-    // Helper method for DFS traversal
-    private void dfs(Graph<V,E> g, V vertex, Set<V> visited) {
-        visited.add(vertex);
-        for (V neighbor : g.neighborListOf(vertex)) {
-            if (!visited.contains(neighbor)) {
-                dfs(g, neighbor, visited);
-            }
-        }
-    }
-    
-    // Helper method to create a new graph with vertices removed
-    private Graph<V,E> removeVertices(Graph<V,E> g, Set<V> verticesToRemove) {
-        Graph<V,E> newGraph = g.clone();
-        for (V vertex : verticesToRemove) {
-            newGraph.removeVertex(vertex);
-        }
-        return newGraph;
+        return components;
     }
 }

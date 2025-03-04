@@ -9,7 +9,7 @@ public class ClassFinder {
      * @throws ClassNotFoundException thrown if class can not be found.
      */
     private Class findClass(final String className) throws ClassNotFoundException {
-        Objects.requireNonNull(className, "className must not be null");
+        Objects.requireNonNull(className, "className cannot be null");
         
         try {
             return Class.forName(className);

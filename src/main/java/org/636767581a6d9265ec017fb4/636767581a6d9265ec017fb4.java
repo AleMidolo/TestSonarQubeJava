@@ -19,7 +19,6 @@ public class BoundComputer<K extends Comparable<K>> {
             K currentKey = keys.get(i);
             int upperBound = Integer.MAX_VALUE;
             
-            // Compare with all other keys
             for (int j = 0; j < keys.size(); j++) {
                 if (i != j) {
                     K otherKey = keys.get(j);

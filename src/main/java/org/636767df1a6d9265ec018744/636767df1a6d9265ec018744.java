@@ -12,13 +12,13 @@ public class TimeRangeBuilder {
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> ranges = new ArrayList<>();
         
-        // If time range is smaller than max duration, return single range
+        // If total duration is less than max, return single range
         if (end - start <= FETCH_DATA_DURATION) {
             ranges.add(new TimeRange(start, end));
             return ranges;
         }
 
-        // Split into multiple ranges of max duration
+        // Split into multiple ranges of FETCH_DATA_DURATION
         long currentStart = start;
         while (currentStart < end) {
             long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
@@ -31,8 +31,8 @@ public class TimeRangeBuilder {
 
     // Inner class to represent a time range
     protected static class TimeRange {
-        private long start;
-        private long end;
+        private final long start;
+        private final long end;
 
         public TimeRange(long start, long end) {
             this.start = start;

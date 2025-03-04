@@ -9,11 +9,11 @@ public class AtmosphereResourceImpl implements AtmosphereResource {
     
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        if (e != null && !listeners.contains(e)) {
+        if (e != null) {
             listeners.add(e);
         }
         return this;
     }
     
-    // Other required interface methods would go here
+    // Other required interface methods...
 }

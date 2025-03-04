@@ -11,7 +11,7 @@ public class HashCapacity {
         // Start checking from desiredCapacity
         int num = desiredCapacity;
         
-        // If even, increment by 1 to start checking from odd number
+        // If even, add 1 to start checking from next odd number
         if (num % 2 == 0) {
             num++;
         }

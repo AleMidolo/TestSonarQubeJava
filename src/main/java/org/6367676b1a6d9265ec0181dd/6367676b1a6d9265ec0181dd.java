@@ -12,7 +12,7 @@ public class StringUtils {
 
         int count = 0;
         int lastIndex = 0;
-
+        
         while (lastIndex != -1) {
             lastIndex = str.indexOf(sub, lastIndex);
             if (lastIndex != -1) {
@@ -20,7 +20,7 @@ public class StringUtils {
                 lastIndex += 1;
             }
         }
-
+        
         return count;
     }
 }

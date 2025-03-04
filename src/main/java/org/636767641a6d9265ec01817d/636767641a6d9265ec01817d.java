@@ -20,10 +20,10 @@ public class BipartiteGraph {
             adj.add(new ArrayList<>());
         }
         
-        // Connect each vertex in first partition to all vertices in second partition
+        // Add edges between every vertex in first partition
+        // to every vertex in second partition
         for(int i = 0; i < m; i++) {
             for(int j = m; j < V; j++) {
-                // Add edges in both directions
                 adj.get(i).add(j);
                 adj.get(j).add(i);
             }

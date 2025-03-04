@@ -17,16 +17,4 @@ public class ChannelManager {
             targetChannels.add(channel);
         }
     }
-
-    /**
-     * Add multiple new target channels.
-     * @param channels List of channels to add
-     */
-    public void addTargetChannels(List<String> channels) {
-        if (channels != null) {
-            for (String channel : channels) {
-                addTargetChannel(channel);
-            }
-        }
-    }
 }

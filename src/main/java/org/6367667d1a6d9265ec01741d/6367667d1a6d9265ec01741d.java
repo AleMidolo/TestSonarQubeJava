@@ -18,11 +18,10 @@ public class TypeResolver {
         if (firstBound instanceof Class) {
             return (Class<?>) firstBound;
         }
-        
+
         return Unknown.class;
     }
-    
-    // Unknown class used as default return value
-    private static class Unknown {
-    }
 }
+
+// Unknown class used as default return value
+class Unknown {}

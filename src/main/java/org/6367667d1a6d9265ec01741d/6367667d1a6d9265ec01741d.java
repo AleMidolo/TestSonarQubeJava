@@ -26,7 +26,6 @@ public class TypeResolver {
             if (upperBounds != null && upperBounds.length > 0) {
                 return upperBounds[0];
             }
-            return Unknown.class;
         }
         
         if (bound instanceof ParameterizedType) {

@@ -2,20 +2,21 @@ import org.apache.log4j.Appender;
 import java.util.Enumeration;
 
 public class AppenderManager {
-    private Enumeration<Appender> appenders;
+    private Vector appenderList;
 
-    /**
-     * Restituisce <code>true</code> se l'appender specificato è presente nell'elenco degli appender allegati, <code>false</code> altrimenti.
-     * @since 1.2
-     */
     public boolean isAttached(Appender appender) {
         if (appender == null) {
             return false;
         }
 
-        while (appenders != null && appenders.hasMoreElements()) {
-            Appender currentAppender = appenders.nextElement();
-            if (currentAppender == appender) {
+        if (appenderList == null) {
+            return false;
+        }
+
+        Enumeration enumeration = appenderList.elements();
+        while (enumeration.hasMoreElements()) {
+            Appender currentAppender = (Appender) enumeration.nextElement();
+            if (currentAppender.equals(appender)) {
                 return true;
             }
         }

@@ -11,13 +11,13 @@ public class MessageSerializer {
      * @return la dimensione del messaggio
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create protobuf output using the buffer
-        final ProtobufOutput output = new ProtobufOutput(buffer);
+        // Create ProtobufOutput with the provided buffer
+        ProtobufOutput output = new ProtobufOutput(buffer);
         
-        // Serialize the message to get its size
+        // Serialize the message using schema
         schema.writeTo(output, message);
         
-        // Get the size of the serialized message
+        // Get the size of serialized message
         int size = output.getSize();
         
         // Write the size as a varint to the output stream
@@ -27,7 +27,7 @@ public class MessageSerializer {
         }
         out.write(size);
         
-        // Write the actual message
+        // Write the actual message bytes
         LinkedBuffer.writeTo(out, buffer);
         
         // Return the total size of the message

@@ -18,18 +18,16 @@ public class TableUtils {
         // Select the row
         table.setRowSelectionInterval(row, row);
 
-        // Get the rectangle for the cell
+        // Scroll to make the row visible
         Rectangle rect = table.getCellRect(row, 0, true);
-        
-        // Convert table coordinates to scroll pane coordinates
-        rect = SwingUtilities.convertRectangle(table, rect, pane.getViewport());
-        
-        // Scroll to make the rectangle visible
-        pane.getViewport().scrollRectToVisible(rect);
-        
-        // Schedule a repaint to ensure proper rendering
+        table.scrollRectToVisible(rect);
+
+        // Ensure proper repainting using SwingUtilities.invokeLater
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
+                // Adjust viewport to show selected row
+                pane.getViewport().scrollRectToVisible(rect);
                 table.repaint();
             }
         });

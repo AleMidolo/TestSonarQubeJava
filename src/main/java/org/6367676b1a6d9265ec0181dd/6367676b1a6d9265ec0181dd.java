@@ -9,7 +9,7 @@ public class StringUtils {
         if (str == null || sub == null || sub.length() == 0) {
             return 0;
         }
-
+        
         int count = 0;
         int pos = 0;
         int idx;

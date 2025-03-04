@@ -9,18 +9,14 @@ public class StackMapFrameVisitor {
     private static class Frame {
         int offset;
         int numLocal;
-        int numStack;
-        Object[] locals;
-        Object[] stack;
-        int index;
+        int numStack; 
+        List<Object> elements;
         
         Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.locals = new Object[numLocal];
-            this.stack = new Object[numStack];
-            this.index = 0;
+            this.elements = new ArrayList<>();
         }
     }
     
@@ -29,14 +25,12 @@ public class StackMapFrameVisitor {
     }
     
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Create new frame and store it as current frame
+        // Create new frame and set as current
         currentFrame = new Frame(offset, numLocal, numStack);
         frames.add(currentFrame);
         
-        // Start writing to local variables section
-        currentFrame.index = 0;
-        
-        // Return current index where next element should be written
-        return currentFrame.index;
+        // Return starting index for writing elements
+        // Local variables are written first, followed by stack elements
+        return 0;
     }
 }

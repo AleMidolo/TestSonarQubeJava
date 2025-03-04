@@ -3,11 +3,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class LogEventBuffer {
     private final ArrayBlockingQueue<LoggingEvent> buffer;
-    private final int capacity;
+    private final int maxSize;
 
-    public LogEventBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new ArrayBlockingQueue<>(capacity);
+    public LogEventBuffer(int size) {
+        this.maxSize = size;
+        this.buffer = new ArrayBlockingQueue<>(maxSize);
     }
 
     /**
@@ -19,11 +19,11 @@ public class LogEventBuffer {
         }
 
         // If buffer is full, remove oldest event
-        if (buffer.size() == capacity) {
+        if (buffer.size() == maxSize) {
             buffer.poll();
         }
 
-        // Add new event
+        // Add new event to buffer
         buffer.offer(event);
     }
 }

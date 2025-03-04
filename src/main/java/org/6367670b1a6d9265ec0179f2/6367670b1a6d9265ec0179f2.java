@@ -22,38 +22,26 @@ public class CustomMap<K,V> implements Map<K,V> {
         }
         
         int hash = key.hashCode();
-        int index = hash & (table.length - 1);
+        int index = Math.abs(hash % table.length);
         
-        for (Entry<K,V> entry = table[index]; entry != null; entry = entry.next) {
-            if (entry.key.equals(key)) {
+        Entry<K,V> current = table[index];
+        while (current != null) {
+            if (current.key.equals(key)) {
                 return true;
             }
+            current = current.next;
         }
         return false;
     }
     
-    private static class Entry<K,V> implements Map.Entry<K,V> {
-        final K key;
-        V value;
+    private static class Entry<K,V> {
+        K key;
+        V value; 
         Entry<K,V> next;
         
         Entry(K key, V value) {
             this.key = key;
             this.value = value;
-        }
-        
-        public K getKey() {
-            return key;
-        }
-        
-        public V getValue() {
-            return value;
-        }
-        
-        public V setValue(V value) {
-            V oldValue = this.value;
-            this.value = value;
-            return oldValue;
         }
     }
 }

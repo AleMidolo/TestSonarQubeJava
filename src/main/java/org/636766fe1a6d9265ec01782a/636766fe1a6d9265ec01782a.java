@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 public class ClassReader {
     private byte[] classFileBuffer;
     private int[] cpInfoOffsets;
-
+    
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
         int offset = cpInfoOffsets[constantPoolEntryIndex];
         int utfLength = readUnsignedShort(offset);
@@ -29,9 +29,9 @@ public class ClassReader {
         }
         return new String(charBuffer, 0, charLength);
     }
-
+    
     private int readUnsignedShort(final int offset) {
-        byte[] classFileBuffer = this.classFileBuffer;
-        return ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
+        byte[] classBuffer = classFileBuffer;
+        return ((classBuffer[offset] & 0xFF) << 8) | (classBuffer[offset + 1] & 0xFF);
     }
 }

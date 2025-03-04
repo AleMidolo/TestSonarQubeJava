@@ -21,4 +21,20 @@ public class StringArrayCopier {
         }
         return dst;
     }
+    
+    // Example usage
+    public static void main(String[] args) {
+        String[] original = {"Hello", "WORLD", "Java", null, "CODE"};
+        String[] copied = copyStrings(original);
+        
+        // Print results
+        System.out.println("Original array:");
+        for (String s : original) {
+            System.out.print(s + " ");
+        }
+        System.out.println("\nCopied array (lowercase):");
+        for (String s : copied) {
+            System.out.print(s + " ");
+        }
+    }
 }

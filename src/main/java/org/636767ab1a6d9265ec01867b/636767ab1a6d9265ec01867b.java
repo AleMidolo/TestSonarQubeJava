@@ -11,44 +11,39 @@ public class StringSerializer {
         }
 
         final byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        final int bytesLength = bytes.length;
+        LinkedBuffer buffer = lb;
         
-        if (lb.offset + bytesLength > lb.buffer.length) {
-            // Not enough space in current buffer, create new one
-            LinkedBuffer newBuffer = new LinkedBuffer(Math.max(bytesLength, LinkedBuffer.DEFAULT_BUFFER_SIZE));
-            lb.next = newBuffer;
-            System.arraycopy(bytes, 0, newBuffer.buffer, 0, bytesLength);
-            newBuffer.offset = bytesLength;
-            session.size += bytesLength;
-            return newBuffer;
+        // Check if current buffer has enough space
+        if (buffer.offset + bytes.length > buffer.buffer.length) {
+            // Create new buffer if needed
+            buffer = new LinkedBuffer(Math.max(bytes.length, buffer.buffer.length));
+            session.tail = buffer;
+            if (session.head == null) {
+                session.head = buffer;
+            }
         }
         
-        // Enough space in current buffer
-        System.arraycopy(bytes, 0, lb.buffer, lb.offset, bytesLength);
-        lb.offset += bytesLength;
-        session.size += bytesLength;
-        return lb;
+        // Copy bytes to buffer
+        System.arraycopy(bytes, 0, buffer.buffer, buffer.offset, bytes.length);
+        buffer.offset += bytes.length;
+        
+        return buffer;
     }
     
     // Supporting classes needed for compilation
     public static class LinkedBuffer {
-        public static final int DEFAULT_BUFFER_SIZE = 256;
         byte[] buffer;
         int offset;
         LinkedBuffer next;
         
         public LinkedBuffer(int size) {
-            buffer = new byte[size];
-            offset = 0;
-            next = null;
+            this.buffer = new byte[size];
+            this.offset = 0;
         }
     }
     
     public static class WriteSession {
-        int size;
-        
-        public WriteSession() {
-            size = 0;
-        }
+        LinkedBuffer head;
+        LinkedBuffer tail;
     }
 }

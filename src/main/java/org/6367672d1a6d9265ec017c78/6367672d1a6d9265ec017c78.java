@@ -1,15 +1,12 @@
 import java.util.HashSet;
 
-public class IntegerSet {
+public class Solution {
     private HashSet<Integer> set;
-
-    public IntegerSet() {
+    
+    public Solution() {
         set = new HashSet<>();
     }
-
-    /**
-     * Inserisce un valore nel "set". Restituisce true se il "set" non conteneva già l'elemento specificato.
-     */
+    
     public boolean insert(int val) {
         return set.add(val);
     }

@@ -1,14 +1,17 @@
+package org.apache.commons.lang3.math;
+
 public class NumberUtils {
     /**
-     * <p>Metodo di utilità per {@link #createNumber(String)}.</p>
-     * <p>Restituisce <code>true</code> se s è <code>null</code>.</p>
-     * @param s la String da controllare
-     * @return se è composta solo da zeri o <code>null</code>
+     * <p>Utility method for {@link #createNumber(String)}.</p>
+     * <p>Returns <code>true</code> if s is <code>null</code>.</p>
+     * @param s the String to check
+     * @return if it is all zeros or <code>null</code>
      */
     private static boolean isAllZeros(String s) {
         if (s == null) {
             return true;
         }
+        
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) != '0') {
                 return false;

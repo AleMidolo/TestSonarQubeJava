@@ -1,27 +1,41 @@
-import javax.swing.SwingUtilities;
-import java.util.logging.LogRecord;
+import javax.swing.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Logger {
-    private LogTable logTable; // Assume LogTable is defined elsewhere
-    
+public class LogManager {
+    private static final Logger LOGGER = Logger.getLogger(LogManager.class.getName());
+    private LogTable logTable;
+
+    public LogManager(LogTable logTable) {
+        this.logTable = logTable;
+    }
+
     /**
-     * Aggiunge un messaggio di registrazione da visualizzare nella LogTable. 
-     * Questo metodo è thread-safe in quanto invia le richieste al SwingThread anziché elaborarle direttamente.
+     * Add a log record message to be displayed in the LogTable. This method is thread-safe as it posts requests to the SwingThread rather than processing directly.
+     * @param message The message to log
      */
-    public void addMessage(final LogRecord lr) {
-        if (lr == null) {
+    public void addLogRecord(final String message) {
+        if (message == null || message.isEmpty()) {
             return;
         }
-        
+
+        // Post to Event Dispatch Thread to ensure thread safety
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    logTable.addLogRecord(lr);
+                    logTable.addRow(message);
                 } catch (Exception e) {
-                    System.err.println("Error adding log record: " + e.getMessage());
+                    LOGGER.log(Level.SEVERE, "Error adding log record: " + message, e);
                 }
             }
         });
+    }
+}
+
+// Supporting class for compilation
+class LogTable extends JTable {
+    public void addRow(String message) {
+        // Implementation details for adding row to table
     }
 }

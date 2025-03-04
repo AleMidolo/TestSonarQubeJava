@@ -1,12 +1,14 @@
 public class StringBuilder {
-    private char[] value;
-    private int count;
-    
-    /**
-     * <p> Ottiene la String costruita da questo builder. </p>
-     * @return la stringa costruita
-     */
+    private char[] buffer;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 16;
+
+    public StringBuilder() {
+        buffer = new char[DEFAULT_CAPACITY];
+        size = 0;
+    }
+
     public String toString() {
-        return new String(value, 0, count);
+        return new String(buffer, 0, size);
     }
 }

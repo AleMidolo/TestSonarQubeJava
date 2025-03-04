@@ -1,41 +1,28 @@
 import java.io.File;
 
 public class FilenameUtils {
-
-    private static final char EXTENSION_SEPARATOR = '.';
-    private static final char UNIX_SEPARATOR = '/';
-    private static final char WINDOWS_SEPARATOR = '\\';
-
+    
     public static int indexOfExtension(String filename) {
         if (filename == null) {
             return -1;
         }
-
-        // Get last directory separator position
-        int lastDirSeparator = indexOfLastSeparator(filename);
         
-        // Find last dot
-        int lastDot = filename.lastIndexOf(EXTENSION_SEPARATOR);
+        int extensionPos = filename.lastIndexOf('.');
+        int lastSeparator = indexOfLastSeparator(filename);
         
-        // Return -1 if:
-        // - No dot found
-        // - Dot is before last directory separator
-        // - Dot is the last character
-        if (lastDot == -1 || lastDot < lastDirSeparator || lastDot == filename.length() - 1) {
+        if (lastSeparator > extensionPos) {
             return -1;
         }
-        
-        return lastDot;
+        return extensionPos;
     }
-
+    
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
         
-        // Find last occurrence of either separator
-        int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
-        int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
         
         return Math.max(lastUnixPos, lastWindowsPos);
     }

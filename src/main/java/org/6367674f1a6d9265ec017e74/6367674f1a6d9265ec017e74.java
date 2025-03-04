@@ -1,42 +1,34 @@
-import java.util.NoSuchElementException;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Queue<E> {
-    private Node<E> front;
-    private Node<E> rear;
-    private int size;
+public class QueuePrinter {
+    private Queue<Object> queue;
 
-    private static class Node<E> {
-        E element;
-        Node<E> next;
-
-        Node(E element) {
-            this.element = element;
-            this.next = null;
-        }
+    public QueuePrinter() {
+        this.queue = new LinkedList<>();
     }
 
     /**
-     * Restituisce una rappresentazione testuale della coda.
-     * @return una rappresentazione testuale della coda.
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
      */
     public String toString() {
-        if (size == 0) {
+        if (queue.isEmpty()) {
             return "[]";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
-        Node<E> current = front;
-        while (current != null) {
-            sb.append(current.element);
-            if (current.next != null) {
-                sb.append(", ");
-            }
-            current = current.next;
+        for (Object element : queue) {
+            sb.append(element);
+            sb.append(", ");
         }
         
+        // Remove trailing comma and space
+        sb.setLength(sb.length() - 2);
         sb.append("]");
+        
         return sb.toString();
     }
 }

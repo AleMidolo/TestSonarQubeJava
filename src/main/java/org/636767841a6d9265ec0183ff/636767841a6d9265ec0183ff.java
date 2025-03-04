@@ -3,39 +3,41 @@ import java.awt.*;
 
 public class TableUtils {
     /**
-     * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. 
-     * Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente 
-     * la riga appena selezionata, che potrebbe essere fuori dallo schermo.
-     * @param table deve appartenere allo JScrollPane specificato
+     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane to the newly selected row. 
+     * More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscre
+     * @param table should belong to the specified JScrollPane
+     * @param scrollPane the scroll pane containing the table
+     * @param row the row index to select and scroll to
      */
-    public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (row < 0 || row >= table.getRowCount()) {
+    public static void selectAndScrollToRow(JTable table, JScrollPane scrollPane, int row) {
+        if (table == null || scrollPane == null || row < 0 || row >= table.getRowCount()) {
             return;
         }
 
-        // Seleziona la riga
+        // Select the row
         table.setRowSelectionInterval(row, row);
 
-        // Calcola il rettangolo della riga selezionata
-        Rectangle rect = table.getCellRect(row, 0, true);
+        // Calculate rectangle of the row to scroll to
+        Rectangle cellRect = table.getCellRect(row, 0, true);
         
-        // Scorre fino alla riga selezionata
-        table.scrollRectToVisible(rect);
+        // Convert table coordinates to scroll pane coordinates
+        Point p = SwingUtilities.convertPoint(table, cellRect.x, cellRect.y, 
+                                            scrollPane.getViewport());
+        cellRect.setLocation(p);
 
-        // Ritarda il repaint per assicurare che la selezione sia visibile
+        // Scroll to make the rectangle visible
+        scrollPane.getViewport().scrollRectToVisible(cellRect);
+        
+        // Schedule a repaint with slight delay to ensure proper rendering
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                // Forza lo scroll
-                pane.getViewport().scrollRectToVisible(rect);
-                
-                // Ritarda ulteriormente il repaint
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        table.repaint();
-                    }
-                });
+                try {
+                    // Small delay to ensure proper rendering
+                    Thread.sleep(50);
+                    table.repaint();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         });
     }

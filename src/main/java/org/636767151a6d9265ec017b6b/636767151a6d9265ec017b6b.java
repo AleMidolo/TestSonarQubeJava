@@ -1,27 +1,22 @@
+package org.apache.commons.lang3;
+
 public class StringUtils {
     /**
-     * <p>Controlla se una Stringa inizia con un prefisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
+     * <p>Check if a String starts with a specified prefix (optionally case insensitive).</p>
      * @see String#startsWith(String)
-     * @param str  la Stringa da controllare, può essere null
-     * @param prefix il prefisso da trovare, può essere null
-     * @param ignoreCase indica se il confronto deve ignorare le maiuscole e minuscole (senza distinzione tra maiuscole e minuscole) o meno.
-     * @return <code>true</code> se la Stringa inizia con il prefisso o entrambi <code>null</code>
+     * @param str  the String to check, may be null
+     * @param prefix the prefix to find, may be null
+     * @param ignoreCase indicates whether the compare should ignore case(case insensitive) or not.
+     * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
      */
-    private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
-        if (str == null && prefix == null) {
-            return true;
-        }
+    public static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
         if (str == null || prefix == null) {
-            return false;
+            return str == null && prefix == null;
         }
         if (prefix.length() > str.length()) {
             return false;
         }
-        
-        if (ignoreCase) {
-            return str.regionMatches(true, 0, prefix, 0, prefix.length());
-        } else {
-            return str.startsWith(prefix);
-        }
+        return ignoreCase ? str.regionMatches(true, 0, prefix, 0, prefix.length()) 
+                         : str.startsWith(prefix);
     }
 }

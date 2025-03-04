@@ -2,32 +2,29 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Appender;
 
-public class Logger {
+public class AppenderManager {
     private List<Appender> appenders;
 
-    public Logger() {
-        appenders = new ArrayList<>();
+    public AppenderManager() {
+        this.appenders = new ArrayList<>();
     }
 
     /**
-     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.
+     * Remove the appender with the name passed as parameter form the list of appenders.
+     * @param name The name of the appender to remove
+     * @return The removed appender, or null if not found
      */
-    public void removeAppender(String name) {
-        if (name == null) {
-            return;
+    public Appender removeAppender(String name) {
+        if (name == null || appenders == null) {
+            return null;
         }
 
-        Appender toRemove = null;
-        for (Appender appender : appenders) {
-            if (name.equals(appender.getName())) {
-                toRemove = appender;
-                break;
+        for (int i = 0; i < appenders.size(); i++) {
+            Appender appender = appenders.get(i);
+            if (appender != null && name.equals(appender.getName())) {
+                return appenders.remove(i);
             }
         }
-
-        if (toRemove != null) {
-            appenders.remove(toRemove);
-            toRemove.close();
-        }
+        return null;
     }
 }

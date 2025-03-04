@@ -1,54 +1,28 @@
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryTree {
-    private CategoryNode root;
+public class Category {
+    private boolean active;
+    private List<Category> children;
+    private Category parent;
     
-    protected class CategoryNode {
-        private boolean active;
-        private List<CategoryNode> children;
-        
-        public CategoryNode() {
-            this.active = false;
-            this.children = new ArrayList<>();
-        }
-        
-        public boolean isActive() {
-            return active;
-        }
-        
-        public List<CategoryNode> getChildren() {
-            return children;
-        }
-    }
-
-    protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
-        return removeUnusedNodesRecursive(root);
-    }
-    
-    private int removeUnusedNodesRecursive(CategoryNode node) {
-        int removedCount = 0;
-        
-        // Create a list to store children that need to be removed
-        List<CategoryNode> nodesToRemove = new ArrayList<>();
-        
-        // Recursively process all children
-        for (CategoryNode child : node.getChildren()) {
-            removedCount += removeUnusedNodesRecursive(child);
-            
-            // If child is inactive and has no children, mark it for removal
-            if (!child.isActive() && child.getChildren().isEmpty()) {
-                nodesToRemove.add(child);
-                removedCount++;
+    public void removeInactiveNodes() {
+        if (children != null && !children.isEmpty()) {
+            Iterator<Category> iterator = children.iterator();
+            while (iterator.hasNext()) {
+                Category child = iterator.next();
+                child.removeInactiveNodes();
+                if (!child.active && (child.children == null || child.children.isEmpty())) {
+                    iterator.remove();
+                }
             }
         }
-        
-        // Remove marked nodes from children list
-        node.getChildren().removeAll(nodesToRemove);
-        
-        return removedCount;
+    }
+    
+    // Constructor and other methods omitted for brevity
+    public Category() {
+        this.active = true;
+        this.children = new ArrayList<>();
     }
 }

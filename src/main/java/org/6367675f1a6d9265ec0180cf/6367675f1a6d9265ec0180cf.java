@@ -1,27 +1,35 @@
-import org.jgrapht.Graph;
-import java.util.Set;
+import java.util.*;
 
 public class GraphUtils {
     /**
-     * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
-     * @param graph il grafo.
-     * @param vertices i vertici da cui indurre il sottografo.
-     * @return true se il sottografo indotto è un clique.
+     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
+     * @param graph the graph.
+     * @param vertices the vertices to induce the subgraph from.
+     * @return true if the induced subgraph is a clique.
      */
-    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        // Per ogni coppia di vertici nel set
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                // Se sono vertici diversi
-                if (!v1.equals(v2)) {
-                    // Se non esiste un arco tra loro, non è un clique
-                    if (!graph.containsEdge(v1, v2)) {
-                        return false;
-                    }
+    public static boolean isClique(Graph graph, Set<Integer> vertices) {
+        // For each pair of vertices in the set
+        for (Integer v1 : vertices) {
+            for (Integer v2 : vertices) {
+                // Skip comparing vertex to itself
+                if (v1.equals(v2)) {
+                    continue;
+                }
+                
+                // If any pair of vertices is not connected by an edge,
+                // then this is not a clique
+                if (!graph.hasEdge(v1, v2)) {
+                    return false;
                 }
             }
         }
-        // Se arriviamo qui, ogni coppia di vertici è collegata
+        
+        // If we get here, all vertices are connected to each other
         return true;
     }
+}
+
+// Simple graph interface for reference
+interface Graph {
+    boolean hasEdge(Integer source, Integer target);
 }

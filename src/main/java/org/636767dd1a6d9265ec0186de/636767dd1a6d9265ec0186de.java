@@ -1,13 +1,21 @@
-public class CacheMetrics {
+import java.time.Duration;
+import java.time.Instant;
+
+public class MetricsCache {
+    
     /**
-     * @param timestamp        tempo attuale
-     * @param expiredThreshold rappresenta la durata tra l'ultimo aggiornamento e il momento in cui si rimuove dalla cache.
-     * @return true significa che queste metriche devono essere rimosse dalla cache.
+     * @param timestamp        of current time
+     * @param expiredThreshold represents the duration between last update time and the time point removing from cache.
+     * @return true means this metrics should be removed from cache.
      */
-    public boolean isExpired(long timestamp, long expiredThreshold) {
-        long lastUpdateTime = System.currentTimeMillis(); // Get current time in milliseconds
-        long timeDifference = timestamp - lastUpdateTime;
+    public boolean isExpired(Instant timestamp, Duration expiredThreshold) {
+        if (timestamp == null || expiredThreshold == null) {
+            return true;
+        }
         
-        return timeDifference >= expiredThreshold;
+        Instant now = Instant.now();
+        Duration timeSinceLastUpdate = Duration.between(timestamp, now);
+        
+        return timeSinceLastUpdate.compareTo(expiredThreshold) > 0;
     }
 }

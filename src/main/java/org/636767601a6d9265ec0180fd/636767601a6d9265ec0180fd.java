@@ -1,42 +1,43 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Graph<V,E> {
+    // Internal map to store adjacency lists
+    private Map<V, List<Edge<V,E>>> adjacencyMap;
     
-    // Index maps to store edges
-    private Map<V, Map<V, Set<E>>> outgoingEdges;
-    private Map<V, Map<V, Set<E>>> incomingEdges;
-
+    // Edge class to store edge information
+    private static class Edge<V,E> {
+        private V source;
+        private V target;
+        private E data;
+        
+        public Edge(V source, V target, E data) {
+            this.source = source;
+            this.target = target;
+            this.data = data;
+        }
+    }
+    
     public Graph() {
-        outgoingEdges = new HashMap<>();
-        incomingEdges = new HashMap<>();
+        adjacencyMap = new HashMap<>();
     }
 
     /**
-     * Aggiunge un arco all'indice.
-     * @param sourceVertex il vertice sorgente 
-     * @param targetVertex il vertice di destinazione
-     * @param e l'arco
+     * Add an edge to the index.
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex  
+     * @param e the edge
      */
-    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        // Add to outgoing edges
-        if (!outgoingEdges.containsKey(sourceVertex)) {
-            outgoingEdges.put(sourceVertex, new HashMap<>());
-        }
-        if (!outgoingEdges.get(sourceVertex).containsKey(targetVertex)) {
-            outgoingEdges.get(sourceVertex).put(targetVertex, new HashSet<>());
-        }
-        outgoingEdges.get(sourceVertex).get(targetVertex).add(e);
-
-        // Add to incoming edges
-        if (!incomingEdges.containsKey(targetVertex)) {
-            incomingEdges.put(targetVertex, new HashMap<>());
-        }
-        if (!incomingEdges.get(targetVertex).containsKey(sourceVertex)) {
-            incomingEdges.get(targetVertex).put(sourceVertex, new HashSet<>());
-        }
-        incomingEdges.get(targetVertex).get(sourceVertex).add(e);
+    public void addEdge(V sourceVertex, V targetVertex, E e) {
+        // Create new edge
+        Edge<V,E> edge = new Edge<>(sourceVertex, targetVertex, e);
+        
+        // Add source vertex if it doesn't exist
+        adjacencyMap.putIfAbsent(sourceVertex, new ArrayList<>());
+        
+        // Add target vertex if it doesn't exist
+        adjacencyMap.putIfAbsent(targetVertex, new ArrayList<>());
+        
+        // Add edge to source vertex's adjacency list
+        adjacencyMap.get(sourceVertex).add(edge);
     }
 }

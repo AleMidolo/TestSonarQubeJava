@@ -1,46 +1,67 @@
-import org.apache.log4j.spi.LoggingEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class CustomFormatter {
-    
+public class StringFormatter {
+
     /**
-     * Produce una stringa formattata come specificato dal modello di conversione.
+     * Produces a formatted string as specified by the conversion pattern.
+     * @param pattern The pattern containing format specifiers
+     * @param args The arguments to format
+     * @return The formatted string with arguments inserted
      */
-    public String format(LoggingEvent event) {
-        if (event == null) {
-            return "";
+    public static String format(String pattern, Object... args) {
+        if (pattern == null) {
+            return null;
+        }
+        
+        if (args == null || args.length == 0) {
+            return pattern;
         }
 
-        StringBuilder formattedMessage = new StringBuilder();
+        StringBuilder result = new StringBuilder();
+        Pattern p = Pattern.compile("%[sdf]");
+        Matcher m = p.matcher(pattern);
         
-        // Add timestamp
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-        formattedMessage.append(dateFormat.format(new Date(event.getTimeStamp())));
-        formattedMessage.append(" ");
+        int argIndex = 0;
+        int lastMatch = 0;
         
-        // Add log level
-        formattedMessage.append("[");
-        formattedMessage.append(event.getLevel().toString());
-        formattedMessage.append("] ");
-        
-        // Add logger name
-        formattedMessage.append(event.getLoggerName());
-        formattedMessage.append(" - ");
-        
-        // Add message
-        formattedMessage.append(event.getRenderedMessage());
-        
-        // Add throwable if exists
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
-            formattedMessage.append("\n");
-            for (String throwableLine : throwableStrRep) {
-                formattedMessage.append(throwableLine);
-                formattedMessage.append("\n");
+        while (m.find() && argIndex < args.length) {
+            // Append text before the format specifier
+            result.append(pattern.substring(lastMatch, m.start()));
+            
+            // Get the format specifier
+            String specifier = m.group();
+            
+            // Format based on specifier type
+            switch (specifier) {
+                case "%s":
+                    result.append(String.valueOf(args[argIndex]));
+                    break;
+                case "%d":
+                    if (args[argIndex] instanceof Number) {
+                        result.append(((Number)args[argIndex]).longValue());
+                    } else {
+                        result.append(args[argIndex]);
+                    }
+                    break;
+                case "%f":
+                    if (args[argIndex] instanceof Number) {
+                        result.append(((Number)args[argIndex]).doubleValue());
+                    } else {
+                        result.append(args[argIndex]);
+                    }
+                    break;
             }
+            
+            lastMatch = m.end();
+            argIndex++;
         }
         
-        return formattedMessage.toString();
+        // Append remaining text after last format specifier
+        if (lastMatch < pattern.length()) {
+            result.append(pattern.substring(lastMatch));
+        }
+        
+        return result.toString();
     }
 }

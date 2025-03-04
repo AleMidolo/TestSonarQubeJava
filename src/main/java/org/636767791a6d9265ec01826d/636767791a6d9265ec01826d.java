@@ -1,14 +1,17 @@
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertyUtils {
+public class PropertyResolver {
 
     /**
-     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. 
-     * Quindi esegui la sostituzione delle variabili sul valore trovato.
+     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     * @param key The property key to look up
+     * @param props The Properties object containing key-value pairs
+     * @return The resolved property value with variables substituted
      */
-    public static String findAndSubst(String key, Properties props) {
+    public String resolveProperty(String key, Properties props) {
         if (key == null || props == null) {
             return null;
         }
@@ -18,7 +21,7 @@ public class PropertyUtils {
             return null;
         }
 
-        // Pattern per trovare variabili del tipo ${var}
+        // Pattern to match ${variable} syntax
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
@@ -27,14 +30,13 @@ public class PropertyUtils {
             String varName = matcher.group(1);
             String replacement = props.getProperty(varName);
             
-            // Se la variabile non è definita, lascia il placeholder originale
+            // If no replacement found, leave original ${var} text
             if (replacement == null) {
                 replacement = "${" + varName + "}";
             }
             
-            // Escape dei caratteri speciali nel replacement
-            replacement = Matcher.quoteReplacement(replacement);
-            matcher.appendReplacement(result, replacement);
+            // Quote replacement string to handle special regex chars
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);
 

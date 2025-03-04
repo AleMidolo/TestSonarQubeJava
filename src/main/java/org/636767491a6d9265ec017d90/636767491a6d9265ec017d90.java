@@ -1,24 +1,14 @@
 import java.util.Arrays;
 
-public class ArrayUtils {
-    /**
-     * Inverte l'ordine degli elementi nell'intervallo specificato all'interno dell'array fornito.
-     * @param <V> il tipo di elementi nell'array
-     * @param arr l'array
-     * @param from l'indice del primo elemento (inclusivo) all'interno dell'intervallo da invertire
-     * @param to l'indice dell'ultimo elemento (inclusivo) all'interno dell'intervallo da invertire
-     */
-    public static final <V> void reverse(V[] arr, int from, int to) {
-        if (arr == null || arr.length == 0) {
+public class ArrayReverser {
+    
+    public static <V> void reverseRange(V[] arr, int from, int to) {
+        if (arr == null || from >= to || from < 0 || to >= arr.length) {
             return;
         }
         
-        if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("Invalid range parameters");
-        }
-        
         while (from < to) {
-            // Swap elements
+            // Swap elements at from and to indices
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;
@@ -26,5 +16,20 @@ public class ArrayUtils {
             from++;
             to--;
         }
+    }
+    
+    // Example usage:
+    public static void main(String[] args) {
+        Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8};
+        System.out.println("Before: " + Arrays.toString(numbers));
+        
+        reverseRange(numbers, 2, 5);
+        System.out.println("After: " + Arrays.toString(numbers));
+        
+        String[] words = {"apple", "banana", "cherry", "date", "elderberry"};
+        System.out.println("Before: " + Arrays.toString(words));
+        
+        reverseRange(words, 1, 3);
+        System.out.println("After: " + Arrays.toString(words));
     }
 }

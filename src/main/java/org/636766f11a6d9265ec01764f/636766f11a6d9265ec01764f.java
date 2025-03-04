@@ -1,19 +1,14 @@
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BeanMap {
-    private Map<String, Object> map;
-    
-    public BeanMap() {
-        this.map = new HashMap<>();
-    }
+    private Map<String, Object> map = new HashMap<>();
     
     /**
-     * Restituisce i valori per il BeanMap.
-     * @return valori per il BeanMap. La collezione restituita non è modificabile.
+     * Returns the values for the BeanMap.
+     * @return values for the BeanMap. The returned collection is not modifiable.
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());

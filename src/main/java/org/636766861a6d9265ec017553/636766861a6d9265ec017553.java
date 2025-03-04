@@ -1,22 +1,17 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class Template {
-    private List<String> templateVariables;
-
-    public Template() {
-        templateVariables = new ArrayList<>();
-    }
+    private Set<String> variables;
 
     /**
-     * Verifica se una variabile di template è un membro di questo template.
-     * @param name nome La variabile di template.
-     * @return true se la variabile di template è un membro del template, altrimenti false.
+     * Ascertain if a template variable is a member of this template.
+     * @param name The template variable.
+     * @return true if the template variable is a member of the template, otherwise false.
      */
-    public final boolean isTemplateVariablePresent(String name) {
-        if (name == null || name.trim().isEmpty()) {
+    public boolean containsVariable(String name) {
+        if (name == null) {
             return false;
         }
-        return templateVariables.contains(name.trim());
+        return variables.contains(name.trim());
     }
 }

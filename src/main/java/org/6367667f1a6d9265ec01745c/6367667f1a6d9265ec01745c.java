@@ -2,41 +2,29 @@ import java.io.File;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathUtils {
-
+public class ClasspathUtils {
     /**
-     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
+     * Add all the jar files in a dir to the classpath, represented as a Vector of URLs.
+     * @param dir The directory containing jar files to add
+     * @param classpath The Vector of URLs representing the classpath
      */
-    @SuppressWarnings("unchecked")
-    public static void addToClassPath(Vector<URL> cpV, String dir) {
-        File directory = new File(dir);
-        
-        // Verifica che la directory esista ed è effettivamente una directory
-        if (!directory.exists() || !directory.isDirectory()) {
+    public static void addJarsFromDirectory(File dir, Vector<URL> classpath) {
+        if (dir == null || !dir.isDirectory() || classpath == null) {
             return;
         }
 
-        // Ottiene la lista di tutti i file nella directory
-        File[] files = directory.listFiles();
-        if (files == null) {
-            return;
-        }
-
-        try {
-            // Itera su tutti i file
+        File[] files = dir.listFiles();
+        if (files != null) {
             for (File file : files) {
-                // Controlla se il file è un file JAR
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
-                    // Converte il file in URL e lo aggiunge al vector
-                    URL url = file.toURI().toURL();
-                    if (!cpV.contains(url)) {
-                        cpV.add(url);
+                    try {
+                        classpath.add(file.toURI().toURL());
+                    } catch (Exception e) {
+                        // Skip files that can't be converted to URLs
+                        continue;
                     }
                 }
             }
-        } catch (Exception e) {
-            // Gestisce eventuali errori nella conversione del file in URL
-            e.printStackTrace();
         }
     }
 }

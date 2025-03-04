@@ -1,49 +1,40 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRangeBuilder {
+public class ProfileSegmentSearchRanges {
 
-    private static class SequenceRange {
-        private long startSequence;
-        private long endSequence;
-
-        public SequenceRange(long startSequence, long endSequence) {
-            this.startSequence = startSequence;
-            this.endSequence = endSequence;
-        }
-
-        public long getStartSequence() {
-            return startSequence;
-        }
-
-        public long getEndSequence() {
-            return endSequence;
-        }
-    }
-
-    public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> ranges = new ArrayList<>();
+    /**
+     * Build current profiles segment snapshot search sequence ranges
+     * @return List of search range pairs
+     */
+    public List<SearchRange> buildSearchRanges() {
+        List<SearchRange> ranges = new ArrayList<>();
         
-        // Get current sequence number
-        long currentSequence = getCurrentSequence();
-        
-        // Build ranges in chunks of 1000
-        long chunkSize = 1000;
-        long startSequence = 0;
-        
-        while (startSequence < currentSequence) {
-            long endSequence = Math.min(startSequence + chunkSize - 1, currentSequence);
-            ranges.add(new SequenceRange(startSequence, endSequence));
-            startSequence = endSequence + 1;
-        }
+        // Add search ranges in sequence
+        ranges.add(new SearchRange(0, 100));
+        ranges.add(new SearchRange(100, 1000)); 
+        ranges.add(new SearchRange(1000, 10000));
+        ranges.add(new SearchRange(10000, Integer.MAX_VALUE));
         
         return ranges;
     }
-
-    // Helper method to get current sequence
-    private long getCurrentSequence() {
-        // Implementation would depend on how sequences are tracked
-        // This is just a placeholder
-        return 5000;
+    
+    // Inner class to represent a search range
+    public static class SearchRange {
+        private int start;
+        private int end;
+        
+        public SearchRange(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+        
+        public int getStart() {
+            return start;
+        }
+        
+        public int getEnd() {
+            return end;
+        }
     }
 }

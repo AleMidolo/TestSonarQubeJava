@@ -2,39 +2,37 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 10;
+    private int length;
+    private static final int DEFAULT_CAPACITY = 64;
 
     public ByteVector() {
         data = new byte[DEFAULT_CAPACITY];
-        size = 0;
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        // Check if we need to expand the array
-        ensureCapacity(size + byteLength);
-        
-        if (byteArrayValue != null) {
-            // Validate offset and length
-            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid offset or length");
+        if (byteLength > 0) {
+            // Ensure capacity
+            int requiredLength = length + byteLength;
+            if (requiredLength > data.length) {
+                int newCapacity = Math.max(2 * data.length, requiredLength);
+                data = Arrays.copyOf(data, newCapacity);
+            }
+
+            if (byteArrayValue != null) {
+                // Copy bytes from input array
+                System.arraycopy(byteArrayValue, byteOffset, data, length, byteLength);
+            } else {
+                // Fill with null bytes
+                Arrays.fill(data, length, length + byteLength, (byte) 0);
             }
             
-            // Copy bytes from input array
-            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        } else {
-            // Fill with null bytes if input array is null
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
+            length += byteLength;
         }
-        
-        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
-        }
+    // Getter for testing
+    public byte[] getData() {
+        return Arrays.copyOf(data, length);
     }
 }

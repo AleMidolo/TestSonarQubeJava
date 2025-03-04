@@ -1,19 +1,15 @@
-import java.io.IOException;
 import java.io.DataInputStream;
+import java.io.IOException;
 
-public class DataReader {
-    private DataInputStream in;
-    
-    public DataReader(DataInputStream in) {
-        this.in = in;
-    }
-
+public class StringReader {
     /**
-     * Leggi un valore di campo {@code string} dallo stream.
+     * Read a string field value from the stream.
+     * @param in The DataInputStream to read from
+     * @return The string value read from the stream
+     * @throws IOException If an I/O error occurs
      */
-    @Override
-    public String readString() throws IOException {
-        // Read the string length first
+    public String readString(DataInputStream in) throws IOException {
+        // Read string length
         int length = in.readInt();
         
         if (length < 0) {
@@ -23,7 +19,7 @@ public class DataReader {
         // Create byte array to hold string data
         byte[] bytes = new byte[length];
         
-        // Read the string bytes
+        // Read bytes into array
         in.readFully(bytes);
         
         // Convert bytes to string using UTF-8 encoding

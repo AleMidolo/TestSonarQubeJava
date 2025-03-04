@@ -2,27 +2,24 @@ import java.nio.charset.StandardCharsets;
 
 public class UTF8Utils {
     /**
-     * Calcola la dimensione della stringa utf8 che inizia all'indice specificato {@code index} con la lunghezza specificata {@code length}.
+     * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
+     *
+     * @param str The input string to compute UTF-8 size for
+     * @param index The starting index in the string
+     * @param length The length of characters to process
+     * @return The size in bytes of the UTF-8 encoded substring
      */
-    public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        int utf8Size = 0;
-        final int end = index + len;
-        
-        for (int i = index; i < end; i++) {
-            char c = str.charAt(i);
-            
-            if (c <= 0x7F) {
-                utf8Size++;
-            } else if (c <= 0x7FF) {
-                utf8Size += 2;
-            } else if (Character.isHighSurrogate(c) && i + 1 < end && Character.isLowSurrogate(str.charAt(i + 1))) {
-                utf8Size += 4;
-                i++;
-            } else {
-                utf8Size += 3;
-            }
+    public static int computeUTF8Size(String str, int index, int length) {
+        if (str == null) {
+            return 0;
         }
         
-        return utf8Size;
+        if (index < 0 || length < 0 || index + length > str.length()) {
+            throw new IllegalArgumentException("Invalid index or length parameters");
+        }
+
+        String substring = str.substring(index, index + length);
+        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
+        return utf8Bytes.length;
     }
 }

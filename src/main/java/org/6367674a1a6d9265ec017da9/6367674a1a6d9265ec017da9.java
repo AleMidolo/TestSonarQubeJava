@@ -1,48 +1,90 @@
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class DoublyLinkedList<E> {
-    private ListNode<E> head;
-    private ListNode<E> tail;
-    private int size;
+public class LinkedList<T> {
+    private ListNode<T> head;
+    private final Object lock = new Object();
 
-    private static class ListNode<E> {
-        E element;
-        ListNode<E> next;
-        ListNode<E> prev;
-
-        ListNode(E element) {
-            this.element = element;
-        }
-    }
-
-    /**
-     * Sposta in modo atomico tutti i {@link ListNode ListNodes} da {@code list} a questa lista 
-     * come se ogni nodo fosse stato rimosso con {@link #removeListNode(ListNodeImpl)} da {@code list} 
-     * e successivamente aggiunto a questa lista tramite {@link #addListNode(ListNodeImpl)}.
-     */
-    private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list);
-        
-        if (list == this || list.size == 0) {
+    public void moveAllNodes(LinkedList<T> list) {
+        if (list == null || list == this) {
             return;
         }
 
-        // If this list is empty, just take the other list's nodes
-        if (size == 0) {
-            this.head = list.head;
-            this.tail = list.tail;
-            this.size = list.size;
-        } else {
-            // Connect the tail of this list to the head of the other list
-            this.tail.next = list.head;
-            list.head.prev = this.tail;
-            this.tail = list.tail;
-            this.size += list.size;
-        }
+        synchronized (lock) {
+            synchronized (list.lock) {
+                // Store the current head of source list
+                ListNode<T> sourceHead = list.head;
+                
+                if (sourceHead == null) {
+                    return;
+                }
 
-        // Clear the source list
-        list.head = null;
-        list.tail = null;
-        list.size = 0;
+                // Find the last node of source list
+                ListNode<T> sourceTail = sourceHead;
+                while (sourceTail.next != null) {
+                    sourceTail = sourceTail.next;
+                }
+
+                // Connect source list to destination
+                if (head == null) {
+                    head = sourceHead;
+                } else {
+                    sourceTail.next = head;
+                    head = sourceHead;
+                }
+
+                // Clear the source list
+                list.head = null;
+            }
+        }
+    }
+
+    // Inner class for ListNode
+    private static class ListNode<T> {
+        T data;
+        ListNode<T> next;
+
+        ListNode(T data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Helper methods
+    public void addListNode(ListNode<T> node) {
+        synchronized (lock) {
+            if (head == null) {
+                head = node;
+            } else {
+                node.next = head;
+                head = node;
+            }
+        }
+    }
+
+    public ListNode<T> removeListNode(ListNode<T> node) {
+        synchronized (lock) {
+            if (head == null || node == null) {
+                return null;
+            }
+
+            if (head == node) {
+                head = head.next;
+                node.next = null;
+                return node;
+            }
+
+            ListNode<T> current = head;
+            while (current.next != null && current.next != node) {
+                current = current.next;
+            }
+
+            if (current.next != null) {
+                current.next = node.next;
+                node.next = null;
+                return node;
+            }
+
+            return null;
+        }
     }
 }

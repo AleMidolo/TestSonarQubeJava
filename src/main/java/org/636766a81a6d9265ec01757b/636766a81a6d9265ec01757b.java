@@ -19,12 +19,12 @@ public class JsonSerializer {
                     mapper.enable(feature);
                 }
             }
-            
+
             // Convert this object to JSON string
             return mapper.writeValueAsString(this);
-            
+
         } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize to JSON", e);
+            throw new RuntimeException("Error serializing object to JSON", e);
         }
     }
 }

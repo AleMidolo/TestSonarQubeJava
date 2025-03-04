@@ -1,7 +1,7 @@
 /**
- * Calculates the sum of two integers
- * @param a first integer
- * @param b second integer
- * @return sum of a and b
+ * Adds two numbers together
+ * @param a first number
+ * @param b second number
+ * @return sum of the two numbers
  */
 public int add(int a, int b)

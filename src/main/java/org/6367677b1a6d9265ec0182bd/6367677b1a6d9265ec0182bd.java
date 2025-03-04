@@ -30,14 +30,15 @@ public class LogFormatter {
         // Add throwable if exists
         Throwable throwable = event.getThrowable();
         if (throwable != null) {
-            sb.append("\n");
+            sb.append(System.lineSeparator());
             for (StackTraceElement element : throwable.getStackTrace()) {
-                sb.append("\tat ").append(element.toString()).append("\n");
+                sb.append("\tat ").append(element.toString());
+                sb.append(System.lineSeparator());
             }
         }
         
-        // Add newline
-        sb.append("\n");
+        // Add line separator
+        sb.append(System.lineSeparator());
         
         try {
             Writer writer = event.getWriter();

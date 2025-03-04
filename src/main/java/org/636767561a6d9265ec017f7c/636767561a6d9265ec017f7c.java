@@ -8,40 +8,24 @@ public class GraphPathTransformer {
         }
 
         List<Integer> path = new ArrayList<>();
-        Map<Integer, List<Edge>> adjacencyMap = new HashMap<>();
-
-        // Build adjacency map from edges
-        for (Edge edge : tour) {
-            adjacencyMap.computeIfAbsent(edge.getSource(), k -> new ArrayList<>()).add(edge);
-            adjacencyMap.computeIfAbsent(edge.getDestination(), k -> new ArrayList<>()).add(edge);
-        }
-
-        // Start with any vertex that has edges
-        int currentVertex = tour.iterator().next().getSource();
+        Edge currentEdge = tour.iterator().next();
+        int currentVertex = currentEdge.getSource();
         path.add(currentVertex);
 
-        // Build path by following edges
-        while (path.size() <= tour.size()) {
-            List<Edge> edges = adjacencyMap.get(currentVertex);
-            
-            // Find unused edge
-            Edge nextEdge = null;
-            for (Edge edge : edges) {
-                if (tour.contains(edge)) {
-                    nextEdge = edge;
+        while (!tour.isEmpty()) {
+            for (Edge edge : tour) {
+                if (edge.getSource() == currentVertex) {
+                    path.add(edge.getDestination());
+                    currentVertex = edge.getDestination();
+                    tour.remove(edge);
+                    break;
+                } else if (edge.getDestination() == currentVertex) {
+                    path.add(edge.getSource());
+                    currentVertex = edge.getSource();
                     tour.remove(edge);
                     break;
                 }
             }
-
-            if (nextEdge == null) {
-                break;
-            }
-
-            // Add next vertex to path
-            currentVertex = (nextEdge.getSource() == currentVertex) ? 
-                          nextEdge.getDestination() : nextEdge.getSource();
-            path.add(currentVertex);
         }
 
         return path;

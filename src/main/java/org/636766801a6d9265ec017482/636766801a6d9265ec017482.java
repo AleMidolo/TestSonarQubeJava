@@ -7,7 +7,7 @@ public class ClassFileBuffer {
     private int readPointer;
     
     /**
-     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
+     * Clear and fill the buffer with the supplied byte stream. 
      * The read pointer is reset to the start of the byte array.
      *
      * @param inputStream the input stream to read bytes from

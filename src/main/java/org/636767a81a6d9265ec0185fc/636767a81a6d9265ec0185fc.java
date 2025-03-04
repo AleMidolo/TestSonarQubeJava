@@ -18,12 +18,14 @@ public class ProtocolParser {
      * @throws IOException If there is an error reading from the input stream
      */
     public int readTag() throws IOException {
-        // Check if we've reached EOF
+        // Try to read first byte
         int firstByte = input.read();
+        
+        // Return 0 if we've hit EOF
         if (firstByte == -1) {
             return 0;
         }
-        
+
         position++;
         
         // For simple tags that fit in 1 byte
@@ -31,21 +33,23 @@ public class ProtocolParser {
             return firstByte;
         }
         
-        // For tags that use multiple bytes (varint encoding)
-        int result = firstByte & 0x7F;
+        // For multi-byte tags
+        int result = firstByte & 0x7f;
         int shift = 7;
         
         while (true) {
             int nextByte = input.read();
+            
+            // Check for EOF mid-tag
             if (nextByte == -1) {
                 throw new IOException("Truncated message");
             }
             
             position++;
-            result |= (nextByte & 0x7F) << shift;
+            result |= (nextByte & 0x7f) << shift;
             
             if ((nextByte & 0x80) == 0) {
-                break;
+                return result;
             }
             
             shift += 7;
@@ -53,13 +57,8 @@ public class ProtocolParser {
                 throw new IOException("Tag is too large");
             }
         }
-        
-        return result;
     }
     
-    /**
-     * Gets the current position in the input stream
-     */
     public int getPosition() {
         return position;
     }

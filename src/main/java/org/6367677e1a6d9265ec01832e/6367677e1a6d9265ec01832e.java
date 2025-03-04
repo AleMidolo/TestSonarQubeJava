@@ -21,7 +21,7 @@ public class LoggerUtils {
                 org.apache.logging.log4j.spi.LoggerConfig loggerConfig = 
                     context.getConfiguration().getLoggerConfig(name);
                 
-                if (loggerConfig != null && !LogManager.ROOT_LOGGER_NAME.equals(loggerConfig.getName())) {
+                if (loggerConfig != null && name.equals(loggerConfig.getName())) {
                     return LogManager.getLogger(name);
                 }
             }

@@ -11,7 +11,7 @@ public class HashCapacity {
         // Start checking from desiredCapacity
         int num = desiredCapacity;
         
-        // If even, add 1 to start checking from next odd number
+        // If even, increment by 1 to start checking from odd number
         if (num % 2 == 0) {
             num++;
         }
@@ -20,7 +20,7 @@ public class HashCapacity {
         while (!isPrime(num)) {
             num += 2;
             
-            // Check if we're exceeding 11% threshold for large capacities
+            // Check if we've exceeded the 11% threshold for large capacities
             if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
                 // Go back to desired capacity and find previous prime
                 num = desiredCapacity;
@@ -39,6 +39,7 @@ public class HashCapacity {
         if (num <= 3) return true;
         if (num % 2 == 0 || num % 3 == 0) return false;
         
+        // Check up to square root of num
         for (int i = 5; i * i <= num; i += 6) {
             if (num % i == 0 || num % (i + 2) == 0) {
                 return false;

@@ -7,7 +7,7 @@ public class FileIterator {
     
     /**
      * Return the next {@link java.io.File} object or {@code null} if no more files are available.
-     * @return next File object, or null if none remain
+     * @return the next File object, or null if none remain
      */
     public File getNextFile() {
         if (fileQueue.isEmpty()) {

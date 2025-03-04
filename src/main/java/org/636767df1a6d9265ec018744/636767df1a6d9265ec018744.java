@@ -9,8 +9,8 @@ public class TimeRangeSplitter {
 
     /**
      * Split time ranges to ensure the start time and end time is smaller than FETCH_DATA_DURATION
-     * @param startTime The start time instant
-     * @param endTime The end time instant
+     * @param startTime Start time as Instant
+     * @param endTime End time as Instant
      * @return List of TimeRange objects containing split time ranges
      */
     public List<TimeRange> splitTimeRanges(Instant startTime, Instant endTime) {

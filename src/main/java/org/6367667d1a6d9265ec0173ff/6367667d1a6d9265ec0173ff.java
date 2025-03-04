@@ -22,7 +22,7 @@ public class MeteorRetriever {
         }
         
         AtmosphereResource resource = meteor.getAtmosphereResource();
-        if (resource.getRequest() == null) {
+        if (!resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
             return null;
         }
         

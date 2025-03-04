@@ -27,7 +27,10 @@ public class ArrayUtils {
     public static <T> T[] nullToEmpty(T[] array) {
         if (array == null || array.length == 0) {
             // Get the type of array and return appropriate empty array
-            return (T[]) Array.newInstance(array == null ? Object.class : array.getClass().getComponentType(), 0);
+            return (T[]) Array.newInstance(
+                array == null ? Object.class : array.getClass().getComponentType(), 
+                0
+            );
         }
         return array;
     }

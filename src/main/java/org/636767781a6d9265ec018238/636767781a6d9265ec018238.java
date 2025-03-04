@@ -10,7 +10,7 @@ public class AppenderChecker {
     }
 
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenderList.isEmpty()) {
+        if (appender == null || appenderList == null) {
             return false;
         }
         return appenderList.contains(appender);

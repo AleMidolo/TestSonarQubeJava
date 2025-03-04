@@ -4,7 +4,7 @@ public class PointComparator {
     /**
      * Compare two points for equality using tolerance 1e-9.
      * @param p1 the first point
-     * @param p2 the second point 
+     * @param p2 the second point
      * @return whether the two points are equal or not
      */
     public boolean arePointsEqual(Point2D p1, Point2D p2) {

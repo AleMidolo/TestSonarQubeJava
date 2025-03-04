@@ -14,8 +14,8 @@ public class SocketAppender {
         // Iterate through connected clients and write message
         for (Socket client : clients) {
             try {
-                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                out.println(message);
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                writer.println(message);
             } catch (IOException e) {
                 // Remove client if we can't write to it
                 clients.remove(client);

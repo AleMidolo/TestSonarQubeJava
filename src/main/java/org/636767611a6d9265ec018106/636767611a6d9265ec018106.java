@@ -1,48 +1,55 @@
 import java.util.Set;
+import java.util.HashSet;
 
-public class Graph<V> {
-    
-    // Assuming there's a method to get the edges of the graph
-    // This is a placeholder for the actual implementation
-    private Set<Edge<V>> getEdges() {
-        // Implementation to retrieve edges
-        return null;
-    }
-
-    /**
-     * Calcula la suma de los pesos que entran a un vértice
-     * @param v el vértice
-     * @return la suma de los pesos que entran a un vértice
-     */
-    public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
-        Set<Edge<V>> edges = getEdges();
-        
-        for (Edge<V> edge : edges) {
-            if (v.contains(edge.getTarget())) {
-                totalWeight += edge.getWeight();
-            }
-        }
-        
-        return totalWeight;
-    }
-    
-    // Placeholder for the Edge class
-    private static class Edge<V> {
-        private V target;
-        private double weight;
-
-        public Edge(V target, double weight) {
-            this.target = target;
-            this.weight = weight;
-        }
-
-        public V getTarget() {
-            return target;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
-    }
+public class Graph<V,E> {
+  
+  private Set<Edge<V,E>> edges;
+  
+  /**
+  * Calcola la somma dei pesi che entrano in un vertice
+  * @param v il vertice 
+  * @return la somma dei pesi che entrano in un vertice
+  */
+  public double vertexWeight(Set<V> v) {
+  double sum = 0.0;
+  
+  for(Edge<V,E> edge : edges) {
+  if(v.contains(edge.getDestination())) {
+  sum += edge.getWeight();
+  }
+  }
+  
+  return sum;
+  }
+  
+  // Edge class to represent weighted edges
+  private class Edge<V,E> {
+  private V source;
+  private V destination;
+  private double weight;
+  private E data;
+  
+  public Edge(V source, V destination, double weight, E data) {
+  this.source = source;
+  this.destination = destination;
+  this.weight = weight;
+  this.data = data;
+  }
+  
+  public V getSource() {
+  return source;
+  }
+  
+  public V getDestination() {
+  return destination;
+  }
+  
+  public double getWeight() {
+  return weight;
+  }
+  
+  public E getData() {
+  return data;
+  }
+  }
 }

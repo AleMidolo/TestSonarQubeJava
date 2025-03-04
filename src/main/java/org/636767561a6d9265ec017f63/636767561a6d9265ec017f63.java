@@ -1,44 +1,17 @@
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class GraphIterator implements Iterator<Vertex> {
-    private List<Vertex> vertices;
-    private boolean[] visited;
-    private int currentIndex;
-
-    public GraphIterator(List<Vertex> vertices) {
-        this.vertices = vertices;
-        this.visited = new boolean[vertices.size()];
-        this.currentIndex = 0;
-    }
-
-    /** 
-     * Verifica si existen vértices no visitados.
-     * @return true si existen vértices no visitados.
-     */
-    @Override 
-    public boolean hasNext() {
-        while (currentIndex < vertices.size()) {
-            if (!visited[currentIndex]) {
-                return true;
-            }
-            currentIndex++;
-        }
-        return false;
-    }
-
-    @Override
-    public Vertex next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        Vertex vertex = vertices.get(currentIndex);
-        visited[currentIndex] = true;
-        currentIndex++;
-        return vertex;
-    }
-}
-
-class Vertex {
-    // Vertex implementation
+public class GraphTraversal implements Iterator<Vertex> {
+  private boolean[] visited;
+  private int numVertices;
+  
+  @Override
+  public boolean hasNext() {
+  // Iterate through visited array to check if any vertices are unvisited
+  for (int i = 0; i < numVertices; i++) {
+  if (!visited[i]) {
+  return true;
+  }
+  }
+  return false;
+  }
 }

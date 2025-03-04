@@ -1,15 +1,18 @@
-@Override
-protected V proporcionarSiguienteVertice() {
-    // Implementación del método para proporcionar el siguiente vértice
-    // Aquí se puede agregar la lógica específica para determinar el siguiente vértice
-    // Por ejemplo, si se está utilizando una lista de vértices:
-    
-    if (vertices.isEmpty()) {
-        return null; // O lanzar una excepción si no hay vértices disponibles
-    }
-    
-    // Suponiendo que 'indice' es un campo que mantiene el índice del siguiente vértice a devolver
-    V siguienteVertice = vertices.get(indice);
-    indice = (indice + 1) % vertices.size(); // Actualiza el índice para el siguiente llamado
-    return siguienteVertice;
+import java.util.NoSuchElementException;
+
+public class VertexIterator<V> implements Iterator<V> {
+  private Queue<V> vertexQueue;
+  
+  /**
+  * Provides the next vertex in the iteration sequence.
+  * @return The next vertex in the iteration.
+  * @throws NoSuchElementException if there are no more vertices
+  */
+  @Override
+  protected V provideNextVertex() {
+  if (vertexQueue.isEmpty()) {
+  throw new NoSuchElementException("No more vertices to iterate");
+  }
+  return vertexQueue.remove();
+  }
 }

@@ -1,31 +1,26 @@
-public class ArrayConverter {
-    
-    /** 
-     * <p>Convierte un array de objetos "Doubles" a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Double</code>, puede ser <code>null</code>
-     * @return un array de <code>double</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
-     */
-    public static double[] toPrimitive(final Double[] array) {
-        if (array == null) {
-            return null;
-        }
-        
-        double[] result = new double[array.length];
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("El contenido del arreglo no puede ser nulo");
-            }
-            result[i] = array[i];
-        }
-        return result;
-    }
+package org.apache.commons.lang3;
 
-    public static void main(String[] args) {
-        Double[] doubleArray = {1.1, 2.2, 3.3};
-        double[] primitiveArray = toPrimitive(doubleArray);
-        for (double d : primitiveArray) {
-            System.out.println(d);
-        }
-    }
+/**
+ * Utility class for converting between primitive and wrapper arrays
+ */
+public class ArrayUtils {
+
+  /**
+  * <p>Converte un array di oggetti Double in primitivi.</p>
+  * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+  * @param array  un array di <code>Double</code>, può essere <code>null</code>
+  * @return un array di <code>double</code>, <code>null</code> se l'array di input è nullo
+  * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+  */
+  public static double[] toPrimitive(final Double[] array) {
+  if (array == null) {
+  return null;
+  }
+  
+  final double[] result = new double[array.length];
+  for (int i = 0; i < array.length; i++) {
+  result[i] = array[i].doubleValue();
+  }
+  return result;
+  }
 }

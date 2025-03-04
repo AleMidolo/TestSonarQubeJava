@@ -1,41 +1,69 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
-public class StackExtractor {
+public class FrameHandler {
+  private Stack<String> outputStack;
 
-    private List<String> stack = new ArrayList<>();
+  public FrameHandler() {
+  this.outputStack = new Stack<>();
+  }
 
-    /**
-     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
-     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
-     */
-    private void pop(final String descriptor) {
-        // Simulación de la extracción de tipos abstractos de la "frame stack"
-        // Aquí se puede implementar la lógica para analizar el descriptor y extraer los tipos correspondientes.
-        
-        // Ejemplo de cómo se podría extraer tipos basados en el descriptor
-        if (descriptor.startsWith("L")) { // Tipo de objeto
-            String type = descriptor.substring(1, descriptor.length() - 1).replace('/', '.');
-            stack.add(type);
-        } else if (descriptor.startsWith("(")) { // Método
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(1, endIndex);
-            for (String arg : args.split(",")) {
-                pop(arg); // Llamada recursiva para extraer tipos de argumentos
-            }
-        } else {
-            // Manejo de otros tipos (por ejemplo, primitivos)
-            stack.add(descriptor);
-        }
-    }
+  /**
+  * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+  * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+  */
+  private void pop(final String descriptor) {
+  if (descriptor == null || descriptor.isEmpty()) {
+  return;
+  }
 
-    public List<String> getStack() {
-        return stack;
-    }
-
-    public static void main(String[] args) {
-        StackExtractor extractor = new StackExtractor();
-        extractor.pop("(Ljava/lang/String;I)V"); // Ejemplo de descriptor de método
-        System.out.println(extractor.getStack());
-    }
+  int index = 0;
+  while (index < descriptor.length()) {
+  char c = descriptor.charAt(index);
+  
+  switch (c) {
+  case '(':
+  // Skip opening parenthesis for method descriptor
+  index++;
+  continue;
+  case ')':
+  // Stop at closing parenthesis
+  return;
+  case 'B':
+  case 'C':
+  case 'D':
+  case 'F':
+  case 'I':
+  case 'J':
+  case 'S':
+  case 'Z':
+  // Pop primitive types
+  if (!outputStack.isEmpty()) {
+  outputStack.pop();
+  }
+  if (c == 'D' || c == 'J') {
+  // Double and Long take two stack slots
+  if (!outputStack.isEmpty()) {
+  outputStack.pop();
+  }
+  }
+  index++;
+  break;
+  case 'L':
+  // Pop object reference type
+  if (!outputStack.isEmpty()) {
+  outputStack.pop();
+  }
+  // Skip to semicolon
+  index = descriptor.indexOf(';', index) + 1;
+  break;
+  case '[':
+  // Skip array dimension
+  index++;
+  break;
+  default:
+  index++;
+  break;
+  }
+  }
+  }
 }

@@ -1,33 +1,28 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SymbolTable {
-    private Map<String, Integer> typeTable;
-    private int currentIndex;
+  private List<String> types;
+  
+  public SymbolTable() {
+  types = new ArrayList<>();
+  }
 
-    public SymbolTable() {
-        this.typeTable = new HashMap<>();
-        this.currentIndex = 0;
-    }
-
-    /**
-     * Agrega un tipo en la tabla de tipos de esta tabla de símbolos. No hace nada si la tabla de tipos ya contiene un tipo similar.
-     * @param value un nombre de clase interno.
-     * @return el índice de un nuevo tipo o de un tipo ya existente con el valor dado.
-     */
-    public int addType(final String value) {
-        if (typeTable.containsKey(value)) {
-            return typeTable.get(value);
-        } else {
-            typeTable.put(value, currentIndex);
-            return currentIndex++;
-        }
-    }
-
-    public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable();
-        System.out.println(symbolTable.addType("MyClass")); // Output: 0
-        System.out.println(symbolTable.addType("MyClass")); // Output: 0
-        System.out.println(symbolTable.addType("AnotherClass")); // Output: 1
-    }
+  /**
+  * Aggiunge un tipo nella tabella dei tipi di questa tabella dei simboli. 
+  * Non fa nulla se la tabella dei tipi contiene già un tipo simile.
+  * @param value un nome di classe interno.
+  * @return l'indice di un nuovo tipo o di un tipo già esistente con il valore fornito.
+  */
+  public int addType(final String value) {
+  // Check if type already exists
+  int existingIndex = types.indexOf(value);
+  if (existingIndex != -1) {
+  return existingIndex;
+  }
+  
+  // Add new type and return its index
+  types.add(value);
+  return types.size() - 1;
+  }
 }

@@ -1,24 +1,28 @@
+import java.util.Objects;
+
 public class HeaderParser {
 
-    /** 
-     * Omite bytes hasta el final de la línea actual.
-     * @param headerPart Las cabeceras que se están analizando.
-     * @param end Índice del último byte que aún no ha sido procesado.
-     * @return Índice de la secuencia \r\n, que indica el final de la línea.
-     */
-    private int parseEndOfLine(String headerPart, int end) {
-        int index = headerPart.indexOf("\r\n", 0);
-        if (index == -1 || index > end) {
-            return end; // No se encontró el final de la línea o está fuera del rango
-        }
-        return index; // Retorna el índice donde se encuentra \r\n
-    }
-
-    public static void main(String[] args) {
-        HeaderParser parser = new HeaderParser();
-        String headers = "Header1: value1\r\nHeader2: value2\r\n";
-        int end = headers.length();
-        int lineEndIndex = parser.parseEndOfLine(headers, end);
-        System.out.println("End of line index: " + lineEndIndex);
-    }
+  /**
+  * Salta i byte fino alla fine della riga corrente.
+  * @param headerPart Le intestazioni che vengono analizzate.
+  * @param end Indice dell'ultimo byte che deve ancora essere elaborato.
+  * @return Indice della sequenza \r\n, che indica la fine della riga.
+  */
+  private int parseEndOfLine(String headerPart, int end) {
+  Objects.requireNonNull(headerPart);
+  
+  int index = end;
+  while (index < headerPart.length()) {
+  // Cerca la sequenza \r\n che indica fine riga
+  if (index + 1 < headerPart.length() && 
+  headerPart.charAt(index) == '\r' && 
+  headerPart.charAt(index + 1) == '\n') {
+  return index;
+  }
+  index++;
+  }
+  
+  // Se non trova \r\n ritorna l'ultimo indice valido
+  return headerPart.length() - 1;
+  }
 }

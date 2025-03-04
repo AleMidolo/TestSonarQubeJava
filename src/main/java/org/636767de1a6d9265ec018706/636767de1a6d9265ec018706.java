@@ -1,61 +1,67 @@
-import java.util.HashMap;
-import java.util.Map;
+import org.elasticsearch.cluster.metadata.MappingMetadata;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.mapper.MapperService;
+import org.elasticsearch.index.mapper.Mapping;
+import org.elasticsearch.index.mapper.Mappings;
 
-public class MappingDiff {
+public class MappingDiffer {
 
-    public static class Mappings {
-        private Map<String, Object> fields;
+  public Mappings diffStructure(String tableName, Mappings mappings) {
+  if (mappings == null) {
+  return null;
+  }
 
-        public Mappings() {
-            this.fields = new HashMap<>();
-        }
+  // Create new mappings builder
+  Mappings.Builder diffMappings = new Mappings.Builder();
 
-        public void addField(String fieldName, Object fieldValue) {
-            fields.put(fieldName, fieldValue);
-        }
+  // Get properties from input mappings
+  Map<String, Object> properties = mappings.getSourceAsMap();
+  if (properties == null || properties.isEmpty()) {
+  return null;
+  }
 
-        public Map<String, Object> getFields() {
-            return fields;
-        }
-    }
+  // Get current index mappings
+  ImmutableOpenMap<String, MappingMetadata> currentMappings = getCurrentIndexMappings(tableName);
+  
+  // Compare and add fields that don't exist in current mappings
+  for (Map.Entry<String, Object> entry : properties.entrySet()) {
+  String fieldName = entry.getKey();
+  
+  if (!fieldExists(fieldName, currentMappings)) {
+  // Add field to diff mappings
+  diffMappings.field(fieldName, entry.getValue());
+  }
+  }
 
-    /**
-     * Devuelve los mapeos con campos que no existen en los mapeos de entrada. 
-     * Los mapeos de entrada deben ser mapeos de historial del índice actual. 
-     * No devolver la configuración _source para evitar conflictos de actualización del índice actual.
-     */
-    public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulación de mapeos actuales del índice
-        Mappings currentMappings = getCurrentMappings(tableName);
-        
-        Mappings diffMappings = new Mappings();
-        
-        for (String field : mappings.getFields().keySet()) {
-            if (!currentMappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, mappings.getFields().get(field));
-            }
-        }
-        
-        return diffMappings;
-    }
+  // Remove _source field to avoid conflicts
+  diffMappings.removeField("_source");
 
-    private Mappings getCurrentMappings(String tableName) {
-        // Simulación de la obtención de mapeos actuales
-        Mappings currentMappings = new Mappings();
-        // Aquí se agregarían los campos existentes en el índice actual
-        // Ejemplo:
-        currentMappings.addField("existingField1", "value1");
-        currentMappings.addField("existingField2", "value2");
-        return currentMappings;
-    }
+  return diffMappings.build();
+  }
 
-    public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings newMappings = new Mappings();
-        newMappings.addField("newField1", "value1");
-        newMappings.addField("existingField1", "value2");
+  private ImmutableOpenMap<String, MappingMetadata> getCurrentIndexMappings(String indexName) {
+  try {
+  GetMappingsRequest request = new GetMappingsRequest().indices(indexName);
+  GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+  return response.getMappings().get(indexName);
+  } catch (Exception e) {
+  return ImmutableOpenMap.of();
+  }
+  }
 
-        Mappings diff = mappingDiff.diffStructure("exampleTable", newMappings);
-        System.out.println("Diff Mappings: " + diff.getFields());
-    }
+  private boolean fieldExists(String fieldName, ImmutableOpenMap<String, MappingMetadata> currentMappings) {
+  try {
+  for (ObjectObjectCursor<String, MappingMetadata> cursor : currentMappings) {
+  Map<String, Object> sourceMap = cursor.value.getSourceAsMap();
+  if (sourceMap.containsKey(fieldName)) {
+  return true;
+  }
+  }
+  } catch (Exception e) {
+  return false;
+  }
+  return false;
+  }
 }

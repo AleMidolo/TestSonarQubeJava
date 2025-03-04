@@ -1,45 +1,55 @@
 import java.io.DataOutput;
 import java.io.IOException;
 
-class LinkedBuffer {
-    // Assuming LinkedBuffer has a method to get its content and size
-    private byte[] content;
-    private LinkedBuffer next;
+public class BufferWriter {
+  /**
+  * Scrive il contenuto del {@link LinkedBuffer} nel {@link DataOutput}.
+  * @return la dimensione totale del contenuto del buffer.
+  */
+  public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
+  if (out == null || node == null) {
+  return 0;
+  }
 
-    public LinkedBuffer(byte[] content) {
-        this.content = content;
-        this.next = null;
-    }
+  int totalSize = 0;
+  LinkedBuffer current = node;
 
-    public byte[] getContent() {
-        return content;
-    }
+  while (current != null) {
+  byte[] buffer = current.getBuffer();
+  int offset = current.getOffset();
+  int size = current.getSize();
 
-    public LinkedBuffer getNext() {
-        return next;
-    }
+  if (buffer != null && size > 0) {
+  out.write(buffer, offset, size);
+  totalSize += size;
+  }
 
-    public void setNext(LinkedBuffer next) {
-        this.next = next;
-    }
+  current = current.getNext();
+  }
+
+  return totalSize;
+  }
 }
 
-public class BufferWriter {
-    /** 
-     * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
-     * @return el tamaño total del contenido del búfer.
-     */
-    public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
-        int totalSize = 0;
-        LinkedBuffer current = node;
+class LinkedBuffer {
+  private byte[] buffer;
+  private int offset;
+  private int size;
+  private LinkedBuffer next;
 
-        while (current != null) {
-            byte[] content = current.getContent();
-            out.write(content);
-            totalSize += content.length;
-            current = current.getNext();
-        }
+  public byte[] getBuffer() {
+  return buffer;
+  }
 
-        return totalSize;
-    }
+  public int getOffset() {
+  return offset;
+  }
+
+  public int getSize() {
+  return size;
+  }
+
+  public LinkedBuffer getNext() {
+  return next;
+  }
 }

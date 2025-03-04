@@ -3,44 +3,47 @@ import java.util.List;
 
 public class SequenceRangeBuilder {
 
-    /** 
-     * construir el rango de secuencias del segmento de perfiles actuales
-     */
-    public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> sequenceRanges = new ArrayList<>();
-        
-        // Example logic to build sequence ranges
-        // This is a placeholder and should be replaced with actual logic
-        for (int i = 0; i < 10; i++) {
-            sequenceRanges.add(new SequenceRange(i, i + 1));
-        }
-        
-        return sequenceRanges;
-    }
+  private static class SequenceRange {
+  private long startSequence;
+  private long endSequence;
 
-    public static void main(String[] args) {
-        SequenceRangeBuilder builder = new SequenceRangeBuilder();
-        List<SequenceRange> ranges = builder.buildSequenceRanges();
-        for (SequenceRange range : ranges) {
-            System.out.println(range);
-        }
-    }
-}
+  public SequenceRange(long startSequence, long endSequence) {
+  this.startSequence = startSequence;
+  this.endSequence = endSequence;
+  }
 
-class SequenceRange {
-    private int start;
-    private int end;
+  public long getStartSequence() {
+  return startSequence;
+  }
 
-    public SequenceRange(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
+  public long getEndSequence() {
+  return endSequence;
+  }
+  }
 
-    @Override
-    public String toString() {
-        return "SequenceRange{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
-    }
+  public List<SequenceRange> buildSequenceRanges() {
+  List<SequenceRange> ranges = new ArrayList<>();
+  
+  // Get current sequence number
+  long currentSequence = getCurrentSequence();
+  
+  // Build ranges in chunks of 1000
+  long chunkSize = 1000;
+  long startSequence = 0;
+  
+  while (startSequence < currentSequence) {
+  long endSequence = Math.min(startSequence + chunkSize - 1, currentSequence);
+  ranges.add(new SequenceRange(startSequence, endSequence));
+  startSequence = endSequence + 1;
+  }
+  
+  return ranges;
+  }
+  
+  // Helper method to get current sequence
+  private long getCurrentSequence() {
+  // Implementation would depend on how sequences are tracked
+  // This is just a placeholder
+  return System.currentTimeMillis();
+  }
 }

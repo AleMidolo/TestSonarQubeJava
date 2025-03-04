@@ -1,54 +1,43 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
-public class FileDeleter {
+public class FileUtils {
 
-    /** 
-     * Programa un archivo para que se elimine cuando la JVM exista. Si el archivo es un directorio, elimínalo y todos sus subdirectorios.
-     * @param file  archivo o directorio a eliminar, no debe ser {@code null}
-     * @throws NullPointerException si el archivo es {@code null}
-     * @throws IOException en caso de que la eliminación no sea exitosa
-     */
-    public static void forceDeleteOnExit(File file) throws IOException {
-        if (file == null) {
-            throw new NullPointerException("El archivo no debe ser null");
-        }
-        
-        if (file.isDirectory()) {
-            deleteDirectory(file);
-        } else {
-            if (!file.delete()) {
-                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-            }
-        }
-        
-        // Register the file for deletion on JVM exit
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                if (file.exists()) {
-                    forceDeleteOnExit(file);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
-    }
+  /**
+  * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
+  * @param file file o directory da cancellare, non deve essere {@code null}
+  * @throws NullPointerException se il file è {@code null}
+  * @throws IOException in caso di cancellazione non riuscita
+  */
+  public static void forceDeleteOnExit(File file) throws IOException {
+  if (file == null) {
+  throw new NullPointerException("File cannot be null");
+  }
 
-    private static void deleteDirectory(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    if (!file.delete()) {
-                        throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-                    }
-                }
-            }
-        }
-        if (!directory.delete()) {
-            throw new IOException("No se pudo eliminar el directorio: " + directory.getAbsolutePath());
-        }
-    }
+  if (!file.exists()) {
+  return;
+  }
+
+  if (file.isDirectory()) {
+  // Registra tutti i file e sottodirectory per la cancellazione
+  Files.walkFileTree(file.toPath(), new SimpleFileVisitor<Path>() {
+  @Override
+  public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+  file.toFile().deleteOnExit();
+  return FileVisitResult.CONTINUE;
+  }
+
+  @Override
+  public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+  dir.toFile().deleteOnExit();
+  return FileVisitResult.CONTINUE;
+  }
+  });
+  } else {
+  // Se è un file semplice, registra solo quello
+  file.deleteOnExit();
+  }
+  }
 }

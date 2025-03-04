@@ -1,36 +1,19 @@
-import java.util.Stack;
+import org.slf4j.MDC;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class DiagnosticContext {
-    private static Stack<String> contextStack = new Stack<>();
+public class NDC {
+  private static final ThreadLocal<Deque<String>> contextStack = ThreadLocal.withInitial(ConcurrentLinkedDeque::new);
 
-    /**
-     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. 
-     * El valor devuelto es el valor que se empujó por última vez. 
-     * Si no hay contexto disponible, se devuelve la cadena vacía "".
-     * @return String El contexto de diagnóstico más interno.
-     */
-    public static String peek() {
-        return contextStack.isEmpty() ? "" : contextStack.peek();
-    }
-
-    // Método para agregar contexto para pruebas
-    public static void push(String context) {
-        contextStack.push(context);
-    }
-
-    // Método para eliminar contexto para pruebas
-    public static String pop() {
-        return contextStack.isEmpty() ? "" : contextStack.pop();
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        push("Contexto 1");
-        push("Contexto 2");
-        System.out.println(peek()); // Debería imprimir "Contexto 2"
-        pop();
-        System.out.println(peek()); // Debería imprimir "Contexto 1"
-        pop();
-        System.out.println(peek()); // Debería imprimir ""
-    }
+  /**
+  * Osserva l'ultimo contesto diagnostico in cima a questo NDC senza rimuoverlo. <p>Il valore restituito è il valore che è stato inserito per ultimo. Se non è disponibile alcun contesto, viene restituita la stringa vuota "".
+  * @return String Il contesto diagnostico più interno.
+  */
+  public static String peek() {
+  Deque<String> stack = contextStack.get();
+  if (stack != null && !stack.isEmpty()) {
+  return stack.peek();
+  }
+  return "";
+  }
 }

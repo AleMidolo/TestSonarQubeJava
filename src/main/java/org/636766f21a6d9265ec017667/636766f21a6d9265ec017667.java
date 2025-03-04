@@ -1,21 +1,22 @@
-import java.io.IOException;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.Attribute;
 
-public class ClassReader {
-    private final byte[] data;
+public class CustomClassReader extends ClassReader {
+  
+  public CustomClassReader(byte[] classFile) {
+  super(classFile);
+  }
 
-    public ClassReader(byte[] data) {
-        this.data = data;
-    }
-
-    /**
-     * Lee un valor corto con signo en este {@link ClassReader}. <i>Este método está destinado a subclases de {@link Attribute},y normalmente no es necesario para generadores de clases o adaptadores.</i>
-     * @param offset el desplazamiento inicial del valor a leer en este {@link ClassReader}.
-     * @return el valor leído.
-     */
-    public short readShort(final int offset) {
-        if (offset < 0 || offset + 2 > data.length) {
-            throw new IndexOutOfBoundsException("Offset is out of bounds");
-        }
-        return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
-    }
+  /**
+  * Legge un valore short firmato in questo {@link ClassReader}. <i>Questo metodo è destinato 
+  * alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori 
+  * di classi o gli adattatori.</i>
+  * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
+  * @return il valore letto.
+  */
+  public short readShort(final int offset) {
+  byte[] classFileBuffer = this.b;
+  return (short)((classFileBuffer[offset] & 0xFF) << 8 | 
+  (classFileBuffer[offset + 1] & 0xFF));
+  }
 }

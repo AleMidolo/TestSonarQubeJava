@@ -1,21 +1,25 @@
+import java.text.MessageFormat;
+
 public class ContentRangeBuilder {
 
-    /**
-     * Construye el valor del encabezado HTTP 'Content-Range'.
-     * @return valor de 'Content-Range'
-     */
-    private String buildContentRange() {
-        // Ejemplo de valores para el rango
-        long start = 0;
-        long end = 99;
-        long total = 1000;
+  private long start;
+  private long end; 
+  private long total;
+  
+  public ContentRangeBuilder(long start, long end, long total) {
+  this.start = start;
+  this.end = end;
+  this.total = total;
+  }
 
-        return String.format("bytes %d-%d/%d", start, end, total);
-    }
-
-    public static void main(String[] args) {
-        ContentRangeBuilder builder = new ContentRangeBuilder();
-        String contentRange = builder.buildContentRange();
-        System.out.println(contentRange);
-    }
+  /**
+  * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
+  * @return valore 'Content-Range'
+  */
+  private String buildContentRange() {
+  return MessageFormat.format("bytes {0}-{1}/{2}", 
+  String.valueOf(start),
+  String.valueOf(end),
+  String.valueOf(total));
+  }
 }

@@ -1,30 +1,34 @@
-public class SubstringMatcher {
+public class StringMatcher {
+  /**
+  * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+  * @param str la stringa originale (o StringBuilder)
+  * @param index l'indice nella stringa originale da cui iniziare a confrontare
+  * @param substring la sottostringa da confrontare all'indice specificato
+  * @return {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+  */
+  public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
+  // Check for null inputs
+  if (str == null || substring == null) {
+  return false;
+  }
 
-    /** 
-     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
-     * @param str la cadena original (o StringBuilder)
-     * @param index el índice en la cadena original para comenzar a comparar
-     * @param substring la subcadena para comparar en el índice dado
-     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
-     */
-    public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
-        if (str == null || substring == null || index < 0 || index + substring.length() > str.length()) {
-            return false;
-        }
-        
-        for (int i = 0; i < substring.length(); i++) {
-            if (str.charAt(index + i) != substring.charAt(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
+  // Check if index is out of bounds
+  if (index < 0 || index > str.length()) {
+  return false;
+  }
 
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        String original = "Hello, world!";
-        String sub = "world";
-        boolean result = substringMatch(original, 7, sub);
-        System.out.println(result); // Debería imprimir true
-    }
+  // Check if substring is longer than remaining characters from index
+  if (str.length() - index < substring.length()) {
+  return false;
+  }
+
+  // Compare each character
+  for (int i = 0; i < substring.length(); i++) {
+  if (str.charAt(index + i) != substring.charAt(i)) {
+  return false;
+  }
+  }
+
+  return true;
+  }
 }

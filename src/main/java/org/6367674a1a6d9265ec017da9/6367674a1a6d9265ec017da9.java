@@ -1,82 +1,48 @@
-import java.util.NoSuchElementException;
+import java.util.Objects;
 
-class ListNode<E> {
-    E data;
-    ListNode<E> next;
-    ListNode<E> prev;
+public class DoublyLinkedList<E> {
+  private ListNode<E> head;
+  private ListNode<E> tail;
+  private int size;
 
-    ListNode(E data) {
-        this.data = data;
-    }
-}
+  private static class ListNode<E> {
+  E element;
+  ListNode<E> next;
+  ListNode<E> prev;
 
-class DoublyLinkedList<E> {
-    private ListNode<E> head;
-    private ListNode<E> tail;
+  ListNode(E element) {
+  this.element = element;
+  }
+  }
 
-    public void addListNode(ListNode<E> node) {
-        if (node == null) return;
-        if (head == null) {
-            head = node;
-            tail = node;
-            node.next = null;
-            node.prev = null;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = node;
-            tail.next = null;
-        }
-    }
+  /**
+  * Sposta in modo atomico tutti i {@link ListNode ListNodes} da {@code list} a questa lista 
+  * come se ogni nodo fosse stato rimosso con {@link #removeListNode(ListNodeImpl)} da {@code list} 
+  * e successivamente aggiunto a questa lista tramite {@link #addListNode(ListNodeImpl)}.
+  */
+  private void moveAllListNodes(DoublyLinkedList<E> list) {
+  Objects.requireNonNull(list);
+  
+  if (list == this || list.size == 0) {
+  return;
+  }
 
-    public void removeListNode(ListNode<E> node) {
-        if (node == null) return;
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
-        }
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev;
-        }
-        node.next = null;
-        node.prev = null;
-    }
+  // If this list is empty, just take the other list's nodes
+  if (size == 0) {
+  this.head = list.head;
+  this.tail = list.tail;
+  this.size = list.size;
+  } else {
+  // Connect the tail of this list to the head of the other list
+  this.tail.next = list.head;
+  list.head.prev = this.tail;
+  this.tail = list.tail;
+  this.size += list.size;
+  }
 
-    public ListNode<E> getHead() {
-        return head;
-    }
-    
-    public boolean isEmpty() {
-        return head == null;
-    }
-}
-
-public class Main<E> {
-    private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.isEmpty()) {
-            return;
-        }
-
-        ListNode<E> currentNode = list.getHead();
-        while (currentNode != null) {
-            ListNode<E> nextNode = currentNode.next; // Store next node
-            list.removeListNode(currentNode); // Remove from the original list
-            addListNode(currentNode); // Add to this list
-            currentNode = nextNode; // Move to the next node
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        DoublyLinkedList<Integer> sourceList = new DoublyLinkedList<>();
-        sourceList.addListNode(new ListNode<>(1));
-        sourceList.addListNode(new ListNode<>(2));
-        sourceList.addListNode(new ListNode<>(3));
-
-        Main<Integer> mainList = new Main<>();
-        mainList.moveAllListNodes(sourceList);
-    }
+  // Clear the source list
+  list.head = null;
+  list.tail = null;
+  list.size = 0;
+  }
 }

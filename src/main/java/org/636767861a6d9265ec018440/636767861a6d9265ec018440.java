@@ -1,29 +1,31 @@
+import java.lang.StringBuffer;
+
 public class NameAbbreviator {
+  /**
+  * Abbrevia il nome.
+  * @param buf buffer a cui aggiungere l'abbreviazione.
+  * @param nameStart inizio del nome da abbreviare.
+  */
+  public void abbreviate(final int nameStart, final StringBuffer buf) {
+  if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
+  return;
+  }
 
-    /** 
-     * Abreviar nombre.
-     * @param buf buffer para agregar la abreviatura.
-     * @param nameStart inicio del nombre a abreviar.
-     */
-    public void abbreviate(final int nameStart, final StringBuffer buf) {
-        String name = "John Doe"; // Example name, replace with actual name source
-        if (nameStart < 0 || nameStart >= name.length()) {
-            throw new IllegalArgumentException("Invalid nameStart index");
-        }
-
-        String[] parts = name.split(" ");
-        for (int i = nameStart; i < parts.length; i++) {
-            if (i > nameStart) {
-                buf.append(". "); // Add space between abbreviations
-            }
-            buf.append(parts[i].charAt(0)).append("."); // Append first letter and dot
-        }
-    }
-
-    public static void main(String[] args) {
-        NameAbbreviator abbreviator = new NameAbbreviator();
-        StringBuffer buffer = new StringBuffer();
-        abbreviator.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: J. D.
-    }
+  // Get the first character
+  char firstChar = buf.charAt(nameStart);
+  
+  // Find the end of the name (next space or end of buffer)
+  int nameEnd = nameStart;
+  while (nameEnd < buf.length() && !Character.isWhitespace(buf.charAt(nameEnd))) {
+  nameEnd++;
+  }
+  
+  // Delete everything after first character up to end of name
+  if (nameEnd > nameStart + 1) {
+  buf.delete(nameStart + 1, nameEnd);
+  
+  // Add period after abbreviated character
+  buf.insert(nameStart + 1, '.');
+  }
+  }
 }

@@ -1,23 +1,24 @@
-public class MatrixUtils {
+public class Matrix {
+  private int[][] matrix;
+  private int rows;
+  private int cols;
 
-    /**
-     * Obtiene el número de entradas diferentes de cero en una fila.
-     * @param row la fila
-     * @return el número de entradas diferentes de cero en una fila
-     */
-    public int nonZeros(int[] row) {
-        int count = 0;
-        for (int value : row) {
-            if (value != 0) {
-                count++;
-            }
-        }
-        return count;
-    }
+  /**
+  * Ottiene il numero di voci diverse da zero in una riga.
+  * @param row la riga
+  * @return il numero di voci diverse da zero in una riga
+  */
+  public int nonZeros(int row) {
+  if (row < 0 || row >= rows) {
+  throw new IllegalArgumentException("Invalid row index");
+  }
 
-    public static void main(String[] args) {
-        MatrixUtils utils = new MatrixUtils();
-        int[] row = {1, 0, 2, 0, 3};
-        System.out.println("Número de entradas diferentes de cero: " + utils.nonZeros(row)); // Output: 3
-    }
+  int count = 0;
+  for (int j = 0; j < cols; j++) {
+  if (matrix[row][j] != 0) {
+  count++;
+  }
+  }
+  return count;
+  }
 }

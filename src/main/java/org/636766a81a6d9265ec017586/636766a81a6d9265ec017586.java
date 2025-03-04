@@ -1,30 +1,21 @@
-public class OutputFrame {
-    private List<Object> outputFrame;
+import java.util.Stack;
 
-    public OutputFrame() {
-        this.outputFrame = new ArrayList<>();
-    }
+public class FrameStack {
+  private Stack<Object> outputStack;
 
-    /**
-     * Elimina el número dado de tipos abstractos del "output frame" de salida.
-     * @param elements el número de tipos abstractos que deben ser eliminados.
-     */
-    private void pop(final int elements) {
-        if (elements <= 0) {
-            return;
-        }
-        int toRemove = Math.min(elements, outputFrame.size());
-        for (int i = 0; i < toRemove; i++) {
-            outputFrame.remove(outputFrame.size() - 1);
-        }
-    }
+  public FrameStack() {
+  outputStack = new Stack<>();
+  }
 
-    // Additional methods to manipulate the outputFrame for testing purposes
-    public void push(Object element) {
-        outputFrame.add(element);
-    }
-
-    public List<Object> getOutputFrame() {
-        return outputFrame;
-    }
+  /**
+  * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
+  * @param elements il numero di tipi astratti che devono essere rimossi.
+  */
+  private void pop(final int elements) {
+  for (int i = 0; i < elements; i++) {
+  if (!outputStack.isEmpty()) {
+  outputStack.pop();
+  }
+  }
+  }
 }

@@ -1,65 +1,60 @@
-public class StringUnescaper {
+import java.util.HashMap;
+import java.util.Map;
 
-    /**
-     * <p>Remueve el "escape" de cualquier literal de Java encontrado en el <code>String</code>. Por ejemplo, convertirá una secuencia de <code>'\'</code> y <code>'n'</code> en un carácter de nueva línea, a menos que el <code>'\'</code> esté precedido por otro <code>'\'</code>.</p>
-     * @param str el <code>String</code> a procesar, puede ser nulo
-     * @return un nuevo <code>String</code> sin carácteres "escape", <code>null</code> si la entrada es un string nulo
-     */
-    public static String unescapeJava(String str) throws Exception {
-        if (str == null) {
-            return null;
-        }
+public class StringUtils {
 
-        StringBuilder result = new StringBuilder();
-        boolean isEscaped = false;
+  private static final Map<String, String> JAVA_ESCAPES = new HashMap<>();
+  static {
+  JAVA_ESCAPES.put("\\t", "\t");
+  JAVA_ESCAPES.put("\\b", "\b"); 
+  JAVA_ESCAPES.put("\\n", "\n");
+  JAVA_ESCAPES.put("\\r", "\r");
+  JAVA_ESCAPES.put("\\f", "\f");
+  JAVA_ESCAPES.put("\\'", "'");
+  JAVA_ESCAPES.put("\\\"", "\"");
+  JAVA_ESCAPES.put("\\\\", "\\");
+  }
 
-        for (char currentChar : str.toCharArray()) {
-            if (isEscaped) {
-                switch (currentChar) {
-                    case 'n':
-                        result.append('\n');
-                        break;
-                    case 't':
-                        result.append('\t');
-                        break;
-                    case 'r':
-                        result.append('\r');
-                        break;
-                    case 'f':
-                        result.append('\f');
-                        break;
-                    case 'b':
-                        result.append('\b');
-                        break;
-                    case '\\':
-                        result.append('\\');
-                        break;
-                    case '"':
-                        result.append('"');
-                        break;
-                    case '\'':
-                        result.append('\'');
-                        break;
-                    default:
-                        result.append(currentChar);
-                        break;
-                }
-                isEscaped = false;
-            } else {
-                if (currentChar == '\\') {
-                    isEscaped = true;
-                } else {
-                    result.append(currentChar);
-                }
-            }
-        }
-
-        return result.toString();
-    }
-
-    public static void main(String[] args) {
-        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
-        String unescapedString = unescapeJava(testString);
-        System.out.println(unescapedString);
-    }
+  /** 
+  * <p>Rimuove l'escape da qualsiasi letterale Java trovato nella <code>String</code>. Ad esempio, trasformerà una sequenza di <code>'\'</code> e <code>'n'</code> in un carattere di nuova linea, a meno che il <code>'\'</code> non sia preceduto da un altro <code>'\'</code>.</p>
+  * @param str la <code>String</code> da desescapare, può essere null
+  * @return una nuova <code>String</code> desescapata, <code>null</code> se l'input è una stringa null
+  */
+  public static String unescapeJava(String str) throws Exception {
+  if (str == null) {
+  return null;
+  }
+  
+  StringBuilder result = new StringBuilder(str.length());
+  
+  for (int i = 0; i < str.length(); i++) {
+  char ch = str.charAt(i);
+  
+  if (ch == '\\' && i + 1 < str.length()) {
+  // Check for escaped sequences
+  String escape = str.substring(i, Math.min(i + 2, str.length()));
+  
+  if (JAVA_ESCAPES.containsKey(escape)) {
+  result.append(JAVA_ESCAPES.get(escape));
+  i++; // Skip next character as it's part of escape sequence
+  } else if (escape.charAt(1) == 'u' && i + 5 < str.length()) {
+  // Handle Unicode escape sequences
+  String hex = str.substring(i + 2, i + 6);
+  try {
+  result.append((char) Integer.parseInt(hex, 16));
+  i += 5; // Skip the unicode sequence
+  } catch (NumberFormatException e) {
+  throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+  }
+  } else {
+  // Not a recognized escape sequence, keep the backslash
+  result.append(ch);
+  }
+  } else {
+  result.append(ch);
+  }
+  }
+  
+  return result.toString();
+  }
 }

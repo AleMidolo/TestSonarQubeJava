@@ -2,36 +2,46 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LoggerFormatter {
+public class CustomFormatter {
+  
+  /**
+  * Produce una stringa formattata come specificato dal modello di conversione.
+  */
+  public String format(LoggingEvent event) {
+  if (event == null) {
+  return "";
+  }
 
-    /**
-     * Produce una cadena formateada según lo especificado por el patrón de conversión.
-     */
-    public String format(LoggingEvent event) {
-        StringBuilder formattedString = new StringBuilder();
-        
-        // Get the timestamp of the logging event
-        long timestamp = event.getTimeStamp();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
-        
-        // Get the log level
-        String level = event.getLevel().toString();
-        
-        // Get the logger name
-        String loggerName = event.getLoggerName();
-        
-        // Get the message
-        String message = event.getRenderedMessage();
-        
-        // Format the string
-        formattedString.append(date)
-                       .append(" [")
-                       .append(level)
-                       .append("] ")
-                       .append(loggerName)
-                       .append(": ")
-                       .append(message);
-        
-        return formattedString.toString();
-    }
+  StringBuilder formattedMessage = new StringBuilder();
+  
+  // Add timestamp
+  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+  String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+  formattedMessage.append(timestamp);
+  formattedMessage.append(" ");
+  
+  // Add log level
+  formattedMessage.append("[");
+  formattedMessage.append(event.getLevel().toString());
+  formattedMessage.append("] ");
+  
+  // Add logger name
+  formattedMessage.append(event.getLoggerName());
+  formattedMessage.append(" - ");
+  
+  // Add message
+  formattedMessage.append(event.getRenderedMessage());
+  
+  // Add throwable info if exists
+  String[] throwableInfo = event.getThrowableStrRep();
+  if (throwableInfo != null) {
+  formattedMessage.append("\n");
+  for (String line : throwableInfo) {
+  formattedMessage.append(line);
+  formattedMessage.append("\n");
+  }
+  }
+  
+  return formattedMessage.toString();
+  }
 }

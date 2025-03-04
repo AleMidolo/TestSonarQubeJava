@@ -1,38 +1,20 @@
-public class FieldChecker {
+import java.util.Objects;
 
-    private Fields storedFields;
+public class FieldValidator {
+  
+  private Set<Fields> storedFields;
 
-    /**
-     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
-     */
-    private boolean containsAllFields(Fields fields) {
-        if (fields == null || storedFields == null) {
-            return false;
-        }
-        
-        // Assuming Fields has a method to get all field names
-        for (String fieldName : fields.getFieldNames()) {
-            if (!storedFields.containsField(fieldName)) {
-                return false;
-            }
-        }
-        return true;
-    }
+  public FieldValidator() {
+  this.storedFields = new HashSet<>();
+  }
 
-    // Assuming a Fields class exists with necessary methods
-    public static class Fields {
-        private Set<String> fieldNames;
-
-        public Fields(Set<String> fieldNames) {
-            this.fieldNames = fieldNames;
-        }
-
-        public Set<String> getFieldNames() {
-            return fieldNames;
-        }
-
-        public boolean containsField(String fieldName) {
-            return fieldNames.contains(fieldName);
-        }
-    }
+  /**
+  * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+  */
+  private boolean containsAllFields(Fields fields) {
+  if (fields == null) {
+  return false;
+  }
+  return storedFields.contains(fields);
+  }
 }

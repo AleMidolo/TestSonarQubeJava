@@ -1,35 +1,26 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-public class BroadcastFilter {
+public class MessageFilter {
+  private BroadcastFilter broadcastFilter;
 
-    private List<Object> filters;
+  public MessageFilter(BroadcastFilter broadcastFilter) {
+  this.broadcastFilter = Objects.requireNonNull(broadcastFilter);
+  }
 
-    public BroadcastFilter() {
-        this.filters = new ArrayList<>();
-    }
+  /**
+  * Invoca il {@link BroadcastFilter}
+  * @param msg
+  * @return
+  */
+  protected Object filter(Object msg) {
+  if (msg == null) {
+  return null;
+  }
+  
+  return broadcastFilter.filter(msg);
+  }
+}
 
-    /**
-     * Invoca el {@link BroadcastFilter}
-     * @param msg
-     * @return
-     */
-    protected Object filter(Object msg) {
-        for (Object filter : filters) {
-            // Apply each filter to the message
-            // This is a placeholder for actual filter logic
-            if (filter instanceof Filter) {
-                msg = ((Filter) filter).apply(msg);
-            }
-        }
-        return msg;
-    }
-
-    public void addFilter(Object filter) {
-        filters.add(filter);
-    }
-
-    interface Filter {
-        Object apply(Object msg);
-    }
+interface BroadcastFilter {
+  Object filter(Object message);
 }

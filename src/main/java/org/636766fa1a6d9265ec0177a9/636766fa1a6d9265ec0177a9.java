@@ -1,30 +1,21 @@
-public class TypeManager {
-    
-    // List to hold initialized types
-    private List<Integer> initializedTypes;
+import java.util.ArrayList;
+import java.util.List;
 
-    // Constructor
-    public TypeManager() {
-        initializedTypes = new ArrayList<>();
-    }
+public class TypeInitializer {
+  // List to store initialized abstract types
+  private List<Integer> initializedTypes;
 
-    /** 
-     * Agrega un tipo abstracto a la lista de tipos sobre los cuales se invoca un constructor en el bloque básico.
-     * @param abstractType un tipo abstracto sobre el cual se invoca un constructor.
-     */
-    private void addInitializedType(final int abstractType) {
-        initializedTypes.add(abstractType);
-    }
+  public TypeInitializer() {
+  initializedTypes = new ArrayList<>();
+  }
 
-    // Method to get the list of initialized types
-    public List<Integer> getInitializedTypes() {
-        return initializedTypes;
-    }
-
-    public static void main(String[] args) {
-        TypeManager manager = new TypeManager();
-        manager.addInitializedType(1);
-        manager.addInitializedType(2);
-        System.out.println(manager.getInitializedTypes());
-    }
+  /**
+  * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
+  * @param abstractType un tipo astratto su cui viene invocato un costruttore.
+  */
+  private void addInitializedType(final int abstractType) {
+  if (!initializedTypes.contains(abstractType)) {
+  initializedTypes.add(abstractType);
+  }
+  }
 }

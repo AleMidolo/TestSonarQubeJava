@@ -1,62 +1,56 @@
+import java.awt.geom.Point2D;
 import javafx.util.Pair;
 
-class Box2D {
-    private double x;
-    private double y;
-    private double width;
-    private double height;
-
-    public Box2D(double x, double y, double width, double height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    @Override
-    public String toString() {
-        return "Box2D{" +
-                "x=" + x +
-                ", y=" + y +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
-    }
-}
-
 public class BoxSplitter {
-    /** 
-     * Divide una caja a lo largo del eje x en dos cajas iguales.
-     * @param box la caja a dividir
-     * @return un par con las dos cajas resultantes
-     */
-    public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        double newWidth = box.getWidth() / 2;
-        Box2D box1 = new Box2D(box.getX(), box.getY(), newWidth, box.getHeight());
-        Box2D box2 = new Box2D(box.getX() + newWidth, box.getY(), newWidth, box.getHeight());
-        return new Pair<>(box1, box2);
-    }
+  
+  public static class Box2D {
+  private Point2D topLeft;
+  private double width;
+  private double height;
+  
+  public Box2D(Point2D topLeft, double width, double height) {
+  this.topLeft = topLeft;
+  this.width = width;
+  this.height = height;
+  }
+  
+  public Point2D getTopLeft() {
+  return topLeft;
+  }
+  
+  public double getWidth() {
+  return width;
+  }
+  
+  public double getHeight() {
+  return height;
+  }
+  }
 
-    public static void main(String[] args) {
-        Box2D originalBox = new Box2D(0, 0, 4, 2);
-        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
-        System.out.println("Original Box: " + originalBox);
-        System.out.println("Split Boxes: " + splitBoxes.getKey() + ", " + splitBoxes.getValue());
-    }
+  /** 
+  * Divide una "Box2D" lungo l'asse x in due "Box2D" uguali.
+  * @param box la scatola da dividere
+  * @return una coppia con le due scatole risultanti
+  */
+  public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
+  // Get original box properties
+  Point2D originalTopLeft = box.getTopLeft();
+  double originalWidth = box.getWidth();
+  double originalHeight = box.getHeight();
+  
+  // Calculate half width for the split
+  double halfWidth = originalWidth / 2;
+  
+  // Create left box with original top-left point
+  Box2D leftBox = new Box2D(originalTopLeft, halfWidth, originalHeight);
+  
+  // Create right box with new top-left point shifted right by halfWidth
+  Point2D rightBoxTopLeft = new Point2D.Double(
+  originalTopLeft.getX() + halfWidth,
+  originalTopLeft.getY()
+  );
+  Box2D rightBox = new Box2D(rightBoxTopLeft, halfWidth, originalHeight);
+  
+  return new Pair<>(leftBox, rightBox);
+  }
 }

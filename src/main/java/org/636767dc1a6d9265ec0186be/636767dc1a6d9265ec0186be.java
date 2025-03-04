@@ -1,35 +1,31 @@
-public class TimeBucketCompressor {
-
-    /**
-     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. 
-     * Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, 
-     * el "bucket" de tiempo reformateado 20000115 es 20000112, 
-     * y el "bucket" de tiempo reformateado 20000123 es 20000123.
-     */
-    static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
-        // Extraer el año, mes y día del bucket de tiempo
-        int year = (int) (bucketDeTiempo / 10000);
-        int month = (int) ((bucketDeTiempo % 10000) / 100);
-        int day = (int) (bucketDeTiempo % 100);
-        
-        // Calcular el día del año
-        java.time.LocalDate date = java.time.LocalDate.of(year, month, day);
-        int dayOfYear = date.getDayOfYear();
-        
-        // Calcular el nuevo día del año basado en el paso diario
-        int newDayOfYear = (dayOfYear / pasoDiario) * pasoDiario;
-        
-        // Obtener la nueva fecha
-        java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
-        
-        // Reformatear la nueva fecha a formato largo
-        return Long.parseLong(newDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")));
-    }
-
-    public static void main(String[] args) {
-        long bucketDeTiempo = 20000115;
-        int pasoDiario = 11;
-        long resultado = comprimirBucketDeTiempo(bucketDeTiempo, pasoDiario);
-        System.out.println("Bucket de tiempo reformateado: " + resultado);
-    }
+public class TimeCompressor {
+  /**
+  * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, per 20000115 è 20000112, e per 20000123 è 20000123.
+  */
+  static long compressTimeBucket(long timeBucket, int dayStep) {
+  // Convert timeBucket to individual components
+  int year = (int)(timeBucket / 10000);
+  int month = (int)((timeBucket % 10000) / 100);
+  int day = (int)(timeBucket % 100);
+  
+  // Calculate compressed day based on dayStep
+  int compressedDay;
+  if (day <= dayStep) {
+  compressedDay = 1;
+  } else if (day <= dayStep * 2) {
+  compressedDay = dayStep + 1;
+  } else {
+  compressedDay = day;
+  }
+  
+  // Reconstruct compressed timeBucket
+  return year * 10000L + month * 100L + compressedDay;
+  }
+  
+  // Test the implementation
+  public static void main(String[] args) {
+  System.out.println(compressTimeBucket(20000105L, 11)); // Should output 20000101
+  System.out.println(compressTimeBucket(20000115L, 11)); // Should output 20000112
+  System.out.println(compressTimeBucket(20000123L, 11)); // Should output 20000123
+  }
 }

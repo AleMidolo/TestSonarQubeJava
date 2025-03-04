@@ -1,31 +1,49 @@
 import org.apache.log4j.spi.LoggingEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class LoggerFormatter {
+public class LogFormatter {
 
-    /** 
-     * Formatea un evento de "logging" para un "writer".
-     * @param event evento de "logging" que se va a formatear.
-     */
-    public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
-        
-        // Formatear la fecha y hora del evento
-        formattedEvent.append(event.getTimeStamp()).append(" - ");
-        
-        // Obtener el nivel de log
-        formattedEvent.append(event.getLevel().toString()).append(" - ");
-        
-        // Obtener el nombre de la clase que genera el evento
-        formattedEvent.append(event.getLoggerName()).append(" - ");
-        
-        // Obtener el mensaje del evento
-        formattedEvent.append(event.getRenderedMessage());
-        
-        // Si hay excepciones, añadirlas al formato
-        if (event.getThrowableInformation() != null) {
-            formattedEvent.append("\n").append(event.getThrowableInformation().getThrowable().toString());
-        }
-        
-        return formattedEvent.toString();
-    }
+  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+  
+  /**
+  * Formatta un evento di logging per un writer.
+  * @param event evento di logging da formattare.
+  */
+  public String format(final LoggingEvent event) {
+  if (event == null) {
+  return "";
+  }
+
+  StringBuilder sb = new StringBuilder();
+  
+  // Add timestamp
+  Date timestamp = new Date(event.getTimeStamp());
+  sb.append(DATE_FORMAT.format(timestamp));
+  sb.append(" ");
+  
+  // Add log level
+  sb.append("[").append(event.getLevel().toString()).append("] ");
+  
+  // Add logger name
+  sb.append(event.getLoggerName());
+  sb.append(" - ");
+  
+  // Add message
+  sb.append(event.getRenderedMessage());
+  
+  // Add throwable if exists
+  String[] throwableStrRep = event.getThrowableStrRep();
+  if (throwableStrRep != null) {
+  sb.append("\n");
+  for (String line : throwableStrRep) {
+  sb.append(line).append("\n");
+  }
+  }
+  
+  // Add new line
+  sb.append("\n");
+  
+  return sb.toString();
+  }
 }

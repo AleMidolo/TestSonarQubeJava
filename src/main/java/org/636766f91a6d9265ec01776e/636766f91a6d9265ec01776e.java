@@ -1,26 +1,48 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-    @Override
-    public void write(final byte b[], final int off, final int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException("Byte array is null");
-        }
-        if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException("Invalid offset or length");
-        }
-        
-        // Here you would implement the logic to write the bytes to the output stream.
-        // For demonstration, we will just print the bytes to the console.
-        for (int i = off; i < off + len; i++) {
-            System.out.print((char) b[i]);
-        }
-    }
+public class ByteOutputStream extends OutputStream {
 
-    @Override
-    public void write(int b) throws IOException {
-        // Implement the method to write a single byte if needed
-        System.out.print((char) b);
-    }
+  private byte[] buffer;
+  private int position;
+  
+  public ByteOutputStream() {
+  buffer = new byte[32]; // Initial buffer size
+  position = 0;
+  }
+
+  @Override
+  public void write(final byte b[], final int off, final int len) throws IOException {
+  if (b == null) {
+  throw new NullPointerException();
+  }
+  
+  if (off < 0 || len < 0 || off + len > b.length) {
+  throw new IndexOutOfBoundsException();
+  }
+
+  // Ensure buffer has enough capacity
+  ensureCapacity(position + len);
+  
+  // Copy bytes from input array to buffer
+  System.arraycopy(b, off, buffer, position, len);
+  position += len;
+  }
+
+  private void ensureCapacity(int minCapacity) {
+  if (minCapacity > buffer.length) {
+  // Grow buffer by doubling size
+  int newCapacity = Math.max(buffer.length * 2, minCapacity);
+  byte[] newBuffer = new byte[newCapacity];
+  System.arraycopy(buffer, 0, newBuffer, 0, position);
+  buffer = newBuffer;
+  }
+  }
+
+  // Other required OutputStream methods would go here
+  @Override
+  public void write(int b) throws IOException {
+  ensureCapacity(position + 1);
+  buffer[position++] = (byte)b;
+  }
 }

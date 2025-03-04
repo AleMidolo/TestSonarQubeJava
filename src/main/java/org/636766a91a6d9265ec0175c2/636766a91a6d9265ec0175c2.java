@@ -1,34 +1,21 @@
-public class StackFrame {
-    private int[] stack;
-    private int top;
+import java.util.Stack;
 
-    public StackFrame(int size) {
-        stack = new int[size];
-        top = -1;
-    }
+public class FrameStack {
+  private Stack<Integer> outputStack;
 
-    /** 
-     * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
-     * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
-     */
-    private int pop() {
-        if (top == -1) {
-            throw new IllegalStateException("Stack is empty");
-        }
-        return stack[top--];
-    }
+  public FrameStack() {
+  outputStack = new Stack<>();
+  }
 
-    public void push(int value) {
-        if (top == stack.length - 1) {
-            throw new IllegalStateException("Stack is full");
-        }
-        stack[++top] = value;
-    }
-
-    public static void main(String[] args) {
-        StackFrame stackFrame = new StackFrame(5);
-        stackFrame.push(10);
-        stackFrame.push(20);
-        System.out.println("Popped value: " + stackFrame.pop());
-    }
+  /**
+  * Estrae un tipo astratto dallo stack del frame di output e restituisce il suo valore.
+  * @return il tipo astratto che è stato estratto dallo stack del frame di output.
+  */
+  private int pop() {
+  if (!outputStack.isEmpty()) {
+  return outputStack.pop();
+  } else {
+  throw new IllegalStateException("Stack is empty");
+  }
+  }
 }

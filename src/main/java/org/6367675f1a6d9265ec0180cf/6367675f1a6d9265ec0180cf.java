@@ -1,50 +1,28 @@
 import org.jgrapht.Graph;
-import org.jgrapht.GraphType;
-import org.jgrapht.alg.clique.CliqueFinder;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
 import java.util.Set;
 
 public class GraphUtils {
-
-    /** 
-     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
-     * @param graph el grafo.
-     * @param vertices los vértices de los que se inducirá el subgrafo.
-     * @return true si el subgrafo inducido es un clique.
-     */
-    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Check if the number of edges in the induced subgraph is equal to the number of vertices choose 2
-        int expectedEdges = vertices.size() * (vertices.size() - 1) / 2;
-        int actualEdges = 0;
-
-        for (V vertex : vertices) {
-            for (E edge : graph.outgoingEdgesOf(vertex)) {
-                V targetVertex = graph.getEdgeTarget(edge);
-                if (vertices.contains(targetVertex)) {
-                    actualEdges++;
-                }
-            }
-        }
-
-        // Each edge is counted twice (once for each vertex), so divide by 2
-        actualEdges /= 2;
-
-        return actualEdges == expectedEdges;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "C");
-        graph.addEdge("B", "C");
-
-        Set<String> vertices = Set.of("A", "B", "C");
-        System.out.println(isClique(graph, vertices)); // Should print true
-    }
+  /**
+  * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
+  * @param graph il grafo.
+  * @param vertices i vertici da cui indurre il sottografo.
+  * @return true se il sottografo indotto è un clique.
+  */
+  private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+  // Per ogni coppia di vertici nel set
+  for (V v1 : vertices) {
+  for (V v2 : vertices) {
+  // Salta il confronto di un vertice con se stesso
+  if (v1.equals(v2)) {
+  continue;
+  }
+  // Se non esiste un arco tra i due vertici, non è un clique
+  if (!graph.containsEdge(v1, v2)) {
+  return false;
+  }
+  }
+  }
+  // Se arriviamo qui, tutti i vertici sono collegati tra loro
+  return true;
+  }
 }

@@ -1,34 +1,50 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.Arrays;
 
-public final class BufferToByteArray {
+public class ByteArrayOutputStream {
+  private byte[] buffer;
+  private int count;
+  private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+  
+  public ByteArrayOutputStream() {
+  this(32); // Default initial size
+  }
+  
+  public ByteArrayOutputStream(int size) {
+  if (size < 0) {
+  throw new IllegalArgumentException("Negative initial size: " + size);
+  }
+  buffer = new byte[size];
+  }
 
-    private ByteArrayOutputStream buffer;
-
-    public BufferToByteArray() {
-        this.buffer = new ByteArrayOutputStream();
-    }
-
-    public void write(byte[] data) throws IOException {
-        buffer.write(data);
-    }
-
-    /** 
-     * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
-     */
-    public final byte[] toByteArray() {
-        return buffer.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        try {
-            BufferToByteArray bufferToByteArray = new BufferToByteArray();
-            bufferToByteArray.write("Hello, ".getBytes());
-            bufferToByteArray.write("World!".getBytes());
-            byte[] result = bufferToByteArray.toByteArray();
-            System.out.println(new String(result)); // Output: Hello, World!
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+  /**
+  * Restituisce un singolo array di byte contenente tutti i contenuti scritti nel/i buffer.
+  */
+  public final byte[] toByteArray() {
+  return Arrays.copyOf(buffer, count);
+  }
+  
+  // Helper method to ensure capacity
+  private void ensureCapacity(int minCapacity) {
+  if (minCapacity - buffer.length > 0) {
+  int oldCapacity = buffer.length;
+  int newCapacity = oldCapacity << 1;
+  
+  if (newCapacity - minCapacity < 0) {
+  newCapacity = minCapacity;
+  }
+  
+  if (newCapacity - MAX_ARRAY_SIZE > 0) {
+  newCapacity = hugeCapacity(minCapacity);
+  }
+  
+  buffer = Arrays.copyOf(buffer, newCapacity);
+  }
+  }
+  
+  private static int hugeCapacity(int minCapacity) {
+  if (minCapacity < 0) {
+  throw new OutOfMemoryError();
+  }
+  return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
+  }
 }

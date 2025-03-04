@@ -1,30 +1,34 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class UpperBoundCalculator<K> {
+public class BoundCalculator<K extends Comparable<K>> {
 
-    /** 
-     * Encuentra un límite superior mínimo para cada clave.
-     * @param keys una lista de claves.
-     * @return el límite superior de clave calculado.
-     */
-    private List<Integer> computeUpperBounds(List<K> keys) {
-        Map<K, Integer> upperBoundsMap = new HashMap<>();
-        List<Integer> upperBounds = new ArrayList<>();
+  /**
+  * Trova un limite superiore minimo per ogni chiave.
+  * @param keys una lista di chiavi.
+  * @return il limite superiore delle chiavi calcolato.
+  */
+  private List<Integer> computeUpperBounds(List<K> keys) {
+  if (keys == null || keys.isEmpty()) {
+  return new ArrayList<>();
+  }
 
-        for (K key : keys) {
-            // Simulamos el cálculo de un límite superior para cada clave
-            // Aquí simplemente asignamos un valor arbitrario para el ejemplo
-            int upperBound = key.hashCode() % 100; // Ejemplo de cálculo
-            upperBoundsMap.put(key, upperBound);
-        }
-
-        for (K key : keys) {
-            upperBounds.add(upperBoundsMap.get(key));
-        }
-
-        return upperBounds;
-    }
+  List<Integer> upperBounds = new ArrayList<>(keys.size());
+  
+  // Per ogni chiave, trova il suo limite superiore
+  for (int i = 0; i < keys.size(); i++) {
+  K currentKey = keys.get(i);
+  int upperBound = i;
+  
+  // Confronta con tutte le chiavi successive
+  for (int j = i + 1; j < keys.size(); j++) {
+  if (currentKey.compareTo(keys.get(j)) <= 0) {
+  upperBound = j;
+  }
+  }
+  
+  upperBounds.add(upperBound);
+  }
+  
+  return upperBounds;
+  }
 }

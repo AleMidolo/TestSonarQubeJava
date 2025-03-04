@@ -1,23 +1,19 @@
 import java.beans.Introspector;
-import java.lang.reflect.Method;
 
-public class StringUtil {
-
-    /** 
-     * Inverso de Introspector.decapitalize
-     */
-    public static String capitalize(String name) {
-        if (name == null || name.isEmpty()) {
-            return name;
-        }
-        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
-    }
-
-    public static void main(String[] args) {
-        // Test the capitalize method
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("java"));   // Output: Java
-        System.out.println(capitalize(""));       // Output: (empty string)
-        System.out.println(capitalize(null));     // Output: null
-    }
+public class StringUtils {
+  /**
+  * Inverso di Introspector.decapitalize
+  */
+  public static String capitalize(String name) {
+  if (name == null || name.length() == 0) {
+  return name;
+  }
+  if (name.length() > 1 && Character.isUpperCase(name.charAt(1)) &&
+  Character.isLowerCase(name.charAt(0))) {
+  return name;
+  }
+  char chars[] = name.toCharArray();
+  chars[0] = Character.toUpperCase(chars[0]);
+  return new String(chars);
+  }
 }

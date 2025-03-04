@@ -3,59 +3,48 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    private static final long FETCH_DATA_DURATION = 3600000; // Example duration in milliseconds (1 hour)
+  // Constant for maximum duration between start and end time
+  private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-    /**
-     * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
-     */
-    protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
-        List<TimeRange> timeRanges = new ArrayList<>();
+  /**
+  * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
+  */
+  protected List<TimeRange> buildTimeRanges(long start, long end) {
+  List<TimeRange> ranges = new ArrayList<>();
+  
+  // If total duration is less than max duration, return single range
+  if (end - start <= FETCH_DATA_DURATION) {
+  ranges.add(new TimeRange(start, end));
+  return ranges;
+  }
 
-        if (fin - inicio <= FETCH_DATA_DURATION) {
-            timeRanges.add(new TimeRange(inicio, fin));
-        } else {
-            long currentStart = inicio;
-            while (currentStart < fin) {
-                long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, fin);
-                timeRanges.add(new TimeRange(currentStart, currentEnd));
-                currentStart = currentEnd;
-            }
-        }
+  // Split into multiple ranges of FETCH_DATA_DURATION
+  long currentStart = start;
+  while (currentStart < end) {
+  long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
+  ranges.add(new TimeRange(currentStart, currentEnd));
+  currentStart = currentEnd;
+  }
 
-        return timeRanges;
-    }
+  return ranges;
+  }
 
-    public static class TimeRange {
-        private long start;
-        private long end;
+  // Inner class to represent a time range
+  protected static class TimeRange {
+  private final long start;
+  private final long end;
 
-        public TimeRange(long start, long end) {
-            this.start = start;
-            this.end = end;
-        }
+  public TimeRange(long start, long end) {
+  this.start = start;
+  this.end = end;
+  }
 
-        public long getStart() {
-            return start;
-        }
+  public long getStart() {
+  return start;
+  }
 
-        public long getEnd() {
-            return end;
-        }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeBuilder builder = new TimeRangeBuilder();
-        List<TimeRange> ranges = builder.construirRangosDeTiempo(0, 10000000); // Example usage
-        for (TimeRange range : ranges) {
-            System.out.println(range);
-        }
-    }
+  public long getEnd() {
+  return end;
+  }
+  }
 }

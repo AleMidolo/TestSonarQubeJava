@@ -1,41 +1,53 @@
 import java.nio.charset.StandardCharsets;
 
-public class Utf8Writer {
+public class UTF8Writer {
+  /**
+  * Scrive i byte codificati in utf8 dalla stringa nel {@link LinkedBuffer}.
+  */
+  public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
+  if (str == null || str.length() == 0) {
+  return lb;
+  }
 
-    /**
-     * Escribe los bytes codificados en utf8 de la cadena en el {@link LinkedBuffer}.
-     */
-    public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || lb == null) {
-            throw new IllegalArgumentException("str and lb cannot be null");
-        }
-
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
-        return lb;
-    }
-}
-
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
-
-    public LinkedBuffer(int size) {
-        buffer = new byte[size];
-        position = 0;
-    }
-
-    public void write(byte[] bytes) {
-        if (position + bytes.length > buffer.length) {
-            throw new ArrayIndexOutOfBoundsException("Not enough space in LinkedBuffer");
-        }
-        System.arraycopy(bytes, 0, buffer, position, bytes.length);
-        position += bytes.length;
-    }
-
-    // Additional methods for LinkedBuffer can be added here
-}
-
-class WriteSession {
-    // Implementation of WriteSession can be added here
+  byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+  LinkedBuffer currentBuffer = lb;
+  
+  int offset = 0;
+  while (offset < utf8Bytes.length) {
+  int remaining = currentBuffer.buffer.length - currentBuffer.offset;
+  int bytesToCopy = Math.min(remaining, utf8Bytes.length - offset);
+  
+  System.arraycopy(utf8Bytes, offset, currentBuffer.buffer, currentBuffer.offset, bytesToCopy);
+  currentBuffer.offset += bytesToCopy;
+  offset += bytesToCopy;
+  
+  if (offset < utf8Bytes.length) {
+  currentBuffer = new LinkedBuffer(session.nextBufferSize);
+  session.tail = currentBuffer;
+  }
+  }
+  
+  return currentBuffer;
+  }
+  
+  // Supporting class definitions
+  public static class LinkedBuffer {
+  byte[] buffer;
+  int offset;
+  LinkedBuffer next;
+  
+  public LinkedBuffer(int size) {
+  this.buffer = new byte[size];
+  this.offset = 0;
+  }
+  }
+  
+  public static class WriteSession {
+  LinkedBuffer tail;
+  int nextBufferSize;
+  
+  public WriteSession(int bufferSize) {
+  this.nextBufferSize = bufferSize;
+  }
+  }
 }

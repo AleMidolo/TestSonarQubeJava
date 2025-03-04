@@ -1,26 +1,33 @@
 import java.lang.Character;
+import java.lang.Class;
+import java.lang.Object;
+import java.lang.String;
 
-public class Converter {
+public class CharacterConverter {
 
-    /**
-     * <p>Convierte el objeto de entrada en un java.lang.Character.</p>
-     * @param type Tipo de dato al que este valor debe ser convertido.
-     * @param value El valor de entrada que se va a convertir.
-     * @return El valor convertido.
-     * @throws Exception si la conversión no se puede realizar con éxito.
-     * @since 1.8.0
-     */
-    @Override 
-    protected Object convertToType(final Class<?> type, final Object value) throws Exception {
-        if (type == Character.class) {
-            if (value instanceof String && ((String) value).length() == 1) {
-                return ((String) value).charAt(0);
-            } else if (value instanceof Character) {
-                return value;
-            } else {
-                throw new Exception("No se puede convertir el valor a Character.");
-            }
-        }
-        throw new Exception("Tipo no soportado: " + type.getName());
-    }
+  @Override
+  protected Object convertToType(final Class<?> type, final Object value) throws Exception {
+  if (value == null) {
+  return null;
+  }
+
+  if (value instanceof Character) {
+  return value;
+  }
+
+  if (value instanceof String) {
+  String str = (String) value;
+  if (str.length() == 0) {
+  throw new Exception("Cannot convert empty String to Character");
+  }
+  return Character.valueOf(str.charAt(0));
+  }
+
+  if (value instanceof Number) {
+  int num = ((Number) value).intValue();
+  return Character.valueOf((char) num);
+  }
+
+  throw new Exception("Cannot convert " + value.getClass().getName() + " to Character");
+  }
 }

@@ -1,24 +1,23 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
-    private int currentSize;
-
-    public ByteVector(int initialSize) {
-        this.data = new byte[initialSize];
-        this.currentSize = initialSize;
-    }
-
-    /**
-     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'. 
-     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
-     */
-    private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than zero.");
-        }
-        int newSize = currentSize + size;
-        data = Arrays.copyOf(data, newSize);
-        currentSize = newSize;
-    }
+  private byte[] data;
+  private int capacity;
+  private int size;
+  
+  /**
+  * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+  * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+  */
+  private void enlarge(final int size) {
+  if (size <= 0) {
+  return;
+  }
+  
+  int newCapacity = this.capacity + size;
+  byte[] newData = Arrays.copyOf(this.data, newCapacity);
+  
+  this.data = newData;
+  this.capacity = newCapacity;
+  }
 }

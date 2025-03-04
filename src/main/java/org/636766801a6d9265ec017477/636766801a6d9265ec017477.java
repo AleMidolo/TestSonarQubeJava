@@ -1,25 +1,48 @@
 import java.io.InputStream;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class FileAdder {
+public class FileHandler {
 
-    /** 
-     * Agrega los archivos especificados en orden inverso.
-     */
-    private void addReverse(final InputStream[] files) {
-        Stack<InputStream> stack = new Stack<>();
-        
-        // Push all files onto the stack
-        for (InputStream file : files) {
-            stack.push(file);
-        }
-        
-        // Pop files from the stack to add them in reverse order
-        while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
-            // Here you would add the file to your desired structure
-            // For demonstration, we will just print the file reference
-            System.out.println("Adding file: " + file);
-        }
-    }
+  /**
+  * Aggiungi i file specificati in ordine inverso.
+  */
+  private void addReverse(final InputStream[] files) {
+  if (files == null || files.length == 0) {
+  return;
+  }
+
+  List<InputStream> fileList = new ArrayList<>();
+  
+  // Add files to list
+  for (InputStream file : files) {
+  if (file != null) {
+  fileList.add(file);
+  }
+  }
+
+  // Reverse the list
+  Collections.reverse(fileList);
+
+  // Process files in reverse order
+  for (InputStream file : fileList) {
+  try {
+  // Add file contents (implementation depends on specific requirements)
+  processFile(file);
+  } finally {
+  try {
+  file.close();
+  } catch (Exception e) {
+  // Handle close exception
+  }
+  }
+  }
+  }
+
+  // Helper method to process individual files
+  private void processFile(InputStream file) {
+  // Implementation depends on specific requirements
+  // Example: read file contents and add to collection/database etc.
+  }
 }

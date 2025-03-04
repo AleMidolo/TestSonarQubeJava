@@ -1,46 +1,36 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-class Channels {
-    private List<IConsumer> consumers;
+public class ChannelManager {
+  
+  private List<Channels> channelsList;
+  private List<IConsumer> consumersList;
 
-    public Channels() {
-        this.consumers = new ArrayList<>();
-    }
+  public ChannelManager() {
+  this.channelsList = new ArrayList<>();
+  this.consumersList = new ArrayList<>();
+  }
 
-    public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
-    }
-
-    public List<IConsumer> getConsumers() {
-        return consumers;
-    }
+  /**
+  * Aggiungi un nuovo canale di destinazione.
+  */
+  public void addNewTarget(Channels channels, IConsumer consumer) {
+  if (channels != null && consumer != null) {
+  channelsList.add(channels);
+  consumersList.add(consumer);
+  }
+  }
 }
+
+// Assumed supporting interfaces/classes:
 
 interface IConsumer {
-    void consume(String message);
+  void consume();
 }
 
-public class TargetManager {
-    /**
-     * Agregar nuevos canales de destino.
-     */
-    public void addNewTarget(Channels channels, IConsumer consumer) {
-        channels.addConsumer(consumer);
-    }
-
-    public static void main(String[] args) {
-        Channels channels = new Channels();
-        TargetManager targetManager = new TargetManager();
-
-        IConsumer consumer = new IConsumer() {
-            @Override
-            public void consume(String message) {
-                System.out.println("Consuming message: " + message);
-            }
-        };
-
-        targetManager.addNewTarget(channels, consumer);
-        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
-    }
+enum Channels {
+  EMAIL,
+  SMS,
+  PUSH_NOTIFICATION,
+  WEBHOOK
 }

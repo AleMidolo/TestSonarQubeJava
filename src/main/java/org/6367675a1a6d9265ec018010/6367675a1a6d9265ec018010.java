@@ -1,20 +1,26 @@
-public class Bucket {
-    // Assuming there is a structure to hold the data in the bucket
-    private List<Object> data;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Bucket() {
-        this.data = new ArrayList<>();
-    }
-
-    /** 
-     * Elimina este bucket de la estructura de datos.
-     */
-    void removeSelf() {
-        // Logic to remove this bucket from its parent structure
-        // This is a placeholder as the actual implementation depends on the context
-        // For example, if this bucket is part of a larger collection, we would need a reference to that collection
-        // Here we will just clear the data for demonstration purposes
-        data.clear();
-        System.out.println("Bucket removed and data cleared.");
-    }
+public class Bucket<T> {
+  private List<T> elements;
+  private Bucket<T> next;
+  private Bucket<T> prev;
+  
+  /**
+  * Rimuove questo bucket dalla struttura dati.
+  */
+  void removeSelf() {
+  if (prev != null) {
+  prev.next = this.next;
+  }
+  
+  if (next != null) {
+  next.prev = this.prev;
+  }
+  
+  // Clear references to help garbage collection
+  this.next = null;
+  this.prev = null;
+  this.elements = null;
+  }
 }

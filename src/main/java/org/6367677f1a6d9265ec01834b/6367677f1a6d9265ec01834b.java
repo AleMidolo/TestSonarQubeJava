@@ -1,34 +1,26 @@
-import java.util.LinkedList;
+import org.apache.log4j.spi.LoggingEvent;
+import java.util.concurrent.ArrayBlockingQueue;
 
-public class LoggingBuffer {
-    private LinkedList<LoggingEvent> buffer;
-    private int capacity;
+public class LogBuffer {
+  private final ArrayBlockingQueue<LoggingEvent> buffer;
+  private static final int DEFAULT_BUFFER_SIZE = 1000;
 
-    public LoggingBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new LinkedList<>();
-    }
+  public LogBuffer() {
+  this(DEFAULT_BUFFER_SIZE);
+  }
 
-    /** 
-     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es <b>silenciosamente descartado</b>. Es responsabilidad del llamador asegurarse de que el búfer tenga espacio libre.  
-     */
-    public void put(LoggingEvent o) {
-        if (buffer.size() < capacity) {
-            buffer.add(o);
-        }
-        // Si el búfer está lleno, el evento es descartado silenciosamente.
-    }
+  public LogBuffer(int bufferSize) {
+  buffer = new ArrayBlockingQueue<>(bufferSize);
+  }
 
-    // Clase interna para representar un evento de registro
-    public static class LoggingEvent {
-        private String message;
-
-        public LoggingEvent(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
+  /**
+  * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene 
+  * <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che 
+  * il buffer abbia spazio libero.
+  */
+  public void put(LoggingEvent o) {
+  if (o != null) {
+  buffer.offer(o); // Uses offer() instead of add() to silently discard when full
+  }
+  }
 }

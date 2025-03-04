@@ -1,40 +1,73 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
-public class StackFrameExtractor {
+public class FrameStack {
+  private Stack<String> stack;
 
-    /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
-     */
-    private void pop(final String descriptor) {
-        List<String> extractedTypes = new ArrayList<>();
-        
-        // Simulación de la extracción de tipos a partir del descriptor
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int startIndex = descriptor.indexOf('(') + 1;
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(startIndex, endIndex);
-            
-            if (!args.isEmpty()) {
-                String[] types = args.split(",");
-                for (String type : types) {
-                    extractedTypes.add(type.trim());
-                }
-            }
-        } else {
-            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
-            extractedTypes.add(descriptor);
-        }
+  public FrameStack() {
+  stack = new Stack<>();
+  }
 
-        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
-        for (String type : extractedTypes) {
-            System.out.println("Tipo extraído: " + type);
-        }
-    }
-
-    public static void main(String[] args) {
-        StackFrameExtractor extractor = new StackFrameExtractor();
-        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
-    }
+  /**
+  * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+  * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+  */
+  private void pop(final String descriptor) {
+  int index = 0;
+  while (index < descriptor.length()) {
+  char c = descriptor.charAt(index);
+  
+  switch (c) {
+  case '(':
+  // Skip opening parenthesis for method descriptor
+  index++;
+  break;
+  
+  case ')':
+  // End of arguments for method descriptor
+  return;
+  
+  case 'B':
+  case 'C': 
+  case 'I':
+  case 'S':
+  case 'Z':
+  case 'F':
+  // Pop single slot types
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  index++;
+  break;
+  
+  case 'D':
+  case 'J':
+  // Pop double slot types
+  if (!stack.isEmpty()) {
+  stack.pop();
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  }
+  index++;
+  break;
+  
+  case 'L':
+  // Skip class descriptor until semicolon
+  if (!stack.isEmpty()) {
+  stack.pop();
+  }
+  index = descriptor.indexOf(';', index) + 1;
+  break;
+  
+  case '[':
+  // Skip array dimension
+  index++;
+  break;
+  
+  default:
+  // Invalid descriptor character
+  throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+  }
+  }
+  }
 }

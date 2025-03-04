@@ -1,61 +1,72 @@
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Layout;
+import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-class LoggingEvent {
-    private String message;
+public class SocketAppender extends AppenderSkeleton {
+  
+  private List<Socket> connectedClients;
+  private List<PrintWriter> clientWriters;
 
-    public LoggingEvent(String message) {
-        this.message = message;
-    }
+  public SocketAppender() {
+  connectedClients = new ArrayList<>();
+  clientWriters = new ArrayList<>();
+  }
 
-    public String getMessage() {
-        return message;
-    }
-}
+  @Override
+  protected void append(LoggingEvent event) {
+  if (event == null) return;
 
-class Logger {
-    private List<Client> clients = new CopyOnWriteArrayList<>();
+  String formattedMessage = this.layout.format(event);
 
-    public void addClient(Client client) {
-        clients.add(client);
-    }
+  // Iterate through all connected clients and send the log message
+  for (int i = 0; i < clientWriters.size(); i++) {
+  try {
+  PrintWriter writer = clientWriters.get(i);
+  writer.println(formattedMessage);
+  writer.flush();
+  } catch (Exception e) {
+  // If there's an error writing to a client, remove it
+  removeClient(i);
+  i--; // Adjust index since we removed an element
+  }
+  }
+  }
 
-    public void removeClient(Client client) {
-        clients.remove(client);
-    }
+  public void addClient(Socket clientSocket) throws IOException {
+  connectedClients.add(clientSocket);
+  clientWriters.add(new PrintWriter(clientSocket.getOutputStream(), true));
+  }
 
-    /**
-     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.  
-     */
-    protected void append(LoggingEvent event) {
-        for (Client client : clients) {
-            client.sendMessage(event.getMessage());
-        }
-    }
-}
+  private void removeClient(int index) {
+  try {
+  connectedClients.get(index).close();
+  } catch (IOException e) {
+  // Ignore close errors
+  }
+  connectedClients.remove(index);
+  clientWriters.remove(index);
+  }
 
-class Client {
-    private String name;
+  @Override
+  public void close() {
+  for (Socket socket : connectedClients) {
+  try {
+  socket.close();
+  } catch (IOException e) {
+  // Ignore close errors
+  }
+  }
+  connectedClients.clear();
+  clientWriters.clear();
+  }
 
-    public Client(String name) {
-        this.name = name;
-    }
-
-    public void sendMessage(String message) {
-        System.out.println(name + " received: " + message);
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Logger logger = new Logger();
-        Client client1 = new Client("Client1");
-        Client client2 = new Client("Client2");
-
-        logger.addClient(client1);
-        logger.addClient(client2);
-
-        LoggingEvent event = new LoggingEvent("This is a log message.");
-        logger.append(event);
-    }
+  @Override
+  public boolean requiresLayout() {
+  return true;
+  }
 }

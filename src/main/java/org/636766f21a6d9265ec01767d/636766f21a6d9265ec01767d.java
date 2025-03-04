@@ -1,16 +1,20 @@
-public class ObjectConverter {
-    
-    /** 
-     * Convierte un objeto a String; si el objeto es nulo, devuelve nulo, de lo contrario, devuelve toString(); 
-     */
-    public static String toString(Object object) {
-        return object == null ? null : object.toString();
-    }
+package utils;
 
-    public static void main(String[] args) {
-        // Ejemplos de uso
-        System.out.println(toString(null)); // Debe imprimir: null
-        System.out.println(toString("Hola")); // Debe imprimir: Hola
-        System.out.println(toString(123)); // Debe imprimir: 123
-    }
+/**
+ * Utility class for object conversions
+ */
+public class ObjectUtils {
+
+  /**
+  * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString()
+  * @param object The object to convert to string
+  * @return String representation of the object, or null if object is null
+  */
+  public static String toString(Object object) {
+  if (object == null) {
+  return null;
+  }
+  return object.toString();
+  }
+
 }

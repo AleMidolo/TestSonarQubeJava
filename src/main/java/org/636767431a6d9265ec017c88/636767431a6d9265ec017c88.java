@@ -1,42 +1,33 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class LowerBoundsCalculator<K> {
+public class BoundCalculator<K extends Comparable<K>> {
 
-    /** 
-     * Encuentra un límite inferior máximo para cada llave.
-     * @param keys lista de llaves.
-     * @return los límites inferiores de llaves calculados.
-     */
-    private List<Integer> computeLowerBounds(List<K> keys) {
-        Map<K, Integer> lowerBoundsMap = new HashMap<>();
-        List<Integer> lowerBounds = new ArrayList<>();
+  /**
+  * Trova un limite inferiore massimo per ogni chiave.
+  * @param keys lista delle chiavi.
+  * @return i limiti inferiori delle chiavi calcolati.
+  */
+  private List<Integer> computeLowerBounds(List<K> keys) {
+  if (keys == null || keys.isEmpty()) {
+  return new ArrayList<>();
+  }
 
-        for (K key : keys) {
-            // Calculate the lower bound for the key
-            int lowerBound = calculateLowerBound(key);
-            lowerBoundsMap.put(key, lowerBound);
-        }
-
-        for (K key : keys) {
-            lowerBounds.add(lowerBoundsMap.get(key));
-        }
-
-        return lowerBounds;
-    }
-
-    private int calculateLowerBound(K key) {
-        // Placeholder for actual lower bound calculation logic
-        // This should be replaced with the actual logic to compute the lower bound
-        return key.hashCode() % 100; // Example logic
-    }
-
-    public static void main(String[] args) {
-        LowerBoundsCalculator<String> calculator = new LowerBoundsCalculator<>();
-        List<String> keys = List.of("key1", "key2", "key3");
-        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds);
-    }
+  List<Integer> lowerBounds = new ArrayList<>(keys.size());
+  
+  for (int i = 0; i < keys.size(); i++) {
+  K currentKey = keys.get(i);
+  int maxLowerBound = 0;
+  
+  for (int j = 0; j < i; j++) {
+  K previousKey = keys.get(j);
+  if (previousKey.compareTo(currentKey) <= 0) {
+  maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
+  }
+  }
+  
+  lowerBounds.add(maxLowerBound);
+  }
+  
+  return lowerBounds;
+  }
 }

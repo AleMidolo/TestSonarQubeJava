@@ -4,27 +4,32 @@ import javafx.util.Pair;
 
 public class SuffixSumCalculator {
 
-    /** 
-     * Calcula una suma de sufijos de los {@code bounds}. Devuelve la suma de sufijos calculada y la suma de todos los elementos en la {@code lista de bounds}.
-     * @param bounds lista de enteros.
-     * @return par calculado de la lista de suma de sufijos y la suma de todos los elementos.
-     */
-    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-        List<Integer> suffixSums = new ArrayList<>();
-        long totalSum = 0;
-        
-        // Calculate total sum and suffix sums
-        for (int i = bounds.size() - 1; i >= 0; i--) {
-            totalSum += bounds.get(i);
-            suffixSums.add(totalSum);
-        }
-        
-        // Reverse the suffix sums to maintain the original order
-        List<Integer> reversedSuffixSums = new ArrayList<>();
-        for (int i = suffixSums.size() - 1; i >= 0; i--) {
-            reversedSuffixSums.add(suffixSums.get(i).intValue());
-        }
-        
-        return new Pair<>(reversedSuffixSums, totalSum);
-    }
+  /**
+  * Calcola la somma dei suffissi di {@code bounds}. Restituisce la somma dei suffissi calcolata e la somma totale di tutti gli elementi nella lista {@code bounds}.
+  * @param bounds lista di interi.
+  * @return coppia calcolata di lista di somma suffisso e somma di tutti gli elementi.
+  */
+  private Pair<List<Integer>,Long> computeSuffixSum(List<Integer> bounds) {
+  List<Integer> suffixSums = new ArrayList<>();
+  long totalSum = 0;
+  
+  // Handle empty list case
+  if (bounds == null || bounds.isEmpty()) {
+  return new Pair<>(suffixSums, totalSum);
+  }
+
+  // Calculate total sum first
+  for (int num : bounds) {
+  totalSum += num;
+  }
+
+  // Calculate suffix sums
+  int currentSum = 0;
+  for (int i = bounds.size() - 1; i >= 0; i--) {
+  currentSum += bounds.get(i);
+  suffixSums.add(0, currentSum); // Add at beginning to maintain order
+  }
+
+  return new Pair<>(suffixSums, totalSum);
+  }
 }

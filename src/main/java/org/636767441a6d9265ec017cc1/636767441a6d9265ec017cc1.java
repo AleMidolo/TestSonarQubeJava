@@ -1,31 +1,33 @@
-class TreeNode<T> {
-    T value;
-    TreeNode<T> left;
-    TreeNode<T> right;
+import java.util.Objects;
 
-    TreeNode(T value) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-    }
-}
+public class BinarySearchTree<T extends Comparable<T>> {
 
-public class BinaryTree<T> {
+  private class TreeNode<T> {
+  T data;
+  TreeNode<T> left;
+  TreeNode<T> right;
+  
+  TreeNode(T data) {
+  this.data = data;
+  this.left = null;
+  this.right = null;
+  }
+  }
 
-    /** 
-     * Realiza una rotación a la derecha de un nodo.
-     * @param node un nodo a rotar
-     * @return un nuevo padre del {@code node}
-     */
-    private TreeNode<T> rotateRight(TreeNode<T> node) {
-        if (node == null || node.left == null) {
-            return node; // No se puede rotar
-        }
-
-        TreeNode<T> newRoot = node.left; // El nuevo padre será el hijo izquierdo
-        node.left = newRoot.right; // El hijo derecho del nuevo padre se convierte en hijo izquierdo del nodo original
-        newRoot.right = node; // El nodo original se convierte en el hijo derecho del nuevo padre
-
-        return newRoot; // Retorna el nuevo padre
-    }
+  /**
+  * Esegue una rotazione a destra del nodo.
+  * @param node un nodo da ruotare
+  * @return un nuovo genitore del {@code node}
+  */
+  private TreeNode<T> rotateRight(TreeNode<T> node) {
+  if (node == null || node.left == null) {
+  return node;
+  }
+  
+  TreeNode<T> newParent = node.left;
+  node.left = newParent.right;
+  newParent.right = node;
+  
+  return newParent;
+  }
 }

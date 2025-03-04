@@ -1,35 +1,50 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javafx.util.Pair;
 
-public class GraphSeparator {
-
-    // Assuming E is a placeholder for an edge type in the graph
-    private class E {
-        // Edge properties can be defined here
-    }
-
-    private List<E> edges; // List of edges in the graph
-
-    /**
-     * Calcula la lista de separadores globales del {@code grafo}. Más precisamente, para cada arista $e$ en el $G = (V, E)$, calcula la lista de separadores mínimos $S_e$ en el vecindario de $e$ y luego concatena estas listas. Nota: el resultado puede contener duplicados.
-     * @return la lista de separadores mínimos de cada arista $e$ en el grafo inspeccionado
-     */
-    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
-
-        for (E edge : edges) {
-            List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
-            globalSeparatorList.add(new Pair<>(separators, edge));
-        }
-
-        return globalSeparatorList;
-    }
-
-    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(E edge) {
-        // Placeholder for the logic to compute separators for a given edge
-        List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Add logic to find minimum separators in the neighborhood of the edge
-        return separators;
-    }
+public class SeparatorComputer {
+  private Graph<V,E> graph; // Assuming a graph class with vertices V and edges E
+  
+  /**
+  * Calcola la lista globale dei separatori del {@code grafo}. Più precisamente, per ogni arco $e$ in $G = (V, E)$ calcola la lista dei separatori minimi $S_e$ nel vicinato di $e$ e poi concatena queste liste. Nota: il risultato può contenere duplicati.
+  * @return la lista dei separatori minimi di ogni arco $e$ nel grafo ispezionato
+  */
+  private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
+  List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
+  
+  // Iterate through all edges in the graph
+  for (E edge : graph.edges()) {
+  List<Pair<Integer,Integer>> separators = new ArrayList<>();
+  
+  // Get vertices incident to the edge
+  V source = graph.getEdgeSource(edge);
+  V target = graph.getEdgeTarget(edge);
+  
+  // Get neighborhood of both vertices
+  Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
+  Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
+  
+  // Find common neighbors that form minimal separators
+  Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
+  commonNeighbors.retainAll(targetNeighbors);
+  
+  // Create pairs of vertices that form minimal separators
+  for (V v1 : commonNeighbors) {
+  for (V v2 : commonNeighbors) {
+  if (!v1.equals(v2)) {
+  // Assuming vertices have integer IDs
+  Pair<Integer,Integer> separator = new Pair<>(
+  ((Integer)v1.getId()),
+  ((Integer)v2.getId())
+  );
+  separators.add(separator);
+  }
+  }
+  }
+  
+  // Add the separators list along with the edge to global list
+  globalSeparators.add(new Pair<>(separators, edge));
+  }
+  
+  return globalSeparators;
+  }
 }

@@ -1,21 +1,18 @@
-public class StringUtil {
+package org.apache.commons.lang3;
 
-    /** 
-     * Encuentra el último índice dentro de una cadena, manejando <code>null</code>. Este método utiliza {@link String#lastIndexOf(String)}. 
-     */
-    public static int lastIndexOf(String str, String searchStr) {
-        if (str == null || searchStr == null) {
-            return -1;
-        }
-        return str.lastIndexOf(searchStr);
-    }
-
-    public static void main(String[] args) {
-        // Ejemplos de uso
-        System.out.println(lastIndexOf("Hello World", "o")); // Salida: 7
-        System.out.println(lastIndexOf("Hello World", "l")); // Salida: 9
-        System.out.println(lastIndexOf("Hello World", "x")); // Salida: -1
-        System.out.println(lastIndexOf(null, "o")); // Salida: -1
-        System.out.println(lastIndexOf("Hello World", null)); // Salida: -1
-    }
+public class StringUtils {
+  /**
+  * Trova l'ultimo indice all'interno di una Stringa, gestendo <code>null</code>.
+  * Questo metodo utilizza {@link String#lastIndexOf(String)}.
+  *
+  * @param str la Stringa da controllare, può essere null
+  * @param searchStr la Stringa da trovare, può essere null
+  * @return l'ultimo indice di searchStr in str, -1 se non trovato o se str è null
+  */
+  public static int lastIndexOf(String str, String searchStr) {
+  if (str == null || searchStr == null) {
+  return -1;
+  }
+  return str.lastIndexOf(searchStr);
+  }
 }

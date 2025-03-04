@@ -1,40 +1,29 @@
-public class DoublyLinkedList {
-    private Node head;
-    private Node tail;
+import java.util.LinkedList;
 
-    private class Node {
-        int data;
-        Node next;
-        Node prev;
+public class TreeEdge {
+  private TreeEdge prev;
+  private TreeEdge next;
+  private LinkedList<TreeEdge> edgeList;
 
-        Node(int data) {
-            this.data = data;
-        }
-    }
-
-    public void removeFromTreeEdgeList() {
-        if (head == null) {
-            return; // List is empty, nothing to remove
-        }
-
-        // Remove the head node
-        if (head.next != null) {
-            head = head.next;
-            head.prev = null;
-        } else {
-            head = null; // List becomes empty
-        }
-
-        // Remove the tail node
-        if (tail != null) {
-            if (tail.prev != null) {
-                tail = tail.prev;
-                tail.next = null;
-            } else {
-                tail = null; // List becomes empty
-            }
-        }
-    }
-
-    // Additional methods for the doubly linked list can be added here
+  /**
+  * Rimuove questo arco da entrambe le liste doppiamente collegate degli archi dell'albero.
+  */
+  public void removeFromTreeEdgeList() {
+  if (prev != null) {
+  prev.next = next;
+  }
+  
+  if (next != null) {
+  next.prev = prev;
+  }
+  
+  if (edgeList != null && edgeList.contains(this)) {
+  edgeList.remove(this);
+  }
+  
+  // Reset references
+  prev = null;
+  next = null;
+  edgeList = null;
+  }
 }

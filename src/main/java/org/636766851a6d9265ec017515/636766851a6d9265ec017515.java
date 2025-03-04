@@ -1,20 +1,40 @@
-import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Action;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereResourceImpl;
+import org.atmosphere.cpr.AtmosphereHandler;
+import org.atmosphere.cpr.AtmosphereInterceptor;
 
-public class MyAtmosphereHandler {
+public class AutoSuspendInterceptor implements AtmosphereInterceptor {
 
-    /**
-     * Suspende automáticamente el {@link AtmosphereResource} basado en el valor de {@link AtmosphereResource.TRANSPORT}.
-     * @param r un {@link AtmosphereResource}
-     * @return {@link Action#CONTINUE}
-     */
-    @Override 
-    public Action inspect(AtmosphereResource r) {
-        // Aquí se puede agregar lógica para suspender el recurso basado en el transporte
-        // Por ejemplo, si el transporte es HTTP, se puede suspender el recurso
-        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            r.suspend();
-        }
-        return Action.CONTINUE;
-    }
+  @Override 
+  public Action inspect(AtmosphereResource r) {
+  if (r != null && r.transport() != null) {
+  switch (r.transport()) {
+  case WEBSOCKET:
+  case STREAMING:
+  case SSE:
+  case LONG_POLLING:
+  r.suspend();
+  break;
+  default:
+  break;
+  }
+  }
+  return Action.CONTINUE;
+  }
+
+  @Override
+  public void postInspect(AtmosphereResource r) {
+  // No implementation needed
+  }
+
+  @Override
+  public void destroy() {
+  // No implementation needed
+  }
+
+  @Override
+  public void configure(AtmosphereConfig config) {
+  // No implementation needed
+  }
 }

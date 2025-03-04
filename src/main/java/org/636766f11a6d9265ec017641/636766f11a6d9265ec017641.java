@@ -2,26 +2,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CustomInputStream extends InputStream {
-    private byte[] data;
-    private int currentIndex;
 
-    public CustomInputStream(byte[] data) {
-        this.data = data;
-        this.currentIndex = 0;
-    }
+  private InputStream inputStream;
 
-    @Override
-    public int available() throws IOException {
-        return data.length - currentIndex;
-    }
+  public CustomInputStream(InputStream is) {
+  this.inputStream = is;
+  }
 
-    @Override
-    public int read() throws IOException {
-        if (currentIndex >= data.length) {
-            return -1; // End of stream
-        }
-        return data[currentIndex++] & 0xFF; // Return byte as int
-    }
+  /**
+  * @see InputStream#available()
+  */
+  @Override
+  public int available() throws IOException {
+  return inputStream.available();
+  }
 
-    // Other methods can be implemented as needed
+  @Override
+  public int read() throws IOException {
+  return inputStream.read();
+  }
 }

@@ -1,52 +1,63 @@
-import java.util.Optional;
+import java.util.*;
+
+public class Graph {
+  private List<Node> nodes;
+  private List<Edge> edges;
+  private int currentNodeIndex;
+
+  // Constructor and other methods...
+
+  /**
+  * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. 
+  * Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
+  * @return un arco dal nodo corrente al nodo successivo
+  */
+  public Edge edgeToNext() {
+  if (nodes == null || nodes.isEmpty() || currentNodeIndex >= nodes.size() - 1) {
+  return null;
+  }
+
+  Node currentNode = nodes.get(currentNodeIndex);
+  Node nextNode = nodes.get(currentNodeIndex + 1);
+
+  // Get real nodes if virtual
+  Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+  Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+
+  // Find edge between real nodes
+  for (Edge edge : edges) {
+  if ((edge.getSource().equals(realCurrentNode) && edge.getDestination().equals(realNextNode)) ||
+  (edge.getSource().equals(realNextNode) && edge.getDestination().equals(realCurrentNode))) {
+  return edge;
+  }
+  }
+
+  return null;
+  }
+}
 
 class Node {
-    private boolean isVirtual;
-    private Node realNode;
-
-    public Node(boolean isVirtual, Node realNode) {
-        this.isVirtual = isVirtual;
-        this.realNode = realNode;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    public Node getRealNode() {
-        return realNode;
-    }
+  private boolean isVirtual;
+  private Node realNode;
+  
+  public boolean isVirtual() {
+  return isVirtual;
+  }
+  
+  public Node getRealNode() {
+  return realNode;
+  }
 }
 
 class Edge {
-    private Node from;
-    private Node to;
-
-    public Edge(Node from, Node to) {
-        this.from = from;
-        this.to = to;
-    }
-
-    // Additional methods can be added here
-}
-
-class Graph {
-    private Node currentNode;
-    private Node nextNode;
-
-    public Graph(Node currentNode, Node nextNode) {
-        this.currentNode = currentNode;
-        this.nextNode = nextNode;
-    }
-
-    /**
-     * Devuelve una arista que conecta el nodo previamente devuelto con el nodo que se devolverá a continuación. 
-     * Si alguno de los nodos mencionados es virtual, la arista será incidente a su contraparte real.
-     * @return una arista desde el nodo actual hasta el siguiente nodo
-     */
-    public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
-        return new Edge(fromNode, toNode);
-    }
+  private Node source;
+  private Node destination;
+  
+  public Node getSource() {
+  return source;
+  }
+  
+  public Node getDestination() {
+  return destination;
+  }
 }

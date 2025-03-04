@@ -2,34 +2,41 @@ import java.io.File;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathAdder {
+public class ClassPathUtils {
 
-    /** 
-     * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
-     */
-    @SuppressWarnings("unchecked") 
-    public static void addToClassPath(Vector<URL> cpV, String dir) {
-        File directory = new File(dir);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
-            if (files != null) {
-                for (File file : files) {
-                    try {
-                        cpV.add(file.toURI().toURL());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } else {
-            System.out.println("El directorio no existe o no es un directorio válido.");
-        }
-    }
+  /**
+  * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
+  */
+  @SuppressWarnings("unchecked")
+  public static void addToClassPath(Vector<URL> cpV, String dir) {
+  File directory = new File(dir);
+  
+  // Verifica che la directory esista ed è effettivamente una directory
+  if (!directory.exists() || !directory.isDirectory()) {
+  return;
+  }
 
-    public static void main(String[] args) {
-        Vector<URL> classpath = new Vector<>();
-        addToClassPath(classpath, "ruta/al/directorio");
-        // Imprimir los URLs añadidos al classpath
-        classpath.forEach(System.out::println);
-    }
+  // Ottiene la lista di tutti i file nella directory
+  File[] files = directory.listFiles();
+  if (files == null) {
+  return;
+  }
+
+  // Itera su tutti i file
+  for (File file : files) {
+  // Controlla se il file è un file JAR
+  if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
+  try {
+  // Converte il file in URL e lo aggiunge al vector
+  URL jarUrl = file.toURI().toURL();
+  if (!cpV.contains(jarUrl)) {
+  cpV.add(jarUrl);
+  }
+  } catch (Exception e) {
+  // Ignora eventuali errori di conversione
+  e.printStackTrace();
+  }
+  }
+  }
+  }
 }

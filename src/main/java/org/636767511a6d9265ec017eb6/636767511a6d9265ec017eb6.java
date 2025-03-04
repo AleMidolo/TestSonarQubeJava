@@ -1,44 +1,45 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Node implementation
-}
+public class GraphTraversal {
 
-class OuterFaceCirculator {
-    private Node currentNode;
+  private class Node {
+  // Node implementation details
+  }
 
-    public OuterFaceCirculator(Node start) {
-        this.currentNode = start;
-    }
+  private class OuterFaceCirculator {
+  private Node current;
+  private int direction;
 
-    public Node getCurrentNode() {
-        return currentNode;
-    }
+  public OuterFaceCirculator(Node node, int dir) {
+  this.current = node;
+  this.direction = dir;
+  }
 
-    public void moveToNext() {
-        // Logic to move to the next node in the outer face
-    }
-}
+  public Node getNode() {
+  return current;
+  }
 
-public class Graph {
-    /**
-     * Encuentra y devuelve un "circulator" al nodo en el límite del componente, que satisface el {@code predicate} o devuelve un circulador al nodo {@code stop}.
-     * @param predicate la condición que debe satisfacer el nodo deseado
-     * @param start el nodo desde el cual comenzar la búsqueda
-     * @param stop el nodo donde finalizar la búsqueda
-     * @param dir la dirección en la que comenzar la travesía
-     * @return un "circulator" al nodo que satisface el {@code predicate} o al nodo {@code stop}
-     */
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        
-        do {
-            if (predicate.test(circulator.getCurrentNode())) {
-                return circulator;
-            }
-            circulator.moveToNext();
-        } while (circulator.getCurrentNode() != stop);
-        
-        return circulator; // Return circulator at stop if no node satisfies the predicate
-    }
+  public void next() {
+  // Move to next node based on direction
+  }
+  }
+
+  /**
+  * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
+  * @param predicate la condizione che il nodo desiderato deve soddisfare
+  * @param start il nodo da cui iniziare la ricerca
+  * @param stop il nodo con cui terminare la ricerca
+  * @param dir la direzione da cui iniziare la traversata
+  * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
+  */
+  private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+  OuterFaceCirculator circulator = new OuterFaceCirculator(start, dir);
+  
+  // Continue traversing until we find a node that satisfies the predicate or reach the stop node
+  while (!predicate.test(circulator.getNode()) && circulator.getNode() != stop) {
+  circulator.next();
+  }
+  
+  return circulator;
+  }
 }

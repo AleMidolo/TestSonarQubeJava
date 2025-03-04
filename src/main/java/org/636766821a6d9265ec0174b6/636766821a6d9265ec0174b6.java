@@ -1,30 +1,48 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GenericTypeResolver {
+public class TypeResolver {
 
-    /** 
-     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
-     */
-    public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
-        if (!(genericType instanceof ParameterizedType)) {
-            return null;
-        }
+  public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
+  if (!(genericType instanceof ParameterizedType)) {
+  return null;
+  }
 
-        ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        Type rawType = parameterizedType.getRawType();
+  ParameterizedType parameterizedType = (ParameterizedType) genericType;
+  Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+  Class<?>[] resolvedTypes = new Class<?>[actualTypeArguments.length];
 
-        if (rawType instanceof Class<?>) {
-            Class<?> rawClass = (Class<?>) rawType;
-            if (rawClass.isAssignableFrom(targetType)) {
-                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-                for (int i = 0; i < actualTypeArguments.length; i++) {
-                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
-                }
-                return resolvedArguments;
-            }
-        }
-        return null;
-    }
+  // Map to store type variable mappings
+  Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+  
+  // Get type variables from target type
+  TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
+  
+  // Map type variables to actual types
+  for (int i = 0; i < actualTypeArguments.length; i++) {
+  Type actualType = actualTypeArguments[i];
+  
+  if (actualType instanceof Class) {
+  resolvedTypes[i] = (Class<?>) actualType;
+  } else if (actualType instanceof TypeVariable) {
+  TypeVariable<?> typeVar = (TypeVariable<?>) actualType;
+  Type resolvedType = typeVariableMap.get(typeVar);
+  
+  if (resolvedType instanceof Class) {
+  resolvedTypes[i] = (Class<?>) resolvedType;
+  } else {
+  // Cannot resolve type variable
+  return null;
+  }
+  } else {
+  // Cannot handle other types
+  return null;
+  }
+  }
+
+  return resolvedTypes;
+  }
 }

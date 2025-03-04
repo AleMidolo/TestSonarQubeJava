@@ -1,29 +1,24 @@
-public class ArrayUtil {
+import java.util.Objects;
 
-    private static final Double[] EMPTY_ARRAY = new Double[0];
+public class ArrayUtils {
 
-    /** 
-     * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p> 
-     * <p>Este método devuelve un array vacío para un array de entrada <code>null</code>.</p> 
-     * <p>Como técnica de optimización de memoria, un array vacío pasado será reemplazado por las referencias vacías <code>public static</code> en esta clase.</p>
-     * @param array  el array a verificar si es <code>null</code> o vacío
-     * @return el mismo array, un array vacío <code>public static</code> si la entrada es <code>null</code> o vacía
-     * @since 2.5
-     */
-    public static Double[] nullToEmpty(final Double[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_ARRAY;
-        }
-        return array;
-    }
+  /**
+  * Empty array constant used for optimization
+  */
+  public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
-    public static void main(String[] args) {
-        Double[] testArray1 = null;
-        Double[] testArray2 = {};
-        Double[] testArray3 = {1.0, 2.0, 3.0};
-
-        System.out.println(nullToEmpty(testArray1).length); // Output: 0
-        System.out.println(nullToEmpty(testArray2).length); // Output: 0
-        System.out.println(nullToEmpty(testArray3).length); // Output: 3
-    }
+  /**
+  * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
+  * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>
+  * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
+  * @param array  l'array da controllare per <code>null</code> o vuoto
+  * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
+  * @since 2.5
+  */
+  public static Double[] nullToEmpty(final Double[] array) {
+  if (array == null || array.length == 0) {
+  return EMPTY_DOUBLE_ARRAY;
+  }
+  return array;
+  }
 }

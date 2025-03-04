@@ -1,24 +1,24 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
-    /**
-     * Devuelve un nuevo arreglo de Strings sin elementos nulos. Método interno utilizado para normalizar listas de exclusión (arreglo y colecciones). Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará un {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
-     * @param array El arreglo a verificar
-     * @return El arreglo dado o un nuevo arreglo sin nulos.
-     */
-    static String[] toNoNullStringArray(Object[] array) {
-        if (array == null) {
-            return new String[0];
-        }
-        return Arrays.stream(array)
-                     .filter(obj -> obj != null)
-                     .map(Object::toString)
-                     .toArray(String[]::new);
-    }
-
-    public static void main(String[] args) {
-        Object[] inputArray = { "Hello", null, "World", null, "!" };
-        String[] resultArray = toNoNullStringArray(inputArray);
-        System.out.println(Arrays.toString(resultArray)); // Output: [Hello, World, !]
-    }
+public class ArrayUtils {
+  /**
+  * Restituisce un nuovo array di Stringhe senza elementi null. Metodo interno utilizzato per normalizzare le liste di esclusione (array e collezioni). Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
+  * @param array L'array da controllare
+  * @return L'array fornito o un nuovo array senza null.
+  */
+  static String[] toNoNullStringArray(Object[] array) {
+  if (array == null) {
+  return new String[0];
+  }
+  
+  List<String> result = new ArrayList<>();
+  for (Object obj : array) {
+  if (obj != null) {
+  result.add(obj.toString());
+  }
+  }
+  
+  return result.toArray(new String[0]);
+  }
 }

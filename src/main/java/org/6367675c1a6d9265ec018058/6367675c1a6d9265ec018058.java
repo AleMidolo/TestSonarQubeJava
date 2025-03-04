@@ -1,28 +1,15 @@
 import java.util.function.Supplier;
 
-public class UniqueStringSupplier {
-
-    /** 
-     * Crea un proveedor de cadenas que devuelve cadenas únicas. Las cadenas devueltas son simplemente enteros que comienzan desde el inicio.
-     * @param start desde dónde comenzar la secuencia
-     * @return un proveedor de cadenas
-     */
-    @SuppressWarnings("unchecked") 
-    public static Supplier<String> createStringSupplier(int start) {
-        return new Supplier<String>() {
-            private int current = start;
-
-            @Override
-            public String get() {
-                return String.valueOf(current++);
-            }
-        };
-    }
-
-    public static void main(String[] args) {
-        Supplier<String> stringSupplier = createStringSupplier(0);
-        System.out.println(stringSupplier.get()); // 0
-        System.out.println(stringSupplier.get()); // 1
-        System.out.println(stringSupplier.get()); // 2
-    }
+public class StringSupplierCreator {
+  
+  /**
+  * Crea un fornitore di stringhe che restituisce stringhe uniche. Le stringhe restituite sono semplicemente interi che partono da start.
+  * @param start da dove iniziare la sequenza
+  * @return un fornitore di stringhe
+  */
+  @SuppressWarnings("unchecked")
+  public static Supplier<String> createStringSupplier(int start) {
+  final int[] counter = {start};
+  return () -> String.valueOf(counter[0]++);
+  }
 }

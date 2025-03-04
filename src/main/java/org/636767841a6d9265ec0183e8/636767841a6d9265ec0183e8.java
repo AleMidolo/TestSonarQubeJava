@@ -1,28 +1,29 @@
-import java.util.LinkedList;
+import org.apache.log4j.spi.LoggingEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EventLogger {
-    private LinkedList<LoggingEvent> eventBuffer;
+public class LogBuffer {
+  private List<LoggingEvent> buffer;
+  private static final int MAX_BUFFER_SIZE = 1000;
 
-    public EventLogger() {
-        eventBuffer = new LinkedList<>();
-    }
+  public LogBuffer() {
+  buffer = new ArrayList<>();
+  }
 
-    /** 
-     * Agrega un <code>evento</code> como el último evento en el búfer.
-     */
-    public void add(LoggingEvent event) {
-        eventBuffer.addLast(event);
-    }
-}
+  /**
+  * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
+  */
+  public void add(LoggingEvent event) {
+  if (event == null) {
+  return;
+  }
 
-class LoggingEvent {
-    private String message;
+  // Remove oldest event if buffer is full
+  if (buffer.size() >= MAX_BUFFER_SIZE) {
+  buffer.remove(0);
+  }
 
-    public LoggingEvent(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+  // Add new event to end of buffer
+  buffer.add(event);
+  }
 }

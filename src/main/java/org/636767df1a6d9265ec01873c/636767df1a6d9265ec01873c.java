@@ -1,16 +1,13 @@
-public class Entity {
-    
-    /**
-     * @return el id de la fila
-     */
-    public String id(String entityId) {
-        // Assuming the entityId is the row ID we want to return
-        return entityId;
-    }
+import java.util.UUID;
 
-    public static void main(String[] args) {
-        Entity entity = new Entity();
-        String rowId = entity.id("12345");
-        System.out.println("El id de la fila es: " + rowId);
-    }
+public class EntityIdentifier {
+  /**
+  * @return l'id della riga
+  */
+  public String id(String entityId) {
+  if (entityId == null || entityId.trim().isEmpty()) {
+  return UUID.randomUUID().toString();
+  }
+  return entityId.trim();
+  }
 }

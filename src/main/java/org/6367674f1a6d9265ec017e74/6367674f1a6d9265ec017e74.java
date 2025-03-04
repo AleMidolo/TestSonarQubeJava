@@ -1,48 +1,42 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.NoSuchElementException;
 
-public class Cola {
-    private Queue<Object> queue;
+public class Queue<E> {
+  private Node<E> front;
+  private Node<E> rear;
+  private int size;
 
-    public Cola() {
-        this.queue = new LinkedList<>();
-    }
+  private static class Node<E> {
+  E element;
+  Node<E> next;
 
-    /** 
-     * Devuelve una representación textual de la cola.
-     * @return una representación textual de la cola.
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Cola: [");
-        for (Object item : queue) {
-            sb.append(item.toString()).append(", ");
-        }
-        if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Eliminar la última coma y espacio
-        }
-        sb.append("]");
-        return sb.toString();
-    }
+  Node(E element) {
+  this.element = element;
+  this.next = null;
+  }
+  }
 
-    public void enqueue(Object item) {
-        queue.add(item);
-    }
+  /**
+  * Restituisce una rappresentazione testuale della coda.
+  * @return una rappresentazione testuale della coda.
+  */
+  public String toString() {
+  if (size == 0) {
+  return "[]";
+  }
 
-    public Object dequeue() {
-        return queue.poll();
-    }
-
-    public boolean isEmpty() {
-        return queue.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        Cola cola = new Cola();
-        cola.enqueue("Elemento 1");
-        cola.enqueue("Elemento 2");
-        System.out.println(cola.toString()); // Cola: [Elemento 1, Elemento 2]
-        cola.dequeue();
-        System.out.println(cola.toString()); // Cola: [Elemento 2]
-    }
+  StringBuilder sb = new StringBuilder();
+  sb.append("[");
+  
+  Node<E> current = front;
+  while (current != null) {
+  sb.append(current.element);
+  if (current.next != null) {
+  sb.append(", ");
+  }
+  current = current.next;
+  }
+  
+  sb.append("]");
+  return sb.toString();
+  }
 }

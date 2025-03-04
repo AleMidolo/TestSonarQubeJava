@@ -1,29 +1,17 @@
-public class OperationTracker {
-    private long lastWriteTimeStamp;
+import java.time.Instant;
 
-    public OperationTracker() {
-        this.lastWriteTimeStamp = System.currentTimeMillis();
-    }
+public class TimeStampTracker {
+  private long lastWriteTimeStamp;
 
-    /**
-     * La última vez, en milisegundos, que ocurrió una operación de escritura.
-     * @return esto
-     */
-    public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTimeStamp;
-    }
+  public TimeStampTracker() {
+  this.lastWriteTimeStamp = Instant.now().toEpochMilli();
+  }
 
-    public void writeOperation() {
-        // Simulate a write operation
-        lastWriteTimeStamp = System.currentTimeMillis();
-    }
-
-    public static void main(String[] args) {
-        OperationTracker tracker = new OperationTracker();
-        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
-        
-        // Simulate a write operation
-        tracker.writeOperation();
-        System.out.println("Last write timestamp after write: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
-    }
+  /** 
+  * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
+  * @return questo
+  */
+  public long lastWriteTimeStampInMilliseconds() {
+  return this.lastWriteTimeStamp;
+  }
 }

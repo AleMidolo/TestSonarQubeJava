@@ -1,31 +1,43 @@
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class VariableSubstitutor {
+public class PropertyUtils {
 
-    /** 
-     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. Luego realiza la sustitución de variables en el valor encontrado.
-     */
-    public static String findAndSubst(String key, Properties props) {
-        String value = props.getProperty(key);
-        if (value == null) {
-            return null; // or throw an exception based on your needs
-        }
+  /**
+  * Trova il valore corrispondente a <code>key</code> in <code>props</code>. 
+  * Quindi esegui la sostituzione delle variabili sul valore trovato.
+  */
+  public static String findAndSubst(String key, Properties props) {
+  if (key == null || props == null) {
+  return null;
+  }
 
-        // Perform variable substitution
-        for (String propKey : props.stringPropertyNames()) {
-            String placeholder = "${" + propKey + "}";
-            value = value.replace(placeholder, props.getProperty(propKey));
-        }
+  String value = props.getProperty(key);
+  if (value == null) {
+  return null;
+  }
 
-        return value;
-    }
+  // Pattern per trovare variabili del tipo ${var}
+  Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+  Matcher matcher = pattern.matcher(value);
+  StringBuffer result = new StringBuffer();
 
-    public static void main(String[] args) {
-        Properties props = new Properties();
-        props.setProperty("name", "John");
-        props.setProperty("greeting", "Hello, ${name}!");
-
-        String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
-    }
+  while (matcher.find()) {
+  String varName = matcher.group(1);
+  String replacement = props.getProperty(varName);
+  
+  // Se la variabile non è definita, lascia il placeholder originale
+  if (replacement == null) {
+  replacement = "${" + varName + "}";
+  }
+  
+  // Escape dei caratteri speciali nella stringa di sostituzione
+  replacement = Matcher.quoteReplacement(replacement);
+  matcher.appendReplacement(result, replacement);
+  }
+  
+  matcher.appendTail(result);
+  return result.toString();
+  }
 }

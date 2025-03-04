@@ -1,29 +1,24 @@
-public class StringManipulator {
+package org.utils;
 
-    /** 
-     * Elimina cualquier carácter en una cadena dada.
-     * @param inString la cadena original
-     * @param charsToDelete un conjunto de caracteres a eliminar. Por ejemplo, "az\n" eliminará las 'a', 'z' y los saltos de línea.
-     * @return la cadena resultante
-     */
-    public static String deleteAny(String inString, String charsToDelete) {
-        if (inString == null || charsToDelete == null) {
-            return inString; // Return original string if input is null
-        }
-        
-        StringBuilder result = new StringBuilder();
-        for (char c : inString.toCharArray()) {
-            if (charsToDelete.indexOf(c) == -1) {
-                result.append(c);
-            }
-        }
-        return result.toString();
-    }
-
-    public static void main(String[] args) {
-        String original = "Hello World!\nThis is a test string.";
-        String charsToRemove = "aeiou\n";
-        String result = deleteAny(original, charsToRemove);
-        System.out.println(result); // Output: Hll Wrld!This s  tst strng.
-    }
+public class StringUtils {
+  /**
+  * Elimina qualsiasi carattere in una Stringa data.
+  * @param inString la Stringa originale
+  * @param charsToDelete un insieme di caratteri da eliminare. Ad esempio, "az\n" eliminerà le 'a', le 'z' e le nuove righe.
+  * @return la Stringa risultante
+  */
+  public static String deleteAny(String inString, String charsToDelete) {
+  if (inString == null || charsToDelete == null) {
+  return inString;
+  }
+  
+  StringBuilder sb = new StringBuilder(inString.length());
+  for (int i = 0; i < inString.length(); i++) {
+  char ch = inString.charAt(i);
+  if (charsToDelete.indexOf(ch) == -1) {
+  sb.append(ch);
+  }
+  }
+  return sb.toString();
+  }
 }

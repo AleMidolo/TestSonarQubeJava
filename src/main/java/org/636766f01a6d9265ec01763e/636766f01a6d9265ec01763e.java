@@ -42,9 +42,9 @@ public class CharsetTranslator {
         // If not in mapping, verify if it's a supported charset
         try {
             Charset.forName(charset);
-            return charset;
+            return charset; // Return original if it's valid
         } catch (Exception e) {
-            return "UTF-8"; // Return default UTF-8 if charset is not recognized
+            return "UTF-8"; // Default to UTF-8 if unsupported
         }
     }
 }

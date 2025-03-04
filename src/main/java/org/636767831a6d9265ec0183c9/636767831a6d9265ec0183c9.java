@@ -12,9 +12,9 @@ public class NDCUtil {
             return "";
         }
         String[] contexts = value.split(" ");
-        if (contexts.length > 0) {
-            return contexts[contexts.length - 1];
+        if (contexts.length == 0) {
+            return "";
         }
-        return "";
+        return contexts[contexts.length - 1];
     }
 }

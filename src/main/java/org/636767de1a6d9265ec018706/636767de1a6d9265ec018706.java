@@ -9,50 +9,50 @@ public class MappingUtils {
      * Do not return _source config to avoid current index update conflict.
      * @param currentMappings The current index mappings
      * @param historyMappings The history mappings to compare against
-     * @return Map containing only new/different mappings
+     * @return Map containing only new fields not present in history mappings
      */
-    public Map<String, Object> getDifferenceMappings(Map<String, Object> currentMappings, Map<String, Object> historyMappings) {
-        // Create new map to store differences
-        Map<String, Object> differenceMappings = new HashMap<>();
+    public Map<String, Object> getDiffMappings(Map<String, Object> currentMappings, Map<String, Object> historyMappings) {
+        Map<String, Object> diffMappings = new HashMap<>();
 
-        // If either mapping is null/empty, return empty map
+        // Handle null inputs
         if (currentMappings == null || historyMappings == null) {
-            return differenceMappings;
+            return diffMappings;
         }
 
         // Iterate through current mappings
         for (Map.Entry<String, Object> entry : currentMappings.entrySet()) {
             String key = entry.getKey();
-            Object currentValue = entry.getValue();
+            Object value = entry.getValue();
 
             // Skip _source field
             if ("_source".equals(key)) {
                 continue;
             }
 
-            // If key doesn't exist in history or values are different, add to difference map
+            // If key doesn't exist in history mappings, add it
             if (!historyMappings.containsKey(key)) {
-                differenceMappings.put(key, currentValue);
-            } else {
-                Object historyValue = historyMappings.get(key);
+                diffMappings.put(key, value);
+                continue;
+            }
+
+            // Handle nested mappings recursively
+            if (value instanceof Map && historyMappings.get(key) instanceof Map) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> nestedDiff = getDiffMappings(
+                    (Map<String, Object>) value,
+                    (Map<String, Object>) historyMappings.get(key)
+                );
                 
-                // Recursively check nested mappings
-                if (currentValue instanceof Map && historyValue instanceof Map) {
-                    @SuppressWarnings("unchecked")
-                    Map<String, Object> nestedDiff = getDifferenceMappings(
-                        (Map<String, Object>) currentValue,
-                        (Map<String, Object>) historyValue
-                    );
-                    
-                    if (!nestedDiff.isEmpty()) {
-                        differenceMappings.put(key, nestedDiff);
-                    }
-                } else if (!currentValue.equals(historyValue)) {
-                    differenceMappings.put(key, currentValue);
+                if (!nestedDiff.isEmpty()) {
+                    diffMappings.put(key, nestedDiff);
                 }
+            }
+            // Handle non-map values
+            else if (!value.equals(historyMappings.get(key))) {
+                diffMappings.put(key, value);
             }
         }
 
-        return differenceMappings;
+        return diffMappings;
     }
 }

@@ -4,10 +4,10 @@ public class CharacterUtils {
      * This is like {@code Character.digit()} but we don't accept non-ASCII digits.
      *
      * @param c The character to interpret as a digit
-     * @param radix The base of the number system (between 2 and 36)
-     * @return The numeric value of the digit, or -1 if the character is not a valid digit
+     * @param radix The radix (base) to use, must be between 2 and 36
+     * @return The numeric value of the digit, or -1 if the character is not a valid digit in the given radix
      */
-    public static int digit(char c, int radix) {
+    public static int digitValue(char c, int radix) {
         if (radix < 2 || radix > 36) {
             return -1;
         }

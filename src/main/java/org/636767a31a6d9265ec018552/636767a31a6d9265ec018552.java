@@ -4,7 +4,7 @@ import java.io.IOException;
 public class StringReader {
     /**
      * Read a string field value from the stream.
-     * @param in The DataInputStream to read from
+     * @param in The input stream to read from
      * @return The string value read from the stream
      * @throws IOException If an I/O error occurs
      */

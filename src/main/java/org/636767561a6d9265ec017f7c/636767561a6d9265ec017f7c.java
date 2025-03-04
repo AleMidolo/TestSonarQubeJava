@@ -8,31 +8,59 @@ public class GraphPathTransformer {
         }
 
         List<Integer> path = new ArrayList<>();
-        Edge currentEdge = tour.iterator().next();
-        int currentVertex = currentEdge.getSource();
+        Map<Integer, List<Edge>> adjacencyMap = new HashMap<>();
+
+        // Build adjacency map from edges
+        for (Edge edge : tour) {
+            adjacencyMap.computeIfAbsent(edge.getSource(), k -> new ArrayList<>()).add(edge);
+            adjacencyMap.computeIfAbsent(edge.getDestination(), k -> new ArrayList<>()).add(edge);
+        }
+
+        // Start with any vertex that has edges
+        int currentVertex = tour.iterator().next().getSource();
         path.add(currentVertex);
 
-        while (!tour.isEmpty()) {
-            for (Edge edge : tour) {
-                if (edge.getSource() == currentVertex) {
-                    path.add(edge.getDestination());
-                    currentVertex = edge.getDestination();
-                    tour.remove(edge);
-                    break;
-                } else if (edge.getDestination() == currentVertex) {
-                    path.add(edge.getSource());
-                    currentVertex = edge.getSource();
-                    tour.remove(edge);
+        // Build path by following edges
+        while (path.size() <= tour.size()) {
+            List<Edge> edges = adjacencyMap.get(currentVertex);
+            
+            // Find unused edge
+            Edge nextEdge = null;
+            for (Edge edge : edges) {
+                if (isEdgeAvailable(edge, path)) {
+                    nextEdge = edge;
                     break;
                 }
             }
+
+            if (nextEdge == null) {
+                break;
+            }
+
+            // Add next vertex to path
+            currentVertex = (nextEdge.getSource() == currentVertex) ? 
+                          nextEdge.getDestination() : nextEdge.getSource();
+            path.add(currentVertex);
         }
 
         return path;
     }
+
+    private boolean isEdgeAvailable(Edge edge, List<Integer> path) {
+        // Check if this edge leads to an unvisited vertex
+        int lastVertex = path.get(path.size() - 1);
+        if (edge.getSource() == lastVertex) {
+            return !path.contains(edge.getDestination()) || 
+                   (path.size() == path.size() && edge.getDestination() == path.get(0));
+        } else if (edge.getDestination() == lastVertex) {
+            return !path.contains(edge.getSource()) ||
+                   (path.size() == path.size() && edge.getSource() == path.get(0));
+        }
+        return false;
+    }
 }
 
-// Supporting classes needed for compilation
+// Supporting classes
 class Edge {
     private int source;
     private int destination;
@@ -53,9 +81,11 @@ class Edge {
 
 class Graph {
     private List<Edge> edges;
+    private int vertices;
     
-    public Graph() {
-        edges = new ArrayList<>();
+    public Graph(int vertices) {
+        this.vertices = vertices;
+        this.edges = new ArrayList<>();
     }
     
     public void addEdge(Edge edge) {
@@ -64,5 +94,9 @@ class Graph {
     
     public List<Edge> getEdges() {
         return edges;
+    }
+    
+    public int getVertices() {
+        return vertices;
     }
 }

@@ -16,13 +16,13 @@ public class ConverterRegistry {
   return null;
   }
   
-  // Check direct match
+  // Cerca il converter direttamente associato alla classe
   Converter converter = converters.get(clazz);
   if (converter != null) {
   return converter;
   }
   
-  // Check interfaces
+  // Cerca nelle interfacce implementate
   for (Class<?> iface : clazz.getInterfaces()) {
   converter = converters.get(iface);
   if (converter != null) {
@@ -30,7 +30,7 @@ public class ConverterRegistry {
   }
   }
   
-  // Check superclass hierarchy
+  // Cerca nella gerarchia delle superclassi
   Class<?> superClass = clazz.getSuperclass();
   while (superClass != null) {
   converter = converters.get(superClass);
@@ -44,6 +44,6 @@ public class ConverterRegistry {
   }
 }
 
-public interface Converter {
+interface Converter {
   Object convert(Object source);
 }

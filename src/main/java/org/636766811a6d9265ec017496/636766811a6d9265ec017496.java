@@ -20,17 +20,23 @@ public class FileIterator implements Iterator<InputStream> {
   if (files.isEmpty()) {
   return null;
   }
+  
   File nextFile = files.poll();
+  if (nextFile != null && nextFile.exists() && nextFile.isFile()) {
   return new FileInputStream(nextFile);
   }
   
-  public boolean hasNext() {
-  return !files.isEmpty();
+  return null;
   }
   
-  public void add(File file) {
+  public void addFile(File file) {
   if (file != null) {
   files.offer(file);
   }
+  }
+  
+  @Override
+  public boolean hasNext() {
+  return !files.isEmpty();
   }
 }

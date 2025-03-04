@@ -1,4 +1,7 @@
-import java.util.Objects;
+import java.lang.Character;
+import java.lang.Class;
+import java.lang.Object;
+import java.lang.String;
 
 public class CharacterConverter {
 
@@ -8,23 +11,23 @@ public class CharacterConverter {
   return null;
   }
 
-  if (Character.class.equals(type)) {
   if (value instanceof Character) {
   return value;
   }
 
-  final String str = value.toString();
-  if (str.length() == 1) {
+  if (value instanceof String) {
+  String str = (String) value;
+  if (str.length() == 0) {
+  throw new Exception("Cannot convert empty String to Character");
+  }
   return Character.valueOf(str.charAt(0));
   }
 
-  if (str.length() == 0) {
-  throw new Exception("Cannot convert empty string to Character");
+  if (value instanceof Number) {
+  int num = ((Number) value).intValue();
+  return Character.valueOf((char) num);
   }
 
-  throw new Exception("Cannot convert string with length > 1 to Character: " + str);
-  }
-
-  throw new Exception("Target type " + type.getName() + " is not supported");
+  throw new Exception("Cannot convert " + value.getClass().getName() + " to Character");
   }
 }

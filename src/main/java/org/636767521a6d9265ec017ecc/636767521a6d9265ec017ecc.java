@@ -1,37 +1,30 @@
-import java.util.Objects;
+import java.awt.geom.Point2D;
+import javafx.util.Pair;
 
 public class BoxSplitter {
-
-  public static class Box2D {
-  private final double x;
-  private final double y;
-  private final double width;
-  private final double height;
   
-  public Box2D(double x, double y, double width, double height) {
-  this.x = x;
-  this.y = y;
+  public static class Box2D {
+  private Point2D topLeft;
+  private double width;
+  private double height;
+  
+  public Box2D(Point2D topLeft, double width, double height) {
+  this.topLeft = topLeft;
   this.width = width;
   this.height = height;
   }
   
-  public double getX() { return x; }
-  public double getY() { return y; }
-  public double getWidth() { return width; }
-  public double getHeight() { return height; }
+  public Point2D getTopLeft() {
+  return topLeft;
   }
   
-  public static class Pair<T,U> {
-  private final T first;
-  private final U second;
-  
-  public Pair(T first, U second) {
-  this.first = first;
-  this.second = second;
+  public double getWidth() {
+  return width;
   }
   
-  public T getFirst() { return first; }
-  public U getSecond() { return second; }
+  public double getHeight() {
+  return height;
+  }
   }
 
   /** 
@@ -40,23 +33,23 @@ public class BoxSplitter {
   * @return una coppia con le due scatole risultanti
   */
   public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
-  Objects.requireNonNull(box);
+  // Get original box dimensions and position
+  Point2D originalTopLeft = box.getTopLeft();
+  double originalWidth = box.getWidth();
+  double originalHeight = box.getHeight();
   
-  double halfWidth = box.getWidth() / 2.0;
+  // Calculate new width (half of original)
+  double newWidth = originalWidth / 2;
   
-  Box2D leftBox = new Box2D(
-  box.getX(),
-  box.getY(),
-  halfWidth,
-  box.getHeight()
+  // Create left box with same top-left point
+  Box2D leftBox = new Box2D(originalTopLeft, newWidth, originalHeight);
+  
+  // Create right box with shifted top-left point
+  Point2D rightBoxTopLeft = new Point2D.Double(
+  originalTopLeft.getX() + newWidth,
+  originalTopLeft.getY()
   );
-  
-  Box2D rightBox = new Box2D(
-  box.getX() + halfWidth,
-  box.getY(),
-  halfWidth,
-  box.getHeight()
-  );
+  Box2D rightBox = new Box2D(rightBoxTopLeft, newWidth, originalHeight);
   
   return new Pair<>(leftBox, rightBox);
   }

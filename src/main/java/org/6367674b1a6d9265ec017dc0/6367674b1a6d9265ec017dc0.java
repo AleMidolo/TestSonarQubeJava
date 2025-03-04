@@ -20,16 +20,16 @@ public class Graph<V> {
   private static class Edge<V> {
   private V source;
   private V target;
-
+  
   public Edge(V source, V target) {
   this.source = source;
   this.target = target;
   }
-
+  
   public V getSource() {
   return source;
   }
-
+  
   public V getTarget() {
   return target;
   }

@@ -17,6 +17,7 @@ public class StringUtils {
   if (suffix.length() > str.length()) {
   return false;
   }
+  
   int strOffset = str.length() - suffix.length();
   
   if (ignoreCase) {

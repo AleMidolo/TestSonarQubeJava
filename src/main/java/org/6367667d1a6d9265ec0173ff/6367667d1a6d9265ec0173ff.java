@@ -20,17 +20,17 @@ public class MeteorLookup {
   if (meteor != null) {
   return meteor;
   }
-
+  
   // Try to get from AtmosphereResource
-  AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.ATMOSPHERE_RESOURCE);
+  AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.class.getName());
   if (resource != null) {
   return Meteor.build(resource.getRequest());
   }
-  } catch (Exception e) {
-  // Return null if any error occurs during lookup
-  return null;
-  }
   
   return null;
+  
+  } catch (Exception e) {
+  return null;
+  }
   }
 }

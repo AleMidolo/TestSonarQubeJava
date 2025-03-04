@@ -11,26 +11,34 @@ public class MessageSerializer {
   * @return la dimensione del messaggio
   */
   public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-  // Create ProtobufOutput with the provided buffer
+  // Create ProtobufOutput for serialization
   ProtobufOutput output = new ProtobufOutput(buffer);
   
-  // Serialize the message using schema
+  // Serialize the message
   schema.writeTo(output, message);
   
-  // Get the size of serialized message
-  int size = output.getSize();
+  // Get the serialized bytes
+  byte[] bytes = output.toByteArray();
   
-  // Write the size as a varint to the output stream
-  while ((size & ~0x7F) != 0) {
-  out.write((size & 0x7F) | 0x80);
-  size >>>= 7;
+  // Write the message size as a varint
+  writeRawVarint32(out, bytes.length);
+  
+  // Write the actual message
+  out.write(bytes);
+  
+  // Return total message size
+  return bytes.length;
   }
-  out.write(size);
   
-  // Write the actual message bytes
-  LinkedBuffer.writeTo(out, buffer);
-  
-  // Return the total size of the message
-  return output.getSize();
+  private static void writeRawVarint32(OutputStream out, int value) throws IOException {
+  while (true) {
+  if ((value & ~0x7F) == 0) {
+  out.write(value);
+  return;
+  } else {
+  out.write((value & 0x7F) | 0x80);
+  value >>>= 7;
+  }
+  }
   }
 }

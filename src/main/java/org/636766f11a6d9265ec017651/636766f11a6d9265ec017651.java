@@ -1,11 +1,11 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 public class ArrayUtils {
   
   /**
   * Empty Character array constant
   */
-  public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
+  public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
   /**
   * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
@@ -17,7 +17,7 @@ public class ArrayUtils {
   */
   public static Character[] nullToEmpty(final Character[] array) {
   if (array == null || array.length == 0) {
-  return EMPTY_CHARACTER_ARRAY;
+  return EMPTY_CHARACTER_OBJECT_ARRAY;
   }
   return array;
   }

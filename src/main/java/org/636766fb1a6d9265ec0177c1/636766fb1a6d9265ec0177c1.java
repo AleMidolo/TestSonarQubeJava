@@ -1,6 +1,6 @@
 public class CharUtils {
   /**
-  * <p>Controlla se il carattere è un carattere alfabetico maiuscolo ASCII a 7 bit.</p>
+  * <p>Checks whether the character is ASCII 7 bit alphabetic upper case.</p>
   * <pre>
   * CharUtils.isAsciiAlphaUpper('a')  = false
   * CharUtils.isAsciiAlphaUpper('A')  = true 
@@ -9,10 +9,10 @@ public class CharUtils {
   * CharUtils.isAsciiAlphaUpper('\n') = false
   * CharUtils.isAsciiAlphaUpper('&copy;') = false
   * </pre>
-  * @param ch il carattere da controllare
-  * @return true se compreso tra 65 e 90 inclusi
+  * @param ch  the character to check
+  * @return true if between 65 and 90 inclusive
   */
-  public static boolean isAsciiAlphaUpper(final char ch) {
+  public static boolean isAsciiAlphaUpper(char ch) {
   return ch >= 'A' && ch <= 'Z';
   }
 }

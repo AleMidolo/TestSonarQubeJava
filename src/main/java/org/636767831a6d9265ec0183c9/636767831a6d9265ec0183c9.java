@@ -1,24 +1,20 @@
 import org.slf4j.MDC;
-import java.util.Deque;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class NDC {
-  private static final ThreadLocal<Deque<String>> localStack = new ThreadLocal<Deque<String>>() {
-  @Override 
-  protected Deque<String> initialValue() {
-  return new ConcurrentLinkedDeque<>();
-  }
-  };
-
-  /** 
-  * Osserva l'ultimo contesto diagnostico in cima a questo NDC senza rimuoverlo. <p>Il valore restituito è il valore che è stato inserito per ultimo. Se non è disponibile alcun contesto, viene restituita la stringa vuota "".
-  * @return String Il contesto diagnostico più interno.
+public class NDCUtil {
+  /**
+  * Looks at the last diagnostic context at the top of this NDC without removing it. <p>The returned value is the value 
+  * that was pushed last. If no context is available, then the empty string "" is returned.
+  * @return String The innermost diagnostic context.
   */
   public static String peek() {
-  Deque<String> stack = localStack.get();
-  if (stack != null && !stack.isEmpty()) {
-  return stack.peek();
-  }
+  String value = MDC.get("NDC");
+  if (value == null) {
   return "";
+  }
+  String[] contexts = value.split(" ");
+  if (contexts.length == 0) {
+  return "";
+  }
+  return contexts[contexts.length - 1];
   }
 }

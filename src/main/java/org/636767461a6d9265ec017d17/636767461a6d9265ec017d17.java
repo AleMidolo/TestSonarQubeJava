@@ -1,36 +1,47 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class DotUtils {
-
+public class StringUnescaper {
+  
   /**
-  * Decomprime un identificatore di stringa DOT.
-  * @param input l'input
-  * @return l'output decompresso
+  * Unescape a string DOT identifier.
+  * @param input the input
+  * @return the unescaped output
   */
-  private String unescapeId(String input) {
+  public static String unescapeDotIdentifier(String input) {
   if (input == null || input.isEmpty()) {
   return input;
   }
 
-  // Remove quotes if present
+  // Handle quoted strings
   if (input.startsWith("\"") && input.endsWith("\"")) {
-  input = input.substring(1, input.length() - 1);
-  }
-
-  // Replace escaped characters
-  StringBuilder result = new StringBuilder();
-  Pattern pattern = Pattern.compile("\\\\(.)");
-  Matcher matcher = pattern.matcher(input);
+  String inner = input.substring(1, input.length() - 1);
   
-  int lastEnd = 0;
-  while (matcher.find()) {
-  result.append(input.substring(lastEnd, matcher.start()));
-  result.append(matcher.group(1));
-  lastEnd = matcher.end();
+  // Replace escaped quotes
+  inner = inner.replace("\\\"", "\"");
+  
+  // Replace escaped newlines
+  inner = inner.replace("\\n", "\n");
+  
+  // Replace escaped tabs
+  inner = inner.replace("\\t", "\t");
+  
+  // Replace escaped backslashes
+  inner = inner.replace("\\\\", "\\");
+  
+  return inner;
   }
-  result.append(input.substring(lastEnd));
 
+  // Handle unquoted identifiers
+  Pattern escapePattern = Pattern.compile("\\\\(.)");
+  Matcher matcher = escapePattern.matcher(input);
+  StringBuffer result = new StringBuffer();
+  
+  while (matcher.find()) {
+  matcher.appendReplacement(result, matcher.group(1));
+  }
+  matcher.appendTail(result);
+  
   return result.toString();
   }
 }

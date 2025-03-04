@@ -1,9 +1,9 @@
 public class HexConverter {
   /**
-  * @param b Un carattere codificato in ASCII da 0-9, a-f, A-F
-  * @return Il valore byte del carattere da 0 a 16.
+  * @param b An ASCII encoded character 0-9 a-f A-F
+  * @return The byte value of the character 0-16.
   */
-  public static byte convertHexDigit(byte b) {
+  public static byte hexCharToByte(char b) {
   if (b >= '0' && b <= '9') {
   return (byte)(b - '0');
   }
@@ -13,6 +13,6 @@ public class HexConverter {
   if (b >= 'A' && b <= 'F') {
   return (byte)(b - 'A' + 10);
   }
-  throw new IllegalArgumentException("Invalid hex digit: " + (char)b);
+  throw new IllegalArgumentException("Invalid hex character: " + b);
   }
 }

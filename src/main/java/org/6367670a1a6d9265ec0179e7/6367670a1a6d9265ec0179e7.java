@@ -1,49 +1,26 @@
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ConverterRegistry {
-  
-  private final Map<Class<?>, Converter> converters = new HashMap<>();
-  
+  // Map to store registered converters
+  private final Map<Class<?>, Converter<?>> converters = new ConcurrentHashMap<>();
+
   /**
-  * Cerca e restituisce qualsiasi {@link Converter} registrato per la classe di destinazione specificata;
-  * se non esiste un Converter registrato, restituisce <code>null</code>.
-  * @param clazz Classe per la quale restituire un Converter registrato
-  * @return Il {@link Converter} registrato o <code>null</code> se non trovato
+  * Look up and return any registered {@link Converter} for the specified destination class; 
+  * if there is no registered Converter, return <code>null</code>.
+  * @param clazz Class for which to return a registered Converter
+  * @return The registered {@link Converter} or <code>null</code> if not found
   */
-  public Converter lookup(final Class<?> clazz) {
+  @SuppressWarnings("unchecked")
+  public <T> Converter<T> lookup(Class<T> clazz) {
   if (clazz == null) {
   return null;
   }
-  
-  // Cerca il converter direttamente associato alla classe
-  Converter converter = converters.get(clazz);
-  if (converter != null) {
-  return converter;
+  return (Converter<T>) converters.get(clazz);
   }
-  
-  // Cerca nelle interfacce implementate
-  for (Class<?> iface : clazz.getInterfaces()) {
-  converter = converters.get(iface);
-  if (converter != null) {
-  return converter;
-  }
-  }
-  
-  // Cerca nella gerarchia delle superclassi
-  Class<?> superClass = clazz.getSuperclass();
-  while (superClass != null) {
-  converter = converters.get(superClass);
-  if (converter != null) {
-  return converter;
-  }
-  superClass = superClass.getSuperclass();
-  }
-  
-  return null;
-  }
-}
 
-interface Converter {
-  Object convert(Object source);
+  // Interface for type conversion
+  public interface Converter<T> {
+  T convert(Object source);
+  }
 }

@@ -1,18 +1,15 @@
 package org.apache.commons.lang3;
 
-/**
- * Utility class for converting between primitive and wrapper arrays
- */
 public class ArrayUtils {
-
   /**
-  * <p>Converte un array di oggetti Double in primitivi.</p>
-  * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-  * @param array  un array di <code>Double</code>, può essere <code>null</code>
-  * @return un array di <code>double</code>, <code>null</code> se l'array di input è nullo
-  * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+  * <p>Converts an array of object Doubles to primitives.</p>
+  * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+  * 
+  * @param array  a <code>Double</code> array, may be <code>null</code>
+  * @return a <code>double</code> array, <code>null</code> if null array input
+  * @throws NullPointerException if array content is <code>null</code>
   */
-  public static double[] toPrimitive(final Double[] array) {
+  public static double[] toPrimitive(Double[] array) {
   if (array == null) {
   return null;
   }

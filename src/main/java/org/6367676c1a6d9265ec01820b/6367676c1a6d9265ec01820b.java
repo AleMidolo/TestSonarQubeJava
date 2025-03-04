@@ -1,24 +1,26 @@
-package org.example.utils;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StringUtils {
-  /**
-  * Elimina qualsiasi carattere in una Stringa data.
-  * @param inString la Stringa originale
-  * @param charsToDelete un insieme di caratteri da eliminare. Ad esempio, "az\n" eliminerà le 'a', le 'z' e le nuove righe.
-  * @return la Stringa risultante
-  */
+  
   public static String deleteAny(String inString, String charsToDelete) {
   if (inString == null || charsToDelete == null) {
   return inString;
   }
   
-  StringBuilder sb = new StringBuilder(inString.length());
-  for (int i = 0; i < inString.length(); i++) {
-  char ch = inString.charAt(i);
-  if (charsToDelete.indexOf(ch) == -1) {
-  sb.append(ch);
+  // Convert charsToDelete to Set for O(1) lookup
+  Set<Character> deleteSet = new HashSet<>();
+  for (char c : charsToDelete.toCharArray()) {
+  deleteSet.add(c);
+  }
+  
+  StringBuilder result = new StringBuilder();
+  for (char c : inString.toCharArray()) {
+  if (!deleteSet.contains(c)) {
+  result.append(c);
   }
   }
-  return sb.toString();
+  
+  return result.toString();
   }
 }

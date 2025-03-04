@@ -1,16 +1,16 @@
 import java.util.Objects;
 
 public class Label {
-  private int lineNumber;
+  private int sourceLineNumber;
   
   /**
-  * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
-  * @param lineNumber un numero di riga sorgente (che dovrebbe essere strettamente positivo).
+  * Adds a source line number corresponding to this label.
+  * @param lineNumber a source line number (which should be strictly positive).
   */
-  final void addLineNumber(final int lineNumber) {
+  public void addLineNumber(int lineNumber) {
   if (lineNumber <= 0) {
-  throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo");
+  throw new IllegalArgumentException("Line number must be strictly positive");
   }
-  this.lineNumber = lineNumber;
+  this.sourceLineNumber = lineNumber;
   }
 }

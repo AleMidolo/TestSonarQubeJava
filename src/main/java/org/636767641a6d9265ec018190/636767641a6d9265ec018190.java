@@ -1,25 +1,34 @@
 import java.util.*;
 
-public class BucketReloader {
+public class BucketLabeler {
   
-  /**
-  * Sposta tutti i vertici dal bucket con etichetta {@code minLabel} al bucket con etichetta 0. 
-  * Pulisce il bucket con etichetta {@code minLabel}. Aggiorna le etichette di conseguenza.
-  * @param bucketsByLabel i buckets in cui sono memorizzati i vertici
-  * @param labels le etichette dei vertici
-  * @param minLabel il valore minimo del bucket non vuoto
-  */
-  private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-  Set<Integer> minBucket = bucketsByLabel.get(minLabel);
-  Set<Integer> zeroBucket = bucketsByLabel.get(0);
+  public void moveVerticesFromMinLabelBucketToZero(
+  Map<Integer, Set<Integer>> bucketsByLabel,
+  Map<Integer, Integer> labels,
+  int minLabel
+  ) {
+  // Get the bucket with minLabel
+  Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
   
-  // Sposta tutti i vertici dal bucket minLabel al bucket 0
-  for (Integer vertex : minBucket) {
-  zeroBucket.add(vertex);
-  labels.set(vertex, 0); // Aggiorna l'etichetta del vertice a 0
+  if (minLabelBucket == null || minLabelBucket.isEmpty()) {
+  return;
   }
   
-  // Pulisce il bucket con etichetta minLabel
-  minBucket.clear();
+  // Get or create bucket 0
+  Set<Integer> zeroBucket = bucketsByLabel.computeIfAbsent(0, k -> new HashSet<>());
+  
+  // Move all vertices from minLabel bucket to zero bucket
+  for (Integer vertex : minLabelBucket) {
+  // Update the label for each vertex to 0
+  labels.put(vertex, 0);
+  // Add vertex to zero bucket
+  zeroBucket.add(vertex);
+  }
+  
+  // Clear the minLabel bucket
+  minLabelBucket.clear();
+  
+  // Remove empty bucket if it exists
+  bucketsByLabel.remove(minLabel);
   }
 }

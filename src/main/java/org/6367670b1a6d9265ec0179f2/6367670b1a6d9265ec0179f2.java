@@ -1,48 +1,29 @@
 import java.util.Map;
+import java.util.HashMap;
 
-public class CustomMap<K,V> implements Map<K,V> {
-
-  private Entry<K,V>[] table;
+public class MapContains {
+  private Map<Object, Object> map = new HashMap<>();
   
-  @Override 
-  public boolean containsKey(final Object key) {
+  /**
+  * Return <code>true</code> if this map contains a mapping for the specified key.
+  * @param key the key to be searched for
+  * @return true if the map contains the key
+  */
+  public boolean containsKey(Object key) {
   if (key == null) {
-  return false;
-  }
-  
-  if (table == null || table.length == 0) {
-  return false;
-  }
-
-  int hash = key.hashCode();
-  int index = (hash & 0x7FFFFFFF) % table.length;
-  
-  for (Entry<K,V> entry = table[index]; entry != null; entry = entry.next) {
-  if (entry.key.equals(key)) {
+  for (Map.Entry<Object, Object> entry : map.entrySet()) {
+  if (entry.getKey() == null) {
   return true;
   }
   }
-  
   return false;
   }
   
-  // Inner class for map entries
-  private static class Entry<K,V> implements Map.Entry<K,V> {
-  K key;
-  V value; 
-  Entry<K,V> next;
-  
-  Entry(K key, V value) {
-  this.key = key;
-  this.value = value;
+  for (Map.Entry<Object, Object> entry : map.entrySet()) {
+  if (key.equals(entry.getKey())) {
+  return true;
   }
-  
-  public K getKey() { return key; }
-  public V getValue() { return value; }
-  public V setValue(V value) {
-  V old = this.value;
-  this.value = value;
-  return old;
   }
+  return false;
   }
 }

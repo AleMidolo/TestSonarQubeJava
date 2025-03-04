@@ -1,32 +1,23 @@
 import java.util.Enumeration;
+import java.util.ArrayList;
 
 public class EnumerationUtils {
 
-  /**
-  * Copia l'Enumeration fornita in un array di Stringhe. L'Enumeration deve contenere solo elementi di tipo String.
-  * @param enumeration l'Enumeration da copiare
-  * @return l'array di Stringhe (<code>null</code> se l'Enumeration passata era <code>null</code>)
-  */
-  public static String[] toStringArray(Enumeration<String> enumeration) {
+  public static String[] copyEnumerationToStringArray(Enumeration<?> enumeration) {
   if (enumeration == null) {
   return null;
   }
-
-  // Count elements in enumeration
-  int size = 0;
-  Enumeration<String> counter = enumeration;
-  while (counter.hasMoreElements()) {
-  counter.nextElement();
-  size++;
-  }
-
-  // Create array and copy elements
-  String[] array = new String[size];
-  int index = 0;
+  
+  ArrayList<String> list = new ArrayList<>();
   while (enumeration.hasMoreElements()) {
-  array[index++] = enumeration.nextElement();
+  Object element = enumeration.nextElement();
+  if (element instanceof String) {
+  list.add((String) element);
+  } else {
+  throw new IllegalArgumentException("Enumeration must contain only String elements");
   }
-
-  return array;
+  }
+  
+  return list.toArray(new String[0]);
   }
 }

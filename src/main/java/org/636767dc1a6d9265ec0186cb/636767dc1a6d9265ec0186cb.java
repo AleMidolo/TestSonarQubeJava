@@ -1,37 +1,33 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
-import java.util.logging.Level;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class ConfigurationManager {
-  private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class.getName());
-  private static final String DEFAULT_DEPLOY_PATH = "/opt/application/";
-  private File deploymentPath;
+public class ConfigInitializer {
 
-  public void init() {
+  /**
+  * initialize config, such as check dist path
+  */
+  public void initializeConfig() {
+  // Check and create dist directory if it doesn't exist
+  String distPath = "dist";
+  Path path = Paths.get(distPath);
+  
+  if (!Files.exists(path)) {
   try {
-  // Check if deployment path exists
-  deploymentPath = new File(DEFAULT_DEPLOY_PATH);
-  if (!deploymentPath.exists()) {
-  deploymentPath.mkdirs();
-  LOGGER.info("Created deployment directory at: " + DEFAULT_DEPLOY_PATH);
+  Files.createDirectories(path);
+  } catch (IOException e) {
+  throw new RuntimeException("Failed to create dist directory", e);
+  }
   }
 
-  // Verify write permissions
-  if (!deploymentPath.canWrite()) {
-  LOGGER.severe("No write permissions for deployment path: " + DEFAULT_DEPLOY_PATH);
-  throw new SecurityException("No write permissions for deployment path");
+  // Verify dist directory is writable
+  File distDir = new File(distPath);
+  if (!distDir.canWrite()) {
+  throw new RuntimeException("Dist directory is not writable");
   }
 
-  // Additional initialization steps can be added here
-  LOGGER.info("Configuration initialized successfully");
-
-  } catch (SecurityException e) {
-  LOGGER.log(Level.SEVERE, "Security error during initialization", e);
-  throw e;
-  } catch (Exception e) {
-  LOGGER.log(Level.SEVERE, "Error during initialization", e);
-  throw new RuntimeException("Failed to initialize configuration", e);
-  }
+  // Additional config initialization can be added here
   }
 }

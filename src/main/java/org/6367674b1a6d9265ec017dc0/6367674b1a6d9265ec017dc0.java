@@ -1,37 +1,34 @@
 import java.util.*;
 
-public class Graph<V> {
-  // Assuming we have a graph representation with edges stored in a set/list
-  private Set<Edge<V>> edges;
+public class Graph {
+  // Assuming we have an adjacency list representation of the graph
+  private Map<Integer, List<Integer>> adjacencyList;
 
-  private Set<V> initVisibleVertices() {
-  Set<V> visibleVertices = new HashSet<>();
-  
-  // Iterate through all edges and add both vertices of each edge
-  for (Edge<V> edge : edges) {
-  visibleVertices.add(edge.getSource());
-  visibleVertices.add(edge.getTarget());
-  }
-  
-  return visibleVertices;
+  public Graph() {
+  adjacencyList = new HashMap<>();
   }
 
-  // Helper Edge class
-  private static class Edge<V> {
-  private V source;
-  private V target;
+  /**
+  * Compute all vertices that have positive degree by iterating over the edges on purpose.
+  * This keeps the complexity to O(m) where m is the number of edges.
+  * @return set of vertices with positive degree
+  */
+  public Set<Integer> getVerticesWithPositiveDegree() {
+  Set<Integer> verticesWithDegree = new HashSet<>();
   
-  public Edge(V source, V target) {
-  this.source = source;
-  this.target = target;
+  // Iterate through all edges in adjacency list
+  for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+  int vertex = entry.getKey();
+  List<Integer> neighbors = entry.getValue();
+  
+  // If vertex has any neighbors, add it to result set
+  if (!neighbors.isEmpty()) {
+  verticesWithDegree.add(vertex);
+  // Also add all neighbors since they must have positive degree
+  verticesWithDegree.addAll(neighbors);
+  }
   }
   
-  public V getSource() {
-  return source;
-  }
-  
-  public V getTarget() {
-  return target;
-  }
+  return verticesWithDegree;
   }
 }

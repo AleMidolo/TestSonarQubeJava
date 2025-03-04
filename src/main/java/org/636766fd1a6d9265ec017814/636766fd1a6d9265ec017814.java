@@ -1,13 +1,17 @@
-public class ArrayUtils {
+public class ByteArrayComparator {
   /**
-  * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
-  * @param a  Il primo array da confrontare.
-  * @param b  Il secondo array da confrontare. 
-  * @param count Quanti byte devono essere confrontati.
-  * @return <code>true</code> se i <code>count</code> primi byte negli array <code>a</code> e <code>b</code> sono uguali.
+  * Compares <code>count</code> first bytes in the arrays <code>a</code> and <code>b</code>.
+  * @param a  The first array to compare.
+  * @param b  The second array to compare.
+  * @param count How many bytes should be compared.
+  * @return <code>true</code> if <code>count</code> first bytes in arrays<code>a</code> and <code>b</code> are equal.
   */
-  public static boolean arrayequals(byte[] a, byte[] b, int count) {
+  public static boolean compareBytes(byte[] a, byte[] b, int count) {
   if (a == null || b == null) {
+  return false;
+  }
+  
+  if (count < 0) {
   return false;
   }
   

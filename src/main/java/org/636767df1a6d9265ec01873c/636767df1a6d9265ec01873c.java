@@ -1,13 +1,11 @@
-import java.util.UUID;
+public class Row {
+  private int rowId;
 
-public class EntityIdentifier {
-  /**
-  * @return l'id della riga
-  */
-  public String id(String entityId) {
-  if (entityId == null || entityId.trim().isEmpty()) {
-  return UUID.randomUUID().toString();
+  public Row(int rowId) {
+  this.rowId = rowId;
   }
-  return entityId.trim();
+
+  public int getRowId() {
+  return rowId;
   }
 }

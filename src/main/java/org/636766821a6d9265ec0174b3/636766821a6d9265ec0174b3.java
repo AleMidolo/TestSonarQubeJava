@@ -1,26 +1,30 @@
-import java.util.Objects;
+import javax.websocket.Session;
+import java.util.Set;
 
-public class MessageFilter {
-  private BroadcastFilter broadcastFilter;
+public class BroadcastManager {
 
-  public MessageFilter(BroadcastFilter broadcastFilter) {
-  this.broadcastFilter = Objects.requireNonNull(broadcastFilter);
+  private Set<Session> sessions;
+  private BroadcastFilter filter;
+
+  public String invokeBroadcastFilter(String msg) {
+  if (filter != null) {
+  return filter.filter(msg);
+  }
+  return msg;
   }
 
-  /**
-  * Invoca il {@link BroadcastFilter}
-  * @param msg
-  * @return
-  */
-  protected Object filter(Object msg) {
-  if (msg == null) {
-  return null;
+  // Interface for broadcast filter
+  public interface BroadcastFilter {
+  String filter(String message);
   }
-  
-  return broadcastFilter.filter(msg);
-  }
-}
 
-interface BroadcastFilter {
-  Object filter(Object message);
+  // Constructor
+  public BroadcastManager(Set<Session> sessions) {
+  this.sessions = sessions;
+  }
+
+  // Setter for filter
+  public void setBroadcastFilter(BroadcastFilter filter) {
+  this.filter = filter;
+  }
 }

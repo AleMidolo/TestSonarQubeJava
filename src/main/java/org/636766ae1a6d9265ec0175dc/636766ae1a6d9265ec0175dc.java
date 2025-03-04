@@ -1,17 +1,12 @@
-import javax.servlet.http.HttpServletResponse;
+import org.apache.http.HttpStatus;
 
-public class ResponseChecker {
-  private HttpServletResponse response;
+public class HttpResponseChecker {
   
-  public ResponseChecker(HttpServletResponse response) {
-  this.response = response;
-  }
-
   /**
-  * Controlla se la risposta attuale è un Contenuto Parziale (codice HTTP 206)
-  * @return vero se è contenuto parziale, falso altrimenti
+  * Check if the actual response is a Partial Content (HTTP 206 code)
+  * @return is partial content or not
   */
-  public Boolean isPartialContentResponse() {
-  return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
+  public boolean isPartialContent() {
+  return HttpStatus.SC_PARTIAL_CONTENT == 206;
   }
 }

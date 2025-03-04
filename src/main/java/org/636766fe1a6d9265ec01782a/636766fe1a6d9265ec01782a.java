@@ -1,34 +1,43 @@
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.nio.ByteBuffer;
 
-public class ClassFileReader {
-  private byte[] classFileBuffer;
-  private int[] cpInfoOffsets;
+public class ClassReader {
+  private ByteBuffer classFileBuffer;
+  private char[] charBuffer;
   
-  final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-  int offset = cpInfoOffsets[constantPoolEntryIndex];
-  int utfLen = ((classFileBuffer[offset + 1] & 0xFF) << 8) | (classFileBuffer[offset + 2] & 0xFF);
-  offset += 3;
+  public String readUTF8(final int constantPoolEntryIndex, final char[] charBuffer) {
+  int currentIndex = classFileBuffer.position();
+  int utfLength = classFileBuffer.getShort(currentIndex) & 0xFFFF;
   
-  int charLen = 0;
-  int max = offset + utfLen;
-  while (offset < max) {
-  int currentByte = classFileBuffer[offset++] & 0xFF;
-  if (currentByte < 0x80) {
-  // 1 byte UTF-8 encoding
-  charBuffer[charLen++] = (char) currentByte;
+  if (utfLength == 0) {
+  return "";
+  }
+  
+  int endIndex = currentIndex + 2 + utfLength;
+  int strLength = 0;
+  int charIndex = 0;
+  
+  while (currentIndex < endIndex) {
+  int currentByte = classFileBuffer.get(currentIndex + 2) & 0xFF;
+  
+  if ((currentByte & 0x80) == 0) {
+  // Single byte character
+  charBuffer[strLength++] = (char) currentByte;
+  currentIndex++;
   } else if ((currentByte & 0xE0) == 0xC0) {
-  // 2 byte UTF-8 encoding
-  charBuffer[charLen++] = (char) (((currentByte & 0x1F) << 6) | 
-  (classFileBuffer[offset++] & 0x3F));
+  // Two byte character
+  charBuffer[strLength++] = (char) (((currentByte & 0x1F) << 6) + 
+  (classFileBuffer.get(currentIndex + 3) & 0x3F));
+  currentIndex += 2;
   } else {
-  // 3 byte UTF-8 encoding
-  charBuffer[charLen++] = (char) (((currentByte & 0xF) << 12) | 
-  ((classFileBuffer[offset++] & 0x3F) << 6) | 
-  (classFileBuffer[offset++] & 0x3F));
+  // Three byte character
+  charBuffer[strLength++] = (char) (((currentByte & 0xF) << 12) + 
+  ((classFileBuffer.get(currentIndex + 3) & 0x3F) << 6) +
+  (classFileBuffer.get(currentIndex + 4) & 0x3F));
+  currentIndex += 3;
   }
   }
-  return new String(charBuffer, 0, charLen);
+  
+  classFileBuffer.position(endIndex);
+  return new String(charBuffer, 0, strLength);
   }
 }

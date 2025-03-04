@@ -2,41 +2,49 @@ import java.util.Arrays;
 
 public class ByteVector {
   private byte[] data;
-  private int size;
-  private static final int DEFAULT_CAPACITY = 16;
+  private int length;
+  private static final int DEFAULT_CAPACITY = 64;
 
   public ByteVector() {
   data = new byte[DEFAULT_CAPACITY];
-  size = 0;
   }
 
   public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
+  if (byteLength < 0) {
+  throw new IllegalArgumentException("Length cannot be negative");
+  }
+  if (byteOffset < 0) {
+  throw new IllegalArgumentException("Offset cannot be negative"); 
+  }
+  if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
+  throw new IllegalArgumentException("Invalid offset/length combination");
+  }
+
   // Ensure capacity
-  ensureCapacity(size + byteLength);
-  
-  // If input array is null, insert null bytes
-  if (byteArrayValue == null) {
-  for (int i = 0; i < byteLength; i++) {
-  data[size++] = 0;
+  int requiredLength = length + byteLength;
+  if (requiredLength > data.length) {
+  int newCapacity = Math.max(2 * data.length, requiredLength);
+  data = Arrays.copyOf(data, newCapacity);
   }
+
+  // Copy bytes
+  if (byteArrayValue != null) {
+  System.arraycopy(byteArrayValue, byteOffset, data, length, byteLength);
   } else {
-  // Input validation
-  if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-  throw new IndexOutOfBoundsException("Invalid offset or length");
+  // Fill with null bytes if input array is null
+  Arrays.fill(data, length, length + byteLength, (byte) 0);
   }
-  
-  // Copy bytes from input array
-  System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-  size += byteLength;
-  }
-  
+
+  length += byteLength;
   return this;
   }
 
-  private void ensureCapacity(int minCapacity) {
-  if (minCapacity > data.length) {
-  int newCapacity = Math.max(data.length * 2, minCapacity);
-  data = Arrays.copyOf(data, newCapacity);
+  // Helper methods for testing/verification
+  public byte[] getData() {
+  return Arrays.copyOf(data, length);
   }
+
+  public int getLength() {
+  return length;
   }
 }

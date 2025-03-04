@@ -1,12 +1,12 @@
 public class ArrayUtils {
-  /** 
-  * Scambia i due elementi agli indici specificati nell'array fornito.
-  * @param <V> il tipo di elementi nell'array
-  * @param arr l'array
-  * @param i l'indice del primo elemento
-  * @param j l'indice del secondo elemento
+  /**
+  * Swaps the two elements at the specified indices in the given array.
+  * @param <V> the type of elements in the array
+  * @param arr the array
+  * @param i the index of the first element
+  * @param j the index of the second element
   */
-  public static final <V> void swap(V[] arr, int i, int j) {
+  public static <V> void swap(V[] arr, int i, int j) {
   V temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;

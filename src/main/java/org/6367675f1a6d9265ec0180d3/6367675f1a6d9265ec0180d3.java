@@ -1,42 +1,24 @@
 import org.jgrapht.Graph;
-import org.jgrapht.GraphMapping;
-import org.jgrapht.graph.AsGraphUnion;
-import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphUtils {
+public class GraphAutomorphism {
 
   /**
-  * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
-  * @param graph il grafo di input
-  * @param <V> il tipo di vertice del grafo
-  * @param <E> il tipo di arco del grafo
-  * @return una mappatura da grafo a grafo
+  * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
+  * @param graph the input graph
+  * @param <V> the graph vertex type
+  * @param <E> the graph edge type
+  * @return a mapping from graph to graph
   */
-  public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-  // Create identity mappings for vertices and edges
-  Map<V,V> vertexCorr = new HashMap<>();
-  Map<E,E> edgeCorr = new HashMap<>();
+  public static <V,E> Map<V,V> getIdentityAutomorphism(Graph<V,E> graph) {
+  Map<V,V> mapping = new HashMap<>();
   
   // Map each vertex to itself
-  for(V vertex : graph.vertexSet()) {
-  vertexCorr.put(vertex, vertex);
+  for (V vertex : graph.vertexSet()) {
+  mapping.put(vertex, vertex);
   }
   
-  // Map each edge to itself
-  for(E edge : graph.edgeSet()) {
-  edgeCorr.put(edge, edge);
-  }
-  
-  // Create and return the isomorphic mapping
-  return new IsomorphicGraphMapping<>(
-  graph, // source graph
-  graph, // target graph (same as source for identity mapping)
-  vertexCorr,
-  vertexCorr, // inverse vertex correspondence is the same for identity
-  edgeCorr,
-  edgeCorr  // inverse edge correspondence is the same for identity
-  );
+  return mapping;
   }
 }

@@ -1,49 +1,41 @@
-import java.util.NoSuchElementException;
+import java.util.Objects;
 
-public class LinkedList<E> {
+public class LinkedList<T> {
   
-  private class ListNodeImpl<E> {
-  E element;
-  ListNodeImpl<E> next;
-  ListNodeImpl<E> prev;
+  private class Node<T> {
+  T data;
+  Node<T> next;
   
-  ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-  this.element = element;
-  this.prev = prev;
-  this.next = next;
+  Node(T data) {
+  this.data = data;
+  this.next = null;
   }
   }
   
-  private ListNodeImpl<E> first;
-  private ListNodeImpl<E> last;
-  private int size;
+  private Node<T> head;
   
-  private boolean unlink(ListNodeImpl<E> node) {
-  if (node == null) {
-  return false;
+  /**
+  * Remove the non null {@code node} from the list.
+  * @param node The node to remove
+  */
+  public void remove(Node<T> node) {
+  Objects.requireNonNull(node);
+  
+  // If node is head
+  if (head == node) {
+  head = head.next;
+  return;
   }
   
-  final ListNodeImpl<E> prev = node.prev;
-  final ListNodeImpl<E> next = node.next;
-  
-  if (prev == null) {
-  // Node is the first element
-  first = next;
-  } else {
-  prev.next = next;
-  node.prev = null;
+  // Find the node before the one to remove
+  Node<T> current = head;
+  while (current != null && current.next != node) {
+  current = current.next;
   }
   
-  if (next == null) {
-  // Node is the last element
-  last = prev; 
-  } else {
-  next.prev = prev;
-  node.next = null;
+  // If node was found in list
+  if (current != null) {
+  current.next = node.next;
   }
-  
-  node.element = null;
-  size--;
-  return true;
   }
 }

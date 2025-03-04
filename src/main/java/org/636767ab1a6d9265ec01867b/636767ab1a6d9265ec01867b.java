@@ -1,59 +1,50 @@
 import java.nio.charset.StandardCharsets;
 
-public class UTF8Writer {
+public class StringUtils {
   /**
-  * Scrive i byte codificati in utf8 dalla stringa nel {@link LinkedBuffer}.
+  * Writes the utf8-encoded bytes from the string into the LinkedBuffer.
+  * @param str The input string to encode
+  * @param buffer The buffer to write the encoded bytes to
+  * @return The number of bytes written
   */
-  public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-  if (str == null || str.length() == 0) {
-  return lb;
+  public static int writeUTF8(String str, LinkedBuffer buffer) {
+  if (str == null || buffer == null) {
+  return 0;
   }
 
-  byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-  LinkedBuffer currentBuffer = lb;
+  byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+  buffer.write(bytes, 0, bytes.length);
+  return bytes.length;
+  }
+}
 
-  int remaining = utf8Bytes.length;
-  int position = 0;
-
-  while (remaining > 0) {
-  int available = currentBuffer.buffer.length - currentBuffer.offset;
-  int copyLength = Math.min(available, remaining);
-
-  System.arraycopy(utf8Bytes, position, currentBuffer.buffer, currentBuffer.offset, copyLength);
+class LinkedBuffer {
+  private byte[] buffer;
+  private int position;
+  private int capacity;
   
-  currentBuffer.offset += copyLength;
-  position += copyLength;
-  remaining -= copyLength;
-
-  if (remaining > 0) {
-  currentBuffer = new LinkedBuffer(session.nextBufferSize, currentBuffer);
+  public LinkedBuffer(int size) {
+  buffer = new byte[size];
+  position = 0;
+  capacity = size;
   }
-  }
-
-  session.size += utf8Bytes.length;
-  return currentBuffer;
-  }
-
-  // Supporting classes needed for compilation
-  public static class LinkedBuffer {
-  byte[] buffer;
-  int offset;
-  LinkedBuffer next;
   
-  public LinkedBuffer(int size, LinkedBuffer next) {
-  this.buffer = new byte[size];
-  this.offset = 0;
-  this.next = next;
+  public void write(byte[] bytes, int offset, int length) {
+  if (position + length > capacity) {
+  // Grow buffer if needed
+  byte[] newBuffer = new byte[Math.max(capacity * 2, position + length)];
+  System.arraycopy(buffer, 0, newBuffer, 0, position);
+  buffer = newBuffer;
+  capacity = buffer.length;
   }
-  }
-
-  public static class WriteSession {
-  int size;
-  int nextBufferSize;
   
-  public WriteSession(int nextBufferSize) {
-  this.size = 0;
-  this.nextBufferSize = nextBufferSize;
+  System.arraycopy(bytes, offset, buffer, position, length);
+  position += length;
   }
+  
+  public byte[] toByteArray() {
+  byte[] result = new byte[position];
+  System.arraycopy(buffer, 0, result, 0, position);
+  return result;
   }
 }

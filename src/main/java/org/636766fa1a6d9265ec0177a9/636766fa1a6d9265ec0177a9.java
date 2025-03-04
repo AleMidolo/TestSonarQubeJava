@@ -1,21 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeInitializer {
-  // List to store initialized abstract types
-  private List<Integer> initializedTypes;
-
-  public TypeInitializer() {
-  initializedTypes = new ArrayList<>();
+public class ConstructorTracker {
+  private List<AbstractType> constructorTypes;
+  
+  public ConstructorTracker() {
+  constructorTypes = new ArrayList<>();
   }
 
   /**
-  * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
-  * @param abstractType un tipo astratto su cui viene invocato un costruttore.
+  * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
+  * @param abstractType an abstract type on a which a constructor is invoked.
   */
-  private void addInitializedType(final int abstractType) {
-  if (!initializedTypes.contains(abstractType)) {
-  initializedTypes.add(abstractType);
+  public void addConstructorType(AbstractType abstractType) {
+  if (abstractType != null) {
+  constructorTypes.add(abstractType);
+  }
+  }
+  
+  // Abstract type class for demonstration
+  public static class AbstractType {
+  private String typeName;
+  
+  public AbstractType(String name) {
+  this.typeName = name;
+  }
+  
+  public String getTypeName() {
+  return typeName;
   }
   }
 }

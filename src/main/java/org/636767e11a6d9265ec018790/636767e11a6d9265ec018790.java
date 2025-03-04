@@ -1,120 +1,50 @@
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
+import java.lang.management.ManagementFactory;
 
-public class ThreadSnapshotParser {
+public class ThreadSnapshotLoader {
 
-  public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
-  List<ThreadSnapshot> snapshots = new ArrayList<>();
+  /**
+  * load thread snapshots in appointing time range
+  * @param startTime start time in milliseconds
+  * @param endTime end time in milliseconds  
+  * @return List of ThreadInfo objects containing thread snapshots
+  */
+  public List<ThreadInfo> loadThreadSnapshots(long startTime, long endTime) {
+  List<ThreadInfo> snapshots = new ArrayList<>();
   
-  try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-  String line;
-  ThreadSnapshot currentSnapshot = null;
-  boolean isInTimeRange = false;
-  
-  while ((line = reader.readLine()) != null) {
-  if (line.startsWith("Time:")) {
-  // Parse timestamp
-  long timestamp = Long.parseLong(line.substring(5).trim());
-  
-  // Check if timestamp is within any of the time ranges
-  isInTimeRange = false;
-  for (ProfileAnalyzeTimeRange range : timeRanges) {
-  if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
-  isInTimeRange = true;
-  break;
-  }
-  }
-  
-  if (isInTimeRange) {
-  currentSnapshot = new ThreadSnapshot();
-  currentSnapshot.setTimestamp(timestamp);
-  snapshots.add(currentSnapshot);
-  }
-  } else if (isInTimeRange && currentSnapshot != null) {
-  // Parse thread info
-  if (line.trim().length() > 0) {
-  String[] threadInfo = line.split("\\s+");
-  if (threadInfo.length >= 2) {
-  ThreadInfo info = new ThreadInfo();
-  info.setThreadId(Long.parseLong(threadInfo[0]));
-  info.setThreadName(threadInfo[1]);
-  info.setThreadState(threadInfo.length > 2 ? threadInfo[2] : "UNKNOWN");
-  currentSnapshot.addThreadInfo(info);
-  }
-  }
-  }
-  }
-  }
-  
+  // Get the thread management bean
+  ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+
+  // Get current time
+  long currentTime = System.currentTimeMillis();
+
+  // Validate time range
+  if (startTime > endTime || endTime > currentTime) {
   return snapshots;
   }
-}
 
-class ThreadSnapshot {
-  private long timestamp;
-  private List<ThreadInfo> threadInfoList = new ArrayList<>();
-  
-  public void setTimestamp(long timestamp) {
-  this.timestamp = timestamp;
-  }
-  
-  public void addThreadInfo(ThreadInfo info) {
-  threadInfoList.add(info);
-  }
-  
-  public long getTimestamp() {
-  return timestamp;
-  }
-  
-  public List<ThreadInfo> getThreadInfoList() {
-  return threadInfoList;
-  }
-}
+  // Get all thread IDs
+  long[] threadIds = threadMXBean.getAllThreadIds();
 
-class ThreadInfo {
-  private long threadId;
-  private String threadName;
-  private String threadState;
+  // Get thread info for each thread
+  for (long threadId : threadIds) {
+  ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId);
   
-  public void setThreadId(long threadId) {
-  this.threadId = threadId;
-  }
+  if (threadInfo != null) {
+  long threadStartTime = threadInfo.getThreadState() == Thread.State.NEW ? 
+  System.currentTimeMillis() : threadInfo.getThreadCpuTime();
   
-  public void setThreadName(String threadName) {
-  this.threadName = threadName;
+  // Only add threads that fall within the time range
+  if (threadStartTime >= startTime && threadStartTime <= endTime) {
+  snapshots.add(threadInfo);
   }
-  
-  public void setThreadState(String threadState) {
-  this.threadState = threadState;
   }
-  
-  public long getThreadId() {
-  return threadId;
   }
-  
-  public String getThreadName() {
-  return threadName;
-  }
-  
-  public String getThreadState() {
-  return threadState;
-  }
-}
 
-class ProfileAnalyzeTimeRange {
-  private long startTime;
-  private long endTime;
-  
-  public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-  this.startTime = startTime;
-  this.endTime = endTime;
-  }
-  
-  public long getStartTime() {
-  return startTime;
-  }
-  
-  public long getEndTime() {
-  return endTime;
+  return snapshots;
   }
 }

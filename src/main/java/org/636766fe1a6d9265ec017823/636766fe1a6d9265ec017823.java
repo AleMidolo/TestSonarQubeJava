@@ -1,44 +1,47 @@
 import org.objectweb.asm.Symbol;
-import org.objectweb.asm.Constants;
 
 public class SymbolTable {
-  private final Symbol[] symbols;
+  private final Entry[] entries;
   private int size;
+  private static final int CONSTANT_NAMEANDTYPE = 12;
 
-  public SymbolTable(int initialCapacity) {
-  this.symbols = new Symbol[initialCapacity];
-  this.size = 1;
+  private static class Entry {
+  final int type;
+  final String name;
+  final String descriptor;
+  Entry next;
+  int index;
+
+  Entry(int type, String name, String descriptor, int index) {
+  this.type = type;
+  this.name = name;
+  this.descriptor = descriptor;
+  this.index = index;
+  }
   }
 
-  int addConstantNameAndType(final String name, final String descriptor) {
-  int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-  Symbol symbol = lookupSymbol(hashCode);
+  public Symbol addConstantNameAndType(final String name, final String descriptor) {
+  int hashCode = hash(CONSTANT_NAMEANDTYPE, name, descriptor);
+  Entry entry = entries[hashCode % entries.length];
   
-  if (symbol != null) {
-  if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-  && symbol.name.equals(name)
-  && symbol.value.equals(descriptor)) {
-  return symbol.index;
+  while (entry != null) {
+  if (entry.type == CONSTANT_NAMEANDTYPE 
+  && entry.name.equals(name)
+  && entry.descriptor.equals(descriptor)) {
+  return new Symbol(entry.index, entry.type, entry.name, entry.descriptor);
   }
+  entry = entry.next;
   }
 
-  symbol = new Symbol(
-  size++, 
-  Symbol.CONSTANT_NAME_AND_TYPE_TAG,
-  name,
-  descriptor,
-  hashCode);
+  // Not found, create new entry
+  Entry newEntry = new Entry(CONSTANT_NAMEANDTYPE, name, descriptor, size++);
+  newEntry.next = entries[hashCode % entries.length];
+  entries[hashCode % entries.length] = newEntry;
   
-  symbols[symbol.index] = symbol;
-  return symbol.index;
+  return new Symbol(newEntry.index, newEntry.type, name, descriptor);
   }
 
-  private Symbol lookupSymbol(int hashCode) {
-  for (int i = 1; i < size; i++) {
-  if (symbols[i] != null && symbols[i].hashCode == hashCode) {
-  return symbols[i];
-  }
-  }
-  return null;
+  private static int hash(int type, String name, String descriptor) {
+  return 0x7FFFFFFF & (type + name.hashCode() * descriptor.hashCode());
   }
 }

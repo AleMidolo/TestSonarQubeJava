@@ -3,33 +3,71 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
-
-  /**
-  * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
-  * @param path il percorso da cui partire (di solito un percorso di file completo)
-  * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
-  * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
-  */
+  
   public static String applyRelativePath(String path, String relativePath) {
-  // Normalizza i separatori di percorso
+  if (path == null || relativePath == null) {
+  return null;
+  }
+
+  // Convert backslashes to forward slashes
   path = path.replace('\\', '/');
   relativePath = relativePath.replace('\\', '/');
-  
-  // Rimuovi eventuali separatori finali
+
+  // Remove trailing slashes
   if (path.endsWith("/")) {
   path = path.substring(0, path.length() - 1);
   }
   
-  // Gestisci il caso in cui il percorso relativo inizia con "/"
-  if (relativePath.startsWith("/")) {
-  relativePath = relativePath.substring(1);
+  // Handle empty relative path
+  if (relativePath.isEmpty()) {
+  return path;
   }
 
-  // Usa Path per risolvere il percorso relativo
-  Path basePath = Paths.get(path);
-  Path resolvedPath = basePath.resolve(relativePath).normalize();
+  // Split the paths into components
+  String[] pathParts = path.split("/");
+  String[] relativeParts = relativePath.split("/");
   
-  // Converti il risultato in una stringa con separatori forward slash
-  return resolvedPath.toString().replace('\\', '/');
+  // Count how many levels to go up
+  int upCount = 0;
+  int relativeStartIndex = 0;
+  
+  for (String part : relativeParts) {
+  if (part.equals("..")) {
+  upCount++;
+  relativeStartIndex++;
+  } else if (!part.equals(".")) {
+  break;
+  } else {
+  relativeStartIndex++;
+  }
+  }
+
+  // Calculate new path length
+  int newPathLength = Math.max(0, pathParts.length - upCount);
+  
+  // Build new path
+  StringBuilder result = new StringBuilder();
+  
+  // Add remaining path parts
+  for (int i = 0; i < newPathLength; i++) {
+  result.append(pathParts[i]).append("/");
+  }
+  
+  // Add remaining relative parts
+  for (int i = relativeStartIndex; i < relativeParts.length; i++) {
+  if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
+  result.append(relativeParts[i]);
+  if (i < relativeParts.length - 1) {
+  result.append("/");
+  }
+  }
+  }
+
+  // Remove trailing slash if present
+  if (result.length() > 0 && result.charAt(result.length() - 1) == '/') {
+  result.setLength(result.length() - 1);
+  }
+  
+  return result.toString();
   }
 }

@@ -1,24 +1,14 @@
-public class Matrix {
-  private int[][] matrix;
-  private int rows;
-  private int cols;
+import java.util.Arrays;
 
+public class MatrixUtils {
   /**
-  * Ottiene il numero di voci diverse da zero in una riga.
-  * @param row la riga
-  * @return il numero di voci diverse da zero in una riga
+  * Get the number of non-zero entries of a row.
+  * @param row the row
+  * @return the number of non-zero entries of a row
   */
-  public int nonZeros(int row) {
-  if (row < 0 || row >= rows) {
-  throw new IllegalArgumentException("Invalid row index");
-  }
-
-  int count = 0;
-  for (int j = 0; j < cols; j++) {
-  if (matrix[row][j] != 0) {
-  count++;
-  }
-  }
-  return count;
+  public static int getNonZeroCount(double[] row) {
+  return (int) Arrays.stream(row)
+  .filter(x -> x != 0.0)
+  .count();
   }
 }

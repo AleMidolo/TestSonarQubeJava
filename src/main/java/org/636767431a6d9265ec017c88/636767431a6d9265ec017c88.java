@@ -1,31 +1,29 @@
 import java.util.*;
 
-public class BoundCalculator<K extends Comparable<K>> {
-
+public class KeyBounds {
   /**
-  * Trova un limite inferiore massimo per ogni chiave.
-  * @param keys lista delle chiavi.
-  * @return i limiti inferiori delle chiavi calcolati.
+  * Finds a maximum lower bound for every key.
+  * @param keys list of keys.
+  * @return the computed key lower bounds.
   */
-  private List<Integer> computeLowerBounds(List<K> keys) {
-  if (keys == null || keys.isEmpty()) {
-  return new ArrayList<>();
-  }
-
-  List<Integer> lowerBounds = new ArrayList<>(keys.size());
+  public static Map<Integer, Integer> findKeyLowerBounds(List<Integer> keys) {
+  // Sort keys in ascending order
+  Collections.sort(keys);
   
+  Map<Integer, Integer> lowerBounds = new HashMap<>();
+  
+  // For each key, find largest value less than it
   for (int i = 0; i < keys.size(); i++) {
-  K currentKey = keys.get(i);
-  int maxLowerBound = 0;
+  int currentKey = keys.get(i);
   
-  for (int j = 0; j < i; j++) {
-  K previousKey = keys.get(j);
-  if (currentKey.compareTo(previousKey) > 0) {
-  maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
-  }
+  // If first element, no lower bound exists
+  if (i == 0) {
+  lowerBounds.put(currentKey, null);
+  continue;
   }
   
-  lowerBounds.add(maxLowerBound);
+  // Get previous element as lower bound
+  lowerBounds.put(currentKey, keys.get(i-1));
   }
   
   return lowerBounds;

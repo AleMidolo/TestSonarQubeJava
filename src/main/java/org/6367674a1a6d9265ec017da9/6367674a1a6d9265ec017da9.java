@@ -5,20 +5,20 @@ public class LinkedList<T> {
     private final Object lock = new Object();
 
     public void moveAllNodes(LinkedList<T> list) {
-        if (list == null || list.head == null) {
-            return;
-        }
-
         synchronized (lock) {
             synchronized (list.lock) {
-                // Get the first and last nodes of source list
+                if (list.head == null) {
+                    return;
+                }
+
+                // Get the first and last nodes of the source list
                 ListNode<T> firstNode = list.head;
                 ListNode<T> lastNode = firstNode;
                 while (lastNode.next != null) {
                     lastNode = lastNode.next;
                 }
 
-                // Connect source list to end of current list
+                // Connect the source list to the end of this list
                 if (head == null) {
                     head = firstNode;
                 } else {
@@ -57,18 +57,20 @@ public class LinkedList<T> {
                 }
                 current.next = node;
             }
+            node.next = null;
         }
     }
 
-    public void removeListNode(ListNode<T> node) {
+    public ListNode<T> removeListNode(ListNode<T> node) {
         synchronized (lock) {
-            if (head == null || node == null) {
-                return;
+            if (head == null) {
+                return null;
             }
 
             if (head == node) {
                 head = head.next;
-                return;
+                node.next = null;
+                return node;
             }
 
             ListNode<T> current = head;
@@ -76,9 +78,13 @@ public class LinkedList<T> {
                 current = current.next;
             }
 
-            if (current.next != null) {
-                current.next = current.next.next;
+            if (current.next == node) {
+                current.next = node.next;
+                node.next = null;
+                return node;
             }
+
+            return null;
         }
     }
 }

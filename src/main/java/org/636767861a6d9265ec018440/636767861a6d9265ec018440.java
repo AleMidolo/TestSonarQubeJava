@@ -15,7 +15,7 @@ public class NameAbbreviator {
         // Add first character
         buf.append(Character.toUpperCase(nameStart.charAt(0)));
 
-        // Find first capital after start or end
+        // Find next capital letter if it exists
         for (int i = 1; i < nameStart.length(); i++) {
             char c = nameStart.charAt(i);
             if (Character.isUpperCase(c)) {

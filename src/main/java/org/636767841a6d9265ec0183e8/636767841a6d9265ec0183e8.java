@@ -21,7 +21,7 @@ public class EventBuffer {
         if (events.size() >= MAX_BUFFER_SIZE) {
             events.remove(0); // Remove oldest event if buffer is full
         }
-
+        
         events.add(event);
     }
 }

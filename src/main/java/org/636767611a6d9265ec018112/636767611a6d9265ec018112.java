@@ -1,4 +1,7 @@
 /**
  * {@inheritDoc}
  */
-public String getMessage()
+@Override
+public String toString() {
+    // implementation here
+}

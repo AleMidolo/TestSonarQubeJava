@@ -1,9 +1,9 @@
 import java.util.Objects;
 
 public class ArrayUtils {
-    
+
     /**
-     * Array vuoto costante di Double da riutilizzare
+     * Empty array constant used for optimization
      */
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 

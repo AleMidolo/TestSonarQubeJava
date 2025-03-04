@@ -29,4 +29,13 @@ public class ByteVector {
             bytes = Arrays.copyOf(bytes, newCapacity);
         }
     }
+    
+    // Helper methods for getting array and size
+    public byte[] getBytes() {
+        return Arrays.copyOf(bytes, size);
+    }
+    
+    public int size() {
+        return size;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Graph<V,E> {
     
-    // Map to store edges between vertices
+    // Maps to store vertex and edge relationships
     private Map<V, Map<V, Set<E>>> index;
     
     public Graph() {

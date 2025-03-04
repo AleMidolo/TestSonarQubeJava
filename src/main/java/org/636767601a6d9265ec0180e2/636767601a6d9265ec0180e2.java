@@ -27,22 +27,23 @@ public class SeparatorComputer {
             Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
             commonNeighbors.retainAll(targetNeighbors);
             
-            // For each pair of common neighbors
+            // For each pair of common neighbors, check if they form a minimal separator
             for (V v1 : commonNeighbors) {
                 for (V v2 : commonNeighbors) {
                     if (!v1.equals(v2)) {
-                        // Add pair as separator if they form a minimal separator
+                        // Assuming vertices have integer IDs
+                        int id1 = v1.getId();
+                        int id2 = v2.getId();
+                        
+                        // Check if {v1,v2} is a minimal separator
                         if (isMinimalSeparator(v1, v2, source, target)) {
-                            separators.add(new Pair<>(
-                                graph.getVertexIndex(v1),
-                                graph.getVertexIndex(v2)
-                            ));
+                            separators.add(new Pair<>(id1, id2));
                         }
                     }
                 }
             }
             
-            // Add edge and its separators to global list
+            // Add the edge and its separators to global list
             globalSeparators.add(new Pair<>(separators, edge));
         }
         
@@ -56,11 +57,11 @@ public class SeparatorComputer {
         removed.add(v1);
         removed.add(v2);
         
-        // Check if source and target are disconnected when v1,v2 removed
+        // Check if source and target are disconnected when v1,v2 are removed
         return !hasPath(source, target, removed);
     }
     
-    // Helper method to check if path exists between vertices
+    // Helper method to check if there exists a path between two vertices
     private boolean hasPath(V start, V end, Set<V> excluded) {
         Set<V> visited = new HashSet<>();
         Queue<V> queue = new LinkedList<>();

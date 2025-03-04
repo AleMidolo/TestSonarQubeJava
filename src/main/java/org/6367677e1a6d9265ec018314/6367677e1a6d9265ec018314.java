@@ -46,7 +46,7 @@ public class CategoryTree {
             }
         }
         
-        // Remove marked nodes from children list
+        // Remove all marked nodes
         node.getChildren().removeAll(nodesToRemove);
         
         return removedCount;

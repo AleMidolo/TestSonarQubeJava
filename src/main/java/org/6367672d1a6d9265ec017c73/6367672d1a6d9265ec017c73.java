@@ -10,20 +10,15 @@ class Logger {
   }
   
   /**
-  * Restituisce true se il messaggio deve essere stampato nel timestamp fornito, altrimenti restituisce false.
-  * Se questo metodo restituisce false, il messaggio non verrà stampato.
-  * Il timestamp è in granularità di secondi.
+  * Restituisce true se il messaggio deve essere stampato nel timestamp fornito, 
+  * altrimenti restituisce false. Se questo metodo restituisce false, il messaggio 
+  * non verrà stampato. Il timestamp è in granularità di secondi.
   */
   public boolean shouldPrintMessage(int timestamp, String message) {
-  // Se il messaggio non è mai stato stampato prima, stampalo
-  if (!messageTimestamps.containsKey(message)) {
-  messageTimestamps.put(message, timestamp);
-  return true;
-  }
+  // If message has never been seen before or the throttle window has passed
+  if (!messageTimestamps.containsKey(message) || 
+  timestamp - messageTimestamps.get(message) >= THROTTLE_WINDOW) {
   
-  // Controlla se sono passati almeno 10 secondi dall'ultima stampa
-  int lastPrinted = messageTimestamps.get(message);
-  if (timestamp - lastPrinted >= THROTTLE_WINDOW) {
   messageTimestamps.put(message, timestamp);
   return true;
   }

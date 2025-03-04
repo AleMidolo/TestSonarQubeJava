@@ -5,13 +5,15 @@ import java.util.Set;
 
 public class Graph<V,E> {
   
-  // Map to store edges between vertices
-  private Map<V, Map<V, Set<E>>> index;
-  
+  // Index maps to store edges
+  private Map<V, Map<V, Set<E>>> outgoingEdges;
+  private Map<V, Map<V, Set<E>>> incomingEdges;
+
   public Graph() {
-  index = new HashMap<>();
+  outgoingEdges = new HashMap<>();
+  incomingEdges = new HashMap<>();
   }
-  
+
   /**
   * Aggiunge un arco all'indice.
   * @param sourceVertex il vertice sorgente 
@@ -19,13 +21,22 @@ public class Graph<V,E> {
   * @param e l'arco
   */
   protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-  // Get or create map for source vertex
-  Map<V, Set<E>> sourceMap = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
-  
-  // Get or create set of edges between source and target
-  Set<E> edges = sourceMap.computeIfAbsent(targetVertex, k -> new HashSet<>());
-  
-  // Add the edge
-  edges.add(e);
+  // Add to outgoing edges
+  if (!outgoingEdges.containsKey(sourceVertex)) {
+  outgoingEdges.put(sourceVertex, new HashMap<>());
+  }
+  if (!outgoingEdges.get(sourceVertex).containsKey(targetVertex)) {
+  outgoingEdges.get(sourceVertex).put(targetVertex, new HashSet<>());
+  }
+  outgoingEdges.get(sourceVertex).get(targetVertex).add(e);
+
+  // Add to incoming edges
+  if (!incomingEdges.containsKey(targetVertex)) {
+  incomingEdges.put(targetVertex, new HashMap<>());
+  }
+  if (!incomingEdges.get(targetVertex).containsKey(sourceVertex)) {
+  incomingEdges.get(targetVertex).put(sourceVertex, new HashSet<>());
+  }
+  incomingEdges.get(targetVertex).get(sourceVertex).add(e);
   }
 }

@@ -27,61 +27,27 @@ public class SeparatorComputer {
   Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
   commonNeighbors.retainAll(targetNeighbors);
   
-  // For each pair of common neighbors, check if they form a minimal separator
+  // Create pairs of vertices that form minimal separators
   for (V v1 : commonNeighbors) {
   for (V v2 : commonNeighbors) {
   if (!v1.equals(v2)) {
   // Assuming vertices have integer IDs
   int id1 = v1.getId();
   int id2 = v2.getId();
-  
-  // Check if {v1,v2} is a minimal separator
-  if (isMinimalSeparator(v1, v2, source, target)) {
+  // Add separator pair in sorted order
+  if (id1 < id2) {
   separators.add(new Pair<>(id1, id2));
+  } else {
+  separators.add(new Pair<>(id2, id1));
   }
   }
   }
   }
   
-  // Add the edge and its separators to global list
+  // Add the separators list along with the edge to global list
   globalSeparators.add(new Pair<>(separators, edge));
   }
   
   return globalSeparators;
-  }
-  
-  // Helper method to check if two vertices form a minimal separator
-  private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
-  // Remove v1 and v2 from graph temporarily
-  Set<V> removed = new HashSet<>();
-  removed.add(v1);
-  removed.add(v2);
-  
-  // Check if source and target are disconnected when v1,v2 are removed
-  return !hasPath(source, target, removed);
-  }
-  
-  // Helper method to check if there exists a path between two vertices
-  private boolean hasPath(V start, V end, Set<V> excluded) {
-  Set<V> visited = new HashSet<>();
-  Queue<V> queue = new LinkedList<>();
-  queue.add(start);
-  visited.add(start);
-  
-  while (!queue.isEmpty()) {
-  V current = queue.poll();
-  if (current.equals(end)) {
-  return true;
-  }
-  
-  for (V neighbor : graph.neighborsOf(current)) {
-  if (!visited.contains(neighbor) && !excluded.contains(neighbor)) {
-  visited.add(neighbor);
-  queue.add(neighbor);
-  }
-  }
-  }
-  
-  return false;
   }
 }

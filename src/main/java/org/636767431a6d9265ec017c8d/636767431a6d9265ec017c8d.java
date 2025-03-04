@@ -9,7 +9,6 @@ public class BinaryLogCalculator {
   }
   
   // Count number of bits needed to represent n
-  // This effectively calculates floor(log_2(n)) + 1
   return 32 - Integer.numberOfLeadingZeros(n);
   }
 }

@@ -5,33 +5,33 @@ import java.util.logging.Level;
 
 public class ConfigurationManager {
   private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class.getName());
-  private static final String DEFAULT_DEPLOY_PATH = "/opt/deploy";
-  private String deployPath;
+  private static final String DEFAULT_DEPLOY_PATH = "/opt/application/";
+  private File deploymentPath;
 
-  /**
-  * inizializza la configurazione, ad esempio controlla il percorso di distribuzione
-  */
   public void init() {
   try {
-  // Check if default deploy path exists
-  File deployDir = new File(DEFAULT_DEPLOY_PATH);
-  
-  if (!deployDir.exists()) {
-  deployDir.mkdirs();
-  LOGGER.info("Created default deployment directory: " + DEFAULT_DEPLOY_PATH);
+  // Check if deployment path exists
+  deploymentPath = new File(DEFAULT_DEPLOY_PATH);
+  if (!deploymentPath.exists()) {
+  deploymentPath.mkdirs();
+  LOGGER.info("Created deployment directory at: " + DEFAULT_DEPLOY_PATH);
   }
-  
-  if (!deployDir.canWrite()) {
-  LOGGER.warning("Deploy directory is not writable: " + DEFAULT_DEPLOY_PATH);
-  throw new IOException("Deploy directory is not writable");
+
+  // Verify write permissions
+  if (!deploymentPath.canWrite()) {
+  LOGGER.severe("No write permissions for deployment path: " + DEFAULT_DEPLOY_PATH);
+  throw new SecurityException("No write permissions for deployment path");
   }
-  
-  this.deployPath = DEFAULT_DEPLOY_PATH;
+
+  // Additional initialization steps can be added here
   LOGGER.info("Configuration initialized successfully");
-  
+
+  } catch (SecurityException e) {
+  LOGGER.log(Level.SEVERE, "Security error during initialization", e);
+  throw e;
   } catch (Exception e) {
-  LOGGER.log(Level.SEVERE, "Failed to initialize configuration", e);
-  throw new RuntimeException("Configuration initialization failed", e);
+  LOGGER.log(Level.SEVERE, "Error during initialization", e);
+  throw new RuntimeException("Failed to initialize configuration", e);
   }
   }
 }

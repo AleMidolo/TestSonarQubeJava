@@ -4,26 +4,25 @@ public class HashUtils {
   return 2;
   }
   
-  int candidate = desiredCapacity;
-  if (candidate % 2 == 0) {
-  candidate++; // Make it odd
+  int num = desiredCapacity;
+  if (num % 2 == 0) {
+  num++; // Start with odd number
   }
   
-  while (!isPrime(candidate)) {
-  candidate += 2;
+  while (!isPrime(num)) {
+  num += 2;
   }
   
-  return candidate;
+  return num;
   }
   
   private static boolean isPrime(int n) {
   if (n <= 1) return false;
-  if (n == 2) return true;
-  if (n % 2 == 0) return false;
+  if (n <= 3) return true;
+  if (n % 2 == 0 || n % 3 == 0) return false;
   
-  int sqrt = (int) Math.sqrt(n);
-  for (int i = 3; i <= sqrt; i += 2) {
-  if (n % i == 0) {
+  for (int i = 5; i * i <= n; i += 6) {
+  if (n % i == 0 || n % (i + 2) == 0) {
   return false;
   }
   }

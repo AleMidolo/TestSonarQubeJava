@@ -30,16 +30,14 @@ public class TypeResolver {
   
   if (actualType instanceof Class) {
   resolvedTypes[i] = (Class<?>) actualType;
-  }
-  else if (actualType instanceof TypeVariable) {
+  } else if (actualType instanceof TypeVariable) {
   Type resolvedType = typeVariableMap.get(actualType);
   if (resolvedType instanceof Class) {
   resolvedTypes[i] = (Class<?>) resolvedType;
   } else {
   return null; // Cannot resolve type variable
   }
-  }
-  else {
+  } else {
   return null; // Cannot handle other type arguments
   }
   }

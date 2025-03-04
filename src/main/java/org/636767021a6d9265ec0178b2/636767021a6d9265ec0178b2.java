@@ -3,73 +3,58 @@ import java.util.Stack;
 public class FrameStack {
   private Stack<String> stack;
 
-  public FrameStack() {
-  this.stack = new Stack<>();
-  }
-
-  /**
-  * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
-  * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
-  */
   private void pop(final String descriptor) {
   int index = 0;
   while (index < descriptor.length()) {
   char c = descriptor.charAt(index);
-  
   switch (c) {
   case '(':
   // Skip opening parenthesis for method descriptor
   index++;
-  continue;
+  break;
   case ')':
   // End of method arguments
   return;
-  case 'B':
-  case 'C': 
-  case 'I':
-  case 'S':
-  case 'Z':
-  case 'F':
-  // Pop single slot types
-  if (!stack.isEmpty()) {
-  stack.pop();
-  }
-  index++;
-  break;
-  case 'D':
-  case 'J':
-  // Pop double slot types
-  if (!stack.isEmpty()) {
-  stack.pop();
-  if (!stack.isEmpty()) {
-  stack.pop();
-  }
-  }
-  index++;
-  break;
   case 'L':
-  // Skip class descriptor until semicolon
-  if (!stack.isEmpty()) {
+  // Object type - pop one element and skip to semicolon
   stack.pop();
+  while (descriptor.charAt(index) != ';') {
+  index++;
   }
-  index = descriptor.indexOf(';', index) + 1;
+  index++;
   break;
   case '[':
-  // Skip array dimensions
-  while (index < descriptor.length() && descriptor.charAt(index) == '[') {
+  // Array type - skip brackets
+  while (descriptor.charAt(index) == '[') {
   index++;
   }
-  if (!stack.isEmpty()) {
+  if (descriptor.charAt(index) == 'L') {
+  // Skip object type name
+  while (descriptor.charAt(index) != ';') {
+  index++;
+  }
+  }
   stack.pop();
-  }
-  if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
-  index = descriptor.indexOf(';', index) + 1;
-  } else {
   index++;
-  }
+  break;
+  case 'B':
+  case 'C': 
+  case 'D':
+  case 'F':
+  case 'I':
+  case 'J':
+  case 'S':
+  case 'Z':
+  // Primitive type - pop one element
+  stack.pop();
+  index++;
+  break;
+  case 'V':
+  // Void type - no pop needed
+  index++;
   break;
   default:
-  index++;
+  throw new IllegalArgumentException("Invalid descriptor character: " + c);
   }
   }
   }

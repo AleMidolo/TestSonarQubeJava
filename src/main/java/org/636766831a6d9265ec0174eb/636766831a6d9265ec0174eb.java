@@ -25,7 +25,7 @@ public class FileHandler {
   }
   }
   
-  // Helper method to add individual files
+  // Helper method for adding individual files
   private void add(File file) {
   // Implementation of add method would go here
   // This is just a stub since the original implementation is not provided

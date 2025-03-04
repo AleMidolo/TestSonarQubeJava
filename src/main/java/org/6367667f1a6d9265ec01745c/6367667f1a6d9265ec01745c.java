@@ -35,7 +35,7 @@ public class ClassPathUtils {
   }
   }
   } catch (Exception e) {
-  // Gestisce eventuali errori nella conversione URL
+  // Gestisce eventuali errori nella conversione del file in URL
   e.printStackTrace();
   }
   }

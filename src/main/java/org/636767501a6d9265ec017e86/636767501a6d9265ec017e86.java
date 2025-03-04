@@ -17,7 +17,7 @@ public class LinkedList<E> {
 
   /**
   * Returns the previous node in the linked list
-  * @return The previous node
+  * @return The previous ListNode
   * @throws NoSuchElementException if there is no previous node
   */
   @Override

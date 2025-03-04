@@ -6,7 +6,7 @@ public class DataTable {
   public DataTable(int bucket) {
   this.bucket = bucket;
   }
-
+  
   /**
   * @return true se il bucket è lo stesso.
   */
@@ -16,9 +16,25 @@ public class DataTable {
   }
   return this.bucket == dataset.bucket;
   }
-
-  // Getter for bucket
+  
   public int getBucket() {
   return bucket;
+  }
+  
+  public void setBucket(int bucket) {
+  this.bucket = bucket;
+  }
+  
+  @Override
+  public boolean equals(Object o) {
+  if (this == o) return true;
+  if (o == null || getClass() != o.getClass()) return false;
+  DataTable dataTable = (DataTable) o;
+  return bucket == dataTable.bucket;
+  }
+  
+  @Override
+  public int hashCode() {
+  return Objects.hash(bucket);
   }
 }

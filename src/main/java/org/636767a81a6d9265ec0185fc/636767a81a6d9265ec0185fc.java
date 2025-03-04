@@ -56,7 +56,7 @@ public class CodedInputStream {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint32");
+        throw new IOException("Malformed varint");
     }
 
     private byte readRawByte() throws IOException {

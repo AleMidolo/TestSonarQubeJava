@@ -17,29 +17,21 @@ public class ConfigurationManager {
             File deployDir = new File(DEFAULT_DEPLOY_PATH);
             
             if (!deployDir.exists()) {
-                boolean created = deployDir.mkdirs();
-                if (created) {
-                    LOGGER.info("Created default deployment directory: " + DEFAULT_DEPLOY_PATH);
-                } else {
-                    LOGGER.warning("Failed to create deployment directory");
-                }
+                deployDir.mkdirs();
+                LOGGER.info("Created default deployment directory: " + DEFAULT_DEPLOY_PATH);
             }
-
-            // Verify directory is writable
-            if (deployDir.canWrite()) {
-                this.deployPath = DEFAULT_DEPLOY_PATH;
-                LOGGER.info("Deployment path initialized to: " + this.deployPath);
-            } else {
-                LOGGER.severe("Deployment directory is not writable");
-                throw new IOException("Deployment directory is not writable");
+            
+            if (!deployDir.canWrite()) {
+                LOGGER.warning("Deploy directory is not writable: " + DEFAULT_DEPLOY_PATH);
+                throw new IOException("Deploy directory is not writable");
             }
-
-        } catch (SecurityException e) {
-            LOGGER.log(Level.SEVERE, "Security exception while initializing configuration", e);
-            throw e;
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "IO exception while initializing configuration", e);
-            throw new RuntimeException("Failed to initialize configuration", e);
+            
+            this.deployPath = DEFAULT_DEPLOY_PATH;
+            LOGGER.info("Configuration initialized successfully");
+            
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to initialize configuration", e);
+            throw new RuntimeException("Configuration initialization failed", e);
         }
     }
 }

@@ -32,12 +32,12 @@ public class BoundaryTraversal {
         FORWARD,
         BACKWARD
     }
-
+    
     public Circulator findOnBoundary(Predicate<Node> predicate, Node start, Node stop, Direction dir) {
         if (start == null || stop == null) {
             return null;
         }
-
+        
         Circulator circulator = new Circulator(start);
         
         // Check if start node satisfies predicate

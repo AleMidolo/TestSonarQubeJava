@@ -5,7 +5,7 @@ public class TreeEdge {
     private TreeEdge next;
     private TreeNode source;
     private TreeNode target;
-    
+
     /**
      * Removes this edge from both doubly linked lists of tree edges.
      */
@@ -20,12 +20,11 @@ public class TreeEdge {
             next.prev = prev;
         }
         
-        // Remove references from source node
+        // Remove references from source and target nodes
         if (source != null) {
             source.removeEdge(this);
         }
         
-        // Remove references from target node 
         if (target != null) {
             target.removeEdge(this);
         }
@@ -38,9 +37,13 @@ public class TreeEdge {
     }
 }
 
-// Supporting class
+// Supporting TreeNode class
 class TreeNode {
+    private List<TreeEdge> edges;
+    
     public void removeEdge(TreeEdge edge) {
-        // Implementation for removing edge from node
+        if (edges != null) {
+            edges.remove(edge);
+        }
     }
 }

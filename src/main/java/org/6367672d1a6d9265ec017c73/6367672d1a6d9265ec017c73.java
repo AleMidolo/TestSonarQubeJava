@@ -8,7 +8,7 @@ class Logger {
   public Logger() {
   messageTimestamps = new HashMap<>();
   }
-
+  
   /**
   * Restituisce true se il messaggio deve essere stampato nel timestamp fornito, altrimenti restituisce false.
   * Se questo metodo restituisce false, il messaggio non verrà stampato.

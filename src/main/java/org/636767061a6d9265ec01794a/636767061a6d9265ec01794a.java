@@ -6,37 +6,41 @@ public class FilenameUtils {
   private static final char UNIX_SEPARATOR = '/';
   private static final char WINDOWS_SEPARATOR = '\\';
 
+  /**
+  * Restituisce l'indice dell'ultimo carattere separatore dell'estensione, che è un punto.
+  * <p>
+  * Questo metodo verifica anche che non ci sia un separatore di directory dopo l'ultimo punto.
+  * Per fare ciò, utilizza {@link #indexOfLastSeparator(String)} che gestirà un file sia in formato Unix che Windows.
+  * <p>
+  * L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
+  *
+  * @param filename il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
+  * @return l'indice dell'ultimo carattere separatore, o -1 se non esiste tale carattere
+  */
   public static int indexOfExtension(String filename) {
   if (filename == null) {
   return -1;
   }
 
-  // Get last directory separator position
-  int lastDirSeparator = indexOfLastSeparator(filename);
-  
-  // Find last dot
-  int lastDot = filename.lastIndexOf(EXTENSION_SEPARATOR);
-  
-  // Return -1 if:
-  // - No dot found
-  // - Dot is before last directory separator
-  // - Dot is the last character
-  if (lastDot == -1 || lastDot < lastDirSeparator || lastDot == filename.length() - 1) {
+  int extensionPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
+  int lastSeparator = indexOfLastSeparator(filename);
+
+  // Se non c'è un punto o se l'ultimo separatore è dopo l'ultimo punto
+  if (extensionPos == -1 || lastSeparator > extensionPos) {
   return -1;
   }
-  
-  return lastDot;
+  return extensionPos;
   }
 
-  public static int indexOfLastSeparator(String filename) {
+  /**
+  * Metodo di supporto per trovare l'ultimo separatore di directory
+  */
+  private static int indexOfLastSeparator(String filename) {
   if (filename == null) {
   return -1;
   }
-  
-  // Find last occurrence of either separator
   int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
   int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
-  
   return Math.max(lastUnixPos, lastWindowsPos);
   }
 }

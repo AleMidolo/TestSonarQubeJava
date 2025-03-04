@@ -10,7 +10,7 @@ public class ByteBuffer {
   * @return La posizione del byte trovato, contando dall'inizio del <code>buffer</code>, oppure <code>-1</code> se non trovato.
   */
   protected int findByte(byte value, int pos) {
-  if (buffer == null || pos >= buffer.length) {
+  if (buffer == null || pos < 0 || pos >= buffer.length) {
   return -1;
   }
   

@@ -11,15 +11,17 @@ public class ByteVector {
   }
   
   public ByteVector putInt(final int intValue) {
+  // Ensure capacity
   ensureCapacity(size + INT_SIZE);
   
-  // Store int value in big-endian format
-  bytes[size] = (byte) ((intValue >> 24) & 0xFF);
-  bytes[size + 1] = (byte) ((intValue >> 16) & 0xFF); 
-  bytes[size + 2] = (byte) ((intValue >> 8) & 0xFF);
-  bytes[size + 3] = (byte) (intValue & 0xFF);
+  // Convert int to bytes and add to array
+  bytes[size] = (byte)(intValue >> 24);
+  bytes[size + 1] = (byte)(intValue >> 16);
+  bytes[size + 2] = (byte)(intValue >> 8);
+  bytes[size + 3] = (byte)intValue;
   
   size += INT_SIZE;
+  
   return this;
   }
   
@@ -28,5 +30,14 @@ public class ByteVector {
   int newCapacity = Math.max(bytes.length * 2, minCapacity);
   bytes = Arrays.copyOf(bytes, newCapacity);
   }
+  }
+  
+  // Helper methods for getting array and size
+  public byte[] getBytes() {
+  return Arrays.copyOf(bytes, size);
+  }
+  
+  public int size() {
+  return size;
   }
 }

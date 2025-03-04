@@ -14,6 +14,7 @@ public class CustomClassReader extends ClassReader {
   */
   public short readShort(final int offset) {
   byte[] classFileBuffer = this.b;
-  return (short)((classFileBuffer[offset] & 0xFF) << 8 | (classFileBuffer[offset + 1] & 0xFF));
+  return (short)((classFileBuffer[offset] & 0xFF) << 8 | 
+  (classFileBuffer[offset + 1] & 0xFF));
   }
 }

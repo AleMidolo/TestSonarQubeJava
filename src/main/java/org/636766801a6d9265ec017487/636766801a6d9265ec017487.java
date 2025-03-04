@@ -17,7 +17,7 @@ public class TemplateEncoder {
   if (c == '{') {
   result.append("%7B");
   } else if (c == '}') {
-  result.append("%7D");
+  result.append("%7D"); 
   } else {
   result.append(c);
   }

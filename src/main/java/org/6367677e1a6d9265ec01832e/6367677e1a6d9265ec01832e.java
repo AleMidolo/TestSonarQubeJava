@@ -12,14 +12,14 @@ public class LoggerUtils {
   }
   
   // Get the logger manager's logger list
-  LogManager logManager = LogManager.getLogManager();
-  Enumeration<String> loggerNames = logManager.getLoggerNames();
+  LogManager manager = LogManager.getLogManager();
+  Enumeration<String> loggerNames = manager.getLoggerNames();
   
   // Search through existing loggers
   while (loggerNames.hasMoreElements()) {
   String loggerName = loggerNames.nextElement();
   if (loggerName.equals(name)) {
-  return logManager.getLogger(name);
+  return manager.getLogger(name);
   }
   }
   

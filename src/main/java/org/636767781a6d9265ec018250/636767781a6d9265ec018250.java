@@ -8,13 +8,14 @@ public class LogEventFilter extends Filter {
   if (event == null) {
   return Filter.NEUTRAL;
   }
-  
+
   String message = event.getRenderedMessage();
   if (message == null || message.isEmpty()) {
   return Filter.NEUTRAL;
   }
-  
-  // Default implementation returns NEUTRAL if no match
+
+  // Add any specific filtering logic here
+  // For now just returns NEUTRAL as per docstring
   return Filter.NEUTRAL;
   }
 }

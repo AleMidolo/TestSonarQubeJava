@@ -14,10 +14,9 @@ public class ByteVector {
   return;
   }
   
-  int newCapacity = this.capacity + size;
-  byte[] newData = Arrays.copyOf(this.data, newCapacity);
-  
-  this.data = newData;
-  this.capacity = newCapacity;
+  int newCapacity = capacity + size;
+  byte[] newData = Arrays.copyOf(data, newCapacity);
+  data = newData;
+  capacity = newCapacity;
   }
 }

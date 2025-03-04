@@ -1,4 +1,4 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 public class ArrayUtils {
   /**
@@ -9,22 +9,20 @@ public class ArrayUtils {
   * @param to l'indice dell'ultimo elemento (inclusivo) all'interno dell'intervallo da invertire
   */
   public static final <V> void reverse(V[] arr, int from, int to) {
-  // Check for null array
-  Objects.requireNonNull(arr, "Array cannot be null");
-  
-  // Validate indices
-  if (from < 0 || to >= arr.length || from > to) {
-  throw new IllegalArgumentException("Invalid range indices");
+  if (arr == null || arr.length == 0) {
+  return;
   }
   
-  // Reverse elements in the specified range
+  if (from < 0 || to >= arr.length || from > to) {
+  throw new IllegalArgumentException("Invalid range parameters");
+  }
+  
   while (from < to) {
   // Swap elements
   V temp = arr[from];
   arr[from] = arr[to];
   arr[to] = temp;
   
-  // Move indices towards center
   from++;
   to--;
   }

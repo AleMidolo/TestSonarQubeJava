@@ -10,63 +10,64 @@ import java.util.List;
 public class SocketAppender extends AppenderSkeleton {
   
   private List<Socket> connectedClients;
-  private List<PrintWriter> clientWriters;
-
+  private List<PrintWriter> writers;
+  
   public SocketAppender() {
   connectedClients = new ArrayList<>();
-  clientWriters = new ArrayList<>();
+  writers = new ArrayList<>();
   }
 
   @Override
   protected void append(LoggingEvent event) {
   if (event == null) return;
-
-  String formattedMessage = this.layout.format(event);
-
-  // Iterate through all connected clients and send the log message
-  for (int i = 0; i < clientWriters.size(); i++) {
+  
+  String message = this.layout.format(event);
+  
+  // Remove disconnected clients
+  List<Integer> disconnectedIndexes = new ArrayList<>();
+  
+  // Send message to all connected clients
+  for (int i = 0; i < writers.size(); i++) {
   try {
-  PrintWriter writer = clientWriters.get(i);
-  writer.println(formattedMessage);
+  PrintWriter writer = writers.get(i);
+  writer.println(message);
   writer.flush();
   } catch (Exception e) {
-  // If there's an error writing to client, remove it
-  removeClient(i);
-  i--; // Adjust index since we removed an element
+  disconnectedIndexes.add(i);
   }
   }
-  }
-
-  public void addClient(Socket clientSocket) throws IOException {
-  connectedClients.add(clientSocket);
-  clientWriters.add(new PrintWriter(clientSocket.getOutputStream(), true));
-  }
-
-  private void removeClient(int index) {
+  
+  // Clean up disconnected clients
+  for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
+  int index = disconnectedIndexes.get(i);
   try {
+  writers.get(index).close();
   connectedClients.get(index).close();
   } catch (IOException e) {
   // Ignore close errors
   }
+  writers.remove(index);
   connectedClients.remove(index);
-  clientWriters.remove(index);
+  }
+  }
+
+  public void addClient(Socket client) throws IOException {
+  connectedClients.add(client);
+  writers.add(new PrintWriter(client.getOutputStream(), true));
   }
 
   @Override
   public void close() {
-  if (!closed) {
-  closed = true;
-  // Close all client connections
-  for (Socket socket : connectedClients) {
+  for (int i = 0; i < connectedClients.size(); i++) {
   try {
-  socket.close();
+  writers.get(i).close();
+  connectedClients.get(i).close();
   } catch (IOException e) {
   // Ignore close errors
   }
   }
   connectedClients.clear();
-  clientWriters.clear();
-  }
+  writers.clear();
   }
 
   @Override

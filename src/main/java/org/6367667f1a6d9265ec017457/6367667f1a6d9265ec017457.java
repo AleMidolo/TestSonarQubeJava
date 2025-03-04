@@ -10,12 +10,12 @@ public class UTF8Decoder {
         int b1 = bb.get(i) & 0xFF;
         
         // Single byte character (ASCII)
-        if (b1 <= 0x7F) {
+        if ((b1 & 0x80) == 0) {
             sb.append((char)b1);
             return i + 1;
         }
         
-        // 2-byte sequence
+        // 2 byte sequence
         if ((b1 & 0xE0) == 0xC0) {
             if (i + 1 >= bb.limit()) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
@@ -29,7 +29,7 @@ public class UTF8Decoder {
             return i + 2;
         }
         
-        // 3-byte sequence  
+        // 3 byte sequence  
         if ((b1 & 0xF0) == 0xE0) {
             if (i + 2 >= bb.limit()) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
@@ -44,7 +44,7 @@ public class UTF8Decoder {
             return i + 3;
         }
         
-        // 4-byte sequence
+        // 4 byte sequence
         if ((b1 & 0xF8) == 0xF0) {
             if (i + 3 >= bb.limit()) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");

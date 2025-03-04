@@ -21,10 +21,10 @@ public class FrameStackHandler {
                     index++;
                     continue;
                 case ')':
-                    // End of method parameters
+                    // End of method arguments
                     return;
                 case 'B':
-                case 'C': 
+                case 'C':
                 case 'I':
                 case 'S':
                 case 'Z':
@@ -52,8 +52,10 @@ public class FrameStackHandler {
                         index++;
                     }
                     if (descriptor.charAt(index) == 'L') {
+                        // Skip to semicolon for array of objects
                         index = descriptor.indexOf(';', index) + 1;
                     } else {
+                        // Single char for primitive arrays
                         index++;
                     }
                     frameStack.pop();

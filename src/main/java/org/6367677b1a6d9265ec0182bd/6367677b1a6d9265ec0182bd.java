@@ -18,8 +18,7 @@ public class CustomLogFormatter {
         formattedLog.append(" ");
         
         // Add log level
-        formattedLog.append("[").append(event.getLevel().toString()).append("]");
-        formattedLog.append(" ");
+        formattedLog.append("[").append(event.getLevel().toString()).append("] ");
         
         // Add logger name
         formattedLog.append(event.getLoggerName());
@@ -28,7 +27,7 @@ public class CustomLogFormatter {
         // Add message
         formattedLog.append(event.getRenderedMessage());
         
-        // Add throwable info if exists
+        // Add throwable information if exists
         String[] throwableInfo = event.getThrowableStrRep();
         if (throwableInfo != null) {
             formattedLog.append("\n");

@@ -1,6 +1,6 @@
-import java.util.Arrays;
+package org.utils;
 
-public class ArrayUtils {
+public class ArrayHashCodeUtils {
     /**
      * Devuelve un código hash basado en el contenido del array especificado. Si el <code>array</code> es <code>null</code>, este método devuelve 0.
      * @param array el array de tipo long para obtener un código hash
@@ -10,6 +10,11 @@ public class ArrayUtils {
         if (array == null) {
             return 0;
         }
-        return Arrays.hashCode(array);
+        
+        int hash = 1;
+        for (long element : array) {
+            hash = 31 * hash + (int)(element ^ (element >>> 32));
+        }
+        return hash;
     }
 }

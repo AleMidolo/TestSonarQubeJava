@@ -19,49 +19,51 @@ public class GraphUtils {
         V startVertex = graph.getEdgeSource(firstEdge);
         V currentVertex = graph.getEdgeTarget(firstEdge);
         
-        // Add first vertex and edge
         vertexList.add(startVertex);
+        vertexList.add(currentVertex);
         edgeList.add(firstEdge);
         
-        // Remove first edge from set
         Set<E> remainingEdges = new HashSet<>(tour);
         remainingEdges.remove(firstEdge);
         
-        // Build path by connecting edges
+        // Build the path by connecting edges
         while (!remainingEdges.isEmpty()) {
-            vertexList.add(currentVertex);
-            
-            // Find next edge that connects to current vertex
-            E nextEdge = null;
+            boolean found = false;
             for (E edge : remainingEdges) {
-                if (graph.getEdgeSource(edge).equals(currentVertex)) {
-                    nextEdge = edge;
-                    currentVertex = graph.getEdgeTarget(edge);
-                    break;
-                } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
-                    nextEdge = edge;
-                    currentVertex = graph.getEdgeSource(edge);
+                V source = graph.getEdgeSource(edge);
+                V target = graph.getEdgeTarget(edge);
+                
+                if (source.equals(currentVertex)) {
+                    currentVertex = target;
+                    found = true;
+                } else if (target.equals(currentVertex)) {
+                    currentVertex = source;
+                    found = true;
+                }
+                
+                if (found) {
+                    vertexList.add(currentVertex);
+                    edgeList.add(edge);
+                    remainingEdges.remove(edge);
                     break;
                 }
             }
             
-            if (nextEdge == null) {
-                throw new IllegalArgumentException("Invalid tour: edges do not form a continuous path");
+            if (!found) {
+                throw new IllegalArgumentException("The edge set does not form a valid tour");
             }
+        }
+        
+        // Verify if the tour is closed (ends at starting vertex)
+        if (!currentVertex.equals(startVertex)) {
+            throw new IllegalArgumentException("The edge set does not form a closed tour");
+        }
+        
+        // Create and return the graph path
+        double weight = edgeList.stream()
+            .mapToDouble(graph::getEdgeWeight)
+            .sum();
             
-            edgeList.add(nextEdge);
-            remainingEdges.remove(nextEdge);
-        }
-        
-        // Add final vertex to complete the path
-        vertexList.add(currentVertex);
-        
-        // Calculate total weight of path
-        double weight = 0.0;
-        for (E edge : edgeList) {
-            weight += graph.getEdgeWeight(edge);
-        }
-        
-        return new GraphWalk<>(graph, vertexList, edgeList, weight);
+        return new GraphWalk<>(graph, vertexList, weight);
     }
 }

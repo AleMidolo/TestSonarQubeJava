@@ -40,21 +40,24 @@ public class SeparatorComputer {
         // Use max flow / min cut to find minimal separators
         EdmondsKarpMFImpl<V,E> maxFlow = new EdmondsKarpMFImpl<>(graph);
         
-        // Convert vertices to integers for result
+        // Convert vertices to indices
         int s = graph.vertexSet().indexOf(source);
-        int t = graph.vertexSet().indexOf(target);
+        int t = graph.vertexSet().indexOf(target); 
         
-        // Find minimal separator
-        Set<E> minCut = maxFlow.getMinCut(source, target);
+        // Find min cut
+        Set<V> sourcePartition = maxFlow.getSourcePartition(source, target);
+        Set<V> targetPartition = maxFlow.getSinkPartition(source, target);
         
-        // Convert cut edges to vertex pairs
-        for (E edge : minCut) {
-            V v1 = graph.getEdgeSource(edge);
-            V v2 = graph.getEdgeTarget(edge);
-            separators.add(Pair.of(
-                graph.vertexSet().indexOf(v1),
-                graph.vertexSet().indexOf(v2)
-            ));
+        // Add separator vertices pairs
+        for (V v1 : sourcePartition) {
+            for (V v2 : targetPartition) {
+                if (graph.containsEdge(v1, v2)) {
+                    separators.add(Pair.of(
+                        graph.vertexSet().indexOf(v1),
+                        graph.vertexSet().indexOf(v2)
+                    ));
+                }
+            }
         }
         
         return separators;

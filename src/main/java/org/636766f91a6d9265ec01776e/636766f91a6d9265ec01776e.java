@@ -39,6 +39,7 @@ public class ByteOutputStream extends OutputStream {
         }
     }
 
+    // Required override of abstract method
     @Override
     public void write(int b) throws IOException {
         ensureCapacity(count + 1);

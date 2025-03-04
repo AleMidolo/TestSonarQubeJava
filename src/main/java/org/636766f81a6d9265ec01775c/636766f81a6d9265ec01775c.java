@@ -6,7 +6,8 @@ package org.apache.commons.lang3;
 public class ObjectUtils {
 
     /**
-     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") si el argumento es <code>null</code>.</p>
+     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") 
+     * si el argumento es <code>null</code>.</p>
      *
      * <pre>
      * ObjectUtils.toString(null)         = ""

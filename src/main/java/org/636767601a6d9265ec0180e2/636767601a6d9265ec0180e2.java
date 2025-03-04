@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MinimalSeparators {
+public class MinimalSeparatorFinder {
     private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
     
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
@@ -12,34 +12,27 @@ public class MinimalSeparators {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get neighborhood of both endpoints
-            Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
-            Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
+            // Get common neighbors of the endpoints
+            Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
+            Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
+            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
+            commonNeighbors.retainAll(targetNeighbors);
             
-            // Remove the endpoints themselves from neighbor sets
-            sourceNeighbors.remove(target);
-            targetNeighbors.remove(source);
-            
-            // Find minimal separators for this edge
+            // For each common neighbor, find minimal separators
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
-            
-            // For each pair of vertices in the neighborhoods
-            for (V s : sourceNeighbors) {
-                for (V t : targetNeighbors) {
-                    // If vertices are not connected, they form a minimal separator
-                    if (!graph.containsEdge(s, t)) {
-                        edgeSeparators.add(new Pair<>(
-                            graph.getVertexIndex(s),
-                            graph.getVertexIndex(t)
-                        ));
-                    }
-                }
+            for (V neighbor : commonNeighbors) {
+                // Create separator pair using vertex indices
+                int v1 = graph.getVertexIndex(source);
+                int v2 = graph.getVertexIndex(neighbor);
+                edgeSeparators.add(new Pair<>(v1, v2));
+                
+                v1 = graph.getVertexIndex(target);
+                v2 = graph.getVertexIndex(neighbor);
+                edgeSeparators.add(new Pair<>(v1, v2));
             }
             
-            // Add the edge separators to global list
-            if (!edgeSeparators.isEmpty()) {
-                globalSeparators.add(new Pair<>(edgeSeparators, edge));
-            }
+            // Add edge separators to global list
+            globalSeparators.add(new Pair<>(edgeSeparators, edge));
         }
         
         return globalSeparators;

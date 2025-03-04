@@ -13,15 +13,16 @@ public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
         List<V> partition1 = new ArrayList<>();
         List<V> partition2 = new ArrayList<>();
 
-        // Add vertices to the partitions from the result map
-        if (resultMap != null) {
-            for (Map.Entry<String,V> entry : resultMap.entrySet()) {
-                if (entry.getKey().startsWith("A")) {
-                    partition1.add(entry.getValue());
-                } else if (entry.getKey().startsWith("B")) {
-                    partition2.add(entry.getValue());
-                }
-                target.addVertex(entry.getValue());
+        // Add vertices to the graph and store in partitions
+        for (Map.Entry<String,V> entry : resultMap.entrySet()) {
+            V vertex = entry.getValue();
+            target.addVertex(vertex);
+            
+            // Add to partition1 if key starts with "A", otherwise partition2
+            if (entry.getKey().startsWith("A")) {
+                partition1.add(vertex);
+            } else {
+                partition2.add(vertex);
             }
         }
 

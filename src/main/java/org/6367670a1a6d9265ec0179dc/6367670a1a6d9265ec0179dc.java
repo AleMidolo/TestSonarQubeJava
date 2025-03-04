@@ -1,56 +1,57 @@
-import org.objectweb.asm.Frame;
 import org.objectweb.asm.Label;
+import org.objectweb.asm.Frame;
 import org.objectweb.asm.MethodWriter;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.ByteVector;
+import org.objectweb.asm.Type;
 
 public class StackMapTableWriter {
-    private byte[] stackMapTableEntries;
+    private ByteVector stackMapTableEntries;
     private Frame currentFrame;
-    private int currentIndex;
-    
+    private static final int ITEM_TOP = 0;
+    private static final int ITEM_INTEGER = 1;
+    private static final int ITEM_FLOAT = 2;
+    private static final int ITEM_DOUBLE = 3;
+    private static final int ITEM_LONG = 4;
+    private static final int ITEM_NULL = 5;
+    private static final int ITEM_UNINITIALIZED_THIS = 6;
+    private static final int ITEM_OBJECT = 7;
+    private static final int ITEM_UNINITIALIZED = 8;
+
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
-            int abstractType = currentFrame.getAbstractType(i);
-            switch (abstractType) {
-                case Frame.TOP:
-                    stackMapTableEntries[currentIndex++] = Opcodes.TOP;
-                    break;
-                case Frame.INTEGER:
-                    stackMapTableEntries[currentIndex++] = Opcodes.INTEGER;
-                    break;
-                case Frame.FLOAT:
-                    stackMapTableEntries[currentIndex++] = Opcodes.FLOAT; 
-                    break;
-                case Frame.DOUBLE:
-                    stackMapTableEntries[currentIndex++] = Opcodes.DOUBLE;
-                    break;
-                case Frame.LONG:
-                    stackMapTableEntries[currentIndex++] = Opcodes.LONG;
-                    break;
-                case Frame.NULL:
-                    stackMapTableEntries[currentIndex++] = Opcodes.NULL;
-                    break;
-                case Frame.UNINITIALIZED_THIS:
-                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED_THIS;
-                    break;
-                case Frame.OBJECT:
-                    stackMapTableEntries[currentIndex++] = Opcodes.OBJECT;
-                    putClass(currentFrame.getObjectType(i));
-                    break;
-                default:
-                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED;
-                    putUnsignedShort(currentFrame.getInitializationLabel(i).getOffset());
-                    break;
+            Object type = currentFrame.getStack(i);
+            if (type instanceof Integer) {
+                int value = (Integer) type;
+                switch (value) {
+                    case ITEM_TOP:
+                        stackMapTableEntries.putByte(0);
+                        break;
+                    case ITEM_INTEGER:
+                        stackMapTableEntries.putByte(1);
+                        break;
+                    case ITEM_FLOAT:
+                        stackMapTableEntries.putByte(2);
+                        break;
+                    case ITEM_DOUBLE:
+                        stackMapTableEntries.putByte(3);
+                        break;
+                    case ITEM_LONG:
+                        stackMapTableEntries.putByte(4);
+                        break;
+                    case ITEM_NULL:
+                        stackMapTableEntries.putByte(5);
+                        break;
+                    case ITEM_UNINITIALIZED_THIS:
+                        stackMapTableEntries.putByte(6);
+                        break;
+                }
+            } else if (type instanceof String) {
+                stackMapTableEntries.putByte(7);
+                stackMapTableEntries.putShort(((String) type).hashCode());
+            } else if (type instanceof Label) {
+                stackMapTableEntries.putByte(8);
+                stackMapTableEntries.putShort(((Label) type).getOffset());
             }
         }
-    }
-    
-    private void putClass(String className) {
-        // Implementation for writing class name
-    }
-    
-    private void putUnsignedShort(int value) {
-        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
-        stackMapTableEntries[currentIndex++] = (byte)value;
     }
 }

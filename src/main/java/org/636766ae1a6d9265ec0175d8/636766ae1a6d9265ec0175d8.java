@@ -5,47 +5,43 @@ public class ContentRangeBuilder {
     private Long start;
     private Long end; 
     private Long total;
-    private String unit = "bytes";
+    
+    public ContentRangeBuilder(Long start, Long end, Long total) {
+        this.start = start;
+        this.end = end;
+        this.total = total;
+    }
 
     /**
      * Construye el valor del encabezado HTTP 'Content-Range'.
      * @return valor de 'Content-Range'
      */
     private String buildContentRange() {
-        if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
-            return null;
-        }
-
         StringBuilder contentRange = new StringBuilder();
-        contentRange.append(unit)
-                   .append(" ")
-                   .append(start)
-                   .append("-")
-                   .append(end)
-                   .append("/")
-                   .append(total);
-
+        contentRange.append("items ");
+        
+        if (Objects.nonNull(start)) {
+            contentRange.append(start);
+        } else {
+            contentRange.append("*");
+        }
+        
+        contentRange.append("-");
+        
+        if (Objects.nonNull(end)) {
+            contentRange.append(end);
+        } else {
+            contentRange.append("*"); 
+        }
+        
+        contentRange.append("/");
+        
+        if (Objects.nonNull(total)) {
+            contentRange.append(total);
+        } else {
+            contentRange.append("*");
+        }
+        
         return contentRange.toString();
-    }
-
-    // Setters for builder pattern
-    public ContentRangeBuilder setStart(Long start) {
-        this.start = start;
-        return this;
-    }
-
-    public ContentRangeBuilder setEnd(Long end) {
-        this.end = end;
-        return this;
-    }
-
-    public ContentRangeBuilder setTotal(Long total) {
-        this.total = total;
-        return this;
-    }
-
-    public ContentRangeBuilder setUnit(String unit) {
-        this.unit = unit;
-        return this;
     }
 }

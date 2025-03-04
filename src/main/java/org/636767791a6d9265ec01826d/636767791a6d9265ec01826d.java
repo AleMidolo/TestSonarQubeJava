@@ -18,23 +18,23 @@ public class PropertyUtils {
             return null;
         }
 
-        // Pattern to find ${variable} references
+        // Pattern to match ${variable} format
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Replace each ${variable} with its value from props
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
+            String varValue = props.getProperty(varName);
             
-            // If variable not found, leave the original ${variable} text
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
+            // If variable not found, leave original ${varName}
+            if (varValue == null) {
+                varValue = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid regex special chars
-            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+            // Escape $ and \ for replacement
+            varValue = varValue.replace("\\", "\\\\").replace("$", "\\$");
+            matcher.appendReplacement(result, varValue);
         }
         matcher.appendTail(result);
 

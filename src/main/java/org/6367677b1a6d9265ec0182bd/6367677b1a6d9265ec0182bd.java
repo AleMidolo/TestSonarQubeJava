@@ -4,14 +4,15 @@ import java.util.Date;
 
 public class CustomLogFormatter {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-    
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss,SSS";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
     public String format(final LoggingEvent event) {
         StringBuilder sb = new StringBuilder();
         
         // Add timestamp
-        Date timestamp = new Date(event.getTimeStamp());
-        sb.append(DATE_FORMAT.format(timestamp));
+        Date eventTime = new Date(event.getTimeStamp());
+        sb.append(sdf.format(eventTime));
         sb.append(" ");
         
         // Add log level
@@ -24,17 +25,14 @@ public class CustomLogFormatter {
         // Add message
         sb.append(event.getRenderedMessage());
         
-        // Add throwable info if exists
+        // Add throwable if exists
         String[] throwableInfo = event.getThrowableStrRep();
         if (throwableInfo != null) {
             sb.append("\n");
-            for (String line : throwableInfo) {
-                sb.append(line).append("\n");
+            for (String throwableLine : throwableInfo) {
+                sb.append(throwableLine).append("\n");
             }
         }
-        
-        // Add new line
-        sb.append("\n");
         
         return sb.toString();
     }

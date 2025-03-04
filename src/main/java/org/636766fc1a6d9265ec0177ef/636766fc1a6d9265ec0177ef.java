@@ -12,7 +12,7 @@ public class ArrayUtils {
         if (array == null) {
             return new String[0];
         }
-
+        
         List<String> result = new ArrayList<>();
         
         for (Object obj : array) {
@@ -20,7 +20,7 @@ public class ArrayUtils {
                 result.add(obj.toString());
             }
         }
-
+        
         return result.toArray(new String[0]);
     }
 }

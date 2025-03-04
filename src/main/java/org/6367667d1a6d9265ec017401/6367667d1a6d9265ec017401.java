@@ -26,16 +26,22 @@ public class StringUtils {
         
         StringBuilder result = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
-            if (i < str.length() - 1 && str.charAt(i) == '\\') {
-                // Obtener la secuencia de escape (backslash + siguiente caracter)
-                String escape = str.substring(i, i + 2);
-                
-                // Si la secuencia está en el mapa, reemplazarla
-                if (unescapeMap.containsKey(escape)) {
-                    result.append(unescapeMap.get(escape));
-                    i++; // Saltar el siguiente caracter ya que fue procesado
+            if (str.charAt(i) == '\\' && i + 1 < str.length()) {
+                String escaped = str.substring(i, i + 2);
+                if (unescapeMap.containsKey(escaped)) {
+                    result.append(unescapeMap.get(escaped));
+                    i++; // saltar el siguiente carácter ya que fue procesado
+                } else if (str.charAt(i + 1) == 'u' && i + 5 < str.length()) {
+                    // Procesar secuencias Unicode \uXXXX
+                    String hex = str.substring(i + 2, i + 6);
+                    try {
+                        result.append((char) Integer.parseInt(hex, 16));
+                        i += 5; // saltar los siguientes 5 caracteres
+                    } catch (NumberFormatException e) {
+                        throw new Exception("Secuencia Unicode inválida: \\u" + hex);
+                    }
                 } else {
-                    // Si no es una secuencia de escape válida, mantener el backslash
+                    // Si no es un escape válido, mantener el backslash
                     result.append(str.charAt(i));
                 }
             } else {

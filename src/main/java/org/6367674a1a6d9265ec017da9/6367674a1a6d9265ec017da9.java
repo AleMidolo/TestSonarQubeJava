@@ -23,7 +23,7 @@ public class DoublyLinkedList<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list);
         
-        if (list == this || list.size == 0) {
+        if (list.size == 0 || list == this) {
             return;
         }
 

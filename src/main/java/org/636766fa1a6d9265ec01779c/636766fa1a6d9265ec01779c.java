@@ -4,6 +4,11 @@ public class Parser {
     private String input;
     private int currentPosition;
     
+    public Parser(String input) {
+        this.input = input;
+        this.currentPosition = 0;
+    }
+
     /**
      * Analiza un token hasta que se encuentra con cualquiera de los terminadores dados.
      * @param terminators el arreglo de caracteres terminadores. Cualquiera de estos caracteres, al ser encontrado, indica el final del token.

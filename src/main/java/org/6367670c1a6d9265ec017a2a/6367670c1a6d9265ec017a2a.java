@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for converting arrays of objects to arrays of primitives.
+ * Utility class for converting Integer arrays to primitive int arrays.
  */
 public class ArrayUtils {
 

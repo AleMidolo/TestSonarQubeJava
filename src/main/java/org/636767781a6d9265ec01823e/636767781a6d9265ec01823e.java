@@ -1,64 +1,57 @@
 import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SocketAppender extends AppenderSkeleton {
     
-    private List<Socket> connectedClients;
+    private final List<PrintWriter> clients = new CopyOnWriteArrayList<>();
     
-    public SocketAppender() {
-        connectedClients = new ArrayList<>();
-    }
-    
-    public void addClient(Socket clientSocket) {
-        connectedClients.add(clientSocket);
-    }
-    
-    public void removeClient(Socket clientSocket) {
-        connectedClients.remove(clientSocket);
-    }
-
+    /**
+     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
+     */
     @Override
     protected void append(LoggingEvent event) {
-        if (layout == null) {
-            return;
-        }
-
         String message = layout.format(event);
         
-        List<Socket> disconnectedClients = new ArrayList<>();
-        
-        for (Socket client : connectedClients) {
+        // Iterar sobre la lista de clientes y enviar el mensaje a cada uno
+        for (PrintWriter client : clients) {
             try {
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
-                writer.println(message);
-            } catch (IOException e) {
-                // If we can't write to the socket, mark it for removal
-                disconnectedClients.add(client);
+                client.println(message);
+                client.flush();
+            } catch (Exception e) {
+                // Si hay un error al escribir, remover el cliente
+                clients.remove(client);
             }
         }
-        
-        // Remove any disconnected clients
-        connectedClients.removeAll(disconnectedClients);
     }
-
+    
+    // Método para agregar un nuevo cliente
+    public void addClient(PrintWriter client) {
+        clients.add(client);
+    }
+    
+    // Método para remover un cliente
+    public void removeClient(PrintWriter client) {
+        clients.remove(client);
+    }
+    
     @Override
     public void close() {
-        for (Socket client : connectedClients) {
+        // Cerrar todas las conexiones de clientes
+        for (PrintWriter client : clients) {
             try {
                 client.close();
-            } catch (IOException e) {
-                // Ignore exceptions during cleanup
+            } catch (Exception e) {
+                // Ignorar errores al cerrar
             }
         }
-        connectedClients.clear();
+        clients.clear();
     }
-
+    
     @Override
     public boolean requiresLayout() {
         return true;

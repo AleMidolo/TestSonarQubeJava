@@ -4,7 +4,7 @@ import org.objectweb.asm.Constants;
 public class SymbolTable {
     private final Symbol[] symbols;
     private int size;
-    
+
     public SymbolTable(int initialCapacity) {
         this.symbols = new Symbol[initialCapacity];
         this.size = 1;
@@ -12,46 +12,47 @@ public class SymbolTable {
 
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-        
-        // Look for an existing entry
         Symbol symbol = lookupSymbol(hashCode);
-        while (symbol != null) {
-            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && symbol.name.equals(name)
-                && symbol.value.equals(descriptor)) {
-                return symbol.index;
-            }
-            symbol = lookupSymbol(hashCode);
+        
+        if (symbol != null) {
+            return symbol.index;
         }
         
-        // Not found, create new entry
-        int nameIndex = addConstantUtf8(name);
-        int descriptorIndex = addConstantUtf8(descriptor);
+        symbol = addConstantUtf8(name);
+        int nameIndex = symbol.index;
+        symbol = addConstantUtf8(descriptor); 
+        int descriptorIndex = symbol.index;
         
-        symbol = new Symbol(
-            size++,
-            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
-            nameIndex,
-            descriptorIndex,
-            name,
-            descriptor,
-            hashCode);
-            
-        addSymbol(symbol);
+        symbol = addConstant(new Symbol(size++, Symbol.CONSTANT_NAME_AND_TYPE_TAG, 
+                                      nameIndex, descriptorIndex, hashCode));
         return symbol.index;
     }
     
     private Symbol lookupSymbol(int hashCode) {
-        // Implementation details omitted for brevity
+        for (int i = 0; i < size; i++) {
+            if (symbols[i] != null && symbols[i].hashCode == hashCode) {
+                return symbols[i]; 
+            }
+        }
         return null;
     }
     
-    private void addSymbol(Symbol symbol) {
-        // Implementation details omitted for brevity
+    private Symbol addConstant(Symbol symbol) {
+        if (size >= symbols.length) {
+            Symbol[] newSymbols = new Symbol[symbols.length * 2];
+            System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
+            symbols = newSymbols;
+        }
+        symbols[size - 1] = symbol;
+        return symbol;
     }
     
-    private int addConstantUtf8(String value) {
-        // Implementation details omitted for brevity
-        return 0;
+    private Symbol addConstantUtf8(String value) {
+        int hashCode = Symbol.CONSTANT_UTF8_TAG + value.hashCode();
+        Symbol symbol = lookupSymbol(hashCode);
+        if (symbol != null) {
+            return symbol;
+        }
+        return addConstant(new Symbol(size++, Symbol.CONSTANT_UTF8_TAG, value, hashCode));
     }
 }

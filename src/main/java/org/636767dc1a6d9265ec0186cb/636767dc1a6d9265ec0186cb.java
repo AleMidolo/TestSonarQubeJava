@@ -14,27 +14,32 @@ public class ConfigurationManager {
         try {
             // Verificar si existe el directorio de distribución
             File distributionDir = new File(DISTRIBUTION_PATH);
-            
             if (!distributionDir.exists()) {
-                // Crear el directorio si no existe
-                if (distributionDir.mkdirs()) {
+                boolean created = distributionDir.mkdirs();
+                if (created) {
                     LOGGER.info("Directorio de distribución creado exitosamente");
                 } else {
-                    LOGGER.severe("No se pudo crear el directorio de distribución");
+                    LOGGER.warning("No se pudo crear el directorio de distribución");
                 }
             }
-            
+
             // Verificar permisos de escritura
             if (!distributionDir.canWrite()) {
-                LOGGER.warning("El directorio de distribución no tiene permisos de escritura");
+                LOGGER.warning("No hay permisos de escritura en el directorio de distribución");
             }
-            
-            // Otras inicializaciones de configuración pueden ir aquí
-            
+
+            // Inicializar otras configuraciones básicas
+            initializeBasicConfigs();
+
         } catch (SecurityException e) {
             LOGGER.log(Level.SEVERE, "Error de seguridad al inicializar la configuración", e);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error al inicializar la configuración", e);
+            LOGGER.log(Level.SEVERE, "Error general al inicializar la configuración", e);
         }
+    }
+
+    private void initializeBasicConfigs() {
+        // Aquí irían otras inicializaciones básicas
+        LOGGER.info("Configuración básica inicializada");
     }
 }

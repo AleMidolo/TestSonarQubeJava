@@ -1,23 +1,21 @@
 import java.util.Stack;
 
 public class FrameStack {
-  private Stack<Object> outputFrameStack;
+    private Stack<Object> outputStack;
 
-  public FrameStack() {
-  outputFrameStack = new Stack<>();
-  }
+    public FrameStack() {
+        outputStack = new Stack<>();
+    }
 
-  public void popElements(int elements) {
-  if (elements < 0) {
-  throw new IllegalArgumentException("Number of elements to pop must be non-negative");
-  }
-
-  if (elements > outputFrameStack.size()) {
-  throw new IllegalStateException("Cannot pop more elements than exist in stack");
-  }
-
-  for (int i = 0; i < elements; i++) {
-  outputFrameStack.pop();
-  }
-  }
+    /**
+     * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
+     * @param elements il numero di tipi astratti che devono essere rimossi.
+     */
+    private void pop(final int elements) {
+        for (int i = 0; i < elements; i++) {
+            if (!outputStack.isEmpty()) {
+                outputStack.pop();
+            }
+        }
+    }
 }

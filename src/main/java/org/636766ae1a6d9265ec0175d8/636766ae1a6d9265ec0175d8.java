@@ -1,43 +1,25 @@
-import java.util.Objects;
+import java.text.MessageFormat;
 
 public class ContentRangeBuilder {
-  
-  private Long start;
-  private Long end; 
-  private Long total;
-  
-  public String buildContentRangeHeader() {
-  Objects.requireNonNull(start, "Start value cannot be null");
-  Objects.requireNonNull(end, "End value cannot be null");
-  Objects.requireNonNull(total, "Total value cannot be null");
-  
-  if (start < 0 || end < 0 || total < 0) {
-  throw new IllegalArgumentException("Values must be non-negative");
-  }
-  
-  if (start > end) {
-  throw new IllegalArgumentException("Start value must be less than or equal to end value");
-  }
-  
-  if (end >= total) {
-  end = total - 1;
-  }
-  
-  return String.format("bytes %d-%d/%d", start, end, total);
-  }
-  
-  public ContentRangeBuilder setStart(Long start) {
-  this.start = start;
-  return this;
-  }
-  
-  public ContentRangeBuilder setEnd(Long end) {
-  this.end = end;
-  return this;
-  }
-  
-  public ContentRangeBuilder setTotal(Long total) {
-  this.total = total;
-  return this;
-  }
+
+    private long start;
+    private long end; 
+    private long total;
+    
+    public ContentRangeBuilder(long start, long end, long total) {
+        this.start = start;
+        this.end = end;
+        this.total = total;
+    }
+
+    /**
+     * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
+     * @return valore 'Content-Range'
+     */
+    private String buildContentRange() {
+        return MessageFormat.format("bytes {0}-{1}/{2}", 
+            String.valueOf(start),
+            String.valueOf(end),
+            String.valueOf(total));
+    }
 }

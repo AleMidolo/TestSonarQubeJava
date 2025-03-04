@@ -1,40 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
+import javax.json.JsonObject;
 
 public class ContentBuilder {
 
-  /**
-  * Build content, if it has @mentions set the mentions
-  * @param content The raw content string
-  * @return Processed content with mentions extracted
-  */
-  public String buildContent(String content) {
-  if (content == null || content.isEmpty()) {
-  return "";
-  }
-
-  // Pattern to match @mentions
-  Pattern pattern = Pattern.compile("@([\\w]+)");
-  Matcher matcher = pattern.matcher(content);
-  
-  List<String> mentions = new ArrayList<>();
-  
-  // Find all @mentions
-  while (matcher.find()) {
-  mentions.add(matcher.group(1));
-  }
-
-  // If mentions found, process them
-  if (!mentions.isEmpty()) {
-  // Replace @mentions with HTML/markdown formatting
-  for (String mention : mentions) {
-  content = content.replace("@" + mention, 
-  String.format("<mention>%s</mention>", mention));
-  }
-  }
-
-  return content;
-  }
+    /**
+     * Costruisci il contenuto, se ha "ATS", imposta l'"ATS"
+     */
+    private Map<String,Object> buildContent(JsonObject jsonObject) {
+        Map<String,Object> content = new HashMap<>();
+        
+        if (jsonObject != null) {
+            // Check if jsonObject contains "ATS" key
+            if (jsonObject.containsKey("ATS")) {
+                content.put("ATS", jsonObject.getString("ATS"));
+            }
+            
+            // Add all other key-value pairs from jsonObject to content map
+            for (String key : jsonObject.keySet()) {
+                if (!key.equals("ATS")) {
+                    Object value = jsonObject.get(key);
+                    content.put(key, value); 
+                }
+            }
+        }
+        
+        return content;
+    }
 }

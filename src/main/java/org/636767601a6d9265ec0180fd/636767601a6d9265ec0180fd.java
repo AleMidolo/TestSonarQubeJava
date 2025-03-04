@@ -4,25 +4,35 @@ import java.util.Map;
 import java.util.Set;
 
 public class Graph<V,E> {
-  // Maps vertices to their adjacent edges
-  private Map<V, Set<E>> vertexMap;
+    
+    // Maps to store vertex and edge relationships
+    private Map<V, Set<E>> sourceVertexToEdgeMap;
+    private Map<V, Set<E>> targetVertexToEdgeMap;
+    private Map<E, V> edgeToSourceVertexMap;
+    private Map<E, V> edgeToTargetVertexMap;
 
-  public Graph() {
-  vertexMap = new HashMap<>();
-  }
+    public Graph() {
+        sourceVertexToEdgeMap = new HashMap<>();
+        targetVertexToEdgeMap = new HashMap<>();
+        edgeToSourceVertexMap = new HashMap<>();
+        edgeToTargetVertexMap = new HashMap<>();
+    }
 
-  /**
-  * Add an edge to the index.
-  * @param sourceVertex the source vertex  
-  * @param targetVertex the target vertex
-  * @param e the edge
-  */
-  public void addEdge(V sourceVertex, V targetVertex, E e) {
-  // Create sets for vertices if they don't exist
-  vertexMap.putIfAbsent(sourceVertex, new HashSet<>());
-  vertexMap.putIfAbsent(targetVertex, new HashSet<>());
-
-  // Add edge to source vertex's edge set
-  vertexMap.get(sourceVertex).add(e);
-  }
+    /**
+     * Aggiunge un arco all'indice.
+     * @param sourceVertex il vertice sorgente
+     * @param targetVertex il vertice di destinazione
+     * @param e l'arco
+     */
+    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
+        // Add edge to source vertex map
+        sourceVertexToEdgeMap.computeIfAbsent(sourceVertex, k -> new HashSet<>()).add(e);
+        
+        // Add edge to target vertex map
+        targetVertexToEdgeMap.computeIfAbsent(targetVertex, k -> new HashSet<>()).add(e);
+        
+        // Map edge to its source and target vertices
+        edgeToSourceVertexMap.put(e, sourceVertex);
+        edgeToTargetVertexMap.put(e, targetVertex);
+    }
 }

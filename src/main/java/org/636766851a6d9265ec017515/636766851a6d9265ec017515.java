@@ -1,24 +1,40 @@
 import org.atmosphere.cpr.Action;
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
+import org.atmosphere.cpr.AtmosphereResourceImpl;
+import org.atmosphere.cpr.AtmosphereHandler;
+import org.atmosphere.cpr.AtmosphereInterceptor;
 
-public class AtmosphereHandler {
+public class AutoSuspendInterceptor implements AtmosphereInterceptor {
 
-  public Action suspend(AtmosphereResource r) {
-  switch (r.transport()) {
-  case JSONP:
-  case LONG_POLLING:
-  r.suspend(5000L); // 5 seconds timeout for polling transports
-  break;
-  case SSE:
-  case WEBSOCKET:
-  r.suspend(-1); // No timeout for streaming transports
-  break;
-  default:
-  r.suspend(30000L); // 30 seconds default timeout
-  break;
-  }
-  return Action.CONTINUE;
-  }
+    @Override 
+    public Action inspect(AtmosphereResource r) {
+        if (r != null && r.transport() != null) {
+            switch (r.transport()) {
+                case WEBSOCKET:
+                case STREAMING:
+                case SSE:
+                case LONG_POLLING:
+                    r.suspend();
+                    break;
+                default:
+                    break;
+            }
+        }
+        return Action.CONTINUE;
+    }
 
+    @Override
+    public void postInspect(AtmosphereResource r) {
+        // No implementation needed
+    }
+
+    @Override
+    public void destroy() {
+        // No implementation needed
+    }
+
+    @Override
+    public void configure(AtmosphereConfig config) {
+        // No implementation needed
+    }
 }

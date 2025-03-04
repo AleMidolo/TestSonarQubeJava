@@ -1,24 +1,28 @@
-import java.io.IOException;
+import java.util.Objects;
 
 public class HeaderParser {
-  /**
-  * Skips bytes until the end of the current line.
-  * @param headerPart The headers, which are being parsed.
-  * @param end Index of the last byte, which has yet been processed.
-  * @return Index of the \r\n sequence, which indicates end of line.
-  */
-  public static int skipLine(byte[] headerPart, int end) {
-  int pos = end;
-  
-  // Search for \r\n sequence
-  while (pos + 1 < headerPart.length) {
-  if (headerPart[pos] == '\r' && headerPart[pos + 1] == '\n') {
-  return pos;
-  }
-  pos++;
-  }
-  
-  // If we reach the end without finding \r\n, return length
-  return headerPart.length;
-  }
+
+    /**
+     * Salta i byte fino alla fine della riga corrente.
+     * @param headerPart Le intestazioni che vengono analizzate.
+     * @param end Indice dell'ultimo byte che deve ancora essere elaborato.
+     * @return Indice della sequenza \r\n, che indica la fine della riga.
+     */
+    private int parseEndOfLine(String headerPart, int end) {
+        Objects.requireNonNull(headerPart);
+        
+        int index = end;
+        while (index < headerPart.length()) {
+            // Cerca la sequenza \r\n che indica fine riga
+            if (index + 1 < headerPart.length() && 
+                headerPart.charAt(index) == '\r' && 
+                headerPart.charAt(index + 1) == '\n') {
+                return index;
+            }
+            index++;
+        }
+        
+        // Se non trova \r\n ritorna l'ultimo indice valido
+        return headerPart.length() - 1;
+    }
 }

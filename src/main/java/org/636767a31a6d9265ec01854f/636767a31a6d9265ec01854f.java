@@ -1,46 +1,33 @@
 import java.io.IOException;
 
 public class FieldReader {
-  private boolean isPacked = false;
-  private int currentPosition = 0;
-  private int packedLength = 0;
-  
-  /**
-  * Check if this field have been packed into a length-delimited field. If so, update internal state to reflect that packed fields are being read.
-  * @throws IOException if there is an error reading the packed field length
-  */
-  public void checkIfPackedField() throws IOException {
-  // Check if we're at the start of a packed field
-  if (currentPosition > 0 && !isPacked) {
-  // Read the packed field length
-  try {
-  packedLength = readVarint32();
-  isPacked = true;
-  currentPosition = 0;
-  } catch (IOException e) {
-  throw new IOException("Error reading packed field length", e);
-  }
-  }
-  }
-  
-  // Helper method to read varint32 encoding
-  private int readVarint32() throws IOException {
-  int result = 0;
-  int shift = 0;
-  while (shift < 32) {
-  byte b = readByte();
-  result |= (b & 0x7F) << shift;
-  if ((b & 0x80) == 0) {
-  return result;
-  }
-  shift += 7;
-  }
-  throw new IOException("Malformed varint32");
-  }
-  
-  // Helper method to read a single byte
-  private byte readByte() throws IOException {
-  // Implementation would depend on underlying input stream
-  throw new IOException("Not implemented");
-  }
+    private boolean isCompressed;
+    private int compressedLength;
+    private int currentPosition;
+    private byte[] buffer;
+
+    /**
+     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. 
+     * In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
+     * @throws IOException
+     */
+    private void checkIfPackedField() throws IOException {
+        if (currentPosition < buffer.length - 4) {
+            // Check for compression marker bytes
+            if (buffer[currentPosition] == 0x1F && buffer[currentPosition + 1] == 0x8B) {
+                // Get compressed length from next 4 bytes
+                compressedLength = ((buffer[currentPosition + 2] & 0xFF) << 24) |
+                                 ((buffer[currentPosition + 3] & 0xFF) << 16) |
+                                 ((buffer[currentPosition + 4] & 0xFF) << 8) |
+                                 (buffer[currentPosition + 5] & 0xFF);
+                
+                isCompressed = true;
+                currentPosition += 6; // Skip marker and length bytes
+            } else {
+                isCompressed = false;
+            }
+        } else {
+            throw new IOException("Buffer overflow while checking for packed field");
+        }
+    }
 }

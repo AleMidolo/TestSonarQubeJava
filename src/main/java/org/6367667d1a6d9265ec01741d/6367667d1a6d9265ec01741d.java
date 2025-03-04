@@ -1,28 +1,42 @@
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.lang.reflect.ParameterizedType;
 
 public class TypeResolver {
-  /**
-  * Resolves the first bound for the typeVariable, returning Unknown.class if none can be resolved.
-  * @param typeVariable The type variable to resolve bounds for
-  * @return The first bound type, or Unknown.class if no bounds exist
-  */
-  public static Class<?> resolveFirstBound(TypeVariable<?> typeVariable) {
-  Type[] bounds = typeVariable.getBounds();
-  
-  if (bounds == null || bounds.length == 0) {
-  return Unknown.class;
-  }
 
-  if (bounds[0] instanceof Class) {
-  return (Class<?>) bounds[0];
-  }
-
-  return Unknown.class;
-  }
-}
-
-// Helper class representing unknown type
-class Unknown {
-  private Unknown() {} // Prevent instantiation
+    /**
+     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
+     */
+    public static Type resolveBound(TypeVariable<?> typeVariable) {
+        Type[] bounds = typeVariable.getBounds();
+        
+        if (bounds == null || bounds.length == 0) {
+            return Unknown.class;
+        }
+        
+        Type bound = bounds[0];
+        
+        if (bound instanceof TypeVariable) {
+            return resolveBound((TypeVariable<?>) bound);
+        }
+        
+        if (bound instanceof WildcardType) {
+            Type[] upperBounds = ((WildcardType) bound).getUpperBounds();
+            if (upperBounds != null && upperBounds.length > 0) {
+                return upperBounds[0];
+            }
+            return Unknown.class;
+        }
+        
+        if (bound instanceof ParameterizedType) {
+            return ((ParameterizedType) bound).getRawType();
+        }
+        
+        return bound;
+    }
+    
+    private static class Unknown {
+        // Marker class for unresolvable bounds
+    }
 }

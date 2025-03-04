@@ -1,14 +1,18 @@
-public class FloatComparator {
-  /**
-  * Compares two floating point values. Returns 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
-  * @param o1 the first value
-  * @param o2 the second value
-  * @return 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
-  */
-  public static int compare(float o1, float o2) {
-  if (o1 == o2) {
-  return 0;
-  }
-  return o1 < o2 ? -1 : 1;
-  }
+import java.util.Comparator;
+
+public class DoubleComparator implements Comparator<Double> {
+
+    /**
+     * Confronta due valori in virgola mobile. Restituisce 0 se sono uguali, -1 se {@literal o1 < o2}, 1 altrimenti
+     * @param o1 il primo valore
+     * @param o2 il secondo valore
+     * @return 0 se sono uguali, -1 se {@literal o1 < o2}, 1 altrimenti
+     */
+    @Override
+    public int compare(Double o1, Double o2) {
+        if (o1.equals(o2)) {
+            return 0;
+        }
+        return o1 < o2 ? -1 : 1;
+    }
 }

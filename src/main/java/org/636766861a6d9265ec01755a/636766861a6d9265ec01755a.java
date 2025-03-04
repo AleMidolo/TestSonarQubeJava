@@ -2,38 +2,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UriMatcher {
+    private final Pattern pattern;
+    
+    public UriMatcher(String template) {
+        // Convert template to regex pattern
+        String regex = template.replaceAll("\\{[^}]+\\}", "([^/]+)");
+        this.pattern = Pattern.compile(regex);
+    }
 
-  private String pattern;
+    /**
+     * Confronta un URI con il modello.
+     * @param uri l'uri da confrontare con il template.
+     * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
+     */
+    public final MatchResult match(CharSequence uri) {
+        if (uri == null) {
+            return null;
+        }
 
-  public UriMatcher(String pattern) {
-  this.pattern = pattern;
-  }
+        Matcher matcher = pattern.matcher(uri);
+        if (!matcher.matches()) {
+            return null;
+        }
 
-  /** 
-  * Match a URI against the pattern.
-  * @param uri the uri to match against the template.
-  * @return the match result, otherwise null if no match occurs.
-  */
-  public String match(String uri) {
-  if (uri == null) {
-  return null;
-  }
-
-  // Convert pattern to regex by escaping special chars and replacing wildcards
-  String regex = pattern.replaceAll("([.+?^${}()|\\[\\]\\\\])", "\\\\$1")
-  .replace("*", ".*")
-  .replace("?", ".");
-  
-  // Add start and end anchors
-  regex = "^" + regex + "$";
-
-  Pattern p = Pattern.compile(regex);
-  Matcher m = p.matcher(uri);
-
-  if (m.matches()) {
-  return m.group(0);
-  }
-
-  return null;
-  }
+        return matcher.toMatchResult();
+    }
 }

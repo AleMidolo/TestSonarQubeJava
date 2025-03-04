@@ -1,66 +1,55 @@
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
 
-public class Graph {
-  // Assume we have an adjacency list representation with Edge objects
-  private Map<Vertex, List<Edge>> adjList;
-  
-  public double computeIncomingWeightSum(Vertex v) {
-  double sum = 0.0;
-  
-  // Iterate through all vertices and their edges
-  for (Map.Entry<Vertex, List<Edge>> entry : adjList.entrySet()) {
-  List<Edge> edges = entry.getValue();
-  
-  // Check each edge to see if it points to vertex v
-  for (Edge e : edges) {
-  if (e.getDestination().equals(v)) {
-  sum += e.getWeight();
-  }
-  }
-  }
-  
-  return sum;
-  }
-  
-  // Helper classes
-  class Vertex {
-  private int id;
-  
-  public Vertex(int id) {
-  this.id = id;
-  }
-  
-  @Override
-  public boolean equals(Object o) {
-  if (this == o) return true;
-  if (o == null || getClass() != o.getClass()) return false;
-  Vertex vertex = (Vertex) o;
-  return id == vertex.id;
-  }
-  
-  @Override
-  public int hashCode() {
-  return Objects.hash(id);
-  }
-  }
-  
-  class Edge {
-  private Vertex source;
-  private Vertex destination;
-  private double weight;
-  
-  public Edge(Vertex source, Vertex destination, double weight) {
-  this.source = source;
-  this.destination = destination;
-  this.weight = weight;
-  }
-  
-  public Vertex getDestination() {
-  return destination;
-  }
-  
-  public double getWeight() {
-  return weight;
-  }
-  }
+public class Graph<V,E> {
+    
+    private Set<Edge<V,E>> edges;
+    
+    /**
+     * Calcola la somma dei pesi che entrano in un vertice
+     * @param v il vertice 
+     * @return la somma dei pesi che entrano in un vertice
+     */
+    public double vertexWeight(Set<V> v) {
+        double sum = 0.0;
+        
+        for(Edge<V,E> edge : edges) {
+            if(v.contains(edge.getDestination())) {
+                sum += edge.getWeight();
+            }
+        }
+        
+        return sum;
+    }
+    
+    // Edge class to represent weighted edges
+    private class Edge<V,E> {
+        private V source;
+        private V destination;
+        private double weight;
+        private E data;
+        
+        public Edge(V source, V destination, double weight, E data) {
+            this.source = source;
+            this.destination = destination;
+            this.weight = weight;
+            this.data = data;
+        }
+        
+        public V getSource() {
+            return source;
+        }
+        
+        public V getDestination() {
+            return destination;
+        }
+        
+        public double getWeight() {
+            return weight;
+        }
+        
+        public E getData() {
+            return data;
+        }
+    }
 }

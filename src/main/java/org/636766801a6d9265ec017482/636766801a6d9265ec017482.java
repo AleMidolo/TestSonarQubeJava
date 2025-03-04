@@ -1,36 +1,36 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class ClassFileBuffer {
-  private byte[] buffer;
-  private int readPointer;
-  
-  /**
-  * Clear and fill the buffer with the supplied byte stream. 
-  * The read pointer is reset to the start of the byte array.
-  *
-  * @param inputStream the input stream to read bytes from
-  * @throws IOException if an I/O error occurs while reading the stream
-  */
-  public void fillBuffer(InputStream inputStream) throws IOException {
-  // Create output stream to store bytes
-  ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-  
-  // Read bytes from input stream
-  byte[] tempBuffer = new byte[4096];
-  int bytesRead;
-  while ((bytesRead = inputStream.read(tempBuffer)) != -1) {
-  outputStream.write(tempBuffer, 0, bytesRead);
-  }
-  
-  // Clear existing buffer and store new bytes
-  buffer = outputStream.toByteArray();
-  
-  // Reset read pointer to start
-  readPointer = 0;
-  
-  // Close streams
-  outputStream.close();
-  }
+    private byte[] buffer;
+    private int position;
+    private static final int INITIAL_BUFFER_SIZE = 4096;
+    
+    public void readFrom(final InputStream in) throws IOException {
+        // Reset buffer and position
+        buffer = new byte[INITIAL_BUFFER_SIZE];
+        position = 0;
+        
+        int bytesRead;
+        int totalBytes = 0;
+        
+        // Read bytes from input stream into buffer
+        while ((bytesRead = in.read(buffer, totalBytes, buffer.length - totalBytes)) != -1) {
+            totalBytes += bytesRead;
+            
+            // If buffer is full, expand it
+            if (totalBytes >= buffer.length) {
+                buffer = Arrays.copyOf(buffer, buffer.length * 2);
+            }
+        }
+        
+        // Trim buffer to actual size
+        if (totalBytes < buffer.length) {
+            buffer = Arrays.copyOf(buffer, totalBytes);
+        }
+        
+        // Reset read position to start
+        position = 0;
+    }
 }

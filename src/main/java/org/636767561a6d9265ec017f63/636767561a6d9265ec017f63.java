@@ -1,18 +1,17 @@
 import java.util.*;
 
-public class Graph {
-  private boolean[] visited;
-
-  /**
-  * Checks whether there exist unvisited vertices.
-  * @return true if there exist unvisited vertices.
-  */
-  public boolean hasUnvisitedVertices() {
-  for (boolean v : visited) {
-  if (!v) {
-  return true;
-  }
-  }
-  return false;
-  }
+public class GraphTraversal implements Iterator<Vertex> {
+    private boolean[] visited;
+    private int numVertices;
+    
+    @Override
+    public boolean hasNext() {
+        // Iterate through visited array to check if any vertices are unvisited
+        for (int i = 0; i < numVertices; i++) {
+            if (!visited[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

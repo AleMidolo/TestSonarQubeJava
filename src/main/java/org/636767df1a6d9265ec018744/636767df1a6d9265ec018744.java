@@ -1,57 +1,50 @@
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeSplitter {
-  // Maximum duration between start and end time
-  private static final Duration FETCH_DATA_DURATION = Duration.ofHours(24);
+public class TimeRangeBuilder {
 
-  /**
-  * Split time ranges to ensure the start time and end time is smaller than FETCH_DATA_DURATION
-  * @param startTime Start time as Instant
-  * @param endTime End time as Instant
-  * @return List of TimeRange objects containing split time ranges
-  */
-  public List<TimeRange> splitTimeRanges(Instant startTime, Instant endTime) {
-  List<TimeRange> timeRanges = new ArrayList<>();
-  
-  if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
-  return timeRanges;
-  }
+    // Constant for maximum duration between start and end time
+    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-  Instant currentStart = startTime;
-  while (currentStart.isBefore(endTime)) {
-  Instant currentEnd = currentStart.plus(FETCH_DATA_DURATION);
-  
-  // If calculated end is after the actual end time, use the actual end time
-  if (currentEnd.isAfter(endTime)) {
-  currentEnd = endTime;
-  }
-  
-  timeRanges.add(new TimeRange(currentStart, currentEnd));
-  currentStart = currentEnd;
-  }
-  
-  return timeRanges;
-  }
+    /**
+     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
+     */
+    protected List<TimeRange> buildTimeRanges(long start, long end) {
+        List<TimeRange> ranges = new ArrayList<>();
+        
+        // If total duration is less than max duration, return single range
+        if (end - start <= FETCH_DATA_DURATION) {
+            ranges.add(new TimeRange(start, end));
+            return ranges;
+        }
 
-  // Inner class to hold time range pairs
-  public static class TimeRange {
-  private final Instant start;
-  private final Instant end;
+        // Split into multiple ranges of FETCH_DATA_DURATION
+        long currentStart = start;
+        while (currentStart < end) {
+            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
+            ranges.add(new TimeRange(currentStart, currentEnd));
+            currentStart = currentEnd;
+        }
 
-  public TimeRange(Instant start, Instant end) {
-  this.start = start;
-  this.end = end;
-  }
+        return ranges;
+    }
 
-  public Instant getStart() {
-  return start;
-  }
+    // Inner class to represent a time range
+    protected static class TimeRange {
+        private final long start;
+        private final long end;
 
-  public Instant getEnd() {
-  return end;
-  }
-  }
+        public TimeRange(long start, long end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public long getStart() {
+            return start;
+        }
+
+        public long getEnd() {
+            return end;
+        }
+    }
 }

@@ -1,35 +1,29 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 
 public class LoggerUtils {
-  /**
-  * Check if the named logger exists in the hierarchy. If so return its reference, otherwise returns <code>null</code>.
-  * @param name The name of the logger to search for.
-  * @return Logger instance if exists, null otherwise
-  */
-  public static Logger exists(String name) {
-  if (name == null || name.trim().isEmpty()) {
-  return null;
-  }
-
-  try {
-  // Get logger context
-  org.apache.logging.log4j.spi.LoggerContext context = LogManager.getContext(false);
-  
-  // Check if logger exists in context
-  if (context != null) {
-  org.apache.logging.log4j.spi.LoggerConfig loggerConfig = 
-  context.getConfiguration().getLoggerConfig(name);
-  
-  if (loggerConfig != null && loggerConfig.getName().equals(name)) {
-  return LogManager.getLogger(name);
-  }
-  }
-  } catch (Exception e) {
-  // Return null if any error occurs during lookup
-  return null;
-  }
-  
-  return null;
-  }
+    
+    /**
+     * Controlla se il logger con il nome specificato esiste nella gerarchia. 
+     * Se sì, restituisce il suo riferimento, altrimenti restituisce <code>null</code>.
+     * @param name Il nome del logger da cercare.
+     */
+    public Logger exists(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return null;
+        }
+        
+        // Get the logger manager's logger list
+        LogManager logManager = LogManager.getLogManager();
+        Enumeration<String> loggerNames = logManager.getLoggerNames();
+        
+        // Search through existing loggers
+        while (loggerNames.hasMoreElements()) {
+            String loggerName = loggerNames.nextElement();
+            if (loggerName.equals(name)) {
+                return logManager.getLogger(name);
+            }
+        }
+        
+        return null;
+    }
 }

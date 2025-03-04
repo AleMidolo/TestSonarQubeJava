@@ -1,46 +1,43 @@
-import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertyResolver {
+public class PropertyUtils {
 
-  /**
-  * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
-  * @param key The property key to look up
-  * @param props The Properties object containing key-value pairs
-  * @return The resolved property value with variables substituted
-  */
-  public String resolveProperty(String key, Properties props) {
-  if (key == null || props == null) {
-  return null;
-  }
+    /**
+     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. 
+     * Quindi esegui la sostituzione delle variabili sul valore trovato.
+     */
+    public static String findAndSubst(String key, Properties props) {
+        if (key == null || props == null) {
+            return null;
+        }
 
-  String value = props.getProperty(key);
-  if (value == null) {
-  return null;
-  }
+        String value = props.getProperty(key);
+        if (value == null) {
+            return null;
+        }
 
-  // Pattern to match ${variable} syntax
-  Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-  Matcher matcher = pattern.matcher(value);
-  StringBuffer result = new StringBuffer();
+        // Pattern per trovare variabili del tipo ${var}
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+        Matcher matcher = pattern.matcher(value);
+        StringBuffer result = new StringBuffer();
 
-  while (matcher.find()) {
-  String varName = matcher.group(1);
-  String replacement = props.getProperty(varName);
-  
-  // If variable not found, leave as-is
-  if (replacement == null) {
-  replacement = "${" + varName + "}";
-  }
-  
-  // Escape $ and \ in replacement string
-  replacement = replacement.replace("\\", "\\\\").replace("$", "\\$");
-  matcher.appendReplacement(result, replacement);
-  }
-  matcher.appendTail(result);
-
-  return result.toString();
-  }
+        while (matcher.find()) {
+            String varName = matcher.group(1);
+            String replacement = props.getProperty(varName);
+            
+            // Se la variabile non è definita, lascia il placeholder originale
+            if (replacement == null) {
+                replacement = "${" + varName + "}";
+            }
+            
+            // Escape dei caratteri speciali nella stringa di sostituzione
+            replacement = Matcher.quoteReplacement(replacement);
+            matcher.appendReplacement(result, replacement);
+        }
+        
+        matcher.appendTail(result);
+        return result.toString();
+    }
 }

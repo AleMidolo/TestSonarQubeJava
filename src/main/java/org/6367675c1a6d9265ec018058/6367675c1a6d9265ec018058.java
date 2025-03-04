@@ -1,9 +1,15 @@
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-public class StringSupplier {
-  public static Supplier<String> createStringSupplier(int start) {
-  AtomicInteger counter = new AtomicInteger(start);
-  return () -> String.valueOf(counter.getAndIncrement());
-  }
+public class StringSupplierCreator {
+    
+    /**
+     * Crea un fornitore di stringhe che restituisce stringhe uniche. Le stringhe restituite sono semplicemente interi che partono da start.
+     * @param start da dove iniziare la sequenza
+     * @return un fornitore di stringhe
+     */
+    @SuppressWarnings("unchecked")
+    public static Supplier<String> createStringSupplier(int start) {
+        final int[] counter = {start};
+        return () -> String.valueOf(counter[0]++);
+    }
 }

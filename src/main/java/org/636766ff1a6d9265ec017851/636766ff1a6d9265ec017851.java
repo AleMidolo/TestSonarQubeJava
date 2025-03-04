@@ -1,29 +1,25 @@
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 
-public class ByteSearch {
-  private ByteBuffer buffer;
-  
-  public ByteSearch(ByteBuffer buffer) {
-  this.buffer = buffer;
-  }
+public class ByteBuffer {
+    private byte[] buffer;
 
-  /**
-  * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
-  * @param value The value to find.
-  * @param pos  The starting position for searching.
-  * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
-  */
-  public int findByte(byte value, int pos) {
-  if (pos < 0 || pos >= buffer.limit()) {
-  return -1;
-  }
-
-  for (int i = pos; i < buffer.limit(); i++) {
-  if (buffer.get(i) == value) {
-  return i;
-  }
-  }
-  
-  return -1;
-  }
+    /**
+     * Cerca un byte di valore specificato nel <code>buffer</code>, partendo dalla <code>posizione</code> specificata.
+     * @param value Il valore da cercare.
+     * @param pos   La posizione di partenza per la ricerca.
+     * @return La posizione del byte trovato, contando dall'inizio del <code>buffer</code>, oppure <code>-1</code> se non trovato.
+     */
+    protected int findByte(byte value, int pos) {
+        if (buffer == null || pos >= buffer.length) {
+            return -1;
+        }
+        
+        for (int i = pos; i < buffer.length; i++) {
+            if (buffer[i] == value) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
 }

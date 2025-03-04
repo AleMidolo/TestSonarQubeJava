@@ -1,50 +1,32 @@
-public class HashCapacity {
-  public static int getPrimeCapacity(int desiredCapacity) {
-  if (desiredCapacity < 0) {
-  throw new IllegalArgumentException("Capacity cannot be negative");
-  }
-  
-  if (desiredCapacity < 2) {
-  return 2;
-  }
-  
-  // Start checking from desiredCapacity
-  int num = desiredCapacity;
-  
-  // If even, add 1 to start checking from next odd number
-  if (num % 2 == 0) {
-  num++;
-  }
-  
-  // Keep checking until we find a prime number
-  while (!isPrime(num)) {
-  num += 2;
-  
-  // Check if we've exceeded the 11% threshold for large capacities
-  if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
-  // Go back to desired capacity and find previous prime
-  num = desiredCapacity;
-  while (!isPrime(num)) {
-  num--;
-  }
-  break;
-  }
-  }
-  
-  return num;
-  }
-  
-  private static boolean isPrime(int num) {
-  if (num <= 1) return false;
-  if (num <= 3) return true;
-  if (num % 2 == 0 || num % 3 == 0) return false;
-  
-  // Check up to square root of num
-  for (int i = 5; i * i <= num; i += 6) {
-  if (num % i == 0 || num % (i + 2) == 0) {
-  return false;
-  }
-  }
-  return true;
-  }
+public class HashUtils {
+    public static int nextPrime(int desiredCapacity) {
+        if (desiredCapacity <= 2) {
+            return 2;
+        }
+        
+        int num = desiredCapacity;
+        if (num % 2 == 0) {
+            num++; // Start with odd number
+        }
+        
+        while (!isPrime(num)) {
+            num += 2;
+        }
+        
+        return num;
+    }
+    
+    private static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+        
+        int sqrt = (int) Math.sqrt(n);
+        for (int i = 3; i <= sqrt; i += 2) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -1,17 +1,14 @@
-import java.lang.Throwable;
+public class Exception {
+    private Throwable thrown;
 
-public class ExceptionUtils {
-  private Throwable thrown;
+    /**
+     * @return true se getThrown().toString() è una stringa non vuota.
+     */
+    public boolean hasThrown() {
+        return thrown != null && !thrown.toString().isEmpty();
+    }
 
-  public ExceptionUtils(Throwable thrown) {
-  this.thrown = thrown;
-  }
-
-  public Throwable getThrown() {
-  return thrown;
-  }
-
-  public boolean hasMessage() {
-  return getThrown() != null && getThrown().toString() != null && !getThrown().toString().isEmpty();
-  }
+    public Throwable getThrown() {
+        return thrown;
+    }
 }

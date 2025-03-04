@@ -1,32 +1,29 @@
+import org.apache.log4j.spi.LoggingEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventBuffer {
-  private List<Event> events;
-  private static final int MAX_BUFFER_SIZE = 100;
+public class LogBuffer {
+    private List<LoggingEvent> buffer;
+    private static final int MAX_BUFFER_SIZE = 1000;
 
-  public EventBuffer() {
-  events = new ArrayList<>();
-  }
+    public LogBuffer() {
+        buffer = new ArrayList<>();
+    }
 
-  /**
-  * Add an <code>event</code> as the last event in the buffer.
-  * @param event The event to add to the buffer
-  */
-  public void addEvent(Event event) {
-  if (event == null) {
-  throw new IllegalArgumentException("Event cannot be null");
-  }
+    /**
+     * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
+     */
+    public void add(LoggingEvent event) {
+        if (event == null) {
+            return;
+        }
 
-  if (events.size() >= MAX_BUFFER_SIZE) {
-  events.remove(0); // Remove oldest event if buffer is full
-  }
+        // Remove oldest event if buffer is full
+        if (buffer.size() >= MAX_BUFFER_SIZE) {
+            buffer.remove(0);
+        }
 
-  events.add(event);
-  }
-}
-
-// Event class for reference
-class Event {
-  // Event implementation details
+        // Add new event to end of buffer
+        buffer.add(event);
+    }
 }

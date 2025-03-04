@@ -1,26 +1,36 @@
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.Schema;
+import com.dyuproject.protostuff.ProtobufOutput;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 public class MessageSerializer {
-  
-  /**
-  * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
-  * @param message The byte array message to serialize
-  * @param out The output stream to write to
-  * @return the size of the message
-  * @throws IOException if an I/O error occurs
-  */
-  public static int serializeMessage(byte[] message, OutputStream out) throws IOException {
-  // Write message length as 4 byte integer
-  ByteBuffer lengthBuffer = ByteBuffer.allocate(4);
-  lengthBuffer.putInt(message.length);
-  out.write(lengthBuffer.array());
-  
-  // Write message content
-  out.write(message);
-  
-  // Return total size (4 bytes for length + message size)
-  return 4 + message.length;
-  }
+
+    /**
+     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
+     * @return la dimensione del messaggio
+     */
+    public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
+        // Create protobuf output using the buffer
+        final ProtobufOutput output = new ProtobufOutput(buffer);
+        
+        // Serialize the message to get its size
+        schema.writeTo(output, message);
+        
+        // Get the size of the serialized message
+        int size = output.getSize();
+        
+        // Write the size as a varint to the output stream
+        while ((size & ~0x7F) != 0) {
+            out.write((size & 0x7F) | 0x80);
+            size >>>= 7;
+        }
+        out.write(size);
+        
+        // Write the actual message
+        LinkedBuffer.writeTo(out, buffer);
+        
+        // Return the total size of the message
+        return output.getSize();
+    }
 }

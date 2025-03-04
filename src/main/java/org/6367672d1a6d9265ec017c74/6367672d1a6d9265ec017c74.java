@@ -1,14 +1,16 @@
 import java.util.HashSet;
-import java.util.Set;
 
-public class Solution {
-  private Set<Integer> set;
-  
-  public Solution() {
-  set = new HashSet<>();
-  }
-  
-  public boolean remove(int val) {
-  return set.remove(val);
-  }
+public class IntegerSet {
+    private HashSet<Integer> set;
+
+    public IntegerSet() {
+        set = new HashSet<>();
+    }
+
+    /**
+     * Rimuove un valore dal set. Restituisce true se il set conteneva l'elemento specificato.
+     */
+    public boolean remove(int val) {
+        return set.remove(Integer.valueOf(val));
+    }
 }

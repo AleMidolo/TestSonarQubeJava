@@ -1,32 +1,36 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ChannelManager {
-  private List<String> targetChannels;
+    
+    private List<Channels> channelsList;
+    private List<IConsumer> consumersList;
 
-  public ChannelManager() {
-  this.targetChannels = new ArrayList<>();
-  }
+    public ChannelManager() {
+        this.channelsList = new ArrayList<>();
+        this.consumersList = new ArrayList<>();
+    }
 
-  /**
-  * Add a new target channels.
-  * @param channel The channel to add
-  */
-  public void addTargetChannel(String channel) {
-  if (channel != null && !channel.isEmpty()) {
-  targetChannels.add(channel);
-  }
-  }
+    /**
+     * Aggiungi un nuovo canale di destinazione.
+     */
+    public void addNewTarget(Channels channels, IConsumer consumer) {
+        if (channels != null && consumer != null) {
+            channelsList.add(channels);
+            consumersList.add(consumer);
+        }
+    }
+}
 
-  /**
-  * Add multiple new target channels.
-  * @param channels List of channels to add
-  */
-  public void addTargetChannels(List<String> channels) {
-  if (channels != null) {
-  for (String channel : channels) {
-  addTargetChannel(channel);
-  }
-  }
-  }
+// Assumed supporting interfaces/classes:
+
+interface IConsumer {
+    void consume();
+}
+
+enum Channels {
+    EMAIL,
+    SMS,
+    PUSH_NOTIFICATION,
+    WEBHOOK
 }

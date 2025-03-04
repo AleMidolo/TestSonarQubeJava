@@ -1,24 +1,29 @@
 import java.io.File;
 
-public class PathUtils {
-  /**
-  * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -> "mypath/myfile".
-  * @param path the file path (may be <code>null</code>)
-  * @return the path with stripped filename extension,or <code>null</code> if none
-  */
-  public static String stripFileExtension(String path) {
-  if (path == null) {
-  return null;
-  }
-  
-  int lastDot = path.lastIndexOf('.');
-  int lastSeparator = Math.max(path.lastIndexOf('/'), path.lastIndexOf(File.separator));
-  
-  // If dot is in the last path element
-  if (lastDot > lastSeparator) {
-  return path.substring(0, lastDot);
-  }
-  
-  return path;
-  }
+public class FileUtils {
+
+    /**
+     * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -> "mypath/myfile".
+     * @param path il percorso del file (può essere <code>null</code>)
+     * @return il percorso con l'estensione del nome file rimossa, oppure <code>null</code> se non presente
+     */
+    public static String stripFilenameExtension(String path) {
+        if (path == null) {
+            return null;
+        }
+        
+        int lastDotIndex = path.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            // No extension found
+            return path;
+        }
+        
+        int lastSeparatorIndex = path.lastIndexOf(File.separator);
+        if (lastSeparatorIndex > lastDotIndex) {
+            // Last dot is in the path portion, not the filename
+            return path;
+        }
+        
+        return path.substring(0, lastDotIndex);
+    }
 }

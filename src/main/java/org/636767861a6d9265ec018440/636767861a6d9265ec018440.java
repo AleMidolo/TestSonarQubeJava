@@ -1,23 +1,31 @@
-import java.lang.StringBuilder;
+import java.lang.StringBuffer;
 
 public class NameAbbreviator {
-  
-  /**
-  * Abbreviate name.
-  * @param buf buffer to append abbreviation
-  * @param nameStart start of name to abbreviate
-  */
-  public static void abbreviateName(StringBuilder buf, String nameStart) {
-  if (nameStart == null || nameStart.isEmpty()) {
-  return;
-  }
+    /**
+     * Abbrevia il nome.
+     * @param buf buffer a cui aggiungere l'abbreviazione.
+     * @param nameStart inizio del nome da abbreviare.
+     */
+    public void abbreviate(final int nameStart, final StringBuffer buf) {
+        if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
+            return;
+        }
 
-  // Add first character
-  buf.append(Character.toUpperCase(nameStart.charAt(0)));
-
-  // Add period if more than one character
-  if (nameStart.length() > 1) {
-  buf.append('.');
-  }
-  }
+        // Get the first character
+        char firstChar = buf.charAt(nameStart);
+        
+        // Find the end of the name (next space or end of buffer)
+        int nameEnd = nameStart;
+        while (nameEnd < buf.length() && !Character.isWhitespace(buf.charAt(nameEnd))) {
+            nameEnd++;
+        }
+        
+        // Delete everything after first character up to end of name
+        if (nameEnd > nameStart + 1) {
+            buf.delete(nameStart + 1, nameEnd);
+            
+            // Add period after abbreviated character
+            buf.insert(nameStart + 1, '.');
+        }
+    }
 }

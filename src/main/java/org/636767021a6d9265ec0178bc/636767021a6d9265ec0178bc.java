@@ -1,18 +1,18 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
 public class StringUtils {
-
-  /**
-  * Finds the first index within a String, handling <code>null</code>. This method uses {@link String#indexOf(String)}.
-  *
-  * @param str The String to check, may be null
-  * @param searchStr The String to find, may be null
-  * @return The first index of searchStr in str, -1 if no match or null string input
-  */
-  public static int indexOf(String str, String searchStr) {
-  if (str == null || searchStr == null) {
-  return -1;
-  }
-  return str.indexOf(searchStr);
-  }
+    /**
+     * Trova il primo indice all'interno di una Stringa, gestendo <code>null</code>.
+     * Questo metodo utilizza {@link String#indexOf(String)}.
+     *
+     * @param str la Stringa da controllare, può essere null
+     * @param searchStr la Stringa da trovare, può essere null
+     * @return l'indice della prima occorrenza, -1 se non trovato o se str è null
+     */
+    public static int indexOf(String str, String searchStr) {
+        if (str == null || searchStr == null) {
+            return -1;
+        }
+        return str.indexOf(searchStr);
+    }
 }

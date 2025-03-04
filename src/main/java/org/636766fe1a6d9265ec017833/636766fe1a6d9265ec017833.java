@@ -1,31 +1,43 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class FileUtils {
 
-  public static void forceDeleteOnExit(final File file) throws IOException {
-  if (file == null) {
-  throw new NullPointerException("File must not be null");
-  }
+    /**
+     * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
+     * @param file file o directory da cancellare, non deve essere {@code null}
+     * @throws NullPointerException se il file è {@code null}
+     * @throws IOException in caso di cancellazione non riuscita
+     */
+    public static void forceDeleteOnExit(File file) throws IOException {
+        if (file == null) {
+            throw new NullPointerException("File cannot be null");
+        }
 
-  if (!file.exists()) {
-  return;
-  }
+        if (!file.exists()) {
+            return;
+        }
 
-  file.deleteOnExit();
-  
-  if (!file.isDirectory()) {
-  return;
-  }
+        if (file.isDirectory()) {
+            // Registra tutti i file e sottodirectory per la cancellazione
+            Files.walkFileTree(file.toPath(), new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                    file.toFile().deleteOnExit();
+                    return FileVisitResult.CONTINUE;
+                }
 
-  // Delete contents recursively for directories
-  final File[] files = file.listFiles();
-  if (files == null) {
-  throw new IOException("Failed to list contents of " + file);
-  }
-
-  for (final File f : files) {
-  forceDeleteOnExit(f);
-  }
-  }
+                @Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                    dir.toFile().deleteOnExit();
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } else {
+            // Se è un file semplice, registra solo quello
+            file.deleteOnExit();
+        }
+    }
 }

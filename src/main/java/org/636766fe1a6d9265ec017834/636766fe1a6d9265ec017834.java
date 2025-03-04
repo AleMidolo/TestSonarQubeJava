@@ -1,14 +1,11 @@
+import java.util.UUID;
+
 public class Session {
-  /**
-  * Session ID.
-  */
-  private String sessionId;
-
-  public String getSessionId() {
-  return sessionId;
-  }
-
-  public void setSessionId(String sessionId) {
-  this.sessionId = sessionId;
-  }
+    /**
+     * ID della sessione.
+     * @return String containing a unique session ID
+     */
+    public static String sessionId() {
+        return UUID.randomUUID().toString();
+    }
 }

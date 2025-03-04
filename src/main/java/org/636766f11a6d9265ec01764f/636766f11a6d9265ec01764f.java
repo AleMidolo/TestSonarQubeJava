@@ -1,8 +1,7 @@
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BeanMap {
     private Map<String, Object> map;

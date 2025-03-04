@@ -3,7 +3,7 @@ public class Type {
     private String description;
     private int id;
 
-    @Override 
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

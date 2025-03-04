@@ -20,7 +20,7 @@ public class BoundCalculator<K extends Comparable<K>> {
             
             for (int j = 0; j < i; j++) {
                 K previousKey = keys.get(j);
-                if (currentKey.compareTo(previousKey) > 0) {
+                if (previousKey.compareTo(currentKey) <= 0) {
                     maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
                 }
             }

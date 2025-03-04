@@ -41,13 +41,8 @@ public class MappingDiffer {
     }
 
     private ImmutableOpenMap<String, MappingMetadata> getCurrentIndexMappings(String tableName) {
-        try {
-            // Get current index mappings from Elasticsearch
-            GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
-            GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
-            return response.mappings().get(tableName);
-        } catch (Exception e) {
-            throw new RuntimeException("Error getting current index mappings", e);
-        }
+        // Implementation to get current index mappings from Elasticsearch
+        // This would need to be implemented based on your ES client
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

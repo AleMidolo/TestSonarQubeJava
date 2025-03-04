@@ -9,10 +9,6 @@ public class RequestWrapper {
      * @since 1.3
      */
     public long contentLength() {
-        long length = request.getContentLengthLong();
-        if (length < 0) {
-            length = 0;
-        }
-        return length;
+        return request.getContentLength();
     }
 }

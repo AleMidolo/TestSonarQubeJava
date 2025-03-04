@@ -1,5 +1,7 @@
+import java.util.Objects;
+
 public class StringUtils {
-    
+
     /**
      * <p>Verifica si una cadena termina con un sufijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).</p>
      * @see String#endsWith(String)

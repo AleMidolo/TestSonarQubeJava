@@ -8,27 +8,18 @@ public class CustomAppender extends AppenderSkeleton {
     
     private Writer writer;
     
-    public CustomAppender(Writer writer) {
-        this.writer = writer;
-    }
-
     /** 
      * Este método realiza la escritura
      */
     protected void subAppend(LoggingEvent event) {
-        if(layout == null) {
-            errorHandler.error("No layout set for the appender named [" + name + "].");
-            return;
-        }
-
         try {
-            String formattedMessage = layout.format(event);
-            writer.write(formattedMessage);
+            String message = this.layout.format(event);
+            writer.write(message);
             
             if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
-                if(throwableStrRep != null) {
-                    for(String line : throwableStrRep) {
+                if (throwableStrRep != null) {
+                    for (String line : throwableStrRep) {
                         writer.write(line);
                         writer.write(Layout.LINE_SEP);
                     }
@@ -36,23 +27,22 @@ public class CustomAppender extends AppenderSkeleton {
             }
             
             writer.flush();
-        } catch(IOException e) {
-            errorHandler.error("Failed to write log event", e, 1);
+        } catch (IOException e) {
+            errorHandler.error("Error writing to output writer", e, 
+                             ErrorCode.WRITE_FAILURE);
         }
     }
-
-    @Override
+    
     public void close() {
         if(writer != null) {
             try {
                 writer.close();
             } catch(IOException e) {
-                errorHandler.error("Failed to close writer", e, 1);
+                // Ignore
             }
         }
     }
-
-    @Override
+    
     public boolean requiresLayout() {
         return true;
     }

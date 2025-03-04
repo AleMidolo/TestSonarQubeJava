@@ -13,9 +13,9 @@ public class PointComparator {
         }
         
         double tolerance = 1e-9;
-        double xDiff = Math.abs(p1.getX() - p2.getX());
-        double yDiff = Math.abs(p1.getY() - p2.getY());
+        double deltaX = Math.abs(p1.getX() - p2.getX());
+        double deltaY = Math.abs(p1.getY() - p2.getY());
         
-        return xDiff <= tolerance && yDiff <= tolerance;
+        return deltaX <= tolerance && deltaY <= tolerance;
     }
 }

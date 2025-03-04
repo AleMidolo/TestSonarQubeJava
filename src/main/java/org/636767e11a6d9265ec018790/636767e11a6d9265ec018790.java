@@ -77,7 +77,7 @@ public class ThreadSnapshotParser {
                 }
             }
             
-            // Handle last snapshot
+            // Add final snapshot if exists
             if (currentTimestamp != -1) {
                 ThreadSnapshot snapshot = new ThreadSnapshot(
                     currentTimestamp,

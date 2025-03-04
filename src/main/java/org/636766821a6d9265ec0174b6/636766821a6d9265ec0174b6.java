@@ -31,11 +31,11 @@ public class TypeResolver {
                 if (resolvedType instanceof Class) {
                     resolvedTypes[i] = (Class<?>) resolvedType;
                 } else {
-                    // If we can't resolve the type variable, return null
+                    // Cannot resolve type variable
                     return null;
                 }
             } else {
-                // If we encounter other types like wildcards, return null
+                // Cannot resolve type argument
                 return null;
             }
         }

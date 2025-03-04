@@ -16,7 +16,7 @@ public class Category {
             return 0;
         }
         
-        // Recursively check children
+        // Recursively check all child nodes
         Iterator<Category> iter = children.iterator();
         while (iter.hasNext()) {
             Category child = iter.next();

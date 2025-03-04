@@ -25,9 +25,8 @@ public class CodedInputStream {
         if (lastTag == 0) {
             // If we read zero, that means either:
             // 1) We hit EOF, or
-            // 2) We read a zero byte (corrupt data)
-            // Either way, we return zero to indicate no more data
-            return 0;
+            // 2) We read a zero byte (invalid tag)
+            throw new IOException("Invalid tag: zero");
         }
 
         return lastTag;
@@ -37,12 +36,12 @@ public class CodedInputStream {
         if (pos < buffer.length) {
             return false;
         }
-        int result = input.read();
-        if (result == -1) {
+        
+        int count = input.read(buffer);
+        if (count <= 0) {
             return true;
         }
         pos = 0;
-        buffer[pos++] = (byte) result;
         return false;
     }
 
@@ -58,14 +57,14 @@ public class CodedInputStream {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint32");
+        throw new IOException("Malformed varint");
     }
 
     private byte readRawByte() throws IOException {
-        if (pos == buffer.length) {
-            int n = input.read(buffer);
-            if (n == -1) {
-                throw new IOException("EOF reached");
+        if (pos >= buffer.length) {
+            int count = input.read(buffer);
+            if (count <= 0) {
+                throw new IOException("EOF");
             }
             pos = 0;
         }

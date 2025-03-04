@@ -20,7 +20,7 @@ public class Graph<V,E> {
             
             // For each destination vertex in v
             for (V dest : v) {
-                // If there is an edge to this destination
+                // If there is an edge to dest
                 if (edges.containsKey(dest)) {
                     E edge = edges.get(dest);
                     // Add weight if graph is weighted

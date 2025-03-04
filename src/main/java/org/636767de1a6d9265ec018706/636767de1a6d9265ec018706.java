@@ -17,48 +17,77 @@ public class MappingDiffer {
         // Get the properties from input mappings
         Map<String, Object> inputProperties = mappings.getSourceAsMap();
         
-        // Create new map for storing diff
-        Map<String, Object> diffMap = new HashMap<>();
-        
-        // Get current mappings for table
-        Mappings currentMappings = getCurrentMappings(tableName);
-        if (currentMappings != null) {
-            Map<String, Object> currentProperties = currentMappings.getSourceAsMap();
-            
-            // Compare and add fields that don't exist in current mappings
-            for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
-                String field = entry.getKey();
-                if (!currentProperties.containsKey(field)) {
-                    diffMap.put(field, entry.getValue());
+        // Create new map for storing diff properties
+        Map<String, Object> diffProperties = new HashMap<>();
+
+        // Get current index mappings
+        Map<String, Object> currentProperties = getCurrentIndexMappings(tableName);
+
+        // Compare and find fields that don't exist in current mappings
+        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+            String field = entry.getKey();
+            Object value = entry.getValue();
+
+            // Skip _source field
+            if ("_source".equals(field)) {
+                continue;
+            }
+
+            // Add field to diff if it doesn't exist in current mappings
+            if (!currentProperties.containsKey(field)) {
+                diffProperties.put(field, value);
+            } else {
+                // For nested objects, recursively check differences
+                if (value instanceof Map && currentProperties.get(field) instanceof Map) {
+                    Map<String, Object> nestedDiff = compareNestedMappings(
+                            (Map<String, Object>) value,
+                            (Map<String, Object>) currentProperties.get(field)
+                    );
+                    if (!nestedDiff.isEmpty()) {
+                        diffProperties.put(field, nestedDiff);
+                    }
                 }
             }
-        } else {
-            // If no current mappings exist, return all input mappings
-            diffMap.putAll(inputProperties);
         }
-        
-        // Remove _source from diff to avoid conflicts
-        diffMap.remove("_source");
-        
-        // Create new Mappings object with diff
-        return new Mappings(MapperService.SINGLE_MAPPING_NAME, diffMap);
+
+        // Create new Mappings object with diff properties
+        if (diffProperties.isEmpty()) {
+            return null;
+        }
+
+        return new Mappings.Builder()
+                .putAll(diffProperties)
+                .build();
     }
-    
-    // Helper method to get current mappings for a table
-    private Mappings getCurrentMappings(String tableName) {
-        try {
-            MappingMetadata mappingMetadata = getClient().admin().indices()
-                .prepareGetMappings(tableName)
-                .get()
-                .getMappings()
-                .get(tableName);
-                
-            if (mappingMetadata != null) {
-                return new Mappings(MapperService.SINGLE_MAPPING_NAME, mappingMetadata.getSourceAsMap());
+
+    private Map<String, Object> getCurrentIndexMappings(String tableName) {
+        // Implementation to get current index mappings
+        // This would typically involve calling Elasticsearch API
+        return new HashMap<>();
+    }
+
+    private Map<String, Object> compareNestedMappings(
+            Map<String, Object> inputMap,
+            Map<String, Object> currentMap) {
+        Map<String, Object> diffMap = new HashMap<>();
+
+        for (Map.Entry<String, Object> entry : inputMap.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (!currentMap.containsKey(key)) {
+                diffMap.put(key, value);
+            } else if (value instanceof Map && currentMap.get(key) instanceof Map) {
+                Map<String, Object> nestedDiff = compareNestedMappings(
+                        (Map<String, Object>) value,
+                        (Map<String, Object>) currentMap.get(key)
+                );
+                if (!nestedDiff.isEmpty()) {
+                    diffMap.put(key, nestedDiff);
+                }
             }
-        } catch (Exception e) {
-            // Handle exceptions
         }
-        return null;
+
+        return diffMap;
     }
 }

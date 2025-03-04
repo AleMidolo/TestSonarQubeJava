@@ -13,10 +13,10 @@ public class ArrayUtils {
         if (array == null) {
             return null;
         }
-
+        
         final byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element at index " + i + " is null");
+            result[i] = Objects.requireNonNull(array[i], "Array element " + i + " is null");
         }
         return result;
     }

@@ -16,62 +16,53 @@ public class TourTransformer<V,E> {
             return null;
         }
 
-        // Create lists to store vertices and edges in order
-        List<V> vertexList = new ArrayList<>();
-        List<E> edgeList = new ArrayList<>();
-        
-        // Get first edge and its vertices
+        // Get first edge and vertex
         E firstEdge = tour.iterator().next();
-        V start = graph.getEdgeSource(firstEdge);
-        V current = graph.getEdgeTarget(firstEdge);
+        V startVertex = graph.getEdgeSource(firstEdge);
         
-        vertexList.add(start);
-        vertexList.add(current);
-        edgeList.add(firstEdge);
+        List<E> orderedEdges = new ArrayList<>();
+        List<V> orderedVertices = new ArrayList<>();
+        orderedVertices.add(startVertex);
         
-        // Remove first edge from set
-        Set<E> remaining = new HashSet<>(tour);
-        remaining.remove(firstEdge);
+        V currentVertex = startVertex;
+        Set<E> remainingEdges = new HashSet<>(tour);
         
-        // Build path by connecting edges
-        while (!remaining.isEmpty()) {
-            boolean found = false;
-            for (E edge : remaining) {
-                V source = graph.getEdgeSource(edge);
-                V target = graph.getEdgeTarget(edge);
-                
-                if (source.equals(current)) {
-                    current = target;
-                    found = true;
-                } else if (target.equals(current)) {
-                    current = source;
-                    found = true;
-                }
-                
-                if (found) {
-                    vertexList.add(current);
-                    edgeList.add(edge);
-                    remaining.remove(edge);
+        // Build ordered path
+        while (!remainingEdges.isEmpty()) {
+            E nextEdge = null;
+            
+            // Find edge connected to current vertex
+            for (E edge : remainingEdges) {
+                if (graph.getEdgeSource(edge).equals(currentVertex)) {
+                    nextEdge = edge;
+                    currentVertex = graph.getEdgeTarget(edge);
+                    break;
+                } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
+                    nextEdge = edge;
+                    currentVertex = graph.getEdgeSource(edge);
                     break;
                 }
             }
             
-            if (!found) {
+            if (nextEdge == null) {
                 throw new IllegalArgumentException("Invalid tour: edges do not form connected path");
             }
+            
+            orderedEdges.add(nextEdge);
+            orderedVertices.add(currentVertex);
+            remainingEdges.remove(nextEdge);
         }
         
-        // Verify tour is complete (ends at start)
-        if (!current.equals(start)) {
-            throw new IllegalArgumentException("Invalid tour: path does not end at starting vertex");
+        // Verify tour ends at start vertex
+        if (!currentVertex.equals(startVertex)) {
+            throw new IllegalArgumentException("Invalid tour: does not end at starting vertex");
         }
         
-        // Calculate total weight
         double weight = 0.0;
-        for (E edge : edgeList) {
+        for (E edge : orderedEdges) {
             weight += graph.getEdgeWeight(edge);
         }
         
-        return new GraphWalk<>(graph, vertexList, weight);
+        return new GraphWalk<>(graph, startVertex, startVertex, orderedVertices, orderedEdges, weight);
     }
 }

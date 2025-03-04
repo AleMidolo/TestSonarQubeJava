@@ -6,7 +6,7 @@ public class Bucket<T> {
     private Bucket<T> next;
     private Bucket<T> prev;
     
-    /** 
+    /**
      * Removes this bucket from the data structure.
      */
     void removeSelf() {

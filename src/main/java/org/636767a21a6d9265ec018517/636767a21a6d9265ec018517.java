@@ -20,7 +20,7 @@ public class ByteArrayBuffer {
         buffer.write(bytes);
     }
     
-    // Helper method to write a single byte
+    // Helper method to write single byte
     public void write(int b) {
         buffer.write(b);
     }

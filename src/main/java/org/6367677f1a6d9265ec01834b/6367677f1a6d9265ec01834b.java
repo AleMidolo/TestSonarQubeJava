@@ -16,7 +16,7 @@ public class LogEventBuffer {
     /** 
      * Place a {@link LoggingEvent} in the buffer. If the buffer is full
      * then the event is <b>silently dropped</b>. It is the caller's 
-     * responsibility to make sure that the buffer has free space.  
+     * responsability to make sure that the buffer has free space.  
      */
     public void put(LoggingEvent o) {
         if (o != null) {

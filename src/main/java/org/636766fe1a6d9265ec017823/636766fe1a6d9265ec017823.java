@@ -3,7 +3,7 @@ import org.objectweb.asm.Symbol;
 public class SymbolTable {
     private static final int CONSTANT_NAME_AND_TYPE_TAG = 12;
     private final Symbol[] symbols;
-    private int constantPoolCount;
+    private int size;
 
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
@@ -21,14 +21,13 @@ public class SymbolTable {
         
         // Not found, create new entry
         symbol = new Symbol(
-            constantPoolCount++,
+            size++,
             CONSTANT_NAME_AND_TYPE_TAG,
             name,
             descriptor,
             null,
             symbols[hashCode % symbols.length]
         );
-        
         symbols[hashCode % symbols.length] = symbol;
         return symbol.index;
     }

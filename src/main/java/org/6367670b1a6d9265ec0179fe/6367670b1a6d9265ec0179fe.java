@@ -17,20 +17,15 @@ public class ByteArrayOutputStream extends OutputStream {
         }
         
         // Ensure capacity
-        ensureCapacity(count + b.length);
-        
-        // Copy bytes to internal buffer
-        System.arraycopy(b, 0, buf, count, b.length);
-        count += b.length;
-    }
-
-    private void ensureCapacity(int minCapacity) {
-        // If the capacity is not enough, grow the buffer
-        if (minCapacity > buf.length) {
-            int newCapacity = Math.max(buf.length << 1, minCapacity);
-            byte[] newBuf = new byte[newCapacity];
-            System.arraycopy(buf, 0, newBuf, 0, count);
-            buf = newBuf;
+        int newcount = count + b.length;
+        if (newcount > buf.length) {
+            byte[] newbuf = new byte[Math.max(buf.length << 1, newcount)];
+            System.arraycopy(buf, 0, newbuf, 0, count);
+            buf = newbuf;
         }
+        
+        // Copy bytes to buffer
+        System.arraycopy(b, 0, buf, count, b.length);
+        count = newcount;
     }
 }

@@ -1,29 +1,28 @@
-public class StringMatcher {
+public class StringUtils {
     /**
-     * Returns {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
-     * @param str the original string (or StringBuilder) 
-     * @param index the index in the original string to start matching against
-     * @param substring the substring to match at the given index
-     * @return {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
+     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
+     * @param str la cadena original (o StringBuilder)
+     * @param index el índice en la cadena original para comenzar a comparar
+     * @param substring la subcadena para comparar en el índice dado
+     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
-        // Check for null inputs
         if (str == null || substring == null) {
             return false;
         }
-
+        
         // Check if index is out of bounds
         if (index < 0 || index + substring.length() > str.length()) {
             return false;
         }
-
+        
         // Compare each character
         for (int i = 0; i < substring.length(); i++) {
             if (str.charAt(index + i) != substring.charAt(i)) {
                 return false;
             }
         }
-
+        
         return true;
     }
 }

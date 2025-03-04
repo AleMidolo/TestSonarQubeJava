@@ -3,8 +3,8 @@ public class StringBuilder {
     private int count;
     
     /**
-     * <p> Gets the String built by this builder. </p>
-     * @return the built string
+     * <p> Obtiene la cadena construida por este constructor. </p>
+     * @return la cadena construida
      */
     public String toString() {
         return new String(value, 0, count);

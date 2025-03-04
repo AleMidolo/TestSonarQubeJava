@@ -1,57 +1,44 @@
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Frame;
 import org.objectweb.asm.MethodWriter;
-import org.objectweb.asm.ByteVector;
-import org.objectweb.asm.Type;
+import java.util.ArrayList;
 
-public class StackMapTableWriter {
-    private ByteVector stackMapTableEntries;
-    private Frame currentFrame;
-    private static final int ITEM_TOP = 0;
-    private static final int ITEM_INTEGER = 1;
-    private static final int ITEM_FLOAT = 2;
-    private static final int ITEM_DOUBLE = 3;
-    private static final int ITEM_LONG = 4;
-    private static final int ITEM_NULL = 5;
-    private static final int ITEM_UNINITIALIZED_THIS = 6;
-    private static final int ITEM_OBJECT = 7;
-    private static final int ITEM_UNINITIALIZED = 8;
-
+public class FrameWriter {
+    private byte[] stackMapTableEntries;
+    private int[] currentFrame;
+    private int currentIndex;
+    
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
-            Object type = currentFrame.getStack(i);
-            if (type instanceof Integer) {
-                int value = (Integer) type;
-                switch (value) {
-                    case ITEM_TOP:
-                        stackMapTableEntries.putByte(0);
-                        break;
-                    case ITEM_INTEGER:
-                        stackMapTableEntries.putByte(1);
-                        break;
-                    case ITEM_FLOAT:
-                        stackMapTableEntries.putByte(2);
-                        break;
-                    case ITEM_DOUBLE:
-                        stackMapTableEntries.putByte(3);
-                        break;
-                    case ITEM_LONG:
-                        stackMapTableEntries.putByte(4);
-                        break;
-                    case ITEM_NULL:
-                        stackMapTableEntries.putByte(5);
-                        break;
-                    case ITEM_UNINITIALIZED_THIS:
-                        stackMapTableEntries.putByte(6);
-                        break;
-                }
-            } else if (type instanceof String) {
-                stackMapTableEntries.putByte(7);
-                stackMapTableEntries.putShort(((String) type).hashCode());
-            } else if (type instanceof Label) {
-                stackMapTableEntries.putByte(8);
-                stackMapTableEntries.putShort(((Label) type).getOffset());
+            int abstractType = currentFrame[i];
+            if (abstractType == Frame.TOP) {
+                stackMapTableEntries[currentIndex++] = 0; // TOP
+            } else if (abstractType == Frame.INTEGER) {
+                stackMapTableEntries[currentIndex++] = 1; // INTEGER
+            } else if (abstractType == Frame.FLOAT) {
+                stackMapTableEntries[currentIndex++] = 2; // FLOAT
+            } else if (abstractType == Frame.DOUBLE) {
+                stackMapTableEntries[currentIndex++] = 3; // DOUBLE
+            } else if (abstractType == Frame.LONG) {
+                stackMapTableEntries[currentIndex++] = 4; // LONG
+            } else if (abstractType == Frame.NULL) {
+                stackMapTableEntries[currentIndex++] = 5; // NULL
+            } else if (abstractType == Frame.UNINITIALIZED_THIS) {
+                stackMapTableEntries[currentIndex++] = 6; // UNINITIALIZED_THIS
+            } else if (abstractType == Frame.OBJECT) {
+                stackMapTableEntries[currentIndex++] = 7; // OBJECT
+                // Write class info index
+                putInt16(currentFrame[++i]);
+            } else {
+                stackMapTableEntries[currentIndex++] = 8; // UNINITIALIZED
+                // Write offset
+                putInt16(((Label) currentFrame[++i]).getOffset());
             }
         }
+    }
+    
+    private void putInt16(final int value) {
+        stackMapTableEntries[currentIndex++] = (byte) (value >>> 8);
+        stackMapTableEntries[currentIndex++] = (byte) value;
     }
 }

@@ -10,7 +10,7 @@ public class Logger {
     }
     
     /**
-     * Remove the appender with the name passed as parameter form the list of appenders.
+     * Elimina el "appender" con el nombre pasado como parámetro de la lista de "appenders".
      */
     public void removeAppender(String name) {
         if (name == null) {
@@ -27,7 +27,7 @@ public class Logger {
         }
     }
     
-    // Inner class representing an Appender
+    // Inner class to represent an Appender
     private class Appender {
         private String name;
         

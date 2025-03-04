@@ -2,19 +2,18 @@ import java.util.Arrays;
 
 public class ArrayUtils {
     /**
-     * Append the given String to the given String array, returning a new array consisting 
-     * of the input array contents plus the given String.
-     * @param array the array to append to (can be <code>null</code>)
-     * @param str the String to append
-     * @return the new array (never <code>null</code>)
+     * Agrega la cadena dada al arreglo de cadenas proporcionado, devolviendo un nuevo arreglo que consiste en el contenido del arreglo de entrada más la cadena dada.
+     * @param array el arreglo al que se va a agregar (puede ser <code>null</code>)
+     * @param str la cadena a agregar
+     * @return el nuevo arreglo (nunca <code>null</code>)
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null) {
-            return new String[] {str};
+            return new String[] { str };
         }
         
-        String[] newArr = Arrays.copyOf(array, array.length + 1);
-        newArr[array.length] = str;
-        return newArr;
+        String[] newArray = Arrays.copyOf(array, array.length + 1);
+        newArray[array.length] = str;
+        return newArray;
     }
 }

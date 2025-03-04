@@ -1,12 +1,16 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
-public class ShortUtils {
+/**
+ * Utility class for converting primitive arrays to object arrays.
+ */
+public class ArrayUtils {
+
     /**
-     * <p>Converts an array of primitive shorts to objects.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Convierte un arreglo de primitivos "shorts" a objetos.</p>
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * 
-     * @param array a <code>short</code> array
-     * @return a <code>Short</code> array, <code>null</code> if null array input
+     * @param array  un arreglo de <code>short</code>
+     * @return un arreglo de <code>Short</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

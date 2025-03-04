@@ -1,12 +1,15 @@
 package org.apache.commons.lang3;
 
+/**
+ * Utility class for array operations.
+ */
 public class ArrayUtils {
+
     /**
-     * <p>Clones an array returning a typecast result and handling <code>null</code>.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to clone, may be <code>null</code>
-     * @return the cloned array, <code>null</code> if <code>null</code> input
+     * <p>Clona un arreglo devolviendo un resultado con tipo convertido y manejando <code>null</code>.</p>
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  el arreglo a clonar, puede ser <code>null</code>
+     * @return el arreglo clonado, <code>null</code> si la entrada es <code>null</code>
      */
     public static char[] clone(final char[] array) {
         if (array == null) {

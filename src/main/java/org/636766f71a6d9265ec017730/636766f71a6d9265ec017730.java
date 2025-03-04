@@ -1,25 +1,26 @@
 import java.util.Collection;
 import java.util.ArrayList;
 
-public class CollectionUtils {
+public class ArrayConverter {
     /**
-     * Converts the given Collection into an array of Strings. The returned array does not contain <code>null</code> entries. Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element is <code>null</code>.
-     * @param collection The collection to convert
-     * @return A new array of Strings.
+     * Convierte la colección dada en un arreglo de Strings. El arreglo devuelto no contiene entradas <code>null</code>. 
+     * Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará una {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
+     * @param collection La colección a convertir
+     * @return Un nuevo arreglo de Strings.
      */
     static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
-        
-        ArrayList<String> list = new ArrayList<>();
+
+        ArrayList<String> result = new ArrayList<>();
         
         for (Object obj : collection) {
             if (obj != null) {
-                list.add(obj.toString());
+                result.add(obj.toString());
             }
         }
-        
-        return list.toArray(new String[0]);
+
+        return result.toArray(new String[0]);
     }
 }

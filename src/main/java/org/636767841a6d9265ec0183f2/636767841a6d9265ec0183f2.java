@@ -1,6 +1,7 @@
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<Object> {
+public class ObjectComparator implements Comparator<Object> {
+    
     /** 
      * @see Comparator 
      */
@@ -9,12 +10,13 @@ public class CustomComparator implements Comparator<Object> {
             return 0;
         }
         if (aObj1 == null) {
-            return -1;
+            return -1; 
         }
         if (aObj2 == null) {
             return 1;
         }
         
+        // Compare using toString() representation if objects are not null
         return aObj1.toString().compareTo(aObj2.toString());
     }
 }

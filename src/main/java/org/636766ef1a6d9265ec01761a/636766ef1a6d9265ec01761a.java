@@ -2,35 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SymbolTable {
-    private final List<Symbol> typeTable;
+    private List<String> types;
 
     public SymbolTable() {
-        this.typeTable = new ArrayList<>();
+        types = new ArrayList<>();
     }
 
+    /**
+     * Agrega un tipo en la tabla de tipos de esta tabla de símbolos. No hace nada si la tabla de tipos ya contiene un tipo similar.
+     * @param value un nombre de clase interno.
+     * @return el índice de un nuevo tipo o de un tipo ya existente con el valor dado.
+     */
     public int addType(final String value) {
         // Check if type already exists
-        for (int i = 0; i < typeTable.size(); i++) {
-            Symbol symbol = typeTable.get(i);
-            if (symbol.getValue().equals(value)) {
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).equals(value)) {
                 return i;
             }
         }
         
-        // Add new type if not found
-        typeTable.add(new Symbol(value));
-        return typeTable.size() - 1;
-    }
-
-    private static class Symbol {
-        private final String value;
-
-        public Symbol(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
+        // Add new type if it doesn't exist
+        types.add(value);
+        return types.size() - 1;
     }
 }

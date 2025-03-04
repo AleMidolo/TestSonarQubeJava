@@ -1,35 +1,31 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BoundComputer<K extends Comparable<K>> {
+public class BPlusTree<K extends Comparable<K>> {
 
-    /**
-     * Finds a minimum lower bound for every key.
-     * @param keys a list of keys.
-     * @return the computed key upper bound.
-     */
     private List<Integer> computeUpperBounds(List<K> keys) {
+        List<Integer> upperBounds = new ArrayList<>();
+        
         if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
+            return upperBounds;
         }
 
-        List<Integer> upperBounds = new ArrayList<>(keys.size());
+        // Initialize first upper bound
+        upperBounds.add(0);
         
-        // For each key, find the smallest value larger than it
-        for (int i = 0; i < keys.size(); i++) {
+        // Compare each adjacent pair of keys
+        for (int i = 1; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int upperBound = Integer.MAX_VALUE;
+            K previousKey = keys.get(i-1);
             
-            // Compare with all other keys
-            for (int j = 0; j < keys.size(); j++) {
-                if (i != j) {
-                    K otherKey = keys.get(j);
-                    if (currentKey.compareTo(otherKey) < 0) {
-                        upperBound = Math.min(upperBound, j);
-                    }
-                }
+            // If keys are equal, use same upper bound
+            if (currentKey.compareTo(previousKey) == 0) {
+                upperBounds.add(upperBounds.get(i-1));
             }
-            
-            upperBounds.add(upperBound);
+            // If keys are different, increment upper bound
+            else {
+                upperBounds.add(upperBounds.get(i-1) + 1);
+            }
         }
         
         return upperBounds;

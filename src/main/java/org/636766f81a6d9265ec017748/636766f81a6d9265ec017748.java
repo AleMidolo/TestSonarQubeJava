@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Base64Decoder {
     /**
-     * Decoding a string to a string follow the Base64 regular.
+     * Decodificación de una cadena a una cadena siguiendo la norma Base64.
      */
     public static String base64Decode(final String s) {
         if (s == null || s.isEmpty()) {

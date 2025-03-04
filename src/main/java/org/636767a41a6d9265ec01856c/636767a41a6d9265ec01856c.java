@@ -3,12 +3,12 @@ import java.nio.charset.StandardCharsets;
 public class UTF8Utils {
 
     /**
-     * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
+     * Calcula el tamaño de la cadena utf8 que comienza en el índice especificado {@code index} con la longitud especificada {@code length}.
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
         int utf8Size = 0;
         final int end = index + len;
-        
+
         for (int i = index; i < end; i++) {
             char c = str.charAt(i);
             
@@ -28,7 +28,7 @@ public class UTF8Utils {
                 utf8Size += 3;
             }
         }
-        
+
         return utf8Size;
     }
 }

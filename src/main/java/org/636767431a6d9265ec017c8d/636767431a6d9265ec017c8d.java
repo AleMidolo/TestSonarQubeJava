@@ -1,19 +1,15 @@
-public class BinaryLogCalculator {
+public class LogCalculator {
     /**
-     * Computes floor(log_2(n)) + 1
-     * @param n The input number
-     * @return floor(log_2(n)) + 1
+     * Calcula el piso(log_2(n)) + 1
+     * @param n numero entero positivo
+     * @return piso(log_2(n)) + 1
      */
-    private int computeBinaryLog(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("Input must be positive");
-        }
-        
+    public static int log(int n) {
         int count = 0;
-        while (n > 0) {
-            n = n >> 1; // Divide by 2 using right shift
+        while (n > 1) {
+            n = n/2;
             count++;
         }
-        return count;
+        return count + 1;
     }
 }

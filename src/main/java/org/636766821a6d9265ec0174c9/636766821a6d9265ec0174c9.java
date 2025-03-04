@@ -1,8 +1,9 @@
 import java.io.File;
 
-public class ClassPathUtil {
+public class ClassPathUtils {
+
     /**
-     * Returns the class path of the current JVM instance as an array of {@link File} objects.
+     * Devuelve la ruta de clases de la instancia actual de la JVM como un arreglo de objetos {@link File}.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");

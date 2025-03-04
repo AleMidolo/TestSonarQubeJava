@@ -3,54 +3,27 @@ import java.io.IOException;
 
 public class BufferWriter {
     /**
-     * Writes the contents of the LinkedBuffer into the DataOutput.
-     * @return the total content size of the buffer.
+     * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
+     * @return el tamaño total del contenido del búfer.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
-        if (out == null || node == null) {
-            return 0;
-        }
-
-        int size = 0;
-        LinkedBuffer current = node;
-
-        while (current != null) {
-            byte[] buffer = current.getBuffer();
-            int offset = current.getOffset();
-            int length = current.getLength();
-
-            if (buffer != null && length > 0) {
-                out.write(buffer, offset, length);
-                size += length;
+        int totalSize = 0;
+        
+        while (node != null && node.buffer != null) {
+            if (node.offset > 0) {
+                out.write(node.buffer, 0, node.offset);
+                totalSize += node.offset;
             }
-            
-            current = current.next();
+            node = node.next;
         }
-
-        return size;
+        
+        return totalSize;
     }
-}
-
-// Helper class to represent a LinkedBuffer node
-class LinkedBuffer {
-    private byte[] buffer;
-    private int offset;
-    private int length;
-    private LinkedBuffer next;
-
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public LinkedBuffer next() {
-        return next;
+    
+    // LinkedBuffer class for compilation
+    private static class LinkedBuffer {
+        byte[] buffer;
+        int offset;
+        LinkedBuffer next;
     }
 }

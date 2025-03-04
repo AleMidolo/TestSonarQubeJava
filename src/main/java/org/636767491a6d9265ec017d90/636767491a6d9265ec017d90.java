@@ -1,28 +1,16 @@
-import java.util.Objects;
-
 public class ArrayUtils {
     /**
-     * Reverses the order of the elements in the specified range within the given array.
-     * @param <V> the type of elements in the array
-     * @param arr the array
-     * @param from the index of the first element (inclusive) inside the range to reverse
-     * @param to the index of the last element (inclusive) inside the range to reverse
+     * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
+     * @param <V> el tipo de elementos en el arreglo
+     * @param arr el arreglo
+     * @param from el índice del primer elemento (inclusive) dentro del rango a invertir
+     * @param to el índice del último elemento (inclusive) dentro del rango a invertir
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        // Input validation
-        Objects.requireNonNull(arr, "Array cannot be null");
-        if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("Invalid range specified");
-        }
-
-        // Reverse elements in the range
         while (from < to) {
-            // Swap elements
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;
-            
-            // Move indices towards center
             from++;
             to--;
         }

@@ -1,11 +1,13 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
 public class BoundCalculator<K extends Comparable<K>> {
 
     /**
-     * Finds a maximum lower bound for every key.
-     * @param keys list of keys.
-     * @return the computed key lower bounds.
+     * Encuentra un límite inferior máximo para cada llave.
+     * @param keys lista de llaves.
+     * @return los límites inferiores de llaves calculados.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
@@ -14,19 +16,19 @@ public class BoundCalculator<K extends Comparable<K>> {
 
         List<Integer> lowerBounds = new ArrayList<>(keys.size());
         
+        // Para cada llave, encontrar su límite inferior
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int maxLowerBound = 0;
+            int lowerBound = -1;
             
-            // Compare with all previous keys to find max lower bound
+            // Buscar el elemento más grande que sea menor que la llave actual
             for (int j = 0; j < i; j++) {
-                K previousKey = keys.get(j);
-                if (previousKey.compareTo(currentKey) <= 0) {
-                    maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
+                if (keys.get(j).compareTo(currentKey) < 0) {
+                    lowerBound = Math.max(lowerBound, j);
                 }
             }
             
-            lowerBounds.add(maxLowerBound);
+            lowerBounds.add(lowerBound);
         }
         
         return lowerBounds;

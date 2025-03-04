@@ -1,25 +1,30 @@
-import java.util.Objects;
-
 public class StringUtils {
+    
     /**
-     * <p>Check if a String ends with a specified suffix (optionally case insensitive).</p>
+     * <p>Verifica si una cadena termina con un sufijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).</p>
      * @see String#endsWith(String)
-     * @param str  the String to check, may be null
-     * @param suffix the suffix to find, may be null
-     * @param ignoreCase inidicates whether the compare should ignore case(case insensitive) or not.
-     * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
+     * @param str  la cadena a verificar, puede ser nula
+     * @param suffix el sufijo a encontrar, puede ser nulo
+     * @param ignoreCase indica si la comparación debe ignorar las mayúsculas y minúsculas (sin distinguir entre mayúsculas y minúsculas) o no.
+     * @return <code>true</code> si la cadena termina con el sufijo o ambos son <code>null</code>
      */
     private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
+        if (str == null && suffix == null) {
+            return true;
+        }
         if (str == null || suffix == null) {
-            return str == null && suffix == null;
+            return false;
         }
         if (suffix.length() > str.length()) {
             return false;
         }
+        
         int strOffset = str.length() - suffix.length();
         
-        return ignoreCase 
-            ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
-            : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
+        if (ignoreCase) {
+            return str.regionMatches(true, strOffset, suffix, 0, suffix.length());
+        } else {
+            return str.regionMatches(strOffset, suffix, 0, suffix.length());
+        }
     }
 }

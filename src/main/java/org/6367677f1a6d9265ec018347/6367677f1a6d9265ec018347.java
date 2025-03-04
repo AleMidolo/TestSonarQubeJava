@@ -1,36 +1,43 @@
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatServer {
+public class TelnetServer {
     private List<PrintWriter> clientWriters;
 
-    public ChatServer() {
+    public TelnetServer() {
         clientWriters = new ArrayList<>();
     }
 
     /**
-     * sends a message to each of the clients in telnet-friendly output.
+     * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
      */
     public synchronized void send(final String message) {
+        // Agregar retorno de carro y nueva línea para compatibilidad telnet
+        String telnetMessage = message + "\r\n";
+        
+        // Iterar sobre la lista de writers de clientes
+        List<PrintWriter> disconnectedClients = new ArrayList<>();
+        
         for (PrintWriter writer : clientWriters) {
             try {
-                writer.println(message);
+                writer.print(telnetMessage);
                 writer.flush();
             } catch (Exception e) {
-                // Remove failed client writer
-                clientWriters.remove(writer);
+                // Si hay error al escribir, agregar cliente a lista de desconectados
+                disconnectedClients.add(writer);
             }
         }
+        
+        // Remover clientes desconectados
+        clientWriters.removeAll(disconnectedClients);
     }
 
-    // Method to add new client writer
-    public synchronized void addClient(PrintWriter writer) {
+    // Método para agregar un nuevo cliente
+    public synchronized void addClient(Socket clientSocket) throws IOException {
+        PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
         clientWriters.add(writer);
-    }
-
-    // Method to remove client writer
-    public synchronized void removeClient(PrintWriter writer) {
-        clientWriters.remove(writer);
     }
 }

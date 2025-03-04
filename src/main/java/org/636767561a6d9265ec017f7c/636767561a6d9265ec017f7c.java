@@ -3,68 +3,65 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.graph.GraphWalk;
 import java.util.*;
 
-public class TourTransformer<V,E> {
+public class GraphUtils {
 
-    /**
-     * Transform from a Set representation to a graph path.
-     * @param tour a set containing the edges of the tour
-     * @param graph the graph
-     * @return a graph path
-     */
-    protected GraphPath<V,E> edgeSetToTour(Set<E> tour, Graph<V,E> graph) {
-        if (tour.isEmpty()) {
+    protected <V,E> GraphPath<V,E> edgeSetToTour(Set<E> tour, Graph<V,E> graph) {
+        if (tour == null || tour.isEmpty() || graph == null) {
             return null;
         }
 
-        List<E> edges = new ArrayList<>();
-        List<V> vertices = new ArrayList<>();
+        // Create lists to store vertices and edges of the path
+        List<V> vertexList = new ArrayList<>();
+        List<E> edgeList = new ArrayList<>();
         
         // Get first edge and its vertices
         E firstEdge = tour.iterator().next();
-        V start = graph.getEdgeSource(firstEdge);
-        V current = graph.getEdgeTarget(firstEdge);
+        V startVertex = graph.getEdgeSource(firstEdge);
+        V currentVertex = graph.getEdgeTarget(firstEdge);
         
-        edges.add(firstEdge);
-        vertices.add(start);
-        vertices.add(current);
+        // Add first vertex and edge
+        vertexList.add(startVertex);
+        edgeList.add(firstEdge);
         
-        // Remove first edge from consideration
-        Set<E> remaining = new HashSet<>(tour);
-        remaining.remove(firstEdge);
+        // Remove first edge from set
+        Set<E> remainingEdges = new HashSet<>(tour);
+        remainingEdges.remove(firstEdge);
         
         // Build path by connecting edges
-        while (!remaining.isEmpty()) {
-            boolean found = false;
-            for (E edge : remaining) {
-                V source = graph.getEdgeSource(edge);
-                V target = graph.getEdgeTarget(edge);
-                
-                if (source.equals(current)) {
-                    current = target;
-                    found = true;
-                } else if (target.equals(current)) {
-                    current = source;
-                    found = true;
-                }
-                
-                if (found) {
-                    edges.add(edge);
-                    vertices.add(current);
-                    remaining.remove(edge);
+        while (!remainingEdges.isEmpty()) {
+            vertexList.add(currentVertex);
+            
+            // Find next edge that connects to current vertex
+            E nextEdge = null;
+            for (E edge : remainingEdges) {
+                if (graph.getEdgeSource(edge).equals(currentVertex)) {
+                    nextEdge = edge;
+                    currentVertex = graph.getEdgeTarget(edge);
+                    break;
+                } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
+                    nextEdge = edge;
+                    currentVertex = graph.getEdgeSource(edge);
                     break;
                 }
             }
             
-            if (!found) {
-                throw new IllegalArgumentException("Edge set does not form a valid tour");
+            if (nextEdge == null) {
+                throw new IllegalArgumentException("Invalid tour: edges do not form a continuous path");
             }
+            
+            edgeList.add(nextEdge);
+            remainingEdges.remove(nextEdge);
         }
         
-        // Create and return graph path
-        double weight = edges.stream()
-            .mapToDouble(graph::getEdgeWeight)
-            .sum();
-            
-        return new GraphWalk<>(graph, vertices, weight);
+        // Add final vertex to complete the path
+        vertexList.add(currentVertex);
+        
+        // Calculate total weight of path
+        double weight = 0.0;
+        for (E edge : edgeList) {
+            weight += graph.getEdgeWeight(edge);
+        }
+        
+        return new GraphWalk<>(graph, vertexList, edgeList, weight);
     }
 }

@@ -2,42 +2,26 @@ import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class Logger {
-    
-    private LogTable logTable; // Assume LogTable is a custom JTable component
-    
-    public Logger(LogTable table) {
-        this.logTable = table;
+    private LogTable logTable;
+
+    public Logger(LogTable logTable) {
+        this.logTable = logTable;
     }
 
     /**
-     * Add a log record message to be displayed in the LogTable. This method is thread-safe 
-     * as it posts requests to the SwingThread rather than processing directly.
+     * Agrega un mensaje de registro a ser mostrado en la "LogTable". 
+     * Este método es seguro para hilos ya que envía solicitudes al SwingThread 
+     * en lugar de procesarlas directamente.
      */
     public void addMessage(final LogRecord lr) {
         if (lr == null) {
             return;
         }
-        
-        // Ensure UI updates happen on Event Dispatch Thread
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Add the log record to the table model
-                logTable.getModel().addRow(new Object[]{
-                    lr.getMillis(),
-                    lr.getLevel(),
-                    lr.getMessage(),
-                    lr.getSourceClassName(),
-                    lr.getSourceMethodName()
-                });
-                
-                // Auto-scroll to the latest entry
-                int lastRow = logTable.getModel().getRowCount() - 1;
-                if (lastRow >= 0) {
-                    logTable.scrollRectToVisible(
-                        logTable.getCellRect(lastRow, 0, true)
-                    );
-                }
+                logTable.addRow(lr);
             }
         });
     }

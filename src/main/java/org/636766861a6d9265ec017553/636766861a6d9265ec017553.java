@@ -1,16 +1,16 @@
 import java.util.Objects;
 
 public class Template {
-    private Set<String> templateVariables;
+    private List<String> templateVariables;
 
     public Template() {
-        this.templateVariables = new HashSet<>();
+        this.templateVariables = new ArrayList<>();
     }
 
     /**
-     * Ascertain if a template variable is a member of this template.
-     * @param name The template variable.
-     * @return true if the template variable is a member of the template, otherwise false.
+     * Determina si una variable de plantilla es un miembro de esta plantilla.
+     * @param name nombre La variable de plantilla.
+     * @return true si la variable de plantilla es un miembro de la plantilla, de lo contrario false.
      */
     public final boolean isTemplateVariablePresent(String name) {
         if (name == null) {

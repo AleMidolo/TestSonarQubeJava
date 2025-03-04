@@ -4,15 +4,14 @@ public class RequestWrapper {
     private HttpServletRequest request;
 
     /**
-     * Retrieve the content length of the request.
-     * @return The content length of the request.
+     * Recupera la longitud del contenido de la solicitud.
+     * @return La longitud del contenido de la solicitud.
      * @since 1.3
      */
     public long contentLength() {
         long length = request.getContentLengthLong();
         if (length < 0) {
-            // If content length header not set, return 0
-            return 0L;
+            length = 0;
         }
         return length;
     }

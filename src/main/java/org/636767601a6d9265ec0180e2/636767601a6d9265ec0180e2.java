@@ -1,59 +1,62 @@
 import java.util.*;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class MinimalSeparatorFinder {
-    private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
+public class SeparatorComputer {
+
+    private Graph<V,E> graph; // Graph instance variable
     
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
         // Iterate through all edges in the graph
         for (E edge : graph.edgeSet()) {
-            // Get endpoints of the edge
+            // Get vertices incident to edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get common neighbors of the endpoints
-            Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
-            Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
-            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
-            commonNeighbors.retainAll(targetNeighbors);
+            // Get neighborhood subgraph around edge
+            Set<V> neighborhood = new HashSet<>();
+            neighborhood.add(source);
+            neighborhood.add(target);
+            neighborhood.addAll(Graphs.neighborListOf(graph, source));
+            neighborhood.addAll(Graphs.neighborListOf(graph, target));
             
-            // For each common neighbor, find minimal separators
-            List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
-            for (V neighbor : commonNeighbors) {
-                // Create separator pair using vertex indices
-                int v1 = graph.getVertexIndex(source);
-                int v2 = graph.getVertexIndex(neighbor);
-                edgeSeparators.add(new Pair<>(v1, v2));
-                
-                v1 = graph.getVertexIndex(target);
-                v2 = graph.getVertexIndex(neighbor);
-                edgeSeparators.add(new Pair<>(v1, v2));
-            }
+            Graph<V,E> subgraph = new AsSubgraph<>(graph, neighborhood);
             
-            // Add edge separators to global list
-            globalSeparators.add(new Pair<>(edgeSeparators, edge));
+            // Find minimal separators in neighborhood
+            List<Pair<Integer,Integer>> separators = findMinimalSeparators(subgraph, source, target);
+            
+            // Add separators with associated edge to global list
+            globalSeparators.add(Pair.of(separators, edge));
         }
         
         return globalSeparators;
     }
     
-    // Helper class for pairs
-    private static class Pair<X,Y> {
-        private final X first;
-        private final Y second;
+    // Helper method to find minimal separators between two vertices
+    private List<Pair<Integer,Integer>> findMinimalSeparators(Graph<V,E> graph, V source, V target) {
+        List<Pair<Integer,Integer>> separators = new ArrayList<>();
         
-        public Pair(X first, Y second) {
-            this.first = first;
-            this.second = second;
+        // Use max flow / min cut to find minimal separators
+        EdmondsKarpMFImpl<V,E> maxFlow = new EdmondsKarpMFImpl<>(graph);
+        
+        // Convert vertices to integers for pair representation
+        int s = graph.vertexSet().indexOf(source);
+        int t = graph.vertexSet().indexOf(target);
+        
+        // Find minimal separator
+        Set<E> minCut = maxFlow.getMinCut(source, target);
+        
+        // Convert cut edges to vertex pairs
+        for (E edge : minCut) {
+            V v1 = graph.getEdgeSource(edge);
+            V v2 = graph.getEdgeTarget(edge);
+            separators.add(Pair.of(
+                graph.vertexSet().indexOf(v1),
+                graph.vertexSet().indexOf(v2)
+            ));
         }
         
-        public X getFirst() {
-            return first;
-        }
-        
-        public Y getSecond() {
-            return second;
-        }
+        return separators;
     }
 }

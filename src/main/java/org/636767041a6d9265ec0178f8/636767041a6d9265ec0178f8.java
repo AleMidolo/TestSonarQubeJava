@@ -1,14 +1,13 @@
-public class StringArrayCopier {
+public class ArrayUtils {
     /**
-     * This method creates a copy of the provided array, and ensures that all the strings 
-     * in the newly created array contain only lower-case letters.
-     * Using this method to copy string arrays means that changes to the src array 
-     * do not modify the dst array.
-     *
-     * @param src The source array to copy
-     * @return A new array containing lowercase copies of the strings
+     * Este método crea una copia del array proporcionado y asegura que todas las cadenas 
+     * en el nuevo array contengan solo letras minúsculas.
+     * Utilizar este método para copiar arrays de cadenas significa que los cambios en el 
+     * array src no modifican el array dst.
+     * @param src Array origen que se desea copiar
+     * @return Nuevo array con las cadenas en minúsculas
      */
-    private static String[] copyStrings(final String[] src) {
+    private static String[] copiarCadenas(final String[] src) {
         if (src == null) {
             return null;
         }
@@ -20,21 +19,5 @@ public class StringArrayCopier {
             }
         }
         return dst;
-    }
-    
-    // Example usage
-    public static void main(String[] args) {
-        String[] original = {"Hello", "WORLD", "Java", null, "CODE"};
-        String[] copied = copyStrings(original);
-        
-        // Print results
-        System.out.println("Original array:");
-        for (String s : original) {
-            System.out.print(s + " ");
-        }
-        System.out.println("\nCopied array (lowercase):");
-        for (String s : copied) {
-            System.out.print(s + " ");
-        }
     }
 }

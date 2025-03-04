@@ -7,13 +7,9 @@ import java.io.Writer;
 public class CustomAppender extends AppenderSkeleton {
     
     private Writer writer;
-    
-    public CustomAppender(Writer writer) {
-        this.writer = writer;
-    }
 
-    /**
-     * This method does actual writing
+    /** 
+     * Este método realiza la escritura
      */
     protected void subAppend(LoggingEvent event) {
         if(layout == null || writer == null) {
@@ -26,8 +22,8 @@ public class CustomAppender extends AppenderSkeleton {
             
             if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
-                if(throwableStrRep != null) {
-                    for(String line : throwableStrRep) {
+                if (throwableStrRep != null) {
+                    for (String line : throwableStrRep) {
                         writer.write(line);
                         writer.write(Layout.LINE_SEP);
                     }
@@ -35,7 +31,7 @@ public class CustomAppender extends AppenderSkeleton {
             }
             
             writer.flush();
-        } catch(IOException e) {
+        } catch (IOException e) {
             errorHandler.error("Failed to write log event", e, 1);
         }
     }
@@ -45,7 +41,7 @@ public class CustomAppender extends AppenderSkeleton {
         if(writer != null) {
             try {
                 writer.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 // Ignore
             }
         }
@@ -54,5 +50,9 @@ public class CustomAppender extends AppenderSkeleton {
     @Override
     public boolean requiresLayout() {
         return true;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 }

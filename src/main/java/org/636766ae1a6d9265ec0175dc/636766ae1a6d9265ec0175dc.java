@@ -1,18 +1,18 @@
-import org.springframework.http.HttpStatus;
+import javax.servlet.http.HttpServletResponse;
 
-public class HttpResponseChecker {
+public class ResponseValidator {
     
-    private HttpStatus responseStatus;
+    private HttpServletResponse response;
     
-    public HttpResponseChecker(HttpStatus responseStatus) {
-        this.responseStatus = responseStatus;
+    public ResponseValidator(HttpServletResponse response) {
+        this.response = response;
     }
-    
-    /** 
-     * Check if the actual response is a Partial Content (HTTP 206 code)
-     * @return is partial content or not
+
+    /**
+     * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)
+     * @return verdadero si es contenido parcial, falso en caso contrario
      */
     public Boolean isPartialContentResponse() {
-        return HttpStatus.PARTIAL_CONTENT.equals(responseStatus);
+        return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
     }
 }

@@ -4,30 +4,38 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
+
     /**
-     * Add the specified files in reverse order.
+     * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final File[] files) {
         if (files == null || files.length == 0) {
             return;
         }
-        
+
         List<File> fileList = new ArrayList<>();
+        
+        // Add files to list
         for (File file : files) {
             fileList.add(file);
         }
-        
+
+        // Reverse the list
         Collections.reverse(fileList);
-        
+
+        // Process files in reverse order
         for (File file : fileList) {
-            // Add files in reverse order
-            // Implementation specific add logic would go here
+            // Add file processing logic here
             processFile(file);
         }
     }
-    
-    // Helper method for processing files
+
+    // Helper method for processing individual files
     private void processFile(File file) {
-        // Implementation specific file processing
+        // Implementation of file processing
+        if (file != null && file.exists()) {
+            // Add file handling logic here
+            System.out.println("Processing file: " + file.getName());
+        }
     }
 }

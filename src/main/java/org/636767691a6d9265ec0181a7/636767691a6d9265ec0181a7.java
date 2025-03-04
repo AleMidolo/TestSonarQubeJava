@@ -1,22 +1,20 @@
-import java.util.Objects;
-
 public class StringUtils {
-
     /**
-     * Trim all occurrences of the supplied leading character from the given String.
-     * @param str the String to check
-     * @param leadingCharacter the leading character to be trimmed
-     * @return the trimmed String
+     * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
+     * @param str la cadena a verificar
+     * @param leadingCharacter el carácter inicial que se debe eliminar
+     * @return la cadena sin el carácter inicial
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
         
-        int index = 0;
-        while (index < str.length() && str.charAt(index) == leadingCharacter) {
-            index++;
+        int i = 0;
+        while (i < str.length() && str.charAt(i) == leadingCharacter) {
+            i++;
         }
-        return str.substring(index);
+        
+        return str.substring(i);
     }
 }

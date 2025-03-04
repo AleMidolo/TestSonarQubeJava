@@ -5,40 +5,21 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-public class FileIterator implements Iterator<InputStream> {
-    private List<File> files;
-    private int currentIndex;
-
+public class FileIterator {
+    private Iterator<File> fileIterator;
+    
     public FileIterator(List<File> files) {
-        this.files = files;
-        this.currentIndex = 0;
+        this.fileIterator = files.iterator();
     }
 
     /** 
-     * Return the next {@link java.io.File} object or {@code null} if no more files are available.
+     * Devuelve el siguiente objeto {@link java.io.File} o {@code null} si no hay más archivos disponibles.
      */
     public InputStream next() throws IOException {
-        if (currentIndex >= files.size()) {
-            return null;
-        }
-        
-        File nextFile = files.get(currentIndex);
-        currentIndex++;
-        
-        if (nextFile != null && nextFile.exists() && nextFile.isFile()) {
+        if (fileIterator.hasNext()) {
+            File nextFile = fileIterator.next();
             return new FileInputStream(nextFile);
         }
-        
         return null;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return currentIndex < files.size();
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
     }
 }

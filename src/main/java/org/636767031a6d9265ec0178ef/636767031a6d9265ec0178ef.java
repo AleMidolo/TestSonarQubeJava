@@ -1,11 +1,12 @@
 import java.lang.reflect.Array;
 
 public class ArrayUtils {
+
     /**
-     * Returns a copy of the given array of size 1 greater than the argument. The last value of the array is left to the default value.
-     * @param array The array to copy, must not be <code>null</code>.
-     * @param newArrayComponentType If <code>array</code> is <code>null</code>, create a size 1 array of this type.
-     * @return A new copy of the array of size 1 greater than the input.
+     * Devuelve una copia del array dado de tamaño 1 mayor que el argumento. El último valor del array se deja con el valor por defecto.
+     * @param array El array a copiar, no debe ser <code>null</code>.
+     * @param newArrayComponentType Si <code>array</code> es <code>null</code>, crea un array de tamaño 1 de este tipo.
+     * @return Una nueva copia del array de tamaño 1 mayor que la entrada.
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array != null) {

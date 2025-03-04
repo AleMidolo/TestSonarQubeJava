@@ -3,12 +3,12 @@ import java.util.Collection;
 public class CollectionUtils {
 
     /**
-     * Return the first element in '<code>candidates</code>' that is contained in '<code>source</code>'. 
-     * If no element in '<code>candidates</code>' is present in '<code>source</code>' returns <code>null</code>. 
-     * Iteration order is {@link Collection} implementation specific.
-     * @param source the source Collection
-     * @param candidates the candidates to search for
-     * @return the first present object, or <code>null</code> if not found
+     * Devuelve el primer elemento en '<code>candidates</code>' que se encuentra en '<code>source</code>'. 
+     * Si no hay ningún elemento en '<code>candidates</code>' presente en '<code>source</code>', devuelve <code>null</code>. 
+     * El orden de iteración es específico de la implementación de {@link Collection}.
+     * @param source la colección fuente
+     * @param candidates los candidatos a buscar
+     * @return el primer objeto presente, o <code>null</code> si no se encuentra
      */
     public static Object findFirstMatch(Collection source, Collection candidates) {
         if (source == null || candidates == null) {

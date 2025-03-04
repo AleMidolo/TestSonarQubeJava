@@ -3,22 +3,17 @@ import java.util.Objects;
 public class BoxSplitter {
 
     public static class Box2D {
-        private final double x;
-        private final double y;
-        private final double width;
-        private final double height;
+        private final double minX;
+        private final double maxX; 
+        private final double minY;
+        private final double maxY;
 
-        public Box2D(double x, double y, double width, double height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+        public Box2D(double minX, double maxX, double minY, double maxY) {
+            this.minX = minX;
+            this.maxX = maxX;
+            this.minY = minY;
+            this.maxY = maxY;
         }
-
-        public double getX() { return x; }
-        public double getY() { return y; }
-        public double getWidth() { return width; }
-        public double getHeight() { return height; }
     }
 
     public static class Pair<T,U> {
@@ -29,39 +24,21 @@ public class BoxSplitter {
             this.first = first;
             this.second = second;
         }
-
-        public T getFirst() { return first; }
-        public U getSecond() { return second; }
     }
 
     /** 
-     * Split a box along the x axis into two equal boxes.
-     * @param box the box to split
-     * @return a pair with the two resulting boxes
+     * Divide una caja a lo largo del eje x en dos cajas iguales.
+     * @param box la caja a dividir
+     * @return un par con las dos cajas resultantes
      */
     public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
-        if (box == null) {
-            throw new IllegalArgumentException("Box cannot be null");
-        }
+        Objects.requireNonNull(box, "Box cannot be null");
 
-        double halfHeight = box.getHeight() / 2.0;
-        
-        // Create first box - top half
-        Box2D box1 = new Box2D(
-            box.getX(),
-            box.getY() + halfHeight,
-            box.getWidth(),
-            halfHeight
-        );
+        double midX = (box.minX + box.maxX) / 2.0;
 
-        // Create second box - bottom half
-        Box2D box2 = new Box2D(
-            box.getX(),
-            box.getY(),
-            box.getWidth(),
-            halfHeight
-        );
+        Box2D leftBox = new Box2D(box.minX, midX, box.minY, box.maxY);
+        Box2D rightBox = new Box2D(midX, box.maxX, box.minY, box.maxY);
 
-        return new Pair<>(box1, box2);
+        return new Pair<>(leftBox, rightBox);
     }
 }

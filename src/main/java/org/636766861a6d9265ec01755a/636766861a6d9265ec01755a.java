@@ -1,19 +1,17 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-public class UriMatcher {
+public class URIMatcher {
     private final Pattern pattern;
     
-    public UriMatcher(String template) {
-        // Convert template to regex pattern
-        String regex = template.replaceAll("\\{[^/]+\\}", "([^/]+)");
-        this.pattern = Pattern.compile(regex);
+    public URIMatcher(String uriPattern) {
+        this.pattern = Pattern.compile(uriPattern);
     }
 
     /**
-     * Match a URI against the pattern.
-     * @param uri the uri to match against the template.
-     * @return the match result, otherwise null if no match occurs.
+     * Compara una URI con el patrón.
+     * @param uri la URI a comparar con la plantilla.
+     * @return el resultado de la coincidencia, o null si no hay coincidencia.
      */
     public final MatchResult match(CharSequence uri) {
         if (uri == null) {
@@ -26,21 +24,5 @@ public class UriMatcher {
         }
 
         return matcher.toMatchResult();
-    }
-
-    public static class MatchResult {
-        private final String[] groups;
-        
-        public MatchResult(String[] groups) {
-            this.groups = groups;
-        }
-        
-        public String group(int index) {
-            return groups[index];
-        }
-        
-        public int groupCount() {
-            return groups.length;
-        }
     }
 }

@@ -4,32 +4,22 @@ import java.util.Enumeration;
 public class Logger {
     private AppenderList appenderList;
 
+    /**
+     * Devuelve <code>true</code> si el "appender" especificado está en la lista de "appenders" adjuntos, <code>false</code> en caso contrario.
+     * @since 1.2
+     */
     public boolean isAttached(Appender appender) {
-        if (appender == null) {
+        if (appender == null || appenderList == null) {
             return false;
         }
 
-        // Get enumeration of all attached appenders
-        Enumeration<Appender> appenders = getAllAppenders();
-        
-        // If no appenders attached, return false
-        if (appenders == null) {
-            return false;
-        }
-
-        // Iterate through appenders to find a match
+        Enumeration<Appender> appenders = appenderList.getAllAppenders();
         while (appenders.hasMoreElements()) {
             Appender currentAppender = appenders.nextElement();
             if (currentAppender == appender) {
                 return true;
             }
         }
-
         return false;
-    }
-
-    // Helper method to get appenders
-    private Enumeration<Appender> getAllAppenders() {
-        return appenderList != null ? appenderList.getAllAppenders() : null;
     }
 }

@@ -1,10 +1,8 @@
-import java.util.Objects;
-
-public class ArrayUtils {
+public class ArrayTrimmer {
     /**
-     * Trim the elements of the given String array, calling <code>String.trim()</code> on each of them.
-     * @param array the original String array
-     * @return the resulting array (of the same size) with trimmed elements
+     * Recorta los elementos del arreglo de Strings dado, llamando a <code>String.trim()</code> en cada uno de ellos.
+     * @param array de Strings original
+     * @return el arreglo resultante (del mismo tamaño) con elementos recortados
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
@@ -12,10 +10,15 @@ public class ArrayUtils {
         }
         
         String[] result = new String[array.length];
+        
         for (int i = 0; i < array.length; i++) {
-            String element = array[i];
-            result[i] = element != null ? element.trim() : null;
+            if (array[i] != null) {
+                result[i] = array[i].trim();
+            } else {
+                result[i] = null;
+            }
         }
+        
         return result;
     }
 }

@@ -1,25 +1,62 @@
-import org.objectweb.asm.Type;
+import java.util.Stack;
 
-public class StackFrameAnalyzer {
-    private Stack<AbstractType> outputStack;
+public class MethodFrameHandler {
+    private Stack<Object> operandStack;
 
+    /**
+     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
+     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
+     */
     private void pop(final String descriptor) {
+        String desc = descriptor;
+        
+        // Si es un descriptor de método, extraer solo los argumentos
         if (descriptor.charAt(0) == '(') {
-            // Method descriptor - pop argument types
-            Type[] argumentTypes = Type.getArgumentTypes(descriptor);
-            for (int i = argumentTypes.length - 1; i >= 0; i--) {
-                pop(argumentTypes[i].getDescriptor());
-            }
-        } else {
-            // Type descriptor - pop single type
-            char firstChar = descriptor.charAt(0);
-            if (firstChar == 'J' || firstChar == 'D') {
-                // Long and Double take up 2 slots
-                outputStack.pop();
-                outputStack.pop();
-            } else if (firstChar != 'V') {
-                // Void doesn't need pop
-                outputStack.pop();
+            desc = descriptor.substring(1, descriptor.indexOf(')'));
+        }
+
+        int index = 0;
+        while (index < desc.length()) {
+            char c = desc.charAt(index);
+            
+            switch (c) {
+                case 'B': // byte
+                case 'C': // char
+                case 'I': // int
+                case 'S': // short
+                case 'Z': // boolean
+                case 'F': // float
+                    operandStack.pop();
+                    index++;
+                    break;
+                    
+                case 'J': // long
+                case 'D': // double
+                    operandStack.pop();
+                    index++;
+                    break;
+                    
+                case 'L': // Object reference
+                    operandStack.pop();
+                    index = desc.indexOf(';', index) + 1;
+                    break;
+                    
+                case '[': // Array
+                    int dimensions = 0;
+                    while (desc.charAt(index) == '[') {
+                        dimensions++;
+                        index++;
+                    }
+                    if (desc.charAt(index) == 'L') {
+                        index = desc.indexOf(';', index) + 1;
+                    } else {
+                        index++;
+                    }
+                    operandStack.pop();
+                    break;
+                    
+                default:
+                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
             }
         }
     }

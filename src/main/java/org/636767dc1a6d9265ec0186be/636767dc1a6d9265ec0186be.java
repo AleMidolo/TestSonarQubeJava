@@ -1,34 +1,33 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class TimeBucketCompressor {
-    
+public class BucketTiempoUtil {
     /**
-     * Follow the dayStep to re-format the time bucket literal long value. Such as, in dayStep == 11, 
-     * 20000105 re-formatted time bucket is 20000101, 20000115 re-formatted time bucket is 20000112, 
-     * 20000123 re-formatted time bucket is 20000123
+     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, el "bucket" de tiempo reformateado 20000115 es 20000112, y el "bucket" de tiempo reformateado 20000123 es 20000123.
      */
-    static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Convert timeBucket to string for parsing
-        String timeBucketStr = String.valueOf(timeBucket);
+    static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
+        // Convertir el bucket de tiempo a string con formato YYYYMMDD
+        String fechaStr = String.valueOf(bucketDeTiempo);
         
-        // Parse the date using DateTimeFormatter
+        // Parsear la fecha usando LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(timeBucketStr, formatter);
+        LocalDate fecha = LocalDate.parse(fechaStr, formatter);
         
-        // Get day of month
-        int dayOfMonth = date.getDayOfMonth();
+        // Obtener el día del mes
+        int dia = fecha.getDayOfMonth();
         
-        // Calculate which step period this date falls into
-        int stepPeriod = (dayOfMonth - 1) / dayStep;
+        // Calcular el nuevo día basado en el paso diario
+        int nuevoDia;
+        if (dia % pasoDiario == 0) {
+            nuevoDia = dia;
+        } else {
+            nuevoDia = ((dia - 1) / pasoDiario) * pasoDiario + 1;
+        }
         
-        // Calculate the first day of that step period
-        int newDay = (stepPeriod * dayStep) + 1;
+        // Crear nueva fecha con el día ajustado
+        LocalDate nuevaFecha = fecha.withDayOfMonth(nuevoDia);
         
-        // Create new date with adjusted day
-        LocalDate compressedDate = date.withDayOfMonth(newDay);
-        
-        // Convert back to long format
-        return Long.parseLong(compressedDate.format(formatter));
+        // Convertir la nueva fecha de vuelta a long
+        return Long.parseLong(nuevaFecha.format(formatter));
     }
 }

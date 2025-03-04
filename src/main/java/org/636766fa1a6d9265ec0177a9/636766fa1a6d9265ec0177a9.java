@@ -9,9 +9,9 @@ public class TypeInitializer {
         initializedTypes = new ArrayList<>();
     }
 
-    /**
-     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
-     * @param abstractType an abstract type on a which a constructor is invoked.
+    /** 
+     * Agrega un tipo abstracto a la lista de tipos sobre los cuales se invoca un constructor en el bloque básico.
+     * @param abstractType un tipo abstracto sobre el cual se invoca un constructor.
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {

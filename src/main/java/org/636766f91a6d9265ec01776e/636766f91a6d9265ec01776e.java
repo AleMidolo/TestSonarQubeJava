@@ -1,33 +1,48 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ByteArrayOutputStream extends OutputStream {
+public class ByteOutputStream extends OutputStream {
+
+    private byte[] buffer;
+    private int count;
     
-    protected byte[] buf;
-    protected int count;
-    
-    /**
-     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to this byte array output stream.
-     * @param b   the data.
-     * @param off the start offset in the data.
-     * @param len the number of bytes to write.
-     */
+    public ByteOutputStream() {
+        buffer = new byte[32];
+        count = 0;
+    }
+
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-            ((off + len) > b.length) || ((off + len) < 0)) {
-            throw new IndexOutOfBoundsException();
-        } else if (len == 0) {
-            return;
+        if (b == null) {
+            throw new NullPointerException();
         }
         
-        int newcount = count + len;
-        if (newcount > buf.length) {
-            byte newbuf[] = new byte[Math.max(buf.length << 1, newcount)];
-            System.arraycopy(buf, 0, newbuf, 0, count);
-            buf = newbuf;
+        if (off < 0 || len < 0 || off + len > b.length) {
+            throw new IndexOutOfBoundsException();
         }
-        System.arraycopy(b, off, buf, count, len);
-        count = newcount;
+
+        // Ensure capacity
+        ensureCapacity(count + len);
+        
+        // Copy bytes to internal buffer
+        System.arraycopy(b, off, buffer, count, len);
+        count += len;
+    }
+
+    private void ensureCapacity(int minCapacity) {
+        // If buffer is too small, grow it
+        if (minCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length << 1, minCapacity);
+            byte[] newBuffer = new byte[newCapacity];
+            System.arraycopy(buffer, 0, newBuffer, 0, count);
+            buffer = newBuffer;
+        }
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        ensureCapacity(count + 1);
+        buffer[count] = (byte) b;
+        count++;
     }
 }

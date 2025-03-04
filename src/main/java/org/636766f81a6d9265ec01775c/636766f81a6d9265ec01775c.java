@@ -6,8 +6,8 @@ package org.apache.commons.lang3;
 public class ObjectUtils {
 
     /**
-     * <p>Gets the <code>toString</code> of an <code>Object</code> returning
-     * an empty string ("") if <code>null</code> input.</p>
+     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") 
+     * si el argumento es <code>null</code>.</p>
      *
      * <pre>
      * ObjectUtils.toString(null)         = ""
@@ -18,8 +18,8 @@ public class ObjectUtils {
      *
      * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)
-     * @param obj  the Object to <code>toString</code>, may be null
-     * @return the passed in Object's toString, or nullStr if <code>null</code> input
+     * @param obj  el objeto a procesar mediante <code>toString</code>, puede ser null
+     * @return el resultado de aplicar la función "toString" al objeto pasado, o una cadena vacía si el argumento es <code>null</code>
      * @since 2.0
      */
     public static String toString(Object obj) {

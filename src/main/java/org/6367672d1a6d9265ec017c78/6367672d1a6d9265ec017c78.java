@@ -1,14 +1,14 @@
 import java.util.HashSet;
 
-public class Solution {
+public class IntegerSet {
     private HashSet<Integer> set;
     
-    public Solution() {
+    public IntegerSet() {
         set = new HashSet<>();
     }
-    
-    /** 
-     * Inserts a value to the set. Returns true if the set did not already contain the specified element. 
+
+    /**
+     * Inserta un valor en el conjunto. Devuelve verdadero si el conjunto no contenía ya el elemento especificado.
      */
     public boolean insert(int val) {
         return set.add(val);

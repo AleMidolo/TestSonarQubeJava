@@ -1,27 +1,27 @@
 import java.util.Objects;
 
-public class PathUtils {
+public class FileUtils {
 
     /**
-     * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -> "mypath/myfile".
-     * @param path the file path (may be <code>null</code>)
-     * @return the path with stripped filename extension,or <code>null</code> if none
+     * Elimina la extensión del nombre de archivo de la ruta dada, por ejemplo, "mypath/myfile.txt" -> "mypath/myfile".
+     * @param path la ruta del archivo (puede ser <code>null</code>)
+     * @return la ruta con la extensión del nombre de archivo eliminada, o <code>null</code> si no hay ninguna
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
             return null;
         }
         
-        int extIndex = path.lastIndexOf('.');
-        if (extIndex == -1) {
-            return path;
-        }
-
-        int sepIndex = path.lastIndexOf('/');
-        if (sepIndex > extIndex) {
+        int lastDotIndex = path.lastIndexOf('.');
+        if (lastDotIndex == -1) {
             return path;
         }
         
-        return path.substring(0, extIndex);
+        int lastSeparatorIndex = path.lastIndexOf('/');
+        if (lastSeparatorIndex > lastDotIndex) {
+            return path;
+        }
+        
+        return path.substring(0, lastDotIndex);
     }
 }

@@ -2,12 +2,12 @@ package org.apache.commons.lang3;
 
 public class StringUtils {
     /**
-     * Finds the first index within a String, handling <code>null</code>. 
-     * This method uses {@link String#indexOf(String)}.
+     * Encuentra el primer índice dentro de una cadena, manejando <code>null</code>. 
+     * Este método utiliza {@link String#indexOf(String)}.
      *
-     * @param str the String to check, may be null
-     * @param searchStr the String to find, may be null
-     * @return the first index of the search String, -1 if no match or null string input
+     * @param str la cadena a verificar, puede ser null
+     * @param searchStr la cadena a buscar, puede ser null
+     * @return el primer índice de searchStr en str, -1 si no se encuentra o si str o searchStr son null
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

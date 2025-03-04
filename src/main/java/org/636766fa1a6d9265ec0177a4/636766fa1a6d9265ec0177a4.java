@@ -1,11 +1,15 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
+/**
+ * Utility class for converting primitive arrays to object arrays
+ */
 public class ArrayUtils {
+
     /**
-     * <p>Converts an array of primitive doubles to objects.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     * @param array  a <code>double</code> array
-     * @return a <code>Double</code> array, <code>null</code> if null array input
+     * <p>Convierte un arreglo de primitivos double a objetos.</p>
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>double</code>
+     * @return un arreglo de <code>Double</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {

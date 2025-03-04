@@ -1,25 +1,21 @@
-import java.util.Properties;
+import java.util.Objects;
 
 public class FieldValidator {
-    private Properties properties;
 
-    public FieldValidator() {
-        this.properties = new Properties();
-    }
+    private Fields storedFields;
 
     /**
-     * Returns true when the input fields have already been stored in the properties.
+     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
         if (fields == null) {
             return false;
         }
 
-        for (String fieldName : fields.getFieldNames()) {
-            if (!properties.containsKey(fieldName)) {
-                return false;
-            }
+        if (storedFields == null) {
+            return false;
         }
-        return true;
+
+        return Objects.equals(storedFields, fields);
     }
 }

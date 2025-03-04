@@ -1,36 +1,44 @@
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MetricsCache<METRICS> {
-    
-    private ConcurrentHashMap<String, METRICS> cache;
-    
+
+    private AtomicReference<METRICS> cache;
+
     public MetricsCache() {
-        this.cache = new ConcurrentHashMap<>();
+        this.cache = new AtomicReference<>();
     }
 
-    /** 
-     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
-     * @param data to be added potentially.
+    /**
+     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
+     * @param data que se va a agregar potencialmente.
      */
-    @Override
+    @Override 
     public void accept(final METRICS data) {
-        if (Objects.isNull(data)) {
-            return;
-        }
-
-        String key = data.toString();
-        METRICS existingValue = cache.get(key);
+        Objects.requireNonNull(data, "Data cannot be null");
         
-        if (existingValue == null) {
-            cache.put(key, data);
+        METRICS currentValue = cache.get();
+        if (currentValue == null) {
+            cache.set(data);
         } else {
-            // Merge logic would depend on METRICS type
-            // For example if METRICS is a numeric type:
-            // cache.put(key, existingValue + data);
-            // Or if it's a collection:
-            // existingValue.addAll(data);
-            // cache.put(key, existingValue);
+            // Si hay un valor existente, combinar los datos
+            try {
+                if (data instanceof Mergeable) {
+                    ((Mergeable)currentValue).merge(data);
+                } else {
+                    // Si no es mergeable, simplemente reemplazar
+                    cache.set(data);
+                }
+            } catch (Exception e) {
+                // En caso de error al combinar, mantener el valor actual
+                // y registrar el error
+                System.err.println("Error merging metrics data: " + e.getMessage());
+            }
         }
     }
+}
+
+// Interfaz opcional para objetos que pueden combinarse
+interface Mergeable<T> {
+    void merge(T other);
 }

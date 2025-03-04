@@ -3,10 +3,7 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * Case in-sensitive Checks if the String contains any character in the given set of string.
-     * @param str The string to check
-     * @param searchStrArray List of strings to search for
-     * @return true if str contains any of the search strings (case insensitive), false otherwise
+     * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null) {

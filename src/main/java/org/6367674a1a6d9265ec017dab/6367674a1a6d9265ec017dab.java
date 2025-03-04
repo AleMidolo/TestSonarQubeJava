@@ -3,10 +3,10 @@ import java.util.Comparator;
 public class DoubleComparator implements Comparator<Double> {
 
     /** 
-     * Compares two floating point values. Returns 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
-     * @param o1 the first value
-     * @param o2 the second value 
-     * @return 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
+     * Compara dos valores de punto flotante. Devuelve 0 si son iguales, -1 si {@literal o1 < o2},1 en caso contrario.
+     * @param o1 el primer valor
+     * @param o2 el segundo valor
+     * @return 0 si son iguales, -1 si {@literal o1 < o2},1 en caso contrario
      */
     @Override
     public int compare(Double o1, Double o2) {

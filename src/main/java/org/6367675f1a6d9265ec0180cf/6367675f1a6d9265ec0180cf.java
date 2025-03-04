@@ -2,26 +2,28 @@ import org.jgrapht.Graph;
 import java.util.Set;
 
 public class GraphUtils {
+
     /**
-     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
-     * @param graph the graph.
-     * @param vertices the vertices to induce the subgraph from.
-     * @return true if the induced subgraph is a clique.
+     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
+     * @param graph el grafo.
+     * @param vertices los vértices de los que se inducirá el subgrafo.
+     * @return true si el subgrafo inducido es un clique.
      */
     private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        // For a complete graph, each vertex must connect to all other vertices
-        // Number of edges should be n*(n-1)/2 where n is number of vertices
-        
-        for (V vertex1 : vertices) {
-            for (V vertex2 : vertices) {
-                if (!vertex1.equals(vertex2)) {
-                    // Check if edge exists between vertices
-                    if (!graph.containsEdge(vertex1, vertex2)) {
-                        return false;
-                    }
+        // Para cada par de vértices distintos en el conjunto
+        for (V v1 : vertices) {
+            for (V v2 : vertices) {
+                // Si son el mismo vértice, continuamos
+                if (v1.equals(v2)) {
+                    continue;
+                }
+                // Si no existe una arista entre ellos, no es un clique
+                if (!graph.containsEdge(v1, v2)) {
+                    return false;
                 }
             }
         }
+        // Si llegamos aquí, todos los vértices están conectados entre sí
         return true;
     }
 }

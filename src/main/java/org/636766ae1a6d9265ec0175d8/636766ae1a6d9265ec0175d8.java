@@ -5,32 +5,47 @@ public class ContentRangeBuilder {
     private Long start;
     private Long end; 
     private Long total;
-
-    public ContentRangeBuilder(Long start, Long end, Long total) {
-        this.start = start;
-        this.end = end;
-        this.total = total;
-    }
+    private String unit = "bytes";
 
     /**
-     * Build the 'Content-Range' HTTP Header value.
-     * @return 'Content-Range' value
+     * Construye el valor del encabezado HTTP 'Content-Range'.
+     * @return valor de 'Content-Range'
      */
     private String buildContentRange() {
-        StringBuilder contentRange = new StringBuilder();
-        contentRange.append("bytes ");
-        
         if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
-            contentRange.append("*/");
-            contentRange.append(Objects.nonNull(total) ? total : "*");
-        } else {
-            contentRange.append(start)
-                       .append("-")
-                       .append(end)
-                       .append("/")
-                       .append(total);
+            return null;
         }
         
+        StringBuilder contentRange = new StringBuilder();
+        contentRange.append(unit)
+                   .append(" ")
+                   .append(start)
+                   .append("-")
+                   .append(end)
+                   .append("/")
+                   .append(total);
+                   
         return contentRange.toString();
+    }
+
+    // Setters for builder pattern
+    public ContentRangeBuilder setStart(Long start) {
+        this.start = start;
+        return this;
+    }
+
+    public ContentRangeBuilder setEnd(Long end) {
+        this.end = end;
+        return this;
+    }
+
+    public ContentRangeBuilder setTotal(Long total) {
+        this.total = total;
+        return this;
+    }
+
+    public ContentRangeBuilder setUnit(String unit) {
+        this.unit = unit;
+        return this;
     }
 }

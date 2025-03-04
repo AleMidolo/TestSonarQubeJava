@@ -1,21 +1,32 @@
-import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 public class ByteVector {
-    private ByteArrayOutputStream buffer;
-
+    private byte[] bytes;
+    private int size;
+    private static final int INT_SIZE = 4;
+    
     public ByteVector() {
-        buffer = new ByteArrayOutputStream();
+        bytes = new byte[10];
+        size = 0;
     }
-
-    /** 
-     * Puts an int into this byte vector. The byte vector is automatically enlarged if necessary.
-     * @param intValue an int.
-     * @return this byte vector.
-     */
+    
     public ByteVector putInt(final int intValue) {
-        byte[] intBytes = ByteBuffer.allocate(4).putInt(intValue).array();
-        buffer.write(intBytes, 0, intBytes.length);
+        ensureCapacity(size + INT_SIZE);
+        
+        // Store int value in big-endian format
+        bytes[size] = (byte) ((intValue >> 24) & 0xFF);
+        bytes[size + 1] = (byte) ((intValue >> 16) & 0xFF); 
+        bytes[size + 2] = (byte) ((intValue >> 8) & 0xFF);
+        bytes[size + 3] = (byte) (intValue & 0xFF);
+        
+        size += INT_SIZE;
         return this;
+    }
+    
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > bytes.length) {
+            int newCapacity = Math.max(bytes.length * 2, minCapacity);
+            bytes = Arrays.copyOf(bytes, newCapacity);
+        }
     }
 }

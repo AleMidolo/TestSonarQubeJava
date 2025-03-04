@@ -1,16 +1,21 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
-    private int length;
-    
+    private byte[] buffer;
+    private int position;
+    private static final int DEFAULT_CAPACITY = 32;
+
+    public ByteVector() {
+        buffer = new byte[DEFAULT_CAPACITY];
+        position = 0;
+    }
+
+    /**
+     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'.
+     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
+     */
     private void enlarge(final int size) {
-        int newLength = length + size;
-        if (newLength > data.length) {
-            // Calculate new array size - double current size or add size needed, whichever is larger
-            int newArraySize = Math.max(data.length * 2, newLength);
-            // Create new array and copy existing data
-            data = Arrays.copyOf(data, newArraySize);
-        }
+        int newCapacity = Math.max(buffer.length * 2, buffer.length + size);
+        buffer = Arrays.copyOf(buffer, newCapacity);
     }
 }

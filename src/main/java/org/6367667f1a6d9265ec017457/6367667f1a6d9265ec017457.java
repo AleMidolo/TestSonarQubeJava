@@ -3,56 +3,65 @@ import java.nio.ByteBuffer;
 public class UTF8Decoder {
 
     /**
-     * Decodes octets to characters using the UTF-8 decoding and appends the characters to a StringBuffer.
-     * @return the index to the next unchecked character in the string to decode
+     * Decodifica octetos a caracteres utilizando la decodificación UTF-8 y agrega los caracteres a un StringBuffer.
+     * @return el índice del siguiente carácter no verificado en la cadena para decodificar
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         int b1 = bb.get(i) & 0xFF;
         
-        // Single byte character
-        if ((b1 >> 7) == 0) {
+        // Single byte character (ASCII)
+        if (b1 <= 0x7F) {
             sb.append((char)b1);
             return i + 1;
         }
         
-        // Two byte character
-        if ((b1 >> 5) == 0b110) {
-            int b2 = bb.get(i + 1) & 0xFF;
-            if ((b2 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+        // 2-byte sequence
+        if ((b1 & 0xE0) == 0xC0) {
+            if (i + 1 >= bb.limit()) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int cp = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
-            sb.append((char)cp);
+            int b2 = bb.get(i + 1) & 0xFF;
+            if ((b2 & 0xC0) != 0x80) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+            }
+            int ch = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)ch);
             return i + 2;
         }
         
-        // Three byte character
-        if ((b1 >> 4) == 0b1110) {
+        // 3-byte sequence  
+        if ((b1 & 0xF0) == 0xE0) {
+            if (i + 2 >= bb.limit()) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+            }
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
-            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int cp = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
-            sb.append((char)cp);
+            int ch = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)ch);
             return i + 3;
         }
         
-        // Four byte character
-        if ((b1 >> 3) == 0b11110) {
+        // 4-byte sequence
+        if ((b1 & 0xF8) == 0xF0) {
+            if (i + 3 >= bb.limit()) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+            }
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
             int b4 = bb.get(i + 3) & 0xFF;
-            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10 || (b4 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) {
+                throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            int ch = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
             // Convert to surrogate pair for characters outside BMP
-            sb.append(Character.highSurrogate(cp));
-            sb.append(Character.lowSurrogate(cp));
+            sb.append(Character.highSurrogate(ch));
+            sb.append(Character.lowSurrogate(ch));
             return i + 4;
         }
         
-        throw new IllegalArgumentException("Invalid UTF-8 encoding");
+        throw new IllegalArgumentException("Invalid UTF-8 sequence");
     }
 }

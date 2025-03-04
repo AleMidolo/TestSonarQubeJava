@@ -7,10 +7,10 @@ public class ConverterRegistry {
     private final Map<Class<?>, Converter> converters = new ConcurrentHashMap<>();
     
     /**
-     * Look up and return any registered {@link Converter} for the specified destination class; 
-     * if there is no registered Converter, return <code>null</code>.
-     * @param clazz Class for which to return a registered Converter
-     * @return The registered {@link Converter} or <code>null</code> if not found
+     * Busca y devuelve cualquier {@link Converter} registrado para la clase de destino especificada; 
+     * si no hay un Converter registrado, devuelve <code>null</code>.
+     * @param clazz Clase para la cual se debe devolver un Converter registrado
+     * @return El {@link Converter} registrado o <code>null</code> si no se encuentra
      */
     public Converter lookup(final Class<?> clazz) {
         if (clazz == null) {
@@ -19,8 +19,8 @@ public class ConverterRegistry {
         return converters.get(clazz);
     }
     
-    // Interface for Converter
+    // Interface for type conversion
     public interface Converter {
-        Object convert(Object source);
+        Object convert(Object value);
     }
 }

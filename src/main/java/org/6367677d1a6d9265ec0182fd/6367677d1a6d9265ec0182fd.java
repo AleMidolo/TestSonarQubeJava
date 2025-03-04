@@ -1,22 +1,21 @@
-public class BooleanUtils {
+public class BooleanConverter {
     /**
-     * If <code>value</code> is "true", then <code>true</code> is returned. 
-     * If <code>value</code> is "false", then <code>true</code> is returned.
-     * Otherwise, <code>default</code> is returned.
-     * Case of value is unimportant.
+     * Si <code>value</code> es "true", se devuelve <code>true</code>. Si <code>value</code> es "false", se devuelve <code>false</code>. 
+     * De lo contrario, se devuelve <code>default</code>.
+     * El caso de <code>value</code> no es importante.
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
             return dEfault;
         }
         
-        String trimmedValue = value.trim().toLowerCase();
+        String lowercaseValue = value.toLowerCase();
         
-        if (trimmedValue.equals("true")) {
+        if (lowercaseValue.equals("true")) {
             return true;
         }
         
-        if (trimmedValue.equals("false")) {
+        if (lowercaseValue.equals("false")) {
             return false;
         }
         

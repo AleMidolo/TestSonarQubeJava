@@ -3,21 +3,33 @@ import java.util.ArrayList;
 
 public class ChannelManager {
     
-    private List<Channels> targetChannels;
-    private List<IConsumer> consumers;
+    private List<Channels> channelsList;
+    private List<IConsumer> consumersList;
 
     public ChannelManager() {
-        targetChannels = new ArrayList<>();
-        consumers = new ArrayList<>();
+        this.channelsList = new ArrayList<>();
+        this.consumersList = new ArrayList<>();
     }
 
     /**
-     * Add a new target channels.
+     * Agregar nuevos canales de destino.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
-            targetChannels.add(channels);
-            consumers.add(consumer);
+            channelsList.add(channels);
+            consumersList.add(consumer);
         }
     }
+}
+
+// Assumed supporting interfaces/classes
+interface IConsumer {
+    void consume();
+}
+
+enum Channels {
+    EMAIL,
+    SMS,
+    PUSH_NOTIFICATION,
+    WEBHOOK
 }

@@ -1,10 +1,8 @@
-package org.utils;
-
 public class StringUtils {
     /**
-     * Trim leading whitespace from the given String.
-     * @param str the String to check
-     * @return the trimmed String
+     * Elimina los espacios en blanco al inicio de la cadena dada.
+     * @param str la cadena a verificar
+     * @return la cadena sin espacios en blanco al inicio
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
@@ -13,12 +11,12 @@ public class StringUtils {
         }
         
         int len = str.length();
-        int st = 0;
+        int start = 0;
         
-        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
-            st++;
+        while (start < len && Character.isWhitespace(str.charAt(start))) {
+            start++;
         }
         
-        return (st > 0) ? str.substring(st) : str;
+        return str.substring(start);
     }
 }

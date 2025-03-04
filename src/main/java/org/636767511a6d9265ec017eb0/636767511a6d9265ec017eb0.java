@@ -1,20 +1,18 @@
-import java.util.Arrays;
-
 public class Matrix {
-    private double[][] data;
+    private int[][] matrix;
     
     /**
-     * Get the number of non-zero entries of a row.
-     * @param row the row
-     * @return the number of non-zero entries of a row
+     * Obtiene el número de entradas diferentes de cero en una fila.
+     * @param row la fila
+     * @return el número de entradas diferentes de cero en una fila
      */
     public int nonZeros(int row) {
-        if (row < 0 || row >= data.length) {
-            throw new IllegalArgumentException("Invalid row index");
+        int count = 0;
+        for(int j = 0; j < matrix[row].length; j++) {
+            if(matrix[row][j] != 0) {
+                count++;
+            }
         }
-        
-        return (int) Arrays.stream(data[row])
-                         .filter(x -> x != 0.0)
-                         .count();
+        return count;
     }
 }

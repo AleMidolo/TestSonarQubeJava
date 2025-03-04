@@ -1,34 +1,31 @@
 import java.util.Set;
+import java.util.Map;
 
 public class Graph<V,E> {
-
-    private Map<V, Map<V, E>> graph = new HashMap<>();
-    private boolean isWeighted = true;
-
+    
+    private Map<V, Map<V,E>> graph;
+    
     /**
-     * Compute the sum of the weights entering a vertex
-     * @param v the vertex
-     * @return the sum of the weights entering a vertex
+     * Calcula la suma de los pesos que entran a un vértice
+     * @param v el vértice
+     * @return la suma de los pesos que entran a un vértice
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         
-        // For each vertex in the graph
-        for (V vertex : graph.keySet()) {
-            // Get edges going to vertices in set v
-            Map<V, E> edges = graph.get(vertex);
-            
-            // For each edge
-            for (Map.Entry<V, E> edge : edges.entrySet()) {
-                // If the destination vertex is in set v
-                if (v.contains(edge.getKey())) {
-                    // Add weight to sum if graph is weighted
-                    if (isWeighted) {
-                        sum += (Double) edge.getValue();
-                    }
-                    // Add 1 if unweighted
-                    else {
-                        sum += 1.0;
+        // Para cada vértice en el conjunto v
+        for(V vertex : v) {
+            // Para cada vértice origen en el grafo
+            for(Map.Entry<V, Map<V,E>> entry : graph.entrySet()) {
+                V source = entry.getKey();
+                Map<V,E> edges = entry.getValue();
+                
+                // Si existe una arista hacia el vértice actual
+                if(edges.containsKey(vertex)) {
+                    // Suma el peso de la arista
+                    E edge = edges.get(vertex);
+                    if(edge instanceof Number) {
+                        sum += ((Number)edge).doubleValue();
                     }
                 }
             }

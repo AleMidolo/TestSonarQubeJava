@@ -1,39 +1,40 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class ConfigInitializer {
-    private static final Logger logger = Logger.getLogger(ConfigInitializer.class.getName());
-    private static final String DIST_PATH = "dist";
+public class ConfigurationManager {
+    private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class.getName());
+    private static final String DISTRIBUTION_PATH = "dist/";
     
     /**
-     * initialize config, such as check dist path
+     * inicializa la configuración, como verificar la ruta de distribución
      */
     public void init() {
         try {
-            // Check if dist directory exists
-            Path distPath = Paths.get(DIST_PATH);
-            if (!Files.exists(distPath)) {
-                // Create dist directory if it doesn't exist
-                Files.createDirectory(distPath);
-                logger.info("Created dist directory at: " + distPath.toAbsolutePath());
-            }
-
-            // Verify dist directory is writable
-            if (!Files.isWritable(distPath)) {
-                throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
-            }
-
-            // Additional initialization can be added here
+            // Verificar si existe el directorio de distribución
+            File distributionDir = new File(DISTRIBUTION_PATH);
             
-            logger.info("Configuration initialized successfully");
+            if (!distributionDir.exists()) {
+                // Crear el directorio si no existe
+                if (distributionDir.mkdirs()) {
+                    LOGGER.info("Directorio de distribución creado exitosamente");
+                } else {
+                    LOGGER.severe("No se pudo crear el directorio de distribución");
+                }
+            }
             
-        } catch (IOException e) {
-            logger.severe("Failed to initialize configuration: " + e.getMessage());
-            throw new RuntimeException("Configuration initialization failed", e);
+            // Verificar permisos de escritura
+            if (!distributionDir.canWrite()) {
+                LOGGER.warning("El directorio de distribución no tiene permisos de escritura");
+            }
+            
+            // Otras inicializaciones de configuración pueden ir aquí
+            
+        } catch (SecurityException e) {
+            LOGGER.log(Level.SEVERE, "Error de seguridad al inicializar la configuración", e);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error al inicializar la configuración", e);
         }
     }
 }

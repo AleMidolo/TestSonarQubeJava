@@ -5,12 +5,12 @@ import javafx.util.Pair;
 public class SuffixSumCalculator {
 
     /**
-     * Computes a suffix sum of the {@code bounds}. Returns computed suffix sum and the sum of all elements in the {@code bounds list}.
-     * @param bounds list of integers.
-     * @return computed pair of suffix sum list and a sum of all elements.
+     * Calcula una suma de sufijos de los {@code bounds}. Devuelve la suma de sufijos calculada y la suma de todos los elementos en la {@code lista de bounds}.
+     * @param bounds lista de enteros.
+     * @return par calculado de la lista de suma de sufijos y la suma de todos los elementos.
      */
-    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-        List<Integer> suffixSum = new ArrayList<>();
+    private Pair<List<Integer>,Long> computeSuffixSum(List<Integer> bounds) {
+        List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
         
         // Calculate total sum first
@@ -22,9 +22,9 @@ public class SuffixSumCalculator {
         long currentSum = 0;
         for (int i = bounds.size() - 1; i >= 0; i--) {
             currentSum += bounds.get(i);
-            suffixSum.add(0, (int)currentSum);
+            suffixSums.add(0, (int)currentSum);
         }
         
-        return new Pair<>(suffixSum, totalSum);
+        return new Pair<>(suffixSums, totalSum);
     }
 }

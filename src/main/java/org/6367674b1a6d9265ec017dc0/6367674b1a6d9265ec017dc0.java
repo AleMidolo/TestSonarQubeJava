@@ -2,26 +2,43 @@ import java.util.*;
 
 public class Graph<V,E> {
 
-    // Assume these fields exist in the Graph class
-    private Map<V, Set<E>> vertexMap; // Maps vertices to their incident edges
-    private Map<E, V[]> edgeMap; // Maps edges to their endpoint vertices
+    // Graph representation using adjacency lists
+    private Map<V, List<Edge<V,E>>> adjacencyMap;
 
-    /**
-     * Compute all vertices that have positive degree by iterating over the edges on purpose. 
-     * This keeps the complexity to O(m) where m is the number of edges.
-     * @return set of vertices with positive degree
+    private class Edge<V,E> {
+        private V source;
+        private V target; 
+        private E data;
+        
+        public Edge(V source, V target, E data) {
+            this.source = source;
+            this.target = target;
+            this.data = data;
+        }
+    }
+
+    /** 
+     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+     * Esto mantiene la complejidad en O(m) donde m es el número de aristas.
+     * @return conjunto de vértices con grado positivo
      */
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         
-        // Iterate through all edges
-        for (E edge : edgeMap.keySet()) {
-            // Get the vertices connected by this edge
-            V[] endpoints = edgeMap.get(edge);
+        // Iterate through all vertices and their edges
+        for (Map.Entry<V, List<Edge<V,E>>> entry : adjacencyMap.entrySet()) {
+            V vertex = entry.getKey();
+            List<Edge<V,E>> edges = entry.getValue();
             
-            // Add both endpoints to the visible vertices set
-            visibleVertices.add(endpoints[0]);
-            visibleVertices.add(endpoints[1]);
+            // If vertex has any edges, add it to visible set
+            if (!edges.isEmpty()) {
+                visibleVertices.add(vertex);
+                
+                // Also add all target vertices of the edges
+                for (Edge<V,E> edge : edges) {
+                    visibleVertices.add(edge.target);
+                }
+            }
         }
         
         return visibleVertices;

@@ -2,25 +2,22 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<E> {
     
-    private class ListNodeImpl<E> {
-        E item;
-        ListNodeImpl<E> next;
-        ListNodeImpl<E> prev;
+    private class ListNodeImpl<T> {
+        T element;
+        ListNodeImpl<T> next;
+        ListNodeImpl<T> prev;
         
-        ListNodeImpl(ListNodeImpl<E> prev, E element, ListNodeImpl<E> next) {
-            this.item = element;
-            this.next = next;
+        ListNodeImpl(T element, ListNodeImpl<T> prev, ListNodeImpl<T> next) {
+            this.element = element;
             this.prev = prev;
+            this.next = next;
         }
     }
     
     private ListNodeImpl<E> first;
     private ListNodeImpl<E> last;
-    private int size = 0;
+    private int size;
     
-    /** 
-     * Remove the non null {@code node} from the list.
-     */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {
             return false;
@@ -45,7 +42,7 @@ public class LinkedList<E> {
             node.next = null;
         }
         
-        node.item = null;
+        node.element = null;
         size--;
         return true;
     }

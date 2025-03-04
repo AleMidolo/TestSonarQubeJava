@@ -1,44 +1,36 @@
 import java.io.IOException;
-import java.io.InputStream;
 
-public class ProtobufReader {
-    private InputStream input;
-    private int currentTag;
-    private boolean isPacked;
-    private int packedEndPos;
-    private int currentPos;
-
+public class FieldReader {
+    private boolean isPackedField = false;
+    private int currentPosition = 0;
+    private byte[] buffer;
+    private static final byte PACKED_FIELD_MARKER = 0x1C;
+    
+    /**
+     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. 
+     * Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
+     * @throws IOException si hay un error al leer el buffer
+     */
     private void checkIfPackedField() throws IOException {
-        // Check if the current field is length-delimited (wire type 2)
-        if ((currentTag & 0x7) == 2) {
-            // Read the length of the packed field
-            int length = readVarint32();
-            
-            // Mark the end position of packed data
-            packedEndPos = currentPos + length;
-            
-            // Set packed flag
-            isPacked = true;
-        } else {
-            // Not a packed field
-            isPacked = false;
-            packedEndPos = 0;
+        if (currentPosition >= buffer.length) {
+            throw new IOException("Buffer overflow - unable to check for packed field");
         }
-    }
-
-    // Helper method to read variable length 32-bit integer
-    private int readVarint32() throws IOException {
-        int result = 0;
-        int shift = 0;
-        while (shift < 32) {
-            int b = input.read();
-            currentPos++;
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
+        
+        if (buffer[currentPosition] == PACKED_FIELD_MARKER) {
+            isPackedField = true;
+            currentPosition++; // Skip the packed field marker
+            
+            // Read the length bytes
+            int length = 0;
+            while (currentPosition < buffer.length && 
+                   Character.isDigit((char)buffer[currentPosition])) {
+                length = length * 10 + (buffer[currentPosition] - '0');
+                currentPosition++;
             }
-            shift += 7;
+            
+            if (currentPosition >= buffer.length || length <= 0) {
+                throw new IOException("Invalid packed field format");
+            }
         }
-        throw new IOException("Malformed varint32");
     }
 }

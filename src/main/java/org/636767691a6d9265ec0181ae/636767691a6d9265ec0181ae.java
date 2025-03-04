@@ -1,12 +1,12 @@
 import java.util.Enumeration;
 import java.util.ArrayList;
 
-public class EnumerationUtils {
+public class EnumerationConverter {
 
     /**
-     * Copy the given Enumeration into a String array. The Enumeration must contain String elements only.
-     * @param enumeration the Enumeration to copy
-     * @return the String array (<code>null</code> if the passed-in Enumeration was <code>null</code>)
+     * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.
+     * @param enumeration El "Enumeration" a copiar
+     * @return el arreglo de Strings (<code>null</code> si El "Enumeration" pasada era <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
@@ -14,10 +14,11 @@ public class EnumerationUtils {
         }
 
         ArrayList<String> list = new ArrayList<>();
+        
         while (enumeration.hasMoreElements()) {
             list.add(enumeration.nextElement());
         }
-        
-        return list.toArray(new String[0]);
+
+        return list.toArray(new String[list.size()]);
     }
 }

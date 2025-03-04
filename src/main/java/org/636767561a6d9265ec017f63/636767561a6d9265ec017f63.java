@@ -1,20 +1,18 @@
 import java.util.*;
 
-public class Graph {
+public class GraphIterator implements Iterator<Vertex> {
     private boolean[] visited;
-    private int currentVertex;
     private int numVertices;
     
-    public Graph(int v) {
-        numVertices = v;
+    public GraphIterator(int n) {
+        numVertices = n;
         visited = new boolean[numVertices];
-        currentVertex = 0;
     }
 
     @Override
     public boolean hasNext() {
-        // Check if there are any unvisited vertices remaining
-        for (int i = currentVertex; i < numVertices; i++) {
+        // Iterate through visited array to find any unvisited vertices
+        for (int i = 0; i < numVertices; i++) {
             if (!visited[i]) {
                 return true;
             }

@@ -1,44 +1,51 @@
 import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
+import java.io.IOException;
 
 public class FileProcessor {
 
     /**
-     * Add the specified files in reverse order.
+     * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final InputStream[] files) {
         if (files == null || files.length == 0) {
             return;
         }
+
+        Stack<InputStream> stack = new Stack<>();
         
-        Deque<InputStream> stack = new ArrayDeque<>();
-        
-        // Add files to stack in original order
+        // Push all files onto stack
         for (InputStream file : files) {
             if (file != null) {
                 stack.push(file);
             }
         }
-        
+
         // Process files in reverse order
         while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
+            InputStream currentFile = stack.pop();
             try {
-                processFile(file);
+                processFile(currentFile);
+            } catch (IOException e) {
+                // Handle exception appropriately
+                e.printStackTrace();
             } finally {
                 try {
-                    file.close();
-                } catch (Exception e) {
-                    // Handle or log exception
+                    currentFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
-    
-    // Helper method to process individual file
-    private void processFile(InputStream file) {
-        // Implementation for processing individual file
-        // would go here
+
+    // Helper method to process individual files
+    private void processFile(InputStream file) throws IOException {
+        // Add file processing logic here
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = file.read(buffer)) != -1) {
+            // Process bytes as needed
+        }
     }
 }

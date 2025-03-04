@@ -1,19 +1,19 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 public class TemplateEncoder {
+
     /**
-     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
-     * @param s the string with zero or more template parameters names
-     * @return the string with encoded template parameters names.
+     * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
+     * @param s la cadena con cero o más nombres de parámetros de plantilla
+     * @return la cadena con los nombres de parámetros de plantilla codificados.
      */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
         
-        // Replace { with %7B and } with %7D
-        String encoded = s.replace("{", "%7B").replace("}", "%7D");
-        return encoded;
+        // Replace '{' with '%7B' and '}' with '%7D'
+        return s.replace("{", "%7B")
+                .replace("}", "%7D");
     }
 }

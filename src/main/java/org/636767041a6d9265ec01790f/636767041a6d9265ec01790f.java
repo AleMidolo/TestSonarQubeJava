@@ -1,16 +1,16 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for converting primitive arrays to their object wrapper equivalents.
+ * Utility class for converting primitive arrays to object arrays.
  */
 public class ArrayUtils {
 
     /**
-     * <p>Converts an array of primitive ints to objects.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Convierte un arreglo de enteros primitivos a objetos.</p>
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * 
-     * @param array  an <code>int</code> array
-     * @return an <code>Integer</code> array, <code>null</code> if null array input
+     * @param array  un arreglo de <code>int</code>
+     * @return un arreglo de <code>Integer</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {

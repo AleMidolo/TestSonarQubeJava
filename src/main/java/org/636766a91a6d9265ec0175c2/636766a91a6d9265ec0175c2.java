@@ -8,13 +8,13 @@ public class FrameStack {
     }
 
     /**
-     * Pops an abstract type from the output frame stack and returns its value.
-     * @return the abstract type that has been popped from the output frame stack.
+     * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
+     * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
      */
     private int pop() {
         if (!outputFrameStack.isEmpty()) {
             return outputFrameStack.pop();
         }
-        throw new IllegalStateException("Stack is empty");
+        throw new IllegalStateException("La pila de marcos está vacía");
     }
 }

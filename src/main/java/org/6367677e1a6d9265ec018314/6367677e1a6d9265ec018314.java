@@ -1,30 +1,55 @@
 import java.util.Iterator;
 import java.util.ArrayList;
 
-public class Category {
-    private boolean active;
-    private ArrayList<Category> children;
+public class CategoryTree {
+    private Category root;
     
-    /**
-     * Removes any inactive nodes from the Category tree.
-     * @return The number of nodes removed
-     */
-    protected int removeUnusedNodes() {
-        int nodesRemoved = 0;
+    protected class Category {
+        private boolean active;
+        private ArrayList<Category> children;
         
-        if (children != null && !children.isEmpty()) {
-            Iterator<Category> iter = children.iterator();
-            while (iter.hasNext()) {
-                Category child = iter.next();
-                nodesRemoved += child.removeUnusedNodes();
-                
-                if (!child.active && (child.children == null || child.children.isEmpty())) {
-                    iter.remove();
-                    nodesRemoved++;
-                }
+        public Category() {
+            this.active = false;
+            this.children = new ArrayList<>();
+        }
+        
+        public boolean isActive() {
+            return active;
+        }
+        
+        public ArrayList<Category> getChildren() {
+            return children;
+        }
+    }
+
+    protected int removeUnusedNodes() {
+        if (root == null) {
+            return 0;
+        }
+        return removeUnusedNodesRecursive(root);
+    }
+    
+    private int removeUnusedNodesRecursive(Category node) {
+        int count = 0;
+        
+        if (node.getChildren().isEmpty()) {
+            return node.isActive() ? 0 : 1;
+        }
+        
+        Iterator<Category> iterator = node.getChildren().iterator();
+        while (iterator.hasNext()) {
+            Category child = iterator.next();
+            count += removeUnusedNodesRecursive(child);
+            
+            if (!child.isActive() && child.getChildren().isEmpty()) {
+                iterator.remove();
             }
         }
         
-        return nodesRemoved;
+        if (!node.isActive() && node.getChildren().isEmpty()) {
+            count++;
+        }
+        
+        return count;
     }
 }

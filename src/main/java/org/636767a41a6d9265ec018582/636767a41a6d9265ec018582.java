@@ -11,7 +11,7 @@ public class MessageSerializer {
   * @return la dimensione del messaggio
   */
   public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-  // Create protobuf output using the buffer
+  // Create ProtobufOutput with the provided buffer
   ProtobufOutput output = new ProtobufOutput(buffer);
   
   // Serialize the message to get its size

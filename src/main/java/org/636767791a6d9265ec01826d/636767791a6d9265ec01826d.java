@@ -32,12 +32,12 @@ public class PropertyUtils {
   replacement = "${" + varName + "}";
   }
   
-  // Escape dei caratteri speciali nel replacement
+  // Escape dei caratteri speciali nella stringa di sostituzione
   replacement = Matcher.quoteReplacement(replacement);
   matcher.appendReplacement(result, replacement);
   }
+  
   matcher.appendTail(result);
-
   return result.toString();
   }
 }

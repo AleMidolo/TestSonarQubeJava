@@ -19,29 +19,22 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
   }
 
   // Normalize mapping
-  if (!mapping.startsWith("/")) {
-  mapping = "/" + mapping;
+  String normalizedMapping = mapping.startsWith("/") ? mapping : "/" + mapping;
+  
+  // Remove handler if exists
+  AtmosphereHandler removed = handlers.remove(normalizedMapping);
+  
+  if (removed != null) {
+  // Clean up any resources associated with the handler
+  removed.destroy();
+  
+  // Update framework configuration
+  AtmosphereConfig config = getAtmosphereConfig();
+  if (config != null) {
+  config.properties().remove(normalizedMapping);
   }
-
-  // Remove the handler
-  AtmosphereHandler handler = handlers.remove(mapping);
-  
-  if (handler != null) {
-  // Clean up any associated resources
-  handler.destroy();
-  
-  // Remove from framework's internal mappings
-  frameworkConfig().properties().remove(mapping);
-  
-  // Remove any associated interceptors
-  clearHandlerInterceptors(mapping);
   }
 
   return this;
-  }
-
-  private void clearHandlerInterceptors(String mapping) {
-  // Implementation specific cleanup of interceptors
-  // This would depend on how interceptors are stored/managed
   }
 }

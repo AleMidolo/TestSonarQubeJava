@@ -34,7 +34,7 @@ public class SeparatorComputer {
   // Assuming vertices have integer IDs
   int id1 = v1.getId();
   int id2 = v2.getId();
-  // Add separator pair in sorted order
+  // Add separator pair in sorted order to avoid duplicates
   if (id1 < id2) {
   separators.add(new Pair<>(id1, id2));
   } else {

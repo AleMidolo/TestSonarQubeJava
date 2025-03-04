@@ -24,7 +24,7 @@ public class ByteOutputStream extends OutputStream {
   // Ensure capacity
   ensureCapacity(count + len);
   
-  // Copy bytes to internal buffer
+  // Copy bytes to buffer
   System.arraycopy(b, off, buffer, count, len);
   count += len;
   }
@@ -39,7 +39,7 @@ public class ByteOutputStream extends OutputStream {
   }
   }
 
-  // Other required methods for OutputStream...
+  // Other required methods...
   @Override
   public void write(int b) throws IOException {
   ensureCapacity(count + 1);

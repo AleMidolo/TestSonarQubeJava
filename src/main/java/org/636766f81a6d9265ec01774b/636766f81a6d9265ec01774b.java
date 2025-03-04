@@ -18,10 +18,10 @@ public class ByteReader {
   public byte readByte() throws IOException {
   if (position >= count) {
   count = input.read(buffer);
+  position = 0;
   if (count == -1) {
   throw new IOException("End of stream reached");
   }
-  position = 0;
   }
   return buffer[position++];
   }

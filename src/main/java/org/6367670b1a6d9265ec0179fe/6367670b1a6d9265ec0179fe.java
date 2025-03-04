@@ -16,7 +16,7 @@ public class CustomOutputStream extends OutputStream {
 
   @Override
   public void write(int b) throws IOException {
-  // Base implementation required by OutputStream
+  // Basic implementation required by OutputStream
   // Actual implementation would depend on specific output destination
   }
 }

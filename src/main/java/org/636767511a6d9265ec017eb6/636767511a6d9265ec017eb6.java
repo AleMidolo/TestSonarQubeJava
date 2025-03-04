@@ -35,7 +35,7 @@ public class GraphTraversal {
   private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
   OuterFaceCirculator circulator = new OuterFaceCirculator(start, dir);
   
-  // Continue traversing until we find a matching node or reach the stop node
+  // Continue traversing until we find matching node or reach stop node
   while (!circulator.getNode().equals(stop)) {
   if (predicate.test(circulator.getNode())) {
   return circulator;
@@ -43,7 +43,7 @@ public class GraphTraversal {
   circulator.next();
   }
   
-  // Return circulator pointing to stop node if no match found
+  // Return circulator at stop node if no match found
   return circulator;
   }
 }

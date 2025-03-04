@@ -11,19 +11,22 @@ public class SetOperations<V> {
   */
   private Set<V> intersection(Set<V> set1, Set<V> set2) {
   // Create new set for result
-  Set<V> result = new HashSet<>();
+  Set<V> intersection = new HashSet<>();
   
-  // Get smaller set to iterate over
-  Set<V> smaller = set1.size() < set2.size() ? set1 : set2;
-  Set<V> larger = set1.size() < set2.size() ? set2 : set1;
-
+  // Iterate over smaller set for efficiency
+  if (set1.size() > set2.size()) {
+  Set<V> temp = set1;
+  set1 = set2;
+  set2 = temp;
+  }
+  
   // Add elements that exist in both sets
-  for (V element : smaller) {
-  if (larger.contains(element)) {
-  result.add(element);
+  for (V element : set1) {
+  if (set2.contains(element)) {
+  intersection.add(element);
   }
   }
   
-  return result;
+  return intersection;
   }
 }

@@ -33,6 +33,8 @@ public class ClassFileReader {
   }
   
   private int readUnsignedShort(final int offset) {
-  return ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
+  byte[] classFileBuffer = this.classFileBuffer;
+  return ((classFileBuffer[offset] & 0xFF) << 8) 
+  | (classFileBuffer[offset + 1] & 0xFF);
   }
 }

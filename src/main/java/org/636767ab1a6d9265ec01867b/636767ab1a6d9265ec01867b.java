@@ -11,43 +11,56 @@ public class UTF8Writer {
 
   byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
   LinkedBuffer currentBuffer = lb;
-  
-  int offset = 0;
-  while (offset < utf8Bytes.length) {
-  int remaining = currentBuffer.buffer.length - currentBuffer.offset;
-  int bytesToCopy = Math.min(remaining, utf8Bytes.length - offset);
-  
-  System.arraycopy(utf8Bytes, offset, currentBuffer.buffer, currentBuffer.offset, bytesToCopy);
-  currentBuffer.offset += bytesToCopy;
-  offset += bytesToCopy;
-  
-  if (offset < utf8Bytes.length) {
-  currentBuffer = new LinkedBuffer(session.nextBufferSize);
-  session.tail = currentBuffer;
+
+  for (byte b : utf8Bytes) {
+  if (currentBuffer.isFull()) {
+  LinkedBuffer nextBuffer = new LinkedBuffer(currentBuffer.getCapacity());
+  currentBuffer.setNext(nextBuffer);
+  currentBuffer = nextBuffer;
   }
+  currentBuffer.write(b);
+  session.size++;
   }
-  
+
   return currentBuffer;
   }
-  
-  // Supporting class definitions
-  public static class LinkedBuffer {
-  byte[] buffer;
-  int offset;
-  LinkedBuffer next;
-  
-  public LinkedBuffer(int size) {
-  this.buffer = new byte[size];
-  this.offset = 0;
+
+  // Helper class to represent a linked buffer
+  private static class LinkedBuffer {
+  private byte[] buffer;
+  private int index;
+  private LinkedBuffer next;
+  private final int capacity;
+
+  public LinkedBuffer(int capacity) {
+  this.capacity = capacity;
+  this.buffer = new byte[capacity];
+  this.index = 0;
+  }
+
+  public boolean isFull() {
+  return index >= capacity;
+  }
+
+  public void write(byte b) {
+  buffer[index++] = b;
+  }
+
+  public void setNext(LinkedBuffer next) {
+  this.next = next;
+  }
+
+  public int getCapacity() {
+  return capacity;
   }
   }
-  
-  public static class WriteSession {
-  LinkedBuffer tail;
-  int nextBufferSize;
-  
-  public WriteSession(int bufferSize) {
-  this.nextBufferSize = bufferSize;
+
+  // Helper class to track write session
+  private static class WriteSession {
+  int size;
+
+  public WriteSession() {
+  this.size = 0;
   }
   }
 }

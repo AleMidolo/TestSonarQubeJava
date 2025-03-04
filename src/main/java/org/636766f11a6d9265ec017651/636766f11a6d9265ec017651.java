@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class ArrayUtils {
-
+  
   /**
   * Empty Character array constant
   */

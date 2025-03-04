@@ -3,7 +3,7 @@ import java.util.Map;
 
 class Logger {
   private Map<String, Integer> messageTimestamps;
-  private static final int THROTTLE_WINDOW = 10; // 10 seconds window
+  private static final int THROTTLE_SECONDS = 10;
   
   public Logger() {
   messageTimestamps = new HashMap<>();
@@ -15,15 +15,13 @@ class Logger {
   * Il timestamp è in granularità di secondi.
   */
   public boolean shouldPrintMessage(int timestamp, String message) {
-  // Se il messaggio non è mai stato stampato prima, stampalo
   if (!messageTimestamps.containsKey(message)) {
   messageTimestamps.put(message, timestamp);
   return true;
   }
   
-  // Controlla se sono passati almeno 10 secondi dall'ultima stampa
   int lastPrinted = messageTimestamps.get(message);
-  if (timestamp - lastPrinted >= THROTTLE_WINDOW) {
+  if (timestamp - lastPrinted >= THROTTLE_SECONDS) {
   messageTimestamps.put(message, timestamp);
   return true;
   }

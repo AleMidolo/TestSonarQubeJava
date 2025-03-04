@@ -34,13 +34,12 @@ public class CodedInputStream {
   return false;
   }
   
-  int read = input.read(buffer, 0, BUFFER_SIZE);
-  if (read <= 0) {
+  int n = input.read(buffer);
+  if (n <= 0) {
   return true;
   }
-  
   pos = 0;
-  bufferSize = read;
+  bufferSize = n;
   return false;
   }
 
@@ -56,17 +55,17 @@ public class CodedInputStream {
   }
   shift += 7;
   }
-  throw new IOException("Malformed varint32");
+  throw new IOException("Malformed varint");
   }
 
   private byte readRawByte() throws IOException {
   if (pos == bufferSize) {
-  int read = input.read(buffer, 0, BUFFER_SIZE);
-  if (read <= 0) {
-  throw new IOException("End of stream reached");
+  int n = input.read(buffer);
+  if (n <= 0) {
+  throw new IOException("End of input");
   }
   pos = 0;
-  bufferSize = read;
+  bufferSize = n;
   }
   return buffer[pos++];
   }

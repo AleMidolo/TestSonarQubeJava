@@ -11,14 +11,18 @@ public class UTF8Utils {
   for (int i = index; i < end; i++) {
   char c = str.charAt(i);
   
-  if (c <= 0x7F) {
+  if (c < 0x80) {
+  // ASCII character (1 byte)
   utf8Size++;
-  } else if (c <= 0x7FF) {
+  } else if (c < 0x800) {
+  // 2-byte UTF-8 character
   utf8Size += 2;
-  } else if (Character.isHighSurrogate(c) && i + 1 < end && Character.isLowSurrogate(str.charAt(i + 1))) {
+  } else if (Character.isSurrogate(c)) {
+  // 4-byte UTF-8 character (surrogate pair)
   utf8Size += 4;
-  i++;
+  i++; // Skip the low surrogate
   } else {
+  // 3-byte UTF-8 character
   utf8Size += 3;
   }
   }

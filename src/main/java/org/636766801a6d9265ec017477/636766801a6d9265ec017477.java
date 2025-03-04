@@ -28,21 +28,24 @@ public class FileHandler {
   // Process files in reverse order
   for (InputStream file : fileList) {
   try {
-  // Add file contents (implementation depends on specific requirements)
+  // Add file contents (implementation depends on specific needs)
   processFile(file);
+  } catch (Exception e) {
+  // Handle exceptions appropriately
+  e.printStackTrace();
   } finally {
   try {
   file.close();
   } catch (Exception e) {
-  // Handle close exception
+  e.printStackTrace();
   }
   }
   }
   }
 
   // Helper method to process individual files
-  private void processFile(InputStream file) {
+  private void processFile(InputStream file) throws Exception {
   // Implementation depends on specific requirements
-  // Example: read file contents and add to collection/database etc.
+  // Example: read file contents, add to collection, etc.
   }
 }

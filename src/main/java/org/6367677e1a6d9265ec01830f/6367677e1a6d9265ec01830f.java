@@ -11,9 +11,10 @@ public class CustomLogFormatter {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         formattedMessage.append(timestamp);
+        formattedMessage.append(" ");
         
         // Add log level
-        formattedMessage.append(" [");
+        formattedMessage.append("[");
         formattedMessage.append(event.getLevel().toString());
         formattedMessage.append("] ");
         

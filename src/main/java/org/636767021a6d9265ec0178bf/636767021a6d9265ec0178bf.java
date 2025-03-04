@@ -24,8 +24,8 @@ public class CharacterConverter {
         }
 
         if (value instanceof Number) {
-            int intValue = ((Number) value).intValue();
-            return Character.valueOf((char) intValue);
+            int num = ((Number) value).intValue();
+            return Character.valueOf((char) num);
         }
 
         throw new Exception("Cannot convert value of type " + value.getClass().getName() + " to Character");

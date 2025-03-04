@@ -16,10 +16,7 @@ public class VertexIterator<V> implements Iterator<V> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        
-        V nextVertex = vertices[currentIndex];
-        currentIndex++;
-        return nextVertex;
+        return vertices[currentIndex++];
     }
 
     @Override
@@ -27,7 +24,7 @@ public class VertexIterator<V> implements Iterator<V> {
         return currentIndex < vertices.length;
     }
 
-    @Override 
+    @Override
     public V next() {
         return proporcionarSiguienteVertice();
     }

@@ -15,7 +15,16 @@ public class ByteVector {
      * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
      */
     private void enlarge(final int size) {
-        int newCapacity = Math.max(buffer.length * 2, buffer.length + size);
-        buffer = Arrays.copyOf(buffer, newCapacity);
+        int length = buffer.length;
+        int newLength = length;
+        
+        // Calculate new buffer size needed
+        int minLength = position + size;
+        while (newLength < minLength) {
+            newLength = newLength * 2;
+        }
+        
+        // Create new buffer with expanded size
+        buffer = Arrays.copyOf(buffer, newLength);
     }
 }

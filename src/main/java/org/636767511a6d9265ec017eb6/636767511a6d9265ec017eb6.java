@@ -35,13 +35,18 @@ public class FaceTraversal {
         
         // Continue traversing until we find a node that satisfies the predicate or reach the stop node
         while (!predicate.test(circulator.getNode())) {
-            // If we've reached the stop node without finding a match, return circulator at stop
+            // If we've reached the stop node, return it
             if (circulator.getNode() == stop) {
                 return circulator;
             }
             
             // Move to next node in specified direction
             circulator.next(dir);
+            
+            // If we've come back to start without finding a match, return stop
+            if (circulator.getNode() == start) {
+                return new OuterFaceCirculator(stop);
+            }
         }
         
         return circulator;

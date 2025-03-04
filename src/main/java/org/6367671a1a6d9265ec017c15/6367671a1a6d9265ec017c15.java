@@ -14,13 +14,13 @@ public class ByteVector {
   // Ensure capacity
   ensureCapacity(size + byteLength);
   
-  // If input array is null, add null bytes
+  // If input array is null, insert null bytes
   if (byteArrayValue == null) {
   for (int i = 0; i < byteLength; i++) {
   data[size++] = 0;
   }
   } else {
-  // Input validation
+  // Validate offset and length
   if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
   throw new IndexOutOfBoundsException("Invalid offset or length");
   }
@@ -39,4 +39,6 @@ public class ByteVector {
   data = Arrays.copyOf(data, newCapacity);
   }
   }
+  
+  // Other methods of ByteVector class would go here...
 }

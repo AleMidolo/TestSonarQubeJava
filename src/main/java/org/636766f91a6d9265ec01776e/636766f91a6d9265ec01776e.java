@@ -12,7 +12,7 @@ public class ByteOutputStream extends OutputStream {
   }
 
   @Override
-  public void write(final byte[] b, final int off, final int len) throws IOException {
+  public void write(final byte b[], final int off, final int len) throws IOException {
   if (b == null) {
   throw new NullPointerException();
   }
@@ -39,10 +39,11 @@ public class ByteOutputStream extends OutputStream {
   }
   }
 
+  // Other required methods for OutputStream...
   @Override
   public void write(int b) throws IOException {
   ensureCapacity(count + 1);
-  buffer[count] = (byte)b;
-  count++;
+  buffer[count] = (byte) b;
+  count += 1;
   }
 }

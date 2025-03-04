@@ -16,27 +16,25 @@ public class GraphUtils {
   */
   public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
   // Create identity mappings for vertices and edges
-  Map<V,V> vertexCorr = new HashMap<>();
-  Map<E,E> edgeCorr = new HashMap<>();
+  Map<V,V> vertexCorrespondence = new HashMap<>();
+  Map<E,E> edgeCorrespondence = new HashMap<>();
   
   // Map each vertex to itself
   for(V vertex : graph.vertexSet()) {
-  vertexCorr.put(vertex, vertex);
+  vertexCorrespondence.put(vertex, vertex);
   }
   
   // Map each edge to itself
   for(E edge : graph.edgeSet()) {
-  edgeCorr.put(edge, edge);
+  edgeCorrespondence.put(edge, edge);
   }
   
   // Create and return the isomorphic mapping
   return new IsomorphicGraphMapping<>(
-  graph, // source graph
-  graph, // target graph (same as source for identity mapping)
-  vertexCorr,
-  vertexCorr, // inverse vertex correspondence is the same for identity
-  edgeCorr,
-  edgeCorr  // inverse edge correspondence is the same for identity
+  graph, // Graph 1
+  graph, // Graph 2 (same graph)
+  vertexCorrespondence,
+  edgeCorrespondence
   );
   }
 }

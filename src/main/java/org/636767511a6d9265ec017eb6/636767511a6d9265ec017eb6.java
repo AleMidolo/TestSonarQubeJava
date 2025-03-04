@@ -20,7 +20,7 @@ public class GraphTraversal {
   }
 
   public void next() {
-  // Move to next node based on direction
+  // Move to next node implementation
   }
   }
 
@@ -28,14 +28,14 @@ public class GraphTraversal {
   * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
   * @param predicate la condizione che il nodo desiderato deve soddisfare
   * @param start il nodo da cui iniziare la ricerca
-  * @param stop il nodo con cui terminare la ricerca 
+  * @param stop il nodo con cui terminare la ricerca
   * @param dir la direzione da cui iniziare la traversata
   * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
   */
   private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
   OuterFaceCirculator circulator = new OuterFaceCirculator(start, dir);
   
-  // Continue traversing until we find matching node or reach stop node
+  // Continue until we find a matching node or reach the stop node
   while (!circulator.getNode().equals(stop)) {
   if (predicate.test(circulator.getNode())) {
   return circulator;
@@ -43,7 +43,7 @@ public class GraphTraversal {
   circulator.next();
   }
   
-  // Return circulator at stop node if no match found
+  // Return circulator pointing to stop node if no match found
   return circulator;
   }
 }

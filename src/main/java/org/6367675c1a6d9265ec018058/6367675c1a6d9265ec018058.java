@@ -1,6 +1,6 @@
 import java.util.function.Supplier;
 
-public class StringSupplierCreator {
+public class StringSupplier {
   
   /**
   * Crea un fornitore di stringhe che restituisce stringhe uniche. Le stringhe restituite sono semplicemente interi che partono da start.

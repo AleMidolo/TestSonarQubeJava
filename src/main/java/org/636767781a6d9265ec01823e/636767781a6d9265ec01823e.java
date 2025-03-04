@@ -10,58 +10,65 @@ import java.util.List;
 public class SocketAppender extends AppenderSkeleton {
   
   private List<Socket> connectedClients;
-  
+  private List<PrintWriter> clientWriters;
+
   public SocketAppender() {
   connectedClients = new ArrayList<>();
+  clientWriters = new ArrayList<>();
   }
-  
-  public void addClient(Socket client) {
-  connectedClients.add(client);
-  }
-  
-  public void removeClient(Socket client) {
-  connectedClients.remove(client);
-  }
-  
+
   @Override
   protected void append(LoggingEvent event) {
-  String message = this.layout.format(event);
-  
-  List<Socket> disconnectedClients = new ArrayList<>();
-  
-  for(Socket client : connectedClients) {
+  if (event == null) return;
+
+  String formattedMessage = this.layout.format(event);
+
+  // Iterate through all connected clients and send the log message
+  for (int i = 0; i < clientWriters.size(); i++) {
   try {
-  PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
-  writer.println(message);
-  } catch(IOException e) {
-  // If we can't write to the socket, mark it for removal
-  disconnectedClients.add(client);
+  PrintWriter writer = clientWriters.get(i);
+  writer.println(formattedMessage);
+  writer.flush();
+  } catch (Exception e) {
+  // If there's an error writing to client, remove it
+  removeClient(i);
+  i--; // Adjust index since we removed an element
   }
   }
-  
-  // Remove any disconnected clients
-  for(Socket client : disconnectedClients) {
-  removeClient(client);
+  }
+
+  public void addClient(Socket clientSocket) throws IOException {
+  connectedClients.add(clientSocket);
+  clientWriters.add(new PrintWriter(clientSocket.getOutputStream(), true));
+  }
+
+  private void removeClient(int index) {
   try {
-  client.close();
-  } catch(IOException e) {
+  connectedClients.get(index).close();
+  } catch (IOException e) {
   // Ignore close errors
   }
+  connectedClients.remove(index);
+  clientWriters.remove(index);
   }
-  }
-  
+
   @Override
   public void close() {
-  for(Socket client : connectedClients) {
+  if (!closed) {
+  closed = true;
+  // Close all client connections
+  for (Socket socket : connectedClients) {
   try {
-  client.close();
-  } catch(IOException e) {
+  socket.close();
+  } catch (IOException e) {
   // Ignore close errors
   }
   }
   connectedClients.clear();
+  clientWriters.clear();
   }
-  
+  }
+
   @Override
   public boolean requiresLayout() {
   return true;

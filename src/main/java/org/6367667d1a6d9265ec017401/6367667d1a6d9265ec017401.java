@@ -32,25 +32,23 @@ public class StringUtils {
   
   if (ch == '\\' && i + 1 < str.length()) {
   // Check for escaped sequences
-  String escape = str.substring(i, i + 2);
+  String escape = str.substring(i, Math.min(i + 2, str.length()));
+  
   if (JAVA_ESCAPES.containsKey(escape)) {
   result.append(JAVA_ESCAPES.get(escape));
   i++; // Skip next character as it's part of escape sequence
-  } else if (i + 3 < str.length() && 
-  str.substring(i + 1, i + 4).matches("[0-7]{3}")) {
-  // Handle octal escapes
-  String octal = str.substring(i + 1, i + 4);
-  result.append((char) Integer.parseInt(octal, 8));
-  i += 3;
-  } else if (i + 5 < str.length() && 
-  str.substring(i + 1, i + 6).matches("u[0-9a-fA-F]{4}")) {
-  // Handle unicode escapes
-  String unicode = str.substring(i + 2, i + 6);
-  result.append((char) Integer.parseInt(unicode, 16));
-  i += 5;
+  } else if (escape.charAt(1) == 'u' && i + 5 < str.length()) {
+  // Handle Unicode escape sequences
+  String hex = str.substring(i + 2, i + 6);
+  try {
+  result.append((char) Integer.parseInt(hex, 16));
+  i += 5; // Skip the unicode sequence
+  } catch (NumberFormatException e) {
+  throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+  }
   } else {
-  // Invalid escape sequence
-  throw new Exception("Invalid escape sequence at position " + i);
+  // Not a recognized escape sequence, keep the backslash
+  result.append(ch);
   }
   } else {
   result.append(ch);

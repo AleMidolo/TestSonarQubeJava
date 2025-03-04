@@ -1,7 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ThreadSnapshotParser {
 
@@ -16,14 +14,12 @@ public class ThreadSnapshotParser {
   while ((line = reader.readLine()) != null) {
   if (line.startsWith("Time:")) {
   // Parse timestamp
-  String timestamp = line.substring(6).trim();
-  LocalDateTime dateTime = LocalDateTime.parse(timestamp, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+  long timestamp = Long.parseLong(line.substring(5).trim());
   
   // Check if timestamp is within any of the time ranges
   isInTimeRange = false;
   for (ProfileAnalyzeTimeRange range : timeRanges) {
-  if (dateTime.isAfter(range.getStartTime()) && 
-  dateTime.isBefore(range.getEndTime())) {
+  if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
   isInTimeRange = true;
   break;
   }
@@ -31,16 +27,22 @@ public class ThreadSnapshotParser {
   
   if (isInTimeRange) {
   currentSnapshot = new ThreadSnapshot();
-  currentSnapshot.setTimestamp(dateTime);
+  currentSnapshot.setTimestamp(timestamp);
   snapshots.add(currentSnapshot);
   }
   } else if (isInTimeRange && currentSnapshot != null) {
-  // Parse thread information
-  if (line.trim().length() > 0) {
-  ThreadInfo threadInfo = parseThreadInfo(line);
-  if (threadInfo != null) {
-  currentSnapshot.addThreadInfo(threadInfo);
+  // Parse thread info
+  if (line.startsWith("Thread-")) {
+  String[] parts = line.split("\\s+");
+  if (parts.length >= 2) {
+  String threadName = parts[0];
+  String threadState = parts[1];
+  currentSnapshot.addThread(threadName, threadState);
   }
+  }
+  // Parse stack trace
+  else if (line.startsWith("\tat ")) {
+  currentSnapshot.addStackTraceLine(line.trim());
   }
   }
   }
@@ -48,94 +50,59 @@ public class ThreadSnapshotParser {
   
   return snapshots;
   }
-  
-  private static ThreadInfo parseThreadInfo(String line) {
-  // Helper method to parse individual thread information
-  try {
-  String[] parts = line.trim().split("\\s+");
-  if (parts.length >= 3) {
-  ThreadInfo info = new ThreadInfo();
-  info.setId(Long.parseLong(parts[0]));
-  info.setState(parts[1]);
-  info.setName(String.join(" ", Arrays.copyOfRange(parts, 2, parts.length)));
-  return info;
-  }
-  } catch (NumberFormatException e) {
-  // Skip invalid lines
-  }
-  return null;
-  }
 }
 
-// Supporting classes (would typically be in separate files)
+// Supporting classes (would be in separate files)
 class ThreadSnapshot {
-  private LocalDateTime timestamp;
-  private List<ThreadInfo> threads = new ArrayList<>();
+  private long timestamp;
+  private Map<String, String> threads;
+  private List<String> stackTrace;
   
-  public void setTimestamp(LocalDateTime timestamp) {
+  public ThreadSnapshot() {
+  threads = new HashMap<>();
+  stackTrace = new ArrayList<>();
+  }
+  
+  public void setTimestamp(long timestamp) {
   this.timestamp = timestamp;
   }
   
-  public void addThreadInfo(ThreadInfo thread) {
-  threads.add(thread);
+  public void addThread(String name, String state) {
+  threads.put(name, state);
   }
   
-  public LocalDateTime getTimestamp() {
+  public void addStackTraceLine(String line) {
+  stackTrace.add(line);
+  }
+  
+  // Getters
+  public long getTimestamp() {
   return timestamp;
   }
   
-  public List<ThreadInfo> getThreads() {
+  public Map<String, String> getThreads() {
   return threads;
   }
-}
-
-class ThreadInfo {
-  private long id;
-  private String state;
-  private String name;
   
-  public void setId(long id) {
-  this.id = id;
-  }
-  
-  public void setState(String state) {
-  this.state = state;
-  }
-  
-  public void setName(String name) {
-  this.name = name;
-  }
-  
-  public long getId() {
-  return id;
-  }
-  
-  public String getState() {
-  return state;
-  }
-  
-  public String getName() {
-  return name;
+  public List<String> getStackTrace() {
+  return stackTrace;
   }
 }
 
 class ProfileAnalyzeTimeRange {
-  private LocalDateTime startTime;
-  private LocalDateTime endTime;
+  private long startTime;
+  private long endTime;
   
-  public LocalDateTime getStartTime() {
+  public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+  this.startTime = startTime;
+  this.endTime = endTime;
+  }
+  
+  public long getStartTime() {
   return startTime;
   }
   
-  public LocalDateTime getEndTime() {
+  public long getEndTime() {
   return endTime;
-  }
-  
-  public void setStartTime(LocalDateTime startTime) {
-  this.startTime = startTime;
-  }
-  
-  public void setEndTime(LocalDateTime endTime) {
-  this.endTime = endTime;
   }
 }

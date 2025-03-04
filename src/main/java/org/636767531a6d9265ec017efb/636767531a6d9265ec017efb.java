@@ -11,18 +11,13 @@ public class Bucket {
   void insertBefore(Bucket bucket) {
   Objects.requireNonNull(bucket);
   
-  // Set this bucket's next reference to the given bucket
   this.next = bucket;
-  
-  // Set this bucket's prev reference to the given bucket's previous
   this.prev = bucket.prev;
   
-  // Update the given bucket's prev reference to point to this bucket
-  bucket.prev = this;
-  
-  // If there was a previous bucket, update its next reference
-  if (this.prev != null) {
-  this.prev.next = this;
+  if (bucket.prev != null) {
+  bucket.prev.next = this;
   }
+  
+  bucket.prev = this;
   }
 }

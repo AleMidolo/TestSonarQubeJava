@@ -25,6 +25,6 @@ public class ShardingValidator {
   private int[] getShardingKeyIndices(String modelName) {
   // Implementation would depend on how sharding keys are stored/retrieved
   // This is just a placeholder
-  return new int[]{0, 1, 2};
+  return new int[]{0, 1, 2, 3};
   }
 }

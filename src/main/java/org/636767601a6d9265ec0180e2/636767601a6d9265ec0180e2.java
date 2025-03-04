@@ -27,25 +27,22 @@ public class SeparatorComputer {
   Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
   commonNeighbors.retainAll(targetNeighbors);
   
-  // Create pairs of vertices that form minimal separators
+  // Convert vertices to integer pairs and add to separators
   for (V v1 : commonNeighbors) {
   for (V v2 : commonNeighbors) {
   if (!v1.equals(v2)) {
-  // Assuming vertices have integer IDs
-  int id1 = v1.getId();
-  int id2 = v2.getId();
-  // Add separator pair in sorted order to avoid duplicates
-  if (id1 < id2) {
-  separators.add(new Pair<>(id1, id2));
-  } else {
-  separators.add(new Pair<>(id2, id1));
-  }
+  separators.add(new Pair<>(
+  graph.getVertexIndex(v1),
+  graph.getVertexIndex(v2)
+  ));
   }
   }
   }
   
   // Add the separators list along with the edge to global list
+  if (!separators.isEmpty()) {
   globalSeparators.add(new Pair<>(separators, edge));
+  }
   }
   
   return globalSeparators;

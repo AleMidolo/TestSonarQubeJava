@@ -15,24 +15,28 @@ public class ArrayUtils {
   return null;
   }
   
+  // If one array is null, return copy of the non-null array
+  if (array1 == null) {
+  return array2.clone();
+  }
+  if (array2 == null) {
+  return array1.clone();
+  }
+
   // Create list to store concatenated elements
   List<String> result = new ArrayList<>();
   
-  // Add elements from first array if not null
-  if (array1 != null) {
+  // Add all elements from first array
   for (String s : array1) {
   result.add(s);
   }
-  }
   
-  // Add elements from second array if not null
-  if (array2 != null) {
+  // Add all elements from second array
   for (String s : array2) {
   result.add(s);
   }
-  }
-  
-  // Convert list to array and return
+
+  // Convert list back to array and return
   return result.toArray(new String[0]);
   }
 }

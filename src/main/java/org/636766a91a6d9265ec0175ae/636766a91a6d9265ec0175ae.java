@@ -11,7 +11,7 @@ public class ByteVector {
   }
 
   public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-  // Check if we need to expand the array
+  // Check if we need to resize the array
   ensureCapacity(size + byteLength);
   
   if (byteArrayValue != null) {
@@ -20,7 +20,7 @@ public class ByteVector {
   throw new IndexOutOfBoundsException("Invalid offset or length");
   }
   
-  // Copy bytes from input array
+  // Copy the bytes from the input array
   System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
   } else {
   // Fill with null bytes if input array is null

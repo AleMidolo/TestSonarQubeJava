@@ -3,7 +3,7 @@ import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class NDC {
-  private static final ThreadLocal<Deque<String>> localStack = new ThreadLocal<Deque<String>>() {
+  private static final ThreadLocal<Deque<String>> localDeque = new ThreadLocal<Deque<String>>() {
   @Override 
   protected Deque<String> initialValue() {
   return new ConcurrentLinkedDeque<>();
@@ -15,9 +15,9 @@ public class NDC {
   * @return String Il contesto diagnostico più interno.
   */
   public static String peek() {
-  Deque<String> stack = localStack.get();
-  if (stack != null && !stack.isEmpty()) {
-  return stack.peek();
+  Deque<String> deque = localDeque.get();
+  if (deque != null && !deque.isEmpty()) {
+  return deque.peek();
   }
   return "";
   }

@@ -6,16 +6,15 @@ package org.apache.commons.lang3;
 public class CharUtils {
 
   /**
-  * Array contenente le stringhe per i caratteri ASCII a 7 bit (0-127).
+  * Array per la cache dei caratteri ASCII.
+  * Cache per caratteri da 0 a 127.
   */
-  private static final String[] CHAR_STRING_ARRAY = new String[128];
+  private static final String[] CHAR_STRING_CACHE = new String[128];
 
-  /**
-  * Inizializza la cache delle stringhe per i caratteri ASCII.
-  */
+  // Inizializza la cache
   static {
-  for (char c = 0; c < CHAR_STRING_ARRAY.length; c++) {
-  CHAR_STRING_ARRAY[c] = String.valueOf(c);
+  for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
+  CHAR_STRING_CACHE[c] = String.valueOf(c);
   }
   }
 
@@ -30,8 +29,8 @@ public class CharUtils {
   * @return una Stringa contenente il carattere specificato
   */
   public static String toString(final char ch) {
-  if (ch < 128) {
-  return CHAR_STRING_ARRAY[ch];
+  if (ch < CHAR_STRING_CACHE.length) {
+  return CHAR_STRING_CACHE[ch];
   }
   return String.valueOf(ch);
   }

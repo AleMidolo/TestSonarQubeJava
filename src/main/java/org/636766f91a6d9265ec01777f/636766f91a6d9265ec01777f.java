@@ -1,10 +1,6 @@
 package org.apache.commons.lang3;
 
-/**
- * Utility class for Boolean operations.
- */
 public class BooleanUtils {
-
   /**
   * <p>Converte un Boolean in un boolean gestendo <code>null</code> restituendo <code>false</code>.</p>
   * 
@@ -20,5 +16,4 @@ public class BooleanUtils {
   public static boolean toBoolean(Boolean bool) {
   return bool != null && bool.booleanValue();
   }
-
 }

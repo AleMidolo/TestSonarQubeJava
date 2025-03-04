@@ -14,7 +14,7 @@ public class MessageSerializer {
   // Create ProtobufOutput with the provided buffer
   ProtobufOutput output = new ProtobufOutput(buffer);
   
-  // Serialize the message to get its size
+  // Serialize the message using schema
   schema.writeTo(output, message);
   
   // Get the size of the serialized message
@@ -30,9 +30,7 @@ public class MessageSerializer {
   // Write the actual message bytes
   LinkedBuffer.writeTo(out, buffer);
   
-  // Clear the buffer
-  buffer.clear();
-  
+  // Return the total size of the message
   return output.getSize();
   }
 }

@@ -1,5 +1,5 @@
 public class ArrayUtils {
-  /** 
+  /**
   * Scambia i due elementi agli indici specificati nell'array fornito.
   * @param <V> il tipo di elementi nell'array
   * @param arr l'array

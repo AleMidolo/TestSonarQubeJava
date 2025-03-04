@@ -36,7 +36,7 @@ public class LinkedList<E> {
   
   if (next == null) {
   // Node is the last element
-  last = prev; 
+  last = prev;
   } else {
   next.prev = prev;
   node.next = null;

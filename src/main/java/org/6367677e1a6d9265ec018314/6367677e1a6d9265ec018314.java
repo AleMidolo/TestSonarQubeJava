@@ -39,7 +39,7 @@ public class CategoryTree {
   for (CategoryNode child : node.getChildren()) {
   removedCount += removeUnusedNodesRecursive(child);
   
-  // If child is inactive and has no children, mark for removal
+  // If child is inactive and has no children, mark it for removal
   if (!child.isActive() && child.getChildren().isEmpty()) {
   nodesToRemove.add(child);
   removedCount++;

@@ -9,49 +9,70 @@ import org.elasticsearch.index.mapper.Mappings;
 public class MappingDiffer {
 
   public Mappings diffStructure(String tableName, Mappings mappings) {
-  try {
-  // Create empty mappings to store the diff
-  Mappings diffMappings = new Mappings.Builder().build();
-  
   if (mappings == null) {
-  return diffMappings;
+  return null;
   }
 
-  // Get the properties from input mappings
-  Map<String, Object> properties = mappings.getSourceAsMap();
-  
-  if (properties == null || properties.isEmpty()) {
+  // Create new mappings object to store differences
+  Mappings diffMappings = new Mappings(MapperService.SINGLE_MAPPING_NAME);
+
+  // Get properties from input mappings
+  Map<String, Object> sourceProps = mappings.getSourceAsMap();
+  if (sourceProps == null || sourceProps.isEmpty()) {
   return diffMappings;
   }
 
   // Get current index mappings
-  GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
-  GetMappingsResponse currentMappings = client.admin().indices()
-  .getMappings(request).actionGet();
+  Map<String, Object> currentProps = getCurrentIndexMappings(tableName);
   
-  ImmutableOpenMap<String, MappingMetadata> indexMappings = 
-  currentMappings.getMappings().get(tableName);
+  // Compare and add fields that don't exist in current mappings
+  Map<String, Object> diffProps = new HashMap<>();
+  compareProperties(sourceProps, currentProps, diffProps);
 
-  if (indexMappings == null || indexMappings.isEmpty()) {
-  // If no current mappings exist, return input mappings without _source
-  Map<String, Object> cleanProperties = new HashMap<>(properties);
-  cleanProperties.remove("_source");
-  return new Mappings.Builder().sourceAsMap(cleanProperties).build();
+  // Build new mappings excluding _source
+  if (!diffProps.isEmpty()) {
+  Map<String, Object> properties = new HashMap<>();
+  properties.put("properties", diffProps);
+  diffMappings.sourceAsMap().putAll(properties);
   }
 
-  // Compare and build diff mappings
-  Map<String, Object> diffProperties = new HashMap<>();
-  for (Map.Entry<String, Object> entry : properties.entrySet()) {
-  String field = entry.getKey();
-  if (!indexMappings.containsKey(field) && !field.equals("_source")) {
-  diffProperties.put(field, entry.getValue());
-  }
+  return diffMappings;
   }
 
-  return new Mappings.Builder().sourceAsMap(diffProperties).build();
-
+  private Map<String, Object> getCurrentIndexMappings(String tableName) {
+  try {
+  GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
+  GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+  ImmutableOpenMap<String, MappingMetadata> mappings = response.getMappings();
+  MappingMetadata mapping = mappings.get(tableName);
+  if (mapping != null) {
+  return mapping.getSourceAsMap();
+  }
   } catch (Exception e) {
-  throw new RuntimeException("Error calculating mapping differences", e);
+  // Handle exception
+  }
+  return new HashMap<>();
+  }
+
+  private void compareProperties(Map<String, Object> source, Map<String, Object> current, 
+  Map<String, Object> diff) {
+  for (Map.Entry<String, Object> entry : source.entrySet()) {
+  String key = entry.getKey();
+  Object value = entry.getValue();
+
+  if (!current.containsKey(key)) {
+  diff.put(key, value);
+  } else if (value instanceof Map) {
+  Map<String, Object> sourceNested = (Map<String, Object>) value;
+  Map<String, Object> currentNested = (Map<String, Object>) current.get(key);
+  Map<String, Object> diffNested = new HashMap<>();
+  
+  compareProperties(sourceNested, currentNested, diffNested);
+  
+  if (!diffNested.isEmpty()) {
+  diff.put(key, diffNested); 
+  }
+  }
   }
   }
 }

@@ -5,8 +5,8 @@ public class TemplateEncoder {
   * @return la stringa con i nomi di parametri di template codificati.
   */
   public static String encodeTemplateNames(String s) {
-  if (s == null || s.isEmpty()) {
-  return s;
+  if (s == null) {
+  return null;
   }
   
   StringBuilder result = new StringBuilder();
@@ -17,7 +17,7 @@ public class TemplateEncoder {
   if (c == '{') {
   result.append("%7B");
   } else if (c == '}') {
-  result.append("%7D");
+  result.append("%7D"); 
   } else {
   result.append(c);
   }

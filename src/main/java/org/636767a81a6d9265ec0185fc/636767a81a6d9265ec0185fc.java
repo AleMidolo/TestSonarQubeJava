@@ -21,10 +21,10 @@ public class CodedInputStream {
             return 0;
         }
 
-        lastTag = readVarint32();
+        lastTag = readRawVarint32();
         if (lastTag == 0) {
             // If we actually read zero, that's not a valid tag.
-            throw new IOException("Invalid tag: zero");
+            throw new IOException("Invalid tag: zero is not a valid tag value");
         }
         return lastTag;
     }
@@ -34,16 +34,17 @@ public class CodedInputStream {
             return false;
         }
         
-        int n = input.read(buffer);
-        if (n <= 0) {
+        int read = input.read(buffer, 0, BUFFER_SIZE);
+        if (read <= 0) {
             return true;
         }
+        
         pos = 0;
-        bufferSize = n;
+        bufferSize = read;
         return false;
     }
 
-    private int readVarint32() throws IOException {
+    private int readRawVarint32() throws IOException {
         int result = 0;
         int shift = 0;
         
@@ -60,12 +61,12 @@ public class CodedInputStream {
 
     private byte readRawByte() throws IOException {
         if (pos == bufferSize) {
-            int n = input.read(buffer);
-            if (n <= 0) {
+            int read = input.read(buffer, 0, BUFFER_SIZE);
+            if (read <= 0) {
                 throw new IOException("End of input");
             }
             pos = 0;
-            bufferSize = n;
+            bufferSize = read;
         }
         return buffer[pos++];
     }

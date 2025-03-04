@@ -19,7 +19,7 @@ public class FieldReader {
         // Verifica si el byte actual es el marcador de campo empaquetado
         if (buffer[currentPosition] == PACKED_FIELD_MARKER) {
             isPackedField = true;
-            currentPosition++; // Avanza la posición para saltear el marcador
+            currentPosition++; // Avanza la posición para saltar el marcador
         } else {
             isPackedField = false;
         }

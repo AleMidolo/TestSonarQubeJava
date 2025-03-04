@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class LabelPropagation {
-
+    
     /**
      * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. 
      * Limpia el cubo con etiqueta {@code minLabel}. Actualiza el etiquetado en consecuencia.

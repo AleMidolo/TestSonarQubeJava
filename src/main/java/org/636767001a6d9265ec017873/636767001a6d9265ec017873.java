@@ -1,4 +1,3 @@
-import java.lang.String;
 import java.lang.StringBuilder;
 
 public class StringUtils {

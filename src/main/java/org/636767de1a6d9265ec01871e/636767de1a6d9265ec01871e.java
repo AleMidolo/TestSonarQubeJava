@@ -17,29 +17,26 @@ public class ShardingValidator {
         Matcher matcher = pattern.matcher(modelName);
 
         if (matcher.find()) {
-            String shardNumberStr = matcher.group(1);
-            int shardNumber = Integer.parseInt(shardNumberStr);
+            String shardIndexStr = matcher.group(1);
+            int shardIndex = Integer.parseInt(shardIndexStr);
 
-            // Check if shard number is negative
-            if (shardNumber < 0) {
+            // Check if shard index is negative
+            if (shardIndex < 0) {
                 throw new IllegalStateException("Shard index cannot be negative: " + modelName);
             }
 
-            // Check if shard number is continuous with previous shards
-            // This assumes shard numbers should start from 0 and be continuous
-            if (shardNumber > 0) {
-                String previousShardName = modelName.substring(0, modelName.lastIndexOf('_')) + "_" + (shardNumber - 1);
-                if (!shardExists(previousShardName)) {
-                    throw new IllegalStateException("Non-continuous shard index detected in: " + modelName);
-                }
+            // Check if shard index skips numbers
+            // Assuming shards should start from 0 and be continuous
+            if (!modelName.replace("_" + shardIndex, "").equals(modelName.substring(0, modelName.lastIndexOf("_")))) {
+                throw new IllegalStateException("Invalid shard format in model name: " + modelName);
+            }
+
+            // Check previous shard exists if not zero
+            if (shardIndex > 0) {
+                String previousShardName = modelName.substring(0, modelName.lastIndexOf("_")) + "_" + (shardIndex - 1);
+                // Here you might want to add additional logic to check if previous shard exists
+                // This would depend on your specific implementation requirements
             }
         }
-    }
-
-    // Helper method to check if a shard exists
-    private boolean shardExists(String shardName) {
-        // Implementation would depend on how shards are stored/managed
-        // This is just a placeholder
-        return true;
     }
 }

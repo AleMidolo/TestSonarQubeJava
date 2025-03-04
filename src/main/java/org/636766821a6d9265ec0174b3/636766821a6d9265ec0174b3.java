@@ -17,16 +17,10 @@ public class MessageFilter {
             return null;
         }
         
-        try {
-            return broadcastFilter.filter(msg);
-        } catch (Exception e) {
-            // Log error if needed
-            return msg; // Return original message if filtering fails
-        }
+        return broadcastFilter.filter(msg);
     }
 }
 
-// Interface definition for reference
 interface BroadcastFilter {
     Object filter(Object message);
 }

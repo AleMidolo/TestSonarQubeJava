@@ -39,11 +39,11 @@ public class Graph {
 class Node {
     private boolean isVirtual;
     private Node realNode;
-
+    
     public boolean isVirtual() {
         return isVirtual;
     }
-
+    
     public Node getRealNode() {
         return realNode;
     }
@@ -52,11 +52,11 @@ class Node {
 class Edge {
     private Node source;
     private Node destination;
-
+    
     public Node getSource() {
         return source;
     }
-
+    
     public Node getDestination() {
         return destination;
     }

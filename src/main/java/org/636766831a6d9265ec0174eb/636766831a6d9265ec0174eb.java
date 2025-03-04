@@ -21,13 +21,12 @@ public class FileHandler {
         Collections.reverse(fileList);
         
         for (File file : fileList) {
-            add(file);
+            add(file); // Assuming there's an add() method in the class
         }
     }
     
-    // Helper method to add individual files
+    // Placeholder for add method
     private void add(File file) {
         // Implementation of add method would go here
-        // This is just a stub since the original implementation is not provided
     }
 }

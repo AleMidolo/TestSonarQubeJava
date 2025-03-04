@@ -1,4 +1,4 @@
-import java.lang.String;
+import java.util.Objects;
 
 public class HeaderParser {
 
@@ -9,11 +9,13 @@ public class HeaderParser {
      * @return Indice della sequenza \r\n, che indica la fine della riga.
      */
     private int parseEndOfLine(String headerPart, int end) {
-        int index = end;
+        Objects.requireNonNull(headerPart);
         
-        // Cerca la sequenza \r\n che indica la fine della riga
-        while (index < headerPart.length() - 1) {
-            if (headerPart.charAt(index) == '\r' && 
+        int index = end;
+        while (index < headerPart.length()) {
+            // Cerca la sequenza \r\n che indica fine riga
+            if (index + 1 < headerPart.length() && 
+                headerPart.charAt(index) == '\r' && 
                 headerPart.charAt(index + 1) == '\n') {
                 return index;
             }

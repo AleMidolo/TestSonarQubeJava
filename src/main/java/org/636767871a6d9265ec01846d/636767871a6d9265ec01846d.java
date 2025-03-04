@@ -12,11 +12,11 @@ public class ConfigurationManager {
         File configDir;
         
         if (System.getProperty("os.name").startsWith("Windows")) {
-            // For Windows systems
+            // For Windows, create in Documents and Settings
             configDir = new File(userHome + File.separator + "Documents and Settings" + 
                                File.separator + "lf5");
         } else {
-            // For all other operating systems
+            // For other platforms, create directly in user home
             configDir = new File(userHome + File.separator + "lf5");
         }
 

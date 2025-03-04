@@ -16,10 +16,11 @@ public class StringUtils {
         if (suffix.length() > str.length()) {
             return false;
         }
-        int strOffset = str.length() - suffix.length();
         
-        return ignoreCase 
-            ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
-            : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
+        if (ignoreCase) {
+            String strEnd = str.substring(str.length() - suffix.length());
+            return strEnd.equalsIgnoreCase(suffix);
+        }
+        return str.endsWith(suffix);
     }
 }

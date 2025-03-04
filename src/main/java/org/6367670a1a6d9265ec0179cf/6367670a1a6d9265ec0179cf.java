@@ -1,8 +1,13 @@
 package org.apache.commons.lang3;
 
+/**
+ * Utility class for Character operations
+ */
 public class CharUtils {
+
     /**
      * <p>Converts the Character to a char handling <code>null</code>.</p>
+     * 
      * <pre>
      * CharUtils.toChar(null, 'X') = 'X'
      * CharUtils.toChar(' ', 'X')  = ' '

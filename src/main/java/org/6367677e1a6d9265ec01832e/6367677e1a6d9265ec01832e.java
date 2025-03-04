@@ -13,25 +13,16 @@ public class LoggerManager {
         
         try {
             // Get the logger if it exists, without creating a new one
-            Logger[] loggers = Logger.getLogger("").getHandlers()
-                    .clone()
-                    .getClass()
-                    .getClassLoader()
-                    .getResources("")
-                    .getClass()
-                    .getDeclaredFields()[0]
-                    .get(null);
-                    
-            for (Logger logger : loggers) {
-                if (name.equals(logger.getName())) {
-                    return logger;
-                }
+            Logger logger = Logger.getLogger(name);
+            
+            // Check if logger exists by seeing if it has any handlers or parent
+            if (logger.getHandlers().length > 0 || logger.getParent() != null) {
+                return logger;
             }
+            
+            return null;
         } catch (Exception e) {
-            // Return null if any error occurs during lookup
             return null;
         }
-        
-        return null;
     }
 }

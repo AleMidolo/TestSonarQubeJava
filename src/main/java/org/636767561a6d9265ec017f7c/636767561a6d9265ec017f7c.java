@@ -16,42 +16,40 @@ public class TourTransformer<V,E> {
             return null;
         }
 
-        // Create lists to store vertices and edges in order
-        List<V> vertexList = new ArrayList<>();
-        List<E> edgeList = new ArrayList<>();
+        List<E> edges = new ArrayList<>();
+        List<V> vertices = new ArrayList<>();
         
         // Get first edge and its vertices
         E firstEdge = tour.iterator().next();
         V start = graph.getEdgeSource(firstEdge);
         V current = graph.getEdgeTarget(firstEdge);
         
-        vertexList.add(start);
-        vertexList.add(current);
-        edgeList.add(firstEdge);
+        edges.add(firstEdge);
+        vertices.add(start);
+        vertices.add(current);
         
-        // Remove first edge from set
-        Set<E> remaining = new HashSet<>(tour);
-        remaining.remove(firstEdge);
+        tour.remove(firstEdge);
         
         // Build path by connecting edges
-        while (!remaining.isEmpty()) {
+        while (!tour.isEmpty()) {
             boolean found = false;
-            for (E edge : remaining) {
+            for (E edge : tour) {
                 V source = graph.getEdgeSource(edge);
                 V target = graph.getEdgeTarget(edge);
                 
                 if (source.equals(current)) {
+                    edges.add(edge);
+                    vertices.add(target);
                     current = target;
+                    tour.remove(edge);
                     found = true;
+                    break;
                 } else if (target.equals(current)) {
+                    edges.add(edge);
+                    vertices.add(source);
                     current = source;
+                    tour.remove(edge);
                     found = true;
-                }
-                
-                if (found) {
-                    vertexList.add(current);
-                    edgeList.add(edge);
-                    remaining.remove(edge);
                     break;
                 }
             }
@@ -61,17 +59,16 @@ public class TourTransformer<V,E> {
             }
         }
         
-        // Verify tour is complete (ends at start)
+        // Verify tour is complete (ends where it started)
         if (!current.equals(start)) {
-            throw new IllegalArgumentException("Invalid tour: path does not end at starting vertex");
+            throw new IllegalArgumentException("Invalid tour: path does not return to start");
         }
         
-        // Calculate total weight
         double weight = 0.0;
-        for (E edge : edgeList) {
+        for (E edge : edges) {
             weight += graph.getEdgeWeight(edge);
         }
         
-        return new GraphWalk<>(graph, vertexList, weight);
+        return new GraphWalk<>(graph, vertices, weight);
     }
 }

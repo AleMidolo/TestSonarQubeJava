@@ -1,4 +1,4 @@
-package org.utils;
+package org.example;
 
 public class StringUtils {
     /**
@@ -13,12 +13,12 @@ public class StringUtils {
         }
         
         int len = str.length();
-        int st = 0;
+        int start = 0;
         
-        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
-            st++;
+        while (start < len && Character.isWhitespace(str.charAt(start))) {
+            start++;
         }
         
-        return (st > 0) ? str.substring(st) : str;
+        return str.substring(start);
     }
 }

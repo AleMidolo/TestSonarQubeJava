@@ -13,11 +13,31 @@ public class GraphUtils {
      * @return a mapping from graph to graph
      */
     public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-        return new IsomorphicGraphMapping<V,E>(
-            graph, // graph1 
-            graph, // graph2 (same as graph1 for identity mapping)
-            v -> v, // vertex correspondence function (identity)
-            e -> e  // edge correspondence function (identity)
-        );
+        return new IsomorphicGraphMapping<V,E>() {
+            @Override
+            public Graph<V, E> getGraph1() {
+                return graph;
+            }
+
+            @Override
+            public Graph<V, E> getGraph2() {
+                return graph;
+            }
+
+            @Override
+            public V getVertexCorrespondence(V vertex, boolean forward) {
+                return vertex;
+            }
+
+            @Override
+            public E getEdgeCorrespondence(E edge, boolean forward) {
+                return edge;
+            }
+
+            @Override
+            public boolean isEdgeCorrespondence(E e1, E e2) {
+                return e1.equals(e2);
+            }
+        };
     }
 }

@@ -18,7 +18,10 @@ public class ClassFileBuffer {
             baos.write(chunk, 0, bytesRead);
         }
         
-        // Convert to byte array and store in buffer
+        // Clear existing buffer
+        buffer = null;
+        
+        // Fill buffer with new bytes
         buffer = baos.toByteArray();
         
         // Reset read pointer to start

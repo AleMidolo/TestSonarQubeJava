@@ -9,9 +9,9 @@ public class CustomClassReader extends ClassReader {
 
     public long readLong(final int offset) {
         // Read 8 bytes starting at offset and combine into a long
-        long high = readInt(offset);
-        long low = readInt(offset + 4) & 0xFFFFFFFFL;
-        return (high << 32) | low;
+        long highBytes = readInt(offset);
+        long lowBytes = readInt(offset + 4) & 0xFFFFFFFFL;
+        return (highBytes << 32) | lowBytes;
     }
 
     private int readInt(final int offset) {

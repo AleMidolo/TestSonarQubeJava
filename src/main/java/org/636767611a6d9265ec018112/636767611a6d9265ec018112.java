@@ -8,7 +8,7 @@ public class IteradorVertices<V> implements Iterator<V> {
     @Override
     protected V proporcionarSiguienteVertice() {
         if (!hayMasVertices()) {
-            throw new NoSuchElementException("No hay más vértices disponibles");
+            throw new NoSuchElementException("No hay más vértices para iterar");
         }
         
         V vertice = vertices[posicionActual];
@@ -17,6 +17,6 @@ public class IteradorVertices<V> implements Iterator<V> {
     }
     
     private boolean hayMasVertices() {
-        return posicionActual < vertices.length;
+        return posicionActual < vertices.length && vertices[posicionActual] != null;
     }
 }

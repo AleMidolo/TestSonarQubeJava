@@ -2,16 +2,22 @@ import java.util.Objects;
 
 public class DataTableComparator {
     
-    private DataTable bucket;
+    private DataTable currentTable;
     
     /**
-     * @return verdadero si el bucket es el mismo.
+     * Checks if two DataTables have compatible bucket structures
+     * @param dataset The DataTable to compare with
+     * @return true if the bucket is the same
      */
     public boolean isCompatible(DataTable dataset) {
         if (dataset == null) {
             return false;
         }
         
-        return Objects.equals(this.bucket, dataset.getBucket());
+        if (this.currentTable == null) {
+            return false;
+        }
+        
+        return Objects.equals(this.currentTable.getBucket(), dataset.getBucket());
     }
 }

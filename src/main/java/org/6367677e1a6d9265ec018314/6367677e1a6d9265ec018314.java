@@ -32,6 +32,10 @@ public class CategoryTree {
     private int removeUnusedNodesRecursive(Category node) {
         int count = 0;
         
+        if (node.getChildren().isEmpty()) {
+            return node.isActive() ? 0 : 1;
+        }
+        
         Iterator<Category> iterator = node.getChildren().iterator();
         while (iterator.hasNext()) {
             Category child = iterator.next();
@@ -39,8 +43,11 @@ public class CategoryTree {
             
             if (!child.isActive() && child.getChildren().isEmpty()) {
                 iterator.remove();
-                count++;
             }
+        }
+        
+        if (!node.isActive() && node.getChildren().isEmpty()) {
+            count++;
         }
         
         return count;

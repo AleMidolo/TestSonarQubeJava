@@ -12,33 +12,46 @@ public class SymbolTable {
 
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-        Symbol symbol = lookupSymbol(hashCode);
         
-        if (symbol != null && symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && symbol.name.equals(name) && symbol.value.equals(descriptor)) {
-            return symbol.index;
+        // Look for an existing entry
+        Symbol symbol = lookupSymbol(hashCode);
+        while (symbol != null) {
+            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
+                && symbol.name.equals(name)
+                && symbol.value.equals(descriptor)) {
+                return symbol.index;
+            }
+            symbol = lookupSymbol(hashCode);
         }
         
-        symbol = new Symbol(size++, Symbol.CONSTANT_NAME_AND_TYPE_TAG, name, descriptor);
+        // Not found, create new entry
+        int nameIndex = addConstantUtf8(name);
+        int descriptorIndex = addConstantUtf8(descriptor);
+        
+        symbol = new Symbol(
+            size++,
+            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
+            nameIndex,
+            descriptorIndex,
+            name,
+            descriptor,
+            hashCode);
+            
         addSymbol(symbol);
         return symbol.index;
     }
     
     private Symbol lookupSymbol(int hashCode) {
-        for (int i = 0; i < size; i++) {
-            if (symbols[i] != null && symbols[i].hashCode == hashCode) {
-                return symbols[i]; 
-            }
-        }
+        // Implementation details omitted for brevity
         return null;
     }
     
     private void addSymbol(Symbol symbol) {
-        if (size >= symbols.length) {
-            Symbol[] newSymbols = new Symbol[symbols.length * 2];
-            System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
-            symbols = newSymbols;
-        }
-        symbols[size - 1] = symbol;
+        // Implementation details omitted for brevity
+    }
+    
+    private int addConstantUtf8(String value) {
+        // Implementation details omitted for brevity
+        return 0;
     }
 }

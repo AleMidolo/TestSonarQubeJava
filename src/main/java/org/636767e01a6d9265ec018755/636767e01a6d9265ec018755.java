@@ -18,12 +18,19 @@ public class ContentBuilder {
                 
                 // Handle "ats" field specially
                 if ("ats".equals(key) && !element.isJsonNull()) {
-                    content.put("ats", element.getAsString());
+                    content.put(key, element.getAsString());
                 }
-                // Add other non-null fields to content map
+                // Handle other fields
                 else if (!element.isJsonNull()) {
                     if (element.isJsonPrimitive()) {
-                        content.put(key, element.getAsString());
+                        JsonPrimitive primitive = element.getAsJsonPrimitive();
+                        if (primitive.isString()) {
+                            content.put(key, primitive.getAsString());
+                        } else if (primitive.isNumber()) {
+                            content.put(key, primitive.getAsNumber());
+                        } else if (primitive.isBoolean()) {
+                            content.put(key, primitive.getAsBoolean());
+                        }
                     } else if (element.isJsonObject()) {
                         content.put(key, buildContent(element.getAsJsonObject()));
                     } else if (element.isJsonArray()) {

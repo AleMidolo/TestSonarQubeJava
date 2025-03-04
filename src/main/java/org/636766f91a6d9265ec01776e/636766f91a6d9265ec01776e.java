@@ -28,7 +28,7 @@ public class ByteOutputStream extends OutputStream {
         System.arraycopy(b, off, buffer, count, len);
         count += len;
     }
-    
+
     private void ensureCapacity(int minCapacity) {
         // If buffer is too small, grow it
         if (minCapacity > buffer.length) {
@@ -39,10 +39,11 @@ public class ByteOutputStream extends OutputStream {
         }
     }
 
+    // Required override of abstract write method
     @Override
     public void write(int b) throws IOException {
         ensureCapacity(count + 1);
-        buffer[count] = (byte)b;
+        buffer[count] = (byte) b;
         count++;
     }
 }

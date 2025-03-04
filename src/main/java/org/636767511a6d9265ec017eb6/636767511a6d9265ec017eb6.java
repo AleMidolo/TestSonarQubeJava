@@ -17,7 +17,7 @@ public class FaceTraversal {
             return current;
         }
         
-        public void next(int direction) {
+        public void next() {
             // Implementation to move to next node
         }
     }
@@ -33,22 +33,18 @@ public class FaceTraversal {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we find a node that satisfies the predicate or reach the stop node
-        while (!predicate.test(circulator.getNode())) {
-            // If we've reached the stop node, return it
-            if (circulator.getNode() == stop) {
+        // Continue until we reach the stop node
+        while (!circulator.getNode().equals(stop)) {
+            // Check if current node satisfies the predicate
+            if (predicate.test(circulator.getNode())) {
                 return circulator;
             }
             
             // Move to next node in specified direction
-            circulator.next(dir);
-            
-            // If we've come back to start node without finding a match, return stop node
-            if (circulator.getNode() == start) {
-                return new OuterFaceCirculator(stop);
-            }
+            circulator.next();
         }
         
+        // Return circulator pointing to stop node if no node satisfies predicate
         return circulator;
     }
 }

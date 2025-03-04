@@ -14,7 +14,7 @@ public class FileProcessor {
 
         Stack<InputStream> stack = new Stack<>();
         
-        // Push files onto stack
+        // Push all files onto stack
         for (InputStream file : files) {
             if (file != null) {
                 stack.push(file);

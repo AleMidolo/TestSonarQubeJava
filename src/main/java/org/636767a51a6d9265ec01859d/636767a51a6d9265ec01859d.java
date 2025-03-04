@@ -15,11 +15,8 @@ public class ByteArrayComparator {
      * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
-            return false;
-        }
-        
-        if (len != internalArray.length) {
+        if (data == null || offset < 0 || len < 0 || 
+            offset + len > data.length || len > internalArray.length) {
             return false;
         }
         

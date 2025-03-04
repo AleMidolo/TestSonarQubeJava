@@ -27,18 +27,19 @@ public class DoublyLinkedList<E> {
             return;
         }
 
-        // If this list is empty, just take the other list's nodes
+        // If this list is empty
         if (size == 0) {
             this.head = list.head;
             this.tail = list.tail;
-            this.size = list.size;
         } else {
             // Connect the tail of this list to the head of the other list
             this.tail.next = list.head;
             list.head.prev = this.tail;
             this.tail = list.tail;
-            this.size += list.size;
         }
+
+        // Update size
+        this.size += list.size;
 
         // Clear the source list
         list.head = null;

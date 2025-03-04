@@ -1,32 +1,31 @@
-import java.util.Properties;
+import org.apache.lucene.index.Fields;
 
-public class PropertyChecker {
-    private Properties properties;
+public class FieldsChecker {
+    private Set<String> storedFields;
 
-    public PropertyChecker() {
-        this.properties = new Properties();
+    public FieldsChecker() {
+        this.storedFields = new HashSet<>();
     }
 
     /**
-     * Returns true when the input fields have already been stored in the properties.
-     * @param fields Array of field names to check
-     * @return boolean indicating if all fields exist in properties
+     * 当输入字段已经存储在属性中时返回真。
      */
-    public boolean areFieldsStored(String[] fields) {
-        if (fields == null || fields.length == 0) {
+    private boolean containsAllFields(Fields fields) {
+        if (fields == null) {
             return false;
         }
 
-        for (String field : fields) {
-            if (field == null || !properties.containsKey(field)) {
-                return false;
+        try {
+            Iterator<String> fieldIterator = fields.iterator();
+            while (fieldIterator.hasNext()) {
+                String field = fieldIterator.next();
+                if (!storedFields.contains(field)) {
+                    return false;
+                }
             }
+            return true;
+        } catch (IOException e) {
+            return false;
         }
-        return true;
-    }
-
-    // Helper method to add properties for testing
-    public void setProperty(String key, String value) {
-        properties.setProperty(key, value);
     }
 }

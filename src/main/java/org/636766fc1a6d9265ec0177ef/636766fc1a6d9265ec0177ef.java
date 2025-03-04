@@ -1,39 +1,25 @@
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
 
 public class ArrayUtils {
     /**
-     * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists (arrays and collections). Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException}if an array element is <code>null</code>.
-     * @param array The array to check
-     * @return The given array or a new array without null.
+     * 返回一个不包含空元素的新字符串数组。此内部方法用于规范化排除列表（数组和集合）。请注意，如果数组元素为 <code>null</code>，{@link Arrays#sort(Object[])} 将抛出 {@link NullPointerException}。
+     * @param array 要检查的数组
+     * @return 给定数组或一个不包含空值的新数组。
      */
-    public static String[] getNonNullArray(String[] array) {
+    static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {
             return new String[0];
         }
         
-        // Count non-null elements
-        int nonNullCount = 0;
-        for (String element : array) {
-            if (element != null) {
-                nonNullCount++;
+        List<String> list = new ArrayList<>(array.length);
+        for (Object obj : array) {
+            if (obj != null) {
+                list.add(obj.toString());
             }
         }
         
-        // If no null elements, return original array
-        if (nonNullCount == array.length) {
-            return array;
-        }
-        
-        // Create new array with only non-null elements
-        String[] result = new String[nonNullCount];
-        int index = 0;
-        for (String element : array) {
-            if (element != null) {
-                result[index++] = element;
-            }
-        }
-        
-        return result;
+        return list.toArray(new String[0]);
     }
 }

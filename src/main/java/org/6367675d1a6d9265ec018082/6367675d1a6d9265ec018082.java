@@ -1,54 +1,53 @@
 import java.util.*;
 
 public class Graph {
-    private Map<Node, List<Edge>> adjacencyList;
-    private Iterator<Node> nodeIterator;
+    private class Node {
+        int id;
+        boolean isVirtual;
+        Node realNode;
+        List<Edge> edges;
+        
+        Node(int id) {
+            this.id = id;
+            this.isVirtual = false;
+            this.edges = new ArrayList<>();
+        }
+    }
+
+    private class Edge {
+        Node source;
+        Node target;
+        int weight;
+        
+        Edge(Node source, Node target) {
+            this.source = source;
+            this.target = target;
+            this.weight = 1;
+        }
+    }
+
     private Node currentNode;
+    private Node nextNode;
     
-    public Edge nextEdge() {
-        if (currentNode == null || !nodeIterator.hasNext()) {
+    public Edge edgeToNext() {
+        if (currentNode == null || nextNode == null) {
             return null;
         }
         
-        Node nextNode = nodeIterator.next();
-        
         // Get real nodes if virtual
-        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        Node realSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
+        Node realTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
         
-        // Find edge between current and next nodes
-        List<Edge> edges = adjacencyList.get(realCurrent);
-        for (Edge edge : edges) {
-            if (edge.connects(realCurrent, realNext)) {
-                currentNode = nextNode;
+        // Find edge between real nodes
+        for (Edge edge : realSource.edges) {
+            if (edge.target == realTarget) {
                 return edge;
             }
         }
         
-        currentNode = nextNode;
-        return null;
-    }
-    
-    // Supporting classes
-    private class Node {
-        private boolean virtual;
-        private Node realNode;
-        
-        public boolean isVirtual() {
-            return virtual;
-        }
-        
-        public Node getRealNode() {
-            return realNode;
-        }
-    }
-    
-    private class Edge {
-        private Node source;
-        private Node target;
-        
-        public boolean connects(Node n1, Node n2) {
-            return (source == n1 && target == n2) || (source == n2 && target == n1);
-        }
+        // Create new edge if none exists
+        Edge newEdge = new Edge(realSource, realTarget);
+        realSource.edges.add(newEdge);
+        return newEdge;
     }
 }

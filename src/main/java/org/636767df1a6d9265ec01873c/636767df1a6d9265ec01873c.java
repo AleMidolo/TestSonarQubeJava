@@ -1,11 +1,13 @@
-public class Row {
-    private int rowId;
+import java.util.UUID;
 
-    public Row(int rowId) {
-        this.rowId = rowId;
-    }
-
-    public int getRowId() {
-        return rowId;
+public class EntityIdGenerator {
+    /**
+     * @return 行 ID
+     */
+    public String id(String entityId) {
+        if (entityId == null || entityId.trim().isEmpty()) {
+            return UUID.randomUUID().toString().replace("-", "");
+        }
+        return entityId;
     }
 }

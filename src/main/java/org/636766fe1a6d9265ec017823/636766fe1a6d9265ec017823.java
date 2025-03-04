@@ -1,47 +1,41 @@
 import org.objectweb.asm.Symbol;
+import org.objectweb.asm.Constants;
 
 public class SymbolTable {
-    private final Entry[] entries;
+    private final Symbol[] symbols;
     private int size;
-    private static final int CONSTANT_NAMEANDTYPE = 12;
-
-    private static class Entry {
-        final int type;
-        final String name;
-        final String descriptor;
-        Entry next;
-        int index;
-
-        Entry(int type, String name, String descriptor, int index) {
-            this.type = type;
-            this.name = name;
-            this.descriptor = descriptor;
-            this.index = index;
-        }
+    
+    public SymbolTable(int initialCapacity) {
+        this.symbols = new Symbol[initialCapacity];
+        this.size = 1;
     }
 
-    public Symbol addConstantNameAndType(final String name, final String descriptor) {
-        int hashCode = hash(CONSTANT_NAMEANDTYPE, name, descriptor);
-        Entry entry = entries[hashCode % entries.length];
+    public int addConstantNameAndType(final String name, final String descriptor) {
+        int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
+        Symbol symbol = getSymbol(hashCode);
         
-        while (entry != null) {
-            if (entry.type == CONSTANT_NAMEANDTYPE 
-                && entry.name.equals(name)
-                && entry.descriptor.equals(descriptor)) {
-                return new Symbol(entry.index, entry.type, entry.name, entry.descriptor);
+        while (symbol != null) {
+            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
+                && symbol.name.equals(name)
+                && symbol.value.equals(descriptor)) {
+                return symbol.index;
             }
-            entry = entry.next;
+            symbol = symbol.next;
         }
 
-        // Not found, create new entry
-        Entry newEntry = new Entry(CONSTANT_NAMEANDTYPE, name, descriptor, size++);
-        newEntry.next = entries[hashCode % entries.length];
-        entries[hashCode % entries.length] = newEntry;
+        symbol = new Symbol(
+            size++,
+            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
+            name,
+            descriptor,
+            hashCode,
+            getSymbol(hashCode));
         
-        return new Symbol(newEntry.index, newEntry.type, name, descriptor);
+        symbols[symbol.index] = symbol;
+        return symbol.index;
     }
-
-    private static int hash(int type, String name, String descriptor) {
-        return 0x7FFFFFFF & (type + name.hashCode() * descriptor.hashCode());
+    
+    private Symbol getSymbol(int hashCode) {
+        return symbols[hashCode % symbols.length];
     }
 }

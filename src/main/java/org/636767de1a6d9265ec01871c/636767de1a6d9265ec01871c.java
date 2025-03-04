@@ -1,23 +1,27 @@
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Accumulator {
-    private Map<String, Integer> accumulatorMap;
-
-    public Accumulator() {
-        accumulatorMap = new HashMap<>();
+public class ValueAccumulator {
+    
+    private Map<String, Long> accumulatorMap;
+    
+    public ValueAccumulator() {
+        this.accumulatorMap = new ConcurrentHashMap<>();
     }
-
+    
     /**
-     * Accumulate the value with existing value in the same given key.
-     * @param key The key to accumulate value for
-     * @param value The value to accumulate
-     * @return The updated accumulated value
+     * 将给定键的值与现有值累加。
      */
-    public int accumulate(String key, int value) {
-        int currentValue = accumulatorMap.getOrDefault(key, 0);
-        int newValue = currentValue + value;
-        accumulatorMap.put(key, newValue);
-        return newValue;
+    public void valueAccumulation(String key, Long value) {
+        if (key == null || value == null) {
+            return;
+        }
+        
+        accumulatorMap.compute(key, (k, v) -> {
+            if (v == null) {
+                return value;
+            }
+            return v + value;
+        });
     }
 }

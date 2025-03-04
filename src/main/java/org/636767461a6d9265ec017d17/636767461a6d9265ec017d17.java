@@ -1,47 +1,39 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class StringUnescaper {
-    
+public class DotIdentifierUnescaper {
+
     /**
-     * Unescape a string DOT identifier.
-     * @param input the input
-     * @return the unescaped output
+     * 反转义字符串 DOT 标识符。
+     * @param input 输入字符串
+     * @return 反转义后的输出
      */
-    public static String unescapeDotIdentifier(String input) {
+    private String unescapeId(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
 
-        // Handle quoted strings
+        // Remove quotes if present
         if (input.startsWith("\"") && input.endsWith("\"")) {
-            String inner = input.substring(1, input.length() - 1);
-            
-            // Replace escaped quotes
-            inner = inner.replace("\\\"", "\"");
-            
-            // Replace escaped newlines
-            inner = inner.replace("\\n", "\n");
-            
-            // Replace escaped tabs
-            inner = inner.replace("\\t", "\t");
-            
-            // Replace escaped backslashes
-            inner = inner.replace("\\\\", "\\");
-            
-            return inner;
+            input = input.substring(1, input.length() - 1);
         }
 
-        // Handle unquoted identifiers
-        Pattern escapePattern = Pattern.compile("\\\\(.)");
-        Matcher matcher = escapePattern.matcher(input);
-        StringBuffer result = new StringBuffer();
+        // Replace escaped characters
+        StringBuilder result = new StringBuilder();
+        Pattern pattern = Pattern.compile("\\\\(.)");
+        Matcher matcher = pattern.matcher(input);
         
+        int lastEnd = 0;
         while (matcher.find()) {
-            matcher.appendReplacement(result, matcher.group(1));
+            result.append(input.substring(lastEnd, matcher.start()));
+            result.append(matcher.group(1));
+            lastEnd = matcher.end();
         }
-        matcher.appendTail(result);
         
+        if (lastEnd < input.length()) {
+            result.append(input.substring(lastEnd));
+        }
+
         return result.toString();
     }
 }

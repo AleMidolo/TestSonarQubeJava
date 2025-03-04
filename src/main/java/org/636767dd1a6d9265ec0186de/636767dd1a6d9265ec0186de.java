@@ -1,21 +1,13 @@
-import java.time.Duration;
 import java.time.Instant;
 
-public class MetricsCache {
-    
+public class CacheExpiryChecker {
     /**
-     * @param timestamp        of current time
-     * @param expiredThreshold represents the duration between last update time and the time point removing from cache.
-     * @return true means this metrics should be removed from cache.
+     * @param timestamp        当前时间的时间戳
+     * @param expiredThreshold 表示最后更新时间与从缓存中移除的时间点之间的持续时间。
+     * @return 真值表示该指标应该从缓存中移除。
      */
-    public boolean isExpired(Instant timestamp, Duration expiredThreshold) {
-        if (timestamp == null || expiredThreshold == null) {
-            return true;
-        }
-        
-        Instant currentTime = Instant.now();
-        Duration timeSinceLastUpdate = Duration.between(timestamp, currentTime);
-        
-        return timeSinceLastUpdate.compareTo(expiredThreshold) > 0;
+    public boolean isExpired(long timestamp, long expiredThreshold) {
+        long currentTime = Instant.now().toEpochMilli();
+        return (currentTime - timestamp) > expiredThreshold;
     }
 }

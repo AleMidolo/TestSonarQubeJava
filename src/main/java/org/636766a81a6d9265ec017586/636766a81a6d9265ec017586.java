@@ -1,23 +1,19 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> outputFrameStack;
+    private Stack<Object> outputStack;
 
     public FrameStack() {
-        outputFrameStack = new Stack<>();
+        outputStack = new Stack<>();
     }
 
-    public void popElements(int elements) {
-        if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be non-negative");
-        }
-
-        if (elements > outputFrameStack.size()) {
-            throw new IllegalStateException("Cannot pop more elements than exist in stack");
-        }
-
-        for (int i = 0; i < elements; i++) {
-            outputFrameStack.pop();
+    /**
+     * 从输出帧栈中弹出给定数量的抽象类型。
+     * @param elements 需弹出的抽象类型数量。
+     */
+    private void pop(final int elements) {
+        for (int i = 0; i < elements && !outputStack.isEmpty(); i++) {
+            outputStack.pop();
         }
     }
 }

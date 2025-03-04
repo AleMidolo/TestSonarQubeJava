@@ -1,26 +1,38 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Arrays;
 
-public class ByteArrayCopier {
+public class ByteArrayConverter {
+    private byte[] data;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 16;
+
+    public ByteArrayConverter() {
+        data = new byte[DEFAULT_CAPACITY];
+        size = 0;
+    }
 
     /**
-     * Copies bytes to a {@code byte[]}.
-     * @param input The input stream to read from
-     * @return The bytes read from the input stream
-     * @throws IOException If an I/O error occurs
+     * 将字节复制到 {@code byte[]} 中。
      */
-    public static byte[] copyToByteArray(InputStream input) throws IOException {
-        if (input == null) {
-            return new byte[0];
-        }
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
+    }
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int n;
-        while ((n = input.read(buffer)) != -1) {
-            output.write(buffer, 0, n);
+    // Helper methods to add bytes
+    public void add(byte b) {
+        ensureCapacity(size + 1);
+        data[size++] = b;
+    }
+
+    public void add(byte[] bytes) {
+        ensureCapacity(size + bytes.length);
+        System.arraycopy(bytes, 0, data, size, bytes.length);
+        size += bytes.length;
+    }
+
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
+            data = Arrays.copyOf(data, newCapacity);
         }
-        return output.toByteArray();
     }
 }

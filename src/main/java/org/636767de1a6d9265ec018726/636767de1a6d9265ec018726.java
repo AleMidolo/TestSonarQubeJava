@@ -1,37 +1,48 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileSegmentSearchRanges {
+public class SequenceRangeBuilder {
 
-    /**
-     * build current profiles segment snapshot search sequence ranges
-     * @return List of search ranges for profile segments
-     */
-    public List<SearchRange> buildProfileSegmentSearchRanges() {
-        List<SearchRange> ranges = new ArrayList<>();
+    private static class SequenceRange {
+        private long startSequence;
+        private long endSequence;
+
+        public SequenceRange(long startSequence, long endSequence) {
+            this.startSequence = startSequence;
+            this.endSequence = endSequence;
+        }
+
+        public long getStartSequence() {
+            return startSequence;
+        }
+
+        public long getEndSequence() {
+            return endSequence;
+        }
+    }
+
+    public List<SequenceRange> buildSequenceRanges() {
+        List<SequenceRange> ranges = new ArrayList<>();
         
-        // Add default search range
-        ranges.add(new SearchRange(0, Integer.MAX_VALUE));
+        // Get current snapshot sequence
+        long currentSequence = getCurrentSequence();
+        
+        // Build sequence ranges with fixed size intervals
+        long interval = 1000;
+        long start = 0;
+        
+        while (start < currentSequence) {
+            long end = Math.min(start + interval, currentSequence);
+            ranges.add(new SequenceRange(start, end));
+            start = end + 1;
+        }
         
         return ranges;
     }
-    
-    // Helper class to define a search range
-    public static class SearchRange {
-        private int start;
-        private int end;
-        
-        public SearchRange(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-        
-        public int getStart() {
-            return start;
-        }
-        
-        public int getEnd() {
-            return end;
-        }
+
+    // Helper method to get current sequence
+    private long getCurrentSequence() {
+        // Implementation to get current sequence number
+        return System.currentTimeMillis();
     }
 }

@@ -1,23 +1,22 @@
-public class BooleanParser {
+public class BooleanUtils {
     /**
-     * If <code>value</code> is "true", then <code>true</code> is returned. 
-     * If <code>value</code> is "false", then <code>true</code> is returned. 
-     * Otherwise, <code>default</code> is returned.
-     * Case of value is unimportant.
-     * @param value The string to parse
-     * @param defaultValue The default value to return if not true/false
-     * @return boolean result of parsing
+     * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。
      */
-    public static boolean parseBoolean(String value, boolean defaultValue) {
+    public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
-            return defaultValue;
+            return dEfault;
         }
         
-        String lowercaseValue = value.toLowerCase();
-        if (lowercaseValue.equals("true") || lowercaseValue.equals("false")) {
+        String trimmedValue = value.trim().toLowerCase();
+        
+        if (trimmedValue.equals("真")) {
             return true;
         }
         
-        return defaultValue;
+        if (trimmedValue.equals("假")) {
+            return false;
+        }
+        
+        return dEfault;
     }
 }

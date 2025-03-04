@@ -1,18 +1,20 @@
-import org.apache.http.HttpStatus;
+import javax.servlet.http.HttpServletResponse;
 
-public class HttpResponseChecker {
-    
-    private int statusCode;
-    
-    public HttpResponseChecker(int statusCode) {
-        this.statusCode = statusCode;
-    }
+public class ResponseUtils {
     
     /**
-     * Check if the actual response is a Partial Content (HTTP 206 code)
-     * @return is partial content or not
+     * 检查实际响应是否为部分内容（HTTP 206 代码）
+     * @return 是否为部分内容
      */
-    public boolean isPartialContent() {
-        return statusCode == HttpStatus.SC_PARTIAL_CONTENT;
+    public Boolean isPartialContentResponse() {
+        HttpServletResponse response = getResponse(); // Assuming getResponse() exists
+        return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
+    }
+    
+    // Helper method to get current response
+    private HttpServletResponse getResponse() {
+        // Implementation details would depend on your framework
+        // This is just a placeholder
+        return null;
     }
 }

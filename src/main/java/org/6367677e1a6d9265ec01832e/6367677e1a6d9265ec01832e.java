@@ -1,35 +1,16 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 
-public class LoggerUtils {
+public class LoggerManager {
     /**
-     * Check if the named logger exists in the hierarchy. If so return its reference, otherwise returns <code>null</code>.
-     * @param name The name of the logger to search for.
-     * @return Logger instance if exists, null otherwise
+     * 检查指定名称的日志记录器是否存在于层次结构中。如果存在，则返回其引用；否则返回 <code>null</code>。
+     * @param name 要搜索的日志记录器的名称。
      */
-    public static Logger exists(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            return null;
-        }
-
-        try {
-            // Get logger context
-            org.apache.logging.log4j.spi.LoggerContext context = LogManager.getContext(false);
-            
-            // Check if logger exists in context
-            if (context != null) {
-                org.apache.logging.log4j.spi.LoggerConfig loggerConfig = 
-                    context.getConfiguration().getLoggerConfig(name);
-                
-                if (loggerConfig != null && !LogManager.ROOT_LOGGER_NAME.equals(loggerConfig.getName())) {
-                    return LogManager.getLogger(name);
-                }
-            }
-        } catch (Exception e) {
-            // Return null if any error occurs during lookup
+    public Logger exists(String name) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
         
-        return null;
+        // Get the logger if it exists, without creating a new one
+        return Logger.getLogger(name).getParent() == null ? null : Logger.getLogger(name);
     }
 }

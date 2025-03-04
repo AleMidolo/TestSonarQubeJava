@@ -1,9 +1,15 @@
+package org.apache.commons.lang3;
+
+/**
+ * String utilities class.
+ */
 public class StringUtils {
+
     /**
-     * Returns {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.
-     * @param str the String to check
-     * @param prefix the prefix to look for
-     * @return {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.
+     * 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
+     * @param str 要检查的字符串
+     * @param prefix 要查找的前缀
+     * @return 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
      * @see java.lang.String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {

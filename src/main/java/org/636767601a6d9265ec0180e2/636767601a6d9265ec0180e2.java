@@ -1,118 +1,100 @@
+import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.interfaces.MinimumSTCutAlgorithm;
+import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleGraph;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.*;
 
-public class MinimalSeparators {
-    private Graph graph;
+public class SeparatorFinder<V,E> {
 
-    public MinimalSeparators(Graph graph) {
-        this.graph = graph;
+    private Graph<V,E> graph;
+    
+    public SeparatorFinder(Graph<V,E> g) {
+        this.graph = g;
     }
 
-    public List<Set<Integer>> computeGlobalSeparatorList() {
-        List<Set<Integer>> globalSeparators = new ArrayList<>();
+    private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
-        // Get all edges from the graph
-        Set<Edge> edges = graph.getEdges();
-        
-        // For each edge, find its minimal separators
-        for (Edge e : edges) {
-            int u = e.getSource();
-            int v = e.getTarget();
+        // For each edge in the graph
+        for (E edge : graph.edgeSet()) {
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
             
-            // Get neighbors of both vertices
-            Set<Integer> uNeighbors = graph.getNeighbors(u);
-            Set<Integer> vNeighbors = graph.getNeighbors(v);
-            
-            // Find common neighbors (potential minimal separators)
-            Set<Integer> commonNeighbors = new HashSet<>(uNeighbors);
-            commonNeighbors.retainAll(vNeighbors);
-            
-            // For each common neighbor, check if it forms a minimal separator
-            for (Integer w : commonNeighbors) {
-                Set<Integer> potentialSeparator = new HashSet<>();
-                potentialSeparator.add(w);
-                
-                // Check if removing the potential separator disconnects u and v
-                if (isMinimalSeparator(u, v, potentialSeparator)) {
-                    globalSeparators.add(potentialSeparator);
+            // Create a working copy of the graph without the current edge
+            Graph<V,E> workingGraph = new SimpleGraph<>(graph.getVertexSupplier(), graph.getEdgeSupplier(), false);
+            for (V vertex : graph.vertexSet()) {
+                workingGraph.addVertex(vertex);
+            }
+            for (E e : graph.edgeSet()) {
+                if (!e.equals(edge)) {
+                    workingGraph.addEdge(graph.getEdgeSource(e), graph.getEdgeTarget(e));
                 }
             }
             
-            // Also check pairs of common neighbors
-            List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < commonNeighborsList.size(); i++) {
-                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
-                    Set<Integer> potentialSeparator = new HashSet<>();
-                    potentialSeparator.add(commonNeighborsList.get(i));
-                    potentialSeparator.add(commonNeighborsList.get(j));
-                    
-                    if (isMinimalSeparator(u, v, potentialSeparator)) {
-                        globalSeparators.add(potentialSeparator);
-                    }
-                }
-            }
+            // Find minimum separators between source and target
+            List<Pair<Integer,Integer>> separators = findMinimumSeparators(workingGraph, source, target);
+            
+            // Add to global list
+            globalSeparators.add(Pair.of(separators, edge));
         }
         
         return globalSeparators;
     }
     
-    private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a copy of the graph without the separator vertices
-        Graph reducedGraph = graph.copy();
-        for (Integer v : separator) {
-            reducedGraph.removeVertex(v);
+    private List<Pair<Integer,Integer>> findMinimumSeparators(Graph<V,E> g, V source, V target) {
+        List<Pair<Integer,Integer>> separators = new ArrayList<>();
+        
+        // Convert vertices to integers for min cut algorithm
+        Map<V,Integer> vertexMap = new HashMap<>();
+        int index = 0;
+        for (V vertex : g.vertexSet()) {
+            vertexMap.put(vertex, index++);
         }
         
-        // Check if source and target are disconnected
-        return !hasPath(reducedGraph, source, target);
-    }
-    
-    private boolean hasPath(Graph g, int source, int target) {
-        Set<Integer> visited = new HashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(source);
-        visited.add(source);
-        
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            if (current == target) {
-                return true;
-            }
+        // Create flow network
+        SimpleGraph<Integer,DefaultWeightedEdge> flowNetwork = 
+            new SimpleGraph<>(DefaultWeightedEdge.class);
             
-            for (Integer neighbor : g.getNeighbors(current)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
+        // Add vertices
+        for (int i = 0; i < vertexMap.size(); i++) {
+            flowNetwork.addVertex(i);
+        }
+        
+        // Add edges with weight 1
+        for (E e : g.edgeSet()) {
+            int v1 = vertexMap.get(g.getEdgeSource(e));
+            int v2 = vertexMap.get(g.getEdgeTarget(e));
+            DefaultWeightedEdge newEdge = flowNetwork.addEdge(v1, v2);
+            if (newEdge != null) {
+                flowNetwork.setEdgeWeight(newEdge, 1.0);
+            }
+        }
+        
+        // Find min cut
+        MinimumSTCutAlgorithm<Integer,DefaultWeightedEdge> minCutAlg = 
+            new EdmondsKarpMFImpl<>(flowNetwork);
+            
+        int s = vertexMap.get(source);
+        int t = vertexMap.get(target);
+        
+        double minCutWeight = minCutAlg.calculateMinCut(s, t);
+        Set<Integer> sourcePartition = minCutAlg.getSourcePartition();
+        
+        // Add separator pairs
+        for (Integer v1 : sourcePartition) {
+            for (Integer v2 : flowNetwork.vertexSet()) {
+                if (!sourcePartition.contains(v2)) {
+                    if (flowNetwork.containsEdge(v1, v2)) {
+                        separators.add(Pair.of(v1, v2));
+                    }
                 }
             }
         }
         
-        return false;
-    }
-    
-    // Helper class to represent edges
-    private static class Edge {
-        private int source;
-        private int target;
-        
-        public Edge(int source, int target) {
-            this.source = source;
-            this.target = target;
-        }
-        
-        public int getSource() {
-            return source;
-        }
-        
-        public int getTarget() {
-            return target;
-        }
-    }
-    
-    // Interface for the graph implementation
-    private interface Graph {
-        Set<Edge> getEdges();
-        Set<Integer> getNeighbors(int vertex);
-        void removeVertex(int vertex);
-        Graph copy();
+        return separators;
     }
 }

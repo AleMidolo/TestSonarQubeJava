@@ -1,17 +1,17 @@
 import java.io.File;
-import java.io.IOException;
 
-public class FileDeleter {
+public class FileUtils {
     /**
-     * Delete's the specified file if it exists
-     * @param filePath The path to the file to delete
-     * @return true if file was deleted successfully, false if file doesn't exist or couldn't be deleted
+     * 如果指定的文件存在，则删除该文件
      */
-    public boolean deleteFile(String filePath) {
-        File fileToDelete = new File(filePath);
-        if (fileToDelete.exists()) {
-            return fileToDelete.delete();
+    protected static void deleteFile(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return;
         }
-        return false;
+        
+        File file = new File(fileName);
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
     }
 }

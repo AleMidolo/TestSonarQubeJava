@@ -1,30 +1,74 @@
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import org.apache.log4j.spi.LoggingEvent;
 
-public class SocketAppender {
-    private List<Socket> clients = new CopyOnWriteArrayList<>();
+public class SocketAppender extends AppenderSkeleton {
     
-    public void handleLogEvent(LoggingEvent event) {
-        String message = event.getRenderedMessage();
+    private List<Socket> clients = new ArrayList<>();
+    private List<PrintWriter> writers = new ArrayList<>();
+
+    @Override
+    protected void append(LoggingEvent event) {
+        // 获取日志消息
+        String message = layout.format(event);
         
-        // Iterate through connected clients and write message
-        for (Socket client : clients) {
+        // 遍历所有连接的客户端
+        for (int i = 0; i < writers.size(); i++) {
             try {
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
-                writer.println(message);
+                PrintWriter writer = writers.get(i);
+                // 检查连接是否仍然有效
+                if (clients.get(i).isConnected() && !clients.get(i).isClosed()) {
+                    writer.println(message);
+                    writer.flush();
+                } else {
+                    // 移除断开连接的客户端
+                    writer.close();
+                    clients.get(i).close();
+                    writers.remove(i);
+                    clients.remove(i);
+                    i--;
+                }
             } catch (IOException e) {
-                // Remove failed client
-                clients.remove(client);
+                // 处理写入错误
+                try {
+                    clients.get(i).close();
+                } catch (IOException ex) {
+                    // 忽略关闭错误
+                }
+                writers.remove(i);
+                clients.remove(i);
+                i--;
             }
         }
     }
-    
-    // Helper method to add new client connections
-    public void addClient(Socket client) {
+
+    // 添加新的客户端连接
+    public void addClient(Socket client) throws IOException {
         clients.add(client);
+        writers.add(new PrintWriter(client.getOutputStream(), true));
+    }
+
+    @Override
+    public void close() {
+        // 关闭所有连接
+        for (int i = 0; i < clients.size(); i++) {
+            try {
+                writers.get(i).close();
+                clients.get(i).close();
+            } catch (IOException e) {
+                // 忽略关闭错误
+            }
+        }
+        clients.clear();
+        writers.clear();
+    }
+
+    @Override
+    public boolean requiresLayout() {
+        return true;
     }
 }

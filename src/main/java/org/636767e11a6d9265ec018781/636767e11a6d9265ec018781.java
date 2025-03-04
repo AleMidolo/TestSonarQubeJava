@@ -1,40 +1,29 @@
-import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Cache {
-    private Map<String, Object> cacheMap;
-
-    public Cache() {
-        this.cacheMap = new ConcurrentHashMap<>();
+public class MetricsAcceptor {
+    
+    private final ConcurrentHashMap<String, METRICS> metricsCache;
+    
+    public MetricsAcceptor() {
+        this.metricsCache = new ConcurrentHashMap<>();
     }
-
+    
     /**
-     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
-     * @param data to be added potentially.
+     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
+     * @param data 需要添加的数据。
      */
-    public void acceptData(Map<String, Object> data) {
-        if (data == null || data.isEmpty()) {
-            return;
-        }
-
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            if (cacheMap.containsKey(key)) {
-                // If value exists, merge with existing value
-                Object existingValue = cacheMap.get(key);
-                if (existingValue instanceof Map && value instanceof Map) {
-                    // If both are maps, merge them
-                    ((Map) existingValue).putAll((Map) value);
-                } else {
-                    // Otherwise replace with new value
-                    cacheMap.put(key, value);
-                }
-            } else {
-                // If key doesn't exist, add new entry
-                cacheMap.put(key, value);
-            }
+    @Override
+    public void accept(final METRICS data) {
+        Objects.requireNonNull(data, "Input metrics data cannot be null");
+        
+        String key = data.getKey(); // Assuming METRICS has a getKey() method
+        
+        METRICS existingMetrics = metricsCache.get(key);
+        if (existingMetrics == null) {
+            metricsCache.put(key, data);
+        } else {
+            existingMetrics.merge(data); // Assuming METRICS has a merge() method
         }
     }
 }

@@ -1,19 +1,18 @@
-public class FloatComparator {
+import java.util.Comparator;
+
+public class DoubleComparator implements Comparator<Double> {
+
     /**
-     * Compares two floating point values. Returns 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
-     * @param o1 the first value 
-     * @param o2 the second value
-     * @return 0 if they are equal, -1 if {@literal o1 < o2}, 1 otherwise
+     * 比较两个浮点值。如果它们相等则返回0，如果 {@literal o1 < o2} 则返回-1，否则返回1
+     * @param o1 第一个值
+     * @param o2 第二个值
+     * @return 如果它们相等则返回0，如果 {@literal o1 < o2} 则返回-1，否则返回1
      */
-    public static int compare(float o1, float o2) {
-        if (o1 == o2) {
+    @Override
+    public int compare(Double o1, Double o2) {
+        if (o1.equals(o2)) {
             return 0;
         }
-        else if (o1 < o2) {
-            return -1;
-        }
-        else {
-            return 1;
-        }
+        return o1 < o2 ? -1 : 1;
     }
 }

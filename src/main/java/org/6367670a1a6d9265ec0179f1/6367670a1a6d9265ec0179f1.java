@@ -1,12 +1,16 @@
-package org.apache.commons.lang3;
+package org.example;
 
-public class ShortUtils {
+/**
+ * Utility class for array conversions
+ */
+public class ArrayUtils {
+
     /**
-     * <p>Converts an array of primitive shorts to objects.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>将基本数据类型的 short 数组转换为对象类型。</p> 
+     * <p>对于 <code>null</code> 输入数组，此方法返回 <code>null</code>。</p>
      * 
-     * @param array  a <code>short</code> array
-     * @return a <code>Short</code> array, <code>null</code> if null array input
+     * @param array  一个 <code>short</code> 数组
+     * @return 一个 <code>Short</code> 数组，如果输入数组为空则返回 <code>null</code>
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

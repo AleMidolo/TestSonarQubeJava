@@ -1,25 +1,25 @@
-import java.nio.charset.StandardCharsets;
-
 public class HeaderParser {
     /**
-     * Skips bytes until the end of the current line.
-     * @param headerPart The headers, which are being parsed.
-     * @param end Index of the last byte, which has yet been processed.
-     * @return Index of the \r\n sequence, which indicates end of line.
+     * 跳过字节直到当前行的末尾。
+     * @param headerPart 正在解析的头部。
+     * @param end 尚未处理的最后一个字节的索引。
+     * @return \r\n 表示行结束的 \r\n 序列的索引。
      */
-    public int skipLine(byte[] headerPart, int end) {
-        int pos = end;
+    private int parseEndOfLine(String headerPart, int end) {
+        int index = end;
         
-        // Search for \r\n sequence
-        while (pos + 1 < headerPart.length) {
-            // Check for CRLF (\r\n) sequence
-            if (headerPart[pos] == '\r' && headerPart[pos + 1] == '\n') {
-                return pos;
+        // 遍历字符串直到找到行尾
+        while (index < headerPart.length()) {
+            // 检查是否找到 \r\n 序列
+            if (index + 1 < headerPart.length() && 
+                headerPart.charAt(index) == '\r' && 
+                headerPart.charAt(index + 1) == '\n') {
+                return index;
             }
-            pos++;
+            index++;
         }
         
-        // If we reach here, no CRLF was found
-        return -1;
+        // 如果没有找到行尾,返回字符串末尾
+        return headerPart.length() - 1;
     }
 }

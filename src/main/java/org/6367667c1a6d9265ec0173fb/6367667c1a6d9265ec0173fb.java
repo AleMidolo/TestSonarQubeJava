@@ -3,20 +3,17 @@ import org.atmosphere.cpr.AtmosphereResourceEventListener;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AtmosphereResourceManager {
-    private List<AtmosphereResourceEventListener> listeners;
-    private AtmosphereResource resource;
-
-    public AtmosphereResourceManager() {
-        this.listeners = new ArrayList<>();
-    }
-
-    public void addEventListener(AtmosphereResourceEventListener e) {
-        if (e != null) {
+public class AtmosphereResourceImpl implements AtmosphereResource {
+    
+    private List<AtmosphereResourceEventListener> listeners = new ArrayList<>();
+    
+    @Override
+    public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
+        if (e != null && !listeners.contains(e)) {
             listeners.add(e);
-            if (resource != null) {
-                resource.addEventListener(e);
-            }
         }
+        return this;
     }
+    
+    // Other required methods from AtmosphereResource interface...
 }

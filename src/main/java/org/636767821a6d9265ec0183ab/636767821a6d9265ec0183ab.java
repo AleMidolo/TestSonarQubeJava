@@ -1,17 +1,26 @@
 import java.lang.Throwable;
 
-public class ExceptionUtils {
+public class ExceptionHandler {
     private Throwable thrown;
-
-    public ExceptionUtils(Throwable thrown) {
-        this.thrown = thrown;
+    
+    /**
+     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
+     */
+    public boolean hasThrown() {
+        if (thrown == null) {
+            return false;
+        }
+        String thrownString = thrown.toString();
+        return thrownString != null && !thrownString.isEmpty();
     }
-
+    
+    // Getter for thrown field
     public Throwable getThrown() {
         return thrown;
     }
-
-    public boolean hasMessage() {
-        return getThrown() != null && getThrown().toString() != null && !getThrown().toString().isEmpty();
+    
+    // Setter for thrown field
+    public void setThrown(Throwable thrown) {
+        this.thrown = thrown;
     }
 }

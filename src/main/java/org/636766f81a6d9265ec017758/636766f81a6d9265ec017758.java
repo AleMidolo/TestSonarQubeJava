@@ -1,25 +1,20 @@
-public class Type {
-    private String name;
-    private int id;
-    private boolean isPrimitive;
-
-    public Type(String name, int id, boolean isPrimitive) {
-        this.name = name;
-        this.id = id;
-        this.isPrimitive = isPrimitive;
-    }
-
+public class MyClass {
+    private String field1;
+    private int field2;
+    private double field3;
+    
     /**
-     * Returns a hash code value for this type.
-     * @return a hash code value for this type.
+     * 返回此类型的哈希码值。
+     * @return 此类型的哈希码值。
      */
-    @Override
+    @Override 
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
-        result = prime * result + (isPrimitive ? 1231 : 1237);
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((field1 == null) ? 0 : field1.hashCode());
+        result = prime * result + field2;
+        long temp = Double.doubleToLongBits(field3);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }

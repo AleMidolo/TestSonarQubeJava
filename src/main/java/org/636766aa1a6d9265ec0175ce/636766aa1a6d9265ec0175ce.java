@@ -1,22 +1,23 @@
 import org.objectweb.asm.Label;
-import org.objectweb.asm.Frame;
 
 public class StackMapFrameVisitor {
-    private Frame currentFrame;
-    private int[] locals;
-    private int[] stack;
+    private int[] currentFrame;
+    private int currentFrameIndex;
     
-    public int visitFrame(final int offset, final int numLocal, final int numStack) {
-        // Create new arrays to store local variables and stack elements
-        locals = new int[numLocal];
-        stack = new int[numStack];
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+        // Calculate total frame size needed for locals and stack elements
+        int frameSize = numLocal + numStack;
         
-        // Initialize the current frame with the given parameters
-        currentFrame = new Frame(offset);
-        currentFrame.setLocal(numLocal, locals);
-        currentFrame.setStack(numStack, stack);
+        // Initialize new frame array
+        currentFrame = new int[frameSize];
         
-        // Return index for next element (start at 0)
-        return 0;
+        // Store offset at start of frame
+        currentFrame[0] = offset;
+        
+        // Reset current index to start after offset
+        currentFrameIndex = 1;
+        
+        // Return next available index for writing
+        return currentFrameIndex;
     }
 }

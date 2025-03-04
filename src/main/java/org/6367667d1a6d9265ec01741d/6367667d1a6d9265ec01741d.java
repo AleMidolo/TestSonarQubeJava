@@ -3,26 +3,17 @@ import java.lang.reflect.TypeVariable;
 
 public class TypeResolver {
     /**
-     * Resolves the first bound for the typeVariable, returning Unknown.class if none can be resolved.
-     * @param typeVariable The type variable to resolve bounds for
-     * @return The first bound type, or Unknown.class if no bounds exist
+     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
      */
-    public static Class<?> resolveFirstBound(TypeVariable<?> typeVariable) {
+    public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
-        
         if (bounds == null || bounds.length == 0) {
             return Unknown.class;
         }
-
-        if (bounds[0] instanceof Class) {
-            return (Class<?>) bounds[0];
-        }
-
-        return Unknown.class;
+        return bounds[0];
     }
-}
-
-// Helper class representing unknown type
-class Unknown {
-    private Unknown() {} // Prevent instantiation
+    
+    // Unknown class used as default return type
+    private static class Unknown {
+    }
 }

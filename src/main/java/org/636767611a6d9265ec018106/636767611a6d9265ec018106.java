@@ -1,70 +1,33 @@
 import java.util.*;
 
-public class Graph {
-    // Assume we have an adjacency list representation with Edge objects
-    private Map<Vertex, List<Edge>> adjList;
-    
-    public double computeIncomingWeightSum(Vertex v) {
-        double sum = 0.0;
+public class Graph<V> {
+    // Adjacency list representation using HashMap
+    private Map<V, Map<V, Double>> adjacencyMap;
+
+    public Graph() {
+        adjacencyMap = new HashMap<>();
+    }
+
+    /**
+     * 计算进入一个顶点的权重总和
+     * @param v 顶点
+     * @return 进入一个顶点的权重总和
+     */
+    public double vertexWeight(Set<V> v) {
+        double totalWeight = 0.0;
         
-        // Iterate through all vertices and their edges
-        for (Map.Entry<Vertex, List<Edge>> entry : adjList.entrySet()) {
-            List<Edge> edges = entry.getValue();
-            
-            // Check each edge to see if it points to vertex v
-            for (Edge e : edges) {
-                if (e.getDestination().equals(v)) {
-                    sum += e.getWeight();
+        // For each vertex in the input set
+        for (V vertex : v) {
+            // Check all vertices in the graph
+            for (Map.Entry<V, Map<V, Double>> entry : adjacencyMap.entrySet()) {
+                Map<V, Double> edges = entry.getValue();
+                // If there is an edge to our target vertex, add its weight
+                if (edges.containsKey(vertex)) {
+                    totalWeight += edges.get(vertex);
                 }
             }
         }
         
-        return sum;
-    }
-    
-    // Helper classes
-    class Vertex {
-        private int id;
-        
-        public Vertex(int id) {
-            this.id = id;
-        }
-        
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Vertex vertex = (Vertex) o;
-            return id == vertex.id;
-        }
-        
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
-    }
-    
-    class Edge {
-        private Vertex source;
-        private Vertex destination;
-        private double weight;
-        
-        public Edge(Vertex source, Vertex destination, double weight) {
-            this.source = source;
-            this.destination = destination;
-            this.weight = weight;
-        }
-        
-        public Vertex getSource() {
-            return source;
-        }
-        
-        public Vertex getDestination() {
-            return destination;
-        }
-        
-        public double getWeight() {
-            return weight;
-        }
+        return totalWeight;
     }
 }

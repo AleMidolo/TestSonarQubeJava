@@ -1,17 +1,12 @@
 public class LongComparator {
     /**
-     * Compares the two specified {@code long} values. The sign of the value returned is the same as that of
-     * {@code ((Long) a).compareTo(b)}.
-     * <p>
-     * <b>Note for Java 7 and later:</b> this method should be treated as deprecated; use the equivalent
-     * {@link Long#compare} method instead.
-     *
-     * @param a the first {@code long} to compare
-     * @param b the second {@code long} to compare
-     * @return a negative value if {@code a} is less than {@code b}; a positive value if {@code a} is greater than
-     *         {@code b}; or zero if they are equal
+     * 比较两个指定的 {@code long} 值。返回值的符号与 {@code ((Long) a).compareTo(b)} 的符号相同。
+     * <p> <b>注意：对于 Java 7 及更高版本：</b>此方法应视为已弃用；请改用等效的 {@link Long#compare} 方法。
+     * @param a 要比较的第一个 {@code long} 值
+     * @param b 要比较的第二个 {@code long} 值
+     * @return 如果 {@code a} 小于 {@code b}，则返回负值；如果 {@code a} 大于 {@code b}，则返回正值；如果它们相等，则返回零
      */
-    public static int compare(long a, long b) {
+    private static int compareSigned(long a, long b) {
         if (a < b) {
             return -1;
         }

@@ -1,26 +1,46 @@
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.Schema;
+import com.dyuproject.protostuff.ProtobufIOUtil;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
-public class MessageSerializer {
+public class MessageWriter {
     
     /**
-     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
-     * @param message The byte array message to serialize
-     * @param out The output stream to write to
-     * @return the size of the message
-     * @throws IOException if an I/O error occurs
+     * 将 {@code message} 序列化，并在前面加上其长度，写入 {@link OutputStream}。
+     * @return 消息的大小
      */
-    public static int serializeMessage(byte[] message, OutputStream out) throws IOException {
-        // Write message length as 4 byte integer
-        ByteBuffer lengthBuffer = ByteBuffer.allocate(4);
-        lengthBuffer.putInt(message.length);
-        out.write(lengthBuffer.array());
+    public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
+        // 序列化消息到字节数组
+        byte[] bytes = ProtobufIOUtil.toByteArray(message, schema, buffer);
         
-        // Write message content
-        out.write(message);
+        // 写入消息长度
+        writeRawVarint32(out, bytes.length);
         
-        // Return total size (4 bytes for length + message size)
-        return 4 + message.length;
+        // 写入消息内容
+        out.write(bytes);
+        
+        // 返回总长度(varint编码的长度 + 消息长度)
+        return computeRawVarint32Size(bytes.length) + bytes.length;
+    }
+    
+    private static void writeRawVarint32(OutputStream out, int value) throws IOException {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.write(value);
+                return;
+            } else {
+                out.write((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
+    }
+    
+    private static int computeRawVarint32Size(int value) {
+        if ((value & (0xffffffff << 7)) == 0) return 1;
+        if ((value & (0xffffffff << 14)) == 0) return 2;
+        if ((value & (0xffffffff << 21)) == 0) return 3;
+        if ((value & (0xffffffff << 28)) == 0) return 4;
+        return 5;
     }
 }

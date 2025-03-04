@@ -1,35 +1,27 @@
-import java.util.Arrays;
+import java.util.Objects;
 
-public class ArrayReverser {
-    
-    public static <V> void reverseRange(V[] arr, int from, int to) {
-        if (arr == null || from >= to || from < 0 || to >= arr.length) {
-            return;
+public class ArrayUtils {
+    /**
+     * 反转给定数组中指定范围内元素的顺序。
+     * @param <V> 数组中元素的类型
+     * @param arr 数组
+     * @param from 要反转的范围内第一个元素的索引（包含）
+     * @param to 要反转的范围内最后一个元素的索引（包含）
+     */
+    public static final <V> void reverse(V[] arr, int from, int to) {
+        // 参数校验
+        Objects.requireNonNull(arr, "Array must not be null");
+        if (from < 0 || to >= arr.length || from > to) {
+            throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
         }
         
+        // 从两端向中间遍历,交换元素
         while (from < to) {
-            // Swap elements at from and to indices
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;
-            
             from++;
             to--;
         }
-    }
-    
-    // Example usage:
-    public static void main(String[] args) {
-        Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8};
-        System.out.println("Before: " + Arrays.toString(numbers));
-        
-        reverseRange(numbers, 2, 5);
-        System.out.println("After: " + Arrays.toString(numbers));
-        
-        String[] words = {"apple", "banana", "cherry", "date", "elderberry"};
-        System.out.println("Before: " + Arrays.toString(words));
-        
-        reverseRange(words, 1, 3);
-        System.out.println("After: " + Arrays.toString(words));
     }
 }

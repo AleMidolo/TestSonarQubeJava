@@ -1,33 +1,35 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int readPointer;
+    private int position;
+    private int length;
     
     /**
-     * Clear and fill the buffer with the supplied byte stream. 
-     * The read pointer is reset to the start of the byte array.
-     *
-     * @param inputStream the input stream to read bytes from
-     * @throws IOException if an I/O error occurs while reading the stream
+     * 清空并用提供的字节流填充此 {@code ClassFileBuffer} 的缓冲区。读取指针重置为字节数组的起始位置。
      */
-    public void fillBuffer(InputStream inputStream) throws IOException {
-        // Create a ByteArrayOutputStream to store bytes
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        
-        // Read bytes from input stream
-        byte[] temp = new byte[4096];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(temp)) != -1) {
-            byteStream.write(temp, 0, bytesRead);
+    public void readFrom(final InputStream in) throws IOException {
+        // 初始化缓冲区大小为8KB
+        if (buffer == null) {
+            buffer = new byte[8192];
         }
         
-        // Clear existing buffer and fill with new bytes
-        buffer = byteStream.toByteArray();
+        // 重置位置指针
+        position = 0;
+        length = 0;
         
-        // Reset read pointer to start
-        readPointer = 0;
+        // 读取输入流到缓冲区
+        int bytesRead;
+        while ((bytesRead = in.read(buffer, length, buffer.length - length)) != -1) {
+            length += bytesRead;
+            
+            // 如果缓冲区已满,扩容为原来的2倍
+            if (length == buffer.length) {
+                byte[] newBuffer = new byte[buffer.length * 2];
+                System.arraycopy(buffer, 0, newBuffer, 0, length);
+                buffer = newBuffer;
+            }
+        }
     }
 }

@@ -1,21 +1,46 @@
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClassPathUtils {
-
+public class ClassPathUtil {
     /**
-     * Returns the class path of the current JVM instance as an array of {@link File} objects.
-     * @return Array of File objects representing the classpath entries
+     * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
      */
-    public static File[] getClassPath() {
-        String classPath = System.getProperty("java.class.path");
-        String pathSeparator = System.getProperty("path.separator");
-        String[] pathElements = classPath.split(pathSeparator);
+    private static File[] classPath() {
+        List<File> files = new ArrayList<>();
         
-        File[] result = new File[pathElements.length];
-        for (int i = 0; i < pathElements.length; i++) {
-            result[i] = new File(pathElements[i]);
+        // Get system class loader
+        ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        
+        // Check if it's URLClassLoader
+        if (systemClassLoader instanceof URLClassLoader) {
+            URLClassLoader urlClassLoader = (URLClassLoader) systemClassLoader;
+            
+            // Get all URLs from class loader
+            URL[] urls = urlClassLoader.getURLs();
+            
+            // Convert URLs to File objects
+            for (URL url : urls) {
+                try {
+                    files.add(new File(url.toURI()));
+                } catch (Exception e) {
+                    // Skip invalid URLs
+                    continue;
+                }
+            }
         }
         
-        return result;
+        // Get additional classpath entries from system property
+        String classPath = System.getProperty("java.class.path");
+        if (classPath != null) {
+            String[] paths = classPath.split(File.pathSeparator);
+            for (String path : paths) {
+                files.add(new File(path));
+            }
+        }
+        
+        return files.toArray(new File[0]);
     }
 }

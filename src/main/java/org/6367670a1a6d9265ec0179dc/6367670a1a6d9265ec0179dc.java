@@ -1,69 +1,55 @@
 import org.objectweb.asm.Frame;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodWriter;
-import java.util.ArrayList;
-import java.util.List;
+import org.objectweb.asm.SymbolTable;
+import org.objectweb.asm.ByteVector;
 
 public class StackMapTableWriter {
+    private ByteVector stackMapTableEntries;
     private Frame currentFrame;
-    private List<VerificationTypeInfo> stackMapTableEntries;
+    private SymbolTable symbolTable;
     
-    public void putAbstractTypes(final int start, final int end) {
+    private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; ++i) {
-            int abstractType = currentFrame.getAbstractType(i);
-            switch (abstractType) {
-                case Frame.ITEM_TOP:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.TOP));
-                    break;
-                case Frame.ITEM_INTEGER:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.INTEGER));
-                    break;
-                case Frame.ITEM_FLOAT:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.FLOAT));
-                    break;
-                case Frame.ITEM_DOUBLE:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.DOUBLE));
-                    break;
-                case Frame.ITEM_LONG:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.LONG));
-                    break;
-                case Frame.ITEM_NULL:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.NULL));
-                    break;
-                case Frame.ITEM_UNINITIALIZED_THIS:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.UNINITIALIZED_THIS));
-                    break;
-                case Frame.ITEM_OBJECT:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.OBJECT, 
-                        currentFrame.getObjectType(i)));
-                    break;
-                default:
-                    // Must be an uninitialized type
-                    if (abstractType > Frame.ITEM_UNINITIALIZED) {
-                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.UNINITIALIZED,
-                            currentFrame.getInitializationLabel(i)));
-                    }
-                    break;
-            }
+            putAbstractType(currentFrame.getLocal(i));
         }
     }
-
-    // Helper enum and class
-    private enum VerificationType {
-        TOP, INTEGER, FLOAT, DOUBLE, LONG, NULL, UNINITIALIZED_THIS, OBJECT, UNINITIALIZED
-    }
-
-    private static class VerificationTypeInfo {
-        private VerificationType type;
-        private Object data; // For OBJECT (class name) or UNINITIALIZED (label)
-
-        public VerificationTypeInfo(VerificationType type) {
-            this.type = type;
-        }
-
-        public VerificationTypeInfo(VerificationType type, Object data) {
-            this.type = type;
-            this.data = data;
+    
+    private void putAbstractType(final int abstractType) {
+        int type = abstractType >>> 32;
+        int typeInfo = abstractType & 0xFFFFFFFFL;
+        
+        switch (type) {
+            case Frame.ITEM_TOP:
+                stackMapTableEntries.putByte(0);
+                break;
+            case Frame.ITEM_INTEGER:
+                stackMapTableEntries.putByte(1);
+                break;
+            case Frame.ITEM_FLOAT:
+                stackMapTableEntries.putByte(2);
+                break;
+            case Frame.ITEM_DOUBLE:
+                stackMapTableEntries.putByte(3);
+                break;
+            case Frame.ITEM_LONG:
+                stackMapTableEntries.putByte(4);
+                break;
+            case Frame.ITEM_NULL:
+                stackMapTableEntries.putByte(5);
+                break;
+            case Frame.ITEM_UNINITIALIZED_THIS:
+                stackMapTableEntries.putByte(6);
+                break;
+            case Frame.ITEM_OBJECT:
+                stackMapTableEntries.putByte(7);
+                stackMapTableEntries.putShort(symbolTable.addConstantClass((String)typeInfo).index);
+                break;
+            case Frame.ITEM_UNINITIALIZED:
+                stackMapTableEntries.putByte(8);
+                stackMapTableEntries.putShort(((Label)typeInfo).bytecodeOffset);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid abstract type: " + abstractType);
         }
     }
 }

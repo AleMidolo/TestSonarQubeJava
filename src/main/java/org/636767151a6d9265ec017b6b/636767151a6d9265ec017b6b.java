@@ -1,23 +1,29 @@
-package org.apache.commons.lang3;
+import java.util.Objects;
 
 public class StringUtils {
+
     /**
-     * <p>Check if a String starts with a specified prefix (optionally case insensitive).</p>
+     * <p>检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。</p>
      * @see String#startsWith(String)
-     * @param str  the String to check, may be null
-     * @param prefix the prefix to find, may be null
-     * @param ignoreCase indicates whether the compare should ignore case(case insensitive) or not.
-     * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
+     * @param str  要检查的字符串，可能为空
+     * @param prefix 要查找的前缀，可能为空
+     * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
+     * @return 如果字符串以前缀开头或两者都是 <code>null</code>则返回<code>true</code>
      */
-    public static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
+    private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
+        if (str == null && prefix == null) {
+            return true;
+        }
         if (str == null || prefix == null) {
-            return str == null && prefix == null;
+            return false;
         }
         if (prefix.length() > str.length()) {
             return false;
         }
-        return ignoreCase ? 
-            str.regionMatches(true, 0, prefix, 0, prefix.length()) :
-            str.startsWith(prefix);
+        
+        if (ignoreCase) {
+            return str.regionMatches(true, 0, prefix, 0, prefix.length());
+        }
+        return str.startsWith(prefix);
     }
 }

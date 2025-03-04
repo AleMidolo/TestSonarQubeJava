@@ -1,21 +1,15 @@
-package utils;
+import java.beans.Introspector;
 
-/**
- * String utility class containing capitalization methods
- */
 public class StringUtils {
-
     /**
-     * Performs the reverse operation of Introspector.decapitalize
-     * Capitalizes the first character of the string if the second character is not already uppercase
-     * @param name The string to capitalize
-     * @return The capitalized string
+     * Reverse of Introspector.decapitalize
      */
     public static String capitalize(String name) {
         if (name == null || name.length() == 0) {
             return name;
         }
-        if (name.length() > 1 && Character.isUpperCase(name.charAt(1))) {
+        if (name.length() > 1 && Character.isUpperCase(name.charAt(1)) &&
+                Character.isLowerCase(name.charAt(0))) {
             return name;
         }
         char chars[] = name.toCharArray();

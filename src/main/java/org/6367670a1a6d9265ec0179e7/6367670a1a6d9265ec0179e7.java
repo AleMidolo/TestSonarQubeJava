@@ -7,43 +7,20 @@ public class ConverterRegistry {
     private final Map<Class<?>, Converter> converters = new ConcurrentHashMap<>();
     
     /**
-     * 查找并返回指定目标类的任何注册的 {@link Converter}；如果没有注册的 Converter，则返回 <code>null</code>。
-     * @param clazz 要返回注册 Converter 的类
-     * @return 注册的 {@link Converter}，如果未找到则返回 <code>null</code>
+     * Look up and return any registered {@link Converter} for the specified destination class; 
+     * if there is no registered Converter, return <code>null</code>.
+     * @param clazz Class for which to return a registered Converter
+     * @return The registered {@link Converter} or <code>null</code> if not found
      */
     public Converter lookup(final Class<?> clazz) {
         if (clazz == null) {
             return null;
         }
-        
-        // Look for direct match
-        Converter converter = converters.get(clazz);
-        if (converter != null) {
-            return converter;
-        }
-        
-        // Look through class hierarchy
-        Class<?> currentClass = clazz;
-        while (currentClass != null && currentClass != Object.class) {
-            converter = converters.get(currentClass);
-            if (converter != null) {
-                return converter;
-            }
-            // Check interfaces
-            for (Class<?> iface : currentClass.getInterfaces()) {
-                converter = converters.get(iface);
-                if (converter != null) {
-                    return converter;
-                }
-            }
-            currentClass = currentClass.getSuperclass();
-        }
-        
-        return null;
+        return converters.get(clazz);
     }
-}
-
-// Interface for type conversion
-interface Converter {
-    Object convert(Object source);
+    
+    // Interface for Converter
+    public interface Converter {
+        Object convert(Object source);
+    }
 }

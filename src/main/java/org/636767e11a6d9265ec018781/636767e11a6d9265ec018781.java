@@ -1,29 +1,45 @@
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
-public class MetricsAcceptor {
+public class MetricsCache<METRICS> {
     
-    private final ConcurrentHashMap<String, METRICS> metricsCache;
-    
-    public MetricsAcceptor() {
-        this.metricsCache = new ConcurrentHashMap<>();
+    private Map<String, METRICS> cache;
+    private METRICS currentMetrics;
+
+    public MetricsCache() {
+        this.cache = new ConcurrentHashMap<>();
+        this.currentMetrics = null;
     }
-    
+
     /**
-     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
-     * @param data 需要添加的数据。
+     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
+     * @param data to be added potentially.
      */
     @Override
     public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Input metrics data cannot be null");
-        
-        String key = data.getKey(); // Assuming METRICS has a getKey() method
-        
-        METRICS existingMetrics = metricsCache.get(key);
-        if (existingMetrics == null) {
-            metricsCache.put(key, data);
-        } else {
-            existingMetrics.merge(data); // Assuming METRICS has a merge() method
+        if (data == null) {
+            return;
         }
+
+        if (currentMetrics == null) {
+            currentMetrics = data;
+        } else {
+            try {
+                // Merge the new data with existing metrics
+                if (data instanceof Map) {
+                    ((Map)currentMetrics).putAll((Map)data);
+                } else {
+                    // For non-map objects, just replace with new data
+                    currentMetrics = data;
+                }
+            } catch (Exception e) {
+                // Fallback to simple replacement if merge fails
+                currentMetrics = data;
+            }
+        }
+
+        // Store in cache using timestamp or unique key
+        String key = String.valueOf(System.currentTimeMillis());
+        cache.put(key, data);
     }
 }

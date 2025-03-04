@@ -7,64 +7,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocketAppender extends AppenderSkeleton {
-    
-    private List<Socket> clients = new ArrayList<>();
-    private List<PrintWriter> writers = new ArrayList<>();
+    private List<Socket> connectedClients;
+    private List<PrintWriter> clientWriters;
+
+    public SocketAppender() {
+        connectedClients = new ArrayList<>();
+        clientWriters = new ArrayList<>();
+    }
 
     @Override
     protected void append(LoggingEvent event) {
-        // 获取日志消息
         String message = layout.format(event);
         
-        // 遍历所有连接的客户端
-        for (int i = 0; i < writers.size(); i++) {
+        // Remove any disconnected clients
+        List<Integer> disconnectedIndexes = new ArrayList<>();
+        
+        // Write message to each connected client
+        for (int i = 0; i < clientWriters.size(); i++) {
+            PrintWriter writer = clientWriters.get(i);
             try {
-                PrintWriter writer = writers.get(i);
-                // 检查连接是否仍然有效
-                if (clients.get(i).isConnected() && !clients.get(i).isClosed()) {
-                    writer.println(message);
-                    writer.flush();
-                } else {
-                    // 移除断开连接的客户端
-                    writer.close();
-                    clients.get(i).close();
-                    writers.remove(i);
-                    clients.remove(i);
-                    i--;
-                }
-            } catch (IOException e) {
-                // 处理写入错误
-                try {
-                    clients.get(i).close();
-                } catch (IOException ex) {
-                    // 忽略关闭错误
-                }
-                writers.remove(i);
-                clients.remove(i);
-                i--;
+                writer.println(message);
+                writer.flush();
+            } catch (Exception e) {
+                // Client likely disconnected, mark for removal
+                disconnectedIndexes.add(i);
             }
+        }
+        
+        // Remove disconnected clients
+        for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
+            int index = disconnectedIndexes.get(i);
+            try {
+                connectedClients.get(index).close();
+            } catch (IOException e) {
+                // Ignore close errors
+            }
+            connectedClients.remove(index);
+            clientWriters.remove(index);
         }
     }
 
-    // 添加新的客户端连接
     public void addClient(Socket client) throws IOException {
-        clients.add(client);
-        writers.add(new PrintWriter(client.getOutputStream(), true));
+        connectedClients.add(client);
+        clientWriters.add(new PrintWriter(client.getOutputStream(), true));
     }
 
     @Override
     public void close() {
-        // 关闭所有连接
-        for (int i = 0; i < clients.size(); i++) {
+        for (Socket socket : connectedClients) {
             try {
-                writers.get(i).close();
-                clients.get(i).close();
+                socket.close();
             } catch (IOException e) {
-                // 忽略关闭错误
+                // Ignore close errors
             }
         }
-        clients.clear();
-        writers.clear();
+        connectedClients.clear();
+        clientWriters.clear();
     }
 
     @Override

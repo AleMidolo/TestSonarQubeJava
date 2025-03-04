@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathDecoder {
+public class URIPathDecoder {
 
     public static class PathSegmentImpl {
         private final String path;
@@ -21,7 +21,7 @@ public class PathDecoder {
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         
-        if (u == null || u.getPath() == null) {
+        if (u == null || u.getPath() == null || u.getPath().isEmpty()) {
             return segments;
         }
 
@@ -31,32 +31,34 @@ public class PathDecoder {
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-        
+
         // Handle empty path
         if (path.isEmpty()) {
             return segments;
         }
-        
+
         // Split path into segments
         String[] rawSegments = path.split("/");
-        
+
+        // Process each segment
         for (String segment : rawSegments) {
             if (segment.isEmpty()) {
                 continue;
             }
             
-            if (decode) {
-                try {
-                    // Decode the segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
-                } catch (Exception e) {
-                    // If decoding fails, use the raw segment
-                }
+            try {
+                // Decode segment if requested
+                String processedSegment = decode ? 
+                    URLDecoder.decode(segment, StandardCharsets.UTF_8.toString()) : 
+                    segment;
+                    
+                segments.add(new PathSegmentImpl(processedSegment));
+            } catch (Exception e) {
+                // If decoding fails, add raw segment
+                segments.add(new PathSegmentImpl(segment));
             }
-            
-            segments.add(new PathSegmentImpl(segment));
         }
-        
+
         return segments;
     }
 }

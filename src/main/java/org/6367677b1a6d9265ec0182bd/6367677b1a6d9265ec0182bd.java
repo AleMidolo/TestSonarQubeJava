@@ -1,28 +1,23 @@
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.Layout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LogFormatter {
+public class CustomLogFormatter extends Layout {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     
+    @Override
     public String format(final LoggingEvent event) {
-        if (event == null) {
-            return "";
-        }
-
         StringBuilder sb = new StringBuilder();
         
         // Add timestamp
         Date timestamp = new Date(event.getTimeStamp());
-        sb.append(DATE_FORMAT.format(timestamp));
+        sb.append(dateFormat.format(timestamp));
         sb.append(" ");
         
         // Add log level
         sb.append("[").append(event.getLevel().toString()).append("] ");
-        
-        // Add thread name
-        sb.append("[").append(event.getThreadName()).append("] ");
         
         // Add logger name
         sb.append(event.getLoggerName());
@@ -32,14 +27,25 @@ public class LogFormatter {
         sb.append(event.getRenderedMessage());
         
         // Add throwable if exists
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
+        String[] throwableInfo = event.getThrowableStrRep();
+        if (throwableInfo != null) {
             sb.append("\n");
-            for (String line : throwableStrRep) {
+            for (String line : throwableInfo) {
                 sb.append(line).append("\n");
             }
         }
         
+        sb.append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean ignoresThrowable() {
+        return false;
+    }
+
+    @Override
+    public void activateOptions() {
+        // No options to activate
     }
 }

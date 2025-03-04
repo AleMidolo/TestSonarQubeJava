@@ -1,13 +1,13 @@
-import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
+import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 
     /**
-     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
+     * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
-     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
+     * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
         if (r == null) {

@@ -1,33 +1,40 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utility class that provides operations on char values.
+ * Utility class for working with characters.
  */
 public class CharUtils {
 
-    // ASCII 7 bit characters cache
-    private static final String[] CHAR_STRING_CACHE = new String[128];
+    /**
+     * Array of String values for characters 0-127 to use as a cache
+     */
+    private static final String[] CHAR_STRING_ARRAY = new String[128];
 
-    // Initialize cache for ASCII characters
+    /**
+     * Initialize the character string cache
+     */
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        for (int i = 0; i < CHAR_STRING_ARRAY.length; i++) {
+            CHAR_STRING_ARRAY[i] = String.valueOf((char) i);
         }
     }
 
-    /**
-     * <p>将字符转换为仅包含该字符的字符串。</p>
-     * <p>对于 ASCII 7 位字符，此方法将使用一个缓存，每次返回相同的字符串对象。</p>
+    /** 
+     * <p>Converts the character to a String that contains the one character.</p>
+     * <p>For ASCII 7 bit characters, this uses a cache that will return the same 
+     * String object each time.</p>
+     *
      * <pre>
      * CharUtils.toString(' ')  = " "
      * CharUtils.toString('A')  = "A"
      * </pre>
-     * @param ch 要转换的字符
-     * @return 包含指定字符的字符串
+     *
+     * @param ch  the character to convert
+     * @return a String containing the one specified character
      */
     public static String toString(final char ch) {
         if (ch < 128) {
-            return CHAR_STRING_CACHE[ch];
+            return CHAR_STRING_ARRAY[ch];
         }
         return String.valueOf(ch);
     }

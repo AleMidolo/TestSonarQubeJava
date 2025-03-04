@@ -1,10 +1,10 @@
-package com.example.utils;
+package org.example;
 
 public class StringUtils {
     /**
-     * 去除给定字符串末尾的空白字符。
-     * @param str 要检查的字符串
-     * @return 去除空白字符后的字符串
+     * Trim trailing whitespace from the given String.
+     * @param str the String to check
+     * @return the trimmed String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
@@ -13,11 +13,9 @@ public class StringUtils {
         }
         
         int len = str.length();
-        
         while (len > 0 && Character.isWhitespace(str.charAt(len - 1))) {
             len--;
         }
-        
         return str.substring(0, len);
     }
 }

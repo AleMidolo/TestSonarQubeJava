@@ -1,14 +1,16 @@
 public class PrimeCalculator {
     /**
-     * 返回一个质数，该质数满足 <code>&gt;= desiredCapacity</code> 且与 <code>desiredCapacity</code> 非常接近（如果 <code>desiredCapacity &gt;= 1000</code>，则误差在 11% 以内）。
-     * @param desiredCapacity 用户所需的容量。
-     * @return 应该用于哈希表的容量。
+     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity 
+     * (within 11% if desiredCapacity >= 1000).
+     * @param desiredCapacity the capacity desired by the user.
+     * @return the capacity which should be used for a hashtable.
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 2) {
             return 2;
         }
         
+        // Start with odd number >= desiredCapacity
         int num = desiredCapacity;
         if (num % 2 == 0) {
             num++;
@@ -16,40 +18,29 @@ public class PrimeCalculator {
         
         while (!isPrime(num)) {
             num += 2;
-            
-            // Check if error exceeds 11% for large numbers
-            if (desiredCapacity >= 1000) {
-                double error = ((double)(num - desiredCapacity) / desiredCapacity) * 100;
-                if (error > 11.0) {
-                    // Return the last checked prime number less than current num
-                    while (!isPrime(num - 2)) {
-                        num -= 2;
-                    }
-                    return num - 2;
-                }
-            }
         }
         
         return num;
     }
     
+    /**
+     * Helper method to check if a number is prime
+     */
     private static boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        }
-        if (num == 2) {
-            return true;
-        }
-        if (num % 2 == 0) {
-            return false;
-        }
+        if (num <= 1) return false;
+        if (num == 2) return true;
+        if (num % 2 == 0) return false;
         
+        // Only need to check up to square root
         int sqrt = (int) Math.sqrt(num);
+        
+        // Check odd divisors up to sqrt
         for (int i = 3; i <= sqrt; i += 2) {
             if (num % i == 0) {
                 return false;
             }
         }
+        
         return true;
     }
 }

@@ -1,21 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class Solution {
-    private List<Integer> list;
+    private HashSet<Integer> set;
     
     public Solution() {
-        list = new ArrayList<>();
+        set = new HashSet<>();
     }
     
-    /**
-     * 从集合中移除一个值。如果集合中包含指定的元素，则返回真。
+    /** 
+     * Removes a value from the set. Returns true if the set contained the specified element.
      */
     public boolean remove(int val) {
-        // Convert primitive int to Integer object since List stores objects
-        Integer element = Integer.valueOf(val);
-        
-        // Try to remove the element and return whether it was present
-        return list.remove(element);
+        return set.remove(val);
     }
 }

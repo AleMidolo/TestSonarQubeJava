@@ -1,31 +1,25 @@
-import org.apache.lucene.index.Fields;
+import java.util.Properties;
 
-public class FieldsChecker {
-    private Set<String> storedFields;
+public class FieldValidator {
+    private Properties properties;
 
-    public FieldsChecker() {
-        this.storedFields = new HashSet<>();
+    public FieldValidator() {
+        this.properties = new Properties();
     }
 
     /**
-     * 当输入字段已经存储在属性中时返回真。
+     * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
         if (fields == null) {
             return false;
         }
 
-        try {
-            Iterator<String> fieldIterator = fields.iterator();
-            while (fieldIterator.hasNext()) {
-                String field = fieldIterator.next();
-                if (!storedFields.contains(field)) {
-                    return false;
-                }
+        for (String fieldName : fields.getFieldNames()) {
+            if (!properties.containsKey(fieldName)) {
+                return false;
             }
-            return true;
-        } catch (IOException e) {
-            return false;
         }
+        return true;
     }
 }

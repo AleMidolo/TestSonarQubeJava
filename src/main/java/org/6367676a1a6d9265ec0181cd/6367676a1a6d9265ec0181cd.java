@@ -2,9 +2,9 @@ package org.utils;
 
 public class StringUtils {
     /**
-     * 去除给定字符串的前导空白字符。
-     * @param str 要检查的字符串
-     * @return 去除空白后的字符串
+     * Trim leading whitespace from the given String.
+     * @param str the String to check
+     * @return the trimmed String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
@@ -13,12 +13,12 @@ public class StringUtils {
         }
         
         int len = str.length();
-        int start = 0;
+        int st = 0;
         
-        while (start < len && Character.isWhitespace(str.charAt(start))) {
-            start++;
+        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
+            st++;
         }
         
-        return start > 0 ? str.substring(start) : str;
+        return (st > 0) ? str.substring(st) : str;
     }
 }

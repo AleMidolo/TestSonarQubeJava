@@ -2,24 +2,27 @@ import java.util.Objects;
 
 public class ArrayUtils {
     /**
-     * 反转给定数组中指定范围内元素的顺序。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param from 要反转的范围内第一个元素的索引（包含）
-     * @param to 要反转的范围内最后一个元素的索引（包含）
+     * Reverses the order of the elements in the specified range within the given array.
+     * @param <V> the type of elements in the array
+     * @param arr the array
+     * @param from the index of the first element (inclusive) inside the range to reverse
+     * @param to the index of the last element (inclusive) inside the range to reverse
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        // 参数校验
-        Objects.requireNonNull(arr, "Array must not be null");
+        // Input validation
+        Objects.requireNonNull(arr, "Array cannot be null");
         if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
+            throw new IllegalArgumentException("Invalid range specified");
         }
-        
-        // 从两端向中间遍历,交换元素
+
+        // Reverse elements in the range
         while (from < to) {
+            // Swap elements at from and to indices
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;
+            
+            // Move indices towards center
             from++;
             to--;
         }

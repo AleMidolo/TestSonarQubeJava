@@ -1,31 +1,39 @@
 import java.util.Objects;
 
-public class ShardingChecker {
-
+public class ShardingKeyValidator {
+    
     /**
-     * @param modelName 实体的模型名称
-     * @throws IllegalStateException 如果分片键索引不连续
+     * @param modelName model name of the entity
+     * @throws IllegalStateException if sharding key indices are not continuous
      */
     private void check(String modelName) throws IllegalStateException {
         if (Objects.isNull(modelName) || modelName.trim().isEmpty()) {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
-
-        // Validate model name format
-        if (!modelName.matches("^[a-zA-Z0-9_]+$")) {
-            throw new IllegalStateException("Invalid model name format: " + modelName);
+        
+        // Assuming sharding key indices are stored in a list/array
+        // This is a placeholder implementation - actual logic would depend on
+        // how sharding keys are maintained
+        int[] shardingKeyIndices = getShardingKeyIndices(modelName);
+        
+        if (shardingKeyIndices.length == 0) {
+            return; // No sharding keys to validate
         }
-
-        // Check if sharding key indexes are continuous
-        try {
-            validateShardingKeyIndexes(modelName);
-        } catch (Exception e) {
-            throw new IllegalStateException("Discontinuous sharding key indexes found for model: " + modelName, e);
+        
+        // Check if indices are continuous
+        for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
+            if (shardingKeyIndices[i + 1] - shardingKeyIndices[i] != 1) {
+                throw new IllegalStateException(
+                    "Sharding key indices must be continuous for model: " + modelName
+                );
+            }
         }
     }
-
-    private void validateShardingKeyIndexes(String modelName) {
-        // Implementation of sharding key index validation logic would go here
-        // This is just a placeholder method to demonstrate the structure
+    
+    // Helper method to get sharding key indices
+    private int[] getShardingKeyIndices(String modelName) {
+        // Implementation would depend on how indices are stored
+        // This is just a placeholder
+        return new int[0];
     }
 }

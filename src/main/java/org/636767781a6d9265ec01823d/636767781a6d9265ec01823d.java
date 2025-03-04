@@ -13,17 +13,10 @@ public class CustomAppender extends AppenderSkeleton {
     }
 
     /**
-     * 此方法执行实际的写入操作
+     * This method does actual writing
      */
-    @Override
     protected void subAppend(LoggingEvent event) {
-        if(layout == null) {
-            errorHandler.error("No layout set for the appender named [" + name + "].");
-            return;
-        }
-
-        if(writer == null) {
-            errorHandler.error("No writer set for the appender named [" + name + "].");
+        if (layout == null || writer == null) {
             return;
         }
 
@@ -31,10 +24,10 @@ public class CustomAppender extends AppenderSkeleton {
             String formattedMessage = layout.format(event);
             writer.write(formattedMessage);
             
-            if(layout.ignoresThrowable()) {
+            if (layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
-                if(throwableStrRep != null) {
-                    for(String line : throwableStrRep) {
+                if (throwableStrRep != null) {
+                    for (String line : throwableStrRep) {
                         writer.write(line);
                         writer.write(Layout.LINE_SEP);
                     }
@@ -42,20 +35,18 @@ public class CustomAppender extends AppenderSkeleton {
             }
             
             writer.flush();
-        } catch(IOException e) {
-            errorHandler.error("Failed to write to writer", e, 
-                    org.apache.log4j.spi.ErrorCode.WRITE_FAILURE);
+        } catch (IOException e) {
+            errorHandler.error("Failed to write log event", e, 1);
         }
     }
 
     @Override
     public void close() {
-        if(writer != null) {
+        if (writer != null) {
             try {
                 writer.close();
-            } catch(IOException e) {
-                errorHandler.error("Failed to close writer", e, 
-                        org.apache.log4j.spi.ErrorCode.CLOSE_FAILURE);
+            } catch (IOException e) {
+                // Ignore
             }
             writer = null;
         }

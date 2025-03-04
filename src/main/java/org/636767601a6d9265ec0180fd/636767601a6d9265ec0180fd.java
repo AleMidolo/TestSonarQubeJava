@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Graph<V,E> {
 
-    // 存储顶点到边的映射关系
+    // Internal map to store vertex-edge relationships
     private Map<V, Map<V, E>> index;
 
     public Graph() {
@@ -10,16 +10,16 @@ public class Graph<V,E> {
     }
 
     /**
-     * 将边添加到索引中。
-     * @param sourceVertex 源顶点
-     * @param targetVertex 目标顶点 
-     * @param e 边
+     * Add an edge to the index.
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex  
+     * @param e the edge
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        // 获取源顶点的边映射,如果不存在则创建新的
-        Map<V, E> edges = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
+        // Get or create map for source vertex
+        Map<V, E> connections = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
         
-        // 将目标顶点和边添加到映射中
-        edges.put(targetVertex, e);
+        // Add edge between source and target
+        connections.put(targetVertex, e);
     }
 }

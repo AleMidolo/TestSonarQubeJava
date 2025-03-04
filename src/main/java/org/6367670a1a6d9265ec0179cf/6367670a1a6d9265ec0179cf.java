@@ -1,21 +1,22 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utilities.
+ * Utility class for Character operations
  */
 public class CharUtils {
 
     /**
-     * <p>将 Character 转换为 char，并处理 <code>null</code> 的情况。</p>
+     * <p>Converts the Character to a char handling <code>null</code>.</p>
+     * 
      * <pre>
      * CharUtils.toChar(null, 'X') = 'X'
      * CharUtils.toChar(' ', 'X')  = ' '
      * CharUtils.toChar('A', 'X')  = 'A'
      * </pre>
      *
-     * @param ch Character to convert
-     * @param defaultValue default value to return if Character is null
-     * @return char value of Character or defaultValue if null
+     * @param ch  the character to convert
+     * @param defaultValue  the value to use if the Character is null
+     * @return the char value of the Character or the default if null
      */
     public static char toChar(final Character ch, final char defaultValue) {
         if (ch == null) {

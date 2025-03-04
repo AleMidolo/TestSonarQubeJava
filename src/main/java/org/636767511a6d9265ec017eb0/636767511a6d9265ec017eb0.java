@@ -1,24 +1,20 @@
 import java.util.Arrays;
 
 public class Matrix {
-    private double[][] matrix; // Assuming matrix is stored as a 2D array
+    private double[][] data;
     
     /**
-     * 获取一行中非零条目的数量。
-     * @param row 行号
-     * @return 一行中非零条目的数量
+     * Get the number of non-zero entries of a row.
+     * @param row the row
+     * @return the number of non-zero entries of a row
      */
     public int nonZeros(int row) {
-        if (row < 0 || row >= matrix.length) {
+        if (row < 0 || row >= data.length) {
             throw new IllegalArgumentException("Invalid row index");
         }
         
-        int count = 0;
-        for (int col = 0; col < matrix[row].length; col++) {
-            if (matrix[row][col] != 0) {
-                count++;
-            }
-        }
-        return count;
+        return (int) Arrays.stream(data[row])
+                         .filter(x -> x != 0.0)
+                         .count();
     }
 }

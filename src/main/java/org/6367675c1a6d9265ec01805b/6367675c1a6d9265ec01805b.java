@@ -1,15 +1,37 @@
 import java.util.LinkedList;
 
 public class TreeEdge {
-    private LinkedList<TreeEdge> treeEdgeList;
+    private TreeEdge prevTreeEdge;
+    private TreeEdge nextTreeEdge;
+    private LinkedList<TreeEdge> sourceEdges;
+    private LinkedList<TreeEdge> targetEdges;
     
     /**
-     * 从树的双向链表中移除该边。
+     * Removes this edge from both doubly linked lists of tree edges.
      */
     public void removeFromTreeEdgeList() {
-        if (treeEdgeList != null) {
-            treeEdgeList.remove(this);
-            treeEdgeList = null;
+        // Remove from source edges list
+        if (sourceEdges != null) {
+            sourceEdges.remove(this);
         }
+        
+        // Remove from target edges list
+        if (targetEdges != null) {
+            targetEdges.remove(this);
+        }
+        
+        // Update previous edge's next pointer
+        if (prevTreeEdge != null) {
+            prevTreeEdge.nextTreeEdge = nextTreeEdge;
+        }
+        
+        // Update next edge's previous pointer
+        if (nextTreeEdge != null) {
+            nextTreeEdge.prevTreeEdge = prevTreeEdge;
+        }
+        
+        // Clear this edge's pointers
+        prevTreeEdge = null;
+        nextTreeEdge = null;
     }
 }

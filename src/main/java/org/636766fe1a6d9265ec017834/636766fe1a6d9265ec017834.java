@@ -1,11 +1,11 @@
 import java.util.UUID;
 
-public class SessionUtils {
+public class Session {
     /**
-     * 会话 ID。
-     * @return 返回一个唯一的会话ID字符串
+     * Session ID.
+     * @return A randomly generated UUID as a String to serve as a unique session identifier
      */
     public static String sessionId() {
-        return UUID.randomUUID().toString().replace("-", "");
+        return UUID.randomUUID().toString();
     }
 }

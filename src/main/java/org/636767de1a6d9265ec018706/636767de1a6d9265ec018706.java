@@ -4,7 +4,6 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.mapper.MapperService;
 import org.elasticsearch.index.mapper.Mapping;
 import org.elasticsearch.index.mapper.Mappings;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,25 +15,31 @@ public class MappingDiffer {
         }
 
         // Get the properties from input mappings
-        Map<String, Object> properties = mappings.getSourceAsMap();
-        if (properties == null || properties.isEmpty()) {
+        Map<String, Object> sourceMap = mappings.getSourceAsMap();
+        if (sourceMap == null || !sourceMap.containsKey("properties")) {
             return null;
         }
 
         // Create new mapping without _source
         Map<String, Object> newMappings = new HashMap<>();
-        for (Map.Entry<String, Object> entry : properties.entrySet()) {
-            String key = entry.getKey();
-            if (!key.equals("_source")) {
-                newMappings.put(key, entry.getValue());
+        Map<String, Object> properties = new HashMap<>();
+        
+        // Copy properties excluding _source
+        Map<String, Object> inputProperties = (Map<String, Object>) sourceMap.get("properties");
+        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+            String fieldName = entry.getKey();
+            if (!fieldName.equals("_source")) {
+                properties.put(fieldName, entry.getValue());
             }
         }
 
-        // Build and return new Mappings object
-        try {
-            return Mappings.fromMap(newMappings);
-        } catch (Exception e) {
-            return null;
-        }
+        // Build new mapping structure
+        newMappings.put("properties", properties);
+        
+        // Create new Mappings object
+        return new Mappings(
+            MapperService.SINGLE_MAPPING_NAME,
+            newMappings
+        );
     }
 }

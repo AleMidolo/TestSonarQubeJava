@@ -1,46 +1,22 @@
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClassPathUtil {
     /**
-     * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
+     * Returns the class path of the current JVM instance as an array of {@link File} objects.
      */
     private static File[] classPath() {
-        List<File> files = new ArrayList<>();
+        // Get the class path string from system property
+        String classPathString = System.getProperty("java.class.path");
         
-        // Get system class loader
-        ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        // Split the class path string by path separator
+        String[] paths = classPathString.split(File.pathSeparator);
         
-        // Check if it's URLClassLoader
-        if (systemClassLoader instanceof URLClassLoader) {
-            URLClassLoader urlClassLoader = (URLClassLoader) systemClassLoader;
-            
-            // Get all URLs from class loader
-            URL[] urls = urlClassLoader.getURLs();
-            
-            // Convert URLs to File objects
-            for (URL url : urls) {
-                try {
-                    files.add(new File(url.toURI()));
-                } catch (Exception e) {
-                    // Skip invalid URLs
-                    continue;
-                }
-            }
+        // Convert string paths to File objects
+        File[] classPathFiles = new File[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            classPathFiles[i] = new File(paths[i]);
         }
         
-        // Get additional classpath entries from system property
-        String classPath = System.getProperty("java.class.path");
-        if (classPath != null) {
-            String[] paths = classPath.split(File.pathSeparator);
-            for (String path : paths) {
-                files.add(new File(path));
-            }
-        }
-        
-        return files.toArray(new File[0]);
+        return classPathFiles;
     }
 }

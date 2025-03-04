@@ -1,8 +1,11 @@
+package org.apache.commons.lang3.math;
+
 public class NumberUtils {
     /**
-     * <p>用于 {@link #createNumber(String)} 的工具方法。</p> <p>如果 s 为 <code>null</code>，则返回 <code>true</code>。</p>
-     * @param s 要检查的字符串
-     * @return 如果它全是零或 <code>null</code>
+     * <p>Utility method for {@link #createNumber(String)}.</p>
+     * <p>Returns <code>true</code> if s is <code>null</code>.</p>
+     * @param s the String to check
+     * @return if it is all zeros or <code>null</code>
      */
     private static boolean isAllZeros(String s) {
         if (s == null) {

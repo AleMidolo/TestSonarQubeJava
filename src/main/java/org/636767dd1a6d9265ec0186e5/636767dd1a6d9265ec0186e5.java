@@ -2,32 +2,21 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ChannelManager {
-    private List<Channels> channelsList;
-    private List<IConsumer> consumerList;
+    private List<Channels> targetChannels;
+    private List<IConsumer> consumers;
 
     public ChannelManager() {
-        channelsList = new ArrayList<>();
-        consumerList = new ArrayList<>();
+        targetChannels = new ArrayList<>();
+        consumers = new ArrayList<>();
     }
 
     /**
-     * 添加新的目标通道。
+     * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
-            channelsList.add(channels);
-            consumerList.add(consumer);
+            targetChannels.add(channels);
+            consumers.add(consumer);
         }
     }
-}
-
-// Required interfaces/classes for compilation
-interface IConsumer {
-    void consume();
-}
-
-enum Channels {
-    CHANNEL1,
-    CHANNEL2,
-    CHANNEL3
 }

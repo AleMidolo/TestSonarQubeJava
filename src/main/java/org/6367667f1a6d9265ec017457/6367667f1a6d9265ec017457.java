@@ -1,46 +1,58 @@
 import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 
 public class UTF8Decoder {
 
+    /**
+     * Decodes octets to characters using the UTF-8 decoding and appends the characters to a StringBuffer.
+     * @return the index to the next unchecked character in the string to decode
+     */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-        try {
-            CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
-                    .onMalformedInput(CodingErrorAction.REPLACE)
-                    .onUnmappableCharacter(CodingErrorAction.REPLACE);
-
-            // Mark current position
-            bb.mark();
-            
-            // Create a new byte buffer for the current character
-            ByteBuffer slice = bb.slice();
-            
-            // Try to decode one character
-            java.nio.CharBuffer cb = java.nio.CharBuffer.allocate(1);
-            decoder.decode(slice, cb, true);
-            decoder.flush(cb);
-            
-            // Append decoded character to StringBuilder
-            cb.flip();
-            sb.append(cb.toString());
-            
-            // Calculate how many bytes were consumed
-            int bytesConsumed = slice.position();
-            
-            // Reset to marked position and skip consumed bytes
-            bb.reset();
-            bb.position(bb.position() + bytesConsumed);
-            
-            return i + bytesConsumed;
-            
-        } catch (CharacterCodingException e) {
-            // On error, skip one byte and append replacement character
-            bb.get();
-            sb.append('\ufffd');
+        int b1 = bb.get(i) & 0xFF;
+        
+        // Single byte character
+        if ((b1 >> 7) == 0) {
+            sb.append((char)b1);
             return i + 1;
         }
+        
+        // Two byte character
+        if ((b1 >> 5) == 0b110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            if ((b2 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)cp);
+            return i + 2;
+        }
+        
+        // Three byte character
+        if ((b1 >> 4) == 0b1110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            int b3 = bb.get(i + 2) & 0xFF;
+            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)cp);
+            return i + 3;
+        }
+        
+        // Four byte character
+        if ((b1 >> 3) == 0b11110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            int b3 = bb.get(i + 2) & 0xFF;
+            int b4 = bb.get(i + 3) & 0xFF;
+            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10 || (b4 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            // Convert to surrogate pair for characters outside BMP
+            sb.append(Character.highSurrogate(cp));
+            sb.append(Character.lowSurrogate(cp));
+            return i + 4;
+        }
+        
+        throw new IllegalArgumentException("Invalid UTF-8 encoding");
     }
 }

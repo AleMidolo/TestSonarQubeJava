@@ -1,19 +1,28 @@
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.lang.reflect.ParameterizedType;
 
 public class TypeResolver {
-    /**
-     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
-     */
+
+    private static final Class<?> UNKNOWN = Unknown.class;
+
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
+        
         if (bounds == null || bounds.length == 0) {
-            return Unknown.class;
+            return UNKNOWN;
         }
-        return bounds[0];
+
+        Type bound = bounds[0];
+        if (bound == Object.class) {
+            return UNKNOWN;
+        }
+
+        return bound;
     }
-    
-    // Unknown class used as default return type
+
     private static class Unknown {
+        private Unknown() {}
     }
 }

@@ -10,9 +10,9 @@ public class Parser {
     }
 
     /**
-     * 解析一个令牌，直到遇到某个给定的终止符。
-     * @param terminators 终止字符数组。遇到这些字符中的任何一个都表示令牌的结束
-     * @return 令牌
+     * Parses out a token until any of the given terminators is encountered.
+     * @param terminators the array of terminating characters. Any of these characters when encountered signify the end of the token
+     * @return the token
      */
     private String parseToken(final char[] terminators) {
         StringBuilder token = new StringBuilder();
@@ -20,7 +20,7 @@ public class Parser {
         while (currentPosition < input.length()) {
             char currentChar = input.charAt(currentPosition);
             
-            // 检查是否遇到终止符
+            // Check if current character is a terminator
             if (Arrays.binarySearch(terminators, currentChar) >= 0) {
                 break;
             }

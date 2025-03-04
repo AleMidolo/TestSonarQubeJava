@@ -1,23 +1,23 @@
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.ArrayList;
 
 public class EnumerationUtils {
+
     /**
-     * 将给定的枚举值复制到字符串数组中。枚举值必须仅包含字符串元素。
-     * @param enumeration 要复制的枚举值
-     * @return 字符串数组（如果传入的枚举为 <code>null</code>，则返回 <code>null</code>）
+     * Copy the given Enumeration into a String array. The Enumeration must contain String elements only.
+     * @param enumeration the Enumeration to copy
+     * @return the String array (<code>null</code> if the passed-in Enumeration was <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
             return null;
         }
-        
-        List<String> list = new ArrayList<>();
+
+        ArrayList<String> list = new ArrayList<>();
         while (enumeration.hasMoreElements()) {
             list.add(enumeration.nextElement());
         }
-        
+
         return list.toArray(new String[0]);
     }
 }

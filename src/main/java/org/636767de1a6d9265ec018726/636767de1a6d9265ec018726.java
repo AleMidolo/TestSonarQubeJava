@@ -24,25 +24,31 @@ public class SequenceRangeBuilder {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         
-        // Get current snapshot sequence
+        // Get current profile segments
         long currentSequence = getCurrentSequence();
+        long snapshotSequence = getSnapshotSequence();
         
-        // Build sequence ranges with fixed size intervals
-        long interval = 1000;
-        long start = 0;
-        
-        while (start < currentSequence) {
-            long end = Math.min(start + interval, currentSequence);
-            ranges.add(new SequenceRange(start, end));
-            start = end + 1;
+        // Build ranges between current and snapshot sequences
+        if (currentSequence > snapshotSequence) {
+            // Add range from snapshot to current
+            ranges.add(new SequenceRange(snapshotSequence, currentSequence));
+        } else if (currentSequence < snapshotSequence) {
+            // Add range from current to snapshot
+            ranges.add(new SequenceRange(currentSequence, snapshotSequence)); 
         }
+        // If equal, no ranges needed
         
         return ranges;
     }
 
-    // Helper method to get current sequence
+    // Helper methods to get sequences
     private long getCurrentSequence() {
-        // Implementation to get current sequence number
-        return System.currentTimeMillis();
+        // Implementation to get current sequence
+        return 0L;
+    }
+    
+    private long getSnapshotSequence() {
+        // Implementation to get snapshot sequence
+        return 0L;
     }
 }

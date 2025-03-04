@@ -1,13 +1,13 @@
-public class HttpMessage {
+import java.util.Arrays;
+
+public class Message {
     private byte[] body;
-    
+
     /**
-     * 如果主体是字节数组，则返回真
-     * @return 如果主体是字节数组，则返回真
+     * True is the body is a byte array
+     * @return True is the body is a byte array
      */
     public boolean hasBytes() {
         return body != null && body.length > 0;
     }
-    
-    // Constructor and other methods omitted for brevity
 }

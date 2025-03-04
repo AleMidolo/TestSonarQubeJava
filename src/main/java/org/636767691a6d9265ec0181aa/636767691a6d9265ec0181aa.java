@@ -1,10 +1,11 @@
 import java.util.Arrays;
 
-public class ArrayHashCode {
+public class ArrayUtils {
+
     /**
-     * 根据指定数组的内容返回一个哈希码。如果 <code>array</code> 为 <code>null</code>，则此方法返回 0。
-     * @param array 要获取哈希码的长整型数组
-     * @return 长整型数组的哈希码，如果数组为 null，则为 0。
+     * Return a hash code based on the contents of the specified array. If <code>array</code> is <code>null</code>, this method returns 0.
+     * @param array the long array to obtain a hashcode
+     * @return the long array's hashcode, which could be 0 if the array is null.
      */
     public static int nullSafeHashCode(long[] array) {
         if (array == null) {

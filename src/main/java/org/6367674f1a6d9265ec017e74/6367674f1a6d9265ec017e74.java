@@ -1,30 +1,30 @@
 import java.util.LinkedList;
 
 public class Queue<T> {
-    private LinkedList<T> elements;
+    private LinkedList<T> queue;
     
     public Queue() {
-        elements = new LinkedList<>();
+        queue = new LinkedList<>();
     }
 
     /**
-     * 返回队列的文本表示。
-     * @return 队列的文本表示。
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
      */
     public String toString() {
-        if (elements.isEmpty()) {
+        if (queue.isEmpty()) {
             return "[]";
         }
         
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
-        for (T element : elements) {
+        for (T element : queue) {
             sb.append(element);
             sb.append(", ");
         }
         
-        // Remove last ", " and close bracket
+        // Remove trailing comma and space
         sb.setLength(sb.length() - 2);
         sb.append("]");
         

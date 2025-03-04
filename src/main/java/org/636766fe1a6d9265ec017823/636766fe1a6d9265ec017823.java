@@ -1,41 +1,55 @@
 import org.objectweb.asm.Symbol;
-import org.objectweb.asm.Constants;
 
 public class SymbolTable {
+    private static final int CONSTANT_NAME_AND_TYPE_TAG = 12;
     private final Symbol[] symbols;
-    private int size;
-    
+    private int constantPoolCount;
+
     public SymbolTable(int initialCapacity) {
         this.symbols = new Symbol[initialCapacity];
-        this.size = 1;
+        this.constantPoolCount = 1;
     }
 
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-        Symbol symbol = getSymbol(hashCode);
+        Symbol symbol = lookupSymbol(hashCode);
         
-        while (symbol != null) {
-            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && symbol.name.equals(name)
-                && symbol.value.equals(descriptor)) {
-                return symbol.index;
-            }
-            symbol = symbol.next;
+        if (symbol != null) {
+            return symbol.index;
         }
-
-        symbol = new Symbol(
-            size++,
-            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
-            name,
-            descriptor,
-            hashCode,
-            getSymbol(hashCode));
         
-        symbols[symbol.index] = symbol;
+        symbol = addConstantNameAndTypeSymbol(name, descriptor, hashCode);
         return symbol.index;
     }
-    
-    private Symbol getSymbol(int hashCode) {
-        return symbols[hashCode % symbols.length];
+
+    private Symbol lookupSymbol(int hashCode) {
+        for (Symbol symbol : symbols) {
+            if (symbol != null && symbol.hashCode == hashCode) {
+                return symbol;
+            }
+        }
+        return null;
+    }
+
+    private Symbol addConstantNameAndTypeSymbol(String name, String descriptor, int hashCode) {
+        Symbol symbol = new Symbol(
+            constantPoolCount++,
+            CONSTANT_NAME_AND_TYPE_TAG,
+            name,
+            descriptor,
+            hashCode
+        );
+        
+        ensureCapacity();
+        symbols[symbol.index] = symbol;
+        return symbol;
+    }
+
+    private void ensureCapacity() {
+        if (constantPoolCount >= symbols.length) {
+            Symbol[] newSymbols = new Symbol[symbols.length * 2];
+            System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
+            symbols = newSymbols;
+        }
     }
 }

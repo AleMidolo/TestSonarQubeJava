@@ -6,17 +6,20 @@ package org.apache.commons.lang3;
 public class ObjectUtils {
 
     /**
-     * <p>获取一个 <code>Object</code> 的 <code>toString</code> 值，如果输入为 <code>null</code> 则返回空字符串 ("")。</p> 
-     * <pre> 
-     * ObjectUtils.toString(null)         = "" 
-     * ObjectUtils.toString("")           = "" 
-     * ObjectUtils.toString("bat")        = "bat" 
-     * ObjectUtils.toString(Boolean.TRUE) = "true" 
+     * <p>Gets the <code>toString</code> of an <code>Object</code> returning
+     * an empty string ("") if <code>null</code> input.</p>
+     *
+     * <pre>
+     * ObjectUtils.toString(null)         = ""
+     * ObjectUtils.toString("")           = ""
+     * ObjectUtils.toString("bat")        = "bat"
+     * ObjectUtils.toString(Boolean.TRUE) = "true"
      * </pre>
+     *
      * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)
-     * @param obj  要调用 <code>toString</code> 的对象，可以为 null
-     * @return 传入对象的 toString 结果，如果输入为 <code>null</code> 则返回空字符串
+     * @param obj  the Object to <code>toString</code>, may be null
+     * @return the passed in Object's toString, or nullStr if <code>null</code> input
      * @since 2.0
      */
     public static String toString(Object obj) {

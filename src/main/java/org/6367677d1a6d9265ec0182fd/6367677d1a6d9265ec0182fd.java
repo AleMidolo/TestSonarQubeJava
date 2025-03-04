@@ -1,6 +1,9 @@
 public class BooleanUtils {
     /**
-     * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。
+     * If <code>value</code> is "true", then <code>true</code> is returned. 
+     * If <code>value</code> is "false", then <code>true</code> is returned.
+     * Otherwise, <code>default</code> is returned.
+     * Case of value is unimportant.
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
@@ -9,11 +12,11 @@ public class BooleanUtils {
         
         String trimmedValue = value.trim().toLowerCase();
         
-        if (trimmedValue.equals("真")) {
+        if (trimmedValue.equals("true")) {
             return true;
         }
         
-        if (trimmedValue.equals("假")) {
+        if (trimmedValue.equals("false")) {
             return false;
         }
         

@@ -1,33 +1,40 @@
-import java.util.*;
+import java.util.Set;
 
-public class Graph<V> {
-    // Adjacency list representation using HashMap
-    private Map<V, Map<V, Double>> adjacencyMap;
+public class Graph<V,E> {
 
-    public Graph() {
-        adjacencyMap = new HashMap<>();
-    }
+    private Map<V, Map<V, E>> graph = new HashMap<>();
+    private boolean isWeighted = true;
 
     /**
-     * 计算进入一个顶点的权重总和
-     * @param v 顶点
-     * @return 进入一个顶点的权重总和
+     * Compute the sum of the weights entering a vertex
+     * @param v the vertex
+     * @return the sum of the weights entering a vertex
      */
     public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
+        double sum = 0.0;
         
-        // For each vertex in the input set
-        for (V vertex : v) {
-            // Check all vertices in the graph
-            for (Map.Entry<V, Map<V, Double>> entry : adjacencyMap.entrySet()) {
-                Map<V, Double> edges = entry.getValue();
-                // If there is an edge to our target vertex, add its weight
-                if (edges.containsKey(vertex)) {
-                    totalWeight += edges.get(vertex);
+        // For each vertex in the graph
+        for (V vertex : graph.keySet()) {
+            // Get edges from this vertex
+            Map<V, E> edges = graph.get(vertex);
+            
+            // For each destination vertex in v
+            for (V dest : v) {
+                // If there is an edge to dest
+                if (edges.containsKey(dest)) {
+                    E edge = edges.get(dest);
+                    // Add weight if graph is weighted
+                    if (isWeighted && edge instanceof Number) {
+                        sum += ((Number) edge).doubleValue();
+                    }
+                    // Add 1 if unweighted
+                    else {
+                        sum += 1.0;
+                    }
                 }
             }
         }
         
-        return totalWeight;
+        return sum;
     }
 }

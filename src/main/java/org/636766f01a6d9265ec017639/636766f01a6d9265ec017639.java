@@ -1,14 +1,15 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ArrayUtils {
     /**
-     * 数组转列表。<p> 其工作方式类似于 {@link Arrays#asList(Object)}，但可以处理空数组。
-     * @return 一个由数组支持的列表。
+     * Array to List. <p> Works like {@link Arrays#asList(Object)}, but handles null arrays.
+     * @param a the array to convert to a List
+     * @return a list backed by the array
      */
     public static <T> List<T> asList(T[] a) {
-        if (a == null || a.length == 0) {
+        if (a == null) {
             return new ArrayList<T>();
         }
         return Arrays.asList(a);

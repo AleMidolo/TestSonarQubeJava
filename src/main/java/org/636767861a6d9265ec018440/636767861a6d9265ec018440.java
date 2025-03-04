@@ -1,34 +1,30 @@
 import java.lang.StringBuffer;
 
 public class NameAbbreviator {
-
+    
     /**
-     * 缩写名称。
-     * @param buf 用于追加缩写的缓冲区。
-     * @param nameStart 要缩写的名称起始位置。
+     * Abbreviate name.
+     * @param buf buffer to append abbreviation.
+     * @param nameStart start of name to abbreviate.
      */
     public void abbreviate(final int nameStart, final StringBuffer buf) {
         if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
             return;
         }
 
-        // 从nameStart开始遍历字符串
-        for (int i = nameStart; i < buf.length(); i++) {
-            char c = buf.charAt(i);
+        // Find first letter after nameStart
+        int pos = nameStart;
+        while (pos < buf.length() && !Character.isLetter(buf.charAt(pos))) {
+            pos++;
+        }
+
+        if (pos < buf.length()) {
+            // Keep first letter
+            char firstLetter = buf.charAt(pos);
             
-            // 如果是点号,保留点号和后面的字符
-            if (c == '.') {
-                continue;
-            }
-            
-            // 如果是单词开头(大写字母),保留该字母
-            if (Character.isUpperCase(c)) {
-                continue;
-            }
-            
-            // 其他字符删除
-            buf.deleteCharAt(i);
-            i--; // 因为删除了字符,所以索引要回退
+            // Delete rest of name and add period
+            buf.delete(pos + 1, buf.length());
+            buf.append('.');
         }
     }
 }

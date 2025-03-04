@@ -1,100 +1,84 @@
-import org.jgrapht.Graph;
-import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.alg.interfaces.MinimumSTCutAlgorithm;
-import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleGraph;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.*;
 
-public class SeparatorFinder<V,E> {
-
-    private Graph<V,E> graph;
+public class MinimalSeparators {
+    private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
     
-    public SeparatorFinder(Graph<V,E> g) {
-        this.graph = g;
-    }
-
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
-        // For each edge in the graph
+        // Iterate through all edges in the graph
         for (E edge : graph.edgeSet()) {
+            // Get endpoints of the edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Create a working copy of the graph without the current edge
-            Graph<V,E> workingGraph = new SimpleGraph<>(graph.getVertexSupplier(), graph.getEdgeSupplier(), false);
-            for (V vertex : graph.vertexSet()) {
-                workingGraph.addVertex(vertex);
-            }
-            for (E e : graph.edgeSet()) {
-                if (!e.equals(edge)) {
-                    workingGraph.addEdge(graph.getEdgeSource(e), graph.getEdgeTarget(e));
+            // Get common neighbors of the endpoints
+            Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
+            Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
+            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
+            commonNeighbors.retainAll(targetNeighbors);
+            
+            // Compute minimal separators for this edge
+            List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
+            
+            // For each pair of common neighbors
+            List<V> neighborList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < neighborList.size(); i++) {
+                for (int j = i + 1; j < neighborList.size(); j++) {
+                    V v1 = neighborList.get(i);
+                    V v2 = neighborList.get(j);
+                    
+                    // Check if they form a minimal separator
+                    if (isMinimalSeparator(v1, v2, source, target)) {
+                        edgeSeparators.add(new Pair<>(
+                            graph.getVertexIndex(v1),
+                            graph.getVertexIndex(v2)
+                        ));
+                    }
                 }
             }
             
-            // Find minimum separators between source and target
-            List<Pair<Integer,Integer>> separators = findMinimumSeparators(workingGraph, source, target);
-            
-            // Add to global list
-            globalSeparators.add(Pair.of(separators, edge));
+            // Add edge separators to global list
+            if (!edgeSeparators.isEmpty()) {
+                globalSeparators.add(new Pair<>(edgeSeparators, edge));
+            }
         }
         
         return globalSeparators;
     }
     
-    private List<Pair<Integer,Integer>> findMinimumSeparators(Graph<V,E> g, V source, V target) {
-        List<Pair<Integer,Integer>> separators = new ArrayList<>();
+    // Helper method to check if two vertices form a minimal separator
+    private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
+        // Remove v1 and v2 from graph temporarily
+        Set<V> separator = new HashSet<>();
+        separator.add(v1);
+        separator.add(v2);
         
-        // Convert vertices to integers for min cut algorithm
-        Map<V,Integer> vertexMap = new HashMap<>();
-        int index = 0;
-        for (V vertex : g.vertexSet()) {
-            vertexMap.put(vertex, index++);
-        }
+        // Check if source and target are in different components
+        Set<V> visited = new HashSet<>();
+        visited.add(v1);
+        visited.add(v2);
         
-        // Create flow network
-        SimpleGraph<Integer,DefaultWeightedEdge> flowNetwork = 
-            new SimpleGraph<>(DefaultWeightedEdge.class);
-            
-        // Add vertices
-        for (int i = 0; i < vertexMap.size(); i++) {
-            flowNetwork.addVertex(i);
-        }
+        Queue<V> queue = new LinkedList<>();
+        queue.add(source);
+        visited.add(source);
         
-        // Add edges with weight 1
-        for (E e : g.edgeSet()) {
-            int v1 = vertexMap.get(g.getEdgeSource(e));
-            int v2 = vertexMap.get(g.getEdgeTarget(e));
-            DefaultWeightedEdge newEdge = flowNetwork.addEdge(v1, v2);
-            if (newEdge != null) {
-                flowNetwork.setEdgeWeight(newEdge, 1.0);
-            }
-        }
-        
-        // Find min cut
-        MinimumSTCutAlgorithm<Integer,DefaultWeightedEdge> minCutAlg = 
-            new EdmondsKarpMFImpl<>(flowNetwork);
-            
-        int s = vertexMap.get(source);
-        int t = vertexMap.get(target);
-        
-        double minCutWeight = minCutAlg.calculateMinCut(s, t);
-        Set<Integer> sourcePartition = minCutAlg.getSourcePartition();
-        
-        // Add separator pairs
-        for (Integer v1 : sourcePartition) {
-            for (Integer v2 : flowNetwork.vertexSet()) {
-                if (!sourcePartition.contains(v2)) {
-                    if (flowNetwork.containsEdge(v1, v2)) {
-                        separators.add(Pair.of(v1, v2));
+        boolean foundTarget = false;
+        while (!queue.isEmpty() && !foundTarget) {
+            V current = queue.poll();
+            for (V neighbor : graph.neighborListOf(current)) {
+                if (!visited.contains(neighbor)) {
+                    if (neighbor.equals(target)) {
+                        foundTarget = true;
+                        break;
                     }
+                    visited.add(neighbor);
+                    queue.add(neighbor);
                 }
             }
         }
         
-        return separators;
+        // If target not reachable, v1 and v2 form a separator
+        return !foundTarget;
     }
 }

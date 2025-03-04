@@ -1,17 +1,22 @@
 import java.util.Arrays;
 
 public class ByteArrayMatcher {
+    
     private byte[] internalArray;
     
+    public ByteArrayMatcher(byte[] array) {
+        this.internalArray = array;
+    }
+    
     /**
-     * 如果内部数组的内容与提供的数组匹配，则返回真。
+     * Returns true if the contents of the internal array and the provided array match.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
         if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
         
-        if (internalArray == null || internalArray.length != len) {
+        if (len != internalArray.length) {
             return false;
         }
         

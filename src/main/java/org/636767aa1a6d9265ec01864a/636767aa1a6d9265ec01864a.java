@@ -1,38 +1,31 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class ByteArrayConverter {
-    private byte[] data;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 16;
-
+    private ByteArrayOutputStream outputStream;
+    
     public ByteArrayConverter() {
-        data = new byte[DEFAULT_CAPACITY];
-        size = 0;
+        outputStream = new ByteArrayOutputStream();
     }
-
+    
     /**
-     * 将字节复制到 {@code byte[]} 中。
+     * Copies bytes to a {@code byte[]}.
+     * @return byte array containing the bytes
      */
     public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
+        if (outputStream == null) {
+            return new byte[0];
+        }
+        return outputStream.toByteArray();
     }
-
-    // Helper methods to add bytes
-    public void add(byte b) {
-        ensureCapacity(size + 1);
-        data[size++] = b;
-    }
-
-    public void add(byte[] bytes) {
-        ensureCapacity(size + bytes.length);
-        System.arraycopy(bytes, 0, data, size, bytes.length);
-        size += bytes.length;
-    }
-
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+    
+    // Helper method to write bytes to the stream
+    public void write(byte[] bytes) {
+        try {
+            outputStream.write(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing bytes to stream", e);
         }
     }
 }

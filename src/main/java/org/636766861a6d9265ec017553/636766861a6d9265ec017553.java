@@ -1,22 +1,21 @@
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class Template {
-    private Map<String, Object> variables;
-    
+    private Set<String> templateVariables;
+
     public Template() {
-        variables = new HashMap<>();
+        this.templateVariables = new HashSet<>();
     }
-    
+
     /**
-     * 确定模板变量是否是该模板的成员。
-     * @param name 模板变量的名称。
-     * @return 如果模板变量是模板的成员，则返回真；否则返回假。
+     * Ascertain if a template variable is a member of this template.
+     * @param name The template variable.
+     * @return true if the template variable is a member of the template, otherwise false.
      */
     public final boolean isTemplateVariablePresent(String name) {
         if (name == null) {
             return false;
         }
-        return variables.containsKey(name);
+        return templateVariables.contains(name.trim());
     }
 }

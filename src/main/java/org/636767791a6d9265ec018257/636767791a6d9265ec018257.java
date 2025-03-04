@@ -1,21 +1,17 @@
 import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
-public class LogTable {
-    private final List<LogRecord> logRecords;
-    private final DefaultTableModel tableModel;
+public class Logger {
     
-    public LogTable() {
-        logRecords = new ArrayList<>();
-        tableModel = new DefaultTableModel();
-        // Initialize table columns
-        tableModel.addColumn("Time");
-        tableModel.addColumn("Level"); 
-        tableModel.addColumn("Message");
+    private LogTable logTable; // Assume LogTable is a custom JTable component
+    
+    public Logger(LogTable table) {
+        this.logTable = table;
     }
 
     /**
-     * 添加日志记录消息以显示在 LogTable 中。此方法是线程安全的，因为它将请求发送到 SwingThread，而不是直接处理。
+     * Add a log record message to be displayed in the LogTable. This method is thread-safe 
+     * as it posts requests to the SwingThread rather than processing directly.
      */
     public void addMessage(final LogRecord lr) {
         if (lr == null) {
@@ -26,20 +22,21 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                logRecords.add(lr);
+                // Add the log record to the table model
+                logTable.getModel().addRow(new Object[]{
+                    lr.getMillis(),
+                    lr.getLevel(),
+                    lr.getMessage(),
+                    lr.getSourceClassName(),
+                    lr.getSourceMethodName()
+                });
                 
-                // Add new row to table model
-                Object[] rowData = new Object[3];
-                rowData[0] = new java.util.Date(lr.getMillis());
-                rowData[1] = lr.getLevel();
-                rowData[2] = lr.getMessage();
-                
-                tableModel.addRow(rowData);
-                
-                // Auto scroll to bottom
-                int lastRow = tableModel.getRowCount() - 1;
+                // Auto scroll to latest entry
+                int lastRow = logTable.getModel().getRowCount() - 1;
                 if (lastRow >= 0) {
-                    scrollRectToVisible(getCellRect(lastRow, 0, true));
+                    logTable.scrollRectToVisible(
+                        logTable.getCellRect(lastRow, 0, true)
+                    );
                 }
             }
         });

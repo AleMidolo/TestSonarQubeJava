@@ -1,27 +1,31 @@
-import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.Appender;
-import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.Appender;
+import org.apache.log4j.LoggingEvent;
+import org.apache.log4j.spi.AppenderAttachable;
+import java.util.Enumeration;
 
-public class AppenderHandler {
+public class AppenderManager implements AppenderAttachable {
     
-    private CopyOnWriteArrayList<Appender<LoggingEvent>> appenderList = new CopyOnWriteArrayList<>();
-    
-    /**
-     * 对所有附加的附加器调用<code>doAppend</code>方法。
+    private Vector<Appender> appenders;
+
+    public AppenderManager() {
+        appenders = new Vector<Appender>();
+    }
+
+    /** 
+     * Call the <code>doAppend</code> method on all attached appenders.  
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
-        if (event != null) {
-            Iterator<Appender<LoggingEvent>> iter = appenderList.iterator();
-            while (iter.hasNext()) {
-                Appender<LoggingEvent> appender = iter.next();
-                if (appender != null) {
+        
+        if(appenders != null) {
+            size = appenders.size();
+            for(Enumeration<Appender> enumeration = appenders.elements(); 
+                enumeration.hasMoreElements();) {
+                    Appender appender = enumeration.nextElement();
                     appender.doAppend(event);
-                    size++;
-                }
             }
         }
+        
         return size;
     }
 }

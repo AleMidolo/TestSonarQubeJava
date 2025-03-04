@@ -1,22 +1,20 @@
-public class Stack {
-    private int[] stack;
-    private int top;
-    private static final int DEFAULT_SIZE = 1000;
+import java.util.Stack;
 
-    public Stack() {
-        stack = new int[DEFAULT_SIZE];
-        top = -1;
+public class FrameStack {
+    private Stack<Integer> outputFrameStack;
+
+    public FrameStack() {
+        outputFrameStack = new Stack<>();
     }
 
     /**
-     * 从输出帧栈中弹出一个抽象类型并返回其值。
-     * @return 从输出帧栈中弹出的抽象类型。
-     * @throws IllegalStateException 如果栈为空
+     * Pops an abstract type from the output frame stack and returns its value.
+     * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
-        if (top < 0) {
-            throw new IllegalStateException("Stack is empty");
+        if (!outputFrameStack.isEmpty()) {
+            return outputFrameStack.pop();
         }
-        return stack[top--];
+        throw new IllegalStateException("Stack is empty");
     }
 }

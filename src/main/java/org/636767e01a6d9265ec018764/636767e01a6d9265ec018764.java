@@ -1,15 +1,15 @@
 import com.google.gson.JsonObject;
 import java.util.List;
 
-public class PropertiesConverter {
+public class PropertyConverter {
 
     /**
-     * 将进程属性转换为源数据
+     * Convert process properties to source data
      */
     private JsonObject convertProperties(List<KeyStringValuePair> properties) {
         JsonObject jsonObject = new JsonObject();
         
-        if (properties != null && !properties.isEmpty()) {
+        if (properties != null) {
             for (KeyStringValuePair property : properties) {
                 if (property.getKey() != null && property.getValue() != null) {
                     jsonObject.addProperty(property.getKey(), property.getValue());
@@ -19,16 +19,16 @@ public class PropertiesConverter {
         
         return jsonObject;
     }
-    
-    // KeyStringValuePair class for reference
+
+    // Helper class for key-value pairs
     private static class KeyStringValuePair {
         private String key;
         private String value;
-        
+
         public String getKey() {
             return key;
         }
-        
+
         public String getValue() {
             return value;
         }

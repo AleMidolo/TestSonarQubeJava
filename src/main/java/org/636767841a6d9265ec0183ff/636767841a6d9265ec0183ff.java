@@ -1,43 +1,38 @@
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.table.TableModel;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import java.awt.Rectangle;
 
 public class TableUtils {
     /**
-     * 选择指定的 JTable 中的行，并将指定的 JScrollPane 滚动到新选择的行。更重要的是，调用 repaint() 的延迟足够长，以便表格能够正确绘制新选择的行，即使该行可能在当前视图之外。
-     * @param table 应该属于指定的 JScrollPane
+     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane 
+     * to the newly selected row. More importantly, the call to repaint() delayed long enough to 
+     * have the table properly paint the newly selected row which may be offscreen
+     * @param table should belong to the specified JScrollPane
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null || row < 0 || row >= table.getRowCount()) {
+        if (row < 0 || row >= table.getRowCount()) {
             return;
         }
 
-        // 选择指定行
+        // Select the row
         table.setRowSelectionInterval(row, row);
 
-        // 计算要滚动到的矩形区域
+        // Get the rectangle for the selected row
         Rectangle rect = table.getCellRect(row, 0, true);
-        
-        // 滚动到指定区域
+
+        // Scroll to make the rectangle visible
         table.scrollRectToVisible(rect);
-        
-        // 使用 SwingUtilities 确保在 EDT 中执行重绘
+
+        // Ensure proper repainting by using SwingUtilities.invokeLater
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // 重新验证并重绘组件
-                table.revalidate();
-                table.repaint();
+                // Scroll the viewport to show the selected row
+                pane.getViewport().scrollRectToVisible(rect);
                 
-                // 额外延迟以确保正确绘制
-                Timer timer = new Timer(100, e -> {
-                    table.revalidate();
-                    table.repaint();
-                    pane.revalidate();
-                    pane.repaint();
-                });
-                timer.setRepeats(false);
-                timer.start();
+                // Force a repaint
+                table.repaint();
             }
         });
     }

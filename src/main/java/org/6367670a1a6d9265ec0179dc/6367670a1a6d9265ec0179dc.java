@@ -1,55 +1,57 @@
-import org.objectweb.asm.Frame;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.SymbolTable;
+import org.objectweb.asm.Frame;
+import org.objectweb.asm.MethodWriter;
 import org.objectweb.asm.ByteVector;
+import org.objectweb.asm.Type;
 
 public class StackMapTableWriter {
     private ByteVector stackMapTableEntries;
     private Frame currentFrame;
-    private SymbolTable symbolTable;
-    
+    private static final int ITEM_TOP = 0;
+    private static final int ITEM_INTEGER = 1;
+    private static final int ITEM_FLOAT = 2;
+    private static final int ITEM_DOUBLE = 3;
+    private static final int ITEM_LONG = 4;
+    private static final int ITEM_NULL = 5;
+    private static final int ITEM_UNINITIALIZED_THIS = 6;
+    private static final int ITEM_OBJECT = 7;
+    private static final int ITEM_UNINITIALIZED = 8;
+
     private void putAbstractTypes(final int start, final int end) {
-        for (int i = start; i < end; ++i) {
-            putAbstractType(currentFrame.getLocal(i));
-        }
-    }
-    
-    private void putAbstractType(final int abstractType) {
-        int type = abstractType >>> 32;
-        int typeInfo = abstractType & 0xFFFFFFFFL;
-        
-        switch (type) {
-            case Frame.ITEM_TOP:
-                stackMapTableEntries.putByte(0);
-                break;
-            case Frame.ITEM_INTEGER:
-                stackMapTableEntries.putByte(1);
-                break;
-            case Frame.ITEM_FLOAT:
-                stackMapTableEntries.putByte(2);
-                break;
-            case Frame.ITEM_DOUBLE:
-                stackMapTableEntries.putByte(3);
-                break;
-            case Frame.ITEM_LONG:
-                stackMapTableEntries.putByte(4);
-                break;
-            case Frame.ITEM_NULL:
-                stackMapTableEntries.putByte(5);
-                break;
-            case Frame.ITEM_UNINITIALIZED_THIS:
-                stackMapTableEntries.putByte(6);
-                break;
-            case Frame.ITEM_OBJECT:
-                stackMapTableEntries.putByte(7);
-                stackMapTableEntries.putShort(symbolTable.addConstantClass((String)typeInfo).index);
-                break;
-            case Frame.ITEM_UNINITIALIZED:
-                stackMapTableEntries.putByte(8);
-                stackMapTableEntries.putShort(((Label)typeInfo).bytecodeOffset);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid abstract type: " + abstractType);
+        for (int i = start; i < end; i++) {
+            Object type = currentFrame.getStack(i);
+            if (type instanceof Integer) {
+                int t = ((Integer) type).intValue();
+                switch (t) {
+                    case Frame.ITEM_TOP:
+                        stackMapTableEntries.putByte(ITEM_TOP);
+                        break;
+                    case Frame.ITEM_INTEGER:
+                        stackMapTableEntries.putByte(ITEM_INTEGER);
+                        break;
+                    case Frame.ITEM_FLOAT:
+                        stackMapTableEntries.putByte(ITEM_FLOAT);
+                        break;
+                    case Frame.ITEM_DOUBLE:
+                        stackMapTableEntries.putByte(ITEM_DOUBLE);
+                        break;
+                    case Frame.ITEM_LONG:
+                        stackMapTableEntries.putByte(ITEM_LONG);
+                        break;
+                    case Frame.ITEM_NULL:
+                        stackMapTableEntries.putByte(ITEM_NULL);
+                        break;
+                    case Frame.ITEM_UNINITIALIZED_THIS:
+                        stackMapTableEntries.putByte(ITEM_UNINITIALIZED_THIS);
+                        break;
+                }
+            } else if (type instanceof String) {
+                stackMapTableEntries.putByte(ITEM_OBJECT)
+                    .putShort(currentFrame.getTypeIndex((String) type));
+            } else if (type instanceof Label) {
+                stackMapTableEntries.putByte(ITEM_UNINITIALIZED)
+                    .putShort(((Label) type).position);
+            }
         }
     }
 }

@@ -1,24 +1,21 @@
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateEncoder {
     /**
-     * 对包含模板参数名称的字符串进行编，特别是字符 '{' 和 '}' 将被百分比编码。
-     * @param s 包含零个或多个模板参数名称的字符串
-     * @return 编码后的模板参数名称字符串。
+     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+     * @param s the string with zero or more template parameters names
+     * @return the string with encoded template parameters names.
      */
     public static String encodeTemplateNames(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+        if (s == null) {
+            return null;
         }
-
-        try {
-            // Replace '{' with '%7B' and '}' with '%7D'
-            String encoded = s.replace("{", "%7B")
-                            .replace("}", "%7D");
-            return encoded;
-        } catch (Exception e) {
-            return s;
-        }
+        
+        // Replace { with %7B and } with %7D
+        String encoded = s.replaceAll("\\{", "%7B")
+                         .replaceAll("\\}", "%7D");
+                         
+        return encoded;
     }
 }

@@ -1,53 +1,59 @@
 import java.util.*;
 
 public class Graph {
+    private List<Node> nodes;
+    private List<Edge> edges;
+    private int currentNodeIndex;
+    
+    // Node class to represent graph vertices
     private class Node {
-        int id;
-        boolean isVirtual;
-        Node realNode;
-        List<Edge> edges;
+        private int id;
+        private boolean isVirtual;
+        private Node realCounterpart;
         
-        Node(int id) {
+        public Node(int id) {
             this.id = id;
             this.isVirtual = false;
-            this.edges = new ArrayList<>();
+            this.realCounterpart = null;
         }
     }
-
-    private class Edge {
-        Node source;
-        Node target;
-        int weight;
-        
-        Edge(Node source, Node target) {
-            this.source = source;
-            this.target = target;
-            this.weight = 1;
-        }
-    }
-
-    private Node currentNode;
-    private Node nextNode;
     
+    // Edge class to represent graph edges
+    private class Edge {
+        private Node source;
+        private Node destination;
+        
+        public Edge(Node source, Node destination) {
+            this.source = source;
+            this.destination = destination;
+        }
+    }
+    
+    /**
+     * Returns an edge connecting previously returned node with node, which will be returned next. 
+     * If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
+     * @return an edge from the current node to the next node
+     */
     public Edge edgeToNext() {
-        if (currentNode == null || nextNode == null) {
+        if (currentNodeIndex >= nodes.size() - 1) {
             return null;
         }
         
-        // Get real nodes if virtual
-        Node realSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
-        Node realTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
+        Node currentNode = nodes.get(currentNodeIndex);
+        Node nextNode = nodes.get(currentNodeIndex + 1);
         
-        // Find edge between real nodes
-        for (Edge edge : realSource.edges) {
-            if (edge.target == realTarget) {
+        // If nodes are virtual, use their real counterparts
+        Node sourceNode = currentNode.isVirtual ? currentNode.realCounterpart : currentNode;
+        Node destNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
+        
+        // Find the edge connecting these nodes
+        for (Edge edge : edges) {
+            if ((edge.source == sourceNode && edge.destination == destNode) ||
+                (edge.source == destNode && edge.destination == sourceNode)) {
                 return edge;
             }
         }
         
-        // Create new edge if none exists
-        Edge newEdge = new Edge(realSource, realTarget);
-        realSource.edges.add(newEdge);
-        return newEdge;
+        return null;
     }
 }

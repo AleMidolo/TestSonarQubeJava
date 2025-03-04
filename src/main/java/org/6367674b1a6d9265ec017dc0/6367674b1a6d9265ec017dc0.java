@@ -1,21 +1,27 @@
 import java.util.*;
 
 public class Graph<V,E> {
-    // 假设图使用邻接表表示
-    private Map<V, Map<V, E>> graph = new HashMap<>();
-    
+
+    // Assume these fields exist in the Graph class
+    private Map<V, Set<E>> vertexMap; // Maps vertices to their incident edges
+    private Map<E, V[]> edgeMap; // Maps edges to their endpoint vertices
+
+    /**
+     * Compute all vertices that have positive degree by iterating over the edges on purpose. 
+     * This keeps the complexity to O(m) where m is the number of edges.
+     * @return set of vertices with positive degree
+     */
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         
-        // 遍历所有边来找到具有正度的顶点
-        for(V vertex : graph.keySet()) {
-            Map<V, E> edges = graph.get(vertex);
-            if(edges != null && !edges.isEmpty()) {
-                // 如果顶点有出边,加入集合
-                visibleVertices.add(vertex);
-                // 将所有邻接点也加入集合(它们有入边)
-                visibleVertices.addAll(edges.keySet());
-            }
+        // Iterate through all edges
+        for (E edge : edgeMap.keySet()) {
+            // Get the vertices connected by this edge
+            V[] endpoints = edgeMap.get(edge);
+            
+            // Add both endpoints to the visible vertices set
+            visibleVertices.add(endpoints[0]);
+            visibleVertices.add(endpoints[1]);
         }
         
         return visibleVertices;

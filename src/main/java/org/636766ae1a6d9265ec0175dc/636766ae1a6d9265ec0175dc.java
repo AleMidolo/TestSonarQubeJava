@@ -1,20 +1,18 @@
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 
-public class ResponseUtils {
+public class HttpResponseChecker {
     
-    /**
-     * 检查实际响应是否为部分内容（HTTP 206 代码）
-     * @return 是否为部分内容
-     */
-    public Boolean isPartialContentResponse() {
-        HttpServletResponse response = getResponse(); // Assuming getResponse() exists
-        return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
+    private HttpStatus responseStatus;
+    
+    public HttpResponseChecker(HttpStatus responseStatus) {
+        this.responseStatus = responseStatus;
     }
     
-    // Helper method to get current response
-    private HttpServletResponse getResponse() {
-        // Implementation details would depend on your framework
-        // This is just a placeholder
-        return null;
+    /** 
+     * Check if the actual response is a Partial Content (HTTP 206 code)
+     * @return is partial content or not
+     */
+    public Boolean isPartialContentResponse() {
+        return HttpStatus.PARTIAL_CONTENT.equals(responseStatus);
     }
 }

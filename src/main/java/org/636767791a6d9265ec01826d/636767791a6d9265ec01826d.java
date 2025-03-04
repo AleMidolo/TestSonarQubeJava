@@ -3,9 +3,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PropertyUtils {
-
     /**
-     * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
+     * Find the value corresponding to <code>key</code> in <code>props</code>. 
+     * Then perform variable substitution on the found value.
      */
     public static String findAndSubst(String key, Properties props) {
         if (key == null || props == null) {
@@ -17,22 +17,22 @@ public class PropertyUtils {
             return null;
         }
 
-        // Pattern for ${var} style variables
+        // Pattern to match ${variable} format
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
+        // Replace each ${variable} with its value from properties
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
+            String varValue = props.getProperty(varName);
             
-            // If no replacement found, keep original ${var}
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
+            // If variable not found, leave as is
+            if (varValue == null) {
+                varValue = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid issues with $ and \
-            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
         }
         matcher.appendTail(result);
 

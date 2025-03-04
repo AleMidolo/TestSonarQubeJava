@@ -4,41 +4,37 @@ import java.nio.file.Paths;
 
 public class PathUtils {
     /**
-     * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即"/"分隔符）。
-     * @param path 起始路径（通常是完整的文件路径）
-     * @param relativePath 要应用的相对路径（相对于上述完整文件路径）
-     * @return 应用相对路径后得到的完整文件路径
+     * Apply the given relative path to the given path, assuming standard Java folder separation (i.e. "/" separators).
+     * @param path the path to start from (usually a full file path)
+     * @param relativePath the relative path to apply(relative to the full file path above)
+     * @return the full file path that results from applying the relative path
      */
     public static String applyRelativePath(String path, String relativePath) {
-        if (path == null || relativePath == null) {
-            return null;
-        }
-
-        // 标准化路径分隔符
+        // Normalize path separators
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
-
-        // 如果relativePath是绝对路径，直接返回
-        if (relativePath.startsWith("/")) {
+        
+        // Handle empty cases
+        if (path == null || path.isEmpty()) {
             return relativePath;
         }
+        if (relativePath == null || relativePath.isEmpty()) {
+            return path;
+        }
 
-        // 使用Path API处理路径
+        // Convert to Path objects for proper resolution
         Path basePath = Paths.get(path);
+        Path relPath = Paths.get(relativePath);
         
-        // 如果path是文件，获取其父目录
-        if (!path.endsWith("/")) {
-            basePath = basePath.getParent();
+        // If relativePath is absolute, return it directly
+        if (relPath.isAbsolute()) {
+            return relativePath;
         }
-
-        if (basePath == null) {
-            basePath = Paths.get("");
-        }
-
-        // 解析并规范化路径
-        Path resolvedPath = basePath.resolve(relativePath).normalize();
         
-        // 转换为字符串并确保使用正斜杠
-        return resolvedPath.toString().replace('\\', '/');
+        // Resolve the paths and normalize
+        Path resolvedPath = basePath.resolveSibling(relPath).normalize();
+        
+        // Convert back to string with forward slashes
+        return resolvedPath.toString().replace(File.separatorChar, '/');
     }
 }

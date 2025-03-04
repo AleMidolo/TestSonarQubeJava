@@ -3,32 +3,28 @@ import java.time.format.DateTimeFormatter;
 
 public class TimeBucketCompressor {
     
-    /**
-     * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，
-     * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
-     */
     static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Convert timeBucket to LocalDate
+        // Convert timeBucket to string in YYYYMMDD format
         String dateStr = String.valueOf(timeBucket);
+        
+        // Parse the date string to LocalDate
         LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyyMMdd"));
         
         // Get day of month
         int dayOfMonth = date.getDayOfMonth();
         
-        // Calculate compressed day
+        // Calculate compressed day based on dayStep
         int compressedDay;
-        if (dayOfMonth <= dayStep) {
-            compressedDay = 1;
-        } else if (dayOfMonth <= dayStep * 2) {
-            compressedDay = dayStep + 1;
+        if (dayOfMonth % dayStep == 0) {
+            compressedDay = dayOfMonth;
         } else {
-            compressedDay = dayStep * 2 + 1;
+            compressedDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
         }
         
         // Create new date with compressed day
         LocalDate compressedDate = date.withDayOfMonth(compressedDay);
         
-        // Convert back to long
+        // Convert back to long in YYYYMMDD format
         return Long.parseLong(compressedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
     }
 }

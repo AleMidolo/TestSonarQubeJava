@@ -1,33 +1,32 @@
 import java.io.IOException;
 import java.io.DataInputStream;
 
-public class DataReader {
+public class BinaryReader {
     private DataInputStream input;
 
-    public DataReader(DataInputStream input) {
+    public BinaryReader(DataInputStream input) {
         this.input = input;
     }
 
     /**
-     * 从流中读取 {@code string} 字段值。
+     * Read a {@code string} field value from the stream.
      */
     @Override
     public String readString() throws IOException {
-        // 首先读取字符串长度
+        // Read string length first
         int length = input.readInt();
         
-        // 如果长度为-1,表示null值
-        if (length == -1) {
+        if (length < 0) {
             return null;
         }
         
-        // 创建byte数组来存储字符串数据
+        // Create byte array to hold string data
         byte[] bytes = new byte[length];
         
-        // 从流中读取字符串数据
+        // Read bytes from stream
         input.readFully(bytes);
         
-        // 将byte数组转换为字符串并返回
+        // Convert bytes to string using UTF-8 encoding
         return new String(bytes, "UTF-8");
     }
 }

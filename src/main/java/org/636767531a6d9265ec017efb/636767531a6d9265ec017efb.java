@@ -5,22 +5,22 @@ public class Bucket {
     private Bucket next;
     
     /**
-     * 在数据结构中将此桶插入到 {@code bucket} 之前。
-     * @param bucket 作为当前桶下一个的桶。
+     * Inserts this bucket in the data structure before the {@code bucket}.
+     * @param bucket the bucket, that will be the next to this bucket.
      */
     void insertBefore(Bucket bucket) {
-        Objects.requireNonNull(bucket, "bucket cannot be null");
+        Objects.requireNonNull(bucket, "Bucket cannot be null");
         
-        // Set this bucket's next reference
+        // Set this bucket's next pointer to the given bucket
         this.next = bucket;
         
-        // Set this bucket's prev reference to bucket's previous
+        // Set this bucket's prev pointer to the given bucket's previous
         this.prev = bucket.prev;
         
-        // Update bucket's prev reference to point to this
+        // Update the given bucket's prev pointer to point to this bucket
         bucket.prev = this;
         
-        // If there was a previous bucket, update its next reference
+        // If there was a previous bucket, update its next pointer
         if (this.prev != null) {
             this.prev.next = this;
         }

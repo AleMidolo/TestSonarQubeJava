@@ -3,22 +3,21 @@ import java.util.*;
 public class Graph {
     private boolean[] visited;
     private int currentVertex;
-    private final int vertices;
+    private int numVertices;
     
     public Graph(int v) {
-        vertices = v;
+        numVertices = v;
         visited = new boolean[v];
         currentVertex = 0;
     }
 
     @Override
     public boolean hasNext() {
-        // 从当前位置开始查找下一个未访问的顶点
-        while (currentVertex < vertices) {
-            if (!visited[currentVertex]) {
+        // Check if there are any unvisited vertices remaining
+        for (int i = 0; i < numVertices; i++) {
+            if (!visited[i]) {
                 return true;
             }
-            currentVertex++;
         }
         return false;
     }

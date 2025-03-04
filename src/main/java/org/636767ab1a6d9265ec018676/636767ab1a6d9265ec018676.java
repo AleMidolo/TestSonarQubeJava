@@ -1,6 +1,6 @@
 public class HexChecker {
     /**
-     * 这是一个十六进制数字吗？
+     * Is this a hex digit?
      */
     private static boolean isHex(final char c) {
         return (c >= '0' && c <= '9') || 

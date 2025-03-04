@@ -12,51 +12,41 @@ public class UTF8Writer {
   byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
   LinkedBuffer currentBuffer = lb;
 
-  for (byte b : utf8Bytes) {
-  if (currentBuffer.isFull()) {
-  LinkedBuffer nextBuffer = new LinkedBuffer(currentBuffer.getCapacity());
-  currentBuffer.setNext(nextBuffer);
-  currentBuffer = nextBuffer;
-  session.nextBuffer(currentBuffer);
+  int remaining = utf8Bytes.length;
+  int position = 0;
+
+  while (remaining > 0) {
+  int available = currentBuffer.buffer.length - currentBuffer.offset;
+  int copyLength = Math.min(available, remaining);
+
+  System.arraycopy(utf8Bytes, position, currentBuffer.buffer, currentBuffer.offset, copyLength);
+  
+  currentBuffer.offset += copyLength;
+  position += copyLength;
+  remaining -= copyLength;
+
+  if (remaining > 0) {
+  currentBuffer = new LinkedBuffer(Math.max(remaining, 256));
+  session.tail = currentBuffer;
   }
-  currentBuffer.write(b);
   }
 
   return currentBuffer;
   }
 
   private static class LinkedBuffer {
-  private byte[] buffer;
-  private int offset;
-  private int capacity;
-  private LinkedBuffer next;
+  byte[] buffer;
+  int offset;
+  LinkedBuffer next;
 
-  public LinkedBuffer(int capacity) {
-  this.capacity = capacity;
-  this.buffer = new byte[capacity];
+  LinkedBuffer(int size) {
+  this.buffer = new byte[size];
   this.offset = 0;
-  }
-
-  public boolean isFull() {
-  return offset >= capacity;
-  }
-
-  public void write(byte b) {
-  buffer[offset++] = b;
-  }
-
-  public int getCapacity() {
-  return capacity;
-  }
-
-  public void setNext(LinkedBuffer next) {
-  this.next = next;
+  this.next = null;
   }
   }
 
   private static class WriteSession {
-  public void nextBuffer(LinkedBuffer buffer) {
-  // Implementation for managing write session
-  }
+  LinkedBuffer tail;
   }
 }

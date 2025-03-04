@@ -9,6 +9,7 @@ public class CharUtils {
   * CharUtils.isAsciiAlphaUpper('\n') = false
   * CharUtils.isAsciiAlphaUpper('&copy;') = false
   * </pre>
+  *
   * @param ch il carattere da controllare
   * @return true se compreso tra 65 e 90 inclusi
   */

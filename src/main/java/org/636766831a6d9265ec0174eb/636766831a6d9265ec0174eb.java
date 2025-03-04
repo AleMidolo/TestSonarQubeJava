@@ -25,7 +25,7 @@ public class FileHandler {
   }
   }
   
-  // Placeholder for add method
+  // Placeholder for the add method that would be called by addReverse
   private void add(File file) {
   // Implementation of add method would go here
   }

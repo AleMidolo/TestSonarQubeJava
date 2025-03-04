@@ -14,22 +14,20 @@ public class ByteVector {
   // Ensure capacity
   ensureCapacity(size + byteLength);
   
-  // If input array is null, add null bytes
-  if (byteArrayValue == null) {
-  for (int i = 0; i < byteLength; i++) {
-  data[size++] = 0;
-  }
-  } else {
-  // Input validation
+  if (byteArrayValue != null) {
+  // Validate offset and length
   if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
   throw new IndexOutOfBoundsException("Invalid offset or length");
   }
   
   // Copy bytes from input array
   System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-  size += byteLength;
+  } else {
+  // Fill with null bytes if input array is null
+  Arrays.fill(data, size, size + byteLength, (byte) 0);
   }
   
+  size += byteLength;
   return this;
   }
 
@@ -38,5 +36,14 @@ public class ByteVector {
   int newCapacity = Math.max(data.length * 2, minCapacity);
   data = Arrays.copyOf(data, newCapacity);
   }
+  }
+  
+  // Helper methods for testing/accessing the vector
+  public byte[] getData() {
+  return Arrays.copyOf(data, size);
+  }
+  
+  public int size() {
+  return size;
   }
 }

@@ -34,9 +34,9 @@ public class GraphUtils {
   graph, // source graph
   graph, // target graph (same as source for identity mapping)
   vertexCorr,
-  vertexCorr, // forward and backward vertex correspondence are the same
+  vertexCorr, // inverse vertex correspondence is the same for identity
   edgeCorr,
-  edgeCorr  // forward and backward edge correspondence are the same
+  edgeCorr  // inverse edge correspondence is the same for identity
   );
   }
 }

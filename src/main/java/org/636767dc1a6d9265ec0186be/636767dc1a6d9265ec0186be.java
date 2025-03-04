@@ -1,6 +1,8 @@
 public class TimeCompressor {
   /**
-  * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, per 20000115 è 20000112, e per 20000123 è 20000123.
+  * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. 
+  * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, 
+  * per 20000115 è 20000112, e per 20000123 è 20000123.
   */
   static long compressTimeBucket(long timeBucket, int dayStep) {
   // Convert timeBucket to string to extract day
@@ -20,7 +22,6 @@ public class TimeCompressor {
   }
   
   // Format back to long
-  String compressedTime = String.format("%04d%02d%02d", year, month, compressedDay);
-  return Long.parseLong(compressedTime);
+  return Long.parseLong(String.format("%04d%02d%02d", year, month, compressedDay));
   }
 }

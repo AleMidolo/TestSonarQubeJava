@@ -16,14 +16,13 @@ public class SymbolTable {
   */
   public int addType(final String value) {
   // Check if type already exists
-  for (int i = 0; i < types.size(); i++) {
-  if (types.get(i).equals(value)) {
-  return i; // Return existing index
-  }
+  int existingIndex = types.indexOf(value);
+  if (existingIndex != -1) {
+  return existingIndex;
   }
   
-  // Add new type
+  // Add new type and return its index
   types.add(value);
-  return types.size() - 1; // Return new index
+  return types.size() - 1;
   }
 }

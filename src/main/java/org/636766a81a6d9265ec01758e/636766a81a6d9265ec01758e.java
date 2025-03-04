@@ -4,16 +4,16 @@ public class HashUtils {
   return 2;
   }
   
-  int candidate = desiredCapacity;
-  if (candidate % 2 == 0) {
-  candidate++; // Make it odd
+  int num = desiredCapacity;
+  if (num % 2 == 0) {
+  num++; // Start with odd number
   }
   
-  while (!isPrime(candidate)) {
-  candidate += 2;
+  while (!isPrime(num)) {
+  num += 2;
   }
   
-  return candidate;
+  return num;
   }
   
   private static boolean isPrime(int n) {

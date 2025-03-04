@@ -10,14 +10,15 @@ public class MetricsCache {
   */
   @Override
   public void accept(final METRICS data) {
-  Objects.requireNonNull(data, "Input data cannot be null");
-  
+  if (data == null) {
+  return;
+  }
+
   METRICS currentValue = cache.get();
   if (currentValue == null) {
   cache.set(data);
   } else {
-  METRICS mergedValue = currentValue.merge(data);
-  cache.set(mergedValue);
+  cache.set(currentValue.merge(data));
   }
   }
 }

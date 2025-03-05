@@ -1,37 +1,38 @@
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.JsonObject;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ContentBuilder {
 
     /**
-     * Build content, if it has ats someone set the ats
-     * @param content The raw content string
-     * @return Processed content with @ mentions extracted
+     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
      */
-    public static String buildContent(String content) {
-        if (content == null || content.isEmpty()) {
-            return "";
+    private Map<String,Object> buildContent(JsonObject jsonObject) {
+        Map<String,Object> content = new HashMap<>();
+        
+        if(jsonObject == null) {
+            return content;
         }
 
-        // Pattern to match @mentions
+        // 获取消息内容
+        String text = jsonObject.has("text") ? jsonObject.get("text").getAsString() : "";
+        content.put("text", text);
+
+        // 解析@信息
+        List<Map<String,String>> atList = new ArrayList<>();
         Pattern pattern = Pattern.compile("@([\\w\\-]+)");
-        Matcher matcher = pattern.matcher(content);
+        Matcher matcher = pattern.matcher(text);
         
-        List<String> mentions = new ArrayList<>();
-        
-        // Find all @mentions
-        while (matcher.find()) {
-            mentions.add(matcher.group(1));
+        while(matcher.find()) {
+            Map<String,String> atInfo = new HashMap<>();
+            String username = matcher.group(1);
+            atInfo.put("username", username);
+            atList.add(atInfo);
         }
 
-        // If mentions found, process them
-        if (!mentions.isEmpty()) {
-            // Replace @mentions with proper format
-            for (String mention : mentions) {
-                content = content.replace("@" + mention, "<@" + mention + ">");
-            }
+        if(!atList.isEmpty()) {
+            content.put("at", atList);
         }
 
         return content;

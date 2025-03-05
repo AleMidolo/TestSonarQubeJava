@@ -1,15 +1,26 @@
 package org.apache.commons.lang3;
 
+/**
+ * ArrayUtils class containing array manipulation methods.
+ */
 public class ArrayUtils {
+
     /**
-     * <p>Checks whether two arrays are the same length, treating <code>null</code> arrays as length <code>0</code>.</p>
-     * @param array1 the first array, may be <code>null</code>
-     * @param array2 the second array, may be <code>null</code>
-     * @return <code>true</code> if length of arrays matches, treating<code>null</code> as an empty array
+     * <p>检查两个数组是否具有相同的长度，将 <code>null</code> 数组视为长度 <code>0</code>。</p>
+     * @param array1 第一个数组，可以为 <code>null</code>
+     * @param array2 第二个数组，可以为 <code>null</code>
+     * @return 如果数组的长度匹配则返回<code>true</code>，将 <code>null</code> 视为一个空数组
      */
-    public static boolean isSameLength(final Object[] array1, final Object[] array2) {
-        int length1 = array1 == null ? 0 : array1.length;
-        int length2 = array2 == null ? 0 : array2.length;
-        return length1 == length2;
+    public static boolean isSameLength(final double[] array1, final double[] array2) {
+        if (array1 == null && array2 == null) {
+            return true;
+        }
+        if (array1 == null) {
+            return array2.length == 0;
+        }
+        if (array2 == null) {
+            return array1.length == 0;
+        }
+        return array1.length == array2.length;
     }
 }

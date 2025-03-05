@@ -2,38 +2,28 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 10;
+    private int length;
     
     public ByteVector() {
-        data = new byte[DEFAULT_CAPACITY];
-        size = 0;
-    }
-
-    public ByteVector putTwoBytes(byte byteValue1, byte byteValue2) {
-        // Ensure capacity for 2 more bytes
-        ensureCapacity(size + 2);
-        
-        // Add the bytes
-        data[size++] = byteValue1;
-        data[size++] = byteValue2;
-        
-        return this;
+        data = new byte[64]; // Default initial capacity
     }
     
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
+    /**
+     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
+     * @param byteValue1 一个字节。
+     * @param byteValue2 另一个字节。
+     * @return 此字节向量。
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        if (length + 2 > data.length) {
+            // Double array size if needed
+            int newCapacity = Math.max(2 * data.length, length + 2);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-    
-    // Helper methods for testing/validation
-    public byte[] getData() {
-        return Arrays.copyOf(data, size);
-    }
-    
-    public int getSize() {
-        return size;
+        
+        data[length++] = (byte) byteValue1;
+        data[length++] = (byte) byteValue2;
+        
+        return this;
     }
 }

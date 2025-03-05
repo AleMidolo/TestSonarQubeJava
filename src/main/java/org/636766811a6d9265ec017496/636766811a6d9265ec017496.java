@@ -1,25 +1,28 @@
 import java.io.File;
-import java.util.Queue;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class FileIterator {
     private Queue<File> fileQueue = new LinkedList<>();
+    private File currentFile;
     
     /**
-     * Return the next {@link java.io.File} object or {@code null} if no more files are available.
-     * @return next File object, or null if none remain
+     * 返回下一个 {@link java.io.File} 对象，如果没有更多文件可用，则返回 {@code null}。
      */
-    public File getNextFile() {
+    public InputStream next() throws IOException {
         if (fileQueue.isEmpty()) {
             return null;
         }
-        return fileQueue.poll();
-    }
-    
-    // Helper method to add files to the queue
-    public void addFile(File file) {
-        if (file != null) {
-            fileQueue.offer(file);
+        
+        currentFile = fileQueue.poll();
+        if (currentFile != null && currentFile.exists() && currentFile.isFile()) {
+            return new FileInputStream(currentFile);
         }
+        
+        return next(); // Skip invalid files and try next
     }
 }

@@ -1,12 +1,16 @@
 public class ArrayUtils {
     /**
-     * Swaps the two elements at the specified indices in the given array.
-     * @param <V> the type of elements in the array
-     * @param arr the array
-     * @param i the index of the first element
-     * @param j the index of the second element
+     * 交换给定数组中指定索引的两个元素。
+     * @param <V> 数组中元素的类型
+     * @param arr 数组
+     * @param i 第一个元素的索引
+     * @param j 第二个元素的索引
      */
-    public static <V> void swap(V[] arr, int i, int j) {
+    public static final <V> void swap(V[] arr, int i, int j) {
+        if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
+            throw new IllegalArgumentException("Invalid array or indices");
+        }
+        
         V temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

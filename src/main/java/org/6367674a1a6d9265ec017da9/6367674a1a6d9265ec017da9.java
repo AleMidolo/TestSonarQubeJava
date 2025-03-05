@@ -1,90 +1,50 @@
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Objects;
 
-public class LinkedList<T> {
-    private ListNode<T> head;
-    private final Object lock = new Object();
+public class DoublyLinkedList<E> {
+    private ListNode<E> head;
+    private ListNode<E> tail;
+    private int size;
 
-    public void moveAllNodes(LinkedList<T> list) {
-        synchronized (lock) {
-            synchronized (list.lock) {
-                if (list.head == null) {
-                    return;
-                }
+    private static class ListNode<E> {
+        E item;
+        ListNode<E> prev;
+        ListNode<E> next;
 
-                // Get the first and last nodes of the source list
-                ListNode<T> firstNode = list.head;
-                ListNode<T> lastNode = firstNode;
-                while (lastNode.next != null) {
-                    lastNode = lastNode.next;
-                }
-
-                // Connect the source list to the end of this list
-                if (head == null) {
-                    head = firstNode;
-                } else {
-                    ListNode<T> current = head;
-                    while (current.next != null) {
-                        current = current.next;
-                    }
-                    current.next = firstNode;
-                }
-
-                // Clear the source list
-                list.head = null;
-            }
+        ListNode(E element, ListNode<E> prev, ListNode<E> next) {
+            this.item = element;
+            this.prev = prev;
+            this.next = next;
         }
     }
 
-    // Supporting classes and methods
-    private static class ListNode<T> {
-        T data;
-        ListNode<T> next;
-
-        ListNode(T data) {
-            this.data = data;
-            this.next = null;
+    /**
+     * 原子性地将所有 {@link ListNode ListNodes} 从 {@code list} 移动到此列表，就像每个节点都是通过 {@link #removeListNode(ListNodeImpl)} 从 {@code list} 中移除的，然后依次通过 {@link #addListNode(ListNodeImpl)} 添加到此列表中。
+     */
+    private void moveAllListNodes(DoublyLinkedList<E> list) {
+        Objects.requireNonNull(list);
+        
+        // If list is empty or same as current list, return
+        if (list.size == 0 || list == this) {
+            return;
         }
-    }
 
-    public void addListNode(ListNode<T> node) {
-        synchronized (lock) {
-            if (head == null) {
-                head = node;
-            } else {
-                ListNode<T> current = head;
-                while (current.next != null) {
-                    current = current.next;
-                }
-                current.next = node;
-            }
-            node.next = null;
+        // If current list is empty
+        if (size == 0) {
+            head = list.head;
+            tail = list.tail;
+        } else {
+            // Connect the tail of current list to head of input list
+            tail.next = list.head;
+            list.head.prev = tail;
+            tail = list.tail;
         }
-    }
 
-    public ListNode<T> removeListNode(ListNode<T> node) {
-        synchronized (lock) {
-            if (head == null) {
-                return null;
-            }
+        // Update size
+        size += list.size;
 
-            if (head == node) {
-                head = head.next;
-                node.next = null;
-                return node;
-            }
-
-            ListNode<T> current = head;
-            while (current.next != null && current.next != node) {
-                current = current.next;
-            }
-
-            if (current.next == node) {
-                current.next = node.next;
-                node.next = null;
-                return node;
-            }
-
-            return null;
-        }
+        // Clear the input list
+        list.head = null;
+        list.tail = null;
+        list.size = 0;
     }
 }

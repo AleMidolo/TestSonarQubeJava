@@ -1,13 +1,35 @@
-package org.springframework.util;
-
 public class ParameterParser {
     /**
-     * Determine whether a parameter name ends at the current position, that is,
-     * whether the given character qualifies as a separator.
-     * @param c The character to check
-     * @return true if the character is a parameter separator, false otherwise
+     * 确定参数名称是否在当前位置结束，即给定字符是否符合分隔符的条件。
      */
-    protected boolean isParameterSeparator(char c) {
-        return (c == '=' || Character.isWhitespace(c));
+    private static boolean isParameterSeparator(final char c) {
+        // Check if character is whitespace
+        if (Character.isWhitespace(c)) {
+            return true;
+        }
+        
+        // Check for common parameter separators
+        switch (c) {
+            case '(':
+            case ')':
+            case '<':
+            case '>':
+            case '@':
+            case ',':
+            case ';':
+            case ':':
+            case '\\':
+            case '"':
+            case '/':
+            case '[':
+            case ']':
+            case '?':
+            case '=':
+            case '{':
+            case '}':
+                return true;
+            default:
+                return false;
+        }
     }
 }

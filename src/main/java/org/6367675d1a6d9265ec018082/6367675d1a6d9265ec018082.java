@@ -1,54 +1,53 @@
 import java.util.*;
 
 public class Graph {
-    private Map<Node, List<Edge>> adjacencyList;
-    private Iterator<Node> nodeIterator;
+    private class Node {
+        int id;
+        boolean isVirtual;
+        Node realNode; // 对应的真实节点
+        List<Edge> edges;
+        
+        Node(int id) {
+            this.id = id;
+            this.isVirtual = false;
+            this.edges = new ArrayList<>();
+        }
+    }
+
+    private class Edge {
+        Node source;
+        Node target;
+        int weight;
+        
+        Edge(Node source, Node target) {
+            this.source = source;
+            this.target = target;
+            this.weight = 1;
+        }
+    }
+
     private Node currentNode;
-    
-    public Edge nextEdge() {
-        if (currentNode == null || !nodeIterator.hasNext()) {
+    private Node nextNode;
+
+    public Edge edgeToNext() {
+        if (currentNode == null || nextNode == null) {
             return null;
         }
-        
-        Node nextNode = nodeIterator.next();
-        
-        // Get real nodes if virtual
-        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
-        
-        // Find edge between current and next nodes
-        List<Edge> edges = adjacencyList.get(realCurrent);
-        for (Edge edge : edges) {
-            if (edge.connects(realCurrent, realNext)) {
-                currentNode = nextNode;
+
+        // 获取实际的源节点和目标节点
+        Node actualSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
+        Node actualTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
+
+        // 在源节点的边列表中查找连接到目标节点的边
+        for (Edge edge : actualSource.edges) {
+            if (edge.target == actualTarget) {
                 return edge;
             }
         }
-        
-        currentNode = nextNode;
-        return null;
-    }
-    
-    // Supporting classes
-    private class Node {
-        private boolean virtual;
-        private Node realNode;
-        
-        public boolean isVirtual() {
-            return virtual;
-        }
-        
-        public Node getRealNode() {
-            return realNode;
-        }
-    }
-    
-    private class Edge {
-        private Node source;
-        private Node target;
-        
-        public boolean connects(Node n1, Node n2) {
-            return (source == n1 && target == n2) || (source == n2 && target == n1);
-        }
+
+        // 如果没有找到边，创建一个新的边
+        Edge newEdge = new Edge(actualSource, actualTarget);
+        actualSource.edges.add(newEdge);
+        return newEdge;
     }
 }

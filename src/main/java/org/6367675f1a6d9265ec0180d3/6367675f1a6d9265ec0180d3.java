@@ -1,24 +1,39 @@
 import org.jgrapht.Graph;
+import org.jgrapht.GraphMapping;
+import org.jgrapht.graph.AsGraphUnion;
+import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphAutomorphism {
+public class GraphUtils {
 
     /**
-     * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
-     * @param graph the input graph
-     * @param <V> the graph vertex type
-     * @param <E> the graph edge type
-     * @return a mapping from graph to graph
+     * 计算一个恒等自同构（即图的自映射，其中每个顶点也映射到自身）。
+     * @param graph 输入图
+     * @param <V> 图的顶点类型
+     * @param <E> 图的边类型
+     * @return 从图到图的映射
      */
-    public static <V,E> Map<V,V> getIdentityAutomorphism(Graph<V,E> graph) {
-        Map<V,V> mapping = new HashMap<>();
-        
-        // Map each vertex to itself
-        for (V vertex : graph.vertexSet()) {
-            mapping.put(vertex, vertex);
+    public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
+        // 创建顶点映射
+        Map<V,V> vertexMap = new HashMap<>();
+        for(V vertex : graph.vertexSet()) {
+            vertexMap.put(vertex, vertex);
         }
         
-        return mapping;
+        // 创建边映射
+        Map<E,E> edgeMap = new HashMap<>();
+        for(E edge : graph.edgeSet()) {
+            edgeMap.put(edge, edge);
+        }
+
+        return new IsomorphicGraphMapping<>(
+            graph,  // 源图
+            graph,  // 目标图
+            vertexMap,  // 顶点映射
+            vertexMap,  // 反向顶点映射
+            edgeMap,    // 边映射
+            edgeMap     // 反向边映射
+        );
     }
 }

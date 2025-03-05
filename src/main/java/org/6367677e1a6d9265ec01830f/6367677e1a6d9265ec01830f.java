@@ -1,81 +1,51 @@
-import java.text.DecimalFormat;
+import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class StringFormatter {
-
+public class CustomLogFormatter {
+    
+    private static final String DEFAULT_PATTERN = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] %c - %m%n";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
     /**
-     * Produces a formatted string as specified by the conversion pattern.
-     * @param pattern The pattern string containing conversion specifiers
-     * @param args Variable arguments to be formatted according to pattern
-     * @return The formatted string with conversions applied
+     * 根据转换模式生成格式化字符串。
      */
-    public static String format(String pattern, Object... args) {
-        if (pattern == null) {
-            return null;
+    public String format(LoggingEvent event) {
+        if (event == null) {
+            return "";
         }
 
-        StringBuilder result = new StringBuilder();
-        Pattern p = Pattern.compile("%[a-zA-Z]");
-        Matcher m = p.matcher(pattern);
+        StringBuilder builder = new StringBuilder();
         
-        int argIndex = 0;
-        int lastMatch = 0;
+        // Add timestamp
+        builder.append("[");
+        builder.append(dateFormat.format(new Date(event.getTimeStamp())));
+        builder.append("] ");
         
-        while (m.find()) {
-            // Add text before the conversion specifier
-            result.append(pattern.substring(lastMatch, m.start()));
-            
-            // Get the conversion character
-            char conversion = pattern.charAt(m.end() - 1);
-            
-            if (argIndex >= args.length) {
-                throw new IllegalArgumentException("Not enough arguments for format pattern");
+        // Add log level
+        builder.append("[");
+        builder.append(event.getLevel().toString());
+        builder.append("] ");
+        
+        // Add logger name
+        builder.append(event.getLoggerName());
+        builder.append(" - ");
+        
+        // Add message
+        builder.append(event.getRenderedMessage());
+        
+        // Add new line
+        builder.append(System.lineSeparator());
+        
+        // Add throwable info if exists
+        String[] throwableInfo = event.getThrowableStrRep();
+        if (throwableInfo != null) {
+            for (String line : throwableInfo) {
+                builder.append(line);
+                builder.append(System.lineSeparator());
             }
-            
-            // Format based on conversion character
-            switch (conversion) {
-                case 's':
-                    result.append(String.valueOf(args[argIndex]));
-                    break;
-                case 'd':
-                    if (args[argIndex] instanceof Number) {
-                        result.append(((Number)args[argIndex]).longValue());
-                    } else {
-                        throw new IllegalArgumentException("Integer format requires numeric argument");
-                    }
-                    break;
-                case 'f':
-                    if (args[argIndex] instanceof Number) {
-                        DecimalFormat df = new DecimalFormat("#.##");
-                        result.append(df.format(((Number)args[argIndex]).doubleValue()));
-                    } else {
-                        throw new IllegalArgumentException("Float format requires numeric argument");
-                    }
-                    break;
-                case 't':
-                    if (args[argIndex] instanceof Date) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        result.append(sdf.format((Date)args[argIndex]));
-                    } else {
-                        throw new IllegalArgumentException("Time format requires Date argument");
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown format conversion: " + conversion);
-            }
-            
-            lastMatch = m.end();
-            argIndex++;
         }
         
-        // Add remaining text after last conversion
-        if (lastMatch < pattern.length()) {
-            result.append(pattern.substring(lastMatch));
-        }
-        
-        return result.toString();
+        return builder.toString();
     }
 }

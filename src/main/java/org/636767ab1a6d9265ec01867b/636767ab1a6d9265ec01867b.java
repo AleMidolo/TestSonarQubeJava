@@ -1,50 +1,69 @@
-import java.nio.charset.StandardCharsets;
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.WriteSession;
 
-public class StringUtils {
+public class UTF8Writer {
     /**
-     * Writes the utf8-encoded bytes from the string into the LinkedBuffer.
-     * @param str The input string to encode
-     * @param buffer The buffer to write the encoded bytes to
-     * @return The number of bytes written
+     * 将字符串中的 UTF-8 编码字节写入 {@link LinkedBuffer}。
      */
-    public static int writeUTF8(String str, LinkedBuffer buffer) {
-        if (str == null || buffer == null) {
-            return 0;
+    public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
+        if (str == null) {
+            return lb;
         }
 
-        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
-        buffer.write(bytes, 0, bytes.length);
-        return bytes.length;
-    }
-}
-
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
-    private int capacity;
-    
-    public LinkedBuffer(int size) {
-        buffer = new byte[size];
-        position = 0;
-        capacity = size;
-    }
-    
-    public void write(byte[] bytes, int offset, int length) {
-        if (position + length > capacity) {
-            // Grow buffer if needed
-            byte[] newBuffer = new byte[Math.max(buffer.length * 2, position + length)];
-            System.arraycopy(buffer, 0, newBuffer, 0, position);
-            buffer = newBuffer;
-            capacity = buffer.length;
+        final int len = str.length();
+        if (len == 0) {
+            return lb;
         }
-        
-        System.arraycopy(bytes, offset, buffer, position, length);
-        position += length;
-    }
-    
-    public byte[] toByteArray() {
-        byte[] result = new byte[position];
-        System.arraycopy(buffer, 0, result, 0, position);
-        return result;
+
+        LinkedBuffer buffer = lb;
+        int i = 0;
+        char c;
+
+        while (i < len) {
+            c = str.charAt(i);
+            if (c < 0x80) {
+                // 1 byte, 7 bits
+                if (buffer.offset == buffer.buffer.length) {
+                    buffer = LinkedBuffer.allocate(buffer.buffer.length);
+                }
+                buffer.buffer[buffer.offset++] = (byte) c;
+            } else if (c < 0x800) {
+                // 2 bytes, 11 bits
+                if (buffer.offset + 2 > buffer.buffer.length) {
+                    buffer = LinkedBuffer.allocate(buffer.buffer.length);
+                }
+                buffer.buffer[buffer.offset++] = (byte) (0xC0 | ((c >> 6) & 0x1F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
+            } else if (Character.isSurrogate(c)) {
+                // 4 bytes, surrogate pair
+                if (++i >= len) {
+                    throw new IllegalArgumentException("Invalid surrogate pair");
+                }
+                char c2 = str.charAt(i);
+                if (!Character.isSurrogate(c2)) {
+                    throw new IllegalArgumentException("Invalid surrogate pair");
+                }
+                int codePoint = Character.toCodePoint(c, c2);
+                if (buffer.offset + 4 > buffer.buffer.length) {
+                    buffer = LinkedBuffer.allocate(buffer.buffer.length);
+                }
+                buffer.buffer[buffer.offset++] = (byte) (0xF0 | ((codePoint >> 18) & 0x07));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (codePoint & 0x3F));
+            } else {
+                // 3 bytes, 16 bits
+                if (buffer.offset + 3 > buffer.buffer.length) {
+                    buffer = LinkedBuffer.allocate(buffer.buffer.length);
+                }
+                buffer.buffer[buffer.offset++] = (byte) (0xE0 | ((c >> 12) & 0x0F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
+            }
+            i++;
+        }
+
+        session.size += buffer.offset;
+        return buffer;
     }
 }

@@ -1,28 +1,25 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Graph<V,E> {
-    // Maps vertices to their adjacent edges
-    private Map<V, Set<E>> vertexMap;
+
+    // 存储顶点到边的映射关系
+    private Map<V, Map<V, E>> index;
 
     public Graph() {
-        vertexMap = new HashMap<>();
+        index = new HashMap<>();
     }
 
     /**
-     * Add an edge to the index.
-     * @param sourceVertex the source vertex  
-     * @param targetVertex the target vertex
-     * @param e the edge
+     * 将边添加到索引中。
+     * @param sourceVertex 源顶点
+     * @param targetVertex 目标顶点 
+     * @param e 边
      */
-    public void addEdge(V sourceVertex, V targetVertex, E e) {
-        // Create sets for vertices if they don't exist
-        vertexMap.putIfAbsent(sourceVertex, new HashSet<>());
-        vertexMap.putIfAbsent(targetVertex, new HashSet<>());
-
-        // Add edge to source vertex's edge set
-        vertexMap.get(sourceVertex).add(e);
+    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
+        // 获取源顶点的边映射,如果不存在则创建新的
+        Map<V, E> edges = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
+        
+        // 将目标顶点和边添加到映射中
+        edges.put(targetVertex, e);
     }
 }

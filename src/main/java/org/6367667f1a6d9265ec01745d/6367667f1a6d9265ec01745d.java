@@ -4,25 +4,42 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class URIPathDecoder {
-    public static List<String> decode(URI u, boolean decode) {
-        String path = u.getPath();
-        List<String> segments = new ArrayList<>();
+public class PathDecoder {
+
+    public static class PathSegmentImpl {
+        private final String path;
         
-        // Handle empty or null path
-        if (path == null || path.isEmpty()) {
+        public PathSegmentImpl(String path) {
+            this.path = path;
+        }
+        
+        public String getPath() {
+            return path;
+        }
+    }
+
+    public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
+        List<PathSegmentImpl> segments = new ArrayList<>();
+        
+        if (u == null || u.getPath() == null) {
             return segments;
         }
 
+        String path = u.getPath();
+        
         // Remove leading '/' for absolute paths
         if (path.startsWith("/")) {
             path = path.substring(1);
+        }
+        
+        // Handle empty path
+        if (path.isEmpty()) {
+            return segments;
         }
 
         // Split path into segments
         String[] rawSegments = path.split("/");
         
-        // Process each segment
         for (String segment : rawSegments) {
             if (segment.isEmpty()) {
                 continue;
@@ -30,15 +47,16 @@ public class URIPathDecoder {
             
             if (decode) {
                 try {
-                    // Decode segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
+                    // Decode the segment using UTF-8 encoding
+                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
                 } catch (Exception e) {
-                    // If decoding fails, use raw segment
+                    // If decoding fails, use the raw segment
                 }
             }
-            segments.add(segment);
+            
+            segments.add(new PathSegmentImpl(segment));
         }
-
+        
         return segments;
     }
 }

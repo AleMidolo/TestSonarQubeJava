@@ -1,30 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.log4j.Appender;
+import org.apache.logging.log4j.core.Appender;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class AppenderManager {
-    private List<Appender> appenders;
-
-    public AppenderManager() {
-        this.appenders = new ArrayList<>();
-    }
-
+public class Logger {
+    
+    private Map<String, Appender> appenders = new ConcurrentHashMap<>();
+    
     /**
-     * Remove the appender with the name passed as parameter form the list of appenders.
-     * @param name The name of the appender to remove
-     * @return The removed appender, or null if not found
+     * 从附加器列表中移除指定名称的附加器。
      */
-    public Appender removeAppender(String name) {
-        if (name == null || appenders == null) {
-            return null;
+    public void removeAppender(String name) {
+        if (name == null) {
+            return;
         }
-
-        for (int i = 0; i < appenders.size(); i++) {
-            Appender appender = appenders.get(i);
-            if (appender != null && name.equals(appender.getName())) {
-                return appenders.remove(i);
-            }
+        
+        Appender appender = appenders.remove(name);
+        if (appender != null) {
+            appender.stop();
         }
-        return null;
     }
 }

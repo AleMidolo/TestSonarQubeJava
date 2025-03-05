@@ -1,14 +1,18 @@
-import java.time.Instant;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class WriteTracker {
-    private long lastWriteTime;
-
+public class TimeStampTracker {
+    private final AtomicLong lastWriteTimeStamp = new AtomicLong(0);
+    
     /**
-     * The last time, in milliseconds, a write operation occurred.
+     * 上一次写操作发生的时间，单位为毫秒。
      * @return this
      */
-    public WriteTracker recordWriteTime() {
-        this.lastWriteTime = Instant.now().toEpochMilli();
-        return this;
+    public long lastWriteTimeStampInMilliseconds() {
+        return lastWriteTimeStamp.get();
+    }
+    
+    // Helper method to update timestamp
+    public void updateWriteTimeStamp() {
+        lastWriteTimeStamp.set(System.currentTimeMillis());
     }
 }

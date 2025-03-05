@@ -1,15 +1,29 @@
 import java.util.Map;
-import java.util.HashMap;
 
-public class MapContains {
-    private Map<Object, Object> map = new HashMap<>();
+public class CustomMap<K,V> implements Map<K,V> {
+
+    private Entry<K,V>[] table;
     
     /**
-     * Return <code>true</code> if this map contains a mapping for the specified key.
-     * @param key the key to be searched for
-     * @return true if the map contains the key
+     * 如果此映射包含指定键的映射，则返回<code>true</code>。
+     * @param key 要搜索的键
+     * @return 如果映射包含该键，则返回真
      */
-    public boolean containsKey(Object key) {
-        return map.containsKey(key);
+    @Override
+    public boolean containsKey(final Object key) {
+        if (key == null) {
+            for (Entry<K,V> entry : table) {
+                if (entry != null && entry.getKey() == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (Entry<K,V> entry : table) {
+                if (entry != null && key.equals(entry.getKey())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

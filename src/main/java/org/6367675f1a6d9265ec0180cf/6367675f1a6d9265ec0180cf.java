@@ -1,35 +1,24 @@
-import java.util.*;
+import org.jgrapht.Graph;
+import java.util.Set;
 
 public class GraphUtils {
     /**
-     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
-     * @param graph the graph.
-     * @param vertices the vertices to induce the subgraph from.
-     * @return true if the induced subgraph is a clique.
+     * 检查由给定的 <code>vertices</code> 诱导的 <code>graph</code> 的子图是否为完全图，即一个团。
+     * @param graph 图。
+     * @param vertices 用于诱导子图的顶点。
+     * @return 如果诱导的子图是一个团，则返回真。
      */
-    public static boolean isClique(Graph graph, Set<Integer> vertices) {
-        // For each pair of vertices in the set
-        for (Integer v1 : vertices) {
-            for (Integer v2 : vertices) {
-                // Skip self loops
-                if (v1.equals(v2)) {
-                    continue;
-                }
-                
-                // If any pair of vertices is not connected by an edge,
-                // then this is not a clique
-                if (!graph.hasEdge(v1, v2)) {
-                    return false;
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+        // 对于团中的每对顶点,它们之间都必须有边相连
+        for (V v1 : vertices) {
+            for (V v2 : vertices) {
+                if (!v1.equals(v2)) { // 不需要检查顶点自身
+                    if (!graph.containsEdge(v1, v2)) {
+                        return false; // 如果任意两点间没有边,则不是团
+                    }
                 }
             }
         }
-        
-        // If we get here, all vertices are connected to each other
-        return true;
+        return true; // 所有点对之间都有边,是一个团
     }
-}
-
-// Sample Graph interface that would be needed
-interface Graph {
-    boolean hasEdge(Integer source, Integer target);
 }

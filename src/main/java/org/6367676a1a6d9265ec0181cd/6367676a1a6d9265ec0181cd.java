@@ -1,8 +1,10 @@
+package org.utils;
+
 public class StringUtils {
     /**
-     * Trim leading whitespace from the given String.
-     * @param str the String to check
-     * @return the trimmed String
+     * 去除给定字符串的前导空白字符。
+     * @param str 要检查的字符串
+     * @return 去除空白后的字符串
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
@@ -13,10 +15,10 @@ public class StringUtils {
         int len = str.length();
         int start = 0;
         
-        while ((start < len) && Character.isWhitespace(str.charAt(start))) {
+        while (start < len && Character.isWhitespace(str.charAt(start))) {
             start++;
         }
         
-        return (start > 0) ? str.substring(start) : str;
+        return start > 0 ? str.substring(start) : str;
     }
 }

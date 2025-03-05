@@ -1,44 +1,34 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class OutputStreamWriter {
-    
-    /**
-     * @see OutputStream#write(byte[])
+public class CustomOutputStream extends OutputStream {
+
+    @Override
+    public void write(int b) throws IOException {
+        // Required abstract method implementation
+    }
+
+    /** 
+     * @see OutputStream#write(byte[]) 
      */
-    public void write(byte[] b) throws IOException {
+    @Override
+    public void write(final byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         }
         write(b, 0, b.length);
     }
 
-    /**
-     * Helper method to write bytes from an offset
-     */
-    private void write(byte[] b, int off, int len) throws IOException {
+    @Override
+    public void write(byte[] b, int off, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         }
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-            ((off + len) > b.length) || ((off + len) < 0)) {
+        if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException();
         }
-        if (len == 0) {
-            return;
-        }
-        
-        // Write bytes one at a time
         for (int i = 0; i < len; i++) {
             write(b[off + i]);
         }
-    }
-
-    /**
-     * Write a single byte
-     */
-    private void write(int b) throws IOException {
-        // Implementation would depend on underlying output stream
-        throw new UnsupportedOperationException("write() not implemented");
     }
 }

@@ -1,28 +1,26 @@
-import java.util.LinkedList;
+import java.util.Objects;
 
 public class Bucket {
-    private Bucket next;
     private Bucket prev;
+    private Bucket next;
     
     /**
-     * Inserts this bucket in the data structure before the {@code bucket}.
-     * @param bucket the bucket, that will be the next to this bucket.
+     * 在数据结构中将此桶插入到 {@code bucket} 之前。
+     * @param bucket 作为当前桶下一个的桶。
      */
-    public void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            return;
-        }
+    void insertBefore(Bucket bucket) {
+        Objects.requireNonNull(bucket, "bucket cannot be null");
         
-        // Set this bucket's next pointer
+        // Set this bucket's next reference
         this.next = bucket;
         
-        // Set this bucket's prev pointer to bucket's previous
+        // Set this bucket's prev reference to bucket's previous
         this.prev = bucket.prev;
         
-        // Update bucket's prev pointer to point to this
+        // Update bucket's prev reference to this
         bucket.prev = this;
         
-        // If there was a previous bucket, update its next pointer
+        // If there was a previous bucket, update its next reference
         if (this.prev != null) {
             this.prev.next = this;
         }

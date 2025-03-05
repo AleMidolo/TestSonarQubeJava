@@ -1,29 +1,30 @@
+import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
-import javax.servlet.http.HttpServletRequest;
 
-public class MeteorRetriever {
+public class MeteorLookup {
 
     /**
-     * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
-     * @param r {@link HttpServletRequest} 
-     * @return a {@link Meteor} or null if not found
+     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
+     * @param r {@link HttpServletRequest}
+     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
      */
-    public static Meteor retrieve(HttpServletRequest r) {
+    public static Meteor lookup(HttpServletRequest r) {
         if (r == null) {
             return null;
         }
         
         // Try to get existing Meteor instance
-        Meteor meteor = Meteor.build(r);
+        Meteor meteor = (Meteor) r.getAttribute(Meteor.class.getName());
         
-        if (meteor == null || meteor.getAtmosphereResource() == null) {
-            return null;
-        }
-        
-        AtmosphereResource resource = meteor.getAtmosphereResource();
-        if (!resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
-            return null;
+        if (meteor == null) {
+            // Try to get from AtmosphereResource
+            AtmosphereResource resource = (AtmosphereResource) 
+                r.getAttribute(AtmosphereResource.class.getName());
+                
+            if (resource != null) {
+                meteor = Meteor.build(resource);
+            }
         }
         
         return meteor;

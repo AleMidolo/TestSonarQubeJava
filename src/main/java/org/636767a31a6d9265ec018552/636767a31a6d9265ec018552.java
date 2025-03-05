@@ -1,28 +1,33 @@
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.DataInputStream;
 
-public class StringReader {
+public class DataReader {
+    private DataInputStream input;
+
+    public DataReader(DataInputStream input) {
+        this.input = input;
+    }
+
     /**
-     * Read a string field value from the stream.
-     * @param in The DataInputStream to read from
-     * @return The string value read from the stream
-     * @throws IOException If an I/O error occurs
+     * 从流中读取 {@code string} 字段值。
      */
-    public String readString(DataInputStream in) throws IOException {
-        // Read string length
-        int length = in.readInt();
+    @Override
+    public String readString() throws IOException {
+        // 首先读取字符串长度
+        int length = input.readInt();
         
-        if (length < 0) {
+        // 如果长度为-1,表示null值
+        if (length == -1) {
             return null;
         }
         
-        // Create byte array to hold string data
+        // 创建byte数组来存储字符串数据
         byte[] bytes = new byte[length];
         
-        // Read bytes into array
-        in.readFully(bytes);
+        // 从流中读取字符串数据
+        input.readFully(bytes);
         
-        // Convert bytes to string using UTF-8 encoding
+        // 将byte数组转换为字符串并返回
         return new String(bytes, "UTF-8");
     }
 }

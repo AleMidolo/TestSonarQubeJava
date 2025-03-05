@@ -1,37 +1,49 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileSegmentSearchRanges {
+public class SequenceRangeBuilder {
 
-    /**
-     * build current profiles segment snapshot search sequence ranges
-     * @return List of search ranges for profile segments
-     */
-    public List<SearchRange> buildProfileSegmentSearchRanges() {
-        List<SearchRange> ranges = new ArrayList<>();
+    private static class SequenceRange {
+        private long start;
+        private long end;
         
-        // Add default search range
-        ranges.add(new SearchRange(0, Integer.MAX_VALUE));
-        
-        return ranges;
-    }
-    
-    // Helper class to define a search range
-    public static class SearchRange {
-        private int start;
-        private int end;
-        
-        public SearchRange(int start, int end) {
+        public SequenceRange(long start, long end) {
             this.start = start;
             this.end = end;
         }
         
-        public int getStart() {
+        public long getStart() {
             return start;
         }
         
-        public int getEnd() {
-            return end;
+        public long getEnd() {
+            return end; 
         }
+    }
+
+    public List<SequenceRange> buildSequenceRanges() {
+        List<SequenceRange> ranges = new ArrayList<>();
+        
+        // Get current sequence number
+        long currentSequence = getCurrentSequence();
+        
+        // Build ranges in chunks of 1000
+        long chunkSize = 1000;
+        long start = 0;
+        
+        while (start < currentSequence) {
+            long end = Math.min(start + chunkSize - 1, currentSequence);
+            ranges.add(new SequenceRange(start, end));
+            start = end + 1;
+        }
+        
+        return ranges;
+    }
+    
+    // Helper method to get current sequence
+    private long getCurrentSequence() {
+        // Implementation to get current sequence number
+        // This could read from a file or database
+        return 10000; // Example value
     }
 }

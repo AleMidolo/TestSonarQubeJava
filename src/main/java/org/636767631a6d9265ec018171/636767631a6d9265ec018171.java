@@ -1,41 +1,50 @@
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
-public class LinkedList<T> {
+public class LinkedList<E> {
     
-    private class Node<T> {
-        T data;
-        Node<T> next;
-        
-        Node(T data) {
-            this.data = data;
-            this.next = null;
+    private static class ListNodeImpl<E> {
+        E item;
+        ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
+
+        ListNodeImpl(ListNodeImpl<E> prev, E element, ListNodeImpl<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
         }
     }
-    
-    private Node<T> head;
-    
+
+    private ListNodeImpl<E> first;
+    private ListNodeImpl<E> last;
+    private int size = 0;
+
     /**
-     * Remove the non null {@code node} from the list.
-     * @param node The node to remove
+     * 从列表中移除非空的 {@code node}。
      */
-    public void remove(Node<T> node) {
-        Objects.requireNonNull(node);
-        
-        // If node is head
-        if (head == node) {
-            head = head.next;
-            return;
+    private boolean unlink(ListNodeImpl<E> node) {
+        if (node == null) {
+            return false;
         }
-        
-        // Find the node before the one to remove
-        Node<T> current = head;
-        while (current != null && current.next != node) {
-            current = current.next;
+
+        final ListNodeImpl<E> prev = node.prev;
+        final ListNodeImpl<E> next = node.next;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            node.prev = null;
         }
-        
-        // If node was found in list
-        if (current != null) {
-            current.next = node.next;
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            node.next = null;
         }
+
+        node.item = null;
+        size--;
+        return true;
     }
 }

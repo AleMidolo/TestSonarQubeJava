@@ -1,33 +1,28 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class SetOperations {
-    
-    /**
-     * Efficient way to compute the intersection between two sets
-     * @param set1 set $1$
-     * @param set2 set $2$ 
-     * @return intersection of set $1$ and $2$
+public class SetOperations<V> {
+    /** 
+     * 高效计算两个集合交集的方法
+     * @param set1 集合 $1$
+     * @param set2 集合 $2$
+     * @return 集合 $1$ 和 $2$ 的交集
      */
-    public static <T> Set<T> intersection(Set<T> set1, Set<T> set2) {
-        // Create new set to store intersection
-        Set<T> intersection = new HashSet<>();
+    private Set<V> intersection(Set<V> set1, Set<V> set2) {
+        // Create a new set to store intersection
+        Set<V> result = new HashSet<>();
         
-        // Iterate through smaller set for efficiency
-        if (set1.size() < set2.size()) {
-            for (T element : set1) {
-                if (set2.contains(element)) {
-                    intersection.add(element);
-                }
-            }
-        } else {
-            for (T element : set2) {
-                if (set1.contains(element)) {
-                    intersection.add(element);
-                }
+        // Choose smaller set to iterate over for better performance
+        Set<V> smallerSet = set1.size() < set2.size() ? set1 : set2;
+        Set<V> largerSet = set1.size() < set2.size() ? set2 : set1;
+        
+        // Iterate through smaller set and check if elements exist in larger set
+        for (V element : smallerSet) {
+            if (largerSet.contains(element)) {
+                result.add(element);
             }
         }
         
-        return intersection;
+        return result;
     }
 }

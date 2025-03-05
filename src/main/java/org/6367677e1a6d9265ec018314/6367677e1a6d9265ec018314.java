@@ -1,28 +1,58 @@
 import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-public class Category {
-    private boolean active;
-    private List<Category> children;
-    private Category parent;
+public class CategoryTree {
+    private CategoryNode root;
+    private int totalNodes = 0;
     
-    public void removeInactiveNodes() {
-        if (children != null && !children.isEmpty()) {
-            Iterator<Category> iterator = children.iterator();
-            while (iterator.hasNext()) {
-                Category child = iterator.next();
-                child.removeInactiveNodes();
-                if (!child.active && (child.children == null || child.children.isEmpty())) {
-                    iterator.remove();
-                }
-            }
+    protected class CategoryNode {
+        private boolean active;
+        private List<CategoryNode> children;
+        
+        public CategoryNode() {
+            this.active = false;
+            this.children = new ArrayList<>();
+        }
+        
+        public boolean isActive() {
+            return active;
+        }
+        
+        public List<CategoryNode> getChildren() {
+            return children;
         }
     }
+
+    /**
+     * 从类别树中移除所有不活跃的节点。
+     * @return 被移除的节点数量
+     */
+    protected int removeUnusedNodes() {
+        if (root == null) {
+            return 0;
+        }
+        
+        int initialCount = totalNodes;
+        removeUnusedNodesRecursive(root);
+        
+        return initialCount - totalNodes;
+    }
     
-    // Constructor and other methods omitted for brevity
-    public Category() {
-        this.active = true;
-        this.children = new ArrayList<>();
+    private void removeUnusedNodesRecursive(CategoryNode node) {
+        if (node == null) {
+            return;
+        }
+        
+        Iterator<CategoryNode> iterator = node.getChildren().iterator();
+        while (iterator.hasNext()) {
+            CategoryNode child = iterator.next();
+            removeUnusedNodesRecursive(child);
+            
+            if (!child.isActive() && child.getChildren().isEmpty()) {
+                iterator.remove();
+                totalNodes--;
+            }
+        }
     }
 }

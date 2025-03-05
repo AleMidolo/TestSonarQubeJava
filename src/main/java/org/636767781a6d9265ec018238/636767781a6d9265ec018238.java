@@ -1,18 +1,22 @@
-import java.util.List;
-import java.util.ArrayList;
 import org.apache.log4j.Appender;
+import java.util.Enumeration;
 
-public class AppenderChecker {
-    private List<Appender> appenderList;
-
-    public AppenderChecker() {
-        appenderList = new ArrayList<>();
-    }
-
+public class AppenderManager {
+    
+    private Vector<Appender> appenders;
+    
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenderList == null) {
+        if (appender == null || appenders == null) {
             return false;
         }
-        return appenderList.contains(appender);
+        
+        Enumeration<Appender> existingAppenders = appenders.elements();
+        while (existingAppenders.hasMoreElements()) {
+            Appender current = existingAppenders.nextElement();
+            if (current == appender) {
+                return true;
+            }
+        }
+        return false;
     }
 }

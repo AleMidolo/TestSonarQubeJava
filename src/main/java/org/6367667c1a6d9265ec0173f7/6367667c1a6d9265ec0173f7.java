@@ -1,20 +1,13 @@
-import java.util.Arrays;
-
-public class BodyValidator {
+public class HttpMessage {
     private byte[] body;
     
-    public BodyValidator(byte[] body) {
-        this.body = body;
-    }
-
     /**
-     * True is the body is a byte array
-     * @return True is the body is a byte array
+     * 如果主体是字节数组，则返回真
+     * @return 如果主体是字节数组，则返回真
      */
-    public boolean isByteArray() {
-        if (body == null) {
-            return false;
-        }
-        return body.getClass().isArray() && body.getClass().getComponentType() == byte.class;
+    public boolean hasBytes() {
+        return body != null && body.length > 0;
     }
+    
+    // Constructor and other methods omitted for brevity
 }

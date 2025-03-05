@@ -1,36 +1,51 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.Arrays;
 
 public class ByteArrayBuffer {
-    private ByteArrayOutputStream buffer;
+    private byte[] buffer;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 32;
 
     public ByteArrayBuffer() {
-        buffer = new ByteArrayOutputStream();
+        this(DEFAULT_CAPACITY);
+    }
+
+    public ByteArrayBuffer(int capacity) {
+        if (capacity < 0) {
+            throw new IllegalArgumentException("Capacity must not be negative");
+        }
+        this.buffer = new byte[capacity];
     }
 
     /**
-     * Returns a single byte array containing all the contents written to the buffer(s).
-     * @return byte array containing buffer contents
+     * 返回一个包含所有写入缓冲区内容的单字节数组。
      */
-    public byte[] toByteArray() {
-        try {
-            buffer.flush();
-            return buffer.toByteArray();
-        } catch (IOException e) {
-            return new byte[0];
+    public final byte[] toByteArray() {
+        return Arrays.copyOf(buffer, size);
+    }
+
+    // Helper method to write bytes to buffer
+    public void write(byte[] b, int off, int len) {
+        if (b == null) {
+            return;
         }
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+                ((off + len) < 0) || ((off + len) > b.length)) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (len == 0) {
+            return;
+        }
+        int newsize = size + len;
+        if (newsize > buffer.length) {
+            expand(newsize);
+        }
+        System.arraycopy(b, off, buffer, size, len);
+        size = newsize;
     }
 
-    // Additional methods for writing to buffer would go here
-    public void write(byte[] bytes) throws IOException {
-        buffer.write(bytes);
-    }
-
-    public void write(int b) throws IOException {
-        buffer.write(b);
-    }
-
-    public void write(byte[] bytes, int offset, int length) throws IOException {
-        buffer.write(bytes, offset, length);
+    private void expand(int newsize) {
+        byte[] newbuffer = new byte[Math.max(buffer.length << 1, newsize)];
+        System.arraycopy(buffer, 0, newbuffer, 0, size);
+        buffer = newbuffer;
     }
 }

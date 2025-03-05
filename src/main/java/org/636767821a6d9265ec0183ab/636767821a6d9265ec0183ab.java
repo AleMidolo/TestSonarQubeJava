@@ -1,17 +1,19 @@
-import java.lang.Throwable;
-
-public class ExceptionUtils {
+public class ExceptionHandler {
     private Throwable thrown;
 
-    public ExceptionUtils(Throwable thrown) {
+    public ExceptionHandler() {
+        this.thrown = null;
+    }
+
+    public void setThrown(Throwable thrown) {
         this.thrown = thrown;
     }
 
     public Throwable getThrown() {
-        return thrown;
+        return this.thrown;
     }
 
-    public boolean hasMessage() {
+    public boolean hasThrown() {
         return getThrown() != null && getThrown().toString() != null && !getThrown().toString().isEmpty();
     }
 }

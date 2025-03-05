@@ -3,63 +3,41 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
-    
+    /**
+     * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即"/"分隔符）。
+     * @param path 起始路径（通常是完整的文件路径）
+     * @param relativePath 要应用的相对路径（相对于上述完整文件路径）
+     * @return 应用相对路径后得到的完整文件路径
+     */
     public static String applyRelativePath(String path, String relativePath) {
         if (path == null || relativePath == null) {
             return null;
         }
-
-        // Convert backslashes to forward slashes
+        
+        // 标准化路径分隔符
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
-
-        // Remove trailing slashes
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
+        
+        // 如果relativePath是绝对路径，直接返回
+        if (relativePath.startsWith("/")) {
+            return relativePath;
         }
-
-        // Handle empty relative path
-        if (relativePath.isEmpty()) {
-            return path;
+        
+        // 使用Path API处理路径
+        Path basePath = Paths.get(path);
+        // 如果path是文件，获取其父目录
+        if (!path.endsWith("/")) {
+            basePath = basePath.getParent();
         }
-
-        // Split the paths into components
-        String[] pathParts = path.split("/");
-        String[] relativeParts = relativePath.split("/");
-
-        // Count number of "../" at start of relative path
-        int upCount = 0;
-        for (String part : relativeParts) {
-            if (part.equals("..")) {
-                upCount++;
-            } else {
-                break;
-            }
+        
+        if (basePath == null) {
+            return relativePath;
         }
-
-        // Build new path
-        StringBuilder result = new StringBuilder();
-
-        // Add path components minus the number of "../"
-        for (int i = 0; i < pathParts.length - upCount; i++) {
-            result.append(pathParts[i]).append("/");
-        }
-
-        // Add remaining relative path components
-        for (int i = upCount; i < relativeParts.length; i++) {
-            if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
-                result.append(relativeParts[i]);
-                if (i < relativeParts.length - 1) {
-                    result.append("/");
-                }
-            }
-        }
-
-        // Remove trailing slash if present
-        if (result.length() > 0 && result.charAt(result.length() - 1) == '/') {
-            result.setLength(result.length() - 1);
-        }
-
-        return result.toString();
+        
+        // 解析并规范化路径
+        Path resolvedPath = basePath.resolve(relativePath).normalize();
+        
+        // 转换为字符串并确保使用正斜杠
+        return resolvedPath.toString().replace('\\', '/');
     }
 }

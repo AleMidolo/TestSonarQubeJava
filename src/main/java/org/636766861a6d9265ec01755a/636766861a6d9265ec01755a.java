@@ -1,37 +1,28 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class UriMatcher {
-
-    private String pattern;
-
+    private final Pattern pattern;
+    
     public UriMatcher(String pattern) {
-        this.pattern = pattern;
+        this.pattern = Pattern.compile(pattern);
     }
-
-    /** 
-     * Match a URI against the pattern.
-     * @param uri the uri to match against the template.
-     * @return the match result, otherwise null if no match occurs.
+    
+    /**
+     * 将URI与模式进行匹配。
+     * @param uri 要与模板匹配的URI。
+     * @return 匹配结果，如果没有匹配则返回空。
      */
-    public String match(String uri) {
+    public final MatchResult match(CharSequence uri) {
         if (uri == null) {
             return null;
         }
-
-        // Convert pattern to regex
-        String regex = pattern.replaceAll("\\*", ".*")
-                            .replaceAll("\\?", ".")
-                            .replaceAll("\\{([^}]+)\\}", "([^/]+)");
         
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(uri);
-
-        if (m.matches()) {
-            // Return the first group if there is one, otherwise return the full match
-            return m.groupCount() > 0 ? m.group(1) : m.group();
+        Matcher matcher = pattern.matcher(uri);
+        if (!matcher.matches()) {
+            return null;
         }
-
-        return null;
+        
+        return matcher.toMatchResult();
     }
 }

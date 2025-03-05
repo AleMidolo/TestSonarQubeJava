@@ -1,16 +1,30 @@
 import java.util.Objects;
 
-public class BucketComparator {
+public class DataTable {
+    private List<String> buckets;
+
     /**
-     * @return true if the bucket is same.
+     * Checks if two DataTable objects have the same buckets
+     * @param dataset The DataTable to compare with
+     * @return true if the buckets are the same, false otherwise
      */
-    public boolean isSameBucket(Object bucket1, Object bucket2) {
-        if (bucket1 == null && bucket2 == null) {
-            return true;
-        }
-        if (bucket1 == null || bucket2 == null) {
+    public boolean isCompatible(DataTable dataset) {
+        if (dataset == null) {
             return false;
         }
-        return Objects.equals(bucket1, bucket2);
+        
+        if (this == dataset) {
+            return true;
+        }
+
+        if (this.buckets == null && dataset.buckets == null) {
+            return true;
+        }
+
+        if (this.buckets == null || dataset.buckets == null) {
+            return false;
+        }
+
+        return Objects.equals(this.buckets, dataset.buckets);
     }
 }

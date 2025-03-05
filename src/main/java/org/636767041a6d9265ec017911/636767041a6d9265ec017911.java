@@ -1,15 +1,15 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class ObjectRegistry {
-    // Set to store registered objects
+public class Registry {
+    // Static set to store registered objects
     private static final Set<Object> registeredObjects = new HashSet<>();
     
     /**
-     * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
-     * @param value The object to register.
+     * <p> 注册给定的对象。用于反射方法以避免无限循环。 </p>
+     * @param value 要注册的对象。
      */
-    public void register(Object value) {
+    static void register(Object value) {
         if (value != null) {
             registeredObjects.add(value);
         }

@@ -1,30 +1,43 @@
-import javax.websocket.Session;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BroadcastManager {
+public class BroadcastHandler {
 
-    private Set<Session> sessions;
-    private BroadcastFilter filter;
+    private List<BroadcastFilter> filters;
 
-    public String invokeBroadcastFilter(String msg) {
-        if (filter != null) {
-            return filter.filter(msg);
+    public BroadcastHandler() {
+        this.filters = new ArrayList<>();
+    }
+
+    /**
+     * 调用 {@link BroadcastFilter}
+     * @param msg 需要过滤的消息对象
+     * @return 过滤后的消息对象
+     */
+    protected Object filter(Object msg) {
+        if (msg == null || filters.isEmpty()) {
+            return msg;
         }
-        return msg;
+
+        Object result = msg;
+        for (BroadcastFilter filter : filters) {
+            result = filter.doFilter(result);
+            if (result == null) {
+                break;
+            }
+        }
+        return result;
     }
 
-    // Interface for broadcast filter
+    // Inner interface for filter implementation
     public interface BroadcastFilter {
-        String filter(String message);
+        Object doFilter(Object msg);
     }
 
-    // Constructor
-    public BroadcastManager(Set<Session> sessions) {
-        this.sessions = sessions;
-    }
-
-    // Setter for filter
-    public void setBroadcastFilter(BroadcastFilter filter) {
-        this.filter = filter;
+    // Method to add filters
+    public void addFilter(BroadcastFilter filter) {
+        if (filter != null) {
+            filters.add(filter);
+        }
     }
 }

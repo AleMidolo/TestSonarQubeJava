@@ -1,22 +1,20 @@
-package com.example.utils;
-
 public class StringUtils {
     /**
-     * Trim all occurrences of the supplied leading character from the given String.
-     * @param str the String to check
-     * @param leadingCharacter the leading character to be trimmed
-     * @return the trimmed String
+     * 从给定的字符串中修剪所有出现的指定前导字符。
+     * @param str 要检查的字符串
+     * @param leadingCharacter 要修剪的前导字符
+     * @return 修剪后的字符串
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
         if (str == null || str.isEmpty()) {
             return str;
         }
-
-        int index = 0;
-        while (index < str.length() && str.charAt(index) == leadingCharacter) {
-            index++;
+        
+        int start = 0;
+        while (start < str.length() && str.charAt(start) == leadingCharacter) {
+            start++;
         }
-
-        return str.substring(index);
+        
+        return str.substring(start);
     }
 }

@@ -20,22 +20,27 @@ public class UTF8Decoder {
             
             // Try to decode one character
             char[] chars = new char[1];
-            decoder.decode(slice).get(0, chars, 0, 1);
+            java.nio.CharBuffer cb = java.nio.CharBuffer.wrap(chars);
+            
+            decoder.decode(slice, cb, true);
+            decoder.flush(cb);
             
             // Append decoded character
             sb.append(chars[0]);
             
-            // Reset to marked position and skip decoded bytes
-            bb.reset();
-            int bytesRead = slice.position();
-            bb.position(bb.position() + bytesRead);
+            // Calculate how many bytes were consumed
+            int bytesConsumed = slice.position();
             
-            return i + bytesRead;
+            // Reset to marked position and skip consumed bytes
+            bb.reset();
+            bb.position(bb.position() + bytesConsumed);
+            
+            return i + bytesConsumed;
             
         } catch (CharacterCodingException e) {
             // On error, skip one byte and append replacement character
             bb.get();
-            sb.append('\uFFFD');
+            sb.append('\ufffd');
             return i + 1;
         }
     }

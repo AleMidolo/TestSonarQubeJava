@@ -22,6 +22,9 @@ public class CharsetConverter {
         MIME_TO_JAVA_CHARSET.put("gb2312", "GB2312");
         MIME_TO_JAVA_CHARSET.put("gbk", "GBK");
         MIME_TO_JAVA_CHARSET.put("gb18030", "GB18030");
+        
+        MIME_TO_JAVA_CHARSET.put("big5", "Big5");
+        MIME_TO_JAVA_CHARSET.put("big-5", "Big5");
     }
 
     /**

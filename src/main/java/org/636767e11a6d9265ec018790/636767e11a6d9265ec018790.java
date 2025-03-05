@@ -54,44 +54,54 @@ public class ThreadAnalyzer {
                 if (line.startsWith("Time:")) {
                     // If we have a complete snapshot, check if it's in range and add it
                     if (currentTimestamp != null && currentThreadName != null) {
+                        boolean inRange = false;
                         for (ProfileAnalyzeTimeRange range : timeRanges) {
                             if (range.isInRange(currentTimestamp)) {
-                                snapshots.add(new ThreadSnapshot(
-                                    currentTimestamp,
-                                    currentThreadName,
-                                    currentThreadState,
-                                    new ArrayList<>(currentStackTrace)
-                                ));
+                                inRange = true;
                                 break;
                             }
+                        }
+                        
+                        if (inRange) {
+                            snapshots.add(new ThreadSnapshot(
+                                currentTimestamp,
+                                currentThreadName,
+                                currentThreadState,
+                                new ArrayList<>(currentStackTrace)
+                            ));
                         }
                     }
                     
                     // Start new snapshot
-                    String timeStr = line.substring(5).trim();
+                    String timeStr = line.substring(6).trim();
                     currentTimestamp = LocalDateTime.parse(timeStr, formatter);
                     currentStackTrace.clear();
                 } else if (line.startsWith("Thread:")) {
-                    currentThreadName = line.substring(7).trim();
+                    currentThreadName = line.substring(8).trim();
                 } else if (line.startsWith("State:")) {
-                    currentThreadState = line.substring(6).trim();
+                    currentThreadState = line.substring(7).trim();
                 } else if (!line.trim().isEmpty()) {
                     currentStackTrace.add(line.trim());
                 }
             }
             
-            // Handle last snapshot
+            // Add final snapshot if in range
             if (currentTimestamp != null && currentThreadName != null) {
+                boolean inRange = false;
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
                     if (range.isInRange(currentTimestamp)) {
-                        snapshots.add(new ThreadSnapshot(
-                            currentTimestamp,
-                            currentThreadName,
-                            currentThreadState,
-                            new ArrayList<>(currentStackTrace)
-                        ));
+                        inRange = true;
                         break;
                     }
+                }
+                
+                if (inRange) {
+                    snapshots.add(new ThreadSnapshot(
+                        currentTimestamp,
+                        currentThreadName,
+                        currentThreadState,
+                        new ArrayList<>(currentStackTrace)
+                    ));
                 }
             }
         }

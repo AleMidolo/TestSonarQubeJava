@@ -7,6 +7,12 @@ public class ResponseUtils {
      * @return 是否为部分内容
      */
     public Boolean isPartialContentResponse() {
-        return HttpServletResponse.SC_PARTIAL_CONTENT == 206;
+        HttpServletResponse response = getResponse(); // Assuming getResponse() exists
+        return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
+    }
+    
+    // Mock method to get response - implementation would depend on context
+    private HttpServletResponse getResponse() {
+        return null;
     }
 }

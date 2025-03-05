@@ -18,7 +18,7 @@ public class LogBuffer {
      */
     public void put(LoggingEvent o) {
         if (o != null) {
-            buffer.offer(o); // Using offer() instead of put() to silently discard when full
+            buffer.offer(o); // Using offer() instead of put() to avoid blocking
         }
     }
 }

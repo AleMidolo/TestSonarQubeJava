@@ -32,7 +32,7 @@ public class UTF8Writer {
                 if (buffer.offset + 2 > buffer.buffer.length) {
                     buffer = LinkedBuffer.allocate(buffer.buffer.length);
                 }
-                buffer.buffer[buffer.offset++] = (byte) (0xC0 | ((c >> 6) & 0x1F));
+                buffer.buffer[buffer.offset++] = (byte) (0xC0 | (c >> 6));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
             } else if (Character.isSurrogate(c)) {
                 // 4 bytes, surrogate pair
@@ -47,7 +47,7 @@ public class UTF8Writer {
                 if (buffer.offset + 4 > buffer.buffer.length) {
                     buffer = LinkedBuffer.allocate(buffer.buffer.length);
                 }
-                buffer.buffer[buffer.offset++] = (byte) (0xF0 | ((codePoint >> 18) & 0x07));
+                buffer.buffer[buffer.offset++] = (byte) (0xF0 | (codePoint >> 18));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (codePoint & 0x3F));
@@ -56,7 +56,7 @@ public class UTF8Writer {
                 if (buffer.offset + 3 > buffer.buffer.length) {
                     buffer = LinkedBuffer.allocate(buffer.buffer.length);
                 }
-                buffer.buffer[buffer.offset++] = (byte) (0xE0 | ((c >> 12) & 0x0F));
+                buffer.buffer[buffer.offset++] = (byte) (0xE0 | (c >> 12));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
             }

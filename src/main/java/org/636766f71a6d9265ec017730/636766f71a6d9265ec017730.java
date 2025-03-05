@@ -13,7 +13,6 @@ public class CollectionUtils {
         }
         
         ArrayList<String> list = new ArrayList<>();
-        
         for (Object obj : collection) {
             if (obj != null) {
                 list.add(obj.toString());

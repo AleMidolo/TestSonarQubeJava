@@ -18,26 +18,27 @@ public class PathUtils {
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
 
-        // 移除开头的./
-        if (relativePath.startsWith("./")) {
-            relativePath = relativePath.substring(2);
-        }
-
-        // 如果是绝对路径，直接返回
+        // 如果relativePath是绝对路径，直接返回
         if (relativePath.startsWith("/")) {
             return relativePath;
         }
 
-        // 处理父目录引用 ../
+        // 使用Path API处理路径
         Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.getParent();
-        if (resolvedPath == null) {
-            resolvedPath = basePath;
+        
+        // 如果path是文件，获取其父目录
+        if (!path.endsWith("/")) {
+            basePath = basePath.getParent();
         }
+
+        if (basePath == null) {
+            basePath = Paths.get("");
+        }
+
+        // 解析并规范化路径
+        Path resolvedPath = basePath.resolve(relativePath).normalize();
         
-        resolvedPath = resolvedPath.resolve(relativePath).normalize();
-        
-        // 转换为标准的正斜杠格式
-        return resolvedPath.toString().replace(File.separatorChar, '/');
+        // 转换为字符串并确保使用正斜杠
+        return resolvedPath.toString().replace('\\', '/');
     }
 }

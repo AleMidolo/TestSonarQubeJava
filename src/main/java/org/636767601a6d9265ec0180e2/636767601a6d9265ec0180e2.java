@@ -33,20 +33,20 @@ public class MinimalSeparators {
                 
                 // Check if removing potentialSeparator disconnects u and v
                 if (isMinimalSeparator(u, v, potentialSeparator)) {
-                    globalSeparators.add(potentialSeparator);
+                    globalSeparators.add(new HashSet<>(potentialSeparator));
                 }
             }
             
-            // Also check pairs of common neighbors
-            List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < commonNeighborsList.size(); i++) {
-                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
+            // Check pairs of common neighbors
+            List<Integer> neighborsList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < neighborsList.size(); i++) {
+                for (int j = i + 1; j < neighborsList.size(); j++) {
                     Set<Integer> potentialSeparator = new HashSet<>();
-                    potentialSeparator.add(commonNeighborsList.get(i));
-                    potentialSeparator.add(commonNeighborsList.get(j));
+                    potentialSeparator.add(neighborsList.get(i));
+                    potentialSeparator.add(neighborsList.get(j));
                     
                     if (isMinimalSeparator(u, v, potentialSeparator)) {
-                        globalSeparators.add(potentialSeparator);
+                        globalSeparators.add(new HashSet<>(potentialSeparator));
                     }
                 }
             }
@@ -56,16 +56,14 @@ public class MinimalSeparators {
     }
     
     private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a copy of the graph
-        Graph tempGraph = graph.clone();
-        
-        // Remove separator vertices
+        // Create a graph copy without the separator vertices
+        Graph reducedGraph = graph.copy();
         for (Integer v : separator) {
-            tempGraph.removeVertex(v);
+            reducedGraph.removeVertex(v);
         }
         
         // Check if source and target are disconnected
-        return !hasPath(tempGraph, source, target);
+        return !hasPath(reducedGraph, source, target);
     }
     
     private boolean hasPath(Graph g, int source, int target) {
@@ -91,9 +89,8 @@ public class MinimalSeparators {
         return false;
     }
     
-    // Helper classes
-    
-    class Edge {
+    // Helper class to represent graph edges
+    private static class Edge {
         private int source;
         private int target;
         
@@ -111,44 +108,11 @@ public class MinimalSeparators {
         }
     }
     
-    class Graph {
-        private Map<Integer, Set<Integer>> adjacencyList;
-        
-        public Graph() {
-            adjacencyList = new HashMap<>();
-        }
-        
-        public Set<Edge> getEdges() {
-            Set<Edge> edges = new HashSet<>();
-            for (int v : adjacencyList.keySet()) {
-                for (int u : adjacencyList.get(v)) {
-                    if (v < u) { // avoid duplicates
-                        edges.add(new Edge(v, u));
-                    }
-                }
-            }
-            return edges;
-        }
-        
-        public Set<Integer> getNeighbors(int vertex) {
-            return adjacencyList.getOrDefault(vertex, new HashSet<>());
-        }
-        
-        public void removeVertex(int vertex) {
-            Set<Integer> neighbors = adjacencyList.remove(vertex);
-            if (neighbors != null) {
-                for (int neighbor : neighbors) {
-                    adjacencyList.get(neighbor).remove(vertex);
-                }
-            }
-        }
-        
-        public Graph clone() {
-            Graph cloned = new Graph();
-            for (Map.Entry<Integer, Set<Integer>> entry : adjacencyList.entrySet()) {
-                cloned.adjacencyList.put(entry.getKey(), new HashSet<>(entry.getValue()));
-            }
-            return cloned;
-        }
+    // Interface for the graph implementation
+    private interface Graph {
+        Set<Edge> getEdges();
+        Set<Integer> getNeighbors(int vertex);
+        void removeVertex(int vertex);
+        Graph copy();
     }
 }

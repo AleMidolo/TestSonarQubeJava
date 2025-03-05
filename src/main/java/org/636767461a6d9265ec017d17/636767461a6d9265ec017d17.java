@@ -33,7 +33,7 @@ public class StringUnescaper {
         }
 
         // Handle unquoted identifiers
-        Pattern escapePattern = Pattern.compile("\\\\(.)");
+        Pattern escapePattern = Pattern.compile("\\\\([^\\\\])");
         Matcher matcher = escapePattern.matcher(input);
         StringBuffer result = new StringBuffer();
         

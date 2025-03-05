@@ -19,7 +19,7 @@ public class LinkedList<T> {
      * @param node The node to remove
      */
     public void remove(Node<T> node) {
-        Objects.requireNonNull(node);
+        Objects.requireNonNull(node, "Node cannot be null");
         
         // If node is head
         if (head == node) {

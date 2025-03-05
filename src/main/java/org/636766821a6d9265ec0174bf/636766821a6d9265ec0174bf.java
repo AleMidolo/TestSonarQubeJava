@@ -1,3 +1,5 @@
+package util;
+
 import java.beans.Introspector;
 
 public class StringUtils {
@@ -6,6 +8,7 @@ public class StringUtils {
      * Reverse of Introspector.decapitalize
      * Capitalizes the first letter of a string, making the first letter uppercase.
      * If the second letter is uppercase, the first letter remains lowercase.
+     * 
      * @param name The string to capitalize
      * @return The capitalized string
      */

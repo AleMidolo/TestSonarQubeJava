@@ -23,7 +23,6 @@ public class FilenameUtils {
         
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
-        
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 }

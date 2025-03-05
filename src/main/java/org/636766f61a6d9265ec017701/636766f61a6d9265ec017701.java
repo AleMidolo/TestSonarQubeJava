@@ -6,9 +6,7 @@ public class StringUtils {
      *
      * @param str 要搜索的字符串，可以为null
      * @param searchStr 要查找的字符串，可以为null
-     * @return 如果两个字符串都不为null且searchStr在str中存在，则返回最后一个匹配的索引位置；
-     *         如果searchStr为空字符串则返回str的长度；
-     *         如果任一参数为null或searchStr不在str中，则返回-1
+     * @return 如果str或searchStr为null则返回-1，否则返回searchStr在str中最后出现的位置，如果未找到则返回-1
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

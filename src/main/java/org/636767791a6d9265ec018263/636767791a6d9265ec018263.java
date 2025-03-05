@@ -14,7 +14,7 @@ public class ClassFinder {
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException("Class " + className + " not found", e);
+            throw new ClassNotFoundException("Could not find class: " + className, e);
         }
     }
 }

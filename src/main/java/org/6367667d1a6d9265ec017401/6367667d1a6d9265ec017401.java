@@ -31,14 +31,26 @@ public class StringUtils {
             if (ch == '\\' && i + 1 < str.length()) {
                 // 检查是否是转义序列
                 String escape = str.substring(i, Math.min(i + 2, str.length()));
-                String mapped = escapeMap.get(escape);
+                if (escapeMap.containsKey(escape)) {
+                    result.append(escapeMap.get(escape));
+                    i++; // 跳过下一个字符
+                    continue;
+                }
                 
-                if (mapped != null) {
-                    // 找到转义字符,添加映射后的字符
-                    result.append(mapped);
-                    i++;  // 跳过下一个字符
+                // 处理Unicode转义序列 \uXXXX
+                if (escape.startsWith("\\u") && i + 5 < str.length()) {
+                    String unicode = str.substring(i + 2, i + 6);
+                    try {
+                        int codePoint = Integer.parseInt(unicode, 16);
+                        result.append((char)codePoint);
+                        i += 5; // 跳过unicode序列
+                        continue;
+                    } catch (NumberFormatException e) {
+                        // 如果不是有效的unicode序列，保持原样
+                        result.append(ch);
+                    }
                 } else {
-                    // 不是有效的转义序列,保持原样
+                    // 不是已知的转义序列，保持原样
                     result.append(ch);
                 }
             } else {

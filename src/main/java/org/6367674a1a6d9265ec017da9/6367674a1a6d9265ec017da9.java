@@ -23,17 +23,16 @@ public class DoublyLinkedList<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list);
         
-        // If list is empty or same as current list, return
-        if (list.size == 0 || list == this) {
+        if (list == this || list.size == 0) {
             return;
         }
 
-        // If current list is empty
+        // If this list is empty
         if (size == 0) {
             head = list.head;
             tail = list.tail;
         } else {
-            // Link the tail of current list to head of input list
+            // Connect the tail of this list to the head of the other list
             tail.next = list.head;
             list.head.prev = tail;
             tail = list.tail;
@@ -42,7 +41,7 @@ public class DoublyLinkedList<E> {
         // Update size
         size += list.size;
 
-        // Clear the input list
+        // Clear the other list
         list.head = null;
         list.tail = null;
         list.size = 0;

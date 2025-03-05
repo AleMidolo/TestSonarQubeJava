@@ -30,6 +30,7 @@ public class LinkedList<E> {
         final ListNodeImpl<E> next = node.next;
 
         if (prev == null) {
+            // 删除的是头节点
             first = next;
         } else {
             prev.next = next;
@@ -37,6 +38,7 @@ public class LinkedList<E> {
         }
 
         if (next == null) {
+            // 删除的是尾节点
             last = prev;
         } else {
             next.prev = prev;

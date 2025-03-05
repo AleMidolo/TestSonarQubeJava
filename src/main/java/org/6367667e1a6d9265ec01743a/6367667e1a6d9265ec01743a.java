@@ -12,7 +12,7 @@ public class TimeStampTracker {
     }
     
     // Helper method to update timestamp
-    public void updateWriteTimeStamp() {
+    public void recordWrite() {
         lastWriteTimeStamp.set(System.currentTimeMillis());
     }
 }

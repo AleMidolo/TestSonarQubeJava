@@ -4,46 +4,45 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     private static class SequenceRange {
-        private long start;
-        private long end;
-        
-        public SequenceRange(long start, long end) {
-            this.start = start;
-            this.end = end;
+        private long startSequence;
+        private long endSequence;
+
+        public SequenceRange(long startSequence, long endSequence) {
+            this.startSequence = startSequence;
+            this.endSequence = endSequence;
         }
-        
-        public long getStart() {
-            return start;
+
+        public long getStartSequence() {
+            return startSequence;
         }
-        
-        public long getEnd() {
-            return end; 
+
+        public long getEndSequence() {
+            return endSequence;
         }
     }
 
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         
-        // Get current sequence number
+        // Get current snapshot sequence
         long currentSequence = getCurrentSequence();
         
-        // Build ranges in chunks of 1000
-        long chunkSize = 1000;
+        // Build sequence ranges with fixed size intervals
+        long interval = 1000;
         long start = 0;
         
         while (start < currentSequence) {
-            long end = Math.min(start + chunkSize - 1, currentSequence);
+            long end = Math.min(start + interval, currentSequence);
             ranges.add(new SequenceRange(start, end));
             start = end + 1;
         }
         
         return ranges;
     }
-    
+
     // Helper method to get current sequence
     private long getCurrentSequence() {
         // Implementation to get current sequence number
-        // This could read from a file or database
-        return 10000; // Example value
+        return System.currentTimeMillis();
     }
 }

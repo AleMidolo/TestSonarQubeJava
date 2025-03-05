@@ -14,18 +14,18 @@ public class BeanMapUtils {
 
         Iterator<?> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
-            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
-            String propertyName = entry.getKey().toString();
+            @SuppressWarnings("unchecked")
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) entries.next();
+            String propertyName = entry.getKey();
             
-            // 检查属性是否可写
+            // Check if property is writeable
             if (map.getWriteMethod(propertyName) != null) {
                 Object value = entry.getValue();
                 try {
-                    // 只复制可写属性
+                    // Put only if property is writeable
                     this.put(propertyName, value);
                 } catch (Exception e) {
-                    // 忽略无法写入的属性
-                    continue;
+                    // Ignore exceptions for read-only or write-only properties
                 }
             }
         }

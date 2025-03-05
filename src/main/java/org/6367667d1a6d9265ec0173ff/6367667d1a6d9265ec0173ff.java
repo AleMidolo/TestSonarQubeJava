@@ -17,18 +17,16 @@ public class MeteorLookup {
         // Try to get existing Meteor instance
         Meteor meteor = (Meteor) r.getAttribute(Meteor.class.getName());
         
-        if (meteor != null) {
-            return meteor;
+        if (meteor == null) {
+            // Try to get from AtmosphereResource
+            AtmosphereResource resource = (AtmosphereResource) 
+                r.getAttribute(AtmosphereResource.class.getName());
+                
+            if (resource != null) {
+                meteor = Meteor.build(resource);
+            }
         }
         
-        // Try to get from AtmosphereResource
-        AtmosphereResource resource = (AtmosphereResource) 
-            r.getAttribute(AtmosphereResource.class.getName());
-            
-        if (resource != null) {
-            return Meteor.build(resource);
-        }
-        
-        return null;
+        return meteor;
     }
 }

@@ -6,17 +6,17 @@ public class StackMapFrameVisitor {
     private int[] locals;
     private int[] stack;
     
-    public int visitFrame(final int offset, final int numLocal, final int numStack) {
-        // Create new arrays to store local variables and stack elements
-        locals = new int[numLocal];
+    public int startFrame(final int offset, final int numLocal, final int numStack) {
+        // Create arrays to store local variables and stack elements
+        locals = new int[numLocal]; 
         stack = new int[numStack];
         
-        // Initialize the current frame with the given parameters
+        // Create new Frame object to store frame state
         currentFrame = new Frame(offset);
-        currentFrame.initInputFrame(numLocal, numStack);
+        currentFrame.setLocal(numLocal, locals);
+        currentFrame.setStack(numStack, stack);
         
-        // The next element to be written will be the first local variable
-        // So return 0 as the starting index
+        // Return index where next element should be written (start at 0)
         return 0;
     }
 }

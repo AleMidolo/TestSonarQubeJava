@@ -6,10 +6,11 @@ import java.util.List;
 
 public class URIPathDecoder {
     
-    public static List<String> getPathSegments(URI u, boolean decode) {
+    public static List<String> decode(URI u, boolean decode) {
+        String path = u.getPath();
         List<String> segments = new ArrayList<>();
         
-        String path = u.getPath();
+        // Handle empty or null path
         if (path == null || path.isEmpty()) {
             return segments;
         }
@@ -30,10 +31,10 @@ public class URIPathDecoder {
             
             if (decode) {
                 try {
-                    // Decode the segment using UTF-8 encoding
+                    // Decode segment using UTF-8 encoding
                     segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
                 } catch (Exception e) {
-                    // If decoding fails, use the raw segment
+                    // If decoding fails, use raw segment
                 }
             }
             segments.add(segment);

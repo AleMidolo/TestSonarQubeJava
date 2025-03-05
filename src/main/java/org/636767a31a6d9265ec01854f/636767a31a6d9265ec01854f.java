@@ -23,7 +23,7 @@ public class FieldReader {
         }
     }
     
-    // Helper method to read varint32 encoding
+    // Helper method to read varint32 encoded length
     private int readVarint32() throws IOException {
         int result = 0;
         int shift = 0;

@@ -10,8 +10,8 @@ public class ClassFileBuffer {
      * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
      * The read pointer is reset to the start of the byte array.
      *
-     * @param inputStream the input stream to read bytes from
-     * @throws IOException if an I/O error occurs while reading from the stream
+     * @param inputStream The input stream to read bytes from
+     * @throws IOException If an I/O error occurs while reading from the stream
      */
     public void fillBuffer(InputStream inputStream) throws IOException {
         // Create a ByteArrayOutputStream to store bytes

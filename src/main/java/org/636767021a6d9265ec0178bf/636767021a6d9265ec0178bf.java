@@ -21,15 +21,11 @@ public class TypeConverter {
         }
 
         if (value instanceof Number) {
-            int intValue;
-            if (value instanceof BigDecimal) {
-                intValue = ((BigDecimal) value).intValue();
-            } else if (value instanceof BigInteger) {
-                intValue = ((BigInteger) value).intValue();
-            } else {
-                intValue = ((Number) value).intValue();
+            int intValue = ((Number) value).intValue();
+            if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
+                return (char) intValue;
             }
-            return (char) intValue;
+            throw new Exception("Number out of range for Character conversion");
         }
 
         if (value instanceof Boolean) {

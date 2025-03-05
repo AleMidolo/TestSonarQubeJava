@@ -9,7 +9,7 @@ public class VarintReader {
      * @throws IOException If there is an error reading from the stream
      */
     public static long readRawVarint(InputStream input) throws IOException {
-        long result = 0;
+        long value = 0;
         int shift = 0;
         int b;
         
@@ -20,13 +20,13 @@ public class VarintReader {
                 throw new IOException("Reached end of stream while reading varint");
             }
             
-            // Add the lower 7 bits to result
-            result |= ((long)(b & 0x7F)) << shift;
+            // Add the lower 7 bits to the result
+            value |= ((long)(b & 0x7F)) << shift;
             shift += 7;
             
-            // Continue if most significant bit is 1
+            // Continue if the high bit is set
         } while ((b & 0x80) != 0);
         
-        return result;
+        return value;
     }
 }

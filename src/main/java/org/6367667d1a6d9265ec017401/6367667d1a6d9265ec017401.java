@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StringUtils {
-
+    
     public static String unescapeJava(String str) {
         if (str == null) {
             return null;
@@ -22,7 +22,6 @@ public class StringUtils {
         boolean escaped = false;
         for (int i = 0; i < str.length(); i++) {
             char current = str.charAt(i);
-            
             if (escaped) {
                 String escape = "\\" + current;
                 if (escapes.containsKey(escape)) {
@@ -31,18 +30,14 @@ public class StringUtils {
                     result.append(current);
                 }
                 escaped = false;
-                continue;
-            }
-            
-            if (current == '\\') {
+            } else if (current == '\\') {
                 escaped = true;
-                continue;
+            } else {
+                result.append(current);
             }
-            
-            result.append(current);
         }
         
-        // Handle trailing backslash if exists
+        // Handle trailing backslash if present
         if (escaped) {
             result.append('\\');
         }

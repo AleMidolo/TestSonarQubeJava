@@ -16,18 +16,9 @@ public class OutputStreamWriter {
      * Helper method to write bytes from an offset
      */
     private void write(byte[] b, int off, int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException();
-        }
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-                ((off + len) > b.length) || ((off + len) < 0)) {
+        if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException();
         }
-        if (len == 0) {
-            return;
-        }
-        
-        // Write bytes one at a time
         for (int i = 0; i < len; i++) {
             write(b[off + i]);
         }

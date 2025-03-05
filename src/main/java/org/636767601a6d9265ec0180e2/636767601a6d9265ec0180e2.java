@@ -31,22 +31,22 @@ public class MinimalSeparators {
                 Set<Integer> potentialSeparator = new HashSet<>();
                 potentialSeparator.add(w);
                 
-                // Check if removing potentialSeparator disconnects u and v
+                // Check if removing the potential separator disconnects u and v
                 if (isMinimalSeparator(u, v, potentialSeparator)) {
-                    globalSeparators.add(new HashSet<>(potentialSeparator));
+                    globalSeparators.add(potentialSeparator);
                 }
             }
             
-            // Check pairs of common neighbors
-            List<Integer> neighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < neighborsList.size(); i++) {
-                for (int j = i + 1; j < neighborsList.size(); j++) {
+            // Also check pairs of common neighbors
+            List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < commonNeighborsList.size(); i++) {
+                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
                     Set<Integer> potentialSeparator = new HashSet<>();
-                    potentialSeparator.add(neighborsList.get(i));
-                    potentialSeparator.add(neighborsList.get(j));
+                    potentialSeparator.add(commonNeighborsList.get(i));
+                    potentialSeparator.add(commonNeighborsList.get(j));
                     
                     if (isMinimalSeparator(u, v, potentialSeparator)) {
-                        globalSeparators.add(new HashSet<>(potentialSeparator));
+                        globalSeparators.add(potentialSeparator);
                     }
                 }
             }
@@ -56,7 +56,7 @@ public class MinimalSeparators {
     }
     
     private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a graph copy without the separator vertices
+        // Create a copy of the graph without the separator vertices
         Graph reducedGraph = graph.copy();
         for (Integer v : separator) {
             reducedGraph.removeVertex(v);
@@ -89,7 +89,7 @@ public class MinimalSeparators {
         return false;
     }
     
-    // Helper class to represent graph edges
+    // Helper class to represent edges
     private static class Edge {
         private int source;
         private int target;

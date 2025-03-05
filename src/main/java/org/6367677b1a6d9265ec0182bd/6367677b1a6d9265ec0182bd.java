@@ -27,7 +27,7 @@ public class LogFormatter {
         // Add message
         sb.append(event.getMessage());
         
-        // Add throwable if exists
+        // Add exception stack trace if present
         Throwable throwable = event.getThrowable();
         if (throwable != null) {
             sb.append(System.lineSeparator());

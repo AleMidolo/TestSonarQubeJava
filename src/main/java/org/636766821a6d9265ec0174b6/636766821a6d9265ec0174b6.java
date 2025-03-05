@@ -36,10 +36,7 @@ public class TypeResolver {
         Type[] resolvedArgs = new Type[targetParams.length];
         for (int i = 0; i < targetParams.length; i++) {
             Type resolvedType = typeVarMap.get(targetParams[i]);
-            if (resolvedType == null) {
-                return null; // Cannot resolve all arguments
-            }
-            resolvedArgs[i] = resolvedType;
+            resolvedArgs[i] = resolvedType != null ? resolvedType : targetParams[i];
         }
 
         return resolvedArgs;

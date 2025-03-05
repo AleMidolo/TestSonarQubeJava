@@ -19,6 +19,6 @@ public class KeyBoundCalculator {
             }
         }
 
-        return minBound == Integer.MAX_VALUE ? 0 : minBound;
+        return minBound;
     }
 }

@@ -4,7 +4,8 @@ import java.util.Iterator;
 public class BeanMapUtils {
     
     /**
-     * Puts all of the writable properties from the given BeanMap into this BeanMap. Read-only and Write-only properties will be ignored.
+     * Puts all of the writable properties from the given BeanMap into this BeanMap. 
+     * Read-only and Write-only properties will be ignored.
      * @param map the BeanMap whose properties to put
      */
     public void putAllWriteable(BeanMap map) {
@@ -12,21 +13,17 @@ public class BeanMapUtils {
             return;
         }
 
-        Iterator<String> it = map.keyIterator();
-        while (it.hasNext()) {
-            String propertyName = it.next();
+        Iterator<?> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
+            String propertyName = entry.getKey().toString();
             
-            // Check if property is writable
+            // Check if property is writable in source map
             if (map.isWriteable(propertyName)) {
-                Object value = map.get(propertyName);
-                try {
-                    // Only put if property exists and is writable in this map
-                    if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
-                        this.put(propertyName, value);
-                    }
-                } catch (IllegalArgumentException e) {
-                    // Skip properties that can't be written
-                    continue;
+                Object value = entry.getValue();
+                // Only put if property exists and is writable in this map
+                if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
+                    this.put(propertyName, value);
                 }
             }
         }

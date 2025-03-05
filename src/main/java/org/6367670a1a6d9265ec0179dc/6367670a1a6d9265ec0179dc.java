@@ -13,63 +13,57 @@ public class StackMapTableWriter {
             int abstractType = currentFrame.getAbstractType(i);
             switch (abstractType) {
                 case Frame.ITEM_TOP:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.TOP_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.TOP));
                     break;
                 case Frame.ITEM_INTEGER:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.INTEGER_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.INTEGER));
                     break;
                 case Frame.ITEM_FLOAT:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.FLOAT_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.FLOAT));
                     break;
                 case Frame.ITEM_DOUBLE:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.DOUBLE_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.DOUBLE));
                     break;
                 case Frame.ITEM_LONG:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.LONG_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.LONG));
                     break;
                 case Frame.ITEM_NULL:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.NULL_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.NULL));
                     break;
                 case Frame.ITEM_UNINITIALIZED_THIS:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_THIS_VARIABLE_INFO));
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.UNINITIALIZED_THIS));
                     break;
                 case Frame.ITEM_OBJECT:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.OBJECT_VARIABLE_INFO, 
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.OBJECT, 
                         currentFrame.getObjectType(i)));
                     break;
                 default:
                     // Must be an uninitialized type
                     if (abstractType > Frame.ITEM_UNINITIALIZED) {
-                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_VARIABLE_INFO,
-                            ((Label) currentFrame.getObjectType(i)).getOffset()));
+                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationType.UNINITIALIZED,
+                            currentFrame.getInitializationLabel(i)));
                     }
                     break;
             }
         }
     }
 
-    // Inner class to represent verification type info
+    // Helper enum and class
+    private enum VerificationType {
+        TOP, INTEGER, FLOAT, DOUBLE, LONG, NULL, UNINITIALIZED_THIS, OBJECT, UNINITIALIZED
+    }
+
     private static class VerificationTypeInfo {
-        static final int TOP_VARIABLE_INFO = 0;
-        static final int INTEGER_VARIABLE_INFO = 1;
-        static final int FLOAT_VARIABLE_INFO = 2;
-        static final int DOUBLE_VARIABLE_INFO = 3;
-        static final int LONG_VARIABLE_INFO = 4;
-        static final int NULL_VARIABLE_INFO = 5;
-        static final int UNINITIALIZED_THIS_VARIABLE_INFO = 6;
-        static final int OBJECT_VARIABLE_INFO = 7;
-        static final int UNINITIALIZED_VARIABLE_INFO = 8;
+        private VerificationType type;
+        private Object data; // For OBJECT (class name) or UNINITIALIZED (label)
 
-        private int tag;
-        private Object info;
-
-        VerificationTypeInfo(int tag) {
-            this.tag = tag;
+        public VerificationTypeInfo(VerificationType type) {
+            this.type = type;
         }
 
-        VerificationTypeInfo(int tag, Object info) {
-            this.tag = tag;
-            this.info = info;
+        public VerificationTypeInfo(VerificationType type, Object data) {
+            this.type = type;
+            this.data = data;
         }
     }
 }

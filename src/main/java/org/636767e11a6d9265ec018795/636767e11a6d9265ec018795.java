@@ -1,28 +1,16 @@
 import java.util.Objects;
 
 public class BucketComparator {
-    
-    private String bucketName;
-    private String bucketRegion;
-    
-    public BucketComparator(String name, String region) {
-        this.bucketName = name;
-        this.bucketRegion = region;
-    }
-
     /**
      * @return true if the bucket is same.
      */
-    public boolean isSameBucket(Object obj) {
-        if (this == obj) {
+    public boolean isSameBucket(Object bucket1, Object bucket2) {
+        if (bucket1 == null && bucket2 == null) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (bucket1 == null || bucket2 == null) {
             return false;
         }
-        
-        BucketComparator other = (BucketComparator) obj;
-        return Objects.equals(bucketName, other.bucketName) && 
-               Objects.equals(bucketRegion, other.bucketRegion);
+        return Objects.equals(bucket1, bucket2);
     }
 }

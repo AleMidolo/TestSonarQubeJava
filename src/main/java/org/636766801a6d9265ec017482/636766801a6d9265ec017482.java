@@ -7,27 +7,30 @@ public class ClassFileBuffer {
     private int readPointer;
     
     /**
-     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
+     * Clear and fill the buffer with the supplied byte stream. 
      * The read pointer is reset to the start of the byte array.
      *
      * @param inputStream the input stream to read bytes from
-     * @throws IOException if an I/O error occurs while reading from the stream
+     * @throws IOException if an I/O error occurs while reading the stream
      */
     public void fillBuffer(InputStream inputStream) throws IOException {
-        // Create a ByteArrayOutputStream to store bytes
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        // Create output stream to store bytes
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         
         // Read bytes from input stream
-        byte[] temp = new byte[4096];
+        byte[] tempBuffer = new byte[4096];
         int bytesRead;
-        while ((bytesRead = inputStream.read(temp)) != -1) {
-            byteStream.write(temp, 0, bytesRead);
+        while ((bytesRead = inputStream.read(tempBuffer)) != -1) {
+            outputStream.write(tempBuffer, 0, bytesRead);
         }
         
-        // Clear existing buffer and fill with new bytes
-        buffer = byteStream.toByteArray();
+        // Clear existing buffer and store new bytes
+        buffer = outputStream.toByteArray();
         
         // Reset read pointer to start
         readPointer = 0;
+        
+        // Close streams
+        outputStream.close();
     }
 }

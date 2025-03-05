@@ -9,7 +9,7 @@ public class ObjectRegistry {
      * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
      * @param value The object to register.
      */
-    public void registerObject(Object value) {
+    public static void registerObject(Object value) {
         if (value != null) {
             registeredObjects.add(value);
         }

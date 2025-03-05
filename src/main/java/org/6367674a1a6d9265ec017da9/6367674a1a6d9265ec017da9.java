@@ -38,7 +38,7 @@ public class LinkedList<T> {
         }
     }
 
-    // Inner class for ListNode
+    // Supporting classes and methods
     private static class ListNode<T> {
         T data;
         ListNode<T> next;
@@ -49,7 +49,6 @@ public class LinkedList<T> {
         }
     }
 
-    // Helper methods
     public void addListNode(ListNode<T> node) {
         synchronized (lock) {
             if (head == null) {

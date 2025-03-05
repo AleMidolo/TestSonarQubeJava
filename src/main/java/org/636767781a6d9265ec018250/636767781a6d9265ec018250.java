@@ -3,9 +3,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 public class LogFilter extends Filter {
 
-    /**
-     * 如果没有字符串匹配，则返回 {@link Filter#NEUTRAL}。
-     */
+    @Override
     public int decide(LoggingEvent event) {
         if (event == null || event.getMessage() == null) {
             return Filter.NEUTRAL;
@@ -13,8 +11,8 @@ public class LogFilter extends Filter {
 
         String message = event.getMessage().toString();
         
-        // Since no specific matching criteria is provided in the docstring,
-        // we return NEUTRAL as specified
+        // Since no string matching criteria is specified in requirements
+        // Always return NEUTRAL as default behavior
         return Filter.NEUTRAL;
     }
 }

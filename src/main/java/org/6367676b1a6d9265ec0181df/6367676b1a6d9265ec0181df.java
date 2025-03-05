@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * String utility methods.
+ * String utilities class.
  */
 public class StringUtils {
 

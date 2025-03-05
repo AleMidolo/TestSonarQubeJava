@@ -27,16 +27,3 @@ public class MetricsAcceptor {
         }
     }
 }
-
-// Placeholder class for METRICS - actual implementation would depend on requirements
-class METRICS {
-    private String key;
-    
-    public String getKey() {
-        return key;
-    }
-    
-    public void merge(METRICS other) {
-        // Implementation of merge logic
-    }
-}

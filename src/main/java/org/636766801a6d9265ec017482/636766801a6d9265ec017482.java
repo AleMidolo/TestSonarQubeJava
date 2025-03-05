@@ -20,9 +20,9 @@ public class ClassFileBuffer {
         size = 0;
         
         // 读取输入流到缓冲区
-        int bytesRead;
-        while ((bytesRead = in.read(buffer, size, buffer.length - size)) != -1) {
-            size += bytesRead;
+        int read;
+        while ((read = in.read(buffer, size, buffer.length - size)) != -1) {
+            size += read;
             
             // 如果缓冲区已满,扩容为原来的2倍
             if (size == buffer.length) {

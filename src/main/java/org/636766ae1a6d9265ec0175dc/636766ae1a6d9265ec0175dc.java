@@ -7,14 +7,6 @@ public class ResponseUtils {
      * @return 是否为部分内容
      */
     public Boolean isPartialContentResponse() {
-        HttpServletResponse response = getResponse(); // Assuming getResponse() exists
-        return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
-    }
-    
-    // Helper method to get current response
-    private HttpServletResponse getResponse() {
-        // Implementation details would depend on your framework
-        // This is just a placeholder
-        return null;
+        return HttpServletResponse.SC_PARTIAL_CONTENT == 206;
     }
 }

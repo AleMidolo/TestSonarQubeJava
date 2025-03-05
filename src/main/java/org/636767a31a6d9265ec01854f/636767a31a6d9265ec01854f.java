@@ -8,35 +8,33 @@ public class WireFormatDecoder {
     
     private final InputStream input;
     private int tag;
-    private int wireType;
     private boolean isPacked;
     private int packedLimit;
     private int currentLimit;
     
     public WireFormatDecoder(InputStream input) {
         this.input = input;
-        this.isPacked = false;
-        this.packedLimit = 0;
         this.currentLimit = Integer.MAX_VALUE;
     }
 
     private void checkIfPackedField() throws IOException {
-        // Check if this field should be packed based on wire type
-        if (wireType == WIRETYPE_LENGTH_DELIMITED) {
-            // Read the length of the packed data
+        // Check if the field has packed encoding by examining the wire type
+        if (getWireType(tag) == WIRETYPE_LENGTH_DELIMITED) {
             int length = readRawVarint32();
-            
-            if (length > 0) {
-                // Store current position as packed limit
-                packedLimit = currentLimit;
-                // Update current limit to end of packed data
-                currentLimit = packedLimit + length;
-                isPacked = true;
+            if (length < 0) {
+                throw new IOException("Negative length for packed field");
             }
+            
+            // Set the packed field limit
+            packedLimit = pushLimit(length);
+            isPacked = true;
         } else {
-            // Not a packed field
             isPacked = false;
         }
+    }
+    
+    private int getWireType(int tag) {
+        return tag & TAG_TYPE_MASK;
     }
     
     private int readRawVarint32() throws IOException {
@@ -45,7 +43,7 @@ public class WireFormatDecoder {
         while (shift < 32) {
             int b = input.read();
             if (b == -1) {
-                throw new IOException("Unexpected EOF while reading varint");
+                throw new IOException("Truncated message");
             }
             result |= (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
@@ -54,5 +52,11 @@ public class WireFormatDecoder {
             shift += 7;
         }
         throw new IOException("Malformed varint");
+    }
+    
+    private int pushLimit(int limit) {
+        int oldLimit = currentLimit;
+        currentLimit = Math.min(oldLimit, limit);
+        return oldLimit;
     }
 }

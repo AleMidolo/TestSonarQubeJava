@@ -1,3 +1,5 @@
+import java.time.Instant;
+
 public class CacheExpiryChecker {
     /**
      * @param timestamp        当前时间的时间戳
@@ -5,10 +7,7 @@ public class CacheExpiryChecker {
      * @return 真值表示该指标应该从缓存中移除。
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        // Get current system timestamp in milliseconds
-        long currentTime = System.currentTimeMillis();
-        
-        // Check if the time elapsed since timestamp exceeds the threshold
+        long currentTime = Instant.now().toEpochMilli();
         return (currentTime - timestamp) > expiredThreshold;
     }
 }

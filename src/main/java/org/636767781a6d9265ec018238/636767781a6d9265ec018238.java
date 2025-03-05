@@ -13,7 +13,7 @@ public class AppenderManager {
         Enumeration<Appender> existingAppenders = appenders.elements();
         while (existingAppenders.hasMoreElements()) {
             Appender current = existingAppenders.nextElement();
-            if (current == appender) {
+            if (current.equals(appender)) {
                 return true;
             }
         }

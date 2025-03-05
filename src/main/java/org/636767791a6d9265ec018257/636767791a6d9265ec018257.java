@@ -2,7 +2,6 @@ import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class LogTable {
-    
     private final List<LogRecord> logRecords;
     private final DefaultTableModel tableModel;
     

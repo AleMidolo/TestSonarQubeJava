@@ -23,4 +23,9 @@ public class ByteArrayMatcher {
         
         return true;
     }
+    
+    // Constructor to set internal array
+    public ByteArrayMatcher(byte[] array) {
+        this.internalArray = array;
+    }
 }

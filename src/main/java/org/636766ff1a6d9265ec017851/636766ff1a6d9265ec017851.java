@@ -21,14 +21,14 @@ public class ByteSearcher {
             // 设置搜索起始位置
             buffer.position(pos);
             
-            // 遍历缓冲区寻找目标字节
+            // 搜索直到找到匹配值或到达buffer末尾
             while (buffer.hasRemaining()) {
                 if (buffer.get() == value) {
                     return buffer.position() - 1;
                 }
             }
             
-            // 未找到返回-1
+            // 未找到匹配值
             return -1;
             
         } finally {

@@ -25,7 +25,7 @@ public class CharacterConverter {
             if (str.length() == 1) {
                 return Character.valueOf(str.charAt(0));
             }
-            throw new Exception("Cannot convert String with length > 1 to Character: " + str);
+            throw new Exception("Cannot convert string with length > 1 to Character: " + str);
         }
 
         if (value instanceof Number) {
@@ -33,9 +33,9 @@ public class CharacterConverter {
             if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
                 return Character.valueOf((char) intValue);
             }
-            throw new Exception("Cannot convert Number outside char range: " + intValue);
+            throw new Exception("Cannot convert number outside char range: " + intValue);
         }
 
-        throw new Exception("Cannot convert type " + value.getClass().getName() + " to Character");
+        throw new Exception("Cannot convert value of type " + value.getClass().getName() + " to Character");
     }
 }

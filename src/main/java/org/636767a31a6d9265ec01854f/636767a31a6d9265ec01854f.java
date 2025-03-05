@@ -18,20 +18,22 @@ public class WireFormatDecoder {
     }
 
     private void checkIfPackedField() throws IOException {
-        // Check if current field has packed encoding
+        // Check if current field is length-delimited (packed field)
         if ((tag & TAG_TYPE_MASK) == WIRETYPE_LENGTH_DELIMITED) {
             // Read packed field length
             int length = readVarint32();
             
-            if (length > 0) {
-                // Mark start of packed values
-                packedFieldMode = true;
-                // Calculate end position
-                packedFieldEndPos = currentPosition + length;
-                // Save the tag for repeated reads
-                lastTag = tag;
-            }
+            // Set packed field mode and calculate end position
+            packedFieldMode = true;
+            packedFieldEndPos = currentPosition + length;
+            
+            // Read first tag inside packed field
+            tag = readVarint32();
+        } else {
+            packedFieldMode = false;
         }
+        
+        lastTag = tag;
     }
     
     // Helper method to read variable length 32-bit integer

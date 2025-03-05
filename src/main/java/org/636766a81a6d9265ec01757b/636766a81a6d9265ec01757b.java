@@ -19,12 +19,11 @@ public class JSONSerializer {
         if (value == null) {
             return null;
         }
-
-        try {
-            // Use FastJSON to serialize object to JSON string with specified features
-            return JSON.toJSONString(value, features);
-        } catch (Exception e) {
-            throw new RuntimeException("Error serializing object to JSON", e);
+        
+        if (features == null || features.length == 0) {
+            return JSON.toJSONString(value);
         }
+        
+        return JSON.toJSONString(value, features);
     }
 }

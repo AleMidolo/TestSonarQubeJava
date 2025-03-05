@@ -2,9 +2,9 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomLogFormatter {
+public class LogFormatter {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     
     public String format(final LoggingEvent event) {
         if (event == null) {
@@ -15,7 +15,7 @@ public class CustomLogFormatter {
         
         // Add timestamp
         Date timestamp = new Date(event.getTimeStamp());
-        sb.append(dateFormat.format(timestamp));
+        sb.append(DATE_FORMAT.format(timestamp));
         sb.append(" ");
         
         // Add log level
@@ -39,9 +39,6 @@ public class CustomLogFormatter {
                 sb.append(line).append("\n");
             }
         }
-        
-        // Add new line
-        sb.append("\n");
         
         return sb.toString();
     }

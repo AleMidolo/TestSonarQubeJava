@@ -37,4 +37,16 @@ public class ByteArrayOutputStream extends OutputStream {
             buf = newBuf;
         }
     }
+    
+    // Constructor
+    public ByteArrayOutputStream() {
+        this(32); // Default size
+    }
+    
+    public ByteArrayOutputStream(int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("Negative initial size: " + size);
+        }
+        buf = new byte[size];
+    }
 }

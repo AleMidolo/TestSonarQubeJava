@@ -3,7 +3,7 @@ public class StringBuilder {
     private int count;
     
     public String toString() {
-        // Create new String from internal char array
+        // Create a new String using the internal char array
         return new String(value, 0, count);
     }
 }

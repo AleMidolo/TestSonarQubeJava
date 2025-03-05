@@ -5,64 +5,59 @@ public class UTF8Decoder {
     /**
      * Decodes octets to characters using the UTF-8 decoding and appends the characters to a StringBuffer.
      * @param bytes The byte array containing UTF-8 encoded data
-     * @param offset The starting offset in the byte array
+     * @param offset The starting position in the byte array
      * @param length The number of bytes to decode
      * @param buffer The StringBuffer to append decoded characters to
      * @return the index to the next unchecked character in the string to decode
      */
     public static int decodeUTF8(byte[] bytes, int offset, int length, StringBuffer buffer) {
-        int end = offset + length;
-        int i = offset;
+        int endIndex = offset + length;
+        int currentIndex = offset;
         
-        while (i < end) {
-            int byte1 = bytes[i] & 0xFF;
+        while (currentIndex < endIndex) {
+            int octet = bytes[currentIndex] & 0xFF;
             
-            if (byte1 <= 0x7F) {
-                // Single byte character
-                buffer.append((char)byte1);
-                i++;
-            }
-            else if ((byte1 & 0xE0) == 0xC0) {
-                // Two byte character
-                if (i + 1 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80) break;
+            if ((octet & 0x80) == 0) {
+                // Single byte character (0xxxxxxx)
+                buffer.append((char)octet);
+                currentIndex++;
+            } else if ((octet & 0xE0) == 0xC0) {
+                // Two byte character (110xxxxx 10xxxxxx)
+                if (currentIndex + 1 >= endIndex) break;
                 
-                int codePoint = ((byte1 & 0x1F) << 6) | (byte2 & 0x3F);
-                buffer.append((char)codePoint);
-                i += 2;
-            }
-            else if ((byte1 & 0xF0) == 0xE0) {
-                // Three byte character
-                if (i + 2 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                int byte3 = bytes[i + 2] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80 || (byte3 & 0xC0) != 0x80) break;
+                int value = ((octet & 0x1F) << 6) |
+                           (bytes[currentIndex + 1] & 0x3F);
+                buffer.append((char)value);
+                currentIndex += 2;
+            } else if ((octet & 0xF0) == 0xE0) {
+                // Three byte character (1110xxxx 10xxxxxx 10xxxxxx)
+                if (currentIndex + 2 >= endIndex) break;
                 
-                int codePoint = ((byte1 & 0x0F) << 12) | ((byte2 & 0x3F) << 6) | (byte3 & 0x3F);
-                buffer.append((char)codePoint);
-                i += 3;
-            }
-            else if ((byte1 & 0xF8) == 0xF0) {
-                // Four byte character
-                if (i + 3 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                int byte3 = bytes[i + 2] & 0xFF;
-                int byte4 = bytes[i + 3] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80 || (byte3 & 0xC0) != 0x80 || (byte4 & 0xC0) != 0x80) break;
+                int value = ((octet & 0x0F) << 12) |
+                           ((bytes[currentIndex + 1] & 0x3F) << 6) |
+                           (bytes[currentIndex + 2] & 0x3F);
+                buffer.append((char)value);
+                currentIndex += 3;
+            } else if ((octet & 0xF8) == 0xF0) {
+                // Four byte character (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
+                if (currentIndex + 3 >= endIndex) break;
                 
-                int codePoint = ((byte1 & 0x07) << 18) | ((byte2 & 0x3F) << 12) | 
-                               ((byte3 & 0x3F) << 6) | (byte4 & 0x3F);
-                buffer.append(Character.highSurrogate(codePoint));
-                buffer.append(Character.lowSurrogate(codePoint));
-                i += 4;
-            }
-            else {
-                // Invalid UTF-8 byte
-                break;
+                int value = ((octet & 0x07) << 18) |
+                           ((bytes[currentIndex + 1] & 0x3F) << 12) |
+                           ((bytes[currentIndex + 2] & 0x3F) << 6) |
+                           (bytes[currentIndex + 3] & 0x3F);
+                // Convert to surrogate pair for characters outside BMP
+                value -= 0x10000;
+                buffer.append((char)((value >>> 10) + 0xD800));
+                buffer.append((char)((value & 0x3FF) + 0xDC00));
+                currentIndex += 4;
+            } else {
+                // Invalid UTF-8 encoding
+                buffer.append('?');
+                currentIndex++;
             }
         }
         
-        return i;
+        return currentIndex;
     }
 }

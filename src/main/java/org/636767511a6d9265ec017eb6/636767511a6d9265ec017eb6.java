@@ -58,7 +58,7 @@ public class BoundaryTraversal {
             }
         }
         
-        // Return circulator to stop node if no match found
-        return new Circulator(stop);
+        // Return circulator pointing to stop node if no match found
+        return circulator;
     }
 }

@@ -1,7 +1,7 @@
 import java.lang.StringBuffer;
 
 public class NameAbbreviator {
-    
+
     /**
      * 缩写名称。
      * @param buf 用于追加缩写的缓冲区。
@@ -12,23 +12,26 @@ public class NameAbbreviator {
             return;
         }
 
-        // 遍历字符串缓冲区
+        // 从nameStart开始遍历字符串
         for (int i = nameStart; i < buf.length(); i++) {
             char c = buf.charAt(i);
             
-            // 如果是点号,保留点号和后面的字符
+            // 如果是点号,保留点号和后面第一个字符
             if (c == '.') {
-                continue;
+                if (i + 1 < buf.length()) {
+                    i++;
+                    // 删除点号后面的其他字符,直到下一个点号
+                    int nextDot = buf.indexOf(".", i);
+                    if (nextDot > 0) {
+                        buf.delete(i + 1, nextDot);
+                    } else {
+                        // 如果没有下一个点号,删除到末尾
+                        if (i + 1 < buf.length()) {
+                            buf.delete(i + 1, buf.length());
+                        }
+                    }
+                }
             }
-            
-            // 如果是单词开头(大写字母),保留该字母
-            if (Character.isUpperCase(c)) {
-                continue;    
-            }
-            
-            // 其他字符删除
-            buf.deleteCharAt(i);
-            i--; // 删除后索引回退
         }
     }
 }

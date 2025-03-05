@@ -47,7 +47,6 @@ public class CategoryTree {
         Iterator<CategoryNode> iterator = node.getChildren().iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();
-            
             removeUnusedNodesRecursive(child);
             
             if (!child.isActive() && child.getChildren().isEmpty()) {

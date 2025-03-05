@@ -22,22 +22,21 @@ public class ConverterRegistry {
             return converter;
         }
         
-        // Look through superclasses
-        Class<?> superClass = clazz.getSuperclass();
-        while (superClass != null) {
-            converter = converters.get(superClass);
+        // Look through class hierarchy
+        Class<?> currentClass = clazz;
+        while (currentClass != null && currentClass != Object.class) {
+            converter = converters.get(currentClass);
             if (converter != null) {
                 return converter;
             }
-            superClass = superClass.getSuperclass();
-        }
-        
-        // Look through interfaces
-        for (Class<?> iface : clazz.getInterfaces()) {
-            converter = converters.get(iface);
-            if (converter != null) {
-                return converter;
+            // Check interfaces
+            for (Class<?> iface : currentClass.getInterfaces()) {
+                converter = converters.get(iface);
+                if (converter != null) {
+                    return converter;
+                }
             }
+            currentClass = currentClass.getSuperclass();
         }
         
         return null;

@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utility class that provides character-related operations.
+ * Character utilities class.
  */
 public class CharUtils {
 
@@ -16,9 +16,11 @@ public class CharUtils {
      * @return 指定字符的 Character 对象
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch <= 127) { // ASCII 7-bit characters
+        if (ch <= 127) {
+            // For ASCII characters, use Character.valueOf() which maintains a cache
             return Character.valueOf(ch);
         }
+        // For non-ASCII characters, create a new Character object
         return new Character(ch);
     }
 }

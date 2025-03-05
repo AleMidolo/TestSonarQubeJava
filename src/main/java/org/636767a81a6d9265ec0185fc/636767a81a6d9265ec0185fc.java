@@ -7,11 +7,10 @@ public class CodedInputStream {
     private int pos = 0;
     private byte[] buffer;
     private int bufferSize;
-    private static final int BUFFER_SIZE = 4096;
-
+    
     public CodedInputStream(InputStream input) {
         this.input = input;
-        this.buffer = new byte[BUFFER_SIZE];
+        this.buffer = new byte[4096];
         this.bufferSize = 0;
     }
 

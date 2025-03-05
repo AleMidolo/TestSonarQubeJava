@@ -19,7 +19,7 @@ public class TypeInitializer {
         }
     }
     
-    // Helper method to get initialized types
+    // Getter for initialized types
     public List<Integer> getInitializedTypes() {
         return new ArrayList<>(initializedTypes);
     }

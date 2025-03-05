@@ -12,10 +12,16 @@ public class StringUtils {
         if (start < 0) {
             start = 0;
         }
+        
         if (end > length) {
             end = length; 
         }
+        
         if (start > end) {
+            return "";
+        }
+        
+        if (start > length) {
             return "";
         }
         

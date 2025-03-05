@@ -18,7 +18,7 @@ public class LogBuffer {
             return;
         }
 
-        // 如果缓冲区达到最大容量,删除最早的事件
+        // 如果缓冲区已满,移除最早的事件
         if (buffer.size() >= MAX_BUFFER_SIZE) {
             buffer.remove(0);
         }

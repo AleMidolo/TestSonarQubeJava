@@ -17,48 +17,40 @@ public class FaceTraversal {
             return current;
         }
         
-        public void setNode(Node node) {
-            this.current = node; 
-        }
+        // Other circulator methods
     }
 
-    /**
-     * 查找并返回一个循环器，指向满足 {@code predicate} 的组件边界上的节点，或者返回指向 {@code stop} 节点的循环器。
-     * @param predicate 期望节点应满足的条件
-     * @param start 开始搜索的节点
-     * @param stop 结束搜索的节点
-     * @param dir 开始遍历的方向
-     * @return 指向满足 {@code predicate} 的节点的循环器，或指向 {@code stop} 节点的循环器
-     */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        if (start == null || stop == null) {
+            return null;
+        }
+
+        // Create circulator starting at the start node
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we find a node that matches predicate or reach stop node
-        while (!predicate.test(circulator.getNode())) {
-            // If we've reached the stop node without finding a match, return stop
-            if (circulator.getNode() == stop) {
-                return new OuterFaceCirculator(stop);
+        // Keep traversing until we find a matching node or reach the stop node
+        Node current = start;
+        while (current != stop) {
+            if (predicate.test(current)) {
+                return new OuterFaceCirculator(current);
             }
             
             // Move to next node based on direction
             if (dir > 0) {
-                circulator.setNode(getNextNode(circulator.getNode())); 
+                // Move clockwise
+                current = current.getNextClockwise();
             } else {
-                circulator.setNode(getPrevNode(circulator.getNode()));
+                // Move counter-clockwise  
+                current = current.getNextCounterClockwise();
+            }
+            
+            // Check if we've gone full circle
+            if (current == start) {
+                break;
             }
         }
         
-        return circulator;
-    }
-    
-    // Helper methods to get next/previous nodes
-    private Node getNextNode(Node current) {
-        // Implementation to get next node
-        return null;
-    }
-    
-    private Node getPrevNode(Node current) {
-        // Implementation to get previous node
-        return null;
+        // Return circulator pointing to stop node if no match found
+        return new OuterFaceCirculator(stop);
     }
 }

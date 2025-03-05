@@ -32,10 +32,10 @@ public class LogFormatter {
         sb.append(event.getRenderedMessage());
         
         // Add throwable if exists
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
+        String[] throwableStr = event.getThrowableStrRep();
+        if (throwableStr != null) {
             sb.append("\n");
-            for (String line : throwableStrRep) {
+            for (String line : throwableStr) {
                 sb.append(line).append("\n");
             }
         }

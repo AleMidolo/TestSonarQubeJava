@@ -8,7 +8,7 @@ public class ExceptionUtils {
     }
 
     public Throwable getThrown() {
-        return thrown;
+        return this.thrown;
     }
 
     public boolean hasMessage() {

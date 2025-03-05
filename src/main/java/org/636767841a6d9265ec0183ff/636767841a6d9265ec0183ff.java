@@ -27,12 +27,11 @@ public class TableUtils {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Force a repaint of the table
-                table.repaint();
+                // Force scroll pane to update
+                scrollPane.getViewport().scrollRectToVisible(cellRect);
                 
-                // Ensure the viewport is updated
-                scrollPane.getViewport().revalidate();
-                scrollPane.getViewport().repaint();
+                // Repaint the table
+                table.repaint();
             }
         });
     }

@@ -28,7 +28,7 @@ public class SymbolTable {
             if (entry.type == CONSTANT_NAMEANDTYPE 
                 && entry.name.equals(name)
                 && entry.descriptor.equals(descriptor)) {
-                return new Symbol(entry.index);
+                return new Symbol(entry.index, entry.type, entry.name, entry.descriptor);
             }
             entry = entry.next;
         }
@@ -38,7 +38,7 @@ public class SymbolTable {
         newEntry.next = entries[hashCode % entries.length];
         entries[hashCode % entries.length] = newEntry;
         
-        return new Symbol(newEntry.index);
+        return new Symbol(newEntry.index, newEntry.type, name, descriptor);
     }
 
     private static int hash(int type, String name, String descriptor) {

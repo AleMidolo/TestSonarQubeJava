@@ -18,34 +18,48 @@ public class ProtocolParser {
      * @throws IOException If there is an error reading from the input stream
      */
     public int readTag() throws IOException {
-        if (input.available() == 0) {
+        // Check if we've reached EOF
+        int firstByte = input.read();
+        if (firstByte == -1) {
             return 0;
         }
-
-        int tag = 0;
-        int shift = 0;
+        
+        position++;
+        
+        // For simple tags that fit in 1 byte
+        if ((firstByte & 0x80) == 0) {
+            return firstByte;
+        }
+        
+        // For tags that use multiple bytes (varint encoding)
+        int result = firstByte & 0x7F;
+        int shift = 7;
         
         while (true) {
-            int byte1 = input.read();
-            if (byte1 == -1) {
-                // EOF reached
-                return shift == 0 ? 0 : tag;
+            int nextByte = input.read();
+            if (nextByte == -1) {
+                throw new IOException("Truncated message");
             }
             
-            tag |= (byte1 & 0x7F) << shift;
-            if ((byte1 & 0x80) == 0) {
+            position++;
+            result |= (nextByte & 0x7F) << shift;
+            
+            if ((nextByte & 0x80) == 0) {
                 break;
             }
+            
             shift += 7;
             if (shift >= 32) {
                 throw new IOException("Tag is too large");
             }
         }
         
-        position++;
-        return tag;
+        return result;
     }
     
+    /**
+     * Gets the current position in the input stream
+     */
     public int getPosition() {
         return position;
     }

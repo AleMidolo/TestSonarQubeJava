@@ -4,23 +4,25 @@ import java.util.List;
 public class ProfileSegmentSearchRanges {
 
     /**
-     * Build current profiles segment snapshot search sequence ranges
-     * @return List of search range pairs
+     * build current profiles segment snapshot search sequence ranges
+     * @return List of search ranges for profile segments
      */
-    public List<SearchRange> buildSearchRanges() {
+    public List<SearchRange> buildProfileSegmentSearchRanges() {
         List<SearchRange> ranges = new ArrayList<>();
         
-        // Add search ranges in sequence
+        // Add default search range
         ranges.add(new SearchRange(0, 100));
-        ranges.add(new SearchRange(100, 1000)); 
-        ranges.add(new SearchRange(1000, 10000));
-        ranges.add(new SearchRange(10000, Integer.MAX_VALUE));
+        
+        // Add additional ranges with overlap
+        ranges.add(new SearchRange(90, 190));
+        ranges.add(new SearchRange(180, 280));
+        ranges.add(new SearchRange(270, 370));
         
         return ranges;
     }
     
-    // Inner class to represent a search range
-    public static class SearchRange {
+    // Helper class to define search ranges
+    private class SearchRange {
         private int start;
         private int end;
         

@@ -6,26 +6,19 @@ public class MeteorRetriever {
 
     /**
      * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
-     * @param r {@link HttpServletRequest} 
+     * @param r {@link HttpServletRequest}
      * @return a {@link Meteor} or null if not found
      */
-    public static Meteor retrieve(HttpServletRequest r) {
+    public Meteor retrieveMeteor(HttpServletRequest r) {
         if (r == null) {
             return null;
         }
         
-        // Try to get existing Meteor instance
-        Meteor meteor = Meteor.build(r);
-        
-        if (meteor == null || meteor.getAtmosphereResource() == null) {
+        try {
+            return Meteor.build(r);
+        } catch (Exception e) {
+            // If Meteor cannot be built from request, return null
             return null;
         }
-        
-        AtmosphereResource resource = meteor.getAtmosphereResource();
-        if (!resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
-            return null;
-        }
-        
-        return meteor;
     }
 }

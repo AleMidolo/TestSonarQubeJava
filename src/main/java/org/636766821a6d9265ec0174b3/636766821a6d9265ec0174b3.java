@@ -6,21 +6,25 @@ public class BroadcastManager {
     private Set<Session> sessions;
     private BroadcastFilter filter;
 
-    public String broadcast(String msg) {
+    public String invokeBroadcastFilter(String msg) {
         if (filter != null) {
-            msg = filter.filter(msg);
+            return filter.filter(msg);
         }
-        
-        for (Session session : sessions) {
-            if (session.isOpen()) {
-                session.getAsyncRemote().sendText(msg);
-            }
-        }
-        
         return msg;
     }
-}
 
-interface BroadcastFilter {
-    String filter(String message);
+    // Interface for broadcast filter
+    public interface BroadcastFilter {
+        String filter(String message);
+    }
+
+    // Constructor
+    public BroadcastManager(Set<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    // Setter for filter
+    public void setBroadcastFilter(BroadcastFilter filter) {
+        this.filter = filter;
+    }
 }

@@ -8,7 +8,7 @@ public class ContentBuilder {
     /**
      * Build content, if it has ats someone set the ats
      * @param content The raw content string
-     * @return Processed content with ats extracted
+     * @return Processed content with @ mentions extracted
      */
     public static String buildContent(String content) {
         if (content == null || content.isEmpty()) {
@@ -16,22 +16,21 @@ public class ContentBuilder {
         }
 
         // Pattern to match @mentions
-        Pattern pattern = Pattern.compile("@\\w+");
+        Pattern pattern = Pattern.compile("@([\\w\\-]+)");
         Matcher matcher = pattern.matcher(content);
         
         List<String> mentions = new ArrayList<>();
         
         // Find all @mentions
         while (matcher.find()) {
-            String mention = matcher.group();
-            mentions.add(mention.substring(1)); // Remove @ symbol
+            mentions.add(matcher.group(1));
         }
 
         // If mentions found, process them
         if (!mentions.isEmpty()) {
             // Replace @mentions with proper format
             for (String mention : mentions) {
-                content = content.replace("@" + mention, "[at]" + mention + "[/at]");
+                content = content.replace("@" + mention, "<@" + mention + ">");
             }
         }
 

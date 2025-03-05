@@ -22,7 +22,7 @@ public class ByteSearch {
         int originalPosition = buffer.position();
         
         try {
-            // Set buffer position to starting search position
+            // Set position to start searching from
             buffer.position(pos);
             
             // Search through remaining bytes

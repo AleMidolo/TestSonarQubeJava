@@ -53,7 +53,6 @@ public class BoundaryTraversal {
                 circulator.retreat();
             }
             
-            // Check if current node satisfies predicate
             if (predicate.test(circulator.getNode())) {
                 return circulator;
             }

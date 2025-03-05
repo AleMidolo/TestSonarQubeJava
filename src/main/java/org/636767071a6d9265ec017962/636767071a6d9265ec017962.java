@@ -16,7 +16,7 @@ public class BeanMapUtils {
         Iterator<?> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
             BeanMap.Entry entry = (BeanMap.Entry) entries.next();
-            String propertyName = entry.getKey().toString();
+            String propertyName = (String) entry.getKey();
             
             // Check if property is writable in source map
             if (map.isWriteable(propertyName)) {

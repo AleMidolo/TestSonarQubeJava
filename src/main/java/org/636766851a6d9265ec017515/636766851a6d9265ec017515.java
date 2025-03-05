@@ -2,38 +2,44 @@ import org.atmosphere.cpr.Action;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceImpl;
 import org.atmosphere.cpr.AtmosphereHandler;
-import org.atmosphere.cpr.AtmosphereInterceptorAdapter;
+import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 
-public class TransportInterceptor extends AtmosphereInterceptorAdapter {
-    
-    @Override 
+public class AtmosphereResourceInspector implements AtmosphereHandler {
+
+    @Override
     public Action inspect(AtmosphereResource r) {
-        // Get the transport type
-        AtmosphereResource.TRANSPORT transport = r.transport();
-        
-        // Suspend the resource based on transport type
-        switch (transport) {
+        if (r == null) {
+            return Action.CONTINUE;
+        }
+
+        switch (r.transport()) {
             case WEBSOCKET:
-                // For WebSocket, suspend indefinitely
-                r.suspend();
-                break;
-                
             case SSE:
             case STREAMING:
-                // For Server-Sent Events and Streaming, suspend with a long timeout
-                r.suspend(-1L);
+                r.suspend();
                 break;
-                
             case LONG_POLLING:
-                // For Long-Polling, suspend with a timeout
-                r.suspend(30000); // 30 seconds timeout
+                r.suspend(r.getAtmosphereConfig().getPropertyValue("polling.timeout", 5000L));
                 break;
-                
             default:
-                // For other transports, don't suspend
                 break;
         }
-        
+
         return Action.CONTINUE;
+    }
+
+    @Override
+    public void onRequest(AtmosphereResource resource) throws IOException {
+        // Required by AtmosphereHandler interface
+    }
+
+    @Override 
+    public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+        // Required by AtmosphereHandler interface
+    }
+
+    @Override
+    public void destroy() {
+        // Required by AtmosphereHandler interface
     }
 }

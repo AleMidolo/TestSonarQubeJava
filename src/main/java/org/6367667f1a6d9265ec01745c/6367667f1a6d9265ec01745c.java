@@ -9,20 +9,28 @@ public class ClassPathUtils {
      */
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
+        File directory = new File(dir);
+        
+        // 检查目录是否存在且是目录
+        if (!directory.exists() || !directory.isDirectory()) {
+            return;
+        }
+        
+        // 获取目录中所有文件
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+        
         try {
-            File directory = new File(dir);
-            if (!directory.exists() || !directory.isDirectory()) {
-                return;
-            }
-
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
-                        URL url = file.toURI().toURL();
-                        if (!cpV.contains(url)) {
-                            cpV.add(url);
-                        }
+            // 遍历所有文件
+            for (File file : files) {
+                // 如果是jar文件
+                if (file.getName().toLowerCase().endsWith(".jar")) {
+                    // 将jar文件转换为URL并添加到Vector中
+                    URL url = file.toURI().toURL();
+                    if (!cpV.contains(url)) {
+                        cpV.add(url);
                     }
                 }
             }

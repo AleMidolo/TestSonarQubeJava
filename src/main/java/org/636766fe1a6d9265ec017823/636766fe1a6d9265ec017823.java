@@ -7,50 +7,72 @@ public class SymbolTable {
     
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
+        Entry entry = get(hashCode);
         
-        // Search for an existing symbol with the same value
-        Symbol symbol = symbols[hashCode % symbols.length];
-        while (symbol != null) {
-            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && symbol.name.equals(name)
-                && symbol.descriptor.equals(descriptor)) {
-                return symbol.index;
+        while (entry != null) {
+            if (entry.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
+                && entry.name.equals(name)
+                && entry.descriptor.equals(descriptor)) {
+                return entry.index;
             }
-            symbol = symbol.next;
+            entry = entry.next;
         }
         
-        // Not found, create a new symbol
+        // 添加name和descriptor到常量池
         int nameIndex = addConstantUtf8(name);
         int descriptorIndex = addConstantUtf8(descriptor);
-        symbol = new Symbol(
-            size++, 
+        
+        // 创建新的NameAndType条目
+        int index = size;
+        entry = new Entry(
+            index,
             Symbol.CONSTANT_NAME_AND_TYPE_TAG,
-            new Symbol(nameIndex, Symbol.CONSTANT_UTF8_TAG, name, null),
-            new Symbol(descriptorIndex, Symbol.CONSTANT_UTF8_TAG, descriptor, null)
-        );
+            name,
+            descriptor,
+            nameIndex,
+            descriptorIndex,
+            get(hashCode));
         
-        // Add to symbol table
-        int index = hashCode % symbols.length;
-        symbol.next = symbols[index];
-        symbols[index] = symbol;
+        put(entry);
+        size++;
         
-        return symbol.index;
+        return index;
     }
     
-    // Helper method to add UTF8 constant
-    private int addConstantUtf8(final String value) {
-        int hashCode = Symbol.CONSTANT_UTF8_TAG + value.hashCode();
-        Symbol symbol = symbols[hashCode % symbols.length];
-        while (symbol != null) {
-            if (symbol.tag == Symbol.CONSTANT_UTF8_TAG && symbol.value.equals(value)) {
-                return symbol.index;
-            }
-            symbol = symbol.next;
+    // 内部辅助类
+    private static class Entry {
+        final int index;
+        final int tag;
+        final String name;
+        final String descriptor;
+        final int nameIndex;
+        final int descriptorIndex; 
+        Entry next;
+        
+        Entry(int index, int tag, String name, String descriptor, 
+             int nameIndex, int descriptorIndex, Entry next) {
+            this.index = index;
+            this.tag = tag;
+            this.name = name;
+            this.descriptor = descriptor;
+            this.nameIndex = nameIndex;
+            this.descriptorIndex = descriptorIndex;
+            this.next = next;
         }
-        symbol = new Symbol(size++, Symbol.CONSTANT_UTF8_TAG, value, null);
-        int index = hashCode % symbols.length;
-        symbol.next = symbols[index];
-        symbols[index] = symbol;
-        return symbol.index;
+    }
+    
+    // 辅助方法
+    private Entry get(int hashCode) {
+        return symbols[hashCode % symbols.length];
+    }
+    
+    private void put(Entry entry) {
+        symbols[entry.hashCode() % symbols.length] = entry;
+    }
+    
+    private int addConstantUtf8(final String value) {
+        // 实现添加UTF8常量的逻辑
+        // 此处省略具体实现
+        return 0;
     }
 }

@@ -14,7 +14,7 @@ public class StringUtils {
         }
         
         if (end > length) {
-            end = length;
+            end = length; 
         }
         
         if (start > end) {

@@ -37,7 +37,7 @@ public class CustomLogFormatter {
         // Add new line
         builder.append(System.lineSeparator());
         
-        // Add throwable information if exists
+        // Add throwable info if exists
         String[] throwableInfo = event.getThrowableStrRep();
         if (throwableInfo != null) {
             for (String line : throwableInfo) {

@@ -16,10 +16,6 @@ public class ByteArrayOutputStream extends OutputStream {
             throw new IndexOutOfBoundsException();
         }
 
-        if (len == 0) {
-            return;
-        }
-
         // Ensure capacity
         ensureCapacity(count + len);
         
@@ -36,17 +32,5 @@ public class ByteArrayOutputStream extends OutputStream {
             System.arraycopy(buf, 0, newBuf, 0, count);
             buf = newBuf;
         }
-    }
-    
-    // Constructor
-    public ByteArrayOutputStream() {
-        this(32); // Default size
-    }
-    
-    public ByteArrayOutputStream(int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Negative initial size: " + size);
-        }
-        buf = new byte[size];
     }
 }

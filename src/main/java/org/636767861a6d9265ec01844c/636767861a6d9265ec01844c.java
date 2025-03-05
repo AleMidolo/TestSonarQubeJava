@@ -10,13 +10,11 @@ public class LoggerConfig {
      * 从附加器列表中移除指定名称的附加器。
      */
     public void removeAppender(String name) {
-        if (name == null) {
-            return;
-        }
-        
-        Appender appender = appenders.remove(name);
-        if (appender != null) {
-            appender.stop();
+        if (name != null) {
+            Appender appender = appenders.remove(name);
+            if (appender != null) {
+                appender.stop();
+            }
         }
     }
 }

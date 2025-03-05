@@ -12,20 +12,17 @@ public class ColumnNameOverride {
         Objects.requireNonNull(oldName, "oldName cannot be null");
         Objects.requireNonNull(newName, "newName cannot be null");
         
-        if (oldName.trim().isEmpty()) {
+        if (oldName.isEmpty()) {
             throw new IllegalArgumentException("oldName cannot be empty");
         }
         
-        if (newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("newName cannot be empty"); 
+        if (newName.isEmpty()) {
+            throw new IllegalArgumentException("newName cannot be empty");
         }
 
-        // Here you would typically have logic to:
-        // 1. Look up the old name in your data structure
-        // 2. Replace it with the new name
-        // 3. Update any related references/mappings
-        
-        // Example implementation might involve a Map:
-        // nameMap.put(oldName, newName);
+        // Here we would typically have some internal data structure 
+        // to store the name mappings, for example a Map<String,String>
+        // For demonstration, we'll just print the override
+        System.out.println("Overriding name: " + oldName + " -> " + newName);
     }
 }

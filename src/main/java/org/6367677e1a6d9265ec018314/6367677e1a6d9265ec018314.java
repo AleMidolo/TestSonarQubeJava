@@ -7,53 +7,38 @@ public class CategoryTree {
     private int totalNodes = 0;
     
     protected class CategoryNode {
-        private boolean active;
+        private boolean isActive;
         private List<CategoryNode> children;
         
         public CategoryNode() {
-            this.active = false;
+            this.isActive = false;
             this.children = new ArrayList<>();
-        }
-        
-        public boolean isActive() {
-            return active;
-        }
-        
-        public List<CategoryNode> getChildren() {
-            return children;
         }
     }
 
-    /**
-     * 从类别树中移除所有不活跃的节点。
-     * @return 被移除的节点数量
-     */
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
+        int removedCount = 0;
+        if (root != null) {
+            removedCount = removeUnusedNodesRecursive(root);
         }
-        
-        int initialCount = totalNodes;
-        removeUnusedNodesRecursive(root);
-        
-        return initialCount - totalNodes;
+        totalNodes -= removedCount;
+        return removedCount;
     }
-    
-    private void removeUnusedNodesRecursive(CategoryNode node) {
-        if (node == null) {
-            return;
-        }
+
+    private int removeUnusedNodesRecursive(CategoryNode node) {
+        int count = 0;
         
-        Iterator<CategoryNode> iterator = node.getChildren().iterator();
+        Iterator<CategoryNode> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();
+            count += removeUnusedNodesRecursive(child);
             
-            removeUnusedNodesRecursive(child);
-            
-            if (!child.isActive() && child.getChildren().isEmpty()) {
+            if (!child.isActive && child.children.isEmpty()) {
                 iterator.remove();
-                totalNodes--;
+                count++;
             }
         }
+        
+        return count;
     }
 }

@@ -1,7 +1,8 @@
 import com.google.gson.JsonObject;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContentBuilder {
 
@@ -11,7 +12,7 @@ public class ContentBuilder {
     private Map<String,Object> buildContent(JsonObject jsonObject) {
         Map<String,Object> content = new HashMap<>();
         
-        if(jsonObject == null) {
+        if (jsonObject == null) {
             return content;
         }
 
@@ -19,20 +20,24 @@ public class ContentBuilder {
         String text = jsonObject.has("text") ? jsonObject.get("text").getAsString() : "";
         content.put("text", text);
 
-        // 解析@信息
-        List<Map<String,String>> atList = new ArrayList<>();
-        Pattern pattern = Pattern.compile("@([\\w\\-]+)");
-        Matcher matcher = pattern.matcher(text);
-        
-        while(matcher.find()) {
-            Map<String,String> atInfo = new HashMap<>();
-            String username = matcher.group(1);
-            atInfo.put("username", username);
-            atList.add(atInfo);
-        }
-
-        if(!atList.isEmpty()) {
-            content.put("at", atList);
+        // 处理@信息
+        if (text.contains("@")) {
+            List<Map<String,String>> atList = new ArrayList<>();
+            
+            // 解析@的用户
+            String[] parts = text.split("@");
+            for (int i = 1; i < parts.length; i++) {
+                String name = parts[i].split("\\s+")[0];
+                if (!name.isEmpty()) {
+                    Map<String,String> atInfo = new HashMap<>();
+                    atInfo.put("name", name);
+                    atList.add(atInfo);
+                }
+            }
+            
+            if (!atList.isEmpty()) {
+                content.put("at", atList);
+            }
         }
 
         return content;

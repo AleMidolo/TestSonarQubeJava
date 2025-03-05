@@ -12,6 +12,6 @@ public class Template {
         if (name == null) {
             return false;
         }
-        return variables.contains(name.trim());
+        return variables != null && variables.contains(name.trim());
     }
 }

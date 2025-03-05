@@ -8,12 +8,14 @@ public class ArrayUtils {
      * @param array  an <code>int</code> array
      * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
-    public static Integer[] toObject(int[] array) {
+    public static Integer[] toObject(final int[] array) {
         if (array == null) {
             return null;
         }
-        
-        Integer[] result = new Integer[array.length];
+        if (array.length == 0) {
+            return new Integer[0];
+        }
+        final Integer[] result = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = Integer.valueOf(array[i]);
         }

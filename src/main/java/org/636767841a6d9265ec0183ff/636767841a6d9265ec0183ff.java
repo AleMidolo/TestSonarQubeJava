@@ -20,7 +20,7 @@ public class TableUtils {
         // Calculate rectangle of the row to scroll to
         Rectangle cellRect = table.getCellRect(row, 0, true);
         
-        // Convert table coordinates to scroll pane coordinates
+        // Convert table coordinates to scrollpane coordinates
         Point p = SwingUtilities.convertPoint(table, cellRect.x, cellRect.y, 
                                             scrollPane.getViewport());
         cellRect.setLocation(p);

@@ -19,10 +19,11 @@ public class LinkedList<T> {
      * @param node The node to remove
      */
     public void remove(Node<T> node) {
+        // Check that node is not null
         Objects.requireNonNull(node);
         
-        // If node is head
-        if (head == node) {
+        // If node is head, update head to next node
+        if (node == head) {
             head = head.next;
             return;
         }
@@ -33,7 +34,7 @@ public class LinkedList<T> {
             current = current.next;
         }
         
-        // If node was found in list
+        // If node was found in list, update next pointer to skip it
         if (current != null) {
             current.next = node.next;
         }

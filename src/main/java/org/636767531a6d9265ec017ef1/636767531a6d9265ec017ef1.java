@@ -8,8 +8,12 @@ public class PointUtils {
      * @return 两个点是否相等
      */
     public static boolean equals(Point2D p1, Point2D p2) {
-        if (p1 == p2) return true;
-        if (p1 == null || p2 == null) return false;
+        if (p1 == p2) {
+            return true;
+        }
+        if (p1 == null || p2 == null) {
+            return false;
+        }
         
         double epsilon = 1e-9;
         return Math.abs(p1.getX() - p2.getX()) < epsilon && 

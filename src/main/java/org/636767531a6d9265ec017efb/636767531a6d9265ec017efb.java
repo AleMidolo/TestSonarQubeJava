@@ -17,7 +17,7 @@ public class Bucket {
         // Set this bucket's prev reference to bucket's previous
         this.prev = bucket.prev;
         
-        // Update bucket's prev reference to this
+        // Update bucket's prev reference to point to this
         bucket.prev = this;
         
         // If there was a previous bucket, update its next reference

@@ -24,15 +24,15 @@ public class PropertyUtils {
 
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String varValue = props.getProperty(varName);
+            String replacement = props.getProperty(varName);
             
-            // If variable not found, leave the ${var} as is
-            if (varValue == null) {
-                varValue = "${" + varName + "}";
+            // If no replacement found, leave the original ${var} intact
+            if (replacement == null) {
+                replacement = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid issues with $ and backslashes
-            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
+            // Quote replacement string to avoid problems with $ and \ in the replacement
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);
 

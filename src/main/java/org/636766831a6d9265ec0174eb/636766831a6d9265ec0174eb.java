@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
+    
     /**
      * 以逆序添加指定的文件。
      */
@@ -25,15 +26,16 @@ public class FileHandler {
         // 反转列表顺序
         Collections.reverse(fileList);
         
-        // 处理反转后的文件
+        // 将反转后的文件添加到处理队列中
         for (File file : fileList) {
-            addFile(file);
+            processFile(file);
         }
     }
     
-    // 用于添加单个文件的辅助方法
-    private void addFile(File file) {
-        // 具体的文件添加实现
-        // 这里需要根据实际需求来实现
+    // 用于处理单个文件的辅助方法
+    private void processFile(File file) {
+        // 具体的文件处理逻辑可以在这里实现
+        // 这里仅作为示例
+        System.out.println("Processing file: " + file.getName());
     }
 }

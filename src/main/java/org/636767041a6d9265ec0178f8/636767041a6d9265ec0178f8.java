@@ -16,13 +16,13 @@ public class StringArrayUtils {
         }
 
         // Create new array with same length
-        String[] dest = new String[src.length];
+        String[] copy = new String[src.length];
 
-        // Copy and convert each string to lowercase
+        // Copy each string and convert to lowercase
         for (int i = 0; i < src.length; i++) {
-            dest[i] = src[i] == null ? null : src[i].toLowerCase();
+            copy[i] = src[i] == null ? null : src[i].toLowerCase();
         }
 
-        return dest;
+        return copy;
     }
 }

@@ -17,11 +17,6 @@ public class ValueAccumulator {
             return;
         }
         
-        accumulatorMap.compute(key, (k, v) -> {
-            if (v == null) {
-                return value;
-            }
-            return v + value;
-        });
+        accumulatorMap.merge(key, value, Long::sum);
     }
 }

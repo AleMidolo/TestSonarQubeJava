@@ -15,29 +15,29 @@ public class UTF8Decoder {
             // Mark current position
             bb.mark();
             
-            // Create a slice from current position
+            // Create a new byte buffer for the current character
             ByteBuffer slice = bb.slice();
             
-            // Decode UTF-8 bytes
-            java.nio.CharBuffer cb = decoder.decode(slice);
+            // Try to decode one character
+            java.nio.CharBuffer cb = java.nio.CharBuffer.allocate(1);
+            decoder.decode(slice, cb, true);
+            decoder.flush(cb);
             
-            // Append decoded characters to StringBuilder
-            sb.append(cb);
+            // Append decoded character to StringBuilder
+            cb.flip();
+            sb.append(cb.toString());
             
-            // Calculate number of bytes consumed
-            int bytesConsumed = (int)(bb.position() - bb.mark());
+            // Calculate how many bytes were consumed
+            int bytesConsumed = slice.position();
             
-            // Reset position to marked position
+            // Reset to marked position and skip consumed bytes
             bb.reset();
-            
-            // Skip the consumed bytes
             bb.position(bb.position() + bytesConsumed);
             
-            // Return next index
             return i + bytesConsumed;
             
         } catch (CharacterCodingException e) {
-            // On error, skip one byte and add replacement character
+            // On error, skip one byte and append replacement character
             bb.get();
             sb.append('\ufffd');
             return i + 1;

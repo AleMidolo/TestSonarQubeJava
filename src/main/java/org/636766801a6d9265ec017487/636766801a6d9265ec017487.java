@@ -1,6 +1,5 @@
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class TemplateEncoder {
     /**
@@ -14,14 +13,12 @@ public class TemplateEncoder {
         }
 
         try {
-            // Replace '{' with its percent encoding
-            String result = s.replace("{", URLEncoder.encode("{", StandardCharsets.UTF_8.toString()));
-            // Replace '}' with its percent encoding
-            result = result.replace("}", URLEncoder.encode("}", StandardCharsets.UTF_8.toString()));
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            // This should never happen with UTF-8
-            throw new RuntimeException("UTF-8 encoding not supported", e);
+            // Replace '{' with '%7B' and '}' with '%7D'
+            String encoded = s.replace("{", "%7B")
+                            .replace("}", "%7D");
+            return encoded;
+        } catch (Exception e) {
+            return s;
         }
     }
 }

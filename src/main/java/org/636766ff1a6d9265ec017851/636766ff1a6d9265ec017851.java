@@ -14,6 +14,11 @@ public class ByteSearcher {
      * @return 找到的字节位置，从 <code>buffer</code> 开始计数，如果未找到则返回 <code>-1</code>。
      */
     protected int findByte(byte value, int pos) {
+        // 检查输入参数的有效性
+        if (pos < 0 || pos >= buffer.limit()) {
+            return -1;
+        }
+
         // 保存原始position
         int originalPosition = buffer.position();
         
@@ -21,14 +26,14 @@ public class ByteSearcher {
             // 设置搜索起始位置
             buffer.position(pos);
             
-            // 搜索直到找到匹配值或到达buffer末尾
+            // 遍历缓冲区寻找目标字节
             while (buffer.hasRemaining()) {
                 if (buffer.get() == value) {
                     return buffer.position() - 1;
                 }
             }
             
-            // 未找到匹配值
+            // 未找到返回-1
             return -1;
             
         } finally {

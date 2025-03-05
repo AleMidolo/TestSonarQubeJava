@@ -7,7 +7,7 @@ public class StringBuilder {
      * @return 构建的字符串
      */
     public String toString() {
-        // Create a new String containing the characters in the buffer
+        // Create a new String containing the characters in the character array
         return new String(value, 0, count);
     }
 }

@@ -8,7 +8,6 @@ public class WireFormatDecoder {
     
     private final InputStream input;
     private int tag;
-    private int wireType;
     private boolean isPacked;
     private int packedLimit;
     private int currentLimit;
@@ -21,24 +20,19 @@ public class WireFormatDecoder {
     }
 
     private void checkIfPackedField() throws IOException {
-        // Check if this field should be packed based on wire type
-        if (wireType == WIRETYPE_LENGTH_DELIMITED) {
-            // Read the length of the packed data
+        if ((tag & TAG_TYPE_MASK) == WIRETYPE_LENGTH_DELIMITED) {
             int length = readRawVarint32();
-            
             if (length > 0) {
-                // Store current position as packed limit
-                packedLimit = currentLimit;
-                // Update current limit to end of packed data
-                currentLimit = packedLimit + length;
                 isPacked = true;
+                packedLimit = currentLimit;
+                currentLimit = currentLimit - length;
             }
         } else {
-            // Not a packed field
             isPacked = false;
         }
     }
     
+    // Helper method to read variable length 32-bit integer
     private int readRawVarint32() throws IOException {
         int result = 0;
         int shift = 0;

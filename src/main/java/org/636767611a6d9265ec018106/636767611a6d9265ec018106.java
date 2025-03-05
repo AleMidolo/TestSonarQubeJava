@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Graph<V> {
-    // Adjacency list representation using HashMap
+    // 邻接表存储图结构
     private Map<V, Map<V, Double>> adjacencyMap;
 
     public Graph() {
@@ -16,14 +16,15 @@ public class Graph<V> {
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
         
-        // For each vertex in the input set
-        for (V vertex : v) {
-            // Check all vertices in the graph
-            for (Map.Entry<V, Map<V, Double>> entry : adjacencyMap.entrySet()) {
-                Map<V, Double> edges = entry.getValue();
-                // If there is an edge to our target vertex, add its weight
-                if (edges.containsKey(vertex)) {
-                    totalWeight += edges.get(vertex);
+        // 遍历所有顶点
+        for (V vertex : adjacencyMap.keySet()) {
+            Map<V, Double> edges = adjacencyMap.get(vertex);
+            
+            // 遍历当前顶点的所有边
+            for (V destination : edges.keySet()) {
+                // 如果目标顶点在传入的集合中,累加权重
+                if (v.contains(destination)) {
+                    totalWeight += edges.get(destination);
                 }
             }
         }

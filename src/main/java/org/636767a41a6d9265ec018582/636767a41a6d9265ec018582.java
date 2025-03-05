@@ -1,6 +1,6 @@
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.ProtobufOutput;
+import com.dyuproject.protostuff.ProtobufIOUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -11,22 +11,16 @@ public class MessageWriter {
      * @return 消息的大小
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create ProtobufOutput with the provided buffer
-        ProtobufOutput output = new ProtobufOutput(buffer);
+        // 序列化消息到字节数组
+        byte[] bytes = ProtobufIOUtil.toByteArray(message, schema, buffer);
         
-        // Serialize the message using schema
-        schema.writeTo(output, message);
-        
-        // Get the serialized bytes
-        byte[] bytes = output.toByteArray();
-        
-        // Write the size of the message as a varint
+        // 写入消息长度
         writeRawVarint32(out, bytes.length);
         
-        // Write the actual message bytes
+        // 写入消息内容
         out.write(bytes);
         
-        // Return total size (varint size + message size)
+        // 返回总字节数
         return bytes.length + computeRawVarint32Size(bytes.length);
     }
     

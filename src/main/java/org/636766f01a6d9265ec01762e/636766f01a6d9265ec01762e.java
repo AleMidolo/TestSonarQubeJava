@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Array utility methods.
+ * Utility class for array operations
  */
 public class ArrayUtils {
 
@@ -14,5 +14,4 @@ public class ArrayUtils {
     public static boolean isEmpty(final double[] array) {
         return array == null || array.length == 0;
     }
-
 }

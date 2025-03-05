@@ -1,6 +1,6 @@
 import org.objectweb.asm.Type;
 
-public class StackFrameAnalyzer {
+public class StackOperations {
     private Frame currentFrame;
     
     /**
@@ -8,27 +8,41 @@ public class StackFrameAnalyzer {
      * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
      */
     private void pop(final String descriptor) {
-        String desc = descriptor;
-        if (desc.charAt(0) == '(') {
+        char firstChar = descriptor.charAt(0);
+        
+        if (firstChar == '(') {
             // Method descriptor - pop parameter types
-            Type[] types = Type.getArgumentTypes(desc);
-            for (int i = types.length - 1; i >= 0; i--) {
-                Type type = types[i];
-                if (type.getSize() == 2) {
-                    currentFrame.pop2();
-                } else {
+            Type methodType = Type.getType(descriptor);
+            Type[] argumentTypes = methodType.getArgumentTypes();
+            
+            // Pop arguments in reverse order
+            for (int i = argumentTypes.length - 1; i >= 0; i--) {
+                Type argType = argumentTypes[i];
+                int size = argType.getSize();
+                
+                // Pop 1 or 2 slots depending on type size
+                while (size > 0) {
                     currentFrame.pop();
+                    size--;
                 }
             }
-            return;
-        }
-        
-        // Type descriptor - pop single type
-        Type type = Type.getType(desc);
-        if (type.getSize() == 2) {
-            currentFrame.pop2();
         } else {
-            currentFrame.pop();
+            // Type descriptor - pop single type
+            Type type = Type.getType(descriptor);
+            int size = type.getSize();
+            
+            // Pop 1 or 2 slots depending on type size
+            while (size > 0) {
+                currentFrame.pop();
+                size--;
+            }
+        }
+    }
+    
+    // Frame class to represent the operand stack
+    private class Frame {
+        public void pop() {
+            // Implementation to pop value from operand stack
         }
     }
 }

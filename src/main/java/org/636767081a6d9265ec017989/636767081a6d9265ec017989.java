@@ -14,7 +14,7 @@ public class BooleanUtils {
             return null;
         }
 
-        final boolean[] result = new boolean[array.length];
+        boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = array[i].booleanValue();
         }

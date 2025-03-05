@@ -8,7 +8,7 @@ public class BoxSplitter {
      * @param box the box to split
      * @return a pair with the two resulting boxes
      */
-    public Map.Entry<Rectangle2D, Rectangle2D> splitBox(Rectangle2D box) {
+    public static Map.Entry<Rectangle2D, Rectangle2D> splitBox(Rectangle2D box) {
         double x = box.getX();
         double y = box.getY();
         double width = box.getWidth();

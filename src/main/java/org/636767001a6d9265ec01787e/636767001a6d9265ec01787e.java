@@ -1,9 +1,18 @@
 public class StringBuilder {
-    private char[] value;
-    private int count;
-    
+    private char[] buffer;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 16;
+
+    public StringBuilder() {
+        buffer = new char[DEFAULT_CAPACITY];
+        size = 0;
+    }
+
+    /**
+     * <p> Gets the String built by this builder. </p>
+     * @return the built string
+     */
     public String toString() {
-        // Create a new String using the internal char array
-        return new String(value, 0, count);
+        return new String(buffer, 0, size);
     }
 }

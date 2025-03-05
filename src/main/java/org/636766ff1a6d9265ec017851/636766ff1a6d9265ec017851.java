@@ -18,24 +18,12 @@ public class ByteSearch {
             return -1;
         }
 
-        // Save the current position
-        int originalPosition = buffer.position();
-        
-        try {
-            // Set position to start searching from
-            buffer.position(pos);
-            
-            // Search through remaining bytes
-            while (buffer.hasRemaining()) {
-                if (buffer.get() == value) {
-                    return buffer.position() - 1;
-                }
+        for (int i = pos; i < buffer.limit(); i++) {
+            if (buffer.get(i) == value) {
+                return i;
             }
-            
-            return -1;
-        } finally {
-            // Restore original position
-            buffer.position(originalPosition);
         }
+        
+        return -1;
     }
 }

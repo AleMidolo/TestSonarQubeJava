@@ -12,7 +12,7 @@ public class StackFrameAnalyzer {
         
         if (firstChar == '(') {
             // Method descriptor - pop parameter types
-            Type methodType = Type.getMethodType(descriptor);
+            Type methodType = Type.getType(descriptor);
             Type[] argumentTypes = methodType.getArgumentTypes();
             
             // Pop arguments in reverse order
@@ -31,10 +31,21 @@ public class StackFrameAnalyzer {
             Type type = Type.getType(descriptor);
             int size = type.getSize();
             
-            // Pop 1 or 2 slots depending on type size  
+            // Pop 1 or 2 slots depending on type size
             while (size > 0) {
                 currentFrame.pop();
                 size--;
+            }
+        }
+    }
+    
+    // Frame class represents the execution stack frame
+    private static class Frame {
+        private java.util.Stack<Object> stack = new java.util.Stack<>();
+        
+        public void pop() {
+            if (!stack.isEmpty()) {
+                stack.pop();
             }
         }
     }

@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 public class ConfigInitializer {
     private static final Logger logger = Logger.getLogger(ConfigInitializer.class.getName());
     private static final String DEFAULT_DISTRIBUTION_PATH = "dist";
-    
+
     public void init() {
         try {
             // Check if distribution directory exists
@@ -13,29 +13,26 @@ public class ConfigInitializer {
             if (!distDir.exists()) {
                 boolean created = distDir.mkdirs();
                 if (created) {
-                    logger.info("Created distribution directory: " + DEFAULT_DISTRIBUTION_PATH);
+                    logger.info("Distribution directory created successfully");
                 } else {
-                    logger.warning("Failed to create distribution directory: " + DEFAULT_DISTRIBUTION_PATH);
+                    logger.warning("Failed to create distribution directory");
                 }
             }
 
-            // Verify directory is writable
+            // Set required file permissions
             if (!distDir.canWrite()) {
-                throw new IOException("Distribution directory is not writable: " + DEFAULT_DISTRIBUTION_PATH);
+                boolean success = distDir.setWritable(true);
+                if (!success) {
+                    logger.warning("Failed to set write permissions on distribution directory");
+                }
             }
 
-            // Initialize other configuration settings
-            initializeDefaultSettings();
-            
-            logger.info("Configuration initialization completed successfully");
-            
-        } catch (Exception e) {
-            logger.severe("Failed to initialize configuration: " + e.getMessage());
-            throw new RuntimeException("Configuration initialization failed", e);
+            // Additional initialization steps can be added here
+            logger.info("Configuration initialization completed");
+
+        } catch (SecurityException e) {
+            logger.severe("Security exception during initialization: " + e.getMessage());
+            throw new RuntimeException("Failed to initialize configuration", e);
         }
-    }
-    
-    private void initializeDefaultSettings() {
-        // Add additional initialization logic here
     }
 }

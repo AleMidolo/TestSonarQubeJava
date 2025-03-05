@@ -33,7 +33,7 @@ public class DoublyLinkedList<E> {
             head = list.head;
             tail = list.tail;
         } else {
-            // Connect the tail of current list to head of input list
+            // Link the tail of current list to head of input list
             tail.next = list.head;
             list.head.prev = tail;
             tail = list.tail;

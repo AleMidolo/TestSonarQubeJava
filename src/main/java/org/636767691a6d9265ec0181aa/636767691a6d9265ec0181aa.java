@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ArrayHashCode {
+public class ArrayHashCodeUtil {
     /**
      * 根据指定数组的内容返回一个哈希码。如果 <code>array</code> 为 <code>null</code>，则此方法返回 0。
      * @param array 要获取哈希码的长整型数组

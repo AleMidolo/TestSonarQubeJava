@@ -7,7 +7,7 @@ public class UriMatcher {
     public UriMatcher(String pattern) {
         this.pattern = Pattern.compile(pattern);
     }
-
+    
     /**
      * 将URI与模式进行匹配。
      * @param uri 要与模板匹配的URI。
@@ -17,12 +17,12 @@ public class UriMatcher {
         if (uri == null) {
             return null;
         }
-
+        
         Matcher matcher = pattern.matcher(uri);
         if (!matcher.matches()) {
             return null;
         }
-
+        
         return matcher.toMatchResult();
     }
 }

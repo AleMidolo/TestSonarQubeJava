@@ -14,10 +14,15 @@ public class ClassPathUtil {
         // Get system class loader
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         
-        // Get URLs from system class loader if it's URLClassLoader
+        // Check if it's URLClassLoader
         if (systemClassLoader instanceof URLClassLoader) {
             URLClassLoader urlClassLoader = (URLClassLoader) systemClassLoader;
-            for (URL url : urlClassLoader.getURLs()) {
+            
+            // Get all URLs from class loader
+            URL[] urls = urlClassLoader.getURLs();
+            
+            // Convert URLs to File objects
+            for (URL url : urls) {
                 try {
                     files.add(new File(url.toURI()));
                 } catch (Exception e) {
@@ -27,7 +32,7 @@ public class ClassPathUtil {
             }
         }
         
-        // Get classpath from system property
+        // Get additional classpath entries from system property
         String classPath = System.getProperty("java.class.path");
         if (classPath != null) {
             String[] paths = classPath.split(File.pathSeparator);

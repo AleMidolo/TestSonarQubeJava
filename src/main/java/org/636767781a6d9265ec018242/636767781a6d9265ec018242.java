@@ -3,25 +3,21 @@ import ch.qos.logback.core.Appender;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class AppenderHandler {
-    
+public class AppenderManager {
     private CopyOnWriteArrayList<Appender<LoggingEvent>> appenderList = new CopyOnWriteArrayList<>();
     
-    /**
-     * 对所有附加的附加器调用<code>doAppend</code>方法。
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
-        int size = 0;
-        if (event != null) {
+        int numberOfAppenders = 0;
+        if(appenderList != null && !appenderList.isEmpty()) {
             Iterator<Appender<LoggingEvent>> iter = appenderList.iterator();
-            while (iter.hasNext()) {
+            while(iter.hasNext()) {
                 Appender<LoggingEvent> appender = iter.next();
-                if (appender != null) {
+                if(appender != null) {
                     appender.doAppend(event);
-                    size++;
+                    numberOfAppenders++;
                 }
             }
         }
-        return size;
+        return numberOfAppenders;
     }
 }

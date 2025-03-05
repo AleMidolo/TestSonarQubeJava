@@ -22,19 +22,10 @@ public class CustomAppender extends AppenderSkeleton {
             return;
         }
 
-        if(writer == null) {
-            errorHandler.error("No writer set for the appender named [" + name + "].");
-            return;
-        }
-
         try {
-            // 使用layout格式化日志事件
             String formattedMessage = layout.format(event);
-            
-            // 写入日志
             writer.write(formattedMessage);
             
-            // 如果layout需要换行符
             if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
                 if(throwableStrRep != null) {
@@ -45,12 +36,9 @@ public class CustomAppender extends AppenderSkeleton {
                 }
             }
             
-            // 刷新writer
             writer.flush();
-            
         } catch(IOException e) {
-            errorHandler.error("Failed to write to writer", e, 
-                    org.apache.log4j.spi.ErrorCode.WRITE_FAILURE);
+            errorHandler.error("Failed to write log event", e, 1);
         }
     }
 
@@ -60,8 +48,7 @@ public class CustomAppender extends AppenderSkeleton {
             try {
                 writer.close();
             } catch(IOException e) {
-                errorHandler.error("Failed to close writer", e, 
-                        org.apache.log4j.spi.ErrorCode.CLOSE_FAILURE);
+                errorHandler.error("Failed to close writer", e, 1);
             }
             writer = null;
         }

@@ -10,7 +10,7 @@ public class SubstringMatch {
         if (str == null || substring == null) {
             return false;
         }
-        if (index < 0 || index + substring.length() > str.length()) {
+        if (index < 0 || index > str.length() - substring.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {
@@ -29,7 +29,5 @@ public class SubstringMatch {
         System.out.println(substringMatch("Hello, World!", 12, "!")); // true
         System.out.println(substringMatch("Hello, World!", 5, ", ")); // true
         System.out.println(substringMatch("Hello, World!", 13, "!")); // false (index out of bounds)
-        System.out.println(substringMatch(null, 0, "test")); // false (null input)
-        System.out.println(substringMatch("Hello, World!", 7, null)); // false (null input)
     }
 }

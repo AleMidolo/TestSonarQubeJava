@@ -15,22 +15,38 @@ final class ClassFileReader {
      * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Posiziona il buffer all'inizio dell'entrata specificata
-        classFileBuffer.position(constantPoolEntryIndex);
+        // Assuming the constant pool entry is a CONSTANT_Utf8_info structure
+        // CONSTANT_Utf8_info structure format:
+        // u1 tag (1 byte)
+        // u2 length (2 bytes)
+        // u1 bytes[length] (variable length)
 
-        // Legge la lunghezza della stringa UTF-8
-        int length = classFileBuffer.getShort() & 0xFFFF;
+        // Calculate the offset of the constant pool entry
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
 
-        // Legge i byte della stringa UTF-8
+        // Read the tag (should be 1 for CONSTANT_Utf8)
+        byte tag = classFileBuffer.get(offset);
+        if (tag != 1) {
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
+        }
+
+        // Read the length of the UTF-8 string
+        int length = classFileBuffer.getShort(offset + 1) & 0xFFFF;
+
+        // Read the UTF-8 bytes into a byte array
         byte[] utf8Bytes = new byte[length];
+        classFileBuffer.position(offset + 3);
         classFileBuffer.get(utf8Bytes);
 
-        // Decodifica i byte UTF-8 in una stringa Java
-        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+        // Decode the UTF-8 bytes into a String using the provided charBuffer
+        return new String(utf8Bytes, StandardCharsets.UTF_8);
+    }
 
-        // Copia la stringa nel buffer di caratteri fornito
-        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
-
-        return utf8String;
+    private int getConstantPoolEntryOffset(int constantPoolEntryIndex) {
+        // This method should calculate the offset of the constant pool entry in the classFileBuffer
+        // based on the constantPoolEntryIndex. The actual implementation depends on the structure
+        // of the constant pool in the class file.
+        // For simplicity, this is a placeholder implementation.
+        return constantPoolEntryIndex * 8; // Example offset calculation
     }
 }

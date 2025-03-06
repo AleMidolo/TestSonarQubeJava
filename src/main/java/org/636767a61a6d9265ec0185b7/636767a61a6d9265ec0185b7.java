@@ -10,6 +10,6 @@ private static int digitValue(final char c) {
     } else if (c >= 'a' && c <= 'z') {
         return 10 + (c - 'a');
     } else {
-        throw new IllegalArgumentException("Il carattere non è una cifra valida in base 36: " + c);
+        throw new IllegalArgumentException("Il carattere non è una cifra valida: " + c);
     }
 }

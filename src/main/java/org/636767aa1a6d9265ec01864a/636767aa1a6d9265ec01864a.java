@@ -12,8 +12,8 @@ public class ByteArrayCopier {
         // Esempio di implementazione: copia i byte da un ByteArrayOutputStream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            // Scrivi alcuni byte di esempio (puoi sostituire con i byte che vuoi copiare)
-            outputStream.write(new byte[]{1, 2, 3, 4, 5});
+            // Scrivi i byte che vuoi copiare nell'outputStream
+            outputStream.write("Esempio di byte".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,8 +23,6 @@ public class ByteArrayCopier {
     public static void main(String[] args) {
         ByteArrayCopier copier = new ByteArrayCopier();
         byte[] byteArray = copier.toByteArray();
-        for (byte b : byteArray) {
-            System.out.print(b + " ");
-        }
+        System.out.println(new String(byteArray));  // Stampa i byte come stringa
     }
 }

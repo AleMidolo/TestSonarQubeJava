@@ -26,7 +26,7 @@ public class ByteVector {
         }
     }
 
-    // Optional: Method to get the current size of the vector
+    // Optional: Method to get the current size of the ByteVector
     public int size() {
         return size;
     }

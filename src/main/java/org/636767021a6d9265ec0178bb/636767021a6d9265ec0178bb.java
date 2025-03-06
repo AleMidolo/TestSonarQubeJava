@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class DefensiveProgramming {
 
-    // Array vuoto pubblico e statico per ottimizzazione della memoria
+    // Public static empty array reference
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
     /**
@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
+    // Example usage
     public static void main(String[] args) {
-        // Test cases
-        Double[] nullArray = null;
-        Double[] emptyArray = new Double[0];
-        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
+        Double[] array1 = null;
+        Double[] array2 = new Double[0];
+        Double[] array3 = new Double[]{1.0, 2.0, 3.0};
 
-        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));  // Output: []
-        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [1.0, 2.0, 3.0]
+        System.out.println(Objects.toString(nullToEmpty(array1))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // Output: [1.0, 2.0, 3.0]
     }
 }

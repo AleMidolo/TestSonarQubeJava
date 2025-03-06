@@ -17,7 +17,7 @@ public class FrameVisitor {
         currentFrame = new Frame(offset, numLocal, numStack);
 
         // Restituisce l'indice del prossimo elemento da scrivere nel frame
-        return currentFrame.getNextWriteIndex();
+        return currentFrame.getNextElementIndex();
     }
 
     // Classe interna per rappresentare un frame
@@ -25,17 +25,19 @@ public class FrameVisitor {
         private final int offset;
         private final int numLocal;
         private final int numStack;
-        private int nextWriteIndex;
+        private int nextElementIndex;
 
         public Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextWriteIndex = 0; // Inizia a scrivere dal primo elemento
+            this.nextElementIndex = 0; // Inizialmente, il prossimo elemento è il primo
         }
 
-        public int getNextWriteIndex() {
-            return nextWriteIndex++;
+        public int getNextElementIndex() {
+            return nextElementIndex;
         }
+
+        // Metodi per gestire il frame (aggiungere elementi, ecc.)
     }
 }

@@ -20,7 +20,6 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
         Byte[] array1 = null;
         Byte[] array2 = new Byte[0];

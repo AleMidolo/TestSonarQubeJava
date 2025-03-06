@@ -15,7 +15,7 @@ public class FileUtils {
         int lastSeparatorIndex = path.lastIndexOf('/');
         int lastDotIndex = path.lastIndexOf('.');
 
-        // Se non c'è un punto o se il punto è prima dell'ultimo separatore, restituisci il percorso originale
+        // Se non c'è un punto o il punto è prima dell'ultimo separatore, restituisci il percorso originale
         if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
             return path;
         }
@@ -26,7 +26,7 @@ public class FileUtils {
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
         System.out.println(stripFilenameExtension("myfile.txt"));         // Output: myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));      // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
     }
 }

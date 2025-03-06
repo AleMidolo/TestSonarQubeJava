@@ -12,7 +12,7 @@ public class ThreadSnapshotParser {
         List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = parseLineToSnapshot(line);
+            ThreadSnapshot snapshot = parseLine(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
@@ -21,7 +21,7 @@ public class ThreadSnapshotParser {
         return snapshots;
     }
 
-    private static ThreadSnapshot parseLineToSnapshot(String line) {
+    private static ThreadSnapshot parseLine(String line) {
         // Assuming the line is in a specific format, e.g., "timestamp,threadId,state"
         String[] parts = line.split(",");
         if (parts.length == 3) {

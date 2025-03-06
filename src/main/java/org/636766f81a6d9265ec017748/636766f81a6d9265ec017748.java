@@ -1,10 +1,11 @@
 import java.util.Base64;
 
 public class Base64Decoder {
+
     /**
      * Decodificación de una cadena a una cadena siguiendo la norma Base64.
      * 
-     * @param s La cadena codificada en Base64.
+     * @param s La cadena codificada en Base64 que se desea decodificar.
      * @return La cadena decodificada.
      */
     public static String base64Decode(final String s) {

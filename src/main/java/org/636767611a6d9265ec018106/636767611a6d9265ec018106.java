@@ -9,12 +9,29 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Asumimos que los pesos están almacenados en una estructura de datos accesible
-        // como un mapa o una matriz de adyacencia. Aquí se simula la suma.
-        for (V vertex : v) {
-            // Aquí se debería obtener el peso asociado al vértice
-            // sum += getWeight(vertex);
+        // Asumimos que el grafo tiene un método getIncomingEdges que devuelve las aristas entrantes
+        // y un método getWeight que devuelve el peso de una arista.
+        for (Edge<V> edge : getIncomingEdges(v)) {
+            sum += edge.getWeight();
         }
         return sum;
+    }
+
+    // Métodos ficticios para completar la implementación
+    private Set<Edge<V>> getIncomingEdges(Set<V> v) {
+        // Implementación ficticia para obtener las aristas entrantes
+        return Set.of();
+    }
+
+    private static class Edge<V> {
+        private final double weight;
+
+        public Edge(double weight) {
+            this.weight = weight;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
     }
 }

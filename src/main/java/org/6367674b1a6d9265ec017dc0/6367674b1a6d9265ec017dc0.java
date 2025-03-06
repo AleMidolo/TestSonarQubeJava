@@ -18,7 +18,7 @@ private Set<V> initVisibleVertices() {
     return visibleVertices;
 }
 
-// Clase Edge de ejemplo para representar una arista
+// Clase de ejemplo para representar una arista
 class Edge<V> {
     private V source;
     private V destination;

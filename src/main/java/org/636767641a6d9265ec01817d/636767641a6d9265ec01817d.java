@@ -1,50 +1,42 @@
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 public class BipartiteGraphGenerator<V, E> {
 
     /**
      * Construir un grafo bipartito completo
      * 
-     * @param target El grafo en el que se construirá el grafo bipartito
-     * @param resultMap Un mapa para almacenar los vértices generados
+     * @param target El grafo en el que se construirá el grafo bipartito completo.
+     * @param resultMap Un mapa para almacenar los vértices generados.
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Supongamos que los vértices de la partición izquierda son A, B, C, etc.
-        // y los vértices de la partición derecha son 1, 2, 3, etc.
-        
-        // Crear vértices para la partición izquierda
-        Set<V> leftPartition = new HashSet<>();
-        leftPartition.add(target.addVertex());
-        leftPartition.add(target.addVertex());
-        leftPartition.add(target.addVertex());
-        
-        // Crear vértices para la partición derecha
-        Set<V> rightPartition = new HashSet<>();
-        rightPartition.add(target.addVertex());
-        rightPartition.add(target.addVertex());
-        rightPartition.add(target.addVertex());
-        
-        // Almacenar los vértices en el resultMap
-        int i = 0;
-        for (V vertex : leftPartition) {
-            resultMap.put("L" + i, vertex);
-            i++;
+        // Crear dos conjuntos de vértices para el grafo bipartito
+        List<V> setA = new ArrayList<>();
+        List<V> setB = new ArrayList<>();
+
+        // Generar vértices para el conjunto A
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setA.add(vertex);
+            resultMap.put("A" + i, vertex);
         }
-        
-        i = 0;
-        for (V vertex : rightPartition) {
-            resultMap.put("R" + i, vertex);
-            i++;
+
+        // Generar vértices para el conjunto B
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setB.add(vertex);
+            resultMap.put("B" + i, vertex);
         }
-        
-        // Conectar cada vértice de la partición izquierda con cada vértice de la partición derecha
-        for (V leftVertex : leftPartition) {
-            for (V rightVertex : rightPartition) {
-                target.addEdge(leftVertex, rightVertex);
+
+        // Conectar todos los vértices de A con todos los vértices de B
+        for (V a : setA) {
+            for (V b : setB) {
+                target.addEdge(a, b);
             }
         }
     }

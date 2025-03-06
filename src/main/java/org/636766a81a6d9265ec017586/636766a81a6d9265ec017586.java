@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class OutputFrame {
-    private Stack<String> outputStack;
+    private Stack<String> frame;
 
     public OutputFrame() {
-        this.outputStack = new Stack<>();
+        frame = new Stack<>();
     }
 
     /**
@@ -15,41 +15,32 @@ public class OutputFrame {
         if (elements < 0) {
             throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (elements > outputStack.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
+        if (elements > frame.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el frame para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
-            outputStack.pop();
+            frame.pop();
         }
     }
 
-    // Método para agregar elementos al stack (solo para propósitos de prueba)
+    // Método para agregar elementos al frame (solo para propósitos de prueba)
     public void push(String element) {
-        outputStack.push(element);
+        frame.push(element);
     }
 
-    // Método para obtener el tamaño del stack (solo para propósitos de prueba)
+    // Método para obtener el tamaño del frame (solo para propósitos de prueba)
     public int size() {
-        return outputStack.size();
-    }
-
-    // Método para imprimir el stack (solo para propósitos de prueba)
-    public void printStack() {
-        System.out.println(outputStack);
+        return frame.size();
     }
 
     public static void main(String[] args) {
-        OutputFrame frame = new OutputFrame();
-        frame.push("Tipo1");
-        frame.push("Tipo2");
-        frame.push("Tipo3");
+        OutputFrame outputFrame = new OutputFrame();
+        outputFrame.push("Tipo1");
+        outputFrame.push("Tipo2");
+        outputFrame.push("Tipo3");
 
-        System.out.println("Stack antes de pop:");
-        frame.printStack();
-
-        frame.pop(2);
-
-        System.out.println("Stack después de pop:");
-        frame.printStack();
+        System.out.println("Tamaño del frame antes de pop: " + outputFrame.size());
+        outputFrame.pop(2);
+        System.out.println("Tamaño del frame después de pop: " + outputFrame.size());
     }
 }

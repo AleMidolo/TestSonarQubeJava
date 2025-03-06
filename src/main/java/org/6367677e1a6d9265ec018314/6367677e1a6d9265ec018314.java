@@ -36,10 +36,10 @@ class TreeNode {
     }
 }
 
-public class CategoryTree {
+public class Tree {
     private TreeNode root;
 
-    public CategoryTree(TreeNode root) {
+    public Tree(TreeNode root) {
         this.root = root;
     }
 
@@ -51,11 +51,7 @@ public class CategoryTree {
     }
 
     private int removeUnusedNodesHelper(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int removedCount = 0;
+        int count = 0;
         List<TreeNode> children = node.getChildren();
         Iterator<TreeNode> iterator = children.iterator();
 
@@ -63,13 +59,13 @@ public class CategoryTree {
             TreeNode child = iterator.next();
             if (!child.getCategory().isActive()) {
                 iterator.remove();
-                removedCount++;
+                count++;
             } else {
-                removedCount += removeUnusedNodesHelper(child);
+                count += removeUnusedNodesHelper(child);
             }
         }
 
-        return removedCount;
+        return count;
     }
 
     public static void main(String[] args) {
@@ -78,20 +74,20 @@ public class CategoryTree {
         rootCategory.setActive(true);
 
         TreeNode rootNode = new TreeNode(rootCategory);
-        CategoryTree tree = new CategoryTree(rootNode);
 
-        // Add some children nodes
-        Category child1 = new Category();
-        child1.setActive(false);
-        TreeNode childNode1 = new TreeNode(child1);
+        Category childCategory1 = new Category();
+        childCategory1.setActive(false);
+        TreeNode childNode1 = new TreeNode(childCategory1);
+
+        Category childCategory2 = new Category();
+        childCategory2.setActive(true);
+        TreeNode childNode2 = new TreeNode(childCategory2);
+
         rootNode.addChild(childNode1);
-
-        Category child2 = new Category();
-        child2.setActive(true);
-        TreeNode childNode2 = new TreeNode(child2);
         rootNode.addChild(childNode2);
 
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+        Tree tree = new Tree(rootNode);
+        int removedCount = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedCount + " unused nodes.");
     }
 }

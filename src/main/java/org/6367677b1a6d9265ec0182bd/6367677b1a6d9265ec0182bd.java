@@ -10,24 +10,14 @@ public class LogFormatter {
     public String format(final LoggingEvent event) {
         StringBuilder formattedEvent = new StringBuilder();
         
-        // Formato básico: [Nivel] Mensaje
+        // Formato básico: [Nivel] [Hora] [Mensaje]
         formattedEvent.append("[")
                       .append(event.getLevel().toString())
+                      .append("] [")
+                      .append(event.getTimeStamp())
                       .append("] ")
                       .append(event.getRenderedMessage())
                       .append("\n");
-        
-        // Si hay un throwable, agregar su stack trace
-        if (event.getThrowableInformation() != null) {
-            formattedEvent.append("Exception: ")
-                          .append(event.getThrowableInformation().getThrowable().toString())
-                          .append("\n");
-            for (StackTraceElement element : event.getThrowableInformation().getThrowable().getStackTrace()) {
-                formattedEvent.append("\t")
-                              .append(element.toString())
-                              .append("\n");
-            }
-        }
         
         return formattedEvent.toString();
     }

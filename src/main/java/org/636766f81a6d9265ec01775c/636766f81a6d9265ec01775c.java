@@ -22,7 +22,7 @@ public class ObjectUtils {
         // Ejemplos de uso
         System.out.println(ObjectUtils.toString(null));         // ""
         System.out.println(ObjectUtils.toString(""));           // ""
-        System.out.println(ObjectUtils.toString("bat"));        // "bat"
+        System.out.println(ObjectUtils.toString("bat"));       // "bat"
         System.out.println(ObjectUtils.toString(Boolean.TRUE)); // "true"
     }
 }

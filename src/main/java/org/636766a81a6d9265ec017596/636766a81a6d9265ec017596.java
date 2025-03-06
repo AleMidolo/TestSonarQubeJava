@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
+    private byte[] buffer;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[16]; // Initial capacity
+        this.buffer = new byte[16]; // Initial capacity
         this.size = 0;
     }
 
@@ -13,26 +13,26 @@ public class ByteVector {
         ensureCapacity(size + 4); // Ensure space for 4 bytes
 
         // Insert the integer in big-endian order
-        data[size++] = (byte) (intValue >> 24);
-        data[size++] = (byte) (intValue >> 16);
-        data[size++] = (byte) (intValue >> 8);
-        data[size++] = (byte) intValue;
+        buffer[size++] = (byte) (intValue >> 24);
+        buffer[size++] = (byte) (intValue >> 16);
+        buffer[size++] = (byte) (intValue >> 8);
+        buffer[size++] = (byte) intValue;
 
         return this;
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = data.length * 2;
+        if (minCapacity > buffer.length) {
+            int newCapacity = buffer.length * 2;
             if (newCapacity < minCapacity) {
                 newCapacity = minCapacity;
             }
-            data = Arrays.copyOf(data, newCapacity);
+            buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }
 
     public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
+        return Arrays.copyOf(buffer, size);
     }
 
     public int size() {

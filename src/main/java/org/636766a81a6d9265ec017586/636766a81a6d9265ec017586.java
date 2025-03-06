@@ -4,7 +4,7 @@ public class OutputFrame {
     private Stack<AbstractType> outputStack;
 
     public OutputFrame() {
-        outputStack = new Stack<>();
+        this.outputStack = new Stack<>();
     }
 
     /**

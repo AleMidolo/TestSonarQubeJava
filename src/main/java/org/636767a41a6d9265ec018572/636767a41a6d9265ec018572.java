@@ -2,15 +2,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VarintReader {
-    private InputStream input;
+    private final InputStream input;
 
     public VarintReader(InputStream input) {
         this.input = input;
     }
 
-    /**
-     * Lee un Varint crudo del flujo.
-     */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;

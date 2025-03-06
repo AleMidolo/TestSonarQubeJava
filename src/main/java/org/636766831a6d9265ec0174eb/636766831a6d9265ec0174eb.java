@@ -10,25 +10,21 @@ public class FileAdder {
      */
     private void addReverse(final File[] files) {
         if (files == null) {
-            throw new IllegalArgumentException("El array de archivos no puede ser nulo.");
+            return;
         }
 
         List<File> fileList = new ArrayList<>();
-        for (File file : files) {
-            if (file != null) {
-                fileList.add(file);
-            }
-        }
-
+        Collections.addAll(fileList, files);
         Collections.reverse(fileList);
 
         // Aquí puedes agregar la lógica para procesar los archivos en orden inverso
         for (File file : fileList) {
-            System.out.println("Archivo agregado: " + file.getName());
+            System.out.println("Procesando archivo: " + file.getName());
         }
     }
 
     public static void main(String[] args) {
+        // Ejemplo de uso
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
         FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);

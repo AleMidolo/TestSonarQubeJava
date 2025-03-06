@@ -9,7 +9,7 @@ public class ConfigInitializer {
      */
     public void init() {
         // Verificar la ruta de distribución
-        String distributionPath = System.getProperty("user.dir"); // Obtiene el directorio actual
+        String distributionPath = "/ruta/de/distribucion"; // Cambia esto a la ruta correcta
         Path path = Paths.get(distributionPath);
 
         if (Files.exists(path)) {

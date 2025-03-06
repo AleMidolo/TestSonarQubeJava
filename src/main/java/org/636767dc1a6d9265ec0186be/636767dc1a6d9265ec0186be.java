@@ -10,31 +10,28 @@ public class TimeBucketCompressor {
         // Convertir el bucket de tiempo a una cadena para facilitar el manejo
         String bucketStr = Long.toString(bucketDeTiempo);
         
-        // Extraer el año, mes y día
-        int year = Integer.parseInt(bucketStr.substring(0, 4));
-        int month = Integer.parseInt(bucketStr.substring(4, 6));
-        int day = Integer.parseInt(bucketStr.substring(6, 8));
+        // Crear un LocalDate a partir del bucket de tiempo
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate date = LocalDate.parse(bucketStr, formatter);
         
-        // Crear una fecha con LocalDate
-        LocalDate date = LocalDate.of(year, month, day);
+        // Obtener el día del mes
+        int dayOfMonth = date.getDayOfMonth();
         
-        // Calcular el día ajustado según el pasoDiario
-        int adjustedDay = ((day - 1) / pasoDiario) * pasoDiario + 1;
+        // Calcular el nuevo día basado en el pasoDiario
+        int newDay = ((dayOfMonth - 1) / pasoDiario) * pasoDiario + 1;
         
         // Crear una nueva fecha con el día ajustado
-        LocalDate adjustedDate = LocalDate.of(year, month, adjustedDay);
+        LocalDate newDate = date.withDayOfMonth(newDay);
         
-        // Formatear la fecha ajustada a un long
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String formattedDate = adjustedDate.format(formatter);
-        
-        return Long.parseLong(formattedDate);
+        // Convertir la nueva fecha de vuelta a un long
+        String newBucketStr = newDate.format(formatter);
+        return Long.parseLong(newBucketStr);
     }
 
     public static void main(String[] args) {
         // Ejemplos de uso
-        System.out.println(comprimirBucketDeTiempo(20000105L, 11)); // Debería imprimir 20000101
-        System.out.println(comprimirBucketDeTiempo(20000115L, 11)); // Debería imprimir 20000112
-        System.out.println(comprimirBucketDeTiempo(20000123L, 11)); // Debería imprimir 20000123
+        System.out.println(comprimirBucketDeTiempo(20000105L, 11)); // 20000101
+        System.out.println(comprimirBucketDeTiempo(20000115L, 11)); // 20000112
+        System.out.println(comprimirBucketDeTiempo(20000123L, 11)); // 20000123
     }
 }

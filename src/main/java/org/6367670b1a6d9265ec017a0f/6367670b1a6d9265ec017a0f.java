@@ -23,4 +23,13 @@ public class StringUtils {
 
         return false;
     }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        List<String> searchStrings = List.of("hola", "mundo", "java");
+        String text = "Bienvenido al Mundo de la Programación en Java!";
+        
+        boolean result = containsAnyIgnoreCase(text, searchStrings);
+        System.out.println("¿El texto contiene alguna de las cadenas? " + result);
+    }
 }

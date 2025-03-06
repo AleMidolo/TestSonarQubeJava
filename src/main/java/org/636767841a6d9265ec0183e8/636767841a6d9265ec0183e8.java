@@ -20,10 +20,10 @@ public class EventBuffer {
             size++;
         } else {
             // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
-            // 1. Ignorar el nuevo evento.
-            // 2. Sobrescribir el evento más antiguo.
-            // 3. Lanzar una excepción.
-            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo.
+            // 1. Ignorar el nuevo evento
+            // 2. Sobrescribir el evento más antiguo
+            // 3. Expandir el búfer dinámicamente
+            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo
             System.arraycopy(buffer, 1, buffer, 0, size - 1);
             buffer[size - 1] = event;
         }

@@ -4,25 +4,37 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileAdder {
+    private List<InputStream> fileList;
 
-    /**
+    public FileAdder() {
+        this.fileList = new ArrayList<>();
+    }
+
+    /** 
      * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
+        if (files == null) {
+            throw new IllegalArgumentException("El arreglo de archivos no puede ser nulo.");
         }
 
-        List<InputStream> fileList = new ArrayList<>();
+        // Convertir el arreglo a una lista para facilitar la manipulación
+        List<InputStream> tempList = new ArrayList<>();
         for (InputStream file : files) {
-            fileList.add(file);
+            if (file != null) {
+                tempList.add(file);
+            }
         }
 
-        Collections.reverse(fileList);
+        // Invertir la lista
+        Collections.reverse(tempList);
 
-        // Aquí puedes agregar la lógica para procesar los archivos en orden inverso
-        for (InputStream file : fileList) {
-            // Procesar cada archivo
-        }
+        // Agregar los archivos invertidos a la lista principal
+        fileList.addAll(tempList);
+    }
+
+    // Método para obtener la lista de archivos (solo para propósitos de prueba)
+    public List<InputStream> getFileList() {
+        return fileList;
     }
 }

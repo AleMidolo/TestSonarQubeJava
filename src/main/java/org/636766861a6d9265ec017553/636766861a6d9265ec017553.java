@@ -6,10 +6,10 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Inicializar con algunas variables de plantilla de ejemplo
-        this.templateVariables.add("username");
-        this.templateVariables.add("email");
-        this.templateVariables.add("date");
+        // Initialize with some template variables for demonstration
+        this.templateVariables.add("var1");
+        this.templateVariables.add("var2");
+        this.templateVariables.add("var3");
     }
 
     /**
@@ -23,7 +23,7 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        System.out.println(template.isTemplateVariablePresent("username")); // true
-        System.out.println(template.isTemplateVariablePresent("nonexistent")); // false
+        System.out.println(template.isTemplateVariablePresent("var1")); // true
+        System.out.println(template.isTemplateVariablePresent("var4")); // false
     }
 }

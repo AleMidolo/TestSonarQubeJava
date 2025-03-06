@@ -14,6 +14,7 @@ public class BooleanUtils {
         return bool != null && bool;
     }
 
+    // Ejemplo de uso
     public static void main(String[] args) {
         System.out.println(toBoolean(Boolean.TRUE));  // true
         System.out.println(toBoolean(Boolean.FALSE)); // false

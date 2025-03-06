@@ -13,13 +13,12 @@ public class Example {
         return thrownString != null && !thrownString.isEmpty();
     }
 
-    public Throwable getThrown() {
-        return thrown;
-    }
-
     public static void main(String[] args) {
         // Example usage
         Example example = new Example(new RuntimeException("Error occurred"));
         System.out.println(example.hasThrown()); // Should print true
+
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Should print false
     }
 }

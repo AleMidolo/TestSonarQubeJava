@@ -1,38 +1,29 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-/**
- * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
- * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
- * @return conjunto de vértices con grado positivo
- */
-private Set<V> initVisibleVertices() {
-    Set<V> visibleVertices = new HashSet<>();
-    
-    // Suponiendo que 'edges' es una lista de aristas disponibles en el contexto
-    for (Edge<V> edge : edges) {
-        visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getDestination());
-    }
-    
-    return visibleVertices;
-}
+public class Graph<V> {
+    private Map<V, Set<V>> adjacencyList;
 
-// Clase Edge de ejemplo para representar una arista
-class Edge<V> {
-    private V source;
-    private V destination;
-
-    public Edge(V source, V destination) {
-        this.source = source;
-        this.destination = destination;
+    public Graph() {
+        this.adjacencyList = new HashMap<>();
     }
 
-    public V getSource() {
-        return source;
+    /**
+     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+     * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+     * @return conjunto de vértices con grado positivo
+     */
+    private Set<V> initVisibleVertices() {
+        Set<V> visibleVertices = new HashSet<>();
+        for (Map.Entry<V, Set<V>> entry : adjacencyList.entrySet()) {
+            V vertex = entry.getKey();
+            Set<V> neighbors = entry.getValue();
+            if (!neighbors.isEmpty()) {
+                visibleVertices.add(vertex);
+            }
+            visibleVertices.addAll(neighbors);
+        }
+        return visibleVertices;
     }
 
-    public V getDestination() {
-        return destination;
-    }
+    // Other methods for adding vertices and edges would go here
 }

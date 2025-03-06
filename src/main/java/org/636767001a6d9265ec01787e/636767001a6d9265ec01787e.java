@@ -1,5 +1,8 @@
 @Override
 public String toString() {
-    // Aquí se construye y retorna la cadena que representa el objeto
-    return "Cadena construida por el constructor";
+    // Aquí se construye la cadena que se desea devolver
+    StringBuilder builder = new StringBuilder();
+    // Ejemplo de construcción de una cadena
+    builder.append("Cadena construida por el constructor");
+    return builder.toString();
 }

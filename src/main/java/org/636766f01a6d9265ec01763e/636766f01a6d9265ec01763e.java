@@ -11,12 +11,12 @@ public class CharsetConverter {
      */
     private static String javaCharset(String charset) {
         try {
-            // 尝试将MIME字符集名称转换为Java字符集对象
+            // 尝试将MIME标准字符集名称转换为Java Charset对象
             Charset javaCharset = Charset.forName(charset);
-            // 返回Java字符集的规范名称
+            // 返回Java Charset的标准名称
             return javaCharset.name();
         } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // 如果字符集名称不合法或不支持，返回默认的UTF-8字符集名称
+            // 如果字符集名称不合法或不支持，返回默认的UTF-8
             return "UTF-8";
         }
     }

@@ -13,7 +13,10 @@ public class TimeRangeSplitter {
         List<TimeRange> timeRanges = new ArrayList<>();
         
         while (start < end) {
-            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            long nextEnd = start + FETCH_DATA_DURATION;
+            if (nextEnd > end) {
+                nextEnd = end;
+            }
             timeRanges.add(new TimeRange(start, nextEnd));
             start = nextEnd;
         }
@@ -21,7 +24,7 @@ public class TimeRangeSplitter {
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Inner class representing a time range
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -45,17 +48,6 @@ public class TimeRangeSplitter {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        TimeRangeSplitter splitter = new TimeRangeSplitter();
-        long start = System.currentTimeMillis() - 3 * FETCH_DATA_DURATION; // 3 days ago
-        long end = System.currentTimeMillis(); // now
-        List<TimeRange> timeRanges = splitter.buildTimeRanges(start, end);
-        for (TimeRange range : timeRanges) {
-            System.out.println(range);
         }
     }
 }

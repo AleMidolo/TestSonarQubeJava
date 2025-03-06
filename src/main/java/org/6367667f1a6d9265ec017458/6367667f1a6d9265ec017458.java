@@ -25,6 +25,4 @@ public class AtmosphereFramework {
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
     }
-
-    // Other methods and fields of AtmosphereFramework...
 }

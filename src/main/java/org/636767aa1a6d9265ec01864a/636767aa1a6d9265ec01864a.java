@@ -5,12 +5,11 @@ import java.io.IOException;
  * 将字节复制到 {@code byte[]} 中。
  */
 public byte[] toByteArray() {
-    // 假设我们有一个输入流或其他数据源
-    // 这里我们使用 ByteArrayOutputStream 来模拟数据的复制
+    // 假设我们有一个字节流作为输入源
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     
-    // 假设我们有一些数据要写入
-    byte[] data = "Hello, World!".getBytes();
+    // 这里假设我们有一些字节数据需要复制
+    byte[] data = {0x01, 0x02, 0x03, 0x04}; // 示例数据
     
     try {
         outputStream.write(data);
@@ -18,6 +17,6 @@ public byte[] toByteArray() {
         e.printStackTrace();
     }
     
-    // 返回复制后的字节数组
+    // 将字节流转换为字节数组并返回
     return outputStream.toByteArray();
 }

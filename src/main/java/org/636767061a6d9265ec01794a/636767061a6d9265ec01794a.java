@@ -38,14 +38,10 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        String filename1 = "path/to/file.txt";
-        String filename2 = "path\\to\\file.txt";
-        String filename3 = "path/to/file";
-        String filename4 = null;
-
-        System.out.println(indexOfExtension(filename1)); // 输出: 12
-        System.out.println(indexOfExtension(filename2)); // 输出: 12
-        System.out.println(indexOfExtension(filename3)); // 输出: -1
-        System.out.println(indexOfExtension(filename4)); // 输出: -1
+        System.out.println(indexOfExtension("path/to/file.txt")); // 输出: 13
+        System.out.println(indexOfExtension("path/to/file"));    // 输出: -1
+        System.out.println(indexOfExtension("path/to/file."));  // 输出: 13
+        System.out.println(indexOfExtension("path/to/.file"));   // 输出: -1
+        System.out.println(indexOfExtension(null));             // 输出: -1
     }
 }

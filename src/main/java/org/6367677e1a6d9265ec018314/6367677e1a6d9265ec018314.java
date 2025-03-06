@@ -1,56 +1,48 @@
 import java.util.*;
 
 class CategoryTree {
-    private Node root;
+    private Map<Integer, Boolean> activeNodes; // 假设这是一个存储节点是否活跃的映射
+    private Map<Integer, List<Integer>> tree; // 假设这是一个存储树的邻接表
 
-    private class Node {
-        String name;
-        boolean isActive;
-        List<Node> children;
-
-        Node(String name, boolean isActive) {
-            this.name = name;
-            this.isActive = isActive;
-            this.children = new ArrayList<>();
-        }
+    public CategoryTree() {
+        activeNodes = new HashMap<>();
+        tree = new HashMap<>();
     }
 
+    /**
+     * 从类别树中移除所有不活跃的节点。
+     * @return 返回被移除的节点数量
+     */
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
-        return removeUnusedNodesHelper(root);
-    }
-
-    private int removeUnusedNodesHelper(Node node) {
-        if (node == null) {
-            return 0;
-        }
-
         int removedCount = 0;
-        Iterator<Node> iterator = node.children.iterator();
-        while (iterator.hasNext()) {
-            Node child = iterator.next();
-            if (!child.isActive) {
-                iterator.remove();
-                removedCount++;
-            } else {
-                removedCount += removeUnusedNodesHelper(child);
+        Set<Integer> nodesToRemove = new HashSet<>();
+
+        // 遍历所有节点，找出不活跃的节点
+        for (Map.Entry<Integer, Boolean> entry : activeNodes.entrySet()) {
+            if (!entry.getValue()) {
+                nodesToRemove.add(entry.getKey());
             }
         }
 
+        // 移除不活跃的节点
+        for (int node : nodesToRemove) {
+            if (tree.containsKey(node)) {
+                tree.remove(node);
+                removedCount++;
+            }
+        }
+
+        // 从邻接表中移除所有指向不活跃节点的边
+        for (Map.Entry<Integer, List<Integer>> entry : tree.entrySet()) {
+            List<Integer> children = entry.getValue();
+            children.removeAll(nodesToRemove);
+        }
+
+        // 从activeNodes中移除不活跃的节点
+        for (int node : nodesToRemove) {
+            activeNodes.remove(node);
+        }
+
         return removedCount;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        CategoryTree tree = new CategoryTree();
-        tree.root = tree.new Node("Root", true);
-        tree.root.children.add(tree.new Node("Child1", false));
-        tree.root.children.add(tree.new Node("Child2", true));
-        tree.root.children.get(1).children.add(tree.new Node("GrandChild1", false));
-
-        int removedCount = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedCount + " unused nodes.");
     }
 }

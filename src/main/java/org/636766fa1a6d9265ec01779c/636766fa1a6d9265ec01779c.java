@@ -2,26 +2,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 private String parseToken(final char[] terminators) {
-    StringBuilder token = new StringBuilder();
     Set<Character> terminatorSet = new HashSet<>();
     for (char c : terminators) {
         terminatorSet.add(c);
     }
 
+    StringBuilder token = new StringBuilder();
+    char currentChar;
     while (true) {
-        char nextChar = readNextChar(); // Assuming a method to read the next character
-        if (terminatorSet.contains(nextChar) {
+        // Assuming we have a method to get the next character from the input stream
+        currentChar = getNextChar();
+        if (terminatorSet.contains(currentChar)) {
             break;
         }
-        token.append(nextChar);
+        token.append(currentChar);
     }
-
     return token.toString();
 }
 
-// Assuming a method to read the next character
-private char readNextChar() {
-    // Implementation to read the next character from the input source
-    // This is a placeholder and should be implemented based on the actual input source
-    return '\0'; // Placeholder return value
+// Placeholder method to simulate getting the next character from the input stream
+private char getNextChar() {
+    // This method should be implemented to return the next character from the input stream
+    // For example, it could read from a file, a string, or any other input source
+    return ' '; // Placeholder return value
 }

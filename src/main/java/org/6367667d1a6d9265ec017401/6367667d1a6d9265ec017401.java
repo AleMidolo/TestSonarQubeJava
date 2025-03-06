@@ -1,84 +1,59 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UnescapeJava {
+
+    private static final Map<Character, Character> ESCAPE_MAP = new HashMap<>();
+
+    static {
+        ESCAPE_MAP.put('n', '\n');
+        ESCAPE_MAP.put('t', '\t');
+        ESCAPE_MAP.put('r', '\r');
+        ESCAPE_MAP.put('b', '\b');
+        ESCAPE_MAP.put('f', '\f');
+        ESCAPE_MAP.put('"', '\"');
+        ESCAPE_MAP.put('\'', '\'');
+        ESCAPE_MAP.put('\\', '\\');
+    }
+
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder(str.length());
-        int i = 0;
-        while (i < str.length()) {
-            char c = str.charAt(i);
-            if (c == '\\' && i + 1 < str.length()) {
-                char nextChar = str.charAt(i + 1);
-                switch (nextChar) {
-                    case '\\':
-                        sb.append('\\');
-                        i += 2;
-                        break;
-                    case 'n':
-                        sb.append('\n');
-                        i += 2;
-                        break;
-                    case 't':
-                        sb.append('\t');
-                        i += 2;
-                        break;
-                    case 'r':
-                        sb.append('\r');
-                        i += 2;
-                        break;
-                    case 'b':
-                        sb.append('\b');
-                        i += 2;
-                        break;
-                    case 'f':
-                        sb.append('\f');
-                        i += 2;
-                        break;
-                    case '\'':
-                        sb.append('\'');
-                        i += 2;
-                        break;
-                    case '\"':
-                        sb.append('\"');
-                        i += 2;
-                        break;
-                    case 'u':
-                        if (i + 5 < str.length()) {
-                            String hex = str.substring(i + 2, i + 6);
-                            try {
-                                int unicode = Integer.parseInt(hex, 16);
-                                sb.append((char) unicode);
-                                i += 6;
-                            } catch (NumberFormatException e) {
-                                throw new Exception("Invalid Unicode escape sequence: " + hex);
-                            }
-                        } else {
-                            throw new Exception("Invalid Unicode escape sequence: incomplete sequence");
-                        }
-                        break;
-                    default:
-                        sb.append(c);
-                        i++;
-                        break;
+        StringBuilder result = new StringBuilder();
+        int length = str.length();
+        boolean escape = false;
+
+        for (int i = 0; i < length; i++) {
+            char currentChar = str.charAt(i);
+
+            if (escape) {
+                if (ESCAPE_MAP.containsKey(currentChar)) {
+                    result.append(ESCAPE_MAP.get(currentChar));
+                } else {
+                    throw new Exception("Invalid escape sequence: \\" + currentChar);
                 }
+                escape = false;
             } else {
-                sb.append(c);
-                i++;
+                if (currentChar == '\\') {
+                    escape = true;
+                } else {
+                    result.append(currentChar);
+                }
             }
         }
-        return sb.toString();
+
+        if (escape) {
+            throw new Exception("Incomplete escape sequence at the end of the string");
+        }
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
         try {
-            String input = "Hello\\nWorld\\t\\u0041";
-            String output = unescapeJava(input);
-            System.out.println(output);  // Output: Hello
-                                          // World   A
+            System.out.println(unescapeJava("Hello\\nWorld\\t!")); // Should print "Hello\nWorld\t!"
         } catch (Exception e) {
             e.printStackTrace();
         }

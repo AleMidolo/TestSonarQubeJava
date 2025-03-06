@@ -17,5 +17,9 @@ public class LogBuffer {
         }
     }
 
-    // 其他方法，如从缓冲区取出事件等
+    // 其他方法...
+}
+
+class LoggingEvent {
+    // LoggingEvent 类的实现
 }

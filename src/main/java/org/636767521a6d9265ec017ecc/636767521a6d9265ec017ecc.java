@@ -1,13 +1,13 @@
 import org.apache.commons.math3.geometry.euclidean.twod.Box2D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.math3.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class BoxSplitter {
 
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
         // 获取矩形的左下角和右上角坐标
-        Vector2D lowerLeft = box.getLowerLeft();
-        Vector2D upperRight = box.getUpperRight();
+        Vector2D lowerLeft = box.getLo();
+        Vector2D upperRight = box.getHi();
 
         // 计算矩形的宽度
         double width = upperRight.getX() - lowerLeft.getX();
@@ -21,7 +21,7 @@ public class BoxSplitter {
         // 创建第二个矩形框
         Box2D secondBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
 
-        // 返回包含两个矩形框的对
-        return new Pair<>(firstBox, secondBox);
+        // 返回两个矩形框的对
+        return Pair.of(firstBox, secondBox);
     }
 }

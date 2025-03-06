@@ -1,28 +1,32 @@
-import java.util.Objects;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-/**
- * 调用 {@link BroadcastFilter}
- * @param msg 需要过滤的消息
- * @return 过滤后的消息
- */
-protected Object filter(Object msg) {
-    // 假设 BroadcastFilter 是一个接口或类，这里我们假设它是一个接口
-    // 并且有一个 filter 方法
-    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设的实现类
-    return filter.filter(msg);
-}
+public class BroadcastFilter extends BroadcastReceiver {
 
-// 假设的 BroadcastFilter 接口
-interface BroadcastFilter {
-    Object filter(Object msg);
-}
-
-// 假设的 BroadcastFilter 实现类
-class BroadcastFilterImpl implements BroadcastFilter {
     @Override
-    public Object filter(Object msg) {
-        // 这里实现具体的过滤逻辑
-        // 例如，返回消息本身，或者进行一些处理
-        return Objects.requireNonNull(msg, "Message cannot be null");
+    public void onReceive(Context context, Intent intent) {
+        // Handle the broadcast message here
+        Object msg = intent.getSerializableExtra("msg");
+        filter(msg);
+    }
+
+    /**
+     * 调用 {@link BroadcastFilter}
+     * @param msg
+     * @return
+     */
+    protected Object filter(Object msg) {
+        // Implement your filtering logic here
+        // For example, you can check the message content and decide whether to process it or not
+        if (msg != null) {
+            // Process the message
+            System.out.println("Filtered message: " + msg.toString());
+            return msg;
+        } else {
+            System.out.println("No message to filter.");
+            return null;
+        }
     }
 }

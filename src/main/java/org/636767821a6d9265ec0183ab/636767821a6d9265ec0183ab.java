@@ -9,11 +9,7 @@ public class ExceptionChecker {
      * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
      */
     public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+        return thrown != null && !thrown.toString().isEmpty();
     }
 
     public Throwable getThrown() {

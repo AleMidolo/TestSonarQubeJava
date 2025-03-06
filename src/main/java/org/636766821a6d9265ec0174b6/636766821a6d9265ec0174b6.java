@@ -5,25 +5,33 @@ import java.util.List;
 
 public class TypeResolver {
 
-    /**
-     * 使用 {@code targetType} 的类型变量信息解析 {@code genericType} 的参数。如果 {@code genericType} 不是参数化的，或者无法解析参数，则返回 {@code null}。
-     */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
             return null;
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Type rawType = parameterizedType.getRawType();
+
+        if (!(rawType instanceof Class) || !targetType.isAssignableFrom((Class<?>) rawType)) {
+            return null;
+        }
+
+        Type[] typeArguments = parameterizedType.getActualTypeArguments();
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
-        for (Type typeArgument : actualTypeArguments) {
+        for (Type typeArgument : typeArguments) {
             if (typeArgument instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArgument);
+            } else if (typeArgument instanceof ParameterizedType) {
+                Type rawTypeArgument = ((ParameterizedType) typeArgument).getRawType();
+                if (rawTypeArgument instanceof Class) {
+                    resolvedTypes.add((Class<?>) rawTypeArgument);
+                } else {
+                    resolvedTypes.add(null);
+                }
             } else {
-                // Handle other cases like TypeVariable, WildcardType, etc.
-                // For simplicity, we return null if any type argument is not a Class.
-                return null;
+                resolvedTypes.add(null);
             }
         }
 
@@ -51,11 +59,11 @@ public class TypeResolver {
 
         Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
         if (resolvedArgs != null) {
-            for (Class<?> clazz : resolvedArgs) {
-                System.out.println(clazz.getSimpleName());
+            for (Class<?> arg : resolvedArgs) {
+                System.out.println(arg);
             }
         } else {
-            System.out.println("Unable to resolve type arguments.");
+            System.out.println("Unable to resolve arguments.");
         }
     }
 }

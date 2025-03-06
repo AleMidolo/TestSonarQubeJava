@@ -5,7 +5,7 @@ public class Acumulador {
     private Map<String, Long> mapa;
 
     public Acumulador() {
-        mapa = new HashMap<>();
+        this.mapa = new HashMap<>();
     }
 
     /**

@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class OutputFrame {
-    private Stack<AbstractType> outputFrame;
+    private Stack<String> outputStack;
 
     public OutputFrame() {
-        this.outputFrame = new Stack<>();
+        this.outputStack = new Stack<>();
     }
 
     /**
@@ -15,16 +15,41 @@ public class OutputFrame {
         if (elements < 0) {
             throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (elements > outputFrame.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el output frame para eliminar.");
+        if (elements > outputStack.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
-            outputFrame.pop();
+            outputStack.pop();
         }
     }
 
-    // Clase de ejemplo para AbstractType
-    private static class AbstractType {
-        // Implementación de tipo abstracto
+    // Método para agregar elementos al stack (solo para propósitos de prueba)
+    public void push(String element) {
+        outputStack.push(element);
+    }
+
+    // Método para obtener el tamaño del stack (solo para propósitos de prueba)
+    public int size() {
+        return outputStack.size();
+    }
+
+    // Método para imprimir el stack (solo para propósitos de prueba)
+    public void printStack() {
+        System.out.println(outputStack);
+    }
+
+    public static void main(String[] args) {
+        OutputFrame frame = new OutputFrame();
+        frame.push("Tipo1");
+        frame.push("Tipo2");
+        frame.push("Tipo3");
+
+        System.out.println("Stack antes de pop:");
+        frame.printStack();
+
+        frame.pop(2);
+
+        System.out.println("Stack después de pop:");
+        frame.printStack();
     }
 }

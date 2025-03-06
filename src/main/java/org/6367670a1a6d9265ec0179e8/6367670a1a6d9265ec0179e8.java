@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // Public static empty array reference for optimization
+    // Public static empty array reference
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**

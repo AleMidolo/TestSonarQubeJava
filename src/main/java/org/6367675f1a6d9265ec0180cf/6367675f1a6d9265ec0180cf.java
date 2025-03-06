@@ -1,5 +1,5 @@
-import java.util.Set;
 import org.jgrapht.Graph;
+import java.util.Set;
 
 public class CliqueChecker {
 
@@ -10,14 +10,16 @@ public class CliqueChecker {
      * @return true si el subgrafo inducido es un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Verificar que todos los pares de vértices en el conjunto están conectados
+        // Verificar si todos los pares de vértices están conectados
         for (V v1 : vertices) {
             for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false;
+                if (!v1.equals(v2) { // No es necesario verificar la conexión de un vértice consigo mismo
+                    if (!graph.containsEdge(v1, v2)) {
+                        return false; // Si falta una arista, no es un clique
+                    }
                 }
             }
         }
-        return true;
+        return true; // Si todos los pares están conectados, es un clique
     }
 }

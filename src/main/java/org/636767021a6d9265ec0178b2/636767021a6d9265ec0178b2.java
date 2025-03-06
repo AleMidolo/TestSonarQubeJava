@@ -7,43 +7,40 @@ public class FrameStack {
         frameStack = new Stack<>();
     }
 
+    /**
+     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
+     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
+     */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
             return;
         }
 
-        // Assuming descriptor is a method descriptor like "(Ljava/lang/String;I)V"
-        // We need to extract the argument types from the descriptor
-        String[] argumentTypes = extractArgumentTypes(descriptor);
-
-        // Pop the types from the stack
-        for (String type : argumentTypes) {
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
+        // Si el descriptor es un método, extraemos los tipos de argumento
+        if (descriptor.startsWith("(")) {
+            String[] parts = descriptor.split("\\)");
+            if (parts.length > 1) {
+                String argumentTypes = parts[0].substring(1); // Ignoramos el '(' inicial
+                String[] types = argumentTypes.split(";");
+                for (String type : types) {
+                    if (!type.isEmpty()) {
+                        frameStack.pop(); // Extraemos cada tipo de la pila
+                    }
+                }
             }
+        } else {
+            // Si es un tipo simple, extraemos un solo elemento
+            frameStack.pop();
         }
     }
 
-    private String[] extractArgumentTypes(String descriptor) {
-        // This is a simplified version of extracting argument types from a method descriptor
-        // For a full implementation, you would need to parse the descriptor properly
-        // Here we assume the descriptor is in the format "(<arg1><arg2>...)"
-
-        if (descriptor.charAt(0) != '(') {
-            return new String[0];
-        }
-
-        int endIndex = descriptor.indexOf(')');
-        if (endIndex == -1) {
-            return new String[0];
-        }
-
-        String args = descriptor.substring(1, endIndex);
-        return args.split(";");
+    // Método para agregar elementos a la pila (solo para propósitos de prueba)
+    public void push(String type) {
+        frameStack.push(type);
     }
 
-    public static void main(String[] args) {
-        FrameStack stack = new FrameStack();
-        stack.pop("(Ljava/lang/String;I)V");
+    // Método para obtener el tamaño de la pila (solo para propósitos de prueba)
+    public int size() {
+        return frameStack.size();
     }
 }

@@ -17,8 +17,9 @@ public class LogBuffer {
             // Silently discard the event if the buffer is full
         }
     }
-}
 
-class LoggingEvent {
-    // Assume LoggingEvent is a class with relevant logging information
+    // Assuming LoggingEvent is a predefined class
+    public static class LoggingEvent {
+        // LoggingEvent implementation details
+    }
 }

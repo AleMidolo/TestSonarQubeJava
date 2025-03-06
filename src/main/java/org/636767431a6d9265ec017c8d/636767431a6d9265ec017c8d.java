@@ -1,8 +1,7 @@
 public class Log2FloorPlusOne {
     /**
      * Calcula el piso(log2(n)) + 1
-     * 
-     * @param n el número para el cual se calculará el logaritmo base 2
+     * @param n el número para el cual se calculará el logaritmo
      * @return el piso(log2(n)) + 1
      */
     public static int calculateLog2FloorPlusOne(int n) {

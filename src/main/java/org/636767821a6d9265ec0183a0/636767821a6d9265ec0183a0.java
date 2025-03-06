@@ -18,4 +18,9 @@ public class FileDeleter {
             System.out.println("El archivo no existe: " + fileName);
         }
     }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        deleteFile("test.txt");
+    }
 }

@@ -16,19 +16,8 @@ public class BooleanArrayConverter {
         
         boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            Objects.requireNonNull(array[i], "El contenido del array no puede ser nulo");
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Boolean[] booleanArray = {true, false, true};
-        boolean[] primitiveArray = toPrimitive(booleanArray);
-        
-        for (boolean b : primitiveArray) {
-            System.out.println(b);
-        }
     }
 }

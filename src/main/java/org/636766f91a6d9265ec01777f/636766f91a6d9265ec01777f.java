@@ -2,11 +2,11 @@ public class BooleanUtils {
 
     /**
      * Convierte un Boolean a un boolean manejando null devolviendo false.
-     * <pre>
+     * Ejemplos:
      * BooleanUtils.toBoolean(Boolean.TRUE)  = true
      * BooleanUtils.toBoolean(Boolean.FALSE) = false
      * BooleanUtils.toBoolean(null)          = false
-     * </pre>
+     *
      * @param bool el booleano a convertir
      * @return true o false, null devuelve false
      */

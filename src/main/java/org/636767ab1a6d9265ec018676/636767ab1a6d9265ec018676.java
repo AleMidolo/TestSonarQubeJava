@@ -1,7 +1,7 @@
 /**
  * Determina si un carácter es un dígito hexadecimal.
  * Un dígito hexadecimal es un carácter que está en el rango de '0' a '9',
- * 'a' a 'f' (minúsculas), o 'A' a 'F' (mayúsculas).
+ * 'a' a 'f' o 'A' a 'F'.
  *
  * @param c El carácter a verificar.
  * @return true si el carácter es un dígito hexadecimal, false en caso contrario.

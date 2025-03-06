@@ -1,4 +1,4 @@
-import java.util.*;
+import java.beans.Introspector;
 
 public class StringUtils {
     /**
@@ -12,9 +12,7 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("world")); // Output: World
-        System.out.println(capitalize(""));      // Output: 
-        System.out.println(capitalize(null));    // Output: null
+        String name = "helloWorld";
+        System.out.println(capitalize(name)); // Output: HelloWorld
     }
 }

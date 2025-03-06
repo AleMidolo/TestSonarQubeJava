@@ -39,21 +39,21 @@ public class FrameStackProcessor {
     }
 
     private String[] extractArgumentTypes(String methodDescriptor) {
-        // Simplified extraction of argument types from method descriptor
-        // This is a basic implementation and may not cover all cases
-        String arguments = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
-        return arguments.split(";");
+        // This is a simplified version, assuming the descriptor is well-formed
+        int start = methodDescriptor.indexOf('(') + 1;
+        int end = methodDescriptor.indexOf(')');
+        String args = methodDescriptor.substring(start, end);
+        return args.split(";");
     }
 
-    // Example usage
+    // For testing purposes
     public static void main(String[] args) {
         FrameStackProcessor processor = new FrameStackProcessor();
-        processor.frameStack.push("Ljava/lang/String;");
-        processor.frameStack.push("I");
-        processor.frameStack.push("D");
+        processor.frameStack.push("Type1");
+        processor.frameStack.push("Type2");
+        processor.frameStack.push("Type3");
 
-        processor.pop("(Ljava/lang/String;ID)V");
-
-        System.out.println(processor.frameStack); // Should print: []
+        processor.pop("(Type1;Type2)V"); // Pops Type1 and Type2
+        System.out.println(processor.frameStack); // Should print [Type3]
     }
 }

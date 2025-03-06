@@ -11,7 +11,7 @@ public class CollectionUtils {
      * @param collection La colección a convertir
      * @return Un nuevo arreglo de Strings.
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }

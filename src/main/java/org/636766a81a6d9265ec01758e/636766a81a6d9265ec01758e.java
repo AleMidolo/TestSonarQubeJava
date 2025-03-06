@@ -12,21 +12,21 @@ public class PrimeUtil {
         if (desiredCapacity <= 2) {
             return 2;
         }
-        int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
-            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
-                candidate = desiredCapacity;
-                while (!isPrime(candidate)) {
-                    candidate++;
+        while (!isPrime(prime)) {
+            prime += 2;
+            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
+                prime = desiredCapacity;
+                while (!isPrime(prime)) {
+                    prime++;
                 }
-                return candidate;
+                break;
             }
         }
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {

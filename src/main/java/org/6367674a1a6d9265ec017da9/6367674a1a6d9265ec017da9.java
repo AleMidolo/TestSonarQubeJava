@@ -2,20 +2,20 @@ import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
-    private static class ListNodeImpl<E> {
+    private static class ListNode<E> {
         E element;
-        ListNodeImpl<E> next;
-        ListNodeImpl<E> prev;
+        ListNode<E> next;
+        ListNode<E> prev;
 
-        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
+        ListNode(E element, ListNode<E> prev, ListNode<E> next) {
             this.element = element;
             this.prev = prev;
             this.next = next;
         }
     }
 
-    private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
+    private ListNode<E> head;
+    private ListNode<E> tail;
     private int size;
 
     public DoublyLinkedList() {
@@ -24,26 +24,8 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
-        }
-
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = node;
-        }
-        size++;
-    }
-
-    public void removeListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
-        }
+    private void removeListNode(ListNode<E> node) {
+        if (node == null) return;
 
         if (node.prev != null) {
             node.prev.next = node.next;
@@ -57,20 +39,36 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
-    private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
+    private void addListNode(ListNode<E> node) {
+        if (node == null) return;
 
-        ListNodeImpl<E> current = list.head;
+        if (tail == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.next = node;
+            node.prev = tail;
+            tail = node;
+        }
+        size++;
+    }
+
+    private void moveAllListNodes(DoublyLinkedList<E> list) {
+        Objects.requireNonNull(list, "La lista no puede ser nula");
+
+        if (list.head == null) return;
+
+        ListNode<E> current = list.head;
         while (current != null) {
-            ListNodeImpl<E> nextNode = current.next;
+            ListNode<E> next = current.next;
             list.removeListNode(current);
             this.addListNode(current);
-            current = nextNode;
+            current = next;
         }
     }
 }

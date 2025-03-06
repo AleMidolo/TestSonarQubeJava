@@ -1,13 +1,12 @@
 import java.util.Objects;
 
-public class ArrayConverter {
+public class ArrayUtils {
 
     /**
-     * <p>Converte un array di oggetti Integer in primitivi.</p>
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Integer</code>, può essere <code>null</code>
-     * @return un array di <code>int</code>, <code>null</code> se l'array di input è nullo
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Converts an array of object Integers to primitives.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>Integer</code> array, may be <code>null</code>
+     * @return an <code>int</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
     public static int[] toPrimitive(final Integer[] array) {
         if (array == null) {
@@ -18,13 +17,5 @@ public class ArrayConverter {
             result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Integer[] testArray = {1, 2, 3, 4, 5};
-        int[] primitiveArray = toPrimitive(testArray);
-        for (int i : primitiveArray) {
-            System.out.print(i + " ");
-        }
     }
 }

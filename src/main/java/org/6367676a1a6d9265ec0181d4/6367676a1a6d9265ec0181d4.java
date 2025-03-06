@@ -3,10 +3,10 @@ import java.util.Arrays;
 public class ArrayUtils {
 
     /**
-     * Aggiunge la Stringa fornita all'array di Stringhe dato, restituendo un nuovo array che consiste nei contenuti dell'array di input più la Stringa fornita.
-     * @param array l'array a cui aggiungere (può essere <code>null</code>)
-     * @param str la Stringa da aggiungere
-     * @return il nuovo array (mai <code>null</code>)
+     * Append the given String to the given String array, returning a new array consisting of the input array contents plus the given String.
+     * @param array the array to append to (can be <code>null</code>)
+     * @param str the String to append
+     * @return the new array (never <code>null</code>)
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null) {

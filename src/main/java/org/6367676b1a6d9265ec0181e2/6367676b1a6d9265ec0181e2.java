@@ -2,21 +2,20 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class CollectionUtils {
-
     /**
-     * Restituisce il primo elemento in '<code>candidates</code>' che è contenuto in '<code>source</code>'. Se nessun elemento in '<code>candidates</code>' è presente in '<code>source</code>', restituisce <code>null</code>. L'ordine di iterazione è specifico dell'implementazione di {@link Collection}.
-     * @param source la Collection sorgente
-     * @param candidates i candidati da cercare
-     * @return il primo oggetto presente, oppure <code>null</code> se non trovato
+     * Return the first element in '<code>candidates</code>' that is contained in '<code>source</code>'. If no element in '<code>candidates</code>' is present in '<code>source</code>' returns <code>null</code>. Iteration order is {@link Collection} implementation specific.
+     * @param source the source Collection
+     * @param candidates the candidates to search for
+     * @return the first present object, or <code>null</code> if not found
      */
     public static Object findFirstMatch(Collection source, Collection candidates) {
         if (source == null || candidates == null) {
             return null;
         }
 
-        Iterator iterator = candidates.iterator();
-        while (iterator.hasNext()) {
-            Object candidate = iterator.next();
+        Iterator candidateIterator = candidates.iterator();
+        while (candidateIterator.hasNext()) {
+            Object candidate = candidateIterator.next();
             if (source.contains(candidate)) {
                 return candidate;
             }

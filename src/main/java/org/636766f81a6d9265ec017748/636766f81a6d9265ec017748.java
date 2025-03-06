@@ -1,12 +1,10 @@
 import java.util.Base64;
 
 public class Base64Decoder {
-
     /**
-     * Decodifica una stringa seguendo la regola Base64.
-     * 
-     * @param s La stringa codificata in Base64 da decodificare.
-     * @return La stringa decodificata.
+     * Decoding a string to a string follow the Base64 regular.
+     * @param s The Base64 encoded string to decode.
+     * @return The decoded string.
      */
     public static String base64Decode(final String s) {
         byte[] decodedBytes = Base64.getDecoder().decode(s);
@@ -14,8 +12,8 @@ public class Base64Decoder {
     }
 
     public static void main(String[] args) {
-        String encodedString = "SGVsbG8gV29ybGQh"; // Esempio di stringa codificata in Base64
+        String encodedString = "SGVsbG8gV29ybGQh"; // Example Base64 encoded string
         String decodedString = base64Decode(encodedString);
-        System.out.println(decodedString); // Output: "Hello World!"
+        System.out.println(decodedString); // Output: Hello World!
     }
 }

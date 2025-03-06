@@ -1,13 +1,19 @@
-import org.apache.log4j.NDC;
+import java.util.Stack;
 
-public class DiagnosticContext {
+public class NDC {
+    private static Stack<String> contextStack = new Stack<>();
 
-    /**
-     * Osserva l'ultimo contesto diagnostico in cima a questo NDC senza rimuoverlo. <p>Il valore restituito è il valore che è stato inserito per ultimo. Se non è disponibile alcun contesto, viene restituita la stringa vuota "".
-     * @return String Il contesto diagnostico più interno.
-     */
     public static String peek() {
-        String context = NDC.peek();
-        return context != null ? context : "";
+        if (contextStack.isEmpty()) {
+            return "";
+        }
+        return contextStack.peek();
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        contextStack.push("Context1");
+        contextStack.push("Context2");
+        System.out.println(peek()); // Output: Context2
     }
 }

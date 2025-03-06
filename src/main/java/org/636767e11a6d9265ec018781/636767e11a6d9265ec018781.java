@@ -1,32 +1,44 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MetricsCache {
-    private Map<String, Double> cache = new HashMap<>();
+public class Cache {
+    private Map<String, METRICS> cacheMap = new HashMap<>();
 
     /**
-     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
-     * @param data da aggiungere potenzialmente.
+     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
+     * @param data to be added potentially.
      */
     @Override
     public void accept(final METRICS data) {
-        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            cache.merge(key, value, Double::sum);
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
+        if (cacheMap.containsKey(key)) {
+            METRICS existingData = cacheMap.get(key);
+            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
+        } else {
+            cacheMap.put(key, data);
         }
     }
+}
 
-    // Assuming METRICS is a class that contains a map of metrics
-    public static class METRICS {
-        private Map<String, Double> metrics;
+// Assuming METRICS class has the following structure
+class METRICS {
+    private String key;
+    private int value;
 
-        public METRICS(Map<String, Double> metrics) {
-            this.metrics = metrics;
-        }
+    public METRICS(String key, int value) {
+        this.key = key;
+        this.value = value;
+    }
 
-        public Map<String, Double> getMetrics() {
-            return metrics;
-        }
+    public String getKey() {
+        return key;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void merge(METRICS other) {
+        this.value += other.getValue();
     }
 }

@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeInitializer {
+public class BasicBlock {
     private List<Integer> initializedTypes;
 
-    public TypeInitializer() {
+    public BasicBlock() {
         this.initializedTypes = new ArrayList<>();
     }
 
     /**
-     * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
-     * @param abstractType un tipo astratto su cui viene invocato un costruttore.
+     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
+     * @param abstractType an abstract type on which a constructor is invoked.
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {
@@ -18,8 +18,8 @@ public class TypeInitializer {
         }
     }
 
-    // Optional: Method to get the list of initialized types
+    // Optional: Getter method to access the list of initialized types
     public List<Integer> getInitializedTypes() {
-        return new ArrayList<>(initializedTypes);
+        return initializedTypes;
     }
 }

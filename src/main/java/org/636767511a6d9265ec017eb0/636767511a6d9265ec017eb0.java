@@ -1,11 +1,11 @@
 public class NonZeroCounter {
 
     /**
-     * Ottiene il numero di voci diverse da zero in una riga.
-     * @param row la riga
-     * @return il numero di voci diverse da zero in una riga
+     * Get the number of non-zero entries of a row.
+     * @param row the row
+     * @return the number of non-zero entries of a row
      */
-    public static int nonZeros(int[] row) {
+    public int nonZeros(int[] row) {
         int count = 0;
         for (int value : row) {
             if (value != 0) {
@@ -16,7 +16,8 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
+        NonZeroCounter counter = new NonZeroCounter();
         int[] row = {0, 5, 0, 3, 0, 8};
-        System.out.println("Numero di voci diverse da zero: " + nonZeros(row));
+        System.out.println("Number of non-zero entries: " + counter.nonZeros(row));
     }
 }

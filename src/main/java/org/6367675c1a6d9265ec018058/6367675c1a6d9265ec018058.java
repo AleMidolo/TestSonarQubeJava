@@ -1,9 +1,9 @@
 import java.util.function.Supplier;
 
-public class StringSupplier {
+public class UniqueStringSupplier {
     private int current;
 
-    public StringSupplier(int start) {
+    public UniqueStringSupplier(int start) {
         this.current = start;
     }
 

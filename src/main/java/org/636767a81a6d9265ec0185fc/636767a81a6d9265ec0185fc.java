@@ -2,22 +2,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TagReader {
-    private InputStream inputStream;
+    private InputStream input;
 
-    public TagReader(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public TagReader(InputStream input) {
+        this.input = input;
     }
 
     /**
-     * Tentativo di leggere un tag di campo, restituendo zero se abbiamo raggiunto la fine del file (EOF).
-     * I parser di messaggi di protocollo utilizzano questo metodo per leggere i tag, poiché un messaggio di
-     * protocollo può legalmente terminare ovunque si trovi un tag, e zero non è un numero di tag valido.
+     * Attempt to read a field tag, returning zero if we have reached EOF. Protocol message parsers use this to read tags,
+     * since a protocol message may legally end wherever a tag occurs, and zero is not a valid tag number.
      *
-     * @return il tag letto, o 0 se è stato raggiunto EOF
-     * @throws IOException se si verifica un errore di I/O durante la lettura
+     * @return the tag read, or 0 if EOF is reached
+     * @throws IOException if an I/O error occurs
      */
     public int readTag() throws IOException {
-        int tag = inputStream.read();
-        return tag == -1 ? 0 : tag;
+        int firstByte = input.read();
+        if (firstByte == -1) {
+            return 0; // EOF reached
+        }
+        return firstByte;
     }
 }

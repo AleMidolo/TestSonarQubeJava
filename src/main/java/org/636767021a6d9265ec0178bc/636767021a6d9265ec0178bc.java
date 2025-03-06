@@ -1,24 +1,13 @@
-public class StringUtils {
-
-    /**
-     * Trova il primo indice all'interno di una Stringa, gestendo <code>null</code>. Questo metodo utilizza {@link String#indexOf(String)}.
-     * 
-     * @param str La stringa in cui cercare, può essere <code>null</code>.
-     * @param searchStr La stringa da cercare, può essere <code>null</code>.
-     * @return L'indice della prima occorrenza di <code>searchStr</code> in <code>str</code>, oppure -1 se non trovato o se una delle stringhe è <code>null</code>.
-     */
-    public static int indexOf(String str, String searchStr) {
-        if (str == null || searchStr == null) {
-            return -1;
-        }
-        return str.indexOf(searchStr);
+/**
+ * Finds the first index within a String, handling <code>null</code>. This method uses  {@link String#indexOf(String)}.
+ * 
+ * @param str The string to search in, may be null.
+ * @param searchStr The string to search for, may be null.
+ * @return The index of the first occurrence of the search string within the string, or -1 if either string is null or the search string is not found.
+ */
+public static int indexOf(String str, String searchStr) {
+    if (str == null || searchStr == null) {
+        return -1;
     }
-
-    public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(indexOf("Hello World", "World")); // Output: 6
-        System.out.println(indexOf("Hello World", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "World"));           // Output: -1
-        System.out.println(indexOf("Hello World", null));     // Output: -1
-    }
+    return str.indexOf(searchStr);
 }

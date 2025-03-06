@@ -6,31 +6,27 @@ import java.util.List;
 public class FileAdder {
 
     /**
-     * Aggiungi i file specificati in ordine inverso.
+     * Add the specified files in reverse order.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("Input array cannot be null");
+        if (files == null || files.length == 0) {
+            return;
         }
 
+        // Convert the array to a list for easier manipulation
         List<InputStream> fileList = new ArrayList<>();
         for (InputStream file : files) {
-            if (file != null) {
-                fileList.add(file);
-            }
+            fileList.add(file);
         }
 
+        // Reverse the list
         Collections.reverse(fileList);
 
-        // Process the reversed list (e.g., add to a collection or perform other operations)
+        // Process the files in reverse order
         for (InputStream file : fileList) {
-            // Example: Add to a collection or process the file
-            // processFile(file);
+            // Add your logic here to process each file
+            // For example, you might want to read from the InputStream
+            // or perform some other operation.
         }
-    }
-
-    // Example method to process a file (placeholder)
-    private void processFile(InputStream file) {
-        // Implement file processing logic here
     }
 }

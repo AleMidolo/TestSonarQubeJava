@@ -3,10 +3,10 @@ import java.util.List;
 public class InterceptorChecker {
 
     /**
-     * <p> Controlla nella lista specificata se esiste almeno un'istanza della data classe di implementazione {@link AtmosphereInterceptor interceptor}. </p>
-     * @param interceptorList gli interceptor
-     * @param c               la classe dell'interceptor
-     * @return {@code false} se un'istanza della classe esiste già nella lista, {@code true} altrimenti
+     * <p> Checks in the specified list if there is at least one instance of the given {@link AtmosphereInterceptor interceptor} implementation class.</p>
+     * @param interceptorList the interceptors
+     * @param c               the interceptor class
+     * @return {@code false} if an instance of the class already exists in the list, {@code true} otherwise
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {

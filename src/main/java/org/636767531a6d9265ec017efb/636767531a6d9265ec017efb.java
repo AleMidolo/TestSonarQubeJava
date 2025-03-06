@@ -1,15 +1,24 @@
 public class Bucket {
     private Bucket next;
+    private Bucket prev;
 
     public void insertBefore(Bucket bucket) {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
-        // Save the current next of this bucket
-        Bucket temp = this.next;
-        // Set this bucket's next to the given bucket
+
+        // Set the previous of the new bucket to the previous of the current bucket
+        this.prev = bucket.prev;
+
+        // Set the next of the new bucket to the current bucket
         this.next = bucket;
-        // Set the given bucket's next to the saved next
-        bucket.next = temp;
+
+        // If the current bucket has a previous, set its next to the new bucket
+        if (bucket.prev != null) {
+            bucket.prev.next = this;
+        }
+
+        // Set the previous of the current bucket to the new bucket
+        bucket.prev = this;
     }
 }

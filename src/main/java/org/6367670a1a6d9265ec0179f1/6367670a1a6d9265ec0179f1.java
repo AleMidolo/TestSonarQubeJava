@@ -1,11 +1,12 @@
+import java.util.Objects;
+
 public class ShortArrayConverter {
 
     /**
-     * Converte un array di short primitivi in oggetti.
-     * Questo metodo restituisce null per un array di input null.
-     *
-     * @param array un array di short
-     * @return un array di Short, null se l'array di input è nullo
+     * <p>Converts an array of primitive shorts to objects.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>short</code> array
+     * @return a <code>Short</code> array, <code>null</code> if null array input
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

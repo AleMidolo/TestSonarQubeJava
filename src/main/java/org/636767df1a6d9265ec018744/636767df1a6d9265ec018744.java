@@ -1,31 +1,24 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeBuilder {
+public class TimeRangeSplitter {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum allowed duration
     private static final long FETCH_DATA_DURATION = 3600000; // Example: 1 hour in milliseconds
 
-    /**
-     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
-     *
-     * @param start The start time in milliseconds.
-     * @param end The end time in milliseconds.
-     * @return A list of TimeRange objects representing the subdivided intervals.
-     */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
 
         while (start < end) {
-            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, nextEnd));
-            start = nextEnd;
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
 
         return timeRanges;
     }
 
-    // Assuming TimeRange is a simple class representing a time interval
+    // Assuming TimeRange is a class that represents a time range
     public static class TimeRange {
         private final long start;
         private final long end;

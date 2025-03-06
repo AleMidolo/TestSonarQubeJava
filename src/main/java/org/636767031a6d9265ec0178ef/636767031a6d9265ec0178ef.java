@@ -3,10 +3,10 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
 
     /**
-     * Restituisce una copia dell'array fornito di dimensione 1 maggiore rispetto all'argomento. L'ultimo valore dell'array viene lasciato al valore predefinito.
-     * @param array L'array da copiare, non deve essere <code>null</code>.
-     * @param newArrayComponentType Se <code>array</code> è <code>null</code>, crea un array di dimensione 1 di questo tipo.
-     * @return Una nuova copia dell'array di dimensione 1 maggiore rispetto all'input.
+     * Returns a copy of the given array of size 1 greater than the argument. The last value of the array is left to the default value.
+     * @param array The array to copy, must not be <code>null</code>.
+     * @param newArrayComponentType If <code>array</code> is <code>null</code>, create a size 1 array of this type.
+     * @return A new copy of the array of size 1 greater than the input.
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array == null) {
@@ -15,17 +15,18 @@ public class ArrayUtils {
 
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
+
         System.arraycopy(array, 0, newArray, 0, length);
+
         return newArray;
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
+        // Example usage
         int[] originalArray = {1, 2, 3};
         int[] newArray = (int[]) copyArrayGrow1(originalArray, int.class);
 
-        for (int i : newArray) {
-            System.out.print(i + " ");
-        }
+        System.out.println("Original Array Length: " + originalArray.length);
+        System.out.println("New Array Length: " + newArray.length);
     }
 }

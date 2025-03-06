@@ -1,28 +1,27 @@
 public class StringUtils {
 
     /**
-     * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
-     * @param str la Stringa da controllare
-     * @param leadingCharacter il carattere iniziale da rimuovere
-     * @return la Stringa ripulita
+     * Trim all occurrences of the supplied leading character from the given String.
+     * @param str the String to check
+     * @param leadingCharacter the leading character to be trimmed
+     * @return the trimmed String
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null || str.isEmpty()) {
-            return str;
+        if (str == null) {
+            return null;
         }
-
+        
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-
+        
         return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String testString = "###Hello World!";
+        String testStr = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result);  // Output: "Hello World!"
+        System.out.println(trimLeadingCharacter(testStr, leadingChar)); // Output: HelloWorld
     }
 }

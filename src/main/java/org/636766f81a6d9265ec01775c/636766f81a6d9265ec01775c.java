@@ -1,16 +1,10 @@
 public class ObjectUtils {
 
     /**
-     * <p>Restituisce il <code>toString</code> di un <code>Object</code> restituendo una stringa vuota ("") se l'input è <code>null</code>.</p>
-     * <pre> ObjectUtils.toString(null)         = ""
-     * ObjectUtils.toString("")           = ""
-     * ObjectUtils.toString("bat")        = "bat"
-     * ObjectUtils.toString(Boolean.TRUE) = "true" </pre>
-     * @see StringUtils#defaultString(String)
-     * @see String#valueOf(Object)
-     * @param obj  l'oggetto da <code>toString</code>, può essere null
-     * @return il toString dell'oggetto passato, o una stringa vuota se l'input è <code>null</code>
-     * @since 2.0
+     * Gets the toString of an Object returning an empty string ("") if null input.
+     * 
+     * @param obj the Object to toString, may be null
+     * @return the passed in Object's toString, or "" if null input
      */
     public static String toString(Object obj) {
         return obj == null ? "" : obj.toString();

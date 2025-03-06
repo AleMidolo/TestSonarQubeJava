@@ -9,9 +9,7 @@ public class CustomSet {
     }
 
     /**
-     * Inserisce un valore nel "set". Restituisce true se il "set" non conteneva già l'elemento specificato.
-     * @param val Il valore da inserire nel set.
-     * @return true se l'elemento non era già presente, false altrimenti.
+     * Inserts a value to the set. Returns true if the set did not already contain the specified element.
      */
     public boolean insert(int val) {
         return set.add(val);

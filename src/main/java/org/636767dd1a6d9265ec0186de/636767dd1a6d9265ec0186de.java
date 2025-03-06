@@ -1,26 +1,11 @@
-public class CacheUtil {
-
-    /**
-     * Determines if the metrics should be removed from the cache based on the given timestamp and expiration threshold.
-     *
-     * @param timestamp        the current time
-     * @param expiredThreshold the duration between the last update and the moment when the metrics should be removed from the cache
-     * @return true if the metrics should be removed from the cache, false otherwise
-     */
-    public static boolean isExpired(long timestamp, long expiredThreshold) {
-        long currentTime = System.currentTimeMillis();
-        return (currentTime - timestamp) > expiredThreshold;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        long timestamp = System.currentTimeMillis() - 10000; // 10 seconds ago
-        long expiredThreshold = 5000; // 5 seconds threshold
-
-        if (isExpired(timestamp, expiredThreshold)) {
-            System.out.println("Metrics should be removed from the cache.");
-        } else {
-            System.out.println("Metrics are still valid.");
-        }
-    }
+/**
+ * Determines if a given timestamp has expired based on a threshold.
+ * 
+ * @param timestamp        The current time in milliseconds since epoch.
+ * @param expiredThreshold The duration in milliseconds after which the timestamp is considered expired.
+ * @return true if the timestamp has expired, false otherwise.
+ */
+public boolean isExpired(long timestamp, long expiredThreshold) {
+    long currentTime = System.currentTimeMillis();
+    return (currentTime - timestamp) > expiredThreshold;
 }

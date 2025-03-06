@@ -20,10 +20,10 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetManager {
+public class TargetChannelManager {
 
     /**
-     * Aggiungi un nuovo canale di destinazione.
+     * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {

@@ -1,15 +1,15 @@
 public class Edge {
-    private Edge prevInTree;
-    private Edge nextInTree;
+    private Edge prevTreeEdge;
+    private Edge nextTreeEdge;
 
     public void removeFromTreeEdgeList() {
-        if (prevInTree != null) {
-            prevInTree.nextInTree = nextInTree;
+        if (prevTreeEdge != null) {
+            prevTreeEdge.nextTreeEdge = nextTreeEdge;
         }
-        if (nextInTree != null) {
-            nextInTree.prevInTree = prevInTree;
+        if (nextTreeEdge != null) {
+            nextTreeEdge.prevTreeEdge = prevTreeEdge;
         }
-        prevInTree = null;
-        nextInTree = null;
+        prevTreeEdge = null;
+        nextTreeEdge = null;
     }
 }

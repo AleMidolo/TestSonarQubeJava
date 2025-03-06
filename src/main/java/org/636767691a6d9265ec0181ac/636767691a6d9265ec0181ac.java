@@ -4,32 +4,27 @@ import java.nio.file.Paths;
 public class PathUtils {
 
     /**
-     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
-     * @param path il percorso da cui partire (di solito un percorso di file completo)
-     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
-     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
+     * Apply the given relative path to the given path, assuming standard Java folder separation (i.e. "/" separators).
+     * @param path the path to start from (usually a full file path)
+     * @param relativePath the relative path to apply(relative to the full file path above)
+     * @return the full file path that results from applying the relative path
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Converti il percorso di base in un oggetto Path
+        // Convert the base path to a Path object
         Path basePath = Paths.get(path);
-        
-        // Converti il percorso relativo in un oggetto Path
-        Path relative = Paths.get(relativePath);
-        
-        // Risolvi il percorso relativo rispetto al percorso di base
-        Path resolvedPath = basePath.resolve(relative);
-        
-        // Normalizza il percorso per rimuovere eventuali ridondanze (es. "./" o "../")
+        // Resolve the relative path against the base path
+        Path resolvedPath = basePath.resolve(relativePath);
+        // Normalize the path to remove any redundant elements like ".." or "."
         Path normalizedPath = resolvedPath.normalize();
-        
-        // Restituisci il percorso come stringa
+        // Convert the normalized path back to a string
         return normalizedPath.toString();
     }
 
     public static void main(String[] args) {
+        // Example usage
         String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
         String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println(result); // Output: /usr/local/lib/java
     }
 }

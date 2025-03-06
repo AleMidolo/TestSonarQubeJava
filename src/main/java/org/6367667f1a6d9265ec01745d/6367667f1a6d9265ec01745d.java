@@ -2,24 +2,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentImpl {
-    private final String path;
-    private final boolean decoded;
-
-    public PathSegmentImpl(String path, boolean decoded) {
-        this.path = path;
-        this.decoded = decoded;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public boolean isDecoded() {
-        return decoded;
-    }
-}
-
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
@@ -30,7 +12,7 @@ public class URIDecoder {
             return segments;
         }
 
-        // Remove the leading '/' if it's an absolute path
+        // Remove the leading '/' if it exists and the path is absolute
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
@@ -40,9 +22,36 @@ public class URIDecoder {
             if (decode) {
                 part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
             }
-            segments.add(new PathSegmentImpl(part, decode));
+            segments.add(new PathSegmentImpl(part));
         }
 
         return segments;
+    }
+
+    public static class PathSegmentImpl {
+        private final String path;
+
+        public PathSegmentImpl(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        @Override
+        public String toString() {
+            return "PathSegmentImpl{" +
+                    "path='" + path + '\'' +
+                    '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        URI uri = URI.create("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
+        }
     }
 }

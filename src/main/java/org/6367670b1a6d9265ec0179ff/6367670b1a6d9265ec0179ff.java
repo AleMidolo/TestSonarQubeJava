@@ -1,16 +1,16 @@
 import java.util.Objects;
 
-public class DefensiveProgramming {
+public class ArrayUtils {
 
-    // Array vuoto pubblico e statico per ottimizzazione della memoria
+    // Public static empty array reference
     public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /**
-     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
-     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>
-     * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
-     * @param array  l'array da controllare per <code>null</code> o vuoto
-     * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
+     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p>
+     * <p>This method returns an empty array for a <code>null</code> input array.</p>
+     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty <code>public static</code> references in this class.</p>
+     * @param array  the array to check for <code>null</code> or empty
+     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
@@ -18,15 +18,5 @@ public class DefensiveProgramming {
             return EMPTY_BYTE_ARRAY;
         }
         return array;
-    }
-
-    public static void main(String[] args) {
-        Byte[] array1 = null;
-        Byte[] array2 = new Byte[0];
-        Byte[] array3 = new Byte[]{1, 2, 3};
-
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
     }
 }

@@ -1,26 +1,27 @@
 public class FileUtils {
 
     /**
-     * Restituisce l'indice dell'ultimo carattere separatore di directory. <p> Questo metodo gestirà un file sia in formato Unix che Windows. Viene restituita la posizione dell'ultimo slash o backslash. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
-     * @param filename  il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
-     * @return l'indice dell'ultimo carattere separatore, oppure -1 se non esiste tale carattere
+     * Returns the index of the last directory separator character. <p> This method will handle a file in either Unix or Windows format. The position of the last forward or backslash is returned. <p> The output will be the same irrespective of the machine that the code is running on.
+     * @param filename  the filename to find the last path separator in, null returns -1
+     * @return the index of the last separator character, or -1 if there is no such character
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
-        
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
-        
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 14
-        System.out.println(indexOfLastSeparator("/home/user/file.txt"));       // Output: 10
-        System.out.println(indexOfLastSeparator("file.txt"));                  // Output: -1
-        System.out.println(indexOfLastSeparator(null));                        // Output: -1
+        // Example usage
+        String filename1 = "C:\\Users\\John\\Documents\\file.txt";
+        String filename2 = "/home/user/documents/file.txt";
+        String filename3 = "file.txt";
+
+        System.out.println(indexOfLastSeparator(filename1)); // Output: 20
+        System.out.println(indexOfLastSeparator(filename2)); // Output: 18
+        System.out.println(indexOfLastSeparator(filename3)); // Output: -1
     }
 }

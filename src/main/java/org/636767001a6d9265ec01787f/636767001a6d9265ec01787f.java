@@ -1,14 +1,14 @@
 import java.util.Arrays;
 
 /**
- * Aggiunge al <code>toString</code> i dettagli di un array di <code>int</code>.
- * @param buffer  il <code>StringBuffer</code> da popolare
- * @param fieldName  il nome del campo, tipicamente non utilizzato poiché già aggiunto
- * @param array  l'array da aggiungere al <code>toString</code>, non <code>null</code>
+ * <p>Append to the <code>toString</code> the detail of an <code>int</code> array.</p>
+ * @param buffer  the <code>StringBuffer</code> to populate
+ * @param fieldName  the field name, typically not used as already appended
+ * @param array  the array to add to the <code>toString</code>,not <code>null</code>
  */
 protected void appendDetail(StringBuffer buffer, String fieldName, int[] array) {
     if (array == null) {
-        throw new IllegalArgumentException("L'array non può essere null");
+        throw new IllegalArgumentException("Array must not be null");
     }
     buffer.append(Arrays.toString(array));
 }

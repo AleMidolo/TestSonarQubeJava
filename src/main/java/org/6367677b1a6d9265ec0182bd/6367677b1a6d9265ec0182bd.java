@@ -1,36 +1,65 @@
-import org.apache.log4j.spi.LoggingEvent;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
     /**
-     * Formatta un evento di logging per un writer.
-     * @param event evento di logging da formattare.
-     * @return la stringa formattata rappresentante l'evento di logging.
+     * Formats a logging event to a writer.
+     * @param event logging event to be formatted.
+     * @return formatted log message as a String.
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
-        
-        // Aggiungi il timestamp
-        formattedEvent.append("[").append(event.getTimeStamp()).append("] ");
-        
-        // Aggiungi il livello di logging
-        formattedEvent.append("[").append(event.getLevel().toString()).append("] ");
-        
-        // Aggiungi il nome del logger
-        formattedEvent.append("[").append(event.getLoggerName()).append("] ");
-        
-        // Aggiungi il messaggio di logging
-        formattedEvent.append(event.getRenderedMessage());
-        
-        // Aggiungi l'eventuale stack trace se presente
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
-            formattedEvent.append("\n");
-            for (String line : throwableStrRep) {
-                formattedEvent.append(line).append("\n");
-            }
-        }
-        
-        return formattedEvent.toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        String level = event.getLevel().toString();
+        String message = event.getMessage();
+        String loggerName = event.getLoggerName();
+
+        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
     }
 }
+
+// Assuming LoggingEvent class has the following methods:
+// long getTimeStamp()
+// Level getLevel()
+// String getMessage()
+// String getLoggerName()
+
+// Example LoggingEvent class (for reference):
+/*
+class LoggingEvent {
+    private long timeStamp;
+    private Level level;
+    private String message;
+    private String loggerName;
+
+    public LoggingEvent(long timeStamp, Level level, String message, String loggerName) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.message = message;
+        this.loggerName = loggerName;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getLoggerName() {
+        return loggerName;
+    }
+}
+
+// Example Level enum (for reference):
+enum Level {
+    INFO, WARN, ERROR, DEBUG
+}
+*/

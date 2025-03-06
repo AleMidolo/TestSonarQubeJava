@@ -8,17 +8,21 @@ public final class UriMatcher {
 
     public UriMatcher(String template) {
         // Convert the template to a regex pattern
-        String regex = template.replaceAll("\\{([^}]+)\\}", "(?<$1>[^/]+)");
+        String regex = template.replaceAll("\\{([^}]+)\\}", "([^/]+)");
         this.pattern = Pattern.compile(regex);
     }
 
+    /**
+     * Match a URI against the pattern.
+     * @param uri the uri to match against the template.
+     * @return the match result, otherwise null if no match occurs.
+     */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
-        } else {
-            return null;
         }
+        return null;
     }
 
     public static void main(String[] args) {
@@ -26,9 +30,10 @@ public final class UriMatcher {
         MatchResult result = matcher.match("/users/123/posts/456");
 
         if (result != null) {
-            System.out.println("Match found:");
-            System.out.println("User ID: " + result.group("userId"));
-            System.out.println("Post ID: " + result.group("postId"));
+            System.out.println("Match found!");
+            for (int i = 1; i <= result.groupCount(); i++) {
+                System.out.println("Group " + i + ": " + result.group(i));
+            }
         } else {
             System.out.println("No match found.");
         }

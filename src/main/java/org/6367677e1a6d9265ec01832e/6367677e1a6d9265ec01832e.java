@@ -3,9 +3,9 @@ import java.util.logging.Logger;
 public class LoggerChecker {
 
     /**
-     * Controlla se il logger con il nome specificato esiste nella gerarchia. Se sì, restituisce il suo riferimento, altrimenti restituisce <code>null</code>.
-     * @param name Il nome del logger da cercare.
-     * @return Il logger se esiste, altrimenti <code>null</code>.
+     * Check if the named logger exists in the hierarchy. If so return its reference, otherwise returns <code>null</code>.
+     * @param name The name of the logger to search for.
+     * @return The Logger instance if it exists, otherwise null.
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);

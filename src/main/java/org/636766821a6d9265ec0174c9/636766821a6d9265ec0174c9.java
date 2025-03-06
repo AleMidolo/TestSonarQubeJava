@@ -3,15 +3,15 @@ import java.io.File;
 public class ClassPathUtil {
 
     /**
-     * Restituisce il percorso delle classi dell'istanza JVM corrente come un array di oggetti {@link File}.
+     * Returns the class path of the current JVM instance as an array of {@link File} objects.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
-        String[] paths = classPath.split(System.getProperty("path.separator"));
-        File[] files = new File[paths.length];
+        String[] pathElements = classPath.split(File.pathSeparator);
+        File[] files = new File[pathElements.length];
         
-        for (int i = 0; i < paths.length; i++) {
-            files[i] = new File(paths[i]);
+        for (int i = 0; i < pathElements.length; i++) {
+            files[i] = new File(pathElements[i]);
         }
         
         return files;

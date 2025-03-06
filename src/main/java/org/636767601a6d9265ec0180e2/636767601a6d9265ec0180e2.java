@@ -1,48 +1,55 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class GraphSeparator {
 
-    // Assuming Pair is a custom class for holding pairs of elements
-    public static class Pair<A, B> {
-        public final A first;
-        public final B second;
+    private static class Pair<K, V> {
+        private final K key;
+        private final V value;
 
-        public Pair(A first, B second) {
-            this.first = first;
-            this.second = second;
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
         }
     }
 
-    // Assuming E is the type of edges in the graph
-    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        // Placeholder for the graph's edges
-        List<E> edges = new ArrayList<>();
-        // Placeholder for the result
-        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
+    private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
+        // Assuming the graph is represented as a list of edges
+        List<Pair<Integer, Integer>> edges = new ArrayList<>();
+        // Populate the edges list with the graph's edges
+        // Example: edges.add(new Pair<>(1, 2));
 
-        // Iterate over each edge in the graph
-        for (E edge : edges) {
-            // Compute the minimal separators in the neighborhood of the edge
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
+
+        for (Pair<Integer, Integer> edge : edges) {
             List<Pair<Integer, Integer>> separators = computeMinimalSeparators(edge);
-            // Add the pair (separators, edge) to the global list
-            globalSeparatorList.add(new Pair<>(separators, edge));
+            globalSeparatorList.add(new Pair<>(separators, edge.getValue()));
         }
 
         return globalSeparatorList;
     }
 
-    // Placeholder method to compute minimal separators for a given edge
-    private List<Pair<Integer, Integer>> computeMinimalSeparators(E edge) {
-        // This method should implement the logic to find minimal separators in the neighborhood of the edge
-        // For now, it returns an empty list
-        return new ArrayList<>();
+    private List<Pair<Integer, Integer>> computeMinimalSeparators(Pair<Integer, Integer> edge) {
+        // Placeholder for the actual computation of minimal separators
+        // This method should compute the minimal separators in the neighborhood of the given edge
+        List<Pair<Integer, Integer>> separators = new ArrayList<>();
+        // Example: separators.add(new Pair<>(edge.getKey(), edge.getValue()));
+        return separators;
     }
 
-    // Main method for testing
     public static void main(String[] args) {
         GraphSeparator graphSeparator = new GraphSeparator();
-        List<Pair<List<Pair<Integer, Integer>>, E>> result = graphSeparator.computeGlobalSeparatorList();
-        // Print the result or perform further operations
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> result = graphSeparator.computeGlobalSeparatorList();
+        // Print or process the result as needed
     }
 }

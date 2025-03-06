@@ -1,17 +1,34 @@
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 private Map<String, Object> buildContent(JsonObject jsonObject) {
     Map<String, Object> content = new HashMap<>();
 
-    // Check if the JsonObject contains the key "ATS"
-    if (jsonObject.has("ATS")) {
-        // If it contains "ATS", set the "ATS" value in the content map
-        content.put("ATS", jsonObject.get("ATS").getAsString());
-    }
+    // Iterate over all the keys in the JsonObject
+    for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+        String key = entry.getKey();
+        JsonElement value = entry.getValue();
 
-    // You can add more logic here to build the rest of the content if needed
+        // Check if the key is "ats" and handle it accordingly
+        if (key.equals("ats")) {
+            // Assuming "ats" is a special field that needs to be set
+            content.put(key, value.getAsString()); // or getAsInt(), getAsBoolean(), etc., depending on the expected type
+        } else {
+            // Handle other fields
+            if (value.isJsonPrimitive()) {
+                // Handle primitive types (String, Number, Boolean)
+                content.put(key, value.getAsString());
+            } else if (value.isJsonObject()) {
+                // Recursively handle nested JsonObject
+                content.put(key, buildContent(value.getAsJsonObject()));
+            } else if (value.isJsonArray()) {
+                // Handle JsonArray if needed
+                // You can add logic to handle arrays here
+            }
+        }
+    }
 
     return content;
 }

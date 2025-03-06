@@ -1,36 +1,30 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.Iterator;
 
 public class CollectionUtils {
 
     /**
-     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>.
-     * Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
-     * @param collection La collezione da convertire
-     * @return Un nuovo array di Stringhe.
+     * Converts the given Collection into an array of Strings. The returned array does not contain <code>null</code> entries. Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element is <code>null</code>.
+     * @param collection The collection to convert
+     * @return A new array of Strings.
      */
-    static String[] toNoNullStringArray(Collection<?> collection) {
+    public static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
-        
-        // Filtra gli elementi non nulli e li converte in String
-        ArrayList<String> nonNullStrings = new ArrayList<>();
-        for (Object obj : collection) {
-            if (obj != null) {
-                nonNullStrings.add(obj.toString());
+
+        // Filter out null values and convert to String
+        ArrayList<String> filteredList = new ArrayList<>();
+        Iterator<?> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            Object element = iterator.next();
+            if (element != null) {
+                filteredList.add(element.toString());
             }
         }
-        
-        // Converti l'ArrayList in un array di String
-        return nonNullStrings.toArray(new String[0]);
-    }
 
-    public static void main(String[] args) {
-        Collection<Object> collection = Arrays.asList("Hello", null, 123, null, "World");
-        String[] result = toNoNullStringArray(collection);
-        System.out.println(Arrays.toString(result)); // Output: [Hello, 123, World]
+        // Convert the filtered list to an array
+        return filteredList.toArray(new String[0]);
     }
 }

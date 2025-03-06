@@ -5,11 +5,11 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implement this method if needed
+        // Implement single byte write logic here
     }
 
-    /** 
-     * @see OutputStream#write(byte[]) 
+    /**
+     * @see OutputStream#write(byte[])
      */
     @Override
     public void write(final byte[] b) throws IOException {

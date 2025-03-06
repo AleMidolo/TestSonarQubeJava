@@ -1,10 +1,10 @@
 public class StringUtils {
 
     /**
-     * Restituisce il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
-     * @param str stringa in cui cercare. Restituisce 0 se è null.
-     * @param sub stringa da cercare. Restituisce 0 se è null.
-     * @return il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
+     * Returns the number of occurrences the substring  {@code sub} appears in string {@code str}.
+     * @param str string to search in. Return 0 if this is null.
+     * @param sub string to search for. Return 0 if this is null.
+     * @return the number of occurrences the substring {@code sub} appears in string {@code str}.
      */
     public static int countOccurrencesOf(String str, String sub) {
         if (str == null || sub == null || sub.isEmpty()) {
@@ -23,8 +23,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String str = "ababababab";
-        String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 5
+        // Example usage
+        String str = "hello world, hello universe, hello";
+        String sub = "hello";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 3
     }
 }

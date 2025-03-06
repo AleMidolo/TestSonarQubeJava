@@ -1,16 +1,16 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.Iterator;
 
-public class FileIterator implements Iterator<InputStream> {
+public class FileIterator implements Iterator<File> {
     private File[] files;
     private int currentIndex;
 
     public FileIterator(File directory) {
         if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided path is not a directory");
+            throw new IllegalArgumentException("Provided file is not a directory");
         }
         this.files = directory.listFiles();
         this.currentIndex = 0;
@@ -22,11 +22,18 @@ public class FileIterator implements Iterator<InputStream> {
     }
 
     @Override
-    public InputStream next() throws IOException {
+    public File next() {
         if (!hasNext()) {
             return null;
         }
-        File nextFile = files[currentIndex++];
+        return files[currentIndex++];
+    }
+
+    public InputStream nextInputStream() throws IOException {
+        File nextFile = next();
+        if (nextFile == null) {
+            return null;
+        }
         return new FileInputStream(nextFile);
     }
 }

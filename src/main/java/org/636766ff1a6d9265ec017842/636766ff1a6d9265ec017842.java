@@ -3,11 +3,11 @@ import java.util.Objects;
 public class DoubleArrayConverter {
 
     /**
-     * <p>Converte un array di oggetti Double in primitivi.</p>
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Double</code>, può essere <code>null</code>
-     * @return un array di <code>double</code>, <code>null</code> se l'array di input è nullo
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Converts an array of object Doubles to primitives.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>Double</code> array, may be <code>null</code>
+     * @return a <code>double</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
     public static double[] toPrimitive(final Double[] array) {
         if (array == null) {
@@ -19,13 +19,5 @@ public class DoubleArrayConverter {
             result[i] = array[i];
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Double[] testArray = {1.0, 2.0, 3.0};
-        double[] primitiveArray = toPrimitive(testArray);
-        for (double d : primitiveArray) {
-            System.out.println(d);
-        }
     }
 }

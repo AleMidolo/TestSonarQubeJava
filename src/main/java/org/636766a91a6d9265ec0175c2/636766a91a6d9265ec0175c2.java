@@ -1,19 +1,19 @@
 import java.util.Stack;
 
-public class Frame {
+public class FrameStack {
     private Stack<Integer> outputFrameStack;
 
-    public Frame() {
+    public FrameStack() {
         this.outputFrameStack = new Stack<>();
     }
 
     /**
-     * Estrae un tipo astratto dallo stack del frame di output e restituisce il suo valore.
-     * @return il tipo astratto che è stato estratto dallo stack del frame di output.
+     * Pops an abstract type from the output frame stack and returns its value.
+     * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
         if (outputFrameStack.isEmpty()) {
-            throw new IllegalStateException("Lo stack del frame di output è vuoto.");
+            throw new IllegalStateException("Cannot pop from an empty stack.");
         }
         return outputFrameStack.pop();
     }

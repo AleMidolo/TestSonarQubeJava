@@ -1,54 +1,39 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.util.Map;
+import java.util.HashMap;
+import java.beans.PropertyDescriptor;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 
-public class BeanMapExample {
+public class BeanMap {
+    private Map<String, Object> properties = new HashMap<>();
 
-    /**
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
-     * @param map  il BeanMap le cui proprietà devono essere inserite
-     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        BeanMap thisBeanMap = new BeanMap(this);
+        for (Map.Entry<String, Object> entry : map.properties.entrySet()) {
+            String propertyName = entry.getKey();
+            Object value = entry.getValue();
 
-        for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key) && map.isReadable((String) key)) {
-                Object value = map.get(key);
-                thisBeanMap.put(key, value);
+            try {
+                PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
+                if (pd.getWriteMethod() != null) {
+                    pd.getWriteMethod().invoke(this, value);
+                }
+            } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+                // Ignore properties that cannot be written or do not exist
             }
         }
     }
 
-    // Esempio di utilizzo
-    public static void main(String[] args) {
-        // Creazione di un BeanMap per un oggetto di esempio
-        BeanMapExample example = new BeanMapExample();
-        BeanMap sourceMap = new BeanMap(new ExampleBean());
-
-        // Inserimento delle proprietà scrivibili
-        example.putAllWriteable(sourceMap);
-    }
-}
-
-class ExampleBean {
-    private String name;
-    private int age;
-
-    public String getName() {
-        return name;
+    // Example of a property setter
+    public void setProperty(String propertyName, Object value) {
+        properties.put(propertyName, value);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    // Example of a property getter
+    public Object getProperty(String propertyName) {
+        return properties.get(propertyName);
     }
 }

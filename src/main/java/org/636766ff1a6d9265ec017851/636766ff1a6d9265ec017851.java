@@ -1,12 +1,12 @@
 /**
- * Cerca un byte di valore specificato nel <code>buffer</code>, partendo dalla <code>posizione</code> specificata.
- * @param value Il valore da cercare.
- * @param pos   La posizione di partenza per la ricerca.
- * @return La posizione del byte trovato, contando dall'inizio del <code>buffer</code>, oppure <code>-1</code> se non trovato.
+ * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
+ * @param value The value to find.
+ * @param pos   The starting position for searching.
+ * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
  */
 protected int findByte(byte value, int pos) {
-    if (buffer == null || pos < 0 || pos >= buffer.length) {
-        return -1;
+    if (pos < 0 || pos >= buffer.length) {
+        throw new IllegalArgumentException("Position is out of bounds");
     }
     
     for (int i = pos; i < buffer.length; i++) {

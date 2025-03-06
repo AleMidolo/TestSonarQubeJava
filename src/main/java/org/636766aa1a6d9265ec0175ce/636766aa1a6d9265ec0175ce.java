@@ -1,43 +1,37 @@
-public class FrameVisitor {
-    private Frame currentFrame;
+import java.util.ArrayList;
+import java.util.List;
 
-    public FrameVisitor(Frame currentFrame) {
-        this.currentFrame = currentFrame;
+public class StackMapFrameVisitor {
+    private List<Object> currentFrame;
+
+    public StackMapFrameVisitor() {
+        this.currentFrame = new ArrayList<>();
     }
 
     /**
-     * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
-     * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
-     * @param numLocal il numero di variabili locali nel frame.
-     * @param numStack il numero di elementi nello stack nel frame.
-     * @return l'indice del prossimo elemento da scrivere in questo frame.
+     * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
+     * @param offset   the bytecode offset of the instruction to which the frame corresponds.
+     * @param numLocal the number of local variables in the frame.
+     * @param numStack the number of stack elements in the frame.
+     * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Inizializza il nuovo frame con i parametri forniti
-        currentFrame = new Frame(offset, numLocal, numStack);
+        // Clear the current frame to start a new one
+        currentFrame.clear();
 
-        // Restituisce l'indice del prossimo elemento da scrivere nel frame
-        return currentFrame.getNextElementIndex();
+        // Add the offset, numLocal, and numStack to the frame
+        currentFrame.add(offset);
+        currentFrame.add(numLocal);
+        currentFrame.add(numStack);
+
+        // Return the index of the next element to be written (after offset, numLocal, and numStack)
+        return currentFrame.size();
     }
 
-    // Classe interna per rappresentare un frame
-    private static class Frame {
-        private final int offset;
-        private final int numLocal;
-        private final int numStack;
-        private int nextElementIndex;
-
-        public Frame(int offset, int numLocal, int numStack) {
-            this.offset = offset;
-            this.numLocal = numLocal;
-            this.numStack = numStack;
-            this.nextElementIndex = 0; // Inizialmente, il prossimo elemento è il primo
-        }
-
-        public int getNextElementIndex() {
-            return nextElementIndex;
-        }
-
-        // Metodi per gestire il frame (aggiungere elementi, ecc.)
+    // Example usage
+    public static void main(String[] args) {
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
+        int nextIndex = visitor.visitFrameStart(10, 3, 2);
+        System.out.println("Next index to write: " + nextIndex);
     }
 }

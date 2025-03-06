@@ -6,24 +6,23 @@ import java.util.List;
 public class ArrayToList {
 
     /**
-     * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
-     * @param a l'array da convertire in lista
-     * @return una lista supportata dall'array.
+     * Array to List. <p> Works like  {@link Arrays#asList(Object)}, but handles null arrays.
+     * @param a the array to be converted to a list
+     * @return a list backed by the array, or an empty list if the array is null.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
-        return new ArrayList<>(Arrays.asList(a));
+        return Arrays.asList(a);
     }
 
     public static void main(String[] args) {
-        // Test con array non nullo
-        String[] array = {"a", "b", "c"};
+        // Example usage
+        String[] array = {"one", "two", "three"};
         List<String> list = asList(array);
-        System.out.println(list); // Output: [a, b, c]
+        System.out.println(list); // Output: [one, two, three]
 
-        // Test con array nullo
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Output: []

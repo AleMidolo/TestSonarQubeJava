@@ -8,7 +8,9 @@ public class TelnetServer {
     private List<Socket> clients = new ArrayList<>();
 
     /**
-     * Invia un messaggio a ciascuno dei client in un formato compatibile con telnet.
+     * Sends a message to each of the clients in telnet-friendly output.
+     * 
+     * @param message The message to send to all connected clients.
      */
     public synchronized void send(final String message) {
         for (Socket client : clients) {
@@ -17,19 +19,27 @@ public class TelnetServer {
                 outputStream.write(message.getBytes());
                 outputStream.flush();
             } catch (IOException e) {
-                // Gestisci l'eccezione, ad esempio rimuovendo il client dalla lista
+                // Handle the exception, e.g., remove the client from the list
                 clients.remove(client);
-                e.printStackTrace();
+                System.err.println("Error sending message to client: " + e.getMessage());
             }
         }
     }
 
-    // Metodo per aggiungere un client alla lista
+    /**
+     * Adds a new client to the list of connected clients.
+     * 
+     * @param client The client socket to add.
+     */
     public synchronized void addClient(Socket client) {
         clients.add(client);
     }
 
-    // Metodo per rimuovere un client dalla lista
+    /**
+     * Removes a client from the list of connected clients.
+     * 
+     * @param client The client socket to remove.
+     */
     public synchronized void removeClient(Socket client) {
         clients.remove(client);
     }

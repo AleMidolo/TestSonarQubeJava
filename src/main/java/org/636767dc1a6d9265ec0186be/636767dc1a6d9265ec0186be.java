@@ -1,30 +1,31 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class TimeBucketCompressor {
 
     /**
-     * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale.
-     * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101,
-     * per 20000115 è 20000112, e per 20000123 è 20000123.
-     *
-     * @param timeBucket Il bucket temporale da comprimere, in formato YYYYMMDD.
-     * @param dayStep Il passo giornaliero per la compressione.
-     * @return Il bucket temporale compresso.
+     * Follow the dayStep to re-format the time bucket literal long value. Such as, in dayStep == 11, 20000105 re-formatted time bucket is 20000101, 20000115 re-formatted time bucket is 20000112, 20000123 re-formatted time bucket is 20000123
      */
     public static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Estrai l'anno e il mese dal timeBucket
-        long yearMonth = (timeBucket / 100) * 100;
-        int day = (int) (timeBucket % 100);
+        // Convert the timeBucket to a LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate date = LocalDate.parse(String.valueOf(timeBucket), formatter);
 
-        // Calcola il giorno compresso
-        int compressedDay = ((day - 1) / dayStep) * dayStep + 1;
+        // Calculate the new day based on the dayStep
+        int dayOfMonth = date.getDayOfMonth();
+        int newDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
 
-        // Ricostruisci il bucket temporale compresso
-        return yearMonth + compressedDay;
+        // Create a new LocalDate with the adjusted day
+        LocalDate newDate = date.withDayOfMonth(newDay);
+
+        // Convert the new date back to a long in the format yyyyMMdd
+        return Long.parseLong(newDate.format(formatter));
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
+        // Example usage
+        System.out.println(compressTimeBucket(20000105L, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115L, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123L, 11)); // Output: 20000123
     }
 }

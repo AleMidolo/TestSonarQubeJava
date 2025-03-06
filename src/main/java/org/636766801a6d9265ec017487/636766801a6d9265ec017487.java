@@ -1,34 +1,27 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TemplateEncoder {
-
+    /**
+     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+     * @param s the string with zero or more template parameters names
+     * @return the string with encoded template parameters names.
+     */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
-
-        // Create a map to store the encoding for '{' and '}'
-        Map<Character, String> encodingMap = new HashMap<>();
-        encodingMap.put('{', "%7B");
-        encodingMap.put('}', "%7D");
-
-        StringBuilder encodedString = new StringBuilder();
-
-        for (char c : s.toCharArray()) {
-            if (encodingMap.containsKey(c)) {
-                encodedString.append(encodingMap.get(c));
-            } else {
-                encodedString.append(c);
-            }
-        }
-
-        return encodedString.toString();
+        
+        // Replace '{' with '%7B' and '}' with '%7D'
+        s = s.replace("{", "%7B");
+        s = s.replace("}", "%7D");
+        
+        return s;
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
+        String input = "This is a {template} string with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D string with %7Bparameters%7D.
     }
 }

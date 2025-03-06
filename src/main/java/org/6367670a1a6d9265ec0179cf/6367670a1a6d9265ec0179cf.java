@@ -1,23 +1,23 @@
 public class CharUtils {
 
     /**
-     * <p>Converte il Character in un char gestendo <code>null</code>.</p> 
-     * <pre> 
-     * CharUtils.toChar(null, 'X') = 'X' 
-     * CharUtils.toChar(' ', 'X')  = ' ' 
-     * CharUtils.toChar('A', 'X')  = 'A' 
+     * Converts the Character to a char handling <code>null</code>.
+     * <pre>
+     * CharUtils.toChar(null, 'X') = 'X'
+     * CharUtils.toChar(' ', 'X')  = ' '
+     * CharUtils.toChar('A', 'X')  = 'A'
      * </pre>
-     * @param ch  il carattere da convertire
-     * @param defaultValue  il valore da utilizzare se il Character è null
-     * @return il valore char del Character o il valore predefinito se null
+     * @param ch  the character to convert
+     * @param defaultValue  the value to use if the Character is null
+     * @return the char value of the Character or the default if null
      */
     public static char toChar(final Character ch, final char defaultValue) {
         return ch != null ? ch : defaultValue;
     }
 
     public static void main(String[] args) {
-        System.out.println(toChar(null, 'X'));  // Output: X
-        System.out.println(toChar(' ', 'X'));   // Output:  
-        System.out.println(toChar('A', 'X'));   // Output: A
+        System.out.println(toChar(null, 'X')); // Output: X
+        System.out.println(toChar(' ', 'X'));  // Output:  
+        System.out.println(toChar('A', 'X'));  // Output: A
     }
 }

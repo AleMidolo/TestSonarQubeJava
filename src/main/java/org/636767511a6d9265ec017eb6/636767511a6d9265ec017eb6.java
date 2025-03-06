@@ -1,48 +1,71 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Assume Node class has necessary fields and methods
-}
-
-class OuterFaceCirculator {
+public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node start) {
-        this.current = start;
+    public OuterFaceCirculator(Node node) {
+        this.current = node;
     }
 
     public Node getCurrent() {
         return current;
     }
 
-    public void next() {
-        // Implement logic to move to the next node in the outer face
+    public void next(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getNextClockwise();
+        } else {
+            current = current.getNextCounterClockwise();
+        }
     }
 
-    public void previous() {
-        // Implement logic to move to the previous node in the outer face
+    public void previous(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getPreviousClockwise();
+        } else {
+            current = current.getPreviousCounterClockwise();
+        }
     }
 }
 
-public class GraphTraversal {
+public class Node {
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
+    private Node previousClockwise;
+    private Node previousCounterClockwise;
 
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+    public Node getNextClockwise() {
+        return nextClockwise;
+    }
 
-        while (true) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
-                return circulator;
-            }
-            if (currentNode.equals(stop)) {
-                return circulator;
-            }
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
+    }
 
-            if (dir == 1) {
-                circulator.next();
-            } else {
-                circulator.previous();
-            }
+    public Node getPreviousClockwise() {
+        return previousClockwise;
+    }
+
+    public Node getPreviousCounterClockwise() {
+        return previousCounterClockwise;
+    }
+
+    // Other methods and fields...
+}
+
+private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+
+    while (true) {
+        Node currentNode = circulator.getCurrent();
+        if (predicate.test(currentNode)) {
+            return circulator;
         }
+        if (currentNode == stop) {
+            return circulator;
+        }
+        circulator.next(dir);
     }
 }

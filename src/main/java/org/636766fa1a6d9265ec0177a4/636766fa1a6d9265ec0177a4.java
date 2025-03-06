@@ -1,11 +1,12 @@
+import java.util.Objects;
+
 public class DoubleArrayConverter {
 
     /**
-     * Converte un array di double primitivi in oggetti.
-     * Questo metodo restituisce null per un array di input null.
-     *
-     * @param array un array di double
-     * @return un array di Double, null se l'array di input è null
+     * <p>Converts an array of primitive doubles to objects.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>double</code> array
+     * @return a <code>Double</code> array, <code>null</code> if null array input
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {
@@ -19,7 +20,7 @@ public class DoubleArrayConverter {
     }
 
     public static void main(String[] args) {
-        double[] primitiveArray = {1.0, 2.0, 3.0};
+        double[] primitiveArray = {1.0, 2.5, 3.7};
         Double[] objectArray = toObject(primitiveArray);
         for (Double d : objectArray) {
             System.out.println(d);

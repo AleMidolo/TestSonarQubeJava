@@ -9,7 +9,7 @@ public class CustomSet {
     }
 
     /**
-     * Rimuove un valore dal set. Restituisce true se il set conteneva l'elemento specificato.
+     * Removes a value from the set. Returns true if the set contained the specified element.
      */
     public boolean remove(int val) {
         return set.remove(val);

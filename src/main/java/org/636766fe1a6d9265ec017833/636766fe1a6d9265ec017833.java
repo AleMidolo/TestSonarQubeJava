@@ -1,17 +1,20 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtils {
 
     /**
-     * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
-     * @param file  file o directory da cancellare, non deve essere {@code null}
-     * @throws NullPointerException se il file è {@code null}
-     * @throws IOException in caso di cancellazione non riuscita
+     * Schedules a file to be deleted when JVM exits. If file is directory delete it and all sub-directories.
+     * @param file  file or directory to delete, must not be {@code null}
+     * @throws NullPointerException if the file is {@code null}
+     * @throws IOException in case deletion is unsuccessful
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("Il file non può essere null");
+            throw new NullPointerException("File must not be null");
         }
 
         if (file.isDirectory()) {
@@ -33,5 +36,14 @@ public class FileUtils {
             }
         }
         directory.deleteOnExit();
+    }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File("path/to/your/file_or_directory");
+            forceDeleteOnExit(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

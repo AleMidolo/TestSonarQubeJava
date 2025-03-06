@@ -1,31 +1,24 @@
-import java.util.*;
+import java.util.BitSet;
 
 public class PrimeUtil {
 
     /**
-     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity 
-     * (entro l'11% se desiredCapacity >= 1000).
-     * @param desiredCapacity la capacità desiderata dall'utente.
-     * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
+     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity
+     * (within 11% if desiredCapacity >= 1000).
+     * @param desiredCapacity the capacity desired by the user.
+     * @return the capacity which should be used for a hashtable.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-        
         int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
+        if (candidate % 2 == 0) {
             candidate++;
         }
-        
-        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            while (candidate > upperBound) {
-                candidate = nextPrime(candidate + 1);
-            }
+        while (!isPrime(candidate)) {
+            candidate += 2;
         }
-        
         return candidate;
     }
 
@@ -48,6 +41,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Esempio di utilizzo
+        System.out.println(nextPrime(1000)); // Example usage
     }
 }

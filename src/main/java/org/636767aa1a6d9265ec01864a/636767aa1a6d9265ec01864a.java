@@ -1,28 +1,23 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-public class ByteArrayCopier {
+public class ByteArrayConverter {
 
     /**
-     * Copia i byte in un {@code byte[]}.
+     * Copies bytes to a {@code byte[]}.
      *
-     * @return un array di byte contenente una copia dei byte
+     * @return a byte array containing the copied bytes
+     * @throws IOException if an I/O error occurs
      */
-    public byte[] toByteArray() {
-        // Esempio di implementazione: copia i byte da un ByteArrayOutputStream
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            // Scrivi i byte che vuoi copiare nell'outputStream
-            outputStream.write("Esempio di byte".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public byte[] toByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[1024];
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
         }
-        return outputStream.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        ByteArrayCopier copier = new ByteArrayCopier();
-        byte[] byteArray = copier.toByteArray();
-        System.out.println(new String(byteArray));  // Stampa i byte come stringa
+        buffer.flush();
+        return buffer.toByteArray();
     }
 }

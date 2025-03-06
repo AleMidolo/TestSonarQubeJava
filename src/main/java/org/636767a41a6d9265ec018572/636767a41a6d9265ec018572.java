@@ -2,8 +2,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VarintReader {
+    private final InputStream input;
 
-    public long readRawVarint64(InputStream input) throws IOException {
+    public VarintReader(InputStream input) {
+        this.input = input;
+    }
+
+    /**
+     * Read a raw Varint from the stream.
+     */
+    public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
@@ -14,6 +22,6 @@ public class VarintReader {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint64");
+        throw new IOException("Malformed varint");
     }
 }

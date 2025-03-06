@@ -4,15 +4,15 @@ import java.util.Set;
 public class CliqueChecker {
 
     /**
-     * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
-     * @param graph il grafo.
-     * @param vertices i vertici da cui indurre il sottografo.
-     * @return true se il sottografo indotto è un clique.
+     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
+     * @param graph the graph.
+     * @param vertices the vertices to induce the subgraph from.
+     * @return true if the induced subgraph is a clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
+        for (V u : vertices) {
+            for (V v : vertices) {
+                if (!u.equals(v) && !graph.containsEdge(u, v)) {
                     return false;
                 }
             }

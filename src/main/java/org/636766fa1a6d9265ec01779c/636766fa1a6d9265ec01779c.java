@@ -9,12 +9,17 @@ private String parseToken(final char[] terminators) {
     }
 
     int currentChar;
-    while ((currentChar = System.in.read()) != -1) {
-        char ch = (char) currentChar;
-        if (terminatorSet.contains(ch)) {
+    while (true) {
+        try {
+            currentChar = System.in.read();
+            if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
+                break;
+            }
+            token.append((char) currentChar);
+        } catch (Exception e) {
+            e.printStackTrace();
             break;
         }
-        token.append(ch);
     }
 
     return token.toString();

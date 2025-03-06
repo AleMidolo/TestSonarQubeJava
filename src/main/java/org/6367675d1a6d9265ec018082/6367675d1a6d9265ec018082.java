@@ -1,36 +1,5 @@
 import java.util.Objects;
 
-class Node {
-    private int id;
-    private boolean isVirtual;
-
-    public Node(int id, boolean isVirtual) {
-        this.id = id;
-        this.isVirtual = isVirtual;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return id == node.id && isVirtual == node.isVirtual;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, isVirtual);
-    }
-}
-
 class Edge {
     private Node from;
     private Node to;
@@ -49,11 +18,54 @@ class Edge {
     }
 
     @Override
-    public String toString() {
-        return "Edge{" +
-                "from=" + from.getId() +
-                ", to=" + to.getId() +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Edge edge = (Edge) o;
+        return Objects.equals(from, edge.from) && Objects.equals(to, edge.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to);
+    }
+}
+
+class Node {
+    private String id;
+    private boolean isVirtual;
+
+    public Node(String id, boolean isVirtual) {
+        this.id = id;
+        this.isVirtual = isVirtual;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public Node getRealCounterpart() {
+        if (isVirtual) {
+            return new Node(id, false); // Return the real counterpart
+        }
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isVirtual);
     }
 }
 
@@ -67,13 +79,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(from, to);
-    }
-
-    private Node getRealNode(Node node) {
-        // Assuming that the real node has the same ID but is not virtual
-        return new Node(node.getId(), false);
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
+        return new Edge(fromNode, toNode);
     }
 }

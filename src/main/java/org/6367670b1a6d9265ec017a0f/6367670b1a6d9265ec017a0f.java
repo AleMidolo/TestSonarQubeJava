@@ -3,11 +3,11 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * Controllo non sensibile al maiuscolo/minuscolo se la Stringa contiene uno qualsiasi dei caratteri nel set di stringhe fornito.
+     * Case in-sensitive Checks if the String contains any character in the given set of string.
      * 
-     * @param str La stringa da controllare.
-     * @param searchStrArray La lista di stringhe da cercare.
-     * @return true se la stringa contiene almeno una delle stringhe nella lista, false altrimenti.
+     * @param str The string to check.
+     * @param searchStrArray The list of strings to search for.
+     * @return true if the string contains any of the search strings (case insensitive), false otherwise.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -24,10 +24,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
-        List<String> searchStrings = List.of("abc", "def", "ghi");
-        String input = "This is a test string with ABC in it.";
-        boolean result = containsAnyIgnoreCase(input, searchStrings);
-        System.out.println(result); // Output: true
+        // Example usage
+        List<String> searchStrings = List.of("hello", "world");
+        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
     }
 }

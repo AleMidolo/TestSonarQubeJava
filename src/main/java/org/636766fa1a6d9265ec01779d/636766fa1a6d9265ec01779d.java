@@ -1,7 +1,7 @@
 public class CharUtils {
 
     /**
-     * <p>Controlla se il carattere è un controllo ASCII a 7 bit.</p>
+     * <p>Checks whether the character is ASCII 7 bit control.</p>
      * <pre>
      * CharUtils.isAsciiControl('a')  = false
      * CharUtils.isAsciiControl('A')  = false
@@ -10,8 +10,8 @@ public class CharUtils {
      * CharUtils.isAsciiControl('\n') = true
      * CharUtils.isAsciiControl('&copy;') = false
      * </pre>
-     * @param ch  il carattere da controllare
-     * @return true se è minore di 32 o uguale a 127
+     * @param ch  the character to check
+     * @return true if less than 32 or equals 127
      */
     public static boolean isAsciiControl(final char ch) {
         return ch < 32 || ch == 127;
@@ -22,7 +22,7 @@ public class CharUtils {
         System.out.println(isAsciiControl('A'));   // false
         System.out.println(isAsciiControl('3'));   // false
         System.out.println(isAsciiControl('-'));   // false
-        System.out.println(isAsciiControl('\n'));  // true
+        System.out.println(isAsciiControl('\n')); // true
         System.out.println(isAsciiControl('©'));   // false
     }
 }

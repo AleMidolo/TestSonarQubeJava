@@ -1,11 +1,12 @@
 import java.util.Objects;
 
-public class ArrayConverter {
+public class IntArrayConverter {
 
     /**
-     * <p>Converte un array di int primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>int</code>
-     * @return un array di <code>Integer</code>, <code>null</code> se l'array di input è nullo
+     * <p>Converts an array of primitive ints to objects.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  an <code>int</code> array
+     * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {

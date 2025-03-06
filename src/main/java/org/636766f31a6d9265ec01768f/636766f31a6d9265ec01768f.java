@@ -1,9 +1,9 @@
 /**
- * Clona un array restituendo un risultato di tipo cast e gestendo null.
- * Questo metodo restituisce null per un array di input null.
+ * Clones an array returning a typecast result and handling <code>null</code>.
+ * This method returns <code>null</code> for a <code>null</code> input array.
  *
- * @param array l'array da clonare, può essere null
- * @return l'array clonato, null se l'input è null
+ * @param array  the array to clone, may be <code>null</code>
+ * @return the cloned array, <code>null</code> if <code>null</code> input
  */
 public static char[] clone(final char[] array) {
     if (array == null) {

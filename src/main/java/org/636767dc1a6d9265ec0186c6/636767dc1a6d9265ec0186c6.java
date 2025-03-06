@@ -1,47 +1,36 @@
-import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
 
 public class FieldChecker {
+    private Properties storedProperties;
 
-    private Fields storedFields;
-
-    public FieldChecker(Fields storedFields) {
-        this.storedFields = storedFields;
+    public FieldChecker(Properties storedProperties) {
+        this.storedProperties = storedProperties;
     }
 
-    /**
-     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+    /** 
+     * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
-        if (fields == null || storedFields == null) {
-            return false;
+        Set<String> fieldNames = fields.getFieldNames();
+        for (String fieldName : fieldNames) {
+            if (!storedProperties.containsKey(fieldName)) {
+                return false;
+            }
         }
-        return Objects.equals(fields.getField1(), storedFields.getField1()) &&
-               Objects.equals(fields.getField2(), storedFields.getField2()) &&
-               Objects.equals(fields.getField3(), storedFields.getField3());
+        return true;
+    }
+}
+
+// Assuming Fields class has a method to get field names
+class Fields {
+    private Set<String> fieldNames;
+
+    public Fields(Set<String> fieldNames) {
+        this.fieldNames = fieldNames;
     }
 
-    // Assuming Fields class has getters for field1, field2, and field3
-    public static class Fields {
-        private String field1;
-        private String field2;
-        private String field3;
-
-        public Fields(String field1, String field2, String field3) {
-            this.field1 = field1;
-            this.field2 = field2;
-            this.field3 = field3;
-        }
-
-        public String getField1() {
-            return field1;
-        }
-
-        public String getField2() {
-            return field2;
-        }
-
-        public String getField3() {
-            return field3;
-        }
+    public Set<String> getFieldNames() {
+        return fieldNames;
     }
 }

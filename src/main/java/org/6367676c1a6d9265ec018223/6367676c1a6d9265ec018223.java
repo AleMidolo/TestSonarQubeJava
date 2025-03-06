@@ -1,23 +1,19 @@
 import java.util.Collection;
-import java.util.Iterator;
 
 public class CollectionUtils {
 
     /**
-     * Controlla se la Collection fornita contiene l'istanza dell'elemento dato. <p>Imporre che l'istanza fornita sia presente, piuttosto che restituire <code>true</code> per un elemento uguale.
-     * @param collection la Collection da controllare
-     * @param element l'elemento da cercare
-     * @return <code>true</code> se trovato, <code>false</code> altrimenti
+     * Check whether the given Collection contains the given element instance. <p>Enforces the given instance to be present, rather than returning <code>true</code> for an equal element as well.
+     * @param collection the Collection to check
+     * @param element the element to look for
+     * @return <code>true</code> if found, <code>false</code> else
      */
-    public static boolean containsInstance(Collection collection, Object element) {
+    public static boolean containsInstance(Collection<?> collection, Object element) {
         if (collection == null || element == null) {
             return false;
         }
-
-        Iterator iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            Object current = iterator.next();
-            if (current == element) {
+        for (Object item : collection) {
+            if (item == element) {
                 return true;
             }
         }
@@ -25,16 +21,15 @@ public class CollectionUtils {
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
+        // Example usage
         Collection<String> collection = new java.util.ArrayList<>();
-        collection.add("A");
-        collection.add("B");
-        collection.add("C");
+        collection.add("Hello");
+        collection.add("World");
 
-        String element = "B";
-        System.out.println(containsInstance(collection, element)); // Output: true
+        String element = "Hello";
+        System.out.println(containsInstance(collection, element)); // true
 
-        String newElement = new String("B");
-        System.out.println(containsInstance(collection, newElement)); // Output: false
+        String newElement = new String("Hello");
+        System.out.println(containsInstance(collection, newElement)); // false
     }
 }

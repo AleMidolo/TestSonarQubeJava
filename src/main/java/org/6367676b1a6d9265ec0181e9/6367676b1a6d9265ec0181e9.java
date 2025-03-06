@@ -1,14 +1,15 @@
-public class SubstringMatch {
+public class SubstringMatcher {
+
     /**
-     * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
-     * @param str la stringa originale (o StringBuilder)
-     * @param index l'indice nella stringa originale da cui iniziare a confrontare
-     * @param substring la sottostringa da confrontare all'indice specificato
-     * @return {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+     * Returns {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
+     * @param str the original string (or StringBuilder)
+     * @param index the index in the original string to start matching against
+     * @param substring the substring to match at the given index
+     * @return {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
-            return false;
+            throw new IllegalArgumentException("Input strings cannot be null.");
         }
         if (index < 0 || index > str.length() - substring.length()) {
             return false;
@@ -22,12 +23,12 @@ public class SubstringMatch {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
-        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
-        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
-        System.out.println(substringMatch("Hello, World!", 5, ", ")); // true
-        System.out.println(substringMatch("Hello, World!", 13, "!")); // false (index out of bounds)
+        // Example usage
+        CharSequence str = "Hello, World!";
+        CharSequence substring = "World";
+        int index = 7;
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println(result); // Output: true
     }
 }

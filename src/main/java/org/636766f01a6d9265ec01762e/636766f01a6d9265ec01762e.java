@@ -1,7 +1,7 @@
 /**
- * <p>Controlla se un array di double primitivi è vuoto o <code>null</code>.</p>
- * @param array  l'array da testare
- * @return <code>true</code> se l'array è vuoto o <code>null</code>
+ * Checks if an array of primitive doubles is empty or null.
+ * @param array  the array to test
+ * @return true if the array is empty or null
  * @since 2.1
  */
 public static boolean isEmpty(final double[] array) {

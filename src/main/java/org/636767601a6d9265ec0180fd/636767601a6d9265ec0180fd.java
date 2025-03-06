@@ -1,23 +1,24 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphIndex<V, E> {
-    private Map<V, Map<V, E>> index;
+public class Graph<V, E> {
+    private Map<V, Map<V, E>> adjacencyMap;
 
-    public GraphIndex() {
-        index = new HashMap<>();
+    public Graph() {
+        this.adjacencyMap = new HashMap<>();
     }
 
     /**
-     * Aggiunge un arco all'indice.
-     * @param sourceVertex il vertice sorgente
-     * @param targetVertex il vertice di destinazione
-     * @param e l'arco
+     * Add an edge to the index.
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex
+     * @param e the edge
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!index.containsKey(sourceVertex)) {
-            index.put(sourceVertex, new HashMap<>());
-        }
-        index.get(sourceVertex).put(targetVertex, e);
+        // Ensure the source vertex exists in the adjacency map
+        adjacencyMap.putIfAbsent(sourceVertex, new HashMap<>());
+        
+        // Add the edge from sourceVertex to targetVertex
+        adjacencyMap.get(sourceVertex).put(targetVertex, e);
     }
 }

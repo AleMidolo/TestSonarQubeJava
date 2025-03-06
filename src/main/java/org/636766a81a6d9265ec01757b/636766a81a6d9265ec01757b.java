@@ -1,58 +1,17 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper.Builder;
-import com.fasterxml.jackson.databind.json.JsonMapper.Feature;
+import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.JSON;
 
-public class JSONWriter {
+public class MyClass {
 
-    private Object data;
-
-    public JSONWriter(Object data) {
-        this.data = data;
-    }
-
+    /**
+     * Serialize to JSON {@link String}
+     * @param features features to be enabled in serialization
+     * @return JSON {@link String}
+     */
     @SuppressWarnings("unchecked")
-    public String toString(Feature... features) {
-        Builder builder = JsonMapper.builder();
-        for (Feature feature : features) {
-            builder = builder.enable(feature);
-        }
-        ObjectMapper mapper = builder.build();
-        try {
-            return mapper.writeValueAsString(data);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        JSONWriter writer = new JSONWriter(new MyDataClass());
-        String json = writer.toString(Feature.INDENT_OUTPUT);
-        System.out.println(json);
-    }
-}
-
-class MyDataClass {
-    private String name = "example";
-    private int value = 42;
-
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
+    public String toString(JSONWriter.Feature... features) {
+        // Assuming this method is part of a class that can be serialized to JSON
+        // Using Fastjson2 to serialize the current object to a JSON string with the specified features
+        return JSON.toJSONString(this, features);
     }
 }

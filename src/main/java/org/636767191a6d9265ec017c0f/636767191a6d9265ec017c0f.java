@@ -1,28 +1,21 @@
-import java.util.Arrays;
+/**
+ * Enlarges this byte vector so that it can receive 'size' more bytes.
+ * @param size number of additional bytes that this byte vector should be able to receive.
+ */
+private void enlarge(final int size) {
+    // Assuming the byte vector is represented by a byte array named 'data'
+    int currentCapacity = data.length;
+    int requiredCapacity = currentCapacity + size;
 
-public class ByteVector {
-    private byte[] data;
-    private int capacity;
+    // Calculate the new capacity, typically doubling the size or adding the required size
+    int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
 
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.capacity = initialCapacity;
-    }
+    // Create a new array with the new capacity
+    byte[] newData = new byte[newCapacity];
 
-    /**
-     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
-     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
-     */
-    private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than 0");
-        }
+    // Copy the existing data to the new array
+    System.arraycopy(data, 0, newData, 0, currentCapacity);
 
-        int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        data = newData;
-        capacity = newCapacity;
-    }
-
-    // Other methods of the ByteVector class...
+    // Update the reference to the new array
+    data = newData;
 }

@@ -1,37 +1,30 @@
 import java.io.File;
 
-public class ConfigurationDirectoryCreator {
-
+public class MRUConfig {
     /**
-     * Crea la directory in cui verrà scritta la lista dei file MRU. La directory "lf5" viene creata nella directory Documenti e Impostazioni sui computer Windows 2000 e ovunque punti la variabile user.home su tutte le altre piattaforme.
+     * Creates the directory where the MRU file list will be written. The "lf5" directory is created in the Documents and Settings directory on Windows 2000 machines and where ever the user.home variable points on all other platforms.
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String directoryPath;
-
-        // Verifica se il sistema operativo è Windows 2000
-        if (System.getProperty("os.name").toLowerCase().contains("windows 2000")) {
-            directoryPath = userHome + "\\Documenti e Impostazioni\\lf5";
+        String osName = System.getProperty("os.name").toLowerCase();
+        
+        String configDirPath;
+        if (osName.contains("windows 2000")) {
+            configDirPath = System.getenv("USERPROFILE") + File.separator + "Documents and Settings" + File.separator + "lf5";
         } else {
-            directoryPath = userHome + "\\lf5";
+            configDirPath = userHome + File.separator + "lf5";
         }
-
-        File directory = new File(directoryPath);
-
-        // Crea la directory se non esiste già
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
+        
+        File configDir = new File(configDirPath);
+        if (!configDir.exists()) {
+            boolean created = configDir.mkdirs();
             if (created) {
-                System.out.println("Directory creata con successo: " + directoryPath);
+                System.out.println("Configuration directory created at: " + configDirPath);
             } else {
-                System.out.println("Impossibile creare la directory: " + directoryPath);
+                System.out.println("Failed to create configuration directory at: " + configDirPath);
             }
         } else {
-            System.out.println("La directory esiste già: " + directoryPath);
+            System.out.println("Configuration directory already exists at: " + configDirPath);
         }
-    }
-
-    public static void main(String[] args) {
-        createConfigurationDirectory();
     }
 }

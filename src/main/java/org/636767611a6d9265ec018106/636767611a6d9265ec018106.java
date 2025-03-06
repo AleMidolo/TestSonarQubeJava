@@ -1,26 +1,18 @@
 import java.util.Set;
 
-public class GraphUtils<V> {
+public class GraphUtils {
 
     /**
-     * Calcola la somma dei pesi che entrano in un vertice
-     * @param v il vertice
-     * @return la somma dei pesi che entrano in un vertice
+     * Compute the sum of the weights entering a vertex
+     * @param v the vertex
+     * @return the sum of the weights entering a vertex
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         for (V vertex : v) {
-            // Assuming each vertex has a weight associated with it
-            // Replace getWeight() with the actual method to get the weight of the vertex
-            sum += getWeight(vertex);
+            // Assuming V has a method getWeight() that returns the weight of the vertex
+            sum += vertex.getWeight();
         }
         return sum;
-    }
-
-    // Placeholder method to get the weight of a vertex
-    // Replace this with the actual implementation to get the weight
-    private double getWeight(V vertex) {
-        // Example implementation, replace with actual logic
-        return 1.0; // Default weight
     }
 }

@@ -4,30 +4,26 @@ import java.nio.file.Paths;
 
 public class ConfigInitializer {
 
-    private String distPath;
-
-    public ConfigInitializer(String distPath) {
-        this.distPath = distPath;
-    }
-
     /**
      * Initialize config, such as check dist path
      */
     public void init() {
+        // Define the path to check
+        String distPath = "path/to/dist";
         Path path = Paths.get(distPath);
-        if (!Files.exists(path)) {
-            System.err.println("Dist path does not exist: " + distPath);
-            return;
-        }
-        if (!Files.isDirectory(path)) {
-            System.err.println("Dist path is not a directory: " + distPath);
-            return;
-        }
-        System.out.println("Dist path is valid: " + distPath);
-    }
 
-    public static void main(String[] args) {
-        ConfigInitializer initializer = new ConfigInitializer("/path/to/dist");
-        initializer.init();
+        // Check if the path exists
+        if (Files.exists(path)) {
+            System.out.println("Dist path exists: " + distPath);
+        } else {
+            System.out.println("Dist path does not exist: " + distPath);
+            // Optionally, create the directory if it doesn't exist
+            try {
+                Files.createDirectories(path);
+                System.out.println("Created dist path: " + distPath);
+            } catch (Exception e) {
+                System.err.println("Failed to create dist path: " + e.getMessage());
+            }
+        }
     }
 }

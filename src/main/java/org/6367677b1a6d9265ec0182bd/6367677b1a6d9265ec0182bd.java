@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 public class LogFormatter {
 
@@ -9,49 +9,25 @@ public class LogFormatter {
      * @return formatted string representation of the logging event.
      */
     public String format(final LoggingEvent event) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        String level = event.getLevel().toString();
-        String message = event.getMessage();
-        String loggerName = event.getLoggerName();
+        StringWriter writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
 
-        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
+        printWriter.println("Logging Event:");
+        printWriter.println("Timestamp: " + event.getTimestamp());
+        printWriter.println("Level: " + event.getLevel());
+        printWriter.println("Message: " + event.getMessage());
+        printWriter.println("Logger Name: " + event.getLoggerName());
+        printWriter.println("Thread Name: " + event.getThreadName());
+
+        if (event.getThrowableInfo() != null) {
+            printWriter.println("Throwable: ");
+            event.getThrowableInfo().printStackTrace(printWriter);
+        }
+
+        printWriter.flush();
+        return writer.toString();
     }
 }
 
 // Assuming LoggingEvent class has the following methods:
-// getTimeStamp(), getLevel(), getMessage(), getLoggerName()
-class LoggingEvent {
-    private long timeStamp;
-    private Level level;
-    private String message;
-    private String loggerName;
-
-    public LoggingEvent(long timeStamp, Level level, String message, String loggerName) {
-        this.timeStamp = timeStamp;
-        this.level = level;
-        this.message = message;
-        this.loggerName = loggerName;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getLoggerName() {
-        return loggerName;
-    }
-}
-
-// Assuming Level is an enum representing log levels
-enum Level {
-    INFO, WARN, ERROR, DEBUG
-}
+// getTimestamp(), getLevel(), getMessage(), getLoggerName(), getThreadName(), getThrowableInfo()

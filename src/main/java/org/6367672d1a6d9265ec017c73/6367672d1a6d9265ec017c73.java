@@ -15,15 +15,11 @@ public class Logger {
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {
             int lastTimestamp = messageTimestamps.get(message);
-            if (timestamp - lastTimestamp >= 10) {
-                messageTimestamps.put(message, timestamp);
-                return true;
-            } else {
+            if (timestamp - lastTimestamp < 10) {
                 return false;
             }
-        } else {
-            messageTimestamps.put(message, timestamp);
-            return true;
         }
+        messageTimestamps.put(message, timestamp);
+        return true;
     }
 }

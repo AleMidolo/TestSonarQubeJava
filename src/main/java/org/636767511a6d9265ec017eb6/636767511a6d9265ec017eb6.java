@@ -3,8 +3,8 @@ import java.util.function.Predicate;
 public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node start) {
-        this.current = start;
+    public OuterFaceCirculator(Node node) {
+        this.current = node;
     }
 
     public Node getCurrent() {
@@ -14,58 +14,56 @@ public class OuterFaceCirculator {
     public void next(int dir) {
         // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
         if (dir == 0) {
-            current = current.getNextClockwise();
+            current = current.getClockwiseNeighbor();
         } else {
-            current = current.getNextCounterClockwise();
+            current = current.getCounterClockwiseNeighbor();
         }
     }
 
     public void previous(int dir) {
         // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
         if (dir == 0) {
-            current = current.getPreviousClockwise();
+            current = current.getCounterClockwiseNeighbor();
         } else {
-            current = current.getPreviousCounterClockwise();
+            current = current.getClockwiseNeighbor();
         }
     }
 }
 
 public class Node {
-    private Node nextClockwise;
-    private Node nextCounterClockwise;
-    private Node previousClockwise;
-    private Node previousCounterClockwise;
+    private Node clockwiseNeighbor;
+    private Node counterClockwiseNeighbor;
 
-    public Node getNextClockwise() {
-        return nextClockwise;
+    public Node getClockwiseNeighbor() {
+        return clockwiseNeighbor;
     }
 
-    public Node getNextCounterClockwise() {
-        return nextCounterClockwise;
+    public void setClockwiseNeighbor(Node clockwiseNeighbor) {
+        this.clockwiseNeighbor = clockwiseNeighbor;
     }
 
-    public Node getPreviousClockwise() {
-        return previousClockwise;
+    public Node getCounterClockwiseNeighbor() {
+        return counterClockwiseNeighbor;
     }
 
-    public Node getPreviousCounterClockwise() {
-        return previousCounterClockwise;
+    public void setCounterClockwiseNeighbor(Node counterClockwiseNeighbor) {
+        this.counterClockwiseNeighbor = counterClockwiseNeighbor;
     }
-
-    // Other methods and fields...
 }
 
-private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+public class Graph {
+    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
-    while (true) {
-        Node currentNode = circulator.getCurrent();
-        if (predicate.test(currentNode)) {
-            return circulator;
+        while (true) {
+            Node currentNode = circulator.getCurrent();
+            if (predicate.test(currentNode)) {
+                return circulator;
+            }
+            if (currentNode == stop) {
+                return circulator;
+            }
+            circulator.next(dir);
         }
-        if (currentNode == stop) {
-            return circulator;
-        }
-        circulator.next(dir);
     }
 }

@@ -7,8 +7,11 @@
  * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
  */
 private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
+    if (str == null && suffix == null) {
+        return true;
+    }
     if (str == null || suffix == null) {
-        return str == null && suffix == null;
+        return false;
     }
     if (ignoreCase) {
         return str.toLowerCase().endsWith(suffix.toLowerCase());

@@ -10,7 +10,7 @@ public class ClassFileBuffer {
         buffer = null;
         readPointer = 0;
 
-        // Read all bytes from the input stream
+        // Read the input stream into a byte array
         buffer = in.readAllBytes();
 
         // Reset the read pointer to the start of the buffer

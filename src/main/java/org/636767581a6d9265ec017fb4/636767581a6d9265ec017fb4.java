@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UpperBoundCalculator<K extends Comparable<K>> {
+public class KeyBounds {
 
     /**
      * Finds a minimum lower bound for every key.
@@ -11,19 +11,18 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         List<Integer> upperBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        int currentMax = Integer.MIN_VALUE;
 
         for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                index = -(index + 1);
+            int keyValue = key.hashCode(); // Assuming K has a hashCode method
+            if (keyValue > currentMax) {
+                currentMax = keyValue;
             }
-            upperBounds.add(index);
+            upperBounds.add(currentMax);
         }
 
         return upperBounds;

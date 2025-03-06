@@ -14,19 +14,14 @@ public class PropertySubstitutor {
         }
 
         // Pattern to match ${...} placeholders
-        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
             String placeholder = matcher.group(1);
-            String replacement = props.getProperty(placeholder);
-            if (replacement != null) {
-                matcher.appendReplacement(result, replacement);
-            } else {
-                // If no replacement is found, keep the original placeholder
-                matcher.appendReplacement(result, matcher.group(0));
-            }
+            String replacement = props.getProperty(placeholder, "");
+            matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);
 
@@ -39,6 +34,6 @@ public class PropertySubstitutor {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result);  // Output: Hello, John!
     }
 }

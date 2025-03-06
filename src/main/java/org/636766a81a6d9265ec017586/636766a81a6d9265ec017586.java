@@ -25,6 +25,6 @@ public class FrameStack {
 
     // Example AbstractType class (assuming it exists)
     private static class AbstractType {
-        // AbstractType implementation details
+        // Define properties and methods for AbstractType
     }
 }

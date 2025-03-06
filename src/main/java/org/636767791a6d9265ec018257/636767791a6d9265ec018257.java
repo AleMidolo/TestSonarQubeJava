@@ -11,15 +11,11 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Assuming there is a method to add the log record to the table
-                addLogRecordToTable(lr);
+                // Add the log record to the table model or perform any other UI updates
+                // For example:
+                // logTableModel.addLogRecord(lr);
+                System.out.println("LogRecord added: " + lr.getMessage());
             }
         });
-    }
-
-    // Dummy method to represent adding a log record to the table
-    private void addLogRecordToTable(LogRecord lr) {
-        // Implementation to add the log record to the table
-        System.out.println("LogRecord added: " + lr.getMessage());
     }
 }

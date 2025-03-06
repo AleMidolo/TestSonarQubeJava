@@ -24,7 +24,7 @@ public class LogBuffer {
     }
 }
 
-// Assuming LoggingEvent is a class defined elsewhere
+// Assuming LoggingEvent is a predefined class
 class LoggingEvent {
-    // Implementation of LoggingEvent
+    // LoggingEvent implementation details
 }

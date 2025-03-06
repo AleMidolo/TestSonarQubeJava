@@ -1,25 +1,41 @@
 import java.util.*;
 
-class CategoryNode {
-    String name;
-    boolean active;
-    List<CategoryNode> children;
+class Category {
+    private String name;
+    private List<Category> children;
+    private boolean active;
 
-    CategoryNode(String name, boolean active) {
+    public Category(String name) {
         this.name = name;
-        this.active = active;
         this.children = new ArrayList<>();
+        this.active = true;
     }
 
-    void addChild(CategoryNode child) {
-        this.children.add(child);
+    public void addChild(Category child) {
+        children.add(child);
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 
-class CategoryTree {
-    private CategoryNode root;
+public class CategoryTree {
+    private Category root;
 
-    CategoryTree(CategoryNode root) {
+    public CategoryTree(Category root) {
         this.root = root;
     }
 
@@ -27,16 +43,18 @@ class CategoryTree {
         return removeUnusedNodesHelper(root);
     }
 
-    private int removeUnusedNodesHelper(CategoryNode node) {
+    private int removeUnusedNodesHelper(Category node) {
         if (node == null) {
             return 0;
         }
 
         int removedCount = 0;
-        Iterator<CategoryNode> iterator = node.children.iterator();
+        List<Category> children = node.getChildren();
+        Iterator<Category> iterator = children.iterator();
+
         while (iterator.hasNext()) {
-            CategoryNode child = iterator.next();
-            if (!child.active) {
+            Category child = iterator.next();
+            if (!child.isActive()) {
                 iterator.remove();
                 removedCount++;
             } else {
@@ -46,19 +64,18 @@ class CategoryTree {
 
         return removedCount;
     }
-}
 
-// Example usage:
-public class Main {
     public static void main(String[] args) {
-        CategoryNode root = new CategoryNode("Root", true);
-        CategoryNode child1 = new CategoryNode("Child1", false);
-        CategoryNode child2 = new CategoryNode("Child2", true);
-        CategoryNode grandChild1 = new CategoryNode("GrandChild1", false);
+        Category root = new Category("Root");
+        Category child1 = new Category("Child1");
+        Category child2 = new Category("Child2");
+        Category child3 = new Category("Child3");
 
         root.addChild(child1);
         root.addChild(child2);
-        child2.addChild(grandChild1);
+        child2.addChild(child3);
+
+        child2.setActive(false); // Marking Child2 as inactive
 
         CategoryTree tree = new CategoryTree(root);
         int removedCount = tree.removeUnusedNodes();

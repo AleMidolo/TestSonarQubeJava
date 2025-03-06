@@ -9,34 +9,13 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Assuming that the graph is represented as a map where each vertex maps to a list of edges with weights
-        // For example: Map<V, List<Edge<V>>> adjacencyList;
-        // Edge<V> could be a class that contains the target vertex and the weight of the edge
-
-        // Iterate through all vertices in the set
+        // Assuming that the graph is represented as a map where each vertex maps to a list of edges
+        // and each edge has a weight. This is a placeholder implementation.
+        // You would need to replace this with the actual logic to sum the weights of incoming edges.
         for (V vertex : v) {
-            // Assuming adjacencyList is a class member that stores the graph structure
-            // List<Edge<V>> edges = adjacencyList.get(vertex);
-            // for (Edge<V> edge : edges) {
-            //     sum += edge.getWeight();
-            // }
+            // Example: sum += getIncomingEdges(vertex).stream().mapToDouble(Edge::getWeight).sum();
+            // Replace with actual logic to get incoming edges and their weights
         }
-
         return sum;
-    }
-
-    // Example Edge class (assuming it exists)
-    private static class Edge<V> {
-        private V target;
-        private double weight;
-
-        public Edge(V target, double weight) {
-            this.target = target;
-            this.weight = weight;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
     }
 }

@@ -3,7 +3,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
-    private InputStream inputStream;
+
+    private final InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -27,7 +28,7 @@ public class StreamReader {
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Expected " + length + " bytes, but read " + bytesRead);
+            throw new IOException("Failed to read the expected number of bytes");
         }
 
         // Convert bytes to string using UTF-8 encoding
@@ -35,14 +36,11 @@ public class StreamReader {
     }
 
     private int readInt() throws IOException {
-        byte[] bytes = new byte[4];
-        int bytesRead = inputStream.read(bytes);
+        byte[] buffer = new byte[4];
+        int bytesRead = inputStream.read(buffer);
         if (bytesRead != 4) {
-            throw new IOException("Expected 4 bytes for an integer, but read " + bytesRead);
+            throw new IOException("Failed to read an integer from the stream");
         }
-        return (bytes[0] & 0xFF) << 24 |
-               (bytes[1] & 0xFF) << 16 |
-               (bytes[2] & 0xFF) << 8  |
-               (bytes[3] & 0xFF);
+        return (buffer[0] << 24) | ((buffer[1] & 0xFF) << 16) | ((buffer[2] & 0xFF) << 8) | (buffer[3] & 0xFF);
     }
 }

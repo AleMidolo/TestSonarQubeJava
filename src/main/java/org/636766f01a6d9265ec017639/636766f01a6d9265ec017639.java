@@ -21,10 +21,10 @@ public class ArrayToList {
         // Example usage
         String[] array = {"one", "two", "three"};
         List<String> list = asList(array);
-        System.out.println(list); // Output: [one, two, three]
+        System.out.println(list);
 
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
-        System.out.println(nullList); // Output: []
+        System.out.println(nullList);
     }
 }

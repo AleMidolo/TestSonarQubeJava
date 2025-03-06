@@ -19,7 +19,7 @@ public class LogAppender {
                 outputStream.write(message.getBytes());
                 outputStream.flush();
             } catch (IOException e) {
-                // Handle the exception, e.g., remove the client if the connection is lost
+                // Handle the exception, e.g., remove the disconnected client
                 clients.remove(client);
                 e.printStackTrace();
             }

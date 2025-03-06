@@ -4,15 +4,15 @@ public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new ArrayList<>();
+        this.consumers = new java.util.ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+        this.consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
-        return consumers;
+        return this.consumers;
     }
 }
 
@@ -20,18 +20,15 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetAdder {
+public class TargetChannelManager {
 
     /**
      * Add a new target channels.
-     * @param channels The channels to which the consumer will be added.
-     * @param consumer The consumer to be added to the channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        if (channels != null && consumer != null) {
-            channels.addConsumer(consumer);
-        } else {
+        if (channels == null || consumer == null) {
             throw new IllegalArgumentException("Channels and consumer must not be null");
         }
+        channels.addConsumer(consumer);
     }
 }

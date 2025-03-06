@@ -1,12 +1,10 @@
 class ListNodeImpl<E> {
-    E element;
+    E value;
     ListNodeImpl<E> next;
     ListNodeImpl<E> prev;
 
-    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-        this.element = element;
-        this.prev = prev;
-        this.next = next;
+    ListNodeImpl(E value) {
+        this.value = value;
     }
 }
 
@@ -26,6 +24,7 @@ public class LinkedList<E> {
         ListNodeImpl<E> next = node.next;
 
         if (prev == null) {
+            // Node is the head
             head = next;
         } else {
             prev.next = next;
@@ -33,13 +32,14 @@ public class LinkedList<E> {
         }
 
         if (next == null) {
+            // Node is the tail
             tail = prev;
         } else {
             next.prev = prev;
             node.next = null;
         }
 
-        node.element = null;
+        node.value = null; // Help GC
         return true;
     }
 }

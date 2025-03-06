@@ -11,20 +11,20 @@ private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
     List<Integer> suffixSum = new ArrayList<>(bounds.size());
     long totalSum = 0;
 
-    // Compute the total sum of all elements
-    for (int num : bounds) {
-        totalSum += num;
-    }
-
     // Compute the suffix sum
-    long currentSum = 0;
+    int currentSum = 0;
     for (int i = bounds.size() - 1; i >= 0; i--) {
         currentSum += bounds.get(i);
-        suffixSum.add((int) currentSum);
+        suffixSum.add(currentSum);
     }
 
     // Reverse the suffix sum list to match the original order
     Collections.reverse(suffixSum);
+
+    // Compute the total sum of all elements
+    for (int num : bounds) {
+        totalSum += num;
+    }
 
     return Pair.of(suffixSum, totalSum);
 }

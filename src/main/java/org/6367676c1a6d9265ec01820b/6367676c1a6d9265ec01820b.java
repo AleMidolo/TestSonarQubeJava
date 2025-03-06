@@ -14,14 +14,16 @@ public class StringUtils {
             return inString;
         }
 
-        Set<Character> charsToRemove = new HashSet<>();
+        // Create a set of characters to delete for quick lookup
+        Set<Character> charsToDeleteSet = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
-            charsToRemove.add(c);
+            charsToDeleteSet.add(c);
         }
 
+        // Build the resulting string by skipping characters in the delete set
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (!charsToRemove.contains(c)) {
+            if (!charsToDeleteSet.contains(c)) {
                 result.append(c);
             }
         }
@@ -32,6 +34,6 @@ public class StringUtils {
     public static void main(String[] args) {
         String input = "Hello, World!\nThis is a test.";
         String charsToDelete = "aeiou\n";
-        System.out.println(deleteAny(input, charsToDelete));
+        System.out.println(deleteAny(input, charsToDelete)); // Output: Hll, Wrld!Ths s  tst.
     }
 }

@@ -1,4 +1,3 @@
-import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,18 +15,19 @@ public class LogFormatter {
         String message = event.getMessage();
         String loggerName = event.getLoggerName();
 
-        return String.format("[%s] %s %s: %s", timestamp, level, loggerName, message);
+        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
     }
 }
 
-// Assuming LoggingEvent class has the following structure:
+// Assuming LoggingEvent class has the following methods:
+// getTimeStamp(), getLevel(), getMessage(), getLoggerName()
 class LoggingEvent {
     private long timeStamp;
-    private String level;
+    private Level level;
     private String message;
     private String loggerName;
 
-    public LoggingEvent(long timeStamp, String level, String message, String loggerName) {
+    public LoggingEvent(long timeStamp, Level level, String message, String loggerName) {
         this.timeStamp = timeStamp;
         this.level = level;
         this.message = message;
@@ -38,7 +38,7 @@ class LoggingEvent {
         return timeStamp;
     }
 
-    public String getLevel() {
+    public Level getLevel() {
         return level;
     }
 
@@ -49,4 +49,9 @@ class LoggingEvent {
     public String getLoggerName() {
         return loggerName;
     }
+}
+
+// Assuming Level is an enum representing log levels
+enum Level {
+    INFO, WARN, ERROR, DEBUG
 }

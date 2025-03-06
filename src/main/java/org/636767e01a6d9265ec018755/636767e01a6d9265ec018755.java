@@ -5,17 +5,17 @@ import com.google.gson.JsonElement;
 
 private Map<String, Object> buildContent(JsonObject jsonObject) {
     Map<String, Object> content = new HashMap<>();
-
+    
     // Iterate over all the keys in the JsonObject
     for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
         String key = entry.getKey();
         JsonElement value = entry.getValue();
-
+        
         // Check if the key is "ats" and handle it accordingly
         if (key.equals("ats")) {
-            // Assuming the value is a JsonObject or JsonArray, you can handle it as needed
-            // For simplicity, we'll just add it as is
-            content.put(key, value);
+            // Assuming "ats" is a special key that needs to be set by someone
+            // Here we just add it to the content map as is
+            content.put(key, value.getAsString());
         } else {
             // For other keys, add them to the content map
             if (value.isJsonPrimitive()) {
@@ -23,11 +23,12 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
             } else if (value.isJsonObject()) {
                 content.put(key, buildContent(value.getAsJsonObject()));
             } else if (value.isJsonArray()) {
-                // Handle JsonArray if needed
-                content.put(key, value.getAsJsonArray());
+                // Handle arrays if needed
+                // For simplicity, we'll just add them as a list of strings
+                content.put(key, value.getAsJsonArray().toString());
             }
         }
     }
-
+    
     return content;
 }

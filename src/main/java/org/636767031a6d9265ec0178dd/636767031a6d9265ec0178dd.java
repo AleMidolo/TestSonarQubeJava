@@ -8,7 +8,7 @@ public class RequestUtils {
      * @return The content length of the request.
      * @since 1.3
      */
-    public long contentLength(HttpServletRequest request) {
+    public static long contentLength(HttpServletRequest request) {
         return request.getContentLength();
     }
 }

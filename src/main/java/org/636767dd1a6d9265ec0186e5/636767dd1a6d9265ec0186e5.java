@@ -1,10 +1,15 @@
 import java.util.List;
 
-public class Channels {
+// Assuming Channels and IConsumer are defined as follows:
+interface IConsumer {
+    void consume(String message);
+}
+
+class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new java.util.ArrayList<>();
+        this.consumers = new ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
@@ -16,11 +21,7 @@ public class Channels {
     }
 }
 
-public interface IConsumer {
-    void consume(String message);
-}
-
-public class TargetChannelManager {
+public class ChannelManager {
 
     /**
      * Add a new target channels.

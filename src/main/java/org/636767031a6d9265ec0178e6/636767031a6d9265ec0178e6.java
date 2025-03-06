@@ -3,10 +3,12 @@ import java.util.Objects;
 public class ByteUtils {
 
     /**
-     * <p>Converts an array of object Bytes to primitives.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     * @param array  a <code>Byte</code> array, may be <code>null</code>
-     * @return a <code>byte</code> array, <code>null</code> if null array input
-     * @throws NullPointerException if array content is <code>null</code>
+     * Converts an array of object Bytes to primitives.
+     * This method returns {@code null} for a {@code null} input array.
+     *
+     * @param array  a {@code Byte} array, may be {@code null}
+     * @return a {@code byte} array, {@code null} if null array input
+     * @throws NullPointerException if array content is {@code null}
      */
     public static byte[] toPrimitive(final Byte[] array) {
         if (array == null) {

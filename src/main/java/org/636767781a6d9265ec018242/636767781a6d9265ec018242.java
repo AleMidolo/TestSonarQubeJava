@@ -22,7 +22,7 @@ public class Logger {
                     count++;
                 } catch (Exception e) {
                     // Log the exception or handle it as needed
-                    System.err.println("Failed to append event: " + e.getMessage());
+                    System.err.println("Failed to append event to appender: " + e.getMessage());
                 }
             }
         }

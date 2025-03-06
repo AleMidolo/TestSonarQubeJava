@@ -1,13 +1,13 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> outputFrameStack;
+    private Stack<AbstractType> outputFrameStack;
 
     public FrameStack() {
         this.outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Pops the given number of abstract types from the output frame stack.
      * @param elements the number of abstract types that must be popped.
      */
@@ -23,14 +23,8 @@ public class FrameStack {
         }
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.outputFrameStack.push("Type1");
-        frameStack.outputFrameStack.push("Type2");
-        frameStack.outputFrameStack.push("Type3");
-
-        frameStack.pop(2); // Pops the last two elements
-        System.out.println(frameStack.outputFrameStack); // Output: [Type1]
+    // Example AbstractType class (assuming it exists)
+    private static class AbstractType {
+        // AbstractType implementation details
     }
 }

@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * Gets a String's length or <code>0</code> if the String is <code>null</code>.
-     * @param str a String or <code>null</code>
-     * @return String length or <code>0</code> if the String is <code>null</code>.
+     * 获取字符串的长度，如果字符串为 <code>null</code> 则返回 <code>0</code>。
+     * @param str 一个字符串或 <code>null</code>
+     * @return 字符串的长度，如果字符串为 <code>null</code> 则返回 <code>0</code>。
      * @since 2.4
      */
     public static int length(final String str) {
@@ -11,9 +11,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        System.out.println(length(null));      // Output: 0
-        System.out.println(length(""));        // Output: 0
-        System.out.println(length("Hello"));   // Output: 5
+        // 测试用例
+        System.out.println(length(null));      // 输出: 0
+        System.out.println(length(""));        // 输出: 0
+        System.out.println(length("Hello"));   // 输出: 5
     }
 }

@@ -1,12 +1,25 @@
-/**
- * Adds a source line number corresponding to this label.
- * @param lineNumber a source line number (which should be strictly positive).
- */
-final void addLineNumber(final int lineNumber) {
-    if (lineNumber <= 0) {
-        throw new IllegalArgumentException("Line number must be strictly positive.");
+import java.util.ArrayList;
+import java.util.List;
+
+public class SourceCodeTagger {
+    private List<Integer> lineNumbers;
+
+    public SourceCodeTagger() {
+        this.lineNumbers = new ArrayList<>();
     }
-    // Assuming there is a list or some data structure to store line numbers
-    // For example, a List<Integer> lineNumbers;
-    lineNumbers.add(lineNumber);
+
+    /**
+     * 添加与此标签对应的源代码行号。
+     * @param lineNumber 一个源代码行号（应为正数）。
+     */
+    final void addLineNumber(final int lineNumber) {
+        if (lineNumber <= 0) {
+            throw new IllegalArgumentException("Line number must be a positive integer.");
+        }
+        this.lineNumbers.add(lineNumber);
+    }
+
+    public List<Integer> getLineNumbers() {
+        return new ArrayList<>(this.lineNumbers);
+    }
 }

@@ -4,9 +4,9 @@ import org.atmosphere.cpr.AtmosphereRequest;
 public class RequestWrapper {
 
     /**
-     * Wrap an {@link HttpServletRequest}.
+     * 包装一个 {@link HttpServletRequest}。
      * @param request {@link HttpServletRequest}
-     * @return an {@link AtmosphereRequest}
+     * @return 一个 {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
         return AtmosphereRequest.wrap(request);

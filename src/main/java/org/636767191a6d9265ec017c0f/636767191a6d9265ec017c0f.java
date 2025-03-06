@@ -1,26 +1,33 @@
-/**
- * Enlarges this byte vector so that it can receive 'size' more bytes.
- * @param size number of additional bytes that this byte vector should be able to receive.
- */
-private void enlarge(final int size) {
-    // Assuming the byte vector is stored in a byte array called 'data'
-    int currentCapacity = data.length;
-    int requiredCapacity = currentCapacity + size;
+import java.util.Arrays;
 
-    // If the current capacity is sufficient, no need to enlarge
-    if (requiredCapacity <= currentCapacity) {
-        return;
+public class ByteVector {
+    private byte[] data;
+    private int capacity;
+    private int size;
+
+    public ByteVector(int initialCapacity) {
+        this.data = new byte[initialCapacity];
+        this.capacity = initialCapacity;
+        this.size = 0;
     }
 
-    // Calculate the new capacity, typically doubling the size or adding the required size
-    int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
+    private void enlarge(final int size) {
+        int newCapacity = capacity + size;
+        if (newCapacity < 0) { // 处理溢出
+            throw new OutOfMemoryError("Required array size too large");
+        }
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
+    }
 
-    // Create a new array with the new capacity
-    byte[] newData = new byte[newCapacity];
+    public void add(byte b) {
+        if (size == capacity) {
+            enlarge(1); // 每次增加1个字节
+        }
+        data[size++] = b;
+    }
 
-    // Copy the existing data to the new array
-    System.arraycopy(data, 0, newData, 0, currentCapacity);
-
-    // Replace the old array with the new one
-    data = newData;
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
+    }
 }

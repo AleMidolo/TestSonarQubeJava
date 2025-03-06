@@ -1,22 +1,22 @@
 public class BooleanUtils {
 
     /**
-     * <p>Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.</p>
-     * <pre>
-     * BooleanUtils.toBoolean(Boolean.TRUE)  = true
-     * BooleanUtils.toBoolean(Boolean.FALSE) = false
-     * BooleanUtils.toBoolean(null)          = false
+     * <p>将 Boolean 类型转换为 boolean，能够处理 <code>null</code> ，将返回 <code>false</code>。</p> 
+     * <pre> 
+     * BooleanUtils.toBoolean(Boolean.TRUE)  = true 
+     * BooleanUtils.toBoolean(Boolean.FALSE) = false 
+     * BooleanUtils.toBoolean(null)          = false 
      * </pre>
-     * @param bool  the boolean to convert
-     * @return <code>true</code> or <code>false</code>, <code>null</code> returns <code>false</code>
+     * @param bool  要转换的boolean值
+     * @return <code>true</code> 或 <code>false</code>，<code>null</code> 将返回 <code>false</code>
      */
     public static boolean toBoolean(Boolean bool) {
         return bool != null && bool;
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean(Boolean.TRUE));  // Output: true
-        System.out.println(toBoolean(Boolean.FALSE)); // Output: false
-        System.out.println(toBoolean(null));          // Output: false
+        System.out.println(toBoolean(Boolean.TRUE));  // true
+        System.out.println(toBoolean(Boolean.FALSE)); // false
+        System.out.println(toBoolean(null));          // false
     }
 }

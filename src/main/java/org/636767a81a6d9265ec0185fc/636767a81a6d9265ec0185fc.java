@@ -2,22 +2,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TagReader {
-    private InputStream input;
+    private InputStream inputStream;
 
-    public TagReader(InputStream input) {
-        this.input = input;
+    public TagReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     /**
-     * Attempt to read a field tag, returning zero if we have reached EOF. Protocol message parsers use this to read tags,
-     * since a protocol message may legally end wherever a tag occurs, and zero is not a valid tag number.
+     * 尝试读取一个字段标签，如果到达文件末尾则返回零。协议消息解析器使用此方法读取标签，因为协议消息可以合法地在任何标签出现的地方结束，而零不是有效的标签编号。
+     *
+     * @return 读取到的标签值，如果到达文件末尾则返回0
+     * @throws IOException 如果读取过程中发生I/O错误
      */
     public int readTag() throws IOException {
-        int firstByte = input.read();
-        if (firstByte == -1) {
-            return 0; // EOF reached
-        }
-        // Assuming the tag is encoded as a single byte for simplicity
-        return firstByte;
+        int tag = inputStream.read();
+        return tag == -1 ? 0 : tag;
     }
 }

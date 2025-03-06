@@ -7,10 +7,7 @@ class Bucket {
         this.bucketList = bucketList;
     }
 
-    /**
-     * Removes this bucket from the data structure.
-     */
-    void removeSelf() {
+    public void removeSelf() {
         if (bucketList != null) {
             bucketList.remove(this);
         }

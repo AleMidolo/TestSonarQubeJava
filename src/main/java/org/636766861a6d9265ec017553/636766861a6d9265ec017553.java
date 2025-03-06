@@ -6,16 +6,16 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Example initialization, you can add your own template variables here
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+        // Initialize with some default template variables
+        this.templateVariables.add("var1");
+        this.templateVariables.add("var2");
+        this.templateVariables.add("var3");
     }
 
     /**
-     * Ascertain if a template variable is a member of this template.
-     * @param name The template variable.
-     * @return true if the template variable is a member of the template, otherwise false.
+     * 确定模板变量是否是该模板的成员。
+     * @param name 模板变量的名称。
+     * @return 如果模板变量是模板的成员，则返回真；否则返回假。
      */
     public final boolean isTemplateVariablePresent(String name) {
         return templateVariables.contains(name);

@@ -1,28 +1,28 @@
-import java.util.function.Predicate;
+import java.util.Objects;
 
 /**
- * Invoke the {@link BroadcastFilter}
- * @param msg The message to be filtered
- * @return The filtered message or null if the message does not pass the filter
+ * 调用 {@link BroadcastFilter}
+ * @param msg 需要过滤的消息
+ * @return 过滤后的消息
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is a functional interface or a class with a test method
-    // For example, BroadcastFilter could be a Predicate<Object>
-    Predicate<Object> broadcastFilter = new BroadcastFilter();
-
-    if (broadcastFilter.test(msg)) {
-        return msg; // Return the message if it passes the filter
-    } else {
-        return null; // Return null if the message does not pass the filter
-    }
+    // 假设 BroadcastFilter 是一个接口或类，这里我们假设它是一个接口
+    // 并且有一个 filter 方法
+    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设的实现类
+    return filter.filter(msg);
 }
 
-// Example implementation of BroadcastFilter as a Predicate
-class BroadcastFilter implements Predicate<Object> {
+// 假设的 BroadcastFilter 接口
+interface BroadcastFilter {
+    Object filter(Object msg);
+}
+
+// 假设的 BroadcastFilter 实现类
+class BroadcastFilterImpl implements BroadcastFilter {
     @Override
-    public boolean test(Object msg) {
-        // Implement your filtering logic here
-        // For example, return true if the message is not null
-        return msg != null;
+    public Object filter(Object msg) {
+        // 这里实现具体的过滤逻辑
+        // 例如，返回消息本身，或者进行一些处理
+        return Objects.requireNonNull(msg, "Message cannot be null");
     }
 }

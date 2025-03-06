@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicBlock {
+public class Block {
     private List<Integer> initializedTypes;
 
-    public BasicBlock() {
+    public Block() {
         this.initializedTypes = new ArrayList<>();
     }
 
     /**
-     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
-     * @param abstractType an abstract type on which a constructor is invoked.
+     * 将一个抽象类型添加到基本块中调用构造函数的类型列表中。
+     * @param abstractType 一个调用了构造函数的抽象类型。
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {
@@ -18,8 +18,5 @@ public class BasicBlock {
         }
     }
 
-    // Optional: Getter method to access the list of initialized types
-    public List<Integer> getInitializedTypes() {
-        return initializedTypes;
-    }
+    // Other methods and fields can be added here
 }

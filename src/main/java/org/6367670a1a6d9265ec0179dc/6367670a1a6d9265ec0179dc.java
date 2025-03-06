@@ -1,14 +1,13 @@
 import java.util.List;
 
-public class StackMapTableWriter {
-    private List<Object> currentFrame;
-    private List<Object> stackMapTableEntries;
+public class StackMapTableHandler {
+    private List<VerificationTypeInfo> currentFrame;
+    private List<VerificationTypeInfo> stackMapTableEntries;
 
     /**
-     * Puts some abstract types of {@link #currentFrame} in {@link #stackMapTableEntries}, using the
-     * JVMS verification_type_info format used in StackMapTable attributes.
-     * @param start index of the first type in {@link #currentFrame} to write.
-     * @param end index of last type in {@link #currentFrame} to write (exclusive).
+     * 使用在 StackMapTable 属性中使用的 JVMS verification_type_info 格式，将 {@link #currentFrame} 中的一些抽象类型放入 {@link #stackMapTableEntries} 中。
+     * @param start 要写入的 {@link #currentFrame} 中第一个类型的索引。
+     * @param end 要写入的 {@link #currentFrame} 中最后一个类型的索引（不包括该索引）。
      */
     private void putAbstractTypes(final int start, final int end) {
         if (start < 0 || end > currentFrame.size() || start >= end) {
@@ -16,19 +15,13 @@ public class StackMapTableWriter {
         }
 
         for (int i = start; i < end; i++) {
-            Object type = currentFrame.get(i);
-            stackMapTableEntries.add(convertToVerificationTypeInfo(type));
+            VerificationTypeInfo typeInfo = currentFrame.get(i);
+            stackMapTableEntries.add(typeInfo);
         }
     }
 
-    /**
-     * Converts the given type to the JVMS verification_type_info format.
-     * @param type the type to convert.
-     * @return the type in verification_type_info format.
-     */
-    private Object convertToVerificationTypeInfo(Object type) {
-        // Implement the conversion logic based on the JVMS specification.
-        // This is a placeholder implementation.
-        return type;
+    // Assuming VerificationTypeInfo is a class representing the verification type info
+    private static class VerificationTypeInfo {
+        // Implementation of VerificationTypeInfo
     }
 }

@@ -1,12 +1,13 @@
 /**
- * Build the 'Content-Range' HTTP Header value.
- * @return 'Content-Range' value
+ * 构建 'Content-Range' HTTP 头部值。
+ * @return 'Content-Range' 值
  */
 private String buildContentRange() {
-    // Assuming the range and total size are known or calculated elsewhere in the class
-    long start = 0; // Example start byte
-    long end = 1023; // Example end byte
-    long total = 2048; // Example total size
+    // 假设我们有一个文件的起始字节和结束字节
+    long startByte = 0; // 起始字节
+    long endByte = 1023; // 结束字节
+    long totalBytes = 2048; // 文件总字节数
 
-    return String.format("bytes %d-%d/%d", start, end, total);
+    // 构建 Content-Range 头部值
+    return String.format("bytes %d-%d/%d", startByte, endByte, totalBytes);
 }

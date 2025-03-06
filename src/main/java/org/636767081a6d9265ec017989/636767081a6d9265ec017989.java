@@ -1,12 +1,11 @@
-public class BooleanUtils {
+public class BooleanArrayConverter {
 
     /**
-     * Converts an array of object Booleans to primitives.
-     * This method returns {@code null} for a {@code null} input array.
-     *
-     * @param array  a {@code Boolean} array, may be {@code null}
-     * @return a {@code boolean} array, {@code null} if null array input
-     * @throws NullPointerException if array content is {@code null}
+     * <p>将一个由对象类型 Boolean 组成的数组转换为基本类型 boolean 数组。</p> 
+     * <p>对于 <code>null</code> 输入数组，此方法返回 <code>null</code>。</p>
+     * @param array  一个 <code>Boolean</code> 数组，可以为 <code>null</code>
+     * @return 一个 <code>boolean</code> 数组，如果输入数组为 null 则返回 <code>null</code>
+     * @throws NullPointerException 如果数组内容为 <code>null</code>
      */
     public static boolean[] toPrimitive(final Boolean[] array) {
         if (array == null) {
@@ -23,9 +22,8 @@ public class BooleanUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Boolean[] array = {true, false, true};
-        boolean[] primitiveArray = toPrimitive(array);
+        Boolean[] testArray = {true, false, true};
+        boolean[] primitiveArray = toPrimitive(testArray);
         for (boolean b : primitiveArray) {
             System.out.println(b);
         }

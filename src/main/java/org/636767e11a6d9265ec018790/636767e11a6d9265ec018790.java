@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +9,10 @@ public class ThreadSnapshotParser {
 
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(file.toPath());
+        List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
+            ThreadSnapshot snapshot = ThreadSnapshot.parseFromLine(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
@@ -30,7 +31,6 @@ public class ThreadSnapshotParser {
         return false;
     }
 
-    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined as follows:
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
@@ -46,15 +46,25 @@ public class ThreadSnapshotParser {
             return timestamp;
         }
 
-        public static ThreadSnapshot fromString(String line) {
-            // Parse the line into a ThreadSnapshot object
-            // Example format: "timestamp,threadName,state"
+        public String getThreadName() {
+            return threadName;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public static ThreadSnapshot parseFromLine(String line) {
+            // Assuming the line format is: timestamp,threadName,state
             String[] parts = line.split(",");
             if (parts.length == 3) {
                 try {
                     long timestamp = Long.parseLong(parts[0]);
-                    return new ThreadSnapshot(timestamp, parts[1], parts[2]);
+                    String threadName = parts[1];
+                    String state = parts[2];
+                    return new ThreadSnapshot(timestamp, threadName, state);
                 } catch (NumberFormatException e) {
+                    // Handle invalid timestamp format
                     return null;
                 }
             }

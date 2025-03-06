@@ -1,20 +1,13 @@
-import java.beans.Introspector;
+import org.apache.commons.lang3.StringUtils;
 
-public class StringUtils {
+public class StringUtil {
     /**
-     * Reverse of Introspector.decapitalize
+     * Introspector.decapitalize 的反向操作
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("world")); // Output: World
-        System.out.println(capitalize(""));      // Output: 
-        System.out.println(capitalize(null));    // Output: null
+        return StringUtils.capitalize(name);
     }
 }

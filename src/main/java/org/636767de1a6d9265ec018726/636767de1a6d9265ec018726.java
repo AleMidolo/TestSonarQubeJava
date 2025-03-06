@@ -27,27 +27,13 @@ public class SequenceRange {
     }
 }
 
-public class ProfileBuilder {
-
-    /**
-     * build current profiles segment snapshot search sequence ranges
-     */
+public class ConfigSnapshot {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
-        
-        // Example logic to create sequence ranges
-        ranges.add(new SequenceRange(1, 100));
+        // Example logic to build sequence ranges
+        ranges.add(new SequenceRange(0, 100));
         ranges.add(new SequenceRange(101, 200));
         ranges.add(new SequenceRange(201, 300));
-        
         return ranges;
-    }
-
-    public static void main(String[] args) {
-        ProfileBuilder builder = new ProfileBuilder();
-        List<SequenceRange> sequenceRanges = builder.buildSequenceRanges();
-        for (SequenceRange range : sequenceRanges) {
-            System.out.println(range);
-        }
     }
 }

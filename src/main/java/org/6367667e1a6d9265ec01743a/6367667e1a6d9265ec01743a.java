@@ -1,25 +1,17 @@
-public class WriteTimeTracker {
-    private long lastWriteTimeStamp;
+import java.util.concurrent.atomic.AtomicLong;
 
-    public WriteTimeTracker() {
-        this.lastWriteTimeStamp = 0;
-    }
+public class LastWriteTimeStamp {
+    private final AtomicLong lastWriteTimeStamp = new AtomicLong();
 
     /**
-     * The last time, in milliseconds, a write operation occurred.
+     * 上一次写操作发生的时间，单位为毫秒。
      * @return this
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return this.lastWriteTimeStamp;
+        return lastWriteTimeStamp.get();
     }
 
-    public void recordWriteOperation() {
-        this.lastWriteTimeStamp = System.currentTimeMillis();
-    }
-
-    public static void main(String[] args) {
-        WriteTimeTracker tracker = new WriteTimeTracker();
-        tracker.recordWriteOperation();
-        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
+    public void updateLastWriteTimeStamp() {
+        lastWriteTimeStamp.set(System.currentTimeMillis());
     }
 }

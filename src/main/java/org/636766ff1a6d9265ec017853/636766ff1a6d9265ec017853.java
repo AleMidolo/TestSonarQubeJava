@@ -1,10 +1,10 @@
 import org.objectweb.asm.Label;
 
 /**
- * Returns the label corresponding to the given bytecode offset. The default implementation of this method creates a label for the given offset if it has not been already created.
- * @param bytecodeOffset a bytecode offset in a method.
- * @param labels the already created labels, indexed by their offset. If a label already exists for bytecodeOffset this method must not create a new one. Otherwise it must store the new label in this array.
- * @return a non null Label, which must be equal to labels[bytecodeOffset].
+ * 返回与给定字节码偏移量对应的标签。如果该标签尚未被创建，该方法的默认实现会为给定的偏移量创建一个标签。
+ * @param bytecodeOffset 方法中的字节码偏移量。
+ * @param labels 已创建的标签数组，按其偏移量索引。如果bytecodeOffset已经存在标签，则此方法不得创建新的标签。否则，它必须将新标签存储在此数组中。
+ * @return 一个非空的标签，必须等于labels[bytecodeOffset]。
  */
 protected Label readLabel(final int bytecodeOffset, final Label[] labels) {
     if (labels[bytecodeOffset] == null) {

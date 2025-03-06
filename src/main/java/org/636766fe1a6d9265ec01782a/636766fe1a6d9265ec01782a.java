@@ -1,4 +1,5 @@
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 
 final class ClassFileReader {
@@ -9,34 +10,28 @@ final class ClassFileReader {
     }
 
     /**
-     * Reads a CONSTANT_Utf8 constant pool entry in {@link #classFileBuffer}.
-     * @param constantPoolEntryIndex the index of a CONSTANT_Utf8 entry in the class's constant pool table.
-     * @param charBuffer the buffer to be used to read the string. This buffer must be sufficiently large. It is not automatically resized.
-     * @return the String corresponding to the specified CONSTANT_Utf8 entry.
+     * 读取 {@link #classFileBuffer} 中的 CONSTANT_Utf8 常量池条目。
+     * @param constantPoolEntryIndex 类的常量池表中 CONSTANT_Utf8 条目的索引。
+     * @param charBuffer 用于读取字符串的缓冲区。此缓冲区必须足够大。不会自动调整大小。
+     * @return 与指定的 CONSTANT_Utf8 条目对应的字符串。
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry is structured as follows:
-        // 1 byte for tag (CONSTANT_Utf8)
-        // 2 bytes for length
-        // N bytes for the UTF-8 encoded string
-
-        // Move to the position of the constant pool entry
+        // Assuming the constant pool entry is stored as a length-prefixed UTF-8 string
+        // and the constantPoolEntryIndex is the offset in the buffer.
         classFileBuffer.position(constantPoolEntryIndex);
 
-        // Read the tag (should be 1 for CONSTANT_Utf8)
-        byte tag = classFileBuffer.get();
-        if (tag != 1) {
-            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag: " + tag);
-        }
-
-        // Read the length of the UTF-8 string
+        // Read the length of the UTF-8 string (assuming it's stored as a 2-byte unsigned short)
         int length = classFileBuffer.getShort() & 0xFFFF;
 
         // Read the UTF-8 bytes into a byte array
         byte[] utf8Bytes = new byte[length];
         classFileBuffer.get(utf8Bytes);
 
-        // Decode the UTF-8 bytes into a String using the provided charBuffer
-        return new String(utf8Bytes, StandardCharsets.UTF_8);
+        // Decode the UTF-8 bytes into the provided char buffer
+        CharBuffer decodedBuffer = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes));
+        decodedBuffer.get(charBuffer, 0, decodedBuffer.length());
+
+        // Convert the char buffer to a String
+        return new String(charBuffer, 0, decodedBuffer.length());
     }
 }

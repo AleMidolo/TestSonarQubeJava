@@ -46,7 +46,6 @@ public class URIDecoder {
     }
 
     public static void main(String[] args) {
-        // Example usage
         URI uri = URI.create("http://example.com/path/to/resource");
         List<PathSegmentImpl> segments = decodePath(uri, true);
         for (PathSegmentImpl segment : segments) {

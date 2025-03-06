@@ -1,9 +1,11 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class ArrayConverter {
 
     /**
-     * <p>Converts an array of primitive ints to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     * @param array  an <code>int</code> array
-     * @return an <code>Integer</code> array, <code>null</code> if null array input
+     * <p>将基本数据类型的 int 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
+     * @param array  一个 <code>int</code> 数组
+     * @return 一个 <code>Integer</code> 数组，如果输入数组为空则返回 <code>null</code>
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
@@ -17,9 +19,9 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        int[] primitiveArray = {1, 2, 3, 4, 5};
-        Integer[] objectArray = toObject(primitiveArray);
-        for (Integer num : objectArray) {
+        int[] intArray = {1, 2, 3, 4, 5};
+        Integer[] integerArray = toObject(intArray);
+        for (Integer num : integerArray) {
             System.out.println(num);
         }
     }

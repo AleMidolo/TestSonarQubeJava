@@ -1,24 +1,13 @@
-public class StringUtils {
-
-    /**
-     * Finds the first index within a String, handling <code>null</code>. This method uses {@link String#indexOf(String)}.
-     *
-     * @param str       the String to check, may be null
-     * @param searchStr the String to search for, may be null
-     * @return the first index of the search String within the original String, or -1 if not found or if either String is null
-     */
-    public static int indexOf(String str, String searchStr) {
-        if (str == null || searchStr == null) {
-            return -1;
-        }
-        return str.indexOf(searchStr);
+/**
+ * 在字符串中查找第一个索引，能处理 <code>null</code>。此方法使用 {@link String#indexOf(String)}。
+ *
+ * @param str 要搜索的字符串，可以为 <code>null</code>
+ * @param searchStr 要查找的字符串，可以为 <code>null</code>
+ * @return 如果找到则返回第一个匹配的索引，否则返回 -1。如果输入字符串为 <code>null</code>，则返回 -1。
+ */
+public static int indexOf(String str, String searchStr) {
+    if (str == null || searchStr == null) {
+        return -1;
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        String str = "Hello, World!";
-        String searchStr = "World";
-        int index = indexOf(str, searchStr);
-        System.out.println("Index of '" + searchStr + "' in '" + str + "' is: " + index);
-    }
+    return str.indexOf(searchStr);
 }

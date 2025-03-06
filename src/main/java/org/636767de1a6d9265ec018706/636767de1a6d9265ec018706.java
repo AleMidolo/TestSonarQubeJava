@@ -2,60 +2,56 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Mappings {
-    private Map<String, Object> properties;
+    private Map<String, Object> fields;
 
     public Mappings() {
-        this.properties = new HashMap<>();
+        this.fields = new HashMap<>();
     }
 
-    public Map<String, Object> getProperties() {
-        return properties;
+    public Map<String, Object> getFields() {
+        return fields;
     }
 
-    public void setProperties(Map<String, Object> properties) {
-        this.properties = properties;
+    public void setFields(Map<String, Object> fields) {
+        this.fields = fields;
     }
 }
 
 public class MappingDiff {
 
     /**
-     * Returns mappings with fields that do not exist in the input mappings. The input mappings should be history mapping from current index. Do not return _source config to avoid current index update conflict.
+     * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
      *
-     * @param tableName The name of the table.
-     * @param mappings The current mappings to compare against.
-     * @return A new Mappings object containing only the fields that are not present in the input mappings.
+     * @param tableName 表名
+     * @param mappings  当前索引的历史映射
+     * @return 不存在的字段的映射
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
+        // 假设我们有一个方法来获取当前表的映射
         Mappings currentMappings = getCurrentMappings(tableName);
-        Mappings diffMappings = new Mappings();
 
-        for (Map.Entry<String, Object> entry : currentMappings.getProperties().entrySet()) {
+        Mappings diffMappings = new Mappings();
+        Map<String, Object> currentFields = currentMappings.getFields();
+        Map<String, Object> inputFields = mappings.getFields();
+
+        for (Map.Entry<String, Object> entry : inputFields.entrySet()) {
             String fieldName = entry.getKey();
-            if (!mappings.getProperties().containsKey(fieldName)) {
-                diffMappings.getProperties().put(fieldName, entry.getValue());
+            if (!currentFields.containsKey(fieldName)) {
+                diffMappings.getFields().put(fieldName, entry.getValue());
             }
         }
 
         return diffMappings;
     }
 
-    // Dummy method to simulate fetching current mappings for a table
+    // 假设的方法，用于获取当前表的映射
     private Mappings getCurrentMappings(String tableName) {
+        // 这里应该实现获取当前表映射的逻辑
+        // 例如，从数据库或配置文件中读取
         Mappings currentMappings = new Mappings();
-        // Simulate some mappings
-        currentMappings.getProperties().put("field1", "type1");
-        currentMappings.getProperties().put("field2", "type2");
-        currentMappings.getProperties().put("field3", "type3");
+        // 假设当前表有以下字段
+        currentMappings.getFields().put("field1", "type1");
+        currentMappings.getFields().put("field2", "type2");
         return currentMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff diff = new MappingDiff();
-        Mappings historyMappings = new Mappings();
-        historyMappings.getProperties().put("field1", "type1");
-
-        Mappings diffMappings = diff.diffStructure("exampleTable", historyMappings);
-        System.out.println("Diff Mappings: " + diffMappings.getProperties());
     }
 }

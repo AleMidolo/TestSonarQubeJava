@@ -5,25 +5,29 @@ import java.nio.file.Paths;
 public class ConfigInitializer {
 
     /**
-     * Initialize config, such as check dist path
+     * 初始化配置，例如检查分发路径
      */
     public void init() {
-        // Define the path to check
-        String distPath = "path/to/dist";
-        Path path = Paths.get(distPath);
+        // 假设分发路径为 "/path/to/distribution"
+        Path distributionPath = Paths.get("/path/to/distribution");
 
-        // Check if the path exists
-        if (Files.exists(path)) {
-            System.out.println("Dist path exists: " + distPath);
+        // 检查路径是否存在
+        if (Files.exists(distributionPath)) {
+            System.out.println("分发路径存在: " + distributionPath);
         } else {
-            System.out.println("Dist path does not exist: " + distPath);
-            // Optionally, create the directory if it doesn't exist
+            System.out.println("分发路径不存在: " + distributionPath);
+            // 可以选择创建路径
             try {
-                Files.createDirectories(path);
-                System.out.println("Created dist path: " + distPath);
+                Files.createDirectories(distributionPath);
+                System.out.println("已创建分发路径: " + distributionPath);
             } catch (Exception e) {
-                System.err.println("Failed to create dist path: " + e.getMessage());
+                System.err.println("无法创建分发路径: " + e.getMessage());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        ConfigInitializer initializer = new ConfigInitializer();
+        initializer.init();
     }
 }

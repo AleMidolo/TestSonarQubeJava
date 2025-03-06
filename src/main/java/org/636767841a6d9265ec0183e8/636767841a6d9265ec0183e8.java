@@ -10,7 +10,7 @@ public class EventBuffer {
     }
 
     /**
-     * Add an <code>event</code> as the last event in the buffer.
+     * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
      */
     public void add(LoggingEvent event) {
         if (event != null) {

@@ -3,11 +3,11 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * Case in-sensitive Checks if the String contains any character in the given set of string.
+     * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
      * 
-     * @param str The string to check.
-     * @param searchStrArray The list of strings to search for within the main string.
-     * @return true if the main string contains any of the strings in the list (case insensitive), false otherwise.
+     * @param str 要检查的字符串
+     * @param searchStrArray 要搜索的字符串集合
+     * @return 如果字符串包含集合中的任何字符，返回true；否则返回false
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -20,14 +20,15 @@ public class StringUtils {
                 return true;
             }
         }
+
         return false;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        List<String> searchStrings = List.of("hello", "world");
-        String input = "Hello, this is a test!";
+        // 示例用法
+        List<String> searchStrings = List.of("hello", "world", "java");
+        String input = "Hello, this is a test string.";
         boolean result = containsAnyIgnoreCase(input, searchStrings);
-        System.out.println(result); // Output: true
+        System.out.println(result); // 输出: true
     }
 }

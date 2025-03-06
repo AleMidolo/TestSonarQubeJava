@@ -4,7 +4,7 @@ import java.lang.reflect.TypeVariable;
 public class TypeResolver {
 
     /**
-     * Resolves the first bound for the {@code typeVariable}, returning {@code Unknown.class} if none can be resolved.
+     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
@@ -15,18 +15,18 @@ public class TypeResolver {
         }
     }
 
-    // Placeholder for Unknown.class
     public static class Unknown {
+        // Placeholder class to represent an unknown type
     }
 
     public static void main(String[] args) {
         // Example usage
-        TypeVariable<?> typeVar = ExampleClass.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVar);
+        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
+        Type bound = resolveBound(typeVariable);
         System.out.println("Resolved bound: " + bound);
     }
 
-    // Example class with a type parameter
-    public static class ExampleClass<T> {
+    public static class ExampleClass<T extends String> {
+        // Example class with a type parameter
     }
 }

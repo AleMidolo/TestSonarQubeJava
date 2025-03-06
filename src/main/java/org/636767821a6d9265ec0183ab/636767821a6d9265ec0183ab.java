@@ -1,10 +1,13 @@
-public class Example {
+public class ExceptionChecker {
     private Throwable thrown;
 
-    public Example(Throwable thrown) {
+    public ExceptionChecker(Throwable thrown) {
         this.thrown = thrown;
     }
 
+    /**
+     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
+     */
     public boolean hasThrown() {
         if (thrown == null) {
             return false;
@@ -13,12 +16,13 @@ public class Example {
         return thrownString != null && !thrownString.isEmpty();
     }
 
+    public Throwable getThrown() {
+        return thrown;
+    }
+
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Should print true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Should print false
+        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
+        System.out.println(checker.hasThrown()); // Should print true
     }
 }

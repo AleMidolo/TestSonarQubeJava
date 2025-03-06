@@ -1,31 +1,25 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class CharUtils {
 
-    private static final Map<Character, Character> CHAR_CACHE = new HashMap<>();
-
-    static {
-        // Pre-cache ASCII 7-bit characters
-        for (int i = 0; i < 128; i++) {
-            CHAR_CACHE.put((char) i, (char) i);
+    /**
+     * <p>将字符转换为 Character 对象。</p> <p>对于 ASCII 7 位字符，此方法使用缓存，每次调用都会返回相同的 Character 对象。</p> <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
+     * @param ch  要转换的字符
+     * @return 指定字符的 Character 对象
+     */
+    public static Character toCharacterObject(final char ch) {
+        // ASCII 7-bit characters are in the range 0-127
+        if (ch <= 127) {
+            // Use the cached Character objects for ASCII characters
+            return Character.valueOf(ch);
+        } else {
+            // For non-ASCII characters, create a new Character object
+            return new Character(ch);
         }
     }
 
-    /**
-     * <p>Converts the character to a Character.</p> 
-     * <p>For ASCII 7 bit characters, this uses a cache that will return the same Character object each time.</p> 
-     * <pre> 
-     * CharUtils.toCharacterObject(' ')  = ' ' 
-     * CharUtils.toCharacterObject('A')  = 'A' 
-     * </pre>
-     * @param ch  the character to convert
-     * @return a Character of the specified character
-     */
-    public static Character toCharacterObject(final char ch) {
-        if (ch < 128) {
-            return CHAR_CACHE.get(ch);
-        }
-        return ch;
+    public static void main(String[] args) {
+        // Test cases
+        System.out.println(CharUtils.toCharacterObject(' ') == ' ');  // true
+        System.out.println(CharUtils.toCharacterObject('A') == 'A');  // true
+        System.out.println(CharUtils.toCharacterObject('€') == '€');  // true (non-ASCII character)
     }
 }

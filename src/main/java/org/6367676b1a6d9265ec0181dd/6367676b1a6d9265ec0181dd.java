@@ -1,13 +1,13 @@
 public class StringUtils {
 
     /**
-     * Returns the number of occurrences the substring {@code sub} appears in string {@code str}.
-     * @param str string to search in. Return 0 if this is null.
-     * @param sub string to search for. Return 0 if this is null.
-     * @return the number of occurrences the substring {@code sub} appears in string {@code str}.
+     * 返回子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
+     * @param str 要搜索的字符串。如果为空，则返回 0。
+     * @param sub 要搜索的子字符串。如果为空，则返回 0。
+     * @return 子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
      */
     public static int countOccurrencesOf(String str, String sub) {
-        if (str == null || sub == null || sub.isEmpty()) {
+        if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
             return 0;
         }
 
@@ -23,9 +23,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String str = "hello world, hello universe, hello everyone";
-        String sub = "hello";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 3
+        String str = "ababababab";
+        String sub = "ab";
+        System.out.println(countOccurrencesOf(str, sub)); // 输出: 5
     }
 }

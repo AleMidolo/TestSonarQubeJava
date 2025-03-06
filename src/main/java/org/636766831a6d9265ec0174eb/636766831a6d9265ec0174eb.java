@@ -3,26 +3,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-private void addReverse(final File[] files) {
-    if (files == null || files.length == 0) {
-        return;
+public class FileHandler {
+
+    /**
+     * 以逆序添加指定的文件。
+     */
+    private void addReverse(final File[] files) {
+        if (files == null) {
+            return;
+        }
+
+        List<File> fileList = new ArrayList<>();
+        for (File file : files) {
+            if (file != null) {
+                fileList.add(file);
+            }
+        }
+
+        Collections.reverse(fileList);
+
+        // Assuming there is a method to handle the reversed list of files
+        handleFiles(fileList);
     }
 
-    List<File> fileList = new ArrayList<>();
-    for (File file : files) {
-        fileList.add(file);
+    private void handleFiles(List<File> files) {
+        // Implementation to handle the list of files
+        for (File file : files) {
+            System.out.println("Processing file: " + file.getName());
+        }
     }
 
-    Collections.reverse(fileList);
-
-    // Assuming there is a method to add files, replace 'addFile' with the actual method name
-    for (File file : fileList) {
-        addFile(file); // Replace 'addFile' with the actual method to add files
+    public static void main(String[] args) {
+        FileHandler handler = new FileHandler();
+        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
+        handler.addReverse(files);
     }
-}
-
-// Example method to add a file (replace with actual implementation)
-private void addFile(File file) {
-    // Implementation to add the file
-    System.out.println("Adding file: " + file.getName());
 }

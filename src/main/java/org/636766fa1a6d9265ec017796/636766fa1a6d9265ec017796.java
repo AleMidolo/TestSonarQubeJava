@@ -3,10 +3,9 @@ import java.util.Objects;
 public class BooleanArrayConverter {
 
     /**
-     * <p>Converts an array of primitive booleans to objects.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     * @param array  a <code>boolean</code> array
-     * @return a <code>Boolean</code> array, <code>null</code> if null array input
+     * <p>将基本数据类型的 boolean 数组转换为对象。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
+     * @param array  一个 <code>boolean</code> 数组
+     * @return 一个 <code>Boolean</code> 数组，如果输入数组为空则返回 <code>null</code>
      */
     public static Boolean[] toObject(final boolean[] array) {
         if (array == null) {
@@ -20,9 +19,9 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        boolean[] primitiveArray = {true, false, true};
-        Boolean[] objectArray = toObject(primitiveArray);
-        for (Boolean b : objectArray) {
+        boolean[] testArray = {true, false, true};
+        Boolean[] result = toObject(testArray);
+        for (Boolean b : result) {
             System.out.println(b);
         }
     }

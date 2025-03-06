@@ -1,5 +1,4 @@
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 public final class Buffer {
     private ByteArrayOutputStream buffer;
@@ -9,12 +8,7 @@ public final class Buffer {
     }
 
     public void write(byte[] data) {
-        try {
-            buffer.write(data);
-        } catch (IOException e) {
-            // Handle the exception, though ByteArrayOutputStream.write() does not throw IOException
-            e.printStackTrace();
-        }
+        buffer.write(data, 0, data.length);
     }
 
     public final byte[] toByteArray() {
@@ -23,9 +17,10 @@ public final class Buffer {
 
     public static void main(String[] args) {
         Buffer buffer = new Buffer();
-        buffer.write("Hello".getBytes());
-        buffer.write("World".getBytes());
+        buffer.write(new byte[]{1, 2, 3, 4, 5});
         byte[] result = buffer.toByteArray();
-        System.out.println(new String(result)); // Outputs: HelloWorld
+        for (byte b : result) {
+            System.out.print(b + " ");
+        }
     }
 }

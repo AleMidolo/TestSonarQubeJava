@@ -13,9 +13,9 @@ class TreeNode<T> {
 public class TreeRotation<T> {
 
     /**
-     * Performs a right node rotation.
-     * @param node a node to rotate
-     * @return a new parent of the {@code node}
+     * 执行右旋转操作。
+     * @param node 要旋转的节点
+     * @return {@code node} 的新父节点
      */
     private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {

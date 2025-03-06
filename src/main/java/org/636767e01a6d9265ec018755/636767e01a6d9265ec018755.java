@@ -1,32 +1,33 @@
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-private Map<String, Object> buildContent(JsonObject jsonObject) {
-    Map<String, Object> content = new HashMap<>();
+public class ContentBuilder {
 
-    // Iterate over all the keys in the JsonObject
-    for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-        String key = entry.getKey();
-        JsonElement value = entry.getValue();
-
-        // Check if the key is "ats" and handle it accordingly
-        if (key.equals("ats")) {
-            // Assuming ats is a special field that needs to be set differently
-            content.put(key, value.getAsString()); // or getAsInt(), getAsBoolean(), etc., depending on the type
-        } else {
-            // Handle other fields normally
-            if (value.isJsonPrimitive()) {
-                content.put(key, value.getAsString());
-            } else if (value.isJsonObject()) {
-                content.put(key, buildContent(value.getAsJsonObject()));
-            } else if (value.isJsonArray()) {
-                // Handle arrays if needed
-                // content.put(key, value.getAsJsonArray());
-            }
+    /**
+     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
+     */
+    private Map<String, Object> buildContent(JsonObject jsonObject) {
+        Map<String, Object> contentMap = new HashMap<>();
+        
+        // 假设jsonObject中有一个字段 "content" 存储了内容
+        String content = jsonObject.get("content").getAsString();
+        
+        // 使用正则表达式匹配 @ 某人
+        Pattern pattern = Pattern.compile("@(\\w+)");
+        Matcher matcher = pattern.matcher(content);
+        
+        // 如果匹配到 @ 某人，则设置 @ 信息
+        if (matcher.find()) {
+            String mentionedUser = matcher.group(1);
+            contentMap.put("mentionedUser", mentionedUser);
         }
+        
+        // 将内容放入map中
+        contentMap.put("content", content);
+        
+        return contentMap;
     }
-
-    return content;
 }

@@ -1,42 +1,32 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cache {
-    private Map<String, METRICS> cacheMap = new HashMap<>();
+public class MetricsCache {
+    private Map<String, Double> cache = new HashMap<>();
 
     /**
-     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
-     * @param data to be added potentially.
+     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
+     * @param data 需要添加的数据。
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
-        if (cacheMap.containsKey(key)) {
-            METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
-        } else {
-            cacheMap.put(key, data);
+        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
+            String key = entry.getKey();
+            Double value = entry.getValue();
+            cache.merge(key, value, Double::sum);
         }
     }
-}
 
-// Assuming METRICS class has the following structure
-class METRICS {
-    private String key;
-    private int value;
+    // Assuming METRICS is a class that contains a map of metrics
+    public static class METRICS {
+        private Map<String, Double> metrics;
 
-    public METRICS(String key, int value) {
-        this.key = key;
-        this.value = value;
+        public METRICS(Map<String, Double> metrics) {
+            this.metrics = metrics;
+        }
+
+        public Map<String, Double> getMetrics() {
+            return metrics;
+        }
     }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
-    }
-
-    // Other methods and fields as needed
 }

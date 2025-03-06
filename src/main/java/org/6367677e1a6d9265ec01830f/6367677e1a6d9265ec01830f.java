@@ -1,57 +1,35 @@
+import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LogFormatter {
 
     /**
-     * Produces a formatted string as specified by the conversion pattern.
-     * @param event The LoggingEvent containing the log information.
-     * @return A formatted string representing the log event.
+     * 根据转换模式生成格式化字符串。
+     * @param event 日志事件
+     * @return 格式化后的日志字符串
      */
     public String format(LoggingEvent event) {
-        // Example conversion pattern: [timestamp] [level] message
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        // 获取日志级别
         String level = event.getLevel().toString();
-        String message = event.getMessage();
+        // 获取日志时间
+        long timeStamp = event.getTimeStamp();
+        Date date = new Date(timeStamp);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(date);
+        // 获取日志消息
+        String message = event.getMessage().toString();
+        // 获取日志线程名
+        String threadName = event.getThreadName();
+        // 获取日志类名
+        String className = event.getLocationInformation().getClassName();
+        // 获取日志方法名
+        String methodName = event.getLocationInformation().getMethodName();
+        // 获取日志行号
+        String lineNumber = event.getLocationInformation().getLineNumber();
 
-        return String.format("[%s] [%s] %s", timestamp, level, message);
-    }
-
-    // Assuming LoggingEvent class structure for demonstration
-    public static class LoggingEvent {
-        private long timeStamp;
-        private Level level;
-        private String message;
-
-        public LoggingEvent(long timeStamp, Level level, String message) {
-            this.timeStamp = timeStamp;
-            this.level = level;
-            this.message = message;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-
-        public Level getLevel() {
-            return level;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    // Assuming Level enum for demonstration
-    public enum Level {
-        INFO, WARN, ERROR, DEBUG
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        LogFormatter formatter = new LogFormatter();
-        LoggingEvent event = new LoggingEvent(System.currentTimeMillis(), Level.INFO, "This is a log message.");
-        System.out.println(formatter.format(event));
+        // 格式化日志输出
+        return String.format("[%s] %s [%s] %s.%s:%s - %s",
+                level, formattedDate, threadName, className, methodName, lineNumber, message);
     }
 }

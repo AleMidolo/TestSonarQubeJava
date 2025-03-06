@@ -5,20 +5,16 @@ class CategoryTree {
 
     private class Node {
         String name;
-        boolean active;
+        boolean isActive;
         List<Node> children;
 
-        Node(String name) {
+        Node(String name, boolean isActive) {
             this.name = name;
-            this.active = true;
+            this.isActive = isActive;
             this.children = new ArrayList<>();
         }
     }
 
-    /**
-     * Removes any inactive nodes from the Category tree.
-     * @return The number of nodes removed.
-     */
     protected int removeUnusedNodes() {
         if (root == null) {
             return 0;
@@ -27,24 +23,34 @@ class CategoryTree {
     }
 
     private int removeUnusedNodesHelper(Node node) {
-        int count = 0;
+        if (node == null) {
+            return 0;
+        }
+
+        int removedCount = 0;
         Iterator<Node> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             Node child = iterator.next();
-            if (!child.active) {
+            if (!child.isActive) {
                 iterator.remove();
-                count++;
+                removedCount++;
             } else {
-                count += removeUnusedNodesHelper(child);
+                removedCount += removeUnusedNodesHelper(child);
             }
         }
-        return count;
+
+        return removedCount;
     }
 
     // Example usage
     public static void main(String[] args) {
         CategoryTree tree = new CategoryTree();
-        // Populate the tree with nodes and set some as inactive
-        // tree.removeUnusedNodes();
+        tree.root = tree.new Node("Root", true);
+        tree.root.children.add(tree.new Node("Child1", false));
+        tree.root.children.add(tree.new Node("Child2", true));
+        tree.root.children.get(1).children.add(tree.new Node("GrandChild1", false));
+
+        int removedCount = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedCount + " unused nodes.");
     }
 }

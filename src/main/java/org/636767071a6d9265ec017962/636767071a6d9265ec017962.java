@@ -1,37 +1,28 @@
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Map;
+import org.apache.commons.beanutils.BeanMap;
 
-public class BeanMap {
-    private Map<String, Object> properties;
+public class BeanMapUtils {
 
-    public BeanMap() {
-        // Initialize properties map
-    }
-
+    /**
+     * 将给定 BeanMap 中所有可写属性放入此 BeanMap。只读和只写属性将被忽略。
+     * @param map  要放入的 BeanMap
+     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+            throw new IllegalArgumentException("The input BeanMap cannot be null.");
         }
 
-        for (Map.Entry<String, Object> entry : map.properties.entrySet()) {
-            String propertyName = entry.getKey();
-            Object value = entry.getValue();
-
-            try {
-                PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
-                Method writeMethod = pd.getWriteMethod();
-
-                if (writeMethod != null) {
-                    writeMethod.invoke(this, value);
-                }
-            } catch (Exception e) {
-                // Handle exceptions (e.g., IntrospectionException, IllegalAccessException, InvocationTargetException)
-                e.printStackTrace();
+        // 获取当前 BeanMap 的所有可写属性
+        for (Object key : map.keySet()) {
+            if (map.isWriteable(key.toString())) {
+                Object value = map.get(key);
+                this.put(key, value);
             }
         }
     }
 
-    // Other methods and properties of BeanMap
+    // 假设 BeanMap 类中已经有一个 put 方法
+    public void put(Object key, Object value) {
+        // 这里假设 BeanMap 的 put 方法已经实现
+        // 实际实现可能依赖于具体的 BeanMap 实现
+    }
 }

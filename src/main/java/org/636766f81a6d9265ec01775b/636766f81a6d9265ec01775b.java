@@ -8,9 +8,9 @@ public class ClassReader {
     }
 
     /**
-     * Reads a signed long value in this {@link ClassReader}. <i>This method is intended for {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
-     * @param offset the start offset of the value to be read in this {@link ClassReader}.
-     * @return the read value.
+     * 在此 {@link ClassReader} 中读取一个有符号的长整型值。<i>此方法旨在用于 {@link Attribute} 子类，通常不用于类生成器或适配器。</i>
+     * @param offset 要读取的值在此 {@link ClassReader} 中的起始偏移量。
+     * @return 读取的值。
      */
     public long readLong(final int offset) {
         if (offset < 0 || offset + 8 > data.length) {

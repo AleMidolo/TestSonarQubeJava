@@ -1,24 +1,68 @@
 public class Bucket {
     private Bucket next;
-    private Bucket prev;
 
+    public Bucket(Bucket next) {
+        this.next = next;
+    }
+
+    public Bucket getNext() {
+        return next;
+    }
+
+    public void setNext(Bucket next) {
+        this.next = next;
+    }
+}
+
+public class BucketList {
+    private Bucket head;
+
+    public BucketList(Bucket head) {
+        this.head = head;
+    }
+
+    public Bucket getHead() {
+        return head;
+    }
+
+    public void setHead(Bucket head) {
+        this.head = head;
+    }
+
+    /**
+     * 在数据结构中将此桶插入到 {@code bucket} 之前。
+     * @param bucket 作为当前桶下一个的桶。
+     */
     public void insertBefore(Bucket bucket) {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
 
-        // Set the previous of the new bucket to the previous of the current bucket
-        this.prev = bucket.prev;
-
-        // Set the next of the new bucket to the current bucket
-        this.next = bucket;
-
-        // If the current bucket has a previous, set its next to the new bucket
-        if (bucket.prev != null) {
-            bucket.prev.next = this;
+        if (head == null) {
+            head = bucket;
+            return;
         }
 
-        // Set the previous of the current bucket to the new bucket
-        bucket.prev = this;
+        Bucket current = head;
+        Bucket previous = null;
+
+        while (current != null && current != bucket) {
+            previous = current;
+            current = current.getNext();
+        }
+
+        if (current == null) {
+            throw new IllegalArgumentException("Bucket not found in the list");
+        }
+
+        if (previous == null) {
+            // Inserting before the head
+            bucket.setNext(head);
+            head = bucket;
+        } else {
+            // Inserting in the middle or at the end
+            previous.setNext(bucket);
+            bucket.setNext(current);
+        }
     }
 }

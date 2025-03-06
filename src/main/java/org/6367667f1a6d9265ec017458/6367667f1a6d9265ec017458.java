@@ -1,8 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
+import org.atmosphere.cpr.AtmosphereFramework;
+import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-    private Map<String, AtmosphereHandler> handlers = new HashMap<>();
+    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
      * Rimuove un {@link AtmosphereHandler}.
@@ -18,16 +18,11 @@ public class AtmosphereFramework {
     }
 
     /**
-     * Aggiunge un {@link AtmosphereHandler} al framework.
-     * @param mapping il mapping associato all'handler
+     * Aggiunge un {@link AtmosphereHandler}.
+     * @param mapping il mapping da associare all'handler
      * @param handler l'handler da aggiungere
      */
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
-    }
-
-    // Classe AtmosphereHandler di esempio
-    public static class AtmosphereHandler {
-        // Implementazione dell'handler
     }
 }

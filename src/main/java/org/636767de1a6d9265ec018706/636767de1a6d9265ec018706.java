@@ -26,12 +26,13 @@ public class MappingDiff {
 
         Mappings historicalMapping = historicalMappings.get(tableName);
         if (historicalMapping == null) {
-            return mappings; // If no historical mapping exists, return the input mappings
+            return new Mappings(); // No historical mappings, return empty mappings
         }
 
         Mappings diffMappings = new Mappings();
         Map<String, Object> diffFields = new HashMap<>();
 
+        // Iterate through the input mappings and find fields that are not in historical mappings
         for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
             if (!historicalMapping.getFields().containsKey(fieldName)) {
@@ -43,9 +44,17 @@ public class MappingDiff {
         return diffMappings;
     }
 
+    // Placeholder method to simulate retrieval of historical mappings
     private Map<String, Mappings> getHistoricalMappings() {
-        // Placeholder for actual historical mappings retrieval logic
-        // This should return a map of table names to their historical Mappings
-        return new HashMap<>();
+        Map<String, Mappings> historicalMappings = new HashMap<>();
+        // Example historical mappings for a table
+        Mappings exampleHistoricalMapping = new Mappings();
+        Map<String, Object> exampleFields = new HashMap<>();
+        exampleFields.put("oldField1", "type1");
+        exampleFields.put("oldField2", "type2");
+        exampleHistoricalMapping.setFields(exampleFields);
+
+        historicalMappings.put("exampleTable", exampleHistoricalMapping);
+        return historicalMappings;
     }
 }

@@ -2,7 +2,25 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class URIDecoder {
+public class PathSegmentImpl {
+    private String path;
+    private boolean decoded;
+
+    public PathSegmentImpl(String path, boolean decoded) {
+        this.path = path;
+        this.decoded = decoded;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public boolean isDecoded() {
+        return decoded;
+    }
+}
+
+public class URIUtils {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
@@ -17,37 +35,14 @@ public class URIDecoder {
             path = path.substring(1);
         }
 
-        String[] rawSegments = path.split("/");
-        for (String rawSegment : rawSegments) {
-            String segment = decode ? decodeURIComponent(rawSegment) : rawSegment;
-            segments.add(new PathSegmentImpl(segment));
+        String[] parts = path.split("/");
+        for (String part : parts) {
+            if (decode) {
+                part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
+            }
+            segments.add(new PathSegmentImpl(part, decode));
         }
 
         return segments;
-    }
-
-    private static String decodeURIComponent(String encoded) {
-        try {
-            return java.net.URLDecoder.decode(encoded, "UTF-8");
-        } catch (java.io.UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 encoding not supported", e);
-        }
-    }
-
-    public static class PathSegmentImpl {
-        private final String segment;
-
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
-        }
-
-        public String getSegment() {
-            return segment;
-        }
-
-        @Override
-        public String toString() {
-            return segment;
-        }
     }
 }

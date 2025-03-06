@@ -3,8 +3,8 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration in milliseconds
-    private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
+    private static final long FETCH_DATA_DURATION = 3600000; // Example: 1 hour in milliseconds
 
     /**
      * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
@@ -25,7 +25,7 @@ public class TimeRangeBuilder {
         return timeRanges;
     }
 
-    // Assuming TimeRange is a simple class representing a time interval
+    // Assuming TimeRange is a class that represents a time interval
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -49,15 +49,6 @@ public class TimeRangeBuilder {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        TimeRangeBuilder builder = new TimeRangeBuilder();
-        List<TimeRange> ranges = builder.buildTimeRanges(1633072800000L, 1633080000000L); // Example timestamps
-        for (TimeRange range : ranges) {
-            System.out.println(range);
         }
     }
 }

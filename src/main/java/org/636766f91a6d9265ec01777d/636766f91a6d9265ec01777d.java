@@ -16,12 +16,12 @@ public class HexConverter {
     }
 
     public static void main(String[] args) {
-        byte testChar1 = 'A';
-        byte testChar2 = '7';
-        byte testChar3 = 'f';
+        byte testChar1 = '5'; // 5 in ASCII
+        byte testChar2 = 'a'; // a in ASCII
+        byte testChar3 = 'F'; // F in ASCII
 
-        System.out.println(convertHexDigit(testChar1)); // Output: 10
-        System.out.println(convertHexDigit(testChar2)); // Output: 7
+        System.out.println(convertHexDigit(testChar1)); // Output: 5
+        System.out.println(convertHexDigit(testChar2)); // Output: 10
         System.out.println(convertHexDigit(testChar3)); // Output: 15
     }
 }

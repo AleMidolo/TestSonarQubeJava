@@ -9,24 +9,24 @@ public class ConfigurationDirectoryCreator {
         String userHome = System.getProperty("user.home");
         String directoryPath;
 
-        // Verifica se il sistema operativo è Windows 2000
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("windows") && osName.contains("2000")) {
+        // Check if the OS is Windows 2000
+        if (System.getProperty("os.name").toLowerCase().contains("windows 2000")) {
             directoryPath = userHome + "\\Documenti e Impostazioni\\lf5";
         } else {
             directoryPath = userHome + File.separator + "lf5";
         }
 
         File directory = new File(directoryPath);
+
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory creata con successo: " + directoryPath);
+                System.out.println("Directory created successfully: " + directoryPath);
             } else {
-                System.out.println("Impossibile creare la directory: " + directoryPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("La directory esiste già: " + directoryPath);
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

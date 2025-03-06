@@ -10,15 +10,11 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Simula l'aggiunta del messaggio alla LogTable
-                System.out.println("Log message added: " + lr.getMessage());
+                // Qui puoi aggiungere il codice per aggiornare la LogTable con il nuovo LogRecord
+                // Ad esempio, aggiungi il LogRecord a un modello di tabella o a una lista
+                // Esempio:
+                // logTableModel.addLogRecord(lr);
             }
         });
-    }
-
-    public static void main(String[] args) {
-        LogTable logTable = new LogTable();
-        LogRecord logRecord = new LogRecord(java.util.logging.Level.INFO, "Test log message");
-        logTable.addMessage(logRecord);
     }
 }

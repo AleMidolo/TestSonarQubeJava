@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
-        Double[] array1 = null;
-        Double[] array2 = new Double[0];
-        Double[] array3 = new Double[]{1.0, 2.0, 3.0};
+        // Test cases
+        Double[] nullArray = null;
+        Double[] emptyArray = new Double[0];
+        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [1.0, 2.0, 3.0]
+        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Output: []
+        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [1.0, 2.0, 3.0]
     }
 }

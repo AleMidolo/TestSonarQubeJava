@@ -8,6 +8,11 @@ public class Logger {
         this.appenders = appenders;
     }
 
+    /**
+     * Chiama il metodo <code>doAppend</code> su tutti gli appender collegati.
+     * @param event L'evento di log da appendere.
+     * @return Il numero di appender su cui è stato chiamato il metodo.
+     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int count = 0;
         if (appenders != null) {

@@ -23,14 +23,15 @@ public class TableUtils {
         // 选择指定的行
         table.setRowSelectionInterval(row, row);
 
-        // 确保表格滚动到选中的行
+        // 获取行的矩形区域
         Rectangle cellRect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(cellRect);
 
-        // 延迟调用 repaint() 以确保表格正确绘制
+        // 将视口滚动到该行的位置
+        pane.getViewport().scrollRectToVisible(cellRect);
+
+        // 延迟调用 repaint() 以确保表格正确绘制新选择的行
         SwingUtilities.invokeLater(() -> {
             table.repaint();
-            pane.repaint();
         });
     }
 }

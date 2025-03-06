@@ -1,11 +1,13 @@
-public class NonZeroCounter {
+import java.util.*;
+
+public class MatrixUtils {
     /**
      * 获取一行中非零条目的数量。
      * @param row 行号
      * @return 一行中非零条目的数量
      */
     public int nonZeros(int row) {
-        // 假设我们有一个二维数组 matrix 来表示矩阵
+        // 假设矩阵是一个二维数组
         int[][] matrix = {
             {1, 0, 3, 0},
             {0, 0, 0, 0},
@@ -13,7 +15,6 @@ public class NonZeroCounter {
             {0, 6, 0, 0}
         };
 
-        // 检查行号是否有效
         if (row < 0 || row >= matrix.length) {
             throw new IllegalArgumentException("Invalid row number");
         }
@@ -28,8 +29,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int row = 2; // 示例行号
-        System.out.println("Non-zero entries in row " + row + ": " + counter.nonZeros(row));
+        MatrixUtils utils = new MatrixUtils();
+        System.out.println(utils.nonZeros(2)); // 示例调用
     }
 }

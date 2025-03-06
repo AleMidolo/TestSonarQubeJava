@@ -1,22 +1,23 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * 将字节复制到 {@code byte[]} 中。
- */
-public byte[] toByteArray() {
-    // 假设我们有一个字节流作为输入源
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    
-    // 这里假设我们有一些字节数据需要复制
-    byte[] data = {0x01, 0x02, 0x03, 0x04}; // 示例数据
-    
-    try {
-        outputStream.write(data);
-    } catch (IOException e) {
-        e.printStackTrace();
+public class ByteArrayConverter {
+
+    /**
+     * 将字节复制到 {@code byte[]} 中。
+     * 
+     * @return 包含复制字节的字节数组
+     */
+    public byte[] toByteArray() {
+        // 假设我们有一些数据需要复制到字节数组中
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            // 这里可以添加需要复制的字节数据
+            // 例如：outputStream.write(someData);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
-    
-    // 将字节流转换为字节数组并返回
-    return outputStream.toByteArray();
 }

@@ -11,7 +11,7 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
     
     // Check if the content contains '@' to identify mentions
     if (content.contains("@")) {
-        // Extract the mentioned user (simplified logic)
+        // Extract the mentioned user (assuming the format is @username)
         String[] parts = content.split("@");
         if (parts.length > 1) {
             String mentionedUser = parts[1].split("\\s+")[0]; // Get the first word after '@'

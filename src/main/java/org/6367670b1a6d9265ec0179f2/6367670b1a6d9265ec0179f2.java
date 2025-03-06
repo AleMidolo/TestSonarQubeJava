@@ -1,9 +1,9 @@
 import java.util.Map;
 
-public class MyMap<K, V> implements Map<K, V> {
+public class CustomMap<K, V> implements Map<K, V> {
     private final Map<K, V> internalMap;
 
-    public MyMap(Map<K, V> internalMap) {
+    public CustomMap(Map<K, V> internalMap) {
         this.internalMap = internalMap;
     }
 

@@ -3,7 +3,7 @@ public class CharUtils {
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
+        for (char c = 0; c < 128; c++) {
             CHAR_STRING_CACHE[c] = String.valueOf(c);
         }
     }
@@ -16,7 +16,7 @@ public class CharUtils {
      * @return 包含指定字符的字符串
      */
     public static String toString(final char ch) {
-        if (ch < CHAR_STRING_CACHE.length) {
+        if (ch < 128) {
             return CHAR_STRING_CACHE[ch];
         }
         return String.valueOf(ch);
@@ -25,6 +25,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // 输出: " "
         System.out.println(toString('A'));  // 输出: "A"
-        System.out.println(toString('€'));  // 输出: "€"
+        System.out.println(toString('€'));  // 输出: "€" (非ASCII字符)
     }
 }

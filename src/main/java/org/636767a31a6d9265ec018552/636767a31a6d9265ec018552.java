@@ -17,23 +17,15 @@ public class StreamReader {
     public String readString() throws IOException {
         // 读取字符串的长度（假设长度以4字节整数形式存储）
         byte[] lengthBytes = new byte[4];
-        int bytesRead = inputStream.read(lengthBytes);
-        if (bytesRead != 4) {
-            throw new IOException("Failed to read string length");
-        }
-
-        // 将字节数组转换为整数
+        inputStream.read(lengthBytes);
         int length = (lengthBytes[0] & 0xFF) << 24 |
-                     (lengthBytes[1] & 0xFF) << 16 |
-                     (lengthBytes[2] & 0xFF) << 8 |
-                     (lengthBytes[3] & 0xFF);
+                    (lengthBytes[1] & 0xFF) << 16 |
+                    (lengthBytes[2] & 0xFF) << 8 |
+                    (lengthBytes[3] & 0xFF);
 
         // 读取字符串内容
         byte[] stringBytes = new byte[length];
-        bytesRead = inputStream.read(stringBytes);
-        if (bytesRead != length) {
-            throw new IOException("Failed to read string content");
-        }
+        inputStream.read(stringBytes);
 
         // 将字节数组转换为字符串
         return new String(stringBytes, StandardCharsets.UTF_8);

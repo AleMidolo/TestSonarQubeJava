@@ -13,42 +13,40 @@ public class FrameVisitor {
      * @return 下一个要写入该帧的元素的索引。
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // 初始化当前帧的局部变量和栈
-        currentFrame.initializeLocals(numLocal);
-        currentFrame.initializeStack(numStack);
-
-        // 设置当前帧的字节码偏移量
+        // 初始化当前帧的偏移量、局部变量数量和栈元素数量
         currentFrame.setOffset(offset);
+        currentFrame.setNumLocal(numLocal);
+        currentFrame.setNumStack(numStack);
 
         // 返回下一个要写入该帧的元素的索引
         return currentFrame.getNextIndex();
     }
 
-    // 假设 Frame 类的定义如下
+    // Frame类定义
     public static class Frame {
         private int offset;
-        private int[] locals;
-        private int[] stack;
+        private int numLocal;
+        private int numStack;
         private int nextIndex;
 
-        public void initializeLocals(int numLocal) {
-            this.locals = new int[numLocal];
-        }
-
-        public void initializeStack(int numStack) {
-            this.stack = new int[numStack];
+        public Frame() {
+            this.nextIndex = 0;
         }
 
         public void setOffset(int offset) {
             this.offset = offset;
         }
 
-        public int getNextIndex() {
-            return nextIndex;
+        public void setNumLocal(int numLocal) {
+            this.numLocal = numLocal;
         }
 
-        public void setNextIndex(int nextIndex) {
-            this.nextIndex = nextIndex;
+        public void setNumStack(int numStack) {
+            this.numStack = numStack;
+        }
+
+        public int getNextIndex() {
+            return nextIndex++;
         }
     }
 }

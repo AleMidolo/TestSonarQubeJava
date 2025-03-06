@@ -32,16 +32,5 @@ public class ClassFileBuffer {
         this.readPointer = 0;
     }
 
-    // Metodi aggiuntivi per gestire il buffer e il puntatore di lettura
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getReadPointer() {
-        return readPointer;
-    }
-
-    public void setReadPointer(int readPointer) {
-        this.readPointer = readPointer;
-    }
+    // Altri metodi della classe...
 }

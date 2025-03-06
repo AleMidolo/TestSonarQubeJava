@@ -14,7 +14,7 @@ public class CustomComparator implements Comparator<Object> {
             if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
                 return ((Comparable) aObj1).compareTo(aObj2);
             } else {
-                // If objects are not Comparable, compare their hash codes
+                // If objects are not Comparable, compare their hash codes as a fallback
                 return Integer.compare(aObj1.hashCode(), aObj2.hashCode());
             }
         }

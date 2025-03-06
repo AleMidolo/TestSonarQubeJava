@@ -10,16 +10,17 @@ public class FileAdder {
      */
     private void addReverse(final File[] files) {
         if (files == null) {
-            return;
+            throw new IllegalArgumentException("File array cannot be null");
         }
 
         List<File> fileList = new ArrayList<>();
         Collections.addAll(fileList, files);
         Collections.reverse(fileList);
 
-        // Example of processing the reversed list
+        // Assuming you want to process the files in reverse order
         for (File file : fileList) {
-            System.out.println(file.getName());
+            // Process each file here
+            System.out.println("Processing file: " + file.getName());
         }
     }
 

@@ -26,7 +26,7 @@ public class Queue<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Queue: [");
+        sb.append("[");
         for (T element : elements) {
             sb.append(element);
             if (elements.indexOf(element) != elements.size() - 1) {
@@ -35,5 +35,13 @@ public class Queue<T> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        System.out.println(queue.toString()); // Output: [1, 2, 3]
     }
 }

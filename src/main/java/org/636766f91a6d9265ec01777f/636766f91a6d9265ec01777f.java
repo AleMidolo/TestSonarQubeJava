@@ -1,7 +1,7 @@
 public class BooleanUtils {
 
     /**
-     * Converte un Boolean in un boolean gestendo <code>null</code> restituendo <code>false</code>.
+     * <p>Converte un Boolean in un boolean gestendo <code>null</code> restituendo <code>false</code>.</p>
      * <pre>
      * BooleanUtils.toBoolean(Boolean.TRUE)  = true
      * BooleanUtils.toBoolean(Boolean.FALSE) = false
@@ -15,8 +15,8 @@ public class BooleanUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean(Boolean.TRUE));  // Output: true
-        System.out.println(toBoolean(Boolean.FALSE)); // Output: false
-        System.out.println(toBoolean(null));         // Output: false
+        System.out.println(toBoolean(Boolean.TRUE));  // true
+        System.out.println(toBoolean(Boolean.FALSE)); // false
+        System.out.println(toBoolean(null));          // false
     }
 }

@@ -8,7 +8,7 @@ public class TemplateEncoder {
             return null;
         }
 
-        // Create a map to hold the characters to be encoded and their corresponding encoded values
+        // Mappa per la codifica dei caratteri speciali
         Map<Character, String> encodingMap = new HashMap<>();
         encodingMap.put('{', "%7B");
         encodingMap.put('}', "%7D");

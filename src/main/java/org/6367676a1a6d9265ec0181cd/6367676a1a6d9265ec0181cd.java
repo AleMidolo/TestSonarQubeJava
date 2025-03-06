@@ -10,11 +10,14 @@ public class StringUtils {
         if (str == null) {
             return null;
         }
+
         int len = str.length();
         int start = 0;
+
         while (start < len && Character.isWhitespace(str.charAt(start))) {
             start++;
         }
+
         return str.substring(start);
     }
 

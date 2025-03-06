@@ -19,9 +19,16 @@ public class ByteVector {
         }
 
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
-    // Other methods to manipulate the byte vector can be added here
+    public byte[] getData() {
+        return data;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
 }

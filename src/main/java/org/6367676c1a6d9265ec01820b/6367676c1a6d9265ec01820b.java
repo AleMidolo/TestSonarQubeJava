@@ -14,7 +14,7 @@ public class StringUtils {
             return inString;
         }
 
-        // Convertir el conjunto de caracteres a eliminar en un Set para acceso rápido
+        // Convertir el conjunto de caracteres a eliminar en un Set para un acceso rápido
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
@@ -32,9 +32,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hola, mundo!\nEste es un ejemplo.";
-        String charsToDelete = "aeiou\n";
+        String input = "Hola, este es un ejemplo.\n";
+        String charsToDelete = "ae\n";
         String result = deleteAny(input, charsToDelete);
-        System.out.println(result);  // Salida: Hl, mnd!Est s n jmpl.
+        System.out.println(result);  // Salida: Hol, st s un jmplo.
     }
 }

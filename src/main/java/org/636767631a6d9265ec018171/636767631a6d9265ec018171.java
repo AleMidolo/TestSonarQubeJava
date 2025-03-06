@@ -10,7 +10,7 @@ class ListNodeImpl<E> {
     }
 }
 
-class LinkedList<E> {
+public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
 

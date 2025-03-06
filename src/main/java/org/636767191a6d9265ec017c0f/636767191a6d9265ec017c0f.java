@@ -14,9 +14,8 @@ public class ByteVector {
             throw new IllegalArgumentException("Size must be greater than 0");
         }
         int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        this.data = newData;
-        this.capacity = newCapacity;
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 
     // Example usage

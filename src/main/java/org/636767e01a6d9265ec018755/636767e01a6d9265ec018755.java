@@ -11,8 +11,7 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
         content.put("ats", jsonObject.get("ats").getAsString());
     }
     
-    // You can add more logic here to build the rest of the content
-    // For example, iterating over the JsonObject and adding other key-value pairs
+    // You can add more logic here to process other fields in the JsonObject if needed
     
     return content;
 }

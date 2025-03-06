@@ -26,11 +26,11 @@ public class ArrayUtils {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        Integer[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 1, 3);
+        Integer[] arr = {1, 2, 3, 4, 5, 6, 7};
+        reverse(arr, 2, 5);
         for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // Salida esperada: 1 4 3 2 5
+        // Salida esperada: 1 2 6 5 4 3 7
     }
 }

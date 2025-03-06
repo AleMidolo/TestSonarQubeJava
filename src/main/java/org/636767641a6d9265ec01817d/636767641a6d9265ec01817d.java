@@ -1,7 +1,9 @@
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 public class BipartiteGraphGenerator<V, E> {
 
@@ -9,39 +11,33 @@ public class BipartiteGraphGenerator<V, E> {
      * Construir un grafo bipartito completo
      * 
      * @param target El grafo en el que se construirá el grafo bipartito completo.
-     * @param resultMap Un mapa para almacenar los vértices generados, donde la clave es un identificador único.
+     * @param resultMap Un mapa para almacenar los vértices generados.
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Supongamos que el grafo bipartito tiene dos conjuntos de vértices: U y V
-        Set<V> setU = new HashSet<>();
-        Set<V> setV = new HashSet<>();
+        // Crear dos conjuntos de vértices para el grafo bipartito
+        List<V> setA = new ArrayList<>();
+        List<V> setB = new ArrayList<>();
 
-        // Generar vértices para el conjunto U
-        for (int i = 0; i < 5; i++) { // Ejemplo: 5 vértices en U
-            V vertexU = target.addVertex();
-            setU.add(vertexU);
-            resultMap.put("U" + i, vertexU);
+        // Generar vértices para el conjunto A
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setA.add(vertex);
+            resultMap.put("A" + i, vertex);
         }
 
-        // Generar vértices para el conjunto V
-        for (int i = 0; i < 5; i++) { // Ejemplo: 5 vértices en V
-            V vertexV = target.addVertex();
-            setV.add(vertexV);
-            resultMap.put("V" + i, vertexV);
+        // Generar vértices para el conjunto B
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setB.add(vertex);
+            resultMap.put("B" + i, vertex);
         }
 
-        // Conectar cada vértice en U con cada vértice en V
-        for (V u : setU) {
-            for (V v : setV) {
-                target.addEdge(u, v);
+        // Conectar todos los vértices de A con todos los vértices de B
+        for (V a : setA) {
+            for (V b : setB) {
+                target.addEdge(a, b);
             }
         }
     }
-}
-
-// Interface Graph asumida para el ejemplo
-interface Graph<V, E> {
-    V addVertex();
-    E addEdge(V source, V target);
 }

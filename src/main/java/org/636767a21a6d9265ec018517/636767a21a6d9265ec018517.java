@@ -1,19 +1,17 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public final class ByteBuffer {
+public final class Buffer {
+    private ByteArrayOutputStream outputStream;
 
-    private ByteArrayOutputStream buffer;
-
-    public ByteBuffer() {
-        this.buffer = new ByteArrayOutputStream();
+    public Buffer() {
+        this.outputStream = new ByteArrayOutputStream();
     }
 
     public void write(byte[] data) {
         try {
-            buffer.write(data);
+            outputStream.write(data);
         } catch (IOException e) {
-            // Handle the exception as needed
             e.printStackTrace();
         }
     }
@@ -22,17 +20,6 @@ public final class ByteBuffer {
      * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
      */
     public final byte[] toByteArray() {
-        return buffer.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        ByteBuffer byteBuffer = new ByteBuffer();
-        byteBuffer.write(new byte[]{1, 2, 3});
-        byteBuffer.write(new byte[]{4, 5, 6});
-
-        byte[] result = byteBuffer.toByteArray();
-        for (byte b : result) {
-            System.out.print(b + " ");
-        }
+        return outputStream.toByteArray();
     }
 }

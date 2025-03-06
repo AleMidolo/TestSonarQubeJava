@@ -21,9 +21,9 @@ public class EventBuffer {
         } else {
             // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
             // 1. Ignorar el nuevo evento
-            // 2. Sobrescribir el evento más antiguo
-            // 3. Expandir el búfer dinámicamente
-            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo
+            // 2. Sobrescribir el evento más antiguo (implementación de un búfer circular)
+            // 3. Lanzar una excepción
+            // Aquí se implementa la opción de sobrescribir el evento más antiguo
             System.arraycopy(buffer, 1, buffer, 0, size - 1);
             buffer[size - 1] = event;
         }
@@ -39,7 +39,7 @@ public class EventBuffer {
         if (index >= 0 && index < size) {
             return buffer[index];
         } else {
-            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
+            throw new IndexOutOfBoundsException("Índice fuera de los límites del búfer");
         }
     }
 }

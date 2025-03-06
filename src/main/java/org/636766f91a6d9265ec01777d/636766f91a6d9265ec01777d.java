@@ -17,8 +17,8 @@ public class HexConverter {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        byte hexChar = 'A'; // Puedes cambiar este valor para probar otros caracteres
-        byte result = convertHexDigit(hexChar);
-        System.out.println("El valor byte del carácter es: " + result);
+        byte hexDigit = 'A';
+        byte result = convertHexDigit(hexDigit);
+        System.out.println("El valor byte de " + (char) hexDigit + " es: " + result);
     }
 }

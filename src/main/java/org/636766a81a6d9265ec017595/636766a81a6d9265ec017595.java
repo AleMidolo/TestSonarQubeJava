@@ -1,30 +1,40 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ByteVector {
-    private ArrayList<Byte> bytes;
+    private byte[] data;
+    private int size;
 
     public ByteVector() {
-        this.bytes = new ArrayList<>();
+        this.data = new byte[10]; // Initial capacity
+        this.size = 0;
     }
 
-    /**
-     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
-     * @param byteValue1 un byte.
-     * @param byteValue2 otro byte.
-     * @return este vector de bytes.
-     */
-    public final ByteVector put11(final int byteValue1, final int byteValue2) {
-        bytes.add((byte) byteValue1);
-        bytes.add((byte) byteValue2);
+    public ByteVector put11(final int byteValue1, final int byteValue2) {
+        ensureCapacity(size + 2);
+        data[size++] = (byte) byteValue1;
+        data[size++] = (byte) byteValue2;
         return this;
     }
 
-    // Optional: Method to get the byte array representation of the vector
-    public byte[] toByteArray() {
-        byte[] result = new byte[bytes.size()];
-        for (int i = 0; i < bytes.size(); i++) {
-            result[i] = bytes.get(i);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > data.length) {
+            int newCapacity = data.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
+            data = Arrays.copyOf(data, newCapacity);
         }
-        return result;
+    }
+
+    // For testing purposes
+    public byte[] getData() {
+        return Arrays.copyOf(data, size);
+    }
+
+    public static void main(String[] args) {
+        ByteVector vector = new ByteVector();
+        vector.put11(0x01, 0x02);
+        byte[] result = vector.getData();
+        System.out.println(Arrays.toString(result)); // Output: [1, 2]
     }
 }

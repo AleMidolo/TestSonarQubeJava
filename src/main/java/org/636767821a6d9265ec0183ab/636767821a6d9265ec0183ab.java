@@ -5,16 +5,24 @@ public class ExceptionChecker {
         this.thrown = thrown;
     }
 
+    /**
+     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
+     */
     public boolean hasThrown() {
-        return thrown != null && thrown.toString() != null && !thrown.toString().isEmpty();
+        if (thrown == null) {
+            return false;
+        }
+        String thrownString = thrown.toString();
+        return thrownString != null && !thrownString.isEmpty();
+    }
+
+    public Throwable getThrown() {
+        return thrown;
     }
 
     public static void main(String[] args) {
         // Example usage
         ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test exception"));
-        System.out.println(checker.hasThrown()); // Output: true
-
-        ExceptionChecker checker2 = new ExceptionChecker(null);
-        System.out.println(checker2.hasThrown()); // Output: false
+        System.out.println(checker.hasThrown()); // Should print true
     }
 }

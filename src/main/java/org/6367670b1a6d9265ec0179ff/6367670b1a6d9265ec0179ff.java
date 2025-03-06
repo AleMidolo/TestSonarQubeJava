@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // 定义一个公共静态的空Byte数组
+    // 定义一个公共静态的空数组引用
     public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /**

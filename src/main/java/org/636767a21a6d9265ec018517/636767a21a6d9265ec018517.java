@@ -1,4 +1,5 @@
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public final class Buffer {
     private ByteArrayOutputStream buffer;
@@ -8,9 +9,17 @@ public final class Buffer {
     }
 
     public void write(byte[] data) {
-        buffer.write(data, 0, data.length);
+        try {
+            buffer.write(data);
+        } catch (IOException e) {
+            // Handle the exception, though ByteArrayOutputStream.write() does not throw IOException
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * 返回一个包含所有写入缓冲区内容的单字节数组。
+     */
     public final byte[] toByteArray() {
         return buffer.toByteArray();
     }

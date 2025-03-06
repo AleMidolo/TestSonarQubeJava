@@ -8,7 +8,7 @@ import java.util.Arrays;
  */
 protected void appendDetail(StringBuffer buffer, String fieldName, int[] array) {
     if (array == null) {
-        throw new IllegalArgumentException("The array must not be null");
+        throw new IllegalArgumentException("数组不能为null");
     }
     buffer.append(Arrays.toString(array));
 }

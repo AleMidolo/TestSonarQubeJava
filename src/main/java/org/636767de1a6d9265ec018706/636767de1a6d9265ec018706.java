@@ -46,12 +46,8 @@ public class MappingDiff {
 
     // 假设的方法，用于获取当前表的映射
     private Mappings getCurrentMappings(String tableName) {
-        // 这里应该实现获取当前表映射的逻辑
-        // 例如从数据库或配置文件中读取
-        Mappings currentMappings = new Mappings();
-        // 假设当前映射中有一些字段
-        currentMappings.getFields().put("field1", "type1");
-        currentMappings.getFields().put("field2", "type2");
-        return currentMappings;
+        // 这里应该是从数据库或其他存储中获取当前表的映射
+        // 为了示例，我们返回一个空的Mappings对象
+        return new Mappings();
     }
 }

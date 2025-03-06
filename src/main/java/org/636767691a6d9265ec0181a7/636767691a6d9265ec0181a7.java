@@ -18,9 +18,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testStr = "###HelloWorld";
+        String input = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(testStr, leadingChar);
+        String result = trimLeadingCharacter(input, leadingChar);
         System.out.println(result);  // 输出: HelloWorld
     }
 }

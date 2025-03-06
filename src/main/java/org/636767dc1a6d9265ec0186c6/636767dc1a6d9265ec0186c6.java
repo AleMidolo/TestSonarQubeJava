@@ -15,7 +15,17 @@ public class Example {
         return true;
     }
 
-    // Assuming Fields is an iterable collection of strings
-    public interface Fields extends Iterable<String> {
+    // Assuming Fields is a class that implements Iterable<String>
+    private static class Fields implements Iterable<String> {
+        private Set<String> fields;
+
+        public Fields(Set<String> fields) {
+            this.fields = fields;
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return fields.iterator();
+        }
     }
 }

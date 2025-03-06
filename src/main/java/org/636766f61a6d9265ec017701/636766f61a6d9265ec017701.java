@@ -15,9 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String str = "Hello, World! Hello, Java!";
-        String searchStr = "Hello";
-        int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of '" + searchStr + "' in '" + str + "' is: " + index);
+        // 测试用例
+        System.out.println(lastIndexOf("Hello World", "o")); // 输出: 7
+        System.out.println(lastIndexOf("Hello World", "z")); // 输出: -1
+        System.out.println(lastIndexOf(null, "o")); // 输出: -1
+        System.out.println(lastIndexOf("Hello World", null)); // 输出: -1
     }
 }

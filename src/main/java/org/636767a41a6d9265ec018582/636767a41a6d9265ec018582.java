@@ -5,25 +5,38 @@ import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.io.DatumWriter;
-import org.apache.avro.io.BinaryEncoder;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 
 public class DelimitedMessageWriter {
 
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using Protostuff
-        byte[] serializedMessage = ProtostuffIOUtil.toByteArray(message, schema, buffer);
+        // Create a ByteBuf to hold the serialized message
+        ByteBuf byteBuf = Unpooled.buffer();
+        ByteBufOutputStream byteBufOutputStream = new ByteBufOutputStream(byteBuf);
+
+        // Create an Avro encoder
+        Encoder encoder = EncoderFactory.get().binaryEncoder(byteBufOutputStream, null);
+
+        // Create a DatumWriter for the given schema
+        DatumWriter<T> datumWriter = new SpecificDatumWriter<>(schema);
+
+        // Serialize the message
+        datumWriter.write(message, encoder);
+        encoder.flush();
+
+        // Get the length of the serialized message
+        int messageLength = byteBuf.readableBytes();
 
         // Write the length of the message as a varint
-        int messageSize = serializedMessage.length;
-        writeVarint(out, messageSize);
+        writeVarint(out, messageLength);
 
         // Write the serialized message to the output stream
-        out.write(serializedMessage);
+        byteBuf.readBytes(out, messageLength);
 
-        // Return the total size of the message including the length prefix
-        return messageSize + computeVarintSize(messageSize);
+        // Return the total size of the message (length + serialized message)
+        return messageLength + computeVarintSize(messageLength);
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {

@@ -29,6 +29,14 @@ class Edge {
     public int hashCode() {
         return Objects.hash(from, to);
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from +
+                ", to=" + to +
+                '}';
+    }
 }
 
 class Node {
@@ -48,6 +56,14 @@ class Node {
         return isVirtual;
     }
 
+    public Node getRealNode() {
+        if (isVirtual) {
+            // Assuming the real node has the same ID but is not virtual
+            return new Node(id, false);
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +75,14 @@ class Node {
     @Override
     public int hashCode() {
         return Objects.hash(id, isVirtual);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id='" + id + '\'' +
+                ", isVirtual=" + isVirtual +
+                '}';
     }
 }
 
@@ -72,13 +96,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        Node from = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node to = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(from, to);
-    }
-
-    private Node getRealNode(Node node) {
-        // Assuming that the real node has the same ID but is not virtual
-        return new Node(node.getId(), false);
     }
 }

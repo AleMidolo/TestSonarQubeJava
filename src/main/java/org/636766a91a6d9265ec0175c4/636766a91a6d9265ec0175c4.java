@@ -1,7 +1,11 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> stack = new Stack<>();
+    private Stack<String> stack;
+
+    public FrameStack() {
+        stack = new Stack<>();
+    }
 
     /**
      * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
@@ -23,7 +27,7 @@ public class FrameStack {
             String paramsDescriptor = descriptor.substring(1, endIndex);
             int paramCount = getParamCount(paramsDescriptor);
 
-            // 弹出相应数量的类型
+            // 弹出相应数量的抽象类型
             for (int i = 0; i < paramCount; i++) {
                 if (!stack.isEmpty()) {
                     stack.pop();
@@ -32,7 +36,7 @@ public class FrameStack {
                 }
             }
         } else {
-            // 单个类型描述符，弹出一个类型
+            // 单个类型描述符，弹出一个抽象类型
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
@@ -48,25 +52,35 @@ public class FrameStack {
      */
     private int getParamCount(String paramsDescriptor) {
         int count = 0;
-        int i = 0;
-        while (i < paramsDescriptor.length()) {
-            char c = paramsDescriptor.charAt(i);
+        int index = 0;
+        while (index < paramsDescriptor.length()) {
+            char c = paramsDescriptor.charAt(index);
             if (c == 'L') {
                 // 对象类型，跳过直到分号
-                i = paramsDescriptor.indexOf(';', i) + 1;
+                int endIndex = paramsDescriptor.indexOf(';', index);
+                if (endIndex == -1) {
+                    throw new IllegalArgumentException("Invalid descriptor: " + paramsDescriptor);
+                }
+                index = endIndex + 1;
             } else if (c == '[') {
                 // 数组类型，跳过所有数组维度
-                while (i < paramsDescriptor.length() && paramsDescriptor.charAt(i) == '[') {
-                    i++;
+                while (index < paramsDescriptor.length() && paramsDescriptor.charAt(index) == '[') {
+                    index++;
                 }
-                if (i < paramsDescriptor.length() && paramsDescriptor.charAt(i) == 'L') {
-                    i = paramsDescriptor.indexOf(';', i) + 1;
+                if (index < paramsDescriptor.length() && paramsDescriptor.charAt(index) == 'L') {
+                    // 对象数组类型，跳过直到分号
+                    int endIndex = paramsDescriptor.indexOf(';', index);
+                    if (endIndex == -1) {
+                        throw new IllegalArgumentException("Invalid descriptor: " + paramsDescriptor);
+                    }
+                    index = endIndex + 1;
                 } else {
-                    i++;
+                    // 基本类型数组，跳过基本类型字符
+                    index++;
                 }
             } else {
-                // 基本类型
-                i++;
+                // 基本类型，跳过基本类型字符
+                index++;
             }
             count++;
         }

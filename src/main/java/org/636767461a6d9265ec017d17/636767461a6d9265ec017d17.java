@@ -1,19 +1,16 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UnescapeIdExample {
+public class DotUnescaper {
 
     private static final Map<String, String> ESCAPE_SEQUENCES = new HashMap<>();
 
     static {
         ESCAPE_SEQUENCES.put("\\\"", "\"");
-        ESCAPE_SEQUENCES.put("\\'", "'");
-        ESCAPE_SEQUENCES.put("\\\\", "\\");
         ESCAPE_SEQUENCES.put("\\n", "\n");
         ESCAPE_SEQUENCES.put("\\r", "\r");
         ESCAPE_SEQUENCES.put("\\t", "\t");
-        ESCAPE_SEQUENCES.put("\\b", "\b");
-        ESCAPE_SEQUENCES.put("\\f", "\f");
+        ESCAPE_SEQUENCES.put("\\\\", "\\");
     }
 
     /**
@@ -21,7 +18,7 @@ public class UnescapeIdExample {
      * @param input 输入字符串
      * @return 反转义后的输出
      */
-    private static String unescapeId(String input) {
+    private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
@@ -41,10 +38,5 @@ public class UnescapeIdExample {
             i++;
         }
         return result.toString();
-    }
-
-    public static void main(String[] args) {
-        String input = "This is a \\\"test\\\" string with \\\\escapes\\\\.";
-        System.out.println(unescapeId(input));
     }
 }

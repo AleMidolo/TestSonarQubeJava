@@ -20,14 +20,5 @@ public class ByteVector {
         capacity = newCapacity;
     }
 
-    public void add(byte b) {
-        if (size == capacity) {
-            enlarge(1); // 每次增加1个字节
-        }
-        data[size++] = b;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
-    }
+    // 其他方法...
 }

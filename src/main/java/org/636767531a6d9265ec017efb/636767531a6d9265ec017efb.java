@@ -1,8 +1,8 @@
 public class Bucket {
     private Bucket next;
 
-    public Bucket(Bucket next) {
-        this.next = next;
+    public Bucket() {
+        this.next = null;
     }
 
     public Bucket getNext() {
@@ -12,42 +12,17 @@ public class Bucket {
     public void setNext(Bucket next) {
         this.next = next;
     }
-}
 
-public class BucketList {
-    private Bucket head;
-
-    public BucketList(Bucket head) {
-        this.head = head;
-    }
-
+    /**
+     * 在数据结构中将此桶插入到 {@code bucket} 之前。
+     * @param bucket 作为当前桶下一个的桶。
+     */
     public void insertBefore(Bucket bucket) {
-        if (head == null) {
-            head = bucket;
-            return;
+        if (bucket == null) {
+            throw new IllegalArgumentException("Bucket cannot be null");
         }
 
-        Bucket current = head;
-        Bucket previous = null;
-
-        while (current != null && current != bucket) {
-            previous = current;
-            current = current.getNext();
-        }
-
-        if (current == null) {
-            // Bucket not found in the list
-            return;
-        }
-
-        if (previous == null) {
-            // Inserting before the head
-            bucket.setNext(head);
-            head = bucket;
-        } else {
-            // Inserting in the middle or end
-            previous.setNext(bucket);
-            bucket.setNext(current);
-        }
+        // 将当前桶的 next 指向传入的 bucket
+        this.next = bucket;
     }
 }

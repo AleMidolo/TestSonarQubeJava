@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UnescapeJava {
+public class StringUnescape {
 
     private static final Map<Character, Character> ESCAPE_MAP = new HashMap<>();
 
@@ -53,7 +53,9 @@ public class UnescapeJava {
 
     public static void main(String[] args) {
         try {
-            System.out.println(unescapeJava("Hello\\nWorld\\t!"));
+            System.out.println(unescapeJava("Hello\\nWorld!"));  // Output: Hello
+                                                                 // World!
+            System.out.println(unescapeJava("C:\\\\path\\\\to\\\\file"));  // Output: C:\path\to\file
         } catch (Exception e) {
             e.printStackTrace();
         }

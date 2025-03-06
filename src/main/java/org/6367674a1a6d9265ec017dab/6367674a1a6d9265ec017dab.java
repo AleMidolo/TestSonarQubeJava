@@ -12,14 +12,9 @@ public class DoubleComparator implements Comparator<Double> {
         if (o2 == null) {
             return 1;
         }
-        double epsilon = 1e-10; // 用于处理浮点数精度问题
-        double diff = o1 - o2;
-        if (Math.abs(diff) < epsilon) {
+        if (Math.abs(o1 - o2) < 1e-9) {
             return 0;
-        } else if (diff < 0) {
-            return -1;
-        } else {
-            return 1;
         }
+        return o1 < o2 ? -1 : 1;
     }
 }

@@ -1,9 +1,10 @@
 public class CharUtils {
 
+    // 缓存 ASCII 7 位字符对应的字符串
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
     static {
-        for (char c = 0; c < 128; c++) {
+        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
             CHAR_STRING_CACHE[c] = String.valueOf(c);
         }
     }
@@ -16,7 +17,7 @@ public class CharUtils {
      * @return 包含指定字符的字符串
      */
     public static String toString(final char ch) {
-        if (ch < 128) {
+        if (ch < CHAR_STRING_CACHE.length) {
             return CHAR_STRING_CACHE[ch];
         }
         return String.valueOf(ch);
@@ -24,7 +25,7 @@ public class CharUtils {
 
     public static void main(String[] args) {
         System.out.println(toString(' '));  // 输出: " "
-        System.out.println(toString('A'));  // 输出: "A"
-        System.out.println(toString('€'));  // 输出: "€" (非ASCII字符)
+        System.out.println(toString('A')); // 输出: "A"
+        System.out.println(toString('€')); // 输出: "€" (非 ASCII 字符)
     }
 }

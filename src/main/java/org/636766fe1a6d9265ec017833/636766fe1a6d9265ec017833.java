@@ -26,10 +26,6 @@ public class FileUtils {
             return;
         }
 
-        if (!directory.isDirectory()) {
-            throw new IOException("Not a directory: " + directory);
-        }
-
         File[] files = directory.listFiles();
         if (files == null) {
             throw new IOException("Failed to list contents of " + directory);

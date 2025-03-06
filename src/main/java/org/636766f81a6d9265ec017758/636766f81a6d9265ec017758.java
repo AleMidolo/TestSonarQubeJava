@@ -1,8 +1,11 @@
 @Override
 public int hashCode() {
-    // Implementazione di base di hashCode che restituisce un valore hash fisso.
-    // Questo è un esempio semplice e potrebbe non essere adatto per tutti i casi d'uso.
-    // Per una migliore distribuzione degli hash, si consiglia di utilizzare una combinazione
-    // di hash dei campi rilevanti della classe.
-    return 31; // Un numero primo è spesso usato come valore di base per gli hash.
+    // Implementazione di un semplice hash code basato su un valore fisso
+    // Questo è un esempio di base, in un caso reale dovresti considerare
+    // i campi rilevanti della classe per calcolare l'hash code.
+    final int prime = 31;
+    int result = 1;
+    // Supponiamo che la classe abbia un campo 'id' di tipo int
+    // result = prime * result + id;
+    return result;
 }

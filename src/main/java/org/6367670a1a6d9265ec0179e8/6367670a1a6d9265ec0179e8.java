@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.Objects;
 
 public class DefensiveProgramming {
 
@@ -24,10 +24,10 @@ public class DefensiveProgramming {
         // Test cases
         Boolean[] nullArray = null;
         Boolean[] emptyArray = new Boolean[0];
-        Boolean[] nonEmptyArray = { true, false, true };
+        Boolean[] nonEmptyArray = {true, false, true};
 
-        System.out.println(Arrays.toString(nullToEmpty(nullArray)));    // Output: []
-        System.out.println(Arrays.toString(nullToEmpty(emptyArray)));  // Output: []
-        System.out.println(Arrays.toString(nullToEmpty(nonEmptyArray))); // Output: [true, false, true]
+        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));  // Output: []
+        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [true, false, true]
     }
 }

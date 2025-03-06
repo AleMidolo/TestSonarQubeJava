@@ -1,13 +1,13 @@
 import java.util.Arrays;
 
-public class ArrayComparator {
+public class ByteArrayComparator {
 
     /**
      * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
-     * 
-     * @param data L'array di byte da confrontare.
+     *
+     * @param data   L'array di byte da confrontare.
      * @param offset L'indice iniziale nell'array interno da cui iniziare il confronto.
-     * @param len Il numero di elementi da confrontare.
+     * @param len    La lunghezza del segmento da confrontare.
      * @return true se i contenuti corrispondono, false altrimenti.
      */
     public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {

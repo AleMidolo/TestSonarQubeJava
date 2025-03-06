@@ -6,7 +6,7 @@ import java.util.Objects;
 public class CollectionUtils {
 
     /**
-     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>. 
+     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>.
      * Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
      * @param collection La collezione da convertire
      * @return Un nuovo array di Stringhe.
@@ -17,20 +17,20 @@ public class CollectionUtils {
         }
 
         // Filtra gli elementi non nulli e li converte in String
-        ArrayList<String> nonNullStrings = new ArrayList<>();
+        ArrayList<String> filteredList = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                nonNullStrings.add(obj.toString());
+                filteredList.add(obj.toString());
             }
         }
 
-        // Converti l'ArrayList in un array di Stringhe
-        return nonNullStrings.toArray(new String[0]);
+        // Converti la lista filtrata in un array di Stringhe
+        return filteredList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        Collection<Object> collection = Arrays.asList("Hello", null, 123, null, "World");
+        Collection<Object> collection = Arrays.asList("Hello", null, "World", 123, null);
         String[] result = toNoNullStringArray(collection);
-        System.out.println(Arrays.toString(result)); // Output: [Hello, 123, World]
+        System.out.println(Arrays.toString(result)); // Output: [Hello, World, 123]
     }
 }

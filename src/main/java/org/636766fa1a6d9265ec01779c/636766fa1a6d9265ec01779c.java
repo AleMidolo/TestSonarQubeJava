@@ -1,29 +1,41 @@
 import java.util.HashSet;
 import java.util.Set;
 
-private String parseToken(final char[] terminators) {
-    StringBuilder token = new StringBuilder();
-    Set<Character> terminatorSet = new HashSet<>();
-    
-    // Aggiungi tutti i caratteri terminatori al set per un accesso rapido
-    for (char c : terminators) {
-        terminatorSet.add(c);
-    }
-    
-    // Simula l'input di un token (ad esempio, da un flusso di input)
-    // In un'implementazione reale, questo sarebbe sostituito con la lettura effettiva da un flusso
-    String input = "exampleToken;"; // Esempio di input
-    for (int i = 0; i < input.length(); i++) {
-        char currentChar = input.charAt(i);
-        
-        // Se il carattere corrente è un terminatore, interrompi la lettura
-        if (terminatorSet.contains(currentChar)) {
-            break;
+public class TokenParser {
+
+    /**
+     * Analizza un token fino a quando non viene incontrato uno dei caratteri terminatori forniti.
+     * @param terminators l'array di caratteri terminatori. Qualsiasi di questi caratteri, quando incontrato, segna la fine del token
+     * @return il token
+     */
+    private String parseToken(final char[] terminators) {
+        Set<Character> terminatorSet = new HashSet<>();
+        for (char c : terminators) {
+            terminatorSet.add(c);
         }
-        
-        // Altrimenti, aggiungi il carattere al token
-        token.append(currentChar);
+
+        StringBuilder token = new StringBuilder();
+        int currentChar;
+        while (true) {
+            try {
+                currentChar = System.in.read();
+                if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
+                    break;
+                }
+                token.append((char) currentChar);
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+
+        return token.toString();
     }
-    
-    return token.toString();
+
+    public static void main(String[] args) {
+        TokenParser parser = new TokenParser();
+        char[] terminators = {' ', '\n', '\t', '\r'};
+        String token = parser.parseToken(terminators);
+        System.out.println("Token: " + token);
+    }
 }

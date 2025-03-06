@@ -5,8 +5,8 @@ public class TimeBucketCompressor {
      * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101,
      * per 20000115 è 20000112, e per 20000123 è 20000123.
      *
-     * @param timeBucket Il bucket temporale da comprimere, rappresentato come un long (es. 20000105).
-     * @param dayStep Il passo giornaliero da utilizzare per la compressione.
+     * @param timeBucket Il bucket temporale da comprimere, in formato YYYYMMDD.
+     * @param dayStep Il passo giornaliero per la compressione.
      * @return Il bucket temporale compresso.
      */
     public static long compressTimeBucket(long timeBucket, int dayStep) {
@@ -23,8 +23,8 @@ public class TimeBucketCompressor {
 
     public static void main(String[] args) {
         // Esempi di utilizzo
-        System.out.println(compressTimeBucket(20000105L, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // Output: 20000123
+        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
     }
 }

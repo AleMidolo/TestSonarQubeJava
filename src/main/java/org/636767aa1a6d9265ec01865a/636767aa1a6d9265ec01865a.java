@@ -21,7 +21,10 @@ public class LinkedBuffer {
 
     /**
      * Scrive il contenuto del {@link LinkedBuffer} nel {@link DataOutput}.
+     * @param out Il DataOutput su cui scrivere i dati.
+     * @param node Il nodo iniziale del LinkedBuffer.
      * @return la dimensione totale del contenuto del buffer.
+     * @throws IOException Se si verifica un errore di I/O durante la scrittura.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;

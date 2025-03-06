@@ -19,14 +19,7 @@ class CategoryTree {
         this.root = root;
     }
 
-    /**
-     * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
-     * @return il numero di nodi rimossi
-     */
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
         return removeUnusedNodesHelper(root);
     }
 
@@ -51,16 +44,20 @@ class CategoryTree {
     }
 
     public static void main(String[] args) {
+        // Example usage
         Node root = new Node(1, true);
         Node child1 = new Node(2, false);
         Node child2 = new Node(3, true);
-        Node child3 = new Node(4, false);
+        Node grandChild1 = new Node(4, false);
+        Node grandChild2 = new Node(5, true);
+
         root.children.add(child1);
         root.children.add(child2);
-        child2.children.add(child3);
+        child2.children.add(grandChild1);
+        child2.children.add(grandChild2);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Nodi rimossi: " + removedNodes);
+        System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

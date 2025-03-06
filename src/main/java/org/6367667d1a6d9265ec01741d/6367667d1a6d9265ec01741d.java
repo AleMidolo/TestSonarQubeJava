@@ -22,7 +22,7 @@ public class TypeResolver {
     public static void main(String[] args) {
         // Esempio di utilizzo
         TypeVariable<?> typeVar = String.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVar);
-        System.out.println("Bound: " + bound);
+        Type resolvedType = resolveBound(typeVar);
+        System.out.println("Resolved Type: " + resolvedType);
     }
 }

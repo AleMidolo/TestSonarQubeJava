@@ -1,26 +1,20 @@
 import java.util.NoSuchElementException;
 
-public class DoublyLinkedList<E> {
+public class LinkedList<E> {
+    private ListNode<E> current;
+    private ListNode<E> head;
+
+    // Assuming ListNode is a nested class within LinkedList
     private static class ListNode<E> {
-        E element;
+        E data;
         ListNode<E> next;
         ListNode<E> prev;
 
-        ListNode(E element, ListNode<E> next, ListNode<E> prev) {
-            this.element = element;
-            this.next = next;
-            this.prev = prev;
+        ListNode(E data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
         }
-    }
-
-    private ListNode<E> head;
-    private ListNode<E> tail;
-    private ListNode<E> current;
-
-    public DoublyLinkedList() {
-        head = null;
-        tail = null;
-        current = null;
     }
 
     /**
@@ -34,4 +28,6 @@ public class DoublyLinkedList<E> {
         current = current.prev;
         return current;
     }
+
+    // Other methods and constructors for LinkedList would go here
 }

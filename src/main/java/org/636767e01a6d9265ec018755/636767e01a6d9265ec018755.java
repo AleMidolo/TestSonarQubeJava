@@ -7,7 +7,7 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
 
     // Check if the JsonObject contains the key "ATS"
     if (jsonObject.has("ATS")) {
-        // If it contains "ATS", set the "ATS" value in the content map
+        // If it contains "ATS", set the "ATS" value in the map
         content.put("ATS", jsonObject.get("ATS").getAsString());
     }
 

@@ -1,10 +1,10 @@
 import org.apache.commons.beanutils.BeanMap;
 
-public class MyBeanMap {
+public class CustomBeanMap {
 
     private Object bean;
 
-    public MyBeanMap(Object bean) {
+    public CustomBeanMap(Object bean) {
         this.bean = bean;
     }
 
@@ -24,18 +24,21 @@ public class MyBeanMap {
 
     public static void main(String[] args) {
         // Esempio di utilizzo
-        MyBean myBean = new MyBean();
-        MyBean anotherBean = new MyBean();
+        MyBean bean1 = new MyBean();
+        MyBean bean2 = new MyBean();
 
-        BeanMap beanMap = new BeanMap(myBean);
-        beanMap.put("name", "John");
-        beanMap.put("age", 30);
+        bean1.setName("Bean1");
+        bean1.setAge(25);
 
-        MyBeanMap myBeanMap = new MyBeanMap(anotherBean);
-        myBeanMap.putAllWriteable(beanMap);
+        bean2.setName("Bean2");
+        bean2.setAge(30);
 
-        System.out.println("Name: " + anotherBean.getName());
-        System.out.println("Age: " + anotherBean.getAge());
+        BeanMap beanMap1 = new BeanMap(bean1);
+        CustomBeanMap customBeanMap = new CustomBeanMap(bean2);
+
+        customBeanMap.putAllWriteable(beanMap1);
+
+        System.out.println("Bean2 dopo putAllWriteable: " + bean2.getName() + ", " + bean2.getAge());
     }
 }
 

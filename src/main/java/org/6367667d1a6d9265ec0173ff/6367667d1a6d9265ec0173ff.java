@@ -8,33 +8,31 @@ public class MeteorLookup {
      * @return un {@link Meteor} o null se non trovato
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming Meteor is a class with a constructor or a factory method
-        // Here we simulate the lookup logic based on the request
+        // Assuming Meteor is a class with a constructor or factory method
+        // that can be initialized with data from the HttpServletRequest.
+        // This is a placeholder implementation.
+        
+        // Example: Extract some data from the request
         String meteorId = r.getParameter("meteorId");
+        
+        // Check if the parameter is present
         if (meteorId != null && !meteorId.isEmpty()) {
-            // Simulate fetching a Meteor instance based on the ID
+            // Create and return a new Meteor instance
             return new Meteor(meteorId);
-        }
-        return null;
-    }
-
-    // Assuming Meteor class is defined as follows
-    public static class Meteor {
-        private String id;
-
-        public Meteor(String id) {
-            this.id = id;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public String toString() {
-            return "Meteor{" +
-                    "id='" + id + '\'' +
-                    '}';
+        } else {
+            // Return null if no valid Meteor can be created
+            return null;
         }
     }
+}
+
+// Assuming the Meteor class looks something like this:
+class Meteor {
+    private String id;
+
+    public Meteor(String id) {
+        this.id = id;
+    }
+
+    // Additional methods and properties can be added here
 }

@@ -10,27 +10,25 @@ public class LogFormatter {
      * @return La stringa formattata.
      */
     public String format(LoggingEvent event) {
+        // Esempio di formattazione: [timestamp] [livello] messaggio
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        
         String level = event.getLevel().toString();
-        String loggerName = event.getLoggerName();
-        String message = event.getMessage();
-        
-        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
+        String message = event.getMessage().toString();
+
+        return String.format("[%s] [%s] %s", timestamp, level, message);
     }
 }
 
+// Classe di esempio per LoggingEvent
 class LoggingEvent {
     private long timeStamp;
-    private String level;
-    private String loggerName;
-    private String message;
+    private Level level;
+    private Object message;
 
-    public LoggingEvent(long timeStamp, String level, String loggerName, String message) {
+    public LoggingEvent(long timeStamp, Level level, Object message) {
         this.timeStamp = timeStamp;
         this.level = level;
-        this.loggerName = loggerName;
         this.message = message;
     }
 
@@ -38,15 +36,16 @@ class LoggingEvent {
         return timeStamp;
     }
 
-    public String getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public String getLoggerName() {
-        return loggerName;
-    }
-
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
+}
+
+// Enumerazione di esempio per i livelli di log
+enum Level {
+    INFO, WARN, ERROR, DEBUG
 }

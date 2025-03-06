@@ -1,27 +1,37 @@
-import org.apache.commons.math3.geometry.euclidean.twod.Box2D;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.math3.util.Pair;
+import java.awt.geom.Rectangle2D;
+import javafx.util.Pair;
 
 public class BoxSplitter {
 
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        // 获取矩形的左下角和右上角坐标
-        Vector2D lowerLeft = box.getLowerLeft();
-        Vector2D upperRight = box.getUpperRight();
+        double x = box.getX();
+        double y = box.getY();
+        double width = box.getWidth();
+        double height = box.getHeight();
 
-        // 计算矩形的宽度
-        double width = upperRight.getX() - lowerLeft.getX();
+        // Calculate the midpoint along the x-axis
+        double midX = x + width / 2;
 
-        // 计算拆分点的x坐标
-        double splitX = lowerLeft.getX() + width / 2.0;
+        // Create the left box
+        Box2D leftBox = new Box2D(x, y, midX - x, height);
 
-        // 创建第一个矩形框（左半部分）
-        Box2D leftBox = new Box2D(lowerLeft, new Vector2D(splitX, upperRight.getY()));
+        // Create the right box
+        Box2D rightBox = new Box2D(midX, y, width / 2, height);
 
-        // 创建第二个矩形框（右半部分）
-        Box2D rightBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
-
-        // 返回两个矩形框的对
         return new Pair<>(leftBox, rightBox);
+    }
+
+    public static class Box2D extends Rectangle2D.Double {
+        public Box2D(double x, double y, double width, double height) {
+            super(x, y, width, height);
+        }
+    }
+
+    public static void main(String[] args) {
+        Box2D box = new Box2D(0, 0, 100, 50);
+        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(box);
+
+        System.out.println("Left Box: " + splitBoxes.getKey());
+        System.out.println("Right Box: " + splitBoxes.getValue());
     }
 }

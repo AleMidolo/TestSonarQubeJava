@@ -9,18 +9,20 @@ public class Logger {
     }
 
     /**
-     * 对所有附加的附加器调用<code>doAppend</code>方法。
-     * @param event 日志事件
-     * @return 成功调用的附加器数量
+     * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.
+     * @param event El evento de logging que se va a enviar a los appenders.
+     * @return El número de appenders a los que se les envió el evento.
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
+        if (appenders == null) {
+            return 0;
+        }
+
         int count = 0;
-        if (appenders != null) {
-            for (Appender appender : appenders) {
-                if (appender != null) {
-                    appender.doAppend(event);
-                    count++;
-                }
+        for (Appender appender : appenders) {
+            if (appender != null) {
+                appender.doAppend(event);
+                count++;
             }
         }
         return count;

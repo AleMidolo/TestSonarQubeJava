@@ -1,18 +1,17 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class ByteVector {
-    private List<Byte> bytes;
+    private ArrayList<Byte> bytes;
 
     public ByteVector() {
         this.bytes = new ArrayList<>();
     }
 
     /**
-     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
-     * @param byteValue1 一个字节。
-     * @param byteValue2 另一个字节。
-     * @return 此字节向量。
+     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
+     * @param byteValue1 un byte.
+     * @param byteValue2 otro byte.
+     * @return este vector de bytes.
      */
     public final ByteVector put11(final int byteValue1, final int byteValue2) {
         bytes.add((byte) byteValue1);
@@ -20,7 +19,12 @@ public class ByteVector {
         return this;
     }
 
-    public List<Byte> getBytes() {
-        return bytes;
+    // Optional: Method to get the internal byte array for testing or other purposes
+    public byte[] toByteArray() {
+        byte[] result = new byte[bytes.size()];
+        for (int i = 0; i < bytes.size(); i++) {
+            result[i] = bytes.get(i);
+        }
+        return result;
     }
 }

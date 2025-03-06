@@ -5,14 +5,14 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // 初始容量
+        this.data = new byte[16]; // Initial capacity
         this.size = 0;
     }
 
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // 确保有足够的空间存放4个字节的整数
+        ensureCapacity(size + 4); // Ensure space for 4 bytes
 
-        // 将整数按大端序写入字节数组
+        // Insert the integer in big-endian order
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);
@@ -31,5 +31,11 @@ public class ByteVector {
         }
     }
 
-    // 其他方法...
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
+    }
+
+    public int size() {
+        return size;
+    }
 }

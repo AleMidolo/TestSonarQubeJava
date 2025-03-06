@@ -1,29 +1,43 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-public class BeanMapUtils {
+public class BeanMap {
+    private Map<String, Object> properties;
 
-    /**
-     * 将给定 BeanMap 中所有可写属性放入此 BeanMap。只读和只写属性将被忽略。
-     * @param map  要放入的 BeanMap
-     */
+    public BeanMap(Map<String, Object> properties) {
+        this.properties = properties;
+    }
+
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("The input BeanMap cannot be null.");
-        }
-
-        // 获取目标 BeanMap 的所有可写属性
-        for (Object key : map.keySet()) {
-            if (map.isWriteable(key.toString())) {
-                Object value = map.get(key);
-                this.put(key, value);
+        try {
+            PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
+            for (PropertyDescriptor descriptor : descriptors) {
+                if (descriptor.getWriteMethod() != null) {
+                    Method readMethod = descriptor.getReadMethod();
+                    if (readMethod != null) {
+                        Object value = readMethod.invoke(map);
+                        this.properties.put(descriptor.getName(), value);
+                    }
+                }
             }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 
-    // 假设 BeanMap 类有一个 put 方法
-    public void put(Object key, Object value) {
-        // 这里假设 BeanMap 有一个 put 方法
-        // 实际实现可能依赖于具体的 BeanMap 实现
-        // 例如：this.beanMap.put(key, value);
+    private PropertyDescriptor[] getPropertyDescriptors() {
+        // This method should return the PropertyDescriptor array for the bean.
+        // For simplicity, we assume it's implemented elsewhere.
+        return new PropertyDescriptor[0];
+    }
+
+    public Object get(String propertyName) {
+        return properties.get(propertyName);
+    }
+
+    public void put(String propertyName, Object value) {
+        properties.put(propertyName, value);
     }
 }

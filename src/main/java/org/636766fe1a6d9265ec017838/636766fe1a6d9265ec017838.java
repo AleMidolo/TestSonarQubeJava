@@ -1,12 +1,11 @@
-import java.util.Objects;
-
 public class CharacterArrayConverter {
 
     /**
-     * <p>将对象类型的 Character 数组转换为基本数据类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>Character</code> 数组，可以为 <code>null</code>
-     * @return 一个 <code>char</code> 数组，如果输入数组为空则返回 <code>null</code>
-     * @throws NullPointerException 如果数组内容为 <code>null</code>
+     * Convierte un array de objetos "Character" a primitivos.
+     * Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.
+     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
+     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
+     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
     public static char[] toPrimitive(final Character[] array) {
         if (array == null) {
@@ -14,7 +13,10 @@ public class CharacterArrayConverter {
         }
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("El contenido del arreglo no puede ser nulo.");
+            }
+            result[i] = array[i];
         }
         return result;
     }
@@ -22,6 +24,8 @@ public class CharacterArrayConverter {
     public static void main(String[] args) {
         Character[] testArray = {'a', 'b', 'c'};
         char[] primitiveArray = toPrimitive(testArray);
-        System.out.println(java.util.Arrays.toString(primitiveArray));
+        for (char c : primitiveArray) {
+            System.out.print(c + " ");
+        }
     }
 }

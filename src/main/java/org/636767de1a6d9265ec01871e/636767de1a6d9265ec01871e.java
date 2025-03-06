@@ -1,40 +1,33 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ShardKeyChecker {
+public class ShardingKeyChecker {
 
     /**
-     * @param modelName 实体的模型名称
-     * @throws IllegalStateException 如果分片键索引不连续
+     * Verifica si los índices de la clave de "sharding" son continuos.
+     * 
+     * @param modelName nombre del modelo de la entidad
+     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
      */
     private void check(String modelName) throws IllegalStateException {
-        // 假设分片键的格式为 "shard_<index>"
-        Pattern pattern = Pattern.compile("shard_(\\d+)");
+        // Expresión regular para encontrar los índices de sharding en el nombre del modelo
+        Pattern pattern = Pattern.compile("_shard(\\d+)");
         Matcher matcher = pattern.matcher(modelName);
 
-        if (!matcher.find()) {
-            throw new IllegalStateException("Invalid model name format: " + modelName);
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group(1));
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Los índices de la clave de sharding no son continuos.");
+            }
+            previousIndex = currentIndex;
         }
-
-        int currentIndex = Integer.parseInt(matcher.group(1));
-        int expectedIndex = getExpectedShardIndex(modelName);
-
-        if (currentIndex != expectedIndex) {
-            throw new IllegalStateException("Shard key index is not continuous. Expected: " + expectedIndex + ", Found: " + currentIndex);
-        }
-    }
-
-    private int getExpectedShardIndex(String modelName) {
-        // 这里假设有一个方法来获取预期的分片键索引
-        // 例如，从数据库或其他存储中获取最后一个分片键索引并加1
-        // 这里只是一个示例，实际实现可能不同
-        return 0; // 替换为实际逻辑
     }
 
     public static void main(String[] args) {
-        ShardKeyChecker checker = new ShardKeyChecker();
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("shard_1");
+            checker.check("model_shard1_shard2_shard3"); // Ejemplo de uso
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

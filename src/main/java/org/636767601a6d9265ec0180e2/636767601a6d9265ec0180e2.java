@@ -1,94 +1,96 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class GraphSeparator {
 
-    private static class Pair<K, V> {
-        private final K key;
-        private final V value;
+    // Assuming the graph is represented as an adjacency list
+    private List<List<Integer>> graph;
 
-        public Pair(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
-        }
+    public GraphSeparator(List<List<Integer>> graph) {
+        this.graph = graph;
     }
 
-    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        // Assuming E is the type of edges in the graph
-        // Assuming the graph is represented as an adjacency list
-        // graph is a Map<Integer, List<E>> where the key is the vertex and the value is the list of edges connected to it
+    private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = new ArrayList<>();
 
-        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
+        // Iterate over each vertex in the graph
+        for (int u = 0; u < graph.size(); u++) {
+            // Iterate over each neighbor of the current vertex
+            for (int v : graph.get(u)) {
+                if (u < v) { // Ensure each edge is processed only once
+                    // Compute the minimal separators for the neighborhood of edge (u, v)
+                    List<Pair<Integer, Integer>> separators = computeMinimalSeparators(u, v);
 
-        // Iterate over all edges in the graph
-        for (Map.Entry<Integer, List<E>> entry : graph.entrySet()) {
-            int vertex = entry.getKey();
-            List<E> edges = entry.getValue();
-
-            for (E edge : edges) {
-                // Compute the neighborhood of the edge
-                Set<Integer> neighborhood = getNeighborhood(vertex, edge);
-
-                // Compute the minimal separator for the neighborhood
-                List<Pair<Integer, Integer>> separator = computeMinimalSeparator(neighborhood);
-
-                // Add the separator and the edge to the global separator list
-                globalSeparatorList.add(new Pair<>(separator, edge));
-            }
-        }
-
-        return globalSeparatorList;
-    }
-
-    private Set<Integer> getNeighborhood(int vertex, E edge) {
-        // Implement logic to get the neighborhood of the edge
-        // This is a placeholder implementation
-        Set<Integer> neighborhood = new HashSet<>();
-        neighborhood.add(vertex);
-        // Add other vertices connected by the edge
-        return neighborhood;
-    }
-
-    private List<Pair<Integer, Integer>> computeMinimalSeparator(Set<Integer> neighborhood) {
-        // Implement logic to compute the minimal separator for the neighborhood
-        // This is a placeholder implementation
-        List<Pair<Integer, Integer>> separator = new ArrayList<>();
-        for (int v : neighborhood) {
-            for (int u : neighborhood) {
-                if (v != u) {
-                    separator.add(new Pair<>(v, u));
+                    // Add the separators to the global list
+                    globalSeparators.add(new Pair<>(separators, u));
                 }
             }
         }
-        return separator;
+
+        return globalSeparators;
     }
 
-    // Assuming the graph is represented as an adjacency list
-    private Map<Integer, List<E>> graph;
+    private List<Pair<Integer, Integer>> computeMinimalSeparators(int u, int v) {
+        List<Pair<Integer, Integer>> separators = new ArrayList<>();
 
-    public GraphSeparator(Map<Integer, List<E>> graph) {
-        this.graph = graph;
+        // Get the neighborhood of edge (u, v)
+        Set<Integer> neighborhood = new HashSet<>();
+        neighborhood.addAll(graph.get(u));
+        neighborhood.addAll(graph.get(v));
+        neighborhood.remove(u);
+        neighborhood.remove(v);
+
+        // For each pair of nodes in the neighborhood, check if they are connected
+        for (int x : neighborhood) {
+            for (int y : neighborhood) {
+                if (x < y && !graph.get(x).contains(y)) {
+                    // If they are not connected, add the pair as a separator
+                    separators.add(new Pair<>(x, y));
+                }
+            }
+        }
+
+        return separators;
+    }
+
+    // Pair class to hold pairs of elements
+    public static class Pair<A, B> {
+        private A first;
+        private B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
     }
 
     public static void main(String[] args) {
         // Example usage
-        Map<Integer, List<E>> graph = new HashMap<>();
-        // Populate the graph with vertices and edges
+        List<List<Integer>> graph = new ArrayList<>();
+        graph.add(List.of(1, 2));
+        graph.add(List.of(0, 2, 3));
+        graph.add(List.of(0, 1, 3));
+        graph.add(List.of(1, 2));
 
         GraphSeparator separator = new GraphSeparator(graph);
-        List<Pair<List<Pair<Integer, Integer>>, E>> result = separator.computeGlobalSeparatorList();
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> result = separator.computeGlobalSeparatorList();
 
         // Print the result
-        for (Pair<List<Pair<Integer, Integer>>, E> pair : result) {
-            System.out.println("Edge: " + pair.getValue());
-            System.out.println("Separator: " + pair.getKey());
+        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : result) {
+            System.out.println("Edge: " + pair.getSecond());
+            for (Pair<Integer, Integer> sep : pair.getFirst()) {
+                System.out.println("Separator: (" + sep.getFirst() + ", " + sep.getSecond() + ")");
+            }
         }
     }
 }

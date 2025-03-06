@@ -1,13 +1,10 @@
-public class ExceptionChecker {
+public class Example {
     private Throwable thrown;
 
-    public ExceptionChecker(Throwable thrown) {
+    public Example(Throwable thrown) {
         this.thrown = thrown;
     }
 
-    /**
-     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
-     */
     public boolean hasThrown() {
         if (thrown == null) {
             return false;
@@ -22,7 +19,7 @@ public class ExceptionChecker {
 
     public static void main(String[] args) {
         // Example usage
-        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
-        System.out.println(checker.hasThrown()); // Should print true
+        Example example = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example.hasThrown()); // Should print true
     }
 }

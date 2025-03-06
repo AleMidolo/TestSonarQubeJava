@@ -3,11 +3,11 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
+     * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado.
      * 
-     * @param str 要检查的字符串
-     * @param searchStrArray 要搜索的字符串集合
-     * @return 如果字符串包含集合中的任何字符，则返回true；否则返回false
+     * @param str La cadena en la que se buscará.
+     * @param searchStrArray Lista de cadenas que se buscarán en la cadena principal.
+     * @return true si la cadena contiene alguna de las cadenas de búsqueda, false en caso contrario.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -20,14 +20,7 @@ public class StringUtils {
                 return true;
             }
         }
-        return false;
-    }
 
-    public static void main(String[] args) {
-        // 示例用法
-        List<String> searchList = List.of("abc", "def", "ghi");
-        String input = "This is a test string with ABC in it.";
-        boolean result = containsAnyIgnoreCase(input, searchList);
-        System.out.println(result); // 输出: true
+        return false;
     }
 }

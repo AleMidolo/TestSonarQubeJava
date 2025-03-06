@@ -9,8 +9,8 @@ public class BasicBlock {
     }
 
     /**
-     * 将一个抽象类型添加到基本块中调用构造函数的类型列表中。
-     * @param abstractType 一个调用了构造函数的抽象类型。
+     * Agrega un tipo abstracto a la lista de tipos sobre los cuales se invoca un constructor en el bloque básico.
+     * @param abstractType un tipo abstracto sobre el cual se invoca un constructor.
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {
@@ -18,5 +18,5 @@ public class BasicBlock {
         }
     }
 
-    // 其他方法...
+    // Otros métodos de la clase BasicBlock...
 }

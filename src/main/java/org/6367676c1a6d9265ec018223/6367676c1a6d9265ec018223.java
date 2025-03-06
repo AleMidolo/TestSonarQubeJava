@@ -3,17 +3,17 @@ import java.util.Collection;
 public class CollectionUtils {
 
     /**
-     * 检查给定的集合是否包含给定的元素实例。<p>此方法要求集合中存在该具体实例，而不仅仅是一个相等的元素。
-     * @param collection 要检查的集合
-     * @param element 要查找的元素
-     * @return 如果找到则返回 <code>true</code>，否则返回 <code>false</code>
+     * Verifica si la colección dada contiene la instancia del elemento proporcionado. <p>Exige que la instancia dada esté presente, en lugar de devolver <code>true</code> para un elemento igual también.
+     * @param collection la colección a verificar
+     * @param element el elemento a buscar
+     * @return <code>true</code> si se encuentra, <code>false</code> en caso contrario
      */
     public static boolean containsInstance(Collection<?> collection, Object element) {
         if (collection == null || element == null) {
             return false;
         }
-        for (Object obj : collection) {
-            if (obj == element) {
+        for (Object item : collection) {
+            if (item == element) {
                 return true;
             }
         }

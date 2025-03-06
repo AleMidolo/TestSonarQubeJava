@@ -1,7 +1,8 @@
 /**
- * <p>用于 {@link #createNumber(String)} 的工具方法。</p> <p>如果 s 为 <code>null</code>，则返回 <code>true</code>。</p>
- * @param s 要检查的字符串
- * @return 如果它全是零或 <code>null</code>
+ * Método de utilidad para {@link #createNumber(String)}.
+ * Devuelve <code>true</code> si "s" es <code>null</code> o si todos los caracteres son ceros.
+ * @param s la cadena a verificar
+ * @return si son todos ceros o <code>null</code>
  */
 private static boolean isAllZeros(String s) {
     if (s == null) {

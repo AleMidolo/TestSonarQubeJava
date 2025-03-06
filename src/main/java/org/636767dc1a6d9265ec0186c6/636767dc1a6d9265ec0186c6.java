@@ -1,34 +1,19 @@
 import java.util.Set;
+import java.util.HashSet;
 
 public class FieldChecker {
+    private Set<Fields> storedFields = new HashSet<>();
 
-    private Set<String> storedFields;
-
-    public FieldChecker(Set<String> storedFields) {
-        this.storedFields = storedFields;
-    }
-
-    /**
-     * 当输入字段已经存储在属性中时返回真。
+    /** 
+     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
-        for (String field : fields.getFieldNames()) {
-            if (!storedFields.contains(field)) {
-                return false;
-            }
-        }
-        return true;
+        return storedFields.contains(fields);
     }
 
+    // Assuming Fields is a class or enum, you would need to define it.
+    // For example:
     public static class Fields {
-        private Set<String> fieldNames;
-
-        public Fields(Set<String> fieldNames) {
-            this.fieldNames = fieldNames;
-        }
-
-        public Set<String> getFieldNames() {
-            return fieldNames;
-        }
+        // Fields implementation
     }
 }

@@ -4,9 +4,10 @@ import java.util.NoSuchElementException;
  * {@inheritDoc}
  */
 @Override
-protected V provideNextVertex() {
-    if (vertices.isEmpty()) {
+protected V proporcionarSiguienteVertice() {
+    if (!hasNext()) {
         throw new NoSuchElementException("No more vertices available.");
     }
-    return vertices.poll();
+    // Assuming 'vertices' is a collection of vertices and 'currentIndex' tracks the current position
+    return vertices.get(currentIndex++);
 }

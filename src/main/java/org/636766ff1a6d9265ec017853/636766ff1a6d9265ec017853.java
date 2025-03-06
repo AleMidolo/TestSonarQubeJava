@@ -1,10 +1,10 @@
 import org.objectweb.asm.Label;
 
 /**
- * 返回与给定字节码偏移量对应的标签。如果该标签尚未被创建，该方法的默认实现会为给定的偏移量创建一个标签。
- * @param bytecodeOffset 方法中的字节码偏移量。
- * @param labels 已创建的标签数组，按其偏移量索引。如果bytecodeOffset已经存在标签，则此方法不得创建新的标签。否则，它必须将新标签存储在此数组中。
- * @return 一个非空的标签，必须等于labels[bytecodeOffset]。
+ * Devuelve la etiqueta correspondiente al "offset" del bytecode dado. La implementación predeterminada de este método crea una etiqueta para el desplazamiento dado si aún no se ha creado.
+ * @param bytecodeOffset un "offset" de bytecode en un método.
+ * @param labels las etiquetas ya creadas, indexadas por su "offset". Si ya existe una etiqueta para bytecodeOffset, este método no debe crear una nueva. De lo contrario, debe almacenar la nueva etiqueta en este arreglo.
+ * @return una etiqueta no nula, que debe ser igual a labels[bytecodeOffset].
  */
 protected Label readLabel(final int bytecodeOffset, final Label[] labels) {
     if (labels[bytecodeOffset] == null) {

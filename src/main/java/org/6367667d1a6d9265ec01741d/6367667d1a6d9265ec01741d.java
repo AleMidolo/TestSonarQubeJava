@@ -4,28 +4,25 @@ import java.lang.reflect.TypeVariable;
 public class TypeResolver {
 
     /**
-     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
+     * Resuelve el primer límite para el {@code typeVariable}, devolviendo {@code Unknown.class} si no se puede resolver ninguno.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
         if (bounds.length > 0) {
             return bounds[0];
+        } else {
+            return Unknown.class;
         }
-        return Unknown.class;
     }
 
+    // Clase ficticia para representar el tipo desconocido
     public static class Unknown {
-        // Placeholder class for unknown types
     }
 
     public static void main(String[] args) {
-        // Example usage
-        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVariable);
-        System.out.println("Resolved bound: " + bound);
-    }
-
-    class ExampleClass<T extends String> {
-        // Example class with a type parameter
+        // Ejemplo de uso
+        TypeVariable<?> typeVar = String.class.getTypeParameters()[0];
+        Type bound = resolveBound(typeVar);
+        System.out.println("Bound: " + bound);
     }
 }

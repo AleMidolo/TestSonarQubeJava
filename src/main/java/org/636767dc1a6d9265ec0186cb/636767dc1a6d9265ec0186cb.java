@@ -5,23 +5,17 @@ import java.nio.file.Paths;
 public class ConfigInitializer {
 
     /**
-     * 初始化配置，例如检查分发路径
+     * Inicializa la configuración, como verificar la ruta de distribución.
      */
     public void init() {
-        // 假设分发路径为 "dist"
-        String distributionPath = "dist";
+        // Verificar la ruta de distribución
+        String distributionPath = System.getProperty("user.dir"); // Obtiene el directorio actual
         Path path = Paths.get(distributionPath);
 
-        // 检查路径是否存在
         if (Files.exists(path)) {
-            System.out.println("分发路径存在: " + path.toAbsolutePath());
+            System.out.println("La ruta de distribución existe: " + distributionPath);
         } else {
-            System.out.println("分发路径不存在，创建路径: " + path.toAbsolutePath());
-            try {
-                Files.createDirectories(path);
-            } catch (Exception e) {
-                System.err.println("无法创建分发路径: " + e.getMessage());
-            }
+            System.out.println("La ruta de distribución no existe: " + distributionPath);
         }
     }
 

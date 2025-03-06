@@ -1,29 +1,25 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class CollectionRemover {
+public class CustomSet {
     private Set<Integer> set;
 
-    public CollectionRemover() {
+    public CustomSet() {
         this.set = new HashSet<>();
     }
 
     /**
-     * 从集合中移除一个值。如果集合中包含指定的元素，则返回真。
-     * @param val 要移除的值
-     * @return 如果集合中包含指定的元素，则返回真；否则返回假
+     * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado.
+     * 
+     * @param val El valor a eliminar del conjunto.
+     * @return Verdadero si el conjunto contenía el elemento, falso en caso contrario.
      */
     public boolean remove(int val) {
         return set.remove(val);
     }
 
-    // 可选：添加一个方法来向集合中添加元素
+    // Método adicional para agregar elementos al conjunto (opcional)
     public void add(int val) {
         set.add(val);
-    }
-
-    // 可选：添加一个方法来检查集合是否包含某个元素
-    public boolean contains(int val) {
-        return set.contains(val);
     }
 }

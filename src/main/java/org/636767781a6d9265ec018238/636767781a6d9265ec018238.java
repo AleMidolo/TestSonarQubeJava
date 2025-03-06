@@ -4,17 +4,15 @@ public class Logger {
     private List<Appender> appenders;
 
     /**
-     * 如果指定的Appender在Appender列表中，则返回<code>true</code>，否则返回<code>false</code>。
-     * @param appender 要检查的Appender
-     * @return 如果Appender在列表中则返回<code>true</code>，否则返回<code>false</code>
+     * Devuelve <code>true</code> si el "appender" especificado está en la lista de "appenders" adjuntos, <code>false</code> en caso contrario.
+     * @param appender El appender a verificar.
+     * @return <code>true</code> si el appender está en la lista, <code>false</code> en caso contrario.
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
+        if (appender == null || appenders == null) {
+            return false;
+        }
         return appenders.contains(appender);
     }
-}
-
-// Assuming Appender is a class or interface defined elsewhere
-interface Appender {
-    // Appender methods
 }

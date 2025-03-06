@@ -1,11 +1,12 @@
 import java.util.Base64;
 
 public class Base64Decoder {
+
     /**
-     * 按照 Base64 规则解码字符串。
+     * Decodificación de una cadena a una cadena siguiendo la norma Base64.
      * 
-     * @param s 需要解码的 Base64 字符串
-     * @return 解码后的字符串
+     * @param s La cadena codificada en Base64.
+     * @return La cadena decodificada.
      */
     public static String base64Decode(final String s) {
         byte[] decodedBytes = Base64.getDecoder().decode(s);
@@ -13,8 +14,8 @@ public class Base64Decoder {
     }
 
     public static void main(String[] args) {
-        String encodedString = "SGVsbG8gV29ybGQh"; // Example Base64 encoded string
+        String encodedString = "SGVsbG8gV29ybGQh"; // Ejemplo de cadena codificada en Base64
         String decodedString = base64Decode(encodedString);
-        System.out.println(decodedString); // Output: Hello World!
+        System.out.println(decodedString); // Salida: "Hello World!"
     }
 }

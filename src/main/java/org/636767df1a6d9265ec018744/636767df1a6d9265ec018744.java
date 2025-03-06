@@ -1,49 +1,59 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeSplitter {
+public class TimeRangeDivider {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration in milliseconds
-    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    // Supongamos que FETCH_DATA_DURATION es una constante definida en la clase
+    private static final long FETCH_DATA_DURATION = 3600000; // 1 hora en milisegundos
 
     /**
-     * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
+     * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
+     *
+     * @param inicio El tiempo de inicio en milisegundos.
+     * @param fin El tiempo de finalización en milisegundos.
+     * @return Una lista de rangos de tiempo divididos.
      */
-    protected List<TimeRange> buildTimeRanges(long start, long end) {
-        List<TimeRange> timeRanges = new ArrayList<>();
+    protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
+        List<TimeRange> rangos = new ArrayList<>();
 
-        while (start < end) {
-            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, nextEnd));
-            start = nextEnd;
+        long tiempoActual = inicio;
+
+        while (tiempoActual < fin) {
+            long tiempoSiguiente = tiempoActual + FETCH_DATA_DURATION;
+            if (tiempoSiguiente > fin) {
+                tiempoSiguiente = fin;
+            }
+
+            rangos.add(new TimeRange(tiempoActual, tiempoSiguiente));
+            tiempoActual = tiempoSiguiente;
         }
 
-        return timeRanges;
+        return rangos;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Clase interna para representar un rango de tiempo
     public static class TimeRange {
-        private final long start;
-        private final long end;
+        private final long inicio;
+        private final long fin;
 
-        public TimeRange(long start, long end) {
-            this.start = start;
-            this.end = end;
+        public TimeRange(long inicio, long fin) {
+            this.inicio = inicio;
+            this.fin = fin;
         }
 
-        public long getStart() {
-            return start;
+        public long getInicio() {
+            return inicio;
         }
 
-        public long getEnd() {
-            return end;
+        public long getFin() {
+            return fin;
         }
 
         @Override
         public String toString() {
             return "TimeRange{" +
-                    "start=" + start +
-                    ", end=" + end +
+                    "inicio=" + inicio +
+                    ", fin=" + fin +
                     '}';
         }
     }

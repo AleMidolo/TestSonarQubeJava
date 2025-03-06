@@ -1,5 +1,4 @@
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 
 final class ClassFileReader {
@@ -10,25 +9,35 @@ final class ClassFileReader {
     }
 
     /**
-     * 读取 {@link #classFileBuffer} 中的 CONSTANT_Utf8 常量池条目。
-     * @param constantPoolEntryIndex 类的常量池表中 CONSTANT_Utf8 条目的索引。
-     * @param charBuffer 用于读取字符串的缓冲区。此缓冲区必须足够大。不会自动调整大小。
-     * @return 与指定的 CONSTANT_Utf8 条目对应的字符串。
+     * Lee una entrada CONSTANT_Utf8 de un grupo de constantes en {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex el índice de una entrada CONSTANT_Utf8 en la tabla de constantes de la clase.
+     * @param charBuffer el búfer que se utilizará para leer la cadena. Este búfer debe ser lo suficientemente grande. No se redimensiona automáticamente.
+     * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // 假设常量池条目从索引1开始，并且每个条目占用2个字节
-        int offset = constantPoolEntryIndex * 2;
-
-        // 读取字符串长度
-        int length = classFileBuffer.getShort(offset) & 0xFFFF;
-        offset += 2;
-
-        // 读取字符串内容
-        for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer.get(offset + i) & 0xFF);
+        // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
+        // La entrada CONSTANT_Utf8 comienza con un byte que indica el tipo de entrada (1 para CONSTANT_Utf8).
+        // Luego sigue un short que indica la longitud de la cadena UTF-8.
+        int position = constantPoolEntryIndex;
+        byte tag = classFileBuffer.get(position);
+        if (tag != 1) {
+            throw new IllegalArgumentException("La entrada no es de tipo CONSTANT_Utf8.");
         }
+        position += 1;
+        int length = classFileBuffer.getShort(position) & 0xFFFF; // Convertir a unsigned short
+        position += 2;
 
-        // 将字符数组转换为字符串
-        return new String(charBuffer, 0, length);
+        // Leer los bytes de la cadena UTF-8
+        byte[] utf8Bytes = new byte[length];
+        classFileBuffer.position(position);
+        classFileBuffer.get(utf8Bytes, 0, length);
+
+        // Convertir los bytes UTF-8 a una cadena Java
+        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+
+        // Copiar la cadena al búfer de caracteres proporcionado
+        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+
+        return utf8String;
     }
 }

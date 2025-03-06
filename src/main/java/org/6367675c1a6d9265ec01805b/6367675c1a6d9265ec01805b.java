@@ -1,34 +1,38 @@
-import java.util.*;
+// Assuming the class has the following structure for the doubly linked list nodes
+class EdgeNode {
+    EdgeNode prev;
+    EdgeNode next;
+    // Other fields as necessary
+}
 
 public class Tree {
-    private Map<Integer, List<Integer>> edgeList;
+    private EdgeNode head; // Head of the doubly linked list
+    private EdgeNode tail; // Tail of the doubly linked list
 
-    public Tree() {
-        edgeList = new HashMap<>();
-    }
-
-    public void addEdge(int u, int v) {
-        edgeList.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
-        edgeList.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
-    }
-
-    public void removeFromTreeEdgeList(int u, int v) {
-        if (edgeList.containsKey(u)) {
-            edgeList.get(u).removeIf(node -> node == v);
+    /**
+     * Elimina este borde de ambas listas doblemente enlazadas de bordes del árbol.
+     */
+    public void removeFromTreeEdgeList(EdgeNode node) {
+        if (node == null) {
+            return;
         }
-        if (edgeList.containsKey(v)) {
-            edgeList.get(v).removeIf(node -> node == u);
+
+        // If the node is the head
+        if (node.prev == null) {
+            head = node.next;
+        } else {
+            node.prev.next = node.next;
         }
-    }
 
-    public static void main(String[] args) {
-        Tree tree = new Tree();
-        tree.addEdge(1, 2);
-        tree.addEdge(2, 3);
-        tree.addEdge(3, 4);
+        // If the node is the tail
+        if (node.next == null) {
+            tail = node.prev;
+        } else {
+            node.next.prev = node.prev;
+        }
 
-        System.out.println("Before removal: " + tree.edgeList);
-        tree.removeFromTreeEdgeList(2, 3);
-        System.out.println("After removal: " + tree.edgeList);
+        // Optional: Clear the node's pointers to help with garbage collection
+        node.prev = null;
+        node.next = null;
     }
 }

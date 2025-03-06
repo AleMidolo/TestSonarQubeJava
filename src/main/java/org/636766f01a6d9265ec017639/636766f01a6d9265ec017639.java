@@ -6,9 +6,9 @@ import java.util.List;
 public class ArrayToList {
 
     /**
-     * 数组转列表。<p> 其工作方式类似于 {@link Arrays#asList(Object)}，但可以处理空数组。
-     * @param a 要转换的数组
-     * @return 一个由数组支持的列表。
+     * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)}, pero maneja arreglos nulos.
+     * @param a el arreglo de elementos a convertir en lista.
+     * @return una lista respaldada por el arreglo.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
@@ -18,17 +18,13 @@ public class ArrayToList {
     }
 
     public static void main(String[] args) {
-        // 测试示例
+        // Ejemplo de uso
         String[] array = {"a", "b", "c"};
         List<String> list = asList(array);
-        System.out.println(list); // 输出: [a, b, c]
-
-        String[] emptyArray = {};
-        List<String> emptyList = asList(emptyArray);
-        System.out.println(emptyList); // 输出: []
+        System.out.println(list); // [a, b, c]
 
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
-        System.out.println(nullList); // 输出: []
+        System.out.println(nullList); // []
     }
 }

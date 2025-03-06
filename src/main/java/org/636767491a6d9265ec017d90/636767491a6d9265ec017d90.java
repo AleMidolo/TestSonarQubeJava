@@ -3,16 +3,16 @@ import java.util.Objects;
 public class ArrayUtils {
 
     /**
-     * 反转给定数组中指定范围内元素的顺序。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param from 要反转的范围内第一个元素的索引（包含）
-     * @param to 要反转的范围内最后一个元素的索引（包含）
+     * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
+     * @param <V> el tipo de elementos en el arreglo
+     * @param arr el arreglo
+     * @param from el índice del primer elemento (inclusive) dentro del rango a invertir
+     * @param to el índice del último elemento (inclusive) dentro del rango a invertir
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "数组不能为null");
+        Objects.requireNonNull(arr, "El arreglo no puede ser nulo.");
         if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("无效的索引范围");
+            throw new IllegalArgumentException("Índices fuera de rango o inválidos.");
         }
 
         while (from < to) {
@@ -25,11 +25,12 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 1, 3);
+        // Ejemplo de uso
+        Integer[] arr = {1, 2, 3, 4, 5, 6, 7};
+        reverse(arr, 2, 5);
         for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // 输出: 1 4 3 2 5
+        // Salida esperada: 1 2 6 5 4 3 7
     }
 }

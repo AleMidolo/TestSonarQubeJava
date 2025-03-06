@@ -4,8 +4,8 @@ public class LastWriteTimeStamp {
     private final AtomicLong lastWriteTimeStamp = new AtomicLong(System.currentTimeMillis());
 
     /**
-     * 上一次写操作发生的时间，单位为毫秒。
-     * @return this
+     * La última vez, en milisegundos, que ocurrió una operación de escritura.
+     * @return esto
      */
     public long lastWriteTimeStampInMilliseconds() {
         return lastWriteTimeStamp.get();
@@ -16,9 +16,9 @@ public class LastWriteTimeStamp {
     }
 
     public static void main(String[] args) {
-        LastWriteTimeStamp timeStamp = new LastWriteTimeStamp();
-        System.out.println("Last write timestamp: " + timeStamp.lastWriteTimeStampInMilliseconds());
-        timeStamp.updateLastWriteTimeStamp();
-        System.out.println("Updated last write timestamp: " + timeStamp.lastWriteTimeStampInMilliseconds());
+        LastWriteTimeStamp example = new LastWriteTimeStamp();
+        System.out.println("Last write timestamp: " + example.lastWriteTimeStampInMilliseconds());
+        example.updateLastWriteTimeStamp();
+        System.out.println("Updated last write timestamp: " + example.lastWriteTimeStampInMilliseconds());
     }
 }

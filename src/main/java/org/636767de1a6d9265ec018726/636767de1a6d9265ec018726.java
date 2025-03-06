@@ -27,20 +27,24 @@ public class SequenceRange {
     }
 }
 
-public class ConfigSnapshot {
+public class ProfileSegment {
+
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
+        
         // Example logic to build sequence ranges
-        ranges.add(new SequenceRange(0, 100));
-        ranges.add(new SequenceRange(101, 200));
-        ranges.add(new SequenceRange(201, 300));
+        // This is a placeholder and should be replaced with actual logic
+        ranges.add(new SequenceRange(1, 10));
+        ranges.add(new SequenceRange(11, 20));
+        ranges.add(new SequenceRange(21, 30));
+        
         return ranges;
     }
 
     public static void main(String[] args) {
-        ConfigSnapshot snapshot = new ConfigSnapshot();
-        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
-        for (SequenceRange range : ranges) {
+        ProfileSegment segment = new ProfileSegment();
+        List<SequenceRange> sequenceRanges = segment.buildSequenceRanges();
+        for (SequenceRange range : sequenceRanges) {
             System.out.println(range);
         }
     }

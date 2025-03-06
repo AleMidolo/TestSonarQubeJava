@@ -12,11 +12,11 @@ public class OuterFaceCirculator {
     }
 
     public void next(int dir) {
-        // Assuming dir is 1 for clockwise and -1 for counter-clockwise
+        // Assuming dir is either 1 (clockwise) or -1 (counter-clockwise)
         if (dir == 1) {
-            current = current.getNext();
+            current = current.getNextClockwise();
         } else if (dir == -1) {
-            current = current.getPrevious();
+            current = current.getNextCounterClockwise();
         } else {
             throw new IllegalArgumentException("Invalid direction: " + dir);
         }
@@ -28,23 +28,23 @@ public class OuterFaceCirculator {
 }
 
 public class Node {
-    private Node next;
-    private Node previous;
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
 
-    public Node getNext() {
-        return next;
+    public Node getNextClockwise() {
+        return nextClockwise;
     }
 
-    public void setNext(Node next) {
-        this.next = next;
+    public void setNextClockwise(Node nextClockwise) {
+        this.nextClockwise = nextClockwise;
     }
 
-    public Node getPrevious() {
-        return previous;
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
     }
 
-    public void setPrevious(Node previous) {
-        this.previous = previous;
+    public void setNextCounterClockwise(Node nextCounterClockwise) {
+        this.nextCounterClockwise = nextCounterClockwise;
     }
 
     @Override
@@ -52,22 +52,22 @@ public class Node {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Node node = (Node) obj;
-        return this == node; // Assuming nodes are compared by reference
+        return this == node; // Assuming identity equality for simplicity
     }
 }
 
-public class Graph {
+public class GraphTraversal {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
         while (!circulator.isAt(stop)) {
-            if (predicate.test(circulator.getCurrent())) {
+            Node currentNode = circulator.getCurrent();
+            if (predicate.test(currentNode)) {
                 return circulator;
             }
             circulator.next(dir);
         }
 
-        // If we reach the stop node without finding a matching node, return the circulator pointing to stop
         return circulator;
     }
 }

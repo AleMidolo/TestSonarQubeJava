@@ -3,24 +3,25 @@ import java.io.File;
 public class FileDeleter {
 
     /**
-     * 如果指定的文件存在，则删除该文件
-     * @param fileName 要删除的文件名
+     * Elimina el archivo especificado si existe
+     * 
+     * @param fileName El nombre del archivo a eliminar
      */
     protected static void deleteFile(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("文件删除成功: " + fileName);
+                System.out.println("Archivo eliminado: " + fileName);
             } else {
-                System.out.println("文件删除失败: " + fileName);
+                System.out.println("No se pudo eliminar el archivo: " + fileName);
             }
         } else {
-            System.out.println("文件不存在: " + fileName);
+            System.out.println("El archivo no existe: " + fileName);
         }
     }
 
     public static void main(String[] args) {
-        // 示例用法
-        deleteFile("example.txt");
+        // Ejemplo de uso
+        deleteFile("test.txt");
     }
 }

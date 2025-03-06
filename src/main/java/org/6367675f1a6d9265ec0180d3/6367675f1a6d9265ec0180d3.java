@@ -1,16 +1,21 @@
 import org.jgrapht.Graph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
-public class GraphUtils {
+public class AutomorfismoIdentidad {
 
     /**
-     * 计算一个恒等自同构（即图的自映射，其中每个顶点也映射到自身）。
-     * @param graph 输入图
-     * @param <V> 图的顶点类型
-     * @param <E> 图的边类型
-     * @return 从图到图的映射
+     * Calcula un automorfismo de identidad (es decir, un mapeo propio de un grafo en el que cada vértice también se mapea a sí mismo).
+     * @param graph el grafo de entrada
+     * @param <V> el tipo de vértice del grafo
+     * @param <E> el tipo de arista del grafo
+     * @return un mapeo de grafo a grafo
      */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        return new IsomorphicGraphMapping<>(graph, graph, v -> v, e -> e);
+    public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> graph) {
+        // Crear un mapeo de identidad donde cada vértice se mapea a sí mismo
+        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
+        for (V vertex : graph.vertexSet()) {
+            mapping.addVertexMapping(vertex, vertex);
+        }
+        return mapping;
     }
 }

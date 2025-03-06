@@ -1,25 +1,25 @@
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
+import java.util.function.Function;
 
 /**
- * 调用 {@link BroadcastFilter}
- * @param msg 要过滤的消息
- * @return 过滤后的消息
+ * Invoca el {@link BroadcastFilter}
+ * @param msg El mensaje que se desea filtrar.
+ * @return El resultado de aplicar el filtro al mensaje.
  */
 protected Object filter(Object msg) {
-    // 假设msg是一个Intent对象
-    if (msg instanceof Intent) {
-        Intent intent = (Intent) msg;
-        Bundle extras = intent.getExtras();
-        
-        // 这里可以添加自定义的过滤逻辑
-        if (extras != null && extras.containsKey("key_to_filter")) {
-            // 如果包含特定的key，则返回过滤后的消息
-            return "Filtered Message";
+    // Asumiendo que BroadcastFilter es una interfaz funcional que toma un Object y devuelve un Object
+    BroadcastFilter filter = new BroadcastFilter() {
+        @Override
+        public Object apply(Object input) {
+            // Implementación del filtro
+            // Aquí puedes agregar la lógica de filtrado
+            return input; // Por defecto, devuelve el mismo mensaje
         }
-    }
-    
-    // 如果没有过滤条件，则返回原始消息
-    return msg;
+    };
+
+    return filter.apply(msg);
+}
+
+// Definición de la interfaz BroadcastFilter
+interface BroadcastFilter extends Function<Object, Object> {
+    // La interfaz puede tener métodos adicionales si es necesario
 }

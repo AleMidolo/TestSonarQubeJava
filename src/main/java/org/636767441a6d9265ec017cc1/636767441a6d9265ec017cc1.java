@@ -13,19 +13,19 @@ class TreeNode<T> {
 public class TreeRotation<T> {
 
     /**
-     * 执行右旋转操作。
-     * @param node 要旋转的节点
-     * @return {@code node} 的新父节点
+     * Realiza una rotación a la derecha de un nodo.
+     * @param node un nodo a rotar
+     * @return un nuevo padre del {@code node}
      */
     private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {
             return node;
         }
 
-        TreeNode<T> newRoot = node.left;
-        node.left = newRoot.right;
-        newRoot.right = node;
+        TreeNode<T> newParent = node.left;
+        node.left = newParent.right;
+        newParent.right = node;
 
-        return newRoot;
+        return newParent;
     }
 }

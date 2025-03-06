@@ -1,25 +1,28 @@
 import java.util.function.Supplier;
 
 public class StringSupplier {
-    private int current;
 
-    public StringSupplier(int start) {
-        this.current = start;
-    }
-
-    public String get() {
-        return String.valueOf(current++);
-    }
-
+    /**
+     * Crea un proveedor de cadenas que devuelve cadenas únicas. Las cadenas devueltas son simplemente enteros que comienzan desde el inicio.
+     * @param start desde dónde comenzar la secuencia
+     * @return un proveedor de cadenas
+     */
+    @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        StringSupplier supplier = new StringSupplier(start);
-        return supplier::get;
+        return new Supplier<String>() {
+            private int current = start;
+
+            @Override
+            public String get() {
+                return String.valueOf(current++);
+            }
+        };
     }
 
     public static void main(String[] args) {
         Supplier<String> supplier = createStringSupplier(10);
-        System.out.println(supplier.get()); // 输出 "10"
-        System.out.println(supplier.get()); // 输出 "11"
-        System.out.println(supplier.get()); // 输出 "12"
+        System.out.println(supplier.get()); // Output: 10
+        System.out.println(supplier.get()); // Output: 11
+        System.out.println(supplier.get()); // Output: 12
     }
 }

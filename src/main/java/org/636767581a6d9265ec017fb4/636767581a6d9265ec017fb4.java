@@ -2,34 +2,55 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-private List<Integer> computeUpperBounds(List<K> keys) {
-    List<Integer> upperBounds = new ArrayList<>();
-    if (keys == null || keys.isEmpty()) {
+public class UpperBoundCalculator<K extends Comparable<K>> {
+
+    /**
+     * Encuentra un límite superior mínimo para cada clave.
+     * @param keys una lista de claves.
+     * @return el límite superior de clave calculado.
+     */
+    private List<Integer> computeUpperBounds(List<K> keys) {
+        if (keys == null || keys.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<Integer> upperBounds = new ArrayList<>();
+        for (K key : keys) {
+            int upperBound = findUpperBound(keys, key);
+            upperBounds.add(upperBound);
+        }
+
         return upperBounds;
     }
 
-    // Assuming K is a type that can be compared, e.g., Integer, String, etc.
-    // We need to find the smallest element that is greater than or equal to each key.
-    // For simplicity, let's assume K is Comparable.
-    List<K> sortedKeys = new ArrayList<>(keys);
-    Collections.sort(sortedKeys);
+    /**
+     * Encuentra el límite superior mínimo para una clave dada.
+     * @param keys la lista de claves.
+     * @param key la clave para la cual se busca el límite superior.
+     * @return el límite superior mínimo.
+     */
+    private int findUpperBound(List<K> keys, K key) {
+        int low = 0;
+        int high = keys.size() - 1;
+        int result = keys.size();
 
-    for (K key : keys) {
-        int index = Collections.binarySearch(sortedKeys, key);
-        if (index >= 0) {
-            // If the key is found, the upper bound is the key itself.
-            upperBounds.add((Integer) key);
-        } else {
-            // If the key is not found, the insertion point is returned as (-(insertion point) - 1).
-            int insertionPoint = -index - 1;
-            if (insertionPoint < sortedKeys.size()) {
-                upperBounds.add((Integer) sortedKeys.get(insertionPoint));
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (keys.get(mid).compareTo(key) > 0) {
+                result = mid;
+                high = mid - 1;
             } else {
-                // If the insertion point is beyond the list, there is no upper bound.
-                upperBounds.add(null);
+                low = mid + 1;
             }
         }
+
+        return result;
     }
 
-    return upperBounds;
+    public static void main(String[] args) {
+        UpperBoundCalculator<Integer> calculator = new UpperBoundCalculator<>();
+        List<Integer> keys = List.of(1, 3, 5, 7, 9);
+        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
+        System.out.println(upperBounds); // Output: [1, 2, 3, 4, 5]
+    }
 }

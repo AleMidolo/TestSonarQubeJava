@@ -15,22 +15,18 @@ public class ByteReader {
     }
 
     /**
-     * 从<code>buffer</code>中读取一个字节，并在必要时进行填充。
-     * @return 输入流中的下一个字节。
-     * @throws IOException 如果没有更多数据可用。
+     * Lee un byte del <code>buffer</code> y lo vuelve a llenar según sea necesario.
+     * @return El siguiente byte del flujo de entrada.
+     * @throws IOException si no hay más datos disponibles.
      */
     public byte readByte() throws IOException {
         if (bufferPosition >= bufferLength) {
-            fillBuffer();
-        }
-        if (bufferLength == -1) {
-            throw new IOException("No more data available");
+            bufferLength = inputStream.read(buffer);
+            if (bufferLength == -1) {
+                throw new IOException("No more data available");
+            }
+            bufferPosition = 0;
         }
         return buffer[bufferPosition++];
-    }
-
-    private void fillBuffer() throws IOException {
-        bufferLength = inputStream.read(buffer);
-        bufferPosition = 0;
     }
 }

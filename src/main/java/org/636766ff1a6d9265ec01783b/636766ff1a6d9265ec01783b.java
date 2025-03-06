@@ -1,13 +1,25 @@
-public class SubstringExample {
+public class StringUtils {
+
     /**
-     * 从指定的字符串中获取子字符串，避免抛出异常。
-     * @param str 原始字符串
-     * @param start 子字符串的起始位置（包含）
-     * @param end 子字符串的结束位置（不包含）
-     * @return 子字符串，如果输入无效则返回空字符串
+     * Obtiene una subcadena de la cadena especificada evitando excepciones.
+     * 
+     * @param str La cadena de la cual se obtendrá la subcadena.
+     * @param start El índice inicial (inclusive) de la subcadena.
+     * @param end El índice final (exclusive) de la subcadena.
+     * @return La subcadena resultante, o una cadena vacía si los índices son inválidos.
      */
     public static String sub(String str, int start, int end) {
-        if (str == null || start < 0 || end > str.length() || start > end) {
+        if (str == null) {
+            return "";
+        }
+        int length = str.length();
+        if (start < 0) {
+            start = 0;
+        }
+        if (end > length) {
+            end = length;
+        }
+        if (start >= end) {
             return "";
         }
         return str.substring(start, end);
@@ -15,9 +27,10 @@ public class SubstringExample {
 
     public static void main(String[] args) {
         String testStr = "Hello, World!";
-        System.out.println(sub(testStr, 7, 12)); // 输出 "World"
-        System.out.println(sub(testStr, -1, 5));  // 输出 ""
-        System.out.println(sub(testStr, 5, 20));  // 输出 ""
-        System.out.println(sub(null, 0, 5));      // 输出 ""
+        System.out.println(sub(testStr, 7, 12)); // Output: "World"
+        System.out.println(sub(testStr, -1, 5)); // Output: "Hello"
+        System.out.println(sub(testStr, 7, 100)); // Output: "World!"
+        System.out.println(sub(testStr, 12, 7)); // Output: ""
+        System.out.println(sub(null, 0, 5)); // Output: ""
     }
 }

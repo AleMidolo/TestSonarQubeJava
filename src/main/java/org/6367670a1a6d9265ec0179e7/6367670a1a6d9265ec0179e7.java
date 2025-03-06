@@ -3,48 +3,28 @@ import java.util.Map;
 
 public class ConverterRegistry {
 
-    private final Map<Class<?>, Converter> converterMap;
-
-    public ConverterRegistry() {
-        this.converterMap = new HashMap<>();
-    }
+    private final Map<Class<?>, Converter> registry = new HashMap<>();
 
     /**
-     * 查找并返回指定目标类的任何注册的 {@link Converter}；如果没有注册的 Converter，则返回 <code>null</code>。
-     * @param clazz 要返回注册 Converter 的类
-     * @return 注册的 {@link Converter}，如果未找到则返回 <code>null</code>
+     * Busca y devuelve cualquier {@link Converter} registrado para la clase de destino especificada; si no hay un Converter registrado, devuelve <code>null</code>.
+     * @param clazz Clase para la cual se debe devolver un Converter registrado
+     * @return El {@link Converter} registrado o <code>null</code> si no se encuentra
      */
     public Converter lookup(final Class<?> clazz) {
-        return converterMap.get(clazz);
+        return registry.get(clazz);
     }
 
     /**
-     * 注册一个 Converter 到指定的类。
-     * @param clazz 要注册 Converter 的类
-     * @param converter 要注册的 Converter
+     * Registra un {@link Converter} para una clase específica.
+     * @param clazz La clase para la cual se registra el Converter
+     * @param converter El Converter a registrar
      */
     public void register(final Class<?> clazz, final Converter converter) {
-        converterMap.put(clazz, converter);
+        registry.put(clazz, converter);
     }
 
-    public static void main(String[] args) {
-        ConverterRegistry registry = new ConverterRegistry();
-        Converter stringConverter = new StringConverter();
-        registry.register(String.class, stringConverter);
-
-        Converter foundConverter = registry.lookup(String.class);
-        if (foundConverter != null) {
-            System.out.println("Converter found for String class.");
-        } else {
-            System.out.println("No converter found for String class.");
-        }
+    // Ejemplo de interfaz Converter
+    public interface Converter {
+        Object convert(Object input);
     }
-}
-
-interface Converter {
-    // Converter interface methods
-}
-
-class StringConverter implements Converter {
-    // Implementation of StringConverter
 }

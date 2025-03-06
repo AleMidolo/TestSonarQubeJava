@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * 获取字符串的长度，如果字符串为 <code>null</code> 则返回 <code>0</code>。
-     * @param str 一个字符串或 <code>null</code>
-     * @return 字符串的长度，如果字符串为 <code>null</code> 则返回 <code>0</code>。
+     * Obtiene la longitud de una cadena o <code>0</code> si la cadena es <code>null</code>.
+     * @param str una cadena o <code>null</code>
+     * @return longitud de la cadena o <code>0</code> si la cadena es <code>null</code>.
      * @since 2.4
      */
     public static int length(final String str) {
@@ -11,10 +11,11 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String test1 = "Hello, World!";
-        String test2 = null;
+        // Ejemplo de uso
+        String testString = "Hola, mundo!";
+        System.out.println("Longitud de la cadena: " + length(testString)); // Debería imprimir 12
 
-        System.out.println(length(test1)); // 输出: 13
-        System.out.println(length(test2)); // 输出: 0
+        String nullString = null;
+        System.out.println("Longitud de la cadena nula: " + length(nullString)); // Debería imprimir 0
     }
 }

@@ -1,31 +1,23 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class DoubleArrayConverter {
 
     /**
-     * <p>将对象类型的 Double 数组转换为基本数据类型的 double 数组。</p>
-     * <p>如果输入数组为 <code>null</code>，则此方法返回 <code>null</code>。</p>
-     * @param array 一个 <code>Double</code> 数组，可以为 <code>null</code>
-     * @return 一个 <code>double</code> 数组，如果输入数组为空则返回 <code>null</code>
-     * @throws NullPointerException 如果数组内容为 <code>null</code>
+     * <p>Convierte un array de objetos "Doubles" a primitivos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>Double</code>, puede ser <code>null</code>
+     * @return un array de <code>double</code>, <code>null</code> si el arreglo de entrada es nulo
+     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
     public static double[] toPrimitive(final Double[] array) {
         if (array == null) {
             return null;
         }
+        
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null.");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "El elemento en la posición " + i + " es nulo.");
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Double[] array = {1.0, 2.0, 3.0};
-        double[] primitiveArray = toPrimitive(array);
-        for (double d : primitiveArray) {
-            System.out.println(d);
-        }
     }
 }

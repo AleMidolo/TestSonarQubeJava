@@ -1,21 +1,46 @@
-import org.apache.log4j.spi.LoggingEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
-    /**
-     * 根据转换模式生成格式化字符串。
-     * 
-     * @param event 日志事件对象
-     * @return 格式化后的字符串
-     */
     public String format(LoggingEvent event) {
-        // 这里假设转换模式是 "[%p] %c - %m%n"
-        // 其中 %p 是日志级别，%c 是日志名称，%m 是日志消息，%n 是换行符
-        String level = event.getLevel().toString();
-        String loggerName = event.getLoggerName();
-        String message = event.getRenderedMessage();
+        // Crear un objeto SimpleDateFormat para formatear la fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
-        // 格式化字符串
-        return String.format("[%s] %s - %s%n", level, loggerName, message);
+        // Obtener la fecha y formatearla
+        String formattedDate = dateFormat.format(new Date(event.getTimeStamp()));
+        
+        // Formatear el mensaje de log
+        String formattedMessage = String.format("[%s] %s: %s", 
+            formattedDate, 
+            event.getLevel().toString(), 
+            event.getMessage());
+        
+        return formattedMessage;
+    }
+}
+
+// Clase LoggingEvent simulada para el ejemplo
+class LoggingEvent {
+    private long timeStamp;
+    private String level;
+    private String message;
+
+    public LoggingEvent(long timeStamp, String level, String message) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.message = message;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

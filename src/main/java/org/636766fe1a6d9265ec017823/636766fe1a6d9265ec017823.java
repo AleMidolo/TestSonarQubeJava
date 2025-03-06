@@ -1,23 +1,29 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class SymbolTable {
-    private final Map<String, Integer> constantPool = new HashMap<>();
-    private int nextIndex = 1;
+public class ConstantPool {
+    private Map<String, Integer> constantNameAndTypeMap;
+
+    public ConstantPool() {
+        constantNameAndTypeMap = new HashMap<>();
+    }
 
     /**
-     * 将一个 CONSTANT_NameAndType_info 添加到该符号表的常量池中。如果常量池已经包含类似项，则不执行任何操作。
-     * @param name 字段或方法名称。
-     * @param descriptor 字段或方法描述符。
-     * @return 具有给定值的新符号或已存在的符号。
+     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos. 
+     * No hace nada si el grupo de constantes ya contiene un elemento similar.
+     *
+     * @param name el nombre de un campo o método.
+     * @param descriptor un descriptor de campo o método.
+     * @return un nuevo símbolo o uno ya existente con el valor dado.
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (constantPool.containsKey(key)) {
-            return constantPool.get(key);
+        if (constantNameAndTypeMap.containsKey(key)) {
+            return constantNameAndTypeMap.get(key);
         } else {
-            constantPool.put(key, nextIndex);
-            return nextIndex++;
+            int newIndex = constantNameAndTypeMap.size() + 1; // Simulando un índice único
+            constantNameAndTypeMap.put(key, newIndex);
+            return newIndex;
         }
     }
 }

@@ -1,30 +1,29 @@
 public class StringUtils {
 
     /**
-     * 去除给定字符串的前导空白字符。
-     * @param str 要检查的字符串
-     * @return 去除空白后的字符串
+     * Elimina los espacios en blanco al inicio de la cadena dada.
+     * @param str la cadena a verificar
+     * @return la cadena sin espacios en blanco al inicio
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
         if (str == null) {
             return null;
         }
-        
+
         int len = str.length();
         int start = 0;
-        
+
         while (start < len && Character.isWhitespace(str.charAt(start))) {
             start++;
         }
-        
+
         return str.substring(start);
     }
 
     public static void main(String[] args) {
-        String input = "   Hello, World!";
-        String result = trimLeadingWhitespace(input);
-        System.out.println("Original: \"" + input + "\"");
-        System.out.println("Trimmed: \"" + result + "\"");
+        String testString = "   Hello, World!";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimLeadingWhitespace(testString) + "'");
     }
 }

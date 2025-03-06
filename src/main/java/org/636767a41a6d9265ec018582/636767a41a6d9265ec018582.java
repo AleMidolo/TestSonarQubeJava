@@ -1,27 +1,34 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.avro.Schema;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
+import org.objenesis.strategy.StdInstantiatorStrategy;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.dyuproject.protostuff.Schema;
+import com.dyuproject.protostuff.runtime.RuntimeSchema;
 
-public class DelimitedMessageWriter {
+public class SerializationUtil {
 
+    /**
+     * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
+     * @return el tamaño del mensaje
+     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using Protostuff
-        byte[] serializedMessage = ProtostuffIOUtil.toByteArray(message, schema, buffer);
+        if (out == null || message == null || schema == null || buffer == null) {
+            throw new IllegalArgumentException("Arguments cannot be null.");
+        }
+
+        // Serialize the message to a byte array
+        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
         // Write the length of the message as a varint
-        int length = serializedMessage.length;
+        int length = data.length;
         writeVarint(out, length);
 
         // Write the serialized message
-        out.write(serializedMessage);
+        out.write(data);
 
-        // Return the total size of the message (length + serialized message)
-        return length + serializedMessage.length;
+        // Return the total size of the message (length + data)
+        return length + computeVarintSize(length);
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {
@@ -34,5 +41,13 @@ public class DelimitedMessageWriter {
                 value >>>= 7;
             }
         }
+    }
+
+    private static int computeVarintSize(int value) {
+        if ((value & (0xffffffff <<  7)) == 0) return 1;
+        if ((value & (0xffffffff << 14)) == 0) return 2;
+        if ((value & (0xffffffff << 21)) == 0) return 3;
+        if ((value & (0xffffffff << 28)) == 0) return 4;
+        return 5;
     }
 }

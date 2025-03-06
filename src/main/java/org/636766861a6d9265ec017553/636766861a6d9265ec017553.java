@@ -6,16 +6,16 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // 假设模板变量已经初始化
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+        // Inicializar con algunas variables de plantilla de ejemplo
+        this.templateVariables.add("username");
+        this.templateVariables.add("email");
+        this.templateVariables.add("date");
     }
 
     /**
-     * 确定模板变量是否是该模板的成员。
-     * @param name 模板变量的名称。
-     * @return 如果模板变量是模板的成员，则返回真；否则返回假。
+     * Determina si una variable de plantilla es un miembro de esta plantilla.
+     * @param name nombre La variable de plantilla.
+     * @return true si la variable de plantilla es un miembro de la plantilla, de lo contrario false.
      */
     public final boolean isTemplateVariablePresent(String name) {
         return templateVariables.contains(name);
@@ -23,7 +23,7 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        System.out.println(template.isTemplateVariablePresent("var1")); // 输出: true
-        System.out.println(template.isTemplateVariablePresent("var4")); // 输出: false
+        System.out.println(template.isTemplateVariablePresent("username")); // true
+        System.out.println(template.isTemplateVariablePresent("nonexistent")); // false
     }
 }

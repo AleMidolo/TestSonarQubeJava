@@ -1,29 +1,13 @@
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-public class PartialContentChecker {
+public class HttpResponseChecker {
 
     /**
-     * 检查实际响应是否为部分内容（HTTP 206 代码）
-     * @return 是否为部分内容
+     * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)
+     * @return verdadero si es contenido parcial, falso en caso contrario
      */
-    public Boolean isPartialContentResponse() {
-        try {
-            // 假设有一个URL对象
-            URL url = new URL("http://example.com/resource");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            return responseCode == HttpURLConnection.HTTP_PARTIAL;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static void main(String[] args) {
-        PartialContentChecker checker = new PartialContentChecker();
-        System.out.println("Is partial content response? " + checker.isPartialContentResponse());
+    public Boolean isPartialContentResponse(ResponseEntity<?> response) {
+        return response.getStatusCode() == HttpStatus.PARTIAL_CONTENT;
     }
 }

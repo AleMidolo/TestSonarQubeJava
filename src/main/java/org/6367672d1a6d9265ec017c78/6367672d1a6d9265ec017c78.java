@@ -1,15 +1,18 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class InsertValue {
+public class CustomSet {
     private Set<Integer> set;
 
-    public InsertValue() {
+    public CustomSet() {
         this.set = new HashSet<>();
     }
 
     /**
-     * 将一个值插入集合。如果集合中尚未包含指定元素，则返回真。
+     * Inserta un valor en el conjunto. Devuelve verdadero si el conjunto no contenía ya el elemento especificado.
+     * 
+     * @param val El valor a insertar en el conjunto.
+     * @return Verdadero si el conjunto no contenía ya el elemento especificado, falso en caso contrario.
      */
     public boolean insert(int val) {
         return set.add(val);

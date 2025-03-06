@@ -11,8 +11,8 @@ public class HttpRequest {
     }
 
     /**
-     * 获取请求的内容长度。
-     * @return 请求的内容长度。
+     * Recupera la longitud del contenido de la solicitud.
+     * @return La longitud del contenido de la solicitud.
      * @since 1.3
      */
     public long contentLength() {
@@ -20,7 +20,6 @@ public class HttpRequest {
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
-            connection.connect();
             return connection.getContentLengthLong();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,32 +1,29 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ByteArrayConverter {
+public class ByteArrayCopier {
 
     /**
-     * 将字节复制到 {@code byte[]} 中。
+     * Copia bytes a un {@code byte[]}.
      * 
-     * @return 包含复制字节的字节数组
+     * @return un array de bytes que contiene los bytes copiados.
      */
     public byte[] toByteArray() {
-        // 假设我们有一个字节流，这里使用 ByteArrayOutputStream 作为示例
+        // Ejemplo de implementación que copia bytes desde un ByteArrayOutputStream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        
-        // 假设我们要将一些数据写入到字节数组中
-        String data = "Hello, World!";
         try {
-            outputStream.write(data.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Aquí se podrían escribir bytes al outputStream
+            // Por ejemplo: outputStream.write(someByteArray);
+            
+            // Convertir el contenido del outputStream a un array de bytes
+            return outputStream.toByteArray();
+        } finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                // Manejar la excepción si es necesario
+                e.printStackTrace();
+            }
         }
-        
-        // 返回字节数组
-        return outputStream.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        ByteArrayConverter converter = new ByteArrayConverter();
-        byte[] byteArray = converter.toByteArray();
-        System.out.println(new String(byteArray)); // 输出: Hello, World!
     }
 }

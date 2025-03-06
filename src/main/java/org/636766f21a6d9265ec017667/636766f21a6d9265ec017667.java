@@ -8,9 +8,10 @@ public class ClassReader {
     }
 
     /**
-     * 在此 {@link ClassReader} 中读取一个有符号短整型值。<i>此方法旨在供 {@link Attribute} 子类使用，通常不用于类生成器或适配器。</i>
-     * @param offset 此 {@link ClassReader} 中要读取的值的起始偏移量。
-     * @return 读取的值。
+     * Lee un valor corto con signo en este {@link ClassReader}. <i>Este método está destinado a subclases de {@link Attribute},
+     * y normalmente no es necesario para generadores de clases o adaptadores.</i>
+     * @param offset el desplazamiento inicial del valor a leer en este {@link ClassReader}.
+     * @return el valor leído.
      */
     public short readShort(final int offset) {
         if (offset < 0 || offset + 2 > data.length) {

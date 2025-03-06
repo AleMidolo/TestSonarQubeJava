@@ -1,9 +1,10 @@
 public class StringUtils {
+
     /**
-     * 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
-     * @param str 要检查的字符串
-     * @param prefix 要查找的前缀
-     * @return 如果给定的字符串以指定的不区分大小写的前缀开头，则返回 {@code true}，否则返回 {@code false}。
+     * Devuelve {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
+     * @param str la cadena a verificar
+     * @param prefix el prefijo a buscar
+     * @return {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
      * @see java.lang.String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {
@@ -17,10 +18,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
-        System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
-        System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
-        System.out.println(startsWithIgnoreCase(null, "hello")); // false
+        // Ejemplo de uso
+        System.out.println(startsWithIgnoreCase("Hola Mundo", "hola")); // true
+        System.out.println(startsWithIgnoreCase("Hola Mundo", "Mundo")); // false
+        System.out.println(startsWithIgnoreCase("Hola Mundo", "HOLA")); // true
+        System.out.println(startsWithIgnoreCase("Hola Mundo", "mundo")); // false
     }
 }

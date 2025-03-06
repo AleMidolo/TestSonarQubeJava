@@ -7,14 +7,19 @@ public class FrameStack {
         stack = new Stack<>();
     }
 
-    /** 
-     * 从输出帧栈中弹出一个抽象类型并返回其值。
-     * @return 从输出帧栈中弹出的抽象类型。
+    /**
+     * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
+     * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
      */
     private int pop() {
         if (stack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty");
+            throw new IllegalStateException("La pila de marcos de salida está vacía.");
         }
         return stack.pop();
+    }
+
+    // Método adicional para agregar elementos a la pila (solo para propósitos de prueba)
+    public void push(int value) {
+        stack.push(value);
     }
 }

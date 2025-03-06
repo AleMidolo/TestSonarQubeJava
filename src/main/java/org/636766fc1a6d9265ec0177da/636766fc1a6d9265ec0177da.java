@@ -1,10 +1,10 @@
 /**
- * 确定参数名称是否在当前位置结束，即给定字符是否符合分隔符的条件。
+ * Determina si un nombre de parámetro termina en la posición actual, es decir, si el carácter dado califica como un separador.
  * 
- * @param c 要检查的字符
- * @return 如果字符是分隔符，则返回true；否则返回false
+ * @param c El carácter a evaluar.
+ * @return true si el carácter es un separador, false en caso contrario.
  */
-private static boolean isParameterSeparator(final char c) {
-    // 常见的分隔符包括空格、逗号、分号、括号等
-    return c == ' ' || c == ',' || c == ';' || c == '(' || c == ')' || c == '{' || c == '}' || c == '[' || c == ']';
+private static boolean esSeparadorDeParametro(final char c) {
+    // Los separadores comunes son espacios, comas, paréntesis, etc.
+    return c == ' ' || c == ',' || c == '(' || c == ')' || c == ';' || c == '\t' || c == '\n';
 }

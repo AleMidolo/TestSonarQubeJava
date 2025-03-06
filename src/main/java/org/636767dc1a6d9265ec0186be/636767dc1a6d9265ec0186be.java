@@ -4,30 +4,37 @@ import java.time.format.DateTimeFormatter;
 public class TimeBucketCompressor {
 
     /**
-     * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
+     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, el "bucket" de tiempo reformateado 20000115 es 20000112, y el "bucket" de tiempo reformateado 20000123 es 20000123.
      */
-    static long compressTimeBucket(long timeBucket, int dayStep) {
-        // 将时间桶转换为字符串
-        String timeBucketStr = Long.toString(timeBucket);
+    public static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
+        // Convertir el bucket de tiempo a una cadena para facilitar el manejo
+        String bucketStr = Long.toString(bucketDeTiempo);
         
-        // 解析日期
+        // Extraer el año, mes y día
+        int year = Integer.parseInt(bucketStr.substring(0, 4));
+        int month = Integer.parseInt(bucketStr.substring(4, 6));
+        int day = Integer.parseInt(bucketStr.substring(6, 8));
+        
+        // Crear una fecha con LocalDate
+        LocalDate date = LocalDate.of(year, month, day);
+        
+        // Calcular el día ajustado según el pasoDiario
+        int adjustedDay = ((day - 1) / pasoDiario) * pasoDiario + 1;
+        
+        // Crear una nueva fecha con el día ajustado
+        LocalDate adjustedDate = LocalDate.of(year, month, adjustedDay);
+        
+        // Formatear la fecha ajustada a un long
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(timeBucketStr, formatter);
+        String formattedDate = adjustedDate.format(formatter);
         
-        // 计算新的日期
-        int dayOfMonth = date.getDayOfMonth();
-        int newDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
-        LocalDate newDate = date.withDayOfMonth(newDay);
-        
-        // 将新日期转换回长整型
-        String newTimeBucketStr = newDate.format(formatter);
-        return Long.parseLong(newTimeBucketStr);
+        return Long.parseLong(formattedDate);
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(compressTimeBucket(20000105L, 11)); // 输出: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // 输出: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // 输出: 20000123
+        // Ejemplos de uso
+        System.out.println(comprimirBucketDeTiempo(20000105L, 11)); // Debería imprimir 20000101
+        System.out.println(comprimirBucketDeTiempo(20000115L, 11)); // Debería imprimir 20000112
+        System.out.println(comprimirBucketDeTiempo(20000123L, 11)); // Debería imprimir 20000123
     }
 }

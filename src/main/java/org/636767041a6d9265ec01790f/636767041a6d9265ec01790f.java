@@ -1,11 +1,12 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 public class ArrayConverter {
 
     /**
-     * <p>将基本数据类型的 int 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>int</code> 数组
-     * @return 一个 <code>Integer</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>Convierte un arreglo de enteros primitivos a objetos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>int</code>
+     * @return un arreglo de <code>Integer</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
@@ -19,10 +20,12 @@ public class ArrayConverter {
     }
 
     public static void main(String[] args) {
-        int[] intArray = {1, 2, 3, 4, 5};
-        Integer[] integerArray = toObject(intArray);
-        for (Integer num : integerArray) {
-            System.out.println(num);
-        }
+        int[] primitiveArray = {1, 2, 3, 4, 5};
+        Integer[] objectArray = toObject(primitiveArray);
+        System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
+
+        int[] nullArray = null;
+        Integer[] nullObjectArray = toObject(nullArray);
+        System.out.println(nullObjectArray); // Output: null
     }
 }

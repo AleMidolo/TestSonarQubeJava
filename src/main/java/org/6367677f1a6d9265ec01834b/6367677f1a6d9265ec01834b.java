@@ -9,13 +9,17 @@ public class LogBuffer {
     }
 
     /**
-     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。调用者有责任确保缓冲区有空闲空间。
+     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es <b>silenciosamente descartado</b>.
+     * Es responsabilidad del llamador asegurarse de que el búfer tenga espacio libre.
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
-            // 如果缓冲区已满，事件被静默丢弃
+            // Silently discard the event if the buffer is full
         }
     }
+}
 
-    // 其他方法，如从缓冲区取出事件等
+class LoggingEvent {
+    // Assuming LoggingEvent is a class with some fields and methods
+    // You can define the actual implementation of LoggingEvent as needed
 }

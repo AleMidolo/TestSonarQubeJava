@@ -2,20 +2,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
-public final class UriMatcher {
+public final class URIMatcher {
+
+    private final Pattern pattern;
+
+    public URIMatcher(String regex) {
+        this.pattern = Pattern.compile(regex);
+    }
 
     /**
-     * 将URI与模式进行匹配。
-     * @param uri 要与模板匹配的URI。
-     * @return 匹配结果，如果没有匹配则返回空。
+     * Compara una URI con el patrón.
+     * @param uri la URI a comparar con la plantilla.
+     * @return el resultado de la coincidencia, o null si no hay coincidencia.
      */
     public final MatchResult match(CharSequence uri) {
-        // 假设我们有一个预定义的模式，例如匹配以 "http://" 或 "https://" 开头的URI
-        String regex = "^(http|https)://.*";
-        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(uri);
-
-        if (matcher.find()) {
+        if (matcher.matches()) {
             return matcher.toMatchResult();
         } else {
             return null;
@@ -23,10 +25,8 @@ public final class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher();
-        CharSequence uri = "https://example.com";
-        MatchResult result = matcher.match(uri);
-
+        URIMatcher matcher = new URIMatcher("https://example.com/.*");
+        MatchResult result = matcher.match("https://example.com/resource");
         if (result != null) {
             System.out.println("Match found: " + result.group());
         } else {

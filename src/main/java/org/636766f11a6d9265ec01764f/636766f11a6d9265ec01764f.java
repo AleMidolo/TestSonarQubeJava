@@ -10,8 +10,8 @@ public class BeanMap {
     }
 
     /**
-     * 返回 BeanMap 的值。
-     * @return BeanMap 的值。返回的集合是不可修改的。
+     * Devuelve los valores del BeanMap.
+     * @return valores del BeanMap. La colección devuelta no es modificable.
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());

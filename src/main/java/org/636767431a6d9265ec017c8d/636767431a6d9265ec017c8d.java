@@ -1,24 +1,23 @@
-public class BinaryLogCalculator {
-
+public class Log2FloorPlusOne {
     /**
-     * 计算 $\log_2 (n)$ 的下限值 + 1
-     * @param n 输入的正整数
-     * @return $\log_2 (n)$ 的下限值 + 1
+     * Calcula el piso(log2(n)) + 1
+     * @param n el número para el cual se calculará el logaritmo
+     * @return el piso(log2(n)) + 1
      */
-    private static int computeBinaryLog(int n) {
+    public static int calculateLog2FloorPlusOne(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("n must be a positive integer");
+            throw new IllegalArgumentException("n debe ser un número positivo");
         }
-        int log = 0;
+        int log2 = 0;
         while (n > 1) {
-            n = n >> 1;
-            log++;
+            n = n / 2;
+            log2++;
         }
-        return log + 1;
+        return log2 + 1;
     }
 
     public static void main(String[] args) {
-        int n = 10; // 示例输入
-        System.out.println("log2(" + n + ") 的下限值 + 1 = " + computeBinaryLog(n));
+        int n = 10; // Ejemplo de uso
+        System.out.println("El piso(log2(" + n + ")) + 1 es: " + calculateLog2FloorPlusOne(n));
     }
 }

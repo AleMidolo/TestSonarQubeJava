@@ -1,8 +1,9 @@
-public class StringQuoter {
+public class StringUtils {
+
     /**
-     * 如果给定的对象是字符串，则将其转换为带单引号的字符串；否则保持对象不变。
-     * @param obj 输入对象（例如："myString"）
-     * @return 带引号的字符串（例如："‘myString’"），如果不是字符串，则返回输入对象本身
+     * Convierte el objeto dado en una cadena con comillas simples si es una cadena; manteniendo el objeto tal como está en caso contrario.
+     * @param obj el objeto de entrada (por ejemplo, "miCadena")
+     * @return la cadena entre comillas (por ejemplo, "'miCadena'"), o el objeto de entrada tal como está si no es una cadena
      */
     public static Object quoteIfString(Object obj) {
         if (obj instanceof String) {
@@ -12,9 +13,8 @@ public class StringQuoter {
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(quoteIfString("myString")); // 输出: 'myString'
-        System.out.println(quoteIfString(123));       // 输出: 123
-        System.out.println(quoteIfString(true));      // 输出: true
+        // Ejemplo de uso
+        System.out.println(quoteIfString("miCadena")); // Salida: 'miCadena'
+        System.out.println(quoteIfString(123));       // Salida: 123
     }
 }

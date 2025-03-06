@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * 去除给定字符串末尾的空白字符。
-     * @param str 要检查的字符串
-     * @return 去除空白字符后的字符串
+     * Elimina los espacios en blanco al final del String dado.
+     * @param str el String a verificar
+     * @return el String sin espacios en blanco al final
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
@@ -20,7 +20,7 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello World!   ";
+        String testString = "Hello World   ";
         System.out.println("Original: '" + testString + "'");
         System.out.println("Trimmed: '" + trimTrailingWhitespace(testString) + "'");
     }

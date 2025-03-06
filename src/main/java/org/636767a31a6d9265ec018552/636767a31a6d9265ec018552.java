@@ -4,28 +4,23 @@ import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
-    private final InputStream inputStream;
+    private InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
+    /**
+     * Lee el valor de un campo de tipo {@code string} del flujo.
+     */
     @Override
     public String readString() throws IOException {
-        // Read the length of the string (assuming it's prefixed by its length as an integer)
-        int length = readInt();
-        if (length < 0) {
-            throw new IOException("Invalid string length: " + length);
-        }
-
-        // Read the string bytes
+        int length = readInt(); // Asume que la longitud de la cadena está precedida por un entero
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Failed to read the expected number of bytes");
+            throw new IOException("Failed to read the expected number of bytes for the string.");
         }
-
-        // Convert bytes to string using UTF-8 encoding
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
@@ -33,7 +28,7 @@ public class StreamReader {
         byte[] bytes = new byte[4];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != 4) {
-            throw new IOException("Failed to read an integer");
+            throw new IOException("Failed to read an integer from the stream.");
         }
         return (bytes[0] & 0xFF) << 24 |
                (bytes[1] & 0xFF) << 16 |

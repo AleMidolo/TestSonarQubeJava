@@ -2,36 +2,37 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 通过遍历边来计算所有具有正度的顶点。这将复杂度保持在 $O(m)$，其中 $m$ 是边的数量。
- * @return 具有正度的顶点集合
+ * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+ * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+ * @return conjunto de vértices con grado positivo
  */
 private Set<V> initVisibleVertices() {
     Set<V> visibleVertices = new HashSet<>();
     
-    // 假设 edges 是一个包含所有边的集合，每个边是一个包含两个顶点的数组或对象
+    // Suponiendo que 'edges' es una lista de aristas disponibles en el contexto
     for (Edge<V> edge : edges) {
         visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getTarget());
+        visibleVertices.add(edge.getDestination());
     }
     
     return visibleVertices;
 }
 
-// 假设 Edge 类的定义如下：
+// Clase Edge de ejemplo para representar una arista
 class Edge<V> {
     private V source;
-    private V target;
+    private V destination;
 
-    public Edge(V source, V target) {
+    public Edge(V source, V destination) {
         this.source = source;
-        this.target = target;
+        this.destination = destination;
     }
 
     public V getSource() {
         return source;
     }
 
-    public V getTarget() {
-        return target;
+    public V getDestination() {
+        return destination;
     }
 }

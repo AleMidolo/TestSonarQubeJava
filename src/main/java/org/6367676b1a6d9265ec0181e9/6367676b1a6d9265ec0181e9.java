@@ -1,15 +1,15 @@
 public class SubstringMatcher {
 
     /**
-     * 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
-     * @param str 原始字符串（或 StringBuilder）
-     * @param index 在原始字符串中开始匹配的索引
-     * @param substring 要在给定索引处匹配的子字符串
-     * @return 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
+     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
+     * @param str la cadena original (o StringBuilder)
+     * @param index el índice en la cadena original para comenzar a comparar
+     * @param substring la subcadena para comparar en el índice dado
+     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
-            throw new IllegalArgumentException("Input strings cannot be null");
+            return false;
         }
         if (index < 0 || index > str.length() - substring.length()) {
             return false;
@@ -23,9 +23,12 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        CharSequence str = "Hello, World!";
-        CharSequence substring = "World";
-        int index = 7;
-        System.out.println(substringMatch(str, index, substring)); // Output: true
+        // Ejemplo de uso
+        CharSequence str = "Hola, mundo!";
+        CharSequence substring = "mundo";
+        int index = 6;
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println(result); // Debería imprimir true
     }
 }

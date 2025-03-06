@@ -1,25 +1,13 @@
 public class NonZeroCounter {
+
     /**
-     * 获取一行中非零条目的数量。
-     * @param row 行号
-     * @return 一行中非零条目的数量
+     * Obtiene el número de entradas diferentes de cero en una fila.
+     * @param row la fila
+     * @return el número de entradas diferentes de cero en una fila
      */
-    public int nonZeros(int row) {
-        // 假设我们有一个二维数组 matrix 表示矩阵
-        int[][] matrix = {
-            {1, 0, 3, 0},
-            {0, 0, 0, 0},
-            {2, 0, 4, 5},
-            {0, 6, 0, 0}
-        };
-
-        // 检查行号是否有效
-        if (row < 0 || row >= matrix.length) {
-            throw new IllegalArgumentException("Invalid row number");
-        }
-
+    public static int nonZeros(int[] row) {
         int count = 0;
-        for (int value : matrix[row]) {
+        for (int value : row) {
             if (value != 0) {
                 count++;
             }
@@ -28,8 +16,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int row = 2; // 示例行号
-        System.out.println("Non-zero entries in row " + row + ": " + counter.nonZeros(row));
+        int[] row = {0, 5, 0, 3, 0, 0, 7};
+        System.out.println("Número de entradas diferentes de cero: " + nonZeros(row));
     }
 }

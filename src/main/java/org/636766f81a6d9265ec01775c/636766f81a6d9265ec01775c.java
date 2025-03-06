@@ -1,7 +1,7 @@
 public class ObjectUtils {
 
     /**
-     * <p>获取一个 <code>Object</code> 的 <code>toString</code> 值，如果输入为 <code>null</code> 则返回空字符串 ("")。</p> 
+     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") si el argumento es <code>null</code>.</p> 
      * <pre> 
      * ObjectUtils.toString(null)         = "" 
      * ObjectUtils.toString("")           = "" 
@@ -10,8 +10,8 @@ public class ObjectUtils {
      * </pre>
      * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)
-     * @param obj  要调用 <code>toString</code> 的对象，可以为 null
-     * @return 传入对象的 toString 结果，如果输入为 <code>null</code> 则返回空字符串
+     * @param obj  el objeto a procesar mediante <code>toString</code>, puede ser null
+     * @return el resultado de aplicar la función "toString" al objeto pasado, o una cadena vacía si el argumento es <code>null</code>
      * @since 2.0
      */
     public static String toString(Object obj) {
@@ -19,10 +19,10 @@ public class ObjectUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(ObjectUtils.toString(null));         // Output: ""
-        System.out.println(ObjectUtils.toString(""));          // Output: ""
-        System.out.println(ObjectUtils.toString("bat"));        // Output: "bat"
-        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // Output: "true"
+        // Ejemplos de uso
+        System.out.println(ObjectUtils.toString(null));         // ""
+        System.out.println(ObjectUtils.toString(""));           // ""
+        System.out.println(ObjectUtils.toString("bat"));        // "bat"
+        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // "true"
     }
 }

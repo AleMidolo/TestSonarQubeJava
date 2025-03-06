@@ -1,10 +1,10 @@
 /**
- * 检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。
+ * Verifica si una cadena comienza con un prefijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).
  * @see String#startsWith(String)
- * @param str  要检查的字符串，可能为空
- * @param prefix 要查找的前缀，可能为空
- * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
- * @return 如果字符串以前缀开头或两者都是 <code>null</code>则返回<code>true</code>
+ * @param str  la cadena a verificar, puede ser nula
+ * @param prefix el prefijo a encontrar, puede ser nulo
+ * @param ignoreCase indica si la comparación debe ignorar las mayúsculas y minúsculas (sin distinguir entre mayúsculas y minúsculas) o no.
+ * @return <code>true</code> si la cadena comienza con el prefijo o ambos son <code>null</code>
  */
 private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
     if (str == null && prefix == null) {

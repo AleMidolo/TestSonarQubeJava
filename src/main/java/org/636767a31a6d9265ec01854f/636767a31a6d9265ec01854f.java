@@ -1,22 +1,27 @@
 import java.io.IOException;
 
-private void checkIfPackedField() throws IOException {
-    // Assuming this method is part of a class that has a field `isPackedField` and `inputStream`
-    // which are used to track the state of the field and read from the input stream respectively.
+public class PackedFieldChecker {
+    private boolean isPacked = false;
 
-    // Check if the field is already packed
-    if (isPackedField) {
-        // Update internal state to reflect that we are reading a packed field
-        // For example, set a flag or update a counter
-        isReadingPackedField = true;
+    /**
+     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
+     * @throws IOException
+     */
+    private void checkIfPackedField() throws IOException {
+        // Aquí se implementaría la lógica para verificar si el campo está empaquetado.
+        // Por ejemplo, se podría leer un byte adicional para verificar un indicador de empaquetado.
+        // Si el campo está empaquetado, se actualiza el estado interno.
+        
+        // Ejemplo de lógica (esto es solo un ejemplo, la lógica real dependerá del contexto):
+        int nextByte = System.in.read();
+        if (nextByte == 0x01) {  // Supongamos que 0x01 es un indicador de empaquetado
+            isPacked = true;
+        } else {
+            isPacked = false;
+        }
+    }
 
-        // Optionally, read the length of the packed field from the input stream
-        // This is just an example, the actual implementation depends on the protocol
-        int packedFieldLength = inputStream.read();
-        // Update any necessary state based on the length
-        // ...
-    } else {
-        // If the field is not packed, reset any related state
-        isReadingPackedField = false;
+    public boolean isPacked() {
+        return isPacked;
     }
 }

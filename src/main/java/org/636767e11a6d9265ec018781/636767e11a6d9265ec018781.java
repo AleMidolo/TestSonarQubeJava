@@ -1,32 +1,45 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
-public class MetricsCache {
-    private Map<String, Integer> cache = new HashMap<>();
+public class Cache {
+
+    private METRICS existingData;
 
     /**
-     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
-     * @param data 需要添加的数据。
+     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
+     * @param data que se va a agregar potencialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        for (Map.Entry<String, Integer> entry : data.getMetrics().entrySet()) {
-            String key = entry.getKey();
-            int value = entry.getValue();
-            cache.put(key, cache.getOrDefault(key, 0) + value);
+        Objects.requireNonNull(data, "Data cannot be null");
+
+        if (existingData == null) {
+            existingData = data;
+        } else {
+            // Aquí se combinan los datos existentes con los nuevos datos.
+            // Asumiendo que METRICS tiene un método para combinar datos.
+            existingData.combine(data);
         }
     }
 
-    // Assuming METRICS is a class that contains a map of metrics
-    public static class METRICS {
-        private Map<String, Integer> metrics;
+    // Método para obtener los datos existentes (opcional)
+    public METRICS getExistingData() {
+        return existingData;
+    }
+}
 
-        public METRICS(Map<String, Integer> metrics) {
-            this.metrics = metrics;
-        }
+// Asumiendo que METRICS es una clase con un método combine
+class METRICS {
+    private int value;
 
-        public Map<String, Integer> getMetrics() {
-            return metrics;
-        }
+    public METRICS(int value) {
+        this.value = value;
+    }
+
+    public void combine(METRICS other) {
+        this.value += other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

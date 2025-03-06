@@ -1,28 +1,37 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class CollectionUtils {
 
     /**
-     * 将给定的集合转换为字符串数组。返回的数组不包含 <code>null</code> 条目。请注意，{@link Arrays#sort(Object[])} 如果数组元素为 <code>null</code> 将抛出 {@link NullPointerException}。
-     * @param collection 要转换的集合
-     * @return 一个新的字符串数组。
+     * Convierte la colección dada en un arreglo de Strings. El arreglo devuelto no contiene entradas <code>null</code>. 
+     * Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará una {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
+     * @param collection La colección a convertir
+     * @return Un nuevo arreglo de Strings.
      */
-    static String[] toNoNullStringArray(Collection<?> collection) {
+    public static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
 
-        ArrayList<String> list = new ArrayList<>();
-        Iterator<?> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            Object element = iterator.next();
-            if (element != null) {
-                list.add(element.toString());
+        // Filtrar elementos no nulos y convertirlos a String
+        ArrayList<String> nonNullStrings = new ArrayList<>();
+        for (Object obj : collection) {
+            if (obj != null) {
+                nonNullStrings.add(obj.toString());
             }
         }
 
-        return list.toArray(new String[0]);
+        // Convertir la lista a un arreglo de Strings
+        return nonNullStrings.toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Collection<Object> collection = Arrays.asList("Hola", null, 123, null, "Mundo");
+        String[] result = toNoNullStringArray(collection);
+        System.out.println(Arrays.toString(result)); // Imprime: [Hola, 123, Mundo]
     }
 }

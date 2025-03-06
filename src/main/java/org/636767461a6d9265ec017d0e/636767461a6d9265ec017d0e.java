@@ -1,38 +1,52 @@
 import java.util.List;
 import java.util.ArrayList;
-import javafx.util.Pair;
+import java.util.Collections;
 
 public class SuffixSumCalculator {
 
     /**
-     * 计算 {@code bounds} 的后缀和。返回计算出的后缀和和 {@code bounds list} 中所有元素的总和。
-     * @param bounds 整数列表。
-     * @return 计算出的后缀和列表和所有元素的总和的配对。
+     * Calcula una suma de sufijos de los {@code bounds}. Devuelve la suma de sufijos calculada y la suma de todos los elementos en la {@code lista de bounds}.
+     * @param bounds lista de enteros.
+     * @return par calculado de la lista de suma de sufijos y la suma de todos los elementos.
      */
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         if (bounds == null || bounds.isEmpty()) {
-            return new Pair<>(new ArrayList<>(), 0L);
+            return new Pair<>(Collections.emptyList(), 0L);
         }
 
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int currentSum = 0;
+        int suffixSum = 0;
 
-        // 计算后缀和
+        // Calcular la suma total y la suma de sufijos
         for (int i = bounds.size() - 1; i >= 0; i--) {
-            currentSum += bounds.get(i);
-            suffixSums.add(0, currentSum); // 添加到列表的开头以保持顺序
+            suffixSum += bounds.get(i);
+            suffixSums.add(suffixSum);
             totalSum += bounds.get(i);
         }
+
+        // Invertir la lista de sumas de sufijos para que esté en el orden correcto
+        Collections.reverse(suffixSums);
 
         return new Pair<>(suffixSums, totalSum);
     }
 
-    public static void main(String[] args) {
-        SuffixSumCalculator calculator = new SuffixSumCalculator();
-        List<Integer> bounds = List.of(1, 2, 3, 4);
-        Pair<List<Integer>, Long> result = calculator.computeSuffixSum(bounds);
-        System.out.println("Suffix Sums: " + result.getKey());
-        System.out.println("Total Sum: " + result.getValue());
+    // Clase Pair para devolver dos valores
+    public static class Pair<A, B> {
+        private final A first;
+        private final B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
     }
 }

@@ -1,7 +1,7 @@
 /**
- * 辅助函数，用于从字符串中解码十六进制数字的一半。
- * @param c 要解码的十六进制数字的ASCII字符。必须在 {@code [0-9a-fA-F]} 范围内。
- * @return 由给定的ASCII字符表示的十六进制值，如果字符无效，则返回 {@link Character#MAX_VALUE}。
+ * Ayudante para decodificar la mitad de un número hexadecimal a partir de una cadena.
+ * @param c El carácter ASCII del número hexadecimal a decodificar. Debe estar en el rango {@code [0-9a-fA-F]}.
+ * @return El valor hexadecimal representado en el carácter ASCII dado, o {@link Character#MAX_VALUE} si el carácter es inválido.
  */
 private static char decodeHexNibble(final char c) {
     if (c >= '0' && c <= '9') {

@@ -6,25 +6,23 @@ import java.util.Vector;
 public class ClassPathUtil {
 
     /**
-     * 将目录中的所有jar文件添加到类路径中，表示为URL的Vector。
-     * 
-     * @param cpV 用于存储URL的Vector
-     * @param dir 要扫描的目录路径
+     * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
      */
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
         if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("提供的路径不是一个有效的目录: " + dir);
+            throw new IllegalArgumentException("El directorio proporcionado no existe o no es un directorio válido.");
         }
 
-        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {
                     URL url = file.toURI().toURL();
                     cpV.add(url);
                 } catch (MalformedURLException e) {
+                    System.err.println("Error al convertir el archivo a URL: " + file.getAbsolutePath());
                     e.printStackTrace();
                 }
             }
@@ -33,9 +31,10 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        addToClassPath(classPath, "path/to/your/directory");
+        String directoryPath = "path/to/your/jar/directory";
+        addToClassPath(classPath, directoryPath);
 
-        // 打印添加的URL
+        // Imprimir las URLs agregadas al classpath
         for (URL url : classPath) {
             System.out.println(url);
         }

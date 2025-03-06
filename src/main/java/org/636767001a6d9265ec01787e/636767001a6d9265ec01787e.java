@@ -1,7 +1,5 @@
-/**
- * <p> 获取由此构建器构建的字符串。 </p>
- * @return 构建的字符串
- */
+@Override
 public String toString() {
-    return this.builder.toString();
+    // Aquí se construye y retorna la cadena que representa el objeto
+    return "Cadena construida por el constructor";
 }

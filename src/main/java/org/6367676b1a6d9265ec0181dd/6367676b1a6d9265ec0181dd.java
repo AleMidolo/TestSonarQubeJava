@@ -1,13 +1,13 @@
 public class StringUtils {
 
     /**
-     * 返回子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
-     * @param str 要搜索的字符串。如果为空，则返回 0。
-     * @param sub 要搜索的子字符串。如果为空，则返回 0。
-     * @return 子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
+     * Devuelve el número de ocurrencias de la subcadena {@code sub} en la cadena {@code str}.
+     * @param str cadena en la que buscar. Devuelve 0 si es nula.
+     * @param sub cadena a buscar. Devuelve 0 si es nula.
+     * @return el número de ocurrencias de la subcadena {@code sub} en la cadena {@code str}.
      */
     public static int countOccurrencesOf(String str, String sub) {
-        if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
+        if (str == null || sub == null || sub.isEmpty()) {
             return 0;
         }
 
@@ -23,8 +23,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+        // Ejemplo de uso
         String str = "ababababab";
         String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // 输出: 5
+        System.out.println(countOccurrencesOf(str, sub)); // Debería imprimir 5
     }
 }

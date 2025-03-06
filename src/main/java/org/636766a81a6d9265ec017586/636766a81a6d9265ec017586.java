@@ -1,36 +1,30 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Object> stack;
+public class OutputFrame {
+    private Stack<AbstractType> outputStack;
 
-    public FrameStack() {
-        stack = new Stack<>();
+    public OutputFrame() {
+        outputStack = new Stack<>();
     }
 
-    /** 
-     * 从输出帧栈中弹出给定数量的抽象类型。
-     * @param elements 需弹出的抽象类型数量。
+    /**
+     * Elimina el número dado de tipos abstractos del "output frame" de salida.
+     * @param elements el número de tipos abstractos que deben ser eliminados.
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
+            throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (stack.size() < elements) {
-            throw new IllegalStateException("Not enough elements in the stack to pop.");
+        if (elements > outputStack.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
-            stack.pop();
+            outputStack.pop();
         }
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push("Element1");
-        frameStack.stack.push("Element2");
-        frameStack.stack.push("Element3");
-
-        frameStack.pop(2); // Pops the last two elements
-        System.out.println(frameStack.stack); // Output: [Element1]
+    // Clase de ejemplo para AbstractType
+    private static class AbstractType {
+        // Implementación de tipo abstracto
     }
 }

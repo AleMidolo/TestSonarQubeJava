@@ -1,23 +1,22 @@
 import java.util.*;
 
 public class Graph {
-    private boolean[] visited;
+    private Set<Integer> visitedVertices;
+    private Set<Integer> allVertices;
 
-    public Graph(int vertexCount) {
-        visited = new boolean[vertexCount];
+    public Graph(Set<Integer> allVertices) {
+        this.allVertices = allVertices;
+        this.visitedVertices = new HashSet<>();
     }
 
-    /** 
-     * 检查是否存在未访问的顶点。
-     * @return 如果存在未访问的顶点，则返回真。
+    /**
+     * Verifica si existen vértices no visitados.
+     * @return true si existen vértices no visitados.
      */
     @Override
     public boolean hasNext() {
-        for (boolean v : visited) {
-            if (!v) {
-                return true;
-            }
-        }
-        return false;
+        return !visitedVertices.containsAll(allVertices);
     }
+
+    // Other methods to manage the graph and vertices...
 }

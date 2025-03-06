@@ -3,22 +3,34 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * 返回一个质数，该质数满足 >= desiredCapacity 且与 desiredCapacity 非常接近（如果 desiredCapacity >= 1000，则误差在 11% 以内）。
-     * @param desiredCapacity 用户所需的容量。
-     * @return 应该用于哈希表的容量。
+     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity
+     * (dentro del 11% si desiredCapacity >= 1000).
+     * @param desiredCapacity la capacidad deseada por el usuario.
+     * @return la capacidad que se debe utilizar para una tabla hash.
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 2) {
             return 2;
         }
-        int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
+        while (!isPrime(prime)) {
+            prime += 2;
+            // Si desiredCapacity >= 1000, limitamos la búsqueda dentro del 11%
+            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
+                prime = desiredCapacity;
+                if (prime % 2 == 0) {
+                    prime++;
+                }
+                while (!isPrime(prime)) {
+                    prime += 2;
+                }
+                break;
+            }
         }
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {
@@ -40,8 +52,9 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // 输出 1009
-        System.out.println(nextPrime(100));  // 输出 101
-        System.out.println(nextPrime(10));    // 输出 11
+        // Ejemplo de uso
+        System.out.println(nextPrime(1000));  // Debería imprimir 1009
+        System.out.println(nextPrime(5000)); // Debería imprimir 5003
+        System.out.println(nextPrime(10));    // Debería imprimir 11
     }
 }

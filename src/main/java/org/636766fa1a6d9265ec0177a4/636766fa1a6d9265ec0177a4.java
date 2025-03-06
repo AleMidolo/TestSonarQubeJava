@@ -1,11 +1,10 @@
-import java.util.Objects;
-
-public class DoubleArrayConverter {
+public class ArrayConverter {
 
     /**
-     * <p>将基本数据类型的 double 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>double</code> 数组
-     * @return 一个 <code>Double</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>Convierte un arreglo de primitivos double a objetos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>double</code>
+     * @return un arreglo de <code>Double</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {

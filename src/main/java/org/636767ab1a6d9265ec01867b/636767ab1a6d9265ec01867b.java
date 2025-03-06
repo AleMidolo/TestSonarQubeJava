@@ -1,34 +1,66 @@
-import io.protostuff.LinkedBuffer;
-import io.protostuff.Output;
-import io.protostuff.WriteSession;
-
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
 
 public class UTF8Writer {
 
-    /**
-     * 将字符串中的 UTF-8 编码字节写入 {@link LinkedBuffer}。
-     */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null) {
-            return lb;
+        if (str == null || session == null || lb == null) {
+            throw new IllegalArgumentException("Arguments cannot be null");
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        int length = utf8Bytes.length;
+        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
 
-        // Ensure there is enough space in the buffer
-        if (lb.offset + length > lb.buffer.length) {
-            lb = LinkedBuffer.allocate(lb.nextBufferSize, lb);
+        while (buffer.hasRemaining()) {
+            if (lb.remaining() == 0) {
+                lb = lb.ensureCapacity(session, 1);
+            }
+            lb.put(buffer.get());
         }
 
-        // Write the length of the UTF-8 bytes
-        session.writeVarInt32(length, lb);
-
-        // Write the UTF-8 bytes
-        System.arraycopy(utf8Bytes, 0, lb.buffer, lb.offset, length);
-        lb.offset += length;
-
         return lb;
+    }
+
+    public static class LinkedBuffer {
+        private byte[] buffer;
+        private int position;
+
+        public LinkedBuffer(int capacity) {
+            this.buffer = new byte[capacity];
+            this.position = 0;
+        }
+
+        public void put(byte b) {
+            if (position >= buffer.length) {
+                throw new IndexOutOfBoundsException("Buffer overflow");
+            }
+            buffer[position++] = b;
+        }
+
+        public int remaining() {
+            return buffer.length - position;
+        }
+
+        public LinkedBuffer ensureCapacity(WriteSession session, int required) {
+            if (remaining() >= required) {
+                return this;
+            }
+            LinkedBuffer newBuffer = new LinkedBuffer(buffer.length * 2);
+            System.arraycopy(buffer, 0, newBuffer.buffer, 0, position);
+            newBuffer.position = position;
+            return newBuffer;
+        }
+    }
+
+    public static class WriteSession {
+        // Placeholder for session-related operations
+    }
+
+    public static void main(String[] args) {
+        WriteSession session = new WriteSession();
+        LinkedBuffer lb = new LinkedBuffer(10);
+        CharSequence str = "Hello, UTF-8!";
+        lb = writeUTF8(str, session, lb);
+        System.out.println("Bytes written: " + lb.position);
     }
 }

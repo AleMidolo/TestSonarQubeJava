@@ -12,26 +12,30 @@ public class EventBuffer {
     }
 
     /**
-     * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
+     * Agrega un <code>evento</code> como el último evento en el búfer.
      */
     public void add(LoggingEvent event) {
         if (size < capacity) {
             buffer[size] = event;
             size++;
         } else {
-            // 如果缓冲区已满，可以选择覆盖最早的事件或者抛出异常
-            // 这里选择覆盖最早的事件
+            // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
+            // 1. Ignorar el nuevo evento.
+            // 2. Sobrescribir el evento más antiguo.
+            // 3. Lanzar una excepción.
+            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo.
             System.arraycopy(buffer, 1, buffer, 0, size - 1);
             buffer[size - 1] = event;
         }
     }
 
-    // 其他方法，如获取缓冲区大小、获取事件等
-    public int getSize() {
+    // Método para obtener el tamaño actual del búfer
+    public int size() {
         return size;
     }
 
-    public LoggingEvent getEvent(int index) {
+    // Método para obtener el evento en una posición específica
+    public LoggingEvent get(int index) {
         if (index >= 0 && index < size) {
             return buffer[index];
         } else {

@@ -1,20 +1,20 @@
-import org.apache.commons.lang3.StringUtils;
+import java.util.*;
 
-public class StringUtil {
+public class StringUtils {
     /**
-     * Introspector.decapitalize 的反向操作
+     * Inverso de Introspector.decapitalize
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return StringUtils.capitalize(name);
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
     public static void main(String[] args) {
-        System.out.println(capitalize("hello")); // 输出 "Hello"
-        System.out.println(capitalize("world")); // 输出 "World"
-        System.out.println(capitalize(""));      // 输出 ""
-        System.out.println(capitalize(null));    // 输出 null
+        System.out.println(capitalize("hello")); // Output: Hello
+        System.out.println(capitalize("world")); // Output: World
+        System.out.println(capitalize(""));      // Output: 
+        System.out.println(capitalize(null));    // Output: null
     }
 }

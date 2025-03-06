@@ -1,52 +1,99 @@
 import java.util.*;
 
-class CategoryTree {
-    private Map<Integer, Boolean> activeNodes; // 假设这是一个存储节点ID及其活跃状态的映射
-    private Map<Integer, List<Integer>> tree; // 假设这是一个存储树结构的映射，键为父节点ID，值为子节点ID列表
+class Category {
+    // Assuming Category class has necessary fields and methods
+    // For example, a field to check if the node is active
+    private boolean isActive;
 
-    public CategoryTree() {
-        activeNodes = new HashMap<>();
-        tree = new HashMap<>();
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+}
+
+class TreeNode {
+    Category category;
+    List<TreeNode> children;
+
+    public TreeNode(Category category) {
+        this.category = category;
+        this.children = new ArrayList<>();
+    }
+
+    public void addChild(TreeNode child) {
+        children.add(child);
+    }
+
+    public List<TreeNode> getChildren() {
+        return children;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+}
+
+public class Tree {
+    private TreeNode root;
+
+    public Tree(TreeNode root) {
+        this.root = root;
     }
 
     /**
-     * 从类别树中移除所有不活跃的节点。
-     * @return 返回被移除的节点数量
+     * Elimina cualquier nodo inactivo del árbol con elementos de tipo "Category".
      */
     protected int removeUnusedNodes() {
-        int removedCount = 0;
-        Set<Integer> nodesToRemove = new HashSet<>();
+        if (root == null) {
+            return 0;
+        }
+        return removeUnusedNodesHelper(root);
+    }
 
-        // 遍历所有节点，找出不活跃的节点
-        for (Map.Entry<Integer, Boolean> entry : activeNodes.entrySet()) {
-            if (!entry.getValue()) {
-                nodesToRemove.add(entry.getKey());
-            }
+    private int removeUnusedNodesHelper(TreeNode node) {
+        if (node == null) {
+            return 0;
         }
 
-        // 从树中移除不活跃的节点
-        for (Integer nodeId : nodesToRemove) {
-            if (tree.containsKey(nodeId)) {
-                // 如果节点有子节点，递归移除子节点
-                removeSubtree(nodeId);
+        int removedCount = 0;
+        List<TreeNode> children = node.getChildren();
+        Iterator<TreeNode> iterator = children.iterator();
+
+        while (iterator.hasNext()) {
+            TreeNode child = iterator.next();
+            if (!child.getCategory().isActive()) {
+                iterator.remove();
                 removedCount++;
             } else {
-                // 如果节点没有子节点，直接移除
-                activeNodes.remove(nodeId);
-                removedCount++;
+                removedCount += removeUnusedNodesHelper(child);
             }
         }
 
         return removedCount;
     }
 
-    private void removeSubtree(int nodeId) {
-        if (tree.containsKey(nodeId)) {
-            for (Integer childId : tree.get(nodeId)) {
-                removeSubtree(childId);
-            }
-            tree.remove(nodeId);
-        }
-        activeNodes.remove(nodeId);
+    public static void main(String[] args) {
+        // Example usage
+        Category rootCategory = new Category();
+        rootCategory.setActive(true);
+
+        TreeNode rootNode = new TreeNode(rootCategory);
+        Tree tree = new Tree(rootNode);
+
+        Category childCategory1 = new Category();
+        childCategory1.setActive(false);
+        TreeNode childNode1 = new TreeNode(childCategory1);
+        rootNode.addChild(childNode1);
+
+        Category childCategory2 = new Category();
+        childCategory2.setActive(true);
+        TreeNode childNode2 = new TreeNode(childCategory2);
+        rootNode.addChild(childNode2);
+
+        int removedNodes = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

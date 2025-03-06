@@ -1,29 +1,29 @@
 import java.util.Arrays;
 
-public class StringUtils {
+public class StringCopier {
 
     /**
-     * 此方法创建提供数组的一个副本，并确保新创建的数组中的所有字符串仅包含小写字母。<p> 使用此方法复制字符串数组意味着对源数组的更改不会修改目标数组。
+     * Este método crea una copia del array proporcionado y asegura que todas las cadenas en el nuevo array contengan solo letras minúsculas. <p> Utilizar este método para copiar arrays de cadenas significa que los cambios en el array src no modifican el array dst.
      */
-    private static String[] copyStrings(final String[] src) {
+    private static String[] copiarCadenas(final String[] src) {
         if (src == null) {
             return null;
         }
 
-        String[] copy = new String[src.length];
+        String[] dst = new String[src.length];
         for (int i = 0; i < src.length; i++) {
             if (src[i] != null) {
-                copy[i] = src[i].toLowerCase();
+                dst[i] = src[i].toLowerCase();
             } else {
-                copy[i] = null;
+                dst[i] = null;
             }
         }
-        return copy;
+        return dst;
     }
 
     public static void main(String[] args) {
-        String[] original = {"Hello", "WORLD", "123", null, "Java"};
-        String[] copied = copyStrings(original);
+        String[] original = {"Hello", "WORLD", "Java", null, "Programming"};
+        String[] copied = copiarCadenas(original);
 
         System.out.println("Original: " + Arrays.toString(original));
         System.out.println("Copied: " + Arrays.toString(copied));

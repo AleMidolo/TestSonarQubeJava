@@ -1,18 +1,18 @@
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.util.logging.LogRecord;
 
 public class LogTable {
+    private final DefaultListModel<String> logListModel;
 
-    /**
-     * 添加日志记录消息以显示在 LogTable 中。此方法是线程安全的，因为它将请求发送到 SwingThread，而不是直接处理。
-     */
+    public LogTable(DefaultListModel<String> logListModel) {
+        this.logListModel = logListModel;
+    }
+
     public void addMessage(final LogRecord lr) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // 在这里添加将日志记录消息显示在 LogTable 中的逻辑
-                // 例如：logTableModel.addLogRecord(lr);
-            }
+        // Ensure the operation is performed on the Swing event dispatch thread
+        SwingUtilities.invokeLater(() -> {
+            String message = lr.getMessage();
+            logListModel.addElement(message);
         });
     }
 }

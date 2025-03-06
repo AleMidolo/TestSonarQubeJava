@@ -1,17 +1,13 @@
-import java.util.Stack;
+import org.apache.log4j.NDC;
 
-public class NDC {
-    private static Stack<String> contextStack = new Stack<>();
+public class DiagnosticContext {
 
     /**
-     * 查看此 NDC 顶部的最后诊断上下文，而不将其移除。<p>返回的值是最后推入的值。如果没有可用的上下文，则返回空字符串 ""。
-     * @return String 最内层的诊断上下文。
+     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. <p> El valor devuelto es el valor que se empujó por última vez. Si no hay contexto disponible, se devuelve la cadena vacía "".
+     * @return String El contexto de diagnóstico más interno.
      */
     public static String peek() {
-        if (!contextStack.isEmpty()) {
-            return contextStack.peek();
-        } else {
-            return "";
-        }
+        String context = NDC.peek();
+        return context != null ? context : "";
     }
 }

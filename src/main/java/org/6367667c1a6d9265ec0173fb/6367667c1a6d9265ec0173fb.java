@@ -1,15 +1,13 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
-public class AtmosphereResourceImpl implements AtmosphereResource {
-
-    private AtmosphereResourceEventListener eventListener;
+public class AtmosphereResourceImpl extends AtmosphereResource {
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        this.eventListener = e;
+        if (e != null) {
+            this.getBroadcaster().addAtmosphereResourceEventListener(e);
+        }
         return this;
     }
-
-    // Other methods and implementations...
 }

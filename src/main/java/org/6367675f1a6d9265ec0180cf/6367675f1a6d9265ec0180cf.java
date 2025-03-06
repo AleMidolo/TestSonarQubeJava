@@ -1,25 +1,23 @@
-import org.jgrapht.Graph;
 import java.util.Set;
+import org.jgrapht.Graph;
 
 public class CliqueChecker {
 
     /**
-     * 检查由给定的 <code>vertices</code> 诱导的 <code>graph</code> 的子图是否为完全图，即一个团。
-     * @param graph 图。
-     * @param vertices 用于诱导子图的顶点。
-     * @return 如果诱导的子图是一个团，则返回真。
+     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
+     * @param graph el grafo.
+     * @param vertices los vértices de los que se inducirá el subgrafo.
+     * @return true si el subgrafo inducido es un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // 遍历所有顶点对
+        // Verificar que todos los pares de vértices en el conjunto están conectados
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    // 如果存在一对顶点之间没有边，则不是团
                     return false;
                 }
             }
         }
-        // 所有顶点对之间都有边，是团
         return true;
     }
 }

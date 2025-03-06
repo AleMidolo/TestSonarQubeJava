@@ -1,62 +1,65 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Object> stack = new Stack<>();
+public class FrameStackHandler {
+
+    private Stack<String> frameStack;
+
+    public FrameStackHandler() {
+        this.frameStack = new Stack<>();
+    }
 
     /**
-     * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则弹出其参数类型）。
+     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
+     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
      */
     private void pop(final String descriptor) {
-        int count = getTypeCount(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
+        if (descriptor == null || descriptor.isEmpty()) {
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
+        }
+
+        // Determine if the descriptor is a method descriptor
+        if (descriptor.startsWith("(")) {
+            // Extract argument types from method descriptor
+            String[] argumentTypes = extractArgumentTypes(descriptor);
+            for (String type : argumentTypes) {
+                if (!frameStack.isEmpty()) {
+                    frameStack.pop();
+                } else {
+                    throw new IllegalStateException("Frame stack is empty");
+                }
+            }
+        } else {
+            // Single type descriptor, pop one frame
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
             } else {
-                throw new IllegalStateException("Stack underflow: attempted to pop from an empty stack.");
+                throw new IllegalStateException("Frame stack is empty");
             }
         }
     }
 
     /**
-     * 根据描述符计算需要弹出的类型数量。
-     * @param descriptor 类型或方法描述符。
-     * @return 需要弹出的类型数量。
+     * Extracts argument types from a method descriptor.
+     * @param descriptor the method descriptor
+     * @return an array of argument types
      */
-    private int getTypeCount(String descriptor) {
-        int count = 0;
-        int index = 0;
-        while (index < descriptor.length()) {
-            char c = descriptor.charAt(index);
-            if (c == 'L') {
-                // 对象类型，跳过直到分号
-                while (index < descriptor.length() && descriptor.charAt(index) != ';') {
-                    index++;
-                }
-                count++;
-            } else if (c == '[') {
-                // 数组类型，跳过所有数组维度
-                while (index < descriptor.length() && descriptor.charAt(index) == '[') {
-                    index++;
-                }
-                if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
-                    // 对象数组，跳过直到分号
-                    while (index < descriptor.length() && descriptor.charAt(index) != ';') {
-                        index++;
-                    }
-                }
-                count++;
-            } else if (c == 'D' || c == 'J') {
-                // double 或 long 类型，占用两个槽位
-                count += 2;
-            } else {
-                // 其他基本类型，占用一个槽位
-                count++;
-            }
-            index++;
-        }
-        return count;
+    private String[] extractArgumentTypes(String descriptor) {
+        // Remove the leading '(' and trailing ')'
+        String args = descriptor.substring(1, descriptor.indexOf(')'));
+
+        // Split the argument types based on the descriptor format
+        // This is a simplified approach and may need to handle more complex cases
+        return args.split(";");
     }
 
-    // 其他方法...
+    // Example usage
+    public static void main(String[] args) {
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("Type1");
+        handler.frameStack.push("Type2");
+        handler.frameStack.push("Type3");
+
+        handler.pop("(Type1;Type2)V"); // Pops Type3 and Type2
+        System.out.println(handler.frameStack); // Should print [Type1]
+    }
 }

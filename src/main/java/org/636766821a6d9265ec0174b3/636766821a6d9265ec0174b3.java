@@ -1,4 +1,6 @@
-import java.util.Objects;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 
 /**
  * 调用 {@link BroadcastFilter}
@@ -6,23 +8,18 @@ import java.util.Objects;
  * @return 过滤后的消息
  */
 protected Object filter(Object msg) {
-    // 假设 BroadcastFilter 是一个接口或类，这里我们假设它是一个接口
-    // 并且有一个 filter 方法
-    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设有一个实现类
-    return filter.filter(msg);
-}
-
-// 假设的 BroadcastFilter 接口
-interface BroadcastFilter {
-    Object filter(Object msg);
-}
-
-// 假设的 BroadcastFilter 实现类
-class BroadcastFilterImpl implements BroadcastFilter {
-    @Override
-    public Object filter(Object msg) {
-        // 这里实现具体的过滤逻辑
-        // 例如，返回消息本身，或者进行一些处理
-        return Objects.requireNonNull(msg, "Message cannot be null");
+    // 假设msg是一个Intent对象
+    if (msg instanceof Intent) {
+        Intent intent = (Intent) msg;
+        Bundle extras = intent.getExtras();
+        
+        // 这里可以添加自定义的过滤逻辑
+        if (extras != null && extras.containsKey("key_to_filter")) {
+            // 如果包含特定的key，则返回过滤后的消息
+            return "Filtered Message";
+        }
     }
+    
+    // 如果没有过滤条件，则返回原始消息
+    return msg;
 }

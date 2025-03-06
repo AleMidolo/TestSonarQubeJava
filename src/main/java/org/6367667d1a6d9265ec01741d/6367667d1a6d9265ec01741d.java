@@ -15,7 +15,7 @@ public class TypeResolver {
     }
 
     public static class Unknown {
-        // Placeholder class for unknown type
+        // Placeholder class for unknown types
     }
 
     public static void main(String[] args) {

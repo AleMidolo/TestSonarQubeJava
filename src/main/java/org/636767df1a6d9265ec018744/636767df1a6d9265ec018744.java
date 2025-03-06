@@ -3,8 +3,8 @@ import java.util.List;
 
 public class TimeRangeSplitter {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
-    private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration in milliseconds
+    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
     /**
      * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
@@ -13,15 +13,15 @@ public class TimeRangeSplitter {
         List<TimeRange> timeRanges = new ArrayList<>();
 
         while (start < end) {
-            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, rangeEnd));
-            start = rangeEnd;
+            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, nextEnd));
+            start = nextEnd;
         }
 
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range
+    // Assuming TimeRange is a class that represents a time range with start and end times
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -45,17 +45,6 @@ public class TimeRangeSplitter {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeSplitter splitter = new TimeRangeSplitter();
-        long startTime = 1633024800000L; // Example start time
-        long endTime = 1633039200000L;   // Example end time
-
-        List<TimeRange> ranges = splitter.buildTimeRanges(startTime, endTime);
-        for (TimeRange range : ranges) {
-            System.out.println(range);
         }
     }
 }

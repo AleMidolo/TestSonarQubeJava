@@ -27,7 +27,7 @@ public class Logger {
         }
     }
 
-    // Assuming Appender is a class with a getName() method
+    // Assuming Appender class has a getName() method
     public static class Appender {
         private String name;
 
@@ -37,19 +37,6 @@ public class Logger {
 
         public String getName() {
             return name;
-        }
-    }
-
-    public static void main(String[] args) {
-        Logger logger = new Logger();
-        logger.addAppender(new Appender("ConsoleAppender"));
-        logger.addAppender(new Appender("FileAppender"));
-
-        logger.removeAppender("ConsoleAppender");
-
-        // Verify that the appender was removed
-        for (Appender appender : logger.appenders) {
-            System.out.println(appender.getName());
         }
     }
 }

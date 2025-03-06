@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class ArrayUtils {
 
     /**
@@ -14,7 +12,10 @@ public class ArrayUtils {
         }
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Array element at index " + i + " is null");
+            }
+            result[i] = array[i];
         }
         return result;
     }

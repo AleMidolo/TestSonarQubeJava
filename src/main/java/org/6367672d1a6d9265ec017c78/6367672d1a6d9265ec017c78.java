@@ -5,7 +5,7 @@ public class InsertValue {
     private Set<Integer> set;
 
     public InsertValue() {
-        set = new HashSet<>();
+        this.set = new HashSet<>();
     }
 
     /**

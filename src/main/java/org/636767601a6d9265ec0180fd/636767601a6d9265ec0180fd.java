@@ -21,5 +21,11 @@ public class GraphIndex<V, E> {
         index.get(sourceVertex).put(targetVertex, e);
     }
 
-    // 其他方法可以根据需要添加
+    // Optional: Method to retrieve an edge from the index
+    public E getEdge(V sourceVertex, V targetVertex) {
+        if (index.containsKey(sourceVertex)) {
+            return index.get(sourceVertex).get(targetVertex);
+        }
+        return null;
+    }
 }

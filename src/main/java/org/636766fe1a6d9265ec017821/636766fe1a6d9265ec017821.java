@@ -1,4 +1,4 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * <p>将 <code>byte</code> 数组的详细信息附加到 <code>toString</code> 中。</p>
@@ -7,14 +7,8 @@ import java.util.Objects;
  * @param array  要添加到 <code>toString</code> 的数组，不能为 <code>null</code>
  */
 protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array) {
-    Objects.requireNonNull(array, "The byte array must not be null");
-
-    buffer.append('[');
-    for (int i = 0; i < array.length; i++) {
-        if (i > 0) {
-            buffer.append(", ");
-        }
-        buffer.append(array[i]);
+    if (array == null) {
+        throw new IllegalArgumentException("The byte array must not be null");
     }
-    buffer.append(']');
+    buffer.append(Arrays.toString(array));
 }

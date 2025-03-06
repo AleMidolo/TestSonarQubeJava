@@ -1,5 +1,4 @@
 public class StringUtils {
-
     /**
      * 从给定的字符串中修剪所有出现的指定前导字符。
      * @param str 要检查的字符串
@@ -18,9 +17,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "###HelloWorld";
+        String testStr = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(input, leadingChar);
+        String result = trimLeadingCharacter(testStr, leadingChar);
         System.out.println(result);  // 输出: HelloWorld
     }
 }

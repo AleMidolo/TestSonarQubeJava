@@ -4,10 +4,10 @@ public class UTF8SizeCalculator {
 
     /**
      * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
-     * 
-     * @param str 输入的字符序列
+     *
+     * @param str   输入的字符序列
      * @param index 开始计算的索引
-     * @param len 要计算的字符长度
+     * @param len   要计算的字符长度
      * @return UTF-8 编码后的字节大小
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {

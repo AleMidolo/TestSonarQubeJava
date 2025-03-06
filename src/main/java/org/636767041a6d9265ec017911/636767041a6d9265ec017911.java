@@ -18,7 +18,7 @@ public class Registration {
         return registeredObjects.contains(value);
     }
 
-    public static void clearRegistry() {
-        registeredObjects.clear();
+    public static void unregister(Object value) {
+        registeredObjects.remove(value);
     }
 }

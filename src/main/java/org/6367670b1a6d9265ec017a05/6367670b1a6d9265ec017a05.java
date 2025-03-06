@@ -1,6 +1,6 @@
 public class CharUtils {
 
-    // 缓存 ASCII 7 位字符对应的字符串
+    // 缓存 ASCII 7 位字符的字符串表示
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
     static {
@@ -25,7 +25,7 @@ public class CharUtils {
 
     public static void main(String[] args) {
         System.out.println(toString(' '));  // 输出: " "
-        System.out.println(toString('A')); // 输出: "A"
-        System.out.println(toString('€')); // 输出: "€" (非 ASCII 字符)
+        System.out.println(toString('A'));  // 输出: "A"
+        System.out.println(toString('€'));  // 输出: "€" (非 ASCII 字符)
     }
 }

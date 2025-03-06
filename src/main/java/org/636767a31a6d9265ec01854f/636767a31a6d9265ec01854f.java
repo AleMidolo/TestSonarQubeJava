@@ -1,28 +1,22 @@
 import java.io.IOException;
 
 private void checkIfPackedField() throws IOException {
-    // Assuming 'packedField' is a boolean flag indicating whether the field is packed
-    if (packedField) {
+    // Assuming this method is part of a class that has a field `isPackedField` and `inputStream`
+    // which are used to track the state of the field and read from the input stream respectively.
+
+    // Check if the field is already packed
+    if (isPackedField) {
         // Update internal state to reflect that we are reading a packed field
         // For example, set a flag or update a counter
         isReadingPackedField = true;
-        packedFieldCounter++;
-        
-        // Optionally, perform additional operations related to reading a packed field
-        // For example, resetting a buffer or adjusting the read position
-        resetBuffer();
-        adjustReadPosition();
+
+        // Optionally, read the length of the packed field from the input stream
+        // This is just an example, the actual implementation depends on the protocol
+        int packedFieldLength = inputStream.read();
+        // Update any necessary state based on the length
+        // ...
     } else {
-        // If the field is not packed, ensure the state reflects that
+        // If the field is not packed, reset any related state
         isReadingPackedField = false;
     }
-}
-
-// Example helper methods (assuming they are defined elsewhere in the class)
-private void resetBuffer() {
-    // Implementation to reset the buffer
-}
-
-private void adjustReadPosition() {
-    // Implementation to adjust the read position
 }

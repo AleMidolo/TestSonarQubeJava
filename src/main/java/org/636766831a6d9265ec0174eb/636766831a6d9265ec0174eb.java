@@ -14,27 +14,17 @@ public class FileHandler {
         if (files == null) {
             return;
         }
-
+        
         // 将数组转换为列表
         List<File> tempList = new ArrayList<>();
-        Collections.addAll(tempList, files);
-
+        for (File file : files) {
+            tempList.add(file);
+        }
+        
         // 反转列表
         Collections.reverse(tempList);
-
+        
         // 添加到成员变量中
         fileList.addAll(tempList);
-    }
-
-    // 示例用法
-    public static void main(String[] args) {
-        FileHandler handler = new FileHandler();
-        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        handler.addReverse(files);
-
-        // 打印结果
-        for (File file : handler.fileList) {
-            System.out.println(file.getName());
-        }
     }
 }

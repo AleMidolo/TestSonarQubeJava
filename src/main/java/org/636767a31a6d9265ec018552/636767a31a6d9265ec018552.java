@@ -10,20 +10,34 @@ public class StreamReader {
         this.inputStream = inputStream;
     }
 
-    /**
-     * 从流中读取 {@code string} 字段值。
-     */
     @Override
     public String readString() throws IOException {
-        int length = inputStream.read();
-        if (length == -1) {
-            throw new IOException("End of stream reached");
+        // Read the length of the string (assuming it's prefixed by its length as an integer)
+        int length = readInt();
+        if (length < 0) {
+            throw new IOException("Invalid string length: " + length);
         }
+
+        // Read the string bytes
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
             throw new IOException("Failed to read the expected number of bytes");
         }
+
+        // Convert bytes to string using UTF-8 encoding
         return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    private int readInt() throws IOException {
+        byte[] bytes = new byte[4];
+        int bytesRead = inputStream.read(bytes);
+        if (bytesRead != 4) {
+            throw new IOException("Failed to read an integer");
+        }
+        return (bytes[0] & 0xFF) << 24 |
+               (bytes[1] & 0xFF) << 16 |
+               (bytes[2] & 0xFF) << 8  |
+               (bytes[3] & 0xFF);
     }
 }

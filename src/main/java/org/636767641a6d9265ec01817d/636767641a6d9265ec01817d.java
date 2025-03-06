@@ -15,7 +15,7 @@ public class BipartiteGraphGenerator<V, E> {
         List<V> groupA = new ArrayList<>();
         List<V> groupB = new ArrayList<>();
 
-        // 生成顶点并添加到对应的组中
+        // 创建顶点并添加到对应的组中
         for (int i = 0; i < 5; i++) {
             V vertexA = target.addVertex();
             groupA.add(vertexA);
@@ -26,7 +26,7 @@ public class BipartiteGraphGenerator<V, E> {
             resultMap.put("B" + i, vertexB);
         }
 
-        // 构建二分图的边
+        // 在两组顶点之间创建边
         for (V a : groupA) {
             for (V b : groupB) {
                 target.addEdge(a, b);

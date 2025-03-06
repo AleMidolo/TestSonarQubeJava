@@ -14,35 +14,15 @@ public class FileUtils {
             throw new NullPointerException("File cannot be null");
         }
 
-        if (!file.exists()) {
-            return;
-        }
+        file.deleteOnExit();
 
         if (file.isDirectory()) {
-            deleteDirectoryOnExit(file);
-        } else {
-            file.deleteOnExit();
-        }
-    }
-
-    private static void deleteDirectoryOnExit(File directory) throws IOException {
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Not a directory: " + directory);
-        }
-
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new IOException("Failed to list contents of " + directory);
-        }
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                deleteDirectoryOnExit(file);
-            } else {
-                file.deleteOnExit();
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File subFile : files) {
+                    forceDeleteOnExit(subFile);
+                }
             }
         }
-
-        directory.deleteOnExit();
     }
 }

@@ -20,10 +20,12 @@ public class DoubleArrayConverter {
     }
 
     public static void main(String[] args) {
-        double[] primitiveArray = {1.0, 2.5, 3.7};
+        double[] primitiveArray = {1.0, 2.0, 3.0};
         Double[] objectArray = toObject(primitiveArray);
-        for (Double d : objectArray) {
-            System.out.println(d);
-        }
+        System.out.println(java.util.Arrays.toString(objectArray)); // Output: [1.0, 2.0, 3.0]
+
+        double[] nullArray = null;
+        Double[] nullObjectArray = toObject(nullArray);
+        System.out.println(Objects.isNull(nullObjectArray)); // Output: true
     }
 }

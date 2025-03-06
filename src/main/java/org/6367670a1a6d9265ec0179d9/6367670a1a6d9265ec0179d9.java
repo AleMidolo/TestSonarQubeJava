@@ -12,10 +12,10 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        String test1 = "Hello, World!";
-        String test2 = null;
+        String testString = "Hello, World!";
+        String nullString = null;
 
-        System.out.println(length(test1)); // Output: 13
-        System.out.println(length(test2)); // Output: 0
+        System.out.println(length(testString)); // Output: 13
+        System.out.println(length(nullString)); // Output: 0
     }
 }

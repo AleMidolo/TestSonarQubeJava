@@ -5,11 +5,11 @@ import java.util.List;
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> segments = new ArrayList<>();
+        List<PathSegmentImpl> pathSegments = new ArrayList<>();
         String path = u.getPath();
 
         if (path == null || path.isEmpty()) {
-            return segments;
+            return pathSegments;
         }
 
         // Remove the leading '/' if it exists and the path is absolute
@@ -17,15 +17,15 @@ public class URIDecoder {
             path = path.substring(1);
         }
 
-        String[] parts = path.split("/");
-        for (String part : parts) {
+        String[] segments = path.split("/");
+        for (String segment : segments) {
             if (decode) {
-                part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
+                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
             }
-            segments.add(new PathSegmentImpl(part));
+            pathSegments.add(new PathSegmentImpl(segment));
         }
 
-        return segments;
+        return pathSegments;
     }
 
     public static class PathSegmentImpl {

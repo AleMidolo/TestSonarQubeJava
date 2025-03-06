@@ -8,7 +8,7 @@ public class FieldChecker {
         this.storedProperties = storedProperties;
     }
 
-    /** 
+    /**
      * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
@@ -22,7 +22,6 @@ public class FieldChecker {
     }
 }
 
-// Assuming Fields class has a method to get field names
 class Fields {
     private Set<String> fieldNames;
 

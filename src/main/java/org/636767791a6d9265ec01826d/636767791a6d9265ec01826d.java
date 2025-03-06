@@ -1,5 +1,4 @@
 import java.util.Properties;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,15 +13,20 @@ public class PropertySubstitutor {
             return null;
         }
 
-        // Pattern to match ${variable} in the value
-        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        // Pattern to match ${...} placeholders
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String variable = matcher.group(1);
-            String replacement = props.getProperty(variable, "");
-            matcher.appendReplacement(result, replacement);
+            String placeholder = matcher.group(1);
+            String replacement = props.getProperty(placeholder);
+            if (replacement != null) {
+                matcher.appendReplacement(result, replacement);
+            } else {
+                // If no replacement is found, leave the placeholder as is
+                matcher.appendReplacement(result, matcher.group(0));
+            }
         }
         matcher.appendTail(result);
 

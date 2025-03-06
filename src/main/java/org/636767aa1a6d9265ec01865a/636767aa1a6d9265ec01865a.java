@@ -11,12 +11,25 @@ public class LinkedBuffer {
         this.next = next;
     }
 
+    public byte[] getData() {
+        return data;
+    }
+
+    public LinkedBuffer getNext() {
+        return next;
+    }
+
+    /**
+     * Writes the contents of the {@link LinkedBuffer} into the {@link DataOutput}.
+     * @return the total content size of the buffer.
+     */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;
         while (node != null) {
-            out.write(node.data);
-            totalSize += node.data.length;
-            node = node.next;
+            byte[] data = node.getData();
+            out.write(data);
+            totalSize += data.length;
+            node = node.getNext();
         }
         return totalSize;
     }

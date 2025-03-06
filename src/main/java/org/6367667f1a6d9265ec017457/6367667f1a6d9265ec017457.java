@@ -7,38 +7,52 @@ private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         return i;
     }
 
-    byte firstByte = bb.get(i);
-    int codePoint;
-    int bytesToRead;
-
-    if ((firstByte & 0x80) == 0) { // 1-byte sequence
-        codePoint = firstByte & 0x7F;
-        bytesToRead = 1;
-    } else if ((firstByte & 0xE0) == 0xC0) { // 2-byte sequence
-        codePoint = firstByte & 0x1F;
-        bytesToRead = 2;
-    } else if ((firstByte & 0xF0) == 0xE0) { // 3-byte sequence
-        codePoint = firstByte & 0x0F;
-        bytesToRead = 3;
-    } else if ((firstByte & 0xF8) == 0xF0) { // 4-byte sequence
-        codePoint = firstByte & 0x07;
-        bytesToRead = 4;
-    } else {
-        throw new IllegalArgumentException("Invalid UTF-8 sequence");
-    }
-
-    if (i + bytesToRead > length) {
-        throw new IllegalArgumentException("Incomplete UTF-8 sequence");
-    }
-
-    for (int j = 1; j < bytesToRead; j++) {
-        byte nextByte = bb.get(i + j);
-        if ((nextByte & 0xC0) != 0x80) {
-            throw new IllegalArgumentException("Invalid UTF-8 sequence");
+    byte b1 = bb.get(i);
+    if ((b1 & 0x80) == 0) {
+        // 1-byte character
+        sb.append((char) b1);
+        return i + 1;
+    } else if ((b1 & 0xE0) == 0xC0) {
+        // 2-byte character
+        if (i + 1 >= length) {
+            return i;
         }
-        codePoint = (codePoint << 6) | (nextByte & 0x3F);
+        byte b2 = bb.get(i + 1);
+        if ((b2 & 0xC0) != 0x80) {
+            return i;
+        }
+        int codePoint = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+        sb.append((char) codePoint);
+        return i + 2;
+    } else if ((b1 & 0xF0) == 0xE0) {
+        // 3-byte character
+        if (i + 2 >= length) {
+            return i;
+        }
+        byte b2 = bb.get(i + 1);
+        byte b3 = bb.get(i + 2);
+        if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) {
+            return i;
+        }
+        int codePoint = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+        sb.append((char) codePoint);
+        return i + 3;
+    } else if ((b1 & 0xF8) == 0xF0) {
+        // 4-byte character
+        if (i + 3 >= length) {
+            return i;
+        }
+        byte b2 = bb.get(i + 1);
+        byte b3 = bb.get(i + 2);
+        byte b4 = bb.get(i + 3);
+        if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) {
+            return i;
+        }
+        int codePoint = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+        sb.append(Character.toChars(codePoint));
+        return i + 4;
+    } else {
+        // Invalid UTF-8 sequence
+        return i;
     }
-
-    sb.append(Character.toChars(codePoint));
-    return i + bytesToRead;
 }

@@ -20,9 +20,9 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(isAsciiControl('a'));   // false
         System.out.println(isAsciiControl('A'));   // false
-        System.out.println(isAsciiControl('3'));   // false
+        System.out.println(isAsciiControl('3'));  // false
         System.out.println(isAsciiControl('-'));   // false
-        System.out.println(isAsciiControl('\n')); // true
+        System.out.println(isAsciiControl('\n'));  // true
         System.out.println(isAsciiControl('©'));   // false
     }
 }

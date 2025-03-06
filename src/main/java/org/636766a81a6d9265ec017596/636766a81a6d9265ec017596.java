@@ -23,7 +23,10 @@ public class ByteVector {
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
+            int newCapacity = data.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
             data = Arrays.copyOf(data, newCapacity);
         }
     }

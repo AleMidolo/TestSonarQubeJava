@@ -1,10 +1,10 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 
-public class FileIterator implements Iterator<File> {
+public class FileIterator implements Iterator<InputStream> {
     private File[] files;
     private int currentIndex;
 
@@ -22,18 +22,11 @@ public class FileIterator implements Iterator<File> {
     }
 
     @Override
-    public File next() {
+    public InputStream next() throws IOException {
         if (!hasNext()) {
             return null;
         }
-        return files[currentIndex++];
-    }
-
-    public InputStream nextInputStream() throws IOException {
-        File nextFile = next();
-        if (nextFile == null) {
-            return null;
-        }
+        File nextFile = files[currentIndex++];
         return new FileInputStream(nextFile);
     }
 }

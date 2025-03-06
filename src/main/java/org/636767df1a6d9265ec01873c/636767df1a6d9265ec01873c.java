@@ -8,7 +8,8 @@ public class Example {
      * @return the row ID as a String
      */
     public String id(String entityId) {
-        // Concatenate the entity ID with a UUID to ensure uniqueness
-        return entityId + "-" + UUID.randomUUID().toString();
+        // Combine the entityId with a UUID to ensure uniqueness
+        String uniqueId = entityId + "-" + UUID.randomUUID().toString();
+        return uniqueId;
     }
 }

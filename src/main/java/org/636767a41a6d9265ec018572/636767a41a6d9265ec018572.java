@@ -3,20 +3,16 @@ import java.io.InputStream;
 
 public class VarintReader {
 
-    private final InputStream inputStream;
-
-    public VarintReader(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
-
     /**
      * स्ट्रीम से एक कच्चा Varint पढ़ें।
+     * @return पढ़ा गया Varint मान
+     * @throws IOException यदि इनपुट स्ट्रीम से पढ़ने में कोई त्रुटि होती है
      */
-    public long readRawVarint64() throws IOException {
+    public long readRawVarint64(InputStream input) throws IOException {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            int b = inputStream.read();
+            int b = input.read();
             if (b == -1) {
                 throw new IOException("Unexpected end of stream while reading varint");
             }
@@ -26,6 +22,6 @@ public class VarintReader {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint64");
+        throw new IOException("Malformed varint");
     }
 }

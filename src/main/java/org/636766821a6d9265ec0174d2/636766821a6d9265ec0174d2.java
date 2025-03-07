@@ -10,6 +10,7 @@ public class RequestWrapper {
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
         // Create an AtmosphereRequest from the HttpServletRequest
-        return AtmosphereRequest.wrap(request);
+        AtmosphereRequest atmosphereRequest = AtmosphereRequest.wrap(request);
+        return atmosphereRequest;
     }
 }

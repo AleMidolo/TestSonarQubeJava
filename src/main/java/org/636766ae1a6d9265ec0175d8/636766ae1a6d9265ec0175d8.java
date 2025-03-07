@@ -3,11 +3,11 @@
  * @return 'Content-Range' मान
  */
 private String buildContentRange() {
-    // Assuming the content length and range are known
-    int start = 0; // Starting byte position
-    int end = 1023; // Ending byte position
-    int total = 2048; // Total size of the content
+    // Assuming the content length is known and the range is from start to end
+    long start = 0; // Starting byte position
+    long end = 1023; // Ending byte position
+    long totalLength = 2048; // Total length of the content
 
-    // Format: "bytes start-end/total"
-    return String.format("bytes %d-%d/%d", start, end, total);
+    // Format: "bytes start-end/totalLength"
+    return String.format("bytes %d-%d/%d", start, end, totalLength);
 }

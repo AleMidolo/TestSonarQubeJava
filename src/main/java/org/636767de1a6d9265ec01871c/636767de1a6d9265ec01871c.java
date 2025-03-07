@@ -8,7 +8,7 @@ public class Accumulator {
         this.map = new HashMap<>();
     }
 
-    /** 
+    /**
      * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
      */
     public void valueAccumulation(String key, Long value) {

@@ -28,10 +28,11 @@ public class CustomAppender extends AppenderSkeleton {
         return false;
     }
 
-    // Dummy Client class for demonstration
+    // Assuming a Client class with a write method
     public static class Client {
         public void write(String message) {
-            System.out.println("Client received: " + message);
+            // Implement the logic to write the message to the client
+            System.out.println("Writing to client: " + message);
         }
     }
 }

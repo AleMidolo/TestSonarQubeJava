@@ -14,50 +14,24 @@ public class TypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] typeArguments = parameterizedType.getActualTypeArguments();
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
-        for (Type typeArgument : typeArguments) {
-            if (typeArgument instanceof Class<?>) {
-                resolvedTypes.add((Class<?>) typeArgument);
+        for (Type typeArg : actualTypeArguments) {
+            if (typeArg instanceof Class<?>) {
+                resolvedTypes.add((Class<?>) typeArg);
+            } else if (typeArg instanceof ParameterizedType) {
+                Type rawType = ((ParameterizedType) typeArg).getRawType();
+                if (rawType instanceof Class<?>) {
+                    resolvedTypes.add((Class<?>) rawType);
+                } else {
+                    return null;
+                }
             } else {
-                // Handle cases where typeArgument is a TypeVariable or other types
-                // For simplicity, we return null if any type argument is not a Class
                 return null;
             }
         }
 
         return resolvedTypes.toArray(new Class<?>[0]);
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Type genericType = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return new Type[] { String.class, Integer.class };
-            }
-
-            @Override
-            public Type getRawType() {
-                return List.class;
-            }
-
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-
-        Class<?> targetType = List.class;
-        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
-
-        if (resolvedArgs != null) {
-            for (Class<?> arg : resolvedArgs) {
-                System.out.println(arg.getSimpleName());
-            }
-        } else {
-            System.out.println("Could not resolve arguments.");
-        }
     }
 }

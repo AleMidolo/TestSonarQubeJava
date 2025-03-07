@@ -6,19 +6,20 @@ public class LoggerChecker {
     /**
      * जांचें कि क्या नामित लॉगर पदानुक्रम में मौजूद है। यदि हाँ, तो इसका संदर्भ लौटाएँ, अन्यथा <code>null</code> लौटाएँ।
      * @param name उस लॉगर का नाम जिसे खोजा जाना है।
-     * @return लॉगर का संदर्भ यदि मौजूद है, अन्यथा <code>null</code>।
      */
     public Logger exists(String name) {
         try {
+            // LogManager.getLogger() will return the logger if it exists, otherwise it will create a new one.
+            // To check if the logger exists, we can compare the logger's name.
             Logger logger = LogManager.getLogger(name);
-            if (logger != null) {
+            if (logger.getName().equals(name)) {
                 return logger;
+            } else {
+                return null;
             }
         } catch (Exception e) {
-            // LogManager.getLogger() may throw an exception if the logger does not exist
-            // or if there is an issue with the logger configuration.
-            // We can ignore this exception and return null.
+            // In case of any exception, return null
+            return null;
         }
-        return null;
     }
 }

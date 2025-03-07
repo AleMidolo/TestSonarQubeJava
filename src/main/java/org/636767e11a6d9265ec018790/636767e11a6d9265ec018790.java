@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ThreadSnapshotParser {
 
@@ -31,7 +30,6 @@ public class ThreadSnapshotParser {
         return false;
     }
 
-    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
@@ -48,14 +46,16 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
-            // Parse the line and return a ThreadSnapshot object
-            // Example parsing logic (adjust as needed):
             String[] parts = line.split(",");
             if (parts.length == 3) {
-                long timestamp = Long.parseLong(parts[0]);
-                String threadName = parts[1];
-                String state = parts[2];
-                return new ThreadSnapshot(timestamp, threadName, state);
+                try {
+                    long timestamp = Long.parseLong(parts[0]);
+                    String threadName = parts[1];
+                    String state = parts[2];
+                    return new ThreadSnapshot(timestamp, threadName, state);
+                } catch (NumberFormatException e) {
+                    return null;
+                }
             }
             return null;
         }

@@ -8,9 +8,8 @@ public class MyFilter extends Filter {
         // Assuming the logic to decide is based on some condition
         // For example, if the message contains a specific string
         String message = event.getRenderedMessage();
-        
         if (message != null && message.contains("specific_string")) {
-            return Filter.ACCEPT; // or Filter.DENY based on your requirement
+            return Filter.ACCEPT; // or Filter.DENY based on your logic
         } else {
             return Filter.NEUTRAL;
         }

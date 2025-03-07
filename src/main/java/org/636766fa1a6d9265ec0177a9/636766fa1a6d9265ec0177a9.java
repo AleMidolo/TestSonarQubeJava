@@ -3,13 +3,9 @@ import java.util.List;
 
 public class ConstructorInitialization {
 
-    private List<Integer> initializedTypes;
+    private List<Integer> initializedTypes = new ArrayList<>();
 
-    public ConstructorInitialization() {
-        this.initializedTypes = new ArrayList<>();
-    }
-
-    /** 
+    /**
      * एक अमूर्त प्रकार को उन प्रकारों की सूची में जोड़ता है जिन पर एक कंस्ट्रक्टर मूलभूत ब्लॉक में लागू होता है।
      * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
      */
@@ -17,10 +13,5 @@ public class ConstructorInitialization {
         if (!initializedTypes.contains(abstractType)) {
             initializedTypes.add(abstractType);
         }
-    }
-
-    // Optional: Getter method to access the list of initialized types
-    public List<Integer> getInitializedTypes() {
-        return initializedTypes;
     }
 }

@@ -36,7 +36,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (strValue.length() == 1) {
             return strValue.charAt(0);
         } else {
-            throw new Exception("String must be exactly one character long.");
+            throw new Exception("String must be exactly one character long: " + strValue);
         }
     }
 

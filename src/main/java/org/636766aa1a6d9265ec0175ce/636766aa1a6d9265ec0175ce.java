@@ -31,6 +31,16 @@ public class FrameVisitor {
             this.numStack = numStack;
         }
 
-        // Additional methods to manipulate the frame can be added here
+        public int getOffset() {
+            return offset;
+        }
+
+        public int getNumLocal() {
+            return numLocal;
+        }
+
+        public int getNumStack() {
+            return numStack;
+        }
     }
 }

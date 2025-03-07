@@ -13,24 +13,39 @@ public class FrameStackHandler {
      */
     private void pop(final String descriptor) {
         // Assuming the descriptor contains the number of elements to pop
-        // For example, "I" for int, "D" for double, etc.
-        int count = descriptor.length();
-        for (int i = 0; i < count; i++) {
+        int elementsToPop = parseDescriptor(descriptor);
+        
+        for (int i = 0; i < elementsToPop; i++) {
             if (!frameStack.isEmpty()) {
                 frameStack.pop();
             } else {
-                throw new IllegalStateException("Frame stack is empty.");
+                throw new IllegalStateException("Frame stack is empty. Cannot pop more elements.");
             }
+        }
+    }
+
+    /**
+     * Parses the descriptor to determine how many elements to pop.
+     * This is a placeholder implementation and should be replaced with actual logic.
+     * @param descriptor The descriptor string.
+     * @return The number of elements to pop.
+     */
+    private int parseDescriptor(String descriptor) {
+        // Placeholder logic: assume the descriptor contains a number indicating the count
+        try {
+            return Integer.parseInt(descriptor);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Descriptor must contain a valid number of elements to pop.");
         }
     }
 
     // Example usage
     public static void main(String[] args) {
         FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push(1);
-        handler.frameStack.push(2.0);
-        handler.frameStack.push("Hello");
+        handler.frameStack.push("Element1");
+        handler.frameStack.push("Element2");
+        handler.frameStack.push("Element3");
 
-        handler.pop("IDLjava/lang/String;"); // Pops 3 elements: int, double, and String
+        handler.pop("2"); // Pops 2 elements from the stack
     }
 }

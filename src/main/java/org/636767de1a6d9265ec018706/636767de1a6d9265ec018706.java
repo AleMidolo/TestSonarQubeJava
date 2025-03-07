@@ -53,13 +53,13 @@ public class MappingDiff {
 
     public static void main(String[] args) {
         MappingDiff mappingDiff = new MappingDiff();
-
         Mappings inputMappings = new Mappings();
         Map<String, Object> inputFields = new HashMap<>();
         inputFields.put("field1", "type1");
+        inputFields.put("field3", "type3");
         inputMappings.setFields(inputFields);
 
         Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
-        System.out.println(diff.getFields()); // Output: {field2=type2, field3=type3}
+        System.out.println("Diff Mappings: " + diff.getFields());
     }
 }

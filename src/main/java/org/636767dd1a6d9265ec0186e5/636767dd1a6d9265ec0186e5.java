@@ -1,26 +1,30 @@
 import java.util.List;
 
-interface IConsumer {
-    void consume(String message);
-}
+// Assuming Channels and IConsumer are defined as follows:
+// Channels is a class that contains a list of channels
+// IConsumer is an interface with a method to consume a channel
 
-class Channels {
+public class Channels {
     private List<String> channels;
 
-    public Channels(List<String> channels) {
-        this.channels = channels;
-    }
-
-    public void addChannel(String channel) {
-        channels.add(channel);
+    public Channels() {
+        this.channels = new ArrayList<>();
     }
 
     public List<String> getChannels() {
         return channels;
     }
+
+    public void addChannel(String channel) {
+        channels.add(channel);
+    }
 }
 
-public class TargetChannelAdder {
+public interface IConsumer {
+    void consume(String channel);
+}
+
+public class TargetAdder {
     /**
      * नए लक्ष्य चैनल जोड़ें।
      */
@@ -30,6 +34,6 @@ public class TargetChannelAdder {
         channels.addChannel(newChannel);
 
         // Notify the consumer about the new channel
-        consumer.consume("New channel added: " + newChannel);
+        consumer.consume(newChannel);
     }
 }

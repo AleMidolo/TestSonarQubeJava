@@ -4,10 +4,10 @@
  */
 @Override
 public String toString() {
-    // Assuming this is part of a class that has a StringBuilder or similar
-    // For example, if the class has a StringBuilder named 'builder':
-    // return builder.toString();
-    
-    // Placeholder implementation
-    return "निर्मित स्ट्रिंग";
+    // Assuming this is part of a class that builds a string
+    // For example, let's assume the class has a StringBuilder instance
+    StringBuilder builder = new StringBuilder();
+    // Add some example content to the builder
+    builder.append("निर्मित स्ट्रिंग");
+    return builder.toString();
 }

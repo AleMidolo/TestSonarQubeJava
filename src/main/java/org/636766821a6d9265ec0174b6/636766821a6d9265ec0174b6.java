@@ -14,14 +14,14 @@ public class TypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Type[] typeArguments = parameterizedType.getActualTypeArguments();
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
-        for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class<?>) {
-                resolvedTypes.add((Class<?>) typeArg);
+        for (Type typeArgument : typeArguments) {
+            if (typeArgument instanceof Class<?>) {
+                resolvedTypes.add((Class<?>) typeArgument);
             } else {
-                // Handle cases where typeArg is a TypeVariable or other types
+                // Handle cases where typeArgument is a TypeVariable or other types
                 // For simplicity, we return null if any type argument is not a Class
                 return null;
             }

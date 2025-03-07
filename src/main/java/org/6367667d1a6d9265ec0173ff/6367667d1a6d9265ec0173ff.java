@@ -2,30 +2,15 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Meteor {
     // Assuming Meteor class has some properties and methods
-    // For example:
-    private String name;
-    private int id;
+    // For example purposes, let's assume it has a constructor and a method
+    private String data;
 
-    public Meteor(String name, int id) {
-        this.name = name;
-        this.id = id;
+    public Meteor(String data) {
+        this.data = data;
     }
 
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public String getData() {
+        return data;
     }
 }
 
@@ -37,21 +22,44 @@ public class MeteorLookup {
      * @return एक {@link Meteor} या यदि नहीं मिला तो null
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example logic to retrieve a Meteor instance based on HttpServletRequest
-        // This is a placeholder implementation and should be replaced with actual logic
-        String meteorName = r.getParameter("meteorName");
-        String meteorIdStr = r.getParameter("meteorId");
-
-        if (meteorName != null && meteorIdStr != null) {
-            try {
-                int meteorId = Integer.parseInt(meteorIdStr);
-                return new Meteor(meteorName, meteorId);
-            } catch (NumberFormatException e) {
-                // Handle the case where meteorId is not a valid integer
-                return null;
-            }
+        // Example logic to create a Meteor instance based on HttpServletRequest
+        // You can modify this logic based on your actual requirements
+        String data = r.getParameter("data");
+        if (data != null && !data.isEmpty()) {
+            return new Meteor(data);
         } else {
             return null;
         }
     }
+
+    public static void main(String[] args) {
+        // Example usage
+        // Assuming you have a mock HttpServletRequest for testing
+        HttpServletRequest mockRequest = new MockHttpServletRequest();
+        ((MockHttpServletRequest) mockRequest).addParameter("data", "Sample Data");
+
+        Meteor meteor = lookup(mockRequest);
+        if (meteor != null) {
+            System.out.println("Meteor data: " + meteor.getData());
+        } else {
+            System.out.println("No Meteor found.");
+        }
+    }
+}
+
+// MockHttpServletRequest class for testing purposes
+class MockHttpServletRequest implements HttpServletRequest {
+    private java.util.Map<String, String> parameters = new java.util.HashMap<>();
+
+    public void addParameter(String name, String value) {
+        parameters.put(name, value);
+    }
+
+    @Override
+    public String getParameter(String name) {
+        return parameters.get(name);
+    }
+
+    // Other methods of HttpServletRequest can be implemented as needed
+    // For simplicity, only getParameter is implemented here
 }

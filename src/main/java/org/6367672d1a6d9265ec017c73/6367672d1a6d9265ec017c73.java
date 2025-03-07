@@ -11,10 +11,6 @@ public class MessageLogger {
     /**
      * यदि संदेश को दिए गए टाइमस्टैम्प में प्रिंट किया जाना चाहिए, तो true लौटाता है, अन्यथा false लौटाता है।
      * यदि यह विधि false लौटाती है, तो संदेश प्रिंट नहीं किया जाएगा। टाइमस्टैम्प सेकंड की ग्रैन्युलैरिटी में है।
-     *
-     * @param timestamp वर्तमान टाइमस्टैम्प (सेकंड में)
-     * @param message   संदेश जिसे प्रिंट किया जाना है
-     * @return true यदि संदेश प्रिंट किया जाना चाहिए, अन्यथा false
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {

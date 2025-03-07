@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class ArrayReverser {
 
     /**
      * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।

@@ -5,9 +5,9 @@ import java.util.Collections;
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
     /**
-     * Encuentra un límite superior mínimo para cada clave.
-     * @param keys una lista de claves.
-     * @return el límite superior de clave calculado.
+     * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
+     * @param keys कुंजियों की एक सूची।
+     * @return गणना की गई कुंजी की ऊपरी सीमा।
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
@@ -15,35 +15,20 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
         }
 
         List<Integer> upperBounds = new ArrayList<>();
-        for (K key : keys) {
-            int upperBound = findUpperBound(keys, key);
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int upperBound = Integer.MAX_VALUE;
+
+            for (int j = i + 1; j < keys.size(); j++) {
+                if (currentKey.compareTo(keys.get(j)) < 0) {
+                    upperBound = j;
+                    break;
+                }
+            }
+
             upperBounds.add(upperBound);
         }
 
         return upperBounds;
-    }
-
-    /**
-     * Encuentra el límite superior para una clave dada.
-     * @param keys la lista de claves.
-     * @param key la clave para la cual se busca el límite superior.
-     * @return el límite superior de la clave.
-     */
-    private int findUpperBound(List<K> keys, K key) {
-        int low = 0;
-        int high = keys.size() - 1;
-        int result = keys.size();
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (keys.get(mid).compareTo(key) > 0) {
-                result = mid;
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-
-        return result;
     }
 }

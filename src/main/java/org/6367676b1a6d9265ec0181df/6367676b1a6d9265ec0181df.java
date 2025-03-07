@@ -1,10 +1,10 @@
 public class StringUtils {
 
     /**
-     * Devuelve {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
-     * @param str la cadena a verificar
-     * @param prefix el prefijo a buscar
-     * @return {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
+     * यदि दिया गया स्ट्रिंग निर्दिष्ट केस-इंसेंसिटिव प्रीफिक्स से शुरू होता है, तो {@code true} लौटाता है, अन्यथा {@code false}।
+     * @param str वह स्ट्रिंग जिसे जांचना है
+     * @param prefix वह प्रीफिक्स जिसे खोजना है
+     * @return {@code true} यदि दिया गया स्ट्रिंग निर्दिष्ट केस-इंसेंसिटिव प्रीफिक्स से शुरू होता है, अन्यथा {@code false}।
      * @see java.lang.String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {
@@ -18,10 +18,12 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "hola")); // true
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "Mundo")); // false
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "HOLA")); // true
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "mundo")); // false
+        // Test cases
+        System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
+        System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
+        System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO WORLD")); // false
+        System.out.println(startsWithIgnoreCase(null, "hello")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
     }
 }

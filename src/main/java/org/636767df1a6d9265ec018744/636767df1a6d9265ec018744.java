@@ -1,54 +1,42 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeDivider {
+public class TimeRangeBuilder {
 
-    // Supongamos que FETCH_DATA_DURATION es una constante definida en la clase
-    private static final long FETCH_DATA_DURATION = 3600000; // 1 hora en milisegundos
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration for a single fetch
+    private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
 
     /**
-     * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
-     *
-     * @param inicio El tiempo de inicio en milisegundos.
-     * @param fin El tiempo de finalización en milisegundos.
-     * @return Una lista de rangos de tiempo divididos.
+     * समय सीमा को विभाजित करें ताकि प्रारंभ समय और समाप्ति समय {@link #FETCH_DATA_DURATION} से छोटा हो
      */
-    protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
-        List<TimeRange> rangos = new ArrayList<>();
+    protected List<TimeRange> buildTimeRanges(long start, long end) {
+        List<TimeRange> timeRanges = new ArrayList<>();
 
-        while (inicio < fin) {
-            long endTime = Math.min(inicio + FETCH_DATA_DURATION, fin);
-            rangos.add(new TimeRange(inicio, endTime));
-            inicio = endTime;
+        while (start < end) {
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
 
-        return rangos;
+        return timeRanges;
     }
 
-    // Clase interna para representar un rango de tiempo
+    // Assuming TimeRange is a class that holds start and end times
     public static class TimeRange {
-        private final long startTime;
-        private final long endTime;
+        private final long start;
+        private final long end;
 
-        public TimeRange(long startTime, long endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
+        public TimeRange(long start, long end) {
+            this.start = start;
+            this.end = end;
         }
 
-        public long getStartTime() {
-            return startTime;
+        public long getStart() {
+            return start;
         }
 
-        public long getEndTime() {
-            return endTime;
-        }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "startTime=" + startTime +
-                    ", endTime=" + endTime +
-                    '}';
+        public long getEnd() {
+            return end;
         }
     }
 }

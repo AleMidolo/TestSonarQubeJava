@@ -2,35 +2,34 @@ import java.io.IOException;
 
 public class PackedFieldChecker {
 
-    private boolean isPacked = false;
+    private boolean isPackedFieldReading = false;
 
     /**
-     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
+     * जांचें कि क्या यह फ़ील्ड लंबाई-सीमित फ़ील्ड में पैक किया गया है। यदि हाँ, तो आंतरिक स्थिति को अपडेट करें ताकि यह दर्शा सके कि पैक किए गए फ़ील्ड पढ़े जा रहे हैं।
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Aquí se implementaría la lógica para verificar si el campo está empaquetado.
-        // Por ejemplo, se podría leer un byte o un conjunto de bytes para determinar si el campo está empaquetado.
-        // Si se detecta que el campo está empaquetado, se actualiza el estado interno.
+        // Assuming some logic to determine if the field is packed
+        boolean isPacked = determineIfFieldIsPacked();
 
-        // Ejemplo de lógica (esto es solo un ejemplo, la lógica real dependerá del formato de los datos):
-        int nextByte = System.in.read();
-        if (nextByte == 0x01) { // Supongamos que 0x01 indica un campo empaquetado
-            isPacked = true;
+        if (isPacked) {
+            isPackedFieldReading = true;
+            // Additional logic to handle the packed field reading
         } else {
-            isPacked = false;
+            isPackedFieldReading = false;
         }
     }
 
-    public boolean isPacked() {
-        return isPacked;
+    // Dummy method to simulate the logic of determining if the field is packed
+    private boolean determineIfFieldIsPacked() {
+        // This is a placeholder for actual logic
+        return true; // or false based on actual conditions
     }
 
     public static void main(String[] args) {
+        PackedFieldChecker checker = new PackedFieldChecker();
         try {
-            PackedFieldChecker checker = new PackedFieldChecker();
             checker.checkIfPackedField();
-            System.out.println("Campo empaquetado: " + checker.isPacked());
         } catch (IOException e) {
             e.printStackTrace();
         }

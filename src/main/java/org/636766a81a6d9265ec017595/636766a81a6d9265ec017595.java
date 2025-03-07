@@ -1,36 +1,31 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class ByteVector {
-    private List<Byte> bytes;
+final class ByteVector {
+    private ArrayList<Byte> vector;
 
     public ByteVector() {
-        this.bytes = new ArrayList<>();
+        this.vector = new ArrayList<>();
     }
 
-    /**
-     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
-     * @param byteValue1 un byte.
-     * @param byteValue2 otro byte.
-     * @return este vector de bytes.
-     */
-    public final ByteVector put11(final int byteValue1, final int byteValue2) {
-        bytes.add((byte) byteValue1);
-        bytes.add((byte) byteValue2);
+    public ByteVector put11(final int byteValue1, final int byteValue2) {
+        // Ensure the values are within byte range
+        if (byteValue1 < -128 || byteValue1 > 127 || byteValue2 < -128 || byteValue2 > 127) {
+            throw new IllegalArgumentException("Byte values must be between -128 and 127");
+        }
+
+        // Add the bytes to the vector
+        vector.add((byte) byteValue1);
+        vector.add((byte) byteValue2);
+
         return this;
     }
 
-    // Método para obtener el vector de bytes como un array de bytes
+    // Optional: Method to get the byte vector as a byte array
     public byte[] toByteArray() {
-        byte[] result = new byte[bytes.size()];
-        for (int i = 0; i < bytes.size(); i++) {
-            result[i] = bytes.get(i);
+        byte[] byteArray = new byte[vector.size()];
+        for (int i = 0; i < vector.size(); i++) {
+            byteArray[i] = vector.get(i);
         }
-        return result;
-    }
-
-    // Método para obtener el tamaño del vector de bytes
-    public int size() {
-        return bytes.size();
+        return byteArray;
     }
 }

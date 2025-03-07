@@ -1,52 +1,48 @@
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class PropertySubstitutor {
+public class PropertySubstitution {
 
     /**
-     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. Luego realiza la sustitución de variables en el valor encontrado.
+     * <code>props</code> में <code>key</code> के अनुसार मान खोजें। फिर पाए गए मान पर वेरिएबल प्रतिस्थापन करें।
      */
     public static String findAndSubst(String key, Properties props) {
+        // Get the value associated with the key from the properties
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // Return null if the key is not found
         }
 
-        // Perform variable substitution
-        StringBuilder result = new StringBuilder();
-        int i = 0;
-        while (i < value.length()) {
-            char c = value.charAt(i);
-            if (c == '$' && i + 1 < value.length() && value.charAt(i + 1) == '{') {
-                // Start of a variable
-                int j = value.indexOf('}', i + 2);
-                if (j != -1) {
-                    String varKey = value.substring(i + 2, j);
-                    String varValue = props.getProperty(varKey);
-                    if (varValue != null) {
-                        result.append(varValue);
-                    } else {
-                        result.append("${").append(varKey).append("}");
-                    }
-                    i = j + 1;
-                } else {
-                    result.append(c);
-                    i++;
-                }
+        // Define a pattern to match variables in the format ${variable}
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+        Matcher matcher = pattern.matcher(value);
+
+        // Use a StringBuffer to build the result
+        StringBuffer result = new StringBuffer();
+
+        // Iterate through the matches and replace variables with their corresponding values
+        while (matcher.find()) {
+            String variableKey = matcher.group(1);
+            String variableValue = props.getProperty(variableKey);
+            if (variableValue != null) {
+                matcher.appendReplacement(result, Matcher.quoteReplacement(variableValue));
             } else {
-                result.append(c);
-                i++;
+                // If the variable is not found, leave it as is
+                matcher.appendReplacement(result, Matcher.quoteReplacement(matcher.group(0)));
             }
         }
+        matcher.appendTail(result);
 
         return result.toString();
     }
 
     public static void main(String[] args) {
         Properties props = new Properties();
+        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
-        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // Output: Hello, World!
+        System.out.println(result); // Output: Hello, John!
     }
 }

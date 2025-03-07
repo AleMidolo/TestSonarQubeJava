@@ -1,7 +1,7 @@
 public class ObjectToStringConverter {
 
     /**
-     * Convierte un objeto a String; si el objeto es nulo, devuelve nulo, de lo contrario, devuelve toString();
+     * ऑब्जेक्ट को स्ट्रिंग में बदलें, जब ऑब्जेक्ट null हो तो null लौटाएं, अन्यथा toString() लौटाएं;
      */
     public static String toString(Object object) {
         if (object == null) {
@@ -11,13 +11,13 @@ public class ObjectToStringConverter {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
+        // Test cases
         Object obj1 = null;
-        Object obj2 = "Hola, mundo!";
+        Object obj2 = "Hello, World!";
         Object obj3 = 12345;
 
-        System.out.println(toString(obj1)); // Debería imprimir "null"
-        System.out.println(toString(obj2)); // Debería imprimir "Hola, mundo!"
-        System.out.println(toString(obj3)); // Debería imprimir "12345"
+        System.out.println(toString(obj1)); // Should print: null
+        System.out.println(toString(obj2)); // Should print: Hello, World!
+        System.out.println(toString(obj3)); // Should print: 12345
     }
 }

@@ -9,8 +9,8 @@ public class MessageLogger {
     }
 
     /**
-     * Devuelve "true" si el mensaje debe imprimirse en la tiempo dada, de lo contrario devuelve falso.
-     * Si este método devuelve falso, el mensaje no se imprimirá. El tiempo está en segundos.
+     * यदि संदेश को दिए गए टाइमस्टैम्प में प्रिंट किया जाना चाहिए, तो true लौटाता है, अन्यथा false लौटाता है।
+     * यदि यह विधि false लौटाती है, तो संदेश प्रिंट नहीं किया जाएगा। टाइमस्टैम्प सेकंड की ग्रैन्युलैरिटी में है।
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {
@@ -25,5 +25,13 @@ public class MessageLogger {
             messageTimestamps.put(message, timestamp);
             return true;
         }
+    }
+
+    public static void main(String[] args) {
+        MessageLogger logger = new MessageLogger();
+        System.out.println(logger.shouldPrintMessage(1, "foo")); // true
+        System.out.println(logger.shouldPrintMessage(2, "bar")); // true
+        System.out.println(logger.shouldPrintMessage(3, "foo")); // false
+        System.out.println(logger.shouldPrintMessage(11, "foo")); // true
     }
 }

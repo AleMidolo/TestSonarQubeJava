@@ -1,12 +1,11 @@
-import java.util.Arrays;
+import java.util.Objects;
 
 public class ArrayConverter {
 
     /**
-     * <p>Convierte un arreglo de enteros primitivos a objetos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>int</code>
-     * @return un arreglo de <code>Integer</code>, <code>null</code> si el arreglo de entrada es nulo
+     * <p>प्राथमिक int के एक ऐरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>int</code> ऐरे
+     * @return एक <code>Integer</code> ऐरे, <code>null</code> यदि null ऐरे इनपुट है
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
@@ -22,10 +21,8 @@ public class ArrayConverter {
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
-
-        int[] nullArray = null;
-        Integer[] nullResult = toObject(nullArray);
-        System.out.println(nullResult); // Output: null
+        for (Integer num : objectArray) {
+            System.out.println(num);
+        }
     }
 }

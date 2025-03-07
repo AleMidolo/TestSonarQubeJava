@@ -1,48 +1,42 @@
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogAppender {
-    private List<PrintWriter> clients = new ArrayList<>();
+public class CustomAppender extends AppenderSkeleton {
+    private List<String> connectedClients = new ArrayList<>();
 
-    /**
-     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
-     * @param event El evento de registro que contiene el mensaje a escribir.
+    /** 
+     * एक लॉग इवेंट को संभालता है। इस ऐपेंडर के लिए, इसका मतलब है कि संदेश को प्रत्येक जुड़े हुए क्लाइंट को लिखना।  
      */
+    @Override
     protected void append(LoggingEvent event) {
-        String message = event.getMessage().toString();
-        synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.println(message);
-                client.flush();
-            }
+        String message = layout.format(event);
+        for (String client : connectedClients) {
+            writeToClient(client, message);
         }
     }
 
-    /**
-     * Agrega un nuevo cliente a la lista de clientes conectados.
-     * @param clientSocket El socket del cliente que se conecta.
-     */
-    public void addClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.add(writer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void writeToClient(String client, String message) {
+        // यहां क्लाइंट को संदेश लिखने का तरीका लागू करें
+        System.out.println("Writing to client " + client + ": " + message);
     }
 
-    /**
-     * Elimina un cliente de la lista de clientes conectados.
-     * @param writer El PrintWriter asociado al cliente que se desconecta.
-     */
-    public void removeClient(PrintWriter writer) {
-        synchronized (clients) {
-            clients.remove(writer);
-        }
+    public void addClient(String client) {
+        connectedClients.add(client);
+    }
+
+    public void removeClient(String client) {
+        connectedClients.remove(client);
+    }
+
+    @Override
+    public void close() {
+        // कोई संसाधन साफ करने की आवश्यकता हो तो यहां लागू करें
+    }
+
+    @Override
+    public boolean requiresLayout() {
+        return true;
     }
 }

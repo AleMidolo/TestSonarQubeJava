@@ -1,46 +1,30 @@
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
-public class TelnetServer {
-    private List<Socket> clients = new ArrayList<>();
+public class TelnetClient {
+    private Socket socket;
+    private PrintWriter out;
+
+    public TelnetClient(Socket socket) throws Exception {
+        this.socket = socket;
+        this.out = new PrintWriter(socket.getOutputStream(), true);
+    }
 
     /**
-     * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
-     * 
-     * @param message El mensaje a enviar a los clientes.
+     * प्रत्येक क्लाइंट को टेलनेट-फ्रेंडली आउटपुट में एक संदेश भेजता है।
      */
     public synchronized void send(final String message) {
-        for (Socket client : clients) {
-            try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
-            } catch (IOException e) {
-                // Manejar la excepción, por ejemplo, eliminando el cliente de la lista
-                clients.remove(client);
-                e.printStackTrace();
-            }
+        if (out != null) {
+            out.println(message);
         }
     }
 
-    /**
-     * Agrega un nuevo cliente a la lista de clientes conectados.
-     * 
-     * @param client El socket del cliente que se conecta.
-     */
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
-    }
-
-    /**
-     * Elimina un cliente de la lista de clientes conectados.
-     * 
-     * @param client El socket del cliente que se desconecta.
-     */
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
+    public void close() throws Exception {
+        if (out != null) {
+            out.close();
+        }
+        if (socket != null) {
+            socket.close();
+        }
     }
 }

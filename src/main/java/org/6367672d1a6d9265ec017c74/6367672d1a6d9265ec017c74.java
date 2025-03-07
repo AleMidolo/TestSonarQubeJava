@@ -8,12 +8,23 @@ public class CustomSet {
         this.set = new HashSet<>();
     }
 
-    /**
-     * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado.
-     * @param val El valor a eliminar del conjunto.
-     * @return Verdadero si el conjunto contenía el elemento, falso en caso contrario.
+    /** 
+     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
      */
     public boolean remove(int val) {
         return set.remove(val);
+    }
+
+    // Optional: Method to add elements to the set for testing
+    public void add(int val) {
+        set.add(val);
+    }
+
+    public static void main(String[] args) {
+        CustomSet customSet = new CustomSet();
+        customSet.add(10);
+        customSet.add(20);
+        System.out.println(customSet.remove(10)); // true
+        System.out.println(customSet.remove(30)); // false
     }
 }

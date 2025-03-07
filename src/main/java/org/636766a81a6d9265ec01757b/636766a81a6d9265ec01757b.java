@@ -1,11 +1,11 @@
 import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.JSON;
 
-public class Example {
+public class JsonSerializer {
 
     /**
-     * Serializar a JSON {@link String}
-     * @param features características que se habilitarán en la serialización
+     * JSON में सीरियलाइज़ करें {@link String}
+     * @param features सीरियलाइज़ेशन में सक्षम करने के लिए विशेषताएँ
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")

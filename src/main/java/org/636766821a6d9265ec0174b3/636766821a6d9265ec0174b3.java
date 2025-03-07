@@ -1,32 +1,37 @@
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-/**
- * Invoca el {@link BroadcastFilter}
- * @param msg El mensaje que se desea filtrar.
- * @return El resultado del filtrado, que puede ser un objeto modificado o null si no se aplica ningún filtro.
- */
-protected Object filter(Object msg) {
-    if (msg instanceof Intent) {
-        Intent intent = (Intent) msg;
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Aquí se puede realizar cualquier operación con el intent recibido
-            }
-        };
+public class BroadcastFilter {
 
-        // Simulando el filtrado del intent
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(intent.getAction());
+    protected Object filter(Object msg) {
+        // Assuming msg is an Intent or can be cast to an Intent
+        if (msg instanceof Intent) {
+            Intent intent = (Intent) msg;
+            // Create a BroadcastReceiver to handle the intent
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    // Handle the intent here
+                    // For example, you can extract data from the intent
+                    String action = intent.getAction();
+                    // Perform actions based on the intent
+                }
+            };
 
-        // Registrando el receptor con el filtro
-        Context context = null; // Deberías proporcionar un contexto válido aquí
-        context.registerReceiver(receiver, filter);
+            // Register the receiver with a filter
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(intent.getAction());
+            // Assuming you have a context available, register the receiver
+            Context context = null; // Replace with actual context
+            context.registerReceiver(receiver, filter);
 
-        // Devolviendo el intent filtrado (en este caso, no se modifica)
-        return intent;
+            // Return the receiver or any other object as needed
+            return receiver;
+        } else {
+            // Handle the case where msg is not an Intent
+            return null;
+        }
     }
-    return null; // Si el mensaje no es un Intent, devuelve null
 }

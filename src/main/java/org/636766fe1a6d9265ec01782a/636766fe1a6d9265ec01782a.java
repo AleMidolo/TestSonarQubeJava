@@ -1,47 +1,32 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final class ClassFileReader {
-    private final ByteBuffer classFileBuffer;
+public class ClassFileReader {
+    private final byte[] classFileBuffer;
 
-    public ClassFileReader(ByteBuffer classFileBuffer) {
+    public ClassFileReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
     /**
-     * Lee una entrada CONSTANT_Utf8 de un grupo de constantes en {@link #classFileBuffer}.
-     * @param constantPoolEntryIndex el índice de una entrada CONSTANT_Utf8 en la tabla de constantes de la clase.
-     * @param charBuffer el búfer que se utilizará para leer la cadena. Este búfer debe ser lo suficientemente grande. No se redimensiona automáticamente.
-     * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
+     * {@link #classFileBuffer} में एक CONSTANT_Utf8 स्थायी पूल प्रविष्टि को पढ़ता है।
+     * @param constantPoolEntryIndex कक्षा के स्थायी पूल तालिका में एक CONSTANT_Utf8 प्रविष्टि का अनुक्रमांक।
+     * @param charBuffer वह बफर है जिसका उपयोग स्ट्रिंग पढ़ने के लिए किया जाएगा। यह बफर पर्याप्त बड़ा होना चाहिए। इसे स्वचालित रूप से आकार नहीं दिया जाता है।
+     * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
-        // En un entorno real, se deberían agregar validaciones adicionales.
+        // Assuming the constant pool entry index points to the start of the CONSTANT_Utf8_info structure
+        int offset = constantPoolEntryIndex;
 
-        // Obtener la posición de la entrada CONSTANT_Utf8 en el búfer.
-        int utf8EntryPosition = getUtf8EntryPosition(constantPoolEntryIndex);
+        // Read the length of the UTF-8 string (2 bytes)
+        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
+        offset += 2;
 
-        // Leer la longitud de la cadena UTF-8.
-        int length = classFileBuffer.getShort(utf8EntryPosition) & 0xFFFF;
+        // Decode the UTF-8 bytes into the char buffer
+        ByteBuffer byteBuffer = ByteBuffer.wrap(classFileBuffer, offset, length);
+        int charCount = StandardCharsets.UTF_8.decode(byteBuffer, charBuffer, 0, charBuffer.length).position();
 
-        // Leer los bytes de la cadena UTF-8.
-        byte[] utf8Bytes = new byte[length];
-        classFileBuffer.position(utf8EntryPosition + 2);
-        classFileBuffer.get(utf8Bytes);
-
-        // Convertir los bytes UTF-8 a una cadena Java.
-        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
-
-        // Copiar la cadena al búfer de caracteres proporcionado.
-        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
-
-        return utf8String;
-    }
-
-    private int getUtf8EntryPosition(int constantPoolEntryIndex) {
-        // Este método debería calcular la posición de la entrada CONSTANT_Utf8 en el búfer.
-        // Aquí se asume que la posición se calcula de alguna manera basada en el índice.
-        // En un entorno real, esto dependería de la estructura del archivo de clase.
-        return constantPoolEntryIndex * 2; // Ejemplo simplificado.
+        // Convert the char buffer to a String
+        return new String(charBuffer, 0, charCount);
     }
 }

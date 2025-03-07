@@ -1,28 +1,12 @@
-import java.util.Arrays;
-
-public class ArrayUtils {
-
-    /**
-     * <p>Clona un arreglo devolviendo un resultado con tipo convertido y manejando <code>null</code>.</p>
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  el arreglo a clonar, puede ser <code>null</code>
-     * @return el arreglo clonado, <code>null</code> si la entrada es <code>null</code>
-     */
-    public static char[] clone(final char[] array) {
-        if (array == null) {
-            return null;
-        }
-        return Arrays.copyOf(array, array.length);
+/**
+ * <p>एक ऐरे को क्लोन करता है और टाइपकास्ट परिणाम लौटाता है और <code>null</code> को संभालता है।</p> 
+ * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+ * @param array  क्लोन करने के लिए ऐरे, यह <code>null</code> हो सकता है
+ * @return क्लोन किया गया ऐरे, <code>null</code> यदि <code>null</code> इनपुट हो
+ */
+public static char[] clone(final char[] array) {
+    if (array == null) {
+        return null;
     }
-
-    public static void main(String[] args) {
-        char[] original = {'a', 'b', 'c'};
-        char[] cloned = clone(original);
-        System.out.println("Original: " + Arrays.toString(original));
-        System.out.println("Cloned: " + Arrays.toString(cloned));
-
-        char[] nullArray = null;
-        char[] clonedNull = clone(nullArray);
-        System.out.println("Cloned null array: " + clonedNull);
-    }
+    return array.clone();
 }

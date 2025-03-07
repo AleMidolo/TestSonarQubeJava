@@ -1,45 +1,45 @@
 class ListNodeImpl<E> {
-    E element;
+    E data;
     ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
 
-    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-        this.element = element;
-        this.prev = prev;
-        this.next = next;
+    ListNodeImpl(E data) {
+        this.data = data;
+        this.next = null;
     }
 }
 
-public class LinkedList<E> {
+class LinkedList<E> {
     private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
+
+    public LinkedList() {
+        this.head = null;
+    }
 
     /**
-     * Elimina el {@code node} no nulo de la lista.
+     * सूची से गैर-शून्य {@code node} को हटा दें।
      */
     private boolean unlink(ListNodeImpl<E> node) {
-        if (node == null) {
+        if (node == null || head == null) {
             return false;
         }
 
-        ListNodeImpl<E> prev = node.prev;
-        ListNodeImpl<E> next = node.next;
-
-        if (prev == null) {
-            head = next;
-        } else {
-            prev.next = next;
-            node.prev = null;
+        // If the node to be removed is the head
+        if (head == node) {
+            head = head.next;
+            return true;
         }
 
-        if (next == null) {
-            tail = prev;
-        } else {
-            next.prev = prev;
-            node.next = null;
+        // Traverse the list to find the node
+        ListNodeImpl<E> current = head;
+        while (current.next != null) {
+            if (current.next == node) {
+                current.next = current.next.next;
+                return true;
+            }
+            current = current.next;
         }
 
-        node.element = null;
-        return true;
+        // Node not found
+        return false;
     }
 }

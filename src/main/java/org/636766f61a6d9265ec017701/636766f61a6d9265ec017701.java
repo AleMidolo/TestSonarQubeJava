@@ -1,23 +1,13 @@
-public class LastIndexOfExample {
-
-    /**
-     * Encuentra el último índice dentro de una cadena, manejando <code>null</code>. Este método utiliza {@link String#lastIndexOf(String)}.
-     * 
-     * @param str La cadena en la que se buscará, puede ser <code>null</code>.
-     * @param searchStr La cadena que se buscará, puede ser <code>null</code>.
-     * @return El índice de la última ocurrencia de <code>searchStr</code> en <code>str</code>, o -1 si no se encuentra o si alguna de las cadenas es <code>null</code>.
-     */
-    public static int lastIndexOf(String str, String searchStr) {
-        if (str == null || searchStr == null) {
-            return -1;
-        }
-        return str.lastIndexOf(searchStr);
+/**
+ * एक स्ट्रिंग के भीतर अंतिम अनुक्रमांक खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#lastIndexOf(String)} का उपयोग करती है।
+ * 
+ * @param str वह स्ट्रिंग जिसमें खोज करनी है, यदि <code>null</code> है तो -1 लौटाता है।
+ * @param searchStr वह स्ट्रिंग जिसे खोजना है, यदि <code>null</code> है तो -1 लौटाता है।
+ * @return अंतिम अनुक्रमांक, यदि नहीं मिलता है तो -1 लौटाता है।
+ */
+public static int lastIndexOf(String str, String searchStr) {
+    if (str == null || searchStr == null) {
+        return -1;
     }
-
-    public static void main(String[] args) {
-        String str = "Hello, world! Hello again!";
-        String searchStr = "Hello";
-        int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of '" + searchStr + "' in '" + str + "' is: " + index);
-    }
+    return str.lastIndexOf(searchStr);
 }

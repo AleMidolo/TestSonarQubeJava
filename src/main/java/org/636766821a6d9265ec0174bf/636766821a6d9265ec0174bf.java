@@ -1,10 +1,10 @@
-import java.util.*;
-
 public class StringUtils {
+
     /**
-     * Inverso de Introspector.decapitalize
-     * Capitalizes the first letter of the given string.
-     * 
+     * Introspector.decapitalize का उल्टा
+     * This method capitalizes the first letter of the given string.
+     * If the string is null or empty, it returns the string as is.
+     *
      * @param name the string to capitalize
      * @return the capitalized string
      */

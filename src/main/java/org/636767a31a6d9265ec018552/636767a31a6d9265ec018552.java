@@ -1,111 +1,29 @@
 import java.io.IOException;
-import java.io.DataInput;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
-public class MyDataInput implements DataInput {
-    // Assuming this class implements DataInput interface
+public class StreamReader {
 
+    /**
+     * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
+     */
     @Override
     public String readString() throws IOException {
-        // Read the length of the string (assuming it's written as an integer first)
-        int length = readInt();
-        
-        // Create a byte array to hold the string data
-        byte[] bytes = new byte[length];
-        
-        // Read the bytes into the array
-        readFully(bytes);
-        
-        // Convert the byte array to a string using UTF-8 encoding
-        return new String(bytes, "UTF-8");
+        InputStream inputStream = getInputStream(); // Assume this method provides the input stream
+        byte[] lengthBytes = new byte[4];
+        inputStream.read(lengthBytes);
+        int length = (lengthBytes[0] & 0xFF) << 24 |
+                     (lengthBytes[1] & 0xFF) << 16 |
+                     (lengthBytes[2] & 0xFF) << 8 |
+                     (lengthBytes[3] & 0xFF);
+        byte[] stringBytes = new byte[length];
+        inputStream.read(stringBytes);
+        return new String(stringBytes, StandardCharsets.UTF_8);
     }
 
-    // Other methods from DataInput interface must be implemented here
-    @Override
-    public void readFully(byte[] b) throws IOException {
-        // Implementation for reading bytes into the array
-    }
-
-    @Override
-    public int readInt() throws IOException {
-        // Implementation for reading an integer
-        return 0; // Placeholder
-    }
-
-    // Other required methods from DataInput interface
-    @Override
-    public void readFully(byte[] b, int off, int len) throws IOException {
-        // Implementation
-    }
-
-    @Override
-    public int skipBytes(int n) throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public boolean readBoolean() throws IOException {
-        // Implementation
-        return false;
-    }
-
-    @Override
-    public byte readByte() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public int readUnsignedByte() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public short readShort() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public int readUnsignedShort() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public char readChar() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public long readLong() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public float readFloat() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public double readDouble() throws IOException {
-        // Implementation
-        return 0;
-    }
-
-    @Override
-    public String readLine() throws IOException {
-        // Implementation
-        return null;
-    }
-
-    @Override
-    public String readUTF() throws IOException {
-        // Implementation
+    // Dummy method to simulate getting an input stream
+    private InputStream getInputStream() {
+        // This should be replaced with actual logic to get the input stream
         return null;
     }
 }

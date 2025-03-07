@@ -1,23 +1,33 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphIndex<V, E> {
-    private Map<V, Map<V, E>> index;
+public class Graph<V, E> {
+    private Map<V, Map<V, E>> adjacencyMap;
 
-    public GraphIndex() {
-        index = new HashMap<>();
+    public Graph() {
+        adjacencyMap = new HashMap<>();
     }
 
     /**
-     * Agrega una arista al índice.
-     * @param sourceVertex el vértice fuente
-     * @param targetVertex el vértice objetivo
-     * @param e la arista
+     * अनुक्रमणिका में एक किनारा जोड़ें।
+     * @param sourceVertex स्रोत वर्टेक्स
+     * @param targetVertex लक्ष्य वर्टेक्स
+     * @param e किनारा
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!index.containsKey(sourceVertex)) {
-            index.put(sourceVertex, new HashMap<>());
+        if (!adjacencyMap.containsKey(sourceVertex)) {
+            adjacencyMap.put(sourceVertex, new HashMap<>());
         }
-        index.get(sourceVertex).put(targetVertex, e);
+        adjacencyMap.get(sourceVertex).put(targetVertex, e);
+    }
+
+    public static void main(String[] args) {
+        Graph<String, Integer> graph = new Graph<>();
+        graph.addToIndex("A", "B", 1);
+        graph.addToIndex("A", "C", 2);
+        graph.addToIndex("B", "C", 3);
+
+        // Example usage
+        System.out.println("Edges added to the graph.");
     }
 }

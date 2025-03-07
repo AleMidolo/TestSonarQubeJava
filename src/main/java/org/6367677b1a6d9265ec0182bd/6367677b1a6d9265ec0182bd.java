@@ -3,22 +3,30 @@ import org.apache.log4j.spi.LoggingEvent;
 public class LogFormatter {
 
     /**
-     * Formatea un evento de "logging" para un "writer".
-     * @param event evento de "logging" que se va a formatear.
-     * @return una cadena formateada que representa el evento de logging.
+     * एक लॉगिंग इवेंट को एक लेखक के लिए प्रारूपित करता है।
+     * @param event प्रारूपित करने के लिए लॉगिंग इवेंट।
+     * @return प्रारूपित स्ट्रिंग।
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
+        StringBuilder formattedMessage = new StringBuilder();
         
-        // Formato básico: [Nivel] [Hora] [Mensaje]
-        formattedEvent.append("[")
-                      .append(event.getLevel().toString())
-                      .append("] [")
-                      .append(event.getTimeStamp())
-                      .append("] ")
-                      .append(event.getRenderedMessage())
-                      .append("\n");
+        // Add timestamp
+        formattedMessage.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
         
-        return formattedEvent.toString();
+        // Add log level
+        formattedMessage.append("Level: ").append(event.getLevel().toString()).append("\n");
+        
+        // Add logger name
+        formattedMessage.append("Logger: ").append(event.getLoggerName()).append("\n");
+        
+        // Add message
+        formattedMessage.append("Message: ").append(event.getRenderedMessage()).append("\n");
+        
+        // Add throwable information if present
+        if (event.getThrowableInformation() != null) {
+            formattedMessage.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append("\n");
+        }
+        
+        return formattedMessage.toString();
     }
 }

@@ -1,17 +1,32 @@
-import java.util.*;
+import java.util.Iterator;
 
-public class Graph {
-    private Set<Integer> visitedVertices;
-    private Set<Integer> allVertices;
+public class GraphIterator implements Iterator<Integer> {
+    private boolean[] visited;
+    private int currentIndex;
 
-    public Graph(Set<Integer> allVertices) {
-        this.allVertices = allVertices;
-        this.visitedVertices = new HashSet<>();
+    public GraphIterator(boolean[] visited) {
+        this.visited = visited;
+        this.currentIndex = 0;
     }
 
     @Override
     public boolean hasNext() {
-        // Verifica si existen vértices no visitados
-        return !visitedVertices.containsAll(allVertices);
+        for (int i = currentIndex; i < visited.length; i++) {
+            if (!visited[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Integer next() {
+        for (int i = currentIndex; i < visited.length; i++) {
+            if (!visited[i]) {
+                currentIndex = i + 1;
+                return i;
+            }
+        }
+        throw new IllegalStateException("No more unvisited vertices");
     }
 }

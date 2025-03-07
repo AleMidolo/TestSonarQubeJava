@@ -1,59 +1,69 @@
 import java.util.Stack;
 
-public class FrameStack {
+public class FrameStackHandler {
     private Stack<String> frameStack;
 
-    public FrameStack() {
+    public FrameStackHandler() {
         frameStack = new Stack<>();
     }
 
     /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
-            return;
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
         }
 
-        // Si el descriptor es un método, extraemos los tipos de argumento
-        if (descriptor.startsWith("(")) {
-            int endIndex = descriptor.indexOf(')');
-            if (endIndex == -1) {
-                return;
-            }
-            String argumentTypes = descriptor.substring(1, endIndex);
-            String[] types = argumentTypes.split(";");
+        // Assuming the descriptor contains the number of types to pop
+        // For example, "(Ljava/lang/String;I)V" would indicate two types to pop
+        int numTypesToPop = countTypesInDescriptor(descriptor);
 
-            for (String type : types) {
-                if (!type.isEmpty()) {
-                    frameStack.pop();
-                }
+        for (int i = 0; i < numTypesToPop; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
+            } else {
+                throw new IllegalStateException("Frame stack is empty");
             }
-        } else {
-            // Si es un tipo simple, solo extraemos uno
-            frameStack.pop();
         }
     }
 
-    // Método para agregar elementos a la pila (solo para propósitos de prueba)
-    public void push(String type) {
-        frameStack.push(type);
+    /**
+     * Counts the number of types in the descriptor.
+     * @param descriptor The descriptor string.
+     * @return The number of types in the descriptor.
+     */
+    private int countTypesInDescriptor(String descriptor) {
+        int count = 0;
+        int index = 0;
+        while (index < descriptor.length()) {
+            char c = descriptor.charAt(index);
+            if (c == 'L') {
+                // Skip until ';' for object types
+                index = descriptor.indexOf(';', index) + 1;
+                count++;
+            } else if (c == '[') {
+                // Skip array type
+                index++;
+            } else if (c == 'V' || c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'B' || c == 'C' || c == 'S') {
+                // Primitive types
+                index++;
+                count++;
+            } else {
+                // Unknown type, skip
+                index++;
+            }
+        }
+        return count;
     }
 
-    // Método para obtener el tamaño de la pila (solo para propósitos de prueba)
-    public int size() {
-        return frameStack.size();
-    }
-
+    // Example usage
     public static void main(String[] args) {
-        FrameStack stack = new FrameStack();
-        stack.push("int");
-        stack.push("float");
-        stack.push("double");
-
-        System.out.println("Tamaño de la pila antes de pop: " + stack.size());
-        stack.pop("(I;F;D)V");
-        System.out.println("Tamaño de la pila después de pop: " + stack.size());
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("Ljava/lang/String;");
+        handler.frameStack.push("I");
+        handler.pop("(Ljava/lang/String;I)V");
+        System.out.println(handler.frameStack); // Should print an empty stack
     }
 }

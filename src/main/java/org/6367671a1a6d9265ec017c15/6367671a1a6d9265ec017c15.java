@@ -10,32 +10,27 @@ public class ByteVector {
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
+        if (byteArrayValue == null) {
+            throw new IllegalArgumentException("byteArrayValue cannot be null");
         }
-        if (byteOffset < 0) {
-            throw new IllegalArgumentException("byteOffset must be non-negative");
-        }
-        if (byteArrayValue != null && (byteOffset + byteLength) > byteArrayValue.length) {
-            throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
+        if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
 
         ensureCapacity(size + byteLength);
 
-        if (byteArrayValue == null) {
-            // Fill with null bytes (0)
-            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
-        } else {
-            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
-        }
-
+        System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         size += byteLength;
+
         return this;
     }
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+            int newCapacity = buffer.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

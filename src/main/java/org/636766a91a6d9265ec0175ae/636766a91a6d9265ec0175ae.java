@@ -10,38 +10,36 @@ public class ByteVector {
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
+        if (byteArrayValue == null) {
+            throw new IllegalArgumentException("byteArrayValue cannot be null");
         }
-        if (byteOffset < 0) {
-            throw new IllegalArgumentException("byteOffset must be non-negative");
-        }
-        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
-            throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
+        if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
 
         ensureCapacity(size + byteLength);
 
-        if (byteArrayValue == null) {
-            // Fill with null bytes
-            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
-        } else {
-            // Copy bytes from byteArrayValue
-            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
-        }
-
+        System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         size += byteLength;
+
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > buffer.length) {
+            int newCapacity = buffer.length * 2;
+            if (newCapacity < requiredCapacity) {
+                newCapacity = requiredCapacity;
+            }
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }
 
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

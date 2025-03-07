@@ -4,9 +4,9 @@ import java.nio.charset.StandardCharsets;
 public class CharsetTranslator {
 
     /**
-     * Traduce un nombre de conjunto de caracteres estándar MIME al equivalente en Java.
-     * @param charset El nombre estándar MIME.
-     * @return El equivalente en Java para este nombre.
+     * एक MIME मानक वर्ण सेट नाम को जावा समकक्ष में अनुवादित करें।
+     * @param charset MIME मानक नाम।
+     * @return इस नाम के लिए जावा समकक्ष।
      */
     private static String javaCharset(String charset) {
         switch (charset.toLowerCase()) {
@@ -23,17 +23,14 @@ public class CharsetTranslator {
             case "utf-16le":
                 return StandardCharsets.UTF_16LE.name();
             default:
-                // Si no es un charset estándar, intenta obtenerlo directamente
-                try {
-                    return Charset.forName(charset).name();
-                } catch (Exception e) {
-                    throw new IllegalArgumentException("Charset no soportado: " + charset);
-                }
+                // यदि कोई मानक मैच नहीं है, तो मूल चारसेट नाम वापस करें
+                return Charset.forName(charset).name();
         }
     }
 
     public static void main(String[] args) {
-        System.out.println(javaCharset("utf-8"));  // Debería imprimir "UTF-8"
-        System.out.println(javaCharset("iso-8859-1"));  // Debería imprimir "ISO-8859-1"
+        // उदाहरण उपयोग
+        System.out.println(javaCharset("utf-8"));  // "UTF-8"
+        System.out.println(javaCharset("iso-8859-1"));  // "ISO-8859-1"
     }
 }

@@ -1,30 +1,48 @@
 import java.io.File;
 import java.io.IOException;
 
-public class FileDeletion {
+public class FileUtils {
 
+    /**
+     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
+     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
+     * @throws NullPointerException यदि फ़ाइल {@code null} है
+     * @throws IOException यदि हटाना असफल हो जाता है
+     */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("El archivo no puede ser null.");
+            throw new NullPointerException("File must not be null");
         }
 
-        // Registrar el archivo o directorio para eliminación al salir
-        file.deleteOnExit();
-
-        // Si es un directorio, eliminar recursivamente todos los subdirectorios y archivos
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File subFile : files) {
-                    forceDeleteOnExit(subFile);
+            deleteDirectoryOnExit(file);
+        } else {
+            file.deleteOnExit();
+        }
+    }
+
+    private static void deleteDirectoryOnExit(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
+
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectoryOnExit(file);
+                } else {
+                    file.deleteOnExit();
                 }
             }
         }
+
+        directory.deleteOnExit();
     }
 
     public static void main(String[] args) {
         try {
-            File file = new File("ruta/al/archivo/o/directorio");
+            File file = new File("path/to/your/file_or_directory");
             forceDeleteOnExit(file);
         } catch (IOException e) {
             e.printStackTrace();

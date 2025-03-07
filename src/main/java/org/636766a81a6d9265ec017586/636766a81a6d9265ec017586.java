@@ -1,46 +1,37 @@
 import java.util.Stack;
 
-public class OutputFrame {
-    private Stack<String> frame;
+public class AbstractTypeHandler {
+    private Stack<Object> outputFrameStack;
 
-    public OutputFrame() {
-        frame = new Stack<>();
+    public AbstractTypeHandler() {
+        this.outputFrameStack = new Stack<>();
     }
 
-    /**
-     * Elimina el número dado de tipos abstractos del "output frame" de salida.
-     * @param elements el número de tipos abstractos que deben ser eliminados.
+    /** 
+     * दिए गए संख्या के अमूर्त प्रकारों को आउटपुट फ्रेम स्टैक से पॉप करता है।
+     * @param elements वह संख्या है जो अमूर्त प्रकारों को पॉप करना है।
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
+            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
         }
-        if (elements > frame.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el frame para eliminar.");
+        if (outputFrameStack.size() < elements) {
+            throw new IllegalStateException("Not enough elements in the stack to pop.");
         }
         for (int i = 0; i < elements; i++) {
-            frame.pop();
+            outputFrameStack.pop();
         }
     }
 
-    // Método para agregar elementos al frame (solo para propósitos de prueba)
-    public void push(String element) {
-        frame.push(element);
-    }
-
-    // Método para obtener el tamaño del frame (solo para propósitos de prueba)
-    public int size() {
-        return frame.size();
-    }
-
+    // Example usage
     public static void main(String[] args) {
-        OutputFrame outputFrame = new OutputFrame();
-        outputFrame.push("Tipo1");
-        outputFrame.push("Tipo2");
-        outputFrame.push("Tipo3");
+        AbstractTypeHandler handler = new AbstractTypeHandler();
+        handler.outputFrameStack.push("Type1");
+        handler.outputFrameStack.push("Type2");
+        handler.outputFrameStack.push("Type3");
 
-        System.out.println("Tamaño del frame antes de pop: " + outputFrame.size());
-        outputFrame.pop(2);
-        System.out.println("Tamaño del frame después de pop: " + outputFrame.size());
+        System.out.println("Before pop: " + handler.outputFrameStack);
+        handler.pop(2);
+        System.out.println("After pop: " + handler.outputFrameStack);
     }
 }

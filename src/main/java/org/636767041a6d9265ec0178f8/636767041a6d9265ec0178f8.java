@@ -1,34 +1,20 @@
 import java.util.Arrays;
 
-public class StringArrayCopier {
-
-    /**
-     * Este método crea una copia del array proporcionado y asegura que todas las cadenas en el nuevo array contengan solo letras minúsculas. <p> Utilizar este método para copiar arrays de cadenas significa que los cambios en el array src no modifican el array dst.
-     *
-     * @param src El array de cadenas original.
-     * @return Un nuevo array de cadenas con todas las cadenas en minúsculas.
-     */
-    private static String[] copiarCadenas(final String[] src) {
-        if (src == null) {
-            return null;
-        }
-
-        String[] dst = new String[src.length];
-        for (int i = 0; i < src.length; i++) {
-            if (src[i] != null) {
-                dst[i] = src[i].toLowerCase();
-            } else {
-                dst[i] = null;
-            }
-        }
-        return dst;
+/**
+ * यह विधि प्रदान किए गए ऐरे की एक प्रति बनाती है, और सुनिश्चित करती है कि नए बनाए गए ऐरे में सभी स्ट्रिंग केवल छोटे अक्षरों में हों। <p> इस विधि का उपयोग स्ट्रिंग ऐरे की नकल करने के लिए करने का मतलब है कि src ऐरे में किए गए परिवर्तन dst ऐरे को संशोधित नहीं करते हैं।
+ */
+private static String[] copyStrings(final String[] src) {
+    if (src == null) {
+        return null;
     }
-
-    public static void main(String[] args) {
-        String[] original = {"Hello", "WORLD", "Java", null, "Programming"};
-        String[] copia = copiarCadenas(original);
-
-        System.out.println("Original: " + Arrays.toString(original));
-        System.out.println("Copia: " + Arrays.toString(copia));
+    
+    String[] dst = new String[src.length];
+    for (int i = 0; i < src.length; i++) {
+        if (src[i] != null) {
+            dst[i] = src[i].toLowerCase();
+        } else {
+            dst[i] = null;
+        }
     }
+    return dst;
 }

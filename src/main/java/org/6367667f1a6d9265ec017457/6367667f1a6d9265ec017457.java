@@ -1,46 +1,60 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-    // Obtener el primer byte
-    byte b1 = bb.get(i);
-    
-    // Determinar el número de bytes en el carácter UTF-8
-    int numBytes;
-    if ((b1 & 0x80) == 0) {
-        // 1 byte
-        numBytes = 1;
-    } else if ((b1 & 0xE0) == 0xC0) {
-        // 2 bytes
-        numBytes = 2;
-    } else if ((b1 & 0xF0) == 0xE0) {
-        // 3 bytes
-        numBytes = 3;
-    } else if ((b1 & 0xF8) == 0xF0) {
-        // 4 bytes
-        numBytes = 4;
-    } else {
-        // Secuencia inválida
-        throw new IllegalArgumentException("Secuencia de bytes UTF-8 inválida");
+public class UTF8Decoder {
+
+    /**
+     * UTF-8 डिकोडिंग का उपयोग करके ऑक्टेट्स को कैरेक्टर में डिकोड करता है और कैरेक्टर को एक StringBuffer में जोड़ता है।
+     * @param i स्ट्रिंग में डिकोड करने के लिए अगले अनचेक किए गए कैरेक्टर का इंडेक्स
+     * @param bb ऑक्टेट्स को रखने वाला ByteBuffer
+     * @param sb डिकोड किए गए कैरेक्टर को जोड़ने के लिए StringBuilder
+     * @return स्ट्रिंग में डिकोड करने के लिए अगले अनचेक किए गए कैरेक्टर का इंडेक्स
+     */
+    private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
+        if (bb.remaining() < 1) {
+            return i;
+        }
+
+        byte firstByte = bb.get();
+        int codePoint;
+
+        if ((firstByte & 0x80) == 0) {
+            codePoint = firstByte & 0x7F;
+        } else if ((firstByte & 0xE0) == 0xC0) {
+            if (bb.remaining() < 1) {
+                return i;
+            }
+            byte secondByte = bb.get();
+            codePoint = ((firstByte & 0x1F) << 6) | (secondByte & 0x3F);
+        } else if ((firstByte & 0xF0) == 0xE0) {
+            if (bb.remaining() < 2) {
+                return i;
+            }
+            byte secondByte = bb.get();
+            byte thirdByte = bb.get();
+            codePoint = ((firstByte & 0x0F) << 12) | ((secondByte & 0x3F) << 6) | (thirdByte & 0x3F);
+        } else if ((firstByte & 0xF8) == 0xF0) {
+            if (bb.remaining() < 3) {
+                return i;
+            }
+            byte secondByte = bb.get();
+            byte thirdByte = bb.get();
+            byte fourthByte = bb.get();
+            codePoint = ((firstByte & 0x07) << 18) | ((secondByte & 0x3F) << 12) | ((thirdByte & 0x3F) << 6) | (fourthByte & 0x3F);
+        } else {
+            // Invalid UTF-8 sequence
+            return i;
+        }
+
+        sb.appendCodePoint(codePoint);
+        return i + 1;
     }
 
-    // Verificar que hay suficientes bytes en el buffer
-    if (i + numBytes > bb.limit()) {
-        throw new IllegalArgumentException("No hay suficientes bytes para decodificar el carácter UTF-8");
+    public static void main(String[] args) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0xB9}); // Example UTF-8 bytes for 'ह'
+        StringBuilder sb = new StringBuilder();
+        int index = decodeOctets(0, bb, sb);
+        System.out.println("Decoded String: " + sb.toString());
+        System.out.println("Next Index: " + index);
     }
-
-    // Crear un array para almacenar los bytes del carácter
-    byte[] charBytes = new byte[numBytes];
-    for (int j = 0; j < numBytes; j++) {
-        charBytes[j] = bb.get(i + j);
-    }
-
-    // Decodificar los bytes a un String
-    String decodedChar = new String(charBytes, StandardCharsets.UTF_8);
-
-    // Agregar el carácter decodificado al StringBuilder
-    sb.append(decodedChar);
-
-    // Retornar el índice del siguiente carácter no verificado
-    return i + numBytes;
 }

@@ -2,29 +2,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterRegistry {
+    private final Map<Class<?>, Converter> converterMap;
 
-    private final Map<Class<?>, Converter> registry = new HashMap<>();
+    public ConverterRegistry() {
+        this.converterMap = new HashMap<>();
+    }
 
     /**
-     * Busca y devuelve cualquier {@link Converter} registrado para la clase de destino especificada; si no hay un Converter registrado, devuelve <code>null</code>.
-     * @param clazz Clase para la cual se debe devolver un Converter registrado
-     * @return El {@link Converter} registrado o <code>null</code> si no se encuentra
+     * निर्दिष्ट गंतव्य वर्ग के लिए किसी भी पंजीकृत {@link Converter} को देखें और उसे लौटाएं; यदि कोई पंजीकृत Converter नहीं है, तो <code>null</code> लौटाएं।
+     * @param clazz वह वर्ग जिसके लिए पंजीकृत Converter लौटाना है
+     * @return पंजीकृत {@link Converter} या यदि नहीं मिला तो <code>null</code>
      */
     public Converter lookup(final Class<?> clazz) {
-        return registry.get(clazz);
+        return converterMap.get(clazz);
     }
 
     /**
-     * Registra un {@link Converter} para una clase específica.
-     * @param clazz La clase para la cual se registra el Converter
-     * @param converter El Converter a registrar
+     * एक Converter को पंजीकृत करें।
+     * @param clazz वह वर्ग जिसके लिए Converter पंजीकृत करना है
+     * @param converter पंजीकृत करने के लिए Converter
      */
-    public void register(final Class<?> clazz, final Converter converter) {
-        registry.put(clazz, converter);
+    public void registerConverter(final Class<?> clazz, final Converter converter) {
+        converterMap.put(clazz, converter);
     }
 
-    // Ejemplo de clase Converter (debe ser implementada por el usuario)
     public interface Converter {
-        Object convert(Object input);
+        // Converter interface methods can be defined here
     }
 }

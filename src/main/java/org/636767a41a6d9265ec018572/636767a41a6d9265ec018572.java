@@ -3,20 +3,23 @@ import java.io.InputStream;
 
 public class VarintReader {
 
-    private final InputStream input;
+    private final InputStream inputStream;
 
-    public VarintReader(InputStream input) {
-        this.input = input;
+    public VarintReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     /**
-     * Lee un Varint crudo del flujo.
+     * स्ट्रीम से एक कच्चा Varint पढ़ें।
      */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            final byte b = (byte) input.read();
+            int b = inputStream.read();
+            if (b == -1) {
+                throw new IOException("Unexpected end of stream while reading varint");
+            }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;

@@ -1,65 +1,46 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> stack;
+    private Stack<Object> stack;
 
     public FrameStack() {
-        stack = new Stack<>();
+        this.stack = new Stack<>();
     }
 
-    public void push(String type) {
-        stack.push(type);
-    }
-
+    /**
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+     */
     private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            return;
-        }
+        // Parse the descriptor to determine how many types to pop
+        int count = countTypesInDescriptor(descriptor);
 
-        // Determine if the descriptor is a method descriptor
-        if (descriptor.startsWith("(")) {
-            // Extract argument types from method descriptor
-            String[] parts = descriptor.split("\\)");
-            if (parts.length < 1) {
-                return;
+        // Pop the required number of types from the stack
+        for (int i = 0; i < count; i++) {
+            if (!stack.isEmpty()) {
+                stack.pop();
+            } else {
+                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
             }
-            String argsDescriptor = parts[0].substring(1);
-            int index = 0;
-            while (index < argsDescriptor.length()) {
-                char c = argsDescriptor.charAt(index);
-                if (c == 'L') {
-                    // Object type
-                    int end = argsDescriptor.indexOf(';', index);
-                    if (end == -1) {
-                        break;
-                    }
-                    stack.pop(); // Pop the object type
-                    index = end + 1;
-                } else if (c == '[') {
-                    // Array type
-                    stack.pop(); // Pop the array type
-                    index++;
-                } else {
-                    // Primitive type
-                    stack.pop(); // Pop the primitive type
-                    index++;
-                }
-            }
-        } else {
-            // Single type descriptor
-            stack.pop(); // Pop the type
         }
     }
 
+    /**
+     * Helper method to count the number of types in the descriptor.
+     * @param descriptor The descriptor string.
+     * @return The number of types to pop.
+     */
+    private int countTypesInDescriptor(String descriptor) {
+        // This is a simplified example; actual implementation depends on descriptor format
+        // For example, if descriptor is "Ljava/lang/String;I", it represents two types: String and int
+        return descriptor.split(";").length;
+    }
+
+    // Example usage
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.push("int");
-        frameStack.push("java.lang.String");
-        frameStack.push("[D");
-
-        frameStack.pop("(ILjava/lang/String;[D)V");
-
-        // The stack should now be empty
-        System.out.println("Stack is empty: " + frameStack.stack.isEmpty());
+        frameStack.stack.push("String");
+        frameStack.stack.push(42);
+        frameStack.pop("Ljava/lang/String;I");
     }
 }

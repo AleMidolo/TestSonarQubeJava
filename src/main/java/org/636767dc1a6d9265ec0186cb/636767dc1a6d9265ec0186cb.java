@@ -2,25 +2,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ConfigInitializer {
+public class ConfigurationInitializer {
 
     /**
-     * Inicializa la configuración, como verificar la ruta de distribución.
+     * कॉन्फ़िगरेशन को प्रारंभ करें, जैसे कि वितरण पथ की जांच करें
      */
     public void init() {
-        // Verificar la ruta de distribución
-        String distributionPath = System.getProperty("user.dir"); // Obtiene el directorio actual
-        Path path = Paths.get(distributionPath);
+        // Define the distribution path
+        Path distributionPath = Paths.get("/path/to/distribution");
 
-        if (Files.exists(path)) {
-            System.out.println("La ruta de distribución existe: " + distributionPath);
+        // Check if the distribution path exists
+        if (Files.exists(distributionPath)) {
+            System.out.println("Distribution path exists: " + distributionPath);
         } else {
-            System.out.println("La ruta de distribución no existe: " + distributionPath);
+            System.out.println("Distribution path does not exist: " + distributionPath);
         }
     }
 
     public static void main(String[] args) {
-        ConfigInitializer initializer = new ConfigInitializer();
+        ConfigurationInitializer initializer = new ConfigurationInitializer();
         initializer.init();
     }
 }

@@ -1,18 +1,15 @@
 import java.util.List;
 
-public class Logger {
-    private List<Appender> appenders;
+public class AppenderManager {
+    private List<Appender> attachedAppenders;
 
     /**
-     * Devuelve <code>true</code> si el "appender" especificado está en la lista de "appenders" adjuntos, <code>false</code> en caso contrario.
-     * @param appender El appender a verificar.
-     * @return <code>true</code> si el appender está en la lista, <code>false</code> en caso contrario.
+     * यदि निर्दिष्ट ऐपेंडर संलग्न ऐपेंडरों की सूची में है, तो <code>true</code> लौटाता है, अन्यथा <code>false</code>।
+     * @param appender जांच करने के लिए ऐपेंडर
+     * @return <code>true</code> यदि ऐपेंडर संलग्न है, अन्यथा <code>false</code>
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenders == null) {
-            return false;
-        }
-        return appenders.contains(appender);
+        return attachedAppenders.contains(appender);
     }
 }

@@ -1,42 +1,29 @@
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class BeanMap {
+
     private Map<String, Object> properties;
 
-    public BeanMap() {
-        // Initialize properties map
-    }
-
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
-        }
-
         try {
-            PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
-            for (PropertyDescriptor descriptor : descriptors) {
-                if (descriptor.getWriteMethod() != null && descriptor.getReadMethod() != null) {
-                    Object value = descriptor.getReadMethod().invoke(map);
-                    this.properties.put(descriptor.getName(), value);
+            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+            for (PropertyDescriptor pd : propertyDescriptors) {
+                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
+                    Method readMethod = pd.getReadMethod();
+                    Object value = readMethod.invoke(map);
+                    this.properties.put(pd.getName(), value);
                 }
             }
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException("Failed to copy properties from the provided BeanMap.", e);
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
-    }
-
-    private PropertyDescriptor[] getPropertyDescriptors() {
-        // Implement logic to get property descriptors
-        return new PropertyDescriptor[0];
-    }
-
-    public Object getProperty(String propertyName) {
-        return properties.get(propertyName);
-    }
-
-    public void setProperty(String propertyName, Object value) {
-        properties.put(propertyName, value);
     }
 }

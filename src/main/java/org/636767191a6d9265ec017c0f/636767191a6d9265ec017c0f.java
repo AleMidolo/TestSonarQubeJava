@@ -10,9 +10,6 @@ public class ByteVector {
     }
 
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than 0");
-        }
         int newCapacity = capacity + size;
         data = Arrays.copyOf(data, newCapacity);
         capacity = newCapacity;

@@ -1,36 +1,26 @@
-import java.nio.charset.StandardCharsets;
-import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateEncoder {
 
     /**
-     * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
-     * @param s la cadena con cero o más nombres de parámetros de plantilla
-     * @return la cadena con los nombres de parámetros de plantilla codificados.
+     * एक स्ट्रिंग को एन्कोड करता है जिसमें टेम्पलेट पैरामीटर नाम मौजूद होते हैं, विशेष रूप से '{' और '}' अक्षरों को प्रतिशत-कोडित किया जाएगा।
+     * @param s वह स्ट्रिंग जिसमें शून्य या अधिक टेम्पलेट पैरामीटर नाम हैं
+     * @return एन्कोडेड टेम्पलेट पैरामीटर नामों के साथ स्ट्रिंग।
      */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
-        
-        StringBuilder encodedString = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '{' || c == '}') {
-                try {
-                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
-                } catch (Exception e) {
-                    // En caso de error, simplemente añade el carácter sin codificar
-                    encodedString.append(c);
-                }
-            } else {
-                encodedString.append(c);
-            }
-        }
-        return encodedString.toString();
+
+        // Replace '{' with '%7B' and '}' with '%7D'
+        String encoded = s.replace("{", "%7B").replace("}", "%7D");
+        return encoded;
     }
 
     public static void main(String[] args) {
-        String testString = "This is a {test} string with {template} parameters.";
-        System.out.println(encodeTemplateNames(testString));
+        String input = "Hello {name}, your code is {code}.";
+        String encoded = encodeTemplateNames(input);
+        System.out.println(encoded);  // Output: Hello %7Bname%7D, your code is %7Bcode%7D.
     }
 }

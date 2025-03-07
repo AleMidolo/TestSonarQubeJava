@@ -2,7 +2,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class LinkedBuffer {
-
     private byte[] data;
     private LinkedBuffer next;
 
@@ -21,7 +20,10 @@ public class LinkedBuffer {
 
     /**
      * {@link LinkedBuffer} की सामग्री को {@link DataOutput} में लिखता है।
+     * @param out डेटा लिखने के लिए {@link DataOutput}।
+     * @param node लिखने के लिए {@link LinkedBuffer} नोड।
      * @return बफर का कुल सामग्री आकार।
+     * @throws IOException यदि I/O त्रुटि होती है।
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;

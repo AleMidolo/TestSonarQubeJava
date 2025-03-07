@@ -1,47 +1,48 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
-public class DataTable {
-    private Map<String, Integer> bucketCounts;
+public class BucketCompatibilityChecker {
 
-    public DataTable() {
-        this.bucketCounts = new HashMap<>();
-    }
-
-    public void addBucket(String bucketName, int count) {
-        bucketCounts.put(bucketName, count);
-    }
-
-    public Map<String, Integer> getBucketCounts() {
-        return bucketCounts;
-    }
-}
-
-public class Main {
     /**
-     * @return यदि बकेट समान है तो true लौटाता है।
+     * @param dataset the dataset to check for bucket compatibility
+     * @return true if the buckets are compatible, false otherwise
      */
-    public static boolean isCompatible(DataTable dataset) {
-        Map<String, Integer> bucketCounts = dataset.getBucketCounts();
-        if (bucketCounts.isEmpty()) {
-            return true;
+    public boolean isCompatible(DataTable dataset) {
+        if (dataset == null) {
+            return false;
         }
 
-        int firstCount = bucketCounts.values().iterator().next();
-        for (int count : bucketCounts.values()) {
-            if (count != firstCount) {
+        // Assuming DataTable has a method getBuckets() that returns an array of buckets
+        Bucket[] buckets = dataset.getBuckets();
+
+        if (buckets == null || buckets.length == 0) {
+            return false;
+        }
+
+        // Compare all buckets to the first one
+        Bucket firstBucket = buckets[0];
+        for (Bucket bucket : buckets) {
+            if (!Objects.equals(bucket, firstBucket)) {
                 return false;
             }
         }
+
         return true;
     }
+}
 
-    public static void main(String[] args) {
-        DataTable dataset = new DataTable();
-        dataset.addBucket("Bucket1", 10);
-        dataset.addBucket("Bucket2", 10);
-        dataset.addBucket("Bucket3", 10);
+// Assuming Bucket and DataTable classes are defined elsewhere
+class Bucket {
+    // Bucket properties and methods
+}
 
-        System.out.println(isCompatible(dataset)); // Output: true
+class DataTable {
+    private Bucket[] buckets;
+
+    public DataTable(Bucket[] buckets) {
+        this.buckets = buckets;
+    }
+
+    public Bucket[] getBuckets() {
+        return buckets;
     }
 }

@@ -16,8 +16,8 @@ public class ObjectToStringConverter {
         Object obj2 = "Hello, World!";
         Object obj3 = 12345;
 
-        System.out.println(toString(obj1)); // Should print: null
-        System.out.println(toString(obj2)); // Should print: Hello, World!
-        System.out.println(toString(obj3)); // Should print: 12345
+        System.out.println(toString(obj1)); // Output: null
+        System.out.println(toString(obj2)); // Output: Hello, World!
+        System.out.println(toString(obj3)); // Output: 12345
     }
 }

@@ -1,7 +1,8 @@
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 
-public class ClassFileReader {
+final class ClassFileReader {
     private final byte[] classFileBuffer;
 
     public ClassFileReader(byte[] classFileBuffer) {
@@ -15,18 +16,24 @@ public class ClassFileReader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry index points to the start of the CONSTANT_Utf8_info structure
-        int offset = constantPoolEntryIndex;
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(classFileBuffer);
+             DataInputStream dis = new DataInputStream(bais)) {
+            
+            // Skip to the constant pool entry
+            dis.skipBytes(constantPoolEntryIndex);
 
-        // Read the length of the UTF-8 string (2 bytes)
-        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
-        offset += 2;
+            // Read the length of the UTF-8 string
+            int length = dis.readUnsignedShort();
 
-        // Decode the UTF-8 bytes into the char buffer
-        ByteBuffer byteBuffer = ByteBuffer.wrap(classFileBuffer, offset, length);
-        int charCount = StandardCharsets.UTF_8.decode(byteBuffer, charBuffer, 0, charBuffer.length).position();
+            // Read the UTF-8 bytes into the char buffer
+            for (int i = 0; i < length; i++) {
+                charBuffer[i] = (char) dis.readUnsignedByte();
+            }
 
-        // Convert the char buffer to a String
-        return new String(charBuffer, 0, charCount);
+            // Convert the char buffer to a String
+            return new String(charBuffer, 0, length);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read UTF-8 string from constant pool", e);
+        }
     }
 }

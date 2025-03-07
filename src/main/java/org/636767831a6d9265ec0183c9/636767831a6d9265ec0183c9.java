@@ -15,17 +15,22 @@ public class DiagnosisReference {
         }
     }
 
-    // Optional: Method to push a new reference onto the stack
-    public static void push(String reference) {
+    // Optional: Method to push a reference onto the stack for testing purposes
+    public static void pushReference(String reference) {
         referenceStack.push(reference);
     }
 
-    // Optional: Method to pop the top reference from the stack
-    public static String pop() {
-        if (!referenceStack.isEmpty()) {
-            return referenceStack.pop();
-        } else {
-            return "";
-        }
+    // Optional: Method to clear the stack for testing purposes
+    public static void clearStack() {
+        referenceStack.clear();
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        pushReference("Reference1");
+        pushReference("Reference2");
+        System.out.println(peek()); // Output: Reference2
+        clearStack();
+        System.out.println(peek()); // Output: ""
     }
 }

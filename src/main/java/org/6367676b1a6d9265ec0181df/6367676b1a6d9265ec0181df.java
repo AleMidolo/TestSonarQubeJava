@@ -1,5 +1,4 @@
 public class StringUtils {
-
     /**
      * यदि दिया गया स्ट्रिंग निर्दिष्ट केस-इंसेंसिटिव प्रीफिक्स से शुरू होता है, तो {@code true} लौटाता है, अन्यथा {@code false}।
      * @param str वह स्ट्रिंग जिसे जांचना है
@@ -18,12 +17,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO WORLD")); // false
-        System.out.println(startsWithIgnoreCase(null, "hello")); // false
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
     }
 }

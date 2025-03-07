@@ -8,23 +8,16 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        int bytesWritten = 0;
-
-        while (bytesWritten < utf8Bytes.length) {
-            if (lb.remaining() == 0) {
+        for (byte b : utf8Bytes) {
+            if (lb.isFull()) {
                 lb = session.nextBuffer(lb);
             }
-
-            int bytesToWrite = Math.min(lb.remaining(), utf8Bytes.length - bytesWritten);
-            System.arraycopy(utf8Bytes, bytesWritten, lb.buffer(), lb.position(), bytesToWrite);
-            lb.position(lb.position() + bytesToWrite);
-            bytesWritten += bytesToWrite;
+            lb.put(b);
         }
 
         return lb;
     }
 
-    // Assuming LinkedBuffer and WriteSession classes are defined elsewhere
     public static class LinkedBuffer {
         private byte[] buffer;
         private int position;
@@ -34,27 +27,41 @@ public class UTF8Writer {
             this.position = 0;
         }
 
-        public int remaining() {
-            return buffer.length - position;
+        public boolean isFull() {
+            return position >= buffer.length;
         }
 
-        public byte[] buffer() {
+        public void put(byte b) {
+            if (isFull()) {
+                throw new IllegalStateException("Buffer is full.");
+            }
+            buffer[position++] = b;
+        }
+
+        public byte[] getBuffer() {
             return buffer;
         }
 
-        public int position() {
+        public int getPosition() {
             return position;
-        }
-
-        public void position(int position) {
-            this.position = position;
         }
     }
 
     public static class WriteSession {
+        private LinkedBuffer currentBuffer;
+
+        public WriteSession(LinkedBuffer initialBuffer) {
+            this.currentBuffer = initialBuffer;
+        }
+
         public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
-            // Implement logic to get the next buffer
-            return new LinkedBuffer(currentBuffer.buffer().length);
+            LinkedBuffer newBuffer = new LinkedBuffer(currentBuffer.getBuffer().length);
+            currentBuffer = newBuffer;
+            return currentBuffer;
+        }
+
+        public LinkedBuffer getCurrentBuffer() {
+            return currentBuffer;
         }
     }
 }

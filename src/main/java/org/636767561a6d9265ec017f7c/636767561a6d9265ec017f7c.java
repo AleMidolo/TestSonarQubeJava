@@ -14,35 +14,37 @@ import java.util.Set;
  * @param graph ग्राफ
  * @return एक ग्राफ पथ
  */
-protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour set cannot be empty.");
+        throw new IllegalArgumentException("Tour cannot be empty");
     }
 
     List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
 
-    // Start with the source vertex of the first edge
+    // Start with the first edge
     E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
+    V endVertex = graph.getEdgeTarget(firstEdge);
+
     vertexList.add(startVertex);
+    vertexList.add(endVertex);
 
-    V currentVertex = startVertex;
-    for (E edge : edgeList) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
+    // Iterate through the remaining edges to build the path
+    for (int i = 1; i < edgeList.size(); i++) {
+        E currentEdge = edgeList.get(i);
+        V source = graph.getEdgeSource(currentEdge);
+        V target = graph.getEdgeTarget(currentEdge);
 
-        if (source.equals(currentVertex)) {
+        if (source.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(target);
-            currentVertex = target;
-        } else if (target.equals(currentVertex)) {
+        } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
-            currentVertex = source;
         } else {
-            throw new IllegalArgumentException("Edges in the tour set do not form a continuous path.");
+            throw new IllegalArgumentException("Tour edges do not form a continuous path");
         }
     }
 
     // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0.0);
+    return new DefaultGraphPath<>(graph, vertexList, edgeList);
 }

@@ -1,10 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConverterRegistry {
+public class ConverterLookupService {
     private final Map<Class<?>, Converter> converterMap;
 
-    public ConverterRegistry() {
+    public ConverterLookupService() {
         this.converterMap = new HashMap<>();
     }
 
@@ -18,7 +18,7 @@ public class ConverterRegistry {
     }
 
     /**
-     * एक Converter को पंजीकृत करें।
+     * एक Converter को किसी विशिष्ट वर्ग के लिए पंजीकृत करें।
      * @param clazz वह वर्ग जिसके लिए Converter पंजीकृत करना है
      * @param converter पंजीकृत करने के लिए Converter
      */
@@ -26,7 +26,8 @@ public class ConverterRegistry {
         converterMap.put(clazz, converter);
     }
 
+    // Example Converter interface
     public interface Converter {
-        // Converter interface methods can be defined here
+        Object convert(Object input);
     }
 }

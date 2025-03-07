@@ -15,12 +15,9 @@ public class SubstringMatch {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(substringMatch("Hello World", 6, "World")); // true
-        System.out.println(substringMatch("Hello World", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello World", 5, " "));    // true
-        System.out.println(substringMatch("Hello World", 6, "world")); // false (case-sensitive)
-        System.out.println(substringMatch("Hello World", 11, "d"));     // true
-        System.out.println(substringMatch("Hello World", 12, "d"));     // false (index out of bounds)
+        CharSequence str = "Hello, World!";
+        CharSequence substring = "World";
+        int index = 7;
+        System.out.println(substringMatch(str, index, substring)); // Output: true
     }
 }

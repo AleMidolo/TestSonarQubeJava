@@ -1,6 +1,6 @@
 import java.util.Set;
 
-public class VertexWeightCalculator<V> {
+public class GraphUtils {
 
     /**
      * एक वर्टेक्स में प्रवेश करने वाले भारों का योग निकालें
@@ -10,23 +10,21 @@ public class VertexWeightCalculator<V> {
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         for (V vertex : v) {
-            // Assuming that the vertex has a method getWeight() that returns its weight
-            // You may need to adjust this based on the actual implementation of the vertex class
-            sum += ((Vertex) vertex).getWeight();
+            sum += vertex.getWeight(); // Assuming V has a method getWeight() to get the weight of the vertex
         }
         return sum;
     }
+}
 
-    // Assuming a Vertex class with a getWeight method
-    private static class Vertex {
-        private double weight;
+// Assuming the Vertex class is defined as follows:
+class V {
+    private double weight;
 
-        public Vertex(double weight) {
-            this.weight = weight;
-        }
+    public V(double weight) {
+        this.weight = weight;
+    }
 
-        public double getWeight() {
-            return weight;
-        }
+    public double getWeight() {
+        return weight;
     }
 }

@@ -17,24 +17,20 @@ public class FrameVisitor {
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         Frame newFrame = new Frame(offset, numLocal, numStack);
         currentFrame.push(newFrame);
-        return newFrame.getNextElementIndex();
+        return currentFrame.size() - 1; // Return the index of the newly added frame
     }
 
     private static class Frame {
         private final int offset;
         private final int numLocal;
         private final int numStack;
-        private int nextElementIndex;
 
         public Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextElementIndex = 0; // Initialize the next element index
         }
 
-        public int getNextElementIndex() {
-            return nextElementIndex++;
-        }
+        // Additional methods to manipulate the frame can be added here
     }
 }

@@ -5,7 +5,7 @@ public class Accumulator {
     private Map<String, Long> map;
 
     public Accumulator() {
-        this.map = new HashMap<>();
+        map = new HashMap<>();
     }
 
     /**
@@ -13,7 +13,8 @@ public class Accumulator {
      */
     public void valueAccumulation(String key, Long value) {
         if (map.containsKey(key)) {
-            map.put(key, map.get(key) + value);
+            Long currentValue = map.get(key);
+            map.put(key, currentValue + value);
         } else {
             map.put(key, value);
         }

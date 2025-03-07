@@ -1,20 +1,24 @@
-public class ExceptionChecker {
+public class Example {
     private Throwable thrown;
 
-    public ExceptionChecker(Throwable thrown) {
+    public Example(Throwable thrown) {
         this.thrown = thrown;
     }
 
     public boolean hasThrown() {
-        return thrown != null && !thrown.toString().isEmpty();
+        if (thrown == null) {
+            return false;
+        }
+        String thrownString = thrown.toString();
+        return thrownString != null && !thrownString.isEmpty();
     }
 
     public static void main(String[] args) {
         // Example usage
-        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
-        System.out.println(checker.hasThrown()); // Output: true
+        Example example = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example.hasThrown()); // Should print true
 
-        ExceptionChecker checker2 = new ExceptionChecker(null);
-        System.out.println(checker2.hasThrown()); // Output: false
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Should print false
     }
 }

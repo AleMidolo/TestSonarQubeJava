@@ -1,17 +1,20 @@
-import org.apache.commons.lang3.StringUtils;
+import java.util.*;
 
-public class StringUtil {
+public class StringUtils {
     /**
-     * Introspector.decapitalize का उल्टा
-     * Capitalizes the first character of the given string.
-     *
-     * @param name the string to capitalize
-     * @return the capitalized string
+     * Inverso de Introspector.decapitalize
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return StringUtils.capitalize(name);
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(capitalize("hello")); // Output: Hello
+        System.out.println(capitalize("world")); // Output: World
+        System.out.println(capitalize(""));      // Output: 
+        System.out.println(capitalize(null));    // Output: null
     }
 }

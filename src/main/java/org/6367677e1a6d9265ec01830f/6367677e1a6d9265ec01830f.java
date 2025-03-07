@@ -1,31 +1,52 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LoggingEvent {
-    private String message;
-    private Date timestamp;
+public class LogFormatter {
 
-    public LoggingEvent(String message, Date timestamp) {
+    /**
+     * Produce una cadena formateada según lo especificado por el patrón de conversión.
+     * 
+     * @param event El evento de registro que contiene la información a formatear.
+     * @return Una cadena formateada según el patrón de conversión.
+     */
+    public String format(LoggingEvent event) {
+        // Ejemplo de patrón de conversión: [fecha] [nivel] [mensaje]
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date(event.getTimeStamp()));
+        
+        return String.format("[%s] [%s] %s", 
+                             formattedDate, 
+                             event.getLevel().toString(), 
+                             event.getMessage());
+    }
+}
+
+// Clase de ejemplo para LoggingEvent
+class LoggingEvent {
+    private long timeStamp;
+    private Level level;
+    private String message;
+
+    public LoggingEvent(long timeStamp, Level level, String message) {
+        this.timeStamp = timeStamp;
+        this.level = level;
         this.message = message;
-        this.timestamp = timestamp;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public String getMessage() {
         return message;
     }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
 }
 
-public class Formatter {
-    /**
-     * रूपांतर पैटर्न द्वारा निर्दिष्ट एक स्वरूपित स्ट्रिंग उत्पन्न करता है।
-     */
-    public String format(LoggingEvent event) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = dateFormat.format(event.getTimestamp());
-        return "[" + formattedDate + "] " + event.getMessage();
-    }
+// Enumeración de ejemplo para Level
+enum Level {
+    INFO, WARN, ERROR, DEBUG
 }

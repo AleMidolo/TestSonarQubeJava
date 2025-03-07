@@ -1,14 +1,14 @@
 import java.util.Arrays;
 
 /**
- * <p><code>toString</code> में <code>byte</code> ऐरे का विवरण जोड़ें।</p>
- * @param buffer  वह <code>StringBuffer</code> जिसे भरना है
- * @param fieldName  फ़ील्ड का नाम, आमतौर पर इसका उपयोग नहीं किया जाता क्योंकि यह पहले से ही जोड़ा गया है
- * @param array  वह ऐरे जिसे <code>toString</code> में जोड़ना है, <code>null</code> नहीं होना चाहिए
+ * <p>Agrega al <code>toString</code> el detalle de un array de <code>byte</code>.</p>
+ * @param buffer  el <code>StringBuffer</code> a poblar
+ * @param fieldName  el nombre del campo, típicamente no se utiliza ya que ya ha sido agregado
+ * @param array  el array que se añadirá al <code>toString</code>, no <code>null</code>
  */
 protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array) {
     if (array == null) {
-        throw new IllegalArgumentException("Array must not be null");
+        throw new IllegalArgumentException("El array no puede ser nulo.");
     }
     buffer.append(Arrays.toString(array));
 }

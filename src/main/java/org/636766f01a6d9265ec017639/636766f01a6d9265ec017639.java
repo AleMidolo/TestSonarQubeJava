@@ -3,12 +3,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ArrayToListConverter {
+public class ArrayToList {
 
     /**
-     * एरे को लिस्ट में बदलें। <p> {@link Arrays#asList(Object)} की तरह काम करता है, लेकिन नल एरे को संभालता है।
-     * @param a एरे जिसे लिस्ट में बदलना है।
-     * @return एक लिस्ट जो एरे द्वारा समर्थित है।
+     * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)}, pero maneja arreglos nulos.
+     * @param a el arreglo de elementos
+     * @return una lista respaldada por el arreglo.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
@@ -18,14 +18,14 @@ public class ArrayToListConverter {
     }
 
     public static void main(String[] args) {
-        // Test case
-        String[] array = {"Hello", "World"};
-        List<String> list = asList(array);
-        System.out.println(list);  // Output: [Hello, World]
+        // Ejemplo de uso
+        String[] array = {"Hola", "Mundo"};
+        List<String> lista = asList(array);
+        System.out.println(lista);
 
-        // Test case with null array
-        String[] nullArray = null;
-        List<String> nullList = asList(nullArray);
-        System.out.println(nullList);  // Output: []
+        // Ejemplo con arreglo nulo
+        String[] arrayNulo = null;
+        List<String> listaNula = asList(arrayNulo);
+        System.out.println(listaNula);
     }
 }

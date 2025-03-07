@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.ArrayList;
 
 public class Channels {
     private List<IConsumer> consumers;
@@ -21,10 +20,10 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetChannelManager {
+public class TargetManager {
 
     /**
-     * नए लक्ष्य चैनल जोड़ें।
+     * Agregar nuevos canales de destino.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {

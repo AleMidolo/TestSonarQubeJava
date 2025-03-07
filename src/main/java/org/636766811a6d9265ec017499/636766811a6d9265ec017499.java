@@ -3,10 +3,10 @@ import java.util.List;
 public class InterceptorChecker {
 
     /**
-     * <p> निर्दिष्ट सूची में यह जांचता है कि क्या दिए गए {@link AtmosphereInterceptor इंटरसेप्टर} कार्यान्वयन वर्ग का कम से कम एक उदाहरण मौजूद है।</p>
-     * @param interceptorList इंटरसेप्टर्स की सूची
-     * @param c               इंटरसेप्टर वर्ग
-     * @return {@code false} यदि सूची में पहले से ही वर्ग का एक उदाहरण मौजूद है, {@code true} अन्यथा
+     * <p> Verifica en la lista especificada si hay al menos una instancia de la clase de implementación del {@link AtmosphereInterceptor interceptor} dado.</p>
+     * @param interceptorList los interceptores
+     * @param c               la clase del interceptor
+     * @return {@code false} si ya existe una instancia de la clase en la lista, {@code true} en caso contrario
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {

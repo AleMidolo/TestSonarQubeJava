@@ -1,22 +1,20 @@
 public void abbreviate(final int nameStart, final StringBuffer buf) {
     if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // Invalid input, do nothing
+        return; // No operation if buffer is null or nameStart is out of bounds
     }
 
-    // Split the buffer into parts
-    String fullName = buf.toString();
-    String[] parts = fullName.split(" ");
-
-    // Abbreviate each part except the last one
-    for (int i = 0; i < parts.length - 1; i++) {
-        if (!parts[i].isEmpty()) {
-            parts[i] = parts[i].charAt(0) + ".";
-        }
+    // Find the first space after nameStart
+    int spaceIndex = buf.indexOf(" ", nameStart);
+    if (spaceIndex == -1) {
+        return; // No space found, nothing to abbreviate
     }
 
-    // Reconstruct the abbreviated name
-    String abbreviatedName = String.join(" ", parts);
+    // Get the first character after the space
+    char firstCharAfterSpace = buf.charAt(spaceIndex + 1);
+    if (Character.isWhitespace(firstCharAfterSpace)) {
+        return; // No character after space, nothing to abbreviate
+    }
 
-    // Replace the original content in the buffer
-    buf.replace(0, buf.length(), abbreviatedName);
+    // Replace the rest of the name with the first character after the space
+    buf.replace(spaceIndex + 1, buf.length(), String.valueOf(firstCharAfterSpace));
 }

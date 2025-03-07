@@ -1,17 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructorInitialization {
-
+public class BasicBlock {
     private List<Integer> initializedTypes;
 
-    public ConstructorInitialization() {
+    public BasicBlock() {
         this.initializedTypes = new ArrayList<>();
     }
 
     /**
-     * एक अमूर्त प्रकार को उन प्रकारों की सूची में जोड़ता है जिन पर एक कंस्ट्रक्टर मूलभूत ब्लॉक में लागू होता है।
-     * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
+     * Agrega un tipo abstracto a la lista de tipos sobre los cuales se invoca un constructor en el bloque básico.
+     * @param abstractType un tipo abstracto sobre el cual se invoca un constructor.
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {
@@ -19,8 +18,5 @@ public class ConstructorInitialization {
         }
     }
 
-    // Optional: Getter method to access the initialized types
-    public List<Integer> getInitializedTypes() {
-        return initializedTypes;
-    }
+    // Other methods and fields can be added here
 }

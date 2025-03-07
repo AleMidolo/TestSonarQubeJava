@@ -1,15 +1,12 @@
-// Assuming ListNodeImpl is a class that represents a node in a linked list
-// and it has a reference to the next node and possibly the previous node.
-
 class ListNodeImpl<E> {
-    E data;
+    E element;
     ListNodeImpl<E> next;
     ListNodeImpl<E> prev;
 
-    ListNodeImpl(E data) {
-        this.data = data;
-        this.next = null;
-        this.prev = null;
+    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
+        this.element = element;
+        this.prev = prev;
+        this.next = next;
     }
 }
 
@@ -17,47 +14,32 @@ public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
 
-    public LinkedList() {
-        this.head = null;
-        this.tail = null;
-    }
-
     /**
-     * सूची से गैर-शून्य {@code node} को हटा दें।
+     * Elimina el {@code node} no nulo de la lista.
      */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {
             return false;
         }
 
-        // If the node to be removed is the head
-        if (node == head) {
-            head = node.next;
-            if (head != null) {
-                head.prev = null;
-            } else {
-                // If head is null, the list is empty, so tail should also be null
-                tail = null;
-            }
-        } else if (node == tail) {
-            // If the node to be removed is the tail
-            tail = node.prev;
-            if (tail != null) {
-                tail.next = null;
-            } else {
-                // If tail is null, the list is empty, so head should also be null
-                head = null;
-            }
+        ListNodeImpl<E> prev = node.prev;
+        ListNodeImpl<E> next = node.next;
+
+        if (prev == null) {
+            head = next;
         } else {
-            // If the node is somewhere in the middle
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
+            prev.next = next;
+            node.prev = null;
         }
 
-        // Clear the node's references
-        node.next = null;
-        node.prev = null;
+        if (next == null) {
+            tail = prev;
+        } else {
+            next.prev = prev;
+            node.next = null;
+        }
 
+        node.element = null;
         return true;
     }
 }

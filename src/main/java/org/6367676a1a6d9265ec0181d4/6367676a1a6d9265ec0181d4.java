@@ -3,10 +3,10 @@ import java.util.Arrays;
 public class ArrayUtils {
 
     /**
-     * दिए गए स्ट्रिंग को दिए गए स्ट्रिंग एरे में जोड़ें, एक नया एरे लौटाते हुए जिसमें इनपुट एरे की सामग्री और दिया गया स्ट्रिंग शामिल हो।
-     * @param array वह एरे जिसमें जोड़ना है (यह <code>null</code> हो सकता है)
-     * @param str वह स्ट्रिंग जिसे जोड़ना है
-     * @return नया एरे (कभी भी <code>null</code> नहीं)
+     * Agrega la cadena dada al arreglo de cadenas proporcionado, devolviendo un nuevo arreglo que consiste en el contenido del arreglo de entrada más la cadena dada.
+     * @param array el arreglo al que se va a agregar (puede ser <code>null</code>)
+     * @param str la cadena a agregar
+     * @return el nuevo arreglo (nunca <code>null</code>)
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null) {
@@ -18,9 +18,8 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] array = {"Hello", "World"};
-        String str = "Java";
-        String[] result = addStringToArray(array, str);
-        System.out.println(Arrays.toString(result)); // Output: [Hello, World, Java]
+        String[] array = {"a", "b", "c"};
+        String[] newArray = addStringToArray(array, "d");
+        System.out.println(Arrays.toString(newArray)); // Output: [a, b, c, d]
     }
 }

@@ -1,4 +1,4 @@
-import java.util.Iterator;
+import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
@@ -24,7 +24,11 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    private void addListNode(ListNodeImpl<E> node) {
+    public void addListNode(ListNodeImpl<E> node) {
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
+
         if (head == null) {
             head = node;
             tail = node;
@@ -36,7 +40,11 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    private void removeListNode(ListNodeImpl<E> node) {
+    public void removeListNode(ListNodeImpl<E> node) {
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
+
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -55,18 +63,14 @@ public class DoublyLinkedList<E> {
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.head == null) {
-            return;
-        }
+        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
 
         ListNodeImpl<E> current = list.head;
         while (current != null) {
-            ListNodeImpl<E> next = current.next;
+            ListNodeImpl<E> nextNode = current.next;
             list.removeListNode(current);
             this.addListNode(current);
-            current = next;
+            current = nextNode;
         }
     }
-
-    // Other methods of DoublyLinkedList...
 }

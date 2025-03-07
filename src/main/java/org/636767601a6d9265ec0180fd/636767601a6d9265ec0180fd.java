@@ -1,23 +1,23 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Graph<V, E> {
-    private Map<V, Map<V, E>> adjacencyMap;
+public class GraphIndex<V, E> {
+    private Map<V, Map<V, E>> index;
 
-    public Graph() {
-        adjacencyMap = new HashMap<>();
+    public GraphIndex() {
+        index = new HashMap<>();
     }
 
     /**
-     * अनुक्रमणिका में एक किनारा जोड़ें।
-     * @param sourceVertex स्रोत वर्टेक्स
-     * @param targetVertex लक्ष्य वर्टेक्स
-     * @param e किनारा
+     * Agrega una arista al índice.
+     * @param sourceVertex el vértice fuente
+     * @param targetVertex el vértice objetivo
+     * @param e la arista
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!adjacencyMap.containsKey(sourceVertex)) {
-            adjacencyMap.put(sourceVertex, new HashMap<>());
+        if (!index.containsKey(sourceVertex)) {
+            index.put(sourceVertex, new HashMap<>());
         }
-        adjacencyMap.get(sourceVertex).put(targetVertex, e);
+        index.get(sourceVertex).put(targetVertex, e);
     }
 }

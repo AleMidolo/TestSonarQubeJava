@@ -3,29 +3,26 @@ import java.io.File;
 public class ConfigurationDirectoryCreator {
 
     /**
-     * वह निर्देशिका बनाता है जहाँ MRU फ़ाइल सूची लिखी जाएगी। "lf5" निर्देशिका Windows 2000 मशीनों पर Documents और Settings निर्देशिका में बनाई जाती है और सभी अन्य प्लेटफार्मों पर जहाँ भी user.home वेरिएबल इंगित करता है।
+     * Crea el directorio donde se escribirá la lista de archivos MRU. El directorio "lf5" se crea en el directorio de Documentos y Configuraciones en máquinas con Windows 2000 y donde sea que apunte la variable user.home en todas las demás plataformas.
      */
     public static void createConfigurationDirectory() {
-        String osName = System.getProperty("os.name").toLowerCase();
+        // Obtener el directorio de inicio del usuario
         String userHome = System.getProperty("user.home");
-        String configDirPath;
-
-        if (osName.contains("windows 2000")) {
-            configDirPath = userHome + File.separator + "Documents and Settings" + File.separator + "lf5";
-        } else {
-            configDirPath = userHome + File.separator + "lf5";
-        }
-
-        File configDir = new File(configDirPath);
+        
+        // Crear la ruta del directorio "lf5"
+        File configDir = new File(userHome, "lf5");
+        
+        // Verificar si el directorio ya existe
         if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
-            if (created) {
-                System.out.println("Configuration directory created at: " + configDirPath);
+            // Intentar crear el directorio
+            boolean dirCreated = configDir.mkdir();
+            if (dirCreated) {
+                System.out.println("Directorio 'lf5' creado exitosamente en: " + configDir.getAbsolutePath());
             } else {
-                System.out.println("Failed to create configuration directory at: " + configDirPath);
+                System.out.println("No se pudo crear el directorio 'lf5' en: " + configDir.getAbsolutePath());
             }
         } else {
-            System.out.println("Configuration directory already exists at: " + configDirPath);
+            System.out.println("El directorio 'lf5' ya existe en: " + configDir.getAbsolutePath());
         }
     }
 

@@ -2,36 +2,25 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertySubstitution {
+public class PropertySubstitutor {
 
-    /**
-     * <code>props</code> में <code>key</code> के अनुसार मान खोजें। फिर पाए गए मान पर वेरिएबल प्रतिस्थापन करें।
-     */
     public static String findAndSubst(String key, Properties props) {
-        // Get the value associated with the key from the properties
+        // Obtener el valor asociado con la clave
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Return null if the key is not found
+            return null; // Si no se encuentra la clave, retornar null
         }
 
-        // Define a pattern to match variables in the format ${variable}
+        // Expresión regular para encontrar variables en el formato ${variable}
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
-
-        // Use a StringBuffer to build the result
         StringBuffer result = new StringBuffer();
 
-        // Iterate through the matches and replace variables
+        // Realizar la sustitución de variables
         while (matcher.find()) {
-            String variableKey = matcher.group(1);
-            String variableValue = props.getProperty(variableKey);
-            if (variableValue != null) {
-                // Replace the variable with its value from the properties
-                matcher.appendReplacement(result, Matcher.quoteReplacement(variableValue));
-            } else {
-                // If the variable is not found, leave it as is
-                matcher.appendReplacement(result, Matcher.quoteReplacement(matcher.group(0)));
-            }
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable, "");
+            matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);
 
@@ -40,10 +29,10 @@ public class PropertySubstitution {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
+        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // Output: Hello, World!
     }
 }

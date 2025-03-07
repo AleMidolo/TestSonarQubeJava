@@ -4,21 +4,23 @@ import java.util.Set;
 public class StringUtils {
 
     /**
-     * दिए गए String में से किसी भी चरित्र को हटाएं।
-     * @param inString मूल String
-     * @param charsToDelete हटाने के लिए चरित्रों का सेट। उदाहरण के लिए, "az\n" 'a', 'z' और नए लाइनों को हटा देगा।
-     * @return परिणामस्वरूप String
+     * Elimina cualquier carácter en una cadena dada.
+     * @param inString la cadena original
+     * @param charsToDelete un conjunto de caracteres a eliminar. Por ejemplo, "az\n" eliminará las 'a', 'z' y los saltos de línea.
+     * @return la cadena resultante
      */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
             return inString;
         }
 
+        // Convertir el conjunto de caracteres a eliminar en un Set para un acceso rápido
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
+        // Construir la cadena resultante
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {
@@ -30,9 +32,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello, World!\nThis is a test.";
-        String charsToDelete = "aeiou\n";
+        String input = "Hola, este es un ejemplo.\n";
+        String charsToDelete = "ae\n";
         String result = deleteAny(input, charsToDelete);
-        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
+        System.out.println(result);  // Salida: Hol, st s un jmplo.
     }
 }

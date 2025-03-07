@@ -1,8 +1,11 @@
-public class DigitChecker {
+public class NumericChecker {
+
     /**
-     * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
-     * @param str  जांचने के लिए <code>String</code>
-     * @return <code>true</code> यदि str में केवल यूनिकोड संख्या है
+     * Verifica si el String contiene solo caracteres numéricos.
+     * Null y un String vacío devolverán false.
+     *
+     * @param str el String a verificar
+     * @return true si str contiene solo caracteres numéricos unicode
      */
     public static boolean isDigits(String str) {
         if (str == null || str.isEmpty()) {
@@ -17,7 +20,7 @@ public class DigitChecker {
     }
 
     public static void main(String[] args) {
-        // Test cases
+        // Ejemplos de uso
         System.out.println(isDigits("12345")); // true
         System.out.println(isDigits("123a45")); // false
         System.out.println(isDigits("")); // false

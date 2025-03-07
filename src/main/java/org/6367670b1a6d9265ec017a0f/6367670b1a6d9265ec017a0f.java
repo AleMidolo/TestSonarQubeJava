@@ -3,11 +3,11 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * केस-संवेदनशीलता की परवाह किए बिना जांच करता है कि स्ट्रिंग में दिए गए स्ट्रिंग सेट में कोई भी वर्ण है या नहीं।
+     * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado.
      * 
-     * @param str जांच की जाने वाली स्ट्रिंग
-     * @param searchStrArray खोजे जाने वाले स्ट्रिंग्स की सूची
-     * @return true यदि स्ट्रिंग में कोई भी स्ट्रिंग सेट में मौजूद है, अन्यथा false
+     * @param str La cadena en la que se buscará.
+     * @param searchStrArray Lista de cadenas que se buscarán en la cadena principal.
+     * @return true si la cadena contiene alguna de las cadenas de búsqueda, false en caso contrario.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -20,12 +20,16 @@ public class StringUtils {
                 return true;
             }
         }
+
         return false;
     }
 
     public static void main(String[] args) {
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String input = "Hello, this is a test string.";
-        System.out.println(containsAnyIgnoreCase(input, searchStrings)); // Output: true
+        // Ejemplo de uso
+        List<String> searchStrings = List.of("hola", "mundo", "java");
+        String text = "Bienvenido al Mundo de la Programación en Java!";
+        
+        boolean result = containsAnyIgnoreCase(text, searchStrings);
+        System.out.println("¿El texto contiene alguna de las cadenas? " + result);
     }
 }

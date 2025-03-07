@@ -1,30 +1,40 @@
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TelnetClientHandler {
-    private final Socket clientSocket;
-    private final PrintWriter out;
+public class TelnetServer {
+    private List<Socket> clients = new ArrayList<>();
 
-    public TelnetClientHandler(Socket clientSocket) throws IOException {
-        this.clientSocket = clientSocket;
-        this.out = new PrintWriter(clientSocket.getOutputStream(), true);
+    /**
+     * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
+     */
+    public synchronized void send(final String message) {
+        for (Socket client : clients) {
+            try {
+                OutputStream outputStream = client.getOutputStream();
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+            } catch (IOException e) {
+                // Handle the exception, e.g., remove the client from the list
+                clients.remove(client);
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
-     * प्रत्येक क्लाइंट को टेलनेट-फ्रेंडली आउटपुट में एक संदेश भेजता है।
+     * Adds a new client to the list of connected clients.
      */
-    public synchronized void send(final String message) {
-        if (out != null) {
-            out.println(message);
-        }
+    public synchronized void addClient(Socket client) {
+        clients.add(client);
     }
 
-    public void close() throws IOException {
-        if (out != null) {
-            out.close();
-        }
-        if (clientSocket != null) {
-            clientSocket.close();
-        }
+    /**
+     * Removes a client from the list of connected clients.
+     */
+    public synchronized void removeClient(Socket client) {
+        clients.remove(client);
     }
 }

@@ -1,17 +1,22 @@
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class PathResolver {
-    /**
-     * दिए गए पथ पर दिए गए सापेक्ष पथ को लागू करें, मानते हुए कि मानक जावा फ़ोल्डर विभाजन (यानी "/" विभाजक) है।
-     * @param path वह पथ जिससे शुरू करना है (आमतौर पर एक पूर्ण फ़ाइल पथ)
-     * @param relativePath लागू करने के लिए सापेक्ष पथ (ऊपर दिए गए पूर्ण फ़ाइल पथ के सापेक्ष)
-     * @return वह पूर्ण फ़ाइल पथ जो सापेक्ष पथ को लागू करने से प्राप्त होता है
-     */
+public class RelativePathApplier {
     public static String applyRelativePath(String path, String relativePath) {
+        // Convertir la ruta base a un objeto Path
         Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.resolveSibling(relativePath).normalize();
-        return resolvedPath.toString();
+        
+        // Convertir la ruta relativa a un objeto Path
+        Path relative = Paths.get(relativePath);
+        
+        // Resolver la ruta relativa contra la ruta base
+        Path resolvedPath = basePath.resolve(relative);
+        
+        // Normalizar la ruta para eliminar redundancias como ".." o "."
+        Path normalizedPath = resolvedPath.normalize();
+        
+        // Convertir la ruta normalizada de vuelta a una cadena
+        return normalizedPath.toString();
     }
 
     public static void main(String[] args) {

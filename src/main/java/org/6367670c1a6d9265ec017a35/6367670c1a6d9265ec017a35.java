@@ -1,10 +1,10 @@
 /**
- * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग के साथ समाप्त होता है (वैकल्पिक रूप से केस संवेदनशीलता को अनदेखा करते हुए)।</p>
+ * Verifica si una cadena termina con un sufijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).
  * @see String#endsWith(String)
- * @param str  वह String जिसे जांचना है, यह null हो सकता है
- * @param suffix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
- * @param ignoreCase यह दर्शाता है कि तुलना में केस को अनदेखा करना चाहिए या नहीं (केस संवेदनशीलता को अनदेखा करना)।
- * @return <code>true</code> यदि String उपसर्ग के साथ शुरू होता है या दोनों <code>null</code> हैं
+ * @param str  la cadena a verificar, puede ser nula
+ * @param suffix el sufijo a encontrar, puede ser nulo
+ * @param ignoreCase indica si la comparación debe ignorar las mayúsculas y minúsculas (sin distinguir entre mayúsculas y minúsculas) o no.
+ * @return <code>true</code> si la cadena termina con el sufijo o ambos son <code>null</code>
  */
 private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
     if (str == null && suffix == null) {
@@ -13,13 +13,9 @@ private static boolean endsWith(final String str, final String suffix, final boo
     if (str == null || suffix == null) {
         return false;
     }
-    if (suffix.length() > str.length()) {
-        return false;
-    }
-    String strSuffix = str.substring(str.length() - suffix.length());
     if (ignoreCase) {
-        return strSuffix.equalsIgnoreCase(suffix);
+        return str.toLowerCase().endsWith(suffix.toLowerCase());
     } else {
-        return strSuffix.equals(suffix);
+        return str.endsWith(suffix);
     }
 }

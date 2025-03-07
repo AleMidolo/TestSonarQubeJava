@@ -1,51 +1,49 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRangeBuilder {
+public class SequenceRange {
+    private int start;
+    private int end;
 
-    /**
-     * वर्तमान प्रोफाइल खंड स्नैपशॉट खोज अनुक्रम सीमा बनाएं
-     */
-    public List<SequenceRange> buildSequenceRanges() {
-        // Placeholder implementation
-        List<SequenceRange> sequenceRanges = new ArrayList<>();
-        
-        // Example: Add a single range from 1 to 10
-        sequenceRanges.add(new SequenceRange(1, 10));
-        
-        return sequenceRanges;
+    public SequenceRange(int start, int end) {
+        this.start = start;
+        this.end = end;
     }
 
-    // Inner class representing a sequence range
-    public static class SequenceRange {
-        private int start;
-        private int end;
+    public int getStart() {
+        return start;
+    }
 
-        public SequenceRange(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
+    public int getEnd() {
+        return end;
+    }
 
-        public int getStart() {
-            return start;
-        }
+    @Override
+    public String toString() {
+        return "SequenceRange{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
+    }
+}
 
-        public int getEnd() {
-            return end;
-        }
+public class ProfileSegment {
 
-        @Override
-        public String toString() {
-            return "SequenceRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
-        }
+    public List<SequenceRange> buildSequenceRanges() {
+        List<SequenceRange> ranges = new ArrayList<>();
+        // Example logic to build sequence ranges
+        // This is a placeholder, replace with actual logic
+        ranges.add(new SequenceRange(1, 10));
+        ranges.add(new SequenceRange(11, 20));
+        ranges.add(new SequenceRange(21, 30));
+        return ranges;
     }
 
     public static void main(String[] args) {
-        SequenceRangeBuilder builder = new SequenceRangeBuilder();
-        List<SequenceRange> ranges = builder.buildSequenceRanges();
-        System.out.println(ranges);
+        ProfileSegment segment = new ProfileSegment();
+        List<SequenceRange> sequenceRanges = segment.buildSequenceRanges();
+        for (SequenceRange range : sequenceRanges) {
+            System.out.println(range);
+        }
     }
 }

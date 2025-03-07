@@ -1,29 +1,27 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class Meteor {
-    // Assuming Meteor class has some properties and methods
-    // For example purposes, let's assume it has a constructor and a method
-    private String name;
+public class MeteorLookup {
 
-    public Meteor(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
+    /**
+     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
+     * @param r {@link HttpServletRequest}
+     * @return un {@link Meteor} o null si no se encuentra
+     */
     public static Meteor lookup(HttpServletRequest r) {
-        // Extract some information from the HttpServletRequest to determine the Meteor instance
-        // For example, let's assume we are looking for a Meteor based on a request parameter
-        String meteorName = r.getParameter("meteorName");
+        // Aquí se implementaría la lógica para buscar y retornar una instancia de Meteor
+        // basada en el HttpServletRequest. Por ejemplo, se podría buscar en la sesión o en
+        // algún atributo de la solicitud.
 
-        if (meteorName != null && !meteorName.isEmpty()) {
-            // Return a new Meteor instance based on the parameter
-            return new Meteor(meteorName);
-        } else {
-            // If no parameter is found, return null
-            return null;
+        // Ejemplo de implementación:
+        Meteor meteor = (Meteor) r.getAttribute("meteor");
+        if (meteor == null) {
+            meteor = (Meteor) r.getSession().getAttribute("meteor");
         }
+
+        return meteor;
     }
+}
+
+class Meteor {
+    // Implementación de la clase Meteor
 }

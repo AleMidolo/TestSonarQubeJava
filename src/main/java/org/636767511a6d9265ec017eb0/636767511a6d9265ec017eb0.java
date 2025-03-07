@@ -1,13 +1,14 @@
 public class NonZeroCounter {
+
     /**
-     * एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या प्राप्त करें।
-     * @param row पंक्ति
-     * @return एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या
+     * Obtiene el número de entradas diferentes de cero en una fila.
+     * @param row la fila representada como un arreglo de enteros
+     * @return el número de entradas diferentes de cero en una fila
      */
-    public int nonZeros(int[] row) {
+    public static int nonZeros(int[] row) {
         int count = 0;
-        for (int num : row) {
-            if (num != 0) {
+        for (int value : row) {
+            if (value != 0) {
                 count++;
             }
         }
@@ -15,8 +16,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int[] row = {0, 5, 0, 3, 0, 8};
-        System.out.println("गैर-शून्य प्रविष्टियों की संख्या: " + counter.nonZeros(row));
+        int[] row = {0, 5, 0, 3, 0, 0, 7};
+        System.out.println("Número de entradas diferentes de cero: " + nonZeros(row));
     }
 }

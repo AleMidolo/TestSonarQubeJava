@@ -1,24 +1,17 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 
 public class LoggerChecker {
 
     /**
-     * जांचें कि क्या नामित लॉगर पदानुक्रम में मौजूद है। यदि हाँ, तो इसका संदर्भ लौटाएँ, अन्यथा <code>null</code> लौटाएँ।
-     * @param name उस लॉगर का नाम जिसे खोजा जाना है।
+     * Verifica si el registrador nombrado existe en la jerarquía. Si es así, devuelve su referencia; de lo contrario, devuelve <code>null</code>.
+     * @param name El nombre del registrador que se busca.
+     * @return El registrador si existe, o <code>null</code> si no existe.
      */
     public Logger exists(String name) {
-        try {
-            // LogManager.getLogger() will return the logger if it exists, otherwise it will create a new one.
-            // To check if the logger exists, we can compare the logger's name.
-            Logger logger = LogManager.getLogger(name);
-            if (logger.getName().equals(name)) {
-                return logger;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            // In case of any exception, return null
+        Logger logger = Logger.getLogger(name);
+        if (logger != null) {
+            return logger;
+        } else {
             return null;
         }
     }

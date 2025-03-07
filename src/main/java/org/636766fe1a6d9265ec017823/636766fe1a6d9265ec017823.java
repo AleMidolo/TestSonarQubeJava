@@ -2,22 +2,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private Map<String, Integer> nameAndTypeMap = new HashMap<>();
+    private final Map<String, Integer> nameAndTypeMap = new HashMap<>();
     private int nextIndex = 1;
 
     /**
-     * इस प्रतीक तालिका के स्थायी पूल में एक CONSTANT_NameAndType_info जोड़ता है। यदि स्थायी पूल में पहले से ही समान आइटम मौजूद है, तो कुछ नहीं करता है।
-     * @param name एक फ़ील्ड या विधि का नाम।
-     * @param descriptor एक फ़ील्ड या विधि का विवरण।
-     * @return दिए गए मान के साथ एक नया या पहले से मौजूद प्रतीक।
+     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos. 
+     * No hace nada si el grupo de constantes ya contiene un elemento similar.
+     *
+     * @param name el nombre de un campo o método.
+     * @param descriptor un descriptor de campo o método.
+     * @return un nuevo símbolo o uno ya existente con el valor dado.
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
         if (nameAndTypeMap.containsKey(key)) {
             return nameAndTypeMap.get(key);
         } else {
-            nameAndTypeMap.put(key, nextIndex);
-            return nextIndex++;
+            int index = nextIndex++;
+            nameAndTypeMap.put(key, index);
+            return index;
         }
     }
 }

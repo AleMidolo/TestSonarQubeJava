@@ -9,16 +9,16 @@ public class LogBuffer {
     }
 
     /**
-     * एक {@link LoggingEvent} को बफर में रखें। यदि बफर भर गया है तो घटना <b>चुपचाप हटा दी जाती है</b>। यह कॉलर की जिम्मेदारी है कि वह सुनिश्चित करे कि बफर में खाली स्थान है।
+     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es <b>silenciosamente descartado</b>.
+     * Es responsabilidad del llamador asegurarse de que el búfer tenga espacio libre.
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
-            // If the buffer is full, the event is silently dropped
-            System.out.println("Buffer is full. Event dropped.");
+            // Silently discard the event if the buffer is full
         }
     }
 }
 
 class LoggingEvent {
-    // Placeholder for LoggingEvent class
+    // Assume LoggingEvent is a class with relevant logging information
 }

@@ -1,16 +1,16 @@
-import org.jgrapht.Graph;
 import java.util.Set;
+import org.jgrapht.Graph;
 
-public class GraphUtils {
+public class CliqueChecker {
 
     /**
-     * जांचें कि <code>graph</code> द्वारा दिए गए <code>vertices</code> से प्रेरित उपग्राफ पूर्ण है, अर्थात् एक क्लिक है।
-     * @param graph ग्राफ।
-     * @param vertices उपग्राफ को प्रेरित करने के लिए वर्टिस।
-     * @return यदि प्रेरित उपग्राफ एक क्लिक है तो true।
+     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
+     * @param graph el grafo.
+     * @param vertices los vértices de los que se inducirá el subgrafo.
+     * @return true si el subgrafo inducido es un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Check if every pair of vertices in the set is connected by an edge
+        // Verificar que todos los pares de vértices en el conjunto están conectados
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {

@@ -1,17 +1,21 @@
 import java.io.File;
 
-/**
- * यदि निर्दिष्ट फ़ाइल मौजूद है, तो उसे हटाएं
- */
-protected static void deleteFile(String fileName) {
-    File file = new File(fileName);
-    if (file.exists()) {
-        if (file.delete()) {
-            System.out.println("फ़ाइल सफलतापूर्वक हटाई गई: " + fileName);
+public class FileDeleter {
+
+    /**
+     * Elimina el archivo especificado si existe
+     * @param fileName El nombre del archivo a eliminar
+     */
+    protected static void deleteFile(String fileName) {
+        File file = new File(fileName);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("Archivo eliminado: " + fileName);
+            } else {
+                System.out.println("No se pudo eliminar el archivo: " + fileName);
+            }
         } else {
-            System.out.println("फ़ाइल हटाने में विफल: " + fileName);
+            System.out.println("El archivo no existe: " + fileName);
         }
-    } else {
-        System.out.println("फ़ाइल मौजूद नहीं है: " + fileName);
     }
 }

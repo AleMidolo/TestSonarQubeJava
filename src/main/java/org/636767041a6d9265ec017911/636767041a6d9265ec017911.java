@@ -1,21 +1,24 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class ObjectRegistry {
+public class Registrar {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**
-     * <p> दिए गए ऑब्जेक्ट को रजिस्टर करता है। अनंत लूप से बचने के लिए रिफ्लेक्शन विधियों द्वारा उपयोग किया जाता है। </p>
-     * @param value रजिस्टर करने के लिए ऑब्जेक्ट।
+     * <p> Registra el objeto dado. Utilizado por los métodos de reflexión para evitar bucles infinitos. </p>
+     * @param value El objeto a registrar.
      */
-    static void register(Object value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Null objects cannot be registered.");
-        }
-        if (!registeredObjects.contains(value)) {
+    public static void register(Object value) {
+        if (value != null) {
             registeredObjects.add(value);
-        } else {
-            throw new IllegalStateException("Object is already registered.");
         }
+    }
+
+    public static boolean isRegistered(Object value) {
+        return registeredObjects.contains(value);
+    }
+
+    public static void clearRegistry() {
+        registeredObjects.clear();
     }
 }

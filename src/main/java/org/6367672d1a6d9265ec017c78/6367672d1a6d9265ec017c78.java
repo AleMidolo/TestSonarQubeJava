@@ -9,10 +9,7 @@ public class CustomSet {
     }
 
     /**
-     * सेट में एक मान डालता है। यदि सेट में पहले से निर्दिष्ट तत्व नहीं था, तो सत्य लौटाता है।
-     * 
-     * @param val वह मान जिसे सेट में डालना है।
-     * @return true यदि मान सेट में नया था, अन्यथा false।
+     * Inserta un valor en el conjunto. Devuelve verdadero si el conjunto no contenía ya el elemento especificado.
      */
     public boolean insert(int val) {
         return set.add(val);

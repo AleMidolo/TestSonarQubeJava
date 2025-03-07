@@ -2,18 +2,20 @@ import java.util.List;
 import java.util.Set;
 
 private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-    // Get the bucket with the minLabel
+    // Obtener el cubo con la etiqueta minLabel
     Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
     
-    // Move all vertices from minLabel bucket to label 0 bucket
-    Set<Integer> labelZeroBucket = bucketsByLabel.get(0);
-    labelZeroBucket.addAll(minLabelBucket);
+    // Obtener el cubo con la etiqueta 0
+    Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
     
-    // Clear the minLabel bucket
+    // Mover todos los vértices del cubo minLabel al cubo 0
+    zeroLabelBucket.addAll(minLabelBucket);
+    
+    // Limpiar el cubo minLabel
     minLabelBucket.clear();
     
-    // Update the labels of the moved vertices to 0
-    for (int vertex : labelZeroBucket) {
+    // Actualizar las etiquetas de los vértices movidos
+    for (int vertex : zeroLabelBucket) {
         labels.set(vertex, 0);
     }
 }

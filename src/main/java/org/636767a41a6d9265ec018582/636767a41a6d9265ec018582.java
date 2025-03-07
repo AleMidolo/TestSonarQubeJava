@@ -1,28 +1,57 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
-import org.msgpack.core.buffer.LinkedBuffer;
-import org.msgpack.core.buffer.MessageBuffer;
-import org.msgpack.core.buffer.MessageBufferOutput;
-import org.msgpack.core.buffer.OutputStreamBufferOutput;
-import org.msgpack.core.schema.Schema;
+import org.apache.avro.Schema;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.io.BinaryEncoder;
+import org.objenesis.strategy.StdInstantiatorStrategy;
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.dyuproject.protostuff.Schema;
 
-public class MessageSerializer {
+public class SerializationUtil {
 
     /**
-     * {@code message} को इसके आकार के साथ प्रारंभ करते हुए {@link OutputStream} में सीरियलाइज़ करता है।
-     * @return संदेश का आकार
+     * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
+     * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        MessageBufferOutput output = new OutputStreamBufferOutput(out);
-        MessagePacker packer = MessagePack.newDefaultPacker(output, buffer);
+        // Serialize the message using Protostuff
+        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
-        // Write the size of the message first
-        int size = schema.write(packer, message);
-        packer.flush();
+        // Write the length of the message as a varint
+        writeVarint(out, data.length);
 
-        return size;
+        // Write the serialized message
+        out.write(data);
+
+        // Return the total size of the message (length + data)
+        return data.length + computeVarintSize(data.length);
+    }
+
+    private static void writeVarint(OutputStream out, int value) throws IOException {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.write(value);
+                return;
+            } else {
+                out.write((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
+    }
+
+    private static int computeVarintSize(int value) {
+        int size = 0;
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                size++;
+                return size;
+            } else {
+                size++;
+                value >>>= 7;
+            }
+        }
     }
 }

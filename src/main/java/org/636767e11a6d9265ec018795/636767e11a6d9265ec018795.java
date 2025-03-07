@@ -1,36 +1,17 @@
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 public class DataTable {
-    private List<Map<String, Object>> data;
+    // Assuming DataTable class has necessary fields and methods
 
-    public DataTable(List<Map<String, Object>> data) {
-        this.data = data;
-    }
-
-    public List<Map<String, Object>> getData() {
-        return data;
-    }
-}
-
-public class BucketChecker {
-
-    /**
-     * @return यदि बकेट समान है तो true लौटाता है।
-     */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null || dataset.getData() == null || dataset.getData().isEmpty()) {
-            return false;
-        }
+        // Assuming compatibility is determined by comparing the bucket of the current instance with the bucket of the provided dataset
+        // For simplicity, let's assume the bucket is a String field in the DataTable class
+        return Objects.equals(this.getBucket(), dataset.getBucket());
+    }
 
-        // Assuming compatibility is determined by checking if all rows have the same set of keys
-        Map<String, Object> firstRow = dataset.getData().get(0);
-        for (Map<String, Object> row : dataset.getData()) {
-            if (!row.keySet().equals(firstRow.keySet())) {
-                return false;
-            }
-        }
-
-        return true;
+    // Assuming a getter method for the bucket field
+    public String getBucket() {
+        // Return the bucket value
+        return "exampleBucket"; // Replace with actual bucket value
     }
 }

@@ -24,8 +24,8 @@ public class Queue<T> {
     }
 
     /**
-     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
-     * @return कतार का पाठ्य प्रतिनिधित्व।
+     * Devuelve una representación textual de la cola.
+     * @return una representación textual de la cola.
      */
     @Override
     public String toString() {

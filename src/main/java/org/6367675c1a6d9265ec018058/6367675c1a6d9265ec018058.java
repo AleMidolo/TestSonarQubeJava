@@ -1,11 +1,11 @@
 import java.util.function.Supplier;
 
-public class UniqueStringSupplier {
+public class StringSupplierExample {
 
     /**
-     * एक स्ट्रिंग सप्लायर बनाएं जो अद्वितीय स्ट्रिंग्स लौटाता है। लौटाए गए स्ट्रिंग्स बस प्रारंभ से शुरू होने वाले पूर्णांक हैं।
-     * @param start अनुक्रम कहाँ से शुरू करना है
-     * @return एक स्ट्रिंग सप्लायर
+     * Crea un proveedor de cadenas que devuelve cadenas únicas. Las cadenas devueltas son simplemente enteros que comienzan desde el inicio.
+     * @param start desde dónde comenzar la secuencia
+     * @return un proveedor de cadenas
      */
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
@@ -20,9 +20,9 @@ public class UniqueStringSupplier {
     }
 
     public static void main(String[] args) {
-        Supplier<String> supplier = createStringSupplier(10);
-        System.out.println(supplier.get()); // 10
-        System.out.println(supplier.get()); // 11
-        System.out.println(supplier.get()); // 12
+        Supplier<String> supplier = createStringSupplier(5);
+        System.out.println(supplier.get()); // Output: 5
+        System.out.println(supplier.get()); // Output: 6
+        System.out.println(supplier.get()); // Output: 7
     }
 }

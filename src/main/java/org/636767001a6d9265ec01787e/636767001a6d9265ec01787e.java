@@ -1,12 +1,9 @@
-/**
- * <p> इस बिल्डर द्वारा निर्मित स्ट्रिंग प्राप्त करता है। </p>
- * @return निर्मित स्ट्रिंग
- */
 @Override
 public String toString() {
-    StringBuilder builder = new StringBuilder();
-    // Add your logic here to build the string
-    // Example:
-    builder.append("निर्मित स्ट्रिंग");
-    return builder.toString();
+    // Aquí se debe implementar la lógica para construir y retornar la cadena.
+    // Por ejemplo, si la clase tiene un atributo 'builder' que es un StringBuilder:
+    // return builder.toString();
+    
+    // Como no se proporciona más contexto, se retorna una cadena vacía como placeholder.
+    return "";
 }

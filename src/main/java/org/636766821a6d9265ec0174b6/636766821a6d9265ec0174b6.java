@@ -6,7 +6,8 @@ import java.util.List;
 public class TypeResolver {
 
     /**
-     * {@code genericType} के लिए तर्कों को {@code targetType} के प्रकार चर जानकारी का उपयोग करके हल करता है। यदि {@code genericType} पैरामीटराइज्ड नहीं है या यदि तर्कों को हल नहीं किया जा सकता है, तो {@code null} लौटाता है।
+     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. 
+     * Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -20,10 +21,8 @@ public class TypeResolver {
         for (Type typeArg : actualTypeArguments) {
             if (typeArg instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArg);
-            } else if (typeArg instanceof ParameterizedType) {
-                resolvedTypes.add((Class<?>) ((ParameterizedType) typeArg).getRawType());
             } else {
-                // If the type argument is not a Class or ParameterizedType, we cannot resolve it
+                // Si el tipo no es una clase, no podemos resolverlo directamente
                 return null;
             }
         }
@@ -32,7 +31,7 @@ public class TypeResolver {
     }
 
     public static void main(String[] args) {
-        // Example usage
+        // Ejemplo de uso
         Type genericType = new ParameterizedType() {
             @Override
             public Type[] getActualTypeArguments() {
@@ -50,15 +49,13 @@ public class TypeResolver {
             }
         };
 
-        Class<?> targetType = List.class;
-        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
-
+        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
         if (resolvedArgs != null) {
             for (Class<?> arg : resolvedArgs) {
                 System.out.println(arg.getSimpleName());
             }
         } else {
-            System.out.println("Could not resolve arguments.");
+            System.out.println("No se pudieron resolver los argumentos.");
         }
     }
 }

@@ -1,41 +1,32 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class ShardingChecker {
-
-    private Map<String, Integer> shardingKeySequence = new HashMap<>();
+public class ShardingKeyChecker {
 
     /**
-     * @param modelName एंटिटी का मॉडल नाम
-     * @throws IllegalStateException यदि शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं
+     * @param modelName nombre del modelo de la entidad
+     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
      */
     private void check(String modelName) throws IllegalStateException {
-        if (!shardingKeySequence.containsKey(modelName)) {
-            throw new IllegalStateException("Sharding key sequence is not continuous for model: " + modelName);
-        }
+        // Assuming the modelName contains sharding indices in the format "modelName_shardX"
+        Pattern pattern = Pattern.compile("_shard(\\d+)");
+        Matcher matcher = pattern.matcher(modelName);
 
-        int currentSequence = shardingKeySequence.get(modelName);
-        int expectedSequence = getExpectedSequence(modelName);
-
-        if (currentSequence != expectedSequence) {
-            throw new IllegalStateException("Sharding key sequence is not continuous for model: " + modelName);
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group(1));
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Sharding indices are not continuous.");
+            }
+            previousIndex = currentIndex;
         }
     }
 
-    private int getExpectedSequence(String modelName) {
-        // This method should return the expected sequence number for the given model.
-        // For the sake of this example, we assume it returns a fixed value.
-        return 1; // Replace with actual logic to determine the expected sequence.
-    }
-
-    // Example usage
     public static void main(String[] args) {
-        ShardingChecker checker = new ShardingChecker();
-        checker.shardingKeySequence.put("exampleModel", 1);
-
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("exampleModel");
-            System.out.println("Sharding key sequence is continuous.");
+            checker.check("model_shard0_shard1_shard2"); // This should pass
+            checker.check("model_shard0_shard2_shard3"); // This should throw an exception
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

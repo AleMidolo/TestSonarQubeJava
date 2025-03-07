@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * दिए गए ऑब्जेक्ट को एक स्ट्रिंग में बदलें यदि यह एक स्ट्रिंग है; अन्यथा ऑब्जेक्ट को जैसा है वैसा ही रखें।
-     * @param obj इनपुट ऑब्जेक्ट (जैसे "myString")
-     * @return उद्धृत स्ट्रिंग (जैसे "'myString'"), या यदि यह स्ट्रिंग नहीं है तो इनपुट ऑब्जेक्ट को जैसा है वैसा ही
+     * Convierte el objeto dado en una cadena con comillas simples si es una cadena; manteniendo el objeto tal como está en caso contrario.
+     * @param obj el objeto de entrada (por ejemplo, "miCadena")
+     * @return la cadena entre comillas (por ejemplo, "'miCadena'"), o el objeto de entrada tal como está si no es una cadena
      */
     public static Object quoteIfString(Object obj) {
         if (obj instanceof String) {
@@ -13,9 +13,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(quoteIfString("myString")); // Output: 'myString'
-        System.out.println(quoteIfString(123));        // Output: 123
-        System.out.println(quoteIfString(null));       // Output: null
+        // Ejemplo de uso
+        System.out.println(quoteIfString("miCadena")); // Salida: 'miCadena'
+        System.out.println(quoteIfString(123));       // Salida: 123
     }
 }

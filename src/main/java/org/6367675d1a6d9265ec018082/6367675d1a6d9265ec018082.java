@@ -1,9 +1,5 @@
 import java.util.Objects;
 
-class Node {
-    // Node class implementation
-}
-
 class Edge {
     private Node from;
     private Node to;
@@ -33,6 +29,61 @@ class Edge {
     public int hashCode() {
         return Objects.hash(from, to);
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from +
+                ", to=" + to +
+                '}';
+    }
+}
+
+class Node {
+    private String id;
+    private boolean isVirtual;
+
+    public Node(String id, boolean isVirtual) {
+        this.id = id;
+        this.isVirtual = isVirtual;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public Node getRealNode() {
+        if (isVirtual) {
+            // Assuming the real node has the same ID but is not virtual
+            return new Node(id, false);
+        }
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isVirtual);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id='" + id + '\'' +
+                ", isVirtual=" + isVirtual +
+                '}';
+    }
 }
 
 class Graph {
@@ -45,12 +96,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        // Assuming that if a node is virtual, it has a real counterpart
-        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
-        Node realNext = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
-
-        return new Edge(realCurrent, realNext);
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        return new Edge(fromNode, toNode);
     }
 }
-
-// Assuming Node class has methods isVirtual() and getRealCounterpart()

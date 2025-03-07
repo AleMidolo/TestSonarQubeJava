@@ -1,31 +1,31 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
     /**
-     * प्रत्येक कुंजी के लिए अधिकतम निम्न सीमा खोजता है।
-     * @param keys कुंजी की सूची।
-     * @return गणना की गई कुंजी की निम्न सीमाएँ।
+     * Encuentra un límite inferior máximo para cada llave.
+     * @param keys lista de llaves.
+     * @return los límites inferiores de llaves calculados.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        List<Integer> lowerBounds = new ArrayList<>();
         if (keys == null || keys.isEmpty()) {
-            return lowerBounds;
+            return Collections.emptyList();
         }
 
-        // Sort the keys to find the lower bounds efficiently
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        List<Integer> lowerBounds = new ArrayList<>();
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int lowerBound = 0;
 
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // If the key is not found, the insertion point gives the lower bound
-                index = -index - 1;
+            for (int j = 0; j < i; j++) {
+                if (keys.get(j).compareTo(currentKey) < 0) {
+                    lowerBound++;
+                }
             }
-            lowerBounds.add(index);
+
+            lowerBounds.add(lowerBound);
         }
 
         return lowerBounds;

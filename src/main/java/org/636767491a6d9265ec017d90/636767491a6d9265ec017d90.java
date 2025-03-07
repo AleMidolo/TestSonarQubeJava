@@ -3,16 +3,16 @@ import java.util.Objects;
 public class ArrayUtils {
 
     /**
-     * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
-     * @param <V> ऐरे में तत्वों का प्रकार
-     * @param arr ऐरे
-     * @param from उलटने के लिए सीमा के भीतर पहले तत्व का अनुक्रमांक (समावेशी)
-     * @param to उलटने के लिए सीमा के भीतर अंतिम तत्व का अनुक्रमांक (समावेशी)
+     * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
+     * @param <V> el tipo de elementos en el arreglo
+     * @param arr el arreglo
+     * @param from el índice del primer elemento (inclusive) dentro del rango a invertir
+     * @param to el índice del último elemento (inclusive) dentro del rango a invertir
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "ऐरे null नहीं हो सकता");
+        Objects.requireNonNull(arr, "El arreglo no puede ser nulo.");
         if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("अमान्य सीमा मान");
+            throw new IllegalArgumentException("Índices fuera de rango o inválidos.");
         }
 
         while (from < to) {
@@ -25,11 +25,12 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 1, 3);
+        // Ejemplo de uso
+        Integer[] arr = {1, 2, 3, 4, 5, 6, 7};
+        reverse(arr, 2, 5);
         for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // Output: 1 4 3 2 5
+        // Salida esperada: 1 2 6 5 4 3 7
     }
 }

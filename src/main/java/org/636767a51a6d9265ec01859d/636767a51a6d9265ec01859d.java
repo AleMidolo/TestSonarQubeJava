@@ -3,15 +3,15 @@ import java.util.Arrays;
 public class ArrayComparator {
 
     /**
-     * यदि आंतरिक ऐरे की सामग्री और प्रदान किए गए ऐरे में मेल खाते हैं, तो सत्य लौटाता है।
-     *
-     * @param data   प्रदान किया गया ऐरे
-     * @param offset ऐरे में शुरुआती स्थान
-     * @param len    तुलना करने के लिए लंबाई
-     * @return सत्य यदि मेल खाते हैं, अन्यथा असत्य
+     * Devuelve verdadero si el contenido del array interno y el array proporcionado coinciden.
+     * 
+     * @param data El array de bytes a comparar.
+     * @param offset El índice inicial en el array proporcionado desde donde comenzar la comparación.
+     * @param len La longitud de la subsección del array proporcionado a comparar.
+     * @return true si los contenidos coinciden, false en caso contrario.
      */
     public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {
-        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len != internalArray.length) {
             return false;
         }
 
@@ -22,16 +22,5 @@ public class ArrayComparator {
         }
 
         return true;
-    }
-
-    public static void main(String[] args) {
-        ArrayComparator comparator = new ArrayComparator();
-        byte[] internalArray = {1, 2, 3, 4, 5};
-        byte[] data = {0, 1, 2, 3, 4, 5, 6};
-        int offset = 1;
-        int len = 5;
-
-        boolean result = comparator.equals(internalArray, data, offset, len);
-        System.out.println("Arrays match: " + result); // Output: Arrays match: true
     }
 }

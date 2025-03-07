@@ -1,12 +1,10 @@
-import java.util.Objects;
-
 public class ArrayConverter {
 
     /**
-     * <p>प्राथमिक डबल्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> 
-     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>double</code> एरे
-     * @return एक <code>Double</code> एरे, <code>null</code> यदि इनपुट एरे null है
+     * <p>Convierte un arreglo de primitivos double a objetos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>double</code>
+     * @return un arreglo de <code>Double</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {

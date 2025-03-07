@@ -1,31 +1,40 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-public class BeanMapUtils {
+public class BeanMap {
+    private Map<String, Object> properties;
 
-    /**
-     * दिए गए BeanMap से सभी लिखने योग्य गुणों को इस BeanMap में डालता है। केवल पढ़ने योग्य और केवल लिखने योग्य गुणों को नजरअंदाज किया जाएगा।
-     * @param map  वह BeanMap जिसके गुणों को डालना है
-     */
+    public BeanMap(Map<String, Object> properties) {
+        this.properties = properties;
+    }
+
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("BeanMap cannot be null");
-        }
+        try {
+            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 
-        for (Object key : map.keySet()) {
-            if (map.isWriteable(key)) {
-                this.put(key, map.get(key));
+            for (PropertyDescriptor pd : propertyDescriptors) {
+                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
+                    Method readMethod = pd.getReadMethod();
+                    Object value = readMethod.invoke(map);
+                    this.properties.put(pd.getName(), value);
+                }
             }
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 
-    // Assuming this class has a BeanMap instance and a put method
-    private BeanMap beanMap;
-
-    public BeanMapUtils(BeanMap beanMap) {
-        this.beanMap = beanMap;
+    public Object getProperty(String key) {
+        return properties.get(key);
     }
 
-    public void put(Object key, Object value) {
-        beanMap.put(key, value);
+    public void setProperty(String key, Object value) {
+        properties.put(key, value);
     }
 }

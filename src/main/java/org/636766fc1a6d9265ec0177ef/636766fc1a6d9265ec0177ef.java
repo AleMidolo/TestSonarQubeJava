@@ -4,11 +4,11 @@ import java.util.List;
 public class ArrayUtils {
 
     /**
-     * एक नई स्ट्रिंग्स की ऐरे लौटाता है जिसमें कोई नल तत्व नहीं है। यह आंतरिक विधि एक्सक्लूड सूचियों (ऐरे और संग्रह) को सामान्य बनाने के लिए उपयोग की जाती है। ध्यान दें कि {@link Arrays#sort(Object[])} एक {@link NullPointerException} फेंकेगा यदि ऐरे का कोई तत्व <code>null</code> है।
-     * @param array जाँचने के लिए ऐरे
-     * @return दिया गया ऐरे या एक नई ऐरे जिसमें नल नहीं है।
+     * Devuelve un nuevo arreglo de Strings sin elementos nulos. Método interno utilizado para normalizar listas de exclusión (arreglo y colecciones). Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará un {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
+     * @param array El arreglo a verificar
+     * @return El arreglo dado o un nuevo arreglo sin nulos.
      */
-    public static String[] toNoNullStringArray(Object[] array) {
+    static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {
             return new String[0];
         }
@@ -21,13 +21,5 @@ public class ArrayUtils {
         }
 
         return nonNullList.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        Object[] array = { "Hello", null, "World", null, "Java" };
-        String[] result = toNoNullStringArray(array);
-        for (String str : result) {
-            System.out.println(str);
-        }
     }
 }

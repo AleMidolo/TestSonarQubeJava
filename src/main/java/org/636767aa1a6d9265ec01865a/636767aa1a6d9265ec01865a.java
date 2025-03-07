@@ -20,8 +20,8 @@ public class LinkedBuffer {
     }
 
     /**
-     * {@link LinkedBuffer} की सामग्री को {@link DataOutput} में लिखता है।
-     * @return बफर का कुल सामग्री आकार।
+     * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
+     * @return el tamaño total del contenido del búfer.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;

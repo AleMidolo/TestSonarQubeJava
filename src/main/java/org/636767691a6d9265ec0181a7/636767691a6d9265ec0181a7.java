@@ -1,10 +1,10 @@
-public class StringTrimmer {
+public class StringUtils {
 
     /**
-     * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
-     * @param str वह स्ट्रिंग जिसे जांचना है
-     * @param leadingCharacter वह अग्रणी वर्ण जिसे हटाना है
-     * @return हटाई गई स्ट्रिंग
+     * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
+     * @param str la cadena a verificar
+     * @param leadingCharacter el carácter inicial que se debe eliminar
+     * @return la cadena sin el carácter inicial
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
         if (str == null || str.isEmpty()) {
@@ -20,9 +20,9 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String input = "###HelloWorld";
+        String testString = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(input, leadingChar);
+        String result = trimLeadingCharacter(testString, leadingChar);
         System.out.println(result);  // Output: HelloWorld
     }
 }

@@ -1,32 +1,35 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class AppenderManager {
-    private List<String> appenders;
+public class Logger {
+    private List<Appender> appenders;
 
-    public AppenderManager() {
+    public Logger() {
         this.appenders = new ArrayList<>();
     }
 
-    /**
-     * पैरामीटर के रूप में दिए गए नाम के साथ एपेंडर को एपेंडर्स की सूची से हटा दें।
-     * @param name एपेंडर का नाम जिसे हटाना है
-     */
     public void removeAppender(String name) {
-        if (name != null) {
-            appenders.remove(name);
+        Iterator<Appender> iterator = appenders.iterator();
+        while (iterator.hasNext()) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
+                iterator.remove();
+                break; // Assuming names are unique, we can break after removal
+            }
         }
     }
 
-    // Optional: Method to add appenders for testing
-    public void addAppender(String name) {
-        if (name != null && !appenders.contains(name)) {
-            appenders.add(name);
-        }
-    }
+    // Assuming Appender class exists with a getName() method
+    private static class Appender {
+        private String name;
 
-    // Optional: Method to get appenders for testing
-    public List<String> getAppenders() {
-        return new ArrayList<>(appenders);
+        public Appender(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

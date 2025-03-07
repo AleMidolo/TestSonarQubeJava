@@ -1,40 +1,31 @@
-import java.util.Objects;
-
 public class CharacterArrayConverter {
 
     /**
-     * <p>एक ऑब्जेक्ट कैरेक्टर्स के एरे को प्रिमिटिव्स में परिवर्तित करता है।</p>
-     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>Character</code> एरे, यह <code>null</code> हो सकता है
-     * @return एक <code>char</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
-     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
+     * <p>Convierte un array de objetos "Character" a primitivos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
+     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
+     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
     public static char[] toPrimitive(final Character[] array) {
         if (array == null) {
             return null;
         }
-
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("El contenido del arreglo no puede ser nulo.");
+            }
+            result[i] = array[i];
         }
         return result;
     }
 
     public static void main(String[] args) {
-        Character[] charArray = {'a', 'b', 'c'};
-        char[] primitiveArray = toPrimitive(charArray);
-        System.out.println(java.util.Arrays.toString(primitiveArray)); // Output: [a, b, c]
-
-        Character[] nullArray = null;
-        char[] nullPrimitiveArray = toPrimitive(nullArray);
-        System.out.println(nullPrimitiveArray); // Output: null
-
-        Character[] arrayWithNull = {'a', null, 'c'};
-        try {
-            char[] invalidArray = toPrimitive(arrayWithNull);
-        } catch (NullPointerException e) {
-            System.out.println("Caught NullPointerException: " + e.getMessage()); // Output: Caught NullPointerException: Array element cannot be null
+        Character[] testArray = {'a', 'b', 'c'};
+        char[] primitiveArray = toPrimitive(testArray);
+        for (char c : primitiveArray) {
+            System.out.print(c + " ");
         }
     }
 }

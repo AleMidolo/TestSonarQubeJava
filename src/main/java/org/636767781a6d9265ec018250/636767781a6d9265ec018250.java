@@ -5,14 +5,9 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Assuming the logic to decide is based on some condition
-        // For example, if the message contains a specific string
-        String message = event.getMessage().toString();
-        
-        if (message.contains("specific_string")) {
-            return Filter.ACCEPT; // or Filter.DENY based on your logic
-        } else {
-            return Filter.NEUTRAL;
-        }
+        // Implementación de la lógica de decisión
+        // Aquí puedes agregar la lógica para determinar si hay coincidencia de cadena
+        // Por ejemplo, si no hay coincidencia, devuelve Filter.NEUTRAL
+        return Filter.NEUTRAL;
     }
 }

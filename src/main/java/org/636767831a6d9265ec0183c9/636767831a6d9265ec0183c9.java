@@ -1,36 +1,13 @@
-import java.util.Stack;
+import org.apache.log4j.NDC;
 
-public class DiagnosticReference {
-    private static Stack<String> referenceStack = new Stack<>();
+public class DiagnosticContext {
 
     /**
-     * इस NDC के शीर्ष पर अंतिम निदान संदर्भ को देखता है बिना उसे हटाए। <p> लौटाई गई मान वह मान है जो अंतिम बार डाला गया था। यदि कोई संदर्भ उपलब्ध नहीं है, तो खाली स्ट्रिंग "" लौटाई जाती है।
-     * @return String सबसे आंतरिक निदान संदर्भ।
+     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. <p> El valor devuelto es el valor que se empujó por última vez. Si no hay contexto disponible, se devuelve la cadena vacía "".
+     * @return String El contexto de diagnóstico más interno.
      */
     public static String peek() {
-        if (!referenceStack.isEmpty()) {
-            return referenceStack.peek();
-        } else {
-            return "";
-        }
-    }
-
-    // Optional: Method to push a reference onto the stack
-    public static void push(String reference) {
-        referenceStack.push(reference);
-    }
-
-    // Optional: Method to pop a reference from the stack
-    public static String pop() {
-        if (!referenceStack.isEmpty()) {
-            return referenceStack.pop();
-        } else {
-            return "";
-        }
-    }
-
-    // Optional: Method to check if the stack is empty
-    public static boolean isEmpty() {
-        return referenceStack.isEmpty();
+        String context = NDC.peek();
+        return context != null ? context : "";
     }
 }

@@ -3,7 +3,7 @@ import java.io.File;
 public class ClassPathUtil {
 
     /**
-     * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
+     * Devuelve la ruta de clases de la instancia actual de la JVM como un arreglo de objetos {@link File}.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");

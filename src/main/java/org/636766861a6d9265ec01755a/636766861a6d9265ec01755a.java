@@ -11,15 +11,26 @@ public final class URIMatcher {
     }
 
     /**
-     * एक URI को पैटर्न के खिलाफ मिलाएं।
-     * @param uri वह URI जिसे टेम्पलेट के खिलाफ मिलाना है।
-     * @return मिलान का परिणाम, अन्यथा यदि कोई मिलान नहीं होता है तो null।
+     * Compara una URI con el patrón.
+     * @param uri la URI a comparar con la plantilla.
+     * @return el resultado de la coincidencia, o null si no hay coincidencia.
      */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
+        } else {
+            return null;
         }
-        return null;
+    }
+
+    public static void main(String[] args) {
+        URIMatcher matcher = new URIMatcher("https://example.com/.*");
+        MatchResult result = matcher.match("https://example.com/resource");
+        if (result != null) {
+            System.out.println("Match found: " + result.group());
+        } else {
+            System.out.println("No match found.");
+        }
     }
 }

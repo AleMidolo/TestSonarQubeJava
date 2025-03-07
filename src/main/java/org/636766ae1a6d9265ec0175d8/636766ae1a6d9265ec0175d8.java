@@ -1,13 +1,13 @@
 /**
- * 'Content-Range' HTTP हेडर मान बनाएं।
- * @return 'Content-Range' मान
+ * Construye el valor del encabezado HTTP 'Content-Range'.
+ * @return valor de 'Content-Range'
  */
 private String buildContentRange() {
-    // Assuming some default values for start, end, and total size
-    long start = 0;
-    long end = 1023; // Example end value
-    long totalSize = 2048; // Example total size
+    // Supongamos que tenemos los siguientes valores para el rango de contenido
+    long start = 0; // Inicio del rango
+    long end = 1023; // Fin del rango
+    long total = 2048; // Tamaño total del recurso
 
-    // Format the Content-Range header value
-    return String.format("bytes %d-%d/%d", start, end, totalSize);
+    // Construir el valor del encabezado 'Content-Range'
+    return String.format("bytes %d-%d/%d", start, end, total);
 }

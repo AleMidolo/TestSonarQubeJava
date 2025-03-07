@@ -17,4 +17,9 @@ public class OutputFrameStack {
         }
         return stack.pop();
     }
+
+    // Optional: Method to push elements onto the stack for testing
+    public void push(int value) {
+        stack.push(value);
+    }
 }

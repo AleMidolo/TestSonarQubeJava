@@ -8,7 +8,7 @@ public class ArrayUtils {
      * @param array जाँचने के लिए ऐरे
      * @return दिया गया ऐरे या एक नई ऐरे जिसमें नल नहीं है।
      */
-    static String[] toNoNullStringArray(Object[] array) {
+    public static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {
             return new String[0];
         }
@@ -24,9 +24,8 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Object[] testArray = { "Hello", null, "World", 123, null };
-        String[] result = toNoNullStringArray(testArray);
-
+        Object[] array = { "Hello", null, "World", null, "Java" };
+        String[] result = toNoNullStringArray(array);
         for (String str : result) {
             System.out.println(str);
         }

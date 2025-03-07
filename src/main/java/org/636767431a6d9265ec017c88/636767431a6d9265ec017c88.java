@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
@@ -17,26 +19,15 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
-        // Use a map to store the index of each key in the sorted list
-        Map<K, Integer> keyToIndex = new HashMap<>();
-        for (int i = 0; i < sortedKeys.size(); i++) {
-            keyToIndex.put(sortedKeys.get(i), i);
-        }
-
-        // Compute the lower bound for each key
         for (K key : keys) {
-            int index = keyToIndex.get(key);
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                // If the key is not found, the insertion point gives the lower bound
+                index = -index - 1;
+            }
             lowerBounds.add(index);
         }
 
         return lowerBounds;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
-        List<Integer> keys = Arrays.asList(5, 3, 8, 1, 3);
-        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds); // Output: [2, 1, 3, 0, 1]
     }
 }

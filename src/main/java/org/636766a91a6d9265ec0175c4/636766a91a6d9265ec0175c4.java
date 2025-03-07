@@ -1,10 +1,10 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Object> stack;
+public class FrameStackHandler {
+    private Stack<Object> frameStack;
 
-    public FrameStack() {
-        stack = new Stack<>();
+    public FrameStackHandler() {
+        frameStack = new Stack<>();
     }
 
     /**
@@ -13,14 +13,14 @@ public class FrameStack {
      */
     private void pop(final String descriptor) {
         // Parse the descriptor to determine how many types to pop
-        int numTypesToPop = countTypesInDescriptor(descriptor);
+        int count = countTypesInDescriptor(descriptor);
 
         // Pop the required number of types from the stack
-        for (int i = 0; i < numTypesToPop; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
+        for (int i = 0; i < count; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
             } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
+                throw new IllegalStateException("Frame stack is empty.");
             }
         }
     }
@@ -33,17 +33,25 @@ public class FrameStack {
     private int countTypesInDescriptor(String descriptor) {
         // This is a simplified example. In a real implementation, you would need to parse
         // the descriptor string according to the JVM specification to determine the number of types.
-        // For example, a method descriptor like "(I)D" has one argument (int) and returns a double.
-        // Here, we assume the descriptor is a simple type name like "I" for int, "D" for double, etc.
-        return descriptor.length();
+        // For example, a descriptor like "(Ljava/lang/String;I)V" would indicate two types to pop.
+        // Here, we assume the descriptor is a simple type name like "Ljava/lang/String;".
+
+        if (descriptor.startsWith("L") && descriptor.endsWith(";")) {
+            return 1;
+        } else if (descriptor.equals("I") || descriptor.equals("J") || descriptor.equals("F") || descriptor.equals("D")) {
+            return 1;
+        } else if (descriptor.startsWith("[")) {
+            return 1;
+        } else {
+            throw new IllegalArgumentException("Unsupported descriptor: " + descriptor);
+        }
     }
 
     // Example usage
     public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(1); // Example: pushing an int
-        frameStack.stack.push(2.0); // Example: pushing a double
-
-        frameStack.pop("ID"); // Pop two elements corresponding to int and double
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("Ljava/lang/String;");
+        handler.frameStack.push("I");
+        handler.pop("(Ljava/lang/String;I)V");
     }
 }

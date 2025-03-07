@@ -11,8 +11,10 @@ public class CustomOutputStream extends OutputStream {
         // Assuming this method is part of a class that extends OutputStream
         // and has access to the underlying output mechanism.
         // For example, writing to a file or network stream.
-        // Here, we just print the bytes to the standard output for demonstration.
-        System.out.write(b);
+        // Here, we just print the bytes to the console as an example.
+        for (byte value : b) {
+            System.out.print((char) value);
+        }
     }
 
     @Override
@@ -24,9 +26,9 @@ public class CustomOutputStream extends OutputStream {
 
     public static void main(String[] args) {
         try {
-            CustomOutputStream cos = new CustomOutputStream();
+            CustomOutputStream stream = new CustomOutputStream();
             byte[] data = "Hello, World!".getBytes();
-            cos.write(data);
+            stream.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,8 +4,8 @@ public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> prev;
         ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -49,8 +49,8 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.prev = null;
         node.next = null;
+        node.prev = null;
         size--;
     }
 

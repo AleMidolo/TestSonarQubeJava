@@ -10,13 +10,13 @@ public class GraphUtils {
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         for (V vertex : v) {
-            sum += vertex.getWeight(); // Assuming V has a method getWeight() to get the weight of the vertex
+            sum += vertex.getWeight(); // Assuming V has a method getWeight() to retrieve the weight
         }
         return sum;
     }
 }
 
-// Assuming the Vertex class is defined as follows:
+// Assuming the V class is defined as follows:
 class V {
     private double weight;
 

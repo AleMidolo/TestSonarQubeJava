@@ -18,16 +18,20 @@ public class PropertySubstitution {
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
 
-        // Use StringBuffer to build the result with substitutions
+        // Use a StringBuffer to build the result
         StringBuffer result = new StringBuffer();
 
+        // Iterate through the matches and replace variables
         while (matcher.find()) {
-            // Extract the variable name from the match
-            String variableName = matcher.group(1);
-            // Get the value of the variable from the properties
-            String variableValue = props.getProperty(variableName, "");
-            // Replace the variable in the original string with its value
-            matcher.appendReplacement(result, Matcher.quoteReplacement(variableValue));
+            String variableKey = matcher.group(1);
+            String variableValue = props.getProperty(variableKey);
+            if (variableValue != null) {
+                // Replace the variable with its value from the properties
+                matcher.appendReplacement(result, Matcher.quoteReplacement(variableValue));
+            } else {
+                // If the variable is not found, leave it as is
+                matcher.appendReplacement(result, Matcher.quoteReplacement(matcher.group(0)));
+            }
         }
         matcher.appendTail(result);
 
@@ -36,10 +40,10 @@ public class PropertySubstitution {
 
     public static void main(String[] args) {
         Properties props = new Properties();
+        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
-        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, World!
+        System.out.println(result); // Output: Hello, John!
     }
 }

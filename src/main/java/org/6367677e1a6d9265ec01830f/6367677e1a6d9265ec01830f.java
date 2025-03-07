@@ -19,14 +19,13 @@ public class LoggingEvent {
     }
 }
 
-public class LogFormatter {
-
+public class Formatter {
     /**
      * रूपांतर पैटर्न द्वारा निर्दिष्ट एक स्वरूपित स्ट्रिंग उत्पन्न करता है।
      */
     public String format(LoggingEvent event) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = dateFormat.format(event.getTimestamp());
-        return String.format("[%s] %s", formattedDate, event.getMessage());
+        return "[" + formattedDate + "] " + event.getMessage();
     }
 }

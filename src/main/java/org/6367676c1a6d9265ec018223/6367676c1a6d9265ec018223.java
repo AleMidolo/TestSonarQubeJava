@@ -13,13 +13,27 @@ public class CollectionUtils {
         if (collection == null || element == null) {
             return false;
         }
+        
         Iterator iterator = collection.iterator();
         while (iterator.hasNext()) {
-            Object currentElement = iterator.next();
-            if (currentElement == element) {
+            Object current = iterator.next();
+            if (current == element) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        Collection<String> collection = new java.util.ArrayList<>();
+        collection.add("Hello");
+        collection.add("World");
+
+        String element = "Hello";
+        System.out.println(containsInstance(collection, element)); // Should print true
+
+        String newElement = new String("Hello");
+        System.out.println(containsInstance(collection, newElement)); // Should print false
     }
 }

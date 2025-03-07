@@ -2,38 +2,9 @@ import java.util.Objects;
 
 class Node {
     // Node class implementation
-    private int id;
-    private boolean isVirtual;
-
-    public Node(int id, boolean isVirtual) {
-        this.id = id;
-        this.isVirtual = isVirtual;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return id == node.id && isVirtual == node.isVirtual;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, isVirtual);
-    }
 }
 
 class Edge {
-    // Edge class implementation
     private Node from;
     private Node to;
 
@@ -74,14 +45,12 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(from, to);
-    }
+        // Assuming that if a node is virtual, it has a real counterpart
+        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
+        Node realNext = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
 
-    private Node getRealNode(Node node) {
-        // Assuming there is a method to get the real node from a virtual node
-        // This is a placeholder implementation
-        return new Node(node.getId(), false);
+        return new Edge(realCurrent, realNext);
     }
 }
+
+// Assuming Node class has methods isVirtual() and getRealCounterpart()

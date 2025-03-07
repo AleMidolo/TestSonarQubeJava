@@ -20,14 +20,4 @@ public class Graph<V, E> {
         }
         adjacencyMap.get(sourceVertex).put(targetVertex, e);
     }
-
-    public static void main(String[] args) {
-        Graph<String, Integer> graph = new Graph<>();
-        graph.addToIndex("A", "B", 1);
-        graph.addToIndex("A", "C", 2);
-        graph.addToIndex("B", "C", 3);
-
-        // Example usage
-        System.out.println("Edges added to the graph.");
-    }
 }

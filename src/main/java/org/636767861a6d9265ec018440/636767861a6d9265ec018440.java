@@ -3,19 +3,20 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
         return; // Invalid input, do nothing
     }
 
-    // Split the name into parts based on spaces
-    String[] parts = buf.substring(nameStart).split(" ");
+    // Split the buffer into parts
+    String fullName = buf.toString();
+    String[] parts = fullName.split(" ");
 
     // Abbreviate each part except the last one
     for (int i = 0; i < parts.length - 1; i++) {
-        if (parts[i].length() > 0) {
-            parts[i] = parts[i].substring(0, 1) + ".";
+        if (!parts[i].isEmpty()) {
+            parts[i] = parts[i].charAt(0) + ".";
         }
     }
 
     // Reconstruct the abbreviated name
     String abbreviatedName = String.join(" ", parts);
 
-    // Replace the original name with the abbreviated name in the buffer
-    buf.replace(nameStart, buf.length(), abbreviatedName);
+    // Replace the original content in the buffer
+    buf.replace(0, buf.length(), abbreviatedName);
 }

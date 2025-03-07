@@ -1,10 +1,10 @@
 import java.util.Stack;
 
-public class FrameStackHandler {
-    private Stack<Object> frameStack;
+public class FrameStack {
+    private Stack<Object> stack;
 
-    public FrameStackHandler() {
-        this.frameStack = new Stack<>();
+    public FrameStack() {
+        this.stack = new Stack<>();
     }
 
     /**
@@ -17,10 +17,10 @@ public class FrameStackHandler {
 
         // Pop the required number of types from the stack
         for (int i = 0; i < count; i++) {
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
+            if (!stack.isEmpty()) {
+                stack.pop();
             } else {
-                throw new IllegalStateException("Frame stack is empty.");
+                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
             }
         }
     }
@@ -28,23 +28,21 @@ public class FrameStackHandler {
     /**
      * Helper method to count the number of types in the descriptor.
      * @param descriptor The descriptor string.
-     * @return The number of types in the descriptor.
+     * @return The number of types to pop.
      */
     private int countTypesInDescriptor(String descriptor) {
         // This is a simplified example. In a real implementation, you would need to parse
-        // the descriptor string according to the JVM specification to count the types.
-        // For example, a descriptor like "(Ljava/lang/String;I)V" would have 2 types.
+        // the descriptor string according to the JVM specification to determine the number of types.
+        // For example, a descriptor like "(I)F" would indicate one argument (int) and one return type (float).
         // Here, we assume the descriptor is a simple string where each character represents a type.
         return descriptor.length();
     }
 
     // Example usage
     public static void main(String[] args) {
-        FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push("Type1");
-        handler.frameStack.push("Type2");
-        handler.frameStack.push("Type3");
-
-        handler.pop("Type1Type2"); // Pops 2 types from the stack
+        FrameStack frameStack = new FrameStack();
+        frameStack.stack.push(1); // Example push
+        frameStack.stack.push(2); // Example push
+        frameStack.pop("II"); // Example pop based on descriptor
     }
 }

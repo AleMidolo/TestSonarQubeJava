@@ -14,9 +14,9 @@ public class ConfigurationInitializer {
 
         // Check if the path exists
         if (Files.exists(path)) {
-            System.out.println("Distribution path exists: " + distributionPath);
+            System.out.println("Distribution path exists: " + path.toAbsolutePath());
         } else {
-            System.out.println("Distribution path does not exist: " + distributionPath);
+            System.out.println("Distribution path does not exist: " + path.toAbsolutePath());
         }
     }
 

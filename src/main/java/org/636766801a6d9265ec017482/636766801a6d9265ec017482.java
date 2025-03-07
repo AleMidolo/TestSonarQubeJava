@@ -24,11 +24,13 @@ public class ClassFileBuffer {
 
         // Read data from the InputStream into the buffer
         int bytesRead;
-        while ((bytesRead = in.read(this.buffer, this.readPointer, this.buffer.length - this.readPointer)) != -1) {
-            this.readPointer += bytesRead;
-            if (this.readPointer >= this.buffer.length) {
-                break; // Buffer is full
+        while ((bytesRead = in.read(this.buffer)) != -1) {
+            // If the buffer is full, break the loop
+            if (bytesRead == this.buffer.length) {
+                break;
             }
         }
     }
+
+    // Additional methods to access the buffer and readPointer can be added here
 }

@@ -55,10 +55,6 @@ public class Graph {
             this.weight = weight;
         }
         
-        public Vertex getSource() {
-            return source;
-        }
-        
         public Vertex getDestination() {
             return destination;
         }

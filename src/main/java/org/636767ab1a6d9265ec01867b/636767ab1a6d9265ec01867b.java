@@ -12,24 +12,8 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.addBytes(utf8Bytes);
+        lb.write(utf8Bytes);
         return lb;
-    }
-
-    public static class LinkedBuffer {
-        private final LinkedList<byte[]> buffers = new LinkedList<>();
-
-        public void addBytes(byte[] bytes) {
-            buffers.add(bytes);
-        }
-
-        public LinkedList<byte[]> getBuffers() {
-            return buffers;
-        }
-    }
-
-    public static class WriteSession {
-        // Implementation of WriteSession can be added here
     }
 
     public static void main(String[] args) {
@@ -37,10 +21,27 @@ public class UTF8Writer {
         WriteSession session = new WriteSession();
         LinkedBuffer lb = new LinkedBuffer();
         writeUTF8("Hello, World!", session, lb);
-        
-        // Print the stored bytes for verification
-        for (byte[] buffer : lb.getBuffers()) {
-            System.out.println(new String(buffer, StandardCharsets.UTF_8));
+        System.out.println(lb);
+    }
+}
+
+class WriteSession {
+    // Implementation of WriteSession
+}
+
+class LinkedBuffer {
+    private LinkedList<byte[]> buffer = new LinkedList<>();
+
+    public void write(byte[] bytes) {
+        buffer.add(bytes);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (byte[] bytes : buffer) {
+            sb.append(new String(bytes, StandardCharsets.UTF_8));
         }
+        return sb.toString();
     }
 }

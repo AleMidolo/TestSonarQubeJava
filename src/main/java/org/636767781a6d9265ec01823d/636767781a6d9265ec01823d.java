@@ -10,7 +10,7 @@ public class CustomAppender {
         if (event != null) {
             String message = event.getRenderedMessage();
             System.out.println("Logging Event: " + message);
-            // Qui si può aggiungere ulteriore logica per gestire l'evento di logging
+            // Qui puoi aggiungere ulteriori logiche per gestire l'evento di logging
         }
     }
 }

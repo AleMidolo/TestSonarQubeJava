@@ -8,7 +8,7 @@ public class CustomInputStream extends InputStream {
         this.inputStream = inputStream;
     }
 
-    /** 
+    /**
      * @see InputStream#available() 
      */
     @Override

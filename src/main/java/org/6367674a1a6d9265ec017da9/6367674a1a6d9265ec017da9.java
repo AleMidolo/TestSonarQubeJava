@@ -19,13 +19,15 @@ class DoublyLinkedList<E> {
             throw new IllegalArgumentException("Node cannot be null");
         }
         if (head == null) {
-            head = tail = node;
-            node.next = node.prev = null;
+            head = node;
+            tail = node;
+            node.next = null;
+            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
-            node.next = null;
             tail = node;
+            tail.next = null;
         }
     }
 
@@ -56,8 +58,8 @@ class DoublyLinkedList<E> {
         ListNode<E> current = list.head;
         while (current != null) {
             ListNode<E> nextNode = current.next;
-            this.addListNode(current);
             list.removeListNode(current);
+            this.addListNode(current);
             current = nextNode;
         }
     }

@@ -13,8 +13,8 @@ public class VariableSubstitutor {
         
         // Replace variables in the value
         for (String propKey : props.stringPropertyNames()) {
-            String propValue = props.getProperty(propKey);
-            value = value.replace("${" + propKey + "}", propValue);
+            String placeholder = "${" + propKey + "}";
+            value = value.replace(placeholder, props.getProperty(propKey));
         }
         
         return value;

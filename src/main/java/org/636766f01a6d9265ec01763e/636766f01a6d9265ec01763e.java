@@ -16,6 +16,6 @@ public class CharsetTranslator {
         // Esempio di utilizzo
         String mimeCharset = "UTF-8";
         String javaEquivalent = javaCharset(mimeCharset);
-        System.out.println("L'equivalente Java per " + mimeCharset + " è: " + javaEquivalent);
+        System.out.println("L'equivalente Java per " + mimeCharset + " è " + javaEquivalent);
     }
 }

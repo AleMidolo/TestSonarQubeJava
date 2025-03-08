@@ -21,10 +21,12 @@ public class FilePathUtil {
     }
 
     public static void main(String[] args) {
-        // Test examples
-        System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null));                // Output: null
-        System.out.println(stripFilenameExtension("mypath/myfile."));    // Output: mypath/myfile
+        String path1 = "mypath/myfile.txt";
+        String path2 = "mypath/myfile";
+        String path3 = null;
+
+        System.out.println(stripFilenameExtension(path1)); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(path2)); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(path3)); // Output: null
     }
 }

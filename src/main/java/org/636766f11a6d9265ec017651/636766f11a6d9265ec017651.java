@@ -11,16 +11,19 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Character[] nullToEmpty(final Character[] array) {
-        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
+        if (array == null || array.length == 0) {
+            return EMPTY_ARRAY;
+        }
+        return array;
     }
 
     public static void main(String[] args) {
         Character[] nullArray = null;
-        Character[] emptyArray = {};
-        Character[] filledArray = { 'a', 'b', 'c' };
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = new Character[]{'a', 'b', 'c'};
 
-        System.out.println(nullToEmpty(nullArray)); // Should print: []
-        System.out.println(nullToEmpty(emptyArray)); // Should print: []
-        System.out.println(nullToEmpty(filledArray)); // Should print: [a, b, c]
+        System.out.println(nullToEmpty(nullArray).length); // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
+        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
     }
 }

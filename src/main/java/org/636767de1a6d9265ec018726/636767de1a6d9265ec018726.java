@@ -19,37 +19,29 @@ public class SequenceRangeBuilder {
         return sequenceRanges;
     }
 
-    public static class SequenceRange {
-        private int start;
-        private int end;
-
-        public SequenceRange(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        @Override
-        public String toString() {
-            return "SequenceRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
-        }
-    }
-
     public static void main(String[] args) {
         SequenceRangeBuilder builder = new SequenceRangeBuilder();
         List<SequenceRange> ranges = builder.buildSequenceRanges();
         for (SequenceRange range : ranges) {
             System.out.println(range);
         }
+    }
+}
+
+class SequenceRange {
+    private int start;
+    private int end;
+
+    public SequenceRange(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return "SequenceRange{" +
+                "start=" + start +
+                ", end=" + end +
+                '}';
     }
 }

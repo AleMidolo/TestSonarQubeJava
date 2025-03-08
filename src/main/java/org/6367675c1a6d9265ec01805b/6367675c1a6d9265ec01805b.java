@@ -42,6 +42,7 @@ class EdgeNode {
     EdgeNode next;
     EdgeNode prev;
 
+    // Constructor
     EdgeNode(Edge edge) {
         this.edge = edge;
         this.next = null;
@@ -52,6 +53,7 @@ class EdgeNode {
 class EdgeList {
     EdgeNode head;
 
+    // Constructor
     EdgeList() {
         this.head = null;
     }

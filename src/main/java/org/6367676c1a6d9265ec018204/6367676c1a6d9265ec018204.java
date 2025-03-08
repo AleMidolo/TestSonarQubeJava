@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenation {
+public class StringArrayConcatenator {
 
     /** 
      * Concatenare i dati degli array di Stringa forniti in uno solo, includendo gli elementi sovrapposti due volte. 
@@ -49,7 +49,7 @@ public class ArrayConcatenation {
         String[] result = concatenateStringArrays(array1, array2);
         
         for (String s : result) {
-            System.out.print(s + " ");
+            System.out.println(s);
         }
     }
 }

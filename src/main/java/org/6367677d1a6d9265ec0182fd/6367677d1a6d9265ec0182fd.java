@@ -1,26 +1,23 @@
-public class BooleanConverter {
+public class BooleanParser {
     /**
-     * Si <code>value</code> es "true", se devuelve <code>true</code>. Si <code>value</code> es "false", se devuelve <code>false</code>. De lo contrario, se devuelve <code>default</code>. <p>El caso de <code>value</code> no es importante.
+     * If <code>value</code> is "true", then <code>true</code> is returned. 
+     * If <code>value</code> is "false", then <code>true</code> is returned. 
+     * Otherwise, <code>default</code> is returned.
+     * Case of value is unimportant.
+     * @param value The string to parse
+     * @param defaultValue The default value to return if not true/false
+     * @return boolean result of parsing
      */
-    public static boolean toBoolean(String value, boolean dEfault) {
+    public static boolean parseBoolean(String value, boolean defaultValue) {
         if (value == null) {
-            return dEfault;
+            return defaultValue;
         }
-        String lowerCaseValue = value.toLowerCase();
-        if (lowerCaseValue.equals("true")) {
+        
+        String lowercaseValue = value.toLowerCase();
+        if (lowercaseValue.equals("true") || lowercaseValue.equals("false")) {
             return true;
-        } else if (lowerCaseValue.equals("false")) {
-            return false;
-        } else {
-            return dEfault;
         }
-    }
-
-    public static void main(String[] args) {
-        // Ejemplos de uso
-        System.out.println(toBoolean("true", false));  // true
-        System.out.println(toBoolean("FALSE", true));  // false
-        System.out.println(toBoolean("random", true)); // true
-        System.out.println(toBoolean(null, false));    // false
+        
+        return defaultValue;
     }
 }

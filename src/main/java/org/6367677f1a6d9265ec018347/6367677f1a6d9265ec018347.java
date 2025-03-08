@@ -1,40 +1,21 @@
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.List;
 
-public class TelnetServer {
-    private List<Socket> clients = new ArrayList<>();
+public class ChatServer {
+    private List<PrintWriter> clientWriters;
 
     /**
-     * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
+     * sends a message to each of the clients in telnet-friendly output.
      */
-    public synchronized void send(final String message) {
-        for (Socket client : clients) {
+    public void broadcast(String message) {
+        for (PrintWriter writer : clientWriters) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
-            } catch (IOException e) {
-                // Handle the exception, e.g., remove the client from the list
-                clients.remove(client);
-                e.printStackTrace();
+                writer.println(message);
+                writer.flush();
+            } catch (Exception e) {
+                // Remove failed client
+                clientWriters.remove(writer);
             }
         }
-    }
-
-    /**
-     * Adds a new client to the list of connected clients.
-     */
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
-    }
-
-    /**
-     * Removes a client from the list of connected clients.
-     */
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
     }
 }

@@ -1,30 +1,22 @@
-public class FrameVisitor {
-    private int[] currentFrame;
-    private int nextIndex;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Frame;
 
-    public FrameVisitor() {
-        this.currentFrame = new int[0];
-        this.nextIndex = 0;
-    }
-
-    /**
-     * Inicia la visita de un nuevo "stack map frame", almacenado en {@link #currentFrame}.
-     * @param offset   el desplazamiento de bytecode de la instrucción a la que corresponde el "frame".
-     * @param numLocal el número de variables locales en el "frame".
-     * @param numStack el número de elementos apilados en el "frame".
-     * @return el índice del siguiente elemento que se escribirá en este "frame".
-     */
-    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Calcular el tamaño total del frame
-        int frameSize = numLocal + numStack;
+public class StackMapFrameVisitor {
+    private Frame currentFrame;
+    private int[] locals;
+    private int[] stack;
+    
+    public int startFrame(final int offset, final int numLocal, final int numStack) {
+        // Create arrays to store local variables and stack elements
+        locals = new int[numLocal]; 
+        stack = new int[numStack];
         
-        // Inicializar el frame con el tamaño calculado
-        currentFrame = new int[frameSize];
+        // Create new Frame object to store frame state
+        currentFrame = new Frame(offset);
+        currentFrame.setLocal(numLocal, locals);
+        currentFrame.setStack(numStack, stack);
         
-        // Reiniciar el índice del siguiente elemento
-        nextIndex = 0;
-        
-        // Devolver el índice del siguiente elemento que se escribirá
-        return nextIndex;
+        // Return index where next element should be written (start at 0)
+        return 0;
     }
 }

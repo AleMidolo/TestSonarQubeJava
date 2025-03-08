@@ -1,31 +1,23 @@
-public class CharacterArrayConverter {
+package org.apache.commons.lang3;
 
+public class ArrayUtils {
     /**
-     * <p>Convierte un array de objetos "Character" a primitivos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
-     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
+     * <p>Converts an array of object Characters to primitives.</p>
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * 
+     * @param array  a <code>Character</code> array, may be <code>null</code>
+     * @return a <code>char</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
-    public static char[] toPrimitive(final Character[] array) {
+    public static char[] toPrimitive(Character[] array) {
         if (array == null) {
             return null;
         }
-        char[] result = new char[array.length];
+        
+        final char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("El contenido del arreglo no puede ser nulo.");
-            }
-            result[i] = array[i];
+            result[i] = array[i].charValue();
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Character[] testArray = {'a', 'b', 'c'};
-        char[] primitiveArray = toPrimitive(testArray);
-        for (char c : primitiveArray) {
-            System.out.print(c + " ");
-        }
     }
 }

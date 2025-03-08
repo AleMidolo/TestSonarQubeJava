@@ -1,33 +1,34 @@
-import java.util.Objects;
+import java.lang.reflect.Array;
 
 public class ArrayUtils {
+    
+    // Empty array constants
+    public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+    public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class[0];
+    public static final String[] EMPTY_STRING_ARRAY = new String[0];
+    public static final long[] EMPTY_LONG_ARRAY = new long[0];
+    public static final Long[] EMPTY_LONG_OBJECT_ARRAY = new Long[0];
+    public static final int[] EMPTY_INT_ARRAY = new int[0];
+    public static final Integer[] EMPTY_INTEGER_OBJECT_ARRAY = new Integer[0];
+    public static final short[] EMPTY_SHORT_ARRAY = new short[0];
+    public static final Short[] EMPTY_SHORT_OBJECT_ARRAY = new Short[0];
+    public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+    public static final Byte[] EMPTY_BYTE_OBJECT_ARRAY = new Byte[0];
+    public static final double[] EMPTY_DOUBLE_ARRAY = new double[0];
+    public static final Double[] EMPTY_DOUBLE_OBJECT_ARRAY = new Double[0];
+    public static final float[] EMPTY_FLOAT_ARRAY = new float[0];
+    public static final Float[] EMPTY_FLOAT_OBJECT_ARRAY = new Float[0];
+    public static final boolean[] EMPTY_BOOLEAN_ARRAY = new boolean[0];
+    public static final Boolean[] EMPTY_BOOLEAN_OBJECT_ARRAY = new Boolean[0];
+    public static final char[] EMPTY_CHAR_ARRAY = new char[0];
+    public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
-    // Public static empty array reference
-    public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
-
-    /**
-     * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p>
-     * <p>Este método devuelve un array vacío para un array de entrada <code>null</code>.</p>
-     * <p>Como técnica de optimización de memoria, un array vacío pasado se sobrescribirá con las referencias vacías <code>public static</code> en esta clase.</p>
-     * @param array  el array a verificar si es <code>null</code> o vacío
-     * @return el mismo array, un array vacío <code>public static</code> si la entrada es <code>null</code> o vacía
-     * @since 2.5
-     */
-    public static Byte[] nullToEmpty(final Byte[] array) {
+    @SuppressWarnings("unchecked")
+    public static <T> T[] nullToEmpty(T[] array) {
         if (array == null || array.length == 0) {
-            return EMPTY_BYTE_ARRAY;
+            // Get the type of array and return appropriate empty array
+            return (T[]) Array.newInstance(array == null ? Object.class : array.getClass().getComponentType(), 0);
         }
         return array;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        Byte[] array1 = null;
-        Byte[] array2 = new Byte[0];
-        Byte[] array3 = new Byte[]{1, 2, 3};
-
-        System.out.println(Objects.toString(nullToEmpty(array1))); // Output: []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // Output: []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // Output: [1, 2, 3]
     }
 }

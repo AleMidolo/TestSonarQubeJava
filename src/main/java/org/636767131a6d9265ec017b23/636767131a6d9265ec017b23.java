@@ -1,12 +1,16 @@
-/**
- * Agrega un número de línea de origen correspondiente a esta etiqueta.
- * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
- */
-final void addLineNumber(final int lineNumber) {
-    if (lineNumber <= 0) {
-        throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
+import java.util.Objects;
+
+public class Label {
+    private int sourceLineNumber;
+    
+    /**
+     * Adds a source line number corresponding to this label.
+     * @param lineNumber a source line number (which should be strictly positive).
+     */
+    public void addLineNumber(int lineNumber) {
+        if (lineNumber <= 0) {
+            throw new IllegalArgumentException("Line number must be strictly positive");
+        }
+        this.sourceLineNumber = lineNumber;
     }
-    // Aquí iría la lógica para agregar el número de línea a la etiqueta.
-    // Por ejemplo, podrías tener un campo en la clase para almacenar el número de línea.
-    this.lineNumber = lineNumber;
 }

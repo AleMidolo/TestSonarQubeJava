@@ -1,45 +1,40 @@
-import java.util.Objects;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Cache {
+    private Map<String, Object> cacheMap;
 
-    private METRICS existingData;
+    public Cache() {
+        this.cacheMap = new ConcurrentHashMap<>();
+    }
 
     /**
-     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
-     * @param data que se va a agregar potencialmente.
+     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
+     * @param data to be added potentially.
      */
-    @Override
-    public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Data cannot be null");
-
-        if (existingData == null) {
-            existingData = data;
-        } else {
-            // Aquí se combinan los datos existentes con los nuevos.
-            // Asumiendo que METRICS tiene un método para combinar datos.
-            existingData.combine(data);
+    public void acceptData(Map<String, Object> data) {
+        if (data == null || data.isEmpty()) {
+            return;
         }
-    }
 
-    // Método para obtener los datos existentes (opcional)
-    public METRICS getExistingData() {
-        return existingData;
-    }
-}
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
 
-// Asumiendo que METRICS es una clase con un método combine
-class METRICS {
-    private int value;
-
-    public METRICS(int value) {
-        this.value = value;
-    }
-
-    public void combine(METRICS other) {
-        this.value += other.value;
-    }
-
-    public int getValue() {
-        return value;
+            if (cacheMap.containsKey(key)) {
+                // If value exists, merge with existing value
+                Object existingValue = cacheMap.get(key);
+                if (existingValue instanceof Map && value instanceof Map) {
+                    // If both are maps, merge them
+                    ((Map) existingValue).putAll((Map) value);
+                } else {
+                    // Otherwise replace with new value
+                    cacheMap.put(key, value);
+                }
+            } else {
+                // If key doesn't exist, add new entry
+                cacheMap.put(key, value);
+            }
+        }
     }
 }

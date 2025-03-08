@@ -1,32 +1,24 @@
-import java.util.Objects;
+import java.io.File;
 
-public class FileUtils {
-
+public class PathUtils {
     /**
-     * Elimina la extensión del nombre de archivo de la ruta dada, por ejemplo, "mypath/myfile.txt" -> "mypath/myfile".
-     * @param path la ruta del archivo (puede ser <code>null</code>)
-     * @return la ruta con la extensión del nombre de archivo eliminada, o <code>null</code> si no hay ninguna
+     * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -> "mypath/myfile".
+     * @param path the file path (may be <code>null</code>)
+     * @return the path with stripped filename extension,or <code>null</code> if none
      */
-    public static String stripFilenameExtension(String path) {
+    public static String stripFileExtension(String path) {
         if (path == null) {
             return null;
         }
-
-        int lastSeparatorIndex = path.lastIndexOf('/');
-        int lastDotIndex = path.lastIndexOf('.');
-
-        // Si no hay un punto o el punto está antes del último separador, no hay extensión
-        if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
-            return path;
+        
+        int lastDot = path.lastIndexOf('.');
+        int lastSeparator = Math.max(path.lastIndexOf('/'), path.lastIndexOf(File.separator));
+        
+        // If dot is in the last path element
+        if (lastDot > lastSeparator) {
+            return path.substring(0, lastDot);
         }
-
-        return path.substring(0, lastDotIndex);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("myfile.txt"));         // Output: myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null));                // Output: null
+        
+        return path;
     }
 }

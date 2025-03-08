@@ -1,26 +1,26 @@
 import java.util.Arrays;
 
-public class ArrayComparator {
+public class ArrayMatcher {
+    private int[] internalArray;
+    
+    public ArrayMatcher(int[] array) {
+        this.internalArray = array;
+    }
 
     /**
-     * Devuelve verdadero si el contenido del array interno y el array proporcionado coinciden.
-     * 
-     * @param data El array de bytes a comparar.
-     * @param offset El índice inicial en el array proporcionado desde donde comenzar la comparación.
-     * @param len La longitud de la subsección del array proporcionado a comparar.
-     * @return true si los contenidos coinciden, false en caso contrario.
+     * Returns true if the contents of the internal array and the provided array match.
+     * @param otherArray The array to compare against the internal array
+     * @return boolean indicating if arrays match
      */
-    public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {
-        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len != internalArray.length) {
+    public boolean matches(int[] otherArray) {
+        if (otherArray == null || internalArray == null) {
             return false;
         }
-
-        for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
-                return false;
-            }
+        
+        if (otherArray.length != internalArray.length) {
+            return false;
         }
-
-        return true;
+        
+        return Arrays.equals(internalArray, otherArray);
     }
 }

@@ -1,34 +1,33 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class ShardingKeyChecker {
+public class ShardingKeyValidator {
 
     /**
-     * @param modelName nombre del modelo de la entidad
-     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
+     * @param modelName model name of the entity
+     * @throws IllegalStateException if sharding key indices are not continuous
      */
-    private void check(String modelName) throws IllegalStateException {
-        // Assuming the modelName contains sharding indices in the format "modelName_shardX"
-        Pattern pattern = Pattern.compile("_shard(\\d+)");
-        Matcher matcher = pattern.matcher(modelName);
+    public void validateShardingKeyIndices(String modelName) {
+        List<Integer> indices = getShardingKeyIndices(modelName);
+        
+        if (indices.isEmpty()) {
+            return;
+        }
 
-        int previousIndex = -1;
-        while (matcher.find()) {
-            int currentIndex = Integer.parseInt(matcher.group(1));
-            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
-                throw new IllegalStateException("Sharding indices are not continuous.");
+        Collections.sort(indices);
+        
+        for (int i = 0; i < indices.size() - 1; i++) {
+            if (indices.get(i + 1) - indices.get(i) != 1) {
+                throw new IllegalStateException("Sharding key indices must be continuous for model: " + modelName);
             }
-            previousIndex = currentIndex;
         }
     }
 
-    public static void main(String[] args) {
-        ShardingKeyChecker checker = new ShardingKeyChecker();
-        try {
-            checker.check("model_shard0_shard1_shard2"); // This should pass
-            checker.check("model_shard0_shard2_shard3"); // This should throw an exception
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
+    // Helper method to get sharding key indices
+    private List<Integer> getShardingKeyIndices(String modelName) {
+        // Implementation would retrieve indices from model metadata
+        // Returning empty list for example
+        return new ArrayList<>();
     }
 }

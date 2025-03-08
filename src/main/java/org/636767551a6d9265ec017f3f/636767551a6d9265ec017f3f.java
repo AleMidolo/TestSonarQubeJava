@@ -1,26 +1,14 @@
 public class ArrayUtils {
-
     /**
-     * Intercambia los dos elementos en los índices especificados en el arreglo dado.
-     * @param <V> el tipo de elementos en el arreglo
-     * @param arr el arreglo
-     * @param i el índice del primer elemento
-     * @param j el índice del segundo elemento
+     * Swaps the two elements at the specified indices in the given array.
+     * @param <V> the type of elements in the array
+     * @param arr the array
+     * @param i the index of the first element
+     * @param j the index of the second element
      */
-    public static final <V> void swap(V[] arr, int i, int j) {
-        if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
-            throw new IllegalArgumentException("Índices fuera de rango o arreglo nulo.");
-        }
+    public static <V> void swap(V[] arr, int i, int j) {
         V temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Integer[] arr = {1, 2, 3, 4, 5};
-        System.out.println("Antes del intercambio: " + java.util.Arrays.toString(arr));
-        swap(arr, 1, 3);
-        System.out.println("Después del intercambio: " + java.util.Arrays.toString(arr));
     }
 }

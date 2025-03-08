@@ -1,40 +1,31 @@
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Map;
+import org.apache.commons.beanutils.BeanMap;
+import java.util.Iterator;
 
-public class BeanMap {
-    private Map<String, Object> properties;
-
-    public BeanMap(Map<String, Object> properties) {
-        this.properties = properties;
-    }
-
+public class BeanMapUtils {
+    
+    /**
+     * Puts all of the writable properties from the given BeanMap into this BeanMap. 
+     * Read-only and Write-only properties will be ignored.
+     * @param map the BeanMap whose properties to put
+     */
     public void putAllWriteable(BeanMap map) {
-        try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
-            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+        if (map == null) {
+            return;
+        }
 
-            for (PropertyDescriptor pd : propertyDescriptors) {
-                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
-                    Method readMethod = pd.getReadMethod();
-                    Object value = readMethod.invoke(map);
-                    this.properties.put(pd.getName(), value);
+        Iterator<?> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
+            String propertyName = entry.getKey().toString();
+            
+            // Check if property is writable in source map
+            if (map.isWriteable(propertyName)) {
+                Object value = entry.getValue();
+                // Only put if property exists and is writable in this map
+                if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
+                    this.put(propertyName, value);
                 }
             }
-        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
         }
-    }
-
-    public Object getProperty(String key) {
-        return properties.get(key);
-    }
-
-    public void setProperty(String key, Object value) {
-        properties.put(key, value);
     }
 }

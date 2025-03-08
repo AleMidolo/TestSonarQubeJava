@@ -1,17 +1,30 @@
-import com.alibaba.fastjson2.JSONWriter;
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import java.util.EnumSet;
 
-public class MyClass {
+public class JsonSerializer {
 
     /**
-     * Serializar a JSON {@link String}
-     * @param features características que se habilitarán en la serialización
+     * Serialize to JSON {@link String}
+     * @param features features to be enabled in serialization
      * @return JSON {@link String}
      */
-    @SuppressWarnings("unchecked")
-    public String toString(JSONWriter.Feature... features) {
-        // Assuming this method is part of a class that can be serialized to JSON
-        // Using Fastjson2 to serialize the object to a JSON string with the specified features
-        return JSON.toJSONString(this, features);
+    public String serializeToJson(EnumSet<SerializationFeature> features) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            
+            // Enable all specified serialization features
+            if (features != null) {
+                for (SerializationFeature feature : features) {
+                    mapper.enable(feature);
+                }
+            }
+
+            // Convert object to JSON string
+            return mapper.writeValueAsString(this);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error serializing object to JSON", e);
+        }
     }
 }

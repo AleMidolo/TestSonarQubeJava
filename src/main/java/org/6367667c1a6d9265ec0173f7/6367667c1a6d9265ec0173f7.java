@@ -1,12 +1,20 @@
-public boolean hasBytes() {
-    // Assuming 'body' is a field in the class where this method is defined
-    // and it is of type Object or a specific type that can hold different data types.
-    // This method checks if the 'body' is an instance of byte[].
+import java.util.Arrays;
 
-    // Example implementation:
-    // return body instanceof byte[];
+public class BodyValidator {
+    private byte[] body;
+    
+    public BodyValidator(byte[] body) {
+        this.body = body;
+    }
 
-    // Since the actual field is not provided, here's a generic implementation:
-    Object body = this.body; // Assuming 'body' is a field in the class
-    return body instanceof byte[];
+    /**
+     * True is the body is a byte array
+     * @return True is the body is a byte array
+     */
+    public boolean isByteArray() {
+        if (body == null) {
+            return false;
+        }
+        return body.getClass().isArray() && body.getClass().getComponentType() == byte.class;
+    }
 }

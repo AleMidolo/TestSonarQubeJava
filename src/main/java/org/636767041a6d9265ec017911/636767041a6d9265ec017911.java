@@ -1,24 +1,17 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Registrar {
+public class ObjectRegistry {
+    // Set to store registered objects
     private static final Set<Object> registeredObjects = new HashSet<>();
-
+    
     /**
-     * <p> Registra el objeto dado. Utilizado por los métodos de reflexión para evitar bucles infinitos. </p>
-     * @param value El objeto a registrar.
+     * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
+     * @param value The object to register.
      */
-    public static void register(Object value) {
+    public void registerObject(Object value) {
         if (value != null) {
             registeredObjects.add(value);
         }
-    }
-
-    public static boolean isRegistered(Object value) {
-        return registeredObjects.contains(value);
-    }
-
-    public static void clearRegistry() {
-        registeredObjects.clear();
     }
 }

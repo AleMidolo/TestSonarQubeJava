@@ -1,45 +1,32 @@
-import org.apache.log4j.spi.LoggingEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventBuffer {
-    private LoggingEvent[] buffer;
-    private int size;
-    private int capacity;
+    private List<Event> events;
+    private static final int MAX_BUFFER_SIZE = 100;
 
-    public EventBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new LoggingEvent[capacity];
-        this.size = 0;
+    public EventBuffer() {
+        events = new ArrayList<>();
     }
 
     /**
-     * Agrega un <code>evento</code> como el último evento en el búfer.
+     * Add an <code>event</code> as the last event in the buffer.
+     * @param event The event to add to the buffer
      */
-    public void add(LoggingEvent event) {
-        if (size < capacity) {
-            buffer[size] = event;
-            size++;
-        } else {
-            // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
-            // 1. Ignorar el nuevo evento
-            // 2. Sobrescribir el evento más antiguo (implementación de un búfer circular)
-            // 3. Lanzar una excepción
-            // Aquí se implementa la opción de sobrescribir el evento más antiguo
-            System.arraycopy(buffer, 1, buffer, 0, size - 1);
-            buffer[size - 1] = event;
+    public void addEvent(Event event) {
+        if (event == null) {
+            throw new IllegalArgumentException("Event cannot be null");
         }
-    }
 
-    // Método para obtener el tamaño actual del búfer
-    public int size() {
-        return size;
-    }
-
-    // Método para obtener el evento en una posición específica
-    public LoggingEvent get(int index) {
-        if (index >= 0 && index < size) {
-            return buffer[index];
-        } else {
-            throw new IndexOutOfBoundsException("Índice fuera de los límites del búfer");
+        if (events.size() >= MAX_BUFFER_SIZE) {
+            events.remove(0); // Remove oldest event if buffer is full
         }
+
+        events.add(event);
     }
+}
+
+// Event class for reference
+class Event {
+    // Event implementation details
 }

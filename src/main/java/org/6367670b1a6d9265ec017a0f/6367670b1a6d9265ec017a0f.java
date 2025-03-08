@@ -1,35 +1,35 @@
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StringUtils {
-
     /**
-     * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado.
-     * 
-     * @param str La cadena en la que se buscará.
-     * @param searchStrArray Lista de cadenas que se buscarán en la cadena principal.
-     * @return true si la cadena contiene alguna de las cadenas de búsqueda, false en caso contrario.
+     * Case in-sensitive Checks if the String contains any character in the given set of string.
+     * @param str The string to check
+     * @param searchChars The set of characters to search for
+     * @return true if str contains any character in searchChars (case insensitive), false otherwise
      */
-    public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
-        if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
+    public static boolean containsAnyIgnoreCase(String str, String searchChars) {
+        if (str == null || searchChars == null) {
             return false;
         }
-
-        String lowerCaseStr = str.toLowerCase();
-        for (String searchStr : searchStrArray) {
-            if (searchStr != null && lowerCaseStr.contains(searchStr.toLowerCase())) {
+        
+        // Convert both strings to lowercase for case-insensitive comparison
+        String lowerStr = str.toLowerCase();
+        String lowerSearchChars = searchChars.toLowerCase();
+        
+        // Convert search chars to a Set for O(1) lookup
+        Set<Character> searchSet = new HashSet<>();
+        for (char c : lowerSearchChars.toCharArray()) {
+            searchSet.add(c);
+        }
+        
+        // Check each character in the input string
+        for (char c : lowerStr.toCharArray()) {
+            if (searchSet.contains(c)) {
                 return true;
             }
         }
-
-        return false;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        List<String> searchStrings = List.of("hola", "mundo", "java");
-        String text = "Bienvenido al Mundo de la Programación en Java!";
         
-        boolean result = containsAnyIgnoreCase(text, searchStrings);
-        System.out.println("¿El texto contiene alguna de las cadenas? " + result);
+        return false;
     }
 }

@@ -1,57 +1,26 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.avro.Schema;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.avro.io.BinaryEncoder;
-import org.objenesis.strategy.StdInstantiatorStrategy;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
+import java.nio.ByteBuffer;
 
-public class SerializationUtil {
+public class MessageSerializer {
 
     /**
-     * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
-     * @return el tamaño del mensaje
+     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
+     * @param message The byte array message to serialize
+     * @param out The output stream to write to
+     * @return the size of the message
+     * @throws IOException if an I/O error occurs
      */
-    public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using Protostuff
-        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
-
-        // Write the length of the message as a varint
-        writeVarint(out, data.length);
-
-        // Write the serialized message
-        out.write(data);
-
-        // Return the total size of the message (length + data)
-        return data.length + computeVarintSize(data.length);
-    }
-
-    private static void writeVarint(OutputStream out, int value) throws IOException {
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                out.write(value);
-                return;
-            } else {
-                out.write((value & 0x7F) | 0x80);
-                value >>>= 7;
-            }
-        }
-    }
-
-    private static int computeVarintSize(int value) {
-        int size = 0;
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                size++;
-                return size;
-            } else {
-                size++;
-                value >>>= 7;
-            }
-        }
+    public static int serializeMessage(byte[] message, OutputStream out) throws IOException {
+        // Write message length as 4 byte integer
+        ByteBuffer lengthBuffer = ByteBuffer.allocate(4);
+        lengthBuffer.putInt(message.length);
+        out.write(lengthBuffer.array());
+        
+        // Write message content
+        out.write(message);
+        
+        // Return total size (4 bytes for length + message size)
+        return 4 + message.length;
     }
 }

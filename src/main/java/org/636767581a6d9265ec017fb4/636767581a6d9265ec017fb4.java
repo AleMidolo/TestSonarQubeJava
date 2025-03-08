@@ -1,33 +1,24 @@
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 
-public class UpperBoundCalculator<K extends Comparable<K>> {
-
+public class KeyBoundCalculator {
     /**
-     * Encuentra un límite superior mínimo para cada clave.
-     * @param keys una lista de claves.
-     * @return el límite superior de clave calculado.
+     * Finds a minimum lower bound for every key.
+     * @param keys a list of keys.
+     * @return the computed key upper bound.
      */
-    private List<Integer> computeUpperBounds(List<K> keys) {
+    public static int findMinLowerBound(List<Integer> keys) {
         if (keys == null || keys.isEmpty()) {
-            return Collections.emptyList();
+            return 0;
         }
 
-        List<Integer> upperBounds = new ArrayList<>();
-        for (int i = 0; i < keys.size(); i++) {
-            K currentKey = keys.get(i);
-            int upperBound = 0;
-
-            for (int j = 0; j < keys.size(); j++) {
-                if (i != j && currentKey.compareTo(keys.get(j)) >= 0) {
-                    upperBound++;
-                }
+        int minBound = Integer.MAX_VALUE;
+        
+        for (Integer key : keys) {
+            if (key != null && key < minBound) {
+                minBound = key;
             }
-
-            upperBounds.add(upperBound);
         }
 
-        return upperBounds;
+        return minBound == Integer.MAX_VALUE ? 0 : minBound;
     }
 }

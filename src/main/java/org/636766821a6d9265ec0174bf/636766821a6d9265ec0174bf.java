@@ -1,20 +1,23 @@
-import java.util.*;
+import java.beans.Introspector;
 
 public class StringUtils {
+
     /**
-     * Inverso de Introspector.decapitalize
+     * Reverse of Introspector.decapitalize
+     * Capitalizes the first letter of a string, making the first letter uppercase.
+     * If the second letter is uppercase, the first letter remains lowercase.
+     * @param name The string to capitalize
+     * @return The capitalized string
      */
     public static String capitalize(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.length() == 0) {
             return name;
         }
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("world")); // Output: World
-        System.out.println(capitalize(""));      // Output: 
-        System.out.println(capitalize(null));    // Output: null
+        if (name.length() > 1 && Character.isUpperCase(name.charAt(1))) {
+            return name;
+        }
+        char chars[] = name.toCharArray();
+        chars[0] = Character.toUpperCase(chars[0]);
+        return new String(chars);
     }
 }

@@ -1,24 +1,17 @@
-public class Example {
+import java.lang.Throwable;
+
+public class ExceptionUtils {
     private Throwable thrown;
 
-    public Example(Throwable thrown) {
+    public ExceptionUtils(Throwable thrown) {
         this.thrown = thrown;
     }
 
-    public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+    public Throwable getThrown() {
+        return thrown;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Should print true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Should print false
+    public boolean hasMessage() {
+        return getThrown() != null && getThrown().toString() != null && !getThrown().toString().isEmpty();
     }
 }

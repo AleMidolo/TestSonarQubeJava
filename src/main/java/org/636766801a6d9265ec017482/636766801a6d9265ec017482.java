@@ -1,44 +1,33 @@
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
     private int readPointer;
-
-    public ClassFileBuffer(int bufferSize) {
-        this.buffer = new byte[bufferSize];
-        this.readPointer = 0;
-    }
-
+    
     /**
-     * Limpia y llena el búfer de este {@code ClassFileBuffer} con el flujo de bytes proporcionado. 
-     * El puntero de lectura se restablece al inicio del arreglo de bytes.
+     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
+     * The read pointer is reset to the start of the byte array.
+     *
+     * @param inputStream The input stream to read bytes from
+     * @throws IOException If an I/O error occurs while reading from the stream
      */
-    public void readFrom(final InputStream in) throws IOException {
-        if (in == null) {
-            throw new IllegalArgumentException("InputStream no puede ser nulo");
+    public void fillBuffer(InputStream inputStream) throws IOException {
+        // Create a ByteArrayOutputStream to store bytes
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        
+        // Read bytes from input stream
+        byte[] temp = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(temp)) != -1) {
+            byteStream.write(temp, 0, bytesRead);
         }
-
-        // Limpiar el buffer
-        for (int i = 0; i < buffer.length; i++) {
-            buffer[i] = 0;
-        }
-
-        // Leer los datos del InputStream al buffer
-        int bytesRead = in.read(buffer);
-        if (bytesRead == -1) {
-            throw new IOException("No se pudieron leer datos del InputStream");
-        }
-
-        // Restablecer el puntero de lectura al inicio del buffer
+        
+        // Clear existing buffer and fill with new bytes
+        buffer = byteStream.toByteArray();
+        
+        // Reset read pointer to start
         readPointer = 0;
-    }
-
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getReadPointer() {
-        return readPointer;
     }
 }

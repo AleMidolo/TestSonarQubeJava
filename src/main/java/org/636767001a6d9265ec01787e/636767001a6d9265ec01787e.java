@@ -1,9 +1,14 @@
-@Override
-public String toString() {
-    // Aquí se debe implementar la lógica para construir y retornar la cadena.
-    // Por ejemplo, si la clase tiene un atributo 'builder' que es un StringBuilder:
-    // return builder.toString();
-    
-    // Como no se proporciona más contexto, se retorna una cadena vacía como placeholder.
-    return "";
+public class StringBuilder {
+    private char[] buffer;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 16;
+
+    public StringBuilder() {
+        buffer = new char[DEFAULT_CAPACITY];
+        size = 0;
+    }
+
+    public String toString() {
+        return new String(buffer, 0, size);
+    }
 }

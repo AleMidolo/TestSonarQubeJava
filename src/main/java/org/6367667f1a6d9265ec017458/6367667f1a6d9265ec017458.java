@@ -1,27 +1,16 @@
-import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class AtmosphereFramework {
-    // Assuming this class has a method to add and remove AtmosphereHandlers
-    private Map<String, AtmosphereHandler> handlers = new HashMap<>();
-
-    /**
-     * Elimina un {@link AtmosphereHandler}.
-     * @param mapping el mapeo utilizado al invocar {@link #addAtmosphereHandler(String, AtmosphereHandler)};
-     * @return true si se eliminó
-     */
+public class AtmosphereHandlerManager {
+    private final Map<String, AtmosphereHandler> handlers = new ConcurrentHashMap<>();
+    
     public boolean removeAtmosphereHandler(String mapping) {
-        if (handlers.containsKey(mapping)) {
-            handlers.remove(mapping);
-            return true;
+        if (mapping == null) {
+            return false;
         }
-        return false;
+        
+        AtmosphereHandler removed = handlers.remove(mapping);
+        return removed != null;
     }
-
-    // Example method to add an AtmosphereHandler
-    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
-        handlers.put(mapping, handler);
-    }
-
-    // Other methods and fields of the AtmosphereFramework class
 }

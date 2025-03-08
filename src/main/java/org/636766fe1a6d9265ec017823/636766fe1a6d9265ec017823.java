@@ -1,26 +1,47 @@
-import java.util.HashMap;
-import java.util.Map;
+import org.objectweb.asm.Symbol;
 
-public class ConstantPool {
-    private final Map<String, Integer> nameAndTypeMap = new HashMap<>();
-    private int nextIndex = 1;
+public class SymbolTable {
+    private final Entry[] entries;
+    private int size;
+    private static final int CONSTANT_NAMEANDTYPE = 12;
 
-    /**
-     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos. 
-     * No hace nada si el grupo de constantes ya contiene un elemento similar.
-     *
-     * @param name el nombre de un campo o método.
-     * @param descriptor un descriptor de campo o método.
-     * @return un nuevo símbolo o uno ya existente con el valor dado.
-     */
-    public int addConstantNameAndType(final String name, final String descriptor) {
-        String key = name + ":" + descriptor;
-        if (nameAndTypeMap.containsKey(key)) {
-            return nameAndTypeMap.get(key);
-        } else {
-            int index = nextIndex++;
-            nameAndTypeMap.put(key, index);
-            return index;
+    private static class Entry {
+        final int type;
+        final String name;
+        final String descriptor;
+        Entry next;
+        int index;
+
+        Entry(int type, String name, String descriptor, int index) {
+            this.type = type;
+            this.name = name;
+            this.descriptor = descriptor;
+            this.index = index;
         }
+    }
+
+    public Symbol addConstantNameAndType(final String name, final String descriptor) {
+        int hashCode = hash(CONSTANT_NAMEANDTYPE, name, descriptor);
+        Entry entry = entries[hashCode % entries.length];
+        
+        while (entry != null) {
+            if (entry.type == CONSTANT_NAMEANDTYPE 
+                && entry.name.equals(name)
+                && entry.descriptor.equals(descriptor)) {
+                return new Symbol(entry.index, entry.type, entry.name, entry.descriptor);
+            }
+            entry = entry.next;
+        }
+
+        // Not found, create new entry
+        Entry newEntry = new Entry(CONSTANT_NAMEANDTYPE, name, descriptor, size++);
+        newEntry.next = entries[hashCode % entries.length];
+        entries[hashCode % entries.length] = newEntry;
+        
+        return new Symbol(newEntry.index, newEntry.type, name, descriptor);
+    }
+
+    private static int hash(int type, String name, String descriptor) {
+        return 0x7FFFFFFF & (type + name.hashCode() * descriptor.hashCode());
     }
 }

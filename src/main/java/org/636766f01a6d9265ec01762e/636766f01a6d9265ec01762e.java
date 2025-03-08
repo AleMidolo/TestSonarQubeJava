@@ -1,9 +1,18 @@
+package org.apache.commons.lang3;
+
 /**
- * Verifica si un arreglo de números decimales primitivos está vacío o es <code>null</code>.
- * @param array el arreglo a probar
- * @return <code>true</code> si el arreglo está vacío o es <code>null</code>
- * @since 2.1
+ * Utility class for array operations
  */
-public static boolean isEmpty(final double[] array) {
-    return array == null || array.length == 0;
+public class ArrayUtils {
+
+    /**
+     * <p>Checks if an array of primitive doubles is empty or <code>null</code>.</p>
+     * @param array  the array to test
+     * @return <code>true</code> if the array is empty or <code>null</code>
+     * @since 2.1
+     */
+    public static boolean isEmpty(double[] array) {
+        return array == null || array.length == 0;
+    }
+
 }

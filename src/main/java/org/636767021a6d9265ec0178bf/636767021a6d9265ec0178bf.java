@@ -1,45 +1,37 @@
-import java.util.Objects;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
-/**
- * Convierte el objeto de entrada en un java.lang.Character.
- * 
- * @param type Tipo de dato al que este valor debe ser convertido.
- * @param value El valor de entrada que se va a convertir.
- * @return El valor convertido.
- * @throws Exception si la conversión no se puede realizar con éxito.
- * @since 1.8.0
- */
-@Override
-protected Object convertToType(final Class<?> type, final Object value) throws Exception {
-    if (type != Character.class && type != char.class) {
-        throw new Exception("El tipo de destino no es Character o char.");
-    }
+public class TypeConverter {
 
-    if (value == null) {
-        return null;
-    }
-
-    if (value instanceof Character) {
-        return value;
-    }
-
-    if (value instanceof String) {
-        String strValue = (String) value;
-        if (strValue.length() == 1) {
-            return strValue.charAt(0);
-        } else {
-            throw new Exception("El valor String debe tener exactamente un carácter.");
+    public Character convertToCharacter(Class<?> type, Object value) throws Exception {
+        if (value == null) {
+            return null;
         }
-    }
 
-    if (value instanceof Number) {
-        int intValue = ((Number) value).intValue();
-        if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
-            return (char) intValue;
-        } else {
-            throw new Exception("El valor numérico está fuera del rango de un carácter.");
+        if (value instanceof Character) {
+            return (Character) value;
         }
-    }
 
-    throw new Exception("No se puede convertir el valor a Character.");
+        if (value instanceof String) {
+            String str = (String) value;
+            if (str.length() == 1) {
+                return str.charAt(0);
+            }
+            throw new Exception("Cannot convert String with length > 1 to Character");
+        }
+
+        if (value instanceof Number) {
+            int intValue = ((Number) value).intValue();
+            if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
+                return (char) intValue;
+            }
+            throw new Exception("Number out of range for Character conversion");
+        }
+
+        if (value instanceof Boolean) {
+            return ((Boolean) value) ? '1' : '0';
+        }
+
+        throw new Exception("Cannot convert " + value.getClass().getName() + " to Character");
+    }
 }

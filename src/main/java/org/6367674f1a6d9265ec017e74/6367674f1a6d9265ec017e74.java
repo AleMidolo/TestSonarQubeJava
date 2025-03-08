@@ -1,42 +1,34 @@
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Queue<T> {
-    private LinkedList<T> elements;
+public class QueuePrinter {
+    private Queue<Object> queue;
 
-    public Queue() {
-        elements = new LinkedList<>();
-    }
-
-    public void enqueue(T element) {
-        elements.addLast(element);
-    }
-
-    public T dequeue() {
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    public int size() {
-        return elements.size();
+    public QueuePrinter() {
+        this.queue = new LinkedList<>();
     }
 
     /**
-     * Devuelve una representación textual de la cola.
-     * @return una representación textual de la cola.
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
      */
-    @Override
     public String toString() {
-        return elements.toString();
-    }
+        if (queue.isEmpty()) {
+            return "[]";
+        }
 
-    public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: [1, 2, 3]
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        
+        for (Object element : queue) {
+            sb.append(element);
+            sb.append(", ");
+        }
+        
+        // Remove trailing comma and space
+        sb.setLength(sb.length() - 2);
+        sb.append("]");
+        
+        return sb.toString();
     }
 }

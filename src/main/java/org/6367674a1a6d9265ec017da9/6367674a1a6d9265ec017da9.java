@@ -1,76 +1,90 @@
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class DoublyLinkedList<E> {
+public class LinkedList<T> {
+    private ListNode<T> head;
+    private final Object lock = new Object();
 
-    private static class ListNodeImpl<E> {
-        E element;
-        ListNodeImpl<E> next;
-        ListNodeImpl<E> prev;
+    public void moveAllNodes(LinkedList<T> list) {
+        if (list == null || list == this) {
+            return;
+        }
 
-        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-            this.element = element;
-            this.prev = prev;
-            this.next = next;
+        synchronized (lock) {
+            synchronized (list.lock) {
+                // Store the current head of source list
+                ListNode<T> sourceHead = list.head;
+                
+                if (sourceHead == null) {
+                    return;
+                }
+
+                // Find the last node of source list
+                ListNode<T> sourceTail = sourceHead;
+                while (sourceTail.next != null) {
+                    sourceTail = sourceTail.next;
+                }
+
+                // Connect source list to destination
+                if (head == null) {
+                    head = sourceHead;
+                } else {
+                    sourceTail.next = head;
+                    head = sourceHead;
+                }
+
+                // Clear the source list
+                list.head = null;
+            }
         }
     }
 
-    private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
-    private int size;
+    // Inner class for ListNode
+    private static class ListNode<T> {
+        T data;
+        ListNode<T> next;
 
-    public DoublyLinkedList() {
-        head = null;
-        tail = null;
-        size = 0;
+        ListNode(T data) {
+            this.data = data;
+            this.next = null;
+        }
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
+    // Helper methods
+    public void addListNode(ListNode<T> node) {
+        synchronized (lock) {
+            if (head == null) {
+                head = node;
+            } else {
+                node.next = head;
+                head = node;
+            }
         }
-
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = node;
-        }
-        size++;
     }
 
-    public void removeListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
-        }
+    public ListNode<T> removeListNode(ListNode<T> node) {
+        synchronized (lock) {
+            if (head == null || node == null) {
+                return null;
+            }
 
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
-        }
+            if (head == node) {
+                head = head.next;
+                node.next = null;
+                return node;
+            }
 
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev;
-        }
+            ListNode<T> current = head;
+            while (current.next != null && current.next != node) {
+                current = current.next;
+            }
 
-        node.next = null;
-        node.prev = null;
-        size--;
-    }
+            if (current.next != null) {
+                current.next = node.next;
+                node.next = null;
+                return node;
+            }
 
-    private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
-
-        ListNodeImpl<E> current = list.head;
-        while (current != null) {
-            ListNodeImpl<E> nextNode = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
-            current = nextNode;
+            return null;
         }
     }
 }

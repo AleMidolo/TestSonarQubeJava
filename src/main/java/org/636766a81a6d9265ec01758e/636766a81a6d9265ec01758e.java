@@ -1,53 +1,50 @@
-import java.util.*;
-
-public class PrimeUtil {
-
-    /**
-     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity
-     * (dentro del 11% si desiredCapacity >= 1000).
-     * @param desiredCapacity la capacidad deseada por el usuario.
-     * @return la capacidad que se debe utilizar para una tabla hash.
-     */
-    public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
+public class HashCapacity {
+    public static int getPrimeCapacity(int desiredCapacity) {
+        if (desiredCapacity < 0) {
+            throw new IllegalArgumentException("Capacity cannot be negative");
+        }
+        
+        if (desiredCapacity < 2) {
             return 2;
         }
-        int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
-            candidate++;
+        
+        // Start checking from desiredCapacity
+        int num = desiredCapacity;
+        
+        // If even, add 1 to start checking from next odd number
+        if (num % 2 == 0) {
+            num++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
-            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
-                candidate = desiredCapacity;
-                while (!isPrime(candidate)) {
-                    candidate++;
+        
+        // Keep checking until we find a prime number
+        while (!isPrime(num)) {
+            num += 2;
+            
+            // Check if we've exceeded the 11% threshold for large capacities
+            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
+                // Go back to desired capacity and find previous prime
+                num = desiredCapacity;
+                while (!isPrime(num)) {
+                    num--;
                 }
-                return candidate;
+                break;
             }
         }
-        return candidate;
+        
+        return num;
     }
-
-    private static boolean isPrime(int n) {
-        if (n <= 1) {
-            return false;
-        }
-        if (n <= 3) {
-            return true;
-        }
-        if (n % 2 == 0 || n % 3 == 0) {
-            return false;
-        }
-        for (int i = 5; i * i <= n; i += 6) {
-            if (n % i == 0 || n % (i + 2) == 0) {
+    
+    private static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
+        
+        // Check up to square root of num
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Ejemplo de uso
     }
 }

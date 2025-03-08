@@ -1,31 +1,24 @@
-import java.util.Arrays;
+package org.apache.commons.lang3;
 
-public class ArrayConverter {
-
+public class ArrayUtils {
     /**
-     * <p>Convierte un arreglo de enteros primitivos a objetos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>int</code>
-     * @return un arreglo de <code>Integer</code>, <code>null</code> si el arreglo de entrada es nulo
+     * <p>Converts an array of primitive ints to objects.</p>
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * 
+     * @param array  an <code>int</code> array
+     * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
             return null;
         }
-        Integer[] result = new Integer[array.length];
+        if (array.length == 0) {
+            return new Integer[0];
+        }
+        final Integer[] result = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
+            result[i] = Integer.valueOf(array[i]);
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        int[] primitiveArray = {1, 2, 3, 4, 5};
-        Integer[] objectArray = toObject(primitiveArray);
-        System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
-
-        int[] nullArray = null;
-        Integer[] nullResult = toObject(nullArray);
-        System.out.println(nullResult); // Output: null
     }
 }

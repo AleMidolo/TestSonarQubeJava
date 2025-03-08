@@ -1,17 +1,28 @@
 import java.util.Objects;
 
-public class DataTable {
-    // Assuming DataTable class has necessary fields and methods
-
-    public boolean isCompatible(DataTable dataset) {
-        // Assuming compatibility is determined by comparing the bucket of the current instance with the bucket of the provided dataset
-        // For simplicity, let's assume the bucket is a String field in the DataTable class
-        return Objects.equals(this.getBucket(), dataset.getBucket());
+public class BucketComparator {
+    
+    private String bucketName;
+    private String bucketRegion;
+    
+    public BucketComparator(String name, String region) {
+        this.bucketName = name;
+        this.bucketRegion = region;
     }
 
-    // Assuming a getter method for the bucket field
-    public String getBucket() {
-        // Return the bucket value
-        return "exampleBucket"; // Replace with actual bucket value
+    /**
+     * @return true if the bucket is same.
+     */
+    public boolean isSameBucket(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        BucketComparator other = (BucketComparator) obj;
+        return Objects.equals(bucketName, other.bucketName) && 
+               Objects.equals(bucketRegion, other.bucketRegion);
     }
 }

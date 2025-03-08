@@ -1,32 +1,19 @@
+package org.apache.commons.lang3;
+
 public class CharUtils {
-
-    private static final Character[] CHAR_CACHE = new Character[128];
-
+    
+    private static final Character[] CHAR_ARRAY = new Character[128];
+    
     static {
-        for (int i = 0; i < CHAR_CACHE.length; i++) {
-            CHAR_CACHE[i] = (char) i;
+        for (char c = 0; c < CHAR_ARRAY.length; c++) {
+            CHAR_ARRAY[c] = new Character(c);
         }
     }
-
-    /**
-     * <p>Convierte el carácter a un objeto "Character".</p>
-     * <p>Para caracteres ASCII de 7 bits, utiliza una caché que devolverá el mismo objeto "Character" cada vez.</p>
-     * <pre>
-     * CharUtils.toCharacterObject(' ')  = ' '
-     * CharUtils.toCharacterObject('A')  = 'A'
-     * </pre>
-     * @param ch  el carácter a convertir
-     * @return un objeto "Character" del carácter especificado
-     */
-    public static Character toCharacterObject(final char ch) {
-        if (ch < CHAR_CACHE.length) {
-            return CHAR_CACHE[ch];
+    
+    public static Character toCharacterObject(char ch) {
+        if (ch < CHAR_ARRAY.length) {
+            return CHAR_ARRAY[ch];
         }
-        return ch;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(toCharacterObject(' ')); // Output: ' '
-        System.out.println(toCharacterObject('A')); // Output: 'A'
+        return new Character(ch);
     }
 }

@@ -1,33 +1,31 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class LowerBoundsCalculator<K extends Comparable<K>> {
-
+public class KeyBounds {
     /**
-     * Encuentra un límite inferior máximo para cada llave.
-     * @param keys lista de llaves.
-     * @return los límites inferiores de llaves calculados.
+     * Finds a maximum lower bound for every key.
+     * @param keys list of keys.
+     * @return the computed key lower bounds.
      */
-    private List<Integer> computeLowerBounds(List<K> keys) {
-        if (keys == null || keys.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        List<Integer> lowerBounds = new ArrayList<>();
+    public static Map<Integer, Integer> findKeyLowerBounds(List<Integer> keys) {
+        // Sort keys in ascending order
+        Collections.sort(keys);
+        
+        Map<Integer, Integer> lowerBounds = new HashMap<>();
+        
+        // For each key, find largest value less than it
         for (int i = 0; i < keys.size(); i++) {
-            K currentKey = keys.get(i);
-            int lowerBound = 0;
-
-            for (int j = 0; j < i; j++) {
-                if (keys.get(j).compareTo(currentKey) < 0) {
-                    lowerBound++;
-                }
+            int currentKey = keys.get(i);
+            
+            // If first element, no lower bound exists
+            if (i == 0) {
+                lowerBounds.put(currentKey, null);
+                continue;
             }
-
-            lowerBounds.add(lowerBound);
+            
+            // Get previous element as lower bound
+            lowerBounds.put(currentKey, keys.get(i-1));
         }
-
+        
         return lowerBounds;
     }
 }

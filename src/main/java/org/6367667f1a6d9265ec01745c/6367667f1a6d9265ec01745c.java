@@ -1,42 +1,30 @@
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathUtil {
-
+public class ClasspathUtils {
     /**
-     * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
+     * Add all the jar files in a dir to the classpath, represented as a Vector of URLs.
+     * @param dir The directory containing jar files to add
+     * @param classpath The Vector of URLs representing the classpath
      */
-    @SuppressWarnings("unchecked")
-    public static void addToClassPath(Vector<URL> cpV, String dir) {
-        File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("El directorio proporcionado no existe o no es un directorio válido.");
+    public static void addJarsFromDirectory(File dir, Vector<URL> classpath) {
+        if (dir == null || !dir.isDirectory() || classpath == null) {
+            return;
         }
 
-        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
+        File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
-                try {
-                    URL url = file.toURI().toURL();
-                    cpV.add(url);
-                } catch (MalformedURLException e) {
-                    System.err.println("Error al convertir el archivo a URL: " + file.getAbsolutePath());
-                    e.printStackTrace();
+                if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
+                    try {
+                        classpath.add(file.toURI().toURL());
+                    } catch (Exception e) {
+                        // Skip files that can't be converted to URLs
+                        continue;
+                    }
                 }
             }
-        }
-    }
-
-    public static void main(String[] args) {
-        Vector<URL> classPath = new Vector<>();
-        String directoryPath = "path/to/your/jar/directory";
-        addToClassPath(classPath, directoryPath);
-
-        // Imprimir las URLs agregadas al classpath
-        for (URL url : classPath) {
-            System.out.println(url);
         }
     }
 }

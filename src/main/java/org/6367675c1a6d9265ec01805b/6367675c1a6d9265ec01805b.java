@@ -1,38 +1,46 @@
-// Assuming the class has the following structure for the doubly linked list nodes
-class EdgeNode {
-    EdgeNode prev;
-    EdgeNode next;
-    // Other fields and methods
+import java.util.List;
+
+public class TreeEdge {
+    private TreeEdge prev;
+    private TreeEdge next;
+    private TreeNode source;
+    private TreeNode target;
+    
+    /**
+     * Removes this edge from both doubly linked lists of tree edges.
+     */
+    public void remove() {
+        // Handle previous edge's next pointer
+        if (prev != null) {
+            prev.next = next;
+        }
+        
+        // Handle next edge's previous pointer 
+        if (next != null) {
+            next.prev = prev;
+        }
+        
+        // Remove references from source node
+        if (source != null) {
+            source.removeEdge(this);
+        }
+        
+        // Remove references from target node
+        if (target != null) {
+            target.removeEdge(this);
+        }
+        
+        // Clear this edge's pointers
+        prev = null;
+        next = null;
+        source = null;
+        target = null;
+    }
 }
 
-public class Tree {
-    private EdgeNode head; // Head of the doubly linked list
-    private EdgeNode tail; // Tail of the doubly linked list
-
-    /**
-     * Elimina este borde de ambas listas doblemente enlazadas de bordes del árbol.
-     */
-    public void removeFromTreeEdgeList(EdgeNode node) {
-        if (node == null) {
-            return;
-        }
-
-        // If the node is the head
-        if (node.prev == null) {
-            head = node.next;
-        } else {
-            node.prev.next = node.next;
-        }
-
-        // If the node is the tail
-        if (node.next == null) {
-            tail = node.prev;
-        } else {
-            node.next.prev = node.prev;
-        }
-
-        // Clear the node's pointers to help with garbage collection
-        node.prev = null;
-        node.next = null;
+// Supporting class
+class TreeNode {
+    public void removeEdge(TreeEdge edge) {
+        // Implementation for removing edge from node
     }
 }

@@ -1,15 +1,22 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
+import java.util.List;
+import java.util.ArrayList;
 
-public class MyAtmosphereResource implements AtmosphereResource {
+public class AtmosphereResourceManager {
+    private List<AtmosphereResourceEventListener> listeners;
+    private AtmosphereResource resource;
 
-    @Override
-    public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Assuming this class has a method to add listeners
-        this.listeners.add(e);
-        return this;
+    public AtmosphereResourceManager() {
+        this.listeners = new ArrayList<>();
     }
 
-    // Other necessary methods and fields would be here
-    private List<AtmosphereResourceEventListener> listeners = new ArrayList<>();
+    public void addEventListener(AtmosphereResourceEventListener e) {
+        if (e != null) {
+            listeners.add(e);
+            if (resource != null) {
+                resource.addEventListener(e);
+            }
+        }
+    }
 }

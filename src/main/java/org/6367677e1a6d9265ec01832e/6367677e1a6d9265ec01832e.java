@@ -1,18 +1,35 @@
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class LoggerChecker {
-
+public class LoggerUtils {
     /**
-     * Verifica si el registrador nombrado existe en la jerarquía. Si es así, devuelve su referencia; de lo contrario, devuelve <code>null</code>.
-     * @param name El nombre del registrador que se busca.
-     * @return El registrador si existe, o <code>null</code> si no existe.
+     * Check if the named logger exists in the hierarchy. If so return its reference, otherwise returns <code>null</code>.
+     * @param name The name of the logger to search for.
+     * @return Logger instance if exists, null otherwise
      */
-    public Logger exists(String name) {
-        Logger logger = Logger.getLogger(name);
-        if (logger != null) {
-            return logger;
-        } else {
+    public static Logger exists(String name) {
+        if (name == null || name.trim().isEmpty()) {
             return null;
         }
+
+        try {
+            // Get logger context
+            org.apache.logging.log4j.spi.LoggerContext context = LogManager.getContext(false);
+            
+            // Check if logger exists in context
+            if (context != null) {
+                org.apache.logging.log4j.spi.LoggerConfig loggerConfig = 
+                    context.getConfiguration().getLoggerConfig(name);
+                
+                if (loggerConfig != null && loggerConfig.getName().equals(name)) {
+                    return LogManager.getLogger(name);
+                }
+            }
+        } catch (Exception e) {
+            // Return null if any error occurs during lookup
+            return null;
+        }
+        
+        return null;
     }
 }

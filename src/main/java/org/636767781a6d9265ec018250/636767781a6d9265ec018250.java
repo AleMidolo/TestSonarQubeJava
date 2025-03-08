@@ -1,13 +1,11 @@
-import org.apache.log4j.spi.Filter;
-import org.apache.log4j.spi.LoggingEvent;
+import java.io.File;
+import java.io.FileFilter;
 
-public class MyFilter extends Filter {
+public class FileFilterImpl implements FileFilter {
 
     @Override
-    public int decide(LoggingEvent event) {
-        // Implementación de la lógica de decisión
-        // Aquí puedes agregar la lógica para determinar si hay coincidencia de cadena
-        // Por ejemplo, si no hay coincidencia, devuelve Filter.NEUTRAL
-        return Filter.NEUTRAL;
+    public boolean accept(File pathname) {
+        return true; // NEUTRAL - accepts all files
     }
+
 }

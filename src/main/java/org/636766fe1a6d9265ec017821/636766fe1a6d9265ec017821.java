@@ -1,14 +1,24 @@
 import java.util.Arrays;
 
-/**
- * <p>Agrega al <code>toString</code> el detalle de un array de <code>byte</code>.</p>
- * @param buffer  el <code>StringBuffer</code> a poblar
- * @param fieldName  el nombre del campo, típicamente no se utiliza ya que ya ha sido agregado
- * @param array  el array que se añadirá al <code>toString</code>, no <code>null</code>
- */
-protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array) {
-    if (array == null) {
-        throw new IllegalArgumentException("El array no puede ser nulo.");
+public class ArrayUtils {
+    /**
+     * <p>Append to the <code>toString</code> the detail of a <code>byte</code> array.</p>
+     * @param buffer  the <code>StringBuffer</code> to populate
+     * @param fieldName  the field name, typically not used as already appended
+     * @param array  the array to add to the <code>toString</code>,not <code>null</code>
+     */
+    public void append(StringBuffer buffer, String fieldName, byte[] array) {
+        if (array == null) {
+            throw new IllegalArgumentException("Array must not be null");
+        }
+        
+        buffer.append('[');
+        for (int i = 0; i < array.length; i++) {
+            if (i > 0) {
+                buffer.append(',');
+            }
+            buffer.append(array[i]);
+        }
+        buffer.append(']');
     }
-    buffer.append(Arrays.toString(array));
 }

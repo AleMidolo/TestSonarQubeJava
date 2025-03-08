@@ -1,26 +1,24 @@
-import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Action;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 
-public class AtmosphereResourceInspector {
+public class AtmosphereHandler {
 
-    /**
-     * Suspende automáticamente el {@link AtmosphereResource} basado en el valor de {@link AtmosphereResource.TRANSPORT}.
-     * @param r un {@link AtmosphereResource}
-     * @return {@link Action#CONTINUE}
-     */
-    @Override
-    public Action inspect(AtmosphereResource r) {
-        // Obtener el transporte del recurso
-        AtmosphereResource.TRANSPORT transport = r.transport();
-
-        // Lógica para suspender el recurso basado en el transporte
-        if (transport == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            r.suspend();
-        } else if (transport == AtmosphereResource.TRANSPORT.LONG_POLLING) {
-            r.suspend(-1); // Suspender indefinidamente
+    public Action suspend(AtmosphereResource r) {
+        switch (r.transport()) {
+            case JSONP:
+            case LONG_POLLING:
+                r.suspend(5000L); // 5 seconds timeout for polling transports
+                break;
+            case SSE:
+            case WEBSOCKET:
+                r.suspend(-1); // No timeout for streaming transports
+                break;
+            default:
+                r.suspend(30000L); // 30 seconds default timeout
+                break;
         }
-
-        // Retornar CONTINUE para permitir que el procesamiento continúe
         return Action.CONTINUE;
     }
+
 }

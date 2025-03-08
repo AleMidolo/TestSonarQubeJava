@@ -1,20 +1,27 @@
-public void abbreviate(final int nameStart, final StringBuffer buf) {
-    if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // No operation if buffer is null or nameStart is out of bounds
-    }
+import java.lang.StringBuilder;
 
-    // Find the first space after nameStart
-    int spaceIndex = buf.indexOf(" ", nameStart);
-    if (spaceIndex == -1) {
-        return; // No space found, nothing to abbreviate
-    }
+public class NameAbbreviator {
+    
+    /**
+     * Abbreviate name.
+     * @param buf buffer to append abbreviation
+     * @param nameStart start of name to abbreviate
+     */
+    public static void abbreviateName(StringBuilder buf, String nameStart) {
+        if (nameStart == null || nameStart.isEmpty()) {
+            return;
+        }
 
-    // Get the first character after the space
-    char firstCharAfterSpace = buf.charAt(spaceIndex + 1);
-    if (Character.isWhitespace(firstCharAfterSpace)) {
-        return; // No character after space, nothing to abbreviate
-    }
+        // Add first character
+        buf.append(Character.toUpperCase(nameStart.charAt(0)));
 
-    // Replace the rest of the name with the first character after the space
-    buf.replace(spaceIndex + 1, buf.length(), String.valueOf(firstCharAfterSpace));
+        // Find next capital letter if it exists
+        for (int i = 1; i < nameStart.length(); i++) {
+            char c = nameStart.charAt(i);
+            if (Character.isUpperCase(c)) {
+                buf.append(c);
+                break;
+            }
+        }
+    }
 }

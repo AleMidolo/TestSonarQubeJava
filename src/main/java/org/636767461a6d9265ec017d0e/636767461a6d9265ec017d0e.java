@@ -1,22 +1,50 @@
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.List;
 
-private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-    // Calculate the total sum of all elements in the list
-    long totalSum = bounds.stream().mapToLong(Integer::longValue).sum();
+public class SuffixSum {
+    public static Pair<List<Integer>, Integer> computeSuffixSum(List<Integer> bounds) {
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(new ArrayList<>(), 0);
+        }
 
-    // Calculate the suffix sums
-    List<Integer> suffixSums = new ArrayList<>();
-    int currentSum = 0;
-    for (int i = bounds.size() - 1; i >= 0; i--) {
-        currentSum += bounds.get(i);
-        suffixSums.add(currentSum);
+        int totalSum = 0;
+        List<Integer> suffixSum = new ArrayList<>(bounds.size());
+
+        // Fill suffix sum array with 0s initially
+        for (int i = 0; i < bounds.size(); i++) {
+            suffixSum.add(0);
+        }
+
+        // Calculate total sum and last element of suffix sum
+        for (int num : bounds) {
+            totalSum += num;
+        }
+
+        // Calculate suffix sum
+        suffixSum.set(bounds.size() - 1, bounds.get(bounds.size() - 1));
+        for (int i = bounds.size() - 2; i >= 0; i--) {
+            suffixSum.set(i, suffixSum.get(i + 1) + bounds.get(i));
+        }
+
+        return new Pair<>(suffixSum, totalSum);
     }
-    // Reverse the list to get the suffix sums in the original order
-    Collections.reverse(suffixSums);
+}
 
-    // Return the pair of suffix sums and total sum
-    return Pair.of(suffixSums, totalSum);
+// Helper class to return pair of values
+class Pair<T, U> {
+    private final T first;
+    private final U second;
+
+    public Pair(T first, U second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public T getFirst() {
+        return first;
+    }
+
+    public U getSecond() {
+        return second;
+    }
 }

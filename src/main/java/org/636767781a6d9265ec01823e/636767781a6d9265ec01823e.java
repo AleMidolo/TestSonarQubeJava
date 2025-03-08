@@ -1,53 +1,35 @@
-import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class LogAppender {
-    private List<PrintWriter> clients = new ArrayList<>();
-
-    /**
-     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
-     */
-    protected void append(LoggingEvent event) {
+public class SocketAppender {
+    private List<Socket> clients = new CopyOnWriteArrayList<>();
+    
+    public void handleLogEvent(LoggingEvent event) {
         String message = event.getRenderedMessage();
-        synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.println(message);
-                client.flush();
+        
+        // Iterate through connected clients and write message
+        for (Socket client : clients) {
+            try {
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                writer.println(message);
+            } catch (IOException e) {
+                // Remove client if we can't write to it
+                clients.remove(client);
             }
         }
     }
-
-    /**
-     * Agrega un nuevo cliente a la lista de clientes conectados.
-     * @param clientSocket El socket del cliente conectado.
-     */
-    public void addClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.add(writer);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    
+    // Helper method to add new client connections
+    public void addClient(Socket client) {
+        clients.add(client);
     }
-
-    /**
-     * Elimina un cliente de la lista de clientes conectados.
-     * @param clientSocket El socket del cliente a eliminar.
-     */
-    public void removeClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.remove(writer);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    
+    // Helper method to remove client connections
+    public void removeClient(Socket client) {
+        clients.remove(client);
     }
 }

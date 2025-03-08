@@ -1,32 +1,33 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
-private String parseToken(final char[] terminators) {
-    // Convertir el arreglo de terminadores a un conjunto para búsqueda rápida
-    Set<Character> terminatorSet = new HashSet<>();
-    for (char c : terminators) {
-        terminatorSet.add(c);
+public class TokenParser {
+    private String input;
+    private int currentPosition;
+    
+    public TokenParser(String input) {
+        this.input = input;
+        this.currentPosition = 0;
     }
 
-    StringBuilder token = new StringBuilder();
-    int currentChar;
-
-    // Leer caracteres hasta encontrar un terminador
-    while (true) {
-        try {
-            currentChar = System.in.read();
-        } catch (java.io.IOException e) {
-            throw new RuntimeException("Error reading input", e);
+    public String parseToken(char[] terminators) {
+        if (currentPosition >= input.length()) {
+            return "";
         }
 
-        // Si se encuentra un terminador, terminar la lectura
-        if (terminatorSet.contains((char) currentChar) || currentChar == -1) {
-            break;
+        StringBuilder token = new StringBuilder();
+        
+        while (currentPosition < input.length()) {
+            char currentChar = input.charAt(currentPosition);
+            
+            // Check if current character is a terminator
+            if (Arrays.binarySearch(terminators, currentChar) >= 0) {
+                break;
+            }
+            
+            token.append(currentChar);
+            currentPosition++;
         }
-
-        // Agregar el caracter al token
-        token.append((char) currentChar);
+        
+        return token.toString();
     }
-
-    return token.toString();
 }

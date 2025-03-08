@@ -1,40 +1,48 @@
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CharsetTranslator {
-
+    
     /**
-     * Traduce un nombre de conjunto de caracteres estándar MIME al equivalente en Java.
-     * @param charset El nombre estándar MIME.
-     * @return El equivalente en Java para este nombre.
+     * Translate a MIME standard character set name into the Java equivalent.
+     * @param charset The MIME standard name.
+     * @return The Java equivalent for this name.
      */
-    private static String javaCharset(String charset) {
-        switch (charset.toLowerCase()) {
-            case "us-ascii":
-                return StandardCharsets.US_ASCII.name();
-            case "iso-8859-1":
-                return StandardCharsets.ISO_8859_1.name();
-            case "utf-8":
-                return StandardCharsets.UTF_8.name();
-            case "utf-16":
-                return StandardCharsets.UTF_16.name();
-            case "utf-16be":
-                return StandardCharsets.UTF_16BE.name();
-            case "utf-16le":
-                return StandardCharsets.UTF_16LE.name();
-            default:
-                // Si no es un charset estándar, intenta obtenerlo directamente
-                try {
-                    return Charset.forName(charset).name();
-                } catch (Exception e) {
-                    throw new IllegalArgumentException("Charset no soportado: " + charset);
-                }
+    public static String translateCharset(String charset) {
+        if (charset == null || charset.trim().isEmpty()) {
+            return Charset.defaultCharset().name();
         }
-    }
 
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(javaCharset("utf-8"));  // Debería imprimir "UTF-8"
-        System.out.println(javaCharset("iso-8859-1"));  // Debería imprimir "ISO-8859-1"
+        Map<String, String> charsetMap = new HashMap<>();
+        charsetMap.put("ISO-8859-1", "ISO-8859-1");
+        charsetMap.put("ISO8859_1", "ISO-8859-1");
+        charsetMap.put("ISO-8859-2", "ISO-8859-2"); 
+        charsetMap.put("ISO8859_2", "ISO-8859-2");
+        charsetMap.put("UTF-8", "UTF-8");
+        charsetMap.put("UTF8", "UTF-8");
+        charsetMap.put("US-ASCII", "US-ASCII");
+        charsetMap.put("ASCII", "US-ASCII");
+        charsetMap.put("windows-1252", "windows-1252");
+        charsetMap.put("CP1252", "windows-1252");
+        charsetMap.put("windows-1251", "windows-1251");
+        charsetMap.put("CP1251", "windows-1251");
+        charsetMap.put("SHIFT_JIS", "SHIFT_JIS");
+        charsetMap.put("SJIS", "SHIFT_JIS");
+        
+        String normalizedCharset = charset.trim().toUpperCase();
+        String javaCharset = charsetMap.get(normalizedCharset);
+        
+        if (javaCharset != null) {
+            return javaCharset;
+        }
+        
+        // If no mapping found, try to see if Java supports it directly
+        try {
+            return Charset.forName(charset).name();
+        } catch (Exception e) {
+            // If charset is not recognized, return default charset
+            return Charset.defaultCharset().name();
+        }
     }
 }

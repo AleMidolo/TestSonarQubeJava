@@ -1,47 +1,42 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] buffer;
-    private int size;
+    private byte[] data;
+    private int length;
+    private static final int DEFAULT_CAPACITY = 64;
 
     public ByteVector() {
-        this.buffer = new byte[16]; // Initial capacity
-        this.size = 0;
+        data = new byte[DEFAULT_CAPACITY];
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
-        }
-        if (byteOffset < 0) {
-            throw new IllegalArgumentException("byteOffset must be non-negative");
-        }
-        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
-            throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
-        }
+        if (byteLength > 0) {
+            // Ensure capacity
+            int requiredLength = length + byteLength;
+            if (requiredLength > data.length) {
+                int newCapacity = Math.max(2 * data.length, requiredLength);
+                data = Arrays.copyOf(data, newCapacity);
+            }
 
-        ensureCapacity(size + byteLength);
-
-        if (byteArrayValue == null) {
-            // Fill with null bytes (0)
-            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
-        } else {
-            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
+            if (byteArrayValue != null) {
+                // Copy bytes from input array
+                System.arraycopy(byteArrayValue, byteOffset, data, length, byteLength);
+            } else {
+                // Fill with null bytes
+                Arrays.fill(data, length, length + byteLength, (byte) 0);
+            }
+            
+            length += byteLength;
         }
-
-        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
-            buffer = Arrays.copyOf(buffer, newCapacity);
-        }
+    // Helper methods for testing/verification
+    public byte[] getData() {
+        return Arrays.copyOf(data, length);
     }
 
-    // Optional: Method to get the current buffer (for testing or debugging)
-    public byte[] toByteArray() {
-        return Arrays.copyOf(buffer, size);
+    public int getLength() {
+        return length;
     }
 }

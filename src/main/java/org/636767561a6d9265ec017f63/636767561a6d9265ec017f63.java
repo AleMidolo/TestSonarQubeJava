@@ -1,20 +1,18 @@
 import java.util.*;
 
 public class Graph {
-    private Set<Integer> visitedVertices;
-    private Set<Integer> allVertices;
+    private boolean[] visited;
 
-    public Graph(Set<Integer> allVertices) {
-        this.allVertices = allVertices;
-        this.visitedVertices = new HashSet<>();
-    }
-
-    /** 
-     * Verifica si existen vértices no visitados.
-     * @return true si existen vértices no visitados.
+    /**
+     * Checks whether there exist unvisited vertices.
+     * @return true if there exist unvisited vertices.
      */
-    @Override
-    public boolean hasNext() {
-        return !visitedVertices.containsAll(allVertices);
+    public boolean hasUnvisitedVertices() {
+        for (boolean v : visited) {
+            if (!v) {
+                return true;
+            }
+        }
+        return false;
     }
 }

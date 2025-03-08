@@ -1,71 +1,50 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
+import java.lang.management.ManagementFactory;
 
-public class ThreadSnapshotParser {
+public class ThreadSnapshotLoader {
 
-    public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
-        List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(file.toPath());
+    /**
+     * load thread snapshots in appointing time range
+     * @param startTime start time in milliseconds
+     * @param endTime end time in milliseconds  
+     * @return List of ThreadInfo objects containing thread snapshots
+     */
+    public List<ThreadInfo> loadThreadSnapshots(long startTime, long endTime) {
+        List<ThreadInfo> snapshots = new ArrayList<>();
+        
+        // Get the thread management bean
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 
-        for (String line : lines) {
-            ThreadSnapshot snapshot = parseLine(line);
-            if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
-                snapshots.add(snapshot);
+        // Get current time
+        long currentTime = System.currentTimeMillis();
+
+        // Validate time range
+        if (startTime > endTime || endTime > currentTime) {
+            return snapshots;
+        }
+
+        // Get all thread IDs
+        long[] threadIds = threadMXBean.getAllThreadIds();
+
+        // Get thread info for each thread
+        for (long threadId : threadIds) {
+            ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId);
+            
+            if (threadInfo != null) {
+                long threadStartTime = threadInfo.getThreadState() == Thread.State.NEW ? 
+                    System.currentTimeMillis() : threadInfo.getThreadCpuTime();
+                
+                // Only add threads that fall within the time range
+                if (threadStartTime >= startTime && threadStartTime <= endTime) {
+                    snapshots.add(threadInfo);
+                }
             }
         }
 
         return snapshots;
-    }
-
-    private static ThreadSnapshot parseLine(String line) {
-        // Implement the logic to parse a line into a ThreadSnapshot object
-        // This is a placeholder implementation
-        return new ThreadSnapshot();
-    }
-
-    private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined as follows:
-    public static class ThreadSnapshot {
-        private long timestamp;
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(long timestamp) {
-            this.timestamp = timestamp;
-        }
-    }
-
-    public static class ProfileAnalyzeTimeRange {
-        private long startTime;
-        private long endTime;
-
-        public long getStartTime() {
-            return startTime;
-        }
-
-        public void setStartTime(long startTime) {
-            this.startTime = startTime;
-        }
-
-        public long getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(long endTime) {
-            this.endTime = endTime;
-        }
     }
 }

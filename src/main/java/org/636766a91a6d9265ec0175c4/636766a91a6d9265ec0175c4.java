@@ -1,59 +1,31 @@
-import java.util.Stack;
+import org.objectweb.asm.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FrameStackProcessor {
-
-    private Stack<String> frameStack;
-
-    public FrameStackProcessor() {
-        this.frameStack = new Stack<>();
+public class FrameStack {
+    private List<Type> stack;
+    
+    public FrameStack() {
+        stack = new ArrayList<>();
     }
 
-    /**
-     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
-     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
-     */
-    private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            throw new IllegalArgumentException("Descriptor cannot be null or empty");
-        }
-
-        // Determine if the descriptor is a method descriptor
+    public void pop(String descriptor) {
         if (descriptor.startsWith("(")) {
-            // Extract argument types from method descriptor
-            String[] argumentTypes = extractArgumentTypes(descriptor);
-            for (String type : argumentTypes) {
-                if (!frameStack.isEmpty()) {
-                    frameStack.pop();
-                } else {
-                    throw new IllegalStateException("Frame stack is empty");
+            // Method descriptor - parse argument types
+            Type[] argumentTypes = Type.getArgumentTypes(descriptor);
+            for (int i = argumentTypes.length - 1; i >= 0; i--) {
+                int size = argumentTypes[i].getSize();
+                for (int j = 0; j < size; j++) {
+                    stack.remove(stack.size() - 1);
                 }
             }
         } else {
             // Single type descriptor
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
-            } else {
-                throw new IllegalStateException("Frame stack is empty");
+            Type type = Type.getType(descriptor);
+            int size = type.getSize();
+            for (int i = 0; i < size; i++) {
+                stack.remove(stack.size() - 1);
             }
         }
-    }
-
-    private String[] extractArgumentTypes(String methodDescriptor) {
-        // Simplified extraction of argument types from method descriptor
-        // This is a basic implementation and may not cover all cases
-        String arguments = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
-        return arguments.split(";");
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        FrameStackProcessor processor = new FrameStackProcessor();
-        processor.frameStack.push("Ljava/lang/String;");
-        processor.frameStack.push("I");
-        processor.frameStack.push("D");
-
-        processor.pop("(Ljava/lang/String;ID)V");
-
-        System.out.println(processor.frameStack); // Should print: []
     }
 }

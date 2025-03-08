@@ -1,12 +1,14 @@
-import java.util.UUID;
-
-public class SessionUtil {
+public class Session {
     /**
-     * Generates a unique session ID.
-     * 
-     * @return A unique session ID as a String.
+     * Session ID.
      */
-    public static String sessionId() {
-        return UUID.randomUUID().toString();
+    private String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

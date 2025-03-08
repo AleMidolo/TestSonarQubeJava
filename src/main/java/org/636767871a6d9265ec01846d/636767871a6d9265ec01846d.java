@@ -1,32 +1,27 @@
 import java.io.File;
 
-public class ConfigurationDirectoryCreator {
-
-    /**
-     * Crea el directorio donde se escribirá la lista de archivos MRU. El directorio "lf5" se crea en el directorio de Documentos y Configuraciones en máquinas con Windows 2000 y donde sea que apunte la variable user.home en todas las demás plataformas.
-     */
-    public static void createConfigurationDirectory() {
-        // Obtener el directorio de inicio del usuario
+public class DirectoryCreator {
+    
+    public void createMRUDirectoryIfNeeded() {
         String userHome = System.getProperty("user.home");
+        String fileSeparator = System.getProperty("file.separator");
+        String os = System.getProperty("os.name").toLowerCase();
         
-        // Crear la ruta del directorio "lf5"
-        File configDir = new File(userHome, "lf5");
+        String mruDirectory;
         
-        // Verificar si el directorio ya existe
-        if (!configDir.exists()) {
-            // Intentar crear el directorio
-            boolean dirCreated = configDir.mkdir();
-            if (dirCreated) {
-                System.out.println("Directorio 'lf5' creado exitosamente en: " + configDir.getAbsolutePath());
-            } else {
-                System.out.println("No se pudo crear el directorio 'lf5' en: " + configDir.getAbsolutePath());
-            }
+        // Check if Windows 2000
+        if (os.contains("windows") && os.contains("2000")) {
+            mruDirectory = System.getenv("USERPROFILE") + fileSeparator + 
+                          "Documents and Settings" + fileSeparator + "lf5";
         } else {
-            System.out.println("El directorio 'lf5' ya existe en: " + configDir.getAbsolutePath());
+            mruDirectory = userHome + fileSeparator + "lf5";
         }
-    }
-
-    public static void main(String[] args) {
-        createConfigurationDirectory();
+        
+        File directory = new File(mruDirectory);
+        
+        // Create directory if it doesn't exist
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
     }
 }

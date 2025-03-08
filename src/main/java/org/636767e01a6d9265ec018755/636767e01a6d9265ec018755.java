@@ -1,17 +1,40 @@
-import java.util.HashMap;
-import java.util.Map;
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-private Map<String, Object> buildContent(JsonObject jsonObject) {
-    Map<String, Object> content = new HashMap<>();
-    
-    // Check if the JsonObject contains the key "ats"
-    if (jsonObject.has("ats")) {
-        // If "ats" is present, set it in the content map
-        content.put("ats", jsonObject.get("ats").getAsString());
+public class ContentBuilder {
+
+    /**
+     * Build content, if it has ats someone set the ats
+     * @param content The raw content string
+     * @return Processed content with ats extracted
+     */
+    public static String buildContent(String content) {
+        if (content == null || content.isEmpty()) {
+            return "";
+        }
+
+        // Pattern to match @mentions
+        Pattern pattern = Pattern.compile("@\\w+");
+        Matcher matcher = pattern.matcher(content);
+        
+        List<String> mentions = new ArrayList<>();
+        
+        // Find all @mentions
+        while (matcher.find()) {
+            String mention = matcher.group();
+            mentions.add(mention.substring(1)); // Remove @ symbol
+        }
+
+        // If mentions found, process them
+        if (!mentions.isEmpty()) {
+            // Replace @mentions with proper format
+            for (String mention : mentions) {
+                content = content.replace("@" + mention, "[AT]" + mention + "[/AT]");
+            }
+        }
+
+        return content;
     }
-    
-    // You can add more logic here to process other fields in the JsonObject if needed
-    
-    return content;
 }

@@ -2,27 +2,28 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 public class TypeResolver {
-
     /**
-     * Resuelve el primer límite para el {@code typeVariable}, devolviendo {@code Unknown.class} si no se puede resolver ninguno.
+     * Resolves the first bound for the typeVariable, returning Unknown.class if none can be resolved.
+     * @param typeVariable The type variable to resolve bounds for
+     * @return The first bound type, or Unknown.class if no bounds exist
      */
-    public static Type resolveBound(TypeVariable<?> typeVariable) {
+    public static Class<?> resolveFirstBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
-        if (bounds.length > 0) {
-            return bounds[0];
-        } else {
+        
+        if (bounds == null || bounds.length == 0) {
             return Unknown.class;
         }
-    }
 
-    // Clase ficticia para representar un tipo desconocido
-    public static class Unknown {
-    }
+        Type firstBound = bounds[0];
+        if (firstBound instanceof Class) {
+            return (Class<?>) firstBound;
+        }
 
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        TypeVariable<?> typeVariable = String.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVariable);
-        System.out.println("Bound: " + bound);
+        return Unknown.class;
     }
+}
+
+// Helper class representing unknown type
+class Unknown {
+    private Unknown() {} // Prevent instantiation
 }

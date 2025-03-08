@@ -1,26 +1,22 @@
+package org.apache.commons.lang3;
+
 public class ArrayUtils {
-
     /**
-     * <p>Verifica si dos arreglos tienen la misma longitud, tratando los arreglos <code>null</code> como longitud <code>0</code>.</p>
-     * @param array1 el primer arreglo, puede ser <code>null</code>
-     * @param array2 el segundo arreglo, puede ser <code>null</code>
-     * @return <code>true</code> si la longitud de los arreglos coincide, tratando <code>null</code> como un arreglo vacío
+     * <p>Checks whether two arrays are the same length, treating <code>null</code> arrays as length <code>0</code>.</p>
+     * @param array1 the first array, may be <code>null</code>
+     * @param array2 the second array, may be <code>null</code>
+     * @return <code>true</code> if length of arrays matches, treating<code>null</code> as an empty array
      */
-    public static boolean isSameLength(final double[] array1, final double[] array2) {
-        int length1 = (array1 == null) ? 0 : array1.length;
-        int length2 = (array2 == null) ? 0 : array2.length;
-        return length1 == length2;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplos de uso
-        double[] arr1 = {1.0, 2.0, 3.0};
-        double[] arr2 = {4.0, 5.0, 6.0};
-        double[] arr3 = null;
-        double[] arr4 = {};
-
-        System.out.println(isSameLength(arr1, arr2)); // true
-        System.out.println(isSameLength(arr1, arr3)); // false
-        System.out.println(isSameLength(arr3, arr4)); // true
+    public static boolean isSameLength(final Object[] array1, final Object[] array2) {
+        if (array1 == null && array2 == null) {
+            return true;
+        }
+        if (array1 == null) {
+            return array2.length == 0;
+        }
+        if (array2 == null) {
+            return array1.length == 0;
+        }
+        return array1.length == array2.length;
     }
 }

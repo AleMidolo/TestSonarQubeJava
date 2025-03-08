@@ -1,23 +1,28 @@
-import java.nio.ByteBuffer;
+import org.objectweb.asm.ClassReader;
 
-public class ClassReader {
-    private byte[] data;
-
-    public ClassReader(byte[] data) {
-        this.data = data;
-    }
-
+public class ClassReaderUtils {
     /**
-     * Lee un valor long con signo en este {@link ClassReader}. <i>Este método está destinado a subclases de {@link Attribute},
-     * y normalmente no es necesario para generadores de clases o adaptadores.</i>
-     * @param offset el desplazamiento inicial del valor a leer en este {@link ClassReader}.
-     * @return el valor leído.
+     * Reads a signed long value in this {@link ClassReader}. <i>This method is intended for {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
+     * @param offset the start offset of the value to be read in this {@link ClassReader}.
+     * @return the read value.
      */
-    public long readLong(final int offset) {
-        if (offset < 0 || offset + 8 > data.length) {
-            throw new IllegalArgumentException("Offset fuera de rango");
-        }
-        ByteBuffer buffer = ByteBuffer.wrap(data, offset, 8);
-        return buffer.getLong();
+    public long readLong(int offset) {
+        byte[] b = new byte[8];
+        System.arraycopy(this.b, offset, b, 0, 8);
+        
+        return ((long)(b[0] & 0xFF) << 56) |
+               ((long)(b[1] & 0xFF) << 48) |
+               ((long)(b[2] & 0xFF) << 40) | 
+               ((long)(b[3] & 0xFF) << 32) |
+               ((long)(b[4] & 0xFF) << 24) |
+               ((long)(b[5] & 0xFF) << 16) |
+               ((long)(b[6] & 0xFF) << 8) |
+               ((long)(b[7] & 0xFF));
+    }
+    
+    private final byte[] b;
+    
+    public ClassReaderUtils(byte[] b) {
+        this.b = b;
     }
 }

@@ -1,20 +1,13 @@
-public class StringUtils {
-
+public class StringQuoter {
     /**
-     * Convierte el objeto dado en una cadena con comillas simples si es una cadena; manteniendo el objeto tal como está en caso contrario.
-     * @param obj el objeto de entrada (por ejemplo, "miCadena")
-     * @return la cadena entre comillas (por ejemplo, "'miCadena'"), o el objeto de entrada tal como está si no es una cadena
+     * Turn the given Object into a String with single quotes if it is a String; keeping the Object as-is else.
+     * @param obj the input Object (e.g. "myString") 
+     * @return the quoted String (e.g. "'myString'"),or the input object as-is if not a String
      */
-    public static Object quoteIfString(Object obj) {
+    public static Object addQuotes(Object obj) {
         if (obj instanceof String) {
             return "'" + obj + "'";
         }
         return obj;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(quoteIfString("miCadena")); // Salida: 'miCadena'
-        System.out.println(quoteIfString(123));       // Salida: 123
     }
 }

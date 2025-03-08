@@ -1,36 +1,69 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.MatchResult;
 
-public final class URIMatcher {
+public class UriMatcher {
 
-    private final Pattern pattern;
-
-    public URIMatcher(String regex) {
-        this.pattern = Pattern.compile(regex);
-    }
+    private static final String URI_PATTERN = "^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?";
 
     /**
-     * Compara una URI con el patrón.
-     * @param uri la URI a comparar con la plantilla.
-     * @return el resultado de la coincidencia, o null si no hay coincidencia.
+     * Match a URI against the pattern.
+     * @param uri the uri to match against the template.
+     * @return the match result, otherwise null if no match occurs.
      */
-    public final MatchResult match(CharSequence uri) {
-        Matcher matcher = pattern.matcher(uri);
-        if (matcher.matches()) {
-            return matcher.toMatchResult();
-        } else {
+    public static UriMatchResult matchUri(String uri) {
+        if (uri == null) {
             return null;
         }
+
+        Pattern pattern = Pattern.compile(URI_PATTERN);
+        Matcher matcher = pattern.matcher(uri);
+
+        if (!matcher.matches()) {
+            return null;
+        }
+
+        String scheme = matcher.group(2);
+        String authority = matcher.group(4);
+        String path = matcher.group(5);
+        String query = matcher.group(7);
+        String fragment = matcher.group(9);
+
+        return new UriMatchResult(scheme, authority, path, query, fragment);
+    }
+}
+
+class UriMatchResult {
+    private final String scheme;
+    private final String authority; 
+    private final String path;
+    private final String query;
+    private final String fragment;
+
+    public UriMatchResult(String scheme, String authority, String path, String query, String fragment) {
+        this.scheme = scheme;
+        this.authority = authority;
+        this.path = path;
+        this.query = query;
+        this.fragment = fragment;
     }
 
-    public static void main(String[] args) {
-        URIMatcher matcher = new URIMatcher("https://example.com/.*");
-        MatchResult result = matcher.match("https://example.com/resource");
-        if (result != null) {
-            System.out.println("Match found: " + result.group());
-        } else {
-            System.out.println("No match found.");
-        }
+    public String getScheme() {
+        return scheme;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public String getFragment() {
+        return fragment;
     }
 }

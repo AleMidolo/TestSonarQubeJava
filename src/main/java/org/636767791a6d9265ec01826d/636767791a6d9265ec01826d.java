@@ -1,38 +1,45 @@
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertySubstitutor {
+public class PropertyResolver {
 
-    public static String findAndSubst(String key, Properties props) {
-        // Obtener el valor asociado con la clave
-        String value = props.getProperty(key);
-        if (value == null) {
-            return null; // Si no se encuentra la clave, retornar null
+    /**
+     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     * @param key The property key to look up
+     * @param props The Properties object containing key-value pairs
+     * @return The resolved property value with variables substituted
+     */
+    public String resolveProperty(String key, Properties props) {
+        if (key == null || props == null) {
+            return null;
         }
 
-        // Expresión regular para encontrar variables en el formato ${variable}
+        String value = props.getProperty(key);
+        if (value == null) {
+            return null;
+        }
+
+        // Pattern to match ${variable} syntax
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Realizar la sustitución de variables
         while (matcher.find()) {
-            String variable = matcher.group(1);
-            String replacement = props.getProperty(variable, "");
-            matcher.appendReplacement(result, replacement);
+            String varName = matcher.group(1);
+            String replacement = props.getProperty(varName);
+            
+            // If no replacement found, leave original ${var} text
+            if (replacement == null) {
+                replacement = "${" + varName + "}";
+            }
+            
+            // Quote replacement string to handle special regex chars
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);
 
         return result.toString();
-    }
-
-    public static void main(String[] args) {
-        Properties props = new Properties();
-        props.setProperty("greeting", "Hello, ${name}!");
-        props.setProperty("name", "World");
-
-        String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, World!
     }
 }

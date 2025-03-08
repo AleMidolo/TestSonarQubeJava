@@ -1,56 +1,45 @@
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentImpl {
-    private final String path;
-    private final boolean decoded;
-
-    public PathSegmentImpl(String path, boolean decoded) {
-        this.path = path;
-        this.decoded = decoded;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public boolean isDecoded() {
-        return decoded;
-    }
-}
-
-public class URIUtils {
-
-    public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> segments = new ArrayList<>();
+public class URIPathDecoder {
+    
+    public static List<String> decode(URI u, boolean decode) {
         String path = u.getPath();
-
+        List<String> segments = new ArrayList<>();
+        
+        // Handle empty or null path
         if (path == null || path.isEmpty()) {
             return segments;
         }
 
-        // Remove the leading '/' if it's an absolute path
+        // Remove leading '/' for absolute paths
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
 
-        String[] parts = path.split("/");
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                String segment = decode ? decodeURIComponent(part) : part;
-                segments.add(new PathSegmentImpl(segment, decode));
+        // Split path into segments
+        String[] rawSegments = path.split("/");
+        
+        // Process each segment
+        for (String segment : rawSegments) {
+            if (segment.isEmpty()) {
+                continue;
             }
+            
+            if (decode) {
+                try {
+                    // Decode segment using UTF-8 encoding
+                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
+                } catch (Exception e) {
+                    // If decoding fails, use raw segment
+                }
+            }
+            segments.add(segment);
         }
-
+        
         return segments;
-    }
-
-    private static String decodeURIComponent(String encoded) {
-        try {
-            return java.net.URLDecoder.decode(encoded, "UTF-8");
-        } catch (java.io.UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 encoding not supported", e);
-        }
     }
 }

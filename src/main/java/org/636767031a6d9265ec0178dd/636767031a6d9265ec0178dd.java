@@ -1,44 +1,18 @@
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.servlet.http.HttpServletRequest;
 
-public class HttpRequest {
+public class RequestHandler {
+    private HttpServletRequest request;
 
-    private URL url;
-
-    public HttpRequest(URL url) {
-        this.url = url;
+    public RequestHandler(HttpServletRequest request) {
+        this.request = request;
     }
 
     /**
-     * Recupera la longitud del contenido de la solicitud.
-     * @return La longitud del contenido de la solicitud.
+     * Retrieve the content length of the request.
+     * @return The content length of the request.
      * @since 1.3
      */
-    public long contentLength() {
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("HEAD");
-            return connection.getContentLengthLong();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // Retorna -1 en caso de error
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            URL url = new URL("https://example.com");
-            HttpRequest request = new HttpRequest(url);
-            long length = request.contentLength();
-            System.out.println("Content Length: " + length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public int getContentLength() {
+        return request.getContentLength();
     }
 }

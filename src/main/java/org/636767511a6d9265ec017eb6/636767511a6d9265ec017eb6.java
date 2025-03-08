@@ -1,54 +1,64 @@
 import java.util.function.Predicate;
 
-public class OuterFaceCirculator {
-    private Node current;
-
-    public OuterFaceCirculator(Node node) {
-        this.current = node;
+public class BoundaryTraversal {
+    
+    private static class Node {
+        Node next;
+        Node prev;
+        // other node properties
     }
-
-    public Node getCurrent() {
-        return current;
+    
+    private static class Circulator {
+        private Node current;
+        
+        public Circulator(Node node) {
+            this.current = node;
+        }
+        
+        public Node getNode() {
+            return current;
+        }
+        
+        public void advance() {
+            current = current.next;
+        }
+        
+        public void retreat() {
+            current = current.prev;
+        }
     }
-
-    public void next() {
-        // Assuming Node has a method getNext(int dir) to get the next node in the given direction
-        current = current.getNext(dir);
+    
+    public enum Direction {
+        FORWARD,
+        BACKWARD
     }
-
-    public void previous() {
-        // Assuming Node has a method getPrevious(int dir) to get the previous node in the given direction
-        current = current.getPrevious(dir);
-    }
-}
-
-public class Node {
-    private Node next;
-    private Node previous;
-
-    public Node getNext(int dir) {
-        // Implementation to get the next node based on direction
-        return next;
-    }
-
-    public Node getPrevious(int dir) {
-        // Implementation to get the previous node based on direction
-        return previous;
-    }
-}
-
-public class GraphTraversal {
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-
-        while (circulator.getCurrent() != stop) {
-            if (predicate.test(circulator.getCurrent())) {
+    
+    public Circulator findOnBoundary(Predicate<Node> predicate, Node start, Node stop, Direction dir) {
+        if (start == null || stop == null) {
+            return null;
+        }
+        
+        Circulator circulator = new Circulator(start);
+        
+        // Check if start node satisfies predicate
+        if (predicate.test(circulator.getNode())) {
+            return circulator;
+        }
+        
+        // Traverse boundary until we find matching node or reach stop node
+        while (circulator.getNode() != stop) {
+            if (dir == Direction.FORWARD) {
+                circulator.advance();
+            } else {
+                circulator.retreat();
+            }
+            
+            if (predicate.test(circulator.getNode())) {
                 return circulator;
             }
-            circulator.next();
         }
-
-        // If the predicate is not satisfied, return a circulator to the stop node
-        return new OuterFaceCirculator(stop);
+        
+        // Return circulator to stop node if no match found
+        return new Circulator(stop);
     }
 }

@@ -1,56 +1,58 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeDivider {
-
-    private static final long FETCH_DATA_DURATION = 3600000; // 1 hora en milisegundos
+public class TimeRangeSplitter {
+    
+    // Maximum duration between start and end time
+    private static final Duration FETCH_DATA_DURATION = Duration.ofHours(24);
 
     /**
-     * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
-     *
-     * @param inicio El tiempo de inicio en milisegundos.
-     * @param fin El tiempo de finalización en milisegundos.
-     * @return Una lista de rangos de tiempo divididos.
+     * Split time ranges to insure the start time and end time is smaller than FETCH_DATA_DURATION
+     * @param startTime Start time as Instant
+     * @param endTime End time as Instant
+     * @return List of TimeRange objects containing split time ranges
      */
-    protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
-        List<TimeRange> rangos = new ArrayList<>();
-        long tiempoActual = inicio;
-
-        while (tiempoActual < fin) {
-            long tiempoSiguiente = tiempoActual + FETCH_DATA_DURATION;
-            if (tiempoSiguiente > fin) {
-                tiempoSiguiente = fin;
-            }
-            rangos.add(new TimeRange(tiempoActual, tiempoSiguiente));
-            tiempoActual = tiempoSiguiente;
+    public List<TimeRange> splitTimeRanges(Instant startTime, Instant endTime) {
+        List<TimeRange> timeRanges = new ArrayList<>();
+        
+        if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
+            return timeRanges;
         }
 
-        return rangos;
+        Instant currentStart = startTime;
+        while (currentStart.isBefore(endTime)) {
+            Instant currentEnd = currentStart.plus(FETCH_DATA_DURATION);
+            
+            // If calculated end is after the actual end time, use the actual end time
+            if (currentEnd.isAfter(endTime)) {
+                currentEnd = endTime;
+            }
+            
+            timeRanges.add(new TimeRange(currentStart, currentEnd));
+            currentStart = currentEnd;
+        }
+        
+        return timeRanges;
     }
 
+    // Inner class to hold time range pairs
     public static class TimeRange {
-        private final long inicio;
-        private final long fin;
+        private final Instant start;
+        private final Instant end;
 
-        public TimeRange(long inicio, long fin) {
-            this.inicio = inicio;
-            this.fin = fin;
+        public TimeRange(Instant start, Instant end) {
+            this.start = start;
+            this.end = end;
         }
 
-        public long getInicio() {
-            return inicio;
+        public Instant getStart() {
+            return start;
         }
 
-        public long getFin() {
-            return fin;
-        }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "inicio=" + inicio +
-                    ", fin=" + fin +
-                    '}';
+        public Instant getEnd() {
+            return end;
         }
     }
 }

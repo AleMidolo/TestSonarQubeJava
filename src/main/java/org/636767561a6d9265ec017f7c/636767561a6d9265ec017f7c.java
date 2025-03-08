@@ -1,86 +1,68 @@
-import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultGraphPath;
-import org.jgrapht.graph.SimpleGraph;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-    if (tour.isEmpty()) {
-        throw new IllegalArgumentException("The tour set cannot be empty.");
-    }
-
-    // Create a map to store the adjacency list of the tour
-    Map<V, List<V>> adjacencyMap = new HashMap<>();
-
-    // Populate the adjacency map
-    for (E edge : tour) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
-
-        adjacencyMap.computeIfAbsent(source, k -> new ArrayList<>()).add(target);
-        adjacencyMap.computeIfAbsent(target, k -> new ArrayList<>()).add(source);
-    }
-
-    // Find the start vertex (a vertex with only one neighbor)
-    V startVertex = null;
-    for (Map.Entry<V, List<V>> entry : adjacencyMap.entrySet()) {
-        if (entry.getValue().size() == 1) {
-            startVertex = entry.getKey();
-            break;
-        }
-    }
-
-    if (startVertex == null) {
-        throw new IllegalArgumentException("The tour does not form a valid path.");
-    }
-
-    // Build the path
-    List<V> vertexList = new ArrayList<>();
-    List<E> edgeList = new ArrayList<>();
-    V currentVertex = startVertex;
-    V previousVertex = null;
-
-    while (true) {
-        vertexList.add(currentVertex);
-        List<V> neighbors = adjacencyMap.get(currentVertex);
-
-        if (neighbors == null || neighbors.isEmpty()) {
-            break;
+public class GraphPathTransformer {
+    
+    public List<Integer> setToPath(Set<Edge> tour, Graph graph) {
+        if (tour == null || tour.isEmpty() || graph == null) {
+            return new ArrayList<>();
         }
 
-        V nextVertex = null;
-        for (V neighbor : neighbors) {
-            if (!neighbor.equals(previousVertex)) {
-                nextVertex = neighbor;
-                break;
+        List<Integer> path = new ArrayList<>();
+        Edge currentEdge = tour.iterator().next();
+        int currentVertex = currentEdge.getSource();
+        path.add(currentVertex);
+
+        while (!tour.isEmpty()) {
+            for (Edge edge : tour) {
+                if (edge.getSource() == currentVertex) {
+                    path.add(edge.getDestination());
+                    currentVertex = edge.getDestination();
+                    tour.remove(edge);
+                    break;
+                } else if (edge.getDestination() == currentVertex) {
+                    path.add(edge.getSource());
+                    currentVertex = edge.getSource();
+                    tour.remove(edge);
+                    break;
+                }
             }
         }
 
-        if (nextVertex == null) {
-            break;
-        }
-
-        E edge = graph.getEdge(currentVertex, nextVertex);
-        if (edge == null) {
-            edge = graph.getEdge(nextVertex, currentVertex);
-        }
-
-        if (edge == null) {
-            throw new IllegalArgumentException("The tour contains an edge not present in the graph.");
-        }
-
-        edgeList.add(edge);
-        previousVertex = currentVertex;
-        currentVertex = nextVertex;
+        return path;
     }
+}
 
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0.0);
+// Supporting classes needed for compilation
+class Edge {
+    private int source;
+    private int destination;
+    
+    public Edge(int source, int destination) {
+        this.source = source;
+        this.destination = destination;
+    }
+    
+    public int getSource() {
+        return source;
+    }
+    
+    public int getDestination() {
+        return destination;
+    }
+}
+
+class Graph {
+    private List<Edge> edges;
+    
+    public Graph() {
+        edges = new ArrayList<>();
+    }
+    
+    public void addEdge(Edge edge) {
+        edges.add(edge);
+    }
+    
+    public List<Edge> getEdges() {
+        return edges;
+    }
 }

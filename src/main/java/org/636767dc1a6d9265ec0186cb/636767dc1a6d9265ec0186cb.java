@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -5,23 +7,27 @@ import java.nio.file.Paths;
 public class ConfigInitializer {
 
     /**
-     * Inicializa la configuración, como verificar la ruta de distribución.
+     * initialize config, such as check dist path
      */
-    public void init() {
-        // Verificar la ruta de distribución
-        String distributionPath = "/ruta/de/distribucion"; // Cambia esto por la ruta real
-        Path path = Paths.get(distributionPath);
-
-        if (Files.exists(path)) {
-            System.out.println("La ruta de distribución existe: " + distributionPath);
-        } else {
-            System.out.println("La ruta de distribución no existe: " + distributionPath);
-            // Aquí podrías lanzar una excepción o manejar el error de otra manera
+    public void initializeConfig() {
+        // Check and create dist directory if it doesn't exist
+        String distPath = "dist";
+        Path path = Paths.get(distPath);
+        
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to create dist directory", e);
+            }
         }
-    }
 
-    public static void main(String[] args) {
-        ConfigInitializer initializer = new ConfigInitializer();
-        initializer.init();
+        // Verify dist directory is writable
+        File distDir = new File(distPath);
+        if (!distDir.canWrite()) {
+            throw new RuntimeException("Dist directory is not writable");
+        }
+
+        // Additional config initialization can be added here
     }
 }

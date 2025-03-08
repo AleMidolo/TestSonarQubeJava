@@ -1,23 +1,43 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class GraphIndex<V, E> {
-    private Map<V, Map<V, E>> index;
-
-    public GraphIndex() {
-        index = new HashMap<>();
+public class Graph<V,E> {
+    // Internal map to store adjacency lists
+    private Map<V, List<Edge<V,E>>> adjacencyMap;
+    
+    // Edge class to store edge information
+    private static class Edge<V,E> {
+        private V source;
+        private V target;
+        private E data;
+        
+        public Edge(V source, V target, E data) {
+            this.source = source;
+            this.target = target;
+            this.data = data;
+        }
+    }
+    
+    public Graph() {
+        adjacencyMap = new HashMap<>();
     }
 
     /**
-     * Agrega una arista al índice.
-     * @param sourceVertex el vértice fuente
-     * @param targetVertex el vértice objetivo
-     * @param e la arista
+     * Add an edge to the index.
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex  
+     * @param e the edge
      */
-    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!index.containsKey(sourceVertex)) {
-            index.put(sourceVertex, new HashMap<>());
-        }
-        index.get(sourceVertex).put(targetVertex, e);
+    public void addEdge(V sourceVertex, V targetVertex, E e) {
+        // Create new edge
+        Edge<V,E> edge = new Edge<>(sourceVertex, targetVertex, e);
+        
+        // Add source vertex if it doesn't exist
+        adjacencyMap.putIfAbsent(sourceVertex, new ArrayList<>());
+        
+        // Add target vertex if it doesn't exist
+        adjacencyMap.putIfAbsent(targetVertex, new ArrayList<>());
+        
+        // Add edge to source vertex's adjacency list
+        adjacencyMap.get(sourceVertex).add(edge);
     }
 }

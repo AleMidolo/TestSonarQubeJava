@@ -1,13 +1,20 @@
-import org.apache.log4j.NDC;
+import org.slf4j.MDC;
 
-public class DiagnosticContext {
-
+public class NDCUtil {
     /**
-     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. <p> El valor devuelto es el valor que se empujó por última vez. Si no hay contexto disponible, se devuelve la cadena vacía "".
-     * @return String El contexto de diagnóstico más interno.
+     * Looks at the last diagnostic context at the top of this NDC without removing it. <p>The returned value is the value 
+     * that was pushed last. If no context is available, then the empty string "" is returned.
+     * @return String The innermost diagnostic context.
      */
     public static String peek() {
-        String context = NDC.peek();
-        return context != null ? context : "";
+        String value = MDC.get("NDC");
+        if (value == null) {
+            return "";
+        }
+        String[] contexts = value.split(" ");
+        if (contexts.length == 0) {
+            return "";
+        }
+        return contexts[contexts.length - 1];
     }
 }

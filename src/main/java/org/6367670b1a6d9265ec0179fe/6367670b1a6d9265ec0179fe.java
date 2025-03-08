@@ -1,32 +1,46 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-    @Override
-    public void write(byte b[]) throws IOException {
-        if (b == null) {
-            throw new NullPointerException("El arreglo de bytes no puede ser nulo.");
-        }
-        write(b, 0, b.length);
+public class ByteOutputStream extends OutputStream {
+    
+    private byte[] buffer;
+    private int pos;
+    
+    public ByteOutputStream() {
+        buffer = new byte[32];
+        pos = 0;
     }
-
-    @Override
-    public void write(byte b[], int off, int len) throws IOException {
+    
+    public void write(byte[] b) throws IOException {
         if (b == null) {
-            throw new NullPointerException("El arreglo de bytes no puede ser nulo.");
+            throw new NullPointerException();
         }
-        if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException("Índice fuera de los límites.");
+        
+        // Ensure buffer has enough capacity
+        if (pos + b.length > buffer.length) {
+            byte[] newBuffer = new byte[Math.max(buffer.length * 2, pos + b.length)];
+            System.arraycopy(buffer, 0, newBuffer, 0, pos);
+            buffer = newBuffer;
         }
-        for (int i = 0; i < len; i++) {
-            write(b[off + i]);
-        }
+        
+        // Copy bytes to buffer
+        System.arraycopy(b, 0, buffer, pos, b.length);
+        pos += b.length;
     }
-
+    
     @Override
     public void write(int b) throws IOException {
-        // Implementación específica para escribir un solo byte.
-        // Este método debe ser implementado por la subclase.
-        throw new IOException("Método no implementado.");
+        if (pos >= buffer.length) {
+            byte[] newBuffer = new byte[buffer.length * 2];
+            System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+            buffer = newBuffer;
+        }
+        buffer[pos++] = (byte)b;
+    }
+    
+    public byte[] toByteArray() {
+        byte[] result = new byte[pos];
+        System.arraycopy(buffer, 0, result, 0, pos);
+        return result;
     }
 }

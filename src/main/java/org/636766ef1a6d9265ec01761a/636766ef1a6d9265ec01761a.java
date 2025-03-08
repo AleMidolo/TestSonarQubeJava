@@ -1,26 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SymbolTable {
-    private final Map<String, Integer> typeTable;
-    private int nextIndex;
-
+    private List<TypeSymbol> typeTable;
+    
     public SymbolTable() {
-        this.typeTable = new HashMap<>();
-        this.nextIndex = 0;
+        typeTable = new ArrayList<>();
     }
-
-    /**
-     * Agrega un tipo en la tabla de tipos de esta tabla de símbolos. No hace nada si la tabla de tipos ya contiene un tipo similar.
-     * @param value un nombre de clase interno.
-     * @return el índice de un nuevo tipo o de un tipo ya existente con el valor dado.
-     */
-    public int addType(final String value) {
-        if (typeTable.containsKey(value)) {
-            return typeTable.get(value);
-        } else {
-            typeTable.put(value, nextIndex);
-            return nextIndex++;
+    
+    public int addType(String value) {
+        // Check if type already exists
+        for (int i = 0; i < typeTable.size(); i++) {
+            if (typeTable.get(i).getValue().equals(value)) {
+                return i;
+            }
+        }
+        
+        // Add new type if not found
+        TypeSymbol newType = new TypeSymbol(value);
+        typeTable.add(newType);
+        return typeTable.size() - 1;
+    }
+    
+    // Inner class to represent a type symbol
+    private static class TypeSymbol {
+        private String value;
+        
+        public TypeSymbol(String value) {
+            this.value = value;
+        }
+        
+        public String getValue() {
+            return value;
         }
     }
 }

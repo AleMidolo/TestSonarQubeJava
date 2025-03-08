@@ -1,43 +1,34 @@
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
+import java.util.*;
 
-public class BipartiteGraphGenerator<V, E> {
+public class BipartiteGraph {
+    private int V; // Number of vertices
+    private List<List<Integer>> adj; // Adjacency list representation
 
     /**
-     * Construir un grafo bipartito completo
-     * 
-     * @param target El grafo en el que se construirá el grafo bipartito completo.
-     * @param resultMap Un mapa para almacenar los vértices generados.
+     * Construct a complete bipartite graph
+     * @param m Number of vertices in first partition
+     * @param n Number of vertices in second partition
+     * @return Adjacency list representation of complete bipartite graph
      */
-    @Override
-    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Crear dos conjuntos de vértices para el grafo bipartito
-        List<V> setA = new ArrayList<>();
-        List<V> setB = new ArrayList<>();
-
-        // Generar vértices para el conjunto A
-        for (int i = 0; i < 5; i++) {
-            V vertex = target.addVertex();
-            setA.add(vertex);
-            resultMap.put("A" + i, vertex);
+    public List<List<Integer>> constructBipartiteGraph(int m, int n) {
+        // Total vertices is sum of both partitions
+        V = m + n;
+        
+        // Initialize adjacency list
+        adj = new ArrayList<>(V);
+        for(int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
         }
-
-        // Generar vértices para el conjunto B
-        for (int i = 0; i < 5; i++) {
-            V vertex = target.addVertex();
-            setB.add(vertex);
-            resultMap.put("B" + i, vertex);
-        }
-
-        // Conectar todos los vértices de A con todos los vértices de B
-        for (V a : setA) {
-            for (V b : setB) {
-                target.addEdge(a, b);
+        
+        // Add edges between every vertex in first partition
+        // to every vertex in second partition
+        for(int i = 0; i < m; i++) {
+            for(int j = m; j < V; j++) {
+                adj.get(i).add(j);
+                adj.get(j).add(i);
             }
         }
+        
+        return adj;
     }
 }

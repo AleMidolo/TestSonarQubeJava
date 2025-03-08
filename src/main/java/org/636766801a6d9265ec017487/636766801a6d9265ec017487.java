@@ -1,36 +1,18 @@
-import java.nio.charset.StandardCharsets;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class TemplateEncoder {
-
     /**
-     * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
-     * @param s la cadena con cero o más nombres de parámetros de plantilla
-     * @return la cadena con los nombres de parámetros de plantilla codificados.
+     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+     * @param s the string with zero or more template parameters names
+     * @return the string with encoded template parameters names.
      */
-    public static String encodeTemplateNames(String s) {
-        if (s == null) {
-            return null;
+    public static String encodeTemplateParameters(String s) {
+        if (s == null || s.isEmpty()) {
+            return s;
         }
         
-        StringBuilder encodedString = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '{' || c == '}') {
-                try {
-                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
-                } catch (Exception e) {
-                    // En caso de error, simplemente añade el carácter sin codificar
-                    encodedString.append(c);
-                }
-            } else {
-                encodedString.append(c);
-            }
-        }
-        return encodedString.toString();
-    }
-
-    public static void main(String[] args) {
-        String testString = "This is a {test} string with {template} parameters.";
-        System.out.println(encodeTemplateNames(testString));
+        // Replace { with %7B and } with %7D
+        return s.replace("{", "%7B").replace("}", "%7D");
     }
 }

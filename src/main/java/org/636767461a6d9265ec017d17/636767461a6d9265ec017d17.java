@@ -1,35 +1,47 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-public class DotUnescape {
-
+public class StringUnescaper {
+    
     /**
-     * Remueve el "escape" de un identificador de cadena DOT.
-     * @param input la entrada
-     * @return la salida sin carácteres "escape"
+     * Unescape a string DOT identifier.
+     * @param input the input
+     * @return the unescaped output
      */
-    private static String unescapeId(String input) {
-        if (input == null) {
-            return null;
+    public static String unescapeDotIdentifier(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
         }
 
-        // Expresión regular para encontrar caracteres escapados
-        Pattern pattern = Pattern.compile("\\\\(.)");
-        Matcher matcher = pattern.matcher(input);
+        // Handle quoted strings
+        if (input.startsWith("\"") && input.endsWith("\"")) {
+            String inner = input.substring(1, input.length() - 1);
+            
+            // Replace escaped quotes
+            inner = inner.replace("\\\"", "\"");
+            
+            // Replace escaped newlines
+            inner = inner.replace("\\n", "\n");
+            
+            // Replace escaped tabs
+            inner = inner.replace("\\t", "\t");
+            
+            // Replace escaped backslashes
+            inner = inner.replace("\\\\", "\\");
+            
+            return inner;
+        }
 
-        // Reemplazar los caracteres escapados con su versión sin escape
+        // Handle unquoted identifiers
+        Pattern escapePattern = Pattern.compile("\\\\([^\\\\])");
+        Matcher matcher = escapePattern.matcher(input);
         StringBuffer result = new StringBuffer();
+        
         while (matcher.find()) {
             matcher.appendReplacement(result, matcher.group(1));
         }
         matcher.appendTail(result);
-
+        
         return result.toString();
-    }
-
-    public static void main(String[] args) {
-        String input = "This\\ is\\ a\\ test\\ string\\ with\\ escaped\\ characters.";
-        String output = unescapeId(input);
-        System.out.println(output);  // Output: This is a test string with escaped characters.
     }
 }

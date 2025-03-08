@@ -1,13 +1,12 @@
-/**
- * Determina si un carácter es un dígito hexadecimal.
- * Un dígito hexadecimal es un carácter que está en el rango de '0' a '9',
- * 'a' a 'f' (minúsculas), o 'A' a 'F' (mayúsculas).
- *
- * @param c El carácter a verificar.
- * @return true si el carácter es un dígito hexadecimal, false en caso contrario.
- */
-private static boolean esHex(final char c) {
-    return (c >= '0' && c <= '9') || 
-           (c >= 'a' && c <= 'f') || 
-           (c >= 'A' && c <= 'F');
+public class HexDigitChecker {
+    /**
+     * Is this a hex digit?
+     * @param c Character to check
+     * @return true if c is a hex digit (0-9, a-f, A-F), false otherwise
+     */
+    public static boolean isHexDigit(char c) {
+        return (c >= '0' && c <= '9') || 
+               (c >= 'a' && c <= 'f') ||
+               (c >= 'A' && c <= 'F');
+    }
 }

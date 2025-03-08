@@ -1,26 +1,23 @@
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ConverterRegistry {
-    // Map to store registered converters
-    private final Map<Class<?>, Converter<?>> converters = new ConcurrentHashMap<>();
+    private Map<Class<?>, Converter> converterMap = new HashMap<>();
 
     /**
-     * Look up and return any registered {@link Converter} for the specified destination class; 
-     * if there is no registered Converter, return <code>null</code>.
-     * @param clazz Class for which to return a registered Converter
-     * @return The registered {@link Converter} or <code>null</code> if not found
+     * Cerca e restituisce qualsiasi {@link Converter} registrato per la classe di destinazione specificata; se non esiste un Converter registrato, restituisce <code>null</code>.
+     * @param clazz Classe per la quale restituire un Converter registrato
+     * @return Il {@link Converter} registrato o <code>null</code> se non trovato
      */
-    @SuppressWarnings("unchecked")
-    public <T> Converter<T> lookup(Class<T> clazz) {
-        if (clazz == null) {
-            return null;
-        }
-        return (Converter<T>) converters.get(clazz);
+    public Converter lookup(final Class<?> clazz) {
+        return converterMap.get(clazz);
     }
 
-    // Interface for type conversion
-    public interface Converter<T> {
-        T convert(Object source);
+    public void registerConverter(Class<?> clazz, Converter converter) {
+        converterMap.put(clazz, converter);
+    }
+
+    public interface Converter {
+        // Define converter methods here
     }
 }

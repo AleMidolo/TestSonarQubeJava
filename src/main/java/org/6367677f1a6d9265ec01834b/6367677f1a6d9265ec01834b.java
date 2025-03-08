@@ -1,21 +1,27 @@
-import org.apache.log4j.spi.LoggingEvent;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.LinkedList;
 
-public class LogBuffer {
-    private ArrayBlockingQueue<LoggingEvent> buffer;
-    private static final int DEFAULT_BUFFER_SIZE = 1000;
+public class LoggingBuffer {
+    private LinkedList<LoggingEvent> buffer;
+    private int capacity;
 
-    public LogBuffer() {
-        this(DEFAULT_BUFFER_SIZE);
+    public LoggingBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new LinkedList<>();
     }
 
-    public LogBuffer(int bufferSize) {
-        buffer = new ArrayBlockingQueue<>(bufferSize);
-    }
-
-    public void put(LoggingEvent event) {
-        if (event != null) {
-            buffer.offer(event); // Silently drops if buffer is full
+    /** 
+     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.  
+     */
+    public void put(LoggingEvent o) {
+        if (buffer.size() < capacity) {
+            buffer.add(o);
         }
+        // If the buffer is full, the event is silently discarded
     }
+
+    // Additional methods for the LoggingBuffer can be added here
+}
+
+class LoggingEvent {
+    // Implementation of LoggingEvent class
 }

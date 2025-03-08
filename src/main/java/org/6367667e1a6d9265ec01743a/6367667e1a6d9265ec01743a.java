@@ -1,14 +1,21 @@
-import java.time.Instant;
+public class TimestampManager {
+    private long lastWriteTimeStamp;
 
-public class WriteTracker {
-    private long lastWriteTime;
-
-    /**
-     * The last time, in milliseconds, a write operation occurred.
-     * @return this
+    /** 
+     * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
+     * @return questo
      */
-    public WriteTracker recordWriteTime() {
-        this.lastWriteTime = Instant.now().toEpochMilli();
-        return this;
+    public long lastWriteTimeStampInMilliseconds() {
+        return lastWriteTimeStamp;
+    }
+
+    public void updateLastWriteTimeStamp() {
+        lastWriteTimeStamp = System.currentTimeMillis();
+    }
+
+    public static void main(String[] args) {
+        TimestampManager manager = new TimestampManager();
+        manager.updateLastWriteTimeStamp();
+        System.out.println("Last write timestamp in milliseconds: " + manager.lastWriteTimeStampInMilliseconds());
     }
 }

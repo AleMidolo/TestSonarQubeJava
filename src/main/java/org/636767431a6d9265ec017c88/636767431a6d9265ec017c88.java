@@ -1,33 +1,35 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class KeyBounds {
-    /**
-     * Finds a maximum lower bound for every key.
-     * @param keys list of keys.
-     * @return the computed key lower bounds.
+public class LowerBoundCalculator<K> {
+
+    /** 
+     * Trova un limite inferiore massimo per ogni chiave.
+     * @param keys lista delle chiavi.
+     * @return i limiti inferiori delle chiavi calcolati.
      */
-    public static Map<Integer, Integer> findKeyLowerBounds(List<Integer> keys) {
-        // Sort keys in ascending order
-        Collections.sort(keys);
-        
-        Map<Integer, Integer> lowerBounds = new HashMap<>();
-        
-        // For each key, find largest value less than it
-        for (int key : keys) {
-            int maxLowerBound = Integer.MIN_VALUE;
-            
-            for (int possibleBound : keys) {
-                if (possibleBound < key && possibleBound > maxLowerBound) {
-                    maxLowerBound = possibleBound;
-                }
-            }
-            
-            // Only add if we found a valid lower bound
-            if (maxLowerBound != Integer.MIN_VALUE) {
-                lowerBounds.put(key, maxLowerBound);
-            }
+    private List<Integer> computeLowerBounds(List<K> keys) {
+        Map<K, Integer> lowerBoundsMap = new HashMap<>();
+        List<Integer> lowerBounds = new ArrayList<>();
+
+        for (K key : keys) {
+            // Simuliamo il calcolo di un limite inferiore per ogni chiave
+            int lowerBound = calculateLowerBound(key);
+            lowerBoundsMap.put(key, lowerBound);
         }
-        
+
+        for (K key : keys) {
+            lowerBounds.add(lowerBoundsMap.get(key));
+        }
+
         return lowerBounds;
+    }
+
+    private int calculateLowerBound(K key) {
+        // Logica per calcolare il limite inferiore per la chiave
+        // Qui si può implementare la logica specifica per il calcolo
+        return key.hashCode() % 100; // Esempio di calcolo
     }
 }

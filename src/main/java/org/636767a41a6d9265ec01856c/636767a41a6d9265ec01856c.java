@@ -1,25 +1,25 @@
 import java.nio.charset.StandardCharsets;
 
-public class UTF8Utils {
-    /**
-     * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
-     *
-     * @param str The input string to compute UTF-8 size for
-     * @param index The starting index in the string
-     * @param length The length of characters to process
-     * @return The size in bytes of the UTF-8 encoded substring
+public class UTF8SizeCalculator {
+
+    /** 
+     * Calcola la dimensione della stringa utf8 che inizia all'indice specificato {@code index} con la lunghezza specificata {@code length}.
      */
-    public static int computeUTF8Size(String str, int index, int length) {
+    public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
         if (str == null) {
-            return 0;
+            throw new IllegalArgumentException("Input string cannot be null");
         }
-        
-        if (index < 0 || length < 0 || index + length > str.length()) {
-            throw new IllegalArgumentException("Invalid index or length parameters");
+        if (index < 0 || len < 0 || index + len > str.length()) {
+            throw new IndexOutOfBoundsException("Index or length is out of bounds");
         }
 
-        String substring = str.substring(index, index + length);
-        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
-        return utf8Bytes.length;
+        String substring = str.subSequence(index, index + len).toString();
+        return substring.getBytes(StandardCharsets.UTF_8).length;
+    }
+
+    public static void main(String[] args) {
+        String testString = "Hello, 世界"; // "Hello, World" in English and "World" in Chinese
+        int utf8Size = computeUTF8Size(testString, 0, testString.length());
+        System.out.println("UTF-8 size: " + utf8Size);
     }
 }

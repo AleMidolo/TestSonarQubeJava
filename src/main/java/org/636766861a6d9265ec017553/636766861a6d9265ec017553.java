@@ -1,17 +1,7 @@
-import java.util.Objects;
+public final boolean isTemplateVariablePresent(String name) {
+    // Assuming we have a list of template variables stored in a Set
+    Set<String> templateVariables = new HashSet<>(Arrays.asList("var1", "var2", "var3")); // Example template variables
 
-public class Template {
-    private Set<String> variables;
-
-    /**
-     * Ascertain if a template variable is a member of this template.
-     * @param name The template variable.
-     * @return true if the template variable is a member of the template, otherwise false.
-     */
-    public boolean containsVariable(String name) {
-        if (name == null) {
-            return false;
-        }
-        return variables != null && variables.contains(name.trim());
-    }
+    // Check if the provided name is present in the set of template variables
+    return templateVariables.contains(name);
 }

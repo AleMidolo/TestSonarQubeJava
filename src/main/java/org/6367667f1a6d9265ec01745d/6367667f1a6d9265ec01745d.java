@@ -1,43 +1,56 @@
 import java.net.URI;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class URIPathDecoder {
-    public static List<String> getPathSegments(URI u, boolean decode) {
-        List<String> segments = new ArrayList<>();
-        
-        String path = u.getPath();
-        if (path == null || path.isEmpty()) {
-            return segments;
-        }
+public class PathDecoder {
 
-        // Remove leading '/' for absolute paths
+    /** 
+     * Decodifica il componente di percorso di un URI come segmenti di percorso.
+     * @param u l'URI. Se il componente di percorso è un componente di percorso assoluto, il '/' iniziale viene ignorato e non è considerato un delimitatore di un segmento di percorso.
+     * @param decode vero se i segmenti di percorso del componente di percorso devono essere in forma decodificata.
+     * @return la lista dei segmenti di percorso.
+     */
+    public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
+        List<PathSegmentImpl> segments = new ArrayList<>();
+        String path = u.getPath();
+        
+        // Ignora il primo '/' se presente
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-
-        // Split path into segments
-        String[] rawSegments = path.split("/");
         
-        // Process each segment
-        for (String segment : rawSegments) {
-            if (segment.isEmpty()) {
-                continue;
-            }
-            
+        String[] pathSegments = path.split("/");
+        
+        for (String segment : pathSegments) {
             if (decode) {
                 try {
-                    // Decode segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
+                    segment = java.net.URLDecoder.decode(segment, "UTF-8");
                 } catch (Exception e) {
-                    // If decoding fails, use raw segment
+                    // Gestione dell'eccezione se la decodifica fallisce
+                    e.printStackTrace();
                 }
             }
-            segments.add(segment);
+            segments.add(new PathSegmentImpl(segment));
         }
         
         return segments;
+    }
+}
+
+class PathSegmentImpl {
+    private String segment;
+
+    public PathSegmentImpl(String segment) {
+        this.segment = segment;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    @Override
+    public String toString() {
+        return segment;
     }
 }

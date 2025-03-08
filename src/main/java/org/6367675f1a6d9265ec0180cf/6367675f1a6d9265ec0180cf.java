@@ -1,35 +1,53 @@
-import java.util.*;
+import org.jgrapht.Graph;
+import org.jgrapht.GraphType;
+import org.jgrapht.alg.clique.CliqueFinder;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
-public class GraphUtils {
-    /**
-     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
-     * @param graph the graph.
-     * @param vertices the vertices to induce the subgraph from.
-     * @return true if the induced subgraph is a clique.
+import java.util.HashSet;
+import java.util.Set;
+
+public class CliqueChecker {
+
+    /** 
+     * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
+     * @param graph il grafo.
+     * @param vertices i vertici da cui indurre il sottografo.
+     * @return true se il sottografo indotto è un clique.
      */
-    public static boolean isClique(Graph graph, Set<Integer> vertices) {
-        // For each pair of vertices in the set
-        for (Integer v1 : vertices) {
-            for (Integer v2 : vertices) {
-                // Skip self loops
-                if (v1.equals(v2)) {
-                    continue;
-                }
-                
-                // If any pair of vertices is not connected by an edge,
-                // then this is not a clique
-                if (!graph.hasEdge(v1, v2)) {
-                    return false;
+    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Check if the vertices set is empty or contains only one vertex
+        if (vertices.isEmpty() || vertices.size() == 1) {
+            return true;
+        }
+
+        // Check if all pairs of vertices are connected
+        for (V v1 : vertices) {
+            for (V v2 : vertices) {
+                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
+                    return false; // Found a pair that is not connected
                 }
             }
         }
-        
-        // If we get here, all vertices are connected to each other
-        return true;
+        return true; // All pairs are connected
     }
-}
 
-// Sample Graph interface that would be needed
-interface Graph {
-    boolean hasEdge(Integer source, Integer target);
+    public static void main(String[] args) {
+        // Example usage
+        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B");
+        graph.addEdge("B", "C");
+        graph.addEdge("A", "C");
+
+        Set<String> vertices = new HashSet<>();
+        vertices.add("A");
+        vertices.add("B");
+        vertices.add("C");
+
+        boolean result = isClique(graph, vertices);
+        System.out.println("Is the induced subgraph a clique? " + result);
+    }
 }

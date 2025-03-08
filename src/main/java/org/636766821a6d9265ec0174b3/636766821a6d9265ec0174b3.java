@@ -1,29 +1,51 @@
-import javax.websocket.Session;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BroadcastManager {
+public class BroadcastFilterExample {
 
-    private Set<Session> sessions;
-    private BroadcastFilter filter;
+    private List<Object> filters;
 
-    public String invokeBroadcastFilter(String msg) {
-        if (filter != null) {
-            return filter.filter(msg);
+    public BroadcastFilterExample() {
+        filters = new ArrayList<>();
+    }
+
+    /**
+     * Invoca il {@link BroadcastFilter}
+     * @param msg
+     * @return
+     */
+    protected Object filter(Object msg) {
+        // Example filter logic
+        for (Object filter : filters) {
+            // Assuming filter is a functional interface that takes an Object and returns a boolean
+            if (filter instanceof FilterFunction) {
+                if (!((FilterFunction) filter).apply(msg)) {
+                    return null; // Message filtered out
+                }
+            }
         }
-        return msg;
+        return msg; // Message passed all filters
     }
 
-    // Interface for broadcast filter
-    public interface BroadcastFilter {
-        String filter(String message);
+    public void addFilter(FilterFunction filter) {
+        filters.add(filter);
     }
 
-    // Constructor and other methods
-    public BroadcastManager(Set<Session> sessions) {
-        this.sessions = sessions;
+    @FunctionalInterface
+    public interface FilterFunction {
+        boolean apply(Object msg);
     }
 
-    public void setBroadcastFilter(BroadcastFilter filter) {
-        this.filter = filter;
+    public static void main(String[] args) {
+        BroadcastFilterExample broadcastFilter = new BroadcastFilterExample();
+        
+        // Adding a simple filter that filters out null messages
+        broadcastFilter.addFilter(msg -> msg != null);
+        
+        Object result = broadcastFilter.filter("Hello, World!");
+        System.out.println(result); // Should print: Hello, World!
+        
+        result = broadcastFilter.filter(null);
+        System.out.println(result); // Should print: null
     }
 }

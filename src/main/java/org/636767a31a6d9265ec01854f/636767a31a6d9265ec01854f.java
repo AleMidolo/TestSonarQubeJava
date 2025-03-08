@@ -1,46 +1,23 @@
 import java.io.IOException;
 
-public class FieldReader {
-    private boolean isPacked = false;
-    private int currentPosition = 0;
-    private int packedLength = 0;
-    
-    /**
-     * Check if this field have been packed into a length-delimited field. If so, update internal state to reflect that packed fields are being read.
-     * @throws IOException if there is an error reading the packed field length
+public class FieldChecker {
+
+    private boolean isPackedField;
+
+    /** 
+     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
+     * @throws IOException
      */
-    public void checkIfPackedField() throws IOException {
-        // Check if we're at the start of a packed field
-        if (currentPosition > 0 && !isPacked) {
-            // Read the packed field length
-            try {
-                packedLength = readVarint32();
-                isPacked = true;
-                currentPosition = 0;
-            } catch (IOException e) {
-                throw new IOException("Error reading packed field length", e);
-            }
+    private void checkIfPackedField() throws IOException {
+        // Simulazione di controllo se il campo è compresso
+        // In un caso reale, qui ci sarebbe la logica per verificare il campo
+        boolean fieldIsPacked = true; // Supponiamo che il campo sia compresso
+
+        if (fieldIsPacked) {
+            isPackedField = true;
+            // Logica aggiuntiva per gestire il campo compresso
+        } else {
+            isPackedField = false;
         }
-    }
-    
-    // Helper method to read varint32 encoding
-    private int readVarint32() throws IOException {
-        int result = 0;
-        int shift = 0;
-        while (shift < 32) {
-            byte b = readByte();
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
-            }
-            shift += 7;
-        }
-        throw new IOException("Malformed varint32");
-    }
-    
-    // Helper method to read a single byte
-    private byte readByte() throws IOException {
-        // Implementation would depend on underlying input stream
-        throw new IOException("Not implemented");
     }
 }

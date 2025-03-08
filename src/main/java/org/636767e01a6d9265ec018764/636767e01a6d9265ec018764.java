@@ -1,26 +1,34 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import com.google.gson.JsonObject;
+import java.util.List;
+
+class KeyStringValuePair {
+    private String key;
+    private String value;
+
+    public KeyStringValuePair(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}
 
 public class PropertyConverter {
 
-    /**
-     * Convert process properties to source data
-     * @param properties The properties to convert
-     * @return Map containing the converted property data
+    /** 
+     * Converte le proprietà del processo in dati sorgente
      */
-    public Map<String, String> convertPropertiesToSourceData(Properties properties) {
-        Map<String, String> sourceData = new HashMap<>();
-        
-        if (properties != null) {
-            for (String key : properties.stringPropertyNames()) {
-                String value = properties.getProperty(key);
-                if (value != null) {
-                    sourceData.put(key, value);
-                }
-            }
+    private JsonObject convertProperties(List<KeyStringValuePair> properties) {
+        JsonObject jsonObject = new JsonObject();
+        for (KeyStringValuePair pair : properties) {
+            jsonObject.addProperty(pair.getKey(), pair.getValue());
         }
-        
-        return sourceData;
+        return jsonObject;
     }
 }

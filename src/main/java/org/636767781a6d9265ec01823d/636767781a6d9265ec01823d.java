@@ -1,16 +1,16 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class FileWriterUtil {
+public class CustomAppender {
 
     /**
-     * This method does actual writing
+     * Questo metodo esegue la scrittura effettiva
      */
-    public void writeToFile(String content, String filePath) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(content);
-            writer.flush();
+    protected void subAppend(LoggingEvent event) {
+        // Implementazione della scrittura del LoggingEvent
+        if (event != null) {
+            String message = event.getRenderedMessage();
+            System.out.println("Logging Event: " + message);
+            // Qui si può aggiungere ulteriore logica per gestire l'evento di logging
         }
     }
 }

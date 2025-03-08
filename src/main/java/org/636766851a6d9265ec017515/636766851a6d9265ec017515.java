@@ -1,24 +1,23 @@
-import org.atmosphere.cpr.Action;
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
+import org.atmosphere.cpr.Action;
 
-public class AtmosphereHandler {
+public class MyAtmosphereHandler {
 
-    public Action suspend(AtmosphereResource r) {
-        switch (r.transport()) {
-            case JSONP:
-            case LONG_POLLING:
-                r.suspend(5000L); // 5 seconds timeout for polling transports
-                break;
-            case SSE:
-            case WEBSOCKET:
-                r.suspend(-1); // No timeout for streaming transports
-                break;
-            default:
-                r.suspend(30000L); // 30 seconds default timeout
-                break;
+    /**
+     * Sospende automaticamente il {@link AtmosphereResource} in base al valore di {@link AtmosphereResource.TRANSPORT}.
+     * @param r un {@link AtmosphereResource}
+     * @return {@link Action#CONTINUE}
+     */
+    @Override
+    public Action inspect(AtmosphereResource r) {
+        // Check the transport type and suspend the resource accordingly
+        if (r.getTransport() != null) {
+            // Logic to suspend the resource based on transport type
+            // For example, if the transport is WebSocket, we might want to suspend it
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.WEBSOCKET)) {
+                r.suspend();
+            }
         }
         return Action.CONTINUE;
     }
-
 }

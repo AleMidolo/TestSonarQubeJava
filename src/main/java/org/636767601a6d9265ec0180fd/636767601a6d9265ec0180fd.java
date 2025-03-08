@@ -1,28 +1,21 @@
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-public class Graph<V,E> {
-    // Maps vertices to their adjacent edges
-    private Map<V, Set<E>> vertexMap;
+public class Graph<V, E> {
+    private Map<V, Map<V, E>> adjacencyList;
 
     public Graph() {
-        vertexMap = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
-    /**
-     * Add an edge to the index.
-     * @param sourceVertex the source vertex  
-     * @param targetVertex the target vertex
-     * @param e the edge
+    /** 
+     * Aggiunge un arco all'indice.
+     * @param sourceVertex il vertice sorgente
+     * @param targetVertex il vertice di destinazione
+     * @param e l'arco
      */
-    public void addEdge(V sourceVertex, V targetVertex, E e) {
-        // Create sets for vertices if they don't exist
-        vertexMap.putIfAbsent(sourceVertex, new HashSet<>());
-        vertexMap.putIfAbsent(targetVertex, new HashSet<>());
-
-        // Add edge to source vertex's edge set
-        vertexMap.get(sourceVertex).add(e);
+    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
+        adjacencyList.putIfAbsent(sourceVertex, new HashMap<>());
+        adjacencyList.get(sourceVertex).put(targetVertex, e);
     }
 }

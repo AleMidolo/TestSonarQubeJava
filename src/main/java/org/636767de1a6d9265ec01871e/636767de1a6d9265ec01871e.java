@@ -1,33 +1,32 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class ShardingKeyValidator {
+public class ShardingChecker {
 
     /**
-     * @param modelName model name of the entity
-     * @throws IllegalStateException if sharding key indices are not continuous
+     * @param modelName nome del modello dell'entità
+     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
      */
-    public void validateShardingKeyIndices(String modelName) {
-        List<Integer> indices = getShardingKeyIndices(modelName);
+    private void check(String modelName) throws IllegalStateException {
+        // Simulated logic for checking sharding key continuity
+        int[] shardingKeys = getShardingKeys(modelName);
         
-        if (indices.isEmpty()) {
-            return;
-        }
-
-        Collections.sort(indices);
-        
-        for (int i = 0; i < indices.size() - 1; i++) {
-            if (indices.get(i + 1) - indices.get(i) != 1) {
-                throw new IllegalStateException("Sharding key indices must be continuous for model: " + modelName);
+        for (int i = 0; i < shardingKeys.length - 1; i++) {
+            if (shardingKeys[i] + 1 != shardingKeys[i + 1]) {
+                throw new IllegalStateException("Sharding keys are not continuous for model: " + modelName);
             }
         }
     }
 
-    // Helper method to get sharding key indices
-    private List<Integer> getShardingKeyIndices(String modelName) {
-        // Implementation would retrieve indices from model metadata
-        // Returning empty list for example
-        return new ArrayList<>();
+    // Simulated method to retrieve sharding keys based on model name
+    private int[] getShardingKeys(String modelName) {
+        // This is just a placeholder. In a real implementation, this would fetch the actual keys.
+        return new int[]{1, 2, 3, 5}; // Example of non-continuous keys
+    }
+
+    public static void main(String[] args) {
+        ShardingChecker checker = new ShardingChecker();
+        try {
+            checker.check("ExampleModel");
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

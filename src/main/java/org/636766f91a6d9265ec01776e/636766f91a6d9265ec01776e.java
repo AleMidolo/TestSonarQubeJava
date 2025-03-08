@@ -1,44 +1,32 @@
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
-public class ByteArrayOutputStreamExtension extends ByteArrayOutputStream {
-
-    /**
-     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to this byte array output stream.
-     * @param b   the data.
-     * @param off the start offset in the data.
-     * @param len the number of bytes to write.
-     */
+public class CustomOutputStream extends OutputStream {
     @Override
-    public synchronized void write(byte[] b, int off, int len) {
+    public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Byte array is null");
         }
-        
         if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Invalid offset or length");
         }
-
-        // Ensure capacity
-        ensureCapacity(count + len);
         
-        // Copy bytes from input array to internal buffer
-        System.arraycopy(b, off, buf, count, len);
-        
-        // Update count
-        count += len;
+        // Here you would implement the logic to write the bytes to the output stream.
+        // For demonstration, we will just print the bytes being written.
+        for (int i = off; i < off + len; i++) {
+            System.out.print((char) b[i]); // Print as characters for demonstration
+        }
     }
 
-    // Helper method to ensure buffer has enough capacity
-    private void ensureCapacity(int minCapacity) {
-        // If the capacity is not enough, grow the buffer
-        if (minCapacity > buf.length) {
-            // New capacity is the larger of:
-            // - minCapacity
-            // - 2 * current capacity
-            int newCapacity = Math.max(minCapacity, buf.length * 2);
-            byte[] newBuf = new byte[newCapacity];
-            System.arraycopy(buf, 0, newBuf, 0, count);
-            buf = newBuf;
-        }
+    @Override
+    public void write(int b) throws IOException {
+        // Implement the method to write a single byte if needed
+        System.out.print((char) b); // Print as character for demonstration
+    }
+
+    public static void main(String[] args) throws IOException {
+        CustomOutputStream customOutputStream = new CustomOutputStream();
+        byte[] data = "Hello, World!".getBytes();
+        customOutputStream.write(data, 0, data.length);
     }
 }

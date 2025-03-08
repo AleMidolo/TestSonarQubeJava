@@ -1,50 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 
-public class SuffixSum {
-    public static Pair<List<Integer>, Integer> computeSuffixSum(List<Integer> bounds) {
-        if (bounds == null || bounds.isEmpty()) {
-            return new Pair<>(new ArrayList<>(), 0);
+public class SuffixSumCalculator {
+
+    /** 
+     * Calcola la somma dei suffissi di {@code bounds}. Restituisce la somma dei suffissi calcolata e la somma totale di tutti gli elementi nella lista {@code bounds}.
+     * @param bounds lista di interi.
+     * @return coppia calcolata di lista di somma suffisso e somma di tutti gli elementi.
+     */
+    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
+        List<Integer> suffixSums = new ArrayList<>();
+        long totalSum = 0;
+        int n = bounds.size();
+
+        for (int i = 0; i < n; i++) {
+            totalSum += bounds.get(i);
         }
 
-        int totalSum = 0;
-        List<Integer> suffixSum = new ArrayList<>(bounds.size());
-
-        // Fill suffix sum array with 0s initially
-        for (int i = 0; i < bounds.size(); i++) {
-            suffixSum.add(0);
+        int currentSuffixSum = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            currentSuffixSum += bounds.get(i);
+            suffixSums.add(currentSuffixSum);
         }
 
-        // Calculate total sum and last element of suffix sum
-        for (int num : bounds) {
-            totalSum += num;
+        // Reverse the suffix sums list to maintain the original order
+        List<Integer> reversedSuffixSums = new ArrayList<>();
+        for (int i = suffixSums.size() - 1; i >= 0; i--) {
+            reversedSuffixSums.add(suffixSums.get(i));
         }
 
-        // Calculate suffix sum
-        suffixSum.set(bounds.size() - 1, bounds.get(bounds.size() - 1));
-        for (int i = bounds.size() - 2; i >= 0; i--) {
-            suffixSum.set(i, suffixSum.get(i + 1) + bounds.get(i));
-        }
-
-        return new Pair<>(suffixSum, totalSum);
-    }
-}
-
-// Helper class to return pair of values
-class Pair<T, U> {
-    private final T first;
-    private final U second;
-
-    public Pair(T first, U second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    public T getFirst() {
-        return first;
-    }
-
-    public U getSecond() {
-        return second;
+        return new Pair<>(reversedSuffixSums, totalSum);
     }
 }

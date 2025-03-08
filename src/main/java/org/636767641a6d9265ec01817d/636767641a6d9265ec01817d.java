@@ -1,34 +1,30 @@
-import java.util.*;
+import java.util.Map;
 
-public class BipartiteGraph {
-    private int V; // Number of vertices
-    private List<List<Integer>> adj; // Adjacency list representation
+public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * Construct a complete bipartite graph
-     * @param m Number of vertices in first partition
-     * @param n Number of vertices in second partition
-     * @return Adjacency list representation of complete bipartite graph
+     * Costruisce un grafo bipartito completo
      */
-    public List<List<Integer>> constructBipartiteGraph(int m, int n) {
-        // Total vertices is sum of both partitions
-        V = m + n;
-        
-        // Initialize adjacency list
-        adj = new ArrayList<>(V);
-        for(int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>());
+    @Override
+    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+        if (resultMap == null || resultMap.size() < 2) {
+            throw new IllegalArgumentException("resultMap must contain at least two vertices.");
         }
-        
-        // Add edges between every vertex in first partition
-        // to every vertex in second partition
-        for(int i = 0; i < m; i++) {
-            for(int j = m; j < V; j++) {
-                adj.get(i).add(j);
-                adj.get(j).add(i);
+
+        // Split the vertices into two sets
+        V[] vertices = (V[]) resultMap.values().toArray();
+        int mid = vertices.length / 2;
+
+        // Add edges between the two sets
+        for (int i = 0; i < mid; i++) {
+            for (int j = mid; j < vertices.length; j++) {
+                target.addEdge(vertices[i], vertices[j]);
             }
         }
-        
-        return adj;
     }
+}
+
+// Assuming a simple Graph interface for demonstration purposes
+interface Graph<V, E> {
+    void addEdge(V source, V destination);
 }

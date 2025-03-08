@@ -1,26 +1,26 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class ByteArrayCopier {
-
+public class ByteArrayExample {
+    
     /**
-     * Copies bytes to a {@code byte[]}.
-     * @param input The input stream to read from
-     * @return The bytes read from the input stream
-     * @throws IOException If an I/O error occurs
+     * Copia i byte in un {@code byte[]}.
      */
-    public static byte[] copyToByteArray(InputStream input) throws IOException {
-        if (input == null) {
-            return new byte[0];
+    public byte[] toByteArray() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            // Example data to write to the byte array
+            String exampleData = "Hello, World!";
+            byteArrayOutputStream.write(exampleData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return byteArrayOutputStream.toByteArray();
+    }
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int n;
-        while ((n = input.read(buffer)) != -1) {
-            output.write(buffer, 0, n);
-        }
-        return output.toByteArray();
+    public static void main(String[] args) {
+        ByteArrayExample example = new ByteArrayExample();
+        byte[] byteArray = example.toByteArray();
+        System.out.println(new String(byteArray));
     }
 }

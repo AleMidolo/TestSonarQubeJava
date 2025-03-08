@@ -1,19 +1,25 @@
-public class StringUtils {
-    /**
-     * Trim trailing whitespace from the given String.
-     * @param str the String to check
-     * @return the trimmed String
+public class StringUtil {
+
+    /** 
+     * Rimuove gli spazi bianchi finali dalla Stringa fornita.
+     * @param str la Stringa da controllare
+     * @return la Stringa senza spazi bianchi finali
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
         if (str == null) {
             return null;
         }
-        
-        int len = str.length();
-        while (len > 0 && Character.isWhitespace(str.charAt(len - 1))) {
-            len--;
+        int end = str.length();
+        while (end > 0 && Character.isWhitespace(str.charAt(end - 1))) {
+            end--;
         }
-        return str.substring(0, len);
+        return str.substring(0, end);
+    }
+
+    public static void main(String[] args) {
+        String testString = "Hello World!    ";
+        String trimmedString = trimTrailingWhitespace(testString);
+        System.out.println("'" + trimmedString + "'"); // Output: 'Hello World!'
     }
 }

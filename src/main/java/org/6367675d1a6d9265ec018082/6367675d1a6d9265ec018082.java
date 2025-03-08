@@ -1,61 +1,63 @@
-import java.util.*;
+import java.util.Objects;
 
-public class Graph {
-    private Map<Node, List<Edge>> adjacencyList;
-    private Iterator<Node> nodeIterator;
+class Edge {
+    private final Node from;
+    private final Node to;
+
+    public Edge(Node from, Node to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
+    }
+}
+
+class Node {
+    private final String name;
+    private final boolean isVirtual;
+
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
+        this.isVirtual = isVirtual;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+}
+
+class Graph {
     private Node currentNode;
-    
-    public Edge nextEdge() {
-        // Get the current node if not already set
-        if (currentNode == null && nodeIterator.hasNext()) {
-            currentNode = nodeIterator.next();
-        }
-        
-        // Get the next node
-        Node nextNode = nodeIterator.hasNext() ? nodeIterator.next() : null;
-        
-        if (currentNode == null || nextNode == null) {
-            return null;
-        }
-        
-        // Handle virtual nodes by getting their real counterparts
-        Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
-        
-        // Find edge between current and next node
-        for (Edge edge : adjacencyList.get(realCurrentNode)) {
-            if (edge.connects(realCurrentNode, realNextNode)) {
-                // Update current node for next call
-                currentNode = nextNode;
-                return edge;
-            }
-        }
-        
-        // Update current node even if no edge found
-        currentNode = nextNode;
-        return null;
+    private Node nextNode;
+
+    public Graph(Node currentNode, Node nextNode) {
+        this.currentNode = currentNode;
+        this.nextNode = nextNode;
     }
-    
-    // Helper classes
-    private class Node {
-        private boolean virtual;
-        private Node realNode;
-        
-        public boolean isVirtual() {
-            return virtual;
-        }
-        
-        public Node getRealNode() {
-            return realNode;
-        }
+
+    /**
+     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
+     * @return un arco dal nodo corrente al nodo successivo
+     */
+    public Edge edgeToNext() {
+        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(fromNode, toNode);
     }
-    
-    private class Edge {
-        private Node source;
-        private Node target;
-        
-        public boolean connects(Node n1, Node n2) {
-            return (source == n1 && target == n2) || (source == n2 && target == n1);
-        }
+
+    private Node getRealNode(Node virtualNode) {
+        // Logic to get the real node corresponding to the virtual node
+        // This is a placeholder implementation
+        return new Node(virtualNode.getName() + "_real", false);
     }
 }

@@ -1,47 +1,46 @@
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
-public class StringUtils {
-    /**
-     * Writes the utf8-encoded bytes from the string into the LinkedBuffer.
-     * @param str The input string to encode
-     * @param buffer The buffer to write the encoded bytes to
-     * @return The number of bytes written
+public class UTF8Writer {
+
+    /** 
+     * Scrive i byte codificati in utf8 dalla stringa nel {@link LinkedBuffer}.
      */
-    public static int writeUTF8(String str, LinkedBuffer buffer) {
-        if (str == null || buffer == null) {
-            return 0;
+    public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
+        if (str == null || lb == null) {
+            throw new IllegalArgumentException("Input string and LinkedBuffer cannot be null");
         }
 
-        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
-        buffer.write(bytes, 0, bytes.length);
-        return bytes.length;
+        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+        lb.addBytes(utf8Bytes);
+        return lb;
     }
-}
 
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
-    
-    public LinkedBuffer(int size) {
-        buffer = new byte[size];
-        position = 0;
-    }
-    
-    public void write(byte[] bytes, int offset, int length) {
-        if (position + length > buffer.length) {
-            // Resize buffer if needed
-            byte[] newBuffer = new byte[Math.max(buffer.length * 2, position + length)];
-            System.arraycopy(buffer, 0, newBuffer, 0, position);
-            buffer = newBuffer;
+    public static class LinkedBuffer {
+        private final LinkedList<byte[]> buffers = new LinkedList<>();
+
+        public void addBytes(byte[] bytes) {
+            buffers.add(bytes);
         }
+
+        public LinkedList<byte[]> getBuffers() {
+            return buffers;
+        }
+    }
+
+    public static class WriteSession {
+        // Implementation of WriteSession can be added here
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        WriteSession session = new WriteSession();
+        LinkedBuffer lb = new LinkedBuffer();
+        writeUTF8("Hello, World!", session, lb);
         
-        System.arraycopy(bytes, offset, buffer, position, length);
-        position += length;
-    }
-    
-    public byte[] toByteArray() {
-        byte[] result = new byte[position];
-        System.arraycopy(buffer, 0, result, 0, position);
-        return result;
+        // Print the stored bytes for verification
+        for (byte[] buffer : lb.getBuffers()) {
+            System.out.println(new String(buffer, StandardCharsets.UTF_8));
+        }
     }
 }

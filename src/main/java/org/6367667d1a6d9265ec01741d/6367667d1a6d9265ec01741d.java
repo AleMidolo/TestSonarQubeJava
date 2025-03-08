@@ -1,28 +1,19 @@
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 public class TypeResolver {
-    /**
-     * Resolves the first bound for the typeVariable, returning Unknown.class if none can be resolved.
-     * @param typeVariable The type variable to resolve bounds for
-     * @return The first bound type, or Unknown.class if no bounds exist
+
+    /** 
+     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
      */
-    public static Class<?> resolveFirstBound(TypeVariable<?> typeVariable) {
+    public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
-        
-        if (bounds == null || bounds.length == 0) {
-            return Unknown.class;
+        if (bounds.length > 0) {
+            return bounds[0];
         }
-
-        if (bounds[0] instanceof Class) {
-            return (Class<?>) bounds[0];
-        }
-
         return Unknown.class;
     }
-}
 
-// Helper class representing unknown type
-class Unknown {
-    private Unknown() {} // Prevent instantiation
+    public static class Unknown {}
 }

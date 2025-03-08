@@ -1,66 +1,35 @@
-import java.util.*;
+import java.util.Set;
 
-public class Graph {
-    // Assume we have an adjacency list representation with Edge objects
-    private Map<Vertex, List<Edge>> adjList;
+public class Graph<V> {
     
-    public double computeIncomingWeightSum(Vertex v) {
-        double sum = 0.0;
-        
-        // Iterate through all vertices and their edges
-        for (Map.Entry<Vertex, List<Edge>> entry : adjList.entrySet()) {
-            List<Edge> edges = entry.getValue();
-            
-            // Check each edge to see if it points to vertex v
-            for (Edge e : edges) {
-                if (e.getDestination().equals(v)) {
-                    sum += e.getWeight();
-                }
-            }
-        }
-        
-        return sum;
+    // Assuming there's a method to get the incoming edges for a vertex
+    private Set<Edge<V>> getIncomingEdges(V vertex) {
+        // Implementation to retrieve incoming edges for the vertex
+        return null; // Placeholder
     }
-    
-    // Helper classes
-    class Vertex {
-        private int id;
-        
-        public Vertex(int id) {
-            this.id = id;
-        }
-        
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Vertex vertex = (Vertex) o;
-            return id == vertex.id;
-        }
-        
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
-    }
-    
-    class Edge {
-        private Vertex source;
-        private Vertex destination;
+
+    // Assuming Edge class has a method to get the weight
+    private class Edge<V> {
         private double weight;
-        
-        public Edge(Vertex source, Vertex destination, double weight) {
-            this.source = source;
-            this.destination = destination;
-            this.weight = weight;
-        }
-        
-        public Vertex getDestination() {
-            return destination;
-        }
-        
+
         public double getWeight() {
             return weight;
         }
+    }
+
+    /** 
+     * Calcola la somma dei pesi che entrano in un vertice
+     * @param v il vertice
+     * @return la somma dei pesi che entrano in un vertice
+     */
+    public double vertexWeight(Set<V> v) {
+        double totalWeight = 0.0;
+        for (V vertex : v) {
+            Set<Edge<V>> incomingEdges = getIncomingEdges(vertex);
+            for (Edge<V> edge : incomingEdges) {
+                totalWeight += edge.getWeight();
+            }
+        }
+        return totalWeight;
     }
 }

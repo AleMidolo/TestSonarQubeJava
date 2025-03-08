@@ -1,15 +1,29 @@
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
-public class MapContains {
-    private Map<Object, Object> map = new HashMap<>();
-    
-    /**
-     * Return <code>true</code> if this map contains a mapping for the specified key.
-     * @param key the key to be searched for
-     * @return true if the map contains the key
+public class MyMap<K, V> {
+    private Map<K, V> map;
+
+    public MyMap() {
+        this.map = new HashMap<>();
+    }
+
+    /** 
+     * Restituisce <code>true</code> se questa mappa contiene una mappatura per la chiave specificata.
+     * @param key  la chiave da cercare
+     * @return true se la mappa contiene la chiave
      */
-    public boolean containsKey(Object key) {
+    @Override 
+    public boolean containsKey(final Object key) {
         return map.containsKey(key);
+    }
+
+    // Additional methods to add and remove entries for testing purposes
+    public void put(K key, V value) {
+        map.put(key, value);
+    }
+
+    public void remove(K key) {
+        map.remove(key);
     }
 }

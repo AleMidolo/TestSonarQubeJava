@@ -1,26 +1,31 @@
 import java.util.Arrays;
 
-public class ArrayMatcher {
-    private int[] internalArray;
+public class ArrayComparer {
     
-    public ArrayMatcher(int[] array) {
-        this.internalArray = array;
-    }
-
-    /**
-     * Returns true if the contents of the internal array and the provided array match.
-     * @param otherArray The array to compare against the internal array
-     * @return boolean indicating if arrays match
+    /** 
+     * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
      */
-    public boolean matches(int[] otherArray) {
-        if (otherArray == null || internalArray == null) {
+    public boolean equals(final byte[] data, int offset, final int len) {
+        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
         
-        if (otherArray.length != internalArray.length) {
+        byte[] internalArray = getInternalArray(); // Assume this method retrieves the internal array
+        if (internalArray.length < len) {
             return false;
         }
         
-        return Arrays.equals(internalArray, otherArray);
+        for (int i = 0; i < len; i++) {
+            if (internalArray[i] != data[offset + i]) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private byte[] getInternalArray() {
+        // This method should return the internal byte array for comparison
+        return new byte[] {1, 2, 3, 4, 5}; // Example internal array
     }
 }

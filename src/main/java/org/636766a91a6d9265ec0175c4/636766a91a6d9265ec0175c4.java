@@ -1,32 +1,52 @@
-import org.objectweb.asm.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
-public class FrameStack {
-    private List<Type> stack;
-    
-    public FrameStack() {
-        stack = new ArrayList<>();
+public class StackManipulator {
+    private Stack<String> stack;
+
+    public StackManipulator() {
+        this.stack = new Stack<>();
     }
 
-    public void pop(String descriptor) {
-        Type type = Type.getType(descriptor);
-        
-        if (type.getSort() == Type.METHOD) {
-            // For method descriptors, pop argument types
-            Type[] argumentTypes = type.getArgumentTypes();
-            for (int i = argumentTypes.length - 1; i >= 0; i--) {
-                int size = argumentTypes[i].getSize();
-                for (int j = 0; j < size; j++) {
-                    stack.remove(stack.size() - 1);
+    /**
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+     */
+    private void pop(final String descriptor) {
+        // Assuming descriptor is a method descriptor like "(I)V" for int parameter
+        if (descriptor.startsWith("(") && descriptor.contains(")")) {
+            int start = descriptor.indexOf('(') + 1;
+            int end = descriptor.indexOf(')');
+            String parameters = descriptor.substring(start, end);
+            for (String type : parameters.split(",")) {
+                if (!stack.isEmpty() && stack.peek().equals(type)) {
+                    stack.pop();
                 }
             }
         } else {
-            // For regular type descriptors, pop the type size
-            int size = type.getSize();
-            for (int i = 0; i < size; i++) {
-                stack.remove(stack.size() - 1);
+            // If it's a single type, just pop it if it matches
+            if (!stack.isEmpty() && stack.peek().equals(descriptor)) {
+                stack.pop();
             }
         }
+    }
+
+    public void push(String type) {
+        stack.push(type);
+    }
+
+    public Stack<String> getStack() {
+        return stack;
+    }
+
+    public static void main(String[] args) {
+        StackManipulator sm = new StackManipulator();
+        sm.push("I");
+        sm.push("J");
+        sm.push("I");
+        sm.push("F");
+
+        System.out.println("Stack before pop: " + sm.getStack());
+        sm.pop("(I)V");
+        System.out.println("Stack after pop: " + sm.getStack());
     }
 }

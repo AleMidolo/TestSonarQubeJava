@@ -1,50 +1,54 @@
-public class HashCapacity {
-    public static int getPrimeCapacity(int desiredCapacity) {
-        if (desiredCapacity < 0) {
-            throw new IllegalArgumentException("Capacity cannot be negative");
-        }
-        
-        if (desiredCapacity < 2) {
+import java.util.Arrays;
+
+public class PrimeCapacity {
+
+    /**
+     * Restituisce un numero primo che è <code>&gt;= desiredCapacity</code> e molto vicino a <code>desiredCapacity</code> (entro l'11% se <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity la capacità desiderata dall'utente.
+     * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
+     */
+    public static int nextPrime(int desiredCapacity) {
+        if (desiredCapacity <= 1) {
             return 2;
         }
-        
-        // Start checking from desiredCapacity
-        int num = desiredCapacity;
-        
-        // If even, add 1 to start checking from next odd number
-        if (num % 2 == 0) {
-            num++;
+        if (desiredCapacity == 2) {
+            return 2;
         }
-        
-        // Keep checking until we find a prime number
-        while (!isPrime(num)) {
-            num += 2;
-            
-            // Check if we've exceeded the 11% threshold for large capacities
-            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
-                // Go back to desired capacity and find previous prime
-                num = desiredCapacity;
-                while (!isPrime(num)) {
-                    num--;
-                }
-                break;
+
+        int upperLimit = desiredCapacity;
+        if (desiredCapacity >= 1000) {
+            upperLimit = (int) (desiredCapacity * 1.11);
+        }
+
+        for (int i = desiredCapacity; i <= upperLimit; i++) {
+            if (isPrime(i)) {
+                return i;
             }
         }
-        
-        return num;
+        return upperLimit; // Fallback, should not reach here
     }
-    
-    private static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        if (num <= 3) return true;
-        if (num % 2 == 0 || num % 3 == 0) return false;
-        
-        // Check up to square root of num
-        for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
+
+    private static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        if (number <= 3) {
+            return true;
+        }
+        if (number % 2 == 0 || number % 3 == 0) {
+            return false;
+        }
+        for (int i = 5; i * i <= number; i += 6) {
+            if (number % i == 0 || number % (i + 2) == 0) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        int desiredCapacity = 1000;
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + nextPrimeCapacity);
     }
 }

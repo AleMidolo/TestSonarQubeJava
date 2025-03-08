@@ -1,30 +1,30 @@
-public class ByteArrayComparator {
-    /**
-     * Compares <code>count</code> first bytes in the arrays <code>a</code> and <code>b</code>.
-     * @param a     The first array to compare.
-     * @param b     The second array to compare.
-     * @param count How many bytes should be compared.
-     * @return <code>true</code> if <code>count</code> first bytes in arrays<code>a</code> and <code>b</code> are equal.
+public class ArrayComparator {
+    
+    /** 
+     * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
+     * @param a     Il primo array da confrontare.
+     * @param b     Il secondo array da confrontare.
+     * @param count Quanti byte devono essere confrontati.
+     * @return <code>true</code> se i <code>count</code> primi byte negli array <code>a</code> e <code>b</code> sono uguali.
      */
-    public static boolean compareBytes(byte[] a, byte[] b, int count) {
-        if (a == null || b == null) {
+    public static boolean arrayequals(byte[] a, byte[] b, int count) {
+        if (a == null || b == null || count < 0 || count > a.length || count > b.length) {
             return false;
         }
-        
-        if (count < 0) {
-            return false;
-        }
-        
-        if (a.length < count || b.length < count) {
-            return false;
-        }
-        
         for (int i = 0; i < count; i++) {
             if (a[i] != b[i]) {
                 return false;
             }
         }
-        
         return true;
+    }
+
+    public static void main(String[] args) {
+        byte[] array1 = {1, 2, 3, 4, 5};
+        byte[] array2 = {1, 2, 3, 6, 7};
+        int count = 3;
+
+        boolean result = arrayequals(array1, array2, count);
+        System.out.println("I primi " + count + " byte sono uguali: " + result);
     }
 }

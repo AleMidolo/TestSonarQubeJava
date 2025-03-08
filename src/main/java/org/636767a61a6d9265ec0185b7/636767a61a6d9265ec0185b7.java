@@ -1,28 +1,29 @@
-public class CharacterUtils {
-    /**
-     * Interpret a character as a digit (in any base up to 36) and return the numeric value. 
-     * This is like {@code Character.digit()} but we don't accept non-ASCII digits.
-     *
-     * @param c The character to interpret as a digit
-     * @param radix The base of the number system (between 2 and 36)
-     * @return The numeric value of the digit, or -1 if the character is not a valid digit
+public class DigitValueInterpreter {
+
+    /** 
+     * Interpreta un carattere come una cifra (in qualsiasi base fino a 36) e restituisce il valore numerico. 
+     * Questo è simile a {@code Character.digit()} ma non accettiamo cifre non-ASCII.
      */
-    public static int digit(char c, int radix) {
-        if (radix < 2 || radix > 36) {
-            return -1;
-        }
-        
-        int value;
+    private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
-            value = c - '0';
-        } else if (c >= 'a' && c <= 'z') {
-            value = c - 'a' + 10;
+            return c - '0'; // Valori da 0 a 9
         } else if (c >= 'A' && c <= 'Z') {
-            value = c - 'A' + 10;
+            return c - 'A' + 10; // Valori da 10 a 35
+        } else if (c >= 'a' && c <= 'z') {
+            return c - 'a' + 10; // Valori da 10 a 35 (minuscolo)
         } else {
-            return -1;
+            throw new IllegalArgumentException("Carattere non valido: " + c);
         }
-        
-        return value < radix ? value : -1;
+    }
+
+    public static void main(String[] args) {
+        // Test del metodo digitValue
+        System.out.println(digitValue('0')); // Output: 0
+        System.out.println(digitValue('9')); // Output: 9
+        System.out.println(digitValue('A')); // Output: 10
+        System.out.println(digitValue('Z')); // Output: 35
+        System.out.println(digitValue('a')); // Output: 10
+        System.out.println(digitValue('z')); // Output: 35
+        // System.out.println(digitValue('@')); // Uncommenting this will throw an exception
     }
 }

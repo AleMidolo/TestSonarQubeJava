@@ -1,30 +1,31 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import java.util.EnumSet;
+import org.json.JSONObject;
+import org.json.JSONWriter;
 
 public class JsonSerializer {
 
     /**
-     * Serialize to JSON {@link String}
-     * @param features features to be enabled in serialization
+     * Serializza in JSON {@link String}
+     * @param features funzionalità da abilitare nella serializzazione
      * @return JSON {@link String}
      */
-    public String serializeToJson(EnumSet<SerializationFeature> features) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            
-            // Enable all specified serialization features
-            if (features != null) {
-                for (SerializationFeature feature : features) {
-                    mapper.enable(feature);
-                }
-            }
-
-            // Convert this object to JSON string
-            return mapper.writeValueAsString(this);
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error serializing object to JSON", e);
+    @SuppressWarnings("unchecked")
+    public String toString(JSONWriter.Feature... features) {
+        JSONObject jsonObject = new JSONObject();
+        
+        // Example data to serialize
+        jsonObject.put("exampleKey", "exampleValue");
+        
+        // Apply features if needed (this is just a placeholder for demonstration)
+        for (JSONWriter.Feature feature : features) {
+            // Implement feature handling logic here if necessary
         }
+        
+        return jsonObject.toString();
+    }
+
+    public static void main(String[] args) {
+        JsonSerializer serializer = new JsonSerializer();
+        String jsonString = serializer.toString();
+        System.out.println(jsonString);
     }
 }

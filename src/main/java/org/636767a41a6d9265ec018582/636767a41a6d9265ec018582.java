@@ -1,26 +1,35 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
+import com.google.protobuf.Schema;
+import com.google.protobuf.LinkedBuffer;
 
 public class MessageSerializer {
-    
-    /**
-     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
-     * @param message The byte array message to serialize
-     * @param out The output stream to write to
-     * @return the size of the message
-     * @throws IOException if an I/O error occurs
+
+    /** 
+     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
+     * @return la dimensione del messaggio
      */
-    public static int serializeMessage(byte[] message, OutputStream out) throws IOException {
-        // Write message length as 4 byte integer
-        ByteBuffer lengthBuffer = ByteBuffer.allocate(4);
-        lengthBuffer.putInt(message.length);
-        out.write(lengthBuffer.array());
+    public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
+        // Serialize the message to a byte array
+        byte[] messageBytes = schema.encode(message, buffer);
         
-        // Write message content
-        out.write(message);
+        // Get the length of the message
+        int length = messageBytes.length;
         
-        // Return total size (4 bytes for length + message size)
-        return 4 + message.length;
+        // Write the length as a varint
+        writeVarint(out, length);
+        
+        // Write the message bytes to the output stream
+        out.write(messageBytes);
+        
+        return length;
+    }
+
+    private static void writeVarint(OutputStream out, int value) throws IOException {
+        while ((value & ~0x7F) != 0) {
+            out.write((value & 0x7F) | 0x80);
+            value >>>= 7;
+        }
+        out.write(value);
     }
 }

@@ -1,47 +1,35 @@
-import org.objectweb.asm.Symbol;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SymbolTable {
-    private final Entry[] entries;
-    private int size;
-    private static final int CONSTANT_NAMEANDTYPE = 12;
+    private final Map<String, Integer> constantPool;
+    private int nextIndex;
 
-    private static class Entry {
-        final int type;
-        final String name;
-        final String descriptor;
-        Entry next;
-        int index;
-
-        Entry(int type, String name, String descriptor, int index) {
-            this.type = type;
-            this.name = name;
-            this.descriptor = descriptor;
-            this.index = index;
-        }
+    public SymbolTable() {
+        this.constantPool = new HashMap<>();
+        this.nextIndex = 0;
     }
 
-    public Symbol addConstantNameAndType(final String name, final String descriptor) {
-        int hashCode = hash(CONSTANT_NAMEANDTYPE, name, descriptor);
-        Entry entry = entries[hashCode % entries.length];
-        
-        while (entry != null) {
-            if (entry.type == CONSTANT_NAMEANDTYPE 
-                && entry.name.equals(name)
-                && entry.descriptor.equals(descriptor)) {
-                return new Symbol(entry.index, entry.type, entry.name, entry.descriptor);
-            }
-            entry = entry.next;
+    /**
+     * Aggiunge un CONSTANT_NameAndType_info al pool di costanti di questa tabella dei simboli. Non fa nulla se il pool di costanti contiene già un elemento simile.
+     * @param name il nome di un campo o di un metodo.
+     * @param descriptor un descrittore di campo o di metodo.
+     * @return un nuovo simbolo o un simbolo già esistente con il valore fornito.
+     */
+    public int addConstantNameAndType(final String name, final String descriptor) {
+        String key = name + ":" + descriptor;
+        if (!constantPool.containsKey(key)) {
+            constantPool.put(key, nextIndex);
+            nextIndex++;
         }
-
-        // Not found, create new entry
-        Entry newEntry = new Entry(CONSTANT_NAMEANDTYPE, name, descriptor, size++);
-        newEntry.next = entries[hashCode % entries.length];
-        entries[hashCode % entries.length] = newEntry;
-        
-        return new Symbol(newEntry.index, newEntry.type, name, descriptor);
+        return constantPool.get(key);
     }
 
-    private static int hash(int type, String name, String descriptor) {
-        return 0x7FFFFFFF & (type + name.hashCode() * descriptor.hashCode());
+    public static void main(String[] args) {
+        SymbolTable symbolTable = new SymbolTable();
+        int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
+        int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
+        System.out.println("Index of first addition: " + index1);
+        System.out.println("Index of second addition (should be the same): " + index2);
     }
 }

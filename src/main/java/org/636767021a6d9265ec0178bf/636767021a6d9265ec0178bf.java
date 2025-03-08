@@ -1,37 +1,26 @@
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.lang.Character;
 
-public class TypeConverter {
+public class Converter {
 
-    public Character convertToCharacter(Class<?> type, Object value) throws Exception {
-        if (value == null) {
-            return null;
-        }
-
-        if (value instanceof Character) {
-            return (Character) value;
-        }
-
-        if (value instanceof String) {
-            String str = (String) value;
-            if (str.length() == 1) {
-                return str.charAt(0);
+    /**
+     * <p>Converte l'oggetto di input in un java.lang.Character.</p>
+     * @param type Il tipo di dato in cui questo valore dovrebbe essere convertito.
+     * @param value Il valore di input da convertire.
+     * @return Il valore convertito.
+     * @throws Exception se la conversione non può essere eseguita con successo
+     * @since 1.8.0
+     */
+    @Override
+    protected Object convertToType(final Class<?> type, final Object value) throws Exception {
+        if (type == Character.class) {
+            if (value instanceof String && ((String) value).length() == 1) {
+                return ((String) value).charAt(0);
+            } else if (value instanceof Character) {
+                return value;
+            } else {
+                throw new Exception("Cannot convert value to Character");
             }
-            throw new Exception("Cannot convert String with length > 1 to Character");
         }
-
-        if (value instanceof Number) {
-            int intValue = ((Number) value).intValue();
-            if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
-                return (char) intValue;
-            }
-            throw new Exception("Number value outside of Character range");
-        }
-
-        if (value instanceof Boolean) {
-            return ((Boolean) value) ? '1' : '0';
-        }
-
-        throw new Exception("Cannot convert " + value.getClass().getName() + " to Character");
+        throw new Exception("Unsupported type: " + type.getName());
     }
 }

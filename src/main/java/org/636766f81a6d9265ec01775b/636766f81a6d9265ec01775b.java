@@ -1,28 +1,28 @@
-import org.objectweb.asm.ClassReader;
+import java.io.IOException;
 
-public class ClassReaderUtils {
-    /**
-     * Reads a signed long value in this {@link ClassReader}. <i>This method is intended for {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
-     * @param offset the start offset of the value to be read in this {@link ClassReader}.
-     * @return the read value.
-     */
-    public long readLong(int offset) {
-        byte[] b = new byte[8];
-        System.arraycopy(this.b, offset, b, 0, 8);
-        
-        return ((long)(b[0] & 0xFF) << 56) |
-               ((long)(b[1] & 0xFF) << 48) |
-               ((long)(b[2] & 0xFF) << 40) | 
-               ((long)(b[3] & 0xFF) << 32) |
-               ((long)(b[4] & 0xFF) << 24) |
-               ((long)(b[5] & 0xFF) << 16) |
-               ((long)(b[6] & 0xFF) << 8) |
-               ((long)(b[7] & 0xFF));
+public class ClassReader {
+    private byte[] data;
+
+    public ClassReader(byte[] data) {
+        this.data = data;
     }
-    
-    private final byte[] b;
-    
-    public ClassReaderUtils(byte[] b) {
-        this.b = b;
+
+    /**
+     * Legge un valore long firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o adattatori.</i>
+     * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
+     * @return il valore letto.
+     */
+    public long readLong(final int offset) {
+        if (offset < 0 || offset + 8 > data.length) {
+            throw new IndexOutOfBoundsException("Offset is out of bounds");
+        }
+        return ((long) (data[offset] & 0xFF) << 56) |
+               ((long) (data[offset + 1] & 0xFF) << 48) |
+               ((long) (data[offset + 2] & 0xFF) << 40) |
+               ((long) (data[offset + 3] & 0xFF) << 32) |
+               ((long) (data[offset + 4] & 0xFF) << 24) |
+               ((long) (data[offset + 5] & 0xFF) << 16) |
+               ((long) (data[offset + 6] & 0xFF) << 8) |
+               ((long) (data[offset + 7] & 0xFF));
     }
 }

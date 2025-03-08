@@ -1,23 +1,28 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Accumulator {
-    private Map<String, Integer> accumulatorMap;
+public class ValueAccumulator {
+    private Map<String, Long> storage;
 
-    public Accumulator() {
-        accumulatorMap = new HashMap<>();
+    public ValueAccumulator() {
+        storage = new HashMap<>();
     }
 
-    /**
-     * Accumulate the value with existing value in the same given key.
-     * @param key The key to accumulate value for
-     * @param value The value to accumulate
-     * @return The accumulated value after adding
+    /** 
+     * Accumula il valore con il valore esistente nella stessa chiave fornita.
      */
-    public int accumulate(String key, int value) {
-        int currentValue = accumulatorMap.getOrDefault(key, 0);
-        int newValue = currentValue + value;
-        accumulatorMap.put(key, newValue);
-        return newValue;
+    public void valueAccumulation(String key, Long value) {
+        storage.put(key, storage.getOrDefault(key, 0L) + value);
+    }
+
+    public Long getValue(String key) {
+        return storage.getOrDefault(key, 0L);
+    }
+
+    public static void main(String[] args) {
+        ValueAccumulator accumulator = new ValueAccumulator();
+        accumulator.valueAccumulation("a", 10L);
+        accumulator.valueAccumulation("a", 5L);
+        System.out.println(accumulator.getValue("a")); // Output: 15
     }
 }

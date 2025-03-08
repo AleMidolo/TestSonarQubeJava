@@ -1,32 +1,32 @@
 import java.util.Arrays;
 
-public class ByteVector {
-    private byte[] buffer;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 64;
+public class ByteArrayExpander {
+    private byte[] byteArray;
+    private int currentSize;
 
-    public ByteVector() {
-        buffer = new byte[DEFAULT_CAPACITY];
-        size = 0;
+    public ByteArrayExpander(int initialSize) {
+        this.byteArray = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
-    public void enlarge(final int size) {
+    /**
+     * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+     */
+    private void enlarge(final int size) {
         if (size <= 0) {
-            return;
+            throw new IllegalArgumentException("Size must be greater than zero.");
         }
-        
-        int newCapacity = buffer.length;
-        int minCapacity = size + this.size;
+        int newSize = currentSize + size;
+        byteArray = Arrays.copyOf(byteArray, newSize);
+        currentSize = newSize;
+    }
 
-        // If current capacity is not enough
-        if (minCapacity > newCapacity) {
-            // Double the capacity until it's large enough
-            while (newCapacity < minCapacity) {
-                newCapacity = newCapacity * 2;
-            }
-            
-            // Create new array and copy contents
-            buffer = Arrays.copyOf(buffer, newCapacity);
-        }
+    public byte[] getByteArray() {
+        return byteArray;
+    }
+
+    public int getCurrentSize() {
+        return currentSize;
     }
 }

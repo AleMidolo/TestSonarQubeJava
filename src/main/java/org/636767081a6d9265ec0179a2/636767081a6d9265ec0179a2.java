@@ -1,22 +1,24 @@
-package org.apache.commons.lang3.math;
+public class Utility {
 
-public class NumberUtils {
-    /**
-     * <p>Utility method for {@link #createNumber(String)}.</p>
-     * <p>Returns <code>true</code> if s is <code>null</code>.</p>
-     * @param s the String to check
-     * @return if it is all zeros or <code>null</code>
+    /** 
+     * <p>Metodo di utilità per {@link #createNumber(String)}.</p> <p>Restituisce <code>true</code> se s è <code>null</code>.</p>
+     * @param s la String da controllare
+     * @return se è composta solo da zeri o <code>null</code>
      */
     private static boolean isAllZeros(String s) {
         if (s == null) {
             return true;
         }
-        
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) != '0') {
-                return false;
-            }
-        }
-        return true;
+        return s.trim().isEmpty() || s.chars().allMatch(c -> c == '0');
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        System.out.println(isAllZeros(null)); // true
+        System.out.println(isAllZeros("0000")); // true
+        System.out.println(isAllZeros("0")); // true
+        System.out.println(isAllZeros("  ")); // true
+        System.out.println(isAllZeros("123")); // false
+        System.out.println(isAllZeros("01")); // false
     }
 }

@@ -1,14 +1,14 @@
-public class Session {
-    /**
-     * Session ID.
-     */
-    private String sessionId;
+import java.util.UUID;
 
-    public String getSessionId() {
-        return sessionId;
+public class SessionUtil {
+    /** 
+     * ID della sessione. 
+     */
+    public static String sessionId() {
+        return UUID.randomUUID().toString();
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public static void main(String[] args) {
+        System.out.println("Generated Session ID: " + sessionId());
     }
 }

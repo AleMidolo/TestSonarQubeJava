@@ -1,47 +1,53 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+public class DotIdentifierDecompressor {
 
-public class StringUnescaper {
-    
-    /**
-     * Unescape a string DOT identifier.
-     * @param input the input
-     * @return the unescaped output
+    /** 
+     * Decomprime un identificatore di stringa DOT.
+     * @param input l'input
+     * @return l'output decompresso
      */
-    public static String unescapeDotIdentifier(String input) {
-        if (input == null || input.isEmpty()) {
-            return input;
+    private String unescapeId(String input) {
+        if (input == null) {
+            return null;
+        }
+        StringBuilder output = new StringBuilder();
+        boolean escape = false;
+
+        for (char c : input.toCharArray()) {
+            if (escape) {
+                switch (c) {
+                    case 'n':
+                        output.append('\n');
+                        break;
+                    case 't':
+                        output.append('\t');
+                        break;
+                    case '\\':
+                        output.append('\\');
+                        break;
+                    case '"':
+                        output.append('"');
+                        break;
+                    default:
+                        output.append(c);
+                        break;
+                }
+                escape = false;
+            } else {
+                if (c == '\\') {
+                    escape = true;
+                } else {
+                    output.append(c);
+                }
+            }
         }
 
-        // Handle quoted strings
-        if (input.startsWith("\"") && input.endsWith("\"")) {
-            String inner = input.substring(1, input.length() - 1);
-            
-            // Replace escaped quotes
-            inner = inner.replace("\\\"", "\"");
-            
-            // Replace escaped newlines
-            inner = inner.replace("\\n", "\n");
-            
-            // Replace escaped tabs
-            inner = inner.replace("\\t", "\t");
-            
-            // Replace escaped backslashes
-            inner = inner.replace("\\\\", "\\");
-            
-            return inner;
-        }
+        return output.toString();
+    }
 
-        // Handle unquoted identifiers
-        Pattern escapePattern = Pattern.compile("\\\\([^\\\\])");
-        Matcher matcher = escapePattern.matcher(input);
-        StringBuffer result = new StringBuffer();
-        
-        while (matcher.find()) {
-            matcher.appendReplacement(result, matcher.group(1));
-        }
-        matcher.appendTail(result);
-        
-        return result.toString();
+    public static void main(String[] args) {
+        DotIdentifierDecompressor decompressor = new DotIdentifierDecompressor();
+        String input = "Hello\\nWorld\\t!";
+        String output = decompressor.unescapeId(input);
+        System.out.println(output);
     }
 }

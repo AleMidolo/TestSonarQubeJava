@@ -1,30 +1,36 @@
 import java.util.Enumeration;
+import java.util.Vector;
 
-public class EnumerationUtils {
+public class EnumerationToArray {
 
-    public static String[] copyEnumerationToStringArray(Enumeration<?> enumeration) {
+    /** 
+     * Copia l'Enumeration fornita in un array di Stringhe. L'Enumeration deve contenere solo elementi di tipo String.
+     * @param enumeration l'Enumeration da copiare
+     * @return l'array di Stringhe (<code>null</code> se l'Enumeration passata era <code>null</code>)
+     */
+    public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
             return null;
         }
 
-        // Count elements in enumeration
-        int count = 0;
-        Enumeration<?> countEnum = enumeration;
-        while (countEnum.hasMoreElements()) {
-            countEnum.nextElement();
-            count++;
+        Vector<String> vector = new Vector<>();
+        while (enumeration.hasMoreElements()) {
+            vector.add(enumeration.nextElement());
         }
 
-        // Create array and copy elements
-        String[] array = new String[count];
-        int i = 0;
-        while (enumeration.hasMoreElements()) {
-            Object element = enumeration.nextElement();
-            if (!(element instanceof String)) {
-                throw new IllegalArgumentException("Enumeration must contain String elements only");
-            }
-            array[i++] = (String) element;
+        return vector.toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        Vector<String> vector = new Vector<>();
+        vector.add("Hello");
+        vector.add("World");
+        Enumeration<String> enumeration = vector.elements();
+        
+        String[] result = toStringArray(enumeration);
+        for (String str : result) {
+            System.out.println(str);
         }
-        return array;
     }
 }

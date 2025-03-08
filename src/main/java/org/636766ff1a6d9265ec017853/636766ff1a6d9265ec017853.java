@@ -1,15 +1,17 @@
 import org.objectweb.asm.Label;
 
-public class LabelCreator {
-    public Label getLabelForBytecodeOffset(int bytecodeOffset, Label[] labels) {
-        // If label already exists at this offset, return it
-        if (labels[bytecodeOffset] != null) {
-            return labels[bytecodeOffset];
+public class LabelManager {
+
+    /**
+     * Restituisce l'etichetta corrispondente all'offset di bytecode fornito. L'implementazione predefinita di questo metodo crea un'etichetta per l'offset dato se non è già stata creata.
+     * @param bytecodeOffset un offset di bytecode in un metodo.
+     * @param labels le etichette già create, indicizzate per il loro offset. Se un'etichetta esiste già per bytecodeOffset, questo metodo non deve crearne una nuova. Altrimenti, deve memorizzare la nuova etichetta in questo array.
+     * @return un'etichetta non nulla, che deve essere uguale a labels[bytecodeOffset].
+     */
+    protected Label readLabel(final int bytecodeOffset, final Label[] labels) {
+        if (labels[bytecodeOffset] == null) {
+            labels[bytecodeOffset] = new Label();
         }
-        
-        // Create new label if none exists
-        Label newLabel = new Label();
-        labels[bytecodeOffset] = newLabel;
-        return newLabel;
+        return labels[bytecodeOffset];
     }
 }

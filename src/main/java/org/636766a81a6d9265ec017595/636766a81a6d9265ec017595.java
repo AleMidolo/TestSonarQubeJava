@@ -1,39 +1,35 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
+    private byte[] bytes;
     private int size;
-    private static final int DEFAULT_CAPACITY = 10;
-    
+
     public ByteVector() {
-        data = new byte[DEFAULT_CAPACITY];
-        size = 0;
+        this.bytes = new byte[2]; // inizializza con una dimensione iniziale
+        this.size = 0;
     }
 
-    public ByteVector putTwoBytes(byte byteValue1, byte byteValue2) {
-        // Ensure capacity for 2 more bytes
-        ensureCapacity(size + 2);
-        
-        // Add the bytes
-        data[size++] = byteValue1;
-        data[size++] = byteValue2;
-        
-        return this;
+    /** 
+     * Inserisce due byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
+     * @param byteValue1 un byte.
+     * @param byteValue2 un altro byte.
+     * @return questo vettore di byte.
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        ensureCapacity(size + 2); // Assicurati che ci sia spazio sufficiente
+        bytes[size++] = (byte) byteValue1; // Aggiungi il primo byte
+        bytes[size++] = (byte) byteValue2; // Aggiungi il secondo byte
+        return this; // Restituisci il vettore di byte
     }
-    
+
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+        if (minCapacity - bytes.length > 0) {
+            int newCapacity = Math.max(bytes.length * 2, minCapacity);
+            bytes = Arrays.copyOf(bytes, newCapacity);
         }
     }
-    
-    // Helper methods for testing/validation
-    public byte[] getData() {
-        return Arrays.copyOf(data, size);
-    }
-    
-    public int getSize() {
-        return size;
+
+    public byte[] getBytes() {
+        return Arrays.copyOf(bytes, size); // Restituisci una copia del vettore di byte
     }
 }

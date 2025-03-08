@@ -1,33 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class ConstructorTracker {
-    private List<AbstractType> constructorTypes;
+public class TypeManager {
     
-    public ConstructorTracker() {
-        constructorTypes = new ArrayList<>();
+    // List to hold initialized types
+    private List<Integer> initializedTypes;
+
+    // Constructor
+    public TypeManager() {
+        initializedTypes = new ArrayList<>();
     }
 
     /**
-     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
-     * @param abstractType an abstract type on a which a constructor is invoked.
+     * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
+     * @param abstractType un tipo astratto su cui viene invocato un costruttore.
      */
-    public void addConstructorType(AbstractType abstractType) {
-        if (abstractType != null) {
-            constructorTypes.add(abstractType);
+    private void addInitializedType(final int abstractType) {
+        if (!initializedTypes.contains(abstractType)) {
+            initializedTypes.add(abstractType);
         }
     }
-    
-    // Abstract type class for demonstration
-    public static class AbstractType {
-        private String typeName;
-        
-        public AbstractType(String name) {
-            this.typeName = name;
-        }
-        
-        public String getTypeName() {
-            return typeName;
-        }
+
+    // Method to get the list of initialized types
+    public List<Integer> getInitializedTypes() {
+        return initializedTypes;
+    }
+
+    public static void main(String[] args) {
+        TypeManager manager = new TypeManager();
+        manager.addInitializedType(1);
+        manager.addInitializedType(2);
+        manager.addInitializedType(1); // This will not be added again
+
+        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }
 }

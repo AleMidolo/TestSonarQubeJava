@@ -1,16 +1,24 @@
+import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class AtmosphereHandlerManager {
-    private final Map<String, AtmosphereHandler> handlers = new ConcurrentHashMap<>();
-    
+    private AtmosphereFramework atmosphereFramework;
+
+    public AtmosphereHandlerManager(AtmosphereFramework atmosphereFramework) {
+        this.atmosphereFramework = atmosphereFramework;
+    }
+
+    /** 
+     * Rimuove un {@link AtmosphereHandler}.
+     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String,AtmosphereHandler)};
+     * @return true se rimosso
+     */
     public boolean removeAtmosphereHandler(String mapping) {
-        if (mapping == null) {
-            return false;
+        AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
+        if (handler != null) {
+            atmosphereFramework.removeAtmosphereHandler(mapping);
+            return true;
         }
-        
-        AtmosphereHandler removed = handlers.remove(mapping);
-        return removed != null;
+        return false;
     }
 }

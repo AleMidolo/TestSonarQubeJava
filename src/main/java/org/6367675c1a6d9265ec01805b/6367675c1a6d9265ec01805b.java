@@ -1,46 +1,63 @@
-import java.util.List;
+public void removeFromTreeEdgeList() {
+    // Assuming there are two doubly linked lists for edges: leftEdgeList and rightEdgeList
+    EdgeNode currentLeft = leftEdgeList.head;
+    EdgeNode currentRight = rightEdgeList.head;
 
-public class TreeEdge {
-    private TreeEdge prev;
-    private TreeEdge next;
-    private TreeNode source;
-    private TreeNode target;
+    // Remove this edge from the left edge list
+    while (currentLeft != null) {
+        if (currentLeft.edge.equals(this)) {
+            if (currentLeft.prev != null) {
+                currentLeft.prev.next = currentLeft.next;
+            } else {
+                leftEdgeList.head = currentLeft.next; // Update head if it's the first element
+            }
+            if (currentLeft.next != null) {
+                currentLeft.next.prev = currentLeft.prev;
+            }
+            break; // Exit after removing the edge
+        }
+        currentLeft = currentLeft.next;
+    }
 
-    /**
-     * Removes this edge from both doubly linked lists of tree edges.
-     */
-    public void remove() {
-        // Handle previous edge's next pointer
-        if (prev != null) {
-            prev.next = next;
+    // Remove this edge from the right edge list
+    while (currentRight != null) {
+        if (currentRight.edge.equals(this)) {
+            if (currentRight.prev != null) {
+                currentRight.prev.next = currentRight.next;
+            } else {
+                rightEdgeList.head = currentRight.next; // Update head if it's the first element
+            }
+            if (currentRight.next != null) {
+                currentRight.next.prev = currentRight.prev;
+            }
+            break; // Exit after removing the edge
         }
-        
-        // Handle next edge's previous pointer
-        if (next != null) {
-            next.prev = prev;
-        }
-        
-        // Remove references from source node
-        if (source != null) {
-            source.removeEdge(this);
-        }
-        
-        // Remove references from target node
-        if (target != null) {
-            target.removeEdge(this);
-        }
-        
-        // Clear this edge's pointers
-        prev = null;
-        next = null;
-        source = null;
-        target = null;
+        currentRight = currentRight.next;
     }
 }
 
-// Supporting class
-class TreeNode {
-    public void removeEdge(TreeEdge edge) {
-        // Implementation for removing edge from node
+// Assuming EdgeNode and EdgeList classes are defined as follows:
+class EdgeNode {
+    Edge edge;
+    EdgeNode next;
+    EdgeNode prev;
+
+    EdgeNode(Edge edge) {
+        this.edge = edge;
+        this.next = null;
+        this.prev = null;
     }
+}
+
+class EdgeList {
+    EdgeNode head;
+
+    EdgeList() {
+        this.head = null;
+    }
+}
+
+// Assuming Edge class is defined
+class Edge {
+    // Edge properties and methods
 }

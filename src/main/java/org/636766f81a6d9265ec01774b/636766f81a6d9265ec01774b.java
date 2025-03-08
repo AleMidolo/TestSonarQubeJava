@@ -1,30 +1,32 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BufferedReader {
-    private byte[] buffer;
-    private int pos;
-    private int count;
-    private InputStream in;
-    private static final int BUFFER_SIZE = 8192;
+public class ByteReader {
+    private InputStream buffer;
+    private byte[] byteBuffer;
+    private int currentIndex;
+    private int bytesRead;
 
-    public int read() throws IOException {
-        if (pos >= count) {
-            // Buffer is empty, try to refill
-            count = in.read(buffer, 0, buffer.length);
-            if (count == -1) {
-                // No more data
-                throw new IOException("End of stream reached");
-            }
-            pos = 0;
-        }
-        return buffer[pos++] & 0xff;
+    public ByteReader(InputStream buffer) {
+        this.buffer = buffer;
+        this.byteBuffer = new byte[1024]; // Buffer size can be adjusted
+        this.currentIndex = 0;
+        this.bytesRead = 0;
     }
 
-    public BufferedReader(InputStream in) {
-        this.in = in;
-        this.buffer = new byte[BUFFER_SIZE];
-        this.pos = 0;
-        this.count = 0;
+    /** 
+     * Legge un byte dal <code>buffer</code> e lo riempie nuovamente se necessario.
+     * @return Il prossimo byte dallo stream di input.
+     * @throws IOException se non ci sono più dati disponibili.
+     */
+    public byte readByte() throws IOException {
+        if (currentIndex >= bytesRead) {
+            bytesRead = buffer.read(byteBuffer);
+            currentIndex = 0;
+            if (bytesRead == -1) {
+                throw new IOException("No more data available.");
+            }
+        }
+        return byteBuffer[currentIndex++];
     }
 }

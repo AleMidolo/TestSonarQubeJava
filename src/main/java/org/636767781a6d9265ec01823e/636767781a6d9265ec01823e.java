@@ -1,35 +1,27 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
-public class SocketAppender {
-    private List<Socket> clients = new CopyOnWriteArrayList<>();
-    
-    public void handleLogEvent(LoggingEvent event) {
+public class CustomAppender extends AppenderSkeleton {
+
+    @Override
+    protected void append(LoggingEvent event) {
+        // Get the message from the logging event
         String message = event.getRenderedMessage();
         
-        // Iterate through connected clients and write message
-        for (Socket client : clients) {
-            try {
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
-                writer.println(message);
-            } catch (IOException e) {
-                // Remove client if we can't write to it
-                clients.remove(client);
-            }
-        }
+        // Here you would implement the logic to send the message to each connected client
+        // For demonstration purposes, we'll just print it to the console
+        System.out.println("Logging to clients: " + message);
+        
+        // You can add your logic to handle connected clients and send the message to them
     }
-    
-    // Helper method to add new client connections
-    public void addClient(Socket client) {
-        clients.add(client);
+
+    @Override
+    public void close() {
+        // Implement any cleanup logic if necessary
     }
-    
-    // Helper method to remove client connections
-    public void removeClient(Socket client) {
-        clients.remove(client);
+
+    @Override
+    public boolean requiresLayout() {
+        return false; // Change to true if you are using a layout
     }
 }

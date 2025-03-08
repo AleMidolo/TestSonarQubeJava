@@ -1,41 +1,39 @@
-import java.util.Objects;
+class ListNodeImpl<E> {
+    E value;
+    ListNodeImpl<E> next;
+    ListNodeImpl<E> prev;
 
-public class LinkedList<T> {
-    
-    private class Node<T> {
-        T data;
-        Node<T> next;
-        
-        Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
+    ListNodeImpl(E value) {
+        this.value = value;
     }
-    
-    private Node<T> head;
-    
-    /**
-     * Remove the non null {@code node} from the list.
-     * @param node The node to remove
+}
+
+public class LinkedList<E> {
+    private ListNodeImpl<E> head;
+    private ListNodeImpl<E> tail;
+
+    /** 
+     * Rimuove il nodo non nullo {@code node} dalla lista. 
      */
-    public void remove(Node<T> node) {
-        Objects.requireNonNull(node, "Node cannot be null");
-        
-        // If node is head
-        if (head == node) {
-            head = head.next;
-            return;
+    private boolean unlink(ListNodeImpl<E> node) {
+        if (node == null) {
+            return false;
         }
-        
-        // Find the node before the one to remove
-        Node<T> current = head;
-        while (current != null && current.next != node) {
-            current = current.next;
+
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            head = node.next; // node is head
         }
-        
-        // If node was found in list
-        if (current != null) {
-            current.next = node.next;
+
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev; // node is tail
         }
+
+        node.next = null;
+        node.prev = null;
+        return true;
     }
 }

@@ -1,26 +1,33 @@
-import java.util.Arrays;
+public class ByteArrayEnlarger {
+    
+    private byte[] byteArray;
 
-public class ByteVector {
-    private byte[] buffer;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 64;
-
-    public ByteVector() {
-        buffer = new byte[DEFAULT_CAPACITY];
-        size = 0;
+    public ByteArrayEnlarger(int initialSize) {
+        this.byteArray = new byte[initialSize];
     }
 
-    public void enlarge(final int size) {
-        if (size <= 0) {
-            return;
+    /**
+     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+     */
+    private void enlarge(final int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
         }
-        
-        int currentCapacity = buffer.length;
-        int requiredCapacity = this.size + size;
-        
-        if (requiredCapacity > currentCapacity) {
-            int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
-            buffer = Arrays.copyOf(buffer, newCapacity);
-        }
+        int newSize = byteArray.length + size;
+        byte[] newByteArray = new byte[newSize];
+        System.arraycopy(byteArray, 0, newByteArray, 0, byteArray.length);
+        byteArray = newByteArray;
+    }
+
+    public byte[] getByteArray() {
+        return byteArray;
+    }
+
+    public static void main(String[] args) {
+        ByteArrayEnlarger enlarger = new ByteArrayEnlarger(10);
+        System.out.println("Initial size: " + enlarger.getByteArray().length);
+        enlarger.enlarge(5);
+        System.out.println("New size after enlargement: " + enlarger.getByteArray().length);
     }
 }

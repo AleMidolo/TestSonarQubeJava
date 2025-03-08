@@ -1,18 +1,20 @@
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 public class TemplateEncoder {
-    /**
-     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
-     * @param s the string with zero or more template parameters names
-     * @return the string with encoded template parameters names.
+
+    /** 
+     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
+     * @param s la stringa con zero o più nomi di parametri di template
+     * @return la stringa con i nomi di parametri di template codificati.
      */
-    public static String encodeTemplateParameters(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+    public static String encodeTemplateNames(String s) {
+        if (s == null) {
+            return null;
         }
-        
-        // Replace { with %7B and } with %7D
         return s.replace("{", "%7B").replace("}", "%7D");
+    }
+
+    public static void main(String[] args) {
+        String input = "Hello {name}, welcome to {place}!";
+        String encoded = encodeTemplateNames(input);
+        System.out.println(encoded); // Output: Hello %7Bname%7D, welcome to %7Bplace%7D!
     }
 }

@@ -1,20 +1,33 @@
-import org.slf4j.MDC;
+public class DiagnosticContext {
+    private static final ThreadLocal<Stack<String>> contextStack = ThreadLocal.withInitial(Stack::new);
 
-public class NDCUtil {
-    /**
-     * Looks at the last diagnostic context at the top of this NDC without removing it. <p>The returned value is the value 
-     * that was pushed last. If no context is available, then the empty string "" is returned.
-     * @return String The innermost diagnostic context.
+    /** 
+     * Osserva l'ultimo contesto diagnostico in cima a questo NDC senza rimuoverlo. <p>Il valore restituito è il valore che è stato inserito per ultimo. Se non è disponibile alcun contesto, viene restituita la stringa vuota "".
+     * @return String Il contesto diagnostico più interno.
      */
     public static String peek() {
-        String value = MDC.get("NDC");
-        if (value == null) {
-            return "";
+        Stack<String> stack = contextStack.get();
+        return stack.isEmpty() ? "" : stack.peek();
+    }
+
+    public static void push(String context) {
+        contextStack.get().push(context);
+    }
+
+    public static void pop() {
+        Stack<String> stack = contextStack.get();
+        if (!stack.isEmpty()) {
+            stack.pop();
         }
-        String[] contexts = value.split(" ");
-        if (contexts.length > 0) {
-            return contexts[contexts.length - 1];
-        }
-        return "";
+    }
+
+    public static void main(String[] args) {
+        push("Context1");
+        push("Context2");
+        System.out.println(peek()); // Should print "Context2"
+        pop();
+        System.out.println(peek()); // Should print "Context1"
+        pop();
+        System.out.println(peek()); // Should print ""
     }
 }

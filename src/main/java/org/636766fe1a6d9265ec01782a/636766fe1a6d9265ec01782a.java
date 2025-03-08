@@ -1,35 +1,31 @@
-import java.nio.ByteBuffer;
+public class ConstantPoolReader {
+    private byte[] classFileBuffer;
 
-public class ClassReader {
-    private ByteBuffer classFileBuffer;
-    private char[] charBuffer;
-    
-    public String readUTF8(final int constantPoolEntryIndex, final char[] charBuffer) {
-        int currentIndex = classFileBuffer.position();
-        int utfLength = classFileBuffer.getShort(currentIndex) & 0xFFFF;
-        currentIndex += 2;
+    public ConstantPoolReader(byte[] classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
+    }
+
+    /** 
+     * Legge un'entrata della pool di costanti CONSTANT_Utf8 in {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex l'indice di un'entrata CONSTANT_Utf8 nella tabella delle costanti della classe.
+     * @param charBuffer il buffer da utilizzare per leggere la stringa. Questo buffer deve essere sufficientemente grande. Non viene ridimensionato automaticamente.
+     * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
+     */
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        // Assuming the classFileBuffer is structured correctly and contains the necessary data
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        int length = (classFileBuffer[offset + 1] << 8) | (classFileBuffer[offset + 2] & 0xFF);
         
-        int charLength = 0;
-        int endIndex = currentIndex + utfLength;
-        
-        while (currentIndex < endIndex) {
-            int currentByte = classFileBuffer.get(currentIndex++) & 0xFF;
-            if ((currentByte & 0x80) == 0) {
-                // Single byte character
-                charBuffer[charLength++] = (char) currentByte;
-            } else if ((currentByte & 0xE0) == 0xC0) {
-                // Two byte character
-                charBuffer[charLength++] = (char) (((currentByte & 0x1F) << 6) 
-                    | (classFileBuffer.get(currentIndex++) & 0x3F));
-            } else {
-                // Three byte character
-                charBuffer[charLength++] = (char) (((currentByte & 0xF) << 12)
-                    | ((classFileBuffer.get(currentIndex++) & 0x3F) << 6)
-                    | (classFileBuffer.get(currentIndex++) & 0x3F));
-            }
+        for (int i = 0; i < length; i++) {
+            charBuffer[i] = (char) classFileBuffer[offset + 3 + i];
         }
         
-        classFileBuffer.position(endIndex);
-        return new String(charBuffer, 0, charLength);
+        return new String(charBuffer, 0, length);
+    }
+
+    private int getConstantPoolEntryOffset(int index) {
+        // This method should return the correct offset for the given constant pool entry index.
+        // For simplicity, let's assume each entry is of fixed size (this is not true in practice).
+        return index * 10; // Placeholder implementation
     }
 }

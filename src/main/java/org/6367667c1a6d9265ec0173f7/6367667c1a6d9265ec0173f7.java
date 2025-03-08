@@ -1,20 +1,24 @@
-import java.util.Arrays;
+public class ByteArrayChecker {
 
-public class BodyValidator {
-    private byte[] body;
-    
-    public BodyValidator(byte[] body) {
+    private Object body;
+
+    public ByteArrayChecker(Object body) {
         this.body = body;
     }
 
-    /**
-     * True is the body is a byte array
-     * @return True is the body is a byte array
+    /** 
+     * Restituisce true se il corpo è un array di byte
+     * @return true se il corpo è un array di byte
      */
-    public boolean isByteArray() {
-        if (body == null) {
-            return false;
-        }
-        return body.getClass().isArray() && body.getClass().getComponentType() == byte.class;
+    public boolean hasBytes() {
+        return body instanceof byte[];
+    }
+
+    public static void main(String[] args) {
+        ByteArrayChecker checker1 = new ByteArrayChecker(new byte[]{1, 2, 3});
+        System.out.println(checker1.hasBytes()); // true
+
+        ByteArrayChecker checker2 = new ByteArrayChecker("Not a byte array");
+        System.out.println(checker2.hasBytes()); // false
     }
 }

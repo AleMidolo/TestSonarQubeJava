@@ -1,57 +1,64 @@
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeSplitter {
-    // Maximum duration between start and end time
-    private static final Duration FETCH_DATA_DURATION = Duration.ofHours(24);
+public class TimeRangeBuilder {
+
+    private static final long FETCH_DATA_DURATION = 3600000; // Example duration in milliseconds (1 hour)
 
     /**
-     * Split time ranges to ensure the start time and end time is smaller than FETCH_DATA_DURATION
-     * @param startTime Start time as Instant
-     * @param endTime End time as Instant
-     * @return List of TimeRange objects containing split time ranges
+     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
      */
-    public List<TimeRange> splitTimeRanges(Instant startTime, Instant endTime) {
+    protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
         
-        if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
-            return timeRanges;
+        // Validate input
+        if (start >= end) {
+            return timeRanges; // Return empty list if start is not less than end
         }
 
-        Instant currentStart = startTime;
-        while (currentStart.isBefore(endTime)) {
-            Instant currentEnd = currentStart.plus(FETCH_DATA_DURATION);
-            
-            // If calculated end is after the actual end time, use the actual end time
-            if (currentEnd.isAfter(endTime)) {
-                currentEnd = endTime;
-            }
-            
+        // Create time ranges
+        long currentStart = start;
+        while (currentStart < end) {
+            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
             timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd;
+            currentStart = currentEnd; // Move to the next range
         }
-        
+
         return timeRanges;
     }
 
-    // Inner class to hold time range pairs
+    // Inner class to represent a time range
     public static class TimeRange {
-        private final Instant start;
-        private final Instant end;
+        private final long start;
+        private final long end;
 
-        public TimeRange(Instant start, Instant end) {
+        public TimeRange(long start, long end) {
             this.start = start;
             this.end = end;
         }
 
-        public Instant getStart() {
+        public long getStart() {
             return start;
         }
 
-        public Instant getEnd() {
+        public long getEnd() {
             return end;
+        }
+
+        @Override
+        public String toString() {
+            return "TimeRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        TimeRangeBuilder builder = new TimeRangeBuilder();
+        List<TimeRange> ranges = builder.buildTimeRanges(0, 10000000); // Example usage
+        for (TimeRange range : ranges) {
+            System.out.println(range);
         }
     }
 }

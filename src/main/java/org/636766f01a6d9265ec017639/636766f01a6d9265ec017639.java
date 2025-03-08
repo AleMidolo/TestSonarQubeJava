@@ -3,16 +3,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArrayUtils {
-    /**
-     * Array to List. <p> Works like {@link Arrays#asList(Object)}, but handles null arrays.
-     * @param <T> the array element type
-     * @param array the array to convert to a List
-     * @return a list backed by the array
+    /** 
+     * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
+     * @return una lista supportata dall'array.
      */
-    public static <T> List<T> arrayToList(final T[] array) {
-        if (array == null) {
+    public static <T> List<T> asList(T[] a) {
+        if (a == null) {
             return Collections.emptyList();
         }
-        return Arrays.asList(array);
+        return Arrays.asList(a);
+    }
+
+    public static void main(String[] args) {
+        // Test the asList method
+        String[] array = {"Hello", "World"};
+        List<String> list = asList(array);
+        System.out.println(list); // Output: [Hello, World]
+
+        String[] nullArray = null;
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // Output: []
     }
 }

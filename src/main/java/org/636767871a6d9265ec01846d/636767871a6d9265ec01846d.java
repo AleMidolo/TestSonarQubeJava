@@ -1,27 +1,28 @@
 import java.io.File;
 
-public class DirectoryCreator {
+public class ConfigurationDirectoryCreator {
     
-    public void createMRUDirectoryIfNeeded() {
+    /** 
+     * Crea la directory in cui verrà scritta la lista dei file MRU. La directory "lf5" viene creata nella directory Documenti e Impostazioni sui computer Windows 2000 e ovunque punti la variabile user.home su tutte le altre piattaforme.
+     */
+    public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String fileSeparator = System.getProperty("file.separator");
-        String os = System.getProperty("os.name").toLowerCase();
+        String directoryPath = userHome + File.separator + "lf5";
+        File directory = new File(directoryPath);
         
-        String mruDirectory;
-        
-        // Check if Windows 2000
-        if (os.contains("windows") && os.contains("2000")) {
-            mruDirectory = System.getenv("USERPROFILE") + fileSeparator + 
-                          "Documents and Settings" + fileSeparator + "lf5";
-        } else {
-            mruDirectory = userHome + fileSeparator + "lf5";
-        }
-        
-        File directory = new File(mruDirectory);
-        
-        // Create directory if it doesn't exist
         if (!directory.exists()) {
-            directory.mkdirs();
+            boolean created = directory.mkdirs();
+            if (created) {
+                System.out.println("Directory created: " + directoryPath);
+            } else {
+                System.out.println("Failed to create directory: " + directoryPath);
+            }
+        } else {
+            System.out.println("Directory already exists: " + directoryPath);
         }
+    }
+
+    public static void main(String[] args) {
+        createConfigurationDirectory();
     }
 }

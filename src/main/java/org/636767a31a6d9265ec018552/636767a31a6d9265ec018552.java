@@ -1,28 +1,31 @@
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class StringReader {
-    /**
-     * Read a string field value from the stream.
-     * @param in The DataInputStream to read from
-     * @return The string value read from the stream
-     * @throws IOException If an I/O error occurs
+
+    private BufferedReader reader;
+
+    public StringReader() {
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    /** 
+     * Leggi un valore di campo {@code string} dallo stream.
      */
-    public String readString(DataInputStream in) throws IOException {
-        // Read the string length first
-        int length = in.readInt();
-        
-        if (length < 0) {
-            return null;
+    @Override 
+    public String readString() throws IOException {
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        StringReader stringReader = new StringReader();
+        try {
+            System.out.println("Please enter a string:");
+            String input = stringReader.readString();
+            System.out.println("You entered: " + input);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
-        // Create byte array to hold string data
-        byte[] bytes = new byte[length];
-        
-        // Read the string bytes
-        in.readFully(bytes);
-        
-        // Convert bytes to string using UTF-8 encoding
-        return new String(bytes, "UTF-8");
     }
 }

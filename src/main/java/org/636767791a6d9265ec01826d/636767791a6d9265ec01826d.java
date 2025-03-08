@@ -1,46 +1,31 @@
-import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class PropertyResolver {
+public class VariableSubstitutor {
 
-    /**
-     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
-     * @param key The property key to look up
-     * @param props The Properties object containing key-value pairs
-     * @return The resolved property value with variables substituted
+    /** 
+     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. Quindi esegui la sostituzione delle variabili sul valore trovato.
      */
-    public String resolveProperty(String key, Properties props) {
-        if (key == null || props == null) {
-            return null;
-        }
-
+    public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // or throw an exception based on your needs
         }
-
-        // Pattern to match ${variable} syntax
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-        Matcher matcher = pattern.matcher(value);
-        StringBuffer result = new StringBuffer();
-
-        while (matcher.find()) {
-            String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
-            
-            // If variable not found, leave as-is
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
-            }
-            
-            // Escape $ and \ in replacement string
-            replacement = replacement.replace("\\", "\\\\").replace("$", "\\$");
-            matcher.appendReplacement(result, replacement);
+        
+        // Replace variables in the value
+        for (String propKey : props.stringPropertyNames()) {
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
-        matcher.appendTail(result);
+        
+        return value;
+    }
 
-        return result.toString();
+    public static void main(String[] args) {
+        Properties props = new Properties();
+        props.setProperty("name", "John");
+        props.setProperty("greeting", "Hello, ${name}!");
+
+        String result = findAndSubst("greeting", props);
+        System.out.println(result); // Output: Hello, John!
     }
 }

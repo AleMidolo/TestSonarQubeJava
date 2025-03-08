@@ -1,34 +1,49 @@
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class QueuePrinter {
-    private Queue<Object> queue;
+public class Queue<T> {
+    private LinkedList<T> elements;
 
-    public QueuePrinter() {
-        this.queue = new LinkedList<>();
+    public Queue() {
+        elements = new LinkedList<>();
+    }
+
+    public void enqueue(T element) {
+        elements.addLast(element);
+    }
+
+    public T dequeue() {
+        if (elements.isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        return elements.removeFirst();
+    }
+
+    public boolean isEmpty() {
+        return elements.isEmpty();
     }
 
     /**
-     * Returns a textual representation of the queue.
-     * @return a textual representation of the queue.
+     * Restituisce una rappresentazione testuale della coda.
+     * @return una rappresentazione testuale della coda.
      */
     public String toString() {
-        if (queue.isEmpty()) {
-            return "[]";
-        }
-
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        
-        for (Object element : queue) {
-            sb.append(element);
-            sb.append(", ");
+        sb.append("Queue: [");
+        for (int i = 0; i < elements.size(); i++) {
+            sb.append(elements.get(i));
+            if (i < elements.size() - 1) {
+                sb.append(", ");
+            }
         }
-        
-        // Remove trailing comma and space
-        sb.setLength(sb.length() - 2);
         sb.append("]");
-        
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
     }
 }

@@ -1,34 +1,48 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+public class TimeBucketCompressor {
 
-public class TimeBucketFormatter {
-
-    public static long formatTimeBucket(long timeBucket, int dayStep) {
-        // Convert timeBucket to LocalDate
-        String dateStr = String.valueOf(timeBucket);
-        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyyMMdd"));
+    /**
+     * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. 
+     * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, 
+     * per 20000115 è 20000112, e per 20000123 è 20000123.
+     */
+    static long compressTimeBucket(long timeBucket, int dayStep) {
+        // Convert the long timeBucket to a string to manipulate the date
+        String timeBucketStr = String.valueOf(timeBucket);
         
-        // Get first day of month
-        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+        // Extract year, month, and day from the timeBucket
+        int year = Integer.parseInt(timeBucketStr.substring(0, 4));
+        int month = Integer.parseInt(timeBucketStr.substring(4, 6));
+        int day = Integer.parseInt(timeBucketStr.substring(6, 8));
         
-        // Calculate days between first day of month and given date
-        long daysBetween = ChronoUnit.DAYS.between(firstDayOfMonth, date);
+        // Calculate the base day for the compression
+        int baseDay = (day - 1) / dayStep * dayStep + 1;
         
-        // Calculate which step bucket the date falls into
-        int stepBucket = (int)(daysBetween / dayStep);
+        // Handle month overflow
+        if (baseDay > 28) {
+            if (baseDay > 31) {
+                baseDay = 1;
+                month++;
+                if (month > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+            // Adjust for months with less than 31 days
+            if (month == 2 && baseDay > 28) {
+                baseDay = 28; // Simplified for leap years
+            } else if ((month == 4 || month == 6 || month == 9 || month == 11) && baseDay > 30) {
+                baseDay = 30;
+            }
+        }
         
-        // Get the formatted date by adding (stepBucket * dayStep) days to first day of month
-        LocalDate formattedDate = firstDayOfMonth.plusDays(stepBucket * dayStep);
-        
-        // Convert back to long format
-        return Long.parseLong(formattedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        // Format the new date back to long
+        String newTimeBucketStr = String.format("%04d%02d%02d", year, month, baseDay);
+        return Long.parseLong(newTimeBucketStr);
     }
-    
-    // Example usage
+
     public static void main(String[] args) {
-        System.out.println(formatTimeBucket(20000105, 11)); // Prints 20000101
-        System.out.println(formatTimeBucket(20000115, 11)); // Prints 20000112
-        System.out.println(formatTimeBucket(20000123, 11)); // Prints 20000123
+        // Example usage
+        long compressedBucket = compressTimeBucket(20000115L, 11);
+        System.out.println(compressedBucket); // Output: 20000112
     }
 }

@@ -1,65 +1,23 @@
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class PathUtils {
-    
+public class PathUtil {
+    /** 
+     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
+     * @param path il percorso da cui partire (di solito un percorso di file completo)
+     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
+     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
+     */
     public static String applyRelativePath(String path, String relativePath) {
-        if (path == null || relativePath == null) {
-            return null;
-        }
+        Path basePath = Paths.get(path);
+        Path resolvedPath = basePath.resolveSibling(relativePath);
+        return resolvedPath.toString();
+    }
 
-        // Convert backslashes to forward slashes
-        path = path.replace('\\', '/');
-        relativePath = relativePath.replace('\\', '/');
-
-        // Remove trailing slashes
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        // Handle empty relative path
-        if (relativePath.isEmpty()) {
-            return path;
-        }
-
-        // Split the paths into components
-        String[] pathParts = path.split("/");
-        String[] relativeParts = relativePath.split("/");
-
-        // Count number of "../" at start of relative path
-        int backCount = 0;
-        for (String part : relativeParts) {
-            if (part.equals("..")) {
-                backCount++;
-            } else {
-                break;
-            }
-        }
-
-        // Build new path
-        StringBuilder result = new StringBuilder();
-
-        // Add path components minus the number of "../"
-        for (int i = 0; i < pathParts.length - backCount; i++) {
-            result.append(pathParts[i]).append("/");
-        }
-
-        // Add remaining relative path components
-        for (int i = backCount; i < relativeParts.length; i++) {
-            if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
-                result.append(relativeParts[i]);
-                if (i < relativeParts.length - 1) {
-                    result.append("/");
-                }
-            }
-        }
-
-        // Remove trailing slash if present
-        if (result.length() > 0 && result.charAt(result.length() - 1) == '/') {
-            result.setLength(result.length() - 1);
-        }
-
-        return result.toString();
+    public static void main(String[] args) {
+        String path = "/home/user/documents/file.txt";
+        String relativePath = "../images/picture.png";
+        String result = applyRelativePath(path, relativePath);
+        System.out.println(result); // Output: /home/user/images/picture.png
     }
 }

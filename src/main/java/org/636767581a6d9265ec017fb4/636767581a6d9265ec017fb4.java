@@ -1,24 +1,26 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class KeyBoundCalculator {
-    /**
-     * Finds a minimum lower bound for every key.
-     * @param keys a list of keys.
-     * @return the computed key upper bound.
+public class UpperBoundCalculator<K extends Comparable<K>> {
+
+    /** 
+     * Trova un limite superiore minimo per ogni chiave.
+     * @param keys una lista di chiavi.
+     * @return il limite superiore delle chiavi calcolato.
      */
-    public static int findMinLowerBound(List<Integer> keys) {
+    private List<Integer> computeUpperBounds(List<K> keys) {
+        List<Integer> upperBounds = new ArrayList<>();
+        
         if (keys == null || keys.isEmpty()) {
-            return 0;
+            return upperBounds; // Return empty list if input is null or empty
+        }
+
+        for (K key : keys) {
+            // Assuming the upper bound is the integer value of the key
+            // This is a placeholder logic; actual logic may vary based on requirements
+            upperBounds.add(key.hashCode()); // Using hashCode as a simple upper bound
         }
         
-        int minBound = Integer.MAX_VALUE;
-        
-        for (Integer key : keys) {
-            if (key != null && key < minBound) {
-                minBound = key;
-            }
-        }
-        
-        return minBound == Integer.MAX_VALUE ? 0 : minBound;
+        return upperBounds;
     }
 }

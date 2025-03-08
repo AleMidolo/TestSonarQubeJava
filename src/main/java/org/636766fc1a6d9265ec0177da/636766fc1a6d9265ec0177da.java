@@ -1,13 +1,19 @@
-package org.springframework.util;
+public class ParameterSeparatorChecker {
 
-public class ParameterParser {
-    /**
-     * Determine whether a parameter name ends at the current position, that is,
-     * whether the given character qualifies as a separator.
-     * @param c The character to check
-     * @return true if the character is a parameter separator, false otherwise
+    /** 
+     * Determina se un nome di parametro termina nella posizione attuale, cioè se il carattere fornito può essere considerato un separatore. 
      */
-    protected boolean isParameterSeparator(char c) {
-        return (c == '=' || Character.isWhitespace(c));
+    private static boolean isParameterSeparator(final char c) {
+        // Consider common parameter separators
+        return c == ',' || c == ';' || c == '&' || c == '|' || c == ' ' || c == '\n' || c == '\t';
+    }
+
+    public static void main(String[] args) {
+        // Test the isParameterSeparator method
+        char testChar1 = ',';
+        char testChar2 = 'a';
+        
+        System.out.println(isParameterSeparator(testChar1)); // true
+        System.out.println(isParameterSeparator(testChar2)); // false
     }
 }

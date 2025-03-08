@@ -1,68 +1,60 @@
-import java.util.*;
+import org.jgrapht.Graph;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 
-public class GraphPathTransformer {
-    
-    public List<Integer> setToPath(Set<Edge> tour, Graph graph) {
-        if (tour == null || tour.isEmpty() || graph == null) {
-            return new ArrayList<>();
-        }
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-        List<Integer> path = new ArrayList<>();
-        Edge currentEdge = tour.iterator().next();
-        int currentVertex = currentEdge.getSource();
-        path.add(currentVertex);
+public class GraphTour<V, E extends DefaultEdge> {
 
-        while (!tour.isEmpty()) {
-            for (Edge edge : tour) {
-                if (edge.getSource() == currentVertex) {
-                    path.add(edge.getDestination());
-                    currentVertex = edge.getDestination();
-                    tour.remove(edge);
-                    break;
-                } else if (edge.getDestination() == currentVertex) {
-                    path.add(edge.getSource());
-                    currentVertex = edge.getSource();
-                    tour.remove(edge);
-                    break;
-                }
+    /** 
+     * Trasforma una rappresentazione di un insieme in un percorso di grafo.
+     * @param tour un insieme contenente i bordi del tour
+     * @param graph il grafo
+     * @return un percorso di grafo
+     */
+    protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+        List<V> vertices = new ArrayList<>();
+        for (E edge : tour) {
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            if (!vertices.contains(source)) {
+                vertices.add(source);
+            }
+            if (!vertices.contains(target)) {
+                vertices.add(target);
             }
         }
+        
+        return new GraphPath<V, E>() {
+            @Override
+            public List<E> getEdgeList() {
+                List<E> edgeList = new ArrayList<>(tour);
+                return edgeList;
+            }
 
-        return path;
-    }
-}
+            @Override
+            public V getStartVertex() {
+                return vertices.get(0);
+            }
 
-// Supporting classes needed for compilation
-class Edge {
-    private int source;
-    private int destination;
-    
-    public Edge(int source, int destination) {
-        this.source = source;
-        this.destination = destination;
-    }
-    
-    public int getSource() {
-        return source;
-    }
-    
-    public int getDestination() {
-        return destination;
-    }
-}
+            @Override
+            public V getEndVertex() {
+                return vertices.get(vertices.size() - 1);
+            }
 
-class Graph {
-    private List<Edge> edges;
-    
-    public Graph() {
-        edges = new ArrayList<>();
-    }
-    
-    public void addEdge(Edge edge) {
-        edges.add(edge);
-    }
-    
-    public List<Edge> getEdges() {
-        return edges;
+            @Override
+            public double getWeight() {
+                double weight = 0.0;
+                for (E edge : tour) {
+                    weight += graph.getEdgeWeight(edge);
+                }
+                return weight;
+            }
+        };
     }
 }

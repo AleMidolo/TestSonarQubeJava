@@ -1,16 +1,36 @@
-import java.util.Objects;
+public class DataTable {
+    // Assuming DataTable has a method to get the bucket
+    private String bucket;
 
-public class BucketComparator {
-    /**
-     * @return true if the bucket is same.
+    public DataTable(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+}
+
+public class CompatibilityChecker {
+    private String bucket;
+
+    public CompatibilityChecker(String bucket) {
+        this.bucket = bucket;
+    }
+
+    /** 
+     * @return true se il bucket è lo stesso.
      */
-    public boolean isSameBucket(Object bucket1, Object bucket2) {
-        if (bucket1 == null && bucket2 == null) {
-            return true;
-        }
-        if (bucket1 == null || bucket2 == null) {
-            return false;
-        }
-        return Objects.equals(bucket1, bucket2);
+    public boolean isCompatible(DataTable dataset) {
+        return this.bucket.equals(dataset.getBucket());
+    }
+
+    public static void main(String[] args) {
+        CompatibilityChecker checker = new CompatibilityChecker("bucket1");
+        DataTable dataset = new DataTable("bucket1");
+        System.out.println(checker.isCompatible(dataset)); // Should print true
+
+        DataTable dataset2 = new DataTable("bucket2");
+        System.out.println(checker.isCompatible(dataset2)); // Should print false
     }
 }

@@ -1,50 +1,21 @@
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CharsetTranslator {
-    
-    /**
-     * Translate a MIME standard character set name into the Java equivalent.
-     * @param charset The MIME standard name.
-     * @return The Java equivalent for this name.
+
+    /** 
+     * Traduci un nome di set di caratteri standard MIME nell'equivalente Java.
+     * @param charset Il nome standard MIME.
+     * @return L'equivalente Java per questo nome.
      */
-    public static String translateCharset(String charset) {
-        if (charset == null || charset.trim().isEmpty()) {
-            return "UTF-8"; // Default to UTF-8 if null or empty
-        }
+    private static String javaCharset(String charset) {
+        Charset javaCharset = Charset.forName(charset);
+        return javaCharset.name();
+    }
 
-        // Create mapping of MIME charset names to Java charset names
-        Map<String, String> charsetMap = new HashMap<>();
-        charsetMap.put("iso-8859-1", "ISO-8859-1");
-        charsetMap.put("iso_8859_1", "ISO-8859-1");
-        charsetMap.put("iso8859_1", "ISO-8859-1");
-        charsetMap.put("iso_8859-1", "ISO-8859-1");
-        charsetMap.put("iso8859-1", "ISO-8859-1");
-        charsetMap.put("latin1", "ISO-8859-1");
-        charsetMap.put("utf-8", "UTF-8");
-        charsetMap.put("utf8", "UTF-8");
-        charsetMap.put("utf_8", "UTF-8");
-        charsetMap.put("ascii", "US-ASCII");
-        charsetMap.put("us-ascii", "US-ASCII");
-        charsetMap.put("us_ascii", "US-ASCII");
-        charsetMap.put("cp1252", "windows-1252");
-        charsetMap.put("windows-1252", "windows-1252");
-        charsetMap.put("win-1252", "windows-1252");
-
-        String normalizedCharset = charset.toLowerCase().trim();
-        
-        // Check if charset exists in our mapping
-        if (charsetMap.containsKey(normalizedCharset)) {
-            return charsetMap.get(normalizedCharset);
-        }
-        
-        // If not in mapping, verify if it's a supported charset
-        try {
-            Charset.forName(charset);
-            return charset;
-        } catch (Exception e) {
-            return "UTF-8"; // Return default UTF-8 if charset is not recognized
-        }
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        String mimeCharset = "UTF-8";
+        String javaEquivalent = javaCharset(mimeCharset);
+        System.out.println("L'equivalente Java per " + mimeCharset + " è: " + javaEquivalent);
     }
 }

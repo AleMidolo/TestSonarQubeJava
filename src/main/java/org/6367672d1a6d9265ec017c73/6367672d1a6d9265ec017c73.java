@@ -1,23 +1,37 @@
-class Logger {
-    private Map<String, Integer> messageMap;
-    private static final int RATE_LIMIT = 10; // 10 seconds
+import java.util.HashMap;
+import java.util.Map;
 
-    public Logger() {
-        messageMap = new HashMap<>();
+public class MessagePrinter {
+    private Map<String, Integer> messageTimestamps;
+
+    public MessagePrinter() {
+        messageTimestamps = new HashMap<>();
     }
-    
+
+    /** 
+     * Restituisce true se il messaggio deve essere stampato nel timestamp fornito, 
+     * altrimenti restituisce false. Se questo metodo restituisce false, il messaggio 
+     * non verrà stampato. Il timestamp è in granularità di secondi. 
+     */
     public boolean shouldPrintMessage(int timestamp, String message) {
-        if (!messageMap.containsKey(message)) {
-            messageMap.put(message, timestamp);
+        if (!messageTimestamps.containsKey(message)) {
+            messageTimestamps.put(message, timestamp);
             return true;
         }
-        
-        int lastPrinted = messageMap.get(message);
-        if (timestamp - lastPrinted >= RATE_LIMIT) {
-            messageMap.put(message, timestamp);
+
+        int lastTimestamp = messageTimestamps.get(message);
+        if (timestamp - lastTimestamp >= 10) {
+            messageTimestamps.put(message, timestamp);
             return true;
         }
-        
+
         return false;
+    }
+
+    public static void main(String[] args) {
+        MessagePrinter printer = new MessagePrinter();
+        System.out.println(printer.shouldPrintMessage(1, "foo")); // true
+        System.out.println(printer.shouldPrintMessage(2, "foo")); // false
+        System.out.println(printer.shouldPrintMessage(11, "foo")); // true
     }
 }

@@ -1,32 +1,28 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
-public class EventBuffer {
-    private List<Event> events;
-    private static final int MAX_BUFFER_SIZE = 100;
+public class EventLogger {
+    private LinkedList<LoggingEvent> eventBuffer;
 
-    public EventBuffer() {
-        events = new ArrayList<>();
+    public EventLogger() {
+        eventBuffer = new LinkedList<>();
     }
 
-    /**
-     * Add an <code>event</code> as the last event in the buffer.
-     * @param event The event to add to the buffer
+    /** 
+     * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
      */
-    public void addEvent(Event event) {
-        if (event == null) {
-            throw new IllegalArgumentException("Event cannot be null");
-        }
-
-        if (events.size() >= MAX_BUFFER_SIZE) {
-            events.remove(0); // Remove oldest event if buffer is full
-        }
-
-        events.add(event);
+    public void add(LoggingEvent event) {
+        eventBuffer.addLast(event);
     }
 }
 
-// Event class for reference
-class Event {
-    // Event implementation details
+class LoggingEvent {
+    private String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

@@ -1,19 +1,19 @@
-public class LogCalculator {
-    /**
-     * Computes floor(log_2(n)) + 1
-     * @param n The input number
-     * @return floor(log_2(n)) + 1
+public class LogarithmCalculator {
+
+    /** 
+     * Calcola floor($\log_2 (n)$) $+ 1$
      */
-    public static int log2Floor(int n) {
+    private int computeBinaryLog(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Input must be positive");
+            throw new IllegalArgumentException("Input must be a positive integer.");
         }
-        
-        int result = 0;
-        while (n > 1) {
-            n = n >> 1; // Divide by 2 using bit shift
-            result++;
-        }
-        return result + 1;
+        return (int) (Math.floor(Math.log(n) / Math.log(2))) + 1;
+    }
+
+    public static void main(String[] args) {
+        LogarithmCalculator calculator = new LogarithmCalculator();
+        int n = 16; // Example input
+        int result = calculator.computeBinaryLog(n);
+        System.out.println("The result of computeBinaryLog(" + n + ") is: " + result);
     }
 }

@@ -10,24 +10,24 @@ public class LogFormatter {
      * @return Una cadena formateada según el patrón de conversión.
      */
     public String format(LoggingEvent event) {
-        // Ejemplo de patrón de conversión: [fecha] [nivel] [mensaje]
+        // Ejemplo de patrón de formato: [fecha] [nivel] [mensaje]
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = dateFormat.format(new Date(event.getTimeStamp()));
         
         return String.format("[%s] [%s] %s", 
-                             formattedDate, 
-                             event.getLevel().toString(), 
-                             event.getMessage());
+                            formattedDate, 
+                            event.getLevel().toString(), 
+                            event.getMessage());
     }
 }
 
 // Clase de ejemplo para LoggingEvent
 class LoggingEvent {
     private long timeStamp;
-    private Level level;
+    private String level;
     private String message;
 
-    public LoggingEvent(long timeStamp, Level level, String message) {
+    public LoggingEvent(long timeStamp, String level, String message) {
         this.timeStamp = timeStamp;
         this.level = level;
         this.message = message;
@@ -37,16 +37,11 @@ class LoggingEvent {
         return timeStamp;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
     }
 
     public String getMessage() {
         return message;
     }
-}
-
-// Enumeración de ejemplo para Level
-enum Level {
-    INFO, WARN, ERROR, DEBUG
 }

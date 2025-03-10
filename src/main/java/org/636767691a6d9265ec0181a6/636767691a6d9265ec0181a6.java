@@ -1,4 +1,5 @@
 public class StringSplitter {
+
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
             return null;
@@ -17,7 +18,7 @@ public class StringSplitter {
     }
 
     public static void main(String[] args) {
-        String[] result = split("HelloWorld", "o");
+        String[] result = split("Hello,World", ",");
         if (result != null) {
             System.out.println("Part 1: " + result[0]);
             System.out.println("Part 2: " + result[1]);

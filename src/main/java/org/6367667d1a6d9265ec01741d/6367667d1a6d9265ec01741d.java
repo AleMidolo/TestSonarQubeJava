@@ -15,7 +15,7 @@ public class TypeResolver {
         }
     }
 
-    // Clase ficticia para representar un tipo desconocido
+    // Clase ficticia para representar el tipo desconocido
     public static class Unknown {
     }
 

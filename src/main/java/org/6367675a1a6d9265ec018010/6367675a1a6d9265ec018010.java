@@ -1,44 +1,42 @@
 import java.util.*;
 
 class Bucket {
+    private String name;
     private List<Bucket> buckets;
 
-    public Bucket() {
+    public Bucket(String name) {
+        this.name = name;
         this.buckets = new ArrayList<>();
     }
 
     public void addBucket(Bucket bucket) {
-        this.buckets.add(bucket);
+        buckets.add(bucket);
     }
 
     public void removeSelf() {
-        // Remove this bucket from all other buckets that reference it
-        for (Bucket bucket : buckets) {
-            bucket.buckets.remove(this);
+        // Remove this bucket from all parent buckets
+        for (Bucket parent : buckets) {
+            parent.buckets.remove(this);
         }
-        // Clear the list of buckets this bucket references
-        this.buckets.clear();
+        // Clear the list of buckets
+        buckets.clear();
     }
 
     public static void main(String[] args) {
-        Bucket bucket1 = new Bucket();
-        Bucket bucket2 = new Bucket();
-        Bucket bucket3 = new Bucket();
+        Bucket bucket1 = new Bucket("Bucket1");
+        Bucket bucket2 = new Bucket("Bucket2");
 
         bucket1.addBucket(bucket2);
-        bucket2.addBucket(bucket3);
-        bucket3.addBucket(bucket1);
+        bucket2.addBucket(bucket1);
 
         System.out.println("Before removal:");
-        System.out.println("Bucket1 references: " + bucket1.buckets.size());
-        System.out.println("Bucket2 references: " + bucket2.buckets.size());
-        System.out.println("Bucket3 references: " + bucket3.buckets.size());
+        System.out.println("Bucket1 contains Bucket2: " + bucket1.buckets.contains(bucket2));
+        System.out.println("Bucket2 contains Bucket1: " + bucket2.buckets.contains(bucket1));
 
-        bucket2.removeSelf();
+        bucket1.removeSelf();
 
         System.out.println("After removal:");
-        System.out.println("Bucket1 references: " + bucket1.buckets.size());
-        System.out.println("Bucket2 references: " + bucket2.buckets.size());
-        System.out.println("Bucket3 references: " + bucket3.buckets.size());
+        System.out.println("Bucket1 contains Bucket2: " + bucket1.buckets.contains(bucket2));
+        System.out.println("Bucket2 contains Bucket1: " + bucket2.buckets.contains(bucket1));
     }
 }

@@ -15,24 +15,29 @@ public class TimeBucketCompressor {
         int month = Integer.parseInt(bucketStr.substring(4, 6));
         int day = Integer.parseInt(bucketStr.substring(6, 8));
         
-        // Calcular el día reformateado
-        int reformattedDay = ((day - 1) / pasoDiario) * pasoDiario + 1;
+        // Calcular el día comprimido
+        int compressedDay = ((day - 1) / pasoDiario) * pasoDiario + 1;
         
-        // Crear una fecha con el día reformateado
-        LocalDate date = LocalDate.of(year, month, reformattedDay);
+        // Crear una fecha con el día comprimido
+        LocalDate compressedDate = LocalDate.of(year, month, compressedDay);
         
-        // Formatear la fecha como un número largo
+        // Formatear la fecha comprimida a un long
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String formattedDate = date.format(formatter);
+        String compressedDateStr = compressedDate.format(formatter);
         
-        // Convertir la cadena formateada de vuelta a un long
-        return Long.parseLong(formattedDate);
+        return Long.parseLong(compressedDateStr);
     }
 
     public static void main(String[] args) {
-        // Ejemplos de uso
-        System.out.println(comprimirBucketDeTiempo(20000105L, 11)); // 20000101
-        System.out.println(comprimirBucketDeTiempo(20000115L, 11)); // 20000112
-        System.out.println(comprimirBucketDeTiempo(20000123L, 11)); // 20000123
+        // Ejemplo de uso
+        long bucket1 = 20000105L;
+        int pasoDiario = 11;
+        System.out.println(comprimirBucketDeTiempo(bucket1, pasoDiario)); // Debería imprimir 20000101
+
+        long bucket2 = 20000115L;
+        System.out.println(comprimirBucketDeTiempo(bucket2, pasoDiario)); // Debería imprimir 20000112
+
+        long bucket3 = 20000123L;
+        System.out.println(comprimirBucketDeTiempo(bucket3, pasoDiario)); // Debería imprimir 20000123
     }
 }

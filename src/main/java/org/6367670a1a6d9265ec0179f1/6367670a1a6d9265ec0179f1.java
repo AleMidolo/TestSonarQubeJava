@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class ShortArrayConverter {
+public class ArrayConverter {
 
     /**
      * <p>Convierte un arreglo de primitivos "shorts" a objetos.</p> 

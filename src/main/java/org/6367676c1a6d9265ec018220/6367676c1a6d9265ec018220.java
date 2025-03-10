@@ -11,7 +11,7 @@ public class FileUtils {
         if (path == null) {
             return null;
         }
-
+        
         int lastSeparatorIndex = path.lastIndexOf('/');
         int lastDotIndex = path.lastIndexOf('.');
 
@@ -20,13 +20,14 @@ public class FileUtils {
             return path;
         }
 
+        // Retorna la ruta sin la extensión
         return path.substring(0, lastDotIndex);
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("myfile.txt"));         // Output: myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("myfile.txt"));        // Output: myfile
+        System.out.println(stripFilenameExtension("mypath/myfile"));    // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
     }
 }

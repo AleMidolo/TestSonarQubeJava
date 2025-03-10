@@ -16,11 +16,10 @@ public class ArrayUtils {
         byte[] array1 = {1, 2, 3};
         byte[] array2 = {4, 5, 6};
         byte[] array3 = null;
-        byte[] array4 = {7, 8};
+        byte[] array4 = {};
 
         System.out.println(isSameLength(array1, array2)); // true
         System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array4)); // false
-        System.out.println(isSameLength(array3, array3)); // true
+        System.out.println(isSameLength(array3, array4)); // true
     }
 }

@@ -23,6 +23,6 @@ public class ArrayUtils {
 
         char[] nullArray = null;
         char[] clonedNull = clone(nullArray);
-        System.out.println("Cloned null array: " + (clonedNull == null ? "null" : Arrays.toString(clonedNull)));
+        System.out.println("Cloned null array: " + clonedNull);
     }
 }

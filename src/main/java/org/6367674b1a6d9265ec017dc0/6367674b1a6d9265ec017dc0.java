@@ -1,35 +1,38 @@
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Graph<V> {
-    private Map<V, Set<V>> adjacencyList;
+/**
+ * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+ * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+ * @return conjunto de vértices con grado positivo
+ */
+private Set<V> initVisibleVertices() {
+    Set<V> visibleVertices = new HashSet<>();
+    
+    // Suponiendo que 'edges' es una lista de aristas disponibles en el contexto
+    for (Edge<V> edge : edges) {
+        visibleVertices.add(edge.getSource());
+        visibleVertices.add(edge.getDestination());
+    }
+    
+    return visibleVertices;
+}
 
-    public Graph() {
-        adjacencyList = new HashMap<>();
+// Clase Edge de ejemplo para representar una arista
+class Edge<V> {
+    private V source;
+    private V destination;
+
+    public Edge(V source, V destination) {
+        this.source = source;
+        this.destination = destination;
     }
 
-    /**
-     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
-     * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
-     * @return conjunto de vértices con grado positivo
-     */
-    private Set<V> initVisibleVertices() {
-        Set<V> visibleVertices = new HashSet<>();
-        for (Map.Entry<V, Set<V>> entry : adjacencyList.entrySet()) {
-            V vertex = entry.getKey();
-            Set<V> neighbors = entry.getValue();
-            if (!neighbors.isEmpty()) {
-                visibleVertices.add(vertex);
-            }
-            visibleVertices.addAll(neighbors);
-        }
-        return visibleVertices;
+    public V getSource() {
+        return source;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        Graph<String> graph = new Graph<>();
-        // Add vertices and edges here
-        Set<String> visibleVertices = graph.initVisibleVertices();
-        System.out.println("Visible Vertices: " + visibleVertices);
+    public V getDestination() {
+        return destination;
     }
 }

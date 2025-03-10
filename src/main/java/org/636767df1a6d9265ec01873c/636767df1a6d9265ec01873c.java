@@ -9,7 +9,7 @@ public class Main {
      */
     public static String id(String entityId) {
         // Concatenate the entity ID with a UUID to ensure uniqueness
-        return entityId + "_" + UUID.randomUUID().toString();
+        return entityId + "-" + UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {

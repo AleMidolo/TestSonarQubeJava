@@ -27,6 +27,6 @@ public class ArrayComparator {
         int count = 4;
 
         boolean result = arrayequals(array1, array2, count);
-        System.out.println("Los primeros " + count + " bytes son iguales: " + result);
+        System.out.println("Are the first " + count + " bytes equal? " + result);
     }
 }

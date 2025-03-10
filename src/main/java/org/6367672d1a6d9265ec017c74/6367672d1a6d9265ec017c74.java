@@ -5,13 +5,21 @@ public class CustomSet {
     private Set<Integer> set;
 
     public CustomSet() {
-        set = new HashSet<>();
+        this.set = new HashSet<>();
     }
 
     /**
      * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado.
+     * 
+     * @param val El valor a eliminar del conjunto.
+     * @return Verdadero si el conjunto contenía el elemento, falso en caso contrario.
      */
     public boolean remove(int val) {
         return set.remove(val);
+    }
+
+    // Método adicional para agregar elementos al conjunto (opcional)
+    public void add(int val) {
+        set.add(val);
     }
 }

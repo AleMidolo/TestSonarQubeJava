@@ -22,8 +22,8 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Double[] testArray = {1.0, 2.0, 3.0};
-        double[] primitiveArray = toPrimitive(testArray);
+        Double[] array = {1.0, 2.0, 3.0};
+        double[] primitiveArray = toPrimitive(array);
         for (double d : primitiveArray) {
             System.out.println(d);
         }

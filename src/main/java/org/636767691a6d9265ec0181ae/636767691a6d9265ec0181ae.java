@@ -21,27 +21,4 @@ public class EnumerationToStringArray {
 
         return list.toArray(new String[0]);
     }
-
-    public static void main(String[] args) {
-        // 示例用法
-        Enumeration<String> enumeration = new Enumeration<String>() {
-            private String[] elements = {"A", "B", "C"};
-            private int index = 0;
-
-            @Override
-            public boolean hasMoreElements() {
-                return index < elements.length;
-            }
-
-            @Override
-            public String nextElement() {
-                return elements[index++];
-            }
-        };
-
-        String[] result = toStringArray(enumeration);
-        for (String s : result) {
-            System.out.println(s);
-        }
-    }
 }

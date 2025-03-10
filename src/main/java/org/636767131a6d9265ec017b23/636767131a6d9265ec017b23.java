@@ -22,4 +22,11 @@ public class SourceCodeTagger {
     public List<Integer> getLineNumbers() {
         return new ArrayList<>(this.lineNumbers);
     }
+
+    public static void main(String[] args) {
+        SourceCodeTagger tagger = new SourceCodeTagger();
+        tagger.addLineNumber(10);
+        tagger.addLineNumber(20);
+        System.out.println(tagger.getLineNumbers()); // Output: [10, 20]
+    }
 }

@@ -18,7 +18,7 @@ public class Graph<V> {
         return totalWeight;
     }
 
-    // 假设的辅助方法，返回进入顶点的边的集合
+    // 假设的辅助方法，用于获取进入顶点的边的集合
     private Set<Edge<V>> getIncomingEdges(Set<V> v) {
         // 这里应该实现获取进入顶点的边的逻辑
         // 由于具体实现依赖于图的表示方式，这里只是一个占位符

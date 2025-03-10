@@ -8,7 +8,7 @@ import java.util.Objects;
 protected Object filter(Object msg) {
     // 假设 BroadcastFilter 是一个接口或类，这里我们假设它是一个接口
     // 并且有一个 filter 方法
-    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设的实现类
+    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设有一个实现类
     return filter.filter(msg);
 }
 
@@ -22,7 +22,7 @@ class BroadcastFilterImpl implements BroadcastFilter {
     @Override
     public Object filter(Object msg) {
         // 这里可以实现具体的过滤逻辑
-        // 例如，返回消息本身或进行某种处理
-        return Objects.requireNonNull(msg, "Message cannot be null");
+        // 例如，返回消息本身，或者根据某些条件进行过滤
+        return msg;
     }
 }

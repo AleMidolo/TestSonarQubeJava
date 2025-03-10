@@ -1,7 +1,6 @@
 import java.util.Queue;
 
 public class QueueToString {
-
     private Queue<?> queue;
 
     public QueueToString(Queue<?> queue) {
@@ -29,15 +28,5 @@ public class QueueToString {
         sb.delete(sb.length() - 2, sb.length());
         sb.append("]");
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        Queue<String> queue = new java.util.LinkedList<>();
-        queue.add("A");
-        queue.add("B");
-        queue.add("C");
-
-        QueueToString queueToString = new QueueToString(queue);
-        System.out.println(queueToString.toString());
     }
 }

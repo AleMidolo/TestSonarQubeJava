@@ -1,33 +1,33 @@
 import java.io.File;
-import java.nio.file.Paths;
 
-public class ConfigurationDirectoryCreator {
+public class MRUDirectoryCreator {
 
     /**
      * 创建将要写入MRU文件列表的目录。在Windows 2000机器上，"lf5"目录会在“文档和设置”目录中创建，而在其他平台上则会在user.home变量指向的位置创建。
      */
     public static void createConfigurationDirectory() {
         String osName = System.getProperty("os.name").toLowerCase();
-        String directoryPath;
+        String userHome = System.getProperty("user.home");
+        String configDirPath;
 
         if (osName.contains("windows 2000")) {
-            // Windows 2000 specific path
-            directoryPath = System.getenv("USERPROFILE") + "\\Documents and Settings\\lf5";
+            // 对于Windows 2000，假设“文档和设置”目录在C盘
+            configDirPath = "C:\\Documents and Settings\\" + System.getProperty("user.name") + "\\lf5";
         } else {
-            // Default to user.home for other platforms
-            directoryPath = System.getProperty("user.home") + File.separator + "lf5";
+            // 对于其他平台，使用user.home目录
+            configDirPath = userHome + File.separator + "lf5";
         }
 
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
+        File configDir = new File(configDirPath);
+        if (!configDir.exists()) {
+            boolean created = configDir.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + directoryPath);
+                System.out.println("Configuration directory created at: " + configDirPath);
             } else {
-                System.out.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create configuration directory at: " + configDirPath);
             }
         } else {
-            System.out.println("Directory already exists: " + directoryPath);
+            System.out.println("Configuration directory already exists at: " + configDirPath);
         }
     }
 

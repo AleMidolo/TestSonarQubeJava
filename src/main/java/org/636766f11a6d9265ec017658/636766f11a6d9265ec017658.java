@@ -14,12 +14,12 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        String filename1 = "C:\\Users\\Example\\file.txt";
-        String filename2 = "/usr/local/bin/script.sh";
+        String filename1 = "C:\\Users\\John\\Documents\\file.txt";
+        String filename2 = "/home/user/documents/file.txt";
         String filename3 = "file.txt";
         
-        System.out.println(indexOfLastSeparator(filename1)); // 输出: 14
-        System.out.println(indexOfLastSeparator(filename2)); // 输出: 13
+        System.out.println(indexOfLastSeparator(filename1)); // 输出: 20
+        System.out.println(indexOfLastSeparator(filename2)); // 输出: 18
         System.out.println(indexOfLastSeparator(filename3)); // 输出: -1
     }
 }

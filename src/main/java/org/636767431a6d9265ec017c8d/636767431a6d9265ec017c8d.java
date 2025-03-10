@@ -1,5 +1,4 @@
 public class BinaryLogCalculator {
-
     /**
      * 计算 $\log_2 (n)$ 的下限值 + 1
      * @param n 输入的正整数
@@ -19,6 +18,6 @@ public class BinaryLogCalculator {
 
     public static void main(String[] args) {
         int n = 10; // 示例输入
-        System.out.println("Result: " + computeBinaryLog(n));
+        System.out.println("Log2(" + n + ") 的下限值 + 1: " + computeBinaryLog(n));
     }
 }

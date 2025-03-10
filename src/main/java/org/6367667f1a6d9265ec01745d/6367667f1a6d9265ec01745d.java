@@ -2,24 +2,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentImpl {
-    private String path;
-    private boolean decoded;
-
-    public PathSegmentImpl(String path, boolean decoded) {
-        this.path = path;
-        this.decoded = decoded;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public boolean isDecoded() {
-        return decoded;
-    }
-}
-
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
@@ -40,17 +22,26 @@ public class URIDecoder {
             if (decode) {
                 segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
             }
-            pathSegments.add(new PathSegmentImpl(segment, decode));
+            pathSegments.add(new PathSegmentImpl(segment));
         }
 
         return pathSegments;
     }
 
-    public static void main(String[] args) {
-        URI uri = URI.create("http://example.com/path%20to%20something/another%20path");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment.getPath());
+    public static class PathSegmentImpl {
+        private final String segment;
+
+        public PathSegmentImpl(String segment) {
+            this.segment = segment;
+        }
+
+        public String getSegment() {
+            return segment;
+        }
+
+        @Override
+        public String toString() {
+            return segment;
         }
     }
 }

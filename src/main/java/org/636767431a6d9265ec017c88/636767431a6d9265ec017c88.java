@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LowerBoundCalculator<K extends Comparable<K>> {
+public class LowerBoundsCalculator<K extends Comparable<K>> {
 
     /**
      * 为每个键找到一个最大下界。
@@ -11,16 +11,22 @@ public class LowerBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         List<Integer> lowerBounds = new ArrayList<>();
+        if (keys == null || keys.isEmpty()) {
+            return lowerBounds;
+        }
+
+        // 对键进行排序
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
+        // 计算每个键的下界
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, binarySearch returns (-(insertion point) - 1)
+                // 如果键不在列表中，返回插入点的负值减一
                 index = -index - 1;
             }
-            // The lower bound is the index of the key in the sorted list
+            // 下界是排序后列表中该键的位置
             lowerBounds.add(index);
         }
 

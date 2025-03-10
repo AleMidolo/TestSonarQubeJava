@@ -1,34 +1,48 @@
 import java.util.*;
 
-public class Tree {
-    private Map<Integer, List<Integer>> edgeList;
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode parent;
 
-    public Tree() {
-        edgeList = new HashMap<>();
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+        this.parent = null;
     }
 
-    public void addEdge(int from, int to) {
-        edgeList.computeIfAbsent(from, k -> new ArrayList<>()).add(to);
-        edgeList.computeIfAbsent(to, k -> new ArrayList<>()).add(from);
-    }
-
-    public void removeFromTreeEdgeList(int from, int to) {
-        if (edgeList.containsKey(from)) {
-            edgeList.get(from).removeIf(node -> node == to);
-        }
-        if (edgeList.containsKey(to)) {
-            edgeList.get(to).removeIf(node -> node == from);
+    public void removeFromTreeEdgeList() {
+        if (this.parent != null) {
+            if (this.parent.left == this) {
+                this.parent.left = null;
+            } else if (this.parent.right == this) {
+                this.parent.right = null;
+            }
+            this.parent = null;
         }
     }
 
     public static void main(String[] args) {
-        Tree tree = new Tree();
-        tree.addEdge(1, 2);
-        tree.addEdge(2, 3);
-        tree.addEdge(3, 4);
+        TreeNode root = new TreeNode(1);
+        TreeNode leftChild = new TreeNode(2);
+        TreeNode rightChild = new TreeNode(3);
 
-        System.out.println("Before removal: " + tree.edgeList);
-        tree.removeFromTreeEdgeList(2, 3);
-        System.out.println("After removal: " + tree.edgeList);
+        root.left = leftChild;
+        leftChild.parent = root;
+
+        root.right = rightChild;
+        rightChild.parent = root;
+
+        System.out.println("Before removal:");
+        System.out.println("Root's left child: " + (root.left != null ? root.left.val : "null"));
+        System.out.println("Root's right child: " + (root.right != null ? root.right.val : "null"));
+
+        leftChild.removeFromTreeEdgeList();
+
+        System.out.println("After removal:");
+        System.out.println("Root's left child: " + (root.left != null ? root.left.val : "null"));
+        System.out.println("Root's right child: " + (root.right != null ? root.right.val : "null"));
     }
 }

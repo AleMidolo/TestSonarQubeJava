@@ -19,9 +19,9 @@ public class PropertySubstitutor {
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String varName = matcher.group(1);
-            String varValue = props.getProperty(varName, "");
-            matcher.appendReplacement(result, varValue);
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable, "");
+            matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);
 

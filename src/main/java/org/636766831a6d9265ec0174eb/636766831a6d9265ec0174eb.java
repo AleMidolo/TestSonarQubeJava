@@ -5,37 +5,37 @@ import java.util.ArrayList;
 
 public class FileHandler {
 
-    private List<File> fileList = new ArrayList<>();
-
     /**
      * 以逆序添加指定的文件。
-     * @param files 要添加的文件数组
      */
     private void addReverse(final File[] files) {
         if (files == null) {
             return;
         }
 
-        // 将数组转换为列表
-        List<File> tempList = new ArrayList<>();
-        Collections.addAll(tempList, files);
+        List<File> fileList = new ArrayList<>();
+        for (File file : files) {
+            if (file != null) {
+                fileList.add(file);
+            }
+        }
 
-        // 反转列表
-        Collections.reverse(tempList);
+        Collections.reverse(fileList);
 
-        // 添加到成员变量中
-        fileList.addAll(tempList);
+        // Assuming there is a method to handle the reversed list of files
+        handleFiles(fileList);
     }
 
-    // 示例用法
-    public static void main(String[] args) {
-        FileHandler handler = new FileHandler();
-        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        handler.addReverse(files);
-
-        // 打印结果
-        for (File file : handler.fileList) {
-            System.out.println(file.getName());
+    private void handleFiles(List<File> files) {
+        // Implementation to handle the files
+        for (File file : files) {
+            System.out.println("Processing file: " + file.getName());
         }
+    }
+
+    public static void main(String[] args) {
+        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
+        FileHandler handler = new FileHandler();
+        handler.addReverse(files);
     }
 }

@@ -16,15 +16,15 @@ public class CharsetConverter {
             // 返回Java字符集的规范名称
             return javaCharset.name();
         } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // 如果字符集名称不合法或不支持，返回null
-            return null;
+            // 如果字符集名称不合法或不支持，返回默认字符集名称
+            return Charset.defaultCharset().name();
         }
     }
 
     public static void main(String[] args) {
         // 测试示例
         String mimeCharset = "UTF-8";
-        String javaCharset = javaCharset(mimeCharset);
-        System.out.println("Java Charset: " + javaCharset);
+        String javaCharsetName = javaCharset(mimeCharset);
+        System.out.println("Java Charset Name: " + javaCharsetName);
     }
 }

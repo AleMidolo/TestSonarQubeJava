@@ -2,20 +2,19 @@ import javax.swing.*;
 import java.util.logging.LogRecord;
 
 public class LogTable {
-    private final JTable table;
+    private final DefaultListModel<LogRecord> logListModel;
 
-    public LogTable(JTable table) {
-        this.table = table;
+    public LogTable() {
+        logListModel = new DefaultListModel<>();
     }
 
     public void addMessage(final LogRecord lr) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Assuming the table model is a DefaultTableModel
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.addRow(new Object[]{lr.getLevel(), lr.getMessage()});
-            }
+        SwingUtilities.invokeLater(() -> {
+            logListModel.addElement(lr);
         });
+    }
+
+    public DefaultListModel<LogRecord> getLogListModel() {
+        return logListModel;
     }
 }

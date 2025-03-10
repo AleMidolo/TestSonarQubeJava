@@ -16,6 +16,9 @@ public class ProtocolParser {
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();
-        return tag == -1 ? 0 : tag;
+        if (tag == -1) {
+            return 0; // 到达文件末尾，返回0
+        }
+        return tag;
     }
 }

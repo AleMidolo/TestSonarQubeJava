@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Registry {
+public class ReflectUtil {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**
@@ -18,7 +18,7 @@ public class Registry {
         return registeredObjects.contains(value);
     }
 
-    public static void clearRegistry() {
+    public static void clearRegisteredObjects() {
         registeredObjects.clear();
     }
 }

@@ -1,6 +1,6 @@
 import org.apache.commons.math3.geometry.euclidean.twod.Box2D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.math3.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class BoxSplitter {
 
@@ -15,22 +15,13 @@ public class BoxSplitter {
         // 计算拆分点的x坐标
         double splitX = lowerLeft.getX() + width / 2.0;
 
-        // 创建第一个矩形框（左半部分）
-        Box2D leftBox = new Box2D(lowerLeft, new Vector2D(splitX, upperRight.getY()));
+        // 创建第一个矩形框
+        Box2D firstBox = new Box2D(lowerLeft, new Vector2D(splitX, upperRight.getY()));
 
-        // 创建第二个矩形框（右半部分）
-        Box2D rightBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
+        // 创建第二个矩形框
+        Box2D secondBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
 
-        // 返回两个矩形框的对
-        return new Pair<>(leftBox, rightBox);
-    }
-
-    public static void main(String[] args) {
-        // 示例用法
-        Box2D originalBox = new Box2D(new Vector2D(0, 0), new Vector2D(10, 5));
-        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
-
-        System.out.println("Left Box: " + splitBoxes.getFirst());
-        System.out.println("Right Box: " + splitBoxes.getSecond());
+        // 返回拆分后的两个矩形框
+        return Pair.of(firstBox, secondBox);
     }
 }

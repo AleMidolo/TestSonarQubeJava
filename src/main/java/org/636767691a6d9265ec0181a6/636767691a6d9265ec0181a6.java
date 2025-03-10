@@ -17,6 +17,7 @@ public class StringSplitter {
     }
 
     public static void main(String[] args) {
+        // Example usage
         String[] result = split("Hello,World", ",");
         if (result != null) {
             System.out.println("Before delimiter: " + result[0]);

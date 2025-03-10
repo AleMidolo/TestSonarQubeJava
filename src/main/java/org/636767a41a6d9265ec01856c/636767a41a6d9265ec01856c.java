@@ -1,12 +1,11 @@
 import java.nio.charset.StandardCharsets;
 
 public class UTF8SizeCalculator {
-
     /**
      * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
      *
-     * @param str   the input character sequence
-     * @param index the starting index of the substring
+     * @param str   the character sequence
+     * @param index the starting index
      * @param len   the length of the substring
      * @return the size in bytes of the UTF-8 encoded substring
      */

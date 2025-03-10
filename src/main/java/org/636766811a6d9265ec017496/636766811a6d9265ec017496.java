@@ -10,7 +10,7 @@ public class FileIterator implements Iterator<InputStream> {
 
     public FileIterator(File directory) {
         if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided path is not a directory");
+            throw new IllegalArgumentException("Provided file is not a directory");
         }
         this.files = directory.listFiles();
         this.currentIndex = 0;

@@ -1,6 +1,10 @@
 @Override
 public int hashCode() {
-    // A simple implementation that returns a constant value.
-    // This is not ideal for most use cases but serves as a placeholder.
-    return 42;
+    // Using a prime number to reduce collisions
+    final int prime = 31;
+    int result = 1;
+    // Combine the hash code of the fields of this type
+    // Example: result = prime * result + (field1 == null ? 0 : field1.hashCode());
+    // Replace with actual fields of the type
+    return result;
 }

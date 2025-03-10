@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class StackMapFrameVisitor {
+public class FrameVisitor {
     private List<Object> currentFrame;
 
-    public StackMapFrameVisitor() {
+    public FrameVisitor() {
         this.currentFrame = new ArrayList<>();
     }
 
@@ -24,13 +24,13 @@ public class StackMapFrameVisitor {
         currentFrame.add(numLocal);
         currentFrame.add(numStack);
 
-        // Return the index of the next element to be written (after offset, numLocal, and numStack)
+        // Return the index of the next element to be written
         return currentFrame.size();
     }
 
     // Example usage
     public static void main(String[] args) {
-        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
+        FrameVisitor visitor = new FrameVisitor();
         int nextIndex = visitor.visitFrameStart(10, 3, 2);
         System.out.println("Next index to write: " + nextIndex);
     }

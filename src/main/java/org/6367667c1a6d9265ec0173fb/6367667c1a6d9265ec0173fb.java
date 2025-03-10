@@ -1,17 +1,15 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
-public class AtmosphereResourceImpl implements AtmosphereResource {
+public class MyAtmosphereResource implements AtmosphereResource {
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Assuming this class has a list to store event listeners
+        // Assuming this class has a mechanism to store listeners, such as a list
         if (e != null) {
-            eventListeners.add(e);
+            // Add the listener to the list of listeners
+            // Example: listeners.add(e);
         }
-        return this;
+        return this; // Return the current instance for method chaining
     }
-
-    // Assuming this class has a list to store event listeners
-    private List<AtmosphereResourceEventListener> eventListeners = new ArrayList<>();
 }

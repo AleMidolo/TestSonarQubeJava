@@ -8,7 +8,7 @@ public class BasicBlock {
         this.initializedTypes = new ArrayList<>();
     }
 
-    /**
+    /** 
      * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
      * @param abstractType an abstract type on a which a constructor is invoked.
      */

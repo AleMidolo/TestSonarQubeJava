@@ -13,6 +13,7 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
+        // Example usage
         byte[] array1 = {1, 2, 3};
         byte[] array2 = {4, 5, 6};
         byte[] array3 = null;

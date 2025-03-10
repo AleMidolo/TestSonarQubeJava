@@ -3,8 +3,7 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity
-     * (within 11% if desiredCapacity >= 1000).
+     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity (within 11% if desiredCapacity >= 1000).
      * @param desiredCapacity the capacity desired by the user.
      * @return the capacity which should be used for a hashtable.
      */

@@ -7,37 +7,36 @@ public class BipartiteGraphGenerator<V, E> {
 
     /**
      * Construct a complete bipartite graph
+     * 
      * @param target The graph to which the bipartite graph will be added
-     * @param resultMap A map to store the vertices created
+     * @param resultMap A map to store the vertices created during the generation process
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming the graph is bipartitioned into two sets, setA and setB
-        List<V> setA = new ArrayList<>();
-        List<V> setB = new ArrayList<>();
+        // Assuming the graph is bipartite with two partitions U and V
+        // Let's create two sets of vertices
+        List<V> partitionU = new ArrayList<>();
+        List<V> partitionV = new ArrayList<>();
 
-        // Create vertices for setA and setB
-        for (int i = 0; i < 5; i++) { // Example: 5 vertices in each set
-            V vertexA = target.addVertex();
-            setA.add(vertexA);
-            resultMap.put("A" + i, vertexA);
-
-            V vertexB = target.addVertex();
-            setB.add(vertexB);
-            resultMap.put("B" + i, vertexB);
+        // Create vertices for partition U
+        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition U
+            V vertex = target.addVertex();
+            partitionU.add(vertex);
+            resultMap.put("U" + i, vertex);
         }
 
-        // Connect every vertex in setA to every vertex in setB
-        for (V a : setA) {
-            for (V b : setB) {
-                target.addEdge(a, b);
+        // Create vertices for partition V
+        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition V
+            V vertex = target.addVertex();
+            partitionV.add(vertex);
+            resultMap.put("V" + i, vertex);
+        }
+
+        // Connect every vertex in partition U to every vertex in partition V
+        for (V uVertex : partitionU) {
+            for (V vVertex : partitionV) {
+                target.addEdge(uVertex, vVertex);
             }
         }
     }
-}
-
-// Assuming the Graph interface is defined as follows:
-interface Graph<V, E> {
-    V addVertex();
-    E addEdge(V source, V target);
 }

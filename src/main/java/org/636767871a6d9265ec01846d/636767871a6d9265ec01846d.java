@@ -1,7 +1,6 @@
 import java.io.File;
 
 public class MRUConfiguration {
-
     /**
      * Creates the directory where the MRU file list will be written. The "lf5" directory is created in the Documents and Settings directory on Windows 2000 machines and where ever the user.home variable points on all other platforms.
      */
@@ -10,7 +9,6 @@ public class MRUConfiguration {
         String osName = System.getProperty("os.name").toLowerCase();
         
         String configDirPath;
-        
         if (osName.contains("windows 2000")) {
             configDirPath = System.getenv("USERPROFILE") + File.separator + "Documents and Settings" + File.separator + "lf5";
         } else {
@@ -18,7 +16,6 @@ public class MRUConfiguration {
         }
         
         File configDir = new File(configDirPath);
-        
         if (!configDir.exists()) {
             boolean created = configDir.mkdirs();
             if (created) {
@@ -29,9 +26,5 @@ public class MRUConfiguration {
         } else {
             System.out.println("Configuration directory already exists at: " + configDirPath);
         }
-    }
-
-    public static void main(String[] args) {
-        createConfigurationDirectory();
     }
 }

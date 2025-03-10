@@ -10,7 +10,7 @@ class ListNodeImpl<E> {
     }
 }
 
-class LinkedList<E> {
+public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
 
@@ -27,21 +27,21 @@ class LinkedList<E> {
             return false;
         }
 
-        ListNodeImpl<E> prevNode = node.prev;
-        ListNodeImpl<E> nextNode = node.next;
-
-        if (prevNode != null) {
-            prevNode.next = nextNode;
+        // If the node is the head
+        if (node.prev == null) {
+            head = node.next;
         } else {
-            head = nextNode;
+            node.prev.next = node.next;
         }
 
-        if (nextNode != null) {
-            nextNode.prev = prevNode;
+        // If the node is the tail
+        if (node.next == null) {
+            tail = node.prev;
         } else {
-            tail = prevNode;
+            node.next.prev = node.prev;
         }
 
+        // Clear the node's references
         node.next = null;
         node.prev = null;
 

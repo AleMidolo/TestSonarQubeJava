@@ -6,13 +6,11 @@ public class ClassFileBuffer {
     private int readPointer;
 
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the buffer by setting it to null
+        // Clear the buffer
         buffer = null;
-        
-        // Read all bytes from the input stream
-        buffer = in.readAllBytes();
-        
-        // Reset the read pointer to the start of the buffer
         readPointer = 0;
+
+        // Read the input stream into the buffer
+        buffer = in.readAllBytes();
     }
 }

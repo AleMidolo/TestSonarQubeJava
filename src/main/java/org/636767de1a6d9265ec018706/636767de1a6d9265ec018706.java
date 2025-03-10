@@ -37,7 +37,7 @@ public class MappingDiff {
         return result;
     }
 
-    // Dummy method to simulate getting current mappings for a table
+    // Dummy method to simulate fetching current mappings for a table
     private Mappings getCurrentMappings(String tableName) {
         Mappings currentMappings = new Mappings();
         Map<String, Object> fields = new HashMap<>();
@@ -46,5 +46,16 @@ public class MappingDiff {
         fields.put("field3", "type3");
         currentMappings.setFields(fields);
         return currentMappings;
+    }
+
+    public static void main(String[] args) {
+        MappingDiff diff = new MappingDiff();
+        Mappings inputMappings = new Mappings();
+        Map<String, Object> inputFields = new HashMap<>();
+        inputFields.put("field1", "type1");
+        inputMappings.setFields(inputFields);
+
+        Mappings result = diff.diffStructure("exampleTable", inputMappings);
+        System.out.println(result.getFields()); // Output: {field2=type2, field3=type3}
     }
 }

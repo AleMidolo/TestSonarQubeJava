@@ -17,7 +17,7 @@ public class StringSplitter {
     }
 
     public static void main(String[] args) {
-        String[] result = split("Hello,World", ",");
+        String[] result = split("HelloWorld", "World");
         if (result != null) {
             System.out.println("Part 1: " + result[0]);
             System.out.println("Part 2: " + result[1]);

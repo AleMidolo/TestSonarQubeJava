@@ -15,7 +15,7 @@ public class StringQuoter {
     public static void main(String[] args) {
         // Test cases
         System.out.println(quoteIfString("Hello")); // Output: 'Hello'
-        System.out.println(quoteIfString(123));    // Output: 123
+        System.out.println(quoteIfString(123));     // Output: 123
         System.out.println(quoteIfString(true));    // Output: true
     }
 }

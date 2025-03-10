@@ -36,9 +36,9 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Numeric value is out of range for a char.");
+            throw new Exception("Numeric value is out of range for a character.");
         }
     }
 
-    throw new Exception("Unsupported value type for conversion to Character.");
+    throw new Exception("Unsupported conversion from " + value.getClass().getName() + " to Character.");
 }

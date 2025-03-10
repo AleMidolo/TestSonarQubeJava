@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
-    private final InputStream inputStream;
+    private InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;

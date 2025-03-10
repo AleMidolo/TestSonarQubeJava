@@ -1,8 +1,7 @@
-// Assuming the class has a reference to the tree edge lists and the node to be removed
+// Assuming the class has a reference to the node and its previous and next nodes in the tree edge list
 public class TreeNode {
     TreeNode prev;
     TreeNode next;
-    // Other fields and methods
 
     public void removeFromTreeEdgeList() {
         if (this.prev != null) {
@@ -11,7 +10,6 @@ public class TreeNode {
         if (this.next != null) {
             this.next.prev = this.prev;
         }
-        // Optionally, set this node's prev and next to null to fully detach it
         this.prev = null;
         this.next = null;
     }

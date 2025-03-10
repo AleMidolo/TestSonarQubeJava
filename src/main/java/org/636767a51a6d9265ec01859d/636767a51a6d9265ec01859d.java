@@ -10,16 +10,11 @@ public class ArrayComparator {
      * @param len तुलना करने के लिए लंबाई
      * @return सत्य यदि ऐरे की सामग्री मेल खाती है, अन्यथा असत्य
      */
-    public boolean equals(final byte[] data, int offset, final int len) {
-        // आंतरिक ऐरे को परिभाषित करें (उदाहरण के लिए)
-        byte[] internalArray = {1, 2, 3, 4, 5};
-
-        // यदि ऑफसेट या लंबाई अमान्य है, तो असत्य लौटाएं
-        if (offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+    public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {
+        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
             return false;
         }
 
-        // आंतरिक ऐरे और प्रदान किए गए ऐरे के हिस्से की तुलना करें
         for (int i = 0; i < len; i++) {
             if (internalArray[i] != data[offset + i]) {
                 return false;
@@ -27,12 +22,5 @@ public class ArrayComparator {
         }
 
         return true;
-    }
-
-    public static void main(String[] args) {
-        ArrayComparator comparator = new ArrayComparator();
-        byte[] data = {1, 2, 3, 4, 5};
-        boolean result = comparator.equals(data, 0, 5);
-        System.out.println(result); // true
     }
 }

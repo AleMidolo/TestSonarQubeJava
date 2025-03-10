@@ -10,7 +10,7 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
         if (cacheMap.containsKey(key)) {
             METRICS existingData = cacheMap.get(key);
             existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
@@ -23,11 +23,11 @@ public class Cache {
 // Assuming METRICS class has the following structure
 class METRICS {
     private String key;
-    private Map<String, Object> metricsData;
+    private int value;
 
-    public METRICS(String key, Map<String, Object> metricsData) {
+    public METRICS(String key, int value) {
         this.key = key;
-        this.metricsData = metricsData;
+        this.value = value;
     }
 
     public String getKey() {
@@ -35,10 +35,8 @@ class METRICS {
     }
 
     public void merge(METRICS other) {
-        this.metricsData.putAll(other.metricsData);
+        this.value += other.value; // Example merge logic
     }
 
-    public Map<String, Object> getMetricsData() {
-        return metricsData;
-    }
+    // Other methods and fields as needed
 }

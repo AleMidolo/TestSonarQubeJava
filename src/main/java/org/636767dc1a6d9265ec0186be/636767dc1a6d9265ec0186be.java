@@ -4,7 +4,7 @@ public class TimeBucketCompressor {
      * दिन के चरण (dayStep) का पालन करते हुए समय बकेट के लम्बे मान को फिर से प्रारूपित करें। जैसे, यदि dayStep == 11 है, तो 20000105 का फिर से प्रारूपित समय बकेट 20000101 होगा, 20000115 का फिर से प्रारूपित समय बकेट 20000112 होगा, और 20000123 का फिर से प्रारूपित समय बकेट 20000123 होगा।
      *
      * @param timeBucket समय बकेट का लम्बा मान (YYYYMMDD प्रारूप में)
-     * @param dayStep दिन का चरण (step)
+     * @param dayStep दिन का चरण (जैसे 11)
      * @return फिर से प्रारूपित समय बकेट
      */
     public static long compressTimeBucket(long timeBucket, int dayStep) {
@@ -16,10 +16,10 @@ public class TimeBucketCompressor {
         // Calculate the new day based on the dayStep
         int newDay = ((day - 1) / dayStep) * dayStep + 1;
 
-        // Reconstruct the timeBucket with the new day
-        long compressedTimeBucket = year * 10000L + month * 100L + newDay;
+        // Reconstruct the new timeBucket
+        long newTimeBucket = year * 10000L + month * 100L + newDay;
 
-        return compressedTimeBucket;
+        return newTimeBucket;
     }
 
     public static void main(String[] args) {

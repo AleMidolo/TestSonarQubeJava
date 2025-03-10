@@ -1,13 +1,11 @@
-import java.io.DataInput;
-import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 final class ClassFileReader {
-    private byte[] classFileBuffer;
-    private int[] constantPool;
+    private final byte[] classFileBuffer;
 
-    public ClassFileReader(byte[] classFileBuffer, int[] constantPool) {
+    public ClassFileReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
-        this.constantPool = constantPool;
     }
 
     /**
@@ -17,14 +15,34 @@ final class ClassFileReader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        int utf8Index = constantPool[constantPoolEntryIndex];
-        int length = ((classFileBuffer[utf8Index] & 0xFF) << 8) | (classFileBuffer[utf8Index + 1] & 0xFF);
-        int offset = utf8Index + 2;
+        // Assuming the constant pool entry is a CONSTANT_Utf8_info structure
+        // CONSTANT_Utf8_info structure format:
+        // tag (1 byte) - always 1 for CONSTANT_Utf8
+        // length (2 bytes) - number of bytes in the string
+        // bytes (length bytes) - the string bytes in UTF-8 format
 
-        for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer[offset + i] & 0xFF);
+        ByteBuffer buffer = ByteBuffer.wrap(classFileBuffer);
+        buffer.position(constantPoolEntryIndex);
+
+        // Read the tag (should be 1 for CONSTANT_Utf8)
+        byte tag = buffer.get();
+        if (tag != 1) {
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag");
         }
 
-        return new String(charBuffer, 0, length);
+        // Read the length of the UTF-8 string
+        int length = buffer.getShort() & 0xFFFF;
+
+        // Read the UTF-8 bytes
+        byte[] utf8Bytes = new byte[length];
+        buffer.get(utf8Bytes);
+
+        // Convert UTF-8 bytes to a Java String
+        String str = new String(utf8Bytes, StandardCharsets.UTF_8);
+
+        // Copy the characters to the provided charBuffer
+        str.getChars(0, str.length(), charBuffer, 0);
+
+        return str;
     }
 }

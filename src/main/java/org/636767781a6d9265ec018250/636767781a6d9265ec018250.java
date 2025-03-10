@@ -5,11 +5,12 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Assuming the logic to decide is based on some string comparison
+        // Assuming the logic to decide is based on some string matching
+        // For example, if the message in the event does not match a certain pattern, return NEUTRAL
         String message = event.getMessage().toString();
         
-        // Example condition: if the message does not match a specific string, return NEUTRAL
-        if (!message.equals("expectedString")) {
+        // Example condition: if the message does not contain "error", return NEUTRAL
+        if (!message.contains("error")) {
             return Filter.NEUTRAL;
         }
         

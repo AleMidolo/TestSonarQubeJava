@@ -45,4 +45,13 @@ public class FileUtils {
 
         directory.deleteOnExit();
     }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File("path/to/fileOrDirectory");
+            forceDeleteOnExit(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

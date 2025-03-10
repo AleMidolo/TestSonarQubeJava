@@ -28,4 +28,9 @@ public class DiagnosisReference {
             return "";
         }
     }
+
+    // Optional: Method to check if the stack is empty
+    public static boolean isEmpty() {
+        return referenceStack.isEmpty();
+    }
 }

@@ -1,4 +1,4 @@
-public class StringUtils {
+public class DigitChecker {
     /**
      * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
      * @param str  जांचने के लिए <code>String</code>

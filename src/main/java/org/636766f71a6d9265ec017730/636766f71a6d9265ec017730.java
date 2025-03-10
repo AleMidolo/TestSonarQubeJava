@@ -14,13 +14,13 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        List<String> result = new ArrayList<>();
+        List<String> nonNullStrings = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                result.add(obj.toString());
+                nonNullStrings.add(obj.toString());
             }
         }
 
-        return result.toArray(new String[0]);
+        return nonNullStrings.toArray(new String[0]);
     }
 }

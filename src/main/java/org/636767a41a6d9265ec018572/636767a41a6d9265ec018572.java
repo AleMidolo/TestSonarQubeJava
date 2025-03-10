@@ -9,6 +9,9 @@ public class VarintReader {
         this.input = input;
     }
 
+    /**
+     * 从流中读取原始 Varint。
+     */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;

@@ -17,7 +17,13 @@ public class ConfigInitializer {
             System.out.println("分发路径存在: " + distributionPath);
         } else {
             System.out.println("分发路径不存在: " + distributionPath);
-            // 可以在这里抛出异常或进行其他处理
+            // 可以选择创建路径
+            try {
+                Files.createDirectories(path);
+                System.out.println("已创建分发路径: " + distributionPath);
+            } catch (Exception e) {
+                System.err.println("无法创建分发路径: " + e.getMessage());
+            }
         }
     }
 

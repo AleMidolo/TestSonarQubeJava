@@ -5,14 +5,14 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Assuming you want to check if the message contains a specific string
-        String message = event.getMessage().toString();
-        String searchString = "specificString"; // Replace with the string you want to match
+        // Assuming we are checking for a specific string in the log message
+        String logMessage = event.getRenderedMessage();
+        String searchString = "specificString"; // Replace with the actual string to match
 
-        if (message.contains(searchString)) {
-            return Filter.ACCEPT; // or Filter.DENY depending on your logic
+        if (logMessage != null && logMessage.contains(searchString)) {
+            return Filter.ACCEPT; // Return ACCEPT if the string is found
         } else {
-            return Filter.NEUTRAL;
+            return Filter.NEUTRAL; // Return NEUTRAL if no match is found
         }
     }
 }

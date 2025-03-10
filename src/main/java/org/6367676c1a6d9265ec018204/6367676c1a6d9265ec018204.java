@@ -31,11 +31,12 @@ public class StringArrayConcatenator {
     }
 
     public static void main(String[] args) {
-        // 测试示例
+        // 测试用例
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"d", "e", "f"};
-
         String[] result = concatenateStringArrays(array1, array2);
+
+        // 输出结果
         for (String s : result) {
             System.out.print(s + " ");
         }

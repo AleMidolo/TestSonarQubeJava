@@ -18,14 +18,6 @@ public class PathSegmentImpl {
     public boolean isDecoded() {
         return decoded;
     }
-
-    @Override
-    public String toString() {
-        return "PathSegmentImpl{" +
-                "path='" + path + '\'' +
-                ", decoded=" + decoded +
-                '}';
-    }
 }
 
 public class URIDecoder {
@@ -45,11 +37,10 @@ public class URIDecoder {
 
         String[] segments = path.split("/");
         for (String segment : segments) {
-            if (segment.isEmpty()) {
-                continue;
+            if (decode) {
+                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
             }
-            String decodedSegment = decode ? java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8) : segment;
-            pathSegments.add(new PathSegmentImpl(decodedSegment, decode));
+            pathSegments.add(new PathSegmentImpl(segment, decode));
         }
 
         return pathSegments;
@@ -59,7 +50,7 @@ public class URIDecoder {
         URI uri = URI.create("http://example.com/path/to/resource%20with%20spaces");
         List<PathSegmentImpl> segments = decodePath(uri, true);
         for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
+            System.out.println(segment.getPath());
         }
     }
 }

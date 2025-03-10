@@ -18,4 +18,12 @@ public class ArrayUtils {
         }
         return result;
     }
+
+    public static void main(String[] args) {
+        Integer[] testArray = {1, 2, 3, 4, 5};
+        int[] primitiveArray = toPrimitive(testArray);
+        for (int i : primitiveArray) {
+            System.out.print(i + " ");
+        }
+    }
 }

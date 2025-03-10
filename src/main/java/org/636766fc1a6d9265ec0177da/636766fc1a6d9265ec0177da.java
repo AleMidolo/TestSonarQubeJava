@@ -5,6 +5,6 @@
  * @return 如果字符是分隔符，则返回true；否则返回false
  */
 private static boolean isParameterSeparator(final char c) {
-    // 常见的分隔符包括空格、逗号、分号、冒号、等号、括号等
-    return c == ' ' || c == ',' || c == ';' || c == ':' || c == '=' || c == '(' || c == ')';
+    // 常见的分隔符包括空格、逗号、分号、括号等
+    return c == ' ' || c == ',' || c == ';' || c == '(' || c == ')' || c == '{' || c == '}' || c == '[' || c == ']';
 }

@@ -20,5 +20,7 @@ public class ByteVector {
         return this;
     }
 
-    // 其他方法可以根据需要添加
+    public List<Byte> getBytes() {
+        return bytes;
+    }
 }

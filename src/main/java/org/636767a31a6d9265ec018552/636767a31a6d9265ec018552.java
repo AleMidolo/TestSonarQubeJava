@@ -15,19 +15,15 @@ public class StreamReader {
      */
     @Override
     public String readString() throws IOException {
-        // 读取字符串的长度（假设长度以4字节整数形式存储）
-        byte[] lengthBytes = new byte[4];
-        inputStream.read(lengthBytes);
-        int length = (lengthBytes[0] & 0xFF) << 24 |
-                    (lengthBytes[1] & 0xFF) << 16 |
-                    (lengthBytes[2] & 0xFF) << 8 |
-                    (lengthBytes[3] & 0xFF);
-
-        // 读取字符串内容
-        byte[] stringBytes = new byte[length];
-        inputStream.read(stringBytes);
-
-        // 将字节数组转换为字符串
-        return new String(stringBytes, StandardCharsets.UTF_8);
+        int length = inputStream.read();
+        if (length == -1) {
+            throw new IOException("End of stream reached");
+        }
+        byte[] bytes = new byte[length];
+        int bytesRead = inputStream.read(bytes);
+        if (bytesRead != length) {
+            throw new IOException("Failed to read the expected number of bytes");
+        }
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

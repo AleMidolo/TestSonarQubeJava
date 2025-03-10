@@ -15,8 +15,7 @@ public class StackMapTableHandler {
         }
 
         for (int i = start; i < end; i++) {
-            VerificationTypeInfo typeInfo = currentFrame.get(i);
-            stackMapTableEntries.add(typeInfo);
+            stackMapTableEntries.add(currentFrame.get(i));
         }
     }
 

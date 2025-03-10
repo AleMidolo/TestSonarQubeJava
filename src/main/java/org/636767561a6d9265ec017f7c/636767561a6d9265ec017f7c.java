@@ -15,7 +15,7 @@ import java.util.Set;
  */
 protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour cannot be empty");
+        throw new IllegalArgumentException("Tour set cannot be empty.");
     }
 
     List<E> edgeList = new ArrayList<>(tour);
@@ -40,9 +40,10 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
         } else {
-            throw new IllegalArgumentException("Edges do not form a continuous path");
+            throw new IllegalArgumentException("Edges in the tour set do not form a continuous path.");
         }
     }
 
-    return new DefaultGraphPath<>(graph, vertexList, edgeList);
+    // Create and return the GraphPath
+    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0.0);
 }

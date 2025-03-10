@@ -19,9 +19,9 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        boolean[] primitiveArray = {true, false, true};
-        Boolean[] objectArray = toObject(primitiveArray);
-        for (Boolean b : Objects.requireNonNull(objectArray)) {
+        boolean[] testArray = {true, false, true};
+        Boolean[] result = toObject(testArray);
+        for (Boolean b : result) {
             System.out.println(b);
         }
     }

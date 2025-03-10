@@ -12,7 +12,7 @@ public class OuterFaceCirculator {
     }
 
     public void next(int dir) {
-        // Assuming dir is 1 for clockwise and -1 for counter-clockwise
+        // Assuming dir is either 1 (clockwise) or -1 (counter-clockwise)
         if (dir == 1) {
             current = current.getNext();
         } else if (dir == -1) {

@@ -15,6 +15,7 @@ public class MatrixUtils {
             {0, 6, 0, 0}
         };
 
+        // 检查行号是否有效
         if (row < 0 || row >= matrix.length) {
             throw new IllegalArgumentException("Invalid row number");
         }
@@ -30,6 +31,6 @@ public class MatrixUtils {
 
     public static void main(String[] args) {
         MatrixUtils utils = new MatrixUtils();
-        System.out.println(utils.nonZeros(2)); // 示例调用
+        System.out.println(utils.nonZeros(2)); // 输出: 3
     }
 }

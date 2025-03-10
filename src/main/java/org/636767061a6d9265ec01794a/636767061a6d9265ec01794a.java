@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class FileUtils {
 
     /**
@@ -6,17 +8,17 @@ public class FileUtils {
      * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
      */
     public static int indexOfExtension(String filename) {
-        if (filename == null) {
+        if (filename == null || filename.isEmpty()) {
             return -1;
         }
-        
+
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
-        
+
         if (lastSeparatorIndex > extensionIndex) {
             return -1;
         }
-        
+
         return extensionIndex;
     }
 
@@ -29,18 +31,20 @@ public class FileUtils {
         if (filename == null) {
             return -1;
         }
-        
+
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
-        
+
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("example/file.txt")); // 输出: 13
-        System.out.println(indexOfExtension("example/file"));    // 输出: -1
-        System.out.println(indexOfExtension("example/file."));  // 输出: 13
-        System.out.println(indexOfExtension("example/file.txt.zip")); // 输出: 17
-        System.out.println(indexOfExtension(null));              // 输出: -1
+        System.out.println(indexOfExtension("example.txt")); // 7
+        System.out.println(indexOfExtension("path/to/file.example.txt")); // 18
+        System.out.println(indexOfExtension("path/to/file")); // -1
+        System.out.println(indexOfExtension("path/to/file.")); // 12
+        System.out.println(indexOfExtension("path/to/.file")); // -1
+        System.out.println(indexOfExtension("")); // -1
+        System.out.println(indexOfExtension(null)); // -1
     }
 }

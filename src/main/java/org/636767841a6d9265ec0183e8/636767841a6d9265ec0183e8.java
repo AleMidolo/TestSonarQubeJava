@@ -9,7 +9,7 @@ public class EventBuffer {
         this.buffer = new ArrayList<>();
     }
 
-    /**
+    /** 
      * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
      */
     public void add(LoggingEvent event) {

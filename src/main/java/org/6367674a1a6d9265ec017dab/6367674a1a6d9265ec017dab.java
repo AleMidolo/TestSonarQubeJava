@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class FloatComparator implements Comparator<Double> {
+public class DoubleComparator implements Comparator<Double> {
     @Override
     public int compare(Double o1, Double o2) {
         if (o1 == null && o2 == null) {

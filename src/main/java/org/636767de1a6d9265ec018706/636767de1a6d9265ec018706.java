@@ -23,21 +23,18 @@ public class MappingDiff {
      * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming we have a method to get the current mappings for the table
-        Mappings currentMappings = getCurrentMappings(tableName);
-
-        Mappings diffMappings = new Mappings();
-        Map<String, Object> currentFields = currentMappings.getFields();
+        Mappings result = new Mappings();
+        Map<String, Object> currentFields = getCurrentMappings(tableName).getFields();
         Map<String, Object> inputFields = mappings.getFields();
 
         for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
-            String fieldName = entry.getKey();
-            if (!inputFields.containsKey(fieldName)) {
-                diffMappings.getFields().put(fieldName, entry.getValue());
+            String key = entry.getKey();
+            if (!inputFields.containsKey(key)) {
+                result.getFields().put(key, entry.getValue());
             }
         }
 
-        return diffMappings;
+        return result;
     }
 
     // Dummy method to simulate getting current mappings for a table

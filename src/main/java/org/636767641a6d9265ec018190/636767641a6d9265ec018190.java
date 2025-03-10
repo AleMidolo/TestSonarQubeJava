@@ -13,7 +13,7 @@ private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int
     minLabelBucket.clear();
     
     // Update the labels of the moved vertices to 0
-    for (int vertex : labelZeroBucket) {
+    for (Integer vertex : labelZeroBucket) {
         labels.set(vertex, 0);
     }
 }

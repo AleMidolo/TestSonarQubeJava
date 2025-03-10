@@ -16,10 +16,10 @@ private static boolean endsWith(final String str, final String suffix, final boo
     if (suffix.length() > str.length()) {
         return false;
     }
-    String strSuffix = str.substring(str.length() - suffix.length());
+    String strEnd = str.substring(str.length() - suffix.length());
     if (ignoreCase) {
-        return strSuffix.equalsIgnoreCase(suffix);
+        return strEnd.equalsIgnoreCase(suffix);
     } else {
-        return strSuffix.equals(suffix);
+        return strEnd.equals(suffix);
     }
 }

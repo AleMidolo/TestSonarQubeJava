@@ -1,7 +1,7 @@
-public class ExceptionChecker {
+public class Example {
     private Throwable thrown;
 
-    public ExceptionChecker(Throwable thrown) {
+    public Example(Throwable thrown) {
         this.thrown = thrown;
     }
 
@@ -11,10 +11,10 @@ public class ExceptionChecker {
 
     public static void main(String[] args) {
         // Example usage
-        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
-        System.out.println(checker.hasThrown()); // Output: true
+        Example example = new Example(new RuntimeException("An error occurred"));
+        System.out.println(example.hasThrown()); // Output: true
 
-        ExceptionChecker checker2 = new ExceptionChecker(null);
-        System.out.println(checker2.hasThrown()); // Output: false
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Output: false
     }
 }

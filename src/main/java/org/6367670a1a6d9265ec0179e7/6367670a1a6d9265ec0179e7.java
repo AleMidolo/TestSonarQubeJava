@@ -1,10 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConverterRegistry {
+public class ConverterLookup {
+
     private final Map<Class<?>, Converter> converterMap;
 
-    public ConverterRegistry() {
+    public ConverterLookup() {
         this.converterMap = new HashMap<>();
     }
 
@@ -18,7 +19,7 @@ public class ConverterRegistry {
     }
 
     /**
-     * एक Converter को किसी विशेष वर्ग के लिए पंजीकृत करें।
+     * एक Converter को किसी विशिष्ट वर्ग के लिए पंजीकृत करें।
      * @param clazz वह वर्ग जिसके लिए Converter पंजीकृत करना है
      * @param converter पंजीकृत करने के लिए Converter
      */
@@ -26,23 +27,7 @@ public class ConverterRegistry {
         converterMap.put(clazz, converter);
     }
 
-    public static void main(String[] args) {
-        ConverterRegistry registry = new ConverterRegistry();
-        // Example usage
-        registry.registerConverter(String.class, new StringConverter());
-        Converter converter = registry.lookup(String.class);
-        if (converter != null) {
-            System.out.println("Converter found for String class.");
-        } else {
-            System.out.println("No converter found for String class.");
-        }
+    public interface Converter {
+        // Converter interface methods can be defined here
     }
-}
-
-interface Converter {
-    // Converter methods can be defined here
-}
-
-class StringConverter implements Converter {
-    // Implementation of StringConverter
 }

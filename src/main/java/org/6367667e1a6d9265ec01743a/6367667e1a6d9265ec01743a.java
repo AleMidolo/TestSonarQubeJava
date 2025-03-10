@@ -1,22 +1,27 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class FileLastWriteTime {
+public class WriteTimestamp {
+    private final AtomicLong lastWriteTimestamp = new AtomicLong();
 
     /**
      * अंतिम बार, मिलीसेकंड में, एक लिखने की प्रक्रिया हुई थी।
      * @return यह
      */
     public long lastWriteTimeStampInMilliseconds() {
-        File file = new File("example.txt"); // Replace with your file path
-        try {
-            BasicFileAttributes attrs = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-            return attrs.lastModifiedTime().toMillis();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // Return -1 in case of an error
-        }
+        return lastWriteTimestamp.get();
+    }
+
+    /**
+     * लिखने की प्रक्रिया के समय को अपडेट करें।
+     * @param timestamp मिलीसेकंड में समय
+     */
+    public void updateWriteTimestamp(long timestamp) {
+        lastWriteTimestamp.set(timestamp);
+    }
+
+    public static void main(String[] args) {
+        WriteTimestamp writeTimestamp = new WriteTimestamp();
+        writeTimestamp.updateWriteTimestamp(System.currentTimeMillis());
+        System.out.println("Last write timestamp: " + writeTimestamp.lastWriteTimeStampInMilliseconds());
     }
 }

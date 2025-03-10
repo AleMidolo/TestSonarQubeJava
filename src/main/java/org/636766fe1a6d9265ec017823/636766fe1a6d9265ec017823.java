@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private Map<String, Integer> nameAndTypeMap = new HashMap<>();
+    private final Map<String, Integer> nameAndTypeMap = new HashMap<>();
     private int nextIndex = 1;
 
     /**
@@ -16,8 +16,9 @@ public class ConstantPool {
         if (nameAndTypeMap.containsKey(key)) {
             return nameAndTypeMap.get(key);
         } else {
-            nameAndTypeMap.put(key, nextIndex);
-            return nextIndex++;
+            int index = nextIndex++;
+            nameAndTypeMap.put(key, index);
+            return index;
         }
     }
 }

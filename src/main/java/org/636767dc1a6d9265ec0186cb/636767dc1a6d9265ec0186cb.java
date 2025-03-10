@@ -10,13 +10,13 @@ public class ConfigurationInitializer {
     public void init() {
         // Define the distribution path
         String distributionPath = "/path/to/distribution";
-        Path path = Paths.get(distributionPath);
 
-        // Check if the path exists
+        // Check if the distribution path exists
+        Path path = Paths.get(distributionPath);
         if (Files.exists(path)) {
-            System.out.println("Distribution path exists: " + path.toAbsolutePath());
+            System.out.println("Distribution path exists: " + distributionPath);
         } else {
-            System.out.println("Distribution path does not exist: " + path.toAbsolutePath());
+            System.out.println("Distribution path does not exist: " + distributionPath);
         }
     }
 

@@ -7,7 +7,7 @@ public class AbstractTypeHandler {
         this.outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * दिए गए संख्या के अमूर्त प्रकारों को आउटपुट फ्रेम स्टैक से पॉप करता है।
      * @param elements वह संख्या है जो अमूर्त प्रकारों को पॉप करना है।
      */

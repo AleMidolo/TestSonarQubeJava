@@ -1,4 +1,4 @@
-public class StringUtils {
+public class StringQuoter {
 
     /**
      * दिए गए ऑब्जेक्ट को एक स्ट्रिंग में बदलें यदि यह एक स्ट्रिंग है; अन्यथा ऑब्जेक्ट को जैसा है वैसा ही रखें।
@@ -14,8 +14,8 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(quoteIfString("myString")); // Output: 'myString'
-        System.out.println(quoteIfString(123));        // Output: 123
-        System.out.println(quoteIfString(null));       // Output: null
+        System.out.println(quoteIfString("Hello")); // Output: 'Hello'
+        System.out.println(quoteIfString(123));    // Output: 123
+        System.out.println(quoteIfString(true));    // Output: true
     }
 }

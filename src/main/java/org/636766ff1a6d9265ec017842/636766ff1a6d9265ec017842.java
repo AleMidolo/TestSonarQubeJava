@@ -13,22 +13,10 @@ public class DoubleArrayConverter {
         if (array == null) {
             return null;
         }
-        
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null.");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Double[] testArray = {1.0, 2.0, 3.0};
-        double[] primitiveArray = toPrimitive(testArray);
-        for (double d : primitiveArray) {
-            System.out.println(d);
-        }
     }
 }

@@ -2,6 +2,6 @@
 public int hashCode() {
     // A simple implementation of hashCode that returns a constant value.
     // This is a basic example and may not be suitable for all use cases.
-    // In a real-world scenario, you would want to generate a hash code based on the object's fields.
-    return 42; // Example constant hash code
+    // For more complex objects, consider using a more sophisticated hashing algorithm.
+    return 31;
 }

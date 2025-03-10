@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructorInitialization {
+public class ConstructorInitializer {
 
     private List<Integer> initializedTypes;
 
-    public ConstructorInitialization() {
+    public ConstructorInitializer() {
         this.initializedTypes = new ArrayList<>();
     }
 
@@ -19,8 +19,16 @@ public class ConstructorInitialization {
         }
     }
 
-    // Optional: Getter method to access the initialized types
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
+    }
+
+    public static void main(String[] args) {
+        ConstructorInitializer initializer = new ConstructorInitializer();
+        initializer.addInitializedType(1);
+        initializer.addInitializedType(2);
+        initializer.addInitializedType(1); // Duplicate, should not be added
+
+        System.out.println(initializer.getInitializedTypes()); // Output: [1, 2]
     }
 }

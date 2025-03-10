@@ -1,29 +1,6 @@
 import java.util.*;
 
-class Pair<K, V> {
-    private K key;
-    private V value;
-
-    public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return "Pair{" + "key=" + key + ", value=" + value + '}';
-    }
-}
-
-public class Graph {
+class Graph {
     private Map<Integer, List<Integer>> adjacencyList;
 
     public Graph() {
@@ -36,55 +13,29 @@ public class Graph {
     }
 
     private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = new ArrayList<>();
 
+        // Iterate over all edges in the graph
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
             int u = entry.getKey();
             for (int v : entry.getValue()) {
-                if (u < v) { // To avoid processing the same edge twice
+                if (u < v) { // Ensure each edge is processed only once
                     List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                    globalSeparatorList.add(new Pair<>(separators, u));
+                    globalSeparators.add(new Pair<>(separators, new Pair<>(u, v)));
                 }
             }
         }
 
-        return globalSeparatorList;
+        return globalSeparators;
     }
 
     private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
+        // This is a placeholder for the actual algorithm to find minimal separators
+        // between nodes u and v. The actual implementation would depend on the specific
+        // graph structure and the algorithm used (e.g., BFS, DFS, etc.).
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        Set<Integer> visited = new HashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
-        Map<Integer, Integer> parent = new HashMap<>();
-
-        queue.add(u);
-        visited.add(u);
-        parent.put(u, null);
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            if (current == v) {
-                break;
-            }
-            for (int neighbor : adjacencyList.getOrDefault(current, Collections.emptyList())) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    parent.put(neighbor, current);
-                    queue.add(neighbor);
-                }
-            }
-        }
-
-        if (!visited.contains(v)) {
-            return separators;
-        }
-
-        int current = v;
-        while (parent.get(current) != null) {
-            separators.add(new Pair<>(parent.get(current), current));
-            current = parent.get(current);
-        }
-
+        // Example: Add a dummy separator
+        separators.add(new Pair<>(u, v));
         return separators;
     }
 
@@ -95,9 +46,33 @@ public class Graph {
         graph.addEdge(3, 4);
         graph.addEdge(4, 1);
 
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = graph.computeGlobalSeparatorList();
-        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : globalSeparatorList) {
-            System.out.println("Edge: " + pair.getValue() + " -> " + pair.getKey());
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = graph.computeGlobalSeparatorList();
+        for (Pair<List<Pair<Integer, Integer>>, Integer> separator : globalSeparators) {
+            System.out.println("Edge: " + separator.getSecond());
+            System.out.println("Separators: " + separator.getFirst());
         }
+    }
+}
+
+class Pair<A, B> {
+    private A first;
+    private B second;
+
+    public Pair(A first, B second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public A getFirst() {
+        return first;
+    }
+
+    public B getSecond() {
+        return second;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ")";
     }
 }

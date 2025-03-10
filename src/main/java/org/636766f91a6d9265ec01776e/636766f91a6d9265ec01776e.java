@@ -73,4 +73,9 @@ public class ByteArrayOutputStream extends OutputStream {
     public String toString() {
         return new String(buffer, 0, count);
     }
+
+    @Override
+    public void close() throws IOException {
+        // No resources to close
+    }
 }

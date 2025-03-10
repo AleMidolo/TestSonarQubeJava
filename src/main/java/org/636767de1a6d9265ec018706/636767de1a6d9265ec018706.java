@@ -19,37 +19,32 @@ public class Mappings {
 
 public class MappingDiff {
 
+    /**
+     * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
+     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
         Mappings result = new Mappings();
-        Map<String, Object> currentFields = getCurrentFieldsForTable(tableName);
+        Map<String, Object> currentFields = getCurrentMappings(tableName).getFields();
         Map<String, Object> inputFields = mappings.getFields();
 
-        for (Map.Entry<String, Object> entry : inputFields.entrySet()) {
-            String fieldName = entry.getKey();
-            if (!currentFields.containsKey(fieldName)) {
-                result.getFields().put(fieldName, entry.getValue());
+        for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
+            String key = entry.getKey();
+            if (!inputFields.containsKey(key)) {
+                result.getFields().put(key, entry.getValue());
             }
         }
 
         return result;
     }
 
-    private Map<String, Object> getCurrentFieldsForTable(String tableName) {
-        // This method should return the current fields for the given table.
-        // For the sake of this example, we'll return a dummy map.
-        Map<String, Object> currentFields = new HashMap<>();
-        currentFields.put("field1", "value1");
-        currentFields.put("field2", "value2");
-        return currentFields;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff diff = new MappingDiff();
-        Mappings inputMappings = new Mappings();
-        inputMappings.getFields().put("field1", "value1");
-        inputMappings.getFields().put("field3", "value3");
-
-        Mappings result = diff.diffStructure("exampleTable", inputMappings);
-        System.out.println(result.getFields()); // Output: {field3=value3}
+    // Dummy method to simulate getting current mappings for a table
+    private Mappings getCurrentMappings(String tableName) {
+        Mappings currentMappings = new Mappings();
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("field1", "type1");
+        fields.put("field2", "type2");
+        fields.put("field3", "type3");
+        currentMappings.setFields(fields);
+        return currentMappings;
     }
 }

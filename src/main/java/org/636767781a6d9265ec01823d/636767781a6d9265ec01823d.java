@@ -6,7 +6,7 @@ import org.apache.log4j.spi.LoggingEvent;
 protected void subAppend(LoggingEvent event) {
     // Implementation of the method
     // This method is responsible for the actual writing of the log event
-    // For example, it could write the event to a file, console, or other output streams
-    // Here is a simple example that prints the event's message to the console
+    // You can customize this method to handle the LoggingEvent as needed
+    // For example, writing to a file, console, or other output streams
     System.out.println(event.getMessage());
 }

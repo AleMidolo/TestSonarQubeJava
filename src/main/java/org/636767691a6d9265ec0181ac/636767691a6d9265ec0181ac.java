@@ -2,6 +2,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathResolver {
+
     /**
      * दिए गए पथ पर दिए गए सापेक्ष पथ को लागू करें, मानते हुए कि मानक जावा फ़ोल्डर विभाजन (यानी "/" विभाजक) है।
      * @param path वह पथ जिससे शुरू करना है (आमतौर पर एक पूर्ण फ़ाइल पथ)
@@ -15,7 +16,7 @@ public class PathResolver {
         // Resolve the relative path against the base path
         Path resolvedPath = basePath.resolve(relativePath);
         
-        // Normalize the path to remove any redundant elements
+        // Normalize the path to remove any redundant elements like ".." or "."
         Path normalizedPath = resolvedPath.normalize();
         
         // Convert the normalized path back to a string

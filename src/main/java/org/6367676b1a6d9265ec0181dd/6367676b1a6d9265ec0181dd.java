@@ -7,7 +7,7 @@ public class StringUtils {
      * @return स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या।
      */
     public static int countOccurrencesOf(String str, String sub) {
-        if (str == null || sub == null || sub.isEmpty()) {
+        if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
             return 0;
         }
 

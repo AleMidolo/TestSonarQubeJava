@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AppenderManager {
@@ -13,20 +14,34 @@ public class AppenderManager {
      * @param name एपेंडर का नाम जिसे हटाना है
      */
     public void removeAppender(String name) {
-        if (name != null) {
-            appenders.remove(name);
+        Iterator<String> iterator = appenders.iterator();
+        while (iterator.hasNext()) {
+            String appender = iterator.next();
+            if (appender.equals(name)) {
+                iterator.remove();
+                break;
+            }
         }
     }
 
     // Optional: Method to add appenders for testing
     public void addAppender(String name) {
-        if (name != null) {
-            appenders.add(name);
-        }
+        appenders.add(name);
     }
 
     // Optional: Method to get appenders for testing
     public List<String> getAppenders() {
-        return new ArrayList<>(appenders);
+        return appenders;
+    }
+
+    public static void main(String[] args) {
+        AppenderManager manager = new AppenderManager();
+        manager.addAppender("Appender1");
+        manager.addAppender("Appender2");
+        manager.addAppender("Appender3");
+
+        System.out.println("Before removal: " + manager.getAppenders());
+        manager.removeAppender("Appender2");
+        System.out.println("After removal: " + manager.getAppenders());
     }
 }

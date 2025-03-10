@@ -12,15 +12,15 @@ public class BroadcastFilter extends BroadcastReceiver {
      */
     protected Object filter(Object msg) {
         // Implement your filtering logic here
-        // For example, you can check if the message is of a certain type
-        // and return a filtered result accordingly.
+        // For example, you can check the type of msg and return a filtered result
         if (msg instanceof String) {
             String message = (String) msg;
-            if (message.contains("filter")) {
-                return "Filtered: " + message;
+            // Example: Filter out messages containing "test"
+            if (message.contains("test")) {
+                return null; // Filter out the message
             }
         }
-        return msg;
+        return msg; // Return the original message if no filtering is needed
     }
 
     @Override
@@ -28,6 +28,8 @@ public class BroadcastFilter extends BroadcastReceiver {
         // Handle the broadcast here
         Object msg = intent.getSerializableExtra("message");
         Object filteredMsg = filter(msg);
-        // You can now use the filtered message as needed
+        if (filteredMsg != null) {
+            // Process the filtered message
+        }
     }
 }

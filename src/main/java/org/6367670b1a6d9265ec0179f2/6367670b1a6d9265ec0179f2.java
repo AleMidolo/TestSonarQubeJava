@@ -1,11 +1,10 @@
 import java.util.Map;
 
 public class CustomMap<K, V> implements Map<K, V> {
-    // Assuming this class has a backing map implementation
-    private final Map<K, V> backingMap;
+    private final Map<K, V> internalMap;
 
-    public CustomMap(Map<K, V> backingMap) {
-        this.backingMap = backingMap;
+    public CustomMap(Map<K, V> internalMap) {
+        this.internalMap = internalMap;
     }
 
     /**
@@ -15,8 +14,8 @@ public class CustomMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean containsKey(final Object key) {
-        return backingMap.containsKey(key);
+        return internalMap.containsKey(key);
     }
 
-    // Other methods of the Map interface would need to be implemented here
+    // Other methods of the Map interface would need to be implemented as well.
 }

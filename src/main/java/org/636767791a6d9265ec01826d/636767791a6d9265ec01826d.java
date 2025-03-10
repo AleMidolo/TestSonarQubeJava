@@ -4,9 +4,6 @@ import java.util.regex.Pattern;
 
 public class PropertySubstitution {
 
-    /**
-     * <code>props</code> में <code>key</code> के अनुसार मान खोजें। फिर पाए गए मान पर वेरिएबल प्रतिस्थापन करें।
-     */
     public static String findAndSubst(String key, Properties props) {
         // Get the value associated with the key from the properties
         String value = props.getProperty(key);

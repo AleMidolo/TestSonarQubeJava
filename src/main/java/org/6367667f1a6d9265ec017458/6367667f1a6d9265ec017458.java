@@ -15,15 +15,17 @@ public class AtmosphereFramework {
             handlers.remove(mapping);
             return this;
         }
-        return null;
+        return this;
     }
 
     /**
      * एक {@link AtmosphereHandler} को जोड़ें।
      * @param mapping मैपिंग जिसके लिए हैण्डलर जोड़ा जाएगा।
      * @param handler जोड़ा जाने वाला हैण्डलर।
+     * @return यह {@link AtmosphereFramework} ऑब्जेक्ट।
      */
-    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
+    public AtmosphereFramework addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
+        return this;
     }
 }

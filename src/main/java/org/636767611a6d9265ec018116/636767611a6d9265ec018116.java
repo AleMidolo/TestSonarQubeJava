@@ -14,4 +14,21 @@ public class SetIntersection {
         result.retainAll(set2);
         return result;
     }
+
+    public static void main(String[] args) {
+        SetIntersection example = new SetIntersection();
+        
+        Set<Integer> set1 = new HashSet<>();
+        set1.add(1);
+        set1.add(2);
+        set1.add(3);
+
+        Set<Integer> set2 = new HashSet<>();
+        set2.add(2);
+        set2.add(3);
+        set2.add(4);
+
+        Set<Integer> intersectionSet = example.intersection(set1, set2);
+        System.out.println("Intersection: " + intersectionSet); // Output: Intersection: [2, 3]
+    }
 }

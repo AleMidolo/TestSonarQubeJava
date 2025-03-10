@@ -22,9 +22,8 @@ public class ThreadSnapshotParser {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
+            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
                 return true;
             }
         }
@@ -32,7 +31,7 @@ public class ThreadSnapshotParser {
     }
 
     // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
-    public static class ThreadSnapshot {
+    static class ThreadSnapshot {
         private long timestamp;
 
         public ThreadSnapshot(long timestamp) {
@@ -55,7 +54,7 @@ public class ThreadSnapshotParser {
         }
     }
 
-    public static class ProfileAnalyzeTimeRange {
+    static class ProfileAnalyzeTimeRange {
         private long startTime;
         private long endTime;
 

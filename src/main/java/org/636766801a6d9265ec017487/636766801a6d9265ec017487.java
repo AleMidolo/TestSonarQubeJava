@@ -17,7 +17,7 @@ public class TemplateEncoder {
         for (char c : s.toCharArray()) {
             if (c == '{' || c == '}') {
                 try {
-                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString());
+                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
                 } catch (Exception e) {
                     // Handle encoding exception
                     encodedString.append(c);

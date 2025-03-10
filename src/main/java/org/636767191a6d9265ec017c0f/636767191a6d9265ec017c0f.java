@@ -9,21 +9,17 @@ public class ByteVector {
         this.capacity = initialCapacity;
     }
 
-    /**
-     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
-     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
-     */
     private void enlarge(final int size) {
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        data = newData;
         capacity = newCapacity;
     }
 
-    public byte[] getData() {
-        return data;
-    }
-
-    public int getCapacity() {
-        return capacity;
+    // Example usage
+    public static void main(String[] args) {
+        ByteVector vector = new ByteVector(10);
+        vector.enlarge(5);
+        System.out.println("New capacity: " + vector.capacity);
     }
 }

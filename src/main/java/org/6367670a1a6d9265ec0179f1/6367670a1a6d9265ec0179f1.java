@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class ShortArrayConverter {
+public class ArrayUtils {
 
     /**
      * <p>将基本数据类型的 short 数组转换为对象类型。</p> <p>对于 <code>null</code> 输入数组，此方法返回 <code>null</code>。</p>

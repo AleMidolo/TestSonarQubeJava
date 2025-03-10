@@ -9,52 +9,51 @@ public class LogFormatter {
      * @return 格式化后的日志字符串
      */
     public String format(LoggingEvent event) {
-        // 假设 LoggingEvent 类有以下方法：
-        // getTimestamp() 返回日志时间戳
-        // getLevel() 返回日志级别
-        // getMessage() 返回日志消息
+        // 假设 LoggingEvent 类有以下属性：
+        // String message, Date timestamp, String level, String loggerName
 
-        // 格式化时间戳
+        // 创建一个日期格式化器
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = dateFormat.format(new Date(event.getTimestamp()));
 
-        // 格式化日志级别
-        String level = event.getLevel().toString();
+        // 格式化日志信息
+        String formattedTimestamp = dateFormat.format(event.getTimestamp());
+        String formattedMessage = String.format("[%s] %s - %s: %s",
+                formattedTimestamp,
+                event.getLevel(),
+                event.getLoggerName(),
+                event.getMessage());
 
-        // 格式化日志消息
-        String message = event.getMessage();
-
-        // 组合成最终的格式化字符串
-        return String.format("[%s] %s: %s", formattedDate, level, message);
+        return formattedMessage;
     }
 }
 
-// 假设 LoggingEvent 类的定义如下：
+// 假设的 LoggingEvent 类
 class LoggingEvent {
-    private long timestamp;
-    private Level level;
     private String message;
+    private Date timestamp;
+    private String level;
+    private String loggerName;
 
-    public LoggingEvent(long timestamp, Level level, String message) {
+    public LoggingEvent(String message, Date timestamp, String level, String loggerName) {
+        this.message = message;
         this.timestamp = timestamp;
         this.level = level;
-        this.message = message;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public Level getLevel() {
-        return level;
+        this.loggerName = loggerName;
     }
 
     public String getMessage() {
         return message;
     }
-}
 
-// 假设 Level 枚举类的定义如下：
-enum Level {
-    INFO, WARN, ERROR, DEBUG
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getLoggerName() {
+        return loggerName;
+    }
 }

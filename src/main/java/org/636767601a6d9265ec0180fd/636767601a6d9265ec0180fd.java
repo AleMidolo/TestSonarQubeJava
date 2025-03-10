@@ -5,7 +5,7 @@ public class GraphIndex<V, E> {
     private Map<V, Map<V, E>> index;
 
     public GraphIndex() {
-        this.index = new HashMap<>();
+        index = new HashMap<>();
     }
 
     /**

@@ -11,7 +11,7 @@ public class FieldChecker {
      * 当输入字段已经存储在属性中时返回真。
      */
     private boolean containsAllFields(Fields fields) {
-        for (String field : fields) {
+        for (String field : fields.getFieldNames()) {
             if (!storedFields.contains(field)) {
                 return false;
             }
@@ -19,17 +19,15 @@ public class FieldChecker {
         return true;
     }
 
-    // Assuming Fields is a class that implements Iterable<String>
-    public static class Fields implements Iterable<String> {
-        private Set<String> fields;
+    public static class Fields {
+        private Set<String> fieldNames;
 
-        public Fields(Set<String> fields) {
-            this.fields = fields;
+        public Fields(Set<String> fieldNames) {
+            this.fieldNames = fieldNames;
         }
 
-        @Override
-        public java.util.Iterator<String> iterator() {
-            return fields.iterator();
+        public Set<String> getFieldNames() {
+            return fieldNames;
         }
     }
 }

@@ -9,17 +9,16 @@ public class ConfigInitializer {
      */
     public void init() {
         // 假设分发路径为 "dist"
-        String distributionPath = "dist";
-        Path path = Paths.get(distributionPath);
+        Path distPath = Paths.get("dist");
 
         // 检查路径是否存在
-        if (Files.exists(path)) {
-            System.out.println("分发路径已存在: " + path.toAbsolutePath());
+        if (Files.exists(distPath)) {
+            System.out.println("分发路径已存在: " + distPath.toAbsolutePath());
         } else {
-            System.out.println("分发路径不存在，正在创建: " + path.toAbsolutePath());
+            System.out.println("分发路径不存在，正在创建: " + distPath.toAbsolutePath());
             try {
-                Files.createDirectories(path);
-                System.out.println("分发路径创建成功: " + path.toAbsolutePath());
+                Files.createDirectories(distPath);
+                System.out.println("分发路径创建成功。");
             } catch (Exception e) {
                 System.err.println("无法创建分发路径: " + e.getMessage());
             }

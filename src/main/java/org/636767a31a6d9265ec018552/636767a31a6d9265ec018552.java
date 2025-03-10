@@ -22,9 +22,9 @@ public class StreamReader {
             throw new IOException("Failed to read string length");
         }
 
-        int length = ((lengthBytes[0] & 0xFF) << 24) |
-                     ((lengthBytes[1] & 0xFF) << 16) |
-                     ((lengthBytes[2] & 0xFF) << 8) |
+        int length = (lengthBytes[0] & 0xFF) << 24 |
+                     (lengthBytes[1] & 0xFF) << 16 |
+                     (lengthBytes[2] & 0xFF) << 8 |
                      (lengthBytes[3] & 0xFF);
 
         // 读取字符串内容
@@ -34,7 +34,6 @@ public class StreamReader {
             throw new IOException("Failed to read string content");
         }
 
-        // 将字节数组转换为字符串
         return new String(stringBytes, StandardCharsets.UTF_8);
     }
 }

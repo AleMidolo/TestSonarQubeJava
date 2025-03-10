@@ -1,21 +1,21 @@
 import java.util.UUID;
 
-public class Main {
+public class EntityIdGenerator {
+
     /**
-     * Generates a unique row ID based on the provided entity ID.
-     *
-     * @param entityId The entity ID to be used in generating the row ID.
-     * @return A unique row ID as a String.
+     * Generates a unique ID for an entity.
+     * 
+     * @param entityId The entity identifier (not used in this implementation).
+     * @return A unique ID as a String.
      */
-    public static String id(String entityId) {
-        // Concatenate the entity ID with a UUID to ensure uniqueness
-        return entityId + "-" + UUID.randomUUID().toString();
+    public String id(String entityId) {
+        // Generate a random UUID and convert it to a string
+        return UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String entityId = "user123";
-        String rowId = id(entityId);
-        System.out.println("Generated Row ID: " + rowId);
+        EntityIdGenerator generator = new EntityIdGenerator();
+        String uniqueId = generator.id("exampleEntityId");
+        System.out.println("Generated ID: " + uniqueId);
     }
 }

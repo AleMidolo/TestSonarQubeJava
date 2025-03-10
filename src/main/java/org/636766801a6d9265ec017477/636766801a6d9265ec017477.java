@@ -7,22 +7,22 @@ import java.util.List;
 
 public class FileReverser {
 
-    private List<byte[]> fileContents;
-
-    public FileReverser() {
-        this.fileContents = new ArrayList<>();
-    }
-
     /**
      * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
-        for (int i = files.length - 1; i >= 0; i--) {
-            try (InputStream inputStream = files[i]) {
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        if (files == null || files.length == 0) {
+            return;
+        }
+
+        List<byte[]> fileContents = new ArrayList<>();
+
+        // 读取所有文件内容
+        for (InputStream file : files) {
+            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
                 int nRead;
                 byte[] data = new byte[1024];
-                while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                while ((nRead = file.read(data, 0, data.length)) != -1) {
                     buffer.write(data, 0, nRead);
                 }
                 buffer.flush();
@@ -31,9 +31,14 @@ public class FileReverser {
                 e.printStackTrace();
             }
         }
-    }
 
-    public List<byte[]> getFileContents() {
-        return Collections.unmodifiableList(fileContents);
+        // 逆序文件内容
+        Collections.reverse(fileContents);
+
+        // 处理逆序后的文件内容（例如写入到某个地方）
+        for (byte[] content : fileContents) {
+            // 这里可以根据需要处理逆序后的文件内容
+            // 例如写入到输出流或进行其他操作
+        }
     }
 }

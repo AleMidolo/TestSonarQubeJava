@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 将集合表示转换为图路径。
+ * @param tour 包含可巡回边的集合
+ * @param graph 图
+ * @return 图路径
+ */
 protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
         throw new IllegalArgumentException("Tour set cannot be empty.");
@@ -35,10 +41,10 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
         } else {
-            throw new IllegalArgumentException("The edges do not form a continuous path.");
+            throw new IllegalArgumentException("Tour set does not form a continuous path.");
         }
     }
 
     // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList);
+    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0);
 }

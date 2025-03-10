@@ -1,4 +1,5 @@
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 
 final class ClassFileReader {
@@ -22,14 +23,15 @@ final class ClassFileReader {
         // Read the length of the UTF-8 string (assuming it's a 2-byte unsigned integer)
         int length = classFileBuffer.getShort() & 0xFFFF;
 
-        // Read the UTF-8 bytes into a byte array
+        // Read the UTF-8 bytes into a temporary buffer
         byte[] utf8Bytes = new byte[length];
         classFileBuffer.get(utf8Bytes);
 
-        // Decode the UTF-8 bytes into the provided char buffer
-        String str = new String(utf8Bytes, StandardCharsets.UTF_8);
-        str.getChars(0, str.length(), charBuffer, 0);
+        // Decode the UTF-8 bytes into the provided charBuffer
+        CharBuffer decodedBuffer = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes));
+        decodedBuffer.get(charBuffer, 0, decodedBuffer.length());
 
-        return str;
+        // Return the string representation
+        return new String(charBuffer, 0, decodedBuffer.length());
     }
 }

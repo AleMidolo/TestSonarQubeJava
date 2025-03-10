@@ -20,17 +20,17 @@ public class FieldChecker {
         }
         return true;
     }
-}
 
-// Assuming Fields class is defined as follows:
-class Fields {
-    private Set<String> fieldNames;
+    // Assuming Fields class is defined as follows:
+    public static class Fields {
+        private Set<String> fieldNames;
 
-    public Fields(Set<String> fieldNames) {
-        this.fieldNames = fieldNames;
-    }
+        public Fields(Set<String> fieldNames) {
+            this.fieldNames = fieldNames;
+        }
 
-    public Set<String> getFieldNames() {
-        return fieldNames;
+        public Set<String> getFieldNames() {
+            return fieldNames;
+        }
     }
 }

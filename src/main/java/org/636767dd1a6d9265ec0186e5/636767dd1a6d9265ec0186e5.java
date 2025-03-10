@@ -24,6 +24,7 @@ public class TargetAdder {
 
     /**
      * Add a new target channels.
+     *
      * @param channels The channels to which the new target will be added.
      * @param consumer The consumer that will handle the new target.
      */

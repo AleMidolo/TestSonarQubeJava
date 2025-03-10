@@ -9,15 +9,15 @@ public class CacheUtil {
      */
     public static boolean isExpired(long timestamp, long expiredThreshold) {
         long currentTime = System.currentTimeMillis();
-        return (currentTime - timestamp) >= expiredThreshold;
+        return (currentTime - timestamp) > expiredThreshold;
     }
 
     public static void main(String[] args) {
         // Example usage
-        long timestamp = System.currentTimeMillis() - 10000; // 10 seconds ago
-        long expiredThreshold = 5000; // 5 seconds threshold
+        long lastUpdateTime = System.currentTimeMillis() - 10000; // 10 seconds ago
+        long threshold = 5000; // 5 seconds threshold
 
-        if (isExpired(timestamp, expiredThreshold)) {
+        if (isExpired(lastUpdateTime, threshold)) {
             System.out.println("Metric should be removed from cache.");
         } else {
             System.out.println("Metric is still valid.");

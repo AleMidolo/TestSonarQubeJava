@@ -10,12 +10,12 @@ private String unescapeId(String input) {
     Pattern pattern = Pattern.compile("\\\\([\\\\\"])");
     Matcher matcher = pattern.matcher(input);
 
-    // Replace escaped characters with their unescaped counterparts
-    StringBuffer unescapedString = new StringBuffer();
+    // Replace escaped characters with their unescaped versions
+    StringBuffer unescaped = new StringBuffer();
     while (matcher.find()) {
-        matcher.appendReplacement(unescapedString, matcher.group(1));
+        matcher.appendReplacement(unescaped, matcher.group(1));
     }
-    matcher.appendTail(unescapedString);
+    matcher.appendTail(unescaped);
 
-    return unescapedString.toString();
+    return unescaped.toString();
 }

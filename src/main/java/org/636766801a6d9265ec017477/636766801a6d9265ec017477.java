@@ -15,9 +15,7 @@ public class FileAdder {
 
         // Convert the array to a list for easier manipulation
         List<InputStream> fileList = new ArrayList<>();
-        for (InputStream file : files) {
-            fileList.add(file);
-        }
+        Collections.addAll(fileList, files);
 
         // Reverse the list
         Collections.reverse(fileList);

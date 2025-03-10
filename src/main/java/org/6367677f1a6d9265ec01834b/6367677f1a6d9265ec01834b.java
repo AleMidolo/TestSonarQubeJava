@@ -15,14 +15,12 @@ public class LogBuffer {
      * @param o the LoggingEvent to be placed in the buffer
      */
     public void put(LoggingEvent o) {
-        if (o == null) {
-            throw new IllegalArgumentException("LoggingEvent cannot be null");
+        if (!buffer.offer(o)) {
+            // Silently drop the event if the buffer is full
         }
-        buffer.offer(o); // Silently drops the event if the buffer is full
     }
+}
 
-    // Example LoggingEvent class (assuming it exists)
-    public static class LoggingEvent {
-        // LoggingEvent implementation details
-    }
+class LoggingEvent {
+    // LoggingEvent implementation details
 }

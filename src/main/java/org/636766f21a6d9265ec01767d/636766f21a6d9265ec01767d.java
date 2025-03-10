@@ -7,10 +7,7 @@ public class ObjectToStringUtil {
      * @return the string representation of the object, or null if the object is null
      */
     public static String toString(Object object) {
-        if (object == null) {
-            return null;
-        }
-        return object.toString();
+        return object == null ? null : object.toString();
     }
 
     public static void main(String[] args) {

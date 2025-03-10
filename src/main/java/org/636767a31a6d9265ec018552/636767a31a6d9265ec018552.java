@@ -4,12 +4,18 @@ import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
-    private InputStream inputStream;
+    private final InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
+    /**
+     * Read a {@code string} field value from the stream.
+     *
+     * @return the string read from the stream
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public String readString() throws IOException {
         int length = readVarInt();

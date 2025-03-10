@@ -9,17 +9,17 @@ public class FileUtils {
         if (path == null) {
             return null;
         }
-        int lastDotIndex = path.lastIndexOf('.');
         int lastSeparatorIndex = path.lastIndexOf('/');
-        if (lastDotIndex > lastSeparatorIndex) {
-            return path.substring(0, lastDotIndex);
+        int lastExtensionIndex = path.lastIndexOf('.');
+        if (lastExtensionIndex > lastSeparatorIndex) {
+            return path.substring(0, lastExtensionIndex);
         }
         return path;
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));    // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null));                // Output: null
+        System.out.println(stripFilenameExtension("mypath/myfile"));      // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(null));                 // Output: null
     }
 }

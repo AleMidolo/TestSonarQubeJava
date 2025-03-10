@@ -15,10 +15,12 @@ class OuterFaceCirculator {
         return current;
     }
 
-    public void next(int dir) {
-        // Implement the logic to move to the next node in the given direction
-        // This is a placeholder implementation
-        current = current.getNeighbor(dir);
+    public void next() {
+        // Implement the logic to move to the next node in the outer face
+    }
+
+    public void previous() {
+        // Implement the logic to move to the previous node in the outer face
     }
 }
 
@@ -26,29 +28,22 @@ public class GraphTraversal {
 
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = circulator.getCurrent();
 
-        while (true) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
+        while (current != stop) {
+            if (predicate.test(current)) {
                 return circulator;
             }
-            if (currentNode.equals(stop)) {
-                return circulator;
+
+            if (dir == 1) {
+                circulator.next();
+            } else {
+                circulator.previous();
             }
-            circulator.next(dir);
+
+            current = circulator.getCurrent();
         }
-    }
 
-    // Example usage
-    public static void main(String[] args) {
-        // Example nodes and predicate
-        Node startNode = new Node();
-        Node stopNode = new Node();
-        Predicate<Node> predicate = node -> true; // Example predicate
-
-        GraphTraversal traversal = new GraphTraversal();
-        OuterFaceCirculator result = traversal.selectOnOuterFace(predicate, startNode, stopNode, 0);
-
-        System.out.println("Circulator stopped at: " + result.getCurrent());
+        return circulator;
     }
 }

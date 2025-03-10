@@ -1,34 +1,40 @@
-import java.util.List;
+import java.util.NoSuchElementException;
 
-public class ListNode<E> {
-    private E element;
-    private ListNode<E> next;
-    private ListNode<E> previous;
+public class LinkedList<E> {
+    private static class ListNode<E> {
+        E element;
+        ListNode<E> next;
+        ListNode<E> prev;
 
-    public ListNode(E element, ListNode<E> next, ListNode<E> previous) {
-        this.element = element;
-        this.next = next;
-        this.previous = previous;
+        ListNode(E element, ListNode<E> next, ListNode<E> prev) {
+            this.element = element;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 
-    public E getElement() {
-        return element;
+    private ListNode<E> head;
+    private ListNode<E> tail;
+    private ListNode<E> current;
+
+    public LinkedList() {
+        head = null;
+        tail = null;
+        current = null;
     }
 
-    public ListNode<E> getNext() {
-        return next;
+    public void add(E element) {
+        ListNode<E> newNode = new ListNode<>(element, null, tail);
+        if (tail != null) {
+            tail.next = newNode;
+        } else {
+            head = newNode;
+        }
+        tail = newNode;
     }
 
-    public ListNode<E> getPrevious() {
-        return previous;
-    }
-
-    public void setNext(ListNode<E> next) {
-        this.next = next;
-    }
-
-    public void setPrevious(ListNode<E> previous) {
-        this.previous = previous;
+    public void setCurrent(ListNode<E> node) {
+        this.current = node;
     }
 
     /**
@@ -36,6 +42,10 @@ public class ListNode<E> {
      */
     @Override
     public ListNode<E> previousNode() {
-        return this.previous;
+        if (current == null || current.prev == null) {
+            throw new NoSuchElementException("No previous node available.");
+        }
+        current = current.prev;
+        return current;
     }
 }

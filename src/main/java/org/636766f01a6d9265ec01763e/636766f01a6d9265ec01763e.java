@@ -13,7 +13,7 @@ public class CharsetTranslator {
         try {
             // Attempt to get the Java Charset object for the given name
             Charset javaCharset = Charset.forName(charset);
-            // Return the canonical name of the charset
+            // Return the canonical name of the Charset
             return javaCharset.name();
         } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
             // If the charset is not supported or the name is illegal, return null

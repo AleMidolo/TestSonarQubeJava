@@ -5,6 +5,13 @@ public class TimeRangeSplitter {
 
     private static final long FETCH_DATA_DURATION = 3600 * 1000; // 1 hour in milliseconds
 
+    /**
+     * Split time ranges to ensure the start time and end time is smaller than {@link #FETCH_DATA_DURATION}
+     *
+     * @param start The start time in milliseconds.
+     * @param end The end time in milliseconds.
+     * @return A list of TimeRange objects representing the split time ranges.
+     */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
         long currentStart = start;

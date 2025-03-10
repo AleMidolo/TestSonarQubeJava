@@ -1,4 +1,4 @@
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.util.logging.LogRecord;
 
 public class LogTable {
@@ -10,15 +10,21 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Assuming there is a method to update the table with the log record
-                updateTable(lr);
+                // Assuming there is a method to add the log record to the table
+                addLogRecordToTable(lr);
             }
         });
     }
 
-    private void updateTable(LogRecord lr) {
-        // Implementation to update the table with the log record
-        // This is a placeholder for the actual logic to update the table
+    // Dummy method to represent adding a log record to the table
+    private void addLogRecordToTable(LogRecord lr) {
+        // Implementation to add the log record to the table
         System.out.println("LogRecord added: " + lr.getMessage());
+    }
+
+    public static void main(String[] args) {
+        LogTable logTable = new LogTable();
+        LogRecord logRecord = new LogRecord(java.util.logging.Level.INFO, "Test log message");
+        logTable.addMessage(logRecord);
     }
 }

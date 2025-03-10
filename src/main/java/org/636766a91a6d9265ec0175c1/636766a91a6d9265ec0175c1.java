@@ -3,7 +3,7 @@
  * @param size number of additional bytes that this byte vector should be able to receive.
  */
 private void enlarge(final int size) {
-    // Assuming the byte vector is represented by a byte array named 'data'
+    // Assuming the byte vector is stored in a byte array called 'data'
     int currentCapacity = data.length;
     int newCapacity = currentCapacity + size;
 

@@ -9,33 +9,29 @@ public class BipartiteGraphGenerator<V, E> {
      * Construct a complete bipartite graph
      * 
      * @param target The graph to which the bipartite graph will be added
-     * @param resultMap A map to store the vertices created during the generation process
+     * @param resultMap A map to store the vertices created during the generation
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming the graph is bipartite with two partitions U and V
-        // Let's create two sets of vertices
-        List<V> partitionU = new ArrayList<>();
-        List<V> partitionV = new ArrayList<>();
+        // Assuming the graph is divided into two sets, setA and setB
+        List<V> setA = new ArrayList<>();
+        List<V> setB = new ArrayList<>();
 
-        // Create vertices for partition U
-        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition U
-            V vertex = target.addVertex();
-            partitionU.add(vertex);
-            resultMap.put("U" + i, vertex);
+        // Create vertices for setA and setB
+        for (int i = 0; i < 5; i++) { // Example: 5 vertices in each set
+            V vertexA = target.addVertex();
+            setA.add(vertexA);
+            resultMap.put("setA_vertex_" + i, vertexA);
+
+            V vertexB = target.addVertex();
+            setB.add(vertexB);
+            resultMap.put("setB_vertex_" + i, vertexB);
         }
 
-        // Create vertices for partition V
-        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition V
-            V vertex = target.addVertex();
-            partitionV.add(vertex);
-            resultMap.put("V" + i, vertex);
-        }
-
-        // Connect every vertex in partition U to every vertex in partition V
-        for (V uVertex : partitionU) {
-            for (V vVertex : partitionV) {
-                target.addEdge(uVertex, vVertex);
+        // Create edges between every vertex in setA and every vertex in setB
+        for (V vertexA : setA) {
+            for (V vertexB : setB) {
+                target.addEdge(vertexA, vertexB);
             }
         }
     }

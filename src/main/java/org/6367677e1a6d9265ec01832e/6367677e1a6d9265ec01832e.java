@@ -12,7 +12,8 @@ public class LoggerChecker {
         Logger logger = LogManager.getLogger(name);
         if (logger != null && logger.getName().equals(name)) {
             return logger;
+        } else {
+            return null;
         }
-        return null;
     }
 }

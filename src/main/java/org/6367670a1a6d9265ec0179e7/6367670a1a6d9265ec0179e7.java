@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterRegistry {
-
     private final Map<Class<?>, Converter> converterMap;
 
     public ConverterRegistry() {
@@ -21,15 +20,15 @@ public class ConverterRegistry {
 
     /**
      * Register a {@link Converter} for the specified class.
-     * @param clazz The class for which to register the converter
+     * @param clazz The class for which the converter is registered
      * @param converter The converter to register
      */
-    public void register(final Class<?> clazz, final Converter converter) {
+    public void registerConverter(final Class<?> clazz, final Converter converter) {
         converterMap.put(clazz, converter);
     }
 
     // Example Converter interface
     public interface Converter {
-        Object convert(Object source);
+        Object convert(Object input);
     }
 }

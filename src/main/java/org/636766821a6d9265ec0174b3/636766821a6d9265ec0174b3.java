@@ -1,29 +1,28 @@
-import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Invoke the {@link BroadcastFilter}
- * @param msg the message to be filtered
- * @return the filtered message or null if the message is filtered out
+ * @param msg The message to be filtered
+ * @return The filtered message or null if the message is filtered out
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is an interface or class that defines a filtering mechanism
-    // For the sake of this example, let's assume BroadcastFilter has a method called filterMessage
-    BroadcastFilter broadcastFilter = new BroadcastFilterImpl(); // Assuming an implementation exists
-
-    // Filter the message using the BroadcastFilter
-    return broadcastFilter.filterMessage(msg);
+    // Assuming BroadcastFilter is a functional interface or a class with a test method
+    // For example, BroadcastFilter could be a Predicate<Object>
+    Predicate<Object> broadcastFilter = new BroadcastFilter();
+    
+    if (broadcastFilter.test(msg)) {
+        return msg; // Message passes the filter
+    } else {
+        return null; // Message is filtered out
+    }
 }
 
-// Assuming BroadcastFilter interface or class exists
-interface BroadcastFilter {
-    Object filterMessage(Object msg);
-}
-
-// Example implementation of BroadcastFilter
-class BroadcastFilterImpl implements BroadcastFilter {
+// Example implementation of BroadcastFilter as a Predicate
+class BroadcastFilter implements Predicate<Object> {
     @Override
-    public Object filterMessage(Object msg) {
-        // Example filtering logic: return the message if it's not null, otherwise return null
-        return Objects.requireNonNullElse(msg, null);
+    public boolean test(Object msg) {
+        // Implement your filtering logic here
+        // For example, filter out messages that are null or empty strings
+        return msg != null && !msg.toString().isEmpty();
     }
 }

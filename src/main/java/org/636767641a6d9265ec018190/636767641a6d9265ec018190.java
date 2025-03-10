@@ -5,17 +5,14 @@ private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int
     // 获取标签为 minLabel 的桶
     Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
     
-    // 获取标签为 0 的桶
-    Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-    
-    // 将所有顶点从 minLabel 桶移动到 0 桶
-    zeroLabelBucket.addAll(minLabelBucket);
-    
-    // 清空 minLabel 桶
-    minLabelBucket.clear();
-    
-    // 更新这些顶点的标签为 0
-    for (int vertex : zeroLabelBucket) {
+    // 遍历 minLabel 桶中的所有顶点
+    for (int vertex : minLabelBucket) {
+        // 将顶点的标签更新为 0
         labels.set(vertex, 0);
+        // 将顶点移动到标签为 0 的桶中
+        bucketsByLabel.get(0).add(vertex);
     }
+    
+    // 清空标签为 minLabel 的桶
+    minLabelBucket.clear();
 }

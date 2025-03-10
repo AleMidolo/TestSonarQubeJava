@@ -16,9 +16,11 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] array = {1, 2, 3, 4, 5};
-        System.out.println("Before swap: " + java.util.Arrays.toString(array));
-        swap(array, 1, 3);
-        System.out.println("After swap: " + java.util.Arrays.toString(array));
+        // 示例用法
+        Integer[] numbers = {1, 2, 3, 4, 5};
+        swap(numbers, 1, 3);
+        for (Integer num : numbers) {
+            System.out.print(num + " ");
+        }
     }
 }

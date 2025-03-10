@@ -1,25 +1,41 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventBuffer {
-    private List<LoggingEvent> buffer;
+    private LoggingEvent[] buffer;
+    private int size;
+    private int capacity;
 
-    public EventBuffer() {
-        this.buffer = new ArrayList<>();
+    public EventBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new LoggingEvent[capacity];
+        this.size = 0;
     }
 
-    /** 
+    /**
      * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
      */
     public void add(LoggingEvent event) {
-        if (event != null) {
-            buffer.add(event);
+        if (size < capacity) {
+            buffer[size] = event;
+            size++;
+        } else {
+            // 如果缓冲区已满，可以选择覆盖最早的事件或者抛出异常
+            // 这里选择覆盖最早的事件
+            System.arraycopy(buffer, 1, buffer, 0, size - 1);
+            buffer[size - 1] = event;
         }
     }
 
-    // Optional: Method to get the buffer for testing or other purposes
-    public List<LoggingEvent> getBuffer() {
-        return buffer;
+    // 其他方法，如获取缓冲区大小、获取事件等
+    public int getSize() {
+        return size;
+    }
+
+    public LoggingEvent getEvent(int index) {
+        if (index >= 0 && index < size) {
+            return buffer[index];
+        } else {
+            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
+        }
     }
 }

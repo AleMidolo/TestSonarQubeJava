@@ -11,10 +11,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, World!";
-        String nullString = null;
+        String test1 = "Hello, World!";
+        String test2 = null;
 
-        System.out.println("Length of testString: " + length(testString)); // 输出: 13
-        System.out.println("Length of nullString: " + length(nullString)); // 输出: 0
+        System.out.println(length(test1)); // 输出: 13
+        System.out.println(length(test2)); // 输出: 0
     }
 }

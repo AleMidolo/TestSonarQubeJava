@@ -1,22 +1,20 @@
 import java.util.*;
 
 public class Graph {
-    private Set<Integer> visited;
-    private Set<Integer> vertices;
+    private boolean[] visited;
 
-    public Graph(Set<Integer> vertices) {
-        this.vertices = vertices;
-        this.visited = new HashSet<>();
+    public Graph(int vertexCount) {
+        visited = new boolean[vertexCount];
     }
 
-    /**
+    /** 
      * 检查是否存在未访问的顶点。
      * @return 如果存在未访问的顶点，则返回真。
      */
     @Override
     public boolean hasNext() {
-        for (Integer vertex : vertices) {
-            if (!visited.contains(vertex)) {
+        for (boolean v : visited) {
+            if (!v) {
                 return true;
             }
         }

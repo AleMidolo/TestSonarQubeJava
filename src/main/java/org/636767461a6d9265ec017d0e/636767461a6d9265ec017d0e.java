@@ -1,30 +1,38 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import org.apache.commons.lang3.tuple.Pair;
+import javafx.util.Pair;
 
-private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-    if (bounds == null || bounds.isEmpty()) {
-        return Pair.of(Collections.emptyList(), 0L);
+public class SuffixSumCalculator {
+
+    /**
+     * 计算 {@code bounds} 的后缀和。返回计算出的后缀和和 {@code bounds list} 中所有元素的总和。
+     * @param bounds 整数列表。
+     * @return 计算出的后缀和列表和所有元素的总和的配对。
+     */
+    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(new ArrayList<>(), 0L);
+        }
+
+        List<Integer> suffixSums = new ArrayList<>();
+        long totalSum = 0;
+        int currentSum = 0;
+
+        // 计算后缀和
+        for (int i = bounds.size() - 1; i >= 0; i--) {
+            currentSum += bounds.get(i);
+            suffixSums.add(0, currentSum); // 添加到列表的开头以保持顺序
+            totalSum += bounds.get(i);
+        }
+
+        return new Pair<>(suffixSums, totalSum);
     }
 
-    List<Integer> suffixSums = new ArrayList<>(bounds.size());
-    long totalSum = 0;
-    int currentSuffixSum = 0;
-
-    // 计算后缀和
-    for (int i = bounds.size() - 1; i >= 0; i--) {
-        currentSuffixSum += bounds.get(i);
-        suffixSums.add(currentSuffixSum);
+    public static void main(String[] args) {
+        SuffixSumCalculator calculator = new SuffixSumCalculator();
+        List<Integer> bounds = List.of(1, 2, 3, 4);
+        Pair<List<Integer>, Long> result = calculator.computeSuffixSum(bounds);
+        System.out.println("Suffix Sums: " + result.getKey());
+        System.out.println("Total Sum: " + result.getValue());
     }
-
-    // 反转后缀和列表以保持原始顺序
-    Collections.reverse(suffixSums);
-
-    // 计算总和
-    for (int num : bounds) {
-        totalSum += num;
-    }
-
-    return Pair.of(suffixSums, totalSum);
 }

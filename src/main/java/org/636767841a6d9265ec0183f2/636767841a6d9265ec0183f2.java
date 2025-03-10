@@ -21,11 +21,10 @@ public class CustomComparator implements Comparator<Object> {
             return 1;
         }
 
-        // Assuming the objects are Comparable, otherwise, you need to handle the case
         if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
             return ((Comparable) aObj1).compareTo(aObj2);
         } else {
-            throw new IllegalArgumentException("Objects must implement Comparable");
+            throw new IllegalArgumentException("Objects do not implement Comparable");
         }
     }
 }

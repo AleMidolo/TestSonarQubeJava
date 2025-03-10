@@ -1,11 +1,7 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack;
-
-    public FrameStack() {
-        this.stack = new Stack<>();
-    }
+    private Stack<Object> stack = new Stack<>();
 
     /**
      * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
@@ -17,7 +13,7 @@ public class FrameStack {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                throw new IllegalStateException("Stack underflow");
+                throw new IllegalStateException("Stack underflow: attempted to pop from an empty stack.");
             }
         }
     }
@@ -44,7 +40,7 @@ public class FrameStack {
                     index++;
                 }
                 if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
-                    // 对象数组类型，跳过直到分号
+                    // 对象数组，跳过直到分号
                     while (index < descriptor.length() && descriptor.charAt(index) != ';') {
                         index++;
                     }
@@ -62,15 +58,5 @@ public class FrameStack {
         return count;
     }
 
-    // 示例用法
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(1);
-        frameStack.stack.push(2.0);
-        frameStack.stack.push("Hello");
-
-        frameStack.pop("I"); // 弹出 int 类型
-        frameStack.pop("D"); // 弹出 double 类型
-        frameStack.pop("Ljava/lang/String;"); // 弹出 String 类型
-    }
+    // 其他方法...
 }

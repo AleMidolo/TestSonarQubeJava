@@ -25,9 +25,9 @@ public class TimeBucketCompressor {
     }
 
     public static void main(String[] args) {
-        long timeBucket = 20000105;
-        int dayStep = 11;
-        long compressedTimeBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedTimeBucket); // 输出: 20000101
+        // 测试用例
+        System.out.println(compressTimeBucket(20000105L, 11)); // 输出: 20000101
+        System.out.println(compressTimeBucket(20000115L, 11)); // 输出: 20000112
+        System.out.println(compressTimeBucket(20000123L, 11)); // 输出: 20000123
     }
 }

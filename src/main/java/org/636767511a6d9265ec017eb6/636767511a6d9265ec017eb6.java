@@ -52,7 +52,7 @@ public class Node {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Node node = (Node) obj;
-        return this == node; // Assuming identity comparison is sufficient
+        return this == node; // Assuming identity equality for simplicity
     }
 }
 
@@ -68,6 +68,7 @@ public class Graph {
             circulator.next(dir);
         }
 
+        // If we reach the stop node without finding a matching node, return the circulator pointing to stop
         return circulator;
     }
 }

@@ -10,15 +10,20 @@ public class PathUtils {
      * @return 应用相对路径后得到的完整文件路径
      */
     public static String applyRelativePath(String path, String relativePath) {
+        // 将路径转换为Path对象
         Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.resolve(relativePath);
-        return resolvedPath.normalize().toString();
+        // 将相对路径转换为Path对象
+        Path relative = Paths.get(relativePath);
+        // 解析相对路径并返回完整路径
+        Path resolvedPath = basePath.resolve(relative).normalize();
+        // 返回路径的字符串表示
+        return resolvedPath.toString();
     }
 
     public static void main(String[] args) {
         String path = "/usr/local/bin";
-        String relativePath = "../lib/java";
+        String relativePath = "../lib";
         String result = applyRelativePath(path, relativePath);
-        System.out.println(result);  // 输出: /usr/local/lib/java
+        System.out.println(result);  // 输出: /usr/local/lib
     }
 }

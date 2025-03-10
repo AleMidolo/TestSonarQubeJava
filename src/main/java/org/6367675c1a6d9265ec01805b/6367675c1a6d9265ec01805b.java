@@ -1,23 +1,23 @@
 import java.util.*;
 
 public class Tree {
-    private Map<Integer, List<Integer>> adjacencyList;
+    private Map<Integer, List<Integer>> edgeList;
 
     public Tree() {
-        this.adjacencyList = new HashMap<>();
+        this.edgeList = new HashMap<>();
     }
 
-    public void addEdge(int source, int destination) {
-        adjacencyList.computeIfAbsent(source, k -> new ArrayList<>()).add(destination);
-        adjacencyList.computeIfAbsent(destination, k -> new ArrayList<>()).add(source);
+    public void addEdge(int u, int v) {
+        edgeList.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+        edgeList.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
     }
 
-    public void removeFromTreeEdgeList(int source, int destination) {
-        if (adjacencyList.containsKey(source)) {
-            adjacencyList.get(source).removeIf(node -> node == destination);
+    public void removeFromTreeEdgeList(int u, int v) {
+        if (edgeList.containsKey(u)) {
+            edgeList.get(u).removeIf(node -> node == v);
         }
-        if (adjacencyList.containsKey(destination)) {
-            adjacencyList.get(destination).removeIf(node -> node == source);
+        if (edgeList.containsKey(v)) {
+            edgeList.get(v).removeIf(node -> node == u);
         }
     }
 
@@ -27,12 +27,8 @@ public class Tree {
         tree.addEdge(2, 3);
         tree.addEdge(3, 4);
 
-        System.out.println("Before removal:");
-        System.out.println(tree.adjacencyList);
-
+        System.out.println("Before removal: " + tree.edgeList);
         tree.removeFromTreeEdgeList(2, 3);
-
-        System.out.println("After removal:");
-        System.out.println(tree.adjacencyList);
+        System.out.println("After removal: " + tree.edgeList);
     }
 }

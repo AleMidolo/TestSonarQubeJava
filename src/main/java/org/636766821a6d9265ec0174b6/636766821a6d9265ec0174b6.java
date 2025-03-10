@@ -13,7 +13,7 @@ public class TypeResolver {
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
         Type rawType = parameterizedType.getRawType();
 
-        if (!(rawType instanceof Class) || !targetType.isAssignableFrom((Class<?>) rawType)) {
+        if (!rawType.equals(targetType)) {
             return null;
         }
 
@@ -23,15 +23,8 @@ public class TypeResolver {
         for (Type typeArgument : typeArguments) {
             if (typeArgument instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArgument);
-            } else if (typeArgument instanceof ParameterizedType) {
-                Type rawTypeArgument = ((ParameterizedType) typeArgument).getRawType();
-                if (rawTypeArgument instanceof Class) {
-                    resolvedTypes.add((Class<?>) rawTypeArgument);
-                } else {
-                    resolvedTypes.add(null);
-                }
             } else {
-                resolvedTypes.add(null);
+                return null;
             }
         }
 
@@ -59,11 +52,11 @@ public class TypeResolver {
 
         Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
         if (resolvedArgs != null) {
-            for (Class<?> arg : resolvedArgs) {
-                System.out.println(arg);
+            for (Class<?> clazz : resolvedArgs) {
+                System.out.println(clazz.getSimpleName());
             }
         } else {
-            System.out.println("Unable to resolve arguments.");
+            System.out.println("Could not resolve arguments.");
         }
     }
 }

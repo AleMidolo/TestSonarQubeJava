@@ -1,12 +1,7 @@
 import java.util.Set;
 
-public class FieldChecker {
-
+public class Example {
     private Set<String> storedFields;
-
-    public FieldChecker(Set<String> storedFields) {
-        this.storedFields = storedFields;
-    }
 
     /**
      * 当输入字段已经存储在属性中时返回真。
@@ -20,17 +15,7 @@ public class FieldChecker {
         return true;
     }
 
-    // Assuming Fields is a class that implements Iterable<String>
-    public static class Fields implements Iterable<String> {
-        private Set<String> fields;
-
-        public Fields(Set<String> fields) {
-            this.fields = fields;
-        }
-
-        @Override
-        public java.util.Iterator<String> iterator() {
-            return fields.iterator();
-        }
+    // Assuming Fields is an iterable collection of strings
+    public interface Fields extends Iterable<String> {
     }
 }

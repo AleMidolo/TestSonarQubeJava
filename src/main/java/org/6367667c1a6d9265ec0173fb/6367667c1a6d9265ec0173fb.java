@@ -3,11 +3,11 @@ import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
 public class AtmosphereResourceImpl implements AtmosphereResource {
 
-    private AtmosphereResourceEventListener listener;
+    private AtmosphereResourceEventListener eventListener;
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        this.listener = e;
+        this.eventListener = e;
         return this;
     }
 

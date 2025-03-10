@@ -20,13 +20,5 @@ public class ByteVector {
         return this;
     }
 
-    public List<Byte> getBytes() {
-        return bytes;
-    }
-
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.put11(0x01, 0x02);
-        System.out.println(byteVector.getBytes()); // 输出: [1, 2]
-    }
+    // 其他方法可以根据需要添加
 }

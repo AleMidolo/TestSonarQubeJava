@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
+public class StringArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         // 如果两个数组都为null，返回null
@@ -31,12 +31,11 @@ public class ArrayConcatenator {
     }
 
     public static void main(String[] args) {
-        // 测试用例
+        // 测试示例
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"d", "e", "f"};
-        String[] result = concatenateStringArrays(array1, array2);
 
-        // 输出结果
+        String[] result = concatenateStringArrays(array1, array2);
         for (String s : result) {
             System.out.print(s + " ");
         }

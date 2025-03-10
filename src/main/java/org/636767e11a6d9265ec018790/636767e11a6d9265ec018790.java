@@ -22,9 +22,8 @@ public class ThreadSnapshotParser {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
+            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
                 return true;
             }
         }
@@ -55,6 +54,7 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
+            // Assuming the line is in the format: timestamp,threadName,threadState
             String[] parts = line.split(",");
             if (parts.length == 3) {
                 try {
@@ -63,6 +63,7 @@ public class ThreadSnapshotParser {
                     String threadState = parts[2];
                     return new ThreadSnapshot(timestamp, threadName, threadState);
                 } catch (NumberFormatException e) {
+                    // Handle parsing error
                     return null;
                 }
             }

@@ -11,15 +11,17 @@ public class TimeBucketCompressor {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date = LocalDate.parse(String.valueOf(timeBucket), formatter);
 
-        // Calculate the day of the month to determine the new day
+        // Calculate the day of the month
         int dayOfMonth = date.getDayOfMonth();
-        int newDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
 
-        // Create a new LocalDate with the adjusted day
-        LocalDate newDate = date.withDayOfMonth(newDay);
+        // Calculate the compressed day
+        int compressedDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
 
-        // Convert the new date back to a long in the format yyyyMMdd
-        return Long.parseLong(newDate.format(formatter));
+        // Create the compressed date
+        LocalDate compressedDate = LocalDate.of(date.getYear(), date.getMonth(), compressedDay);
+
+        // Convert the compressed date back to a long
+        return Long.parseLong(compressedDate.format(formatter));
     }
 
     public static void main(String[] args) {

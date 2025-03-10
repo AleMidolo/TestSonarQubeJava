@@ -13,19 +13,14 @@ public final class BufferToByteArray {
         buffer.write(data);
     }
 
-    /**
-     * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
-     */
-    public final byte[] toByteArray() {
+    public byte[] toByteArray() {
         return buffer.toByteArray();
     }
 
     public static void main(String[] args) throws IOException {
         BufferToByteArray buffer = new BufferToByteArray();
-        buffer.write(new byte[]{1, 2, 3});
+        buffer.write("Hello, World!".getBytes());
         byte[] result = buffer.toByteArray();
-        for (byte b : result) {
-            System.out.print(b + " ");
-        }
+        System.out.println(new String(result));
     }
 }

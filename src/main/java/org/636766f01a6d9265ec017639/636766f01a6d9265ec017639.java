@@ -7,7 +7,7 @@ public class ArrayToListConverter {
 
     /**
      * एरे को लिस्ट में बदलें। <p> {@link Arrays#asList(Object)} की तरह काम करता है, लेकिन नल एरे को संभालता है।
-     * @param a एरे जिसे लिस्ट में बदलना है।
+     * @param a इनपुट एरे
      * @return एक लिस्ट जो एरे द्वारा समर्थित है।
      */
     public static <T> List<T> asList(T[] a) {
@@ -18,14 +18,12 @@ public class ArrayToListConverter {
     }
 
     public static void main(String[] args) {
-        // Test case
+        // टेस्ट केस
         String[] array = {"Hello", "World"};
         List<String> list = asList(array);
-        System.out.println(list);  // Output: [Hello, World]
+        System.out.println(list);  // [Hello, World]
 
-        // Test case with null array
-        String[] nullArray = null;
-        List<String> nullList = asList(nullArray);
-        System.out.println(nullList);  // Output: []
+        List<String> nullList = asList(null);
+        System.out.println(nullList);  // []
     }
 }

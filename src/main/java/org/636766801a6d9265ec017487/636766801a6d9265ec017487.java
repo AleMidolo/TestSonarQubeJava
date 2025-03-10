@@ -1,5 +1,5 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class TemplateEncoder {
 
@@ -12,15 +12,26 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
-
-        // Replace '{' with '%7B' and '}' with '%7D'
-        String encoded = s.replace("{", "%7B").replace("}", "%7D");
-        return encoded;
+        
+        StringBuilder encodedString = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == '{' || c == '}') {
+                try {
+                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString());
+                } catch (Exception e) {
+                    // Handle encoding exception
+                    encodedString.append(c);
+                }
+            } else {
+                encodedString.append(c);
+            }
+        }
+        return encodedString.toString();
     }
 
     public static void main(String[] args) {
-        String input = "Hello {name}, your code is {code}.";
+        String input = "This is a {template} with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: Hello %7Bname%7D, your code is %7Bcode%7D.
+        System.out.println(encoded);
     }
 }

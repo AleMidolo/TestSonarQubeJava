@@ -1,76 +1,32 @@
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
-final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-    // Assuming classFileBuffer is a byte array containing the class file data
-    // and constantPool is an array of ConstantPoolEntry objects.
-    // This is a simplified implementation and may need adjustments based on the actual class file structure.
+public class ClassFileReader {
+    private byte[] classFileBuffer;
 
-    try {
-        // Get the constant pool entry at the specified index
-        ConstantPoolEntry entry = constantPool[constantPoolEntryIndex];
-        
-        // Check if the entry is of type CONSTANT_Utf8
-        if (entry.getTag() != ConstantPoolEntry.CONSTANT_Utf8) {
-            throw new IllegalArgumentException("The specified constant pool entry is not a CONSTANT_Utf8 entry.");
-        }
-
-        // Read the UTF-8 bytes from the entry
-        byte[] utf8Bytes = entry.getBytes();
-
-        // Use a DataInputStream to read the UTF-8 bytes into the charBuffer
-        ByteArrayInputStream bais = new ByteArrayInputStream(utf8Bytes);
-        DataInputStream dis = new DataInputStream(bais);
-
-        // Read the UTF-8 string into the charBuffer
-        int length = dis.readUnsignedShort();
-        dis.readFully(charBuffer, 0, length);
-
-        // Convert the charBuffer to a String
-        return new String(charBuffer, 0, length);
-    } catch (IOException e) {
-        throw new RuntimeException("Error reading UTF-8 string from constant pool", e);
-    }
-}
-
-// Assuming ConstantPoolEntry is a class that represents a constant pool entry
-class ConstantPoolEntry {
-    public static final int CONSTANT_Utf8 = 1;
-
-    private int tag;
-    private byte[] bytes;
-
-    public ConstantPoolEntry(int tag, byte[] bytes) {
-        this.tag = tag;
-        this.bytes = bytes;
+    public ClassFileReader(byte[] classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
     }
 
-    public int getTag() {
-        return tag;
-    }
+    /**
+     * {@link #classFileBuffer} में एक CONSTANT_Utf8 स्थायी पूल प्रविष्टि को पढ़ता है।
+     * @param constantPoolEntryIndex कक्षा के स्थायी पूल तालिका में एक CONSTANT_Utf8 प्रविष्टि का अनुक्रमांक।
+     * @param charBuffer वह बफर है जिसका उपयोग स्ट्रिंग पढ़ने के लिए किया जाएगा। यह बफर पर्याप्त बड़ा होना चाहिए। इसे स्वचालित रूप से आकार नहीं दिया जाता है।
+     * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
+     */
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        // Assuming the constant pool entry index points to the start of the UTF-8 entry
+        int offset = constantPoolEntryIndex;
 
-    public byte[] getBytes() {
-        return bytes;
-    }
-}
+        // Read the length of the UTF-8 string (2 bytes)
+        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
+        offset += 2;
 
-// Example usage
-public class Main {
-    public static void main(String[] args) {
-        // Example constant pool entry for a UTF-8 string
-        byte[] utf8Bytes = {0x00, 0x05, 0x48, 0x65, 0x6C, 0x6C, 0x6F}; // Represents "Hello"
-        ConstantPoolEntry entry = new ConstantPoolEntry(ConstantPoolEntry.CONSTANT_Utf8, utf8Bytes);
+        // Decode the UTF-8 bytes into the char buffer
+        ByteBuffer byteBuffer = ByteBuffer.wrap(classFileBuffer, offset, length);
+        int charCount = StandardCharsets.UTF_8.decode(byteBuffer, charBuffer, 0, charBuffer.length).position();
 
-        // Example constant pool array
-        ConstantPoolEntry[] constantPool = new ConstantPoolEntry[1];
-        constantPool[0] = entry;
-
-        // Char buffer to hold the string
-        char[] charBuffer = new char[10];
-
-        // Read the UTF-8 string
-        String result = readUtf(0, charBuffer);
-        System.out.println(result); // Output: Hello
+        // Convert the char buffer to a String
+        return new String(charBuffer, 0, charCount);
     }
 }

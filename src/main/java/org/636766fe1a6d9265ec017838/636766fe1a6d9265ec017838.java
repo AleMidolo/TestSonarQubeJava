@@ -15,10 +15,7 @@ public class CharacterArrayConverter {
         }
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null.");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
     }
@@ -26,6 +23,6 @@ public class CharacterArrayConverter {
     public static void main(String[] args) {
         Character[] testArray = {'a', 'b', 'c'};
         char[] primitiveArray = toPrimitive(testArray);
-        System.out.println(java.util.Arrays.toString(primitiveArray));
+        System.out.println(java.util.Arrays.toString(primitiveArray)); // Output: [a, b, c]
     }
 }

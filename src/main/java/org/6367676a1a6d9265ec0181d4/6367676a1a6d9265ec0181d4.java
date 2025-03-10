@@ -11,7 +11,7 @@ public class ArrayUtils {
         // Create a new array with one extra slot for the new string
         String[] newArray = Arrays.copyOf(array, array.length + 1);
 
-        // Add the new string to the end of the array
+        // Add the new string to the end of the new array
         newArray[array.length] = str;
 
         return newArray;
@@ -19,10 +19,9 @@ public class ArrayUtils {
 
     public static void main(String[] args) {
         // Example usage
-        String[] originalArray = {"Hello", "World"};
-        String newString = "!";
-        String[] newArray = addStringToArray(originalArray, newString);
-
-        System.out.println(Arrays.toString(newArray)); // Output: [Hello, World, !]
+        String[] array = {"Hello", "World"};
+        String str = "Java";
+        String[] result = addStringToArray(array, str);
+        System.out.println(Arrays.toString(result)); // Output: [Hello, World, Java]
     }
 }

@@ -3,7 +3,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import java.awt.Rectangle;
 
-public class TableRowSelector {
+public class TableUtils {
 
     /**
      * निर्दिष्ट JTable में निर्दिष्ट पंक्ति का चयन करता है और निर्दिष्ट JScrollPane को नए चयनित पंक्ति की ओर स्क्रॉल करता है। सबसे महत्वपूर्ण बात यह है कि repaint() कॉल को इतना देर से किया जाता है कि तालिका नए चयनित पंक्ति को सही तरीके से पेंट कर सके, जो कि स्क्रीन से बाहर हो सकती है।
@@ -15,19 +15,12 @@ public class TableRowSelector {
         // पंक्ति का चयन करें
         table.setRowSelectionInterval(row, row);
 
-        // चयनित पंक्ति का आयत प्राप्त करें
-        Rectangle cellRect = table.getCellRect(row, 0, true);
+        // पंक्ति के दृश्य आयत को प्राप्त करें
+        Rectangle rect = table.getCellRect(row, 0, true);
 
-        // JViewport का आयत प्राप्त करें
+        // JViewport को स्क्रॉल करें ताकि चयनित पंक्ति दिखाई दे
         JViewport viewport = pane.getViewport();
-        Rectangle viewRect = viewport.getViewRect();
-
-        // यदि चयनित पंक्ति दृश्य से बाहर है, तो स्क्रॉल करें
-        if (!viewRect.contains(cellRect)) {
-            // पंक्ति को दृश्य के केंद्र में लाने के लिए स्क्रॉल करें
-            int centerY = cellRect.y + cellRect.height / 2 - viewRect.height / 2;
-            viewport.setViewPosition(new java.awt.Point(0, centerY));
-        }
+        viewport.scrollRectToVisible(rect);
 
         // तालिका को पुनः पेंट करें
         table.repaint();

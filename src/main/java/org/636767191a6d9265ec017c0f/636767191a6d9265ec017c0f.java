@@ -19,10 +19,11 @@ public class ByteVector {
         capacity = newCapacity;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        ByteVector vector = new ByteVector(10);
-        vector.enlarge(5);
-        System.out.println("New capacity: " + vector.capacity);
+    public byte[] getData() {
+        return data;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

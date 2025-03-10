@@ -18,6 +18,6 @@ public class SubstringMatch {
         CharSequence str = "Hello, World!";
         CharSequence substring = "World";
         int index = 7;
-        System.out.println(substringMatch(str, index, substring)); // true
+        System.out.println(substringMatch(str, index, substring)); // Output: true
     }
 }

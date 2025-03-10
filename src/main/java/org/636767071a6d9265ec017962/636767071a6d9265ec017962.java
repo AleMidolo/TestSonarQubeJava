@@ -1,25 +1,44 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-public class BeanMapUtils {
+public class BeanMap {
 
-    /**
-     * दिए गए BeanMap से सभी लिखने योग्य गुणों को इस BeanMap में डालता है। केवल पढ़ने योग्य और केवल लिखने योग्य गुणों को नजरअंदाज किया जाएगा।
-     * @param map  वह BeanMap जिसके गुणों को डालना है
-     */
+    private Map<String, Object> properties;
+
+    public BeanMap(Map<String, Object> properties) {
+        this.properties = properties;
+    }
+
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("Input BeanMap cannot be null");
-        }
+        try {
+            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 
-        // Iterate over all the properties in the input BeanMap
-        for (Object key : map.keySet()) {
-            // Check if the property is writable
-            if (map.isWriteable(key.toString())) {
-                // Get the value from the input BeanMap
-                Object value = map.get(key);
-                // Put the value into this BeanMap
-                this.put(key, value);
+            for (PropertyDescriptor pd : propertyDescriptors) {
+                Method readMethod = pd.getReadMethod();
+                Method writeMethod = pd.getWriteMethod();
+
+                if (writeMethod != null && readMethod != null) {
+                    String propertyName = pd.getName();
+                    Object value = readMethod.invoke(map);
+                    this.properties.put(propertyName, value);
+                }
             }
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
+    }
+
+    public Object get(String key) {
+        return properties.get(key);
+    }
+
+    public void put(String key, Object value) {
+        properties.put(key, value);
     }
 }

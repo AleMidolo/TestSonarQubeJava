@@ -15,8 +15,8 @@ public class CollectionUtils {
         }
         Iterator iterator = collection.iterator();
         while (iterator.hasNext()) {
-            Object current = iterator.next();
-            if (current == element) {
+            Object currentElement = iterator.next();
+            if (currentElement == element) {
                 return true;
             }
         }

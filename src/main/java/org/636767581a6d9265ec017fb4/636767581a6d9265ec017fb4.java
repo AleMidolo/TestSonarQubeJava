@@ -17,8 +17,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, calculate the insertion point
-                index = -index - 1;
+                index = -(index + 1);
             }
             upperBounds.add(index);
         }

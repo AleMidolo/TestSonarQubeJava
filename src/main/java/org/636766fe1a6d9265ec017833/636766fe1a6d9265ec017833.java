@@ -48,7 +48,7 @@ public class FileUtils {
 
     public static void main(String[] args) {
         try {
-            File file = new File("example.txt");
+            File file = new File("path/to/fileOrDirectory");
             forceDeleteOnExit(file);
         } catch (IOException e) {
             e.printStackTrace();

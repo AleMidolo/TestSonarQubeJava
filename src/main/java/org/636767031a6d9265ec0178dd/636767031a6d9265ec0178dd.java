@@ -10,20 +10,18 @@ public class ContentLengthChecker {
      * @since 1.3
      */
     public long contentLength() {
+        long length = -1;
         try {
             URL url = new URL("https://example.com"); // Replace with the actual URL
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("HEAD");
             connection.connect();
-
-            long contentLength = connection.getContentLengthLong();
+            length = connection.getContentLengthLong();
             connection.disconnect();
-
-            return contentLength;
         } catch (IOException e) {
             e.printStackTrace();
-            return -1; // Return -1 in case of an error
         }
+        return length;
     }
 
     public static void main(String[] args) {

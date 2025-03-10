@@ -13,11 +13,9 @@ public class UnescapeIdExample {
             return null;
         }
         
-        // Replace escaped dots with actual dots
-        String unescaped = input.replaceAll("\\\\.", ".");
-        
-        // Replace escaped backslashes with actual backslashes
-        unescaped = unescaped.replaceAll("\\\\\\\\", "\\\\");
+        // Replace escaped characters with their unescaped counterparts
+        String unescaped = input.replace("\\\\.", ".");
+        unescaped = unescaped.replace("\\\\", "\\");
         
         return unescaped;
     }

@@ -1,5 +1,6 @@
 import java.util.Map;
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 public class GraphGenerator<V, E> {
 
@@ -11,7 +12,7 @@ public class GraphGenerator<V, E> {
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Create two sets of vertices for the bipartition
+        // Create two sets of vertices for the bipartite graph
         V v1 = target.addVertex();
         V v2 = target.addVertex();
         V v3 = target.addVertex();
@@ -23,7 +24,7 @@ public class GraphGenerator<V, E> {
         resultMap.put("v3", v3);
         resultMap.put("v4", v4);
 
-        // Add edges between the two partitions to make it a complete bipartite graph
+        // Add edges to create a complete bipartite graph
         target.addEdge(v1, v3);
         target.addEdge(v1, v4);
         target.addEdge(v2, v3);

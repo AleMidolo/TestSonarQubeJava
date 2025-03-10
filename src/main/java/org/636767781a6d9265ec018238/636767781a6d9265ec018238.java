@@ -5,12 +5,13 @@ public class AppenderManager {
 
     /**
      * यदि निर्दिष्ट ऐपेंडर संलग्न ऐपेंडरों की सूची में है, तो <code>true</code> लौटाता है, अन्यथा <code>false</code>।
-     * @since 1.2 
+     * @param appender जांच करने के लिए ऐपेंडर
+     * @return <code>true</code> यदि ऐपेंडर संलग्न है, अन्यथा <code>false</code>
+     * @since 1.2
      */
     public boolean isAttached(Appender appender) {
-        if (attachedAppenders == null || appender == null) {
-            return false;
-        }
         return attachedAppenders.contains(appender);
     }
 }
+
+// Assuming Appender is a class or interface that is already defined.

@@ -12,7 +12,7 @@ public class WriteOperationTracker {
     }
 
     /**
-     * Actualiza el último timestamp de escritura al tiempo actual en milisegundos.
+     * Actualiza el último timestamp de escritura con el tiempo actual en milisegundos.
      */
     public void updateWriteTimeStamp() {
         lastWriteTimeStamp.set(System.currentTimeMillis());

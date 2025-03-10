@@ -9,16 +9,18 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Asumimos que el grafo tiene un método getIncomingEdges que devuelve las aristas entrantes
+        // Asumimos que el grafo tiene un método getIncomingEdges que devuelve las aristas entrantes al vértice
         // y un método getWeight que devuelve el peso de una arista.
-        for (Edge<V> edge : getIncomingEdges(v)) {
-            sum += edge.getWeight();
+        for (V vertex : v) {
+            for (Edge<V> edge : getIncomingEdges(vertex)) {
+                sum += edge.getWeight();
+            }
         }
         return sum;
     }
 
     // Métodos ficticios para completar la implementación
-    private Set<Edge<V>> getIncomingEdges(Set<V> v) {
+    private Set<Edge<V>> getIncomingEdges(V vertex) {
         // Implementación ficticia para obtener las aristas entrantes
         return Set.of();
     }

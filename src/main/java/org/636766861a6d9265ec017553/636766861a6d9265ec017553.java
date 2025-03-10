@@ -6,7 +6,7 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Initialize with some example template variables
+        // Initialize with some template variables for demonstration
         this.templateVariables.add("var1");
         this.templateVariables.add("var2");
         this.templateVariables.add("var3");

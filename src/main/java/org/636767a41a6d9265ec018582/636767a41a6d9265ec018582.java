@@ -1,34 +1,38 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
+import org.msgpack.core.MessageBufferPacker;
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.core.buffer.LinkedBuffer;
+import org.msgpack.core.buffer.MessageBuffer;
+import org.msgpack.core.buffer.MessageBufferOutput;
+import org.msgpack.core.buffer.OutputStreamBufferOutput;
+import org.msgpack.schema.Schema;
 
-public class SerializationUtil {
+public class MessageSerializer {
 
     /**
      * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
      * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message to a byte array
-        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
+        // Create a MessageBufferOutput from the OutputStream
+        MessageBufferOutput output = new OutputStreamBufferOutput(out);
 
-        // Write the length of the message as a varint
-        int length = data.length;
-        int size = 0;
-        while ((length & ~0x7F) != 0) {
-            out.write((byte) ((length & 0x7F) | 0x80));
-            length >>>= 7;
-            size++;
-        }
-        out.write((byte) length);
-        size++;
+        // Create a MessagePacker with the buffer
+        MessagePacker packer = MessagePack.newDefaultPacker(output);
+
+        // Write the length of the message first
+        byte[] serializedMessage = schema.write(message, buffer);
+        packer.packInt(serializedMessage.length);
 
         // Write the serialized message
-        out.write(data);
-        size += data.length;
+        packer.writePayload(serializedMessage);
 
-        return size;
+        // Flush the packer to ensure all data is written
+        packer.flush();
+
+        // Return the total size of the message (length + serialized message)
+        return Integer.BYTES + serializedMessage.length;
     }
 }

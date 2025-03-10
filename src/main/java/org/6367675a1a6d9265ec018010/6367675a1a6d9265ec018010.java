@@ -2,40 +2,40 @@ import java.util.*;
 
 class Bucket {
     private String name;
-    private List<Bucket> children;
+    private List<Bucket> buckets;
 
     public Bucket(String name) {
         this.name = name;
-        this.children = new ArrayList<>();
+        this.buckets = new ArrayList<>();
     }
 
-    public void addChild(Bucket child) {
-        this.children.add(child);
+    public void addBucket(Bucket bucket) {
+        buckets.add(bucket);
     }
 
     public void removeSelf() {
-        // Remove all children first
-        for (Bucket child : children) {
-            child.removeSelf();
+        // Remove this bucket from all parent buckets
+        for (Bucket parent : buckets) {
+            parent.buckets.remove(this);
         }
-        // Clear the children list
-        children.clear();
-        // Remove this bucket from its parent (if any)
-        // Assuming there is a parent reference, but since it's not provided, we'll assume it's handled externally.
-        // For example, if the parent has a list of children, this bucket should be removed from that list.
-        // This is a placeholder for the actual removal logic.
-        System.out.println("Bucket " + name + " has been removed.");
+        // Clear the list of buckets to remove all references
+        buckets.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Bucket{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     public static void main(String[] args) {
-        Bucket root = new Bucket("root");
-        Bucket child1 = new Bucket("child1");
-        Bucket child2 = new Bucket("child2");
+        Bucket parentBucket = new Bucket("Parent");
+        Bucket childBucket = new Bucket("Child");
 
-        root.addChild(child1);
-        root.addChild(child2);
-
-        // Remove child1
-        child1.removeSelf();
+        parentBucket.addBucket(childBucket);
+        System.out.println("Before removal: " + parentBucket.buckets);
+        childBucket.removeSelf();
+        System.out.println("After removal: " + parentBucket.buckets);
     }
 }

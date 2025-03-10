@@ -1,20 +1,24 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 private String unescapeId(String input) {
     if (input == null) {
         return null;
     }
     
-    // Pattern to match escaped characters in DOT identifiers
+    // Define the pattern for escaped characters
     Pattern pattern = Pattern.compile("\\\\(.)");
     Matcher matcher = pattern.matcher(input);
     
-    // Replace escaped characters with their unescaped counterparts
+    // Use a StringBuffer to build the result
     StringBuffer result = new StringBuffer();
+    
     while (matcher.find()) {
+        // Replace the escaped character with the actual character
         matcher.appendReplacement(result, matcher.group(1));
     }
+    
+    // Append the remaining part of the input
     matcher.appendTail(result);
     
     return result.toString();

@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // Public static empty array reference
+    // Referencia estática para un array vacío
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
     /**
@@ -21,13 +21,13 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        Double[] nullArray = null;
-        Double[] emptyArray = new Double[0];
-        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
+        // Ejemplo de uso
+        Double[] array1 = null;
+        Double[] array2 = new Double[0];
+        Double[] array3 = {1.0, 2.0, 3.0};
 
-        System.out.println(Objects.deepEquals(nullToEmpty(nullArray), EMPTY_DOUBLE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(emptyArray), EMPTY_DOUBLE_ARRAY); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(nonEmptyArray), nonEmptyArray)); // true
+        System.out.println(Objects.toString(nullToEmpty(array1))); // []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // [1.0, 2.0, 3.0]
     }
 }

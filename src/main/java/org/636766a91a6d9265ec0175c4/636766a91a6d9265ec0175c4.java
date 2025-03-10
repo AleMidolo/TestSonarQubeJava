@@ -1,65 +1,58 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<String> stack;
+public class FrameStackProcessor {
 
-    public FrameStack() {
-        stack = new Stack<>();
+    private Stack<String> frameStack;
+
+    public FrameStackProcessor() {
+        this.frameStack = new Stack<>();
     }
 
-    public void push(String type) {
-        stack.push(type);
-    }
-
+    /**
+     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
+     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
+     */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
-            return;
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
         }
 
         // Determine if the descriptor is a method descriptor
         if (descriptor.startsWith("(")) {
             // Extract argument types from method descriptor
-            String[] parts = descriptor.split("\\)");
-            if (parts.length < 1) {
-                return;
-            }
-            String argsDescriptor = parts[0].substring(1);
-            int index = 0;
-            while (index < argsDescriptor.length()) {
-                char c = argsDescriptor.charAt(index);
-                if (c == 'L') {
-                    // Object type
-                    int end = argsDescriptor.indexOf(';', index);
-                    if (end == -1) {
-                        break;
-                    }
-                    stack.pop(); // Pop the object type
-                    index = end + 1;
-                } else if (c == '[') {
-                    // Array type
-                    stack.pop(); // Pop the array type
-                    index++;
+            String[] argumentTypes = extractArgumentTypes(descriptor);
+            for (String type : argumentTypes) {
+                if (!frameStack.isEmpty()) {
+                    frameStack.pop();
                 } else {
-                    // Primitive type
-                    stack.pop(); // Pop the primitive type
-                    index++;
+                    throw new IllegalStateException("Frame stack is empty");
                 }
             }
         } else {
             // Single type descriptor
-            stack.pop(); // Pop the type
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
+            } else {
+                throw new IllegalStateException("Frame stack is empty");
+            }
         }
     }
 
+    private String[] extractArgumentTypes(String methodDescriptor) {
+        // Remove the leading '(' and trailing ')'
+        String argsPart = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
+        // Split the argument types based on the descriptor format
+        // This is a simplified approach and may need to handle complex types like arrays and objects
+        return argsPart.split("(?<=\\D)(?=\\D)|(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+    }
+
+    // Example usage
     public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.push("int");
-        frameStack.push("java.lang.String");
-        frameStack.push("[D");
+        FrameStackProcessor processor = new FrameStackProcessor();
+        processor.frameStack.push("int");
+        processor.frameStack.push("float");
+        processor.frameStack.push("java/lang/String");
 
-        frameStack.pop("(ILjava/lang/String;[D)V");
-
-        // The stack should now be empty
-        System.out.println("Stack is empty: " + frameStack.stack.isEmpty());
+        processor.pop("(IFLjava/lang/String;)V"); // Pops 3 elements from the stack
     }
 }

@@ -1,4 +1,4 @@
-public class StringTrimmer {
+public class StringArrayTrimmer {
 
     /**
      * Recorta los elementos del arreglo de Strings dado, llamando a <code>String.trim()</code> en cada uno de ellos.
@@ -22,11 +22,11 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String[] array = {"  hello ", "  world  ", null, "  java  "};
-        String[] trimmedArray = trimArrayElements(array);
+        String[] originalArray = {"  hello ", "  world  ", null, "  java  "};
+        String[] trimmedArray = trimArrayElements(originalArray);
         
         for (String str : trimmedArray) {
-            System.out.println(str);
+            System.out.println("'" + str + "'");
         }
     }
 }

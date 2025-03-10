@@ -28,6 +28,8 @@ public class TargetManager {
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
             channels.addConsumer(consumer);
+        } else {
+            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
     }
 }

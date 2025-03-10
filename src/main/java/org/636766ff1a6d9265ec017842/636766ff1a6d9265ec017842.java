@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class DoubleArrayConverter {
+public class ArrayUtils {
 
     /**
      * <p>Convierte un array de objetos "Doubles" a primitivos.</p> 
@@ -13,11 +11,22 @@ public class DoubleArrayConverter {
         if (array == null) {
             return null;
         }
-        
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "El elemento en la posición " + i + " es nulo.");
+            if (array[i] == null) {
+                throw new NullPointerException("El contenido del arreglo no puede ser nulo.");
+            }
+            result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Double[] array = {1.0, 2.0, 3.0};
+        double[] primitiveArray = toPrimitive(array);
+        for (double d : primitiveArray) {
+            System.out.println(d);
+        }
     }
 }

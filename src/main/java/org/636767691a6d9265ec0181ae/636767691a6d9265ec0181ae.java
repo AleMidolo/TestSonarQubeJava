@@ -2,7 +2,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnumerationUtils {
+public class EnumerationToStringArray {
 
     /**
      * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.

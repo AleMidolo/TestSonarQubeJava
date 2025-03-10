@@ -10,12 +10,12 @@ private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
 
     List<Integer> suffixSums = new ArrayList<>();
     long totalSum = 0;
-    int currentSuffixSum = 0;
+    int suffixSum = 0;
 
     // Calcola la somma totale e la somma dei suffissi
     for (int i = bounds.size() - 1; i >= 0; i--) {
-        currentSuffixSum += bounds.get(i);
-        suffixSums.add(currentSuffixSum);
+        suffixSum += bounds.get(i);
+        suffixSums.add(suffixSum);
         totalSum += bounds.get(i);
     }
 

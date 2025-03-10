@@ -5,10 +5,19 @@ import java.util.NoSuchElementException;
  */
 @Override
 protected V provideNextVertex() {
-    if (hasNext()) {
-        // Assuming 'vertices' is a collection of vertices and 'currentIndex' tracks the current position
-        return vertices.get(currentIndex++);
-    } else {
+    // Assuming V is a generic type for the vertex
+    // This method should return the next vertex in the sequence or throw an exception if no more vertices are available.
+    // Example implementation for a simple list-based vertex provider:
+    
+    if (vertices == null || currentIndex >= vertices.size()) {
         throw new NoSuchElementException("No more vertices available.");
     }
+    
+    V nextVertex = vertices.get(currentIndex);
+    currentIndex++;
+    return nextVertex;
 }
+
+// Assuming the following fields are defined in the class:
+// private List<V> vertices; // List of vertices
+// private int currentIndex = 0; // Current index in the list

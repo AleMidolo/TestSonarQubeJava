@@ -13,7 +13,7 @@ public class CollectionUtils {
         if (collection == null || element == null) {
             return false;
         }
-
+        
         Iterator iterator = collection.iterator();
         while (iterator.hasNext()) {
             Object current = iterator.next();

@@ -1,4 +1,4 @@
-public class StringUtils {
+public class StringQuoter {
 
     /**
      * Trasforma l'oggetto fornito in una Stringa con virgolette singole se è una Stringa; altrimenti, mantiene l'oggetto così com'è.
@@ -15,7 +15,7 @@ public class StringUtils {
     public static void main(String[] args) {
         // Test cases
         System.out.println(quoteIfString("myString")); // Output: 'myString'
-        System.out.println(quoteIfString(123));       // Output: 123
-        System.out.println(quoteIfString(true));      // Output: true
+        System.out.println(quoteIfString(123));        // Output: 123
+        System.out.println(quoteIfString(true));       // Output: true
     }
 }

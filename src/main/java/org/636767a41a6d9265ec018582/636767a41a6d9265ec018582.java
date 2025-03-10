@@ -4,6 +4,7 @@ import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.buffer.LinkedBuffer;
+import org.msgpack.core.buffer.MessageBuffer;
 import org.msgpack.schema.Schema;
 
 public class MessageSerializer {
@@ -13,23 +14,24 @@ public class MessageSerializer {
      * @return la dimensione del messaggio
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        try (MessagePacker packer = MessagePack.newDefaultPacker(buffer)) {
-            // Serialize the message using the provided schema
-            schema.write(packer, message);
+        // Create a MessagePacker with the provided buffer
+        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
 
-            // Get the serialized message as a byte array
-            byte[] serializedMessage = packer.toByteArray();
+        // Serialize the message using the schema
+        schema.write(packer, message);
 
-            // Write the length of the message as a varint
-            MessageBufferPacker lengthPacker = MessagePack.newDefaultBufferPacker();
-            lengthPacker.packInt(serializedMessage.length);
+        // Get the serialized message as a byte array
+        byte[] serializedMessage = packer.toByteArray();
 
-            // Write the length and the serialized message to the output stream
-            out.write(lengthPacker.toByteArray());
-            out.write(serializedMessage);
+        // Write the length of the message as a varint
+        MessagePacker lengthPacker = MessagePack.newDefaultPacker(out);
+        lengthPacker.packInt(serializedMessage.length);
+        lengthPacker.flush();
 
-            // Return the total size of the message (length + serialized message)
-            return lengthPacker.toByteArray().length + serializedMessage.length;
-        }
+        // Write the serialized message to the output stream
+        out.write(serializedMessage);
+
+        // Return the total size of the message (length + serialized message)
+        return serializedMessage.length + MessagePack.newDefaultBufferPacker().packInt(serializedMessage.length).toByteArray().length;
     }
 }

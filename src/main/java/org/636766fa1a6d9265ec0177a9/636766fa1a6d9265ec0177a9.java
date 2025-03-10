@@ -18,6 +18,7 @@ public class TypeInitializer {
         }
     }
 
+    // Optional: Getter method to retrieve the list of initialized types
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
     }

@@ -1,13 +1,13 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Object> outputFrameStack;
+public class Frame {
+    private Stack<Object> outputStack;
 
-    public FrameStack() {
-        this.outputFrameStack = new Stack<>();
+    public Frame() {
+        this.outputStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
      * @param elements il numero di tipi astratti che devono essere rimossi.
      */
@@ -15,21 +15,21 @@ public class FrameStack {
         if (elements < 0) {
             throw new IllegalArgumentException("Il numero di elementi da rimuovere non può essere negativo.");
         }
-        if (elements > outputFrameStack.size()) {
-            throw new IllegalArgumentException("Il numero di elementi da rimuovere è maggiore della dimensione dello stack.");
+        if (outputStack.size() < elements) {
+            throw new IllegalStateException("Non ci sono abbastanza elementi nello stack per rimuovere.");
         }
         for (int i = 0; i < elements; i++) {
-            outputFrameStack.pop();
+            outputStack.pop();
         }
     }
 
-    // Metodo di esempio per aggiungere elementi allo stack
+    // Metodo di esempio per aggiungere elementi allo stack (per testing)
     public void push(Object element) {
-        outputFrameStack.push(element);
+        outputStack.push(element);
     }
 
-    // Metodo di esempio per ottenere la dimensione dello stack
+    // Metodo di esempio per ottenere la dimensione dello stack (per testing)
     public int size() {
-        return outputFrameStack.size();
+        return outputStack.size();
     }
 }

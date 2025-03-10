@@ -1,4 +1,5 @@
 import java.util.Properties;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,20 +12,16 @@ public class PropertySubstitutor {
             return null; // Se la chiave non esiste, restituisci null
         }
 
-        // Trova tutte le variabili nel formato ${var} e sostituiscile
+        // Pattern per trovare le variabili nel formato ${var}
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
+        // Sostituisci ogni variabile con il valore corrispondente
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String varValue = props.getProperty(varName);
-            if (varValue != null) {
-                matcher.appendReplacement(result, varValue);
-            } else {
-                // Se la variabile non esiste, lascia il placeholder originale
-                matcher.appendReplacement(result, matcher.group(0));
-            }
+            String varValue = props.getProperty(varName, "");
+            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
         }
         matcher.appendTail(result);
 
@@ -33,10 +30,10 @@ public class PropertySubstitutor {
 
     public static void main(String[] args) {
         Properties props = new Properties();
+        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
-        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, World!
+        System.out.println(result); // Output: Hello, John!
     }
 }

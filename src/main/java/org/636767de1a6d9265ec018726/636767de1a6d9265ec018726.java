@@ -28,15 +28,14 @@ public class SequenceRange {
 }
 
 public class ProfileSnapshot {
+
     /**
      * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
-        // Example logic to build sequence ranges
+        // Example implementation: create a single range from 1 to 100
         ranges.add(new SequenceRange(1, 100));
-        ranges.add(new SequenceRange(101, 200));
-        ranges.add(new SequenceRange(201, 300));
         return ranges;
     }
 }

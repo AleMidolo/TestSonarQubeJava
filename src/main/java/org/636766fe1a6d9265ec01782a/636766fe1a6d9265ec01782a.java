@@ -1,47 +1,23 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final class ClassFileReader {
-    private final ByteBuffer classFileBuffer;
+final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+    // Assuming classFileBuffer is a ByteBuffer containing the class file data
+    // and constantPool is an array of constant pool entries.
+    // This is a simplified implementation assuming the constant pool entry is a CONSTANT_Utf8_info structure.
 
-    public ClassFileReader(ByteBuffer classFileBuffer) {
-        this.classFileBuffer = classFileBuffer;
-    }
+    // Get the CONSTANT_Utf8_info entry from the constant pool
+    int utf8Length = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF; // Length of the UTF-8 string
+    int utf8Offset = constantPoolEntryIndex + 2; // Offset to the start of the UTF-8 bytes
 
-    /**
-     * Legge un'entrata della pool di costanti CONSTANT_Utf8 in {@link #classFileBuffer}.
-     * @param constantPoolEntryIndex l'indice di un'entrata CONSTANT_Utf8 nella tabella delle costanti della classe.
-     * @param charBuffer il buffer da utilizzare per leggere la stringa. Questo buffer deve essere sufficientemente grande. Non viene ridimensionato automaticamente.
-     * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
-     */
-    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry is a CONSTANT_Utf8_info structure
-        // CONSTANT_Utf8_info structure format:
-        // u1 tag (1 byte)
-        // u2 length (2 bytes)
-        // u1 bytes[length] (variable length)
+    // Decode the UTF-8 bytes into the charBuffer
+    byte[] utf8Bytes = new byte[utf8Length];
+    classFileBuffer.position(utf8Offset);
+    classFileBuffer.get(utf8Bytes, 0, utf8Length);
 
-        // Calculate the position of the constant pool entry in the buffer
-        int position = constantPoolEntryIndex;
+    // Convert the UTF-8 bytes to a String using the provided charBuffer
+    String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+    utf8String.getChars(0, utf8String.length(), charBuffer, 0);
 
-        // Read the tag (should be 1 for CONSTANT_Utf8)
-        byte tag = classFileBuffer.get(position);
-        if (tag != 1) {
-            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
-        }
-
-        // Read the length of the UTF-8 string
-        int length = classFileBuffer.getShort(position + 1) & 0xFFFF;
-
-        // Read the UTF-8 bytes
-        byte[] utf8Bytes = new byte[length];
-        classFileBuffer.position(position + 3);
-        classFileBuffer.get(utf8Bytes);
-
-        // Convert UTF-8 bytes to a String using the provided charBuffer
-        String result = new String(utf8Bytes, StandardCharsets.UTF_8);
-        result.getChars(0, result.length(), charBuffer, 0);
-
-        return result;
-    }
+    return utf8String;
 }

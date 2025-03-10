@@ -1,15 +1,16 @@
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.Filter;
 
-public class Filter {
-    public static final int NEUTRAL = 0;
+public class MyFilter extends Filter {
 
+    @Override
     public int decide(LoggingEvent event) {
         // Implementazione di esempio: restituisce NEUTRAL se non c'è corrispondenza con la stringa
         String message = event.getMessage().toString();
         if (!message.contains("specific string")) {
-            return NEUTRAL;
+            return Filter.NEUTRAL;
         }
-        // Altrimenti, restituisce un altro valore (ad esempio 1 per indicare una corrispondenza)
-        return 1;
+        // Altrimenti, restituisci un altro valore (es. ACCEPT o DENY)
+        return Filter.ACCEPT;
     }
 }

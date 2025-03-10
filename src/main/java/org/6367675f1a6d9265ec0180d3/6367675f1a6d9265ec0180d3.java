@@ -17,12 +17,10 @@ public class GraphUtils {
         Map<V, V> vertexMap = new HashMap<>();
         Map<E, E> edgeMap = new HashMap<>();
 
-        // Mappa ogni vertice su se stesso
         for (V vertex : graph.vertexSet()) {
             vertexMap.put(vertex, vertex);
         }
 
-        // Mappa ogni arco su se stesso
         for (E edge : graph.edgeSet()) {
             edgeMap.put(edge, edge);
         }

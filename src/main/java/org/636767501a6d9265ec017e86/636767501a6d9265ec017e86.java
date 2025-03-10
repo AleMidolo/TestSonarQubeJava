@@ -37,13 +37,20 @@ public class LinkedList<E> {
         this.current = node;
     }
 
+    public ListNode<E> getCurrent() {
+        return current;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public ListNode<E> previousNode() {
-        if (current == null || current.prev == null) {
-            throw new NoSuchElementException("No previous node available.");
+        if (current == null) {
+            throw new NoSuchElementException("No current node is set.");
+        }
+        if (current.prev == null) {
+            throw new NoSuchElementException("No previous node exists.");
         }
         current = current.prev;
         return current;

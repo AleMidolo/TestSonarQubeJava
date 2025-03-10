@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Logger {
@@ -13,11 +14,18 @@ public class Logger {
      * @param name Il nome dell'appender da rimuovere.
      */
     public void removeAppender(String name) {
-        appenders.removeIf(appender -> appender.getName().equals(name));
+        Iterator<Appender> iterator = appenders.iterator();
+        while (iterator.hasNext()) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
     // Classe Appender di esempio
-    private static class Appender {
+    public static class Appender {
         private String name;
 
         public Appender(String name) {

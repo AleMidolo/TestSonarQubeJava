@@ -1,5 +1,4 @@
-public class SubstringMatcher {
-
+public class SubstringMatch {
     /**
      * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
      * @param str la stringa originale (o StringBuilder)
@@ -24,14 +23,13 @@ public class SubstringMatcher {
 
     public static void main(String[] args) {
         // Test cases
-        CharSequence str = "Hello, World!";
-        CharSequence substring1 = "World";
-        CharSequence substring2 = "Hello";
-        CharSequence substring3 = "ld!";
-
-        System.out.println(substringMatch(str, 7, substring1)); // true
-        System.out.println(substringMatch(str, 0, substring2)); // true
-        System.out.println(substringMatch(str, 10, substring3)); // true
-        System.out.println(substringMatch(str, 5, substring1)); // false
+        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
+        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
+        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
+        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
+        System.out.println(substringMatch("Hello, World!", 5, ", ")); // true
+        System.out.println(substringMatch("Hello, World!", 13, "!")); // false (index out of bounds)
+        System.out.println(substringMatch(null, 0, "test")); // false (null input)
+        System.out.println(substringMatch("Hello, World!", 7, null)); // false (null input)
     }
 }

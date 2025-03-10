@@ -1,14 +1,17 @@
 import java.io.IOException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
+import java.io.InputStream;
 
 public class ByteReader {
-    private ByteBuffer buffer;
     private InputStream inputStream;
+    private byte[] buffer;
+    private int bufferPosition;
+    private int bufferLength;
 
-    public ByteReader(ByteBuffer buffer, InputStream inputStream) {
-        this.buffer = buffer;
+    public ByteReader(InputStream inputStream, int bufferSize) {
         this.inputStream = inputStream;
+        this.buffer = new byte[bufferSize];
+        this.bufferPosition = 0;
+        this.bufferLength = 0;
     }
 
     /**
@@ -17,22 +20,13 @@ public class ByteReader {
      * @throws IOException se non ci sono più dati disponibili.
      */
     public byte readByte() throws IOException {
-        if (!buffer.hasRemaining()) {
-            refillBuffer();
+        if (bufferPosition >= bufferLength) {
+            bufferLength = inputStream.read(buffer);
+            if (bufferLength == -1) {
+                throw new IOException("No more data available");
+            }
+            bufferPosition = 0;
         }
-        try {
-            return buffer.get();
-        } catch (BufferUnderflowException e) {
-            throw new IOException("No more data available", e);
-        }
-    }
-
-    private void refillBuffer() throws IOException {
-        buffer.clear();
-        int bytesRead = inputStream.read(buffer.array());
-        if (bytesRead == -1) {
-            throw new IOException("No more data available");
-        }
-        buffer.limit(bytesRead);
+        return buffer[bufferPosition++];
     }
 }

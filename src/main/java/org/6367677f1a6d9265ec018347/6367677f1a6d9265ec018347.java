@@ -13,11 +13,11 @@ public class TelnetServer {
     public synchronized void send(final String message) {
         for (Socket client : clients) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
+                OutputStream out = client.getOutputStream();
+                out.write(message.getBytes());
+                out.flush();
             } catch (IOException e) {
-                // Gestione dell'errore, ad esempio rimuovendo il client dalla lista
+                // Gestisci l'eccezione, ad esempio rimuovendo il client dalla lista
                 clients.remove(client);
                 e.printStackTrace();
             }

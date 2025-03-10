@@ -1,6 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
@@ -19,7 +19,8 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
             K currentKey = keys.get(i);
             int lowerBound = 0;
 
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < keys.size(); j++) {
+                if (i == j) continue;
                 if (keys.get(j).compareTo(currentKey) < 0) {
                     lowerBound++;
                 }
@@ -29,5 +30,12 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         }
 
         return lowerBounds;
+    }
+
+    public static void main(String[] args) {
+        LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
+        List<Integer> keys = List.of(5, 3, 9, 1, 7);
+        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
+        System.out.println(lowerBounds); // Output: [2, 1, 4, 0, 3]
     }
 }

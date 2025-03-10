@@ -27,7 +27,7 @@ public class DefensiveProgramming {
         Double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
         System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Output: []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));  // Output: []
         System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [1.0, 2.0, 3.0]
     }
 }

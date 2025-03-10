@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
+    // Esempio di utilizzo
     public static void main(String[] args) {
-        // Test cases
-        Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
-        Byte[] nonEmptyArray = {1, 2, 3};
+        Byte[] array1 = null;
+        Byte[] array2 = new Byte[0];
+        Byte[] array3 = new Byte[]{1, 2, 3};
 
-        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));  // Output: []
-        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [1, 2, 3]
+        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BYTE_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BYTE_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
     }
 }

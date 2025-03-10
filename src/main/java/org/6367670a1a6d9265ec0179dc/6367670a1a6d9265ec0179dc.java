@@ -10,7 +10,7 @@ public class StackMapTable {
      * @param end indice dell'ultimo tipo in {@link #currentFrame} da scrivere (esclusivo).
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start > end) {
+        if (start < 0 || end > currentFrame.size() || start >= end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
 
@@ -22,6 +22,6 @@ public class StackMapTable {
 
     // Classe interna per rappresentare il tipo di verifica
     private static class VerificationTypeInfo {
-        // Implementazione della classe VerificationTypeInfo
+        // Implementazione del tipo di verifica
     }
 }

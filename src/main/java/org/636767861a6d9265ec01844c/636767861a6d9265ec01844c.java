@@ -10,12 +10,13 @@ public class Logger {
 
     /**
      * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.
+     * @param name Il nome dell'appender da rimuovere.
      */
     public void removeAppender(String name) {
         appenders.removeIf(appender -> appender.getName().equals(name));
     }
 
-    // Inner class representing an Appender
+    // Classe Appender di esempio
     private static class Appender {
         private String name;
 

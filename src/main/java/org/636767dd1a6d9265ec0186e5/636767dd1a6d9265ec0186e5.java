@@ -4,15 +4,15 @@ public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new ArrayList<>();
+        this.consumers = new java.util.ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+        this.consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
-        return consumers;
+        return this.consumers;
     }
 }
 

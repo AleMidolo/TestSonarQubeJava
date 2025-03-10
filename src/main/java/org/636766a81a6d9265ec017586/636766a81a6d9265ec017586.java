@@ -7,7 +7,7 @@ public class FrameStack {
         this.outputFrameStack = new Stack<>();
     }
 
-    /**
+    /** 
      * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
      * @param elements il numero di tipi astratti che devono essere rimossi.
      */
@@ -21,5 +21,15 @@ public class FrameStack {
         for (int i = 0; i < elements; i++) {
             outputFrameStack.pop();
         }
+    }
+
+    // Metodo di esempio per aggiungere elementi allo stack
+    public void push(Object element) {
+        outputFrameStack.push(element);
+    }
+
+    // Metodo di esempio per ottenere la dimensione dello stack
+    public int size() {
+        return outputFrameStack.size();
     }
 }

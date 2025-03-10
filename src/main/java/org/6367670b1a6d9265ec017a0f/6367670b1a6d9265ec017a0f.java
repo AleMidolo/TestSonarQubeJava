@@ -4,9 +4,13 @@ public class StringUtils {
 
     /**
      * Controllo non sensibile al maiuscolo/minuscolo se la Stringa contiene uno qualsiasi dei caratteri nel set di stringhe fornito.
+     * 
+     * @param str La stringa in cui cercare.
+     * @param searchStrArray La lista di stringhe da cercare.
+     * @return true se la stringa contiene almeno una delle stringhe nella lista, false altrimenti.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
-        if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
+        if (str == null || searchStrArray == null) {
             return false;
         }
 
@@ -20,10 +24,11 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String input = "Hello, this is a test string.";
-        boolean result = containsAnyIgnoreCase(input, searchStrings);
-        System.out.println(result); // Output: true
+        // Esempio di utilizzo
+        List<String> searchStrings = List.of("abc", "def", "ghi");
+        String inputString = "This is a test string with ABC in it.";
+
+        boolean result = containsAnyIgnoreCase(inputString, searchStrings);
+        System.out.println("Contains any: " + result); // Output: Contains any: true
     }
 }

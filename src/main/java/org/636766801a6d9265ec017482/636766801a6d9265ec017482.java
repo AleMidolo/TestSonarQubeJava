@@ -33,4 +33,6 @@ public class ClassFileBuffer {
         // Ripristina il puntatore di lettura all'inizio del buffer
         this.readPointer = 0;
     }
+
+    // Altri metodi della classe...
 }

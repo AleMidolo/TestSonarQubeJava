@@ -13,13 +13,9 @@ public class Example {
         return thrownString != null && !thrownString.isEmpty();
     }
 
-    public Throwable getThrown() {
-        return thrown;
-    }
-
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Output: true
+        Example example = new Example(new RuntimeException("Test exception"));
+        System.out.println(example.hasThrown()); // Should print true
     }
 }

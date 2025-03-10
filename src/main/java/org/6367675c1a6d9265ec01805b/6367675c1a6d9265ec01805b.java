@@ -1,18 +1,37 @@
-// Assuming the class is part of a larger structure where `prev` and `next` are references to the previous and next nodes in the doubly linked list.
+// Assuming the class has access to the doubly linked list of edges
+// and the necessary node structure is defined.
 
-public class Edge {
-    Edge prev;
-    Edge next;
+public class TreeNode {
+    TreeNode prev;
+    TreeNode next;
+    // Other fields and methods
+}
 
-    public void removeFromTreeEdgeList() {
-        if (this.prev != null) {
-            this.prev.next = this.next;
+public class Tree {
+    private TreeNode head;
+    private TreeNode tail;
+
+    public void removeFromTreeEdgeList(TreeNode node) {
+        if (node == null) {
+            return;
         }
-        if (this.next != null) {
-            this.next.prev = this.prev;
+
+        // If the node is the head
+        if (node.prev == null) {
+            head = node.next;
+        } else {
+            node.prev.next = node.next;
         }
-        // Optionally, you can set this node's prev and next to null to help with garbage collection
-        this.prev = null;
-        this.next = null;
+
+        // If the node is the tail
+        if (node.next == null) {
+            tail = node.prev;
+        } else {
+            node.next.prev = node.prev;
+        }
+
+        // Clear the node's pointers
+        node.prev = null;
+        node.next = null;
     }
 }

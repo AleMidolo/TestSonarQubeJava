@@ -14,19 +14,19 @@ public class GraphUtils {
      * @return un mapeo de grafo a grafo
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> graph) {
-        Map<V, V> vertexMap = new HashMap<>();
-        Map<E, E> edgeMap = new HashMap<>();
+        Map<V, V> vertexMapping = new HashMap<>();
+        Map<E, E> edgeMapping = new HashMap<>();
 
         // Mapea cada vértice a sí mismo
         for (V vertex : graph.vertexSet()) {
-            vertexMap.put(vertex, vertex);
+            vertexMapping.put(vertex, vertex);
         }
 
         // Mapea cada arista a sí misma
         for (E edge : graph.edgeSet()) {
-            edgeMap.put(edge, edge);
+            edgeMapping.put(edge, edge);
         }
 
-        return new IsomorphicGraphMapping<>(vertexMap, edgeMap, graph, graph);
+        return new IsomorphicGraphMapping<>(vertexMapping, edgeMapping, graph, graph);
     }
 }

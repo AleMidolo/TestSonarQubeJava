@@ -17,7 +17,7 @@ public class FactorialCalculator {
     }
 
     public static void main(String[] args) {
-        int n = 5; // Ejemplo de entrada
+        int n = 5; // Ejemplo de uso
         System.out.println("El factorial de " + n + " es: " + factorial(n));
     }
 }

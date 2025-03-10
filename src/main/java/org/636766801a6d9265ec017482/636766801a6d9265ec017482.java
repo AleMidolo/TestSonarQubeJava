@@ -24,10 +24,10 @@ public class ClassFileBuffer {
             buffer[i] = 0;
         }
 
-        // Leer los bytes del InputStream y llenar el buffer
+        // Leer los datos del InputStream al buffer
         int bytesRead = in.read(buffer);
         if (bytesRead == -1) {
-            throw new IOException("No se pudieron leer bytes del InputStream");
+            throw new IOException("No se pudieron leer datos del InputStream");
         }
 
         // Restablecer el puntero de lectura al inicio del buffer

@@ -1,5 +1,4 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,38 +9,40 @@ public class LogAppender {
 
     /**
      * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
+     * @param event El evento de registro que contiene el mensaje a escribir.
      */
     protected void append(LoggingEvent event) {
         String message = event.getMessage().toString();
-        for (PrintWriter client : clients) {
-            client.println(message);
-            client.flush();
+        synchronized (clients) {
+            for (PrintWriter client : clients) {
+                client.println(message);
+                client.flush();
+            }
         }
     }
 
     /**
      * Agrega un nuevo cliente a la lista de clientes conectados.
-     * @param clientSocket El socket del cliente conectado.
+     * @param clientSocket El socket del cliente que se conecta.
      */
     public void addClient(Socket clientSocket) {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            clients.add(writer);
-        } catch (IOException e) {
+            synchronized (clients) {
+                clients.add(writer);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Elimina un cliente de la lista de clientes conectados.
-     * @param clientSocket El socket del cliente a eliminar.
+     * @param writer El PrintWriter asociado al cliente que se desconecta.
      */
-    public void removeClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+    public void removeClient(PrintWriter writer) {
+        synchronized (clients) {
             clients.remove(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

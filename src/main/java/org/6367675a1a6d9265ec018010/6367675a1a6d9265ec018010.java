@@ -2,41 +2,40 @@ import java.util.*;
 
 class Bucket {
     private String name;
-    private List<Bucket> buckets;
+    private List<Bucket> children;
 
     public Bucket(String name) {
         this.name = name;
-        this.buckets = new ArrayList<>();
+        this.children = new ArrayList<>();
     }
 
-    public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
+    public void addChild(Bucket child) {
+        this.children.add(child);
     }
 
     public void removeSelf() {
-        // Remove this bucket from all parent buckets
-        for (Bucket parent : buckets) {
-            parent.buckets.remove(this);
+        // Remove all children first
+        for (Bucket child : children) {
+            child.removeSelf();
         }
-        // Clear the list of buckets
-        buckets.clear();
+        // Clear the children list
+        children.clear();
+        // Remove this bucket from its parent (if any)
+        // Assuming there is a parent reference, but since it's not provided, we'll assume it's handled externally.
+        // For example, if the parent has a list of children, this bucket should be removed from that list.
+        // This is a placeholder for the actual removal logic.
+        System.out.println("Bucket " + name + " has been removed.");
     }
 
     public static void main(String[] args) {
-        Bucket bucket1 = new Bucket("Bucket1");
-        Bucket bucket2 = new Bucket("Bucket2");
+        Bucket root = new Bucket("root");
+        Bucket child1 = new Bucket("child1");
+        Bucket child2 = new Bucket("child2");
 
-        bucket1.addBucket(bucket2);
-        bucket2.addBucket(bucket1);
+        root.addChild(child1);
+        root.addChild(child2);
 
-        System.out.println("Before removal:");
-        System.out.println("Bucket1 contains Bucket2: " + bucket1.buckets.contains(bucket2));
-        System.out.println("Bucket2 contains Bucket1: " + bucket2.buckets.contains(bucket1));
-
-        bucket1.removeSelf();
-
-        System.out.println("After removal:");
-        System.out.println("Bucket1 contains Bucket2: " + bucket1.buckets.contains(bucket2));
-        System.out.println("Bucket2 contains Bucket1: " + bucket2.buckets.contains(bucket1));
+        // Remove child1
+        child1.removeSelf();
     }
 }

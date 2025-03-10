@@ -11,7 +11,7 @@ public class AtmosphereResourceInspector {
     @Override
     public Action inspect(AtmosphereResource r) {
         // Implementación para suspender el recurso basado en el transporte
-        // Aquí se puede agregar la lógica necesaria para manejar el recurso
+        // Aquí se podría agregar lógica adicional si es necesario
         return Action.CONTINUE;
     }
 }

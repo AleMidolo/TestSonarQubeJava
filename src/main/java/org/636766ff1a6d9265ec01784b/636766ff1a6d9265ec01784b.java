@@ -1,4 +1,4 @@
-public class StringUtils {
+public class NumericChecker {
 
     /**
      * <p>Verifica si el <code>String</code> contiene solo caracteres numéricos.</p> 

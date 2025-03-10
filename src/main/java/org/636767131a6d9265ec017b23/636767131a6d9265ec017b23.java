@@ -7,6 +7,6 @@ final void addLineNumber(final int lineNumber) {
         throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
     }
     // Aquí iría la lógica para agregar el número de línea a la etiqueta.
-    // Por ejemplo, podrías tener un campo en la clase para almacenar el número de línea.
+    // Por ejemplo, podrías almacenarlo en un campo de la clase.
     this.lineNumber = lineNumber;
 }

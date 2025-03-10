@@ -1,11 +1,10 @@
-public class DoubleArrayConverter {
+public class ArrayConverter {
 
     /**
-     * Converte un array di double primitivi in oggetti.
-     * Questo metodo restituisce null per un array di input null.
-     *
-     * @param array un array di double
-     * @return un array di Double, null se l'array di input è null
+     * <p>Converte un array di double primitivi in oggetti.</p> 
+     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>double</code>
+     * @return un array di <code>Double</code>, <code>null</code> se l'array di input è null
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {

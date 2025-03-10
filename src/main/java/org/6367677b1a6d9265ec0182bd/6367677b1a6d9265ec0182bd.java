@@ -8,29 +8,29 @@ public class LogFormatter {
      * @return la stringa formattata rappresentante l'evento di logging.
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
-        
+        StringBuilder formattedMessage = new StringBuilder();
+
         // Aggiungi il timestamp
-        formattedEvent.append("[").append(event.getTimeStamp()).append("] ");
-        
-        // Aggiungi il livello di logging
-        formattedEvent.append("[").append(event.getLevel().toString()).append("] ");
-        
+        formattedMessage.append("[").append(event.getTimeStamp()).append("] ");
+
+        // Aggiungi il livello di log
+        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
+
         // Aggiungi il nome del logger
-        formattedEvent.append("[").append(event.getLoggerName()).append("] ");
-        
-        // Aggiungi il messaggio di logging
-        formattedEvent.append(event.getRenderedMessage());
-        
+        formattedMessage.append("[").append(event.getLoggerName()).append("] ");
+
+        // Aggiungi il messaggio di log
+        formattedMessage.append(event.getRenderedMessage());
+
         // Aggiungi l'eventuale stack trace se presente
         String[] throwableStrRep = event.getThrowableStrRep();
         if (throwableStrRep != null) {
-            formattedEvent.append("\n");
+            formattedMessage.append("\n");
             for (String line : throwableStrRep) {
-                formattedEvent.append(line).append("\n");
+                formattedMessage.append(line).append("\n");
             }
         }
-        
-        return formattedEvent.toString();
+
+        return formattedMessage.toString();
     }
 }

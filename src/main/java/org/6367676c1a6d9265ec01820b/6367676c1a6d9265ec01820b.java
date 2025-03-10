@@ -14,13 +14,11 @@ public class StringUtils {
             return inString;
         }
 
-        // Converti i caratteri da eliminare in un set per un accesso rapido
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
-        // Costruisci la stringa risultante
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {

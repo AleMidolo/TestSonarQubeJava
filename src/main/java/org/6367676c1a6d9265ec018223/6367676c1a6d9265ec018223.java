@@ -13,7 +13,6 @@ public class CollectionUtils {
         if (collection == null || element == null) {
             return false;
         }
-
         Iterator iterator = collection.iterator();
         while (iterator.hasNext()) {
             Object current = iterator.next();
@@ -22,19 +21,5 @@ public class CollectionUtils {
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        // Esempio di utilizzo
-        Collection<String> collection = new java.util.ArrayList<>();
-        collection.add("A");
-        collection.add("B");
-        collection.add("C");
-
-        String element = "B";
-        System.out.println(containsInstance(collection, element)); // Output: true
-
-        String newElement = new String("B");
-        System.out.println(containsInstance(collection, newElement)); // Output: false
     }
 }

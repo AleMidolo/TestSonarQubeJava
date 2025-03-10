@@ -4,10 +4,6 @@ public class StringUtils {
 
     /**
      * Inverso di Introspector.decapitalize
-     * Capitalizes the first letter of the given string.
-     * 
-     * @param name the string to capitalize
-     * @return the capitalized string
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
@@ -17,7 +13,7 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "helloWorld";
-        System.out.println(capitalize(testString)); // Output: HelloWorld
+        String testName = "helloWorld";
+        System.out.println(capitalize(testName)); // Output: HelloWorld
     }
 }

@@ -11,9 +11,9 @@ public class LogTable {
             @Override
             public void run() {
                 // Qui puoi aggiungere il codice per aggiornare la LogTable con il nuovo LogRecord
-                // Ad esempio, aggiungi il LogRecord a un modello di tabella o a una lista
-                // Esempio:
-                // logTableModel.addLogRecord(lr);
+                // Ad esempio, potresti aggiungere il LogRecord a un modello di tabella
+                // tableModel.addRow(new Object[]{lr.getMessage(), lr.getLevel(), lr.getMillis()});
+                System.out.println("LogRecord aggiunto: " + lr.getMessage());
             }
         });
     }

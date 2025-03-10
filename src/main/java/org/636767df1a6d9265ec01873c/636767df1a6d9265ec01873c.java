@@ -1,19 +1,23 @@
-import java.util.UUID;
+public class EntityIdHandler {
 
-public class Main {
     /**
-     * @param entityId the entity identifier
-     * @return the row ID
+     * @param entityId the entity ID to process
+     * @return the ID of the row
      */
-    public static String id(String entityId) {
-        // Generate a unique row ID based on the entity ID
-        return entityId + "-" + UUID.randomUUID().toString();
+    public String id(String entityId) {
+        // Assuming the entityId is already the row ID or needs to be processed
+        // For example, if the entityId is in the format "row-123", we extract "123"
+        // This is just a placeholder implementation
+        if (entityId != null && entityId.startsWith("row-")) {
+            return entityId.substring(4);
+        }
+        return entityId; // Return the entityId as is if no processing is needed
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String entityId = "exampleEntity";
-        String rowId = id(entityId);
-        System.out.println("Generated Row ID: " + rowId);
+        EntityIdHandler handler = new EntityIdHandler();
+        String entityId = "row-123";
+        String rowId = handler.id(entityId);
+        System.out.println("Row ID: " + rowId);
     }
 }

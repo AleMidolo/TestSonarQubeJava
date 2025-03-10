@@ -14,11 +14,6 @@ public class ByteReader {
         this.bufferLength = 0;
     }
 
-    /**
-     * Legge un byte dal <code>buffer</code> e lo riempie nuovamente se necessario.
-     * @return Il prossimo byte dallo stream di input.
-     * @throws IOException se non ci sono più dati disponibili.
-     */
     public byte readByte() throws IOException {
         if (bufferPosition >= bufferLength) {
             bufferLength = inputStream.read(buffer);

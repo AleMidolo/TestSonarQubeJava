@@ -11,34 +11,33 @@ public class ArrayConcatenator {
         List<String> result = new ArrayList<>();
 
         if (array1 != null) {
-            for (String s : array1) {
-                result.add(s);
+            for (String element : array1) {
+                result.add(element);
             }
         }
 
         if (array2 != null) {
-            for (String s : array2) {
-                result.add(s);
+            for (String element : array2) {
+                result.add(element);
             }
         }
 
-        if (array1 != null && array2 != null) {
-            int overlapLength = Math.min(array1.length, array2.length);
-            for (int i = 0; i < overlapLength; i++) {
-                result.add(array1[i] + array2[i]);
-            }
+        // Handle overlapping elements by adding them twice
+        if (array1 != null && array2 != null && array1.length > 0 && array2.length > 0) {
+            result.add(array1[array1.length - 1]);
+            result.add(array2[0]);
         }
 
         return result.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"1", "2", "3", "4"};
+        String[] array1 = {"A", "B", "C"};
+        String[] array2 = {"C", "D", "E"};
 
         String[] result = concatenateStringArrays(array1, array2);
         for (String s : result) {
-            System.out.println(s);
+            System.out.print(s + " ");
         }
     }
 }

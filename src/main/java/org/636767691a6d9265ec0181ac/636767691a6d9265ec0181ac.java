@@ -10,23 +10,24 @@ public class PathUtils {
      * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Converti il percorso di base in un oggetto Path
+        // Convert the base path to a Path object
         Path basePath = Paths.get(path);
         
-        // Converti il percorso relativo in un oggetto Path
+        // Convert the relative path to a Path object
         Path relative = Paths.get(relativePath);
         
-        // Risolvi il percorso relativo rispetto al percorso di base
+        // Resolve the relative path against the base path
         Path resolvedPath = basePath.resolve(relative);
         
-        // Normalizza il percorso per rimuovere eventuali ridondanze (es. "./" o "../")
+        // Normalize the path to remove any redundant elements
         Path normalizedPath = resolvedPath.normalize();
         
-        // Restituisci il percorso come stringa
+        // Return the normalized path as a string
         return normalizedPath.toString();
     }
 
     public static void main(String[] args) {
+        // Example usage
         String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
         String result = applyRelativePath(basePath, relativePath);

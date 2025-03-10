@@ -7,16 +7,20 @@ public class TypeResolver {
      * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
-        Type[] bounds = typeVariable.getBounds();
-        if (bounds.length > 0) {
-            return bounds[0];
-        } else {
+        if (typeVariable == null) {
             return Unknown.class;
         }
+
+        Type[] bounds = typeVariable.getBounds();
+        if (bounds.length == 0) {
+            return Unknown.class;
+        }
+
+        return bounds[0];
     }
 
     public static class Unknown {
-        // Classe di segnaposto per rappresentare un tipo sconosciuto
+        // Classe segnaposto per rappresentare un tipo sconosciuto
     }
 
     public static void main(String[] args) {

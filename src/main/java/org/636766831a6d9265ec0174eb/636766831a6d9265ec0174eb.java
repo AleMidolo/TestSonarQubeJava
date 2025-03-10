@@ -1,7 +1,7 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
 public class FileAdder {
 
@@ -9,17 +9,23 @@ public class FileAdder {
      * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final File[] files) {
-        if (files == null || files.length == 0) {
-            return;
+        if (files == null) {
+            throw new IllegalArgumentException("File array cannot be null");
         }
 
         List<File> fileList = new ArrayList<>();
-        Collections.addAll(fileList, files);
+        for (File file : files) {
+            if (file != null) {
+                fileList.add(file);
+            }
+        }
+
         Collections.reverse(fileList);
 
         // Example of processing the reversed list
         for (File file : fileList) {
-            System.out.println(file.getName());
+            System.out.println("Processing file: " + file.getName());
+            // Add your logic here to process the files
         }
     }
 

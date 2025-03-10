@@ -1,38 +1,18 @@
-import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Invoke the {@link BroadcastFilter}
- * @param msg The message to be filtered
- * @return The filtered message or null if the message is filtered out
+ * @param msg the message to be filtered
+ * @return the filtered message or null if the message is filtered out
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is an interface or class that defines a filter method
-    // For the sake of this example, let's assume it has a method called filterMessage
-    BroadcastFilter filter = new BroadcastFilter() {
-        @Override
-        public Object filterMessage(Object message) {
-            // Example filtering logic: filter out null messages
-            if (message == null) {
-                return null;
-            }
-            // Example: filter out messages that are not instances of String
-            if (!(message instanceof String)) {
-                return null;
-            }
-            // Example: filter out empty strings
-            if (((String) message).trim().isEmpty()) {
-                return null;
-            }
-            // Otherwise, return the message as is
-            return message;
-        }
-    };
+    // Assuming BroadcastFilter is a functional interface or a class with a test method
+    // For example, it could be a Predicate<Object>
+    Predicate<Object> broadcastFilter = /* initialize your BroadcastFilter here */;
 
-    // Invoke the filter
-    return filter.filterMessage(msg);
-}
-
-// Assuming BroadcastFilter is an interface
-interface BroadcastFilter {
-    Object filterMessage(Object message);
+    if (broadcastFilter != null && broadcastFilter.test(msg)) {
+        return msg; // Message passes the filter
+    } else {
+        return null; // Message is filtered out
+    }
 }

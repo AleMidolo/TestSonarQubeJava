@@ -8,20 +8,23 @@ private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         return Pair.of(Collections.emptyList(), 0L);
     }
 
-    List<Integer> suffixSums = new ArrayList<>(bounds.size());
+    List<Integer> suffixSum = new ArrayList<>(bounds.size());
     long totalSum = 0;
 
-    // Calculate the total sum of all elements
+    // Compute the total sum of all elements
     for (int num : bounds) {
         totalSum += num;
     }
 
-    // Compute suffix sums
-    long suffixSum = 0;
+    // Compute the suffix sum
+    long currentSum = 0;
     for (int i = bounds.size() - 1; i >= 0; i--) {
-        suffixSum += bounds.get(i);
-        suffixSums.add(0, (int) suffixSum); // Insert at the beginning to maintain order
+        currentSum += bounds.get(i);
+        suffixSum.add((int) currentSum);
     }
 
-    return Pair.of(suffixSums, totalSum);
+    // Reverse the suffix sum list to match the original order
+    Collections.reverse(suffixSum);
+
+    return Pair.of(suffixSum, totalSum);
 }

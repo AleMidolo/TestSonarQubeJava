@@ -1,6 +1,6 @@
 public void abbreviate(final int nameStart, final StringBuffer buf) {
     if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // Handle invalid input
+        return; // Invalid input, do nothing
     }
 
     // Split the name into parts based on spaces
@@ -10,7 +10,7 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
     // Abbreviate each part except the last one
     for (int i = 0; i < parts.length - 1; i++) {
         if (!parts[i].isEmpty()) {
-            parts[i] = parts[i].substring(0, 1) + ".";
+            parts[i] = parts[i].charAt(0) + ".";
         }
     }
 

@@ -5,13 +5,11 @@ public class CustomSet {
     private Set<Integer> set;
 
     public CustomSet() {
-        set = new HashSet<>();
+        this.set = new HashSet<>();
     }
 
     /**
      * Inserts a value to the set. Returns true if the set did not already contain the specified element.
-     * @param val the value to be inserted into the set
-     * @return true if the set did not already contain the specified element, false otherwise
      */
     public boolean insert(int val) {
         return set.add(val);

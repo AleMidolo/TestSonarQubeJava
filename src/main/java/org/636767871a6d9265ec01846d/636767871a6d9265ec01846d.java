@@ -14,14 +14,14 @@ public class MRUConfig {
         } else {
             configDirPath = userHome + File.separator + "lf5";
         }
-        
+
         File configDir = new File(configDirPath);
         if (!configDir.exists()) {
             boolean created = configDir.mkdirs();
             if (created) {
                 System.out.println("Configuration directory created at: " + configDirPath);
             } else {
-                System.err.println("Failed to create configuration directory at: " + configDirPath);
+                System.out.println("Failed to create configuration directory at: " + configDirPath);
             }
         } else {
             System.out.println("Configuration directory already exists at: " + configDirPath);

@@ -1,17 +1,9 @@
 import java.util.Objects;
 
-/**
- * <p>Convert the input object into a java.lang.Character.</p>
- * @param type Data type to which this value should be converted.
- * @param value The input value to be converted.
- * @return The converted value.
- * @throws Exception if conversion cannot be performed successfully
- * @since 1.8.0
- */
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Conversion to " + type.getName() + " is not supported.");
+        throw new Exception("Conversion to Character is not supported for type: " + type.getName());
     }
 
     if (value == null) {
@@ -27,7 +19,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Value " + intValue + " is out of range for a char.");
+            throw new Exception("Value out of range for Character: " + intValue);
         }
     }
 
@@ -36,9 +28,9 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (strValue.length() == 1) {
             return strValue.charAt(0);
         } else {
-            throw new Exception("String \"" + strValue + "\" cannot be converted to a single character.");
+            throw new Exception("String must be exactly one character long: " + strValue);
         }
     }
 
-    throw new Exception("Cannot convert " + value.getClass().getName() + " to " + type.getName());
+    throw new Exception("Cannot convert value to Character: " + value);
 }

@@ -17,14 +17,7 @@ public class ByteArrayOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
-        ensureCapacity(count + 1);
-        buf[count] = (byte) b;
-        count++;
-    }
-
-    @Override
-    public void write(byte b[], int off, int len) throws IOException {
+    public void write(final byte b[], final int off, final int len) throws IOException {
         if ((off < 0) || (off > b.length) || (len < 0) ||
             ((off + len) - b.length > 0)) {
             throw new IndexOutOfBoundsException();
@@ -55,6 +48,13 @@ public class ByteArrayOutputStream extends OutputStream {
         byte[] newBuf = new byte[newCapacity];
         System.arraycopy(buf, 0, newBuf, 0, count);
         buf = newBuf;
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        ensureCapacity(count + 1);
+        buf[count] = (byte) b;
+        count++;
     }
 
     public byte[] toByteArray() {

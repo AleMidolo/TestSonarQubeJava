@@ -33,14 +33,22 @@ public class ProfileBuilder {
      * build current profiles segment snapshot search sequence ranges
      */
     public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> ranges = new ArrayList<>();
+        List<SequenceRange> sequenceRanges = new ArrayList<>();
         
         // Example logic to create sequence ranges
         // This can be customized based on actual requirements
-        ranges.add(new SequenceRange(1, 100));
-        ranges.add(new SequenceRange(101, 200));
-        ranges.add(new SequenceRange(201, 300));
+        sequenceRanges.add(new SequenceRange(1, 100));
+        sequenceRanges.add(new SequenceRange(101, 200));
+        sequenceRanges.add(new SequenceRange(201, 300));
         
-        return ranges;
+        return sequenceRanges;
+    }
+
+    public static void main(String[] args) {
+        ProfileBuilder builder = new ProfileBuilder();
+        List<SequenceRange> ranges = builder.buildSequenceRanges();
+        for (SequenceRange range : ranges) {
+            System.out.println(range);
+        }
     }
 }

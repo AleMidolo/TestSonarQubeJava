@@ -1,4 +1,4 @@
-public class ArrayUtils {
+public class StringArrayUtils {
 
     /**
      * Trim the elements of the given String array, calling <code>String.trim()</code> on each of them.
@@ -23,8 +23,8 @@ public class ArrayUtils {
     public static void main(String[] args) {
         String[] testArray = {"  hello ", "  world  ", null, "  java  "};
         String[] result = trimArrayElements(testArray);
-        for (String s : result) {
-            System.out.println("'" + s + "'");
+        for (String str : result) {
+            System.out.println("'" + str + "'");
         }
     }
 }

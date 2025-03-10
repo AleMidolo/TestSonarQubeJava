@@ -4,14 +4,14 @@ public class StringSplitter {
             return null;
         }
         
-        int delimiterIndex = toSplit.indexOf(delimiter);
-        if (delimiterIndex == -1) {
+        int index = toSplit.indexOf(delimiter);
+        if (index == -1) {
             return null;
         }
         
         String[] result = new String[2];
-        result[0] = toSplit.substring(0, delimiterIndex);
-        result[1] = toSplit.substring(delimiterIndex + delimiter.length());
+        result[0] = toSplit.substring(0, index);
+        result[1] = toSplit.substring(index + delimiter.length());
         
         return result;
     }

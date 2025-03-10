@@ -1,25 +1,20 @@
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import java.util.logging.LogRecord;
 
 public class LogTable {
+    private final JTable logTable;
+    private final DefaultTableModel tableModel;
 
-    /**
-     * Add a log record message to be displayed in the LogTable. This method is thread-safe as it posts requests to the SwingThread rather than processing directly.
-     */
-    public void addMessage(final LogRecord lr) {
-        // Ensure the operation is performed on the Swing event dispatch thread
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Assuming there is a method to add the log record to the table
-                addLogRecordToTable(lr);
-            }
-        });
+    public LogTable(JTable logTable, DefaultTableModel tableModel) {
+        this.logTable = logTable;
+        this.tableModel = tableModel;
     }
 
-    // Dummy method to represent adding a log record to the table
-    private void addLogRecordToTable(LogRecord lr) {
-        // Implementation to add the log record to the table
-        System.out.println("LogRecord added: " + lr.getMessage());
+    public void addMessage(final LogRecord lr) {
+        SwingUtilities.invokeLater(() -> {
+            Object[] rowData = {lr.getLevel(), lr.getMessage(), lr.getMillis()};
+            tableModel.addRow(rowData);
+            logTable.scrollRectToVisible(logTable.getCellRect(tableModel.getRowCount() - 1, 0, true));
+        });
     }
 }

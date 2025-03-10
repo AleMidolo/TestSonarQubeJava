@@ -10,13 +10,9 @@ private static boolean endsWith(final String str, final String suffix, final boo
     if (str == null || suffix == null) {
         return str == null && suffix == null;
     }
-    if (suffix.length() > str.length()) {
-        return false;
-    }
-    String strEnd = str.substring(str.length() - suffix.length());
     if (ignoreCase) {
-        return strEnd.equalsIgnoreCase(suffix);
+        return str.toLowerCase().endsWith(suffix.toLowerCase());
     } else {
-        return strEnd.equals(suffix);
+        return str.endsWith(suffix);
     }
 }

@@ -1,6 +1,12 @@
 import java.util.Set;
 
 public class Graph<V> {
+    // Assuming a map to store the weights of edges entering each vertex
+    private java.util.Map<V, Double> incomingWeights;
+
+    public Graph() {
+        incomingWeights = new java.util.HashMap<>();
+    }
 
     /**
      * Compute the sum of the weights entering a vertex
@@ -9,19 +15,16 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Assuming that the graph is represented as a map where each vertex maps to its incoming edges and their weights
-        // For example: Map<V, Map<V, Double>> incomingEdges;
-        // This is a placeholder implementation, as the actual graph structure is not provided.
         for (V vertex : v) {
-            // Assuming incomingEdges is a map that contains the incoming edges and their weights for each vertex
-            // Map<V, Double> edges = incomingEdges.get(vertex);
-            // if (edges != null) {
-            //     for (Double weight : edges.values()) {
-            //         sum += weight;
-            //     }
-            // }
-            // Placeholder: sum += 1.0; // Replace with actual weight calculation
+            if (incomingWeights.containsKey(vertex)) {
+                sum += incomingWeights.get(vertex);
+            }
         }
         return sum;
+    }
+
+    // Example method to add an incoming weight to a vertex
+    public void addIncomingWeight(V vertex, double weight) {
+        incomingWeights.put(vertex, incomingWeights.getOrDefault(vertex, 0.0) + weight);
     }
 }

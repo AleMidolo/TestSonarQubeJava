@@ -7,8 +7,9 @@ import java.util.Map;
 public class TypeResolver {
 
     /**
-     * Resolves the arguments for the {@code genericType} using the type variable information for the {@code targetType}.
-     * Returns {@code null} if {@code genericType} is not parameterized or if arguments cannot be resolved.
+     * Resolves the arguments for the {@code genericType} using the type variable information for the
+     * {@code targetType}. Returns {@code null} if {@code genericType} is not parameterized or if
+     * arguments cannot be resolved.
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -19,18 +20,12 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
-        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
-        populateTypeVariableMap(targetType, typeVariableMap);
+        Map<TypeVariable<?>, Type> typeVariableMap = getTypeVariableMap(targetType);
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
             Type typeArgument = actualTypeArguments[i];
             if (typeArgument instanceof TypeVariable) {
-                Type resolvedType = typeVariableMap.get(typeArgument);
-                if (resolvedType instanceof Class) {
-                    resolvedArguments[i] = (Class<?>) resolvedType;
-                } else {
-                    return null;
-                }
+                resolvedArguments[i] = (Class<?>) typeVariableMap.get(typeArgument);
             } else if (typeArgument instanceof Class) {
                 resolvedArguments[i] = (Class<?>) typeArgument;
             } else {
@@ -41,15 +36,12 @@ public class TypeResolver {
         return resolvedArguments;
     }
 
-    private static void populateTypeVariableMap(Class<?> targetType, Map<TypeVariable<?>, Type> typeVariableMap) {
-        Type genericSuperclass = targetType.getGenericSuperclass();
-        if (genericSuperclass instanceof ParameterizedType) {
-            ParameterizedType parameterizedSuperclass = (ParameterizedType) genericSuperclass;
-            TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
-            Type[] actualTypeArguments = parameterizedSuperclass.getActualTypeArguments();
-            for (int i = 0; i < typeParameters.length; i++) {
-                typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
-            }
+    private static Map<TypeVariable<?>, Type> getTypeVariableMap(Class<?> targetType) {
+        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
+        for (TypeVariable<?> typeParameter : typeParameters) {
+            typeVariableMap.put(typeParameter, Object.class); // Default to Object if no specific type is found
         }
+        return typeVariableMap;
     }
 }

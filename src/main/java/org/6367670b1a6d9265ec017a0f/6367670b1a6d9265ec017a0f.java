@@ -22,4 +22,12 @@ public class StringUtils {
         }
         return false;
     }
+
+    public static void main(String[] args) {
+        // Example usage
+        List<String> searchStrings = List.of("hello", "world");
+        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Goodbye, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
+    }
 }

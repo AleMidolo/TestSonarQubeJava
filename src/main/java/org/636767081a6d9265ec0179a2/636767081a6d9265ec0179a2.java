@@ -1,6 +1,6 @@
 /**
  * Utility method for {@link #createNumber(String)}.
- * Returns <code>true</code> if s is <code>null</code> or if it consists entirely of zeros.
+ * Returns <code>true</code> if s is <code>null</code> or if it consists only of zeros.
  * @param s the String to check
  * @return true if it is all zeros or <code>null</code>
  */

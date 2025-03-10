@@ -7,36 +7,82 @@ final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) 
     // This is a simplified implementation assuming the constant pool entry is already parsed.
 
     // Get the constant pool entry at the specified index
-    // For simplicity, assume the entry is a CONSTANT_Utf8_info structure
-    // CONSTANT_Utf8_info structure:
-    // u1 tag;
-    // u2 length;
-    // u1 bytes[length];
+    ConstantPoolEntry entry = constantPool[constantPoolEntryIndex];
 
-    // Assuming classFileBuffer is a ByteBuffer containing the class file data
-    ByteBuffer classFileBuffer = ByteBuffer.wrap(new byte[0]); // Replace with actual class file buffer
-
-    // Move to the start of the constant pool entry
-    classFileBuffer.position(constantPoolEntryIndex);
-
-    // Read the tag (should be 1 for CONSTANT_Utf8)
-    byte tag = classFileBuffer.get();
-    if (tag != 1) {
-        throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
+    // Ensure the entry is of type CONSTANT_Utf8
+    if (entry.getTag() != ConstantPoolEntry.CONSTANT_Utf8) {
+        throw new IllegalArgumentException("The specified constant pool entry is not a CONSTANT_Utf8 entry.");
     }
 
-    // Read the length of the UTF-8 string
-    int length = classFileBuffer.getShort() & 0xFFFF;
+    // Get the byte array representing the UTF-8 string
+    byte[] utf8Bytes = entry.getBytes();
 
-    // Read the UTF-8 bytes
-    byte[] utf8Bytes = new byte[length];
-    classFileBuffer.get(utf8Bytes);
+    // Decode the UTF-8 bytes into a String using the provided charBuffer
+    int length = utf8Bytes.length;
+    int charCount = 0;
+    int i = 0;
 
-    // Convert UTF-8 bytes to a String
-    String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+    while (i < length) {
+        int b1 = utf8Bytes[i++] & 0xFF;
+        if (b1 < 0x80) {
+            // 1-byte sequence
+            charBuffer[charCount++] = (char) b1;
+        } else if ((b1 & 0xE0) == 0xC0) {
+            // 2-byte sequence
+            int b2 = utf8Bytes[i++] & 0xFF;
+            charBuffer[charCount++] = (char) (((b1 & 0x1F) << 6) | (b2 & 0x3F);
+        } else if ((b1 & 0xF0) == 0xE0) {
+            // 3-byte sequence
+            int b2 = utf8Bytes[i++] & 0xFF;
+            int b3 = utf8Bytes[i++] & 0xFF;
+            charBuffer[charCount++] = (char) (((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+        } else {
+            // Invalid UTF-8 sequence
+            throw new IllegalArgumentException("Invalid UTF-8 sequence in constant pool entry.");
+        }
+    }
 
-    // Copy the characters to the provided charBuffer
-    utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+    // Create a String from the charBuffer
+    return new String(charBuffer, 0, charCount);
+}
 
-    return utf8String;
+// Assuming ConstantPoolEntry is a class representing a constant pool entry
+class ConstantPoolEntry {
+    public static final int CONSTANT_Utf8 = 1;
+
+    private int tag;
+    private byte[] bytes;
+
+    public ConstantPoolEntry(int tag, byte[] bytes) {
+        this.tag = tag;
+        this.bytes = bytes;
+    }
+
+    public int getTag() {
+        return tag;
+    }
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+}
+
+// Example usage
+public class Main {
+    public static void main(String[] args) {
+        // Example constant pool entry for a UTF-8 string
+        byte[] utf8Bytes = "Hello, World!".getBytes(StandardCharsets.UTF_8);
+        ConstantPoolEntry entry = new ConstantPoolEntry(ConstantPoolEntry.CONSTANT_Utf8, utf8Bytes);
+
+        // Assuming constantPool is an array of ConstantPoolEntry
+        ConstantPoolEntry[] constantPool = new ConstantPoolEntry[1];
+        constantPool[0] = entry;
+
+        // Char buffer to hold the decoded string
+        char[] charBuffer = new char[100];
+
+        // Read the UTF-8 string from the constant pool
+        String result = readUtf(0, charBuffer);
+        System.out.println(result);  // Output: Hello, World!
+    }
 }

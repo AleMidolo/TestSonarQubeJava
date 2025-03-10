@@ -1,13 +1,13 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class LowerBoundsCalculator<K extends Comparable<K>> {
+public class LowerBoundCalculator<K extends Comparable<K>> {
 
     /**
-     * Trova un limite inferiore massimo per ogni chiave.
-     * @param keys lista delle chiavi.
-     * @return i limiti inferiori delle chiavi calcolati.
+     * Encuentra un límite inferior máximo para cada llave.
+     * @param keys lista de llaves.
+     * @return los límites inferiores de llaves calculados.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
@@ -15,16 +15,17 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         }
 
         List<Integer> lowerBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int lowerBound = 0;
 
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // Se la chiave non è trovata, Collections.binarySearch restituisce (-(insertion point) - 1)
-                index = -index - 1;
+            for (int j = 0; j < i; j++) {
+                if (keys.get(j).compareTo(currentKey) < 0) {
+                    lowerBound++;
+                }
             }
-            lowerBounds.add(index);
+
+            lowerBounds.add(lowerBound);
         }
 
         return lowerBounds;

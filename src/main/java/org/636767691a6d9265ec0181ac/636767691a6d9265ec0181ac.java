@@ -1,34 +1,35 @@
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class PathUtils {
+public class RelativePathApplier {
 
     /**
-     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
-     * @param path il percorso da cui partire (di solito un percorso di file completo)
-     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
-     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
+     * Aplica la ruta relativa dada a la ruta proporcionada, asumiendo la separación estándar de carpetas en Java (es decir, separadores "/").
+     * @param path la ruta desde la cual comenzar (generalmente una ruta de archivo completa)
+     * @param relativePath la ruta relativa a aplicar (en relación con la ruta de archivo completa anterior)
+     * @return la ruta de archivo completa que resulta de aplicar la ruta relativa
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Converti il percorso di base in un oggetto Path
+        // Convertir la ruta base a un objeto Path
         Path basePath = Paths.get(path);
-
-        // Converti il percorso relativo in un oggetto Path
+        
+        // Convertir la ruta relativa a un objeto Path
         Path relative = Paths.get(relativePath);
-
-        // Risolvi il percorso relativo rispetto al percorso di base
+        
+        // Resolver la ruta relativa contra la ruta base
         Path resolvedPath = basePath.resolve(relative);
-
-        // Normalizza il percorso per rimuovere eventuali ridondanze
+        
+        // Normalizar la ruta resultante para eliminar redundancias como ".." o "."
         Path normalizedPath = resolvedPath.normalize();
-
-        // Restituisci il percorso come stringa
+        
+        // Convertir la ruta normalizada de vuelta a una cadena
         return normalizedPath.toString();
     }
 
     public static void main(String[] args) {
-        String path = "/usr/local/bin";
+        String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
-        System.out.println(applyRelativePath(path, relativePath)); // Output: /usr/local/lib/java
+        String result = applyRelativePath(basePath, relativePath);
+        System.out.println(result);  // Output: /usr/local/lib/java
     }
 }

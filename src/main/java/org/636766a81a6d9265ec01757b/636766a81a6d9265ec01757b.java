@@ -4,8 +4,8 @@ import com.alibaba.fastjson2.JSON;
 public class MyClass {
 
     /**
-     * Serializza in JSON {@link String}
-     * @param features funzionalità da abilitare nella serializzazione
+     * Serializar a JSON {@link String}
+     * @param features características que se habilitarán en la serialización
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")

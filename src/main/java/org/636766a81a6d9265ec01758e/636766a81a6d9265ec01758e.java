@@ -3,28 +3,34 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity (entro l'11% se desiredCapacity >= 1000).
-     * @param desiredCapacity la capacità desiderata dall'utente.
-     * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
+     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity
+     * (dentro del 11% si desiredCapacity >= 1000).
+     * @param desiredCapacity la capacidad deseada por el usuario.
+     * @return la capacidad que se debe utilizar para una tabla hash.
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 2) {
             return 2;
         }
-        int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
-            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
-                candidate = desiredCapacity;
-                if (candidate % 2 == 0) {
-                    candidate++;
+        while (!isPrime(prime)) {
+            prime += 2;
+            // Si desiredCapacity >= 1000, limitamos la búsqueda dentro del 11%
+            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
+                prime = desiredCapacity;
+                if (prime % 2 == 0) {
+                    prime++;
                 }
+                while (!isPrime(prime)) {
+                    prime += 2;
+                }
+                break;
             }
         }
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {
@@ -46,6 +52,9 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Esempio di utilizzo
+        // Ejemplo de uso
+        System.out.println(nextPrime(1000));  // Debería imprimir 1009
+        System.out.println(nextPrime(5000)); // Debería imprimir 5003
+        System.out.println(nextPrime(10));    // Debería imprimir 11
     }
 }

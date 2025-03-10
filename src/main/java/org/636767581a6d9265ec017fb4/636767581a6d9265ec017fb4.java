@@ -5,36 +5,52 @@ import java.util.Collections;
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
     /**
-     * Trova un limite superiore minimo per ogni chiave.
-     * @param keys una lista di chiavi.
-     * @return il limite superiore delle chiavi calcolato.
+     * Encuentra un límite superior mínimo para cada clave.
+     * @param keys una lista de claves.
+     * @return el límite superior de clave calculado.
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
-
-        // Ordina la lista di chiavi
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
 
         List<Integer> upperBounds = new ArrayList<>();
         for (K key : keys) {
-            // Trova l'indice della chiave nella lista ordinata
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // Se la chiave non è presente, Collections.binarySearch restituisce (-(insertion point) - 1)
-                index = -index - 1;
-            }
-            // Il limite superiore è l'elemento successivo nella lista ordinata
-            if (index < sortedKeys.size()) {
-                upperBounds.add((Integer) sortedKeys.get(index));
-            } else {
-                // Se non c'è un elemento successivo, il limite superiore è nullo o un valore predefinito
-                upperBounds.add(null);
-            }
+            int upperBound = findUpperBound(keys, key);
+            upperBounds.add(upperBound);
         }
 
         return upperBounds;
+    }
+
+    /**
+     * Encuentra el límite superior mínimo para una clave dada.
+     * @param keys la lista de claves.
+     * @param key la clave para la cual se busca el límite superior.
+     * @return el límite superior mínimo.
+     */
+    private int findUpperBound(List<K> keys, K key) {
+        int low = 0;
+        int high = keys.size() - 1;
+        int result = keys.size();
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (keys.get(mid).compareTo(key) > 0) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        UpperBoundCalculator<Integer> calculator = new UpperBoundCalculator<>();
+        List<Integer> keys = List.of(1, 3, 5, 7, 9);
+        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
+        System.out.println(upperBounds); // Output: [1, 2, 3, 4, 5]
     }
 }

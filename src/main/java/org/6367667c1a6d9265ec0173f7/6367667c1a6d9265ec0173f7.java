@@ -1,8 +1,9 @@
 /**
- * Restituisce true se il corpo è un array di byte
- * @return true se il corpo è un array di byte
+ * Verdadero si el cuerpo es un arreglo de bytes
+ * @return Verdadero si el cuerpo es un arreglo de bytes
  */
 public boolean hasBytes() {
-    // Assuming 'body' is a field in the class that holds the data
-    return body instanceof byte[];
+    // Asumiendo que 'cuerpo' es un campo de la clase que contiene este método
+    // y que 'cuerpo' es de tipo Object o similar.
+    return cuerpo instanceof byte[];
 }

@@ -1,42 +1,41 @@
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 
 public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * Costruisce un grafo bipartito completo
+     * Construir un grafo bipartito completo
+     * 
+     * @param target El grafo en el que se construirá el grafo bipartito
+     * @param resultMap Un mapa para almacenar los vértices generados
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming Graph<V, E> has methods to add vertices and edges
-        // Assuming V is the vertex type and E is the edge type
+        // Crear dos conjuntos de vértices para el grafo bipartito
+        Set<V> setA = new HashSet<>();
+        Set<V> setB = new HashSet<>();
 
-        // Extract vertices from the resultMap
-        List<V> vertices = new ArrayList<>(resultMap.values());
-
-        // Split vertices into two partitions
-        int mid = vertices.size() / 2;
-        List<V> partitionA = vertices.subList(0, mid);
-        List<V> partitionB = vertices.subList(mid, vertices.size());
-
-        // Add all vertices to the graph
-        for (V vertex : vertices) {
-            target.addVertex(vertex);
+        // Generar vértices para el conjunto A
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setA.add(vertex);
+            resultMap.put("A" + i, vertex);
         }
 
-        // Add edges between all vertices in partitionA and partitionB
-        for (V a : partitionA) {
-            for (V b : partitionB) {
-                target.addEdge(a, b);
+        // Generar vértices para el conjunto B
+        for (int i = 0; i < 5; i++) {
+            V vertex = target.addVertex();
+            setB.add(vertex);
+            resultMap.put("B" + i, vertex);
+        }
+
+        // Conectar todos los vértices de A con todos los vértices de B
+        for (V vertexA : setA) {
+            for (V vertexB : setB) {
+                target.addEdge(vertexA, vertexB);
             }
         }
     }
-}
-
-// Assuming the Graph interface looks something like this:
-interface Graph<V, E> {
-    void addVertex(V vertex);
-    void addEdge(V source, V target);
 }

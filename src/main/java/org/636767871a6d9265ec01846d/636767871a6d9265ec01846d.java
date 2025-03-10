@@ -3,28 +3,30 @@ import java.io.File;
 public class ConfigurationDirectoryCreator {
 
     /**
-     * Crea la directory in cui verrà scritta la lista dei file MRU. La directory "lf5" viene creata nella directory Documenti e Impostazioni sui computer Windows 2000 e ovunque punti la variabile user.home su tutte le altre piattaforme.
+     * Crea el directorio donde se escribirá la lista de archivos MRU. El directorio "lf5" se crea en el directorio de Documentos y Configuraciones en máquinas con Windows 2000 y donde sea que apunte la variable user.home en todas las demás plataformas.
      */
     public static void createConfigurationDirectory() {
+        // Obtener la ruta del directorio de inicio del usuario
         String userHome = System.getProperty("user.home");
-        String directoryName = "lf5";
         
-        File configDir;
-        if (System.getProperty("os.name").toLowerCase().contains("windows 2000")) {
-            configDir = new File(userHome + "\\Documenti e Impostazioni\\" + directoryName);
-        } else {
-            configDir = new File(userHome + File.separator + directoryName);
-        }
+        // Crear la ruta del directorio "lf5"
+        String configDirPath = userHome + File.separator + "lf5";
         
+        // Crear el objeto File para el directorio
+        File configDir = new File(configDirPath);
+        
+        // Verificar si el directorio ya existe
         if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
-            if (created) {
-                System.out.println("Directory created: " + configDir.getAbsolutePath());
+            // Intentar crear el directorio
+            boolean dirCreated = configDir.mkdir();
+            
+            if (dirCreated) {
+                System.out.println("Directorio creado exitosamente en: " + configDirPath);
             } else {
-                System.out.println("Failed to create directory: " + configDir.getAbsolutePath());
+                System.out.println("No se pudo crear el directorio en: " + configDirPath);
             }
         } else {
-            System.out.println("Directory already exists: " + configDir.getAbsolutePath());
+            System.out.println("El directorio ya existe en: " + configDirPath);
         }
     }
 

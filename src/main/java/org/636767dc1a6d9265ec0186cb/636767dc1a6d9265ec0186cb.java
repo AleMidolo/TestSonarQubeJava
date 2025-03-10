@@ -2,23 +2,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ConfigManager {
+public class ConfigInitializer {
 
     /**
-     * Inizializza la configurazione, ad esempio controlla il percorso di distribuzione.
+     * Inicializa la configuración, como verificar la ruta de distribución.
      */
     public void init() {
-        // Controlla se il percorso di distribuzione esiste
-        Path distributionPath = Paths.get("path/to/distribution");
-        if (Files.exists(distributionPath)) {
-            System.out.println("Il percorso di distribuzione esiste: " + distributionPath);
+        // Verificar la ruta de distribución
+        String distributionPath = System.getProperty("user.dir"); // Obtiene el directorio actual
+        Path path = Paths.get(distributionPath);
+
+        if (Files.exists(path)) {
+            System.out.println("La ruta de distribución existe: " + distributionPath);
         } else {
-            System.out.println("Il percorso di distribuzione non esiste: " + distributionPath);
+            System.out.println("La ruta de distribución no existe: " + distributionPath);
         }
     }
 
     public static void main(String[] args) {
-        ConfigManager configManager = new ConfigManager();
-        configManager.init();
+        ConfigInitializer initializer = new ConfigInitializer();
+        initializer.init();
     }
 }

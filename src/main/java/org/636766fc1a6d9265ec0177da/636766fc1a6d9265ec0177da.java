@@ -1,10 +1,10 @@
 /**
- * Determina se un nome di parametro termina nella posizione attuale, cioè se il carattere fornito può essere considerato un separatore.
+ * Determina si un nombre de parámetro termina en la posición actual, es decir, si el carácter dado califica como un separador.
  * 
- * @param c il carattere da controllare
- * @return true se il carattere è un separatore, false altrimenti
+ * @param c El carácter a evaluar.
+ * @return true si el carácter es un separador, false en caso contrario.
  */
-private static boolean isParameterSeparator(final char c) {
-    // Considera spazi, parentesi, virgole, punti e virgola, e altri caratteri non validi per i nomi dei parametri
-    return Character.isWhitespace(c) || c == '(' || c == ')' || c == ',' || c == ';' || c == '=' || c == '{' || c == '}';
+private static boolean esSeparadorDeParametro(final char c) {
+    // Los separadores comunes son espacios, comas, paréntesis, etc.
+    return c == ' ' || c == ',' || c == '(' || c == ')' || c == ';' || c == '\t' || c == '\n';
 }

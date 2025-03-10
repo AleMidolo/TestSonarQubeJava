@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] buffer;
+    private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.buffer = new byte[16]; // Initial capacity
+        this.data = new byte[16]; // Initial capacity
         this.size = 0;
     }
 
@@ -23,10 +23,11 @@ public class ByteVector {
         ensureCapacity(size + byteLength);
 
         if (byteArrayValue == null) {
-            // Fill with null bytes (0)
-            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
+            // Fill with null bytes (0x00)
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
         } else {
-            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
+            // Copy the specified bytes from byteArrayValue
+            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         }
 
         size += byteLength;
@@ -34,17 +35,14 @@ public class ByteVector {
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
-            buffer = Arrays.copyOf(buffer, newCapacity);
+        if (minCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
+            data = Arrays.copyOf(data, newCapacity);
         }
     }
 
+    // Optional: Add a method to get the current data as a byte array
     public byte[] toByteArray() {
-        return Arrays.copyOf(buffer, size);
-    }
-
-    public int size() {
-        return size;
+        return Arrays.copyOf(data, size);
     }
 }

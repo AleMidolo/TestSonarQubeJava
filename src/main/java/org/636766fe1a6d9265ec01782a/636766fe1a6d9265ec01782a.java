@@ -1,23 +1,43 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-    // Assuming classFileBuffer is a ByteBuffer containing the class file data
-    // and constantPool is an array of constant pool entries.
-    // This is a simplified implementation assuming the constant pool entry is a CONSTANT_Utf8_info structure.
+final class ClassFileReader {
+    private final ByteBuffer classFileBuffer;
 
-    // Get the CONSTANT_Utf8_info entry from the constant pool
-    int utf8Length = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF; // Length of the UTF-8 string
-    int utf8Offset = constantPoolEntryIndex + 2; // Offset to the start of the UTF-8 bytes
+    public ClassFileReader(ByteBuffer classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
+    }
 
-    // Decode the UTF-8 bytes into the charBuffer
-    byte[] utf8Bytes = new byte[utf8Length];
-    classFileBuffer.position(utf8Offset);
-    classFileBuffer.get(utf8Bytes, 0, utf8Length);
+    /**
+     * Lee una entrada CONSTANT_Utf8 de un grupo de constantes en {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex el índice de una entrada CONSTANT_Utf8 en la tabla de constantes de la clase.
+     * @param charBuffer el búfer que se utilizará para leer la cadena. Este búfer debe ser lo suficientemente grande. No se redimensiona automáticamente.
+     * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
+     */
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
+        // La entrada CONSTANT_Utf8 comienza con un byte que indica el tipo de entrada (1 para CONSTANT_Utf8).
+        // Luego sigue un short que indica la longitud de la cadena UTF-8.
+        int position = constantPoolEntryIndex;
+        byte tag = classFileBuffer.get(position);
+        if (tag != 1) {
+            throw new IllegalArgumentException("La entrada no es de tipo CONSTANT_Utf8.");
+        }
+        position += 1;
+        int length = classFileBuffer.getShort(position) & 0xFFFF; // Convertir a unsigned short
+        position += 2;
 
-    // Convert the UTF-8 bytes to a String using the provided charBuffer
-    String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
-    utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+        // Leer los bytes de la cadena UTF-8
+        byte[] utf8Bytes = new byte[length];
+        classFileBuffer.position(position);
+        classFileBuffer.get(utf8Bytes, 0, length);
 
-    return utf8String;
+        // Convertir los bytes UTF-8 a una cadena Java
+        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+
+        // Copiar la cadena al búfer de caracteres proporcionado
+        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+
+        return utf8String;
+    }
 }

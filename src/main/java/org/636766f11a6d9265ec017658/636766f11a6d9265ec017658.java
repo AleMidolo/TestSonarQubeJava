@@ -1,9 +1,9 @@
-public class FileUtils {
+public class PathUtils {
 
     /**
-     * Restituisce l'indice dell'ultimo carattere separatore di directory. <p> Questo metodo gestirà un file sia in formato Unix che Windows. Viene restituita la posizione dell'ultimo slash o backslash. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
-     * @param filename  il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
-     * @return l'indice dell'ultimo carattere separatore, oppure -1 se non esiste tale carattere
+     * Devuelve el índice del último carácter separador de directorio. <p> Este método manejará un archivo en formato Unix o Windows. Se devuelve la posición de la última barra inclinada o barra invertida. <p> La salida será la misma independientemente de la máquina en la que se ejecute el código.
+     * @param filename  el nombre del archivo en el que se busca el último separador de ruta, null devuelve -1
+     * @return el índice del último carácter separador, o -1 si no existe tal carácter
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
@@ -17,10 +17,8 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 14
-        System.out.println(indexOfLastSeparator("/home/user/file.txt"));       // Output: 10
-        System.out.println(indexOfLastSeparator("file.txt"));                  // Output: -1
-        System.out.println(indexOfLastSeparator(null));                        // Output: -1
+        // Ejemplo de uso
+        String path = "C:\\Users\\JohnDoe\\Documents\\file.txt";
+        System.out.println(indexOfLastSeparator(path)); // Debería imprimir 20
     }
 }

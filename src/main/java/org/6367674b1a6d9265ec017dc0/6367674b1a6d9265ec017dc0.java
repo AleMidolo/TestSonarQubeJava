@@ -2,36 +2,37 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Calcola tutti i vertici che hanno un grado positivo iterando intenzionalmente sugli archi. Questo mantiene la complessità a $O(m)$ dove $m$ è il numero di archi.
- * @return insieme di vertici con grado positivo
+ * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+ * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+ * @return conjunto de vértices con grado positivo
  */
 private Set<V> initVisibleVertices() {
     Set<V> visibleVertices = new HashSet<>();
     
-    // Assumiamo che 'edges' sia una lista o collezione di archi disponibile nel contesto
+    // Suponiendo que 'edges' es una lista de aristas disponibles en el contexto
     for (Edge<V> edge : edges) {
         visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getTarget());
+        visibleVertices.add(edge.getDestination());
     }
     
     return visibleVertices;
 }
 
-// Classe di esempio per rappresentare un arco
+// Clase Edge de ejemplo para representar una arista
 class Edge<V> {
     private V source;
-    private V target;
+    private V destination;
 
-    public Edge(V source, V target) {
+    public Edge(V source, V destination) {
         this.source = source;
-        this.target = target;
+        this.destination = destination;
     }
 
     public V getSource() {
         return source;
     }
 
-    public V getTarget() {
-        return target;
+    public V getDestination() {
+        return destination;
     }
 }

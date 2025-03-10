@@ -1,10 +1,15 @@
-public class StringUtils {
+public class Main {
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        String result = trimLeadingCharacter("aaaaHello", 'a');
+        System.out.println(result);  // Output: "Hello"
+    }
 
     /**
-     * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
-     * @param str la Stringa da controllare
-     * @param leadingCharacter il carattere iniziale da rimuovere
-     * @return la Stringa ripulita
+     * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
+     * @param str la cadena a verificar
+     * @param leadingCharacter el carácter inicial que se debe eliminar
+     * @return la cadena sin el carácter inicial
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
         if (str == null || str.isEmpty()) {
@@ -17,12 +22,5 @@ public class StringUtils {
         }
 
         return str.substring(index);
-    }
-
-    public static void main(String[] args) {
-        String testString = "###HelloWorld";
-        char leadingChar = '#';
-        String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result);  // Output: "HelloWorld"
     }
 }

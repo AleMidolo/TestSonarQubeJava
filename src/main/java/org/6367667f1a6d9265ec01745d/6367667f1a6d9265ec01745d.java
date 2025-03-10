@@ -18,17 +18,9 @@ public class PathSegmentImpl {
     public boolean isDecoded() {
         return decoded;
     }
-
-    @Override
-    public String toString() {
-        return "PathSegmentImpl{" +
-                "path='" + path + '\'' +
-                ", decoded=" + decoded +
-                '}';
-    }
 }
 
-public class URIDecoder {
+public class URIUtils {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
@@ -38,18 +30,17 @@ public class URIDecoder {
             return segments;
         }
 
-        // Remove the leading '/' if it's an absolute path
+        // Ignore the leading '/' if it's an absolute path
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
 
-        String[] rawSegments = path.split("/");
-        for (String rawSegment : rawSegments) {
-            if (rawSegment.isEmpty()) {
-                continue;
+        String[] parts = path.split("/");
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                String segment = decode ? decodeURIComponent(part) : part;
+                segments.add(new PathSegmentImpl(segment, decode));
             }
-            String segment = decode ? decodeURIComponent(rawSegment) : rawSegment;
-            segments.add(new PathSegmentImpl(segment, decode));
         }
 
         return segments;
@@ -60,14 +51,6 @@ public class URIDecoder {
             return java.net.URLDecoder.decode(encoded, "UTF-8");
         } catch (java.io.UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 encoding not supported", e);
-        }
-    }
-
-    public static void main(String[] args) {
-        URI uri = URI.create("http://example.com/path/to/resource%20with%20spaces");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
         }
     }
 }

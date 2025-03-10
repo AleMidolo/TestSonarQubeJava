@@ -1,7 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils {
+public class UnescapeJava {
 
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
@@ -15,6 +15,10 @@ public class StringUtils {
             if (c == '\\' && i + 1 < str.length()) {
                 char nextChar = str.charAt(i + 1);
                 switch (nextChar) {
+                    case '\\':
+                        sb.append('\\');
+                        i += 2;
+                        break;
                     case 'n':
                         sb.append('\n');
                         i += 2;
@@ -43,10 +47,6 @@ public class StringUtils {
                         sb.append('\"');
                         i += 2;
                         break;
-                    case '\\':
-                        sb.append('\\');
-                        i += 2;
-                        break;
                     default:
                         sb.append(c);
                         i++;
@@ -61,9 +61,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        String input = "Ciao\\nMondo\\t!";
+        String input = "This is a test\\nwith a new line\\tand a tab.";
         String output = unescapeJava(input);
-        System.out.println(output);  // Output: Ciao
-                                     //         Mondo    !
+        System.out.println(output);
     }
 }

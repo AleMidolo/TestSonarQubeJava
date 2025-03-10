@@ -12,13 +12,17 @@ public final class UriMatcher {
         this.pattern = Pattern.compile(regex);
     }
 
+    /**
+     * Confronta un URI con il modello.
+     * @param uri l'uri da confrontare con il template.
+     * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
+     */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
-        } else {
-            return null;
         }
+        return null;
     }
 
     public static void main(String[] args) {

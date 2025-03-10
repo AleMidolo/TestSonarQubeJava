@@ -80,8 +80,8 @@ class Graph {
 
 public class Main {
     public static void main(String[] args) {
-        Node currentNode = new Node(1, false);
-        Node nextNode = new Node(2, true);
+        Node currentNode = new Node(1, true);
+        Node nextNode = new Node(2, false);
         Graph graph = new Graph(currentNode, nextNode);
         Edge edge = graph.edgeToNext();
         System.out.println(edge);

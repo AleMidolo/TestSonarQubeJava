@@ -10,7 +10,7 @@ public class SubstringMatch {
         if (str == null || substring == null) {
             return false;
         }
-        if (index < 0 || index + substring.length() > str.length()) {
+        if (index < 0 || index > str.length() - substring.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {
@@ -22,13 +22,9 @@ public class SubstringMatch {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
-        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
-        System.out.println(substringMatch("Hello, World!", 7, "World!")); // true
-        System.out.println(substringMatch("Hello, World!", 7, "World!!")); // false
-        System.out.println(substringMatch("Hello, World!", 13, "!")); // true
-        System.out.println(substringMatch("Hello, World!", 14, "!")); // false
+        CharSequence str = "Hello, World!";
+        CharSequence substring = "World";
+        int index = 7;
+        System.out.println(substringMatch(str, index, substring)); // Output: true
     }
 }

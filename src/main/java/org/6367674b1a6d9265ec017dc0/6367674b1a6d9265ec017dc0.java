@@ -5,7 +5,7 @@ private Set<V> initVisibleVertices() {
     Set<V> visibleVertices = new HashSet<>();
     for (Edge<V> edge : edges) {
         visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getTarget());
+        visibleVertices.add(edge.getDestination());
     }
     return visibleVertices;
 }

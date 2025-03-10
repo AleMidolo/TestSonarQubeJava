@@ -14,10 +14,26 @@ public class ObjectRegistry {
         }
     }
 
+    /**
+     * Verifica se un oggetto è già stato registrato.
+     * @param value L'oggetto da verificare.
+     * @return true se l'oggetto è già stato registrato, false altrimenti.
+     */
     public static boolean isRegistered(Object value) {
         return registeredObjects.contains(value);
     }
 
+    /**
+     * Rimuove un oggetto dal registro.
+     * @param value L'oggetto da rimuovere.
+     */
+    public static void unregister(Object value) {
+        registeredObjects.remove(value);
+    }
+
+    /**
+     * Svuota il registro.
+     */
     public static void clearRegistry() {
         registeredObjects.clear();
     }

@@ -17,7 +17,7 @@ public class LogFormatter {
         formattedEvent.append("Level: ").append(event.getLevel().toString()).append(" ");
         
         // Aggiungi il messaggio di log
-        formattedEvent.append("Message: ").append(event.getMessage()).append(" ");
+        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append(" ");
         
         // Aggiungi il nome del logger
         formattedEvent.append("Logger: ").append(event.getLoggerName()).append(" ");
@@ -25,9 +25,12 @@ public class LogFormatter {
         // Aggiungi il thread name
         formattedEvent.append("Thread: ").append(event.getThreadName()).append(" ");
         
-        // Aggiungi l'eccezione se presente
-        if (event.getThrowableInformation() != null) {
-            formattedEvent.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append(" ");
+        // Aggiungi l'eccezione, se presente
+        if (event.getThrowableStrRep() != null) {
+            formattedEvent.append("Exception: ");
+            for (String line : event.getThrowableStrRep()) {
+                formattedEvent.append(line).append(" ");
+            }
         }
         
         return formattedEvent.toString();

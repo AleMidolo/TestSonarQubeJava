@@ -8,15 +8,11 @@ public class Logger {
         this.appenders = new ArrayList<>();
     }
 
-    /**
-     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.
-     * @param name Il nome dell'appender da rimuovere.
-     */
     public void removeAppender(String name) {
         appenders.removeIf(appender -> appender.getName().equals(name));
     }
 
-    // Classe interna per rappresentare un Appender
+    // Assuming Appender class exists with a getName() method
     private static class Appender {
         private String name;
 

@@ -9,6 +9,6 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
         return; // No space found, do nothing
     }
 
-    // Abbreviate the name by taking the first character and adding a dot
+    // Abbreviate the name by keeping the first character and adding a dot
     buf.replace(nameStart + 1, spaceIndex, ".");
 }

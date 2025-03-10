@@ -8,7 +8,7 @@ public class FileAdder {
     private List<InputStream> fileList;
 
     public FileAdder() {
-        this.fileList = new ArrayList<>();
+        fileList = new ArrayList<>();
     }
 
     /**

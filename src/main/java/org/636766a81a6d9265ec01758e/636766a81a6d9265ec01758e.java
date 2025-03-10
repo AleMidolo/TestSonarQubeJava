@@ -12,37 +12,38 @@ public class PrimeUtil {
             return 2;
         }
 
-        int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
-            candidate++;
+        int prime = desiredCapacity;
+        while (!isPrime(prime)) {
+            prime++;
         }
 
-        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
+        // Se desiredCapacity >= 1000, cerca un primo entro l'11% di desiredCapacity
         if (desiredCapacity >= 1000) {
             int upperBound = (int) (desiredCapacity * 1.11);
-            if (candidate > upperBound) {
-                candidate = desiredCapacity;
-                while (!isPrime(candidate)) {
-                    candidate--;
+            int candidate = desiredCapacity;
+            while (candidate <= upperBound) {
+                if (isPrime(candidate)) {
+                    return candidate;
                 }
+                candidate++;
             }
         }
 
-        return candidate;
+        return prime;
     }
 
-    private static boolean isPrime(int n) {
-        if (n <= 1) {
+    private static boolean isPrime(int num) {
+        if (num <= 1) {
             return false;
         }
-        if (n <= 3) {
+        if (num <= 3) {
             return true;
         }
-        if (n % 2 == 0 || n % 3 == 0) {
+        if (num % 2 == 0 || num % 3 == 0) {
             return false;
         }
-        for (int i = 5; i * i <= n; i += 6) {
-            if (n % i == 0 || n % (i + 2) == 0) {
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }

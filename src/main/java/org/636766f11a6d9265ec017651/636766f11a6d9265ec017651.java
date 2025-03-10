@@ -2,8 +2,8 @@ import java.util.Objects;
 
 public class DefensiveProgramming {
 
-    // Array vuoto pubblico e statico per ottimizzazione della memoria
-    public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
+    // Riferimento statico per un array vuoto di Character
+    private static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
      * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
-        Character[] array1 = null;
-        Character[] array2 = new Character[0];
-        Character[] array3 = new Character[]{'a', 'b', 'c'};
+        // Test cases
+        Character[] nullArray = null;
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_CHARACTER_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_CHARACTER_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
+        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Output: []
+        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [a, b, c]
     }
 }

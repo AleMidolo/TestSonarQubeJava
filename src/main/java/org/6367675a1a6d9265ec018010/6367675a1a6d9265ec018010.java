@@ -1,41 +1,18 @@
 import java.util.*;
 
 class Bucket {
-    private String name;
-    private List<Bucket> buckets;
+    private List<Bucket> dataStructure;
 
-    public Bucket(String name) {
-        this.name = name;
-        this.buckets = new ArrayList<>();
+    public Bucket(List<Bucket> dataStructure) {
+        this.dataStructure = dataStructure;
     }
 
-    public void addBucket(Bucket bucket) {
-        this.buckets.add(bucket);
-    }
-
+    /**
+     * इस बकेट को डेटा संरचना से हटा देता है।
+     */
     public void removeSelf() {
-        // Assuming this bucket is part of a larger structure, we need to remove it from its parent.
-        // This is a simplified example where we assume the parent is managing the list of buckets.
-        // In a real-world scenario, you would need to handle the parent reference.
-        for (Bucket bucket : buckets) {
-            bucket.removeSelf();
+        if (dataStructure != null) {
+            dataStructure.remove(this);
         }
-        // Clear the list of buckets
-        buckets.clear();
-        // Additional cleanup if needed
-    }
-
-    public static void main(String[] args) {
-        Bucket parentBucket = new Bucket("Parent");
-        Bucket childBucket = new Bucket("Child");
-        parentBucket.addBucket(childBucket);
-
-        System.out.println("Before removal:");
-        System.out.println("Parent has " + parentBucket.buckets.size() + " buckets.");
-
-        childBucket.removeSelf();
-
-        System.out.println("After removal:");
-        System.out.println("Parent has " + parentBucket.buckets.size() + " buckets.");
     }
 }

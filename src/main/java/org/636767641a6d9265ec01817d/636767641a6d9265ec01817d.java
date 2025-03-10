@@ -1,40 +1,47 @@
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import org.jgrapht.Graph;
 
-public class BipartiteGraphGenerator<V, E> {
+public class GraphGenerator<V, E> {
 
     /**
-     * Construir un grafo bipartito completo
-     * @param target El grafo en el que se generará el grafo bipartito
-     * @param resultMap Un mapa para almacenar los vértices generados
+     * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
+     * 
+     * @param target    ग्राफ जिसमें निर्माण करना है
+     * @param resultMap शीर्षों को मैप करने के लिए परिणाम मैप
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Crear dos conjuntos de vértices para las dos particiones
-        Set<V> partitionA = new HashSet<>();
-        Set<V> partitionB = new HashSet<>();
+        // Assuming the graph is bipartite, we need two sets of vertices
+        // Let's assume the first set is labeled as "A" and the second set as "B"
+        // For simplicity, let's create 3 vertices in each set
 
-        // Generar vértices para la partición A
-        for (int i = 0; i < 5; i++) {
-            V vertexA = target.addVertex();
-            partitionA.add(vertexA);
-            resultMap.put("A" + i, vertexA);
-        }
+        // Create vertices for set A
+        V a1 = target.addVertex();
+        V a2 = target.addVertex();
+        V a3 = target.addVertex();
 
-        // Generar vértices para la partición B
-        for (int i = 0; i < 5; i++) {
-            V vertexB = target.addVertex();
-            partitionB.add(vertexB);
-            resultMap.put("B" + i, vertexB);
-        }
+        // Create vertices for set B
+        V b1 = target.addVertex();
+        V b2 = target.addVertex();
+        V b3 = target.addVertex();
 
-        // Conectar todos los vértices de la partición A con todos los de la partición B
-        for (V vertexA : partitionA) {
-            for (V vertexB : partitionB) {
-                target.addEdge(vertexA, vertexB);
-            }
-        }
+        // Add vertices to the result map
+        resultMap.put("A1", a1);
+        resultMap.put("A2", a2);
+        resultMap.put("A3", a3);
+        resultMap.put("B1", b1);
+        resultMap.put("B2", b2);
+        resultMap.put("B3", b3);
+
+        // Connect every vertex in set A to every vertex in set B
+        target.addEdge(a1, b1);
+        target.addEdge(a1, b2);
+        target.addEdge(a1, b3);
+        target.addEdge(a2, b1);
+        target.addEdge(a2, b2);
+        target.addEdge(a2, b3);
+        target.addEdge(a3, b1);
+        target.addEdge(a3, b2);
+        target.addEdge(a3, b3);
     }
 }

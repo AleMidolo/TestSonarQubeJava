@@ -5,10 +5,9 @@ public class StackMapTableHandler {
     private List<VerificationTypeInfo> stackMapTableEntries;
 
     /**
-     * Coloca algunos tipos abstractos de {@link #currentFrame} en {@link #stackMapTableEntries},
-     * utilizando el formato verification_type_info de la JVMS que se usa en los atributos StackMapTable.
-     * @param start índice del primer tipo en {@link #currentFrame} para escribir.
-     * @param end índice del último tipo en {@link #currentFrame} para escribir (exclusivo).
+     * {@link #currentFrame} के कुछ अमूर्त प्रकारों को {@link #stackMapTableEntries} में डालता है, StackMapTable गुणों में प्रयुक्त JVMS verification_type_info प्रारूप का उपयोग करते हुए।
+     * @param start {@link #currentFrame} में लिखने के लिए पहले प्रकार का अनुक्रमांक।
+     * @param end {@link #currentFrame} में लिखने के लिए अंतिम प्रकार का अनुक्रमांक (असामान्य)।
      */
     private void putAbstractTypes(final int start, final int end) {
         if (start < 0 || end > currentFrame.size() || start >= end) {
@@ -21,8 +20,8 @@ public class StackMapTableHandler {
         }
     }
 
-    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
+    // Assuming VerificationTypeInfo is a class representing the verification type info
     private static class VerificationTypeInfo {
-        // Implementation of VerificationTypeInfo
+        // Define the structure of VerificationTypeInfo as per JVMS
     }
 }

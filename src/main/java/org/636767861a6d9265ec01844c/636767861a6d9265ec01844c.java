@@ -1,14 +1,17 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Iterator;
 
-public class Logger {
+public class AppenderManager {
     private List<Appender> appenders;
 
-    public Logger() {
-        this.appenders = new ArrayList<>();
+    public AppenderManager(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
+    /**
+     * पैरामीटर के रूप में दिए गए नाम के साथ एपेंडर को एपेंडर्स की सूची से हटा दें।
+     * @param name एपेंडर का नाम जिसे हटाना है
+     */
     public void removeAppender(String name) {
         Iterator<Appender> iterator = appenders.iterator();
         while (iterator.hasNext()) {
@@ -20,8 +23,8 @@ public class Logger {
         }
     }
 
-    // Assuming Appender class exists with a getName() method
-    private static class Appender {
+    // Assuming Appender class has a getName() method
+    public static class Appender {
         private String name;
 
         public Appender(String name) {

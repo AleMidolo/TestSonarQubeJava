@@ -3,15 +3,15 @@ import java.util.Collections;
 import java.util.Map;
 
 public class BeanMap {
-    private Map<String, Object> map;
+    private Map<Object, Object> map;
 
-    public BeanMap(Map<String, Object> map) {
+    public BeanMap(Map<Object, Object> map) {
         this.map = map;
     }
 
     /**
-     * Devuelve los valores del BeanMap.
-     * @return valores del BeanMap. La colección devuelta no es modificable.
+     * BeanMap के लिए मान लौटाता है।
+     * @return BeanMap के लिए मान। लौटाई गई संग्रह को संशोधित नहीं किया जा सकता है।
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());

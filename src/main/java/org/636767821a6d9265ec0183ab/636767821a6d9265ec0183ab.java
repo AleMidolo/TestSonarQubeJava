@@ -6,16 +6,15 @@ public class Example {
     }
 
     public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+        return thrown != null && !thrown.toString().isEmpty();
     }
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Test exception"));
-        System.out.println(example.hasThrown()); // Should print true
+        Example example = new Example(new RuntimeException("An error occurred"));
+        System.out.println(example.hasThrown()); // Output: true
+
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Output: false
     }
 }

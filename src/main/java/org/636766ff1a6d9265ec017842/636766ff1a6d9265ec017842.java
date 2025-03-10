@@ -3,23 +3,20 @@ import java.util.Objects;
 public class DoubleArrayConverter {
 
     /**
-     * <p>Convierte un array de objetos "Doubles" a primitivos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Double</code>, puede ser <code>null</code>
-     * @return un array de <code>double</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
+     * <p>ऑब्जेक्ट डबल्स के एक एरे को प्रिमिटिव्स में परिवर्तित करता है।</p>
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Double</code> एरे, यह <code>null</code> हो सकता है
+     * @return एक <code>double</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
      */
     public static double[] toPrimitive(final Double[] array) {
         if (array == null) {
             return null;
         }
-        
-        double[] primitiveArray = new double[array.length];
+        double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            Objects.requireNonNull(array[i], "El contenido del arreglo no puede ser nulo");
-            primitiveArray[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
-        
-        return primitiveArray;
+        return result;
     }
 }

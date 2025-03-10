@@ -13,7 +13,7 @@ public class ThreadSnapshotParser {
 
         for (String line : lines) {
             ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
-            if (snapshot != null && isWithinTimeRange(snapshot.getTimestamp(), timeRanges)) {
+            if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
         }
@@ -21,15 +21,17 @@ public class ThreadSnapshotParser {
         return snapshots;
     }
 
-    private static boolean isWithinTimeRange(long timestamp, List<ProfileAnalyzeTimeRange> timeRanges) {
+    private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
+        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
                 return true;
             }
         }
         return false;
     }
 
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
@@ -46,17 +48,14 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
-            // Assuming the line format is: timestamp,threadName,state
+            // Parse the line and return a ThreadSnapshot object
+            // Example parsing logic (adjust as needed):
             String[] parts = line.split(",");
             if (parts.length == 3) {
-                try {
-                    long timestamp = Long.parseLong(parts[0]);
-                    String threadName = parts[1];
-                    String state = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, state);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
+                long timestamp = Long.parseLong(parts[0]);
+                String threadName = parts[1];
+                String state = parts[2];
+                return new ThreadSnapshot(timestamp, threadName, state);
             }
             return null;
         }

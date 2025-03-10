@@ -1,37 +1,44 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringArrayConcatenator {
+public class ArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
+        // Handle null cases
         if (array1 == null && array2 == null) {
             return null;
+        } else if (array1 == null) {
+            return array2.clone();
+        } else if (array2 == null) {
+            return array1.clone();
         }
 
-        List<String> result = new ArrayList<>();
+        // Create a list to hold the concatenated elements
+        List<String> resultList = new ArrayList<>();
 
-        if (array1 != null) {
-            for (String element : array1) {
-                result.add(element);
-            }
+        // Add elements from array1
+        for (String element : array1) {
+            resultList.add(element);
         }
 
-        if (array2 != null) {
-            for (String element : array2) {
-                result.add(element);
-            }
+        // Add elements from array2
+        for (String element : array2) {
+            resultList.add(element);
         }
 
-        return result.toArray(new String[0]);
+        // Convert the list to an array and return
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"c", "d", "e"};
+        // Example usage
+        String[] array1 = {"Hello", "World"};
+        String[] array2 = {"Java", "Programming"};
+
         String[] result = concatenateStringArrays(array1, array2);
 
         for (String element : result) {
-            System.out.print(element + " ");
+            System.out.println(element);
         }
     }
 }

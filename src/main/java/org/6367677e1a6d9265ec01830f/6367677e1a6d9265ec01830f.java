@@ -1,18 +1,46 @@
-import org.apache.log4j.spi.LoggingEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
+    /**
+     * रूपांतर पैटर्न द्वारा निर्दिष्ट एक स्वरूपित स्ट्रिंग उत्पन्न करता है।
+     *
+     * @param event लॉगिंग इवेंट जिसे स्वरूपित किया जाना है।
+     * @return स्वरूपित स्ट्रिंग।
+     */
     public String format(LoggingEvent event) {
-        // Ejemplo de formato: [Nivel] Mensaje - Hora
+        // Example pattern: [timestamp] [level] [message]
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         String level = event.getLevel().toString();
-        String message = event.getRenderedMessage();
-        long timeStamp = event.getTimeStamp();
-        
-        // Formatear la hora en un formato legible
-        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedTime = dateFormat.format(new java.util.Date(timeStamp));
-        
-        // Construir la cadena formateada
-        return String.format("[%s] %s - %s", level, message, formattedTime);
+        String message = event.getMessage();
+
+        return String.format("[%s] [%s] %s", timestamp, level, message);
+    }
+}
+
+// Assuming LoggingEvent class exists with the following methods:
+class LoggingEvent {
+    private long timeStamp;
+    private String level;
+    private String message;
+
+    public LoggingEvent(long timeStamp, String level, String message) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.message = message;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

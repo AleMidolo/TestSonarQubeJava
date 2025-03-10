@@ -1,9 +1,12 @@
-import java.util.Objects;
-
 public class StringUtils {
 
     /**
-     * Inverso de Introspector.decapitalize
+     * Introspector.decapitalize का उल्टा
+     * This method capitalizes the first letter of the given string.
+     * If the string is null or empty, it returns the string as is.
+     *
+     * @param name the string to capitalize
+     * @return the capitalized string
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {

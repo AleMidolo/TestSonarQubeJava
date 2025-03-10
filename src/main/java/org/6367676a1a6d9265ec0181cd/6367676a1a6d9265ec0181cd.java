@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * Elimina los espacios en blanco al inicio de la cadena dada.
-     * @param str la cadena a verificar
-     * @return la cadena sin espacios en blanco al inicio
+     * दिए गए स्ट्रिंग से अग्रणी व्हाइटस्पेस को हटाएं।
+     * @param str वह स्ट्रिंग जिसे जांचना है
+     * @return ट्रिम की गई स्ट्रिंग
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
@@ -22,8 +22,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "   Hello, World!";
-        System.out.println("Original: '" + testString + "'");
-        System.out.println("Trimmed: '" + trimLeadingWhitespace(testString) + "'");
+        String input = "   Hello World!";
+        String result = trimLeadingWhitespace(input);
+        System.out.println("'" + result + "'");  // Output: 'Hello World!'
     }
 }

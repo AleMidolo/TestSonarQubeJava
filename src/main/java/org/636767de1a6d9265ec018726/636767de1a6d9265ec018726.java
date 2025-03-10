@@ -37,7 +37,7 @@ public class ProfileSegment {
         ranges.add(new SequenceRange(1, 10));
         ranges.add(new SequenceRange(11, 20));
         ranges.add(new SequenceRange(21, 30));
-        
+
         return ranges;
     }
 

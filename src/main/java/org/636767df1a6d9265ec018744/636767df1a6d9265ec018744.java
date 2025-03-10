@@ -8,14 +8,12 @@ public class TimeRangeDivider {
 
     /**
      * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
-     *
-     * @param inicio El tiempo de inicio en milisegundos.
-     * @param fin El tiempo de finalización en milisegundos.
-     * @return Una lista de rangos de tiempo divididos.
+     * @param inicio El tiempo de inicio en milisegundos
+     * @param fin El tiempo de finalización en milisegundos
+     * @return Una lista de rangos de tiempo divididos
      */
     protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> rangos = new ArrayList<>();
-
         long tiempoActual = inicio;
 
         while (tiempoActual < fin) {
@@ -23,7 +21,6 @@ public class TimeRangeDivider {
             if (tiempoSiguiente > fin) {
                 tiempoSiguiente = fin;
             }
-
             rangos.add(new TimeRange(tiempoActual, tiempoSiguiente));
             tiempoActual = tiempoSiguiente;
         }

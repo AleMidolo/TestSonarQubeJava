@@ -1,7 +1,6 @@
 import java.util.Comparator;
 
 public class CustomComparator implements Comparator<Object> {
-
     /**
      * Compares two objects for order. Returns a negative integer, zero, or a positive integer
      * as the first argument is less than, equal to, or greater than the second.
@@ -20,9 +19,13 @@ public class CustomComparator implements Comparator<Object> {
         } else if (aObj2 == null) {
             return 1;
         } else {
-            // Assuming the objects are Comparable, otherwise, you need to handle the case
-            // where they are not Comparable or implement custom comparison logic.
-            return ((Comparable<Object>) aObj1).compareTo(aObj2);
+            // Assuming the objects are comparable, cast them to Comparable and compare
+            if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
+                return ((Comparable) aObj1).compareTo(aObj2);
+            } else {
+                // If objects are not Comparable, compare their hash codes as a fallback
+                return Integer.compare(aObj1.hashCode(), aObj2.hashCode());
+            }
         }
     }
 }

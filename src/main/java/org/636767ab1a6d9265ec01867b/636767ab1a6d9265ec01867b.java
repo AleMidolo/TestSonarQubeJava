@@ -1,5 +1,4 @@
 import java.nio.charset.StandardCharsets;
-import java.nio.ByteBuffer;
 
 public class UTF8Writer {
 
@@ -9,18 +8,17 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
-
-        while (buffer.hasRemaining()) {
+        for (byte b : utf8Bytes) {
             if (lb.remaining() == 0) {
-                lb = lb.ensureCapacity(session, 1);
+                lb = session.nextBuffer(lb);
             }
-            lb.put(buffer.get());
+            lb.put(b);
         }
 
         return lb;
     }
 
+    // Assuming LinkedBuffer and WriteSession are defined as follows:
     public static class LinkedBuffer {
         private byte[] buffer;
         private int position;
@@ -32,7 +30,7 @@ public class UTF8Writer {
 
         public void put(byte b) {
             if (position >= buffer.length) {
-                throw new IndexOutOfBoundsException("Buffer overflow");
+                throw new IllegalStateException("Buffer overflow");
             }
             buffer[position++] = b;
         }
@@ -40,27 +38,12 @@ public class UTF8Writer {
         public int remaining() {
             return buffer.length - position;
         }
-
-        public LinkedBuffer ensureCapacity(WriteSession session, int required) {
-            if (remaining() >= required) {
-                return this;
-            }
-            LinkedBuffer newBuffer = new LinkedBuffer(buffer.length * 2);
-            System.arraycopy(buffer, 0, newBuffer.buffer, 0, position);
-            newBuffer.position = position;
-            return newBuffer;
-        }
     }
 
     public static class WriteSession {
-        // Placeholder for session-related operations
-    }
-
-    public static void main(String[] args) {
-        WriteSession session = new WriteSession();
-        LinkedBuffer lb = new LinkedBuffer(10);
-        CharSequence str = "Hello, UTF-8!";
-        lb = writeUTF8(str, session, lb);
-        System.out.println("Bytes written: " + lb.position);
+        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
+            // Implement logic to get the next buffer in the chain
+            return new LinkedBuffer(currentBuffer.buffer.length); // Example implementation
+        }
     }
 }

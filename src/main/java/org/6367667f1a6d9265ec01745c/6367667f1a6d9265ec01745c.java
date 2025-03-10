@@ -11,8 +11,8 @@ public class ClassPathUtil {
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("El directorio proporcionado no existe o no es un directorio válido.");
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("El parámetro 'dir' debe ser un directorio válido.");
         }
 
         File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
@@ -22,7 +22,6 @@ public class ClassPathUtil {
                     URL url = file.toURI().toURL();
                     cpV.add(url);
                 } catch (MalformedURLException e) {
-                    System.err.println("Error al convertir el archivo a URL: " + file.getAbsolutePath());
                     e.printStackTrace();
                 }
             }

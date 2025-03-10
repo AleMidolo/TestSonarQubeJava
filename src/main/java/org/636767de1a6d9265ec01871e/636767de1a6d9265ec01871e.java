@@ -1,35 +1,28 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ShardingKeyChecker {
+private void check(String modelName) throws IllegalStateException {
+    // Define a regex pattern to match the sharding indices
+    Pattern pattern = Pattern.compile(".*_\\d+$");
+    Matcher matcher = pattern.matcher(modelName);
 
-    /**
-     * Verifica si los índices de la clave de "sharding" son continuos.
-     * 
-     * @param modelName nombre del modelo de la entidad
-     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
-     */
-    private void check(String modelName) throws IllegalStateException {
-        // Expresión regular para encontrar los índices de sharding en el nombre del modelo
-        Pattern pattern = Pattern.compile("_shard(\\d+)");
-        Matcher matcher = pattern.matcher(modelName);
-
-        int previousIndex = -1;
-        while (matcher.find()) {
-            int currentIndex = Integer.parseInt(matcher.group(1));
-            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
-                throw new IllegalStateException("Los índices de la clave de sharding no son continuos.");
-            }
-            previousIndex = currentIndex;
-        }
+    if (!matcher.find()) {
+        throw new IllegalStateException("Model name does not contain sharding indices.");
     }
 
-    public static void main(String[] args) {
-        ShardingKeyChecker checker = new ShardingKeyChecker();
+    // Extract the sharding index from the model name
+    String[] parts = modelName.split("_");
+    int lastIndex = Integer.parseInt(parts[parts.length - 1]);
+
+    // Check if the sharding indices are continuous
+    for (int i = 0; i < parts.length - 1; i++) {
         try {
-            checker.check("model_shard1_shard2_shard3"); // Ejemplo de uso
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
+            int currentIndex = Integer.parseInt(parts[i]);
+            if (currentIndex != lastIndex - (parts.length - 1 - i)) {
+                throw new IllegalStateException("Sharding indices are not continuous.");
+            }
+        } catch (NumberFormatException e) {
+            // Ignore non-numeric parts
         }
     }
 }

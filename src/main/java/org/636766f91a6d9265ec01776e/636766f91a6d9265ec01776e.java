@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ByteOutputStream extends OutputStream {
-
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
@@ -18,8 +17,8 @@ public class ByteOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación para escribir un solo byte.
-        // Este método debe ser implementado por la clase que extienda ByteOutputStream.
-        throw new UnsupportedOperationException("Método write(int) no implementado.");
+        // Implementación de la escritura de un solo byte
+        // Aquí se puede agregar la lógica para escribir el byte en el flujo de salida
+        System.out.write(b);
     }
 }

@@ -16,7 +16,7 @@ public class CustomOutputStream extends OutputStream {
             throw new NullPointerException("El arreglo de bytes no puede ser nulo.");
         }
         if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException("Índice fuera de los límites del arreglo de bytes.");
+            throw new IndexOutOfBoundsException("Índice fuera de los límites.");
         }
         for (int i = 0; i < len; i++) {
             write(b[off + i]);
@@ -25,8 +25,8 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación específica para escribir un solo byte.
+        // Implementación específica para escribir un byte.
         // Este método debe ser implementado por la clase que extienda CustomOutputStream.
-        throw new UnsupportedOperationException("Método no implementado.");
+        throw new IOException("Método no implementado.");
     }
 }

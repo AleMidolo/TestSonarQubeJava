@@ -2,8 +2,8 @@ import java.util.Objects;
 
 public class DefensiveProgramming {
 
-    // Referencia estática para un array vacío
-    private static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
+    // Public static empty array reference
+    public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
      * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p>
@@ -20,11 +20,11 @@ public class DefensiveProgramming {
         return array;
     }
 
+    // Example usage
     public static void main(String[] args) {
-        // Ejemplo de uso
         Character[] array1 = null;
         Character[] array2 = new Character[0];
-        Character[] array3 = {'a', 'b', 'c'};
+        Character[] array3 = new Character[]{'a', 'b', 'c'};
 
         System.out.println(Objects.toString(nullToEmpty(array1))); // []
         System.out.println(Objects.toString(nullToEmpty(array2))); // []

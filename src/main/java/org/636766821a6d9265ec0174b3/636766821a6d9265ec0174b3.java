@@ -1,25 +1,32 @@
-import java.util.function.Function;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 
-/**
- * Invoca el {@link BroadcastFilter}
- * @param msg El mensaje que se desea filtrar.
- * @return El resultado de aplicar el filtro al mensaje.
- */
-protected Object filter(Object msg) {
-    // Asumiendo que BroadcastFilter es una interfaz funcional que toma un Object y devuelve un Object
-    BroadcastFilter filter = new BroadcastFilter() {
-        @Override
-        public Object apply(Object input) {
-            // Implementación del filtro
-            // Aquí puedes agregar la lógica de filtrado
-            return input; // Por defecto, devuelve el mismo mensaje
+public class BroadcastFilterExample {
+
+    protected Object filter(Object msg) {
+        // Assuming msg is an Intent or can be cast to an Intent
+        if (msg instanceof Intent) {
+            Intent intent = (Intent) msg;
+            Context context = getContext(); // Assuming this method provides the context
+            IntentFilter filter = new IntentFilter(intent.getAction());
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    // Handle the broadcast here
+                }
+            };
+            context.registerReceiver(receiver, filter);
+            return receiver;
+        } else {
+            throw new IllegalArgumentException("msg must be an instance of Intent");
         }
-    };
+    }
 
-    return filter.apply(msg);
-}
-
-// Definición de la interfaz BroadcastFilter
-interface BroadcastFilter extends Function<Object, Object> {
-    // La interfaz puede tener métodos adicionales si es necesario
+    // Dummy method to simulate context retrieval
+    private Context getContext() {
+        // This should return the actual context in a real implementation
+        return null;
+    }
 }

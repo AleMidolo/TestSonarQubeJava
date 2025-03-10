@@ -1,38 +1,30 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class FrameVisitor {
-    private Map<Integer, Frame> frames = new HashMap<>();
-    private Frame currentFrame;
+    private int[] currentFrame;
+    private int nextIndex;
 
-    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Crear un nuevo frame y establecerlo como el frame actual
-        currentFrame = new Frame(offset, numLocal, numStack);
-        frames.put(offset, currentFrame);
-
-        // El índice del siguiente elemento que se escribirá en este frame es 0
-        return 0;
+    public FrameVisitor() {
+        this.currentFrame = new int[0];
+        this.nextIndex = 0;
     }
 
-    private static class Frame {
-        private int offset;
-        private int numLocal;
-        private int numStack;
-        private int nextIndex;
-
-        public Frame(int offset, int numLocal, int numStack) {
-            this.offset = offset;
-            this.numLocal = numLocal;
-            this.numStack = numStack;
-            this.nextIndex = 0;
-        }
-
-        public int getNextIndex() {
-            return nextIndex;
-        }
-
-        public void incrementNextIndex() {
-            nextIndex++;
-        }
+    /**
+     * Inicia la visita de un nuevo "stack map frame", almacenado en {@link #currentFrame}.
+     * @param offset   el desplazamiento de bytecode de la instrucción a la que corresponde el "frame".
+     * @param numLocal el número de variables locales en el "frame".
+     * @param numStack el número de elementos apilados en el "frame".
+     * @return el índice del siguiente elemento que se escribirá en este "frame".
+     */
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+        // Calcular el tamaño total del frame
+        int frameSize = numLocal + numStack;
+        
+        // Inicializar el frame con el tamaño calculado
+        currentFrame = new int[frameSize];
+        
+        // Reiniciar el índice del siguiente elemento
+        nextIndex = 0;
+        
+        // Devolver el índice del siguiente elemento que se escribirá
+        return nextIndex;
     }
 }

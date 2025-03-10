@@ -1,27 +1,36 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 public class Logger {
     private List<Appender> appenders;
 
-    public Logger() {
-        this.appenders = new ArrayList<>();
+    public Logger(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
+    /**
+     * Elimina el "appender" con el nombre pasado como parámetro de la lista de "appenders".
+     */
     public void removeAppender(String name) {
-        appenders.removeIf(appender -> appender.getName().equals(name));
+        Iterator<Appender> iterator = appenders.iterator();
+        while (iterator.hasNext()) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+}
+
+class Appender {
+    private String name;
+
+    public Appender(String name) {
+        this.name = name;
     }
 
-    // Assuming Appender class exists with a getName() method
-    private static class Appender {
-        private String name;
-
-        public Appender(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+    public String getName() {
+        return name;
     }
 }

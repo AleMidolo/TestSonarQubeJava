@@ -27,25 +27,13 @@ public class SequenceRange {
     }
 }
 
-public class ProfileSegmentSnapshot {
-
+public class ConfigSnapshot {
     public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> sequenceRanges = new ArrayList<>();
-
+        List<SequenceRange> ranges = new ArrayList<>();
         // Example logic to build sequence ranges
-        // This is a placeholder and should be replaced with actual logic
-        sequenceRanges.add(new SequenceRange(1, 100));
-        sequenceRanges.add(new SequenceRange(101, 200));
-        sequenceRanges.add(new SequenceRange(201, 300));
-
-        return sequenceRanges;
-    }
-
-    public static void main(String[] args) {
-        ProfileSegmentSnapshot snapshot = new ProfileSegmentSnapshot();
-        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
-        for (SequenceRange range : ranges) {
-            System.out.println(range);
-        }
+        ranges.add(new SequenceRange(0, 100));
+        ranges.add(new SequenceRange(101, 200));
+        ranges.add(new SequenceRange(201, 300));
+        return ranges;
     }
 }

@@ -1,32 +1,25 @@
-import java.util.Iterator;
+import java.util.*;
 
-public class GraphIterator implements Iterator<Integer> {
-    private boolean[] visited;
-    private int currentIndex;
+public class Graph {
+    private Set<Integer> visited;
+    private Set<Integer> vertices;
 
-    public GraphIterator(boolean[] visited) {
-        this.visited = visited;
-        this.currentIndex = 0;
+    public Graph(Set<Integer> vertices) {
+        this.vertices = vertices;
+        this.visited = new HashSet<>();
     }
 
+    /** 
+     * 检查是否存在未访问的顶点。
+     * @return 如果存在未访问的顶点，则返回真。
+     */
     @Override
     public boolean hasNext() {
-        for (int i = currentIndex; i < visited.length; i++) {
-            if (!visited[i]) {
+        for (Integer vertex : vertices) {
+            if (!visited.contains(vertex)) {
                 return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public Integer next() {
-        for (int i = currentIndex; i < visited.length; i++) {
-            if (!visited[i]) {
-                currentIndex = i + 1;
-                return i;
-            }
-        }
-        throw new IllegalStateException("No more unvisited vertices");
     }
 }

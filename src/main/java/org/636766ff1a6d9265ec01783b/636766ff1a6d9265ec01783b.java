@@ -1,12 +1,10 @@
-public class SubstringUtils {
-
+public class StringUtils {
     /**
-     * Gets a substring from the specified String avoiding exceptions.
-     * 
-     * @param str   the original string
-     * @param start the starting index (inclusive)
-     * @param end   the ending index (exclusive)
-     * @return the substring, or an empty string if the indices are invalid
+     * 从指定的字符串中获取子字符串，避免抛出异常。
+     * @param str 原始字符串
+     * @param start 起始索引（包含）
+     * @param end 结束索引（不包含）
+     * @return 子字符串，如果索引越界则返回空字符串
      */
     public static String sub(String str, int start, int end) {
         if (str == null) {
@@ -26,11 +24,11 @@ public class SubstringUtils {
     }
 
     public static void main(String[] args) {
-        String testStr = "Hello, World!";
-        System.out.println(sub(testStr, 7, 12)); // Outputs "World"
-        System.out.println(sub(testStr, -1, 5));  // Outputs "Hello"
-        System.out.println(sub(testStr, 7, 100)); // Outputs "World!"
-        System.out.println(sub(testStr, 12, 7));  // Outputs ""
-        System.out.println(sub(null, 0, 5));      // Outputs ""
+        String str = "Hello, World!";
+        System.out.println(sub(str, 7, 12)); // 输出 "World"
+        System.out.println(sub(str, -1, 5)); // 输出 "Hello"
+        System.out.println(sub(str, 7, 20)); // 输出 "World!"
+        System.out.println(sub(null, 0, 5)); // 输出 ""
+        System.out.println(sub(str, 10, 5)); // 输出 ""
     }
 }

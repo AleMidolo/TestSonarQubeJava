@@ -1,27 +1,22 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import org.apache.commons.lang3.tuple.Pair;
+import javafx.util.Pair;
 
 private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-    if (bounds == null || bounds.isEmpty()) {
-        return Pair.of(Collections.emptyList(), 0L);
-    }
-
-    List<Integer> suffixSums = new ArrayList<>(bounds.size());
+    List<Integer> suffixSums = new ArrayList<>();
     long totalSum = 0;
-
-    // Calculate the total sum of all elements
+    
+    // 计算总和
     for (int num : bounds) {
         totalSum += num;
     }
-
-    // Compute suffix sums
+    
+    // 计算后缀和
     long suffixSum = 0;
     for (int i = bounds.size() - 1; i >= 0; i--) {
         suffixSum += bounds.get(i);
-        suffixSums.add(0, (int) suffixSum); // Insert at the beginning to maintain order
+        suffixSums.add(0, (int) suffixSum);
     }
-
-    return Pair.of(suffixSums, totalSum);
+    
+    return new Pair<>(suffixSums, totalSum);
 }

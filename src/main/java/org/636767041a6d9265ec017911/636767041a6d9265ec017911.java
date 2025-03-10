@@ -1,12 +1,12 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class ReflectionUtils {
+public class Registration {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**
-     * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
-     * @param value The object to register.
+     * <p> 注册给定的对象。用于反射方法以避免无限循环。 </p>
+     * @param value 要注册的对象。
      */
     public static void register(Object value) {
         if (value != null) {
@@ -18,7 +18,7 @@ public class ReflectionUtils {
         return registeredObjects.contains(value);
     }
 
-    public static void clearRegisteredObjects() {
+    public static void clearRegistry() {
         registeredObjects.clear();
     }
 }

@@ -1,18 +1,19 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Channels {
-    private List<String> channels;
+    private List<IConsumer> consumers;
 
-    public Channels(List<String> channels) {
-        this.channels = channels;
+    public Channels() {
+        this.consumers = new ArrayList<>();
     }
 
-    public List<String> getChannels() {
-        return channels;
+    public void addConsumer(IConsumer consumer) {
+        this.consumers.add(consumer);
     }
 
-    public void addChannel(String channel) {
-        channels.add(channel);
+    public List<IConsumer> getConsumers() {
+        return consumers;
     }
 }
 
@@ -20,18 +21,14 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetAdder {
+public class TargetChannelManager {
 
     /**
-     * Add a new target channels.
-     *
-     * @param channels The channels to which the new target will be added.
-     * @param consumer The consumer that will handle the new target.
+     * 添加新的目标通道。
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        // Assuming the new target is a string message
-        String newTarget = "New Target Channel";
-        channels.addChannel(newTarget);
-        consumer.consume("Added new target: " + newTarget);
+        if (channels != null && consumer != null) {
+            channels.addConsumer(consumer);
+        }
     }
 }

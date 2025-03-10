@@ -1,10 +1,6 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Assuming Node class has necessary fields and methods
-}
-
-class OuterFaceCirculator {
+public class OuterFaceCirculator {
     private Node current;
 
     public OuterFaceCirculator(Node start) {
@@ -15,35 +11,60 @@ class OuterFaceCirculator {
         return current;
     }
 
-    public void next() {
-        // Implement the logic to move to the next node in the outer face
+    public void next(int dir) {
+        // Assuming dir is 1 for clockwise and -1 for counter-clockwise
+        if (dir == 1) {
+            current = current.getNext();
+        } else if (dir == -1) {
+            current = current.getPrevious();
+        } else {
+            throw new IllegalArgumentException("Invalid direction: " + dir);
+        }
     }
 
-    public void previous() {
-        // Implement the logic to move to the previous node in the outer face
+    public boolean isAt(Node node) {
+        return current.equals(node);
     }
 }
 
-public class GraphTraversal {
+public class Node {
+    private Node next;
+    private Node previous;
 
+    public Node getNext() {
+        return next;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
+    public Node getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Node previous) {
+        this.previous = previous;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Node node = (Node) obj;
+        return this == node; // Assuming identity comparison is sufficient
+    }
+}
+
+public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        Node current = circulator.getCurrent();
-
-        while (current != stop) {
-            if (predicate.test(current)) {
+        while (!circulator.isAt(stop)) {
+            if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
-
-            if (dir == 1) {
-                circulator.next();
-            } else {
-                circulator.previous();
-            }
-
-            current = circulator.getCurrent();
+            circulator.next(dir);
         }
-
         return circulator;
     }
 }

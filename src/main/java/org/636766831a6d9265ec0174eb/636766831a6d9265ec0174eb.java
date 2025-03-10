@@ -3,35 +3,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class FileAdder {
+public class FileHandler {
 
     /**
-     * Add the specified files in reverse order.
+     * 以逆序添加指定的文件。
      */
     private void addReverse(final File[] files) {
-        if (files == null || files.length == 0) {
+        if (files == null) {
             return;
         }
 
         List<File> fileList = new ArrayList<>();
-        Collections.addAll(fileList, files);
+        for (File file : files) {
+            if (file != null) {
+                fileList.add(file);
+            }
+        }
+
         Collections.reverse(fileList);
 
-        // Assuming there is a method to add files, e.g., addFile(File file)
-        for (File file : fileList) {
-            addFile(file);
+        // Assuming there is a method to handle the reversed list of files
+        handleFiles(fileList);
+    }
+
+    private void handleFiles(List<File> files) {
+        // Implementation to handle the list of files
+        for (File file : files) {
+            System.out.println("Processing file: " + file.getName());
         }
     }
 
-    // Dummy method to simulate adding a file
-    private void addFile(File file) {
-        // Implementation to add the file
-        System.out.println("Adding file: " + file.getName());
-    }
-
     public static void main(String[] args) {
-        FileAdder fileAdder = new FileAdder();
+        FileHandler handler = new FileHandler();
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        fileAdder.addReverse(files);
+        handler.addReverse(files);
     }
 }

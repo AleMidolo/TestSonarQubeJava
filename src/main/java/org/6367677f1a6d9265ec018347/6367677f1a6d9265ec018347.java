@@ -8,9 +8,8 @@ public class TelnetServer {
     private List<Socket> clients = new ArrayList<>();
 
     /**
-     * Sends a message to each of the clients in telnet-friendly output.
-     * 
-     * @param message The message to send to all connected clients.
+     * 以适用于 Telnet 的格式向每个客户端发送消息。
+     * @param message 要发送的消息
      */
     public synchronized void send(final String message) {
         for (Socket client : clients) {
@@ -21,24 +20,22 @@ public class TelnetServer {
             } catch (IOException e) {
                 // Handle the exception, e.g., remove the client from the list
                 clients.remove(client);
-                System.err.println("Error sending message to client: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
 
     /**
-     * Adds a new client to the list of connected clients.
-     * 
-     * @param client The client socket to add.
+     * 添加一个新的客户端连接。
+     * @param client 客户端Socket
      */
     public synchronized void addClient(Socket client) {
         clients.add(client);
     }
 
     /**
-     * Removes a client from the list of connected clients.
-     * 
-     * @param client The client socket to remove.
+     * 移除一个客户端连接。
+     * @param client 客户端Socket
      */
     public synchronized void removeClient(Socket client) {
         clients.remove(client);

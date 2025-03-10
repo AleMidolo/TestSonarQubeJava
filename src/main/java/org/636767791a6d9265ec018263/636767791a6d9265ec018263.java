@@ -1,18 +1,15 @@
-import java.lang.Class;
-import java.lang.ClassNotFoundException;
+import java.util.Objects;
 
 public class ClassFinder {
 
     /**
-     * Find class given class name.
-     * @param className class name, may not be null.
-     * @return class, will not be null.
-     * @throws ClassNotFoundException thrown if class can not be found.
+     * 根据类名查找类。
+     * @param className 类名，不能为空。
+     * @return 类，不会空。
+     * @throws ClassNotFoundException 如果找不到类则抛出此异常。
      */
     private Class<?> findClass(final String className) throws ClassNotFoundException {
-        if (className == null) {
-            throw new IllegalArgumentException("Class name cannot be null.");
-        }
+        Objects.requireNonNull(className, "类名不能为空");
         return Class.forName(className);
     }
 }

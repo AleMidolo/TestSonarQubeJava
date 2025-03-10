@@ -32,20 +32,20 @@ class Edge {
 }
 
 class Node {
+    private String id;
     private boolean isVirtual;
-    private Node realCounterpart;
 
-    public Node(boolean isVirtual, Node realCounterpart) {
+    public Node(String id, boolean isVirtual) {
+        this.id = id;
         this.isVirtual = isVirtual;
-        this.realCounterpart = realCounterpart;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public boolean isVirtual() {
         return isVirtual;
-    }
-
-    public Node getRealCounterpart() {
-        return realCounterpart;
     }
 
     @Override
@@ -53,12 +53,12 @@ class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return isVirtual == node.isVirtual && Objects.equals(realCounterpart, node.realCounterpart);
+        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isVirtual, realCounterpart);
+        return Objects.hash(id, isVirtual);
     }
 }
 
@@ -72,8 +72,14 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
-        Node to = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
+        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
         return new Edge(from, to);
+    }
+
+    private Node getRealNode(Node node) {
+        // Assuming there is a method to get the real node corresponding to a virtual node
+        // This is a placeholder implementation
+        return new Node(node.getId(), false);
     }
 }

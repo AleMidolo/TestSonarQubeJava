@@ -5,33 +5,33 @@ import java.awt.*;
 public class TableUtils {
 
     /**
-     * Selects the specified row in the specified JTable and scrolls the specified JScrollPane to the newly selected row.
-     * More importantly, the call to repaint() is delayed long enough to have the table properly paint the newly selected row which may be offscreen.
-     * @param row The row index to select.
-     * @param table The JTable to select the row in. Should belong to the specified JScrollPane.
-     * @param pane The JScrollPane containing the JTable.
+     * 选择指定的 JTable 中的行，并将指定的 JScrollPane 滚动到新选择的行。更重要的是，调用 repaint() 的延迟足够长，以便表格能够正确绘制新选择的行，即使该行可能在当前视图之外。
+     * @param row 要选择的行索引
+     * @param table 应该属于指定的 JScrollPane
+     * @param pane 包含 JTable 的 JScrollPane
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and ScrollPane must not be null.");
+            throw new IllegalArgumentException("Table and pane must not be null");
         }
 
         TableModel model = table.getModel();
         if (row < 0 || row >= model.getRowCount()) {
-            throw new IllegalArgumentException("Row index out of bounds.");
+            throw new IllegalArgumentException("Row index out of bounds");
         }
 
-        // Select the row
+        // 选择指定的行
         table.setRowSelectionInterval(row, row);
 
-        // Scroll to the selected row
+        // 获取行的矩形区域
         Rectangle cellRect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(cellRect);
 
-        // Delay repaint to ensure proper rendering
+        // 将 JScrollPane 滚动到该行的位置
+        pane.getViewport().scrollRectToVisible(cellRect);
+
+        // 延迟调用 repaint() 以确保表格正确绘制新选择的行
         SwingUtilities.invokeLater(() -> {
             table.repaint();
-            pane.repaint();
         });
     }
 }

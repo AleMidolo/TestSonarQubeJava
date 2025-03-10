@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public class DataTable {
-    // Assuming DataTable has some fields and methods
-    // For the purpose of this example, let's assume it has a field 'bucket'
+    // Assuming DataTable class has necessary fields and methods
+    // For example, let's assume it has a field 'bucket' to represent the bucket
     private String bucket;
 
     public DataTable(String bucket) {
@@ -27,14 +27,24 @@ public class DataTable {
     }
 }
 
-public class BucketChecker {
+public class Main {
     /**
-     * @param dataset The dataset to check.
-     * @return true if the bucket is the same.
+     * @param dataset The dataset to compare with.
+     * @return 如果桶相同则返回真。
      */
     public boolean isCompatible(DataTable dataset) {
-        // Assuming we have a reference bucket to compare against
-        DataTable referenceDataset = new DataTable("referenceBucket");
-        return referenceDataset.equals(dataset);
+        // Assuming 'this' refers to another DataTable instance
+        // For example, let's assume 'this' is another DataTable instance
+        DataTable currentDataset = new DataTable("exampleBucket"); // Replace with actual instance
+        return currentDataset.equals(dataset);
+    }
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        DataTable dataset1 = new DataTable("exampleBucket");
+        DataTable dataset2 = new DataTable("differentBucket");
+
+        System.out.println(main.isCompatible(dataset1)); // Should print true if buckets are the same
+        System.out.println(main.isCompatible(dataset2)); // Should print false if buckets are different
     }
 }

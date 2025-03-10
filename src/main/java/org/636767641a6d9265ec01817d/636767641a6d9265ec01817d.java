@@ -6,33 +6,37 @@ import java.util.ArrayList;
 public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * Construct a complete bipartite graph
-     * 
-     * @param target The graph to which the bipartite graph will be added
-     * @param resultMap A map to store the vertices created during the generation
+     * 构建一个完整的二分图
+     * @param target 目标图对象
+     * @param resultMap 用于存储生成的顶点
      */
-    @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming the graph is divided into two sets, setA and setB
-        List<V> setA = new ArrayList<>();
-        List<V> setB = new ArrayList<>();
+        // 假设我们有两组顶点，分别命名为 "A" 和 "B"
+        List<V> groupA = new ArrayList<>();
+        List<V> groupB = new ArrayList<>();
 
-        // Create vertices for setA and setB
-        for (int i = 0; i < 5; i++) { // Example: 5 vertices in each set
+        // 创建顶点并添加到对应的组中
+        for (int i = 0; i < 5; i++) {
             V vertexA = target.addVertex();
-            setA.add(vertexA);
-            resultMap.put("setA_vertex_" + i, vertexA);
+            groupA.add(vertexA);
+            resultMap.put("A" + i, vertexA);
 
             V vertexB = target.addVertex();
-            setB.add(vertexB);
-            resultMap.put("setB_vertex_" + i, vertexB);
+            groupB.add(vertexB);
+            resultMap.put("B" + i, vertexB);
         }
 
-        // Create edges between every vertex in setA and every vertex in setB
-        for (V vertexA : setA) {
-            for (V vertexB : setB) {
-                target.addEdge(vertexA, vertexB);
+        // 在两组顶点之间创建边
+        for (V a : groupA) {
+            for (V b : groupB) {
+                target.addEdge(a, b);
             }
         }
     }
+}
+
+// 假设 Graph 接口如下
+interface Graph<V, E> {
+    V addVertex();
+    E addEdge(V source, V target);
 }

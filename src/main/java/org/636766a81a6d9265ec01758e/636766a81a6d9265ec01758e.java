@@ -3,9 +3,9 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity (within 11% if desiredCapacity >= 1000).
-     * @param desiredCapacity the capacity desired by the user.
-     * @return the capacity which should be used for a hashtable.
+     * 返回一个质数，该质数满足 >= desiredCapacity 且与 desiredCapacity 非常接近（如果 desiredCapacity >= 1000，则误差在 11% 以内）。
+     * @param desiredCapacity 用户所需的容量。
+     * @return 应该用于哈希表的容量。
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 2) {
@@ -40,6 +40,7 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // Example usage
+        int desiredCapacity = 1000;
+        System.out.println("Next prime >= " + desiredCapacity + " is: " + nextPrime(desiredCapacity));
     }
 }

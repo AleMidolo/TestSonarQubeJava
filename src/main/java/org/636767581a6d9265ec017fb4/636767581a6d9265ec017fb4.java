@@ -2,29 +2,23 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UpperBoundCalculator<K extends Comparable<K>> {
-
-    /**
-     * Finds a minimum lower bound for every key.
-     * @param keys a list of keys.
-     * @return the computed key upper bound.
-     */
-    private List<Integer> computeUpperBounds(List<K> keys) {
-        if (keys == null || keys.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        List<Integer> upperBounds = new ArrayList<>();
-        for (int i = 0; i < keys.size(); i++) {
-            int upperBound = 0;
-            for (int j = 0; j < keys.size(); j++) {
-                if (i != j && keys.get(j).compareTo(keys.get(i)) < 0) {
-                    upperBound++;
-                }
-            }
-            upperBounds.add(upperBound);
-        }
-
+private List<Integer> computeUpperBounds(List<K> keys) {
+    List<Integer> upperBounds = new ArrayList<>();
+    if (keys == null || keys.isEmpty()) {
         return upperBounds;
     }
+
+    // Assuming K is a Comparable type, we can sort the keys
+    List<K> sortedKeys = new ArrayList<>(keys);
+    Collections.sort(sortedKeys);
+
+    // The upper bound for each key is the next key in the sorted list
+    for (int i = 0; i < sortedKeys.size() - 1; i++) {
+        upperBounds.add((Integer) sortedKeys.get(i + 1));
+    }
+
+    // The last key has no upper bound, so we can add a special value (e.g., Integer.MAX_VALUE)
+    upperBounds.add(Integer.MAX_VALUE);
+
+    return upperBounds;
 }

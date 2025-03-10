@@ -24,19 +24,11 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    private void addListNode(ListNodeImpl<E> node) {
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = node;
-        }
-        size++;
-    }
-
     private void removeListNode(ListNodeImpl<E> node) {
+        if (node == null) {
+            return;
+        }
+
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -54,13 +46,31 @@ public class DoublyLinkedList<E> {
         size--;
     }
 
+    private void addListNode(ListNodeImpl<E> node) {
+        if (node == null) {
+            return;
+        }
+
+        if (tail == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.next = node;
+            node.prev = tail;
+            tail = node;
+        }
+        size++;
+    }
+
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list, "The input list cannot be null");
 
-        while (list.head != null) {
-            ListNodeImpl<E> node = list.head;
-            list.removeListNode(node);
-            this.addListNode(node);
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> next = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = next;
         }
     }
 }

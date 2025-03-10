@@ -1,22 +1,53 @@
 import java.io.IOException;
 
-private void checkIfPackedField() throws IOException {
-    // Assuming 'isPacked' is a boolean field that indicates if the field is packed
-    // and 'inputStream' is an InputStream or similar object used to read the data.
-    
-    if (isPacked) {
-        // Update internal state to reflect that packed fields are being read
-        // For example, set a flag or update a counter
-        readingPackedFields = true;
-        
-        // Optionally, read the length of the packed field
-        int length = inputStream.read();
-        if (length == -1) {
-            throw new IOException("Unexpected end of input stream while reading packed field length");
+public class PackedFieldChecker {
+
+    private boolean isPackedField = false;
+    private int packedFieldLength = 0;
+
+    /**
+     * 检查该字段是否已被打包为长度限定字段。如果是，则更新内部状态以反映正在读取打包字段。
+     * @throws IOException
+     */
+    private void checkIfPackedField() throws IOException {
+        // 假设我们有一个方法来检查字段是否被打包
+        boolean isPacked = checkFieldPackedStatus();
+
+        if (isPacked) {
+            isPackedField = true;
+            packedFieldLength = readPackedFieldLength();
+            // 更新内部状态以反映正在读取打包字段
+            updateInternalStateForPackedField();
+        } else {
+            isPackedField = false;
+            packedFieldLength = 0;
         }
-        
-        // Update any other internal state as necessary
-        // For example, set the number of bytes to read for the packed field
-        bytesToRead = length;
+    }
+
+    private boolean checkFieldPackedStatus() {
+        // 实现检查字段是否被打包的逻辑
+        // 这里只是一个示例，实际实现可能不同
+        return false;
+    }
+
+    private int readPackedFieldLength() throws IOException {
+        // 实现读取打包字段长度的逻辑
+        // 这里只是一个示例，实际实现可能不同
+        return 0;
+    }
+
+    private void updateInternalStateForPackedField() {
+        // 实现更新内部状态的逻辑
+        // 这里只是一个示例，实际实现可能不同
+    }
+
+    public static void main(String[] args) {
+        // 示例用法
+        PackedFieldChecker checker = new PackedFieldChecker();
+        try {
+            checker.checkIfPackedField();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

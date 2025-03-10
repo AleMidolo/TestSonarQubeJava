@@ -3,16 +3,19 @@ import java.nio.charset.StandardCharsets;
 public class UTF8SizeCalculator {
 
     /**
-     * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
-     *
-     * @param str   the input character sequence
-     * @param index the starting index of the substring
-     * @param len   the length of the substring
-     * @return the size in bytes of the UTF-8 encoded substring
+     * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
+     * 
+     * @param str 输入的字符序列
+     * @param index 开始计算的索引
+     * @param len 要计算的字符长度
+     * @return UTF-8 编码后的字节大小
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        if (str == null || index < 0 || len < 0 || index + len > str.length()) {
-            throw new IllegalArgumentException("Invalid input parameters");
+        if (str == null) {
+            throw new IllegalArgumentException("Input string cannot be null");
+        }
+        if (index < 0 || len < 0 || index + len > str.length()) {
+            throw new IllegalArgumentException("Invalid index or length");
         }
 
         String substring = str.subSequence(index, index + len).toString();
@@ -25,6 +28,6 @@ public class UTF8SizeCalculator {
         int index = 7;
         int len = 2;
         int size = computeUTF8Size(str, index, len);
-        System.out.println("UTF-8 size: " + size); // Output: UTF-8 size: 6
+        System.out.println("UTF-8 size: " + size); // 输出: UTF-8 size: 6
     }
 }

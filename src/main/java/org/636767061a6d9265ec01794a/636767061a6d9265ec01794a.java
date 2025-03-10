@@ -1,11 +1,9 @@
-import java.util.Objects;
-
 public class FileUtils {
 
     /**
-     * Returns the index of the last extension separator character, which is a dot. <p> This method also checks that there is no directory separator after the last dot. To do this it uses  {@link #indexOfLastSeparator(String)} which will handle a file in either Unix or Windows format. <p> The output will be the same irrespective of the machine that the code is running on.
-     * @param filename  the filename to find the last path separator in, null returns -1
-     * @return the index of the last separator character, or -1 if there is no such character
+     * 返回最后一个扩展名分隔符（即点号）的索引。<p> 此方法还检查最后一个点后面是否没有目录分隔符。为此，它使用 {@link #indexOfLastSeparator(String)}，该方法可以处理Unix或Windows格式的文件。<p> 无论代码运行在哪台机器上，输出结果都是相同的。
+     * @param filename 要查找最后一个路径分隔符的文件名，如果为空则返回-1
+     * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
      */
     public static int indexOfExtension(String filename) {
         if (filename == null) {
@@ -15,6 +13,7 @@ public class FileUtils {
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
+        // 如果最后一个点号在最后一个分隔符之前，或者没有点号，则返回-1
         if (lastSeparatorIndex > extensionIndex) {
             return -1;
         }
@@ -23,9 +22,9 @@ public class FileUtils {
     }
 
     /**
-     * Returns the index of the last directory separator character.
-     * @param filename  the filename to find the last path separator in, null returns -1
-     * @return the index of the last separator character, or -1 if there is no such character
+     * 返回最后一个路径分隔符的索引。该方法可以处理Unix或Windows格式的文件。
+     * @param filename 要查找最后一个路径分隔符的文件名
+     * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
      */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
@@ -39,10 +38,14 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("example/file.txt")); // Output: 13
-        System.out.println(indexOfExtension("example/file"));    // Output: -1
-        System.out.println(indexOfExtension("example/file."));    // Output: 13
-        System.out.println(indexOfExtension("example/file.txt.gz")); // Output: 17
-        System.out.println(indexOfExtension(null));              // Output: -1
+        String filename1 = "path/to/file.txt";
+        String filename2 = "path\\to\\file.txt";
+        String filename3 = "path/to/file";
+        String filename4 = null;
+
+        System.out.println(indexOfExtension(filename1)); // 输出: 12
+        System.out.println(indexOfExtension(filename2)); // 输出: 12
+        System.out.println(indexOfExtension(filename3)); // 输出: -1
+        System.out.println(indexOfExtension(filename4)); // 输出: -1
     }
 }

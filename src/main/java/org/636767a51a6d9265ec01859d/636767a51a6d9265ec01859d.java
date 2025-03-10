@@ -1,23 +1,27 @@
 import java.util.Arrays;
 
-public class ArrayComparator {
-
-    private byte[] internalArray;
-
-    public ArrayComparator(byte[] internalArray) {
-        this.internalArray = internalArray;
-    }
+public class ByteArrayComparator {
 
     /**
-     * Returns true if the contents of the internal array and the provided array match.
+     * 如果内部数组的内容与提供的数组匹配，则返回真。
+     *
+     * @param data   提供的数组
+     * @param offset 内部数组的起始偏移量
+     * @param len    要比较的长度
+     * @return 如果内部数组的内容与提供的数组匹配，则返回真
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+        // 假设内部数组为 internalData
+        byte[] internalData = getInternalData(); // 这个方法需要你自己实现
+
+        // 检查边界条件
+        if (data == null || internalData == null || offset < 0 || len < 0 || offset + len > internalData.length || len > data.length) {
             return false;
         }
 
+        // 比较数组内容
         for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
+            if (internalData[offset + i] != data[i]) {
                 return false;
             }
         }
@@ -25,14 +29,9 @@ public class ArrayComparator {
         return true;
     }
 
-    public static void main(String[] args) {
-        byte[] internalArray = {1, 2, 3, 4, 5};
-        ArrayComparator comparator = new ArrayComparator(internalArray);
-
-        byte[] data = {0, 1, 2, 3, 4, 5, 6};
-        int offset = 1;
-        int len = 5;
-
-        System.out.println(comparator.equals(data, offset, len)); // Should print true
+    // 假设这是一个获取内部数组的方法
+    private byte[] getInternalData() {
+        // 这里返回内部数组，实际实现需要根据你的需求来定
+        return new byte[0];
     }
 }

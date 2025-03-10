@@ -1,28 +1,36 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
     /**
-     * प्रत्येक कुंजी के लिए अधिकतम निम्न सीमा खोजता है।
-     * @param keys कुंजी की सूची।
-     * @return गणना की गई कुंजी की निम्न सीमाएँ।
+     * Finds a maximum lower bound for every key.
+     * @param keys list of keys.
+     * @return the computed key lower bounds.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
+        if (keys == null || keys.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         List<Integer> lowerBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        TreeSet<K> sortedKeys = new TreeSet<>(keys);
 
         for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // If the key is not found, calculate the insertion point
-                index = -index - 1;
+            K lowerBound = sortedKeys.lower(key);
+            if (lowerBound != null) {
+                lowerBounds.add(lowerBound.hashCode());
+            } else {
+                lowerBounds.add(Integer.MIN_VALUE); // No lower bound found
             }
-            lowerBounds.add(index);
         }
 
         return lowerBounds;
+    }
+
+    public static void main(String[] args) {
+        LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
+        List<Integer> keys = Arrays.asList(5, 3, 8, 1, 4);
+        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
+        System.out.println(lowerBounds); // Example output: [4, 1, 5, -2147483648, 3]
     }
 }

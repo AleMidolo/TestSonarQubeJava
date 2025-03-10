@@ -1,22 +1,24 @@
 import java.util.Properties;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertySubstitution {
+public class PropertySubstitutor {
 
+    /**
+     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     */
     public static String findAndSubst(String key, Properties props) {
-        // Get the value associated with the key from the properties
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Return null if the key is not found
+            return null;
         }
 
-        // Define a pattern to match variables in the format ${variable}
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+        // Pattern to match ${variable} in the value
+        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Perform variable substitution
         while (matcher.find()) {
             String variable = matcher.group(1);
             String replacement = props.getProperty(variable, "");

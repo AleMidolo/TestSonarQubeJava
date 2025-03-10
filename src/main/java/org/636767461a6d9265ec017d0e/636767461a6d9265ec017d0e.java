@@ -1,22 +1,24 @@
 import java.util.List;
 import java.util.ArrayList;
-import javafx.util.Pair;
+import java.util.Collections;
+import org.apache.commons.lang3.tuple.Pair;
 
 private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-    List<Integer> suffixSums = new ArrayList<>();
+    if (bounds == null || bounds.isEmpty()) {
+        return Pair.of(Collections.emptyList(), 0L);
+    }
+
+    List<Integer> suffixSum = new ArrayList<>(bounds.size());
     long totalSum = 0;
-    
-    // Calculate the suffix sums
-    int suffixSum = 0;
+
+    // Compute the total sum and initialize the suffix sum list
     for (int i = bounds.size() - 1; i >= 0; i--) {
-        suffixSum += bounds.get(i);
-        suffixSums.add(0, suffixSum); // Add to the beginning of the list
+        totalSum += bounds.get(i);
+        suffixSum.add((int) totalSum);
     }
-    
-    // Calculate the total sum of all elements
-    for (int num : bounds) {
-        totalSum += num;
-    }
-    
-    return new Pair<>(suffixSums, totalSum);
+
+    // Reverse the suffix sum list to get the correct order
+    Collections.reverse(suffixSum);
+
+    return Pair.of(suffixSum, totalSum);
 }

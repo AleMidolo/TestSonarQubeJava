@@ -4,6 +4,14 @@ import java.io.OutputStream;
 public class CustomOutputStream extends OutputStream {
 
     @Override
+    public void write(int b) throws IOException {
+        // Implement single byte write logic here
+    }
+
+    /**
+     * @see OutputStream#write(byte[])
+     */
+    @Override
     public void write(final byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException("Byte array is null");
@@ -12,7 +20,7 @@ public class CustomOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(final byte[] b, final int off, final int len) throws IOException {
+    public void write(byte[] b, int off, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException("Byte array is null");
         }
@@ -22,13 +30,5 @@ public class CustomOutputStream extends OutputStream {
         for (int i = 0; i < len; i++) {
             write(b[off + i]);
         }
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        // Implement the logic to write a single byte
-        // For example, write to a file, network stream, etc.
-        // This is a placeholder implementation
-        System.out.write(b);
     }
 }

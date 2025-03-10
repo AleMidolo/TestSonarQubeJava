@@ -1,40 +1,32 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/**
- * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
- */
-private void addReverse(final InputStream[] files) {
-    try {
-        // Create a ByteArrayOutputStream to hold the concatenated data
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+public class FileAdder {
 
-        // Iterate over the files in reverse order
-        for (int i = files.length - 1; i >= 0; i--) {
-            InputStream inputStream = files[i];
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-
-            // Read from the input stream and write to the output stream
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            // Close the input stream
-            inputStream.close();
+    /**
+     * Add the specified files in reverse order.
+     */
+    private void addReverse(final InputStream[] files) {
+        if (files == null || files.length == 0) {
+            return;
         }
 
-        // Convert the output stream to a byte array
-        byte[] result = outputStream.toByteArray();
+        // Convert the array to a list for easier manipulation
+        List<InputStream> fileList = new ArrayList<>();
+        for (InputStream file : files) {
+            fileList.add(file);
+        }
 
-        // Close the output stream
-        outputStream.close();
+        // Reverse the list
+        Collections.reverse(fileList);
 
-        // Use the result as needed (e.g., print it or return it)
-        System.out.println(new String(result));
-
-    } catch (IOException e) {
-        e.printStackTrace();
+        // Process the files in reverse order
+        for (InputStream file : fileList) {
+            // Add your logic here to process each file
+            // For example, you might want to read from the InputStream
+            // or perform some other operation.
+        }
     }
 }

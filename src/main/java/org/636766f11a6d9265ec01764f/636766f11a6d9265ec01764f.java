@@ -10,8 +10,8 @@ public class BeanMap {
     }
 
     /**
-     * BeanMap के लिए मान लौटाता है।
-     * @return BeanMap के लिए मान। लौटाई गई संग्रह को संशोधित नहीं किया जा सकता है।
+     * Returns the values for the BeanMap.
+     * @return values for the BeanMap. The returned collection is not modifiable.
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());

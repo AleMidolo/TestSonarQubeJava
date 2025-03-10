@@ -1,20 +1,20 @@
 import java.util.Stack;
 
-public class OutputFrameStack {
-    private Stack<Integer> stack;
+public class FrameStack {
+    private Stack<Integer> outputFrameStack;
 
-    public OutputFrameStack() {
-        stack = new Stack<>();
+    public FrameStack() {
+        this.outputFrameStack = new Stack<>();
     }
 
     /**
-     * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
-     * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
+     * Pops an abstract type from the output frame stack and returns its value.
+     * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
-        if (stack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty");
+        if (outputFrameStack.isEmpty()) {
+            throw new IllegalStateException("Cannot pop from an empty stack.");
         }
-        return stack.pop();
+        return outputFrameStack.pop();
     }
 }

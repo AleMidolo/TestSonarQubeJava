@@ -1,35 +1,56 @@
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import java.util.Objects;
 
-public class BroadcastFilter extends BroadcastReceiver {
+/**
+ * Invoke the {@link BroadcastFilter}
+ * @param msg The message to be filtered
+ * @return The filtered message or null if the message is filtered out
+ */
+protected Object filter(Object msg) {
+    // Assuming BroadcastFilter is an interface or class that defines a filtering mechanism
+    // For the sake of this example, let's assume BroadcastFilter has a method called filterMessage
+    // which takes an Object and returns a filtered Object or null if the message is filtered out.
 
-    /**
-     * {@link BroadcastFilter} को कॉल करें
-     * @param msg
-     * @return
-     */
-    protected Object filter(Object msg) {
-        // Implement your filtering logic here
-        // For example, you can check the type of msg and return a filtered result
-        if (msg instanceof String) {
-            String message = (String) msg;
-            // Example: Filter out messages containing "test"
-            if (message.contains("test")) {
-                return null; // Filter out the message
-            }
-        }
-        return msg; // Return the original message if no filtering is needed
+    // Example implementation:
+    if (msg == null) {
+        return null;
+    }
+
+    // Example filtering logic: filter out messages that are empty strings
+    if (msg instanceof String && ((String) msg).trim().isEmpty()) {
+        return null;
+    }
+
+    // Example filtering logic: filter out messages that are not instances of a specific class
+    if (!(msg instanceof MyCustomMessageClass)) {
+        return null;
+    }
+
+    // If the message passes all filters, return it as is
+    return msg;
+}
+
+// Example custom message class
+class MyCustomMessageClass {
+    private String content;
+
+    public MyCustomMessageClass(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        // Handle the broadcast here
-        Object msg = intent.getSerializableExtra("message");
-        Object filteredMsg = filter(msg);
-        if (filteredMsg != null) {
-            // Process the filtered message
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyCustomMessageClass that = (MyCustomMessageClass) o;
+        return Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
     }
 }

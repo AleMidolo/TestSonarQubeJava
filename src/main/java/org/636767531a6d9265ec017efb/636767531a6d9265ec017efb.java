@@ -8,17 +8,17 @@ public class Bucket {
         }
 
         // Set the previous of the new bucket to the previous of the current bucket
-        bucket.prev = this.prev;
+        this.prev = bucket.prev;
 
         // Set the next of the new bucket to the current bucket
-        bucket.next = this;
+        this.next = bucket;
 
-        // If there is a previous bucket, set its next to the new bucket
-        if (this.prev != null) {
-            this.prev.next = bucket;
+        // If the current bucket has a previous, set its next to the new bucket
+        if (bucket.prev != null) {
+            bucket.prev.next = this;
         }
 
         // Set the previous of the current bucket to the new bucket
-        this.prev = bucket;
+        bucket.prev = this;
     }
 }

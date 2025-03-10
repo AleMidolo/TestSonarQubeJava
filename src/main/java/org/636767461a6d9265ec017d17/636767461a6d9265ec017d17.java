@@ -1,27 +1,29 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UnescapeIdExample {
-
-    /**
-     * एक स्ट्रिंग DOT पहचानकर्ता को अनएस्केप करें।
-     * @param input इनपुट
-     * @return अनएस्केप किया गया आउटपुट
-     */
-    private static String unescapeId(String input) {
-        if (input == null) {
-            return null;
-        }
-        
-        // Replace escaped dots with actual dots
-        String unescaped = input.replace("\\.", ".");
-        
-        return unescaped;
+private String unescapeId(String input) {
+    if (input == null) {
+        return null;
     }
 
-    public static void main(String[] args) {
-        String input = "example\\.com";
-        String result = unescapeId(input);
-        System.out.println(result);  // Output: example.com
+    // Replace escaped quotes and backslashes
+    input = input.replace("\\\"", "\"");
+    input = input.replace("\\\\", "\\");
+
+    // Replace escaped newlines, tabs, etc.
+    input = input.replace("\\n", "\n");
+    input = input.replace("\\r", "\r");
+    input = input.replace("\\t", "\t");
+
+    // Replace other escaped characters
+    Pattern pattern = Pattern.compile("\\\\(.)");
+    Matcher matcher = pattern.matcher(input);
+    StringBuffer sb = new StringBuffer();
+
+    while (matcher.find()) {
+        matcher.appendReplacement(sb, matcher.group(1));
     }
+    matcher.appendTail(sb);
+
+    return sb.toString();
 }

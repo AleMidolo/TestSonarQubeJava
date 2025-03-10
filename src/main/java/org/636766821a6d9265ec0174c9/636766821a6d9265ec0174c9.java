@@ -3,11 +3,11 @@ import java.io.File;
 public class ClassPathUtil {
 
     /**
-     * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
+     * Returns the class path of the current JVM instance as an array of {@link File} objects.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
-        String[] pathElements = classPath.split(System.getProperty("path.separator"));
+        String[] pathElements = classPath.split(File.pathSeparator);
         File[] files = new File[pathElements.length];
         
         for (int i = 0; i < pathElements.length; i++) {

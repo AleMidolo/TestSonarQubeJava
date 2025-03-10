@@ -1,53 +1,71 @@
 import java.util.function.Predicate;
 
-public class GraphTraversal {
+public class OuterFaceCirculator {
+    private Node current;
 
-    private static class Node {
-        // Node implementation details
+    public OuterFaceCirculator(Node node) {
+        this.current = node;
     }
 
-    private static class OuterFaceCirculator {
-        // OuterFaceCirculator implementation details
+    public Node getCurrent() {
+        return current;
     }
 
-    /**
-     * या तो उस नोड के लिए एक सर्कुलेटर खोजता है और लौटाता है जो घटक की सीमा पर है, जो {@code predicate} को संतुष्ट करता है या {@code stop} नोड के लिए एक सर्कुलेटर लौटाता है।
-     * @param predicate वह शर्त है जिसे इच्छित नोड को संतुष्ट करना चाहिए
-     * @param start वह नोड है जिससे खोज शुरू की जानी है
-     * @param stop वह नोड है जिस पर खोज समाप्त होनी है
-     * @param dir वह दिशा है जिसमें यात्रा शुरू की जानी है
-     * @return {@code predicate} को संतुष्ट करने वाले नोड के लिए एक सर्कुलेटर या {@code stop} नोड के लिए
-     */
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        Node current = start;
-        OuterFaceCirculator circulator = new OuterFaceCirculator();
-
-        while (current != stop) {
-            if (predicate.test(current)) {
-                return circulator; // Return circulator for the node that satisfies the predicate
-            }
-            // Move to the next node based on the direction
-            current = getNextNode(current, dir);
+    public void next(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getNextClockwise();
+        } else {
+            current = current.getNextCounterClockwise();
         }
-
-        // If the loop ends, return circulator for the stop node
-        return circulator;
     }
 
-    private Node getNextNode(Node current, int dir) {
-        // Implementation to get the next node based on the direction
-        // This is a placeholder and should be implemented based on the actual graph structure
-        return new Node();
+    public void previous(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getPreviousClockwise();
+        } else {
+            current = current.getPreviousCounterClockwise();
+        }
+    }
+}
+
+public class Node {
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
+    private Node previousClockwise;
+    private Node previousCounterClockwise;
+
+    public Node getNextClockwise() {
+        return nextClockwise;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        GraphTraversal traversal = new GraphTraversal();
-        Node startNode = new Node();
-        Node stopNode = new Node();
-        Predicate<Node> predicate = node -> true; // Example predicate
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
+    }
 
-        OuterFaceCirculator result = traversal.selectOnOuterFace(predicate, startNode, stopNode, 0);
-        // Use the result as needed
+    public Node getPreviousClockwise() {
+        return previousClockwise;
+    }
+
+    public Node getPreviousCounterClockwise() {
+        return previousCounterClockwise;
+    }
+
+    // Other methods and fields...
+}
+
+private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+
+    while (true) {
+        Node currentNode = circulator.getCurrent();
+        if (predicate.test(currentNode)) {
+            return circulator;
+        }
+        if (currentNode == stop) {
+            return circulator;
+        }
+        circulator.next(dir);
     }
 }

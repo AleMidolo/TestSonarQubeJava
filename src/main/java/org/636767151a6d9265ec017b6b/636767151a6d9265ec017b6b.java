@@ -1,10 +1,10 @@
 /**
- * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग से शुरू होता है (वैकल्पिक रूप से केस-इंसेंसिटिव)।</p>
+ * <p>Check if a String starts with a specified prefix (optionally case insensitive).</p>
  * @see String#startsWith(String)
- * @param str  वह String जिसे जांचना है, यह null हो सकता है
- * @param prefix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
- * @param ignoreCase यह दर्शाता है कि तुलना में केस को नजरअंदाज करना चाहिए या नहीं (केस-इंसेंसिटिव)।
- * @return <code>true</code> यदि String उपसर्ग से शुरू होता है या दोनों <code>null</code> हैं
+ * @param str  the String to check, may be null
+ * @param prefix the prefix to find, may be null
+ * @param ignoreCase inidicates whether the compare should ignore case(case insensitive) or not.
+ * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
  */
 private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
     if (str == null && prefix == null) {

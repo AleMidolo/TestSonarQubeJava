@@ -1,18 +1,18 @@
 import java.util.Objects;
 
-public class ArrayReverser {
+public class ArrayUtils {
 
     /**
-     * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
-     * @param <V> ऐरे में तत्वों का प्रकार
-     * @param arr ऐरे
-     * @param from उलटने के लिए सीमा के भीतर पहले तत्व का अनुक्रमांक (समावेशी)
-     * @param to उलटने के लिए सीमा के भीतर अंतिम तत्व का अनुक्रमांक (समावेशी)
+     * Reverses the order of the elements in the specified range within the given array.
+     * @param <V> the type of elements in the array
+     * @param arr the array
+     * @param from the index of the first element (inclusive) inside the range to reverse
+     * @param to the index of the last element (inclusive) inside the range to reverse
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "ऐरे null नहीं हो सकता");
+        Objects.requireNonNull(arr, "The input array must not be null.");
         if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("अमान्य सीमा मान");
+            throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
         }
 
         while (from < to) {
@@ -25,12 +25,12 @@ public class ArrayReverser {
     }
 
     public static void main(String[] args) {
-        // उदाहरण उपयोग
-        Integer[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 1, 3);
-        for (Integer num : arr) {
+        // Example usage
+        Integer[] array = {1, 2, 3, 4, 5, 6, 7};
+        reverse(array, 2, 5);
+        for (Integer num : array) {
             System.out.print(num + " ");
         }
-        // आउटपुट: 1 4 3 2 5
+        // Output: 1 2 6 5 4 3 7
     }
 }

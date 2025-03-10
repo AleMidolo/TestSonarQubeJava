@@ -4,7 +4,7 @@ public class QueueToString {
     private Queue<Object> queue;
 
     public QueueToString() {
-        queue = new LinkedList<>();
+        this.queue = new LinkedList<>();
     }
 
     public void enqueue(Object item) {
@@ -15,20 +15,26 @@ public class QueueToString {
         return queue.poll();
     }
 
-    /**
-     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
-     * @return कतार का पाठ्य प्रतिनिधित्व।
-     */
     @Override
     public String toString() {
-        return queue.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Object item : queue) {
+            sb.append(item);
+            sb.append(", ");
+        }
+        if (!queue.isEmpty()) {
+            sb.delete(sb.length() - 2, sb.length()); // Remove the trailing ", "
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     public static void main(String[] args) {
         QueueToString q = new QueueToString();
-        q.enqueue("A");
-        q.enqueue("B");
-        q.enqueue("C");
-        System.out.println(q.toString()); // Output: [A, B, C]
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        System.out.println(q.toString()); // Output: [1, 2, 3]
     }
 }

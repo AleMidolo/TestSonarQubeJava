@@ -1,17 +1,17 @@
 public class StringUtils {
 
     /**
-     * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> 
-     * <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
-     * @param str  जांचने के लिए <code>String</code>
-     * @return <code>true</code> यदि str में केवल यूनिकोड संख्या है
+     * <p>Checks whether the <code>String</code> contains only digit characters.</p> 
+     * <p><code>Null</code> and empty String will return <code>false</code>.</p>
+     * @param str  the <code>String</code> to check
+     * @return <code>true</code> if str contains only unicode numeric
      */
     public static boolean isDigits(String str) {
         if (str == null || str.isEmpty()) {
             return false;
         }
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
                 return false;
             }
         }

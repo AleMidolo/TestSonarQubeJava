@@ -1,47 +1,29 @@
-class ListNodeImpl<E> {
-    E data;
-    ListNodeImpl<E> next;
+// Assuming ListNodeImpl is a class that represents a node in a linked list
+// and it has the following structure:
+// class ListNodeImpl<E> {
+//     E value;
+//     ListNodeImpl<E> next;
+//     ListNodeImpl<E> prev;
+// }
 
-    ListNodeImpl(E data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
-public class LinkedList<E> {
-    private ListNodeImpl<E> head;
-
-    public LinkedList() {
-        this.head = null;
-    }
-
-    /**
-     * सूची से गैर-शून्य {@code node} को हटा दें।
-     */
-    private boolean unlink(ListNodeImpl<E> node) {
-        if (node == null) {
-            return false;
-        }
-
-        if (head == null) {
-            return false;
-        }
-
-        // If the node to be unlinked is the head
-        if (head == node) {
-            head = head.next;
-            return true;
-        }
-
-        ListNodeImpl<E> current = head;
-        while (current.next != null) {
-            if (current.next == node) {
-                current.next = current.next.next;
-                return true;
-            }
-            current = current.next;
-        }
-
+private boolean unlink(ListNodeImpl<E> node) {
+    if (node == null) {
         return false;
     }
+
+    // If the node has a previous node, update its next reference
+    if (node.prev != null) {
+        node.prev.next = node.next;
+    }
+
+    // If the node has a next node, update its previous reference
+    if (node.next != null) {
+        node.next.prev = node.prev;
+    }
+
+    // Clear the node's references to help with garbage collection
+    node.next = null;
+    node.prev = null;
+
+    return true;
 }

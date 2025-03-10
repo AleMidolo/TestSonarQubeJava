@@ -8,6 +8,9 @@ public class Logger {
         this.appenders = appenders;
     }
 
+    /**
+     * Call the <code>doAppend</code> method on all attached appenders.
+     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int count = 0;
         if (appenders != null) {

@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * दिए गए String से अंतिमWhitespace को हटाएं।
-     * @param str वह String जिसे जांचना है
-     * @return ट्रिम किया हुआ String
+     * Trim trailing whitespace from the given String.
+     * @param str the String to check
+     * @return the trimmed String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
@@ -20,8 +20,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello World   ";
-        String output = trimTrailingWhitespace(input);
-        System.out.println("'" + output + "'");  // Output: 'Hello World'
+        String testString = "Hello World   ";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimTrailingWhitespace(testString) + "'");
     }
 }

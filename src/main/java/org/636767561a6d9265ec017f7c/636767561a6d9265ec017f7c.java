@@ -1,49 +1,54 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.GraphWalk;
+import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultGraphPath;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-/**
- * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
- * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
- * @param graph ग्राफ
- * @return एक ग्राफ पथ
- */
 protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        return new GraphWalk<>(graph, new ArrayList<>(), 0.0);
+        throw new IllegalArgumentException("Tour set cannot be empty.");
     }
 
-    List<E> edgeList = new ArrayList<>(tour);
-    List<V> vertexList = new ArrayList<>();
-
-    // Start with the source vertex of the first edge
-    V startVertex = graph.getEdgeSource(edgeList.get(0));
-    vertexList.add(startVertex);
-
-    // Traverse the edges to build the vertex list
-    for (E edge : edgeList) {
+    // Create a map to store the adjacency of vertices
+    Map<V, V> adjacencyMap = new HashMap<>();
+    for (E edge : tour) {
         V source = graph.getEdgeSource(edge);
         V target = graph.getEdgeTarget(edge);
+        adjacencyMap.put(source, target);
+    }
 
-        if (vertexList.get(vertexList.size() - 1).equals(source)) {
-            vertexList.add(target);
-        } else if (vertexList.get(vertexList.size() - 1).equals(target)) {
-            vertexList.add(source);
-        } else {
-            throw new IllegalArgumentException("The edge set does not form a valid tour.");
+    // Find the starting vertex (a vertex with only one occurrence in the adjacency map)
+    V startVertex = null;
+    for (V vertex : adjacencyMap.keySet()) {
+        if (!adjacencyMap.containsValue(vertex)) {
+            startVertex = vertex;
+            break;
         }
     }
 
-    // Calculate the total weight of the path
-    double totalWeight = 0.0;
-    for (E edge : edgeList) {
-        totalWeight += graph.getEdgeWeight(edge);
+    if (startVertex == null) {
+        throw new IllegalArgumentException("Tour does not form a valid path.");
     }
 
-    return new GraphWalk<>(graph, vertexList, edgeList, totalWeight);
+    // Build the path
+    List<E> edgeList = new ArrayList<>();
+    V currentVertex = startVertex;
+    while (adjacencyMap.containsKey(currentVertex)) {
+        V nextVertex = adjacencyMap.get(currentVertex);
+        E edge = graph.getEdge(currentVertex, nextVertex);
+        if (edge == null) {
+            throw new IllegalArgumentException("Edge not found in the graph.");
+        }
+        edgeList.add(edge);
+        currentVertex = nextVertex;
+    }
+
+    // Create and return the GraphPath
+    return new DefaultGraphPath<>(graph, startVertex, currentVertex, edgeList, 0.0);
 }

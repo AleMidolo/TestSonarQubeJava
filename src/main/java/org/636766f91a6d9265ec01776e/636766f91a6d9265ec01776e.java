@@ -2,18 +2,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ByteArrayOutputStream extends OutputStream {
-    private byte[] buffer;
+    private byte[] buf;
     private int count;
 
     public ByteArrayOutputStream() {
-        this(32); // Default buffer size
+        this(32);
     }
 
     public ByteArrayOutputStream(int size) {
         if (size < 0) {
             throw new IllegalArgumentException("Negative initial size: " + size);
         }
-        buffer = new byte[size];
+        buf = new byte[size];
     }
 
     @Override
@@ -27,18 +27,18 @@ public class ByteArrayOutputStream extends OutputStream {
             return;
         }
         ensureCapacity(count + len);
-        System.arraycopy(b, off, buffer, count, len);
+        System.arraycopy(b, off, buf, count, len);
         count += len;
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - buffer.length > 0) {
+        if (minCapacity - buf.length > 0) {
             grow(minCapacity);
         }
     }
 
     private void grow(int minCapacity) {
-        int oldCapacity = buffer.length;
+        int oldCapacity = buf.length;
         int newCapacity = oldCapacity << 1;
         if (newCapacity - minCapacity < 0) {
             newCapacity = minCapacity;
@@ -49,33 +49,23 @@ public class ByteArrayOutputStream extends OutputStream {
             }
             newCapacity = Integer.MAX_VALUE;
         }
-        byte[] newBuffer = new byte[newCapacity];
-        System.arraycopy(buffer, 0, newBuffer, 0, count);
-        buffer = newBuffer;
+        byte[] newBuf = new byte[newCapacity];
+        System.arraycopy(buf, 0, newBuf, 0, count);
+        buf = newBuf;
     }
 
     @Override
     public void write(int b) throws IOException {
         ensureCapacity(count + 1);
-        buffer[count] = (byte) b;
+        buf[count] = (byte) b;
         count++;
     }
 
     public byte[] toByteArray() {
-        return java.util.Arrays.copyOf(buffer, count);
+        return buf.clone();
     }
 
     public int size() {
         return count;
-    }
-
-    @Override
-    public String toString() {
-        return new String(buffer, 0, count);
-    }
-
-    @Override
-    public void close() throws IOException {
-        // No resources to close
     }
 }

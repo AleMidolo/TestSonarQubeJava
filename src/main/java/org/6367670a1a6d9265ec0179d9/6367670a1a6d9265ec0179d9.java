@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * एक स्ट्रिंग की लंबाई प्राप्त करता है या यदि स्ट्रिंग <code>null</code> है तो <code>0</code> लौटाता है।
-     * @param str एक स्ट्रिंग या <code>null</code>
-     * @return स्ट्रिंग की लंबाई या यदि स्ट्रिंग <code>null</code> है तो <code>0</code>।
+     * Gets a String's length or <code>0</code> if the String is <code>null</code>.
+     * @param str a String or <code>null</code>
+     * @return String length or <code>0</code> if the String is <code>null</code>.
      * @since 2.4
      */
     public static int length(final String str) {
@@ -11,9 +11,11 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(length(null));      // Output: 0
-        System.out.println(length(""));       // Output: 0
-        System.out.println(length("Hello"));  // Output: 5
+        // Example usage
+        String test1 = "Hello, World!";
+        String test2 = null;
+
+        System.out.println(length(test1)); // Output: 13
+        System.out.println(length(test2)); // Output: 0
     }
 }

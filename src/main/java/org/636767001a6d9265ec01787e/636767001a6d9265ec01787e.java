@@ -1,12 +1,13 @@
 /**
- * <p> इस बिल्डर द्वारा निर्मित स्ट्रिंग प्राप्त करता है। </p>
- * @return निर्मित स्ट्रिंग
+ * <p> Gets the String built by this builder. </p>
+ * @return the built string
  */
-@Override
 public String toString() {
-    StringBuilder builder = new StringBuilder();
-    // Add your logic here to build the string
-    // Example:
-    builder.append("निर्मित स्ट्रिंग");
-    return builder.toString();
+    // Assuming this is part of a StringBuilder-like class
+    // and the internal buffer is stored in a char array.
+    return new String(buffer, 0, count);
 }
+
+// Assuming the following fields are part of the class:
+// private char[] buffer;
+// private int count;

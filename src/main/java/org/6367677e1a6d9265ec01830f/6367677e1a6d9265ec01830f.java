@@ -4,23 +4,20 @@ import java.util.Date;
 public class LogFormatter {
 
     /**
-     * रूपांतर पैटर्न द्वारा निर्दिष्ट एक स्वरूपित स्ट्रिंग उत्पन्न करता है।
-     * 
-     * @param event लॉगिंग इवेंट जिसे स्वरूपित करना है
-     * @return स्वरूपित स्ट्रिंग
+     * Produces a formatted string as specified by the conversion pattern.
+     * @param event The LoggingEvent containing the log information.
+     * @return A formatted string representing the log event.
      */
     public String format(LoggingEvent event) {
-        // Example pattern: [timestamp] [level] [message]
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         String level = event.getLevel().toString();
         String message = event.getMessage();
 
-        return String.format("[%s] [%s] %s", timestamp, level, message);
+        return String.format("[%s] %s: %s", timestamp, level, message);
     }
 }
 
-// Assuming LoggingEvent class exists with the following structure:
 class LoggingEvent {
     private long timeStamp;
     private String level;

@@ -2,7 +2,7 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-    private Map<String, AtmosphereHandler> handlers = new HashMap<>();
+    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
      * Rimuove un {@link AtmosphereHandler}.

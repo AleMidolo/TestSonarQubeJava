@@ -13,7 +13,7 @@ public class LogFormatter {
         // Aggiungi il timestamp
         formattedMessage.append("[").append(event.getTimeStamp()).append("] ");
 
-        // Aggiungi il livello di log
+        // Aggiungi il livello di logging
         formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
 
         // Aggiungi il nome del logger

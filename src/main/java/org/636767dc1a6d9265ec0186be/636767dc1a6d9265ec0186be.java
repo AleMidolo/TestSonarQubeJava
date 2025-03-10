@@ -6,19 +6,19 @@ public class TimeBucketCompressor {
      * per 20000115 è 20000112, e per 20000123 è 20000123.
      *
      * @param timeBucket Il bucket temporale da comprimere, rappresentato come un long (es. 20000105).
-     * @param dayStep Il passo giornaliero da seguire per la compressione (es. 11).
-     * @return Il bucket temporale riformattato.
+     * @param dayStep Il passo giornaliero da utilizzare per la compressione.
+     * @return Il bucket temporale compresso.
      */
     public static long compressTimeBucket(long timeBucket, int dayStep) {
         // Estrai l'anno e il mese dal timeBucket
-        long yearMonth = timeBucket / 100;
+        long yearMonth = (timeBucket / 100) * 100;
         int day = (int) (timeBucket % 100);
 
         // Calcola il giorno compresso
         int compressedDay = ((day - 1) / dayStep) * dayStep + 1;
 
         // Ricostruisci il timeBucket compresso
-        return yearMonth * 100 + compressedDay;
+        return yearMonth + compressedDay;
     }
 
     public static void main(String[] args) {

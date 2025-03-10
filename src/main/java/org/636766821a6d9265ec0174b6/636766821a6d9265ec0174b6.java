@@ -39,9 +39,45 @@ public class TypeResolver {
     private static Map<String, Class<?>> createTypeVariableMap(Class<?> targetType) {
         Map<String, Class<?>> typeVariableMap = new HashMap<>();
         TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
+
         for (TypeVariable<?> typeParameter : typeParameters) {
-            typeVariableMap.put(typeParameter.getName(), Object.class); // Default to Object if no specific type is found
+            Type[] bounds = typeParameter.getBounds();
+            if (bounds.length > 0 && bounds[0] instanceof Class<?>) {
+                typeVariableMap.put(typeParameter.getName(), (Class<?>) bounds[0]);
+            }
         }
+
         return typeVariableMap;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        Type genericType = new ParameterizedType() {
+            @Override
+            public Type[] getActualTypeArguments() {
+                return new Type[] { String.class };
+            }
+
+            @Override
+            public Type getRawType() {
+                return Map.class;
+            }
+
+            @Override
+            public Type getOwnerType() {
+                return null;
+            }
+        };
+
+        Class<?> targetType = Map.class;
+        Class<?>[] resolvedArguments = resolveArguments(genericType, targetType);
+
+        if (resolvedArguments != null) {
+            for (Class<?> arg : resolvedArguments) {
+                System.out.println(arg.getName());
+            }
+        } else {
+            System.out.println("Arguments could not be resolved.");
+        }
     }
 }

@@ -5,7 +5,7 @@ public class LastWriteTimeStamp {
 
     /**
      * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
-     * @return questo
+     * @return il timestamp dell'ultima operazione di scrittura in millisecondi.
      */
     public long lastWriteTimeStampInMilliseconds() {
         return lastWriteTimeStamp.get();
@@ -13,7 +13,7 @@ public class LastWriteTimeStamp {
 
     /**
      * Aggiorna il timestamp dell'ultima operazione di scrittura.
-     * @param timestamp Il nuovo timestamp in millisecondi.
+     * @param timestamp il nuovo timestamp in millisecondi.
      */
     public void updateLastWriteTimeStamp(long timestamp) {
         lastWriteTimeStamp.set(timestamp);

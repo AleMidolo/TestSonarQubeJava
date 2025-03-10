@@ -10,7 +10,7 @@ public class Logger {
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenders == null) {
+        if (appender == null) {
             return false;
         }
         return appenders.contains(appender);

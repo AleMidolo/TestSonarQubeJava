@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class DefensiveProgramming {
+public class ArrayUtils {
 
     // Array vuoto pubblico e statico per ottimizzazione della memoria
     public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
@@ -25,8 +25,8 @@ public class DefensiveProgramming {
         Byte[] array2 = new Byte[0];
         Byte[] array3 = new Byte[]{1, 2, 3};
 
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [1, 2, 3]
+        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BYTE_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BYTE_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
     }
 }

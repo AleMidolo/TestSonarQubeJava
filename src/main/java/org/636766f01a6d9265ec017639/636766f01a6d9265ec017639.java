@@ -19,9 +19,9 @@ public class ArrayToList {
 
     public static void main(String[] args) {
         // Test case
-        String[] array = {"one", "two", "three"};
+        String[] array = {"a", "b", "c"};
         List<String> list = asList(array);
-        System.out.println(list); // Output: [one, two, three]
+        System.out.println(list); // Output: [a, b, c]
 
         // Test case with null array
         String[] nullArray = null;

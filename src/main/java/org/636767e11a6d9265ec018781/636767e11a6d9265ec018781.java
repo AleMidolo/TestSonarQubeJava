@@ -18,6 +18,7 @@ public class Cache {
         if (existingData == null) {
             existingData = data;
         } else {
+            // Assuming METRICS has a method to merge with another METRICS object
             existingData.merge(data);
         }
     }
@@ -27,6 +28,7 @@ public class Cache {
     }
 }
 
+// Assuming METRICS is a class with a merge method
 class METRICS {
     private int value;
 

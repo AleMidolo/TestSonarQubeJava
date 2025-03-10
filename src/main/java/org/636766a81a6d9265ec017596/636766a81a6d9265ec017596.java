@@ -12,7 +12,7 @@ public class ByteVector {
     public ByteVector putInt(final int intValue) {
         ensureCapacity(size + 4); // Ensure space for 4 bytes
 
-        // Insert the integer into the buffer in big-endian order
+        // Insert the integer in big-endian order
         buffer[size++] = (byte) (intValue >> 24);
         buffer[size++] = (byte) (intValue >> 16);
         buffer[size++] = (byte) (intValue >> 8);
@@ -21,21 +21,15 @@ public class ByteVector {
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > buffer.length) {
-            int newCapacity = buffer.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length * 2, requiredCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }
 
+    // Optional: Add a method to get the current buffer
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
-    }
-
-    public int size() {
-        return size;
     }
 }

@@ -17,4 +17,15 @@ public class ArrayUtils {
         }
         return array;
     }
+
+    // Esempio di utilizzo
+    public static void main(String[] args) {
+        Double[] array1 = null;
+        Double[] array2 = new Double[0];
+        Double[] array3 = {1.0, 2.0, 3.0};
+
+        System.out.println(nullToEmpty(array1) == EMPTY_DOUBLE_ARRAY); // true
+        System.out.println(nullToEmpty(array2) == EMPTY_DOUBLE_ARRAY); // true
+        System.out.println(nullToEmpty(array3) == array3); // true
+    }
 }

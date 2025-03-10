@@ -8,27 +8,24 @@ public class PrimeUtil {
      * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
+        if (desiredCapacity <= 1) {
             return 2;
         }
-        int prime = desiredCapacity;
-        if (prime % 2 == 0) {
-            prime++;
+
+        int candidate = desiredCapacity;
+        while (!isPrime(candidate)) {
+            candidate++;
         }
-        while (!isPrime(prime)) {
-            prime += 2;
-            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
-                prime = desiredCapacity;
-                if (prime % 2 == 0) {
-                    prime++;
-                }
-                while (!isPrime(prime)) {
-                    prime += 2;
-                }
-                break;
+
+        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
+        if (desiredCapacity >= 1000) {
+            int upperBound = (int) (desiredCapacity * 1.11);
+            while (candidate > upperBound) {
+                candidate = nextPrime(candidate + 1);
             }
         }
-        return prime;
+
+        return candidate;
     }
 
     private static boolean isPrime(int n) {
@@ -50,6 +47,9 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Esempio di utilizzo
+        // Test cases
+        System.out.println(nextPrime(10));    // Output: 11
+        System.out.println(nextPrime(1000));  // Output: 1009
+        System.out.println(nextPrime(5000));  // Output: 5003
     }
 }

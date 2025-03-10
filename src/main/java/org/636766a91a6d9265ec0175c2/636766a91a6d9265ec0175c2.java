@@ -17,9 +17,4 @@ public class Frame {
         }
         return outputFrameStack.pop();
     }
-
-    // Metodo di esempio per aggiungere elementi allo stack (non richiesto ma utile per il testing)
-    public void push(int value) {
-        outputFrameStack.push(value);
-    }
 }

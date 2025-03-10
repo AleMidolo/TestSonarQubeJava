@@ -13,32 +13,37 @@ public class FrameStack {
         }
 
         if (descriptor.startsWith("(")) {
-            // Se il descrittore è un descrittore di metodo, rimuove i tipi di argomento
-            String[] parts = descriptor.split("\\)");
-            if (parts.length > 1) {
-                String argumentTypes = parts[0].substring(1);
-                String[] types = argumentTypes.split(";");
-                for (String type : types) {
-                    if (!type.isEmpty()) {
-                        outputFrameStack.pop();
+            // È un descrittore di metodo, rimuovi i tipi degli argomenti
+            int endOfArgs = descriptor.indexOf(')');
+            if (endOfArgs == -1) {
+                return; // Descrittore non valido
+            }
+
+            String argsDescriptor = descriptor.substring(1, endOfArgs);
+            int index = 0;
+            while (index < argsDescriptor.length()) {
+                char currentChar = argsDescriptor.charAt(index);
+                if (currentChar == 'L') {
+                    // Tipo oggetto, rimuovi fino al ';'
+                    int endOfObject = argsDescriptor.indexOf(';', index);
+                    if (endOfObject == -1) {
+                        return; // Descrittore non valido
                     }
+                    outputFrameStack.pop(); // Rimuovi il tipo oggetto dallo stack
+                    index = endOfObject + 1;
+                } else if (currentChar == '[') {
+                    // Tipo array, rimuovi il tipo base
+                    outputFrameStack.pop(); // Rimuovi il tipo array dallo stack
+                    index++;
+                } else {
+                    // Tipo primitivo, rimuovi direttamente
+                    outputFrameStack.pop(); // Rimuovi il tipo primitivo dallo stack
+                    index++;
                 }
             }
         } else {
-            // Se il descrittore è un tipo singolo, rimuove solo quel tipo
-            outputFrameStack.pop();
+            // È un tipo singolo, rimuovi direttamente
+            outputFrameStack.pop(); // Rimuovi il tipo dallo stack
         }
-    }
-
-    // Metodo di esempio per testare la funzione
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.outputFrameStack.push("Type1");
-        frameStack.outputFrameStack.push("Type2");
-        frameStack.outputFrameStack.push("Type3");
-
-        System.out.println("Stack prima di pop: " + frameStack.outputFrameStack);
-        frameStack.pop("(Type1;Type2)V");
-        System.out.println("Stack dopo pop: " + frameStack.outputFrameStack);
     }
 }

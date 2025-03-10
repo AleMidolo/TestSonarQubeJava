@@ -67,6 +67,6 @@ public class StringUtils {
         String input = "Ciao\\nMondo\\t!";
         String output = unescapeJava(input);
         System.out.println(output);  // Output: Ciao
-                                      //         Mondo    !
+                                    //         Mondo    !
     }
 }

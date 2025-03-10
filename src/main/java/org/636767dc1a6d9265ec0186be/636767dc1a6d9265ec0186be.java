@@ -18,7 +18,7 @@ public class TimeBucketCompressor {
         // Calcola il giorno compresso
         int compressedDay = ((day - 1) / dayStep) * dayStep + 1;
 
-        // Ricostruisci il timeBucket compresso
+        // Ricostruisci il bucket temporale compresso
         return year * 10000L + month * 100L + compressedDay;
     }
 

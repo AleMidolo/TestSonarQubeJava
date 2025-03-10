@@ -19,7 +19,7 @@ public class AtmosphereFramework {
 
     /**
      * Aggiunge un {@link AtmosphereHandler}.
-     * @param mapping il mapping da associare all'handler
+     * @param mapping il mapping associato all'handler
      * @param handler l'handler da aggiungere
      */
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {

@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VarintReader {
+
     private final InputStream input;
 
     public VarintReader(InputStream input) {

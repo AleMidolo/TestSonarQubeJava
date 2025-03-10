@@ -17,7 +17,7 @@ public class BinaryLog {
     }
 
     public static void main(String[] args) {
-        int n = 16; // Example input
+        int n = 10; // Example input
         System.out.println("Result: " + computeBinaryLog(n));
     }
 }

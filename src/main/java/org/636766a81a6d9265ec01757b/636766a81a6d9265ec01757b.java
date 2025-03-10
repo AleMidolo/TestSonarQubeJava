@@ -11,7 +11,7 @@ public class MyClass {
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
         // Assuming this method is part of a class that can be serialized to JSON
-        // Using Fastjson2 to serialize the object with the provided features
+        // Using Fastjson2 to serialize the current object with the provided features
         return JSON.toJSONString(this, features);
     }
 }

@@ -19,9 +19,11 @@ public class ClassPathUtil {
         if (files != null) {
             for (File file : files) {
                 try {
-                    cpV.add(file.toURI().toURL());
+                    URL url = file.toURI().toURL();
+                    cpV.add(url);
                 } catch (MalformedURLException e) {
-                    throw new RuntimeException("Failed to convert file to URL: " + file.getAbsolutePath(), e);
+                    System.err.println("Error converting file to URL: " + file.getAbsolutePath());
+                    e.printStackTrace();
                 }
             }
         }
@@ -29,7 +31,8 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        addToClassPath(classPath, "path/to/your/directory");
+        String directoryPath = "path/to/your/jar/directory";
+        addToClassPath(classPath, directoryPath);
 
         // Print the URLs added to the classpath
         for (URL url : classPath) {

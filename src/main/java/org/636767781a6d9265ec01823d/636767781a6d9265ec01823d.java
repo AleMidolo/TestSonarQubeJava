@@ -5,6 +5,6 @@ import org.apache.log4j.spi.LoggingEvent;
  */
 protected void subAppend(LoggingEvent event) {
     // Implementazione della scrittura effettiva del log
-    // Ad esempio, potrebbe scrivere su un file, console, o altro output
+    // Ad esempio, scrivere il messaggio su un file o su console
     System.out.println(event.getMessage());
 }

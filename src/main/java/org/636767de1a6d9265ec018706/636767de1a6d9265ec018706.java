@@ -1,51 +1,55 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Mappings {
-    private Map<String, Object> fields;
+    private Map<String, Object> properties;
 
     public Mappings() {
-        this.fields = new HashMap<>();
+        this.properties = new HashMap<>();
     }
 
-    public Map<String, Object> getFields() {
-        return fields;
+    public Map<String, Object> getProperties() {
+        return properties;
     }
 
-    public void setFields(Map<String, Object> fields) {
-        this.fields = fields;
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
     }
 }
 
 public class MappingDiff {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming that the historical mappings for the table are stored in a static map
-        // This is just a placeholder for the actual historical mappings retrieval logic
-        Map<String, Mappings> historicalMappings = getHistoricalMappings();
-
-        Mappings historicalMapping = historicalMappings.get(tableName);
-        if (historicalMapping == null) {
-            return mappings; // If no historical mapping exists, return the current mappings
-        }
+        // Assuming we have a method to get historical mappings for the given tableName
+        Mappings historicalMappings = getHistoricalMappings(tableName);
 
         Mappings diffMappings = new Mappings();
-        Map<String, Object> currentFields = mappings.getFields();
-        Map<String, Object> historicalFields = historicalMapping.getFields();
+        Map<String, Object> diffProperties = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
-            String fieldName = entry.getKey();
-            if (!historicalFields.containsKey(fieldName)) {
-                diffMappings.getFields().put(fieldName, entry.getValue());
+        // Get the properties from the input mappings
+        Map<String, Object> inputProperties = mappings.getProperties();
+
+        // Get the properties from the historical mappings
+        Map<String, Object> historicalProperties = historicalMappings.getProperties();
+
+        // Iterate through the input properties to find fields that do not exist in historical mappings
+        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+            String key = entry.getKey();
+            if (!historicalProperties.containsKey(key)) {
+                diffProperties.put(key, entry.getValue());
             }
         }
+
+        // Set the diff properties to the diffMappings object
+        diffMappings.setProperties(diffProperties);
 
         return diffMappings;
     }
 
-    private Map<String, Mappings> getHistoricalMappings() {
-        // Placeholder for actual historical mappings retrieval logic
-        // This should return a map of table names to their historical Mappings
-        return new HashMap<>();
+    private Mappings getHistoricalMappings(String tableName) {
+        // This method should retrieve the historical mappings for the given tableName
+        // For the sake of this example, we return an empty Mappings object
+        return new Mappings();
     }
 }

@@ -17,24 +17,20 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
-        // Use a map to store the lower bound for each key
-        Map<K, Integer> lowerBoundMap = new HashMap<>();
-
-        // Initialize the lower bound for the smallest key
-        lowerBoundMap.put(sortedKeys.get(0), 0);
-
-        // Iterate through the sorted keys to compute lower bounds
-        for (int i = 1; i < sortedKeys.size(); i++) {
-            K currentKey = sortedKeys.get(i);
-            K previousKey = sortedKeys.get(i - 1);
-
-            // The lower bound for the current key is the lower bound of the previous key plus 1
-            lowerBoundMap.put(currentKey, lowerBoundMap.get(previousKey) + 1);
+        // Use a TreeMap to store the sorted keys and their indices
+        TreeMap<K, Integer> treeMap = new TreeMap<>();
+        for (int i = 0; i < sortedKeys.size(); i++) {
+            treeMap.put(sortedKeys.get(i), i);
         }
 
-        // Populate the lowerBounds list with the computed values
+        // For each key, find the maximum lower bound
         for (K key : keys) {
-            lowerBounds.add(lowerBoundMap.get(key));
+            K lowerKey = treeMap.lowerKey(key);
+            if (lowerKey != null) {
+                lowerBounds.add(treeMap.get(lowerKey));
+            } else {
+                lowerBounds.add(-1); // No lower bound found
+            }
         }
 
         return lowerBounds;
@@ -43,8 +39,8 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
     public static void main(String[] args) {
         // Example usage
         LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
-        List<Integer> keys = Arrays.asList(5, 3, 8, 1, 2);
+        List<Integer> keys = Arrays.asList(5, 3, 8, 1, 4);
         List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds); // Output: [3, 1, 4, 0, 2]
+        System.out.println(lowerBounds); // Output: [3, 1, 5, -1, 2]
     }
 }

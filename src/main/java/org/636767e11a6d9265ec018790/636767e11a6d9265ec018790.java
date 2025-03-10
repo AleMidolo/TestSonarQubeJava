@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class ThreadSnapshotParser {
 
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
+        List<String> lines = Files.readAllLines(file.toPath());
 
         for (String line : lines) {
             ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
@@ -31,7 +30,7 @@ public class ThreadSnapshotParser {
         return false;
     }
 
-    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined as follows:
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
@@ -48,14 +47,16 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
-            // Parse the line and return a ThreadSnapshot object
-            // Example parsing logic (adjust based on actual file format):
+            // Parse the line into a ThreadSnapshot object
+            // Example format: "timestamp,threadName,state"
             String[] parts = line.split(",");
             if (parts.length == 3) {
-                long timestamp = Long.parseLong(parts[0]);
-                String threadName = parts[1];
-                String state = parts[2];
-                return new ThreadSnapshot(timestamp, threadName, state);
+                try {
+                    long timestamp = Long.parseLong(parts[0]);
+                    return new ThreadSnapshot(timestamp, parts[1], parts[2]);
+                } catch (NumberFormatException e) {
+                    return null;
+                }
             }
             return null;
         }

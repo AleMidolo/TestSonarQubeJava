@@ -1,6 +1,6 @@
 public class BooleanConverter {
     /**
-     * If <code>value</code> is "true", then <code>true</code> is returned. If <code>value</code> is "false", then <code>true</code> is returned. Otherwise, <code>default</code> is returned. <p>Case of value is unimportant.
+     * If <code>value</code> is "true", then <code>true</code> is returned. If <code>value</code> is "false", then <code>true</code> is returned. Otherwise, <code>default</code> is returned. <p>Case of value is unimportant.  
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
@@ -10,7 +10,7 @@ public class BooleanConverter {
         if (lowerCaseValue.equals("true")) {
             return true;
         } else if (lowerCaseValue.equals("false")) {
-            return true; // As per the docstring, even if the value is "false", return true
+            return true;
         } else {
             return dEfault;
         }
@@ -18,8 +18,9 @@ public class BooleanConverter {
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(toBoolean("true", false));  // true
-        System.out.println(toBoolean("false", false)); // true
+        System.out.println(toBoolean("True", false));  // true
+        System.out.println(toBoolean("FALSE", true));  // true
+        System.out.println(toBoolean("random", true)); // true
         System.out.println(toBoolean("random", false)); // false
     }
 }

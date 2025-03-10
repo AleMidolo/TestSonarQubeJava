@@ -54,17 +54,8 @@ public class DoublyLinkedList<E> {
         size--;
     }
 
-    /**
-     * Atomically moves all {@link ListNode ListNodes} from {@code list} to this list as if each
-     * node was removed with {@link #removeListNode(ListNodeImpl)} from {@code list} and
-     * subsequently added to this list by {@link #addListNode(ListNodeImpl)}.
-     */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list, "The input list cannot be null");
-
-        if (list.head == null) {
-            return; // No nodes to move
-        }
 
         ListNodeImpl<E> current = list.head;
         while (current != null) {

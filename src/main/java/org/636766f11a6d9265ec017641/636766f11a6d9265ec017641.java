@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CustomInputStream extends InputStream {
+
     private InputStream inputStream;
 
     public CustomInputStream(InputStream inputStream) {

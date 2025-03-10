@@ -3,6 +3,7 @@ import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
 public final class UriMatcher {
+
     private final Pattern pattern;
 
     public UriMatcher(String regex) {

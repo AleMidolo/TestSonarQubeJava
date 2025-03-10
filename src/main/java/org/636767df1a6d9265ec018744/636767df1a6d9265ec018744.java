@@ -10,18 +10,15 @@ public class TimeRangeSplitter {
         List<TimeRange> timeRanges = new ArrayList<>();
 
         while (start < end) {
-            long nextEnd = start + FETCH_DATA_DURATION;
-            if (nextEnd > end) {
-                nextEnd = end;
-            }
-            timeRanges.add(new TimeRange(start, nextEnd));
-            start = nextEnd;
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
 
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that holds a start and end time
+    // Assuming TimeRange is a class that holds start and end times
     public static class TimeRange {
         private final long start;
         private final long end;

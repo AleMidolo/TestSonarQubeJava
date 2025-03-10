@@ -1,23 +1,36 @@
-import org.apache.commons.geometry.euclidean.twod.Box2D;
-import org.apache.commons.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.lang3.tuple.Pair;
+import java.awt.geom.Rectangle2D;
+import javafx.util.Pair;
 
 public class BoxSplitter {
 
-    /**
-     * Split a box along the x axis into two equal boxes.
-     * @param box the box to split
-     * @return a pair with the two resulting boxes
-     */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        Vector2D min = box.getMin();
-        Vector2D max = box.getMax();
+        double x = box.getX();
+        double y = box.getY();
+        double width = box.getWidth();
+        double height = box.getHeight();
 
-        double midX = (min.getX() + max.getX()) / 2.0;
+        // Calculate the midpoint along the x-axis
+        double midX = x + width / 2.0;
 
-        Box2D leftBox = Box2D.from(min, Vector2D.of(midX, max.getY()));
-        Box2D rightBox = Box2D.from(Vector2D.of(midX, min.getY()), max);
+        // Create the left box
+        Box2D leftBox = new Box2D(x, y, midX - x, height);
 
-        return Pair.of(leftBox, rightBox);
+        // Create the right box
+        Box2D rightBox = new Box2D(midX, y, width - (midX - x), height);
+
+        return new Pair<>(leftBox, rightBox);
+    }
+
+    public static class Box2D extends Rectangle2D.Double {
+        public Box2D(double x, double y, double width, double height) {
+            super(x, y, width, height);
+        }
+    }
+
+    public static void main(String[] args) {
+        Box2D box = new Box2D(0, 0, 10, 5);
+        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(box);
+        System.out.println("Left Box: " + splitBoxes.getKey());
+        System.out.println("Right Box: " + splitBoxes.getValue());
     }
 }

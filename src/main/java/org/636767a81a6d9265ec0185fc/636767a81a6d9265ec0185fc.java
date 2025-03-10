@@ -2,24 +2,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TagReader {
-    private InputStream input;
+    private InputStream inputStream;
 
-    public TagReader(InputStream input) {
-        this.input = input;
+    public TagReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     /**
      * Attempt to read a field tag, returning zero if we have reached EOF. Protocol message parsers use this to read tags,
      * since a protocol message may legally end wherever a tag occurs, and zero is not a valid tag number.
      *
-     * @return the tag read, or 0 if EOF is reached
+     * @return the tag read from the input stream, or 0 if EOF is reached
      * @throws IOException if an I/O error occurs
      */
     public int readTag() throws IOException {
-        int firstByte = input.read();
-        if (firstByte == -1) {
+        int tag = inputStream.read();
+        if (tag == -1) {
             return 0; // EOF reached
         }
-        return firstByte;
+        return tag;
     }
 }

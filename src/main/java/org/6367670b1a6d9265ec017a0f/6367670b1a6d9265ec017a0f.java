@@ -6,8 +6,8 @@ public class StringUtils {
      * Case in-sensitive Checks if the String contains any character in the given set of string.
      * 
      * @param str The string to check.
-     * @param searchStrArray The list of strings to search for.
-     * @return true if the string contains any of the search strings (case insensitive), false otherwise.
+     * @param searchStrArray The list of strings to search for within the main string.
+     * @return true if the main string contains any of the strings in the list (case insensitive), false otherwise.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -20,13 +20,16 @@ public class StringUtils {
                 return true;
             }
         }
+
         return false;
     }
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrings = List.of("hello", "world");
-        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
-        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
+        List<String> searchStrings = List.of("hello", "world", "java");
+        String testString = "Hello, this is a test string!";
+        
+        boolean result = containsAnyIgnoreCase(testString, searchStrings);
+        System.out.println("Contains any: " + result); // Output: Contains any: true
     }
 }

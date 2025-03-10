@@ -32,5 +32,5 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         }
     }
 
-    throw new Exception("Unsupported value type for Character conversion: " + value.getClass().getName());
+    throw new Exception("Unsupported value type for conversion to Character: " + value.getClass().getName());
 }

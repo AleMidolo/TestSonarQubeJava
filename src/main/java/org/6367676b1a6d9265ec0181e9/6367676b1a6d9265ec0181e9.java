@@ -1,7 +1,6 @@
 public class SubstringMatcher {
-
     /**
-     * Returns {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
+     * Returns  {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
      * @param str the original string (or StringBuilder)
      * @param index the index in the original string to start matching against
      * @param substring the substring to match at the given index
@@ -9,9 +8,9 @@ public class SubstringMatcher {
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
-            throw new IllegalArgumentException("Input strings cannot be null.");
+            return false;
         }
-        if (index < 0 || index > str.length() - substring.length()) {
+        if (index < 0 || index + substring.length() > str.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {
@@ -27,8 +26,6 @@ public class SubstringMatcher {
         CharSequence str = "Hello, World!";
         CharSequence substring = "World";
         int index = 7;
-
-        boolean result = substringMatch(str, index, substring);
-        System.out.println(result); // Output: true
+        System.out.println(substringMatch(str, index, substring)); // Output: true
     }
 }

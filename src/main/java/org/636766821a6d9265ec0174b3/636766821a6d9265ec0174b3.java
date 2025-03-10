@@ -1,56 +1,28 @@
-import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Invoke the {@link BroadcastFilter}
  * @param msg The message to be filtered
- * @return The filtered message or null if the message is filtered out
+ * @return The filtered message or null if the message does not pass the filter
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is an interface or class that defines a filtering mechanism
-    // For the sake of this example, let's assume BroadcastFilter has a method called filterMessage
-    // which takes an Object and returns a filtered Object or null if the message is filtered out.
+    // Assuming BroadcastFilter is a functional interface or a class with a test method
+    // For example, BroadcastFilter could be a Predicate<Object>
+    Predicate<Object> broadcastFilter = new BroadcastFilter();
 
-    // Example implementation:
-    if (msg == null) {
-        return null;
+    if (broadcastFilter.test(msg)) {
+        return msg; // Return the message if it passes the filter
+    } else {
+        return null; // Return null if the message does not pass the filter
     }
-
-    // Example filtering logic: filter out messages that are empty strings
-    if (msg instanceof String && ((String) msg).trim().isEmpty()) {
-        return null;
-    }
-
-    // Example filtering logic: filter out messages that are not instances of a specific class
-    if (!(msg instanceof MyCustomMessageClass)) {
-        return null;
-    }
-
-    // If the message passes all filters, return it as is
-    return msg;
 }
 
-// Example custom message class
-class MyCustomMessageClass {
-    private String content;
-
-    public MyCustomMessageClass(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
+// Example implementation of BroadcastFilter as a Predicate
+class BroadcastFilter implements Predicate<Object> {
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MyCustomMessageClass that = (MyCustomMessageClass) o;
-        return Objects.equals(content, that.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(content);
+    public boolean test(Object msg) {
+        // Implement your filtering logic here
+        // For example, return true if the message is not null
+        return msg != null;
     }
 }

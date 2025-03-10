@@ -2,11 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> nameMap;
-
-    public ColumnName() {
-        nameMap = new HashMap<>();
-    }
+    private Map<String, String> nameMap = new HashMap<>();
 
     /**
      * Keep the same name replacement as {@link ColumnName#overrideName(String, String)}

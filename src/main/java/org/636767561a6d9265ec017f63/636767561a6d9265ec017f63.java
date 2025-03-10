@@ -21,12 +21,11 @@ public class GraphIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        while (currentIndex < visited.length && visited[currentIndex]) {
-            currentIndex++;
-        }
-        if (currentIndex < visited.length) {
-            visited[currentIndex] = true;
-            return currentIndex++;
+        for (int i = currentIndex; i < visited.length; i++) {
+            if (!visited[i]) {
+                currentIndex = i + 1;
+                return i;
+            }
         }
         throw new IllegalStateException("No more unvisited vertices");
     }

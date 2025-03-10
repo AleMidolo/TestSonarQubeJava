@@ -25,6 +25,6 @@ public class OutputFrame {
 
     // Clase de ejemplo para AbstractType
     private static class AbstractType {
-        // Implementación de tipo abstracto
+        // Implementación de la clase AbstractType
     }
 }

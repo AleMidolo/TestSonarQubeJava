@@ -10,7 +10,7 @@ public class Logger {
 
     /**
      * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.
-     * @param event El evento de logging que se va a enviar a los appenders.
+     * @param event El evento de logging que se va a agregar.
      * @return El número de appenders a los que se les envió el evento.
      */
     public int appendLoopOnAppenders(LoggingEvent event) {

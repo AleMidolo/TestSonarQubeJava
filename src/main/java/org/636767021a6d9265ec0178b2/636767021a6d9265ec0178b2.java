@@ -12,65 +12,41 @@ public class FrameStack {
             return;
         }
 
-        // Si el descriptor es un tipo simple, simplemente extraemos un elemento
-        if (!descriptor.startsWith("(")) {
+        // Si el descriptor es un método, extraemos los tipos de argumento
+        if (descriptor.startsWith("(")) {
+            // Extraer los tipos de argumento del descriptor
+            String[] parts = descriptor.split("\\)");
+            if (parts.length > 1) {
+                String argumentTypes = parts[0].substring(1);
+                String[] types = argumentTypes.split(";");
+
+                for (String type : types) {
+                    if (!type.isEmpty()) {
+                        // Extraer el tipo base (eliminar 'L' y ';' si es un objeto)
+                        String baseType = type.replace("L", "").replace(";", "");
+                        // Extraer el tipo de la pila
+                        if (!frameStack.isEmpty()) {
+                            frameStack.pop();
+                        }
+                    }
+                }
+            }
+        } else {
+            // Si es un tipo simple, extraer un solo elemento de la pila
             if (!frameStack.isEmpty()) {
                 frameStack.pop();
             }
-            return;
-        }
-
-        // Si el descriptor es un descriptor de método, extraemos los tipos de argumento
-        int startIndex = descriptor.indexOf('(') + 1;
-        int endIndex = descriptor.indexOf(')');
-        if (startIndex >= 0 && endIndex > startIndex) {
-            String argsDescriptor = descriptor.substring(startIndex, endIndex);
-            int argCount = countArguments(argsDescriptor);
-            for (int i = 0; i < argCount; i++) {
-                if (!frameStack.isEmpty()) {
-                    frameStack.pop();
-                }
-            }
         }
     }
 
-    /**
-     * Cuenta el número de argumentos en el descriptor de argumentos.
-     * @param argsDescriptor el descriptor de argumentos.
-     * @return el número de argumentos.
-     */
-    private int countArguments(String argsDescriptor) {
-        int count = 0;
-        int index = 0;
-        while (index < argsDescriptor.length()) {
-            char c = argsDescriptor.charAt(index);
-            if (c == 'L') {
-                // Tipo de objeto, avanzar hasta el ';'
-                int endIndex = argsDescriptor.indexOf(';', index);
-                if (endIndex == -1) {
-                    break;
-                }
-                index = endIndex + 1;
-            } else if (c == '[') {
-                // Tipo de array, avanzar al siguiente carácter
-                index++;
-            } else {
-                // Tipo primitivo, avanzar al siguiente carácter
-                index++;
-            }
-            count++;
-        }
-        return count;
-    }
-
-    // Método de prueba
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.frameStack.push("arg1");
-        frameStack.frameStack.push("arg2");
-        frameStack.frameStack.push("arg3");
+        frameStack.frameStack.push("Type1");
+        frameStack.frameStack.push("Type2");
+        frameStack.frameStack.push("Type3");
 
         frameStack.pop("(Ljava/lang/String;I)V");
-        System.out.println(frameStack.frameStack); // Debería imprimir [arg1]
+
+        System.out.println(frameStack.frameStack); // Debería imprimir [Type1]
     }
 }

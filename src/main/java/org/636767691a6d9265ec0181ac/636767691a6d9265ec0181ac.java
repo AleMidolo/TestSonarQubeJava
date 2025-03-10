@@ -13,11 +13,8 @@ public class RelativePathApplier {
         // Convertir la ruta base a un objeto Path
         Path basePath = Paths.get(path);
         
-        // Convertir la ruta relativa a un objeto Path
-        Path relative = Paths.get(relativePath);
-        
-        // Resolver la ruta relativa contra la ruta base
-        Path resolvedPath = basePath.resolve(relative);
+        // Aplicar la ruta relativa a la ruta base
+        Path resolvedPath = basePath.resolve(relativePath);
         
         // Normalizar la ruta resultante para eliminar redundancias como ".." o "."
         Path normalizedPath = resolvedPath.normalize();
@@ -27,9 +24,10 @@ public class RelativePathApplier {
     }
 
     public static void main(String[] args) {
+        // Ejemplo de uso
         String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
         String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println(result);  // Imprime: /usr/local/lib/java
     }
 }

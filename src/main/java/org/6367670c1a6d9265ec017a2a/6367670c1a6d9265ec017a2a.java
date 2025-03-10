@@ -13,7 +13,6 @@ public class ArrayUtils {
         if (array == null) {
             return null;
         }
-        
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = Objects.requireNonNull(array[i], "El elemento en la posición " + i + " es nulo.");

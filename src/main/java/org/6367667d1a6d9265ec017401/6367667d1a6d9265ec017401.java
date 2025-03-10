@@ -9,54 +9,53 @@ public class UnescapeJava {
         }
 
         StringBuilder sb = new StringBuilder();
-        int i = 0;
-        while (i < str.length()) {
+        int length = str.length();
+        for (int i = 0; i < length; i++) {
             char c = str.charAt(i);
-            if (c == '\\' && i + 1 < str.length()) {
+            if (c == '\\' && i + 1 < length) {
                 char nextChar = str.charAt(i + 1);
                 switch (nextChar) {
                     case 'n':
                         sb.append('\n');
-                        i += 2;
+                        i++;
                         break;
                     case 't':
                         sb.append('\t');
-                        i += 2;
+                        i++;
                         break;
                     case 'r':
                         sb.append('\r');
-                        i += 2;
+                        i++;
                         break;
                     case 'b':
                         sb.append('\b');
-                        i += 2;
+                        i++;
                         break;
                     case 'f':
                         sb.append('\f');
-                        i += 2;
+                        i++;
                         break;
                     case '\'':
                         sb.append('\'');
-                        i += 2;
+                        i++;
                         break;
                     case '\"':
                         sb.append('\"');
-                        i += 2;
+                        i++;
                         break;
                     case '\\':
                         sb.append('\\');
-                        i += 2;
+                        i++;
                         break;
                     default:
                         sb.append(c);
-                        i++;
                         break;
                 }
             } else {
                 sb.append(c);
-                i++;
             }
         }
+
         return sb.toString();
     }
 

@@ -30,8 +30,7 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
-        String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);
+        String testString = "This is a {test} string with {template} parameters.";
+        System.out.println(encodeTemplateNames(testString));
     }
 }

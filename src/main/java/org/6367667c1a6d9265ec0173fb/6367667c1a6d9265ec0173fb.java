@@ -5,9 +5,13 @@ public class MyAtmosphereResource implements AtmosphereResource {
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Assuming this class has a way to store listeners, e.g., a list
-        // For example:
-        // this.listeners.add(e);
-        return this; // Return the current instance for method chaining
+        // Assuming this class has a list to store listeners
+        if (e != null) {
+            listeners.add(e);
+        }
+        return this;
     }
+
+    // Assuming this class has a list to store listeners
+    private List<AtmosphereResourceEventListener> listeners = new ArrayList<>();
 }

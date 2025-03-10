@@ -8,14 +8,15 @@ public class ConfigInitializer {
      * Inicializa la configuración, como verificar la ruta de distribución.
      */
     public void init() {
-        // Verificar la ruta de distribución
-        String distributionPath = System.getProperty("user.dir"); // Obtiene el directorio actual
+        // Verificar si la ruta de distribución existe
+        String distributionPath = "/ruta/de/distribucion"; // Cambia esto por la ruta correcta
         Path path = Paths.get(distributionPath);
 
         if (Files.exists(path)) {
             System.out.println("La ruta de distribución existe: " + distributionPath);
         } else {
             System.out.println("La ruta de distribución no existe: " + distributionPath);
+            // Aquí podrías lanzar una excepción o manejar el error de otra manera
         }
     }
 

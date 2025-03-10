@@ -1,7 +1,12 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ByteOutputStream extends OutputStream {
+public class CustomOutputStream extends OutputStream {
+
+    @Override
+    public void write(int b) throws IOException {
+        // Implementación de la escritura de un solo byte
+    }
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
@@ -14,12 +19,5 @@ public class ByteOutputStream extends OutputStream {
         for (int i = off; i < off + len; i++) {
             write(b[i]);
         }
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        // Implementación para escribir un solo byte.
-        // Este método debe ser implementado por la clase que extienda ByteOutputStream.
-        throw new UnsupportedOperationException("Método no implementado.");
     }
 }

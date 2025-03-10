@@ -11,23 +11,11 @@ public class FieldChecker {
      * 当输入字段已经存储在属性中时返回真。
      */
     private boolean containsAllFields(Fields fields) {
-        for (String field : fields.getFieldNames()) {
+        for (String field : fields) {
             if (!storedFields.contains(field)) {
                 return false;
             }
         }
         return true;
-    }
-
-    public static class Fields {
-        private Set<String> fieldNames;
-
-        public Fields(Set<String> fieldNames) {
-            this.fieldNames = fieldNames;
-        }
-
-        public Set<String> getFieldNames() {
-            return fieldNames;
-        }
     }
 }

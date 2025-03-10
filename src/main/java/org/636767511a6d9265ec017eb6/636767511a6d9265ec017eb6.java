@@ -12,11 +12,13 @@ public class OuterFaceCirculator {
     }
 
     public void next(int dir) {
-        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
-        if (dir == 0) {
-            current = current.getNextClockwise();
+        // Assuming dir is 1 for clockwise and -1 for counter-clockwise
+        if (dir == 1) {
+            current = current.getNext();
+        } else if (dir == -1) {
+            current = current.getPrevious();
         } else {
-            current = current.getNextCounterClockwise();
+            throw new IllegalArgumentException("Invalid direction: " + dir);
         }
     }
 
@@ -26,23 +28,23 @@ public class OuterFaceCirculator {
 }
 
 public class Node {
-    private Node nextClockwise;
-    private Node nextCounterClockwise;
+    private Node next;
+    private Node previous;
 
-    public Node getNextClockwise() {
-        return nextClockwise;
+    public Node getNext() {
+        return next;
     }
 
-    public void setNextClockwise(Node nextClockwise) {
-        this.nextClockwise = nextClockwise;
+    public void setNext(Node next) {
+        this.next = next;
     }
 
-    public Node getNextCounterClockwise() {
-        return nextCounterClockwise;
+    public Node getPrevious() {
+        return previous;
     }
 
-    public void setNextCounterClockwise(Node nextCounterClockwise) {
-        this.nextCounterClockwise = nextCounterClockwise;
+    public void setPrevious(Node previous) {
+        this.previous = previous;
     }
 
     @Override
@@ -59,13 +61,13 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
         while (!circulator.isAt(stop)) {
-            if (predicate.test(circulator.getCurrent())) {
+            Node currentNode = circulator.getCurrent();
+            if (predicate.test(currentNode)) {
                 return circulator;
             }
             circulator.next(dir);
         }
 
-        // If we reach the stop node without finding a matching node, return the circulator pointing to stop
         return circulator;
     }
 }

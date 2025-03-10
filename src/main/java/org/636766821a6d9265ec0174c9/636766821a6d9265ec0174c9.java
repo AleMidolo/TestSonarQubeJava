@@ -14,12 +14,12 @@ public class ClassPathUtil {
         List<File> classPathFiles = new ArrayList<>();
 
         if (classLoader instanceof URLClassLoader) {
-            URL[] urls = ((URLClassLoader) classLoader).getURLs();
-            for (URL url : urls) {
+            URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
+            for (URL url : urlClassLoader.getURLs()) {
                 classPathFiles.add(new File(url.getFile()));
             }
         } else {
-            // For Java 9 and above, the system class loader is not an instance of URLClassLoader
+            // For Java 9 and above, the class loader is not URLClassLoader
             String classPath = System.getProperty("java.class.path");
             String[] paths = classPath.split(System.getProperty("path.separator"));
             for (String path : paths) {

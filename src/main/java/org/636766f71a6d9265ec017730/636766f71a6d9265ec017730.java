@@ -1,6 +1,6 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class CollectionUtils {
 
@@ -9,18 +9,27 @@ public class CollectionUtils {
      * @param collection 要转换的集合
      * @return 一个新的字符串数组。
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
 
-        List<String> result = new ArrayList<>();
-        for (Object obj : collection) {
-            if (obj != null) {
-                result.add(obj.toString());
+        // 过滤掉 null 元素
+        ArrayList<String> filteredList = new ArrayList<>();
+        Iterator<?> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            Object element = iterator.next();
+            if (element != null) {
+                filteredList.add(element.toString());
             }
         }
 
-        return result.toArray(new String[0]);
+        // 转换为数组
+        String[] result = new String[filteredList.size()];
+        for (int i = 0; i < filteredList.size(); i++) {
+            result[i] = filteredList.get(i);
+        }
+
+        return result;
     }
 }

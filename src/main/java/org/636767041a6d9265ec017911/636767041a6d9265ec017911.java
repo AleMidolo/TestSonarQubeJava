@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Registration {
+public class Registry {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**

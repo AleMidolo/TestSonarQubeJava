@@ -22,8 +22,8 @@ public class ByteVector {
 
         int newCapacity = capacity + size;
         byte[] newData = Arrays.copyOf(data, newCapacity);
-        data = newData;
-        capacity = newCapacity;
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
     public void add(byte b) {
@@ -33,7 +33,7 @@ public class ByteVector {
         data[size++] = b;
     }
 
-    public byte[] toArray() {
+    public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }
 
@@ -42,8 +42,7 @@ public class ByteVector {
         vector.add((byte) 1);
         vector.add((byte) 2);
         vector.add((byte) 3); // This will trigger enlargement
-
-        byte[] result = vector.toArray();
+        byte[] result = vector.toByteArray();
         System.out.println(Arrays.toString(result)); // Output: [1, 2, 3]
     }
 }

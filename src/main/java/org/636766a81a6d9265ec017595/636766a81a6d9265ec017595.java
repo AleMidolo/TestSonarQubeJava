@@ -20,5 +20,12 @@ public class ByteVector {
         return this;
     }
 
-    // 其他方法可以根据需要添加
+    // Optional: Method to get the byte array representation
+    public byte[] toByteArray() {
+        byte[] result = new byte[bytes.size()];
+        for (int i = 0; i < bytes.size(); i++) {
+            result[i] = bytes.get(i);
+        }
+        return result;
+    }
 }

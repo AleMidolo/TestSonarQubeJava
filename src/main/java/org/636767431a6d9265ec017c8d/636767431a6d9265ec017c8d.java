@@ -19,6 +19,6 @@ public class BinaryLogCalculator {
 
     public static void main(String[] args) {
         int n = 10; // 示例输入
-        System.out.println("The result is: " + computeBinaryLog(n));
+        System.out.println("Result: " + computeBinaryLog(n));
     }
 }

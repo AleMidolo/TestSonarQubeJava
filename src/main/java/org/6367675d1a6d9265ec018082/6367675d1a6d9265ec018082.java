@@ -56,14 +56,6 @@ class Node {
         return isVirtual;
     }
 
-    public Node getRealNode() {
-        if (isVirtual) {
-            // Assuming the real node has the same ID but is not virtual
-            return new Node(id, false);
-        }
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,8 +88,13 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node to = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
         return new Edge(from, to);
+    }
+
+    private Node getRealNode(Node node) {
+        // Assuming that the real node has the same ID but is not virtual
+        return new Node(node.getId(), false);
     }
 }

@@ -8,29 +8,16 @@ public class MyOutputStream extends OutputStream {
             throw new NullPointerException("Byte array is null");
         }
         // Assuming this method is part of a class that extends OutputStream
-        // and has access to the underlying output mechanism.
-        // For example, writing to a file or network stream.
-        // Here, we just print the bytes to the console as an example.
+        // and has a method to write a single byte.
         for (byte value : b) {
-            System.out.print(value + " ");
+            write(value);
         }
-        System.out.println();
     }
 
     @Override
     public void write(int b) throws IOException {
-        // This method is required by the OutputStream class.
-        // It writes a single byte to the output stream.
-        System.out.print(b + " ");
-    }
-
-    public static void main(String[] args) {
-        try {
-            MyOutputStream outputStream = new MyOutputStream();
-            byte[] data = {65, 66, 67, 68}; // Example byte array
-            outputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Implement the logic to write a single byte to the output stream.
+        // This is a placeholder implementation.
+        System.out.write(b);
     }
 }

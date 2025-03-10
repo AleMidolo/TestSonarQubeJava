@@ -10,8 +10,9 @@ public class TypeResolver {
         Type[] bounds = typeVariable.getBounds();
         if (bounds.length > 0) {
             return bounds[0];
+        } else {
+            return Unknown.class;
         }
-        return Unknown.class;
     }
 
     public static class Unknown {

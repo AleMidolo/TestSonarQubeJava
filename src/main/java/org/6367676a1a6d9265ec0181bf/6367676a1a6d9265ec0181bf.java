@@ -1,5 +1,4 @@
-public class StringUtils {
-
+public class StringQuoter {
     /**
      * 如果给定的对象是字符串，则将其转换为带单引号的字符串；否则保持对象不变。
      * @param obj 输入对象（例如："myString"）

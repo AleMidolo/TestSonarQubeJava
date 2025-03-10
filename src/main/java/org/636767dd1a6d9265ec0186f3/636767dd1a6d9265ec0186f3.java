@@ -2,11 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> nameMap;
-
-    public ColumnName() {
-        this.nameMap = new HashMap<>();
-    }
+    private Map<String, String> nameMap = new HashMap<>();
 
     /**
      * 保持与 {@link ColumnName#overrideName(String,String)} 相同的名称替换

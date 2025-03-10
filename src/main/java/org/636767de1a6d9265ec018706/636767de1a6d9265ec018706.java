@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Mappings {
     private Map<String, Object> fields;
@@ -27,16 +26,10 @@ public class MappingDiff {
         Mappings diffMappings = new Mappings();
         Map<String, Object> diffFields = new HashMap<>();
 
-        // Get the fields from the historical mappings
-        Map<String, Object> historicalFields = historicalMappings.getFields();
-
-        // Get the fields from the input mappings
-        Map<String, Object> inputFields = mappings.getFields();
-
-        // Find fields that are in historical mappings but not in input mappings
-        for (Map.Entry<String, Object> entry : historicalFields.entrySet()) {
+        // Iterate through the input mappings and find fields that are not in historical mappings
+        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!inputFields.containsKey(fieldName)) {
+            if (!historicalMappings.getFields().containsKey(fieldName)) {
                 diffFields.put(fieldName, entry.getValue());
             }
         }

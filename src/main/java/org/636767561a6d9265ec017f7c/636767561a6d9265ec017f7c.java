@@ -1,6 +1,5 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
 
@@ -22,12 +21,12 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
 
-    // Aggiungi il primo vertice del primo arco
+    // Aggiungi il primo vertice del primo bordo
     E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
     vertexList.add(startVertex);
 
-    // Costruisci la lista dei vertici seguendo gli archi
+    // Costruisci la lista dei vertici seguendo i bordi
     V currentVertex = startVertex;
     for (E edge : edgeList) {
         V source = graph.getEdgeSource(edge);
@@ -44,6 +43,6 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         }
     }
 
-    // Crea il percorso di grafo
+    // Crea e restituisci il GraphPath
     return new DefaultGraphPath<>(graph, vertexList, edgeList, 0);
 }

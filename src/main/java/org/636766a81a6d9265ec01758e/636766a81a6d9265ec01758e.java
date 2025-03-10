@@ -3,7 +3,7 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity
+     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity 
      * (entro l'11% se desiredCapacity >= 1000).
      * @param desiredCapacity la capacità desiderata dall'utente.
      * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
@@ -12,20 +12,20 @@ public class PrimeUtil {
         if (desiredCapacity <= 1) {
             return 2;
         }
-
+        
         int candidate = desiredCapacity;
         while (!isPrime(candidate)) {
             candidate++;
         }
-
-        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11%
+        
+        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
         if (desiredCapacity >= 1000) {
             int upperBound = (int) (desiredCapacity * 1.11);
             while (candidate > upperBound) {
                 candidate = nextPrime(candidate + 1);
             }
         }
-
+        
         return candidate;
     }
 

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Graph {
+public class GraphSeparator {
 
     // Assuming Pair is a custom class for holding pairs of elements
     public static class Pair<A, B> {
@@ -14,7 +14,7 @@ public class Graph {
         }
     }
 
-    // Assuming E is the type representing edges in the graph
+    // Assuming E is the type of edges in the graph
     private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
         // Placeholder for the graph's edges
         List<E> edges = new ArrayList<>();
@@ -25,29 +25,24 @@ public class Graph {
         for (E edge : edges) {
             // Compute the minimal separators in the neighborhood of the edge
             List<Pair<Integer, Integer>> separators = computeMinimalSeparators(edge);
-            // Add the pair of separators and the edge to the global list
+            // Add the pair (separators, edge) to the global list
             globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
         return globalSeparatorList;
     }
 
-    // Placeholder method for computing minimal separators in the neighborhood of an edge
+    // Placeholder method to compute minimal separators for a given edge
     private List<Pair<Integer, Integer>> computeMinimalSeparators(E edge) {
-        // This method should be implemented based on the specific graph structure
-        // and the definition of minimal separators in the neighborhood of an edge.
-        // For now, it returns an empty list.
+        // This method should implement the logic to find minimal separators in the neighborhood of the edge
+        // For now, it returns an empty list
         return new ArrayList<>();
     }
 
     // Main method for testing
     public static void main(String[] args) {
-        Graph graph = new Graph();
-        List<Pair<List<Pair<Integer, Integer>>, E>> result = graph.computeGlobalSeparatorList();
-        // Output the result (for testing purposes)
-        for (Pair<List<Pair<Integer, Integer>>, E> pair : result) {
-            System.out.println("Edge: " + pair.second);
-            System.out.println("Separators: " + pair.first);
-        }
+        GraphSeparator graphSeparator = new GraphSeparator();
+        List<Pair<List<Pair<Integer, Integer>>, E>> result = graphSeparator.computeGlobalSeparatorList();
+        // Print the result or perform further operations
     }
 }

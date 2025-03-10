@@ -14,12 +14,12 @@ public class Label {
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Line number must be strictly positive.");
+            throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo.");
         }
         this.lineNumbers.add(lineNumber);
     }
 
-    // Optional: Method to get the list of line numbers
+    // Optional: Getter method to retrieve the line numbers
     public List<Integer> getLineNumbers() {
         return new ArrayList<>(this.lineNumbers);
     }

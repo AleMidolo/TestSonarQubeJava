@@ -17,7 +17,10 @@ public class CacheUtil {
         long timestamp = System.currentTimeMillis() - 10000; // 10 seconds ago
         long expiredThreshold = 5000; // 5 seconds threshold
 
-        boolean shouldRemove = isExpired(timestamp, expiredThreshold);
-        System.out.println("Should remove from cache: " + shouldRemove); // Output: Should remove from cache: true
+        if (isExpired(timestamp, expiredThreshold)) {
+            System.out.println("Metrics should be removed from the cache.");
+        } else {
+            System.out.println("Metrics are still valid.");
+        }
     }
 }

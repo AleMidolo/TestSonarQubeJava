@@ -1,7 +1,11 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> outputFrameStack = new Stack<>();
+    private Stack<String> outputStack;
+
+    public FrameStack() {
+        this.outputStack = new Stack<>();
+    }
 
     /**
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
@@ -14,51 +18,57 @@ public class FrameStack {
 
         if (descriptor.startsWith("(")) {
             // È un descrittore di metodo, rimuovi i tipi di argomento
-            int endOfArgs = descriptor.indexOf(')');
-            if (endOfArgs == -1) {
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
                 return;
             }
-            String argsDescriptor = descriptor.substring(1, endOfArgs);
+            String argsDescriptor = descriptor.substring(1, endIndex);
             removeTypesFromStack(argsDescriptor);
         } else {
-            // È un singolo tipo, rimuovi solo quel tipo
-            removeTypesFromStack(descriptor);
+            // È un tipo singolo, rimuovi il tipo dallo stack
+            removeTypeFromStack(descriptor);
         }
     }
 
-    private void removeTypesFromStack(String descriptor) {
+    private void removeTypesFromStack(String argsDescriptor) {
         int index = 0;
-        while (index < descriptor.length()) {
-            char currentChar = descriptor.charAt(index);
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
             if (currentChar == 'L') {
-                // Tipo oggetto, rimuovi fino al ';'
-                int endIndex = descriptor.indexOf(';', index);
+                // Tipo oggetto, trova il ';'
+                int endIndex = argsDescriptor.indexOf(';', index);
                 if (endIndex == -1) {
                     break;
                 }
-                outputFrameStack.pop();
+                String type = argsDescriptor.substring(index, endIndex + 1);
+                removeTypeFromStack(type);
                 index = endIndex + 1;
             } else if (currentChar == '[') {
-                // Tipo array, rimuovi l'array
-                outputFrameStack.pop();
+                // Tipo array, rimuovi il tipo base
                 index++;
             } else {
-                // Tipo primitivo, rimuovi il tipo
-                outputFrameStack.pop();
+                // Tipo primitivo
+                removeTypeFromStack(String.valueOf(currentChar));
                 index++;
             }
+        }
+    }
+
+    private void removeTypeFromStack(String type) {
+        if (!outputStack.isEmpty() && outputStack.peek().equals(type)) {
+            outputStack.pop();
         }
     }
 
     // Metodo di esempio per testare la funzionalità
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.outputFrameStack.push("int");
-        frameStack.outputFrameStack.push("java/lang/String;");
-        frameStack.outputFrameStack.push("[I");
+        frameStack.outputStack.push("I");
+        frameStack.outputStack.push("Ljava/lang/String;");
+        frameStack.outputStack.push("D");
 
-        frameStack.pop("(ILjava/lang/String;[I)V");
-
-        System.out.println(frameStack.outputFrameStack); // Dovrebbe essere vuoto
+        System.out.println("Stack prima della rimozione: " + frameStack.outputStack);
+        frameStack.pop("(ILjava/lang/String;D)V");
+        System.out.println("Stack dopo la rimozione: " + frameStack.outputStack);
     }
 }

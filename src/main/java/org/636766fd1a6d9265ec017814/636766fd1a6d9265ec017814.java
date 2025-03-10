@@ -25,8 +25,6 @@ public class ArrayComparator {
         byte[] array1 = {1, 2, 3, 4, 5};
         byte[] array2 = {1, 2, 3, 4, 6};
         int count = 4;
-
-        boolean result = arrayequals(array1, array2, count);
-        System.out.println("I primi " + count + " byte sono uguali? " + result);
+        System.out.println(arrayequals(array1, array2, count)); // Output: true
     }
 }

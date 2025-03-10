@@ -14,13 +14,13 @@ public class StringUtils {
             return inString;
         }
 
-        // Convert the characters to delete into a set for quick lookup
+        // Converti i caratteri da eliminare in un set per un accesso rapido
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
-        // Build the resulting string by skipping characters in the set
+        // Costruisci la stringa risultante
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {
@@ -35,6 +35,6 @@ public class StringUtils {
         String input = "Hello, World!\nThis is a test.";
         String charsToDelete = "aeiou\n";
         String result = deleteAny(input, charsToDelete);
-        System.out.println(result); // Output: Hll, Wrld!Ths s  tst.
+        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
     }
 }

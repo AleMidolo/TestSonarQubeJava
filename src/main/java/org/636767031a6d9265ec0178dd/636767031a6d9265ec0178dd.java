@@ -14,6 +14,6 @@ public class ContentLengthExample {
      * @since 1.3
      */
     public long contentLength() {
-        return request.getContentLength();
+        return request.getContentLengthLong();
     }
 }

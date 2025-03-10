@@ -1,48 +1,38 @@
 import org.apache.commons.beanutils.BeanMap;
 
-public class CustomBeanMap {
+public class BeanMapExample {
 
-    private Object bean;
-
-    public CustomBeanMap(Object bean) {
-        this.bean = bean;
-    }
-
+    /**
+     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
+     * @param map  il BeanMap le cui proprietà devono essere inserite
+     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
             throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
 
-        BeanMap thisBeanMap = new BeanMap(this.bean);
+        BeanMap thisBeanMap = new BeanMap(this);
 
         for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key)) {
-                thisBeanMap.put(key, map.get(key));
+            if (thisBeanMap.isWriteable((String) key) && map.isReadable((String) key)) {
+                Object value = map.get(key);
+                thisBeanMap.put(key, value);
             }
         }
     }
 
+    // Esempio di utilizzo
     public static void main(String[] args) {
-        // Esempio di utilizzo
-        MyBean bean1 = new MyBean();
-        MyBean bean2 = new MyBean();
+        // Creazione di un BeanMap per un oggetto di esempio
+        BeanMapExample example = new BeanMapExample();
+        BeanMap sourceMap = new BeanMap(new ExampleBean());
 
-        bean1.setName("Bean1");
-        bean1.setAge(25);
-
-        bean2.setName("Bean2");
-        bean2.setAge(30);
-
-        BeanMap beanMap1 = new BeanMap(bean1);
-        CustomBeanMap customBeanMap = new CustomBeanMap(bean2);
-
-        customBeanMap.putAllWriteable(beanMap1);
-
-        System.out.println("Bean2 dopo putAllWriteable: " + bean2.getName() + ", " + bean2.getAge());
+        // Inserimento delle proprietà scrivibili
+        example.putAllWriteable(sourceMap);
     }
 }
 
-class MyBean {
+class ExampleBean {
     private String name;
     private int age;
 

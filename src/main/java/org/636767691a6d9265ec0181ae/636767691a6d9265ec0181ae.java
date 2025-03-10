@@ -28,8 +28,8 @@ public class EnumerationToStringArray {
         vector.add("Hello");
         vector.add("World");
         Enumeration<String> enumeration = vector.elements();
-        String[] result = toStringArray(enumeration);
 
+        String[] result = toStringArray(enumeration);
         for (String str : result) {
             System.out.println(str);
         }

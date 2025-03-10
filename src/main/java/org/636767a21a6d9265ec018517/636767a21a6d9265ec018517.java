@@ -18,13 +18,17 @@ public final class BufferToByteArray {
         return buffer.toByteArray();
     }
 
-    // Optional: Method to write data to the buffer
-    public void write(byte[] data) throws IOException {
+    // Example method to write data to the buffer
+    public void writeToBuffer(byte[] data) throws IOException {
         buffer.write(data);
     }
 
-    // Optional: Method to reset the buffer
-    public void reset() {
-        buffer.reset();
+    public static void main(String[] args) throws IOException {
+        BufferToByteArray buffer = new BufferToByteArray();
+        buffer.writeToBuffer(new byte[]{1, 2, 3, 4, 5});
+        byte[] result = buffer.toByteArray();
+        for (byte b : result) {
+            System.out.print(b + " ");
+        }
     }
 }

@@ -15,15 +15,13 @@ public class ByteVector {
      */
     private void enlarge(final int size) {
         int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        this.data = newData;
-        this.capacity = newCapacity;
+        byte[] newData = new byte[newCapacity];
+        System.arraycopy(data, 0, newData, 0, capacity);
+        data = newData;
+        capacity = newCapacity;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        ByteVector vector = new ByteVector(10);
-        vector.enlarge(5);
-        System.out.println("New capacity: " + vector.capacity);
+    public byte[] getData() {
+        return Arrays.copyOf(data, capacity);
     }
 }

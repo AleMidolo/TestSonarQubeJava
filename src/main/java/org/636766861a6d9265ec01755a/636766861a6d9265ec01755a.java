@@ -22,14 +22,4 @@ public final class URIMatcher {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        URIMatcher matcher = new URIMatcher("https://example.com/.*");
-        MatchResult result = matcher.match("https://example.com/resource");
-        if (result != null) {
-            System.out.println("Match found: " + result.group());
-        } else {
-            System.out.println("No match found.");
-        }
-    }
 }

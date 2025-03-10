@@ -18,7 +18,7 @@ public class Template {
      * @return यदि टेम्पलेट वेरिएबल टेम्पलेट का सदस्य है, तो true, अन्यथा false।
      */
     public final boolean isTemplateVariablePresent(String name) {
-        return templateVariables.contains(name);
+        return this.templateVariables.contains(name);
     }
 
     public static void main(String[] args) {

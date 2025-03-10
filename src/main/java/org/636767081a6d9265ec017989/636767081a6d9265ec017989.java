@@ -16,7 +16,7 @@ public class BooleanArrayConverter {
         boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null");
+                throw new NullPointerException("Array element at index " + i + " is null.");
             }
             result[i] = array[i];
         }

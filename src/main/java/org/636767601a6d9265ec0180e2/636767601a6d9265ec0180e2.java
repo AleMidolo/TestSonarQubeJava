@@ -1,6 +1,37 @@
 import java.util.*;
 
-class Graph {
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(key, pair.key) && Objects.equals(value, pair.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
+    }
+}
+
+public class Graph {
     private Map<Integer, List<Integer>> adjacencyList;
 
     public Graph() {
@@ -18,8 +49,10 @@ class Graph {
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
             int u = entry.getKey();
             for (int v : entry.getValue()) {
-                List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                globalSeparators.add(new Pair<>(separators, u));
+                if (u < v) { // To avoid processing the same edge twice
+                    List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
+                    globalSeparators.add(new Pair<>(separators, u));
+                }
             }
         }
 
@@ -31,7 +64,7 @@ class Graph {
         // This is a complex problem and typically involves advanced graph algorithms
         // such as BFS, DFS, or flow-based methods.
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Example: Adding a dummy separator for illustration
+        // Example: Adding a dummy separator
         separators.add(new Pair<>(u, v));
         return separators;
     }
@@ -43,33 +76,10 @@ class Graph {
         graph.addEdge(3, 4);
         graph.addEdge(4, 1);
 
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> result = graph.computeGlobalSeparatorList();
-        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : result) {
-            System.out.println("Edge: " + pair.getSecond());
-            System.out.println("Separators: " + pair.getFirst());
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = graph.computeGlobalSeparatorList();
+        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : globalSeparators) {
+            System.out.println("Edge: " + pair.getValue());
+            System.out.println("Separators: " + pair.getKey());
         }
-    }
-}
-
-class Pair<K, V> {
-    private K first;
-    private V second;
-
-    public Pair(K first, V second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    public K getFirst() {
-        return first;
-    }
-
-    public V getSecond() {
-        return second;
-    }
-
-    @Override
-    public String toString() {
-        return "(" + first + ", " + second + ")";
     }
 }

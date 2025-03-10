@@ -8,7 +8,7 @@ public class AppenderManager {
      * @since 1.2 
      */
     public boolean isAttached(Appender appender) {
-        if (attachedAppenders == null || appender == null) {
+        if (appender == null) {
             return false;
         }
         return attachedAppenders.contains(appender);

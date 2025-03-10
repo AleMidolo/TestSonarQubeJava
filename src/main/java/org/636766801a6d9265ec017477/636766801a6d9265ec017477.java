@@ -26,13 +26,13 @@ public class FileReverser {
                 file.close();
             }
             
-            // Convert the output stream to a byte array
+            // Convert the output stream to a byte array (if needed)
             byte[] result = outputStream.toByteArray();
             
             // Close the output stream
             outputStream.close();
             
-            // Print the result (or handle it as needed)
+            // Use the result as needed (e.g., print, save, etc.)
             System.out.println(new String(result));
             
         } catch (IOException e) {

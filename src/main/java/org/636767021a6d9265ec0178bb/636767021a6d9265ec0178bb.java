@@ -19,15 +19,4 @@ public class ArrayUtils {
         }
         return array;
     }
-
-    public static void main(String[] args) {
-        // Test cases
-        Double[] nullArray = null;
-        Double[] emptyArray = new Double[0];
-        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
-
-        System.out.println(Objects.toString(nullToEmpty(nullArray)));      // Should print []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));    // Should print []
-        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Should print [1.0, 2.0, 3.0]
-    }
 }

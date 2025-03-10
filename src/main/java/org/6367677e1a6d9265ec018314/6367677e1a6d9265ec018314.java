@@ -17,13 +17,10 @@ class CategoryTree {
         activeNodes.add(node);
     }
 
-    /**
-     * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
-     */
     protected int removeUnusedNodes() {
         Set<Integer> nodesToRemove = new HashSet<>();
         for (Integer node : tree.keySet()) {
-            if (!activeNodes.contains(node)) {
+            if (!activeNodes.contains(node) {
                 nodesToRemove.add(node);
             }
         }

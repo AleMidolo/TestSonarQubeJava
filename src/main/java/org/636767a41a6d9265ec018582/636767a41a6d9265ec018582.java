@@ -6,6 +6,7 @@ import org.msgpack.core.MessagePacker;
 import org.msgpack.core.buffer.LinkedBuffer;
 import org.msgpack.core.buffer.MessageBuffer;
 import org.msgpack.core.buffer.MessageBufferOutput;
+import org.msgpack.core.buffer.OutputStreamBufferOutput;
 import org.msgpack.core.schema.Schema;
 
 public class MessageSerializer {
@@ -15,12 +16,13 @@ public class MessageSerializer {
      * @return संदेश का आकार
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
-        schema.write(packer, message);
-        int size = packer.getBufferSize();
-        MessageBufferOutput output = MessagePack.newDefaultBufferOutput(out);
-        output.writeBuffer(MessageBuffer.wrap(packer.toByteArray()));
-        output.flush();
+        MessageBufferOutput output = new OutputStreamBufferOutput(out);
+        MessagePacker packer = MessagePack.newDefaultPacker(output, buffer);
+
+        // Write the size of the message first
+        int size = schema.write(packer, message);
+        packer.flush();
+
         return size;
     }
 }

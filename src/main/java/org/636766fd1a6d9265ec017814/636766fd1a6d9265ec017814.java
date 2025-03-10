@@ -30,5 +30,6 @@ public class ArrayComparator {
 
         System.out.println(arrayequals(array1, array2, 5)); // true
         System.out.println(arrayequals(array1, array3, 5)); // false
+        System.out.println(arrayequals(array1, array2, 3)); // true
     }
 }

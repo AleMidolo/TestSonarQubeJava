@@ -1,9 +1,9 @@
 import java.util.Objects;
 
-public class ArrayConverter {
+public class DoubleArrayConverter {
 
-    /** 
-     * <p>Converte un array di oggetti Double in primitivi.</p> 
+    /**
+     * <p>Converte un array di oggetti Double in primitivi.</p>
      * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
      * @param array  un array di <code>Double</code>, può essere <code>null</code>
      * @return un array di <code>double</code>, <code>null</code> se l'array di input è nullo
@@ -15,17 +15,15 @@ public class ArrayConverter {
         }
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Element at index " + i + " is null");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
     }
 
     public static void main(String[] args) {
-        Double[] doubleArray = {1.1, 2.2, 3.3};
-        double[] primitiveArray = toPrimitive(doubleArray);
+        // Test case
+        Double[] testArray = {1.0, 2.0, 3.0};
+        double[] primitiveArray = toPrimitive(testArray);
         for (double d : primitiveArray) {
             System.out.println(d);
         }

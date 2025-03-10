@@ -1,53 +1,59 @@
 import java.util.Stack;
 
-public class StackManipulator {
-    private Stack<String> stack;
-
-    public StackManipulator() {
-        this.stack = new Stack<>();
-    }
+public class FrameStack {
+    private Stack<String> outputFrameStack = new Stack<>();
 
     /**
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
      * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            // Extract argument types from the descriptor
-            String args = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
-            for (char c : args.toCharArray()) {
-                // Pop the corresponding number of types from the stack
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
+        }
+
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, rimuovi i tipi di argomento
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
             }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            removeTypesFromStack(argsDescriptor);
         } else {
-            // If it's a single type descriptor, just pop one element
-            if (!stack.isEmpty()) {
-                stack.pop();
+            // È un tipo singolo, rimuovi il tipo dallo stack
+            removeTypeFromStack(descriptor);
+        }
+    }
+
+    private void removeTypesFromStack(String argsDescriptor) {
+        int index = 0;
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
+            if (currentChar == 'L') {
+                // Tipo oggetto, trova il punto e virgola
+                int semicolonIndex = argsDescriptor.indexOf(';', index);
+                if (semicolonIndex == -1) {
+                    break;
+                }
+                String type = argsDescriptor.substring(index, semicolonIndex + 1);
+                removeTypeFromStack(type);
+                index = semicolonIndex + 1;
+            } else if (currentChar == '[') {
+                // Tipo array, rimuovi il tipo base
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
+            } else {
+                // Tipo primitivo
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
             }
         }
     }
 
-    // Method to push an item onto the stack for testing purposes
-    public void push(String item) {
-        stack.push(item);
-    }
-
-    // Method to view the current stack for testing purposes
-    public Stack<String> getStack() {
-        return stack;
-    }
-
-    public static void main(String[] args) {
-        StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
-
-        System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method taking an int
-        System.out.println("Stack after pop: " + sm.getStack());
+    private void removeTypeFromStack(String type) {
+        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+            outputFrameStack.pop();
+        }
     }
 }

@@ -1,52 +1,53 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
+    private byte[] buffer;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.buffer = new byte[16]; // Initial capacity
         this.size = 0;
     }
 
-    /** 
-     * Inserisce un array di byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
-     * @param byteArrayValue un array di byte. Può essere {@literal null} per inserire {@code byteLength} byte null in questo vettore di byte.
-     * @param byteOffset     indice del primo byte di byteArrayValue che deve essere copiato.
-     * @param byteLength     numero di byte di byteArrayValue che devono essere copiati.
-     * @return questo vettore di byte.
-     */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
         if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
+            throw new IllegalArgumentException("byteLength must be non-negative");
         }
-        
-        if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
-            Arrays.fill(byteArrayValue, (byte) 0);
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+        if (byteOffset < 0) {
+            throw new IllegalArgumentException("byteOffset must be non-negative");
+        }
+        if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
+            throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
         ensureCapacity(size + byteLength);
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        size += byteLength;
 
+        if (byteArrayValue == null) {
+            // Fill with null bytes (0)
+            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
+        } else {
+            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
+        }
+
+        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > buffer.length) {
+            int newCapacity = buffer.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
+            buffer = Arrays.copyOf(buffer, newCapacity);
         }
+    }
+
+    public byte[] toByteArray() {
+        return Arrays.copyOf(buffer, size);
     }
 
     public int size() {
         return size;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
     }
 }

@@ -1,29 +1,17 @@
-import java.util.HashMap;
 import java.util.Map;
 
-public class MyMap<K, V> {
-    private Map<K, V> map;
+public class MyMap<K, V> implements Map<K, V> {
+    // Assuming this class has a private field `entries` that stores the key-value pairs
+    private final Map<K, V> entries;
 
-    public MyMap() {
-        this.map = new HashMap<>();
+    public MyMap(Map<K, V> entries) {
+        this.entries = entries;
     }
 
-    /** 
-     * Restituisce <code>true</code> se questa mappa contiene una mappatura per la chiave specificata.
-     * @param key  la chiave da cercare
-     * @return true se la mappa contiene la chiave
-     */
-    @Override 
+    @Override
     public boolean containsKey(final Object key) {
-        return map.containsKey(key);
+        return entries.containsKey(key);
     }
 
-    // Additional methods to add and remove entries for testing purposes
-    public void put(K key, V value) {
-        map.put(key, value);
-    }
-
-    public void remove(K key) {
-        map.remove(key);
-    }
+    // Other methods of the Map interface would need to be implemented here
 }

@@ -1,25 +1,25 @@
 import java.io.File;
 
-public class FileUtils {
+public class FileDeleter {
 
-    /** 
-     * Elimina il file specificato se esiste 
+    /**
+     * Elimina il file specificato se esiste
      */
     protected static void deleteFile(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("File deleted successfully: " + fileName);
+                System.out.println("File eliminato con successo: " + fileName);
             } else {
-                System.out.println("Failed to delete the file: " + fileName);
+                System.out.println("Impossibile eliminare il file: " + fileName);
             }
         } else {
-            System.out.println("File does not exist: " + fileName);
+            System.out.println("Il file non esiste: " + fileName);
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
+        // Esempio di utilizzo
         deleteFile("example.txt");
     }
 }

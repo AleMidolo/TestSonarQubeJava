@@ -2,63 +2,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Mappings {
-    private Map<String, String> fields;
+    private Map<String, Object> fields;
 
     public Mappings() {
         this.fields = new HashMap<>();
     }
 
-    public void addField(String fieldName, String fieldType) {
-        fields.put(fieldName, fieldType);
+    public Map<String, Object> getFields() {
+        return fields;
     }
 
-    public Map<String, String> getFields() {
-        return fields;
+    public void setFields(Map<String, Object> fields) {
+        this.fields = fields;
     }
 }
 
 public class MappingDiff {
 
-    /**
-     * Restituisce le mappature con i campi che non esistono nelle mappature di input. 
-     * Le mappature di input devono essere le mappature storiche dall'indice corrente. 
-     * Non restituire la configurazione _source per evitare conflitti di aggiornamento dell'indice corrente.
-     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulazione di mappature storiche
+        // Assuming we have a method to get historical mappings for the given table
         Mappings historicalMappings = getHistoricalMappings(tableName);
-        
+
         Mappings diffMappings = new Mappings();
-        
-        for (String field : historicalMappings.getFields().keySet()) {
-            if (!mappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, historicalMappings.getFields().get(field));
+        Map<String, Object> diffFields = new HashMap<>();
+
+        // Iterate through the input mappings and find fields that are not in historical mappings
+        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
+            String fieldName = entry.getKey();
+            if (!historicalMappings.getFields().containsKey(fieldName)) {
+                diffFields.put(fieldName, entry.getValue());
             }
         }
-        
+
+        diffMappings.setFields(diffFields);
         return diffMappings;
     }
 
     private Mappings getHistoricalMappings(String tableName) {
-        // Simulazione di recupero delle mappature storiche
-        Mappings historicalMappings = new Mappings();
-        // Aggiunta di campi storici per esempio
-        historicalMappings.addField("id", "integer");
-        historicalMappings.addField("name", "string");
-        historicalMappings.addField("created_at", "date");
-        return historicalMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings currentMappings = new Mappings();
-        currentMappings.addField("name", "string");
-        
-        Mappings diff = mappingDiff.diffStructure("example_table", currentMappings);
-        
-        System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
-            System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
-        }
+        // This method should retrieve the historical mappings for the given table
+        // For the sake of this example, we return an empty Mappings object
+        return new Mappings();
     }
 }

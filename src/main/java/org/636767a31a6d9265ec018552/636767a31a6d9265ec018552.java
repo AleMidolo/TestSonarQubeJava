@@ -1,31 +1,28 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 
-public class StringReader {
+public class StreamReader {
 
-    private BufferedReader reader;
+    private InputStream inputStream;
 
-    public StringReader() {
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
+    public StreamReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
-    /** 
+    /**
      * Leggi un valore di campo {@code string} dallo stream.
      */
-    @Override 
+    @Override
     public String readString() throws IOException {
-        return reader.readLine();
-    }
-
-    public static void main(String[] args) {
-        StringReader stringReader = new StringReader();
-        try {
-            System.out.println("Please enter a string:");
-            String input = stringReader.readString();
-            System.out.println("You entered: " + input);
-        } catch (IOException e) {
-            e.printStackTrace();
+        StringBuilder stringBuilder = new StringBuilder();
+        int data;
+        while ((data = inputStream.read()) != -1) {
+            char character = (char) data;
+            if (character == '\n' || character == '\r') {
+                break; // Stop reading at newline or carriage return
+            }
+            stringBuilder.append(character);
         }
+        return stringBuilder.toString();
     }
 }

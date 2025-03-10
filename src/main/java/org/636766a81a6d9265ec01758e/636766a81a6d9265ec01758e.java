@@ -1,37 +1,48 @@
-import java.util.Arrays;
+import java.util.*;
 
-public class PrimeCapacity {
+public class PrimeUtil {
 
+    /**
+     * Restituisce un numero primo che è <code>&gt;= desiredCapacity</code> e molto vicino a <code>desiredCapacity</code> (entro l'11% se <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity la capacità desiderata dall'utente.
+     * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
+     */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity < 2) {
+        if (desiredCapacity <= 1) {
             return 2;
         }
 
-        int upperLimit = desiredCapacity;
-        if (desiredCapacity >= 1000) {
-            upperLimit = (int) (desiredCapacity * 1.11);
+        int candidate = desiredCapacity;
+        while (!isPrime(candidate)) {
+            candidate++;
         }
 
-        for (int i = desiredCapacity; i <= upperLimit; i++) {
-            if (isPrime(i)) {
-                return i;
+        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
+        if (desiredCapacity >= 1000) {
+            int upperBound = (int) (desiredCapacity * 1.11);
+            if (candidate > upperBound) {
+                candidate = desiredCapacity;
+                while (!isPrime(candidate)) {
+                    candidate--;
+                }
             }
         }
-        return upperLimit; // Fallback, should not reach here for valid input
+
+        return candidate;
     }
 
-    private static boolean isPrime(int number) {
-        if (number <= 1) {
+    private static boolean isPrime(int n) {
+        if (n <= 1) {
             return false;
         }
-        if (number <= 3) {
+        if (n <= 3) {
             return true;
         }
-        if (number % 2 == 0 || number % 3 == 0) {
+        if (n % 2 == 0 || n % 3 == 0) {
             return false;
         }
-        for (int i = 5; i * i <= number; i += 6) {
-            if (number % i == 0 || number % (i + 2) == 0) {
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) {
                 return false;
             }
         }
@@ -39,7 +50,6 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(10)); // Example usage
-        System.out.println(nextPrime(1000)); // Example usage
+        System.out.println(nextPrime(1000));  // Esempio di utilizzo
     }
 }

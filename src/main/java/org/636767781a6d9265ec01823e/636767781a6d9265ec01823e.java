@@ -1,27 +1,56 @@
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAppender extends AppenderSkeleton {
+    private List<PrintWriter> clients = new ArrayList<>();
+    private ServerSocket serverSocket;
+
+    public CustomAppender(int port) throws IOException {
+        serverSocket = new ServerSocket(port);
+        new Thread(this::acceptClients).start();
+    }
+
+    private void acceptClients() {
+        try {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+                synchronized (clients) {
+                    clients.add(writer);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void append(LoggingEvent event) {
-        // Get the message from the logging event
-        String message = event.getRenderedMessage();
-        
-        // Here you would implement the logic to send the message to each connected client
-        // For demonstration purposes, we will just print the message to the console
-        System.out.println("Logging to clients: " + message);
-        
-        // You can add your logic to handle connected clients and send the message to them
+        String message = layout.format(event);
+        synchronized (clients) {
+            for (PrintWriter writer : clients) {
+                writer.println(message);
+            }
+        }
     }
 
     @Override
     public void close() {
-        // Implement any cleanup logic if necessary
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean requiresLayout() {
-        return false; // Change to true if you are using a layout
+        return true;
     }
 }

@@ -1,12 +1,12 @@
 import java.util.Arrays;
 
-public class ByteArrayExpander {
-    private byte[] byteArray;
-    private int currentSize;
+public class ByteVector {
+    private byte[] data;
+    private int capacity;
 
-    public ByteArrayExpander(int initialSize) {
-        this.byteArray = new byte[initialSize];
-        this.currentSize = initialSize;
+    public ByteVector(int initialCapacity) {
+        this.data = new byte[initialCapacity];
+        this.capacity = initialCapacity;
     }
 
     /**
@@ -15,18 +15,13 @@ public class ByteArrayExpander {
      */
     private void enlarge(final int size) {
         if (size <= 0) {
-            return; // No need to enlarge if size is non-positive
+            throw new IllegalArgumentException("Size must be greater than 0");
         }
-        int newSize = currentSize + size;
-        byteArray = Arrays.copyOf(byteArray, newSize);
-        currentSize = newSize;
+
+        int newCapacity = capacity + size;
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 
-    public byte[] getByteArray() {
-        return byteArray;
-    }
-
-    public int getCurrentSize() {
-        return currentSize;
-    }
+    // Other methods to manipulate the byte vector can be added here
 }

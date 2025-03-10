@@ -1,5 +1,6 @@
 public class ArrayUtils {
-    /** 
+
+    /**
      * Scambia i due elementi agli indici specificati nell'array fornito.
      * @param <V> il tipo di elementi nell'array
      * @param arr l'array
@@ -7,11 +8,8 @@ public class ArrayUtils {
      * @param j l'indice del secondo elemento
      */
     public static final <V> void swap(V[] arr, int i, int j) {
-        if (arr == null) {
-            throw new IllegalArgumentException("Array cannot be null");
-        }
-        if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
+            throw new IllegalArgumentException("Indici non validi o array nullo");
         }
         V temp = arr[i];
         arr[i] = arr[j];
@@ -19,10 +17,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
+        // Esempio di utilizzo
         Integer[] array = {1, 2, 3, 4, 5};
+        System.out.println("Array prima dello scambio: " + java.util.Arrays.toString(array));
         swap(array, 1, 3);
-        for (Integer num : array) {
-            System.out.print(num + " ");
-        }
+        System.out.println("Array dopo lo scambio: " + java.util.Arrays.toString(array));
     }
 }

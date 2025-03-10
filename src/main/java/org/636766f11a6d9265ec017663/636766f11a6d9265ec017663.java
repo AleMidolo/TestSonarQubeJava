@@ -1,6 +1,6 @@
-public class ArrayLengthChecker {
-    
-    /** 
+public class ArrayUtils {
+
+    /**
      * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
      * @param array1 il primo array, può essere <code>null</code>
      * @param array2 il secondo array, può essere <code>null</code>
@@ -16,9 +16,10 @@ public class ArrayLengthChecker {
         double[] array1 = {1.0, 2.0, 3.0};
         double[] array2 = {4.0, 5.0, 6.0};
         double[] array3 = null;
+        double[] array4 = {7.0};
 
         System.out.println(isSameLength(array1, array2)); // true
         System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array3)); // true
+        System.out.println(isSameLength(array3, array4)); // false
     }
 }

@@ -1,9 +1,11 @@
-public class TypeManager {
-    
+import java.util.ArrayList;
+import java.util.List;
+
+public class TypeInitializer {
     private List<Integer> initializedTypes;
 
-    public TypeManager() {
-        initializedTypes = new ArrayList<>();
+    public TypeInitializer() {
+        this.initializedTypes = new ArrayList<>();
     }
 
     /**
@@ -15,17 +17,8 @@ public class TypeManager {
             initializedTypes.add(abstractType);
         }
     }
-    
+
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
-    }
-
-    public static void main(String[] args) {
-        TypeManager manager = new TypeManager();
-        manager.addInitializedType(1);
-        manager.addInitializedType(2);
-        manager.addInitializedType(1); // Duplicate, should not be added
-        
-        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }
 }

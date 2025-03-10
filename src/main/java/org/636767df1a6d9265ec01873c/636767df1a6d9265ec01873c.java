@@ -1,16 +1,18 @@
-public class Entity {
-    
+public class EntityIdHandler {
+
     /**
-     * @return l'id della riga
+     * @param entityId the entity identifier
+     * @return the id of the row
      */
     public String id(String entityId) {
-        // Assuming the entityId is the row id we want to return
+        // Assuming the entityId is already in the correct format for the row ID
         return entityId;
     }
 
     public static void main(String[] args) {
-        Entity entity = new Entity();
-        String rowId = entity.id("12345");
-        System.out.println("L'id della riga è: " + rowId);
+        EntityIdHandler handler = new EntityIdHandler();
+        String entityId = "exampleEntityId";
+        String rowId = handler.id(entityId);
+        System.out.println("Row ID: " + rowId);
     }
 }

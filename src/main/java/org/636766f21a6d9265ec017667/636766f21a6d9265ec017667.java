@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class ClassReader {
     private byte[] data;
@@ -14,16 +14,9 @@ public class ClassReader {
      */
     public short readShort(final int offset) {
         if (offset < 0 || offset + 2 > data.length) {
-            throw new IndexOutOfBoundsException("Offset is out of bounds");
+            throw new IndexOutOfBoundsException("Offset out of bounds");
         }
-        return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        byte[] exampleData = {0x00, 0x01, 0x02, 0x03};
-        ClassReader reader = new ClassReader(exampleData);
-        short value = reader.readShort(0);
-        System.out.println("Read short value: " + value);
+        ByteBuffer buffer = ByteBuffer.wrap(data, offset, 2);
+        return buffer.getShort();
     }
 }

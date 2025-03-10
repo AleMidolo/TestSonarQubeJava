@@ -1,6 +1,6 @@
-public class StringUtil {
-    
-    /** 
+public class StringUtils {
+
+    /**
      * Rimuove gli spazi bianchi finali dalla Stringa fornita.
      * @param str la Stringa da controllare
      * @return la Stringa senza spazi bianchi finali
@@ -10,16 +10,18 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
-        int end = str.length();
-        while (end > 0 && Character.isWhitespace(str.charAt(end - 1))) {
-            end--;
+
+        int length = str.length();
+        while (length > 0 && Character.isWhitespace(str.charAt(length - 1))) {
+            length--;
         }
-        return str.substring(0, end);
+
+        return str.substring(0, length);
     }
 
     public static void main(String[] args) {
-        String testString = "Hello World!    ";
-        String trimmedString = trimTrailingWhitespace(testString);
-        System.out.println("'" + trimmedString + "'"); // Output: 'Hello World!'
+        String testString = "Hello World!   ";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimTrailingWhitespace(testString) + "'");
     }
 }

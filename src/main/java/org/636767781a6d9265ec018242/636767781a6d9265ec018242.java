@@ -1,61 +1,23 @@
-import java.util.ArrayList;
-import java.util.List;
-
-class LoggingEvent {
-    private String message;
-
-    public LoggingEvent(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-}
-
-interface Appender {
-    void doAppend(LoggingEvent event);
-}
-
-class ConsoleAppender implements Appender {
-    @Override
-    public void doAppend(LoggingEvent event) {
-        System.out.println("Appending to console: " + event.getMessage());
-    }
-}
-
-class FileAppender implements Appender {
-    @Override
-    public void doAppend(LoggingEvent event) {
-        // Simulate appending to a file
-        System.out.println("Appending to file: " + event.getMessage());
-    }
-}
+import org.apache.log4j.Appender;
+import org.apache.log4j.spi.LoggingEvent;
 
 public class Logger {
-    private List<Appender> appenders = new ArrayList<>();
+    private Appender[] appenders;
 
-    public void addAppender(Appender appender) {
-        appenders.add(appender);
+    public Logger(Appender[] appenders) {
+        this.appenders = appenders;
     }
 
-    /** 
-     * Chiama il metodo <code>doAppend</code> su tutti gli appender collegati.  
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
-        for (Appender appender : appenders) {
-            appender.doAppend(event);
+        int count = 0;
+        if (appenders != null) {
+            for (Appender appender : appenders) {
+                if (appender != null) {
+                    appender.doAppend(event);
+                    count++;
+                }
+            }
         }
-        return appenders.size();
-    }
-
-    public static void main(String[] args) {
-        Logger logger = new Logger();
-        logger.addAppender(new ConsoleAppender());
-        logger.addAppender(new FileAppender());
-
-        LoggingEvent event = new LoggingEvent("This is a log message.");
-        int count = logger.appendLoopOnAppenders(event);
-        System.out.println("Number of appenders called: " + count);
+        return count;
     }
 }

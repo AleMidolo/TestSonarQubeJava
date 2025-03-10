@@ -1,40 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Predicate;
 
-public class BroadcastFilterExample {
+/**
+ * Invoca il {@link BroadcastFilter}
+ * @param msg L'oggetto da filtrare
+ * @return L'oggetto filtrato o null se non supera il filtro
+ */
+protected Object filter(Object msg) {
+    // Esempio di implementazione di un filtro
+    Predicate<Object> broadcastFilter = obj -> {
+        // Logica di filtro personalizzata
+        return obj != null; // Esempio: filtra solo oggetti non nulli
+    };
 
-    private List<Object> filters = new ArrayList<>();
-
-    /** 
-     * Invoca il {@link BroadcastFilter}
-     * @param msg
-     * @return
-     */
-    protected Object filter(Object msg) {
-        for (Object filter : filters) {
-            // Assuming filter is a functional interface with a method apply
-            if (filter instanceof Filter) {
-                msg = ((Filter) filter).apply(msg);
-            }
-        }
+    if (broadcastFilter.test(msg)) {
         return msg;
-    }
-
-    public void addFilter(Filter filter) {
-        filters.add(filter);
-    }
-
-    public interface Filter {
-        Object apply(Object msg);
-    }
-
-    public static void main(String[] args) {
-        BroadcastFilterExample example = new BroadcastFilterExample();
-        
-        // Adding a simple filter that converts the message to uppercase
-        example.addFilter(msg -> ((String) msg).toUpperCase());
-        
-        Object result = example.filter("hello world");
-        System.out.println(result); // Output: HELLO WORLD
+    } else {
+        return null;
     }
 }

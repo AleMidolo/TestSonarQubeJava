@@ -1,6 +1,6 @@
-public class StringUtil {
+public class StringUtils {
 
-    /** 
+    /**
      * Rimuove gli spazi bianchi iniziali dalla Stringa fornita.
      * @param str la Stringa da controllare
      * @return la Stringa senza spazi bianchi iniziali
@@ -10,16 +10,17 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
-        int index = 0;
-        while (index < str.length() && Character.isWhitespace(str.charAt(index))) {
-            index++;
+        int len = str.length();
+        int start = 0;
+        while (start < len && Character.isWhitespace(str.charAt(start))) {
+            start++;
         }
-        return str.substring(index);
+        return str.substring(start);
     }
 
     public static void main(String[] args) {
-        String testString = "   Hello World!";
-        String result = trimLeadingWhitespace(testString);
-        System.out.println(result); // Output: "Hello World!"
+        String testString = "   Hello, World!";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimLeadingWhitespace(testString) + "'");
     }
 }

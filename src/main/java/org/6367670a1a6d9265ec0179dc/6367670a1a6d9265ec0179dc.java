@@ -1,9 +1,8 @@
 import java.util.List;
 
-public class StackMapTable {
-
-    private List<Integer> currentFrame; // Assuming currentFrame is a list of Integer types
-    private List<Integer> stackMapTableEntries; // Assuming stackMapTableEntries is a list of Integer types
+public class StackMapTableWriter {
+    private List<VerificationTypeInfo> currentFrame;
+    private List<VerificationTypeInfo> stackMapTableEntries;
 
     /**
      * Inserisce alcuni tipi astratti di {@link #currentFrame} in {@link #stackMapTableEntries}, utilizzando il formato verification_type_info del JVMS utilizzato negli attributi StackMapTable.
@@ -12,13 +11,17 @@ public class StackMapTable {
      */
     private void putAbstractTypes(final int start, final int end) {
         if (start < 0 || end > currentFrame.size() || start >= end) {
-            throw new IllegalArgumentException("Invalid start or end indices");
+            throw new IllegalArgumentException("Invalid start or end index");
         }
-        
+
         for (int i = start; i < end; i++) {
-            Integer type = currentFrame.get(i);
-            // Assuming some transformation or verification is needed for the type
-            stackMapTableEntries.add(type); // Add the type to stackMapTableEntries
+            VerificationTypeInfo typeInfo = currentFrame.get(i);
+            stackMapTableEntries.add(typeInfo);
         }
+    }
+
+    // Classe di esempio per VerificationTypeInfo
+    private static class VerificationTypeInfo {
+        // Implementazione della classe VerificationTypeInfo
     }
 }

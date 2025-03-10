@@ -1,6 +1,6 @@
-public class StringCleaner {
-    
-    /** 
+public class StringUtils {
+
+    /**
      * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
      * @param str la Stringa da controllare
      * @param leadingCharacter il carattere iniziale da rimuovere
@@ -10,29 +10,19 @@ public class StringCleaner {
         if (str == null || str.isEmpty()) {
             return str;
         }
-        
-        StringBuilder result = new StringBuilder();
-        boolean leadingCharFound = false;
 
-        for (char c : str.toCharArray()) {
-            if (c == leadingCharacter) {
-                leadingCharFound = true;
-            } else {
-                if (leadingCharFound) {
-                    result.append(c);
-                } else {
-                    result.append(c);
-                }
-            }
+        int index = 0;
+        while (index < str.length() && str.charAt(index) == leadingCharacter) {
+            index++;
         }
-        
-        return result.toString();
+
+        return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String testString = "aaabacadae";
-        char leadingChar = 'a';
-        String cleanedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(cleanedString); // Output: "bcade"
+        String testString = "###HelloWorld";
+        char leadingChar = '#';
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result);  // Output: "HelloWorld"
     }
 }

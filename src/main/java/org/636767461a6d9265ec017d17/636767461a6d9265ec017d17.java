@@ -1,50 +1,35 @@
-public class StringDecompressor {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    /** 
+public class DotUnescape {
+
+    /**
      * Decomprime un identificatore di stringa DOT.
      * @param input l'input
      * @return l'output decompresso
      */
-    private String unescapeId(String input) {
-        StringBuilder output = new StringBuilder();
-        boolean escape = false;
-
-        for (char c : input.toCharArray()) {
-            if (escape) {
-                switch (c) {
-                    case 'n':
-                        output.append('\n');
-                        break;
-                    case 't':
-                        output.append('\t');
-                        break;
-                    case '\\':
-                        output.append('\\');
-                        break;
-                    case '"':
-                        output.append('"');
-                        break;
-                    default:
-                        output.append(c);
-                        break;
-                }
-                escape = false;
-            } else {
-                if (c == '\\') {
-                    escape = true;
-                } else {
-                    output.append(c);
-                }
-            }
+    private static String unescapeId(String input) {
+        if (input == null) {
+            return null;
         }
 
-        return output.toString();
+        // Pattern per identificare sequenze di escape
+        Pattern pattern = Pattern.compile("\\\\([\\\\\"])");
+        Matcher matcher = pattern.matcher(input);
+
+        // Sostituisci le sequenze di escape con i caratteri corrispondenti
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(result, matcher.group(1));
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        StringDecompressor decompressor = new StringDecompressor();
-        String input = "Hello\\nWorld\\t!";
-        String output = decompressor.unescapeId(input);
-        System.out.println(output);
+        String input = "\\\\escaped\\\"string\\\"";
+        String output = unescapeId(input);
+        System.out.println(output);  // Output: \escaped"string"
     }
 }

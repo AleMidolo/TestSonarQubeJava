@@ -2,12 +2,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SymbolTable {
-    private Map<String, Integer> typeTable;
-    private int currentIndex;
+    private final Map<String, Integer> typeTable;
+    private int nextIndex;
 
     public SymbolTable() {
         this.typeTable = new HashMap<>();
-        this.currentIndex = 0;
+        this.nextIndex = 0;
     }
 
     /**
@@ -19,15 +19,8 @@ public class SymbolTable {
         if (typeTable.containsKey(value)) {
             return typeTable.get(value);
         } else {
-            typeTable.put(value, currentIndex);
-            return currentIndex++;
+            typeTable.put(value, nextIndex);
+            return nextIndex++;
         }
-    }
-
-    public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable();
-        System.out.println(symbolTable.addType("MyClass")); // Output: 0
-        System.out.println(symbolTable.addType("MyClass")); // Output: 0
-        System.out.println(symbolTable.addType("AnotherClass")); // Output: 1
     }
 }

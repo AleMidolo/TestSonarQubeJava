@@ -1,7 +1,7 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Action;
 
-public class MyAtmosphereHandler {
+public class AtmosphereResourceInspector {
 
     /**
      * Sospende automaticamente il {@link AtmosphereResource} in base al valore di {@link AtmosphereResource.TRANSPORT}.
@@ -10,10 +10,15 @@ public class MyAtmosphereHandler {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // Check the transport type and suspend the resource accordingly
-        if (r.transport() != null) {
+        // Sospendi l'AtmosphereResource in base al valore di TRANSPORT
+        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
+        } else if (r.transport() == AtmosphereResource.TRANSPORT.LONG_POLLING) {
+            r.suspend(-1); // Sospendi indefinitamente
+        } else {
+            // Gestisci altri tipi di trasporto se necessario
         }
+
         return Action.CONTINUE;
     }
 }

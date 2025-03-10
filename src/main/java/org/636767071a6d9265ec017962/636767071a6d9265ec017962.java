@@ -2,32 +2,63 @@ import org.apache.commons.beanutils.BeanMap;
 
 public class MyBeanMap {
 
-    /**
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. 
-     * Le proprietà di sola lettura e di sola scrittura verranno ignorate.
-     * @param map  il BeanMap le cui proprietà devono essere inserite
-     */
+    private Object bean;
+
+    public MyBeanMap(Object bean) {
+        this.bean = bean;
+    }
+
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null");
+            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
 
-        for (Object property : map.keySet()) {
-            if (isWritable(property, map)) {
-                Object value = map.get(property);
-                this.put(property, value);
+        BeanMap thisBeanMap = new BeanMap(this.bean);
+        for (Object key : map.keySet()) {
+            if (thisBeanMap.isWriteable((String) key)) {
+                thisBeanMap.put(key, map.get(key));
             }
         }
     }
 
-    private boolean isWritable(Object property, BeanMap map) {
-        // Implement logic to check if the property is writable
-        // This is a placeholder for actual writable check logic
-        return true; // Assume all properties are writable for this example
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        MyBean myBean = new MyBean();
+        MyBean anotherBean = new MyBean();
+
+        BeanMap beanMap = new BeanMap(myBean);
+        BeanMap anotherBeanMap = new BeanMap(anotherBean);
+
+        // Imposta alcune proprietà scrivibili
+        anotherBeanMap.put("property1", "value1");
+        anotherBeanMap.put("property2", "value2");
+
+        MyBeanMap myBeanMap = new MyBeanMap(myBean);
+        myBeanMap.putAllWriteable(anotherBeanMap);
+
+        // Verifica che le proprietà siano state copiate correttamente
+        System.out.println(beanMap.get("property1")); // Output: value1
+        System.out.println(beanMap.get("property2")); // Output: value2
+    }
+}
+
+class MyBean {
+    private String property1;
+    private String property2;
+
+    public String getProperty1() {
+        return property1;
     }
 
-    private void put(Object property, Object value) {
-        // Implement logic to put the property and value into this BeanMap
-        // This is a placeholder for actual put logic
+    public void setProperty1(String property1) {
+        this.property1 = property1;
+    }
+
+    public String getProperty2() {
+        return property2;
+    }
+
+    public void setProperty2(String property2) {
+        this.property2 = property2;
     }
 }

@@ -1,6 +1,6 @@
 public class BooleanUtils {
 
-    /** 
+    /**
      * <p>Controlla se un valore <code>Boolean</code> è <i>non</i> <code>true</code>, gestendo <code>null</code> restituendo <code>true</code>.</p> 
      * <pre> 
      * BooleanUtils.isNotTrue(Boolean.TRUE)  = false 
@@ -16,8 +16,8 @@ public class BooleanUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(isNotTrue(Boolean.TRUE));  // false
-        System.out.println(isNotTrue(Boolean.FALSE)); // true
-        System.out.println(isNotTrue(null));           // true
+        System.out.println(isNotTrue(Boolean.TRUE));   // false
+        System.out.println(isNotTrue(Boolean.FALSE));  // true
+        System.out.println(isNotTrue(null));          // true
     }
 }

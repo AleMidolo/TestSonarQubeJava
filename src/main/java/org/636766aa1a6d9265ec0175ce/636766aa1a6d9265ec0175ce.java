@@ -1,6 +1,9 @@
 public class FrameVisitor {
-    private int currentFrame;
-    private int nextIndex;
+    private Frame currentFrame;
+
+    public FrameVisitor(Frame currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 
     /**
      * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
@@ -10,19 +13,33 @@ public class FrameVisitor {
      * @return l'indice del prossimo elemento da scrivere in questo frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Logica per iniziare la visita del frame
-        currentFrame = offset; // memorizza l'offset nel frame corrente
-        nextIndex = 0; // inizializza l'indice successivo a zero
+        // Inizializza il nuovo frame con i parametri forniti
+        currentFrame = new Frame(offset, numLocal, numStack);
 
-        // Potresti voler gestire numLocal e numStack qui, ad esempio:
-        // Allocare spazio per le variabili locali e lo stack, se necessario
-
-        return nextIndex; // restituisce l'indice del prossimo elemento da scrivere
+        // Restituisce l'indice del prossimo elemento da scrivere nel frame
+        return currentFrame.getNextWriteIndex();
     }
 
-    public static void main(String[] args) {
-        FrameVisitor visitor = new FrameVisitor();
-        int nextElementIndex = visitor.visitFrameStart(10, 5, 3);
-        System.out.println("Next element index: " + nextElementIndex);
+    // Classe interna per rappresentare un frame
+    private static class Frame {
+        private final int offset;
+        private final int numLocal;
+        private final int numStack;
+        private int nextWriteIndex;
+
+        public Frame(int offset, int numLocal, int numStack) {
+            this.offset = offset;
+            this.numLocal = numLocal;
+            this.numStack = numStack;
+            this.nextWriteIndex = 0; // Inizialmente, il prossimo elemento da scrivere è il primo
+        }
+
+        public int getNextWriteIndex() {
+            return nextWriteIndex;
+        }
+
+        public void incrementWriteIndex() {
+            nextWriteIndex++;
+        }
     }
 }

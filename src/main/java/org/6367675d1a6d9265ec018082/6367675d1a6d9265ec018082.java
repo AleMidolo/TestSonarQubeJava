@@ -1,8 +1,39 @@
 import java.util.Objects;
 
+class Node {
+    private int id;
+    private boolean isVirtual;
+
+    public Node(int id, boolean isVirtual) {
+        this.id = id;
+        this.isVirtual = isVirtual;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return id == node.id && isVirtual == node.isVirtual;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isVirtual);
+    }
+}
+
 class Edge {
-    private final Node from;
-    private final Node to;
+    private Node from;
+    private Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
@@ -16,23 +47,13 @@ class Edge {
     public Node getTo() {
         return to;
     }
-}
 
-class Node {
-    private final String name;
-    private final boolean isVirtual;
-
-    public Node(String name, boolean isVirtual) {
-        this.name = name;
-        this.isVirtual = isVirtual;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from.getId() +
+                ", to=" + to.getId() +
+                '}';
     }
 }
 
@@ -45,19 +66,24 @@ class Graph {
         this.nextNode = nextNode;
     }
 
-    /**
-     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
-     * @return un arco dal nodo corrente al nodo successivo
-     */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(fromNode, toNode);
+        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(from, to);
     }
 
-    private Node getRealNode(Node virtualNode) {
-        // Logic to get the real node corresponding to the virtual node
-        // This is a placeholder implementation
-        return new Node(virtualNode.getName() + "_real", false);
+    private Node getRealNode(Node node) {
+        // Assuming that the real node has the same ID but is not virtual
+        return new Node(node.getId(), false);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Node currentNode = new Node(1, false);
+        Node nextNode = new Node(2, true);
+        Graph graph = new Graph(currentNode, nextNode);
+        Edge edge = graph.edgeToNext();
+        System.out.println(edge);
     }
 }

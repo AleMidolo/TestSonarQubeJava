@@ -1,33 +1,35 @@
-public class ShardingChecker {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ShardingKeyChecker {
 
     /**
+     * Verifica che gli indici della chiave di sharding siano continui per un dato modello.
+     * 
      * @param modelName nome del modello dell'entità
      * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
      */
     private void check(String modelName) throws IllegalStateException {
-        // Simulated logic for checking sharding key indices
-        int[] shardingKeyIndices = getShardingKeyIndices(modelName);
-        
-        for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
-            if (shardingKeyIndices[i] + 1 != shardingKeyIndices[i + 1]) {
-                throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
+        // Estrai gli indici di sharding dal nome del modello
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(modelName);
+
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group());
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Gli indici della chiave di sharding non sono continui.");
             }
+            previousIndex = currentIndex;
         }
     }
 
-    // Simulated method to retrieve sharding key indices based on model name
-    private int[] getShardingKeyIndices(String modelName) {
-        // This is just a placeholder. In a real implementation, this would fetch the actual indices.
-        return new int[]{0, 1, 2}; // Example of continuous indices
-    }
-
     public static void main(String[] args) {
-        ShardingChecker checker = new ShardingChecker();
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("ExampleModel");
-            System.out.println("Sharding key indices are continuous.");
+            checker.check("model_1_2_3"); // Esempio di chiamata
         } catch (IllegalStateException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

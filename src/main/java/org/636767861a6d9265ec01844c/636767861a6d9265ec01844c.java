@@ -1,33 +1,31 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class AppenderManager {
-    private List<String> appenders;
+public class Logger {
+    private List<Appender> appenders;
 
-    public AppenderManager() {
+    public Logger() {
         this.appenders = new ArrayList<>();
     }
 
-    /** 
-     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.  
+    /**
+     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.
+     * @param name Il nome dell'appender da rimuovere.
      */
     public void removeAppender(String name) {
-        Iterator<String> iterator = appenders.iterator();
-        while (iterator.hasNext()) {
-            String appender = iterator.next();
-            if (appender.equals(name)) {
-                iterator.remove();
-                break;
-            }
+        appenders.removeIf(appender -> appender.getName().equals(name));
+    }
+
+    // Classe interna per rappresentare un Appender
+    private static class Appender {
+        private String name;
+
+        public Appender(String name) {
+            this.name = name;
         }
-    }
 
-    public void addAppender(String name) {
-        appenders.add(name);
-    }
-
-    public List<String> getAppenders() {
-        return appenders;
+        public String getName() {
+            return name;
+        }
     }
 }

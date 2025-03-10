@@ -2,7 +2,7 @@ import java.util.List;
 
 public class InterceptorChecker {
 
-    /** 
+    /**
      * <p> Controlla nella lista specificata se esiste almeno un'istanza della data classe di implementazione {@link AtmosphereInterceptor interceptor}. </p>
      * @param interceptorList gli interceptor
      * @param c               la classe dell'interceptor
@@ -10,15 +10,10 @@ public class InterceptorChecker {
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
-            if (interceptor.getClass().equals(c)) {
-                return false; // Esiste già un'istanza della classe
+            if (c.isInstance(interceptor)) {
+                return false;
             }
         }
-        return true; // Non esiste alcuna istanza della classe
-    }
-    
-    // Dummy AtmosphereInterceptor class for demonstration purposes
-    public static class AtmosphereInterceptor {
-        // Implementation details for AtmosphereInterceptor
+        return true;
     }
 }

@@ -1,29 +1,41 @@
 import java.io.InputStream;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FileAdder {
-    
+
+    private List<InputStream> fileList;
+
+    public FileAdder() {
+        this.fileList = new ArrayList<>();
+    }
+
     /**
      * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final InputStream[] files) {
-        Stack<InputStream> stack = new Stack<>();
-        
-        // Push all files onto the stack
+        if (files == null) {
+            throw new IllegalArgumentException("Input array cannot be null");
+        }
+
+        // Convert the array to a list for easier manipulation
+        List<InputStream> tempList = new ArrayList<>();
         for (InputStream file : files) {
-            stack.push(file);
+            if (file != null) {
+                tempList.add(file);
+            }
         }
-        
-        // Pop files from the stack to add them in reverse order
-        while (!stack.isEmpty()) {
-            InputStream fileToAdd = stack.pop();
-            // Add the file (implementation depends on the context)
-            addFile(fileToAdd);
-        }
+
+        // Reverse the list
+        Collections.reverse(tempList);
+
+        // Add the reversed list to the main file list
+        fileList.addAll(tempList);
     }
-    
-    private void addFile(InputStream file) {
-        // Implementation for adding the file goes here
-        // For example, reading the file or processing it
+
+    // Optional: Method to get the file list for verification
+    public List<InputStream> getFileList() {
+        return fileList;
     }
 }

@@ -1,36 +1,54 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Assume Node class has necessary properties and methods
-}
-
-class OuterFaceCirculator {
-    private Node currentNode;
+public class OuterFaceCirculator {
+    private Node current;
 
     public OuterFaceCirculator(Node start) {
-        this.currentNode = start;
+        this.current = start;
     }
 
-    public Node getCurrentNode() {
-        return currentNode;
+    public Node getCurrent() {
+        return current;
     }
 
-    public void moveToNext() {
-        // Logic to move to the next node in the outer face
+    public void next(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getNextClockwise();
+        } else {
+            current = current.getNextCounterClockwise();
+        }
     }
+}
+
+public class Node {
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
+
+    public Node getNextClockwise() {
+        return nextClockwise;
+    }
+
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
+    }
+
+    // Other methods and fields...
 }
 
 public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        
-        while (circulator.getCurrentNode() != stop) {
-            if (predicate.test(circulator.getCurrentNode())) {
+        Node current = circulator.getCurrent();
+
+        while (current != stop) {
+            if (predicate.test(current)) {
                 return circulator;
             }
-            circulator.moveToNext();
+            circulator.next(dir);
+            current = circulator.getCurrent();
         }
-        
-        return circulator; // Return circulator at stop if no node satisfies the predicate
+
+        return circulator;
     }
 }

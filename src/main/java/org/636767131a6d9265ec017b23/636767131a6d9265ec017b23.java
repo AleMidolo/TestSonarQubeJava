@@ -1,30 +1,26 @@
-public class LineNumberManager {
-    
+import java.util.ArrayList;
+import java.util.List;
+
+public class Label {
     private List<Integer> lineNumbers;
 
-    public LineNumberManager() {
-        lineNumbers = new ArrayList<>();
+    public Label() {
+        this.lineNumbers = new ArrayList<>();
     }
 
-    /** 
+    /**
      * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
      * @param lineNumber un numero di riga sorgente (che dovrebbe essere strettamente positivo).
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo.");
+            throw new IllegalArgumentException("Line number must be strictly positive.");
         }
-        lineNumbers.add(lineNumber);
+        this.lineNumbers.add(lineNumber);
     }
 
+    // Optional: Method to get the list of line numbers
     public List<Integer> getLineNumbers() {
-        return new ArrayList<>(lineNumbers);
-    }
-
-    public static void main(String[] args) {
-        LineNumberManager manager = new LineNumberManager();
-        manager.addLineNumber(5);
-        manager.addLineNumber(10);
-        System.out.println(manager.getLineNumbers());
+        return new ArrayList<>(this.lineNumbers);
     }
 }

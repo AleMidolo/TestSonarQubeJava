@@ -1,20 +1,19 @@
 import java.beans.Introspector;
 
-public class StringUtil {
-    /** 
+public class StringUtils {
+
+    /**
      * Inverso di Introspector.decapitalize
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
     public static void main(String[] args) {
-        // Test the capitalize method
-        System.out.println(capitalize("example")); // Output: Example
-        System.out.println(capitalize("")); // Output: (empty string)
-        System.out.println(capitalize(null)); // Output: null
+        String name = "helloWorld";
+        System.out.println(capitalize(name));  // Output: HelloWorld
     }
 }

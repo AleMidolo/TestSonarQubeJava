@@ -1,30 +1,24 @@
-import java.util.LinkedList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class LoggingBuffer {
-    private LinkedList<LoggingEvent> buffer;
-    private int capacity;
+public class LogBuffer {
+    private final BlockingQueue<LoggingEvent> buffer;
 
-    public LoggingBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new LinkedList<>();
+    public LogBuffer(int capacity) {
+        this.buffer = new ArrayBlockingQueue<>(capacity);
     }
 
-    /** 
-     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.  
+    /**
+     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>.
+     * È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.
      */
     public void put(LoggingEvent o) {
-        if (buffer.size() < capacity) {
-            buffer.add(o);
+        if (!buffer.offer(o)) {
+            // Silently discard the event if the buffer is full
         }
-        // If the buffer is full, the event is silently discarded
     }
+}
 
-    // Additional methods for demonstration purposes
-    public int size() {
-        return buffer.size();
-    }
-
-    public static class LoggingEvent {
-        // Implementation of LoggingEvent class
-    }
+class LoggingEvent {
+    // LoggingEvent implementation details
 }

@@ -1,39 +1,37 @@
 import java.util.Set;
 
 public class Graph<V> {
-    
-    // Assuming a method to get the incoming edges for a vertex
-    private Set<Edge<V>> getIncomingEdges(V vertex) {
-        // Implementation to retrieve incoming edges for the vertex
-        return null; // Placeholder
-    }
 
-    // Assuming an Edge class that has a method to get the weight
-    private static class Edge<V> {
-        private double weight;
-
-        public Edge(double weight) {
-            this.weight = weight;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
-    }
-
-    /** 
+    /**
      * Calcola la somma dei pesi che entrano in un vertice
      * @param v il vertice
      * @return la somma dei pesi che entrano in un vertice
      */
     public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
-        for (V vertex : v) {
-            Set<Edge<V>> incomingEdges = getIncomingEdges(vertex);
-            for (Edge<V> edge : incomingEdges) {
-                totalWeight += edge.getWeight();
+        double sum = 0.0;
+        // Assuming that the graph is represented as a map of vertices to their incoming edges with weights
+        // For example: Map<V, Map<V, Double>> incomingEdges;
+        // Where incomingEdges.get(v) returns a map of vertices that have edges pointing to v, with their weights
+
+        // Iterate over all vertices that have edges pointing to v
+        for (V source : incomingEdges.keySet()) {
+            if (incomingEdges.get(source).containsKey(v)) {
+                sum += incomingEdges.get(source).get(v);
             }
         }
-        return totalWeight;
+        return sum;
+    }
+
+    // Assuming the graph structure is represented as follows:
+    private Map<V, Map<V, Double>> incomingEdges;
+
+    // Constructor to initialize the graph
+    public Graph() {
+        incomingEdges = new HashMap<>();
+    }
+
+    // Method to add an edge to the graph
+    public void addEdge(V source, V target, double weight) {
+        incomingEdges.computeIfAbsent(target, k -> new HashMap<>()).put(source, weight);
     }
 }

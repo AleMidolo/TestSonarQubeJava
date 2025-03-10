@@ -1,35 +1,53 @@
-import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class SuffixSumCalculator {
 
-    /** 
-     * Calcola la somma dei suffissi di {@code bounds}. Restituisce la somma dei suffissi calcolata e la somma totale di tutti gli elementi nella lista {@code bounds}.
-     * @param bounds lista di interi.
-     * @return coppia calcolata di lista di somma suffisso e somma di tutti gli elementi.
-     */
-    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
+    public static class Pair<A, B> {
+        private final A first;
+        private final B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
+    }
+
+    private static Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(Collections.emptyList(), 0L);
+        }
+
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int n = bounds.size();
+        int currentSuffixSum = 0;
 
-        for (int i = 0; i < n; i++) {
+        // Calcola la somma totale e la somma dei suffissi
+        for (int i = bounds.size() - 1; i >= 0; i--) {
+            currentSuffixSum += bounds.get(i);
+            suffixSums.add(currentSuffixSum);
             totalSum += bounds.get(i);
         }
 
-        int currentSuffixSum = 0;
-        for (int i = n - 1; i >= 0; i--) {
-            currentSuffixSum += bounds.get(i);
-            suffixSums.add(currentSuffixSum);
-        }
+        // Inverti la lista delle somme dei suffissi per avere l'ordine corretto
+        Collections.reverse(suffixSums);
 
-        // Reverse the suffix sums list to maintain the original order
-        List<Integer> reversedSuffixSums = new ArrayList<>();
-        for (int i = suffixSums.size() - 1; i >= 0; i--) {
-            reversedSuffixSums.add(suffixSums.get(i));
-        }
+        return new Pair<>(suffixSums, totalSum);
+    }
 
-        return new Pair<>(reversedSuffixSums, totalSum);
+    public static void main(String[] args) {
+        List<Integer> bounds = List.of(1, 2, 3, 4);
+        Pair<List<Integer>, Long> result = computeSuffixSum(bounds);
+        System.out.println("Suffix Sums: " + result.getFirst());
+        System.out.println("Total Sum: " + result.getSecond());
     }
 }

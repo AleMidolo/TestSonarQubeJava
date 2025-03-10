@@ -1,7 +1,9 @@
-public class FilePathUtil {
+import java.util.Objects;
 
-    /** 
-     * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -&gt; "mypath/myfile".
+public class FileUtils {
+
+    /**
+     * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -> "mypath/myfile".
      * @param path il percorso del file (può essere <code>null</code>)
      * @return il percorso con l'estensione del nome file rimossa, oppure <code>null</code> se non presente
      */
@@ -9,24 +11,22 @@ public class FilePathUtil {
         if (path == null) {
             return null;
         }
-        
+
+        int lastSeparatorIndex = path.lastIndexOf('/');
         int lastDotIndex = path.lastIndexOf('.');
-        int lastSlashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
-        
-        if (lastDotIndex > lastSlashIndex) {
-            return path.substring(0, lastDotIndex);
+
+        // Se non c'è un punto o se il punto è prima dell'ultimo separatore, restituisci il percorso originale
+        if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
+            return path;
         }
-        
-        return path; // No extension found
+
+        return path.substring(0, lastDotIndex);
     }
 
     public static void main(String[] args) {
-        String path1 = "mypath/myfile.txt";
-        String path2 = "mypath/myfile";
-        String path3 = null;
-
-        System.out.println(stripFilenameExtension(path1)); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(path2)); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(path3)); // Output: null
+        System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("myfile.txt"));        // Output: myfile
+        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(null));                // Output: null
     }
 }

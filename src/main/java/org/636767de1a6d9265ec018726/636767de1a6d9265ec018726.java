@@ -1,34 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRangeBuilder {
-
-    /** 
-     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
-     */
-    public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> sequenceRanges = new ArrayList<>();
-        
-        // Example logic to create sequence ranges
-        // This should be replaced with actual logic to build the ranges
-        for (int i = 0; i < 10; i++) {
-            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
-            sequenceRanges.add(range);
-        }
-        
-        return sequenceRanges;
-    }
-
-    public static void main(String[] args) {
-        SequenceRangeBuilder builder = new SequenceRangeBuilder();
-        List<SequenceRange> ranges = builder.buildSequenceRanges();
-        for (SequenceRange range : ranges) {
-            System.out.println(range);
-        }
-    }
-}
-
-class SequenceRange {
+public class SequenceRange {
     private int start;
     private int end;
 
@@ -37,11 +10,44 @@ class SequenceRange {
         this.end = end;
     }
 
+    public int getStart() {
+        return start;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
     @Override
     public String toString() {
         return "SequenceRange{" +
                 "start=" + start +
                 ", end=" + end +
                 '}';
+    }
+}
+
+public class ProfileSnapshot {
+
+    /**
+     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
+     */
+    public List<SequenceRange> buildSequenceRanges() {
+        List<SequenceRange> sequenceRanges = new ArrayList<>();
+        
+        // Example logic to build sequence ranges
+        sequenceRanges.add(new SequenceRange(1, 100));
+        sequenceRanges.add(new SequenceRange(101, 200));
+        sequenceRanges.add(new SequenceRange(201, 300));
+        
+        return sequenceRanges;
+    }
+
+    public static void main(String[] args) {
+        ProfileSnapshot snapshot = new ProfileSnapshot();
+        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
+        for (SequenceRange range : ranges) {
+            System.out.println(range);
+        }
     }
 }

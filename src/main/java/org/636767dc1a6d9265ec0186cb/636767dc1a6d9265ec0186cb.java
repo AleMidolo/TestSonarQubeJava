@@ -1,21 +1,24 @@
-public class ConfigurationInitializer {
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class ConfigInitializer {
 
     /**
-     * inizializza la configurazione, ad esempio controlla il percorso di distribuzione
+     * Inizializza la configurazione, ad esempio controlla il percorso di distribuzione.
      */
     public void init() {
-        String distributionPath = System.getenv("DISTRIBUTION_PATH");
-        
-        if (distributionPath == null || distributionPath.isEmpty()) {
-            throw new IllegalArgumentException("Il percorso di distribuzione non è stato impostato.");
+        // Controlla se il percorso di distribuzione esiste
+        Path distributionPath = Paths.get("path/to/distribution");
+        if (Files.exists(distributionPath)) {
+            System.out.println("Il percorso di distribuzione esiste.");
+        } else {
+            System.out.println("Il percorso di distribuzione non esiste.");
         }
-        
-        // Ulteriori controlli e inizializzazioni possono essere aggiunti qui
-        System.out.println("Configurazione inizializzata con successo. Percorso di distribuzione: " + distributionPath);
     }
 
     public static void main(String[] args) {
-        ConfigurationInitializer initializer = new ConfigurationInitializer();
+        ConfigInitializer initializer = new ConfigInitializer();
         initializer.init();
     }
 }

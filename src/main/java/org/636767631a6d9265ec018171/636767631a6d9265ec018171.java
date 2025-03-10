@@ -1,7 +1,7 @@
 // Assuming ListNodeImpl is a class that represents a node in a linked list
 // and it has the following structure:
 // class ListNodeImpl<E> {
-//     E value;
+//     E data;
 //     ListNodeImpl<E> next;
 //     ListNodeImpl<E> prev;
 // }

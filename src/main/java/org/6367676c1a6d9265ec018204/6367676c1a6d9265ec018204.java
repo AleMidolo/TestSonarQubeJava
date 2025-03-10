@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
+public class StringArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {

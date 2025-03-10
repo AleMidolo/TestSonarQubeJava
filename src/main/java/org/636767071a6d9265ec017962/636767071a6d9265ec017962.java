@@ -7,7 +7,7 @@ public class BeanMap {
     private Map<String, Object> properties;
 
     public BeanMap() {
-        // Initialize properties map
+        // Initialize the properties map
     }
 
     public void putAllWriteable(BeanMap map) {
@@ -27,7 +27,8 @@ public class BeanMap {
                     writeMethod.invoke(this, value);
                 }
             } catch (Exception e) {
-                // Handle exceptions (e.g., IntrospectionException, IllegalAccessException, InvocationTargetException)
+                // Handle exceptions such as IntrospectionException, IllegalAccessException, InvocationTargetException
+                // Log or handle the exception as needed
                 e.printStackTrace();
             }
         }

@@ -36,18 +36,11 @@ public class ProfileBuilder {
         List<SequenceRange> ranges = new ArrayList<>();
         
         // Example logic to create sequence ranges
+        // This can be customized based on actual requirements
         ranges.add(new SequenceRange(1, 100));
         ranges.add(new SequenceRange(101, 200));
         ranges.add(new SequenceRange(201, 300));
         
         return ranges;
-    }
-
-    public static void main(String[] args) {
-        ProfileBuilder builder = new ProfileBuilder();
-        List<SequenceRange> sequenceRanges = builder.buildSequenceRanges();
-        for (SequenceRange range : sequenceRanges) {
-            System.out.println(range);
-        }
     }
 }

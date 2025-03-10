@@ -2,11 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SymbolTable {
-    private Map<String, Symbol> constantPool;
-
-    public SymbolTable() {
-        this.constantPool = new HashMap<>();
-    }
+    private Map<String, Symbol> constantPool = new HashMap<>();
 
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;

@@ -18,7 +18,7 @@ public class EventBuffer {
         }
     }
 
-    // Optional: Method to get the buffer for testing or other purposes
+    // Optional: Getter for the buffer if needed
     public List<LoggingEvent> getBuffer() {
         return buffer;
     }

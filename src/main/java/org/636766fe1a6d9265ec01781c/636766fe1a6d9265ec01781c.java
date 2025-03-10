@@ -13,12 +13,7 @@ public class CharUtils {
     }
 
     /**
-     * <p>Converts the character to a Character.</p> 
-     * <p>For ASCII 7 bit characters, this uses a cache that will return the same Character object each time.</p> 
-     * <pre> 
-     * CharUtils.toCharacterObject(' ')  = ' ' 
-     * CharUtils.toCharacterObject('A')  = 'A' 
-     * </pre>
+     * <p>Converts the character to a Character.</p> <p>For ASCII 7 bit characters, this uses a cache that will return the same Character object each time.</p> <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
      * @param ch  the character to convert
      * @return a Character of the specified character
      */

@@ -13,38 +13,30 @@ private void pop(final String descriptor) {
     for (Type type : types) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
-            case Type.BYTE:
             case Type.CHAR:
+            case Type.BYTE:
             case Type.SHORT:
             case Type.INT:
-                // Pop int
+                // Pop one slot for primitive types
                 // Assuming outputFrameStack is a stack-like structure
                 outputFrameStack.pop();
                 break;
-            case Type.FLOAT:
-                // Pop float
-                outputFrameStack.pop();
-                break;
             case Type.LONG:
-                // Pop long (takes two slots)
-                outputFrameStack.pop();
-                outputFrameStack.pop();
-                break;
             case Type.DOUBLE:
-                // Pop double (takes two slots)
+                // Pop two slots for long and double
                 outputFrameStack.pop();
                 outputFrameStack.pop();
                 break;
             case Type.ARRAY:
             case Type.OBJECT:
-                // Pop reference
+                // Pop one slot for reference types
                 outputFrameStack.pop();
                 break;
             case Type.VOID:
                 // No action needed for void
                 break;
             default:
-                throw new IllegalArgumentException("Unknown type: " + type);
+                throw new IllegalArgumentException("Unsupported type: " + type);
         }
     }
 }

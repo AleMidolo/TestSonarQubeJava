@@ -23,9 +23,11 @@ public final class Buffer {
 
     public static void main(String[] args) {
         Buffer buffer = new Buffer();
-        buffer.write("Hello".getBytes());
-        buffer.write("World".getBytes());
+        buffer.write(new byte[]{1, 2, 3});
+        buffer.write(new byte[]{4, 5, 6});
         byte[] result = buffer.toByteArray();
-        System.out.println(new String(result)); // Outputs: HelloWorld
+        for (byte b : result) {
+            System.out.print(b + " ");
+        }
     }
 }

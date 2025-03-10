@@ -18,7 +18,6 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true

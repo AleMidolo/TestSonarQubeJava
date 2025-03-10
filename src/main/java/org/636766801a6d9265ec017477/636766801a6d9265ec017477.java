@@ -9,7 +9,6 @@ public class FileReverser {
 
     /**
      * 以逆序添加指定的文件。
-     * @param files 输入流数组，表示要逆序添加的文件
      */
     private void addReverse(final InputStream[] files) {
         if (files == null) {
@@ -18,7 +17,7 @@ public class FileReverser {
 
         List<byte[]> fileContents = new ArrayList<>();
 
-        // 读取所有文件内容到内存
+        // 读取所有文件内容
         for (InputStream file : files) {
             if (file == null) {
                 throw new IllegalArgumentException("File input stream cannot be null");
@@ -40,10 +39,10 @@ public class FileReverser {
         // 逆序文件内容
         Collections.reverse(fileContents);
 
-        // 处理逆序后的文件内容（例如写入到输出流或进行其他操作）
+        // 处理逆序后的文件内容（例如写入到某个地方）
         for (byte[] content : fileContents) {
             // 这里可以根据需要处理逆序后的文件内容
-            // 例如：System.out.write(content);
+            // 例如写入到输出流或进行其他操作
         }
     }
 }

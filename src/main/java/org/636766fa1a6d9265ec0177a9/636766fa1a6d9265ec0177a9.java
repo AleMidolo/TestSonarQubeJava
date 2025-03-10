@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Block {
+public class BasicBlock {
     private List<Integer> initializedTypes;
 
-    public Block() {
+    public BasicBlock() {
         this.initializedTypes = new ArrayList<>();
     }
 

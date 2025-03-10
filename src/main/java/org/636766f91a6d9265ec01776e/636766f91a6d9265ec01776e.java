@@ -18,9 +18,10 @@ public class ByteArrayOutputStream extends OutputStream {
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-            ((off + len) - b.length > 0)) {
+        if ((off < 0) || (off > b.length) || (len < 0) || ((off + len) > b.length) || ((off + len) < 0)) {
             throw new IndexOutOfBoundsException();
+        } else if (len == 0) {
+            return;
         }
         ensureCapacity(count + len);
         System.arraycopy(b, off, buf, count, len);
@@ -46,7 +47,7 @@ public class ByteArrayOutputStream extends OutputStream {
             newCapacity = Integer.MAX_VALUE;
         }
         byte[] newBuf = new byte[newCapacity];
-        System.arraycopy(buf, 0, newBuf, 0, count);
+        System.arraycopy(buf, 0, newBuf, 0, oldCapacity);
         buf = newBuf;
     }
 
@@ -65,7 +66,13 @@ public class ByteArrayOutputStream extends OutputStream {
         return count;
     }
 
-    public void reset() {
-        count = 0;
+    @Override
+    public String toString() {
+        return new String(buf, 0, count);
+    }
+
+    @Override
+    public void close() throws IOException {
+        // No-op
     }
 }

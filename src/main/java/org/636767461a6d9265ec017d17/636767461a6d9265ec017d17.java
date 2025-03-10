@@ -24,31 +24,30 @@ public class DotUnescaper {
         }
 
         StringBuilder result = new StringBuilder();
+        int length = input.length();
         int i = 0;
-        while (i < input.length()) {
-            boolean matched = false;
-            for (Map.Entry<String, String> entry : ESCAPE_SEQUENCES.entrySet()) {
-                String escapeSeq = entry.getKey();
-                String unescapedChar = entry.getValue();
-                if (input.startsWith(escapeSeq, i)) {
-                    result.append(unescapedChar);
-                    i += escapeSeq.length();
-                    matched = true;
-                    break;
+
+        while (i < length) {
+            if (i + 1 < length && input.charAt(i) == '\\') {
+                String escapeSequence = input.substring(i, i + 2);
+                if (ESCAPE_SEQUENCES.containsKey(escapeSequence)) {
+                    result.append(ESCAPE_SEQUENCES.get(escapeSequence));
+                    i += 2;
+                    continue;
                 }
             }
-            if (!matched) {
-                result.append(input.charAt(i));
-                i++;
-            }
+            result.append(input.charAt(i));
+            i++;
         }
+
         return result.toString();
     }
 
     public static void main(String[] args) {
         DotUnescaper unescaper = new DotUnescaper();
-        String input = "This is a \\\"test\\\" string with \\n newlines and \\t tabs.";
+        String input = "This\\nis\\ta\\\"test\\\"";
         String output = unescaper.unescapeId(input);
-        System.out.println(output);
+        System.out.println(output);  // Output: This
+                                     // is	a"test"
     }
 }

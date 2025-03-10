@@ -14,12 +14,10 @@ public class GraphUtils {
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    // 如果存在一对不相连的顶点，则不是团
                     return false;
                 }
             }
         }
-        // 所有顶点对都相连，是团
         return true;
     }
 }

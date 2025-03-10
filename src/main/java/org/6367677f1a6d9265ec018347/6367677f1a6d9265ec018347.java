@@ -18,8 +18,7 @@ public class TelnetServer {
                 outputStream.write(message.getBytes());
                 outputStream.flush();
             } catch (IOException e) {
-                // Handle the exception, e.g., remove the client from the list
-                clients.remove(client);
+                // 处理客户端连接异常
                 e.printStackTrace();
             }
         }

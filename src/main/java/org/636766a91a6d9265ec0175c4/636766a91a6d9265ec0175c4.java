@@ -27,21 +27,21 @@ public class FrameStack {
                     // 对象类型，跳过直到分号
                     i = params.indexOf(';', i);
                     if (i == -1) {
-                        throw new IllegalArgumentException("Invalid object type in descriptor: " + descriptor);
+                        throw new IllegalArgumentException("Invalid object type in descriptor: " + params);
                     }
                 } else if (c == '[') {
-                    // 数组类型，跳过所有维度
+                    // 数组类型，跳过所有数组维度
                     while (i < params.length() && params.charAt(i) == '[') {
                         i++;
                     }
                     if (i >= params.length()) {
-                        throw new IllegalArgumentException("Invalid array type in descriptor: " + descriptor);
+                        throw new IllegalArgumentException("Invalid array type in descriptor: " + params);
                     }
                     if (params.charAt(i) == 'L') {
                         // 对象数组类型，跳过直到分号
                         i = params.indexOf(';', i);
                         if (i == -1) {
-                            throw new IllegalArgumentException("Invalid object array type in descriptor: " + descriptor);
+                            throw new IllegalArgumentException("Invalid object array type in descriptor: " + params);
                         }
                     }
                 }
@@ -55,7 +55,7 @@ public class FrameStack {
                 stack.pop();
             }
         } else {
-            // 单个类型描述符，弹出一个类型
+            // 单个类型描述符，直接弹出一个类型
             if (stack.isEmpty()) {
                 throw new IllegalStateException("Stack underflow while popping single type");
             }

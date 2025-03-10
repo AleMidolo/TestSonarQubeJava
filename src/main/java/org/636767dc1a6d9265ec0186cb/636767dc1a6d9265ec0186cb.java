@@ -8,18 +8,18 @@ public class ConfigInitializer {
      * 初始化配置，例如检查分发路径
      */
     public void init() {
-        // 假设分发路径为 "/path/to/distribution"
-        Path distributionPath = Paths.get("/path/to/distribution");
+        // 假设分发路径为 "dist"
+        String distributionPath = "dist";
+        Path path = Paths.get(distributionPath);
 
         // 检查路径是否存在
-        if (Files.exists(distributionPath)) {
-            System.out.println("分发路径存在: " + distributionPath);
+        if (Files.exists(path)) {
+            System.out.println("分发路径已存在: " + path.toAbsolutePath());
         } else {
-            System.out.println("分发路径不存在: " + distributionPath);
-            // 可以选择创建路径
+            System.out.println("分发路径不存在，正在创建: " + path.toAbsolutePath());
             try {
-                Files.createDirectories(distributionPath);
-                System.out.println("已创建分发路径: " + distributionPath);
+                Files.createDirectories(path);
+                System.out.println("分发路径创建成功。");
             } catch (Exception e) {
                 System.err.println("无法创建分发路径: " + e.getMessage());
             }

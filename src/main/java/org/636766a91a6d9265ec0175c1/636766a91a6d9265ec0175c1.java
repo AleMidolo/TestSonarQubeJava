@@ -19,19 +19,17 @@ public class ByteVector {
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be positive");
         }
+
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        data = newData;
         capacity = newCapacity;
     }
 
-    public void add(byte b) {
-        if (size == capacity) {
-            enlarge(1);
-        }
-        data[size++] = b;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
+    // Example usage
+    public static void main(String[] args) {
+        ByteVector vector = new ByteVector(10);
+        vector.enlarge(5);
+        System.out.println("New capacity: " + vector.capacity);
     }
 }

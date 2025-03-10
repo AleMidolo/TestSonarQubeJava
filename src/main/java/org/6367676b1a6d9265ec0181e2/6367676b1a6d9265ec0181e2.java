@@ -25,10 +25,10 @@ public class CollectionUtils {
 
     public static void main(String[] args) {
         // 示例用法
-        Collection<String> source = java.util.List.of("apple", "banana", "cherry");
-        Collection<String> candidates = java.util.List.of("banana", "grape", "cherry");
+        Collection<String> source = java.util.Arrays.asList("apple", "banana", "cherry");
+        Collection<String> candidates = java.util.Arrays.asList("banana", "grape", "cherry");
 
         Object result = findFirstMatch(source, candidates);
-        System.out.println("First match: " + result); // 输出: First match: banana
+        System.out.println("First match: " + result);  // 输出: First match: banana
     }
 }

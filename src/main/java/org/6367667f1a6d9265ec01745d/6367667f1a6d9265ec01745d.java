@@ -29,19 +29,21 @@ public class URIDecoder {
     }
 
     public static class PathSegmentImpl {
-        private final String segment;
+        private final String path;
 
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
+        public PathSegmentImpl(String path) {
+            this.path = path;
         }
 
-        public String getSegment() {
-            return segment;
+        public String getPath() {
+            return path;
         }
 
         @Override
         public String toString() {
-            return segment;
+            return "PathSegmentImpl{" +
+                    "path='" + path + '\'' +
+                    '}';
         }
     }
 

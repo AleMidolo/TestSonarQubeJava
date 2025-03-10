@@ -12,7 +12,7 @@ public class TableUtils {
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane must not be null");
+            throw new IllegalArgumentException("Table and ScrollPane must not be null");
         }
 
         TableModel model = table.getModel();
@@ -23,15 +23,14 @@ public class TableUtils {
         // 选择指定的行
         table.setRowSelectionInterval(row, row);
 
-        // 获取行的矩形区域
+        // 确保表格滚动到选中的行
         Rectangle cellRect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(cellRect);
 
-        // 将 JScrollPane 滚动到该行的位置
-        pane.getViewport().scrollRectToVisible(cellRect);
-
-        // 延迟调用 repaint() 以确保表格正确绘制新选择的行
+        // 延迟调用 repaint() 以确保表格正确绘制
         SwingUtilities.invokeLater(() -> {
             table.repaint();
+            pane.repaint();
         });
     }
 }

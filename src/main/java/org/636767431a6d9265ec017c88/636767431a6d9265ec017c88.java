@@ -15,16 +15,17 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         }
 
         List<Integer> lowerBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int lowerBound = -1; // 初始化为-1，表示没有找到下界
 
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // If the key is not found, binarySearch returns (-(insertion point) - 1)
-                index = -index - 1;
+            for (int j = 0; j < i; j++) {
+                if (keys.get(j).compareTo(currentKey) <= 0) {
+                    lowerBound = j;
+                }
             }
-            lowerBounds.add(index);
+
+            lowerBounds.add(lowerBound);
         }
 
         return lowerBounds;

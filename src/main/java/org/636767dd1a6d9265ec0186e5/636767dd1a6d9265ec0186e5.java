@@ -1,35 +1,34 @@
 import java.util.List;
 
 public class Channels {
-    private List<IConsumer> consumers;
+    private List<String> channels;
 
-    public Channels() {
-        this.consumers = new java.util.ArrayList<>();
+    public Channels(List<String> channels) {
+        this.channels = channels;
     }
 
-    public void addConsumer(IConsumer consumer) {
-        this.consumers.add(consumer);
+    public List<String> getChannels() {
+        return channels;
     }
 
-    public List<IConsumer> getConsumers() {
-        return this.consumers;
+    public void setChannels(List<String> channels) {
+        this.channels = channels;
     }
 }
 
 public interface IConsumer {
-    void consume(String message);
+    void consume(String channel);
 }
 
-public class TargetManager {
+public class ChannelManager {
 
     /**
      * Agregar nuevos canales de destino.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        if (channels != null && consumer != null) {
-            channels.addConsumer(consumer);
-        } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
+        List<String> channelList = channels.getChannels();
+        for (String channel : channelList) {
+            consumer.consume(channel);
         }
     }
 }

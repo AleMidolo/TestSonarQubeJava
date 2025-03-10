@@ -19,4 +19,18 @@ public class CollectionUtils {
         }
         return false;
     }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Collection<String> collection = new java.util.ArrayList<>();
+        collection.add("A");
+        collection.add("B");
+        collection.add("C");
+
+        String element = "B";
+        System.out.println(containsInstance(collection, element)); // true
+
+        String newElement = new String("B");
+        System.out.println(containsInstance(collection, newElement)); // false
+    }
 }

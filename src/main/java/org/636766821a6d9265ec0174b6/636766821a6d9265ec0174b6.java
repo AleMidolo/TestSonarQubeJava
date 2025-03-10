@@ -1,13 +1,10 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TypeResolver {
 
-    /**
-     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
-     */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
             return null;
@@ -15,46 +12,31 @@ public class TypeResolver {
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        List<Class<?>> resolvedTypes = new ArrayList<>();
+        Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
-        for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class) {
-                resolvedTypes.add((Class<?>) typeArg);
+        for (int i = 0; i < actualTypeArguments.length; i++) {
+            Type typeArgument = actualTypeArguments[i];
+            if (typeArgument instanceof Class<?>) {
+                resolvedArguments[i] = (Class<?>) typeArgument;
+            } else if (typeArgument instanceof ParameterizedType) {
+                resolvedArguments[i] = (Class<?>) ((ParameterizedType) typeArgument).getRawType();
             } else {
-                // Si el tipo no es una clase, no podemos resolverlo directamente
+                // If the type argument is not a Class or ParameterizedType, we cannot resolve it
                 return null;
             }
         }
 
-        return resolvedTypes.toArray(new Class<?>[0]);
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Type genericType = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return new Type[] { String.class, Integer.class };
-            }
-
-            @Override
-            public Type getRawType() {
-                return List.class;
-            }
-
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
-        if (resolvedArgs != null) {
-            for (Class<?> arg : resolvedArgs) {
-                System.out.println(arg.getSimpleName());
-            }
-        } else {
-            System.out.println("No se pudieron resolver los argumentos.");
+        // Check if the resolved arguments match the target type's type parameters
+        Map<Type, Class<?>> typeVariableMap = new HashMap<>();
+        Type[] targetTypeParameters = targetType.getTypeParameters();
+        if (targetTypeParameters.length != resolvedArguments.length) {
+            return null;
         }
+
+        for (int i = 0; i < targetTypeParameters.length; i++) {
+            typeVariableMap.put(targetTypeParameters[i], resolvedArguments[i]);
+        }
+
+        return resolvedArguments;
     }
 }

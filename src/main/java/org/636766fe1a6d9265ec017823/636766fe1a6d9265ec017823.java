@@ -2,11 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private Map<String, Integer> constantNameAndTypeMap;
-
-    public ConstantPool() {
-        this.constantNameAndTypeMap = new HashMap<>();
-    }
+    private final Map<String, Integer> constantNameAndTypeMap = new HashMap<>();
+    private int nextIndex = 1;
 
     /**
      * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos.
@@ -21,9 +18,8 @@ public class ConstantPool {
         if (constantNameAndTypeMap.containsKey(key)) {
             return constantNameAndTypeMap.get(key);
         } else {
-            int newIndex = constantNameAndTypeMap.size() + 1; // Simulando un índice único
-            constantNameAndTypeMap.put(key, newIndex);
-            return newIndex;
+            constantNameAndTypeMap.put(key, nextIndex);
+            return nextIndex++;
         }
     }
 }

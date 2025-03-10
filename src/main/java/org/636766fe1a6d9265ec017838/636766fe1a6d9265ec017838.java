@@ -3,8 +3,7 @@ public class CharacterArrayConverter {
     /**
      * Convierte un array de objetos "Character" a primitivos.
      * Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.
-     *
-     * @param array un arreglo de <code>Character</code>, puede ser <code>null</code>
+     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
      * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
      * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
@@ -25,6 +24,8 @@ public class CharacterArrayConverter {
     public static void main(String[] args) {
         Character[] testArray = {'a', 'b', 'c'};
         char[] primitiveArray = toPrimitive(testArray);
-        System.out.println(java.util.Arrays.toString(primitiveArray)); // Output: [a, b, c]
+        for (char c : primitiveArray) {
+            System.out.print(c + " ");
+        }
     }
 }

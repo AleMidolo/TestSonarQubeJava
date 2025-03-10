@@ -22,9 +22,17 @@ public class ThreadSnapshotParser {
     }
 
     private static ThreadSnapshot parseLineToSnapshot(String line) {
-        // Implement logic to parse a line into a ThreadSnapshot object
-        // This is a placeholder implementation
-        return new ThreadSnapshot();
+        // Assuming the line is in a specific format, parse it into a ThreadSnapshot object
+        // Example format: "timestamp|threadId|threadName|state"
+        String[] parts = line.split("\\|");
+        if (parts.length == 4) {
+            long timestamp = Long.parseLong(parts[0]);
+            long threadId = Long.parseLong(parts[1]);
+            String threadName = parts[2];
+            String state = parts[3];
+            return new ThreadSnapshot(timestamp, threadId, threadName, state);
+        }
+        return null;
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
@@ -36,16 +44,33 @@ public class ThreadSnapshotParser {
         return false;
     }
 
-    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
+        private long threadId;
+        private String threadName;
+        private String state;
+
+        public ThreadSnapshot(long timestamp, long threadId, String threadName, String state) {
+            this.timestamp = timestamp;
+            this.threadId = threadId;
+            this.threadName = threadName;
+            this.state = state;
+        }
 
         public long getTimestamp() {
             return timestamp;
         }
 
-        public void setTimestamp(long timestamp) {
-            this.timestamp = timestamp;
+        public long getThreadId() {
+            return threadId;
+        }
+
+        public String getThreadName() {
+            return threadName;
+        }
+
+        public String getState() {
+            return state;
         }
     }
 
@@ -53,20 +78,17 @@ public class ThreadSnapshotParser {
         private long startTime;
         private long endTime;
 
+        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
         public long getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(long startTime) {
-            this.startTime = startTime;
-        }
-
         public long getEndTime() {
             return endTime;
-        }
-
-        public void setEndTime(long endTime) {
-            this.endTime = endTime;
         }
     }
 }

@@ -1,5 +1,4 @@
-public class SubstringMatcher {
-
+public class SubstringMatch {
     /**
      * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      * @param str la cadena original (o StringBuilder)

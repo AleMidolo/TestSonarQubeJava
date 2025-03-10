@@ -1,28 +1,66 @@
-// Asumiendo que la clase que contiene este método tiene referencias a las listas doblemente enlazadas de bordes.
-// También asumimos que la clase tiene un campo `this` que representa el borde actual.
+// Asumiendo que la clase Node representa un nodo en una lista doblemente enlazada
+class Node {
+    int data;
+    Node prev;
+    Node next;
 
-public void removeFromTreeEdgeList() {
-    // Verificar si el borde tiene un nodo anterior en la lista
-    if (this.previous != null) {
-        this.previous.next = this.next;
+    public Node(int data) {
+        this.data = data;
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+// Clase que representa una lista doblemente enlazada de bordes
+class DoublyLinkedList {
+    Node head;
+    Node tail;
+
+    public DoublyLinkedList() {
+        this.head = null;
+        this.tail = null;
     }
 
-    // Verificar si el borde tiene un nodo siguiente en la lista
-    if (this.next != null) {
-        this.next.previous = this.previous;
+    // Método para eliminar un nodo de la lista
+    public void removeNode(Node node) {
+        if (node == null) return;
+
+        // Si el nodo es el único en la lista
+        if (head == node && tail == node) {
+            head = null;
+            tail = null;
+        } else if (head == node) {
+            // Si el nodo es la cabeza
+            head = head.next;
+            head.prev = null;
+        } else if (tail == node) {
+            // Si el nodo es la cola
+            tail = tail.prev;
+            tail.next = null;
+        } else {
+            // Si el nodo está en medio
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+    }
+}
+
+// Clase que representa el árbol y sus bordes
+class Tree {
+    DoublyLinkedList edgeList1;
+    DoublyLinkedList edgeList2;
+
+    public Tree() {
+        this.edgeList1 = new DoublyLinkedList();
+        this.edgeList2 = new DoublyLinkedList();
     }
 
-    // Si el borde es el primer nodo de la lista, actualizar la cabeza de la lista
-    if (this == treeEdgeListHead) {
-        treeEdgeListHead = this.next;
-    }
+    // Método para eliminar un borde de ambas listas de bordes
+    public void removeFromTreeEdgeList(Node edge) {
+        if (edge == null) return;
 
-    // Si el borde es el último nodo de la lista, actualizar la cola de la lista
-    if (this == treeEdgeListTail) {
-        treeEdgeListTail = this.previous;
+        // Eliminar el borde de ambas listas
+        edgeList1.removeNode(edge);
+        edgeList2.removeNode(edge);
     }
-
-    // Limpiar las referencias del borde actual para evitar referencias colgantes
-    this.previous = null;
-    this.next = null;
 }

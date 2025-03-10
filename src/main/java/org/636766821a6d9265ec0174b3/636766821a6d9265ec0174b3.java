@@ -15,8 +15,8 @@ public class BroadcastFilterExample {
                 }
             };
 
-            // Assuming a context is available, register the receiver
-            Context context = null; // Replace with actual context
+            // Example of registering the receiver
+            Context context = null; // You need to provide a valid context
             context.registerReceiver(receiver, new IntentFilter(intent.getAction()));
 
             // Return the filtered result or the original message

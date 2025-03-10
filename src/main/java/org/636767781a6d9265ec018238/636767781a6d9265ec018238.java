@@ -5,7 +5,7 @@ public class Logger {
 
     /**
      * Devuelve <code>true</code> si el "appender" especificado está en la lista de "appenders" adjuntos, <code>false</code> en caso contrario.
-     * @param appender El appender que se desea verificar.
+     * @param appender El appender a verificar.
      * @return <code>true</code> si el appender está en la lista, <code>false</code> en caso contrario.
      * @since 1.2
      */

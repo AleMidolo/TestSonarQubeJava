@@ -5,16 +5,21 @@ public class DoubleComparator implements Comparator<Double> {
     public int compare(Double o1, Double o2) {
         if (o1 == null && o2 == null) {
             return 0;
-        }
-        if (o1 == null) {
+        } else if (o1 == null) {
             return -1;
-        }
-        if (o2 == null) {
+        } else if (o2 == null) {
             return 1;
         }
-        if (Math.abs(o1 - o2) < 1e-9) {
-            return 0;
+
+        double epsilon = 1e-10; // Tolerancia para comparación de punto flotante
+        double diff = o1 - o2;
+
+        if (Math.abs(diff) < epsilon) {
+            return 0; // Son iguales dentro de la tolerancia
+        } else if (diff < 0) {
+            return -1; // o1 es menor que o2
+        } else {
+            return 1; // o1 es mayor que o2
         }
-        return o1 < o2 ? -1 : 1;
     }
 }

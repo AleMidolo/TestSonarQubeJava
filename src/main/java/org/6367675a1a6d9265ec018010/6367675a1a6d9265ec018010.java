@@ -10,32 +10,23 @@ class Bucket {
     }
 
     public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
+        this.buckets.add(bucket);
     }
 
     public void removeSelf() {
-        // Remove this bucket from all parent buckets
-        for (Bucket parent : buckets) {
-            parent.buckets.remove(this);
+        // Elimina este bucket de la estructura de datos
+        // Aquí asumimos que el bucket está en una lista de buckets en algún contenedor
+        // y que el contenedor tiene un método para eliminar este bucket.
+        // Este es un ejemplo simplificado.
+        if (this.buckets != null) {
+            this.buckets.clear();
         }
-        // Clear the list of buckets to remove all references
-        buckets.clear();
-    }
-
-    @Override
-    public String toString() {
-        return "Bucket{" +
-                "name='" + name + '\'' +
-                '}';
+        // Aquí podrías agregar más lógica para eliminar el bucket de cualquier estructura
+        // que lo contenga, como una lista o un mapa.
     }
 
     public static void main(String[] args) {
-        Bucket parentBucket = new Bucket("Parent");
-        Bucket childBucket = new Bucket("Child");
-
-        parentBucket.addBucket(childBucket);
-        System.out.println("Before removal: " + parentBucket.buckets);
-        childBucket.removeSelf();
-        System.out.println("After removal: " + parentBucket.buckets);
+        Bucket bucket = new Bucket("ExampleBucket");
+        bucket.removeSelf();
     }
 }

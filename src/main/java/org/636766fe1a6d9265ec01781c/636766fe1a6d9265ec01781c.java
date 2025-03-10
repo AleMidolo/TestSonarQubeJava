@@ -28,9 +28,4 @@ public class CharUtils {
         }
         return ch;
     }
-
-    public static void main(String[] args) {
-        System.out.println(toCharacterObject(' ')); // Output: ' '
-        System.out.println(toCharacterObject('A')); // Output: 'A'
-    }
 }

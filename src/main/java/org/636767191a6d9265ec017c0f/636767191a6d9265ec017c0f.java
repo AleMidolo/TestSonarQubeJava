@@ -1,26 +1,29 @@
-import java.util.Arrays;
-
-public class ByteVector {
-    private byte[] data;
-    private int capacity;
-
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.capacity = initialCapacity;
-    }
-
-    /**
-     * Enlarges this byte vector so that it can receive 'size' more bytes.
-     * @param size number of additional bytes that this byte vector should be able to receive.
-     */
-    private void enlarge(final int size) {
-        int newCapacity = capacity + size;
-        if (newCapacity < 0) { // Handle overflow
-            throw new OutOfMemoryError("Required array size too large");
+/**
+ * Enlarges this byte vector so that it can receive 'size' more bytes.
+ * @param size number of additional bytes that this byte vector should be able to receive.
+ */
+private void enlarge(final int size) {
+    // Assuming the byte vector is represented by a byte array named 'data'
+    // and 'length' is the current length of the byte vector.
+    
+    // Calculate the new length required
+    int newLength = length + size;
+    
+    // If the current array is not large enough, create a new one
+    if (newLength > data.length) {
+        // Double the size of the array until it can accommodate the new length
+        int newCapacity = data.length * 2;
+        while (newCapacity < newLength) {
+            newCapacity *= 2;
         }
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        
+        // Create a new array with the calculated capacity
+        byte[] newData = new byte[newCapacity];
+        
+        // Copy the existing data to the new array
+        System.arraycopy(data, 0, newData, 0, length);
+        
+        // Update the reference to the new array
+        data = newData;
     }
-
-    // Other methods of the ByteVector class...
 }

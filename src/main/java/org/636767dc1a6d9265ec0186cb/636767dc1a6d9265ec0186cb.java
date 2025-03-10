@@ -20,11 +20,11 @@ public class ConfigInitializer {
 
         Path path = Paths.get(distPath);
         if (!Files.exists(path)) {
-            throw new IllegalStateException("Distribution path does not exist: " + distPath);
+            throw new RuntimeException("Distribution path does not exist: " + distPath);
         }
 
         if (!Files.isDirectory(path)) {
-            throw new IllegalStateException("Distribution path is not a directory: " + distPath);
+            throw new RuntimeException("Distribution path is not a directory: " + distPath);
         }
 
         System.out.println("Config initialized successfully. Distribution path: " + distPath);

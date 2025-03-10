@@ -5,12 +5,19 @@ class ListNodeImpl<E> {
 
     ListNodeImpl(E value) {
         this.value = value;
+        this.next = null;
+        this.prev = null;
     }
 }
 
-public class LinkedList<E> {
+class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
+
+    public LinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
 
     /**
      * Remove the non null {@code node} from the list.
@@ -23,23 +30,21 @@ public class LinkedList<E> {
         ListNodeImpl<E> prevNode = node.prev;
         ListNodeImpl<E> nextNode = node.next;
 
-        if (prevNode == null) {
-            // Node is the head
-            head = nextNode;
-        } else {
+        if (prevNode != null) {
             prevNode.next = nextNode;
-            node.prev = null;
-        }
-
-        if (nextNode == null) {
-            // Node is the tail
-            tail = prevNode;
         } else {
-            nextNode.prev = prevNode;
-            node.next = null;
+            head = nextNode;
         }
 
-        node.value = null; // Help GC
+        if (nextNode != null) {
+            nextNode.prev = prevNode;
+        } else {
+            tail = prevNode;
+        }
+
+        node.next = null;
+        node.prev = null;
+
         return true;
     }
 }

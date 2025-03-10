@@ -3,7 +3,7 @@ import java.util.Objects;
 public class BooleanUtils {
 
     /**
-     * <p>Converts an array of object Booleans to primitives.</p> 
+     * <p>Converts an array of object Booleans to primitives.</p>
      * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>Boolean</code> array, may be <code>null</code>
      * @return a <code>boolean</code> array, <code>null</code> if null array input

@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtils {
 
@@ -22,10 +25,6 @@ public class FileUtils {
     }
 
     private static void deleteDirectoryOnExit(File directory) throws IOException {
-        if (!directory.exists()) {
-            return;
-        }
-
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
@@ -36,7 +35,6 @@ public class FileUtils {
                 }
             }
         }
-
         directory.deleteOnExit();
     }
 

@@ -19,7 +19,7 @@ public class Label {
         this.lineNumbers.add(lineNumber);
     }
 
-    // Optional: Getter method to retrieve the list of line numbers
+    // Optional: Getter method for lineNumbers if needed
     public List<Integer> getLineNumbers() {
         return new ArrayList<>(this.lineNumbers);
     }

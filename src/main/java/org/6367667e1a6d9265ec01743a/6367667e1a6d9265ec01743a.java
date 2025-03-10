@@ -1,14 +1,10 @@
-public class WriteTimeTracker {
+public class WriteTracker {
     private long lastWriteTimeStamp;
 
-    public WriteTimeTracker() {
-        this.lastWriteTimeStamp = 0;
+    public WriteTracker() {
+        this.lastWriteTimeStamp = System.currentTimeMillis();
     }
 
-    /**
-     * The last time, in milliseconds, a write operation occurred.
-     * @return this
-     */
     public long lastWriteTimeStampInMilliseconds() {
         return this.lastWriteTimeStamp;
     }
@@ -18,8 +14,17 @@ public class WriteTimeTracker {
     }
 
     public static void main(String[] args) {
-        WriteTimeTracker tracker = new WriteTimeTracker();
+        WriteTracker tracker = new WriteTracker();
+        System.out.println("Initial timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
+
+        // Simulate a write operation
+        try {
+            Thread.sleep(1000); // Simulate a delay
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         tracker.recordWriteOperation();
-        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
+        System.out.println("Updated timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
     }
 }

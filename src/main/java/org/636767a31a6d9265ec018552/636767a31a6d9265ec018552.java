@@ -18,27 +18,32 @@ public class StreamReader {
      */
     @Override
     public String readString() throws IOException {
-        int length = readVarInt();
+        // Read the length of the string (assuming it's prefixed by its length as an integer)
+        int length = readInt();
+        if (length < 0) {
+            throw new IOException("Invalid string length: " + length);
+        }
+
+        // Read the string bytes
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Unexpected end of stream");
+            throw new IOException("Failed to read the expected number of bytes");
         }
+
+        // Convert bytes to string using UTF-8 encoding
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    private int readVarInt() throws IOException {
-        int value = 0;
-        int shift = 0;
-        int b;
-        do {
-            b = inputStream.read();
-            if (b == -1) {
-                throw new IOException("Unexpected end of stream");
-            }
-            value |= (b & 0x7F) << shift;
-            shift += 7;
-        } while ((b & 0x80) != 0);
-        return value;
+    private int readInt() throws IOException {
+        byte[] bytes = new byte[4];
+        int bytesRead = inputStream.read(bytes);
+        if (bytesRead != 4) {
+            throw new IOException("Failed to read an integer from the stream");
+        }
+        return (bytes[0] & 0xFF) << 24 |
+               (bytes[1] & 0xFF) << 16 |
+               (bytes[2] & 0xFF) << 8  |
+               (bytes[3] & 0xFF);
     }
 }

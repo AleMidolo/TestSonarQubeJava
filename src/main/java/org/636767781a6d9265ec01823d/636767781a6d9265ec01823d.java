@@ -1,6 +1,7 @@
 import org.apache.log4j.spi.LoggingEvent;
 
 public class Logger {
+
     /**
      * This method does actual writing
      */

@@ -1,31 +1,28 @@
-public class Example {
+public class ExceptionChecker {
     private Throwable thrown;
 
-    public Example(Throwable thrown) {
+    public ExceptionChecker(Throwable thrown) {
         this.thrown = thrown;
-    }
-
-    public Throwable getThrown() {
-        return thrown;
     }
 
     /**
      * @return true if getThrown().toString() is a non-empty string.
      */
     public boolean hasThrown() {
-        if (getThrown() == null) {
+        if (thrown == null) {
             return false;
         }
-        String thrownString = getThrown().toString();
+        String thrownString = thrown.toString();
         return thrownString != null && !thrownString.isEmpty();
+    }
+
+    public Throwable getThrown() {
+        return thrown;
     }
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Test exception"));
-        System.out.println(example.hasThrown()); // Output: true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Output: false
+        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
+        System.out.println(checker.hasThrown()); // Should print true
     }
 }

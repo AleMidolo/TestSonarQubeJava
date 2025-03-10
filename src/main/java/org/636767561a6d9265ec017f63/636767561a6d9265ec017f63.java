@@ -21,12 +21,17 @@ public class GraphIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (!hasNext()) {
-            throw new IllegalStateException("No more unvisited vertices.");
+        for (int i = currentIndex; i < visited.length; i++) {
+            if (!visited[i]) {
+                currentIndex = i + 1;
+                return i;
+            }
         }
-        while (currentIndex < visited.length && visited[currentIndex]) {
-            currentIndex++;
-        }
-        return currentIndex++;
+        throw new IllegalStateException("No more unvisited vertices");
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Remove operation is not supported");
     }
 }

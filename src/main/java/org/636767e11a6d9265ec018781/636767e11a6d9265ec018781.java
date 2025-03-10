@@ -23,22 +23,22 @@ public class Cache {
 // Assuming METRICS class has the following structure
 class METRICS {
     private String key;
-    private int value;
+    private Map<String, Object> metricsData;
 
-    public METRICS(String key, int value) {
+    public METRICS(String key, Map<String, Object> metricsData) {
         this.key = key;
-        this.value = value;
+        this.metricsData = metricsData;
     }
 
     public String getKey() {
         return key;
     }
 
-    public int getValue() {
-        return value;
+    public void merge(METRICS other) {
+        this.metricsData.putAll(other.metricsData);
     }
 
-    public void merge(METRICS other) {
-        this.value += other.getValue();
+    public Map<String, Object> getMetricsData() {
+        return metricsData;
     }
 }

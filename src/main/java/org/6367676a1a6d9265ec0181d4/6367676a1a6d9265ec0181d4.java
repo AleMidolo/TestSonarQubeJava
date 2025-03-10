@@ -18,9 +18,9 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] array = {"one", "two"};
-        String str = "three";
+        String[] array = {"a", "b", "c"};
+        String str = "d";
         String[] result = addStringToArray(array, str);
-        System.out.println(Arrays.toString(result)); // Output: [one, two, three]
+        System.out.println(Arrays.toString(result)); // Output: [a, b, c, d]
     }
 }

@@ -11,13 +11,11 @@ public class BeanMapUtils {
             throw new IllegalArgumentException("The input BeanMap cannot be null.");
         }
 
-        // 获取目标 BeanMap 的所有可写属性
+        // 获取当前 BeanMap 的所有可写属性
+        BeanMap thisBeanMap = new BeanMap(this);
         for (Object key : map.keySet()) {
-            if (map.isWriteable(key.toString())) {
-                // 获取源 BeanMap 中的属性值
-                Object value = map.get(key);
-                // 将属性值放入目标 BeanMap
-                this.put(key, value);
+            if (thisBeanMap.isWriteable((String) key)) {
+                thisBeanMap.put(key, map.get(key));
             }
         }
     }

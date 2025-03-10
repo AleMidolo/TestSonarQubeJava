@@ -23,11 +23,11 @@ public class MappingDiff {
      * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
      *
      * @param tableName 表名
-     * @param mappings  当前索引的历史映射
+     * @param mappings 当前索引的历史映射
      * @return 不存在的字段的映射
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // 假设我们有一个方法来获取当前索引的映射
+        // 假设我们有一个方法来获取当前表的映射
         Mappings currentMappings = getCurrentMappings(tableName);
 
         Mappings diffMappings = new Mappings();
@@ -44,14 +44,10 @@ public class MappingDiff {
         return diffMappings;
     }
 
-    // 假设的方法，用于获取当前索引的映射
+    // 假设的方法，用于获取当前表的映射
     private Mappings getCurrentMappings(String tableName) {
-        // 这里应该实现获取当前索引的映射的逻辑
-        // 例如，从数据库或配置文件中读取
-        Mappings currentMappings = new Mappings();
-        // 假设当前索引的映射如下
-        currentMappings.getFields().put("field1", "type1");
-        currentMappings.getFields().put("field2", "type2");
-        return currentMappings;
+        // 这里应该是从数据库或其他存储中获取当前表的映射
+        // 为了示例，我们返回一个空的Mappings对象
+        return new Mappings();
     }
 }

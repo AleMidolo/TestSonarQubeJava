@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack;
+    private Stack<String> stack;
 
     public FrameStack() {
-        this.stack = new Stack<>();
+        stack = new Stack<>();
     }
 
     /**
@@ -16,73 +16,79 @@ public class FrameStack {
             return;
         }
 
-        int count = 0;
-        if (descriptor.charAt(0) == '(') {
-            // 方法描述符，计算参数类型的数量
-            int i = 1;
-            while (i < descriptor.length() && descriptor.charAt(i) != ')') {
-                char c = descriptor.charAt(i);
-                if (c == 'L') {
-                    // 对象类型，跳过直到分号
-                    while (i < descriptor.length() && descriptor.charAt(i) != ';') {
-                        i++;
-                    }
-                    count++;
-                } else if (c == '[') {
-                    // 数组类型，跳过所有数组维度
-                    while (i < descriptor.length() && descriptor.charAt(i) == '[') {
-                        i++;
-                    }
-                    if (i < descriptor.length() && descriptor.charAt(i) == 'L') {
-                        // 对象数组类型，跳过直到分号
-                        while (i < descriptor.length() && descriptor.charAt(i) != ';') {
-                            i++;
-                        }
-                    }
-                    count++;
-                } else if (c == 'D' || c == 'J') {
-                    // double 或 long 类型，占用两个槽位
-                    count += 2;
-                } else {
-                    // 其他基本类型，占用一个槽位
-                    count++;
+        // 判断是否是方法描述符
+        if (descriptor.startsWith("(")) {
+            // 方法描述符，解析参数类型
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                throw new IllegalArgumentException("Invalid method descriptor: " + descriptor);
+            }
+            String params = descriptor.substring(1, endIndex);
+            int paramCount = countParameters(params);
+            for (int i = 0; i < paramCount; i++) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
                 }
-                i++;
             }
         } else {
             // 单个类型描述符
-            if (descriptor.charAt(0) == 'L') {
-                // 对象类型
-                count = 1;
-            } else if (descriptor.charAt(0) == '[') {
-                // 数组类型
-                count = 1;
-            } else if (descriptor.charAt(0) == 'D' || descriptor.charAt(0) == 'J') {
-                // double 或 long 类型，占用两个槽位
-                count = 2;
-            } else {
-                // 其他基本类型，占用一个槽位
-                count = 1;
-            }
-        }
-
-        // 弹出相应数量的元素
-        for (int i = 0; i < count; i++) {
             if (!stack.isEmpty()) {
                 stack.pop();
             }
         }
     }
 
-    public void push(Object obj) {
-        stack.push(obj);
+    /**
+     * 计算参数描述符中的参数数量。
+     * @param params 参数描述符
+     * @return 参数数量
+     */
+    private int countParameters(String params) {
+        int count = 0;
+        int index = 0;
+        while (index < params.length()) {
+            char c = params.charAt(index);
+            if (c == 'L') {
+                // 对象类型，跳过直到 ';'
+                int endIndex = params.indexOf(';', index);
+                if (endIndex == -1) {
+                    throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
+                }
+                index = endIndex + 1;
+            } else if (c == '[') {
+                // 数组类型，跳过所有 '['
+                while (index < params.length() && params.charAt(index) == '[') {
+                    index++;
+                }
+                if (index < params.length() && params.charAt(index) == 'L') {
+                    // 对象数组类型，跳过直到 ';'
+                    int endIndex = params.indexOf(';', index);
+                    if (endIndex == -1) {
+                        throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
+                    }
+                    index = endIndex + 1;
+                } else {
+                    // 基本类型数组
+                    index++;
+                }
+            } else {
+                // 基本类型
+                index++;
+            }
+            count++;
+        }
+        return count;
     }
 
-    public Object peek() {
-        return stack.peek();
-    }
+    // 测试代码
+    public static void main(String[] args) {
+        FrameStack frameStack = new FrameStack();
+        frameStack.stack.push("int");
+        frameStack.stack.push("float");
+        frameStack.stack.push("java/lang/Object");
 
-    public boolean isEmpty() {
-        return stack.isEmpty();
+        frameStack.pop("(IFLjava/lang/Object;)V");
+
+        System.out.println(frameStack.stack); // 输出: []
     }
 }

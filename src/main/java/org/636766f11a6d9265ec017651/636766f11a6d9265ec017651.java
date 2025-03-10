@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // 空数组的静态引用
+    // 定义一个公共静态的空数组引用
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**

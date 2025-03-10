@@ -2,7 +2,7 @@ public class StringUtils {
     /**
      * 从指定的字符串中获取子字符串，避免抛出异常。
      * @param str 原始字符串
-     * @param start 起始索引（包含）
+     * @param start 开始索引（包含）
      * @param end 结束索引（不包含）
      * @return 子字符串，如果索引越界则返回空字符串
      */
@@ -24,10 +24,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testStr = "Hello, World!";
-        System.out.println(sub(testStr, 7, 12)); // 输出 "World"
-        System.out.println(sub(testStr, 20, 25)); // 输出 ""
-        System.out.println(sub(testStr, -5, 5)); // 输出 "Hello"
+        String str = "Hello, World!";
+        System.out.println(sub(str, 7, 12)); // 输出 "World"
+        System.out.println(sub(str, -1, 5));  // 输出 "Hello"
+        System.out.println(sub(str, 7, 20));  // 输出 "World!"
         System.out.println(sub(null, 0, 5)); // 输出 ""
     }
 }

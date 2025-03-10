@@ -13,7 +13,7 @@ public class ByteVector {
 
     private void enlarge(final int size) {
         int newCapacity = capacity + size;
-        if (newCapacity < 0) { // 处理溢出
+        if (newCapacity < 0) { // Handle overflow
             throw new OutOfMemoryError("Required array size too large");
         }
         data = Arrays.copyOf(data, newCapacity);
@@ -22,7 +22,7 @@ public class ByteVector {
 
     public void add(byte b) {
         if (size == capacity) {
-            enlarge(1); // 每次增加1个字节
+            enlarge(1); // Enlarge by 1 if full
         }
         data[size++] = b;
     }

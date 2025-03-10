@@ -11,19 +11,26 @@ public class ClassFileBuffer {
     }
 
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the buffer by resetting the read pointer
-        this.readPointer = 0;
-
-        // Read the entire stream into the buffer
-        int bytesRead = in.read(this.buffer, 0, this.buffer.length);
-
-        // If the stream is shorter than the buffer, fill the rest with zeros
-        if (bytesRead < this.buffer.length) {
-            for (int i = bytesRead; i < this.buffer.length; i++) {
-                this.buffer[i] = 0;
-            }
+        // Clear the buffer
+        for (int i = 0; i < buffer.length; i++) {
+            buffer[i] = 0;
         }
+
+        // Read from the InputStream into the buffer
+        int bytesRead = in.read(buffer);
+        if (bytesRead == -1) {
+            throw new IOException("End of stream reached");
+        }
+
+        // Reset the read pointer to the start of the buffer
+        readPointer = 0;
     }
 
-    // Additional methods to access the buffer and readPointer can be added here
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    public int getReadPointer() {
+        return readPointer;
+    }
 }

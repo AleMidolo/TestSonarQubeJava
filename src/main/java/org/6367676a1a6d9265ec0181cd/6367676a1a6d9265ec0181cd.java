@@ -10,20 +10,17 @@ public class StringUtils {
         if (str == null) {
             return null;
         }
-        
-        int length = str.length();
-        int start = 0;
-        
-        while (start < length && Character.isWhitespace(str.charAt(start))) {
-            start++;
+        int len = str.length();
+        int st = 0;
+        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
+            st++;
         }
-        
-        return str.substring(start);
+        return st > 0 ? str.substring(st) : str;
     }
 
     public static void main(String[] args) {
         String input = "   Hello, World!";
-        String result = trimLeadingWhitespace(input);
-        System.out.println("'" + result + "'");  // 输出: 'Hello, World!'
+        String output = trimLeadingWhitespace(input);
+        System.out.println(output);  // 输出: "Hello, World!"
     }
 }

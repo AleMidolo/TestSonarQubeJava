@@ -18,8 +18,7 @@ public class ByteArrayOutputStream extends OutputStream {
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-            ((off + len) - b.length > 0)) {
+        if ((off < 0) || (off > b.length) || (len < 0) || ((off + len) - b.length > 0)) {
             throw new IndexOutOfBoundsException();
         }
         ensureCapacity(count + len);

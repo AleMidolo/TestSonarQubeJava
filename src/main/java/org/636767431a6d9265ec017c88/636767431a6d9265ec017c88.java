@@ -2,34 +2,23 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LowerBoundsCalculator<K extends Comparable<K>> {
-
-    /**
-     * 为每个键找到一个最大下界。
-     * @param keys 键的列表。
-     * @return 计算出的键的下界。
-     */
-    private List<Integer> computeLowerBounds(List<K> keys) {
-        List<Integer> lowerBounds = new ArrayList<>();
-        if (keys == null || keys.isEmpty()) {
-            return lowerBounds;
-        }
-
-        // 对键进行排序
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
-
-        // 计算每个键的下界
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // 如果键不在列表中，返回插入点的负值减一
-                index = -index - 1;
-            }
-            // 下界是排序后列表中该键的位置
-            lowerBounds.add(index);
-        }
-
+private List<Integer> computeLowerBounds(List<K> keys) {
+    List<Integer> lowerBounds = new ArrayList<>();
+    if (keys == null || keys.isEmpty()) {
         return lowerBounds;
     }
+
+    // Assuming K is a comparable type, we can sort the keys and find the lower bounds
+    List<K> sortedKeys = new ArrayList<>(keys);
+    Collections.sort(sortedKeys);
+
+    // The lower bound for the first element is itself
+    lowerBounds.add((Integer) sortedKeys.get(0));
+
+    // For the rest of the elements, the lower bound is the previous element
+    for (int i = 1; i < sortedKeys.size(); i++) {
+        lowerBounds.add((Integer) sortedKeys.get(i - 1));
+    }
+
+    return lowerBounds;
 }

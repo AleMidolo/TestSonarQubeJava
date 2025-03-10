@@ -9,12 +9,12 @@ public class FrameVisitor {
      * @return 下一个要写入该帧的元素的索引。
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // 假设 Frame 类已经定义，并且有相应的构造函数和方法
+        // 假设 Frame 类有一个构造函数可以接受 offset, numLocal, numStack 作为参数
         currentFrame = new Frame(offset, numLocal, numStack);
         
         // 返回下一个要写入该帧的元素的索引
-        // 假设 Frame 类有一个方法 getNextIndex() 来获取下一个索引
-        return currentFrame.getNextIndex();
+        // 假设下一个索引是局部变量数量加上栈元素数量
+        return numLocal + numStack;
     }
 
     // 假设的 Frame 类
@@ -22,17 +22,13 @@ public class FrameVisitor {
         private final int offset;
         private final int numLocal;
         private final int numStack;
-        private int nextIndex;
 
         public Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextIndex = 0; // 初始化下一个索引为0
         }
 
-        public int getNextIndex() {
-            return nextIndex++;
-        }
+        // 其他方法...
     }
 }

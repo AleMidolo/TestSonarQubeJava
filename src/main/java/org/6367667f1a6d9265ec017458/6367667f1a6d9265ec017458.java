@@ -2,7 +2,6 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-    // Assuming a map to store the handlers
     private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
@@ -26,6 +25,4 @@ public class AtmosphereFramework {
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
     }
-
-    // Other methods and fields of AtmosphereFramework
 }

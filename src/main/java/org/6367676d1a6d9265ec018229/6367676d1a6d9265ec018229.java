@@ -9,11 +9,15 @@ public class StringUtils {
         if (array == null) {
             return null;
         }
-        String[] result = new String[array.length];
+        String[] trimmedArray = new String[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i] != null ? array[i].trim() : null;
+            if (array[i] != null) {
+                trimmedArray[i] = array[i].trim();
+            } else {
+                trimmedArray[i] = null;
+            }
         }
-        return result;
+        return trimmedArray;
     }
 
     public static void main(String[] args) {

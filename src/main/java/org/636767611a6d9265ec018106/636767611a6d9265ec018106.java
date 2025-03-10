@@ -10,31 +10,17 @@ public class Graph<V> {
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
         // 假设我们有一个方法来获取进入顶点的边的权重
-        // 这里假设 getIncomingEdges 返回一个包含所有进入顶点的边的集合
-        // 并且每条边有一个 getWeight 方法返回边的权重
-        for (Edge<V> edge : getIncomingEdges(v)) {
-            totalWeight += edge.getWeight();
+        for (V vertex : v) {
+            totalWeight += getIncomingEdgeWeight(vertex);
         }
         return totalWeight;
     }
 
-    // 假设的辅助方法，用于获取进入顶点的边的集合
-    private Set<Edge<V>> getIncomingEdges(Set<V> v) {
-        // 这里应该实现获取进入顶点的边的逻辑
-        // 由于具体实现依赖于图的表示方式，这里只是一个占位符
-        return null;
-    }
-
-    // 假设的边类
-    private static class Edge<V> {
-        private double weight;
-
-        public Edge(double weight) {
-            this.weight = weight;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
+    // 假设这个方法返回进入某个顶点的边的权重
+    private double getIncomingEdgeWeight(V vertex) {
+        // 这里应该实现获取进入顶点的边的权重的逻辑
+        // 例如，从图的邻接表中获取边的权重
+        // 这里只是一个示例，返回一个默认值
+        return 1.0; // 假设每条边的权重为1.0
     }
 }

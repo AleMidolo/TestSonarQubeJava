@@ -11,9 +11,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(length(null));      // 输出: 0
-        System.out.println(length(""));        // 输出: 0
-        System.out.println(length("Hello"));   // 输出: 5
+        String testString = "Hello, World!";
+        System.out.println(length(testString));  // 输出: 13
+
+        String nullString = null;
+        System.out.println(length(nullString));  // 输出: 0
     }
 }

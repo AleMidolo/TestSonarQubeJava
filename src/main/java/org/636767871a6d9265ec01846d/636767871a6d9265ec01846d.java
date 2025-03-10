@@ -7,27 +7,26 @@ public class MRUDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String osName = System.getProperty("os.name").toLowerCase();
-        String userHome = System.getProperty("user.home");
-        String configDirPath;
+        String directoryPath;
 
         if (osName.contains("windows 2000")) {
             // 对于Windows 2000，假设“文档和设置”目录在C盘
-            configDirPath = "C:\\Documents and Settings\\" + System.getProperty("user.name") + "\\lf5";
+            directoryPath = "C:\\Documents and Settings\\" + System.getProperty("user.name") + "\\lf5";
         } else {
-            // 对于其他平台，使用user.home目录
-            configDirPath = userHome + File.separator + "lf5";
+            // 对于其他平台，使用user.home变量指向的位置
+            directoryPath = System.getProperty("user.home") + File.separator + "lf5";
         }
 
-        File configDir = new File(configDirPath);
-        if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Configuration directory created at: " + configDirPath);
+                System.out.println("Directory created: " + directoryPath);
             } else {
-                System.out.println("Failed to create configuration directory at: " + configDirPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("Configuration directory already exists at: " + configDirPath);
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

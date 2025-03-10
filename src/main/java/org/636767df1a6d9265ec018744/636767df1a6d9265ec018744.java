@@ -8,18 +8,15 @@ public class TimeRangeSplitter {
 
     /**
      * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
-     *
-     * @param start 开始时间戳（毫秒）
-     * @param end   结束时间戳（毫秒）
-     * @return 拆分后的时间范围列表
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
+        long currentStart = start;
 
-        while (start < end) {
-            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, nextEnd));
-            start = nextEnd;
+        while (currentStart < end) {
+            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(currentStart, currentEnd));
+            currentStart = currentEnd;
         }
 
         return timeRanges;

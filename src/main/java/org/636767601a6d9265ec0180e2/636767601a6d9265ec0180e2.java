@@ -1,37 +1,6 @@
 import java.util.*;
 
-class Pair<K, V> {
-    private K key;
-    private V value;
-
-    public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pair<?, ?> pair = (Pair<?, ?>) o;
-        return Objects.equals(key, pair.key) && Objects.equals(value, pair.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(key, value);
-    }
-}
-
-public class Graph {
+class Graph {
     private Map<Integer, List<Integer>> adjacencyList;
 
     public Graph() {
@@ -46,13 +15,13 @@ public class Graph {
     private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
 
+        // Iterate over all edges in the graph
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
             int u = entry.getKey();
             for (int v : entry.getValue()) {
-                if (u < v) { // To avoid processing the same edge twice
+                if (u < v) { // Ensure each edge is processed only once
                     List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                    globalSeparatorList.add(new Pair<>(separators, u));
-                    globalSeparatorList.add(new Pair<>(separators, v));
+                    globalSeparatorList.add(new Pair<>(separators, new Pair<>(u, v)));
                 }
             }
         }
@@ -61,11 +30,24 @@ public class Graph {
     }
 
     private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
-        // Placeholder for the actual algorithm to find minimal separators
-        // This is a simplified version that just returns the edge itself as a separator
+        // Placeholder for actual implementation of finding minimal separators
+        // This is a complex problem and typically involves advanced graph algorithms
+        // such as BFS, DFS, or flow-based methods.
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
+        // Example: Add some dummy separators for illustration
         separators.add(new Pair<>(u, v));
         return separators;
+    }
+
+    // Helper class to represent a pair of values
+    class Pair<A, B> {
+        A first;
+        B second;
+
+        Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
     }
 
     public static void main(String[] args) {
@@ -77,8 +59,8 @@ public class Graph {
 
         List<Pair<List<Pair<Integer, Integer>>, Integer>> result = graph.computeGlobalSeparatorList();
         for (Pair<List<Pair<Integer, Integer>>, Integer> pair : result) {
-            System.out.println("Edge: " + pair.getValue());
-            System.out.println("Separators: " + pair.getKey());
+            System.out.println("Edge: " + pair.second);
+            System.out.println("Separators: " + pair.first);
         }
     }
 }

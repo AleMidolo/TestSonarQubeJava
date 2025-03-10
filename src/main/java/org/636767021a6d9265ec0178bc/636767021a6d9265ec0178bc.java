@@ -15,10 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
+        // टेस्ट केस
         System.out.println(indexOf("Hello World", "World")); // 6
         System.out.println(indexOf("Hello World", "Java"));  // -1
-        System.out.println(indexOf(null, "World"));          // -1
+        System.out.println(indexOf(null, "World"));         // -1
         System.out.println(indexOf("Hello World", null));    // -1
     }
 }

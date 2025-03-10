@@ -24,10 +24,9 @@ public class GraphIterator implements Iterator<Integer> {
         if (!hasNext()) {
             throw new IllegalStateException("No more unvisited vertices.");
         }
-        while (visited[currentIndex]) {
+        while (currentIndex < visited.length && visited[currentIndex]) {
             currentIndex++;
         }
-        visited[currentIndex] = true;
         return currentIndex++;
     }
 }

@@ -7,7 +7,7 @@ public class UTF8SizeCalculator {
      *
      * @param str   इनपुट स्ट्रिंग
      * @param index स्ट्रिंग में शुरुआती इंडेक्स
-     * @param len   गणना करने के लिए लंबाई
+     * @param len   गणना करने के लिए स्ट्रिंग की लंबाई
      * @return UTF-8 एन्कोडिंग में स्ट्रिंग का आकार
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {

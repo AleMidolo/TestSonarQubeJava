@@ -3,7 +3,7 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration for a single fetch
     private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
 
     /**
@@ -37,6 +37,22 @@ public class TimeRangeBuilder {
 
         public long getEnd() {
             return end;
+        }
+
+        @Override
+        public String toString() {
+            return "TimeRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        TimeRangeBuilder builder = new TimeRangeBuilder();
+        List<TimeRange> ranges = builder.buildTimeRanges(1633072800000L, 1633094400000L);
+        for (TimeRange range : ranges) {
+            System.out.println(range);
         }
     }
 }

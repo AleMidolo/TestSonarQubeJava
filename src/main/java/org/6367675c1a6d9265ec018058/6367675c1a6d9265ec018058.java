@@ -2,26 +2,26 @@ import java.util.function.Supplier;
 
 public class UniqueStringSupplier {
 
-    private int counter;
+    private int current;
 
     public UniqueStringSupplier(int start) {
-        this.counter = start;
+        this.current = start;
     }
 
-    public Supplier<String> createStringSupplier() {
-        return () -> {
-            String uniqueString = Integer.toString(counter);
-            counter++;
-            return uniqueString;
-        };
+    public String get() {
+        return String.valueOf(current++);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Supplier<String> createStringSupplier(int start) {
+        UniqueStringSupplier supplier = new UniqueStringSupplier(start);
+        return supplier::get;
     }
 
     public static void main(String[] args) {
-        UniqueStringSupplier supplier = new UniqueStringSupplier(10);
-        Supplier<String> stringSupplier = supplier.createStringSupplier();
-
-        System.out.println(stringSupplier.get()); // Output: 10
-        System.out.println(stringSupplier.get()); // Output: 11
-        System.out.println(stringSupplier.get()); // Output: 12
+        Supplier<String> supplier = createStringSupplier(10);
+        System.out.println(supplier.get()); // 10
+        System.out.println(supplier.get()); // 11
+        System.out.println(supplier.get()); // 12
     }
 }

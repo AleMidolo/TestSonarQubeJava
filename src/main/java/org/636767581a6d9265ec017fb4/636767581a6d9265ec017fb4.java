@@ -10,23 +10,16 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      * @return गणना की गई कुंजी की ऊपरी सीमा।
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
-        if (keys == null || keys.isEmpty()) {
-            return Collections.emptyList();
-        }
-
         List<Integer> upperBounds = new ArrayList<>();
-        for (int i = 0; i < keys.size(); i++) {
-            K currentKey = keys.get(i);
-            int upperBound = Integer.MAX_VALUE;
+        List<K> sortedKeys = new ArrayList<>(keys);
+        Collections.sort(sortedKeys);
 
-            for (int j = i + 1; j < keys.size(); j++) {
-                if (currentKey.compareTo(keys.get(j)) < 0) {
-                    upperBound = j;
-                    break;
-                }
+        for (K key : keys) {
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                index = -(index + 1);
             }
-
-            upperBounds.add(upperBound == Integer.MAX_VALUE ? -1 : upperBound);
+            upperBounds.add(index);
         }
 
         return upperBounds;

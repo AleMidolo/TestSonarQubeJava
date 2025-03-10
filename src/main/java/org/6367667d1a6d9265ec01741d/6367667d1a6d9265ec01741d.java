@@ -21,34 +21,12 @@ public class TypeResolver {
 
     public static void main(String[] args) {
         // Example usage
-        TypeVariable<?> typeVar = new TypeVariable<Object>() {
-            @Override
-            public Type[] getBounds() {
-                return new Type[]{String.class};
-            }
+        TypeVariable<?> typeVar = ExampleClass.class.getTypeParameters()[0];
+        Type bound = resolveBound(typeVar);
+        System.out.println("Resolved bound: " + bound);
+    }
 
-            @Override
-            public String getName() {
-                return "T";
-            }
-
-            @Override
-            public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
-                return null;
-            }
-
-            @Override
-            public java.lang.annotation.Annotation[] getAnnotations() {
-                return new java.lang.annotation.Annotation[0];
-            }
-
-            @Override
-            public java.lang.annotation.Annotation[] getDeclaredAnnotations() {
-                return new java.lang.annotation.Annotation[0];
-            }
-        };
-
-        Type resolvedType = resolveBound(typeVar);
-        System.out.println("Resolved Type: " + resolvedType);
+    class ExampleClass<T> {
+        // Example class with a type parameter
     }
 }

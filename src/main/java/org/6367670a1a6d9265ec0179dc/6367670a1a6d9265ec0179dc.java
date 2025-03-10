@@ -1,8 +1,8 @@
 import java.util.List;
 
 public class StackMapTableHandler {
-    private List<VerificationTypeInfo> currentFrame;
-    private List<VerificationTypeInfo> stackMapTableEntries;
+    private List<Object> currentFrame;
+    private List<Object> stackMapTableEntries;
 
     /**
      * {@link #currentFrame} के कुछ अमूर्त प्रकारों को {@link #stackMapTableEntries} में डालता है, StackMapTable गुणों में प्रयुक्त JVMS verification_type_info प्रारूप का उपयोग करते हुए।
@@ -15,12 +15,8 @@ public class StackMapTableHandler {
         }
 
         for (int i = start; i < end; i++) {
-            stackMapTableEntries.add(currentFrame.get(i));
+            Object abstractType = currentFrame.get(i);
+            stackMapTableEntries.add(abstractType);
         }
-    }
-
-    // Assuming VerificationTypeInfo is a class representing the verification_type_info format
-    private static class VerificationTypeInfo {
-        // Define the structure of verification_type_info here
     }
 }

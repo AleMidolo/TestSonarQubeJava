@@ -15,7 +15,10 @@ public class BooleanArrayConverter {
         }
         boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Array element at index " + i + " is null");
+            }
+            result[i] = array[i];
         }
         return result;
     }

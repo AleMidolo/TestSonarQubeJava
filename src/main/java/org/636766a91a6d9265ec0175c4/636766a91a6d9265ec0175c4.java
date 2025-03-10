@@ -12,46 +12,40 @@ public class FrameStackHandler {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Assuming the descriptor is in the format "L<type>;" for object types or "I" for int, etc.
-        // This is a simplified example, actual implementation may vary based on descriptor parsing.
-        if (descriptor.startsWith("L") && descriptor.endsWith(";")) {
-            // Pop an object type
-            frameStack.pop();
-        } else if (descriptor.equals("I")) {
-            // Pop an integer
-            frameStack.pop();
-        } else if (descriptor.equals("J")) {
-            // Pop a long
-            frameStack.pop();
-        } else if (descriptor.equals("F")) {
-            // Pop a float
-            frameStack.pop();
-        } else if (descriptor.equals("D")) {
-            // Pop a double
-            frameStack.pop();
-        } else if (descriptor.equals("C")) {
-            // Pop a char
-            frameStack.pop();
-        } else if (descriptor.equals("S")) {
-            // Pop a short
-            frameStack.pop();
-        } else if (descriptor.equals("B")) {
-            // Pop a byte
-            frameStack.pop();
-        } else if (descriptor.equals("Z")) {
-            // Pop a boolean
-            frameStack.pop();
-        } else {
-            throw new IllegalArgumentException("Unknown descriptor: " + descriptor);
+        // Assuming the descriptor is in the format "L<type>;" for object types or "I", "J", etc. for primitives
+        // This is a simplified example; actual implementation may need to handle more complex cases
+        int count = countTypesInDescriptor(descriptor);
+        for (int i = 0; i < count; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
+            } else {
+                throw new IllegalStateException("Frame stack is empty.");
+            }
         }
     }
 
-    // Example usage
+    private int countTypesInDescriptor(String descriptor) {
+        // This is a placeholder method to count the number of types in the descriptor
+        // For example, "(Ljava/lang/String;I)V" would return 2 (String and int)
+        // This is a simplified example; actual implementation may need to handle more complex cases
+        int count = 0;
+        for (int i = 0; i < descriptor.length(); i++) {
+            if (descriptor.charAt(i) == 'L') {
+                count++;
+                while (i < descriptor.length() && descriptor.charAt(i) != ';') {
+                    i++;
+                }
+            } else if (descriptor.charAt(i) == 'I' || descriptor.charAt(i) == 'J' || descriptor.charAt(i) == 'F' || descriptor.charAt(i) == 'D' || descriptor.charAt(i) == 'Z' || descriptor.charAt(i) == 'B' || descriptor.charAt(i) == 'C' || descriptor.charAt(i) == 'S') {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push(10); // Push an integer
-        handler.frameStack.push("Hello"); // Push a string
-        handler.pop("I"); // Pop an integer
-        handler.pop("Ljava/lang/String;"); // Pop a string
+        handler.frameStack.push("String");
+        handler.frameStack.push(42);
+        handler.pop("(Ljava/lang/String;I)V");
     }
 }

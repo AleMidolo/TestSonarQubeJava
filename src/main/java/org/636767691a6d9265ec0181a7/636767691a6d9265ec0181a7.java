@@ -1,4 +1,10 @@
-public class StringTrimmer {
+public class Main {
+    public static void main(String[] args) {
+        // Example usage
+        String result = trimLeadingCharacter("###Hello World!", '#');
+        System.out.println(result);  // Output: "Hello World!"
+    }
+
     /**
      * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
      * @param str वह स्ट्रिंग जिसे जांचना है
@@ -9,19 +15,12 @@ public class StringTrimmer {
         if (str == null || str.isEmpty()) {
             return str;
         }
-        
+
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-        
-        return str.substring(index);
-    }
 
-    public static void main(String[] args) {
-        String input = "###HelloWorld";
-        char leadingChar = '#';
-        String result = trimLeadingCharacter(input, leadingChar);
-        System.out.println(result);  // Output: HelloWorld
+        return str.substring(index);
     }
 }

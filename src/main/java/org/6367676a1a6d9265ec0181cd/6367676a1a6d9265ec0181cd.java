@@ -10,16 +10,14 @@ public class StringUtils {
         if (str == null) {
             return null;
         }
-
+        
         int len = str.length();
         int start = 0;
-
-        // Find the index of the first non-whitespace character
+        
         while (start < len && Character.isWhitespace(str.charAt(start))) {
             start++;
         }
-
-        // Return the substring from the first non-whitespace character
+        
         return str.substring(start);
     }
 

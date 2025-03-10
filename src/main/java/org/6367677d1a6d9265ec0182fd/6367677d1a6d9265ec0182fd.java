@@ -18,8 +18,8 @@ public class BooleanConverter {
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(toBoolean("True", false));  // true
-        System.out.println(toBoolean("FALSE", true)); // false
+        System.out.println(toBoolean("True", false)); // true
+        System.out.println(toBoolean("FALSE", true));  // false
         System.out.println(toBoolean("random", true)); // true
         System.out.println(toBoolean(null, false));    // false
     }

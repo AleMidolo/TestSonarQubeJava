@@ -18,13 +18,8 @@ public class LogBuffer {
         }
     }
 
-    // Optional: Method to retrieve events from the buffer
-    public LoggingEvent take() throws InterruptedException {
-        return buffer.take();
+    // Example LoggingEvent class (assuming it exists)
+    public static class LoggingEvent {
+        // LoggingEvent implementation details
     }
-}
-
-// Assuming LoggingEvent is a predefined class
-class LoggingEvent {
-    // LoggingEvent implementation details
 }

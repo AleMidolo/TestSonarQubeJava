@@ -14,15 +14,19 @@ public class LogFormatter {
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         
         StringBuilder formattedMessage = new StringBuilder();
-        formattedMessage.append("[").append(timestamp).append("] ");
-        formattedMessage.append("[").append(event.getLevel()).append("] ");
-        formattedMessage.append(event.getLoggerName()).append(" - ");
-        formattedMessage.append(event.getMessage());
+        formattedMessage.append(timestamp)
+                         .append(" [")
+                         .append(event.getLevel())
+                         .append("] ")
+                         .append(event.getLoggerName())
+                         .append(" - ")
+                         .append(event.getMessage());
         
         return formattedMessage.toString();
     }
 }
 
+// Assuming LoggingEvent class is defined as follows:
 class LoggingEvent {
     private long timeStamp;
     private String level;

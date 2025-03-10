@@ -20,26 +20,24 @@ public class LinkedList<E> {
             return false;
         }
 
-        ListNodeImpl<E> prev = node.prev;
-        ListNodeImpl<E> next = node.next;
+        ListNodeImpl<E> prevNode = node.prev;
+        ListNodeImpl<E> nextNode = node.next;
 
-        if (prev == null) {
-            // Node is the head
-            head = next;
+        if (prevNode != null) {
+            prevNode.next = nextNode;
         } else {
-            prev.next = next;
-            node.prev = null;
+            head = nextNode;
         }
 
-        if (next == null) {
-            // Node is the tail
-            tail = prev;
+        if (nextNode != null) {
+            nextNode.prev = prevNode;
         } else {
-            next.prev = prev;
-            node.next = null;
+            tail = prevNode;
         }
 
-        node.value = null; // Help GC
+        node.prev = null;
+        node.next = null;
+
         return true;
     }
 }

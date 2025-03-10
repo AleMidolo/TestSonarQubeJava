@@ -1,34 +1,41 @@
-import java.util.NoSuchElementException;
+import java.util.List;
 
-public class LinkedList<E> {
-    private ListNode<E> current;
+public class ListNode<E> {
+    private E element;
+    private ListNode<E> next;
+    private ListNode<E> previous;
 
-    // Assuming ListNode is a nested class within LinkedList
-    private static class ListNode<E> {
-        E data;
-        ListNode<E> next;
-        ListNode<E> prev;
+    public ListNode(E element, ListNode<E> next, ListNode<E> previous) {
+        this.element = element;
+        this.next = next;
+        this.previous = previous;
+    }
 
-        ListNode(E data) {
-            this.data = data;
-            this.next = null;
-            this.prev = null;
-        }
+    public E getElement() {
+        return element;
+    }
+
+    public ListNode<E> getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode<E> next) {
+        this.next = next;
+    }
+
+    public ListNode<E> getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(ListNode<E> previous) {
+        this.previous = previous;
     }
 
     /**
      * {@inheritDoc}
-     * Returns the previous node in the list.
-     *
-     * @return the previous node in the list
-     * @throws NoSuchElementException if there is no previous node
      */
     @Override
     public ListNode<E> previousNode() {
-        if (current == null || current.prev == null) {
-            throw new NoSuchElementException("No previous node available.");
-        }
-        current = current.prev;
-        return current;
+        return this.previous;
     }
 }

@@ -5,43 +5,45 @@ import java.util.List;
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> pathSegments = new ArrayList<>();
+        List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
 
         if (path == null || path.isEmpty()) {
-            return pathSegments;
+            return segments;
         }
 
-        // Remove leading '/' if the path is absolute
+        // Remove the leading '/' if it exists and the path is absolute
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
 
-        String[] segments = path.split("/");
-        for (String segment : segments) {
+        String[] parts = path.split("/");
+        for (String part : parts) {
             if (decode) {
-                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
+                part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
             }
-            pathSegments.add(new PathSegmentImpl(segment));
+            segments.add(new PathSegmentImpl(part));
         }
 
-        return pathSegments;
+        return segments;
     }
 
     public static class PathSegmentImpl {
-        private final String segment;
+        private final String path;
 
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
+        public PathSegmentImpl(String path) {
+            this.path = path;
         }
 
-        public String getSegment() {
-            return segment;
+        public String getPath() {
+            return path;
         }
 
         @Override
         public String toString() {
-            return segment;
+            return "PathSegmentImpl{" +
+                    "path='" + path + '\'' +
+                    '}';
         }
     }
 

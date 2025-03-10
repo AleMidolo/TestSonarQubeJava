@@ -22,14 +22,16 @@ public class ThreadSnapshotParser {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
+        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
                 return true;
             }
         }
         return false;
     }
 
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
@@ -46,15 +48,14 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
-            // Assuming the line is in the format: timestamp,threadName,state
+            // Parse the line and return a ThreadSnapshot object
+            // Example parsing logic (adjust based on actual file format):
             String[] parts = line.split(",");
             if (parts.length == 3) {
-                try {
-                    long timestamp = Long.parseLong(parts[0]);
-                    return new ThreadSnapshot(timestamp, parts[1], parts[2]);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
+                long timestamp = Long.parseLong(parts[0]);
+                String threadName = parts[1];
+                String state = parts[2];
+                return new ThreadSnapshot(timestamp, threadName, state);
             }
             return null;
         }

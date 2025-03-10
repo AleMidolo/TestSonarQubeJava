@@ -11,29 +11,31 @@ public class ClassPathUtil {
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided path is not a directory: " + dir);
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new IllegalArgumentException("The provided path is not a valid directory: " + dir);
         }
 
-        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {
-                    cpV.add(file.toURI().toURL());
+                    URL url = file.toURI().toURL();
+                    cpV.add(url);
                 } catch (MalformedURLException e) {
-                    throw new RuntimeException("Failed to convert file to URL: " + file.getAbsolutePath(), e);
+                    System.err.println("Failed to convert file to URL: " + file.getAbsolutePath());
+                    e.printStackTrace();
                 }
             }
         }
     }
 
     public static void main(String[] args) {
-        Vector<URL> classPath = new Vector<>();
+        Vector<URL> classpath = new Vector<>();
         String directoryPath = "path/to/your/jar/directory";
-        addToClassPath(classPath, directoryPath);
+        addToClassPath(classpath, directoryPath);
 
-        // Print the URLs to verify
-        for (URL url : classPath) {
+        // Print the URLs added to the classpath
+        for (URL url : classpath) {
             System.out.println(url);
         }
     }

@@ -9,15 +9,8 @@ public class EntityIdGenerator {
      * @return the row ID as a String
      */
     public String id(String entityId) {
-        // Concatenate the entity ID with a UUID to ensure uniqueness
+        // Combine the entityId with a UUID to ensure uniqueness
         String uniqueId = entityId + "-" + UUID.randomUUID().toString();
         return uniqueId;
-    }
-
-    public static void main(String[] args) {
-        EntityIdGenerator generator = new EntityIdGenerator();
-        String entityId = "exampleEntity";
-        String rowId = generator.id(entityId);
-        System.out.println("Generated Row ID: " + rowId);
     }
 }

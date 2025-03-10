@@ -13,22 +13,3 @@ private Set<V> initVisibleVertices() {
     }
     return visibleVertices;
 }
-
-// Assuming the following classes are defined elsewhere in your code:
-// class Edge<V> {
-//     private V source;
-//     private V target;
-//
-//     public Edge(V source, V target) {
-//         this.source = source;
-//         this.target = target;
-//     }
-//
-//     public V getSource() {
-//         return source;
-//     }
-//
-//     public V getTarget() {
-//         return target;
-//     }
-// }

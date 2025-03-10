@@ -14,14 +14,16 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             return new ArrayList<>();
         }
 
-        // Sort the keys to find the minimum lower bound for each key
+        List<Integer> upperBounds = new ArrayList<>();
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
-        List<Integer> upperBounds = new ArrayList<>();
-        for (int i = 0; i < sortedKeys.size(); i++) {
-            // The upper bound for each key is the index of the next key in the sorted list
-            upperBounds.add(i + 1);
+        for (K key : keys) {
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                index = -(index + 1);
+            }
+            upperBounds.add(index);
         }
 
         return upperBounds;

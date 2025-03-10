@@ -1,3 +1,4 @@
+import org.apache.log4j.spi.LoggingEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -16,10 +17,5 @@ public class LogBuffer {
         if (!buffer.offer(o)) {
             // Silently discard the event if the buffer is full
         }
-    }
-
-    // Assuming LoggingEvent is a predefined class
-    public static class LoggingEvent {
-        // LoggingEvent implementation details
     }
 }

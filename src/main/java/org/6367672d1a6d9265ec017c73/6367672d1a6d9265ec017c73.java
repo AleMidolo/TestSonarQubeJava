@@ -5,11 +5,16 @@ public class MessageLogger {
     private Map<String, Integer> messageTimestamps;
 
     public MessageLogger() {
-        this.messageTimestamps = new HashMap<>();
+        messageTimestamps = new HashMap<>();
     }
 
     /**
-     * Devuelve "true" si el mensaje debe imprimirse en la tiempo dada, de lo contrario devuelve falso. Si este método devuelve falso, el mensaje no se imprimirá. El tiempo está en segundos.
+     * Devuelve "true" si el mensaje debe imprimirse en la tiempo dada, de lo contrario devuelve falso.
+     * Si este método devuelve falso, el mensaje no se imprimirá. El tiempo está en segundos.
+     *
+     * @param timestamp El tiempo actual en segundos.
+     * @param message El mensaje que se desea imprimir.
+     * @return true si el mensaje debe imprimirse, false en caso contrario.
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {

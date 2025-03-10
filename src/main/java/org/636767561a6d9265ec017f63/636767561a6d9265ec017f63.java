@@ -17,4 +17,6 @@ public class Graph {
     public boolean hasNext() {
         return !visitedVertices.containsAll(allVertices);
     }
+
+    // Other methods to manage the graph and vertices...
 }

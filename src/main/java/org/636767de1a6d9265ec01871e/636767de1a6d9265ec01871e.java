@@ -1,20 +1,38 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-private void check(String modelName) throws IllegalStateException {
-    // Regular expression to match sharding indices in the model name
-    Pattern pattern = Pattern.compile("_\\d+");
-    Matcher matcher = pattern.matcher(modelName);
+public class ShardingKeyChecker {
 
-    int previousIndex = -1;
-    while (matcher.find()) {
-        String match = matcher.group();
-        int currentIndex = Integer.parseInt(match.substring(1)); // Extract the number after '_'
+    /**
+     * Verifica si los índices de la clave de "sharding" son continuos.
+     * 
+     * @param modelName nombre del modelo de la entidad
+     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
+     */
+    private void check(String modelName) throws IllegalStateException {
+        // Expresión regular para encontrar los índices de sharding en el nombre del modelo
+        Pattern pattern = Pattern.compile("_\\d+");
+        Matcher matcher = pattern.matcher(modelName);
 
-        if (previousIndex != -1 && currentIndex != previousIndex + 1) {
-            throw new IllegalStateException("Sharding indices are not continuous.");
+        int previousIndex = -1;
+        while (matcher.find()) {
+            String match = matcher.group();
+            int currentIndex = Integer.parseInt(match.substring(1)); // Elimina el "_" y convierte a entero
+
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Los índices de la clave de sharding no son continuos.");
+            }
+
+            previousIndex = currentIndex;
         }
+    }
 
-        previousIndex = currentIndex;
+    public static void main(String[] args) {
+        ShardingKeyChecker checker = new ShardingKeyChecker();
+        try {
+            checker.check("model_0_1_2_3"); // Ejemplo de uso
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

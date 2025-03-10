@@ -10,6 +10,14 @@ public class CliqueChecker {
      * @return true si el subgrafo inducido es un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Verificar que todos los vértices estén en el grafo
+        for (V vertex : vertices) {
+            if (!graph.containsVertex(vertex)) {
+                return false;
+            }
+        }
+
+        // Verificar que todos los pares de vértices estén conectados
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
@@ -17,6 +25,7 @@ public class CliqueChecker {
                 }
             }
         }
+
         return true;
     }
 }

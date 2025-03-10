@@ -28,7 +28,8 @@ public class DotUnescape {
     }
 
     public static void main(String[] args) {
-        String input = "\\\"Hello\\\" \\\\World\\\\";
-        System.out.println(unescapeId(input));  // Output: "Hello" \World\
+        String input = "This\\ is\\ a\\ test\\ string\\ with\\ escaped\\ spaces.";
+        String output = unescapeId(input);
+        System.out.println(output);  // Output: "This is a test string with escaped spaces."
     }
 }

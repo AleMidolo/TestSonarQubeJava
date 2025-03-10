@@ -12,14 +12,12 @@ public class OuterFaceCirculator {
     }
 
     public void next() {
-        // Implement the logic to move to the next node in the outer face
-        // This is a placeholder and should be replaced with actual traversal logic
+        // Assuming the node has a method to get the next node in the direction
         current = current.getNext(dir);
     }
 
     public void previous() {
-        // Implement the logic to move to the previous node in the outer face
-        // This is a placeholder and should be replaced with actual traversal logic
+        // Assuming the node has a method to get the previous node in the direction
         current = current.getPrevious(dir);
     }
 }
@@ -29,29 +27,28 @@ public class Node {
     private Node previous;
 
     public Node getNext(int dir) {
-        // Implement the logic to get the next node based on direction
-        return next;
+        return dir == 1 ? next : previous;
     }
 
     public Node getPrevious(int dir) {
-        // Implement the logic to get the previous node based on direction
-        return previous;
+        return dir == 1 ? previous : next;
     }
+
+    // Other methods and properties of Node
 }
 
-public class Graph {
+public class GraphTraversal {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        Node current = start;
 
-        while (current != stop) {
-            if (predicate.test(current)) {
+        while (circulator.getCurrent() != stop) {
+            if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
             circulator.next();
-            current = circulator.getCurrent();
         }
 
+        // If the predicate is not satisfied, return a circulator to the stop node
         return new OuterFaceCirculator(stop);
     }
 }

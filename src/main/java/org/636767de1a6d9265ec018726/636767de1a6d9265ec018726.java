@@ -28,22 +28,12 @@ public class SequenceRange {
 }
 
 public class ProfileSegment {
-
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         // Example logic to build sequence ranges
-        // This is a placeholder and should be replaced with actual logic
         ranges.add(new SequenceRange(1, 10));
         ranges.add(new SequenceRange(11, 20));
         ranges.add(new SequenceRange(21, 30));
         return ranges;
-    }
-
-    public static void main(String[] args) {
-        ProfileSegment segment = new ProfileSegment();
-        List<SequenceRange> sequenceRanges = segment.buildSequenceRanges();
-        for (SequenceRange range : sequenceRanges) {
-            System.out.println(range);
-        }
     }
 }

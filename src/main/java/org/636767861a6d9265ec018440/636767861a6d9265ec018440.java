@@ -1,21 +1,20 @@
 public void abbreviate(final int nameStart, final StringBuffer buf) {
     if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // No operation if buffer is null or start index is invalid
+        return; // No operation if buffer is null or nameStart is out of bounds
     }
 
-    // Split the string into words starting from nameStart
-    String[] words = buf.substring(nameStart).split("\\s+");
-
-    // Clear the buffer from nameStart onwards
-    buf.delete(nameStart, buf.length());
-
-    // Append the abbreviated name
-    for (int i = 0; i < words.length; i++) {
-        if (i > 0) {
-            buf.append(" "); // Add space between words
-        }
-        if (words[i].length() > 0) {
-            buf.append(words[i].charAt(0)); // Append the first character of each word
-        }
+    // Find the first space after nameStart
+    int spaceIndex = buf.indexOf(" ", nameStart);
+    if (spaceIndex == -1) {
+        return; // No space found, nothing to abbreviate
     }
+
+    // Get the first character after the space
+    char firstChar = buf.charAt(spaceIndex + 1);
+    if (Character.isWhitespace(firstChar)) {
+        return; // No valid character to abbreviate
+    }
+
+    // Replace the rest of the name with the first character and a dot
+    buf.replace(spaceIndex + 1, buf.length(), String.valueOf(firstChar) + ".");
 }

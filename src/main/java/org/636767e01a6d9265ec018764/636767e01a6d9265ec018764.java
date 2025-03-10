@@ -1,22 +1,15 @@
 import com.google.gson.JsonObject;
 import java.util.List;
 
-public class PropertyConverter {
-
-    /**
-     * Convertir propiedades del proceso a datos de origen
-     * @param properties Lista de pares clave-valor
-     * @return JsonObject con las propiedades convertidas
-     */
-    private JsonObject convertProperties(List<KeyStringValuePair> properties) {
-        JsonObject jsonObject = new JsonObject();
-        for (KeyStringValuePair pair : properties) {
-            jsonObject.addProperty(pair.getKey(), pair.getValue());
-        }
-        return jsonObject;
+private JsonObject convertProperties(List<KeyStringValuePair> properties) {
+    JsonObject jsonObject = new JsonObject();
+    for (KeyStringValuePair property : properties) {
+        jsonObject.addProperty(property.getKey(), property.getValue());
     }
+    return jsonObject;
 }
 
+// Assuming KeyStringValuePair is a class with getKey() and getValue() methods
 class KeyStringValuePair {
     private String key;
     private String value;

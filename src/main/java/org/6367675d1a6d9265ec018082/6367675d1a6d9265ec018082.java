@@ -56,9 +56,9 @@ class Node {
         return isVirtual;
     }
 
-    public Node getRealCounterpart() {
+    public Node getRealNode() {
         if (isVirtual) {
-            return new Node(id.replace("-virtual", ""), false);
+            return new Node(id.replace("virtual_", ""), false);
         }
         return this;
     }
@@ -95,8 +95,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
-        Node to = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
+        Node from = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node to = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(from, to);
     }
 }

@@ -1,18 +1,19 @@
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class LogTable {
-    private final DefaultListModel<String> logListModel;
 
-    public LogTable(DefaultListModel<String> logListModel) {
-        this.logListModel = logListModel;
-    }
-
+    /**
+     * Agrega un mensaje de registro a ser mostrado en la "LogTable". Este método es seguro para hilos ya que envía solicitudes al SwingThread en lugar de procesarlas directamente.
+     */
     public void addMessage(final LogRecord lr) {
-        // Ensure the operation is performed on the Swing event dispatch thread
-        SwingUtilities.invokeLater(() -> {
-            String message = lr.getMessage();
-            logListModel.addElement(message);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Aquí se puede agregar la lógica para actualizar la tabla de registro
+                // Por ejemplo, agregar el LogRecord a un modelo de tabla y notificar a la vista que se ha actualizado
+                System.out.println("Mensaje de registro agregado: " + lr.getMessage());
+            }
         });
     }
 }

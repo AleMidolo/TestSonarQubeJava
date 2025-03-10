@@ -19,48 +19,31 @@ public class Mappings {
 
 public class MappingDiff {
 
-    /**
-     * Devuelve los mapeos con campos que no existen en los mapeos de entrada. Los mapeos de entrada deben ser mapeos de historial del índice actual. No devolver la configuración _source para evitar conflictos de actualización del índice actual.
-     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulación de mapeos históricos para la tabla dada
-        Mappings historicalMappings = getHistoricalMappings(tableName);
+        // Assuming that the current index mappings are stored in a Map for simplicity
+        Map<String, Object> currentMappings = getCurrentIndexMappings(tableName);
 
-        Mappings result = new Mappings();
-        Map<String, Object> resultProperties = new HashMap<>();
+        Mappings diffMappings = new Mappings();
+        Map<String, Object> diffProperties = new HashMap<>();
 
-        // Obtener las propiedades de los mapeos de entrada
-        Map<String, Object> inputProperties = mappings.getProperties();
-
-        // Obtener las propiedades de los mapeos históricos
-        Map<String, Object> historicalProperties = historicalMappings.getProperties();
-
-        // Comparar las propiedades de entrada con las históricas
-        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            // Si la clave no existe en los mapeos históricos, agregarla al resultado
-            if (!historicalProperties.containsKey(key)) {
-                resultProperties.put(key, value);
+        for (Map.Entry<String, Object> entry : mappings.getProperties().entrySet()) {
+            String fieldName = entry.getKey();
+            if (!currentMappings.containsKey(fieldName)) {
+                diffProperties.put(fieldName, entry.getValue());
             }
         }
 
-        // No incluir la configuración _source en el resultado
-        resultProperties.remove("_source");
-
-        result.setProperties(resultProperties);
-        return result;
+        diffMappings.setProperties(diffProperties);
+        return diffMappings;
     }
 
-    private Mappings getHistoricalMappings(String tableName) {
-        // Simulación de mapeos históricos para la tabla dada
-        Mappings historicalMappings = new Mappings();
-        Map<String, Object> historicalProperties = new HashMap<>();
-        historicalProperties.put("field1", "type1");
-        historicalProperties.put("field2", "type2");
-        historicalMappings.setProperties(historicalProperties);
-        return historicalMappings;
+    private Map<String, Object> getCurrentIndexMappings(String tableName) {
+        // This method should return the current index mappings for the given tableName
+        // For the sake of this example, we return a hardcoded map
+        Map<String, Object> currentMappings = new HashMap<>();
+        currentMappings.put("existingField1", "type1");
+        currentMappings.put("existingField2", "type2");
+        return currentMappings;
     }
 
     public static void main(String[] args) {
@@ -68,16 +51,12 @@ public class MappingDiff {
 
         Mappings inputMappings = new Mappings();
         Map<String, Object> inputProperties = new HashMap<>();
-        inputProperties.put("field1", "type1");
-        inputProperties.put("field3", "type3");
-        inputProperties.put("_source", "enabled");
+        inputProperties.put("existingField1", "type1");
+        inputProperties.put("newField1", "type3");
         inputMappings.setProperties(inputProperties);
 
-        Mappings result = mappingDiff.diffStructure("exampleTable", inputMappings);
+        Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
 
-        System.out.println("Mapeos con campos que no existen en los mapeos históricos:");
-        for (Map.Entry<String, Object> entry : result.getProperties().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        System.out.println("Diff Mappings: " + diff.getProperties());
     }
 }

@@ -1,20 +1,26 @@
 class Bucket {
-    // Assuming Bucket class has a reference to the next bucket
     Bucket next;
+    Bucket prev;
 
-    // Method to insert a new bucket before the given bucket
+    // Constructor and other methods can be added here
+
     void insertBefore(Bucket bucket) {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
 
-        // Save the next reference of the current bucket
-        Bucket temp = this.next;
+        // Set the previous of the new bucket to the previous of the current bucket
+        this.prev = bucket.prev;
 
-        // Set the next reference of the current bucket to the given bucket
+        // If the previous of the current bucket is not null, set its next to the new bucket
+        if (bucket.prev != null) {
+            bucket.prev.next = this;
+        }
+
+        // Set the next of the new bucket to the current bucket
         this.next = bucket;
 
-        // Set the next reference of the given bucket to the saved reference
-        bucket.next = temp;
+        // Set the previous of the current bucket to the new bucket
+        bucket.prev = this;
     }
 }

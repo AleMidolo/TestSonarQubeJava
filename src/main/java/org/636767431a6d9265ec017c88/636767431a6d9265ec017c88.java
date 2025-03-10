@@ -20,13 +20,12 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         Collections.sort(sortedKeys);
 
         for (K key : keys) {
-            // Find the index of the key in the sorted list
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, the insertion point gives the lower bound
-                index = -index - 1;
+                // If the key is not found, the insertion point is -(index + 1)
+                index = -(index + 1);
             }
-            // The lower bound is the index itself
+            // The lower bound is the index of the key in the sorted list
             lowerBounds.add(index);
         }
 

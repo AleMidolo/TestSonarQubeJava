@@ -3,7 +3,7 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration for each time range
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
     private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
 
     /**
@@ -21,7 +21,7 @@ public class TimeRangeBuilder {
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Assuming TimeRange is a class that holds start and end times
     public static class TimeRange {
         private final long start;
         private final long end;

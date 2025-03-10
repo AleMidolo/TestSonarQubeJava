@@ -1,5 +1,4 @@
 public class ArrayUtils {
-
     /**
      * दिए गए ऐरे में निर्दिष्ट अनुक्रमांक पर दो तत्वों का आदान-प्रदान करता है।
      * @param <V> ऐरे में तत्वों का प्रकार
@@ -17,9 +16,9 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] numbers = {1, 2, 3, 4, 5};
-        System.out.println("Before swap: " + java.util.Arrays.toString(numbers));
-        swap(numbers, 1, 3);
-        System.out.println("After swap: " + java.util.Arrays.toString(numbers));
+        Integer[] arr = {1, 2, 3, 4, 5};
+        System.out.println("Before swap: " + java.util.Arrays.toString(arr));
+        swap(arr, 1, 3);
+        System.out.println("After swap: " + java.util.Arrays.toString(arr));
     }
 }

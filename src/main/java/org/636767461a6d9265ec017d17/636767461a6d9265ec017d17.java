@@ -12,13 +12,19 @@ public class UnescapeIdExample {
         if (input == null) {
             return null;
         }
+        
         // Replace escaped dots with actual dots
-        return input.replaceAll("\\\\.", ".");
+        String unescaped = input.replaceAll("\\\\.", ".");
+        
+        // Replace escaped backslashes with actual backslashes
+        unescaped = unescaped.replaceAll("\\\\\\\\", "\\\\");
+        
+        return unescaped;
     }
 
     public static void main(String[] args) {
-        String input = "example\\.com";
-        String unescaped = unescapeId(input);
-        System.out.println("Unescaped: " + unescaped);  // Output: Unescaped: example.com
+        String input = "example\\.com\\\\path";
+        String result = unescapeId(input);
+        System.out.println(result);  // Output: example.com\path
     }
 }

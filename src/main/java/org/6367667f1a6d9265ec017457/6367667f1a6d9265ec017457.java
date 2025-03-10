@@ -40,7 +40,7 @@ public class UTF8Decoder {
             sb.append(c);
             return i + 3;
         } else if ((b1 & 0xF8) == 0xF0) {
-            // 4-byte character (surrogate pair)
+            // 4-byte character (requires surrogate pairs)
             if (i + 3 >= bb.limit()) {
                 return i;
             }
@@ -57,10 +57,10 @@ public class UTF8Decoder {
     }
 
     public static void main(String[] args) {
-        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0xBF}); // Example UTF-8 bytes for 'क'
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0x85}); // UTF-8 for 'अ'
         StringBuilder sb = new StringBuilder();
-        int index = decodeOctets(0, bb, sb);
+        int nextIndex = decodeOctets(0, bb, sb);
         System.out.println("Decoded String: " + sb.toString());
-        System.out.println("Next index: " + index);
+        System.out.println("Next Index: " + nextIndex);
     }
 }

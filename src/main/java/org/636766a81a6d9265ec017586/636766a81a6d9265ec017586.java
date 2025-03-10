@@ -23,13 +23,15 @@ public class AbstractTypeHandler {
         }
     }
 
-    // Optional: Method to add elements to the stack for testing
-    public void push(Object element) {
-        outputFrameStack.push(element);
-    }
+    // Example usage
+    public static void main(String[] args) {
+        AbstractTypeHandler handler = new AbstractTypeHandler();
+        handler.outputFrameStack.push("Type1");
+        handler.outputFrameStack.push("Type2");
+        handler.outputFrameStack.push("Type3");
 
-    // Optional: Method to get the current stack size for testing
-    public int getStackSize() {
-        return outputFrameStack.size();
+        System.out.println("Before pop: " + handler.outputFrameStack);
+        handler.pop(2);
+        System.out.println("After pop: " + handler.outputFrameStack);
     }
 }

@@ -5,11 +5,11 @@ public class TemplateChecker {
     private Set<String> templateVariables;
 
     public TemplateChecker() {
-        this.templateVariables = new HashSet<>();
         // Initialize with some template variables for demonstration
-        this.templateVariables.add("var1");
-        this.templateVariables.add("var2");
-        this.templateVariables.add("var3");
+        templateVariables = new HashSet<>();
+        templateVariables.add("var1");
+        templateVariables.add("var2");
+        templateVariables.add("var3");
     }
 
     /**

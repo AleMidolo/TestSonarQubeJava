@@ -19,15 +19,4 @@ public class ArrayUtils {
         }
         return array;
     }
-
-    // Example usage
-    public static void main(String[] args) {
-        Byte[] array1 = null;
-        Byte[] array2 = new Byte[0];
-        Byte[] array3 = new Byte[]{1, 2, 3};
-
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
-    }
 }

@@ -6,12 +6,15 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(byte b[]) throws IOException {
         if (b == null) {
-            throw new NullPointerException("The byte array is null");
+            throw new NullPointerException("Byte array is null");
         }
         // Assuming this method is part of a class that extends OutputStream
         // and has access to the underlying output mechanism.
-        // Here, we simply write the bytes to the standard output as an example.
-        System.out.write(b);
+        // For example, writing to a file or network stream.
+        // Here, we just print the bytes to the console as an example.
+        for (byte value : b) {
+            System.out.write(value);
+        }
     }
 
     @Override
@@ -23,9 +26,9 @@ public class CustomOutputStream extends OutputStream {
 
     public static void main(String[] args) {
         try {
-            CustomOutputStream cos = new CustomOutputStream();
-            byte[] data = "Hello, World!".getBytes();
-            cos.write(data);
+            CustomOutputStream stream = new CustomOutputStream();
+            byte[] data = {72, 101, 108, 108, 111}; // "Hello" in ASCII
+            stream.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

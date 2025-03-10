@@ -13,19 +13,19 @@ public class PrimeUtil {
         }
 
         int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
+        while (true) {
+            if (isPrime(candidate)) {
+                if (desiredCapacity >= 1000) {
+                    double upperBound = desiredCapacity * 1.11;
+                    if (candidate <= upperBound) {
+                        return candidate;
+                    }
+                } else {
+                    return candidate;
+                }
+            }
             candidate++;
         }
-
-        // If desiredCapacity >= 1000, ensure the candidate is within 11% of desiredCapacity
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            while (candidate > upperBound) {
-                candidate = nextPrime(candidate + 1);
-            }
-        }
-
-        return candidate;
     }
 
     private static boolean isPrime(int n) {

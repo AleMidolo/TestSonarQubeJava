@@ -1,40 +1,87 @@
-import java.util.*;
-
-class Edge {
-    Node from;
-    Node to;
-
-    Edge(Node from, Node to) {
-        this.from = from;
-        this.to = to;
-    }
-}
+import java.util.Objects;
 
 class Node {
-    int id;
-    boolean isVirtual;
+    // Node class implementation
+    private int id;
+    private boolean isVirtual;
 
-    Node(int id, boolean isVirtual) {
+    public Node(int id, boolean isVirtual) {
         this.id = id;
         this.isVirtual = isVirtual;
     }
 
-    Node getRealEquivalent() {
-        if (this.isVirtual) {
-            // Assuming a mapping or logic to get the real equivalent
-            return new Node(this.id, false); // Replace with actual logic
-        }
-        return this;
+    public int getId() {
+        return id;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return id == node.id && isVirtual == node.isVirtual;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isVirtual);
+    }
+}
+
+class Edge {
+    // Edge class implementation
+    private Node from;
+    private Node to;
+
+    public Edge(Node from, Node to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Edge edge = (Edge) o;
+        return Objects.equals(from, edge.from) && Objects.equals(to, edge.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to);
     }
 }
 
 class Graph {
-    Node currentNode;
-    Node nextNode;
+    private Node currentNode;
+    private Node nextNode;
 
-    Edge edgeToNext() {
-        Node realFrom = currentNode.getRealEquivalent();
-        Node realTo = nextNode.getRealEquivalent();
-        return new Edge(realFrom, realTo);
+    public Graph(Node currentNode, Node nextNode) {
+        this.currentNode = currentNode;
+        this.nextNode = nextNode;
+    }
+
+    public Edge edgeToNext() {
+        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(from, to);
+    }
+
+    private Node getRealNode(Node node) {
+        // Assuming there is a method to get the real node from a virtual node
+        // This is a placeholder implementation
+        return new Node(node.getId(), false);
     }
 }

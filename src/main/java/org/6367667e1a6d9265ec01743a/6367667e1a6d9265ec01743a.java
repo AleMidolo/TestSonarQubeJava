@@ -12,10 +12,10 @@ public class LastWriteTimeStamp {
     }
 
     /**
-     * लिखने की प्रक्रिया को अपडेट करने के लिए उपयोग किया जाता है।
-     * @param timestamp मिलीसेकंड में समय
+     * लिखने की प्रक्रिया के समय को अपडेट करें।
+     * @param timeStamp मिलीसेकंड में समय
      */
-    public void updateWriteTimeStamp(long timestamp) {
-        lastWriteTimeStamp.set(timestamp);
+    public void updateWriteTimeStamp(long timeStamp) {
+        lastWriteTimeStamp.set(timeStamp);
     }
 }

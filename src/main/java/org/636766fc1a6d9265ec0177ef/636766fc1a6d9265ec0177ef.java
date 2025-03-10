@@ -8,7 +8,7 @@ public class ArrayUtils {
      * @param array जाँचने के लिए ऐरे
      * @return दिया गया ऐरे या एक नई ऐरे जिसमें नल नहीं है।
      */
-    public static String[] toNoNullStringArray(Object[] array) {
+    static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {
             return new String[0];
         }

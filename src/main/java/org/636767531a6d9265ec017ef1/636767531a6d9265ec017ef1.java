@@ -9,7 +9,7 @@ public class PointComparison {
      */
     public static boolean equals(Point2D p1, Point2D p2) {
         double tolerance = 1e-9;
-        return Math.abs(p1.getX() - p2.getX()) < tolerance &&
+        return Math.abs(p1.getX() - p2.getX()) < tolerance && 
                Math.abs(p1.getY() - p2.getY()) < tolerance;
     }
 }

@@ -47,6 +47,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // Example usage
+        System.out.println(nextPrime(1000));  // Example usage
     }
 }

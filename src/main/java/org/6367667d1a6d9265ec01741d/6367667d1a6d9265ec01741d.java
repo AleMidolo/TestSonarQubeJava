@@ -36,6 +36,16 @@ public class TypeResolver {
             public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
                 return null;
             }
+
+            @Override
+            public java.lang.annotation.Annotation[] getAnnotations() {
+                return new java.lang.annotation.Annotation[0];
+            }
+
+            @Override
+            public java.lang.annotation.Annotation[] getDeclaredAnnotations() {
+                return new java.lang.annotation.Annotation[0];
+            }
         };
 
         Type resolvedType = resolveBound(typeVar);

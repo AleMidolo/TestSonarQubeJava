@@ -17,19 +17,11 @@ public class MessageSerializer {
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         MessageBufferOutput output = new OutputStreamBufferOutput(out);
-        MessagePacker packer = MessagePack.newDefaultPacker(output);
+        MessagePacker packer = MessagePack.newDefaultPacker(output, buffer);
 
-        // Serialize the message using the schema
-        schema.write(packer, message);
-
-        // Flush the packer to ensure all data is written to the output stream
+        // Write the size of the message first
+        int size = schema.write(packer, message);
         packer.flush();
-
-        // Calculate the size of the serialized message
-        int size = packer.getTotalWrittenBytes();
-
-        // Close the packer to release resources
-        packer.close();
 
         return size;
     }

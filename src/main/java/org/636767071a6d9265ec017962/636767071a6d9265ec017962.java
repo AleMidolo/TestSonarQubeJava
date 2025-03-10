@@ -16,8 +16,11 @@ public class BeanMap {
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 
             for (PropertyDescriptor pd : propertyDescriptors) {
-                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
-                    Method readMethod = pd.getReadMethod();
+                Method readMethod = pd.getReadMethod();
+                Method writeMethod = pd.getWriteMethod();
+
+                // Check if the property is writable and readable
+                if (readMethod != null && writeMethod != null) {
                     Object value = readMethod.invoke(map);
                     this.properties.put(pd.getName(), value);
                 }

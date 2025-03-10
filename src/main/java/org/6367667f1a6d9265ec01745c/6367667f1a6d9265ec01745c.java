@@ -35,8 +35,6 @@ public class ClassPathUtil {
 
         // Example of using the class loader with the updated classpath
         URLClassLoader classLoader = new URLClassLoader(classPath.toArray(new URL[0]));
-        Thread.currentThread().setContextClassLoader(classLoader);
-
-        // Now you can load classes from the added JAR files
+        // You can now use the classLoader to load classes from the added JAR files
     }
 }

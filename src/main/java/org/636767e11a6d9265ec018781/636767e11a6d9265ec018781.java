@@ -10,26 +10,34 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
+        String key = data.getKey(); // Assuming METRICS has a method getKey()
         if (cacheMap.containsKey(key)) {
             METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
+            existingData.merge(data); // Assuming METRICS has a method merge()
         } else {
             cacheMap.put(key, data);
         }
     }
 }
 
-// Assuming METRICS class has the following methods
 class METRICS {
     private String key;
-    private Map<String, Object> metricsData;
+    private int value;
+
+    public METRICS(String key, int value) {
+        this.key = key;
+        this.value = value;
+    }
 
     public String getKey() {
         return key;
     }
 
     public void merge(METRICS other) {
-        this.metricsData.putAll(other.metricsData);
+        this.value += other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

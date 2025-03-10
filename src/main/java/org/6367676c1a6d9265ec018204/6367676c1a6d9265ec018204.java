@@ -21,24 +21,27 @@ public class ArrayConcatenator {
             resultList.add(element);
         }
 
-        // Add elements from array2
+        // Add elements from array2, including overlapping elements
         for (String element : array2) {
             resultList.add(element);
         }
 
-        // Convert the list to an array and return
-        return resultList.toArray(new String[0]);
+        // Convert the list back to an array
+        String[] resultArray = new String[resultList.size()];
+        resultArray = resultList.toArray(resultArray);
+
+        return resultArray;
     }
 
     public static void main(String[] args) {
         // Example usage
-        String[] array1 = {"Hello", "World"};
-        String[] array2 = {"Java", "Programming"};
+        String[] array1 = {"a", "b", "c"};
+        String[] array2 = {"c", "d", "e"};
 
         String[] result = concatenateStringArrays(array1, array2);
 
         for (String element : result) {
-            System.out.println(element);
+            System.out.print(element + " ");
         }
     }
 }

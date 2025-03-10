@@ -9,18 +9,13 @@ class CategoryTree {
         activeNodes = new HashSet<>();
     }
 
-    public void addNode(int parent, int node) {
-        tree.computeIfAbsent(parent, k -> new ArrayList<>()).add(node);
-    }
-
-    public void markActive(int node) {
-        activeNodes.add(node);
-    }
-
+    /**
+     * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
+     */
     protected int removeUnusedNodes() {
         Set<Integer> nodesToRemove = new HashSet<>();
         for (Integer node : tree.keySet()) {
-            if (!activeNodes.contains(node) && !hasActiveDescendants(node)) {
+            if (!activeNodes.contains(node)) {
                 nodesToRemove.add(node);
             }
         }
@@ -32,22 +27,15 @@ class CategoryTree {
         return nodesToRemove.size();
     }
 
-    private boolean hasActiveDescendants(int node) {
-        if (activeNodes.contains(node)) {
-            return true;
-        }
+    // Example usage and testing
+    public static void main(String[] args) {
+        CategoryTree ct = new CategoryTree();
+        ct.tree.put(1, Arrays.asList(2, 3));
+        ct.tree.put(2, Arrays.asList(4));
+        ct.activeNodes.add(1);
+        ct.activeNodes.add(2);
 
-        List<Integer> children = tree.get(node);
-        if (children == null) {
-            return false;
-        }
-
-        for (Integer child : children) {
-            if (hasActiveDescendants(child)) {
-                return true;
-            }
-        }
-
-        return false;
+        int removedNodes = ct.removeUnusedNodes();
+        System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

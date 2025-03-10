@@ -12,7 +12,7 @@ public class ArrayUtils {
         if (array == null) {
             return Array.newInstance(newArrayComponentType, 1);
         }
-
+        
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
         System.arraycopy(array, 0, newArray, 0, length);
@@ -23,7 +23,7 @@ public class ArrayUtils {
         // Example usage
         int[] originalArray = {1, 2, 3};
         int[] newArray = (int[]) copyArrayGrow1(originalArray, int.class);
-
+        
         for (int i : newArray) {
             System.out.print(i + " ");
         }

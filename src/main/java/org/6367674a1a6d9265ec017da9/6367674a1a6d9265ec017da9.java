@@ -24,7 +24,7 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    private void addListNode(ListNodeImpl<E> node) {
+    public void addListNode(ListNodeImpl<E> node) {
         if (head == null) {
             head = node;
             tail = node;
@@ -36,7 +36,7 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    private void removeListNode(ListNodeImpl<E> node) {
+    public void removeListNode(ListNodeImpl<E> node) {
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -55,10 +55,6 @@ public class DoublyLinkedList<E> {
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.size == 0) {
-            return;
-        }
-
         Iterator<ListNodeImpl<E>> iterator = list.iterator();
         while (iterator.hasNext()) {
             ListNodeImpl<E> node = iterator.next();

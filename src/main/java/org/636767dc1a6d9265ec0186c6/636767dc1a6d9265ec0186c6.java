@@ -1,31 +1,35 @@
 import java.util.Set;
 
-public class Fields {
-    private Set<String> storedFields;
+public class FieldChecker {
 
-    public Fields(Set<String> storedFields) {
-        this.storedFields = storedFields;
-    }
-
-    public Set<String> getStoredFields() {
-        return storedFields;
-    }
-}
-
-public class Example {
     /**
      * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
      */
     private boolean containsAllFields(Fields fields) {
-        Set<String> inputFields = fields.getStoredFields();
-        // Assuming 'properties' is a Set<String> containing the stored properties
-        return properties.containsAll(inputFields);
+        // Assuming Fields is a class that contains a Set<String> of stored properties
+        Set<String> storedProperties = fields.getStoredProperties();
+        Set<String> inputFields = fields.getInputFields();
+
+        // Check if all input fields are present in the stored properties
+        return storedProperties.containsAll(inputFields);
     }
 
-    // Assuming 'properties' is a Set<String> containing the stored properties
-    private Set<String> properties;
+    // Assuming the Fields class is defined as follows:
+    public static class Fields {
+        private Set<String> storedProperties;
+        private Set<String> inputFields;
 
-    public Example(Set<String> properties) {
-        this.properties = properties;
+        public Fields(Set<String> storedProperties, Set<String> inputFields) {
+            this.storedProperties = storedProperties;
+            this.inputFields = inputFields;
+        }
+
+        public Set<String> getStoredProperties() {
+            return storedProperties;
+        }
+
+        public Set<String> getInputFields() {
+            return inputFields;
+        }
     }
 }

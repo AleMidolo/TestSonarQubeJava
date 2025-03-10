@@ -1,6 +1,13 @@
 import java.util.Set;
 
 public class Graph<V> {
+    private double[][] adjacencyMatrix; // 假设使用邻接矩阵表示图
+    private int vertexCount;
+
+    public Graph(int vertexCount) {
+        this.vertexCount = vertexCount;
+        this.adjacencyMatrix = new double[vertexCount][vertexCount];
+    }
 
     /**
      * 计算进入一个顶点的权重总和
@@ -9,18 +16,19 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-        // 假设我们有一个方法来获取进入顶点的边的权重
         for (V vertex : v) {
-            totalWeight += getIncomingEdgeWeight(vertex);
+            int vertexIndex = getVertexIndex(vertex);
+            for (int i = 0; i < vertexCount; i++) {
+                totalWeight += adjacencyMatrix[i][vertexIndex];
+            }
         }
         return totalWeight;
     }
 
-    // 假设这个方法返回进入某个顶点的边的权重
-    private double getIncomingEdgeWeight(V vertex) {
-        // 这里应该实现具体的逻辑来获取进入顶点的边的权重
-        // 例如，从图的邻接表或邻接矩阵中获取
-        // 这里只是一个示例，返回一个固定的权重值
-        return 1.0; // 假设每条边的权重都是1.0
+    // 假设有一个方法将顶点转换为索引
+    private int getVertexIndex(V vertex) {
+        // 这里假设顶点可以直接转换为索引
+        // 实际实现可能依赖于具体的顶点类型
+        return (int) vertex;
     }
 }

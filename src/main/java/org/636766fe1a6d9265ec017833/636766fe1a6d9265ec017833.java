@@ -11,7 +11,7 @@ public class FileUtils {
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("File cannot be null");
+            throw new NullPointerException("File must not be null");
         }
 
         file.deleteOnExit();
@@ -23,6 +23,15 @@ public class FileUtils {
                     forceDeleteOnExit(subFile);
                 }
             }
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File("path/to/your/file_or_directory");
+            forceDeleteOnExit(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

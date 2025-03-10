@@ -1,10 +1,10 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProtocolParser {
+public class TagReader {
     private InputStream inputStream;
 
-    public ProtocolParser(InputStream inputStream) {
+    public TagReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
@@ -13,9 +13,6 @@ public class ProtocolParser {
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();
-        if (tag == -1) {
-            return 0; // 到达文件末尾，返回0
-        }
-        return tag;
+        return tag == -1 ? 0 : tag;
     }
 }

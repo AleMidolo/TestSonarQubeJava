@@ -1,21 +1,60 @@
-import org.apache.log4j.spi.LoggingEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
     /**
      * 根据转换模式生成格式化字符串。
-     * 
      * @param event 日志事件对象
-     * @return 格式化后的字符串
+     * @return 格式化后的日志字符串
      */
     public String format(LoggingEvent event) {
-        // 这里假设转换模式是 "[%p] %c - %m%n"
-        // 其中 %p 是日志级别，%c 是日志名称，%m 是日志消息，%n 是换行符
+        // 假设 LoggingEvent 类有以下方法：
+        // getTimestamp() 返回日志时间戳
+        // getLevel() 返回日志级别
+        // getMessage() 返回日志消息
+
+        // 格式化时间戳
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date(event.getTimestamp()));
+
+        // 格式化日志级别
         String level = event.getLevel().toString();
-        String loggerName = event.getLoggerName();
-        String message = event.getRenderedMessage();
-        
-        // 格式化字符串
-        return String.format("[%s] %s - %s%n", level, loggerName, message);
+
+        // 格式化日志消息
+        String message = event.getMessage();
+
+        // 组合成最终的格式化字符串
+        return String.format("[%s] %s: %s", formattedDate, level, message);
     }
+}
+
+// 假设 LoggingEvent 类的定义如下：
+class LoggingEvent {
+    private long timestamp;
+    private Level level;
+    private String message;
+
+    public LoggingEvent(long timestamp, Level level, String message) {
+        this.timestamp = timestamp;
+        this.level = level;
+        this.message = message;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
+// 假设 Level 枚举类的定义如下：
+enum Level {
+    INFO, WARN, ERROR, DEBUG
 }

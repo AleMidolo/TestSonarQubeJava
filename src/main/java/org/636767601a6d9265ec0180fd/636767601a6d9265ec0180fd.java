@@ -5,7 +5,7 @@ public class GraphIndex<V, E> {
     private Map<V, Map<V, E>> index;
 
     public GraphIndex() {
-        index = new HashMap<>();
+        this.index = new HashMap<>();
     }
 
     /**
@@ -21,11 +21,5 @@ public class GraphIndex<V, E> {
         index.get(sourceVertex).put(targetVertex, e);
     }
 
-    // Optional: Method to retrieve an edge from the index
-    public E getEdge(V sourceVertex, V targetVertex) {
-        if (index.containsKey(sourceVertex)) {
-            return index.get(sourceVertex).get(targetVertex);
-        }
-        return null;
-    }
+    // 其他方法可以根据需要添加
 }

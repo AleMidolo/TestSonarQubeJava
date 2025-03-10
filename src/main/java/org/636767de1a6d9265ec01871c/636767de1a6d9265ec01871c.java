@@ -10,14 +10,10 @@ public class Accumulator {
      * @param value 要累加的值
      */
     public void valueAccumulation(String key, Long value) {
-        if (map.containsKey(key)) {
-            map.put(key, map.get(key) + value);
-        } else {
-            map.put(key, value);
-        }
+        map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
-    // 可选：提供一个方法来获取当前累加结果
+    // 可选：提供一个方法来获取当前累加的结果
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }

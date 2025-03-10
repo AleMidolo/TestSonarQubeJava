@@ -16,7 +16,9 @@ public class ClassPathUtil {
         if (classLoader instanceof URLClassLoader) {
             URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
             for (URL url : urlClassLoader.getURLs()) {
-                classPathEntries.add(new File(url.getFile()));
+                if ("file".equals(url.getProtocol())) {
+                    classPathEntries.add(new File(url.getFile()));
+                }
             }
         } else {
             String classPath = System.getProperty("java.class.path");

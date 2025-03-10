@@ -1,4 +1,5 @@
 public class ObjectToStringUtil {
+
     /**
      * 对象转字符串，当对象为空时返回空字符串，否则返回toString();
      */

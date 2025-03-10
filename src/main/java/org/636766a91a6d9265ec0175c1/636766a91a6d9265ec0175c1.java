@@ -12,22 +12,13 @@ public class ByteVector {
     }
 
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be positive");
-        }
         int newCapacity = capacity + size;
+        if (newCapacity < 0) { // Handle overflow
+            throw new OutOfMemoryError("Required array size too large");
+        }
         data = Arrays.copyOf(data, newCapacity);
         capacity = newCapacity;
     }
 
-    public void add(byte b) {
-        if (size == capacity) {
-            enlarge(1);
-        }
-        data[size++] = b;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
-    }
+    // Other methods of ByteVector class...
 }

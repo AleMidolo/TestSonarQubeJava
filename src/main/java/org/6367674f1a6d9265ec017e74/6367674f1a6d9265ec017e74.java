@@ -12,15 +12,16 @@ public class QueueToString {
         if (queue == null) {
             return "null";
         }
+        if (queue.isEmpty()) {
+            return "[]";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (Object element : queue) {
-            sb.append(element);
-            sb.append(", ");
+            sb.append(element).append(", ");
         }
-        if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Remove the trailing ", "
-        }
+        // Remove the trailing comma and space
+        sb.setLength(sb.length() - 2);
         sb.append("]");
         return sb.toString();
     }

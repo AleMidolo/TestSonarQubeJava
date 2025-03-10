@@ -3,7 +3,7 @@ import java.util.Objects;
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Target type is not Character or char");
+        throw new Exception("Unsupported conversion to type: " + type.getName());
     }
 
     if (value == null) {
@@ -28,7 +28,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (strValue.length() == 1) {
             return strValue.charAt(0);
         } else {
-            throw new Exception("String length must be 1 to convert to Character: " + strValue);
+            throw new Exception("String must be exactly one character long: " + strValue);
         }
     }
 

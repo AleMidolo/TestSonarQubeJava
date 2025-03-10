@@ -9,7 +9,7 @@ public class PartialContentChecker {
      */
     public Boolean isPartialContentResponse() {
         try {
-            // 假设有一个URL对象
+            // 假设我们有一个URL对象
             URL url = new URL("http://example.com/resource");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -24,6 +24,6 @@ public class PartialContentChecker {
 
     public static void main(String[] args) {
         PartialContentChecker checker = new PartialContentChecker();
-        System.out.println("Is partial content response? " + checker.isPartialContentResponse());
+        System.out.println("Is partial content response: " + checker.isPartialContentResponse());
     }
 }

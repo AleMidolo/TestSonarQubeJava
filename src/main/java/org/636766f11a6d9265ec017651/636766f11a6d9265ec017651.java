@@ -2,7 +2,9 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // 定义一个公共静态的空数组引用
+    /**
+     * 空字符数组常量，用于优化内存使用。
+     */
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**

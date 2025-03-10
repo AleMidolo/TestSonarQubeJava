@@ -25,6 +25,7 @@ public class ClassPathUtil {
                     URL url = file.toURI().toURL();
                     cpV.add(url);
                 } catch (MalformedURLException e) {
+                    System.err.println("无法将文件转换为URL: " + file.getAbsolutePath());
                     e.printStackTrace();
                 }
             }
@@ -33,7 +34,8 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        addToClassPath(classPath, "path/to/your/directory");
+        String directoryPath = "path/to/your/directory";
+        addToClassPath(classPath, directoryPath);
 
         // 打印添加的URL
         for (URL url : classPath) {

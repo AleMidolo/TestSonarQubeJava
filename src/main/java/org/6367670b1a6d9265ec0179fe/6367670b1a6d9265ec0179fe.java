@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-    
+public class MyOutputStream extends OutputStream {
+
     @Override
     public void write(byte b[]) throws IOException {
         if (b == null) {
@@ -11,22 +11,25 @@ public class CustomOutputStream extends OutputStream {
         // Assuming this method is part of a class that extends OutputStream
         // and has access to the underlying output mechanism.
         // For example, writing to a file or network stream.
-        // Here, we just print the bytes to the standard output as an example.
-        System.out.write(b, 0, b.length);
+        // Here, we just simulate writing by printing the bytes.
+        for (byte value : b) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
     }
 
     @Override
     public void write(int b) throws IOException {
         // This method is required by the OutputStream class.
-        // It writes a single byte to the output stream.
-        System.out.write(b);
+        // It writes a single byte.
+        System.out.print(b + " ");
     }
 
     public static void main(String[] args) {
         try {
-            CustomOutputStream cos = new CustomOutputStream();
-            byte[] data = "Hello, World!".getBytes();
-            cos.write(data);
+            MyOutputStream outputStream = new MyOutputStream();
+            byte[] data = {65, 66, 67, 68}; // Example byte array
+            outputStream.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }

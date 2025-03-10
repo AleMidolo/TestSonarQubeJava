@@ -49,35 +49,4 @@ public class TypeResolver {
 
         return typeVariableMap;
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        Type genericType = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return new Type[] { String.class };
-            }
-
-            @Override
-            public Type getRawType() {
-                return Map.class;
-            }
-
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-
-        Class<?> targetType = Map.class;
-        Class<?>[] resolvedArguments = resolveArguments(genericType, targetType);
-
-        if (resolvedArguments != null) {
-            for (Class<?> arg : resolvedArguments) {
-                System.out.println(arg.getName());
-            }
-        } else {
-            System.out.println("Arguments could not be resolved.");
-        }
-    }
 }

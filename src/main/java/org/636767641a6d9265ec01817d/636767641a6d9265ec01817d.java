@@ -5,33 +5,38 @@ import java.util.ArrayList;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
-/**
- * Costruisce un grafo bipartito completo
- */
-@Override
-public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-    // Creare due partizioni di vertici
-    List<V> partition1 = new ArrayList<>();
-    List<V> partition2 = new ArrayList<>();
+public class BipartiteGraphGenerator<V, E> {
 
-    // Aggiungere vertici alla prima partizione
-    for (int i = 0; i < 5; i++) {
-        V vertex = target.addVertex();
-        partition1.add(vertex);
-        resultMap.put("partition1_vertex" + i, vertex);
-    }
+    /**
+     * Costruisce un grafo bipartito completo
+     */
+    @Override
+    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+        // Estrai i vertici dalle due partizioni
+        List<V> partition1 = new ArrayList<>();
+        List<V> partition2 = new ArrayList<>();
 
-    // Aggiungere vertici alla seconda partizione
-    for (int i = 0; i < 5; i++) {
-        V vertex = target.addVertex();
-        partition2.add(vertex);
-        resultMap.put("partition2_vertex" + i, vertex);
-    }
+        for (Map.Entry<String, V> entry : resultMap.entrySet()) {
+            if (entry.getKey().startsWith("A")) {
+                partition1.add(entry.getValue());
+            } else if (entry.getKey().startsWith("B")) {
+                partition2.add(entry.getValue());
+            }
+        }
 
-    // Creare archi tra tutte le coppie di vertici delle due partizioni
-    for (V v1 : partition1) {
-        for (V v2 : partition2) {
-            target.addEdge(v1, v2);
+        // Aggiungi tutti i vertici al grafo
+        for (V vertex : partition1) {
+            target.addVertex(vertex);
+        }
+        for (V vertex : partition2) {
+            target.addVertex(vertex);
+        }
+
+        // Aggiungi tutti gli archi tra le due partizioni
+        for (V v1 : partition1) {
+            for (V v2 : partition2) {
+                target.addEdge(v1, v2);
+            }
         }
     }
 }

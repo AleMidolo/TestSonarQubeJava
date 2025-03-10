@@ -5,8 +5,8 @@ public class ByteArrayCopier {
 
     /**
      * Copia i byte in un {@code byte[]}.
-     * 
-     * @return un array di byte contenente i byte copiati
+     *
+     * @return un array di byte contenente una copia dei byte
      */
     public byte[] toByteArray() {
         // Esempio di implementazione: copia i byte da un ByteArrayOutputStream

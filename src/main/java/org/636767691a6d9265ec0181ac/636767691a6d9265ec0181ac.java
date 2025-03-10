@@ -19,7 +19,7 @@ public class PathUtils {
         // Risolvi il percorso relativo rispetto al percorso di base
         Path resolvedPath = basePath.resolve(relative);
         
-        // Normalizza il percorso per rimuovere eventuali ".." o "." ridondanti
+        // Normalizza il percorso per rimuovere eventuali ridondanze
         Path normalizedPath = resolvedPath.normalize();
         
         // Restituisci il percorso come stringa

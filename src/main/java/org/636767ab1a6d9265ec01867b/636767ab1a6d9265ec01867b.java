@@ -1,5 +1,4 @@
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 public class LinkedBuffer {
     private byte[] buffer;
@@ -11,14 +10,15 @@ public class LinkedBuffer {
     }
 
     public void write(byte[] data) {
-        if (position + data.length > buffer.length) {
-            // Resize buffer if necessary
-            byte[] newBuffer = new byte[buffer.length * 2];
-            System.arraycopy(buffer, 0, newBuffer, 0, position);
-            buffer = newBuffer;
+        for (byte b : data) {
+            if (position >= buffer.length) {
+                // Resize buffer if needed
+                byte[] newBuffer = new byte[buffer.length * 2];
+                System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+                buffer = newBuffer;
+            }
+            buffer[position++] = b;
         }
-        System.arraycopy(data, 0, buffer, position, data.length);
-        position += data.length;
     }
 
     public byte[] toByteArray() {
@@ -29,25 +29,28 @@ public class LinkedBuffer {
 }
 
 public class WriteSession {
-    // Placeholder for WriteSession class
+    // Placeholder for any session-related data or methods
 }
 
-public class Utf8Writer {
+public class UTF8Writer {
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        Objects.requireNonNull(str, "CharSequence must not be null");
-        Objects.requireNonNull(session, "WriteSession must not be null");
-        Objects.requireNonNull(lb, "LinkedBuffer must not be null");
+        if (str == null || lb == null) {
+            throw new IllegalArgumentException("Input parameters cannot be null");
+        }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         lb.write(utf8Bytes);
+
         return lb;
     }
 
     public static void main(String[] args) {
-        LinkedBuffer lb = new LinkedBuffer(1024);
         WriteSession session = new WriteSession();
+        LinkedBuffer lb = new LinkedBuffer(1024);
         CharSequence str = "Hello, UTF-8!";
+
         writeUTF8(str, session, lb);
+
         byte[] result = lb.toByteArray();
         System.out.println(new String(result, StandardCharsets.UTF_8));
     }

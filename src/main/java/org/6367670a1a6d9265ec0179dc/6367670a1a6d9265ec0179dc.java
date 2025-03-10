@@ -20,8 +20,8 @@ public class StackMapTableWriter {
         }
     }
 
-    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
+    // Assuming VerificationTypeInfo is a class or interface representing the verification type info
     private static class VerificationTypeInfo {
-        // Implementation of VerificationTypeInfo
+        // Implementation details of VerificationTypeInfo
     }
 }

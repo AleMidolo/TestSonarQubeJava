@@ -1,10 +1,9 @@
-// Assuming ListNodeImpl is a class that represents a node in a linked list
 class ListNodeImpl<E> {
-    E data;
+    E value;
     ListNodeImpl<E> next;
 
-    ListNodeImpl(E data) {
-        this.data = data;
+    ListNodeImpl(E value) {
+        this.value = value;
         this.next = null;
     }
 }
@@ -12,7 +11,9 @@ class ListNodeImpl<E> {
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
 
-    // Other methods of the LinkedList class...
+    public LinkedList() {
+        this.head = null;
+    }
 
     /**
      * Rimuove il nodo non nullo {@code node} dalla lista.
@@ -22,25 +23,25 @@ public class LinkedList<E> {
             return false;
         }
 
-        // If the node to be removed is the head
+        // Caso speciale: il nodo da rimuovere è la testa
         if (node == head) {
             head = head.next;
             return true;
         }
 
-        // Traverse the list to find the node before the one to be removed
+        // Trova il nodo precedente a quello da rimuovere
         ListNodeImpl<E> current = head;
         while (current != null && current.next != node) {
             current = current.next;
         }
 
-        // If the node was found, unlink it
-        if (current != null) {
-            current.next = node.next;
-            return true;
+        // Se il nodo non è stato trovato nella lista
+        if (current == null) {
+            return false;
         }
 
-        // Node not found in the list
-        return false;
+        // Rimuovi il nodo dalla lista
+        current.next = node.next;
+        return true;
     }
 }

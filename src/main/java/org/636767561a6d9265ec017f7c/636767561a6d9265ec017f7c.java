@@ -1,8 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
+import org.jgrapht.alg.shortestpath.GraphWalk;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultGraphPath;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,39 +13,43 @@ import java.util.Set;
  * @param graph il grafo
  * @return un percorso di grafo
  */
-protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Il tour non può essere vuoto.");
+        return new GraphWalk<>(graph, new ArrayList<>(), 0.0);
     }
 
-    List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
+    List<E> edgeList = new ArrayList<>(tour);
 
-    // Inizia con il primo vertice del primo arco
+    // Start with the first edge
     E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
+    V endVertex = graph.getEdgeTarget(firstEdge);
+
     vertexList.add(startVertex);
+    vertexList.add(endVertex);
 
-    V currentVertex = startVertex;
-    for (E edge : edgeList) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
+    // Iterate through the remaining edges to build the path
+    for (int i = 1; i < edgeList.size(); i++) {
+        E currentEdge = edgeList.get(i);
+        V source = graph.getEdgeSource(currentEdge);
+        V target = graph.getEdgeTarget(currentEdge);
 
-        if (source.equals(currentVertex)) {
+        if (source.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(target);
-            currentVertex = target;
-        } else if (target.equals(currentVertex)) {
+        } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
-            currentVertex = source;
         } else {
-            throw new IllegalArgumentException("Il tour non è un percorso valido nel grafo.");
+            // If the edge doesn't connect to the last vertex, the tour is invalid
+            throw new IllegalArgumentException("The provided edge set does not form a valid tour.");
         }
     }
 
-    // Verifica che il percorso sia un ciclo
-    if (!currentVertex.equals(startVertex)) {
-        throw new IllegalArgumentException("Il tour non è un ciclo valido nel grafo.");
+    // Calculate the total weight of the path
+    double totalWeight = 0.0;
+    for (E edge : edgeList) {
+        totalWeight += graph.getEdgeWeight(edge);
     }
 
-    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0);
+    return new GraphWalk<>(graph, vertexList, edgeList, totalWeight);
 }

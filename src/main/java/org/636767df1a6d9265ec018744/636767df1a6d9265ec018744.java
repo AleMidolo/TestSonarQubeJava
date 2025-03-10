@@ -5,6 +5,9 @@ public class TimeRangeBuilder {
 
     private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
 
+    /**
+     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
+     */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
         long currentStart = start;

@@ -1,11 +1,11 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
     if (bounds == null || bounds.isEmpty()) {
-        return new Pair<>(Collections.emptyList(), 0L);
+        return Pair.of(Collections.emptyList(), 0L);
     }
 
     List<Integer> suffixSums = new ArrayList<>();
@@ -22,5 +22,5 @@ private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
     // Inverti la lista delle somme dei suffissi per ottenere l'ordine corretto
     Collections.reverse(suffixSums);
 
-    return new Pair<>(suffixSums, totalSum);
+    return Pair.of(suffixSums, totalSum);
 }

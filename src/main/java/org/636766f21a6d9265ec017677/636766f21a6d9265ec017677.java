@@ -18,6 +18,6 @@ public class BooleanUtils {
     public static void main(String[] args) {
         System.out.println(isNotTrue(Boolean.TRUE));   // false
         System.out.println(isNotTrue(Boolean.FALSE));  // true
-        System.out.println(isNotTrue(null));           // true
+        System.out.println(isNotTrue(null));          // true
     }
 }

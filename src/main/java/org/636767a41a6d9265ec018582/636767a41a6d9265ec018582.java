@@ -10,25 +10,43 @@ import com.dyuproject.protostuff.ProtostuffIOUtil;
 
 public class SerializationUtil {
 
-    /**
-     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
-     * @return the size of the message
-     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message using Protostuff
         byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
-        // Write the length of the message as a prefix
+        // Write the length of the message as a varint
         int length = data.length;
-        out.write((length >>> 24) & 0xFF);
-        out.write((length >>> 16) & 0xFF);
-        out.write((length >>> 8) & 0xFF);
-        out.write(length & 0xFF);
+        writeVarint(out, length);
 
         // Write the serialized message
         out.write(data);
 
-        // Return the total size of the message (length prefix + data)
-        return 4 + length;
+        // Return the total size of the message (length + data)
+        return length + computeVarintSize(length);
+    }
+
+    private static void writeVarint(OutputStream out, int value) throws IOException {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.write(value);
+                return;
+            } else {
+                out.write((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
+    }
+
+    private static int computeVarintSize(int value) {
+        int size = 0;
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                size++;
+                return size;
+            } else {
+                size++;
+                value >>>= 7;
+            }
+        }
     }
 }

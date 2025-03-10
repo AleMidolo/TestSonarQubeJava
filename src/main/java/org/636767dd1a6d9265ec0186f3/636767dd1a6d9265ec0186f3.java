@@ -2,7 +2,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> nameMap = new HashMap<>();
+    private Map<String, String> nameMap;
+
+    public ColumnName() {
+        this.nameMap = new HashMap<>();
+    }
 
     /**
      * Keep the same name replacement as {@link ColumnName#overrideName(String, String)}
@@ -17,6 +21,12 @@ public class ColumnName {
     }
 
     public String getNewName(String oldName) {
-        return nameMap.getOrDefault(oldName, oldName);
+        return nameMap.get(oldName);
+    }
+
+    public static void main(String[] args) {
+        ColumnName columnName = new ColumnName();
+        columnName.overrideName("oldColumn", "newColumn");
+        System.out.println(columnName.getNewName("oldColumn")); // Output: newColumn
     }
 }

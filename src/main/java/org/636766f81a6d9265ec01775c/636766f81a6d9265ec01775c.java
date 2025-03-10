@@ -1,12 +1,10 @@
 public class ObjectUtils {
 
     /**
-     * <p>Gets the <code>toString</code> of an <code>Object</code> returning an empty string ("") if <code>null</code> input.</p> <pre> ObjectUtils.toString(null)         = "" ObjectUtils.toString("")           = "" ObjectUtils.toString("bat")        = "bat" ObjectUtils.toString(Boolean.TRUE) = "true" </pre>
-     * @see StringUtils#defaultString(String)
-     * @see String#valueOf(Object)
-     * @param obj  the Object to <code>toString</code>, may be null
-     * @return the passed in Object's toString, or nullStr if <code>null</code> input
-     * @since 2.0
+     * Gets the toString of an Object returning an empty string ("") if null input.
+     * 
+     * @param obj the Object to toString, may be null
+     * @return the passed in Object's toString, or "" if null input
      */
     public static String toString(Object obj) {
         return obj == null ? "" : obj.toString();
@@ -14,9 +12,9 @@ public class ObjectUtils {
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(toString(null));         // Output: ""
-        System.out.println(toString(""));           // Output: ""
-        System.out.println(toString("bat"));        // Output: "bat"
-        System.out.println(toString(Boolean.TRUE)); // Output: "true"
+        System.out.println(ObjectUtils.toString(null));         // Output: ""
+        System.out.println(ObjectUtils.toString(""));           // Output: ""
+        System.out.println(ObjectUtils.toString("bat"));        // Output: "bat"
+        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // Output: "true"
     }
 }

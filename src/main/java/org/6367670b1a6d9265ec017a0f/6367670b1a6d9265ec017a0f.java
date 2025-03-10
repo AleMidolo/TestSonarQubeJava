@@ -20,16 +20,14 @@ public class StringUtils {
                 return true;
             }
         }
-
         return false;
     }
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String testString = "Hello, this is a test string!";
-        
-        boolean result = containsAnyIgnoreCase(testString, searchStrings);
-        System.out.println("Contains any: " + result); // Output: Contains any: true
+        List<String> searchStrings = List.of("hello", "world");
+        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Goodbye, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
     }
 }

@@ -17,30 +17,24 @@ public class FileUtils {
             throw new NullPointerException("File must not be null");
         }
 
-        if (file.isDirectory()) {
-            deleteDirectoryOnExit(file);
-        } else {
-            file.deleteOnExit();
-        }
-    }
+        // Convert File to Path for easier handling
+        Path path = file.toPath();
 
-    private static void deleteDirectoryOnExit(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectoryOnExit(file);
-                } else {
-                    file.deleteOnExit();
-                }
-            }
+        // Register the file or directory to be deleted on JVM exit
+        file.deleteOnExit();
+
+        // If it's a directory, recursively register all its contents for deletion
+        if (Files.isDirectory(path)) {
+            Files.walk(path)
+                 .sorted((p1, p2) -> -p1.compareTo(p2)) // Reverse order to delete files before directories
+                 .forEach(p -> p.toFile().deleteOnExit());
         }
-        directory.deleteOnExit();
     }
 
     public static void main(String[] args) {
         try {
-            File file = new File("path/to/your/file_or_directory");
+            // Example usage
+            File file = new File("example_directory");
             forceDeleteOnExit(file);
         } catch (IOException e) {
             e.printStackTrace();

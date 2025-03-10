@@ -4,31 +4,33 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 public class BeanMap {
-    private Object bean;
+    private Map<String, Object> properties;
 
-    public BeanMap(Object bean) {
-        this.bean = bean;
+    public BeanMap() {
+        // Initialize properties map
     }
 
     public void putAllWriteable(BeanMap map) {
-        if (map == null || map.bean == null) {
-            return;
+        if (map == null) {
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        try {
-            PropertyDescriptor[] descriptors = java.beans.Introspector.getBeanInfo(map.bean.getClass()).getPropertyDescriptors();
-            for (PropertyDescriptor descriptor : descriptors) {
-                Method readMethod = descriptor.getReadMethod();
-                Method writeMethod = descriptor.getWriteMethod();
+        for (Map.Entry<String, Object> entry : map.properties.entrySet()) {
+            String propertyName = entry.getKey();
+            Object value = entry.getValue();
 
-                // Check if the property is writable and readable
-                if (readMethod != null && writeMethod != null) {
-                    Object value = readMethod.invoke(map.bean);
-                    writeMethod.invoke(this.bean, value);
+            try {
+                PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
+                Method writeMethod = pd.getWriteMethod();
+
+                if (writeMethod != null) {
+                    writeMethod.invoke(this, value);
                 }
+            } catch (Exception e) {
+                // Ignore properties that are read-only or write-only
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to copy properties", e);
         }
     }
+
+    // Other methods and properties of BeanMap
 }

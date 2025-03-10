@@ -1,24 +1,53 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
-private String parseToken(final char[] terminators) {
-    // Convert the array of terminators to a Set for O(1) lookups
-    Set<Character> terminatorSet = new HashSet<>();
-    for (char c : terminators) {
-        terminatorSet.add(c);
-    }
+public class TokenParser {
 
-    StringBuilder tokenBuilder = new StringBuilder();
-    int currentChar;
-
-    // Read characters until a terminator is encountered or end of input
-    while ((currentChar = System.in.read()) != -1) {
-        char ch = (char) currentChar;
-        if (terminatorSet.contains(ch)) {
-            break;
+    /**
+     * Parses out a token until any of the given terminators is encountered.
+     * @param terminators the array of terminating characters. Any of these characters when encountered signify the end of the token
+     * @return the token
+     */
+    private String parseToken(final char[] terminators) {
+        StringBuilder token = new StringBuilder();
+        int currentChar;
+        
+        while (true) {
+            currentChar = System.in.read();
+            if (currentChar == -1) {
+                break; // End of input
+            }
+            
+            char ch = (char) currentChar;
+            if (containsTerminator(terminators, ch)) {
+                break; // Terminator encountered
+            }
+            
+            token.append(ch);
         }
-        tokenBuilder.append(ch);
+        
+        return token.toString();
     }
 
-    return tokenBuilder.toString();
+    /**
+     * Helper method to check if a character is in the terminators array.
+     * @param terminators the array of terminating characters
+     * @param ch the character to check
+     * @return true if the character is a terminator, false otherwise
+     */
+    private boolean containsTerminator(final char[] terminators, final char ch) {
+        for (char terminator : terminators) {
+            if (terminator == ch) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        TokenParser parser = new TokenParser();
+        char[] terminators = {' ', '\n', '\t', '\r'}; // Example terminators
+        System.out.println("Enter input:");
+        String token = parser.parseToken(terminators);
+        System.out.println("Parsed token: " + token);
+    }
 }

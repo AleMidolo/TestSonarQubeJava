@@ -21,8 +21,8 @@ public class StackMapTableHandler {
         }
     }
 
-    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
+    // Assuming VerificationTypeInfo is a class representing the verification type info
     private static class VerificationTypeInfo {
-        // Implementation details of VerificationTypeInfo
+        // Define the structure of VerificationTypeInfo as per JVMS
     }
 }

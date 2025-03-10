@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ByteOutputStream extends OutputStream {
+
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {

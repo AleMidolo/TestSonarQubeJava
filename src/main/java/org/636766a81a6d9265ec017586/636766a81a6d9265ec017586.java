@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class OutputFrame {
-    private Stack<AbstractType> outputStack;
+    private Stack<AbstractType> outputFrame;
 
     public OutputFrame() {
-        this.outputStack = new Stack<>();
+        this.outputFrame = new Stack<>();
     }
 
     /**
@@ -15,11 +15,11 @@ public class OutputFrame {
         if (elements < 0) {
             throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (elements > outputStack.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
+        if (elements > outputFrame.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el output frame para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
-            outputStack.pop();
+            outputFrame.pop();
         }
     }
 

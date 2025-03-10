@@ -4,20 +4,19 @@ import java.util.List;
 
 public class PathSegmentImpl {
     private final String path;
+    private final boolean decoded;
 
-    public PathSegmentImpl(String path) {
+    public PathSegmentImpl(String path, boolean decoded) {
         this.path = path;
+        this.decoded = decoded;
     }
 
     public String getPath() {
         return path;
     }
 
-    @Override
-    public String toString() {
-        return "PathSegmentImpl{" +
-                "path='" + path + '\'' +
-                '}';
+    public boolean isDecoded() {
+        return decoded;
     }
 }
 
@@ -31,7 +30,7 @@ public class URIUtils {
             return segments;
         }
 
-        // Ignore the leading '/' if the path is absolute
+        // Remove the leading '/' if it's an absolute path
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
@@ -39,21 +38,19 @@ public class URIUtils {
         String[] parts = path.split("/");
         for (String part : parts) {
             if (!part.isEmpty()) {
-                if (decode) {
-                    part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
-                }
-                segments.add(new PathSegmentImpl(part));
+                String segment = decode ? decodeURIComponent(part) : part;
+                segments.add(new PathSegmentImpl(segment, decode));
             }
         }
 
         return segments;
     }
 
-    public static void main(String[] args) {
-        URI uri = URI.create("http://example.com/path/to/resource");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
+    private static String decodeURIComponent(String encoded) {
+        try {
+            return java.net.URLDecoder.decode(encoded, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
         }
     }
 }

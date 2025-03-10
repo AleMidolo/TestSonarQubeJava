@@ -58,7 +58,7 @@ class Node {
 
     public Node getRealNode() {
         if (isVirtual) {
-            // Assuming a virtual node has a real counterpart with the same ID but without the "virtual" flag
+            // Assuming the real node has the same ID but is not virtual
             return new Node(id, false);
         }
         return this;

@@ -8,21 +8,21 @@ public class StringArrayConcatenator {
             return null;
         }
 
-        List<String> result = new ArrayList<>();
+        List<String> resultList = new ArrayList<>();
 
         if (array1 != null) {
             for (String element : array1) {
-                result.add(element);
+                resultList.add(element);
             }
         }
 
         if (array2 != null) {
             for (String element : array2) {
-                result.add(element);
+                resultList.add(element);
             }
         }
 
-        return result.toArray(new String[0]);
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
@@ -30,7 +30,6 @@ public class StringArrayConcatenator {
         String[] array2 = {"c", "d", "e"};
 
         String[] result = concatenateStringArrays(array1, array2);
-
         for (String element : result) {
             System.out.print(element + " ");
         }

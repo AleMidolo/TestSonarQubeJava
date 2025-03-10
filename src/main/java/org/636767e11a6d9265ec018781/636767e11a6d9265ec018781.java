@@ -21,20 +21,25 @@ public class Cache {
         }
     }
 
-    // Clase de ejemplo METRICS (debe ser definida por el usuario)
-    public static class METRICS {
-        private int value;
+    // Método para obtener los datos existentes (opcional)
+    public METRICS getExistingData() {
+        return existingData;
+    }
+}
 
-        public METRICS(int value) {
-            this.value = value;
-        }
+// Asumiendo que METRICS es una clase con un método combine
+class METRICS {
+    private int value;
 
-        public void combine(METRICS other) {
-            this.value += other.value;
-        }
+    public METRICS(int value) {
+        this.value = value;
+    }
 
-        public int getValue() {
-            return value;
-        }
+    public void combine(METRICS other) {
+        this.value += other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -5,9 +5,9 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Implementación de la lógica de filtrado
-        // Aquí puedes agregar la lógica para decidir si el evento debe ser aceptado, rechazado o neutral
-        // Por ejemplo, si no hay coincidencia de cadena, devolvemos Filter.NEUTRAL
+        // Implementación de la lógica de decisión
+        // Aquí puedes agregar la lógica para determinar si hay coincidencia de cadena
+        // Por ejemplo, si no hay coincidencia, devuelve Filter.NEUTRAL
         return Filter.NEUTRAL;
     }
 }

@@ -1,4 +1,5 @@
-public class SubstringMatch {
+public class SubstringMatcher {
+
     /**
      * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      * @param str la cadena original (o StringBuilder)
@@ -10,7 +11,7 @@ public class SubstringMatch {
         if (str == null || substring == null) {
             return false;
         }
-        if (index < 0 || index + substring.length() > str.length()) {
+        if (index < 0 || index > str.length() - substring.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {
@@ -22,10 +23,11 @@ public class SubstringMatch {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        CharSequence str = "Hola mundo";
-        CharSequence substring = "mundo";
-        int index = 5;
-        System.out.println(substringMatch(str, index, substring)); // Debería imprimir true
+        CharSequence str = "Hello, World!";
+        CharSequence substring = "World";
+        int index = 7;
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println(result); // Output: true
     }
 }

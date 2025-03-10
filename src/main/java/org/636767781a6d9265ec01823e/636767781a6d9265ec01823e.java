@@ -1,4 +1,5 @@
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -9,10 +10,9 @@ public class LogAppender {
 
     /**
      * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
-     * @param event El evento de registro que contiene el mensaje a enviar.
      */
     protected void append(LoggingEvent event) {
-        String message = event.getMessage().toString();
+        String message = event.getRenderedMessage();
         synchronized (clients) {
             for (PrintWriter client : clients) {
                 client.println(message);
@@ -23,7 +23,7 @@ public class LogAppender {
 
     /**
      * Agrega un nuevo cliente a la lista de clientes conectados.
-     * @param clientSocket El socket del cliente que se conecta.
+     * @param clientSocket El socket del cliente conectado.
      */
     public void addClient(Socket clientSocket) {
         try {
@@ -31,14 +31,14 @@ public class LogAppender {
             synchronized (clients) {
                 clients.add(writer);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Elimina un cliente de la lista de clientes conectados.
-     * @param clientSocket El socket del cliente que se desconecta.
+     * @param clientSocket El socket del cliente a eliminar.
      */
     public void removeClient(Socket clientSocket) {
         try {
@@ -46,7 +46,7 @@ public class LogAppender {
             synchronized (clients) {
                 clients.remove(writer);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

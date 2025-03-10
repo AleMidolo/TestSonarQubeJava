@@ -27,13 +27,4 @@ public class ByteVector {
         }
         return result;
     }
-
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.put11(0x01, 0x02);
-        byte[] byteArray = byteVector.toByteArray();
-        for (byte b : byteArray) {
-            System.out.printf("0x%02X ", b);
-        }
-    }
 }

@@ -4,9 +4,9 @@
  */
 @Override
 public String toString() {
-    // Aquí se debe implementar la lógica para construir y retornar la cadena.
+    // Aquí se debe implementar la lógica para construir la cadena.
     // Por ejemplo, si se está construyendo una cadena a partir de un StringBuilder:
-    StringBuilder sb = new StringBuilder();
-    sb.append("Cadena construida");
-    return sb.toString();
+    StringBuilder builder = new StringBuilder();
+    builder.append("Cadena construida");
+    return builder.toString();
 }

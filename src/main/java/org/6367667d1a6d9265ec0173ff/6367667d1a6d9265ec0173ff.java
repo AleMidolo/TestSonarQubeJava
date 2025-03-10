@@ -8,13 +8,17 @@ public class MeteorLookup {
      * @return un {@link Meteor} o null si no se encuentra
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Aquí se implementaría la lógica para buscar y retornar la instancia de Meteor
+        // Aquí se implementaría la lógica para buscar y retornar una instancia de Meteor
         // basada en el HttpServletRequest. Por ejemplo, se podría buscar en los atributos
         // de la solicitud o en algún otro lugar dependiendo de la implementación.
-
+        
         // Ejemplo de implementación:
         Meteor meteor = (Meteor) r.getAttribute("meteor");
-        return meteor;
+        if (meteor != null) {
+            return meteor;
+        } else {
+            return null;
+        }
     }
 }
 

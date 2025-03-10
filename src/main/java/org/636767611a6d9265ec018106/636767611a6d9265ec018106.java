@@ -1,6 +1,6 @@
 import java.util.Set;
 
-public class Graph<V> {
+public class GraphUtils<V> {
 
     /**
      * Calcula la suma de los pesos que entran a un vértice
@@ -9,18 +9,11 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Asumimos que los pesos están almacenados en un mapa o estructura similar
-        // Aquí se debería implementar la lógica para sumar los pesos de las aristas que entran al vértice v
-        // Por ejemplo:
-        // for (Edge<V> edge : incomingEdges(v)) {
-        //     sum += edge.getWeight();
-        // }
+        // Asumimos que el peso de cada vértice es 1.0 para este ejemplo.
+        // En un caso real, deberías tener una forma de obtener el peso de cada vértice.
+        for (V vertex : v) {
+            sum += 1.0; // Aquí deberías sumar el peso real del vértice.
+        }
         return sum;
     }
-
-    // Método de ejemplo para obtener las aristas entrantes (debería ser implementado según la estructura del grafo)
-    // private Set<Edge<V>> incomingEdges(V vertex) {
-    //     // Lógica para obtener las aristas entrantes
-    //     return new HashSet<>();
-    // }
 }

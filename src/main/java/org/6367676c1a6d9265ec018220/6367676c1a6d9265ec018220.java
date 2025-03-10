@@ -15,18 +15,19 @@ public class FileUtils {
         int lastSeparatorIndex = path.lastIndexOf('/');
         int lastDotIndex = path.lastIndexOf('.');
 
-        // Si no hay un punto o el punto está antes del último separador, no hay extensión
+        // Si no hay un punto o si el punto está antes del último separador, no hay extensión
         if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
             return path;
         }
 
+        // Eliminar la extensión
         return path.substring(0, lastDotIndex);
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("myfile.txt"));       // Output: myfile
+        System.out.println(stripFilenameExtension("myfile.txt"));        // Output: myfile
         System.out.println(stripFilenameExtension("mypath/myfile"));    // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null));               // Output: null
+        System.out.println(stripFilenameExtension(null));                // Output: null
     }
 }

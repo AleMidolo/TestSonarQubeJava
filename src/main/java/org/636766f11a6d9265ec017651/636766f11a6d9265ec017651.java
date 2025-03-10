@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class DefensiveProgramming {
 
-    // Public static empty array reference for optimization
+    // Public static empty array reference
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Example usage
     public static void main(String[] args) {
+        // Test cases
         Character[] nullArray = null;
         Character[] emptyArray = new Character[0];
         Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(nullToEmpty(nullArray).length);      // Output: 0
-        System.out.println(nullToEmpty(emptyArray).length);    // Output: 0
-        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
+        System.out.println(nullToEmpty(nullArray) == EMPTY_CHARACTER_ARRAY); // true
+        System.out.println(nullToEmpty(emptyArray) == EMPTY_CHARACTER_ARRAY); // true
+        System.out.println(nullToEmpty(nonEmptyArray) == nonEmptyArray); // true
     }
 }

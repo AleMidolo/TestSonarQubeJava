@@ -17,7 +17,7 @@ public class Logger {
             Appender appender = iterator.next();
             if (appender.getName().equals(name)) {
                 iterator.remove();
-                break; // Assuming names are unique, we can break after removal
+                break;
             }
         }
     }

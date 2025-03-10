@@ -4,12 +4,7 @@ public class Graph<V> {
     private Map<V, Set<V>> adjacencyList;
 
     public Graph() {
-        this.adjacencyList = new HashMap<>();
-    }
-
-    public void addEdge(V source, V destination) {
-        adjacencyList.computeIfAbsent(source, k -> new HashSet<>()).add(destination);
-        adjacencyList.computeIfAbsent(destination, k -> new HashSet<>()).add(source);
+        adjacencyList = new HashMap<>();
     }
 
     /**
@@ -20,10 +15,15 @@ public class Graph<V> {
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         for (Map.Entry<V, Set<V>> entry : adjacencyList.entrySet()) {
-            if (!entry.getValue().isEmpty()) {
-                visibleVertices.add(entry.getKey());
+            V vertex = entry.getKey();
+            Set<V> neighbors = entry.getValue();
+            if (!neighbors.isEmpty()) {
+                visibleVertices.add(vertex);
             }
+            visibleVertices.addAll(neighbors);
         }
         return visibleVertices;
     }
+
+    // Other methods for adding vertices and edges would go here
 }

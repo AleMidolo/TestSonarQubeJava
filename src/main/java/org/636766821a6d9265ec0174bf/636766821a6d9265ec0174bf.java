@@ -4,11 +4,6 @@ public class StringUtils {
 
     /**
      * Inverso de Introspector.decapitalize
-     * Capitalizes the first character of the given string.
-     * If the string is null or empty, it returns the string as is.
-     *
-     * @param name the string to capitalize
-     * @return the capitalized string
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {

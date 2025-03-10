@@ -1,37 +1,39 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.avro.Schema;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.util.LinkedBuffer;
+import org.msgpack.core.MessageBufferPacker;
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.core.buffer.LinkedBuffer;
+import org.msgpack.core.buffer.MessageBuffer;
+import org.msgpack.core.buffer.MessageBufferOutput;
+import org.msgpack.core.buffer.OutputStreamBufferOutput;
+import org.msgpack.schema.Schema;
 
-public class DelimitedWriter {
+public class MessageSerializer {
 
     /**
      * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
      * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create a DatumWriter for the given schema
-        DatumWriter<T> datumWriter = new SpecificDatumWriter<>(schema);
+        // Create a MessagePacker to serialize the message
+        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
 
-        // Create an Encoder that writes to the OutputStream
-        Encoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+        // Serialize the message using the provided schema
+        schema.write(packer, message);
 
-        // Write the length of the message first
-        int length = buffer.getLength();
-        out.write((length >> 24) & 0xFF);
-        out.write((length >> 16) & 0xFF);
-        out.write((length >> 8) & 0xFF);
-        out.write(length & 0xFF);
+        // Get the serialized message as a byte array
+        byte[] serializedMessage = packer.toByteArray();
 
-        // Write the message using the DatumWriter
-        datumWriter.write(message, encoder);
-        encoder.flush();
+        // Write the length of the serialized message as a varint
+        MessagePacker lengthPacker = MessagePack.newDefaultPacker(out);
+        lengthPacker.packInt(serializedMessage.length);
+        lengthPacker.flush();
 
-        // Return the total size of the message (length + message)
-        return 4 + length;
+        // Write the serialized message to the output stream
+        out.write(serializedMessage);
+
+        // Return the total size of the message (length + serialized message)
+        return serializedMessage.length + MessagePack.newDefaultPacker(out).packInt(serializedMessage.length).toByteArray().length;
     }
 }

@@ -18,6 +18,14 @@ public class PathSegmentImpl {
     public boolean isDecoded() {
         return decoded;
     }
+
+    @Override
+    public String toString() {
+        return "PathSegmentImpl{" +
+                "path='" + path + '\'' +
+                ", decoded=" + decoded +
+                '}';
+    }
 }
 
 public class URIUtils {
@@ -37,12 +45,28 @@ public class URIUtils {
 
         String[] parts = path.split("/");
         for (String part : parts) {
-            if (decode) {
-                part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
+            if (!part.isEmpty()) {
+                String decodedPath = decode ? decodeURIComponent(part) : part;
+                segments.add(new PathSegmentImpl(decodedPath, decode));
             }
-            segments.add(new PathSegmentImpl(part, decode));
         }
 
         return segments;
+    }
+
+    private static String decodeURIComponent(String encoded) {
+        try {
+            return java.net.URLDecoder.decode(encoded, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        URI uri = URI.create("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
+        }
     }
 }

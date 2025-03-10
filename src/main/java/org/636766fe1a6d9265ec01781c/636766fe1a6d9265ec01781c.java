@@ -3,12 +3,12 @@ import java.util.Map;
 
 public class CharUtils {
 
-    private static final Map<Character, Character> CACHE = new HashMap<>();
+    // Cache for ASCII characters (0-127)
+    private static final Character[] ASCII_CACHE = new Character[128];
 
     static {
-        // Pre-cache ASCII characters (0-127)
         for (int i = 0; i < 128; i++) {
-            CACHE.put((char) i, (char) i);
+            ASCII_CACHE[i] = (char) i;
         }
     }
 
@@ -24,14 +24,13 @@ public class CharUtils {
      */
     public static Character toCharacterObject(final char ch) {
         if (ch < 128) {
-            return CACHE.get(ch);
+            return ASCII_CACHE[ch];
         }
         return ch;
     }
 
     public static void main(String[] args) {
         System.out.println(toCharacterObject(' '));  // Output: ' '
-        System.out.println(toCharacterObject('A'));  // Output: 'A'
-        System.out.println(toCharacterObject('€'));  // Output: '€' (non-ASCII, no caching)
+        System.out.println(toCharacterObject('A')); // Output: 'A'
     }
 }

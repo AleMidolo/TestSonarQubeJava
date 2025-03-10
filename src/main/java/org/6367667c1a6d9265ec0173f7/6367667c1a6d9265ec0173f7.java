@@ -13,9 +13,9 @@ public class BodyChecker {
     public static void main(String[] args) {
         BodyChecker checker = new BodyChecker();
         byte[] byteArray = new byte[10];
-        Object nonByteArray = new Object();
+        String stringBody = "Hello World";
 
         System.out.println(checker.hasBytes(byteArray)); // true
-        System.out.println(checker.hasBytes(nonByteArray)); // false
+        System.out.println(checker.hasBytes(stringBody)); // false
     }
 }

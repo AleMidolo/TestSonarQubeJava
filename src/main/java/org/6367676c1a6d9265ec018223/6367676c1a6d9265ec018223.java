@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Iterator;
 
 public class CollectionUtils {
 
@@ -8,29 +9,18 @@ public class CollectionUtils {
      * @param element el elemento a buscar
      * @return <code>true</code> si se encuentra, <code>false</code> en caso contrario
      */
-    public static boolean containsInstance(Collection<?> collection, Object element) {
+    public static boolean containsInstance(Collection collection, Object element) {
         if (collection == null || element == null) {
             return false;
         }
-        for (Object item : collection) {
-            if (item == element) {
+        
+        Iterator iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            Object current = iterator.next();
+            if (current == element) {
                 return true;
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Collection<String> collection = new java.util.ArrayList<>();
-        collection.add("A");
-        collection.add("B");
-        collection.add("C");
-
-        String element = "B";
-        System.out.println(containsInstance(collection, element)); // true
-
-        String newElement = new String("B");
-        System.out.println(containsInstance(collection, newElement)); // false
     }
 }

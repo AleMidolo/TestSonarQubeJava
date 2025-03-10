@@ -10,7 +10,7 @@ public class CliqueChecker {
      * @return true se il sottografo indotto è un clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Verifica che ogni coppia di vertici sia connessa da un arco
+        // Verifica se ogni coppia di vertici è connessa da un arco
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {

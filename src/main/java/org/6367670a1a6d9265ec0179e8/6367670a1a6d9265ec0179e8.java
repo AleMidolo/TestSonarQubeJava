@@ -26,8 +26,8 @@ public class DefensiveProgramming {
         Boolean[] emptyArray = new Boolean[0];
         Boolean[] nonEmptyArray = { true, false, true };
 
-        System.out.println(Arrays.toString(nullToEmpty(nullArray)));      // Output: []
-        System.out.println(Arrays.toString(nullToEmpty(emptyArray)));    // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(nullArray)));    // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(emptyArray)));  // Output: []
         System.out.println(Arrays.toString(nullToEmpty(nonEmptyArray))); // Output: [true, false, true]
     }
 }

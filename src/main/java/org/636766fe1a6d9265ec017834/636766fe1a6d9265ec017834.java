@@ -1,6 +1,7 @@
 import java.util.UUID;
 
-public class SessionIdGenerator {
+public class SessionUtil {
+
     /**
      * Generates a unique session ID.
      * 
@@ -11,6 +12,6 @@ public class SessionIdGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println(sessionId());
+        System.out.println("Generated Session ID: " + sessionId());
     }
 }

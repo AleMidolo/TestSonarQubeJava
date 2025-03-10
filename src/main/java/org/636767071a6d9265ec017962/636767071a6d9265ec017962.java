@@ -2,59 +2,60 @@ import org.apache.commons.beanutils.BeanMap;
 
 public class MyBeanMap {
 
-    private BeanMap beanMap;
+    private Object bean;
 
     public MyBeanMap(Object bean) {
-        this.beanMap = new BeanMap(bean);
+        this.bean = bean;
     }
 
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
 
+        BeanMap thisBeanMap = new BeanMap(this.bean);
+
         for (Object key : map.keySet()) {
-            if (beanMap.isWriteable((String) key)) {
-                beanMap.put(key, map.get(key));
+            if (thisBeanMap.isWriteable((String) key)) {
+                thisBeanMap.put(key, map.get(key));
             }
         }
     }
 
-    // Example usage
     public static void main(String[] args) {
+        // Esempio di utilizzo
         MyBean myBean = new MyBean();
         MyBean anotherBean = new MyBean();
 
-        MyBeanMap myBeanMap = new MyBeanMap(myBean);
-        BeanMap anotherBeanMap = new BeanMap(anotherBean);
+        BeanMap beanMap = new BeanMap(myBean);
+        beanMap.put("name", "John");
+        beanMap.put("age", 30);
 
-        // Assuming MyBean has some properties
-        anotherBeanMap.put("property1", "value1");
-        anotherBeanMap.put("property2", "value2");
+        MyBeanMap myBeanMap = new MyBeanMap(anotherBean);
+        myBeanMap.putAllWriteable(beanMap);
 
-        myBeanMap.putAllWriteable(anotherBeanMap);
-
-        // Now myBean should have the properties from anotherBean
+        System.out.println("Name: " + anotherBean.getName());
+        System.out.println("Age: " + anotherBean.getAge());
     }
 }
 
 class MyBean {
-    private String property1;
-    private String property2;
+    private String name;
+    private int age;
 
-    public String getProperty1() {
-        return property1;
+    public String getName() {
+        return name;
     }
 
-    public void setProperty1(String property1) {
-        this.property1 = property1;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProperty2() {
-        return property2;
+    public int getAge() {
+        return age;
     }
 
-    public void setProperty2(String property2) {
-        this.property2 = property2;
+    public void setAge(int age) {
+        this.age = age;
     }
 }

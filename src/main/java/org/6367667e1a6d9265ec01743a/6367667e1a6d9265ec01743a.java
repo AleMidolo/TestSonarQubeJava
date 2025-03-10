@@ -1,7 +1,7 @@
 import java.util.concurrent.atomic.AtomicLong;
 
 public class LastWriteTimestamp {
-    private final AtomicLong lastWriteTimestamp = new AtomicLong();
+    private final AtomicLong lastWriteTimestamp = new AtomicLong(0);
 
     /**
      * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.

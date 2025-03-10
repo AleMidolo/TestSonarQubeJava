@@ -22,7 +22,7 @@ public class ClassPathUtil {
                     URL url = file.toURI().toURL();
                     cpV.add(url);
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException("Errore durante la conversione del file in URL: " + file.getAbsolutePath(), e);
                 }
             }
         }

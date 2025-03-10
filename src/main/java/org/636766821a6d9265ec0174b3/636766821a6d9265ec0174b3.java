@@ -1,36 +1,23 @@
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import java.util.function.Function;
 
 /**
  * Invoca il {@link BroadcastFilter}
- * @param msg the message to be filtered
- * @return the filtered result
+ * @param msg Il messaggio da filtrare
+ * @return Il messaggio filtrato
  */
 protected Object filter(Object msg) {
-    // Assuming msg is an Intent, and we are filtering it using a BroadcastReceiver
-    if (msg instanceof Intent) {
-        Intent intent = (Intent) msg;
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Handle the intent here
-            }
-        };
+    // Assuming BroadcastFilter is a functional interface or a class with a filter method
+    // For example, let's assume BroadcastFilter is a Function<Object, Object>
+    BroadcastFilter filter = new BroadcastFilter();
+    return filter.apply(msg);
+}
 
-        // Create a filter to match the intent
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(intent.getAction());
-
-        // Register the receiver with the filter
-        Context context = /* obtain your context here */;
-        context.registerReceiver(receiver, filter);
-
-        // Return the filtered result (in this case, the intent itself)
-        return intent;
-    } else {
-        // Handle other types of messages if necessary
+// Assuming BroadcastFilter is a functional interface or a class with a filter method
+class BroadcastFilter implements Function<Object, Object> {
+    @Override
+    public Object apply(Object msg) {
+        // Implement the filtering logic here
+        // For example, just return the message as is (no filtering)
         return msg;
     }
 }

@@ -7,19 +7,13 @@ final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) 
     // This is a simplified implementation.
 
     // Get the CONSTANT_Utf8_info entry from the constant pool
-    int utf8InfoIndex = constantPool[constantPoolEntryIndex];
-    
-    // Read the length of the UTF-8 string
-    int length = classFileBuffer.getShort(utf8InfoIndex) & 0xFFFF;
-    
-    // Read the UTF-8 bytes into a byte array
-    byte[] utf8Bytes = new byte[length];
-    classFileBuffer.position(utf8InfoIndex + 2);
-    classFileBuffer.get(utf8Bytes, 0, length);
-    
+    int utf8Length = classFileBuffer.getShort(constantPoolEntryIndex + 1); // Length of the UTF-8 string
+    byte[] utf8Bytes = new byte[utf8Length];
+    classFileBuffer.position(constantPoolEntryIndex + 3); // Skip tag and length
+    classFileBuffer.get(utf8Bytes, 0, utf8Length);
+
     // Decode the UTF-8 bytes into a String using the provided charBuffer
     int charCount = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes)).get(charBuffer, 0, charBuffer.length);
-    
-    // Return the String
+
     return new String(charBuffer, 0, charCount);
 }

@@ -1,4 +1,4 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
 public class StringUtils {
     /**
@@ -18,9 +18,11 @@ public class StringUtils {
         }
         
         if (ignoreCase) {
-            String strEnd = str.substring(str.length() - suffix.length());
-            return strEnd.equalsIgnoreCase(suffix);
+            String strLower = str.toLowerCase();
+            String suffixLower = suffix.toLowerCase();
+            return strLower.endsWith(suffixLower);
+        } else {
+            return str.endsWith(suffix);
         }
-        return str.endsWith(suffix);
     }
 }

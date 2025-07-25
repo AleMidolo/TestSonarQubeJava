@@ -20,14 +20,15 @@ public class MappingDiffer {
         // Create new map for storing diff
         Map<String, Object> diffMap = new HashMap<>();
         
-        // Get current index mappings
-        Map<String, Object> currentMappings = getCurrentIndexMappings(tableName);
-        
+        // Get current mappings for table
+        Mappings currentMappings = getCurrentMappings(tableName);
         if (currentMappings != null) {
-            // Compare and get fields that don't exist in current mappings
+            Map<String, Object> currentProperties = currentMappings.getSourceAsMap();
+            
+            // Compare and add fields that don't exist in current mappings
             for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
                 String field = entry.getKey();
-                if (!currentMappings.containsKey(field)) {
+                if (!currentProperties.containsKey(field)) {
                     diffMap.put(field, entry.getValue());
                 }
             }
@@ -36,30 +37,28 @@ public class MappingDiffer {
             diffMap.putAll(inputProperties);
         }
         
-        // Remove _source from diff mappings
+        // Remove _source from diff to avoid conflicts
         diffMap.remove("_source");
         
-        // Create new Mappings object from diff
-        return createMappings(diffMap);
+        // Create new Mappings object with diff
+        return new Mappings(MapperService.SINGLE_MAPPING_NAME, diffMap);
     }
     
-    private Map<String, Object> getCurrentIndexMappings(String tableName) {
+    // Helper method to get current mappings for a table
+    private Mappings getCurrentMappings(String tableName) {
         try {
-            // Implementation to get current index mappings
-            // This would typically involve calling Elasticsearch API
-            return null; // Placeholder
+            MappingMetadata mappingMetadata = getClient().admin().indices()
+                .prepareGetMappings(tableName)
+                .get()
+                .getMappings()
+                .get(tableName);
+                
+            if (mappingMetadata != null) {
+                return new Mappings(MapperService.SINGLE_MAPPING_NAME, mappingMetadata.getSourceAsMap());
+            }
         } catch (Exception e) {
-            return null;
+            // Handle exceptions
         }
-    }
-    
-    private Mappings createMappings(Map<String, Object> mappingsMap) {
-        try {
-            // Create new Mappings object from map
-            // This would typically use Elasticsearch API to create mappings
-            return null; // Placeholder
-        } catch (Exception e) {
-            return null;
-        }
+        return null;
     }
 }

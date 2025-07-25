@@ -40,7 +40,6 @@ public class URIPathDecoder {
         // Split path into segments
         String[] rawSegments = path.split("/");
 
-        // Process each segment
         for (String segment : rawSegments) {
             if (segment.isEmpty()) {
                 continue;
@@ -48,11 +47,11 @@ public class URIPathDecoder {
             
             try {
                 // Decode segment if requested
-                String processedSegment = decode ? 
+                String decodedSegment = decode ? 
                     URLDecoder.decode(segment, StandardCharsets.UTF_8.toString()) : 
                     segment;
                     
-                segments.add(new PathSegmentImpl(processedSegment));
+                segments.add(new PathSegmentImpl(decodedSegment));
             } catch (Exception e) {
                 // If decoding fails, add raw segment
                 segments.add(new PathSegmentImpl(segment));

@@ -21,6 +21,6 @@ public class ConverterRegistry {
     
     // Interface for Converter
     public interface Converter {
-        Object convert(Object source);
+        Object convert(Object value);
     }
 }

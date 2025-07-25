@@ -5,49 +5,31 @@ public class SymbolTable {
     private final Symbol[] symbols;
     private int constantPoolCount;
 
-    public SymbolTable(int initialCapacity) {
-        this.symbols = new Symbol[initialCapacity];
-        this.constantPoolCount = 1;
-    }
-
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-        Symbol symbol = lookupSymbol(hashCode);
         
-        if (symbol != null) {
-            return symbol.index;
-        }
-        
-        symbol = addConstantNameAndTypeSymbol(name, descriptor, hashCode);
-        return symbol.index;
-    }
-
-    private Symbol lookupSymbol(int hashCode) {
-        for (int i = 1; i < constantPoolCount; i++) {
-            Symbol symbol = symbols[i];
-            if (symbol != null && symbol.type == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && symbol.hashCode == hashCode) {
-                return symbol;
+        // Look for an existing entry
+        Symbol symbol = symbols[hashCode % symbols.length];
+        while (symbol != null) {
+            if (symbol.tag == CONSTANT_NAME_AND_TYPE_TAG 
+                && symbol.name.equals(name)
+                && symbol.value.equals(descriptor)) {
+                return symbol.index;
             }
+            symbol = symbol.next;
         }
-        return null;
-    }
-
-    private Symbol addConstantNameAndTypeSymbol(String name, String descriptor, int hashCode) {
-        Symbol symbol = new Symbol(
+        
+        // Not found, create new entry
+        symbol = new Symbol(
             constantPoolCount++,
-            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
-            addConstantUtf8(name),
-            addConstantUtf8(descriptor),
-            hashCode
+            CONSTANT_NAME_AND_TYPE_TAG,
+            name,
+            descriptor,
+            null,
+            symbols[hashCode % symbols.length]
         );
-        symbols[symbol.index] = symbol;
-        return symbol;
-    }
-
-    private int addConstantUtf8(String value) {
-        // Implementation for adding UTF8 constant omitted for brevity
-        // Would follow similar pattern of checking existing entries then adding if not found
-        return 0;
+        
+        symbols[hashCode % symbols.length] = symbol;
+        return symbol.index;
     }
 }

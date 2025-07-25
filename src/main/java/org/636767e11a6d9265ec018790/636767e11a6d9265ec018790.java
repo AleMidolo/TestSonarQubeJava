@@ -9,32 +9,30 @@ public class ThreadSnapshotLoader {
         private String threadName;
         private String threadState;
         private List<String> stackTrace;
-        
+
         public ThreadSnapshot(LocalDateTime timestamp, String threadName, String threadState, List<String> stackTrace) {
             this.timestamp = timestamp;
             this.threadName = threadName;
             this.threadState = threadState;
             this.stackTrace = stackTrace;
         }
-        
-        // Getters
-        public LocalDateTime getTimestamp() { return timestamp; }
-        public String getThreadName() { return threadName; }
-        public String getThreadState() { return threadState; }
-        public List<String> getStackTrace() { return stackTrace; }
+
+        public LocalDateTime getTimestamp() {
+            return timestamp;
+        }
     }
 
     public static class ProfileAnalyzeTimeRange {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
-        
-        public ProfileAnalyzeTimeRange(LocalDateTime start, LocalDateTime end) {
-            this.startTime = start;
-            this.endTime = end;
+
+        public ProfileAnalyzeTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
         }
-        
-        public boolean isInRange(LocalDateTime time) {
-            return !time.isBefore(startTime) && !time.isAfter(endTime);
+
+        public boolean isInRange(LocalDateTime timestamp) {
+            return !timestamp.isBefore(startTime) && !timestamp.isAfter(endTime);
         }
     }
 
@@ -50,56 +48,49 @@ public class ThreadSnapshotLoader {
             
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Time:")) {
-                    // Save previous snapshot if exists
-                    if (currentTimestamp != null && isInAnyTimeRange(currentTimestamp, timeRanges)) {
-                        snapshots.add(new ThreadSnapshot(currentTimestamp, currentThreadName, 
-                            currentThreadState, new ArrayList<>(currentStackTrace)));
+                    // If we were processing a snapshot, check if it's in range and save it
+                    if (currentTimestamp != null) {
+                        boolean inRange = timeRanges.stream()
+                            .anyMatch(range -> range.isInRange(currentTimestamp));
+                        
+                        if (inRange) {
+                            snapshots.add(new ThreadSnapshot(
+                                currentTimestamp,
+                                currentThreadName,
+                                currentThreadState,
+                                new ArrayList<>(currentStackTrace)
+                            ));
+                        }
                     }
                     
-                    // Parse new timestamp
-                    currentTimestamp = parseTimestamp(line);
+                    // Start new snapshot
+                    currentTimestamp = LocalDateTime.parse(line.substring(6));
                     currentStackTrace.clear();
                 } else if (line.startsWith("Thread:")) {
-                    currentThreadName = parseThreadName(line);
+                    currentThreadName = line.substring(8);
                 } else if (line.startsWith("State:")) {
-                    currentThreadState = parseThreadState(line);
+                    currentThreadState = line.substring(7);
                 } else if (!line.trim().isEmpty()) {
                     currentStackTrace.add(line.trim());
                 }
             }
             
-            // Add last snapshot if in range
-            if (currentTimestamp != null && isInAnyTimeRange(currentTimestamp, timeRanges)) {
-                snapshots.add(new ThreadSnapshot(currentTimestamp, currentThreadName, 
-                    currentThreadState, new ArrayList<>(currentStackTrace)));
+            // Handle last snapshot
+            if (currentTimestamp != null) {
+                boolean inRange = timeRanges.stream()
+                    .anyMatch(range -> range.isInRange(currentTimestamp));
+                
+                if (inRange) {
+                    snapshots.add(new ThreadSnapshot(
+                        currentTimestamp,
+                        currentThreadName,
+                        currentThreadState,
+                        new ArrayList<>(currentStackTrace)
+                    ));
+                }
             }
         }
         
         return snapshots;
-    }
-    
-    private static boolean isInAnyTimeRange(LocalDateTime time, List<ProfileAnalyzeTimeRange> timeRanges) {
-        for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (range.isInRange(time)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private static LocalDateTime parseTimestamp(String line) {
-        // Implement timestamp parsing based on your file format
-        // This is a placeholder implementation
-        return LocalDateTime.now();
-    }
-    
-    private static String parseThreadName(String line) {
-        // Implement thread name parsing based on your file format
-        return line.substring(line.indexOf(":") + 1).trim();
-    }
-    
-    private static String parseThreadState(String line) {
-        // Implement thread state parsing based on your file format
-        return line.substring(line.indexOf(":") + 1).trim();
     }
 }

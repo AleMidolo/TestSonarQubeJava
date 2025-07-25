@@ -1,5 +1,5 @@
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateEncoder {
     /**
@@ -12,7 +12,10 @@ public class TemplateEncoder {
             return null;
         }
         
-        return s.replace("{", "%7B")
-                .replace("}", "%7D");
+        // Replace { with %7B and } with %7D
+        String encoded = s.replaceAll("\\{", "%7B")
+                         .replaceAll("\\}", "%7D");
+                         
+        return encoded;
     }
 }

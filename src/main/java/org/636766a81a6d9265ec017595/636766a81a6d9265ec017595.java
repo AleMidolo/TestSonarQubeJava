@@ -15,13 +15,17 @@ public class ByteVector {
      * @return this byte vector.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        if (length + 2 > data.length) {
-            // Double array size if more space needed
-            int newCapacity = Math.max(2 * data.length, length + 2);
+        int newLength = length + 2;
+        if (newLength > data.length) {
+            // Grow array if needed
+            int newCapacity = Math.max(2 * data.length, newLength);
             data = Arrays.copyOf(data, newCapacity);
         }
+        
+        // Add the two bytes
         data[length++] = (byte) byteValue1;
         data[length++] = (byte) byteValue2;
+        
         return this;
     }
 }

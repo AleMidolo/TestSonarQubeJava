@@ -19,13 +19,12 @@ public class MessageSerializer {
         // Write the size as a varint prefix
         writeRawVarint32(out, size);
         
-        // Write the message bytes to output stream
+        // Write the message bytes
         LinkedBuffer.writeTo(out, buffer);
         
         // Clear the buffer
         buffer.clear();
         
-        // Return total size (varint + message)
         return size;
     }
     

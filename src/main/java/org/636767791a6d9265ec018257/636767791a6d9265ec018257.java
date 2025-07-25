@@ -27,8 +27,7 @@ public class Logger {
                     lr.getLevel(),
                     lr.getMessage(),
                     lr.getSourceClassName(),
-                    lr.getSourceMethodName(),
-                    lr.getThrown()
+                    lr.getSourceMethodName()
                 });
 
                 // Auto scroll to the bottom

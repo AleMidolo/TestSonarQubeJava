@@ -12,7 +12,7 @@ public class FileIterator implements Iterator<InputStream> {
     public FileIterator() {
         this.files = new LinkedList<>();
     }
-    
+
     /** 
      * Restituisce il prossimo oggetto {@link java.io.File} oppure {@code null} se non ci sono più file disponibili.
      */
@@ -20,23 +20,17 @@ public class FileIterator implements Iterator<InputStream> {
         if (files.isEmpty()) {
             return null;
         }
-        
         File nextFile = files.poll();
-        if (nextFile != null && nextFile.exists() && nextFile.isFile()) {
-            return new FileInputStream(nextFile);
-        }
-        
-        return null;
+        return new FileInputStream(nextFile);
     }
-    
+
+    public boolean hasNext() {
+        return !files.isEmpty();
+    }
+
     public void addFile(File file) {
         if (file != null) {
             files.offer(file);
         }
-    }
-    
-    @Override
-    public boolean hasNext() {
-        return !files.isEmpty();
     }
 }

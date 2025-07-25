@@ -1,4 +1,4 @@
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class StringUtils {
     /**
@@ -8,7 +8,7 @@ public class StringUtils {
      * @return <code>true</code> se str contiene solo numeri unicode
      */
     public static boolean isDigits(String str) {
-        if (Objects.isNull(str) || str.isEmpty()) {
+        if (str == null || str.isEmpty()) {
             return false;
         }
         
@@ -17,7 +17,6 @@ public class StringUtils {
                 return false;
             }
         }
-        
         return true;
     }
 }

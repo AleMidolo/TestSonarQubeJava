@@ -17,7 +17,6 @@ public class FrameWriter {
     
     private void putAbstractType(final int abstractType) {
         int type = abstractType >>> Frame.ITEM_TOP;
-        
         switch (type) {
             case Frame.ITEM_TOP:
                 stackMapTableEntries.putByte(0);
@@ -42,11 +41,11 @@ public class FrameWriter {
                 break;
             case Frame.ITEM_OBJECT:
                 stackMapTableEntries.putByte(7);
-                stackMapTableEntries.putShort(symbolTable.addConstantClass(abstractType & Frame.ITEM_MASK).index);
+                stackMapTableEntries.putShort(symbolTable.addConstantClass(currentFrame[i] & Frame.ITEM_MASK).index);
                 break;
             default:
                 stackMapTableEntries.putByte(8);
-                stackMapTableEntries.putShort((abstractType & Frame.ITEM_MASK));
+                stackMapTableEntries.putShort((currentFrame[i] & Frame.ITEM_MASK));
                 break;
         }
     }

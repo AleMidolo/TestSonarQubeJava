@@ -9,16 +9,16 @@ public class StringArrayTrimmer {
             return null;
         }
         
-        String[] trimmedArray = new String[array.length];
+        String[] result = new String[array.length];
         
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                trimmedArray[i] = array[i].trim();
+                result[i] = array[i].trim();
             } else {
-                trimmedArray[i] = null;
+                result[i] = null;
             }
         }
         
-        return trimmedArray;
+        return result;
     }
 }

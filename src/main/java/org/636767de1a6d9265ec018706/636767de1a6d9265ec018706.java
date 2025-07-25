@@ -9,59 +9,52 @@ import org.elasticsearch.index.mapper.Mappings;
 public class MappingDiffer {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        if (mappings == null) {
-            return null;
-        }
-
-        // Create new mappings builder
-        Mappings.Builder diffMappings = new Mappings.Builder();
-
-        // Get properties from input mappings
-        Map<String, Object> properties = mappings.getSourceAsMap();
-        if (properties == null || properties.isEmpty()) {
-            return null;
-        }
-
-        // Get current index mappings
-        ImmutableOpenMap<String, MappingMetadata> currentMappings = getCurrentIndexMappings(tableName);
-        
-        // Compare and add fields that don't exist in current mappings
-        for (Map.Entry<String, Object> entry : properties.entrySet()) {
-            String fieldName = entry.getKey();
+        try {
+            // Create empty mappings to store the diff
+            Mappings diffMappings = new Mappings.Builder().build();
             
-            if (!fieldExists(fieldName, currentMappings)) {
-                // Add field to diff mappings
-                diffMappings.field(fieldName, entry.getValue());
+            if (mappings == null) {
+                return diffMappings;
             }
-        }
 
-        // Remove _source field to avoid conflicts
-        diffMappings.removeField("_source");
+            // Get the properties from input mappings
+            Map<String, Object> properties = mappings.getSourceAsMap();
+            
+            if (properties == null || properties.isEmpty()) {
+                return diffMappings;
+            }
 
-        return diffMappings.build();
-    }
+            // Get current index mappings
+            GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
+            GetMappingsResponse currentMappings = client.admin().indices()
+                .getMappings(request).actionGet();
+                
+            ImmutableOpenMap<String, MappingMetadata> indexMappings = 
+                currentMappings.getMappings().get(tableName);
 
-    private ImmutableOpenMap<String, MappingMetadata> getCurrentIndexMappings(String indexName) {
-        try {
-            GetMappingsRequest request = new GetMappingsRequest().indices(indexName);
-            GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
-            return response.getMappings().get(indexName);
-        } catch (Exception e) {
-            return ImmutableOpenMap.of();
-        }
-    }
+            if (indexMappings == null || indexMappings.isEmpty()) {
+                // If no current mappings exist, return input mappings without _source
+                Map<String, Object> newProps = new HashMap<>(properties);
+                newProps.remove("_source");
+                return new Mappings.Builder().sourceAsMap(newProps).build();
+            }
 
-    private boolean fieldExists(String fieldName, ImmutableOpenMap<String, MappingMetadata> currentMappings) {
-        try {
-            for (ObjectObjectCursor<String, MappingMetadata> cursor : currentMappings) {
-                Map<String, Object> sourceMap = cursor.value.getSourceAsMap();
-                if (sourceMap.containsKey(fieldName)) {
-                    return true;
+            // Compare and build diff mappings
+            Map<String, Object> currentProps = indexMappings.get("_doc")
+                .getSourceAsMap();
+            Map<String, Object> diffProps = new HashMap<>();
+
+            for (Map.Entry<String, Object> entry : properties.entrySet()) {
+                String field = entry.getKey();
+                if (!currentProps.containsKey(field) && !"_source".equals(field)) {
+                    diffProps.put(field, entry.getValue());
                 }
             }
+
+            return new Mappings.Builder().sourceAsMap(diffProps).build();
+
         } catch (Exception e) {
-            return false;
+            throw new RuntimeException("Error calculating mapping differences", e);
         }
-        return false;
     }
 }

@@ -4,15 +4,15 @@ import java.io.OutputStream;
 public class ByteOutputStream extends OutputStream {
 
     private byte[] buffer;
-    private int position;
+    private int count;
     
     public ByteOutputStream() {
-        buffer = new byte[32]; // Initial buffer size
-        position = 0;
+        buffer = new byte[32];
+        count = 0;
     }
 
     @Override
-    public void write(final byte b[], final int off, final int len) throws IOException {
+    public void write(final byte[] b, final int off, final int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         }
@@ -21,28 +21,28 @@ public class ByteOutputStream extends OutputStream {
             throw new IndexOutOfBoundsException();
         }
 
-        // Ensure buffer has enough capacity
-        ensureCapacity(position + len);
+        // Ensure capacity
+        ensureCapacity(count + len);
         
-        // Copy bytes from input array to buffer
-        System.arraycopy(b, off, buffer, position, len);
-        position += len;
+        // Copy bytes to internal buffer
+        System.arraycopy(b, off, buffer, count, len);
+        count += len;
     }
 
     private void ensureCapacity(int minCapacity) {
+        // If buffer is too small, grow it
         if (minCapacity > buffer.length) {
-            // Grow buffer by doubling size
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+            int newCapacity = Math.max(buffer.length << 1, minCapacity);
             byte[] newBuffer = new byte[newCapacity];
-            System.arraycopy(buffer, 0, newBuffer, 0, position);
+            System.arraycopy(buffer, 0, newBuffer, 0, count);
             buffer = newBuffer;
         }
     }
 
-    // Other required OutputStream methods would go here
     @Override
     public void write(int b) throws IOException {
-        ensureCapacity(position + 1);
-        buffer[position++] = (byte)b;
+        ensureCapacity(count + 1);
+        buffer[count] = (byte)b;
+        count++;
     }
 }

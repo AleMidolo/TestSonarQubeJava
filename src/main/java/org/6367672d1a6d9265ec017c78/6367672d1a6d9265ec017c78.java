@@ -2,7 +2,7 @@ import java.util.HashSet;
 
 public class IntegerSet {
     private HashSet<Integer> set;
-
+    
     public IntegerSet() {
         set = new HashSet<>();
     }

@@ -18,14 +18,15 @@ public class CharUtils {
         }
     }
 
-    /** 
-     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p> 
-     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p> 
+    /**
+     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p>
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p>
      * <pre>
      * CharUtils.toString(' ')  = " "
      * CharUtils.toString('A')  = "A"
      * </pre>
-     * @param ch  il carattere da convertire
+     * 
+     * @param ch il carattere da convertire
      * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {

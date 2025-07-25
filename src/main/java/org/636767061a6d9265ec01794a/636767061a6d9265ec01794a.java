@@ -14,25 +14,23 @@ public class FilenameUtils {
         // Get the last directory separator position
         int lastDirSeparator = indexOfLastSeparator(filename);
         
-        // Find last dot in filename
-        int lastDotPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
+        // Find last dot
+        int lastDot = filename.lastIndexOf(EXTENSION_SEPARATOR);
         
-        // Return -1 if:
-        // - No dot found
-        // - Dot is before last directory separator
-        // - Dot is the last character
-        if (lastDotPos == -1 || lastDotPos < lastDirSeparator || lastDotPos == filename.length() - 1) {
+        // If no dot found or dot is before last directory separator, return -1
+        if (lastDot == -1 || lastDot < lastDirSeparator) {
             return -1;
         }
         
-        return lastDotPos;
+        return lastDot;
     }
 
-    private static int indexOfLastSeparator(String filename) {
+    public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
         
+        // Find last occurrence of either separator
         int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
         int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
         

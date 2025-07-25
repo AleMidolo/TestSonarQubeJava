@@ -1,7 +1,6 @@
 import java.beans.Introspector;
 
 public class StringUtils {
-
     /**
      * Reverse of Introspector.decapitalize
      */

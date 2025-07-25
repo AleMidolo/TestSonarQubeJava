@@ -12,10 +12,11 @@ public class PointComparator {
             return false;
         }
         
-        double tolerance = 1e-9;
-        double dx = Math.abs(p1.getX() - p2.getX());
-        double dy = Math.abs(p1.getY() - p2.getY());
+        final double EPSILON = 1e-9;
         
-        return dx <= tolerance && dy <= tolerance;
+        double xDiff = Math.abs(p1.getX() - p2.getX());
+        double yDiff = Math.abs(p1.getY() - p2.getY());
+        
+        return xDiff < EPSILON && yDiff < EPSILON;
     }
 }

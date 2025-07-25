@@ -19,14 +19,14 @@ public class ConfigInitializer {
             if (!Files.exists(distPath)) {
                 // Create dist directory if it doesn't exist
                 Files.createDirectory(distPath);
-                logger.info("Created dist directory");
+                logger.info("Created dist directory at: " + distPath.toAbsolutePath());
             }
-            
+
             // Verify dist directory is writable
             if (!Files.isWritable(distPath)) {
-                throw new IOException("Dist directory is not writable");
+                throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
             }
-            
+
             // Additional initialization can be added here
             
             logger.info("Configuration initialized successfully");

@@ -4,7 +4,7 @@ import java.util.List;
 public class TypeInitializer {
     // List to store initialized abstract types
     private List<Integer> initializedTypes;
-    
+
     public TypeInitializer() {
         initializedTypes = new ArrayList<>();
     }

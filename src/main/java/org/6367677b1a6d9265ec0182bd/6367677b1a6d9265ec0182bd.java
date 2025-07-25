@@ -35,7 +35,9 @@ public class CustomLogFormatter extends Layout {
             }
         }
         
+        // Add new line
         sb.append("\n");
+        
         return sb.toString();
     }
 

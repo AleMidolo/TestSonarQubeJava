@@ -11,16 +11,15 @@ public class Bucket<T> {
      */
     void removeSelf() {
         if (prev != null) {
-            prev.next = this.next;
+            prev.next = next;
         }
-        
         if (next != null) {
-            next.prev = this.prev;
+            next.prev = prev;
         }
         
         // Clear references to help garbage collection
-        this.next = null;
-        this.prev = null;
-        this.items = null;
+        items = null;
+        next = null;
+        prev = null;
     }
 }

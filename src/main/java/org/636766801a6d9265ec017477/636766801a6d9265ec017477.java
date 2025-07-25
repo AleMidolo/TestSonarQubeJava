@@ -1,9 +1,9 @@
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class FileProcessor {
+
     /**
      * Add the specified files in reverse order.
      */
@@ -12,14 +12,18 @@ public class FileProcessor {
             return;
         }
         
-        List<InputStream> fileList = new ArrayList<>();
+        Deque<InputStream> stack = new ArrayDeque<>();
+        
+        // Add files to stack in original order
         for (InputStream file : files) {
-            fileList.add(file);
+            if (file != null) {
+                stack.push(file);
+            }
         }
         
-        Collections.reverse(fileList);
-        
-        for (InputStream file : fileList) {
+        // Process files in reverse order
+        while (!stack.isEmpty()) {
+            InputStream file = stack.pop();
             try {
                 processFile(file);
             } finally {
@@ -32,8 +36,9 @@ public class FileProcessor {
         }
     }
     
-    // Helper method to process individual files
+    // Helper method to process individual file
     private void processFile(InputStream file) {
-        // Implementation for processing individual files would go here
+        // Implementation for processing individual file
+        // would go here
     }
 }

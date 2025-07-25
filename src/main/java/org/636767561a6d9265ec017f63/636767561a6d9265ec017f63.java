@@ -7,14 +7,14 @@ public class Graph {
     
     public Graph(int v) {
         numVertices = v;
-        visited = new boolean[v];
+        visited = new boolean[numVertices];
         currentVertex = 0;
     }
 
     @Override
     public boolean hasNext() {
         // Check if there are any unvisited vertices remaining
-        for (int i = 0; i < numVertices; i++) {
+        for (int i = currentVertex; i < numVertices; i++) {
             if (!visited[i]) {
                 return true;
             }

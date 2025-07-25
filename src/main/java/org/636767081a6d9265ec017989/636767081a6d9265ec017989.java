@@ -15,15 +15,17 @@ public class BooleanArrayConverter {
         }
         boolean[] result = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Array element at index " + i + " is null");
+            }
+            result[i] = array[i];
         }
         return result;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Boolean[] booleanArray = {true, false, true};
-        boolean[] primitiveArray = toPrimitive(booleanArray);
+        Boolean[] testArray = {true, false, true};
+        boolean[] primitiveArray = toPrimitive(testArray);
         for (boolean b : primitiveArray) {
             System.out.println(b);
         }

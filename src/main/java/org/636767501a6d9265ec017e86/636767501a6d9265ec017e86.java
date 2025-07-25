@@ -3,12 +3,12 @@ import java.util.List;
 public class ListNode<E> {
     private E element;
     private ListNode<E> next;
-    private ListNode<E> prev;
+    private ListNode<E> previous;
 
-    public ListNode(E element, ListNode<E> next, ListNode<E> prev) {
+    public ListNode(E element, ListNode<E> next, ListNode<E> previous) {
         this.element = element;
         this.next = next;
-        this.prev = prev;
+        this.previous = previous;
     }
 
     public E getElement() {
@@ -23,12 +23,12 @@ public class ListNode<E> {
         this.next = next;
     }
 
-    public ListNode<E> getPrev() {
-        return prev;
+    public ListNode<E> getPrevious() {
+        return previous;
     }
 
-    public void setPrev(ListNode<E> prev) {
-        this.prev = prev;
+    public void setPrevious(ListNode<E> previous) {
+        this.previous = previous;
     }
 
     /**
@@ -36,6 +36,6 @@ public class ListNode<E> {
      */
     @Override
     public ListNode<E> previousNode() {
-        return this.prev;
+        return this.previous;
     }
 }

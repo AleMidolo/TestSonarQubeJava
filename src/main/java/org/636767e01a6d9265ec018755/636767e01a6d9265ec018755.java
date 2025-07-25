@@ -10,7 +10,7 @@ public class ContentBuilder {
     private Map<String, Object> buildContent(JsonObject jsonObject) {
         Map<String, Object> content = new HashMap<>();
 
-        // Check if the JsonObject contains the key "ats"
+        // Check if "ats" key exists in the JsonObject
         if (jsonObject.has("ats")) {
             content.put("ats", jsonObject.get("ats").getAsString());
         }

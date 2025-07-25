@@ -3,68 +3,34 @@ import java.util.Objects;
 public class BucketCompatibilityChecker {
 
     /**
-     * @param dataset the dataset to check for bucket compatibility
-     * @return true if the buckets are compatible, false otherwise
+     * @param dataset डेटा टेबल जिसकी जांच की जानी है
+     * @return यदि बकेट समान है तो true लौटाता है।
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
+        // Assuming DataTable has a method getBucket() that returns the bucket identifier
+        String bucket1 = dataset.getBucket();
+        String bucket2 = this.getBucket(); // Assuming this class also has a getBucket() method
 
-        // Assuming DataTable has a method getBuckets() that returns a list of buckets
-        List<Bucket> buckets = dataset.getBuckets();
+        // Compare the buckets
+        return Objects.equals(bucket1, bucket2);
+    }
 
-        if (buckets == null || buckets.isEmpty()) {
-            return false;
-        }
-
-        // Get the first bucket to compare with the rest
-        Bucket firstBucket = buckets.get(0);
-
-        for (Bucket bucket : buckets) {
-            if (!Objects.equals(firstBucket, bucket)) {
-                return false;
-            }
-        }
-
-        return true;
+    // Assuming this class has a method to get the bucket identifier
+    public String getBucket() {
+        // Return the bucket identifier for this instance
+        return "defaultBucket"; // Replace with actual bucket identifier
     }
 }
 
-// Assuming the following classes are defined elsewhere in your codebase
+// Assuming DataTable class is defined as follows:
 class DataTable {
-    private List<Bucket> buckets;
+    private String bucket;
 
-    public DataTable(List<Bucket> buckets) {
-        this.buckets = buckets;
+    public DataTable(String bucket) {
+        this.bucket = bucket;
     }
 
-    public List<Bucket> getBuckets() {
-        return buckets;
-    }
-}
-
-class Bucket {
-    // Define the properties and methods of a Bucket
-    // For example:
-    private String name;
-    private int size;
-
-    public Bucket(String name, int size) {
-        this.name = name;
-        this.size = size;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bucket bucket = (Bucket) o;
-        return size == bucket.size && Objects.equals(name, bucket.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, size);
+    public String getBucket() {
+        return bucket;
     }
 }

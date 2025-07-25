@@ -1,4 +1,5 @@
-public class DigitChecker {
+public class StringUtils {
+
     /**
      * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
      * @param str  जांचने के लिए <code>String</code>
@@ -8,8 +9,8 @@ public class DigitChecker {
         if (str == null || str.isEmpty()) {
             return false;
         }
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
                 return false;
             }
         }

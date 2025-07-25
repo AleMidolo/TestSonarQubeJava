@@ -6,11 +6,11 @@ public class Cache {
 
     /**
      * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
-     * @param data जिसे संभावित रूप से जोड़ा जाना है।
+     * @param data जिसे संभागित रूप से जोड़ा जाना है।
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
         if (cacheMap.containsKey(key)) {
             METRICS existingData = cacheMap.get(key);
             existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
@@ -23,11 +23,11 @@ public class Cache {
 // Assuming METRICS class has the following structure
 class METRICS {
     private String key;
-    private int value;
+    private Map<String, Object> metricsData;
 
-    public METRICS(String key, int value) {
+    public METRICS(String key, Map<String, Object> metricsData) {
         this.key = key;
-        this.value = value;
+        this.metricsData = metricsData;
     }
 
     public String getKey() {
@@ -35,7 +35,7 @@ class METRICS {
     }
 
     public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
+        this.metricsData.putAll(other.metricsData);
     }
 
     // Other methods and fields as needed

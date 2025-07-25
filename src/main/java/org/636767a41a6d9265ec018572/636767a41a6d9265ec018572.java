@@ -16,13 +16,16 @@ public class VarintReader {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            final byte b = (byte) inputStream.read();
+            int b = inputStream.read();
+            if (b == -1) {
+                throw new IOException("Unexpected end of stream");
+            }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint64");
+        throw new IOException("Malformed varint");
     }
 }

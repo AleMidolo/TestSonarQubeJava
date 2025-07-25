@@ -4,7 +4,7 @@ class Graph {
     private Map<Integer, List<Integer>> adjacencyList;
 
     public Graph() {
-        this.adjacencyList = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
     public void addEdge(int u, int v) {
@@ -13,7 +13,7 @@ class Graph {
     }
 
     private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = new ArrayList<>();
 
         // Iterate over all edges in the graph
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
@@ -21,13 +21,13 @@ class Graph {
             for (int v : entry.getValue()) {
                 if (u < v) { // Ensure each edge is processed only once
                     List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                    globalSeparatorList.add(new Pair<>(separators, u));
-                    globalSeparatorList.add(new Pair<>(separators, v));
+                    globalSeparators.add(new Pair<>(separators, u));
+                    globalSeparators.add(new Pair<>(separators, v));
                 }
             }
         }
 
-        return globalSeparatorList;
+        return globalSeparators;
     }
 
     private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
@@ -70,40 +70,14 @@ class Graph {
         return true;
     }
 
-    public static void main(String[] args) {
-        Graph graph = new Graph();
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 4);
-        graph.addEdge(4, 1);
+    // Utility Pair class
+    class Pair<A, B> {
+        A first;
+        B second;
 
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> result = graph.computeGlobalSeparatorList();
-        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : result) {
-            System.out.println("Edge: " + pair.getSecond());
-            System.out.println("Separators: " + pair.getFirst());
+        Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
         }
-    }
-}
-
-class Pair<K, V> {
-    private K first;
-    private V second;
-
-    public Pair(K first, V second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    public K getFirst() {
-        return first;
-    }
-
-    public V getSecond() {
-        return second;
-    }
-
-    @Override
-    public String toString() {
-        return "(" + first + ", " + second + ")";
     }
 }

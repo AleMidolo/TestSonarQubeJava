@@ -25,7 +25,7 @@ public final class URIMatcher {
 
     public static void main(String[] args) {
         URIMatcher matcher = new URIMatcher("https://example.com/.*");
-        MatchResult result = matcher.match("https://example.com/resource");
+        MatchResult result = matcher.match("https://example.com/path/to/resource");
         if (result != null) {
             System.out.println("Match found: " + result.group());
         } else {

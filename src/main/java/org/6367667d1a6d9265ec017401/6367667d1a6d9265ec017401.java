@@ -2,7 +2,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UnescapeJava {
-
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
@@ -62,8 +61,7 @@ public class UnescapeJava {
     }
 
     public static void main(String[] args) throws Exception {
-        String input = "This is a test\\nwith a new line\\tand a tab.";
-        String unescaped = unescapeJava(input);
-        System.out.println(unescaped);
+        String input = "This is a test\\nstring with\\tescape\\rsequences\\b\\f\\'\\\"\\\\";
+        System.out.println(unescapeJava(input));
     }
 }

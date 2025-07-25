@@ -1,11 +1,11 @@
-import java.util.Iterator;
+import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> next;
         ListNodeImpl<E> prev;
+        ListNodeImpl<E> next;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -49,39 +49,20 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.size == 0) {
-            return;
+        Objects.requireNonNull(list, "The provided list cannot be null");
+
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> next = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = next;
         }
-
-        Iterator<ListNodeImpl<E>> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            ListNodeImpl<E> node = iterator.next();
-            list.removeListNode(node);
-            this.addListNode(node);
-        }
-    }
-
-    private Iterator<ListNodeImpl<E>> iterator() {
-        return new Iterator<ListNodeImpl<E>>() {
-            private ListNodeImpl<E> current = head;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public ListNodeImpl<E> next() {
-                ListNodeImpl<E> node = current;
-                current = current.next;
-                return node;
-            }
-        };
     }
 }

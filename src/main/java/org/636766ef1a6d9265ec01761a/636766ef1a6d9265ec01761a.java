@@ -2,8 +2,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SymbolTable {
-    private final Map<String, Integer> typeTable = new HashMap<>();
-    private int nextIndex = 0;
+    private final Map<String, Integer> typeTable;
+    private int nextIndex;
+
+    public SymbolTable() {
+        this.typeTable = new HashMap<>();
+        this.nextIndex = 0;
+    }
 
     /**
      * इस प्रतीक तालिका के प्रकार तालिका में एक प्रकार जोड़ता है। यदि प्रकार तालिका में पहले से ही एक समान प्रकार मौजूद है, तो कुछ नहीं करता है।

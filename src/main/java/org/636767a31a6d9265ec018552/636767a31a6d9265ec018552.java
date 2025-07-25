@@ -1,29 +1,31 @@
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.InputStreamReader;
 
-public class StreamReader {
+public class StringReader {
 
-    private final InputStream inputStream;
+    private BufferedReader reader;
 
-    public StreamReader(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public StringReader() {
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    /**
-     * 从流中读取 {@code string} 字段值。
+    /** 
+     * Leggi un valore di campo {@code string} dallo stream.
      */
-    @Override
+    @Override 
     public String readString() throws IOException {
-        int length = inputStream.read();
-        if (length == -1) {
-            throw new IOException("End of stream reached");
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        StringReader stringReader = new StringReader();
+        try {
+            System.out.println("Please enter a string:");
+            String input = stringReader.readString();
+            System.out.println("You entered: " + input);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        byte[] bytes = new byte[length];
-        int bytesRead = inputStream.read(bytes);
-        if (bytesRead != length) {
-            throw new IOException("Expected " + length + " bytes, but only read " + bytesRead);
-        }
-        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

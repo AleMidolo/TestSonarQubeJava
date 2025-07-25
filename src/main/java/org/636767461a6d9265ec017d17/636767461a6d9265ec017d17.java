@@ -1,43 +1,53 @@
-import java.util.HashMap;
-import java.util.Map;
+public class DotIdentifierDecompressor {
 
-public class DotUnescaper {
-
-    private static final Map<String, String> ESCAPE_SEQUENCES = new HashMap<>();
-
-    static {
-        ESCAPE_SEQUENCES.put("\\\"", "\"");
-        ESCAPE_SEQUENCES.put("\\n", "\n");
-        ESCAPE_SEQUENCES.put("\\r", "\r");
-        ESCAPE_SEQUENCES.put("\\t", "\t");
-        ESCAPE_SEQUENCES.put("\\\\", "\\");
-    }
-
+    /** 
+     * Decomprime un identificatore di stringa DOT.
+     * @param input l'input
+     * @return l'output decompresso
+     */
     private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
+        StringBuilder output = new StringBuilder();
+        boolean escape = false;
 
-        StringBuilder result = new StringBuilder();
-        int length = input.length();
-        int i = 0;
-
-        while (i < length) {
-            char currentChar = input.charAt(i);
-
-            if (currentChar == '\\' && i + 1 < length) {
-                String escapeSequence = input.substring(i, i + 2);
-                if (ESCAPE_SEQUENCES.containsKey(escapeSequence)) {
-                    result.append(ESCAPE_SEQUENCES.get(escapeSequence));
-                    i += 2;
-                    continue;
+        for (char c : input.toCharArray()) {
+            if (escape) {
+                switch (c) {
+                    case 'n':
+                        output.append('\n');
+                        break;
+                    case 't':
+                        output.append('\t');
+                        break;
+                    case '\\':
+                        output.append('\\');
+                        break;
+                    case '"':
+                        output.append('"');
+                        break;
+                    default:
+                        output.append(c);
+                        break;
+                }
+                escape = false;
+            } else {
+                if (c == '\\') {
+                    escape = true;
+                } else {
+                    output.append(c);
                 }
             }
-
-            result.append(currentChar);
-            i++;
         }
 
-        return result.toString();
+        return output.toString();
+    }
+
+    public static void main(String[] args) {
+        DotIdentifierDecompressor decompressor = new DotIdentifierDecompressor();
+        String input = "Hello\\nWorld\\t!";
+        String output = decompressor.unescapeId(input);
+        System.out.println(output);
     }
 }

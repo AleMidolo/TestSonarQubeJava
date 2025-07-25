@@ -1,14 +1,17 @@
 public class ArrayUtils {
-    /**
-     * 交换给定数组中指定索引的两个元素。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param i 第一个元素的索引
-     * @param j 第二个元素的索引
+    /** 
+     * Scambia i due elementi agli indici specificati nell'array fornito.
+     * @param <V> il tipo di elementi nell'array
+     * @param arr l'array
+     * @param i l'indice del primo elemento
+     * @param j l'indice del secondo elemento
      */
     public static final <V> void swap(V[] arr, int i, int j) {
-        if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
-            throw new IllegalArgumentException("Invalid array or indices");
+        if (arr == null) {
+            throw new IllegalArgumentException("Array cannot be null");
+        }
+        if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
         V temp = arr[i];
         arr[i] = arr[j];
@@ -16,9 +19,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 2, 3, 4, 5};
-        System.out.println("Before swap: " + java.util.Arrays.toString(arr));
-        swap(arr, 1, 3);
-        System.out.println("After swap: " + java.util.Arrays.toString(arr));
+        Integer[] array = {1, 2, 3, 4, 5};
+        swap(array, 1, 3);
+        for (Integer num : array) {
+            System.out.print(num + " ");
+        }
     }
 }

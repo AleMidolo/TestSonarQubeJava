@@ -1,17 +1,26 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * 将字节复制到 {@code byte[]} 中。
- */
-public byte[] toByteArray() {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    try {
-        // 假设有一些字节数据需要写入到 outputStream 中
-        // 例如：outputStream.write(someByteData);
-        outputStream.flush();
-    } catch (IOException e) {
-        e.printStackTrace();
+public class ByteArrayExample {
+    
+    /**
+     * Copia i byte in un {@code byte[]}.
+     */
+    public byte[] toByteArray() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            // Example data to write to the byte array
+            String exampleData = "Hello, World!";
+            byteArrayOutputStream.write(exampleData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
-    return outputStream.toByteArray();
+
+    public static void main(String[] args) {
+        ByteArrayExample example = new ByteArrayExample();
+        byte[] byteArray = example.toByteArray();
+        System.out.println(new String(byteArray));
+    }
 }

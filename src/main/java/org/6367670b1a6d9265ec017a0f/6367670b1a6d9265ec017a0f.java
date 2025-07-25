@@ -2,25 +2,27 @@ import java.util.List;
 
 public class StringUtils {
 
-    /**
-     * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
-     * 
-     * @param str 要检查的字符串
-     * @param searchStrArray 要搜索的字符串集合
-     * @return 如果字符串包含集合中的任何字符，返回true；否则返回false
+    /** 
+     * Controllo non sensibile al maiuscolo/minuscolo se la Stringa contiene uno qualsiasi dei caratteri nel set di stringhe fornito. 
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
-        if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
+        if (str == null || searchStrArray == null) {
             return false;
         }
-
-        String lowerCaseStr = str.toLowerCase();
+        String lowerStr = str.toLowerCase();
         for (String searchStr : searchStrArray) {
-            if (searchStr != null && lowerCaseStr.contains(searchStr.toLowerCase())) {
+            if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
                 return true;
             }
         }
-
         return false;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        List<String> searchStrings = List.of("abc", "def", "ghi");
+        String testString = "Hello ABC World";
+        boolean result = containsAnyIgnoreCase(testString, searchStrings);
+        System.out.println("Contains any: " + result); // Output: Contains any: true
     }
 }

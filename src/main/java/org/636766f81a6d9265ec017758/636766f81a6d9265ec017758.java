@@ -1,10 +1,10 @@
 @Override
 public int hashCode() {
-    // 假设这是一个简单的哈希码实现，根据对象的某些字段计算哈希码
-    // 这里假设对象有两个字段：field1 和 field2
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((field1 == null) ? 0 : field1.hashCode());
-    result = prime * result + ((field2 == null) ? 0 : field2.hashCode());
+    int result = 17; // Start with a non-zero constant
+    // Assuming there are fields in the class, we would include them in the hash calculation
+    // For example, if there are fields named 'field1' and 'field2':
+    // result = 31 * result + (field1 != null ? field1.hashCode() : 0);
+    // result = 31 * result + (field2 != null ? field2.hashCode() : 0);
+    // Add more fields as necessary
     return result;
 }

@@ -1,23 +1,33 @@
-import java.util.Stack;
-
 public class DiagnosticContext {
-    private static Stack<String> contextStack = new Stack<>();
+    private static final ThreadLocal<Stack<String>> contextStack = ThreadLocal.withInitial(Stack::new);
 
-    /**
-     * 查看此 NDC 顶部的最后诊断上下文，而不将其移除。<p>返回的值是最后推入的值。如果没有可用的上下文，则返回空字符串 ""。
-     * @return String 最内层的诊断上下文。
+    /** 
+     * Osserva l'ultimo contesto diagnostico in cima a questo NDC senza rimuoverlo. <p>Il valore restituito è il valore che è stato inserito per ultimo. Se non è disponibile alcun contesto, viene restituita la stringa vuota "".
+     * @return String Il contesto diagnostico più interno.
      */
     public static String peek() {
-        if (contextStack.isEmpty()) {
-            return "";
-        }
-        return contextStack.peek();
+        Stack<String> stack = contextStack.get();
+        return stack.isEmpty() ? "" : stack.peek();
     }
 
-    // 示例用法
+    public static void push(String context) {
+        contextStack.get().push(context);
+    }
+
+    public static void pop() {
+        Stack<String> stack = contextStack.get();
+        if (!stack.isEmpty()) {
+            stack.pop();
+        }
+    }
+
     public static void main(String[] args) {
-        contextStack.push("Context 1");
-        contextStack.push("Context 2");
-        System.out.println(peek()); // 输出: Context 2
+        push("Context1");
+        push("Context2");
+        System.out.println(peek()); // Should print "Context2"
+        pop();
+        System.out.println(peek()); // Should print "Context1"
+        pop();
+        System.out.println(peek()); // Should print ""
     }
 }

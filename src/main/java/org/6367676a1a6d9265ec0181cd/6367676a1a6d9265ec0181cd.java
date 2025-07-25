@@ -1,26 +1,25 @@
-public class StringUtils {
-
-    /**
-     * 去除给定字符串的前导空白字符。
-     * @param str 要检查的字符串
-     * @return 去除空白后的字符串
+public class StringUtil {
+    
+    /** 
+     * Rimuove gli spazi bianchi iniziali dalla Stringa fornita.
+     * @param str la Stringa da controllare
+     * @return la Stringa senza spazi bianchi iniziali
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
         if (str == null) {
             return null;
         }
-        int len = str.length();
-        int st = 0;
-        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
-            st++;
+        int index = 0;
+        while (index < str.length() && Character.isWhitespace(str.charAt(index))) {
+            index++;
         }
-        return st > 0 ? str.substring(st) : str;
+        return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String input = "   Hello, World!";
-        String output = trimLeadingWhitespace(input);
-        System.out.println(output);  // 输出: "Hello, World!"
+        String testString = "   Hello World!";
+        String result = trimLeadingWhitespace(testString);
+        System.out.println("'" + result + "'"); // Output: 'Hello World!'
     }
 }

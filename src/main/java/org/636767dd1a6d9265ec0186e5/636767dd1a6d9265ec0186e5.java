@@ -1,7 +1,11 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Channels {
+interface IConsumer {
+    void consume(String message);
+}
+
+class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
@@ -9,7 +13,7 @@ public class Channels {
     }
 
     public void addConsumer(IConsumer consumer) {
-        this.consumers.add(consumer);
+        consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
@@ -17,20 +21,29 @@ public class Channels {
     }
 }
 
-public interface IConsumer {
-    void consume(String message);
-}
-
-public class TargetChannelManager {
-
-    /**
-     * 添加新的目标通道。
+public class ChannelManager {
+    /** 
+     * Aggiungi un nuovo canale di destinazione.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        if (channels != null && consumer != null) {
-            channels.addConsumer(consumer);
-        } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
+        channels.addConsumer(consumer);
+    }
+
+    public static void main(String[] args) {
+        Channels channels = new Channels();
+        ChannelManager manager = new ChannelManager();
+
+        IConsumer consumer = new IConsumer() {
+            @Override
+            public void consume(String message) {
+                System.out.println("Consuming message: " + message);
+            }
+        };
+
+        manager.addNewTarget(channels, consumer);
+        // Test the consumer
+        for (IConsumer c : channels.getConsumers()) {
+            c.consume("Hello, World!");
         }
     }
 }

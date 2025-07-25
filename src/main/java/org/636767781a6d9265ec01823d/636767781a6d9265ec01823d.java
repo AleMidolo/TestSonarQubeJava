@@ -1,16 +1,16 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-protected void subAppend(LoggingEvent event) {
-    // Assuming this method is part of a class that has access to a writer or output stream
-    // For example, a FileAppender or ConsoleAppender in Log4j
+public class CustomAppender {
 
-    // Convert the LoggingEvent to a string representation
-    String logMessage = event.getMessage().toString();
-
-    // Example: Writing to the console
-    System.out.println(logMessage);
-
-    // If you have a specific writer or output stream, you can use it like this:
-    // writer.write(logMessage);
-    // writer.flush();
+    /**
+     * Questo metodo esegue la scrittura effettiva
+     */
+    protected void subAppend(LoggingEvent event) {
+        // Implementazione della scrittura del LoggingEvent
+        if (event != null) {
+            String message = event.getRenderedMessage();
+            System.out.println("Logging Event: " + message);
+            // Qui si può aggiungere ulteriore logica per gestire l'evento di logging
+        }
+    }
 }

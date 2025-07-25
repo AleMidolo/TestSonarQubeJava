@@ -12,34 +12,28 @@ public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
 
-    /**
-     * 从列表中移除非空的 {@code node}。
+    /** 
+     * Rimuove il nodo non nullo {@code node} dalla lista. 
      */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {
             return false;
         }
 
-        ListNodeImpl<E> prevNode = node.prev;
-        ListNodeImpl<E> nextNode = node.next;
-
-        if (prevNode == null) {
-            // Node is the head
-            head = nextNode;
+        if (node.prev != null) {
+            node.prev.next = node.next;
         } else {
-            prevNode.next = nextNode;
-            node.prev = null;
+            head = node.next; // node is head
         }
 
-        if (nextNode == null) {
-            // Node is the tail
-            tail = prevNode;
+        if (node.next != null) {
+            node.next.prev = node.prev;
         } else {
-            nextNode.prev = prevNode;
-            node.next = null;
+            tail = node.prev; // node is tail
         }
 
-        node.value = null; // Help GC
+        node.next = null;
+        node.prev = null;
         return true;
     }
 }

@@ -1,37 +1,45 @@
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * 通过遍历边来计算所有具有正度的顶点。这将复杂度保持在 $O(m)$，其中 $m$ 是边的数量。
- * @return 具有正度的顶点集合
- */
-private Set<V> initVisibleVertices() {
-    Set<V> visibleVertices = new HashSet<>();
-    
-    // 假设 edges 是一个包含图中所有边的集合
-    for (Edge<V> edge : edges) {
-        visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getTarget());
-    }
-    
-    return visibleVertices;
-}
+public class Graph<V> {
+    private Set<V> vertices;
+    private Set<Edge<V>> edges;
 
-// 假设 Edge 类的定义如下：
-class Edge<V> {
-    private V source;
-    private V target;
-
-    public Edge(V source, V target) {
-        this.source = source;
-        this.target = target;
+    public Graph() {
+        this.vertices = new HashSet<>();
+        this.edges = new HashSet<>();
     }
 
-    public V getSource() {
-        return source;
+    public void addVertex(V vertex) {
+        vertices.add(vertex);
     }
 
-    public V getTarget() {
-        return target;
+    public void addEdge(V from, V to) {
+        edges.add(new Edge<>(from, to));
+        addVertex(from);
+        addVertex(to);
+    }
+
+    /** 
+     * Calcola tutti i vertici che hanno un grado positivo iterando intenzionalmente sugli archi. Questo mantiene la complessità a $O(m)$ dove $m$ è il numero di archi.
+     * @return insieme di vertici con grado positivo
+     */
+    private Set<V> initVisibleVertices() {
+        Set<V> visibleVertices = new HashSet<>();
+        for (Edge<V> edge : edges) {
+            visibleVertices.add(edge.from);
+            visibleVertices.add(edge.to);
+        }
+        return visibleVertices;
+    }
+
+    private static class Edge<V> {
+        V from;
+        V to;
+
+        Edge(V from, V to) {
+            this.from = from;
+            this.to = to;
+        }
     }
 }

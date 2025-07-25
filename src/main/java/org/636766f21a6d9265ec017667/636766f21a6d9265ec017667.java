@@ -1,22 +1,29 @@
-import java.nio.ByteBuffer;
+import java.io.IOException;
 
 public class ClassReader {
-    private byte[] data;
+    private final byte[] data;
 
     public ClassReader(byte[] data) {
         this.data = data;
     }
 
     /**
-     * 在此 {@link ClassReader} 中读取一个有符号短整型值。<i>此方法旨在供 {@link Attribute} 子类使用，通常不用于类生成器或适配器。</i>
-     * @param offset 此 {@link ClassReader} 中要读取的值的起始偏移量。
-     * @return 读取的值。
+     * Legge un valore short firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o gli adattatori.</i>
+     * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
+     * @return il valore letto.
      */
     public short readShort(final int offset) {
         if (offset < 0 || offset + 2 > data.length) {
-            throw new IndexOutOfBoundsException("Offset out of bounds");
+            throw new IndexOutOfBoundsException("Offset is out of bounds");
         }
-        ByteBuffer buffer = ByteBuffer.wrap(data, offset, 2);
-        return buffer.getShort();
+        return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        byte[] exampleData = {0x00, 0x01, 0x02, 0x03};
+        ClassReader reader = new ClassReader(exampleData);
+        short value = reader.readShort(0);
+        System.out.println("Read short value: " + value);
     }
 }

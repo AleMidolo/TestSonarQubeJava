@@ -1,32 +1,19 @@
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class ConfigurationInitializer {
 
-public class ConfigInitializer {
-
-    /**
-     * 初始化配置，例如检查分发路径
-     */
     public void init() {
-        // 假设分发路径为 "dist"
-        String distributionPath = "dist";
-        Path path = Paths.get(distributionPath);
-
-        // 检查路径是否存在
-        if (Files.exists(path)) {
-            System.out.println("分发路径存在: " + path.toAbsolutePath());
-        } else {
-            System.out.println("分发路径不存在，创建路径: " + path.toAbsolutePath());
-            try {
-                Files.createDirectories(path);
-            } catch (Exception e) {
-                System.err.println("无法创建分发路径: " + e.getMessage());
-            }
+        // Check the distribution path
+        String distributionPath = System.getProperty("distribution.path");
+        
+        if (distributionPath == null || distributionPath.isEmpty()) {
+            throw new IllegalArgumentException("Distribution path is not set.");
         }
+        
+        // Additional initialization logic can be added here
+        System.out.println("Configuration initialized with distribution path: " + distributionPath);
     }
 
     public static void main(String[] args) {
-        ConfigInitializer initializer = new ConfigInitializer();
+        ConfigurationInitializer initializer = new ConfigurationInitializer();
         initializer.init();
     }
 }

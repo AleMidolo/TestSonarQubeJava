@@ -1,42 +1,28 @@
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelnetServer {
-    private List<Socket> clients = new ArrayList<>();
+    private final List<PrintWriter> clientWriters = new ArrayList<>();
 
-    /**
-     * 以适用于 Telnet 的格式向每个客户端发送消息。
-     * @param message 要发送的消息
-     */
     public synchronized void send(final String message) {
-        for (Socket client : clients) {
-            try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
-            } catch (IOException e) {
-                // 处理客户端连接异常
-                e.printStackTrace();
-            }
+        for (PrintWriter writer : clientWriters) {
+            writer.println(message);
+            writer.flush();
         }
     }
 
-    /**
-     * 添加一个新的客户端连接。
-     * @param client 客户端Socket
-     */
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
+    public synchronized void addClient(Socket clientSocket) {
+        try {
+            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+            clientWriters.add(writer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * 移除一个客户端连接。
-     * @param client 客户端Socket
-     */
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
+    public synchronized void removeClient(PrintWriter writer) {
+        clientWriters.remove(writer);
     }
 }

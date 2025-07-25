@@ -1,37 +1,37 @@
 import java.io.File;
 import java.io.IOException;
 
-public class FileUtils {
+public class FileDeletionScheduler {
 
-    /**
-     * 安排在JVM退出时删除指定文件。如果文件是目录，则删除该目录及所有子目录。
-     * @param file 要删除的文件或目录，不能为空 {@code null}
-     * @throws NullPointerException 如果文件为 {@code null}
-     * @throws IOException 如果删除不成功
+    /** 
+     * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
+     * @param file  file o directory da cancellare, non deve essere {@code null}
+     * @throws NullPointerException se il file è {@code null}
+     * @throws IOException in caso di cancellazione non riuscita
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("File cannot be null");
+            throw new NullPointerException("Il file non deve essere null");
         }
-
-        file.deleteOnExit();
-
+        
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File subFile : files) {
-                    forceDeleteOnExit(subFile);
-                }
-            }
+            deleteDirectoryOnExit(file);
+        } else {
+            file.deleteOnExit();
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            File file = new File("path/to/your/file_or_directory");
-            forceDeleteOnExit(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void deleteDirectoryOnExit(File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectoryOnExit(file);
+                } else {
+                    file.deleteOnExit();
+                }
+            }
         }
+        directory.deleteOnExit();
     }
 }

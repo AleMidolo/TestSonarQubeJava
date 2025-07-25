@@ -2,35 +2,31 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ByteReader {
-    private InputStream inputStream;
-    private byte[] buffer;
-    private int bufferPosition;
-    private int bufferLength;
+    private InputStream buffer;
+    private byte[] byteBuffer;
+    private int currentIndex;
+    private int bytesRead;
 
-    public ByteReader(InputStream inputStream, int bufferSize) {
-        this.inputStream = inputStream;
-        this.buffer = new byte[bufferSize];
-        this.bufferPosition = 0;
-        this.bufferLength = 0;
+    public ByteReader(InputStream buffer) {
+        this.buffer = buffer;
+        this.byteBuffer = new byte[1024]; // Buffer size can be adjusted
+        this.currentIndex = 0;
+        this.bytesRead = 0;
     }
 
-    /**
-     * 从<code>buffer</code>中读取一个字节，并在必要时进行填充。
-     * @return 输入流中的下一个字节。
-     * @throws IOException 如果没有更多数据可用。
+    /** 
+     * Legge un byte dal <code>buffer</code> e lo riempie nuovamente se necessario.
+     * @return Il prossimo byte dallo stream di input.
+     * @throws IOException se non ci sono più dati disponibili.
      */
     public byte readByte() throws IOException {
-        if (bufferPosition >= bufferLength) {
-            fillBuffer();
+        if (currentIndex >= bytesRead) {
+            bytesRead = buffer.read(byteBuffer);
+            currentIndex = 0;
+            if (bytesRead == -1) {
+                throw new IOException("No more data available.");
+            }
         }
-        if (bufferLength == -1) {
-            throw new IOException("No more data available");
-        }
-        return buffer[bufferPosition++];
-    }
-
-    private void fillBuffer() throws IOException {
-        bufferLength = inputStream.read(buffer);
-        bufferPosition = 0;
+        return byteBuffer[currentIndex++];
     }
 }

@@ -1,15 +1,11 @@
-import java.util.*;
+public class Bucket {
+    // Assuming there is a data structure to hold the buckets
+    private static List<Bucket> bucketList = new ArrayList<>();
 
-class Bucket {
-    private List<Bucket> buckets;
-
-    public Bucket(List<Bucket> buckets) {
-        this.buckets = buckets;
-    }
-
+    /** 
+     * Rimuove questo bucket dalla struttura dati.
+     */
     public void removeSelf() {
-        if (buckets != null) {
-            buckets.remove(this);
-        }
+        bucketList.remove(this);
     }
 }

@@ -1,28 +1,38 @@
-public class StringUtils {
-
-    /**
-     * 从给定的字符串中修剪所有出现的指定前导字符。
-     * @param str 要检查的字符串
-     * @param leadingCharacter 要修剪的前导字符
-     * @return 修剪后的字符串
+public class StringCleaner {
+    
+    /** 
+     * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
+     * @param str la Stringa da controllare
+     * @param leadingCharacter il carattere iniziale da rimuovere
+     * @return la Stringa ripulita
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
         
-        int index = 0;
-        while (index < str.length() && str.charAt(index) == leadingCharacter) {
-            index++;
+        StringBuilder result = new StringBuilder();
+        boolean leadingCharFound = false;
+
+        for (char c : str.toCharArray()) {
+            if (c == leadingCharacter) {
+                leadingCharFound = true;
+            } else {
+                if (leadingCharFound) {
+                    result.append(c);
+                } else {
+                    result.append(c);
+                }
+            }
         }
         
-        return str.substring(index);
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String str = "###HelloWorld";
-        char leadingCharacter = '#';
-        String result = trimLeadingCharacter(str, leadingCharacter);
-        System.out.println(result);  // 输出: HelloWorld
+        String testString = "aaabacadae";
+        char leadingChar = 'a';
+        String cleanedString = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(cleanedString); // Output: "bcde"
     }
 }

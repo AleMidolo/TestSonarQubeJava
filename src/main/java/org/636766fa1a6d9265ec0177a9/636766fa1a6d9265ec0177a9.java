@@ -1,20 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Block {
+public class TypeManager {
+    
+    // List to hold initialized types
     private List<Integer> initializedTypes;
 
-    public Block() {
+    // Constructor
+    public TypeManager() {
         initializedTypes = new ArrayList<>();
     }
 
     /**
-     * 将一个抽象类型添加到基本块中调用构造函数的类型列表中。
-     * @param abstractType 一个调用了构造函数的抽象类型。
+     * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
+     * @param abstractType un tipo astratto su cui viene invocato un costruttore.
      */
     private void addInitializedType(final int abstractType) {
-        initializedTypes.add(abstractType);
+        if (!initializedTypes.contains(abstractType)) {
+            initializedTypes.add(abstractType);
+        }
     }
 
-    // 其他方法...
+    // Method to get the list of initialized types
+    public List<Integer> getInitializedTypes() {
+        return initializedTypes;
+    }
+
+    public static void main(String[] args) {
+        TypeManager manager = new TypeManager();
+        manager.addInitializedType(1);
+        manager.addInitializedType(2);
+        manager.addInitializedType(1); // This will not be added again
+
+        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
+    }
 }

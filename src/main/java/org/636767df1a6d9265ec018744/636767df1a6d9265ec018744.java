@@ -1,28 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRangeSplitter {
+public class TimeRangeBuilder {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration in milliseconds
-    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    private static final long FETCH_DATA_DURATION = 3600000; // Example duration in milliseconds (1 hour)
 
     /**
-     * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
+     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        long currentStart = start;
+        
+        // Validate input
+        if (start >= end) {
+            return timeRanges; // Return empty list if start is not less than end
+        }
 
+        // Create time ranges
+        long currentStart = start;
         while (currentStart < end) {
             long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
             timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd;
+            currentStart = currentEnd; // Move to the next range
         }
 
         return timeRanges;
     }
 
-    // Inner class representing a time range
+    // Inner class to represent a time range
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -46,6 +51,14 @@ public class TimeRangeSplitter {
                     "start=" + start +
                     ", end=" + end +
                     '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        TimeRangeBuilder builder = new TimeRangeBuilder();
+        List<TimeRange> ranges = builder.buildTimeRanges(0, 10000000); // Example usage
+        for (TimeRange range : ranges) {
+            System.out.println(range);
         }
     }
 }

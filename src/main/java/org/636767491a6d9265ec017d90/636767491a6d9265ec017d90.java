@@ -1,20 +1,16 @@
-import java.util.Objects;
-
 public class ArrayUtils {
-
-    /**
-     * 反转给定数组中指定范围内元素的顺序。
-     * @param <V> 数组中元素的类型
-     * @param arr 数组
-     * @param from 要反转的范围内第一个元素的索引（包含）
-     * @param to 要反转的范围内最后一个元素的索引（包含）
+    /** 
+     * Inverte l'ordine degli elementi nell'intervallo specificato all'interno dell'array fornito.
+     * @param < V > il tipo di elementi nell'array
+     * @param arr l'array
+     * @param from l'indice del primo elemento (inclusivo) all'interno dell'intervallo da invertire
+     * @param to l'indice dell'ultimo elemento (inclusivo) all'interno dell'intervallo da invertire
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "数组不能为空");
-        if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("无效的索引范围");
+        if (arr == null || from < 0 || to >= arr.length || from >= to) {
+            throw new IllegalArgumentException("Invalid indices or array is null");
         }
-
+        
         while (from < to) {
             V temp = arr[from];
             arr[from] = arr[to];
@@ -25,11 +21,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 1, 3);
-        for (Integer num : arr) {
+        Integer[] array = {1, 2, 3, 4, 5};
+        reverse(array, 1, 3);
+        for (Integer num : array) {
             System.out.print(num + " ");
         }
-        // 输出: 1 4 3 2 5
     }
 }

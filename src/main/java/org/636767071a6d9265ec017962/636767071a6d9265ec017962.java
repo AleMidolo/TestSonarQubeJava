@@ -1,22 +1,33 @@
 import org.apache.commons.beanutils.BeanMap;
+import java.util.Map;
 
-public class BeanMapUtils {
+public class BeanMapUtil {
 
-    /**
-     * 将给定 BeanMap 中所有可写属性放入此 BeanMap。只读和只写属性将被忽略。
-     * @param map  要放入的 BeanMap
+    /** 
+     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
+     * @param map  il BeanMap le cui proprietà devono essere inserite
      */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The input BeanMap cannot be null.");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        // 获取当前 BeanMap 的所有可写属性
-        BeanMap thisBeanMap = new BeanMap(this);
-        for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key)) {
-                thisBeanMap.put(key, map.get(key));
+        for (Object property : map.keySet()) {
+            if (isWritable(property, map)) {
+                Object value = map.get(property);
+                this.put(property, value);
             }
         }
+    }
+
+    private boolean isWritable(Object property, BeanMap map) {
+        // Implement logic to check if the property is writable
+        // This is a placeholder for actual writable check logic
+        return true; // Assume all properties are writable for this example
+    }
+
+    private void put(Object property, Object value) {
+        // Implement logic to put the property and value into this BeanMap
+        // This is a placeholder for actual put logic
     }
 }

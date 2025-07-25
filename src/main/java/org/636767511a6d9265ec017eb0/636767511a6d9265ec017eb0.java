@@ -1,26 +1,13 @@
-import java.util.*;
-
-public class MatrixUtils {
-    /**
-     * 获取一行中非零条目的数量。
-     * @param row 行号
-     * @return 一行中非零条目的数量
+public class NonZeroCounter {
+    
+    /** 
+     * Ottiene il numero di voci diverse da zero in una riga.
+     * @param row la riga
+     * @return il numero di voci diverse da zero in una riga
      */
-    public int nonZeros(int row) {
-        // 假设我们有一个二维数组 matrix 表示矩阵
-        int[][] matrix = {
-            {1, 0, 3, 0},
-            {0, 0, 0, 0},
-            {2, 0, 4, 5},
-            {0, 6, 0, 0}
-        };
-
-        if (row < 0 || row >= matrix.length) {
-            throw new IllegalArgumentException("Invalid row number");
-        }
-
+    public int nonZeros(int[] row) {
         int count = 0;
-        for (int value : matrix[row]) {
+        for (int value : row) {
             if (value != 0) {
                 count++;
             }
@@ -29,7 +16,8 @@ public class MatrixUtils {
     }
 
     public static void main(String[] args) {
-        MatrixUtils utils = new MatrixUtils();
-        System.out.println(utils.nonZeros(2)); // 输出: 3
+        NonZeroCounter counter = new NonZeroCounter();
+        int[] row = {1, 0, 2, 3, 0, 4};
+        System.out.println("Numero di voci diverse da zero: " + counter.nonZeros(row));
     }
 }

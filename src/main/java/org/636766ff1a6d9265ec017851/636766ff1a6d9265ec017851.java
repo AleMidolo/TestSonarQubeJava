@@ -1,19 +1,35 @@
-/**
- * 从指定的 <code>position</code> 开始，搜索 <code>buffer</code> 中指定值的字节。
- * @param value 要查找的值。
- * @param pos   搜索的起始位置。
- * @return 找到的字节位置，从 <code>buffer</code> 开始计数，如果未找到则返回 <code>-1</code>。
- */
-protected int findByte(byte value, int pos) {
-    if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Position is out of bounds");
-    }
+public class ByteFinder {
     
-    for (int i = pos; i < buffer.length; i++) {
-        if (buffer[i] == value) {
-            return i;
+    private byte[] buffer;
+
+    public ByteFinder(byte[] buffer) {
+        this.buffer = buffer;
+    }
+
+    /** 
+     * Cerca un byte di valore specificato nel <code>buffer</code>, partendo dalla <code>posizione</code> specificata.
+     * @param value Il valore da cercare.
+     * @param pos   La posizione di partenza per la ricerca.
+     * @return La posizione del byte trovato, contando dall'inizio del <code>buffer</code>, oppure <code>-1</code> se non trovato.
+     */
+    protected int findByte(byte value, int pos) {
+        if (pos < 0 || pos >= buffer.length) {
+            return -1; // posizione non valida
         }
+        
+        for (int i = pos; i < buffer.length; i++) {
+            if (buffer[i] == value) {
+                return i; // byte trovato
+            }
+        }
+        
+        return -1; // byte non trovato
     }
-    
-    return -1;
+
+    public static void main(String[] args) {
+        byte[] data = {1, 2, 3, 4, 5, 2};
+        ByteFinder finder = new ByteFinder(data);
+        int position = finder.findByte((byte) 2, 0);
+        System.out.println("Byte trovato alla posizione: " + position);
+    }
 }

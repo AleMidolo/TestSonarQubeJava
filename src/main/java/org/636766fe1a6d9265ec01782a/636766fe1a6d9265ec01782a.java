@@ -1,25 +1,31 @@
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
+public class ConstantPoolReader {
+    private byte[] classFileBuffer;
 
-final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-    // Assuming classFileBuffer is a ByteBuffer containing the class file data
-    ByteBuffer classFileBuffer = ByteBuffer.wrap(new byte[0]); // Replace with actual class file data
+    public ConstantPoolReader(byte[] classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
+    }
 
-    // Move to the constant pool entry index
-    classFileBuffer.position(constantPoolEntryIndex);
+    /** 
+     * Legge un'entrata della pool di costanti CONSTANT_Utf8 in {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex l'indice di un'entrata CONSTANT_Utf8 nella tabella delle costanti della classe.
+     * @param charBuffer il buffer da utilizzare per leggere la stringa. Questo buffer deve essere sufficientemente grande. Non viene ridimensionato automaticamente.
+     * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
+     */
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        // Assuming the classFileBuffer is structured correctly and contains the necessary data
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        int length = (classFileBuffer[offset + 1] << 8) | (classFileBuffer[offset + 2] & 0xFF);
+        
+        for (int i = 0; i < length; i++) {
+            charBuffer[i] = (char) classFileBuffer[offset + 3 + i];
+        }
+        
+        return new String(charBuffer, 0, length);
+    }
 
-    // Read the length of the UTF-8 string
-    int length = classFileBuffer.getShort() & 0xFFFF;
-
-    // Read the UTF-8 bytes into a byte array
-    byte[] utf8Bytes = new byte[length];
-    classFileBuffer.get(utf8Bytes);
-
-    // Decode the UTF-8 bytes into the provided char buffer
-    CharBuffer decodedBuffer = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes));
-    decodedBuffer.get(charBuffer, 0, decodedBuffer.length());
-
-    // Return the string representation
-    return new String(charBuffer, 0, decodedBuffer.length());
+    private int getConstantPoolEntryOffset(int index) {
+        // This method should return the correct offset for the given constant pool entry index.
+        // For simplicity, let's assume each entry is of fixed size (this is not true in practice).
+        return index * 10; // Placeholder implementation
+    }
 }

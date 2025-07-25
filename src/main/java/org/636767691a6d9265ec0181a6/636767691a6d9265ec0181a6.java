@@ -1,4 +1,11 @@
 public class StringSplitter {
+    
+    /** 
+     * Divide una Stringa alla prima occorrenza del delimitatore. Non include il delimitatore nel risultato.
+     * @param toSplit la stringa da dividere
+     * @param delimiter il delimitatore con cui dividere la stringa
+     * @return un array di due elementi con l'indice 0 che rappresenta la parte prima del delimitatore, e l'indice 1 che rappresenta la parte dopo il delimitatore (nessun elemento include il delimitatore); oppure <code>null</code> se il delimitatore non è stato trovato nella Stringa di input fornita
+     */
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
             return null;
@@ -9,18 +16,17 @@ public class StringSplitter {
             return null;
         }
         
-        String[] result = new String[2];
-        result[0] = toSplit.substring(0, index);
-        result[1] = toSplit.substring(index + delimiter.length());
+        String beforeDelimiter = toSplit.substring(0, index);
+        String afterDelimiter = toSplit.substring(index + delimiter.length());
         
-        return result;
+        return new String[] { beforeDelimiter, afterDelimiter };
     }
 
     public static void main(String[] args) {
         String[] result = split("Hello,World", ",");
         if (result != null) {
-            System.out.println("Part 1: " + result[0]);
-            System.out.println("Part 2: " + result[1]);
+            System.out.println("Before: " + result[0]);
+            System.out.println("After: " + result[1]);
         } else {
             System.out.println("Delimiter not found.");
         }

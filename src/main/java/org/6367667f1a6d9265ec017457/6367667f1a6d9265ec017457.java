@@ -1,20 +1,44 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-public class Decoder {
+public class OctetDecoder {
 
-    /**
-     * 使用 UTF-8 解码将字节解码为字符，并将字符附加到 StringBuffer 中。
-     * @param i 当前字节的索引
-     * @param bb 包含待解码字节的 ByteBuffer
-     * @param sb 用于存储解码后字符的 StringBuilder
-     * @return 下一个未检查字符在待解码字符串中的索引
+    /** 
+     * Decodifica gli ottetti in caratteri utilizzando la decodifica UTF-8 e aggiunge i caratteri ad uno oggetto StringBuffer.
+     * @return l'indice del prossimo carattere non controllato nella stringa da decodificare
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-        byte[] bytes = new byte[bb.remaining()];
-        bb.get(bytes);
-        String decodedString = new String(bytes, i, bytes.length - i, StandardCharsets.UTF_8);
-        sb.append(decodedString);
-        return bytes.length; // 返回下一个未检查字符的索引
+        while (i < bb.remaining()) {
+            byte b = bb.get(i);
+            if ((b & 0x80) == 0) { // 1-byte character
+                sb.append((char) b);
+                i++;
+            } else if ((b & 0xE0) == 0xC0) { // 2-byte character
+                if (i + 1 < bb.remaining()) {
+                    sb.append(new String(new byte[]{b, bb.get(i + 1)}, StandardCharsets.UTF_8));
+                    i += 2;
+                } else {
+                    break; // incomplete character
+                }
+            } else if ((b & 0xF0) == 0xE0) { // 3-byte character
+                if (i + 2 < bb.remaining()) {
+                    sb.append(new String(new byte[]{b, bb.get(i + 1), bb.get(i + 2)}, StandardCharsets.UTF_8));
+                    i += 3;
+                } else {
+                    break; // incomplete character
+                }
+            } else if ((b & 0xF8) == 0xF0) { // 4-byte character
+                if (i + 3 < bb.remaining()) {
+                    sb.append(new String(new byte[]{b, bb.get(i + 1), bb.get(i + 2), bb.get(i + 3)}, StandardCharsets.UTF_8));
+                    i += 4;
+                } else {
+                    break; // incomplete character
+                }
+            } else {
+                // Invalid UTF-8 byte, skip it
+                i++;
+            }
+        }
+        return i;
     }
 }

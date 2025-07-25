@@ -1,16 +1,36 @@
-import java.util.Objects;
-
 public class DataTable {
-    // Assuming DataTable class has necessary fields and methods
+    // Assuming DataTable has a method to get the bucket
+    private String bucket;
 
-    public boolean isCompatible(DataTable dataset) {
-        // Assuming compatibility is determined by comparing the bucket of the current instance with the bucket of the provided dataset
-        return Objects.equals(this.getBucket(), dataset.getBucket());
+    public DataTable(String bucket) {
+        this.bucket = bucket;
     }
 
-    // Placeholder method for getting the bucket
-    private String getBucket() {
-        // Implement logic to return the bucket of the DataTable
-        return "exampleBucket";
+    public String getBucket() {
+        return bucket;
+    }
+}
+
+public class CompatibilityChecker {
+    private String bucket;
+
+    public CompatibilityChecker(String bucket) {
+        this.bucket = bucket;
+    }
+
+    /** 
+     * @return true se il bucket è lo stesso.
+     */
+    public boolean isCompatible(DataTable dataset) {
+        return this.bucket.equals(dataset.getBucket());
+    }
+
+    public static void main(String[] args) {
+        CompatibilityChecker checker = new CompatibilityChecker("bucket1");
+        DataTable dataset = new DataTable("bucket1");
+        System.out.println(checker.isCompatible(dataset)); // Should print true
+
+        DataTable dataset2 = new DataTable("bucket2");
+        System.out.println(checker.isCompatible(dataset2)); // Should print false
     }
 }

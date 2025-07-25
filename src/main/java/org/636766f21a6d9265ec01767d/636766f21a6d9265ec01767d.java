@@ -1,15 +1,16 @@
-public class ObjectToStringUtil {
-    /**
-     * 对象转字符串，当对象为空时返回空字符串，否则返回toString();
+public class ObjectConverter {
+
+    /** 
+     * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString(); 
      */
     public static String toString(Object object) {
-        return object == null ? "" : object.toString();
+        return object == null ? null : object.toString();
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(toString(null)); // 输出: ""
-        System.out.println(toString("Hello, World!")); // 输出: Hello, World!
-        System.out.println(toString(123)); // 输出: 123
+        Object obj1 = null;
+        Object obj2 = new Object();
+        System.out.println(toString(obj1)); // Output: null
+        System.out.println(toString(obj2)); // Output: java.lang.Object@<hashcode>
     }
 }

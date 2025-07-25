@@ -1,38 +1,29 @@
-import java.util.HashSet;
-import java.util.Set;
+public class StringManipulator {
 
-public class StringUtils {
-
-    /**
-     * 删除给定字符串中的所有给定字符。
-     * @param inString 原始字符串
-     * @param charsToDelete 要删除的字符集合。例如 "az\n" 将删除 'a'、'z' 和换行符。
-     * @return 结果字符串
+    /** 
+     * Elimina qualsiasi carattere in una Stringa data.
+     * @param inString la Stringa originale
+     * @param charsToDelete un insieme di caratteri da eliminare. Ad esempio, "az\n" eliminerà le 'a', le 'z' e le nuove righe.
+     * @return la Stringa risultante
      */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
-            return inString;
+            return inString; // Return original string if input is null
         }
-
-        Set<Character> charsToRemove = new HashSet<>();
-        for (char c : charsToDelete.toCharArray()) {
-            charsToRemove.add(c);
-        }
-
+        
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (!charsToRemove.contains(c)) {
-                result.append(c);
+            if (charsToDelete.indexOf(c) == -1) {
+                result.append(c); // Append character if it's not in charsToDelete
             }
         }
-
-        return result.toString();
+        return result.toString(); // Return the resulting string
     }
 
     public static void main(String[] args) {
-        String input = "Hello, World!\nThis is a test.";
-        String charsToDelete = "aeiou\n";
-        String result = deleteAny(input, charsToDelete);
-        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
+        String original = "Hello World!";
+        String charsToRemove = "lo";
+        String result = deleteAny(original, charsToRemove);
+        System.out.println(result); // Output: "He Wr!"
     }
 }

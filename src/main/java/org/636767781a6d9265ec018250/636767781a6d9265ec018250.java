@@ -1,18 +1,21 @@
-import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.Filter;
 
-public class MyFilter extends Filter {
+public class FilterDecider {
 
-    @Override
+    /**
+     * Restituisce {@link Filter#NEUTRAL} se non c'è corrispondenza con la stringa.
+     */
     public int decide(LoggingEvent event) {
-        // 这里假设我们有一个字符串匹配的逻辑
-        // 如果没有匹配到，返回 Filter.NEUTRAL
-        // 例如，假设我们检查日志消息是否包含某个关键字
-        String message = event.getRenderedMessage();
-        if (message != null && message.contains("keyword")) {
-            return Filter.ACCEPT; // 如果匹配到关键字，接受日志
-        } else {
-            return Filter.NEUTRAL; // 如果没有匹配到，返回 NEUTRAL
+        // Assuming we are checking for a specific string match in the LoggingEvent
+        String message = event.getMessage();
+        String targetString = "specificString"; // Replace with the actual string to match
+
+        if (!message.contains(targetString)) {
+            return Filter.NEUTRAL;
         }
+        
+        // Additional logic can be added here for other cases
+        return Filter.DENY; // Example return value if there's a match
     }
 }

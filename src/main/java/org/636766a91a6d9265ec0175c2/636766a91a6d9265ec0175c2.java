@@ -1,20 +1,37 @@
-import java.util.Stack;
+public class StackFrame {
+    private int[] stack;
+    private int top;
 
-public class FrameStack {
-    private Stack<Integer> stack;
+    public StackFrame(int size) {
+        stack = new int[size];
+        top = -1;
+    }
 
-    public FrameStack() {
-        stack = new Stack<>();
+    public void push(int value) {
+        if (top < stack.length - 1) {
+            stack[++top] = value;
+        } else {
+            throw new StackOverflowError("Stack is full");
+        }
     }
 
     /**
-     * 从输出帧栈中弹出一个抽象类型并返回其值。
-     * @return 从输出帧栈中弹出的抽象类型。
+     * Estrae un tipo astratto dallo stack del frame di output e restituisce il suo valore.
+     * @return il tipo astratto che è stato estratto dallo stack del frame di output.
      */
     private int pop() {
-        if (stack.isEmpty()) {
+        if (top >= 0) {
+            return stack[top--];
+        } else {
             throw new IllegalStateException("Stack is empty");
         }
-        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+        StackFrame frame = new StackFrame(5);
+        frame.push(10);
+        frame.push(20);
+        System.out.println("Popped value: " + frame.pop()); // Should print 20
+        System.out.println("Popped value: " + frame.pop()); // Should print 10
     }
 }

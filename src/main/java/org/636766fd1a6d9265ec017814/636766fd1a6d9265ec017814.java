@@ -1,16 +1,14 @@
 public class ArrayComparator {
-    /**
-     * 比较数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节。
-     * @param a     第一个要比较的数组。
-     * @param b     第二个要比较的数组。
-     * @param count 要比较的字节数。
-     * @return 如果数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节相等，则返回 <code>true</code>。
+    
+    /** 
+     * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
+     * @param a     Il primo array da confrontare.
+     * @param b     Il secondo array da confrontare.
+     * @param count Quanti byte devono essere confrontati.
+     * @return <code>true</code> se i <code>count</code> primi byte negli array <code>a</code> e <code>b</code> sono uguali.
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
-        if (a == null || b == null) {
-            return a == b;
-        }
-        if (a.length < count || b.length < count) {
+        if (a == null || b == null || count < 0 || count > a.length || count > b.length) {
             return false;
         }
         for (int i = 0; i < count; i++) {
@@ -22,13 +20,11 @@ public class ArrayComparator {
     }
 
     public static void main(String[] args) {
-        byte[] a = {1, 2, 3, 4, 5};
-        byte[] b = {1, 2, 3, 4, 5};
-        byte[] c = {1, 2, 3, 4, 6};
-        int count = 4;
+        byte[] array1 = {1, 2, 3, 4, 5};
+        byte[] array2 = {1, 2, 3, 6, 7};
+        int count = 3;
 
-        System.out.println(arrayequals(a, b, count)); // true
-        System.out.println(arrayequals(a, c, count)); // true
-        System.out.println(arrayequals(a, c, 5));     // false
+        boolean result = arrayequals(array1, array2, count);
+        System.out.println("I primi " + count + " byte sono uguali: " + result);
     }
 }

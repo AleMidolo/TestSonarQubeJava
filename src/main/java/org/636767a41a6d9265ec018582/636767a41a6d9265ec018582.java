@@ -1,53 +1,35 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.avro.Schema;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.io.BinaryEncoder;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.google.protobuf.Schema;
+import com.google.protobuf.LinkedBuffer;
 
-public class DelimitedMessageWriter {
+public class MessageSerializer {
 
+    /** 
+     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
+     * @return la dimensione del messaggio
+     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using Protostuff
-        byte[] serializedMessage = ProtostuffIOUtil.toByteArray(message, schema, buffer);
-
-        // Write the length of the message as a varint
-        int messageSize = serializedMessage.length;
-        writeVarint(out, messageSize);
-
-        // Write the serialized message
-        out.write(serializedMessage);
-
-        // Return the total size of the message (including the length prefix)
-        return messageSize + computeVarintSize(messageSize);
+        // Serialize the message to a byte array
+        byte[] messageBytes = schema.encode(message, buffer);
+        
+        // Get the length of the message
+        int length = messageBytes.length;
+        
+        // Write the length as a varint
+        writeVarint(out, length);
+        
+        // Write the message bytes to the output stream
+        out.write(messageBytes);
+        
+        return length;
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                out.write(value);
-                return;
-            } else {
-                out.write((value & 0x7F) | 0x80);
-                value >>>= 7;
-            }
+        while ((value & ~0x7F) != 0) {
+            out.write((value & 0x7F) | 0x80);
+            value >>>= 7;
         }
-    }
-
-    private static int computeVarintSize(int value) {
-        int size = 0;
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                size++;
-                return size;
-            } else {
-                size++;
-                value >>>= 7;
-            }
-        }
+        out.write(value);
     }
 }

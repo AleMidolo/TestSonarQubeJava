@@ -1,7 +1,26 @@
-/**
- * <p> 获取由此构建器构建的字符串。 </p>
- * @return 构建的字符串
- */
-public String toString() {
-    return this.builder.toString();
+public class StringBuilderExample {
+    private StringBuilder builder;
+
+    public StringBuilderExample() {
+        this.builder = new StringBuilder();
+    }
+
+    /** 
+     * <p> Ottiene la String costruita da questo builder. </p>
+     * @return la stringa costruita
+     */
+    public String toString() {
+        return builder.toString();
+    }
+
+    public void append(String str) {
+        builder.append(str);
+    }
+
+    public static void main(String[] args) {
+        StringBuilderExample example = new StringBuilderExample();
+        example.append("Hello, ");
+        example.append("World!");
+        System.out.println(example.toString()); // Output: Hello, World!
+    }
 }

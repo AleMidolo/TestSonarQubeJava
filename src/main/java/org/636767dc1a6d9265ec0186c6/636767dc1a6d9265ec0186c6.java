@@ -1,27 +1,30 @@
-import java.util.Set;
+public class FieldChecker {
 
-public class Example {
-    private Set<String> storedFields;
+    private Fields storedFields;
 
     /**
-     * 当输入字段已经存储在属性中时返回真。
+     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
      */
     private boolean containsAllFields(Fields fields) {
-        for (String field : fields) {
-            if (!storedFields.contains(field)) {
-                return false;
-            }
+        if (storedFields == null || fields == null) {
+            return false;
         }
-        return true;
+        
+        return storedFields.equals(fields);
     }
 
-    // Assuming Fields is a class that implements Iterable<String>
-    private static class Fields implements Iterable<String> {
-        // Implementation of Fields class
-        @Override
-        public Iterator<String> iterator() {
-            // Return an iterator over the fields
-            return null; // Placeholder, replace with actual implementation
-        }
+    // Assuming Fields class has been defined elsewhere
+    public void setStoredFields(Fields fields) {
+        this.storedFields = fields;
+    }
+    
+    public static void main(String[] args) {
+        // Example usage
+        FieldChecker checker = new FieldChecker();
+        Fields fields1 = new Fields(); // Assume Fields has a default constructor
+        Fields fields2 = new Fields(); // Assume Fields has a default constructor
+        
+        checker.setStoredFields(fields1);
+        System.out.println(checker.containsAllFields(fields2)); // Should print false
     }
 }

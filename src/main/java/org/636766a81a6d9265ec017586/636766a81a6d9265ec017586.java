@@ -1,36 +1,45 @@
-import java.util.Stack;
+public class StackFrame {
+    private final Stack<Object> stack;
 
-public class FrameStack {
-    private Stack<Object> stack;
-
-    public FrameStack() {
-        stack = new Stack<>();
+    public StackFrame() {
+        this.stack = new Stack<>();
     }
 
     /** 
-     * 从输出帧栈中弹出给定数量的抽象类型。
-     * @param elements 需弹出的抽象类型数量。
+     * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
+     * @param elements il numero di tipi astratti che devono essere rimossi.
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
-        }
-        if (stack.size() < elements) {
-            throw new IllegalStateException("Not enough elements in the stack to pop.");
+            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
         }
         for (int i = 0; i < elements; i++) {
-            stack.pop();
+            if (!stack.isEmpty()) {
+                stack.pop();
+            } else {
+                break; // Stop if the stack is already empty
+            }
         }
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push("Element1");
-        frameStack.stack.push("Element2");
-        frameStack.stack.push("Element3");
+    // Method to push an element onto the stack for testing purposes
+    public void push(Object element) {
+        stack.push(element);
+    }
 
-        frameStack.pop(2); // Pops the last two elements
-        System.out.println(frameStack.stack); // Output: [Element1]
+    // Method to get the current size of the stack for testing purposes
+    public int size() {
+        return stack.size();
+    }
+
+    public static void main(String[] args) {
+        StackFrame frame = new StackFrame();
+        frame.push("Type1");
+        frame.push("Type2");
+        frame.push("Type3");
+        
+        System.out.println("Stack size before pop: " + frame.size());
+        frame.pop(2);
+        System.out.println("Stack size after popping 2 elements: " + frame.size());
     }
 }

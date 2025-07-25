@@ -1,11 +1,11 @@
 public class SubstringMatcher {
 
-    /**
-     * 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
-     * @param str 原始字符串（或 StringBuilder）
-     * @param index 在原始字符串中开始匹配的索引
-     * @param substring 要在给定索引处匹配的子字符串
-     * @return 如果给定的字符串在指定索引处与给定的子字符串匹配，则返回 {@code true}，否则返回 {@code false}。
+    /** 
+     * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+     * @param str la stringa originale (o StringBuilder)
+     * @param index l'indice nella stringa originale da cui iniziare a confrontare
+     * @param substring la sottostringa da confrontare all'indice specificato
+     * @return {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
@@ -23,12 +23,12 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        CharSequence str = "Hello, World!";
-        CharSequence substring = "World";
-        int index = 7;
-
-        boolean result = substringMatch(str, index, substring);
-        System.out.println(result); // 输出: true
+        // Test examples
+        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
+        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
+        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
+        System.out.println(substringMatch("Hello, World!", 5, ", W")); // true
+        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
+        System.out.println(substringMatch("Hello, World!", 13, "!")); // false
     }
 }

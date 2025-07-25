@@ -1,21 +1,29 @@
 public class CharUtils {
+    private static final Character[] cache = new Character[128];
+
+    static {
+        for (int i = 0; i < cache.length; i++) {
+            cache[i] = (char) i;
+        }
+    }
 
     /**
-     * <p>将字符转换为 Character 对象。</p> <p>对于 ASCII 7 位字符，此方法使用缓存，每次调用都会返回相同的 Character 对象。</p> <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
-     * @param ch  要转换的字符
-     * @return 指定字符的 Character 对象
+     * <p>Converte il carattere in un oggetto Character.</p>
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto Character ogni volta.</p>
+     * <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
+     * @param ch  il carattere da convertire
+     * @return un oggetto Character del carattere specificato
      */
     public static Character toCharacterObject(final char ch) {
-        // 对于 ASCII 7 位字符（0-127），使用 Character 的缓存
-        if (ch <= 127) {
-            return Character.valueOf(ch);
+        if (ch >= 0 && ch < 128) {
+            return cache[ch];
         }
-        // 对于其他字符，直接返回新的 Character 对象
-        return new Character(ch);
+        return Character.valueOf(ch);
     }
 
     public static void main(String[] args) {
-        System.out.println(toCharacterObject(' '));  // 输出:  
-        System.out.println(toCharacterObject('A'));  // 输出: A
+        System.out.println(toCharacterObject(' ')); // Output: ' '
+        System.out.println(toCharacterObject('A')); // Output: 'A'
+        System.out.println(toCharacterObject('ñ')); // Output: 'ñ'
     }
 }

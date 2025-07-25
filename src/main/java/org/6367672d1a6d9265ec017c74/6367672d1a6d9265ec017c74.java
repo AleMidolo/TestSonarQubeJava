@@ -1,28 +1,32 @@
 import java.util.HashSet;
-import java.util.Set;
 
-public class CollectionRemover {
-    private Set<Integer> collection;
+public class CustomSet {
+    private HashSet<Integer> set;
 
-    public CollectionRemover() {
-        this.collection = new HashSet<>();
+    public CustomSet() {
+        set = new HashSet<>();
     }
 
+    /** 
+     * Rimuove un valore dal set. Restituisce true se il set conteneva l'elemento specificato. 
+     */
     public boolean remove(int val) {
-        return this.collection.remove(val);
+        return set.remove(val);
     }
 
     public void add(int val) {
-        this.collection.add(val);
+        set.add(val);
+    }
+
+    public boolean contains(int val) {
+        return set.contains(val);
     }
 
     public static void main(String[] args) {
-        CollectionRemover remover = new CollectionRemover();
-        remover.add(10);
-        remover.add(20);
-        remover.add(30);
-
-        System.out.println(remover.remove(20)); // 输出: true
-        System.out.println(remover.remove(40)); // 输出: false
+        CustomSet customSet = new CustomSet();
+        customSet.add(1);
+        customSet.add(2);
+        System.out.println(customSet.remove(1)); // true
+        System.out.println(customSet.remove(3)); // false
     }
 }

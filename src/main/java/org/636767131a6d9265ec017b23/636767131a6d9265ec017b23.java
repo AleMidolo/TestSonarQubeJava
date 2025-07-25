@@ -1,25 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class SourceCodeTagger {
+public class LineNumberManager {
+    
     private List<Integer> lineNumbers;
 
-    public SourceCodeTagger() {
-        this.lineNumbers = new ArrayList<>();
+    public LineNumberManager() {
+        lineNumbers = new ArrayList<>();
     }
 
-    /**
-     * 添加与此标签对应的源代码行号。
-     * @param lineNumber 一个源代码行号（应为正数）。
+    /** 
+     * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
+     * @param lineNumber un numero di riga sorgente (che dovrebbe essere strettamente positivo).
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Line number must be a positive integer.");
+            throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo.");
         }
-        this.lineNumbers.add(lineNumber);
+        lineNumbers.add(lineNumber);
     }
 
     public List<Integer> getLineNumbers() {
-        return new ArrayList<>(this.lineNumbers);
+        return new ArrayList<>(lineNumbers);
+    }
+
+    public static void main(String[] args) {
+        LineNumberManager manager = new LineNumberManager();
+        manager.addLineNumber(5);
+        manager.addLineNumber(10);
+        System.out.println(manager.getLineNumbers());
     }
 }

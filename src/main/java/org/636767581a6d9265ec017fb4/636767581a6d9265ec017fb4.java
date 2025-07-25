@@ -1,44 +1,26 @@
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
-    /**
-     * 为每个键找到一个最小上界。
-     * @param keys 键的列表。
-     * @return 计算得到的键上界。
+    /** 
+     * Trova un limite superiore minimo per ogni chiave.
+     * @param keys una lista di chiavi.
+     * @return il limite superiore delle chiavi calcolato.
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
-        if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
-        }
-
         List<Integer> upperBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        
+        if (keys == null || keys.isEmpty()) {
+            return upperBounds; // Return empty list if input is null or empty
+        }
 
         for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index >= 0) {
-                // If the key is found, the upper bound is the next element
-                if (index < sortedKeys.size() - 1) {
-                    upperBounds.add(index + 1);
-                } else {
-                    // If it's the last element, there is no upper bound
-                    upperBounds.add(-1);
-                }
-            } else {
-                // If the key is not found, the insertion point is the upper bound
-                int insertionPoint = -index - 1;
-                if (insertionPoint < sortedKeys.size()) {
-                    upperBounds.add(insertionPoint);
-                } else {
-                    upperBounds.add(-1);
-                }
-            }
+            // Assuming the upper bound is the integer value of the key
+            // This is a placeholder logic; actual logic may vary based on requirements
+            upperBounds.add(key.hashCode()); // Using hashCode as a simple upper bound
         }
-
+        
         return upperBounds;
     }
 }

@@ -1,18 +1,22 @@
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
-public class LogTable {
-    private final JTable table;
-
-    public LogTable(JTable table) {
-        this.table = table;
+public class Logger {
+    
+    public void addMessage(final LogRecord lr) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Here you would add the log record to your LogTable
+                // For example, assuming you have a method to update the LogTable:
+                updateLogTable(lr);
+            }
+        });
     }
 
-    public void addMessage(final LogRecord lr) {
-        SwingUtilities.invokeLater(() -> {
-            // Assuming the table model is a DefaultTableModel
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.addRow(new Object[]{lr.getLevel(), lr.getMessage(), lr.getMillis()});
-        });
+    private void updateLogTable(LogRecord lr) {
+        // Implementation to update the LogTable with the log record
+        // This is a placeholder for the actual log table update logic
+        System.out.println("Log Message: " + lr.getMessage());
     }
 }

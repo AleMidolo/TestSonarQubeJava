@@ -1,27 +1,24 @@
 import java.util.List;
 
-public class StackMapTableHandler {
-    private List<VerificationTypeInfo> currentFrame;
-    private List<VerificationTypeInfo> stackMapTableEntries;
+public class StackMapTable {
 
-    /**
-     * 使用在 StackMapTable 属性中使用的 JVMS verification_type_info 格式，将 {@link #currentFrame} 中的一些抽象类型放入 {@link #stackMapTableEntries} 中。
-     * @param start 要写入的 {@link #currentFrame} 中第一个类型的索引。
-     * @param end 要写入的 {@link #currentFrame} 中最后一个类型的索引（不包括该索引）。
+    private List<Integer> currentFrame; // Assuming currentFrame is a list of Integer types
+    private List<Integer> stackMapTableEntries; // Assuming stackMapTableEntries is a list of Integer types
+
+    /** 
+     * Inserisce alcuni tipi astratti di {@link #currentFrame} in {@link #stackMapTableEntries}, utilizzando il formato verification_type_info del JVMS utilizzato negli attributi StackMapTable.
+     * @param start indice del primo tipo in {@link #currentFrame} da scrivere.
+     * @param end indice dell'ultimo tipo in {@link #currentFrame} da scrivere (esclusivo).
      */
     private void putAbstractTypes(final int start, final int end) {
         if (start < 0 || end > currentFrame.size() || start >= end) {
-            throw new IllegalArgumentException("Invalid start or end index");
+            throw new IllegalArgumentException("Invalid start or end indices");
         }
-
+        
         for (int i = start; i < end; i++) {
-            VerificationTypeInfo typeInfo = currentFrame.get(i);
-            stackMapTableEntries.add(typeInfo);
+            Integer type = currentFrame.get(i);
+            // Assuming some transformation or verification is needed for the type
+            stackMapTableEntries.add(type); // Add the type to stackMapTableEntries
         }
-    }
-
-    // Assuming VerificationTypeInfo is a class representing the verification type info
-    private static class VerificationTypeInfo {
-        // Define the structure of VerificationTypeInfo as per JVMS
     }
 }

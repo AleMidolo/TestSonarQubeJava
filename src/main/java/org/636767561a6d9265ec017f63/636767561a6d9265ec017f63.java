@@ -1,25 +1,45 @@
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-public class Graph {
-    private Set<Integer> visited;
-    private Set<Integer> vertices;
+public class GraphIterator implements Iterator<Vertex> {
+    private List<Vertex> vertices;
+    private boolean[] visited;
+    private int currentIndex;
 
-    public Graph(Set<Integer> vertices) {
+    public GraphIterator(List<Vertex> vertices) {
         this.vertices = vertices;
-        this.visited = new HashSet<>();
+        this.visited = new boolean[vertices.size()];
+        this.currentIndex = 0;
     }
 
-    /**
-     * 检查是否存在未访问的顶点。
-     * @return 如果存在未访问的顶点，则返回真。
+    /** 
+     * Controlla se esistono vertici non visitati.
+     * @return true se esistono vertici non visitati.
      */
     @Override
     public boolean hasNext() {
-        for (Integer vertex : vertices) {
-            if (!visited.contains(vertex)) {
+        while (currentIndex < vertices.size()) {
+            if (!visited[currentIndex]) {
                 return true;
             }
+            currentIndex++;
         }
         return false;
+    }
+
+    @Override
+    public Vertex next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        Vertex vertex = vertices.get(currentIndex);
+        visited[currentIndex] = true;
+        currentIndex++;
+        return vertex;
+    }
+    
+    // Assuming Vertex is a class defined elsewhere
+    public static class Vertex {
+        // Vertex properties and methods
     }
 }

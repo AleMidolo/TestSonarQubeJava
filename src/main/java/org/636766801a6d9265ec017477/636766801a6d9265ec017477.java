@@ -1,48 +1,29 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
-public class FileReverser {
-
+public class FileAdder {
+    
     /**
-     * 以逆序添加指定的文件。
+     * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("Files array cannot be null");
-        }
-
-        List<byte[]> fileContents = new ArrayList<>();
-
-        // 读取所有文件内容
+        Stack<InputStream> stack = new Stack<>();
+        
+        // Push all files onto the stack
         for (InputStream file : files) {
-            if (file == null) {
-                throw new IllegalArgumentException("File input stream cannot be null");
-            }
-
-            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = file.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
-                }
-                buffer.flush();
-                fileContents.add(buffer.toByteArray());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read file content", e);
-            }
+            stack.push(file);
         }
-
-        // 逆序文件内容
-        Collections.reverse(fileContents);
-
-        // 处理逆序后的文件内容（例如写入到某个地方）
-        for (byte[] content : fileContents) {
-            // 这里可以根据需要处理逆序后的文件内容
-            // 例如写入到输出流或进行其他操作
+        
+        // Pop files from the stack to add them in reverse order
+        while (!stack.isEmpty()) {
+            InputStream fileToAdd = stack.pop();
+            // Add the file (implementation depends on the context)
+            addFile(fileToAdd);
         }
+    }
+    
+    private void addFile(InputStream file) {
+        // Implementation for adding the file goes here
+        // For example, reading the file or processing it
     }
 }

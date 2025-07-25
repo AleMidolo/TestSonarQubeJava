@@ -1,41 +1,31 @@
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class PropertySubstitutor {
+public class VariableSubstitutor {
 
+    /** 
+     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. Quindi esegui la sostituzione delle variabili sul valore trovato.
+     */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // or throw an exception based on your needs
         }
-
-        // 正则表达式匹配 ${...} 形式的变量
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-        Matcher matcher = pattern.matcher(value);
-        StringBuffer result = new StringBuffer();
-
-        while (matcher.find()) {
-            String varName = matcher.group(1);
-            String varValue = props.getProperty(varName);
-            if (varValue != null) {
-                matcher.appendReplacement(result, varValue);
-            } else {
-                // 如果找不到对应的变量，保留原样
-                matcher.appendReplacement(result, matcher.group(0));
-            }
+        
+        // Replace variables in the value
+        for (String propKey : props.stringPropertyNames()) {
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
-        matcher.appendTail(result);
-
-        return result.toString();
+        
+        return value;
     }
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "Alice");
+        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // 输出: Hello, Alice!
+        System.out.println(result); // Output: Hello, John!
     }
 }

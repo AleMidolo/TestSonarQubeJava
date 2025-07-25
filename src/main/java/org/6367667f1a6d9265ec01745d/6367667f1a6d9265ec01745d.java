@@ -1,57 +1,56 @@
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class URIDecoder {
+public class PathDecoder {
 
+    /** 
+     * Decodifica il componente di percorso di un URI come segmenti di percorso.
+     * @param u l'URI. Se il componente di percorso è un componente di percorso assoluto, il '/' iniziale viene ignorato e non è considerato un delimitatore di un segmento di percorso.
+     * @param decode vero se i segmenti di percorso del componente di percorso devono essere in forma decodificata.
+     * @return la lista dei segmenti di percorso.
+     */
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> pathSegments = new ArrayList<>();
+        List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
-
-        if (path == null || path.isEmpty()) {
-            return pathSegments;
-        }
-
-        // Remove leading '/' if the path is absolute
+        
+        // Ignora il primo '/' se presente
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-
-        String[] segments = path.split("/");
-        for (String segment : segments) {
+        
+        String[] pathSegments = path.split("/");
+        
+        for (String segment : pathSegments) {
             if (decode) {
-                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
+                try {
+                    segment = java.net.URLDecoder.decode(segment, "UTF-8");
+                } catch (Exception e) {
+                    // Gestione dell'eccezione se la decodifica fallisce
+                    e.printStackTrace();
+                }
             }
-            pathSegments.add(new PathSegmentImpl(segment));
+            segments.add(new PathSegmentImpl(segment));
         }
+        
+        return segments;
+    }
+}
 
-        return pathSegments;
+class PathSegmentImpl {
+    private String segment;
+
+    public PathSegmentImpl(String segment) {
+        this.segment = segment;
     }
 
-    // Assuming PathSegmentImpl is a class that represents a path segment
-    public static class PathSegmentImpl {
-        private String segment;
-
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
-        }
-
-        public String getSegment() {
-            return segment;
-        }
-
-        @Override
-        public String toString() {
-            return segment;
-        }
+    public String getSegment() {
+        return segment;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        URI uri = URI.create("http://example.com/path/to/resource");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
-        }
+    @Override
+    public String toString() {
+        return segment;
     }
 }

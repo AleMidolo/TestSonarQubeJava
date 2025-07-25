@@ -1,19 +1,18 @@
-public class ArrayUtils {
-
-    /**
-     * <p>将基本数据类型的 double 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>double</code> 数组
-     * @return 一个 <code>Double</code> 数组，如果输入数组为空则返回 <code>null</code>
+public class ArrayConverter {
+    /** 
+     * <p>Converte un array di double primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>double</code>
+     * @return un array di <code>Double</code>, <code>null</code> se l'array di input è null
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {
             return null;
         }
-        Double[] result = new Double[array.length];
+        Double[] objectArray = new Double[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
+            objectArray[i] = array[i]; // Autoboxing from double to Double
         }
-        return result;
+        return objectArray;
     }
 
     public static void main(String[] args) {

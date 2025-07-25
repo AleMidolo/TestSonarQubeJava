@@ -1,36 +1,29 @@
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int readPointer;
 
-    public ClassFileBuffer(int bufferSize) {
-        this.buffer = new byte[bufferSize];
-        this.readPointer = 0;
-    }
-
+    /**
+     * Svuota e riempie il buffer di questo {@code ClassFileBuffer} con il flusso di byte fornito. 
+     * Il puntatore di lettura viene ripristinato all'inizio dell'array di byte.
+     */
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the buffer
-        for (int i = 0; i < buffer.length; i++) {
-            buffer[i] = 0;
+        if (in == null) {
+            throw new IllegalArgumentException("InputStream cannot be null");
         }
 
-        // Read from the InputStream into the buffer
-        int bytesRead = in.read(buffer);
-        if (bytesRead == -1) {
-            throw new IOException("End of stream reached");
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] tempBuffer = new byte[1024];
+        int bytesRead;
+
+        // Read from the InputStream and write to the ByteArrayOutputStream
+        while ((bytesRead = in.read(tempBuffer)) != -1) {
+            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
-        // Reset the read pointer to the start of the buffer
-        readPointer = 0;
-    }
-
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getReadPointer() {
-        return readPointer;
+        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
+        buffer = byteArrayOutputStream.toByteArray();
     }
 }

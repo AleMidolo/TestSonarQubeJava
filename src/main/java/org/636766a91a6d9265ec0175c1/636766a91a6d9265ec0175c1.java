@@ -1,26 +1,32 @@
 import java.util.Arrays;
 
-public class ByteVector {
-    private byte[] data;
-    private int capacity;
+public class ByteArrayExpander {
+    private byte[] byteArray;
+    private int currentSize;
 
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.capacity = initialCapacity;
+    public ByteArrayExpander(int initialSize) {
+        this.byteArray = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
     /**
-     * 扩展此字节向量，以便能够接收 'size' 个额外的字节。
-     * @param size 此字节向量应该能够接收的额外字节数。
+     * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Size must be positive");
+            throw new IllegalArgumentException("Size must be greater than zero.");
         }
-        int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        int newSize = currentSize + size;
+        byteArray = Arrays.copyOf(byteArray, newSize);
+        currentSize = newSize;
     }
 
-    // Other methods of the ByteVector class...
+    public byte[] getByteArray() {
+        return byteArray;
+    }
+
+    public int getCurrentSize() {
+        return currentSize;
+    }
 }

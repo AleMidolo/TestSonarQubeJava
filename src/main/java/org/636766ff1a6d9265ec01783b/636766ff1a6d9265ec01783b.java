@@ -1,33 +1,30 @@
-public class StringUtils {
-    /**
-     * 从指定的字符串中获取子字符串，避免抛出异常。
-     * @param str 原始字符串
-     * @param start 开始索引（包含）
-     * @param end 结束索引（不包含）
-     * @return 子字符串，如果索引越界则返回空字符串
+public class SubstringUtil {
+    
+    /** 
+     * Ottiene una sottostringa dalla Stringa specificata evitando eccezioni. 
      */
     public static String sub(String str, int start, int end) {
         if (str == null) {
-            return "";
+            return null;
         }
-        int length = str.length();
         if (start < 0) {
             start = 0;
         }
-        if (end > length) {
-            end = length;
+        if (end > str.length()) {
+            end = str.length();
         }
-        if (start >= end) {
+        if (start > end) {
             return "";
         }
         return str.substring(start, end);
     }
 
     public static void main(String[] args) {
-        String str = "Hello, World!";
-        System.out.println(sub(str, 7, 12)); // 输出 "World"
-        System.out.println(sub(str, -1, 5));  // 输出 "Hello"
-        System.out.println(sub(str, 7, 20));  // 输出 "World!"
-        System.out.println(sub(null, 0, 5)); // 输出 ""
+        String example = "Hello, World!";
+        System.out.println(sub(example, 7, 12)); // Output: World
+        System.out.println(sub(example, -5, 5)); // Output: Hello
+        System.out.println(sub(example, 0, 20)); // Output: Hello, World!
+        System.out.println(sub(example, 5, 3));  // Output: (empty string)
+        System.out.println(sub(null, 0, 5));     // Output: null
     }
 }

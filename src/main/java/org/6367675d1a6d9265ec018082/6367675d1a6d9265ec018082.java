@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 class Edge {
-    private Node from;
-    private Node to;
+    private final Node from;
+    private final Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
@@ -16,65 +16,23 @@ class Edge {
     public Node getTo() {
         return to;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Edge edge = (Edge) o;
-        return Objects.equals(from, edge.from) && Objects.equals(to, edge.to);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to);
-    }
-
-    @Override
-    public String toString() {
-        return "Edge{" +
-                "from=" + from +
-                ", to=" + to +
-                '}';
-    }
 }
 
 class Node {
-    private String id;
-    private boolean isVirtual;
+    private final String name;
+    private final boolean isVirtual;
 
-    public Node(String id, boolean isVirtual) {
-        this.id = id;
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
         this.isVirtual = isVirtual;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public boolean isVirtual() {
         return isVirtual;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, isVirtual);
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "id='" + id + '\'' +
-                ", isVirtual=" + isVirtual +
-                '}';
     }
 }
 
@@ -87,14 +45,19 @@ class Graph {
         this.nextNode = nextNode;
     }
 
+    /**
+     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
+     * @return un arco dal nodo corrente al nodo successivo
+     */
     public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(from, to);
+        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(fromNode, toNode);
     }
 
-    private Node getRealNode(Node node) {
-        // Assuming that the real node has the same ID but is not virtual
-        return new Node(node.getId(), false);
+    private Node getRealNode(Node virtualNode) {
+        // Logic to get the real node corresponding to the virtual node
+        // This is a placeholder implementation
+        return new Node(virtualNode.getName() + "_real", false);
     }
 }

@@ -1,21 +1,29 @@
+import java.util.HashMap;
 import java.util.Map;
 
-public class CustomMap<K, V> implements Map<K, V> {
-    private final Map<K, V> internalMap;
+public class MyMap<K, V> {
+    private Map<K, V> map;
 
-    public CustomMap(Map<K, V> internalMap) {
-        this.internalMap = internalMap;
+    public MyMap() {
+        this.map = new HashMap<>();
     }
 
-    /**
-     * 如果此映射包含指定键的映射，则返回<code>true</code>。
-     * @param key 要搜索的键
-     * @return 如果映射包含该键，则返回真
+    /** 
+     * Restituisce <code>true</code> se questa mappa contiene una mappatura per la chiave specificata.
+     * @param key  la chiave da cercare
+     * @return true se la mappa contiene la chiave
      */
-    @Override
+    @Override 
     public boolean containsKey(final Object key) {
-        return internalMap.containsKey(key);
+        return map.containsKey(key);
     }
 
-    // Other methods of the Map interface would need to be implemented here
+    // Additional methods to add and remove entries for testing purposes
+    public void put(K key, V value) {
+        map.put(key, value);
+    }
+
+    public void remove(K key) {
+        map.remove(key);
+    }
 }

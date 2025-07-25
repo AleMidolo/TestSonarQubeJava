@@ -1,28 +1,37 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Logger {
+public class MessagePrinter {
     private Map<String, Integer> messageTimestamps;
 
-    public Logger() {
+    public MessagePrinter() {
         messageTimestamps = new HashMap<>();
     }
 
-    /**
-     * 如果在给定的时间戳下应该打印消息，则返回真，否则返回假。如果此方法返回假，则消息将不会被打印。时间戳的粒度为秒。
+    /** 
+     * Restituisce true se il messaggio deve essere stampato nel timestamp fornito, 
+     * altrimenti restituisce false. Se questo metodo restituisce false, il messaggio 
+     * non verrà stampato. Il timestamp è in granularità di secondi. 
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
-        if (messageTimestamps.containsKey(message)) {
-            int lastTimestamp = messageTimestamps.get(message);
-            if (timestamp - lastTimestamp >= 10) {
-                messageTimestamps.put(message, timestamp);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (!messageTimestamps.containsKey(message)) {
             messageTimestamps.put(message, timestamp);
             return true;
         }
+
+        int lastTimestamp = messageTimestamps.get(message);
+        if (timestamp - lastTimestamp >= 10) {
+            messageTimestamps.put(message, timestamp);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        MessagePrinter printer = new MessagePrinter();
+        System.out.println(printer.shouldPrintMessage(1, "foo")); // true
+        System.out.println(printer.shouldPrintMessage(2, "foo")); // false
+        System.out.println(printer.shouldPrintMessage(11, "foo")); // true
     }
 }

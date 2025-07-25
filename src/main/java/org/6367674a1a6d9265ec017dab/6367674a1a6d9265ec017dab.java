@@ -1,26 +1,25 @@
 import java.util.Comparator;
 
 public class DoubleComparator implements Comparator<Double> {
-    /**
-     * 比较两个浮点值。如果它们相等则返回0，如果 {@literal o1 < o2} 则返回-1，否则返回1
-     * @param o1 第一个值
-     * @param o2 第二个值
-     * @return 如果它们相等则返回0，如果 {@literal o1 < o2} 则返回-1，否则返回1
+    
+    /** 
+     * Confronta due valori in virgola mobile. Restituisce 0 se sono uguali, -1 se {@literal o1 < o2}, 1 altrimenti
+     * @param o1 il primo valore
+     * @param o2 il secondo valore
+     * @return 0 se sono uguali, -1 se {@literal o1 < o2}, 1 altrimenti
      */
-    @Override
+    @Override 
     public int compare(Double o1, Double o2) {
-        if (o1 == null && o2 == null) {
-            return 0;
-        }
-        if (o1 == null) {
-            return -1;
-        }
-        if (o2 == null) {
-            return 1;
-        }
-        if (Math.abs(o1 - o2) < 1e-9) {
+        if (o1.equals(o2)) {
             return 0;
         }
         return o1 < o2 ? -1 : 1;
+    }
+    
+    public static void main(String[] args) {
+        DoubleComparator comparator = new DoubleComparator();
+        System.out.println(comparator.compare(1.0, 2.0)); // Output: -1
+        System.out.println(comparator.compare(2.0, 1.0)); // Output: 1
+        System.out.println(comparator.compare(1.0, 1.0)); // Output: 0
     }
 }

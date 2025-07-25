@@ -1,45 +1,53 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRange {
-    private int start;
-    private int end;
+public class SequenceRangeBuilder {
 
-    public SequenceRange(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    @Override
-    public String toString() {
-        return "SequenceRange{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
-    }
-}
-
-public class ConfigSnapshot {
+    /** 
+     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
+     */
     public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> ranges = new ArrayList<>();
-        // Example logic to build sequence ranges
-        ranges.add(new SequenceRange(0, 100));
-        ranges.add(new SequenceRange(101, 200));
-        ranges.add(new SequenceRange(201, 300));
-        return ranges;
+        List<SequenceRange> sequenceRanges = new ArrayList<>();
+        
+        // Example logic to create sequence ranges
+        // This should be replaced with actual logic to build the ranges
+        for (int i = 0; i < 10; i++) {
+            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
+            sequenceRanges.add(range);
+        }
+        
+        return sequenceRanges;
+    }
+
+    public static class SequenceRange {
+        private int start;
+        private int end;
+
+        public SequenceRange(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        @Override
+        public String toString() {
+            return "SequenceRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
     }
 
     public static void main(String[] args) {
-        ConfigSnapshot snapshot = new ConfigSnapshot();
-        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
+        SequenceRangeBuilder builder = new SequenceRangeBuilder();
+        List<SequenceRange> ranges = builder.buildSequenceRanges();
         for (SequenceRange range : ranges) {
             System.out.println(range);
         }

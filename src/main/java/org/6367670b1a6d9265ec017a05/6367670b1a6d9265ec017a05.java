@@ -1,30 +1,31 @@
 public class CharUtils {
-
-    private static final String[] CHAR_STRING_CACHE = new String[128];
+    
+    private static final String[] CACHE = new String[128];
 
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        for (int i = 0; i < CACHE.length; i++) {
+            CACHE[i] = String.valueOf((char) i);
         }
     }
 
     /**
-     * <p>将字符转换为仅包含该字符的字符串。</p> 
-     * <p>对于 ASCII 7 位字符，此方法将使用一个缓存，每次返回相同的字符串对象。</p> 
+     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p> 
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p> 
      * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  要转换的字符
-     * @return 包含指定字符的字符串
+     * @param ch  il carattere da convertire
+     * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {
-        if (ch < CHAR_STRING_CACHE.length) {
-            return CHAR_STRING_CACHE[ch];
+        if (ch >= 0 && ch < CACHE.length) {
+            return CACHE[ch];
         }
         return String.valueOf(ch);
     }
 
     public static void main(String[] args) {
-        System.out.println(toString(' '));  // 输出: " "
-        System.out.println(toString('A'));  // 输出: "A"
-        System.out.println(toString('€'));  // 输出: "€"
+        System.out.println(CharUtils.toString(' ')); // Output: " "
+        System.out.println(CharUtils.toString('A')); // Output: "A"
+        System.out.println(CharUtils.toString('Z')); // Output: "Z"
+        System.out.println(CharUtils.toString('ñ')); // Output: "ñ"
     }
 }

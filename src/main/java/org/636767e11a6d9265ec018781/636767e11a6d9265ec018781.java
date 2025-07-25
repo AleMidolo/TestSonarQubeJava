@@ -2,31 +2,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MetricsCache {
-    private Map<String, Double> cache = new HashMap<>();
 
-    /**
-     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
-     * @param data 需要添加的数据。
+    private final Map<String, Integer> cache = new HashMap<>();
+
+    /** 
+     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
+     * @param data da aggiungere potenzialmente.
      */
-    @Override
+    @Override 
     public void accept(final METRICS data) {
-        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            cache.merge(key, value, Double::sum);
+        if (data != null) {
+            // Assuming METRICS has a method getKey() to get the key and getValue() to get the value
+            String key = data.getKey();
+            Integer value = data.getValue();
+
+            cache.merge(key, value, Integer::sum);
         }
     }
 
-    // Assuming METRICS is a class that contains a map of metrics
+    // Assuming a METRICS class for demonstration purposes
     public static class METRICS {
-        private Map<String, Double> metrics;
+        private final String key;
+        private final Integer value;
 
-        public METRICS(Map<String, Double> metrics) {
-            this.metrics = metrics;
+        public METRICS(String key, Integer value) {
+            this.key = key;
+            this.value = value;
         }
 
-        public Map<String, Double> getMetrics() {
-            return metrics;
+        public String getKey() {
+            return key;
+        }
+
+        public Integer getValue() {
+            return value;
         }
     }
 }

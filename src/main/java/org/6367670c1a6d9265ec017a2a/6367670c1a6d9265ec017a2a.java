@@ -1,12 +1,13 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class ArrayConverter {
 
-    /**
-     * <p>将对象类型的 Integer 数组转换为基本类型。</p> <p>如果输入数组为 <code>null</code>，则此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>Integer</code> 数组，可以为 <code>null</code>
-     * @return 一个 <code>int</code> 数组，如果输入数组为空则返回 <code>null</code>
-     * @throws NullPointerException 如果数组内容为 <code>null</code>
+    /** 
+     * <p>Converte un array di oggetti Integer in primitivi.</p> 
+     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>Integer</code>, può essere <code>null</code>
+     * @return un array di <code>int</code>, <code>null</code> se l'array di input è nullo
+     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
      */
     public static int[] toPrimitive(final Integer[] array) {
         if (array == null) {
@@ -14,8 +15,20 @@ public class ArrayUtils {
         }
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Element at index " + i + " is null");
+            }
+            result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        Integer[] integerArray = {1, 2, 3, null};
+        try {
+            int[] primitiveArray = toPrimitive(integerArray);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -2,21 +2,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> nameMap = new HashMap<>();
+    private Map<String, String> nameMapping;
 
-    /**
-     * 保持与 {@link ColumnName#overrideName(String,String)} 相同的名称替换
-     * @param oldName 要被替换的名称。
-     * @param newName 在存储层使用的新名称。
+    public ColumnName() {
+        nameMapping = new HashMap<>();
+    }
+
+    /** 
+     * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String,String)}
+     * @param oldName da sostituire.
+     * @param newName da utilizzare a livello di archiviazione.
      */
     public void overrideName(String oldName, String newName) {
         if (oldName == null || newName == null) {
-            throw new IllegalArgumentException("Old name and new name cannot be null");
+            throw new IllegalArgumentException("Names cannot be null");
         }
-        nameMap.put(oldName, newName);
+        nameMapping.put(oldName, newName);
     }
 
     public String getNewName(String oldName) {
-        return nameMap.getOrDefault(oldName, oldName);
+        return nameMapping.getOrDefault(oldName, oldName);
+    }
+
+    public static void main(String[] args) {
+        ColumnName columnName = new ColumnName();
+        columnName.overrideName("old_column", "new_column");
+        System.out.println(columnName.getNewName("old_column")); // Output: new_column
+        System.out.println(columnName.getNewName("another_column")); // Output: another_column
     }
 }

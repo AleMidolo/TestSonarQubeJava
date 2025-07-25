@@ -1,12 +1,24 @@
-import java.util.List;
+import java.util.NoSuchElementException;
 
-/**
- * {@inheritDoc}
- */
-@Override
-public ListNode<E> previousNode() {
-    if (this.prev == null) {
-        throw new NoSuchElementException("No previous node available.");
+class ListNode<E> {
+    E data;
+    ListNode<E> next;
+    ListNode<E> previous;
+
+    public ListNode(E data) {
+        this.data = data;
+        this.next = null;
+        this.previous = null;
     }
-    return this.prev;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ListNode<E> previousNode() {
+        if (this.previous == null) {
+            throw new NoSuchElementException("No previous node exists.");
+        }
+        return this.previous;
+    }
 }

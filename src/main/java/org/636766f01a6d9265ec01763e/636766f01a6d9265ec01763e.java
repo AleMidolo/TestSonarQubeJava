@@ -1,28 +1,21 @@
 import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.charset.UnsupportedCharsetException;
 
-public class CharsetConverter {
+public class CharsetTranslator {
 
-    /**
-     * 将MIME标准字符集名称转换为Java等效名称。
-     * @param charset MIME标准名称。
-     * @return 此名称的Java等效名称。
+    /** 
+     * Traduci un nome di set di caratteri standard MIME nell'equivalente Java.
+     * @param charset Il nome standard MIME.
+     * @return L'equivalente Java per questo nome.
      */
     private static String javaCharset(String charset) {
-        try {
-            // 尝试将MIME字符集名称转换为Java字符集名称
-            return Charset.forName(charset).name();
-        } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // 如果字符集名称不合法或不支持，返回默认字符集名称
-            return Charset.defaultCharset().name();
-        }
+        Charset javaCharset = Charset.forName(charset);
+        return javaCharset.name();
     }
 
     public static void main(String[] args) {
-        // 测试示例
-        System.out.println(javaCharset("UTF-8"));  // 输出: UTF-8
-        System.out.println(javaCharset("ISO-8859-1"));  // 输出: ISO-8859-1
-        System.out.println(javaCharset("invalid-charset"));  // 输出: 默认字符集名称
+        // Esempio di utilizzo
+        String mimeCharset = "UTF-8";
+        String javaEquivalent = javaCharset(mimeCharset);
+        System.out.println("L'equivalente Java per " + mimeCharset + " è: " + javaEquivalent);
     }
 }

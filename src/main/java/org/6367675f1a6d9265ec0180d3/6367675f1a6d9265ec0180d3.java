@@ -1,25 +1,42 @@
-import org.jgrapht.Graph;
-import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphUtils {
 
-    /**
-     * 计算一个恒等自同构（即图的自映射，其中每个顶点也映射到自身）。
-     * @param graph 输入图
-     * @param <V> 图的顶点类型
-     * @param <E> 图的边类型
-     * @return 从图到图的映射
+    /** 
+     * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
+     * @param graph il grafo di input
+     * @param <V> il tipo di vertice del grafo
+     * @param <E> il tipo di arco del grafo
+     * @return una mappatura da grafo a grafo
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
-        for (V vertex : graph.vertexSet()) {
-            mapping.addVertexMapping(vertex, vertex);
+        Map<V, V> mapping = new HashMap<>();
+        
+        for (V vertex : graph.getVertices()) {
+            mapping.put(vertex, vertex);
         }
-        for (E edge : graph.edgeSet()) {
-            V source = graph.getEdgeSource(edge);
-            V target = graph.getEdgeTarget(edge);
-            mapping.addEdgeMapping(edge, edge, source, target);
-        }
+        
+        return new IsomorphicGraphMapping<>(mapping);
+    }
+}
+
+class Graph<V, E> {
+    // Assume this class has necessary methods like getVertices()
+    public Iterable<V> getVertices() {
+        // Implementation here
+        return null; // Placeholder
+    }
+}
+
+class IsomorphicGraphMapping<V, E> {
+    private final Map<V, V> mapping;
+
+    public IsomorphicGraphMapping(Map<V, V> mapping) {
+        this.mapping = mapping;
+    }
+
+    public Map<V, V> getMapping() {
         return mapping;
     }
 }

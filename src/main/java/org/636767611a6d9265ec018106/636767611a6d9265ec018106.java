@@ -1,26 +1,35 @@
 import java.util.Set;
 
 public class Graph<V> {
+    
+    // Assuming there's a method to get the incoming edges for a vertex
+    private Set<Edge<V>> getIncomingEdges(V vertex) {
+        // Implementation to retrieve incoming edges for the vertex
+        return null; // Placeholder
+    }
 
-    /**
-     * 计算进入一个顶点的权重总和
-     * @param v 顶点
-     * @return 进入一个顶点的权重总和
+    // Assuming Edge class has a method to get the weight
+    private class Edge<V> {
+        private double weight;
+
+        public double getWeight() {
+            return weight;
+        }
+    }
+
+    /** 
+     * Calcola la somma dei pesi che entrano in un vertice
+     * @param v il vertice
+     * @return la somma dei pesi che entrano in un vertice
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-        // 假设我们有一个方法来获取进入顶点的边的权重
         for (V vertex : v) {
-            totalWeight += getIncomingEdgeWeight(vertex);
+            Set<Edge<V>> incomingEdges = getIncomingEdges(vertex);
+            for (Edge<V> edge : incomingEdges) {
+                totalWeight += edge.getWeight();
+            }
         }
         return totalWeight;
-    }
-
-    // 假设这个方法返回进入某个顶点的边的权重
-    private double getIncomingEdgeWeight(V vertex) {
-        // 这里应该实现获取进入顶点的边的权重的逻辑
-        // 例如，从图的邻接表中获取边的权重
-        // 这里只是一个示例，返回一个默认值
-        return 1.0; // 假设每条边的权重为1.0
     }
 }

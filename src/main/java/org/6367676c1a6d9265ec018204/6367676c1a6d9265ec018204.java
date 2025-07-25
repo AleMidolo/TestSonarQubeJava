@@ -1,42 +1,53 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
+public class ArrayConcatenation {
 
+    /** 
+     * Concatenare i dati degli array di Stringa forniti in uno solo, includendo gli elementi sovrapposti due volte. 
+     * <p>L'ordine degli elementi negli array originali è preservato.
+     * @param array1 il primo array (può essere <code>null</code>)
+     * @param array2 il secondo array (può essere <code>null</code>)
+     * @return il nuovo array (<code>null</code> se entrambi gli array forniti erano <code>null</code>)
+     */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-        // 如果两个数组都为null，返回null
         if (array1 == null && array2 == null) {
             return null;
         }
 
-        // 创建一个List来存储结果
         List<String> resultList = new ArrayList<>();
 
-        // 如果array1不为null，将其元素添加到结果List中
         if (array1 != null) {
-            for (String element : array1) {
-                resultList.add(element);
+            for (String s : array1) {
+                resultList.add(s);
             }
         }
 
-        // 如果array2不为null，将其元素添加到结果List中
         if (array2 != null) {
-            for (String element : array2) {
-                resultList.add(element);
+            for (String s : array2) {
+                resultList.add(s);
             }
         }
 
-        // 将List转换为数组并返回
+        // Include overlapping elements twice
+        if (array1 != null && array2 != null) {
+            for (String s : array1) {
+                for (String t : array2) {
+                    if (s.equals(t)) {
+                        resultList.add(s);
+                    }
+                }
+            }
+        }
+
         return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        // 测试用例
         String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"d", "e", "f"};
+        String[] array2 = {"b", "c", "d"};
         String[] result = concatenateStringArrays(array1, array2);
-
-        // 输出结果
+        
         for (String s : result) {
             System.out.print(s + " ");
         }

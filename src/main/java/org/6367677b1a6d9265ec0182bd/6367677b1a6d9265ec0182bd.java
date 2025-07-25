@@ -1,23 +1,24 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-public class LogFormatter {
+public class LoggerFormatter {
 
     /**
-     * 将日志事件格式化为写入器。
-     * @param event 要格式化的日志事件。
-     * @return 格式化后的日志字符串。
+     * Formatta un evento di logging per un writer.
+     * @param event evento di logging da formattare.
+     * @return una stringa formattata dell'evento di logging.
      */
     public String format(final LoggingEvent event) {
-        if (event == null) {
-            return "";
+        StringBuilder formattedEvent = new StringBuilder();
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        formattedEvent.append("Level: ").append(event.getLevel()).append("\n");
+        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
+        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
+        formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
+        
+        if (event.getThrowableInformation() != null) {
+            formattedEvent.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append("\n");
         }
-
-        StringBuilder formattedMessage = new StringBuilder();
-        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
-        formattedMessage.append(event.getTimeStamp()).append(" - ");
-        formattedMessage.append(event.getLoggerName()).append(" - ");
-        formattedMessage.append(event.getRenderedMessage());
-
-        return formattedMessage.toString();
+        
+        return formattedEvent.toString();
     }
 }

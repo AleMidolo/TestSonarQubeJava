@@ -10,11 +10,11 @@ public class StringUtils {
             return str;
         }
         
-        int index = 0;
-        while (index < str.length() && str.charAt(index) == leadingCharacter) {
-            index++;
+        int i = 0;
+        while (i < str.length() && str.charAt(i) == leadingCharacter) {
+            i++;
         }
         
-        return str.substring(index);
+        return str.substring(i);
     }
 }

@@ -41,12 +41,13 @@ public class FrameStackHandler {
                     index++;
                     break;
                 case 'L':
-                    // Skip reference type name until semicolon
+                    // Pop reference type
                     frameStack.pop();
+                    // Skip to semicolon
                     index = descriptor.indexOf(';', index) + 1;
                     break;
                 case '[':
-                    // Skip array dimensions
+                    // Array type - skip dimensions and handle base type
                     while (descriptor.charAt(index) == '[') {
                         index++;
                     }
@@ -58,7 +59,7 @@ public class FrameStackHandler {
                     frameStack.pop();
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+                    throw new IllegalArgumentException("Invalid descriptor character: " + c);
             }
         }
     }

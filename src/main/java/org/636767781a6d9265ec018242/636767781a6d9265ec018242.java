@@ -17,7 +17,7 @@ public class AppenderManager implements AppenderAttachable {
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         
-        if(appenders != null && !appenders.isEmpty()) {
+        if(appenders != null) {
             size = appenders.size();
             for(Enumeration<Appender> enumeration = appenders.elements(); 
                 enumeration.hasMoreElements();) {

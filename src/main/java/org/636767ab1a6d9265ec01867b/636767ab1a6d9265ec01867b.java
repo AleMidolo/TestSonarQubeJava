@@ -29,7 +29,7 @@ public class StringSerializer {
         return lb;
     }
 
-    // Helper class definitions for compilation
+    // Helper class for buffer management
     public static class LinkedBuffer {
         byte[] buffer;
         int offset;
@@ -42,6 +42,7 @@ public class StringSerializer {
         }
     }
 
+    // Helper class for writing session
     public static class WriteSession {
         LinkedBuffer tail;
         

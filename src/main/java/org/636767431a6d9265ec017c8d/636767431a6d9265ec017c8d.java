@@ -9,11 +9,11 @@ public class LogCalculator {
             throw new IllegalArgumentException("n debe ser positivo");
         }
         
-        int result = 0;
+        int count = 0;
         while (n > 1) {
-            n = n >> 1; // Divide by 2
-            result++;
+            n = n >> 1; // divide by 2
+            count++;
         }
-        return result + 1;
+        return count + 1;
     }
 }

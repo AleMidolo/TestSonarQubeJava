@@ -6,14 +6,6 @@ public class Edge {
     private LinkedList<Edge> treeEdgeList1;
     private LinkedList<Edge> treeEdgeList2;
 
-    public Edge(Node source, Node target) {
-        this.source = source;
-        this.target = target;
-    }
-
-    /**
-     * Elimina este borde de ambas listas doblemente enlazadas de bordes del árbol.
-     */
     public void removeFromTreeEdgeList() {
         if (treeEdgeList1 != null) {
             treeEdgeList1.remove(this);
@@ -23,8 +15,4 @@ public class Edge {
             treeEdgeList2.remove(this);
         }
     }
-}
-
-class Node {
-    // Node implementation
 }

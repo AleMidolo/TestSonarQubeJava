@@ -16,14 +16,15 @@ public class DataReader {
         // Read the string length first
         int length = input.readInt();
         
-        if (length < 0) {
+        // If length is -1, return null (for null strings)
+        if (length == -1) {
             return null;
         }
         
         // Create byte array to hold string data
         byte[] bytes = new byte[length];
         
-        // Read the string bytes
+        // Read the bytes
         input.readFully(bytes);
         
         // Convert bytes to string using UTF-8 encoding

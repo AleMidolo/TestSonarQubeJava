@@ -18,7 +18,10 @@ public class CharacterConverter {
         if (value instanceof String) {
             String str = (String) value;
             if (str.length() == 0) {
-                throw new Exception("Cannot convert empty String to Character");
+                return null;
+            }
+            if (str.length() > 1) {
+                throw new Exception("Cannot convert String with length > 1 to Character: " + str);
             }
             return Character.valueOf(str.charAt(0));
         }

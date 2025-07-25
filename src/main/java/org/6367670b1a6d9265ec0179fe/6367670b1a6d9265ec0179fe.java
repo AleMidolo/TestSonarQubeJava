@@ -18,6 +18,6 @@ public class ByteOutputStream extends OutputStream {
     public void write(int b) throws IOException {
         // Basic implementation required by OutputStream
         // Actual implementation would depend on specific output destination
-        throw new UnsupportedOperationException("write(int b) must be implemented");
+        throw new UnsupportedOperationException("write(int) must be implemented");
     }
 }

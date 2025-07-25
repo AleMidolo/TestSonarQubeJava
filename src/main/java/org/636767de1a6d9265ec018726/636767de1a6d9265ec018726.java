@@ -32,7 +32,7 @@ public class SequenceRangeBuilder {
         }
 
         // Sort sequences
-        Collections.sort(profileSequences);
+        profileSequences.sort(null);
         
         int rangeStart = profileSequences.get(0);
         int prev = rangeStart;
@@ -58,6 +58,6 @@ public class SequenceRangeBuilder {
     // Helper method to get profile sequences
     private List<Integer> getProfileSequences() {
         // Implementation would depend on how profile data is stored
-        return new ArrayList<>(); 
+        return new ArrayList<>();
     }
 }

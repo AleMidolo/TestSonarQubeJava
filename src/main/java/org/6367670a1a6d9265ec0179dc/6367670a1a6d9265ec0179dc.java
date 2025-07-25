@@ -9,7 +9,7 @@ public class FrameWriter {
     private int currentIndex;
     
     private void putAbstractTypes(final int start, final int end) {
-        for (int i = start; i < end; ++i) {
+        for (int i = start; i < end; i++) {
             int abstractType = currentFrame[i];
             if (abstractType == Frame.TOP) {
                 stackMapTableEntries[currentIndex++] = 0; // TOP
@@ -27,22 +27,18 @@ public class FrameWriter {
                 stackMapTableEntries[currentIndex++] = 6; // UNINITIALIZED_THIS
             } else if (abstractType == Frame.OBJECT) {
                 stackMapTableEntries[currentIndex++] = 7; // OBJECT
-                putClass(currentFrame[i]); 
+                // Write class info index
+                putInt16(currentFrame[++i]);
             } else {
                 stackMapTableEntries[currentIndex++] = 8; // UNINITIALIZED
-                putUninitialized(currentFrame[i]);
+                // Write offset
+                putInt16(((Label) currentFrame[++i]).getOffset());
             }
         }
     }
     
-    // Helper methods
-    private void putClass(int classType) {
-        // Write class info to stackMapTableEntries
-        // Implementation details depend on class format
-    }
-    
-    private void putUninitialized(int uninitType) {
-        // Write uninitialized type info to stackMapTableEntries
-        // Implementation details depend on format
+    private void putInt16(final int value) {
+        stackMapTableEntries[currentIndex++] = (byte) (value >>> 8);
+        stackMapTableEntries[currentIndex++] = (byte) value;
     }
 }

@@ -24,12 +24,12 @@ public class UTF8Decoder {
             if ((b2 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int codePoint = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
-            sb.append((char)codePoint);
+            int ch = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)ch);
             return i + 2;
         }
         
-        // 3-byte sequence
+        // 3-byte sequence  
         if ((b1 & 0xF0) == 0xE0) {
             if (i + 2 >= bb.limit()) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
@@ -39,8 +39,8 @@ public class UTF8Decoder {
             if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int codePoint = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
-            sb.append((char)codePoint);
+            int ch = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)ch);
             return i + 3;
         }
         
@@ -55,9 +55,10 @@ public class UTF8Decoder {
             if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int codePoint = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
-            sb.append(Character.highSurrogate(codePoint));
-            sb.append(Character.lowSurrogate(codePoint));
+            int ch = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            // Convert to surrogate pair for characters outside BMP
+            sb.append(Character.highSurrogate(ch));
+            sb.append(Character.lowSurrogate(ch));
             return i + 4;
         }
         

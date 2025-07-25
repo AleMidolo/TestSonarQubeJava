@@ -23,7 +23,7 @@ public class Graph {
         Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
         Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-        // Find edge connecting current and next nodes
+        // Find edge connecting the nodes
         for (Edge edge : edges) {
             if ((edge.getSource() == realCurrent && edge.getTarget() == realNext) ||
                 (edge.getSource() == realNext && edge.getTarget() == realCurrent)) {
@@ -35,31 +35,30 @@ public class Graph {
         currentNode = nextNode;
         return null;
     }
+}
 
-    // Supporting classes
-    private class Node {
-        private boolean isVirtual;
-        private Node realNode;
+class Node {
+    private boolean isVirtual;
+    private Node realNode;
 
-        public boolean isVirtual() {
-            return isVirtual;
-        }
-
-        public Node getRealNode() {
-            return realNode;
-        }
+    public boolean isVirtual() {
+        return isVirtual;
     }
 
-    private class Edge {
-        private Node source;
-        private Node target;
+    public Node getRealNode() {
+        return realNode;
+    }
+}
 
-        public Node getSource() {
-            return source;
-        }
+class Edge {
+    private Node source;
+    private Node target;
 
-        public Node getTarget() {
-            return target;
-        }
+    public Node getSource() {
+        return source;
+    }
+
+    public Node getTarget() {
+        return target;
     }
 }

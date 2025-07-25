@@ -4,48 +4,60 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.mapper.MapperService;
 import org.elasticsearch.index.mapper.Mapping;
 import org.elasticsearch.index.mapper.Mappings;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MappingDiffer {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        try {
-            // Create empty mappings builder
-            Mappings.Builder diffMappings = new Mappings.Builder();
-
-            // Get current index mappings
-            ImmutableOpenMap<String, MappingMetadata> currentMappings = mappings.getMappings();
-            
-            if (currentMappings == null || currentMappings.isEmpty()) {
-                return null;
-            }
-
-            // Get mapping for table
-            MappingMetadata tableMapping = currentMappings.get(tableName);
-            if (tableMapping == null) {
-                return null;
-            }
-
-            // Get properties map
-            Map<String, Object> properties = (Map<String, Object>) tableMapping.getSourceAsMap().get("properties");
-            
-            if (properties == null) {
-                return null;
-            }
-
-            // Create new mapping without _source
-            Map<String, Object> newMapping = new HashMap<>();
-            newMapping.put("properties", properties);
-
-            // Remove _source configuration
-            newMapping.remove("_source");
-
-            // Build new mappings object
-            diffMappings.put(tableName, newMapping);
-
-            return diffMappings.build();
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error diffing mappings structure", e);
+        if (mappings == null) {
+            return null;
         }
+
+        // Get the properties from input mappings
+        Map<String, Object> inputProperties = mappings.getSourceAsMap();
+        
+        // Create new map for storing diff
+        Map<String, Object> diffMap = new HashMap<>();
+        
+        // Get current index mappings
+        Map<String, Object> currentMappings = getCurrentIndexMappings(tableName);
+        
+        if (currentMappings != null) {
+            // Compare and get fields that don't exist in current mappings
+            for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+                String field = entry.getKey();
+                if (!currentMappings.containsKey(field)) {
+                    diffMap.put(field, entry.getValue());
+                }
+            }
+        } else {
+            // If no current mappings exist, return all input mappings
+            diffMap.putAll(inputProperties);
+        }
+        
+        // Remove _source configuration if present
+        diffMap.remove("_source");
+        
+        // Create new Mappings object with diff
+        return new Mappings(MapperService.SINGLE_MAPPING_NAME, diffMap);
+    }
+    
+    // Helper method to get current index mappings
+    private Map<String, Object> getCurrentIndexMappings(String indexName) {
+        try {
+            MappingMetadata mappingMetadata = client.admin().indices()
+                .prepareGetMappings(indexName)
+                .get()
+                .getMappings()
+                .get(indexName);
+                
+            if (mappingMetadata != null) {
+                return mappingMetadata.getSourceAsMap();
+            }
+        } catch (Exception e) {
+            // Handle exception
+        }
+        return null;
     }
 }

@@ -17,12 +17,14 @@ public class GraphUtils {
                 if (v1.equals(v2)) {
                     continue;
                 }
+                
                 // Si no existe una arista entre ellos, no es un clique
                 if (!graph.containsEdge(v1, v2)) {
                     return false;
                 }
             }
         }
+        
         // Si llegamos aquí, todos los vértices están conectados entre sí
         return true;
     }

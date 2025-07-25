@@ -30,9 +30,4 @@ public class TransportInterceptor implements AtmosphereInterceptor {
     public void destroy() {
         // No implementation needed
     }
-
-    @Override
-    public void configure(org.atmosphere.cpr.AtmosphereConfig config) {
-        // No implementation needed
-    }
 }

@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class URIPathDecoder {
-    
-    public static List<String> decodePath(URI u, boolean decode) {
-        String path = u.getPath();
+    public static List<String> getPathSegments(URI u, boolean decode) {
         List<String> segments = new ArrayList<>();
         
-        // Handle empty or null path
+        String path = u.getPath();
         if (path == null || path.isEmpty()) {
             return segments;
         }

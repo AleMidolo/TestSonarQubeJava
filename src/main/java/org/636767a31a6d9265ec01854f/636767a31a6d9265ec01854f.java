@@ -18,7 +18,7 @@ public class FieldParser {
         byte nextByte = buffer[currentPosition];
         if ((nextByte & 0x80) != 0) {
             isPacked = true;
-            // Skip the length delimiter byte
+            // Skip the length byte
             currentPosition++;
         } else {
             isPacked = false;

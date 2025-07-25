@@ -26,7 +26,6 @@ public class PropertyResolver {
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Replace each ${var} with its value from properties
         while (matcher.find()) {
             String varName = matcher.group(1);
             String replacement = props.getProperty(varName);

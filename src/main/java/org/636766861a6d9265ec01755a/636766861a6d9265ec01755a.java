@@ -21,8 +21,8 @@ public class UriMatcher {
 
         // Convert pattern to regex
         String regex = pattern.replaceAll("\\*", ".*")
-                             .replaceAll("\\?", ".")
-                             .replaceAll("\\{([^}]+)\\}", "([^/]+)");
+                            .replaceAll("\\?", ".")
+                            .replaceAll("\\{([^/]+)\\}", "([^/]+)");
         
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(uri);

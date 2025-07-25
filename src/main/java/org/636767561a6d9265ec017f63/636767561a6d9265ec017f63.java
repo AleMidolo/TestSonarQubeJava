@@ -7,7 +7,7 @@ public class Graph {
      * Checks whether there exist unvisited vertices.
      * @return true if there exist unvisited vertices.
      */
-    public boolean hasUnvisitedVertices() {
+    public boolean hasUnvisited() {
         for (boolean v : visited) {
             if (!v) {
                 return true;

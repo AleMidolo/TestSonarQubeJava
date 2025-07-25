@@ -11,18 +11,23 @@ public class VarintReader {
 
     /**
      * 从流中读取原始 Varint。
+     * @return 读取到的64位 Varint 值
+     * @throws IOException 如果读取过程中发生 I/O 错误
      */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            final byte b = (byte) inputStream.read();
+            int b = inputStream.read();
+            if (b == -1) {
+                throw new IOException("Unexpected end of stream while reading Varint");
+            }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint");
+        throw new IOException("Malformed Varint: too long");
     }
 }

@@ -19,16 +19,4 @@ public class ArrayUtils {
         }
         return array;
     }
-
-    // 测试代码
-    public static void main(String[] args) {
-        Double[] array1 = null;
-        Double[] array2 = new Double[0];
-        Double[] array3 = new Double[]{1.0, 2.0, 3.0};
-
-        System.out.println(Objects.isNull(nullToEmpty(array1))); // false
-        System.out.println(nullToEmpty(array1).length); // 0
-        System.out.println(nullToEmpty(array2).length); // 0
-        System.out.println(nullToEmpty(array3).length); // 3
-    }
 }

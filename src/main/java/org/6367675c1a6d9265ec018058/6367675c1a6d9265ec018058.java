@@ -18,8 +18,8 @@ public class StringSupplier {
 
     public static void main(String[] args) {
         Supplier<String> supplier = createStringSupplier(10);
-        System.out.println(supplier.get()); // 输出: 10
-        System.out.println(supplier.get()); // 输出: 11
-        System.out.println(supplier.get()); // 输出: 12
+        System.out.println(supplier.get()); // 输出 "10"
+        System.out.println(supplier.get()); // 输出 "11"
+        System.out.println(supplier.get()); // 输出 "12"
     }
 }

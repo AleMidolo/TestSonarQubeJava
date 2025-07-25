@@ -23,23 +23,24 @@ public class GraphSeparator {
     private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
         // Assuming E is the type of edges in the graph
         // Assuming the graph is represented as an adjacency list
-        // graph is a Map<Integer, List<E>> where the key is the vertex and the value is the list of edges connected to it
+        // graph is a Map<Integer, List<E>> where the key is the vertex and the value is the list of edges
 
+        // Placeholder for the result
         List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
-        // Iterate over all edges in the graph
+        // Iterate over each edge in the graph
         for (Map.Entry<Integer, List<E>> entry : graph.entrySet()) {
             int vertex = entry.getKey();
             List<E> edges = entry.getValue();
 
             for (E edge : edges) {
                 // Compute the neighborhood of the edge
-                Set<Integer> neighborhood = getNeighborhood(edge);
+                Set<Integer> neighborhood = getNeighborhood(vertex, edge);
 
                 // Compute the minimal separator for the neighborhood
                 List<Pair<Integer, Integer>> separator = computeMinimalSeparator(neighborhood);
 
-                // Add the separator and the edge to the global separator list
+                // Add the separator and the edge to the global list
                 globalSeparatorList.add(new Pair<>(separator, edge));
             }
         }
@@ -47,14 +48,14 @@ public class GraphSeparator {
         return globalSeparatorList;
     }
 
-    private Set<Integer> getNeighborhood(E edge) {
+    private Set<Integer> getNeighborhood(int vertex, E edge) {
         // Implement logic to get the neighborhood of the edge
         // This is a placeholder implementation
         Set<Integer> neighborhood = new HashSet<>();
-        // Add vertices connected by the edge to the neighborhood
-        // Assuming edge has methods getSource() and getTarget()
-        neighborhood.add(edge.getSource());
-        neighborhood.add(edge.getTarget());
+        neighborhood.add(vertex);
+        // Add other vertices connected by the edge
+        // Assuming edge has a method to get the other vertex
+        neighborhood.add(edge.getOtherVertex(vertex));
         return neighborhood;
     }
 
@@ -62,9 +63,12 @@ public class GraphSeparator {
         // Implement logic to compute the minimal separator for the neighborhood
         // This is a placeholder implementation
         List<Pair<Integer, Integer>> separator = new ArrayList<>();
-        // Add some pairs to the separator (this is just an example)
-        for (int vertex : neighborhood) {
-            separator.add(new Pair<>(vertex, vertex + 1));
+        for (int u : neighborhood) {
+            for (int v : neighborhood) {
+                if (u != v) {
+                    separator.add(new Pair<>(u, v));
+                }
+            }
         }
         return separator;
     }
@@ -77,21 +81,35 @@ public class GraphSeparator {
         this.graph = graph;
     }
 
-    // Example usage
+    // Assuming E is the type of edges in the graph
+    private static class E {
+        private final int vertex1;
+        private final int vertex2;
+
+        public E(int vertex1, int vertex2) {
+            this.vertex1 = vertex1;
+            this.vertex2 = vertex2;
+        }
+
+        public int getOtherVertex(int vertex) {
+            if (vertex == vertex1) {
+                return vertex2;
+            } else if (vertex == vertex2) {
+                return vertex1;
+            } else {
+                throw new IllegalArgumentException("Vertex not part of this edge");
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        // Initialize the graph with some edges
+        // Example usage
         Map<Integer, List<E>> graph = new HashMap<>();
-        // Add edges to the graph (this is just an example)
-        // graph.put(1, Arrays.asList(new E(1, 2), new E(1, 3)));
-        // graph.put(2, Arrays.asList(new E(2, 3)));
+        // Populate the graph with edges
+        // ...
 
         GraphSeparator separator = new GraphSeparator(graph);
         List<Pair<List<Pair<Integer, Integer>>, E>> result = separator.computeGlobalSeparatorList();
-
-        // Print the result
-        for (Pair<List<Pair<Integer, Integer>>, E> pair : result) {
-            System.out.println("Edge: " + pair.getValue());
-            System.out.println("Separator: " + pair.getKey());
-        }
+        // Process the result
     }
 }

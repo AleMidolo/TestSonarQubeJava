@@ -1,7 +1,8 @@
 import org.apache.log4j.spi.LoggingEvent;
 
 protected void subAppend(LoggingEvent event) {
-    // Assuming this method is part of a class that has a writer or output stream
-    // Here we simply print the event's message to the console
+    // Assuming this method is part of a custom appender class
+    // Here we simply print the log message to the console
+    // You can replace this with actual logging logic as needed
     System.out.println(event.getMessage());
 }

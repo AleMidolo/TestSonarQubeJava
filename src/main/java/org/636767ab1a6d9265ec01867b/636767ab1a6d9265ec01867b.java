@@ -14,8 +14,6 @@ public class UTF8Writer {
 
         int length = str.length();
         int utf8Length = 0;
-
-        // 计算 UTF-8 编码后的字节长度
         for (int i = 0; i < length; i++) {
             char c = str.charAt(i);
             if (c <= 0x7F) {
@@ -24,39 +22,48 @@ public class UTF8Writer {
                 utf8Length += 2;
             } else if (Character.isHighSurrogate(c)) {
                 utf8Length += 4;
-                i++; // 跳过低代理项
+                i++; // Skip the low surrogate
             } else {
                 utf8Length += 3;
             }
         }
 
-        // 确保 LinkedBuffer 有足够的空间
-        if (lb.offset + utf8Length > lb.buffer.length) {
-            lb = new LinkedBuffer(lb.buffer.length, lb);
+        if (utf8Length > 65535) {
+            throw new IllegalArgumentException("UTF-8 encoded string is too long: " + utf8Length);
         }
 
-        // 写入 UTF-8 编码的字节
+        LinkedBuffer buffer = lb;
+        if (buffer == null) {
+            buffer = LinkedBuffer.allocate();
+        }
+
+        Output output = session.getOutput();
+        output.writeVarInt32(utf8Length, buffer);
+
         for (int i = 0; i < length; i++) {
             char c = str.charAt(i);
             if (c <= 0x7F) {
-                lb.buffer[lb.offset++] = (byte) c;
+                buffer.buffer[buffer.offset++] = (byte) c;
             } else if (c <= 0x7FF) {
-                lb.buffer[lb.offset++] = (byte) (0xC0 | (c >> 6));
-                lb.buffer[lb.offset++] = (byte) (0x80 | (c & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0xC0 | (c >> 6));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
             } else if (Character.isHighSurrogate(c)) {
-                int codePoint = Character.toCodePoint(c, str.charAt(i + 1));
-                lb.buffer[lb.offset++] = (byte) (0xF0 | (codePoint >> 18));
-                lb.buffer[lb.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
-                lb.buffer[lb.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
-                lb.buffer[lb.offset++] = (byte) (0x80 | (codePoint & 0x3F));
-                i++; // 跳过低代理项
+                int codePoint = Character.toCodePoint(c, str.charAt(++i));
+                buffer.buffer[buffer.offset++] = (byte) (0xF0 | (codePoint >> 18));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (codePoint & 0x3F));
             } else {
-                lb.buffer[lb.offset++] = (byte) (0xE0 | (c >> 12));
-                lb.buffer[lb.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
-                lb.buffer[lb.offset++] = (byte) (0x80 | (c & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0xE0 | (c >> 12));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
+                buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
+            }
+
+            if (buffer.offset == buffer.buffer.length) {
+                buffer = buffer.next = LinkedBuffer.allocate();
             }
         }
 
-        return lb;
+        return buffer;
     }
 }

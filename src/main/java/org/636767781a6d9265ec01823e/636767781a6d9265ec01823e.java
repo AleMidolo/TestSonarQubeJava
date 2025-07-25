@@ -31,11 +31,11 @@ public class ClientAppender extends AppenderSkeleton {
     public boolean requiresLayout() {
         return true;
     }
+}
 
-    // Dummy Client class for demonstration
-    public static class Client {
-        public void sendMessage(String message) {
-            System.out.println("Sending to client: " + message);
-        }
+class Client {
+    public void sendMessage(String message) {
+        // Simulate sending message to client
+        System.out.println("Sending to client: " + message);
     }
 }

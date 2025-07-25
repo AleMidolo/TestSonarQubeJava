@@ -11,11 +11,8 @@ public class UTF8SizeCalculator {
      * @return UTF-8 编码后的字节大小
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        if (str == null) {
-            throw new IllegalArgumentException("Input string cannot be null");
-        }
-        if (index < 0 || len < 0 || index + len > str.length()) {
-            throw new IllegalArgumentException("Invalid index or length");
+        if (str == null || index < 0 || len < 0 || index + len > str.length()) {
+            throw new IllegalArgumentException("Invalid input parameters");
         }
 
         String substring = str.subSequence(index, index + len).toString();
@@ -28,6 +25,6 @@ public class UTF8SizeCalculator {
         int index = 7;
         int len = 2;
         int size = computeUTF8Size(str, index, len);
-        System.out.println("UTF-8 size: " + size); // 输出: UTF-8 size: 6
+        System.out.println("UTF-8 size: " + size);  // 输出: UTF-8 size: 6
     }
 }

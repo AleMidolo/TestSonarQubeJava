@@ -9,23 +9,19 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-        // 假设我们有一个邻接表来表示图的结构
-        // 这里假设邻接表中的每个顶点都有一个与之关联的权重
-        // 遍历所有顶点，累加进入该顶点的权重
-        for (V vertex : v) {
-            // 假设 getIncomingEdges 返回进入该顶点的所有边的集合
-            // 假设 getWeight 返回边的权重
-            for (Edge<V> edge : getIncomingEdges(vertex)) {
-                totalWeight += edge.getWeight();
-            }
+        // 假设我们有一个方法来获取进入顶点的边的权重
+        // 这里假设 getIncomingEdges 返回一个包含所有进入顶点的边的集合
+        // 并且每个边都有一个 getWeight 方法返回边的权重
+        for (Edge<V> edge : getIncomingEdges(v)) {
+            totalWeight += edge.getWeight();
         }
         return totalWeight;
     }
 
-    // 假设的辅助方法，返回进入某个顶点的所有边
+    // 假设的辅助方法，用于获取进入顶点的边
     private Set<Edge<V>> getIncomingEdges(V vertex) {
-        // 这里应该返回进入该顶点的所有边的集合
-        // 由于这是一个示例，我们返回一个空的集合
+        // 这里应该实现获取进入顶点的边的逻辑
+        // 由于没有具体的图结构，这里返回一个空集合
         return Set.of();
     }
 

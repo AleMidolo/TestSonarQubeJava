@@ -19,4 +19,15 @@ public class ArrayUtils {
         }
         return array;
     }
+
+    public static void main(String[] args) {
+        // 测试用例
+        Character[] array1 = null;
+        Character[] array2 = new Character[0];
+        Character[] array3 = new Character[]{'a', 'b', 'c'};
+
+        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_CHARACTER_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_CHARACTER_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
+    }
 }

@@ -24,5 +24,4 @@ public class CharUtils {
         }
         return ch.charValue();
     }
-
 }

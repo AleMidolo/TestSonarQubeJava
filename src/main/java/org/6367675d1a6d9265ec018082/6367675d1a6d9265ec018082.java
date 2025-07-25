@@ -19,14 +19,16 @@ public class Graph {
 
         Node nextNode = nodeIterator.next();
         
-        // Get real nodes if virtual
-        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        // If current node is virtual, get its real counterpart
+        Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        
+        // If next node is virtual, get its real counterpart
+        Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-        // Find edge connecting current and next nodes
+        // Find edge connecting the real nodes
         for (Edge edge : edges) {
-            if ((edge.getSource() == realCurrent && edge.getTarget() == realNext) ||
-                (edge.getSource() == realNext && edge.getTarget() == realCurrent)) {
+            if ((edge.getSource() == realCurrentNode && edge.getTarget() == realNextNode) ||
+                (edge.getSource() == realNextNode && edge.getTarget() == realCurrentNode)) {
                 currentNode = nextNode;
                 return edge;
             }

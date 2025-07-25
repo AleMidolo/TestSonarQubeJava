@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CharsetConverter {
-    
+
     private static final Map<String, String> MIME_TO_JAVA_CHARSET = new HashMap<>();
     
     static {
@@ -19,6 +19,11 @@ public class CharsetConverter {
         MIME_TO_JAVA_CHARSET.put("CP1252", "windows-1252");
     }
 
+    /**
+     * Traduce un nombre de conjunto de caracteres estándar MIME al equivalente en Java.
+     * @param charset El nombre estándar MIME.
+     * @return El equivalente en Java para este nombre.
+     */
     private static String javaCharset(String charset) {
         if (charset == null || charset.trim().isEmpty()) {
             return Charset.defaultCharset().name();
@@ -32,12 +37,14 @@ public class CharsetConverter {
         }
         
         try {
-            // Verify if the charset is valid by attempting to get an instance
-            Charset.forName(charset);
-            return charset;
-        } catch (Exception e) {
-            // If charset is not recognized, return default charset
-            return Charset.defaultCharset().name();
+            // Verify if the charset is supported by Java
+            if (Charset.isSupported(charset)) {
+                return Charset.forName(charset).name();
+            }
+        } catch (IllegalArgumentException e) {
+            // If charset is not supported, return default
         }
+        
+        return Charset.defaultCharset().name();
     }
 }

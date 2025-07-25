@@ -34,10 +34,14 @@ public class TypeResolver {
             return Unknown.class;
         }
         
-        return bound;
+        if (bound instanceof Class) {
+            return bound;
+        }
+        
+        return Unknown.class;
     }
     
     private static class Unknown {
-        // Placeholder class for unknown types
+        private Unknown() {}
     }
 }

@@ -20,25 +20,33 @@ public class TypeResolver {
         Map<String, Type> typeVariableMap = new HashMap<>();
         TypeVariable<?>[] typeVariables = targetType.getTypeParameters();
         
-        for (int i = 0; i < typeVariables.length; i++) {
-            typeVariableMap.put(typeVariables[i].getName(), actualTypeArguments[i]);
-        }
-
-        // Resolve each type argument
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type type = actualTypeArguments[i];
+            Type actualType = actualTypeArguments[i];
             
-            if (type instanceof Class) {
-                resolvedTypes[i] = (Class<?>) type;
-            } else if (type instanceof TypeVariable) {
-                Type resolvedType = typeVariableMap.get(((TypeVariable<?>) type).getName());
-                if (resolvedType instanceof Class) {
-                    resolvedTypes[i] = (Class<?>) resolvedType;
-                } else {
-                    return null; // Cannot resolve type variable
+            if (actualType instanceof Class) {
+                resolvedTypes[i] = (Class<?>) actualType;
+            } else if (actualType instanceof TypeVariable) {
+                String variableName = ((TypeVariable<?>) actualType).getName();
+                
+                // Try to find matching type variable in target type
+                for (int j = 0; j < typeVariables.length; j++) {
+                    if (typeVariables[j].getName().equals(variableName)) {
+                        // Get bounds of type variable
+                        Type[] bounds = typeVariables[j].getBounds();
+                        if (bounds != null && bounds.length > 0 && bounds[0] instanceof Class) {
+                            resolvedTypes[i] = (Class<?>) bounds[0];
+                        }
+                        break;
+                    }
+                }
+                
+                if (resolvedTypes[i] == null) {
+                    // Could not resolve type variable
+                    return null;
                 }
             } else {
-                return null; // Cannot handle other type arguments
+                // Cannot resolve other types
+                return null;
             }
         }
 

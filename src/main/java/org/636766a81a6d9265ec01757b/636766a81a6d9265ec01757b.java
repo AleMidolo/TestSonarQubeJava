@@ -3,22 +3,15 @@ import com.alibaba.fastjson2.JSON;
 
 public class JsonSerializer {
     
-    private Object value;
-    
-    public JsonSerializer(Object value) {
-        this.value = value;
-    }
-
-    /**
-     * Serialize to JSON {@link String}
-     * @param features features to be enabled in serialization
-     * @return JSON {@link String}
-     */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        if (features == null || features.length == 0) {
-            return JSON.toJSONString(value);
+        try {
+            if (features == null || features.length == 0) {
+                return JSON.toJSONString(this);
+            }
+            return JSON.toJSONString(this, features);
+        } catch (Exception e) {
+            return "{}";
         }
-        return JSON.toJSONString(value, features);
     }
 }

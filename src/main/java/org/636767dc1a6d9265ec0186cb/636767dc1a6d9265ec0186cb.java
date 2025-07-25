@@ -21,17 +21,19 @@ public class ConfigInitializer {
                 Files.createDirectory(distPath);
                 logger.info("Created dist directory at: " + distPath.toAbsolutePath());
             }
-            
+
             // Verify directory is writable
             if (!Files.isWritable(distPath)) {
                 throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
             }
+
+            // Additional initialization can be added here
             
-            logger.info("Config initialization completed successfully");
+            logger.info("Configuration initialized successfully");
             
         } catch (IOException e) {
-            logger.severe("Failed to initialize config: " + e.getMessage());
-            throw new RuntimeException("Config initialization failed", e);
+            logger.severe("Failed to initialize configuration: " + e.getMessage());
+            throw new RuntimeException("Configuration initialization failed", e);
         }
     }
 }

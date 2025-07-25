@@ -16,12 +16,13 @@ public class BoundCalculator<K extends Comparable<K>> {
         
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int maxLowerBound = -1;
+            int maxLowerBound = 0;
             
+            // Compare with all previous keys to find max lower bound
             for (int j = 0; j < i; j++) {
                 K previousKey = keys.get(j);
                 if (previousKey.compareTo(currentKey) <= 0) {
-                    maxLowerBound = Math.max(maxLowerBound, j);
+                    maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
                 }
             }
             

@@ -1,52 +1,41 @@
 import org.objectweb.asm.Symbol;
 
 public class SymbolTable {
-    private final Symbol[] constantPool;
-    private int constantPoolCount;
-    private static final int CONSTANT_NAMEANDTYPE_TAG = 12;
-    
-    public SymbolTable(int initialCapacity) {
-        this.constantPool = new Symbol[initialCapacity];
-        this.constantPoolCount = 1;
-    }
+    private static final int CONSTANT_NAME_AND_TYPE_TAG = 12;
+    private final Symbol[] symbols;
+    private int size;
 
     public int addConstantNameAndType(final String name, final String descriptor) {
-        int hashCode = Symbol.CONSTANT_NAMEANDTYPE_TAG + name.hashCode() * descriptor.hashCode();
+        int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
         
-        // Check if symbol already exists in constant pool
-        Symbol symbol = lookupConstant(hashCode, CONSTANT_NAMEANDTYPE_TAG, name, descriptor);
-        if (symbol != null) {
-            return symbol.index;
-        }
-        
-        // Create new symbol and add to pool
-        symbol = new Symbol(
-            constantPoolCount,
-            CONSTANT_NAMEANDTYPE_TAG,
-            name,
-            descriptor,
-            hashCode
-        );
-        
-        constantPool[constantPoolCount] = symbol;
-        return constantPoolCount++;
-    }
-    
-    private Symbol lookupConstant(
-        final int hashCode,
-        final int tag,
-        final String name,
-        final String descriptor) {
-        for (int i = 1; i < constantPoolCount; i++) {
-            Symbol symbol = constantPool[i];
+        // Look for an existing entry
+        for (int i = 1; i < size; i++) {
+            Symbol symbol = symbols[i];
             if (symbol != null && 
-                symbol.tag == tag &&
-                symbol.hashCode == hashCode &&
-                symbol.name.equals(name) &&
+                symbol.tag == CONSTANT_NAME_AND_TYPE_TAG &&
+                symbol.name.equals(name) && 
                 symbol.value.equals(descriptor)) {
-                return symbol;
+                return i;
             }
         }
-        return null;
+        
+        // Create new entry if not found
+        return addConstantSymbol(new Symbol(
+            CONSTANT_NAME_AND_TYPE_TAG,
+            size++,
+            name,
+            descriptor,
+            hashCode));
+    }
+
+    private int addConstantSymbol(Symbol symbol) {
+        if (size >= symbols.length) {
+            // Expand array if needed
+            Symbol[] newSymbols = new Symbol[symbols.length * 2];
+            System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
+            symbols = newSymbols;
+        }
+        symbols[size] = symbol;
+        return size;
     }
 }

@@ -24,10 +24,10 @@ public class Graph {
         // Other circulator methods
     }
     
-    /** 
-     * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the  {@code predicate} or returns a circulator to the {@code stop} node.
+    /**
+     * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the {@code predicate} or returns a circulator to the {@code stop} node.
      * @param predicate the condition the desired node should satisfy
-     * @param start the node to start the search from
+     * @param start the node to start the search from  
      * @param stop the node to end the search with
      * @param dir the direction to start the traversal in
      * @return a circulator to the node satisfying the {@code predicate} or to the {@code stop} node
@@ -35,32 +35,29 @@ public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we either find a node satisfying the predicate
-        // or reach the stop node
+        // Continue traversing until we reach the stop node
         while (!circulator.getCurrent().equals(stop)) {
+            // Check if current node satisfies predicate
             if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
             
             // Move to next node based on direction
-            if (dir > 0) {
-                circulator.setCurrent(getNextNode(circulator.getCurrent()));
-            } else {
-                circulator.setCurrent(getPreviousNode(circulator.getCurrent()));
-            }
+            Node next = (dir == 1) ? getNextNode(circulator.getCurrent()) : getPrevNode(circulator.getCurrent());
+            circulator.setCurrent(next);
         }
         
-        // Return circulator pointing to stop node if no matching node found
+        // Return circulator pointing to stop node if no match found
         return circulator;
     }
     
-    // Helper methods to traverse nodes
+    // Helper methods to get next/previous nodes
     private Node getNextNode(Node current) {
         // Implementation to get next node
         return null;
     }
     
-    private Node getPreviousNode(Node current) {
+    private Node getPrevNode(Node current) {
         // Implementation to get previous node
         return null;
     }

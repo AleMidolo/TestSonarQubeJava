@@ -1,7 +1,5 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
-import org.jgrapht.graph.DefaultGraphMapping;
-import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
 import java.util.HashMap;
@@ -17,19 +15,23 @@ public class GraphUtils {
      * @return a mapping from graph to graph
      */
     public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-        Map<V,V> vertexMap = new HashMap<>();
-        Map<E,E> edgeMap = new HashMap<>();
-        
-        // Map each vertex to itself
+        // Create vertex mapping where each vertex maps to itself
+        Map<V,V> vertexCorrespondence = new HashMap<>();
         for (V vertex : graph.vertexSet()) {
-            vertexMap.put(vertex, vertex);
+            vertexCorrespondence.put(vertex, vertex);
         }
-        
-        // Map each edge to itself
+
+        // Create edge mapping where each edge maps to itself
+        Map<E,E> edgeCorrespondence = new HashMap<>();
         for (E edge : graph.edgeSet()) {
-            edgeMap.put(edge, edge);
+            edgeCorrespondence.put(edge, edge);
         }
-        
-        return new IsomorphicGraphMapping<>(graph, graph, vertexMap, edgeMap);
+
+        return new IsomorphicGraphMapping<>(
+            graph, // Graph 1 (source)
+            graph, // Graph 2 (target) - same as source for identity mapping
+            vertexCorrespondence,
+            edgeCorrespondence
+        );
     }
 }

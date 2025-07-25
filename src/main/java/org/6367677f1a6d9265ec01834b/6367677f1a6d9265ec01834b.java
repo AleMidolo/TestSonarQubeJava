@@ -9,14 +9,14 @@ public class LogEventBuffer {
         this.buffer = new ArrayBlockingQueue<>(DEFAULT_BUFFER_SIZE);
     }
 
-    public LogEventBuffer(int bufferSize) {
-        this.buffer = new ArrayBlockingQueue<>(bufferSize);
+    public LogEventBuffer(int capacity) {
+        this.buffer = new ArrayBlockingQueue<>(capacity);
     }
 
     /** 
      * Place a {@link LoggingEvent} in the buffer. If the buffer is full
      * then the event is <b>silently dropped</b>. It is the caller's 
-     * responsability to make sure that the buffer has free space.  
+     * responsibility to make sure that the buffer has free space.  
      */
     public void put(LoggingEvent o) {
         if (o != null) {

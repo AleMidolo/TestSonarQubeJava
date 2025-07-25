@@ -22,13 +22,13 @@ public class MinimalSeparators {
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
             
             // For each pair of common neighbors
-            List<V> commonNeighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < commonNeighborsList.size(); i++) {
-                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
-                    V v1 = commonNeighborsList.get(i);
-                    V v2 = commonNeighborsList.get(j);
+            List<V> neighborList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < neighborList.size(); i++) {
+                for (int j = i + 1; j < neighborList.size(); j++) {
+                    V v1 = neighborList.get(i);
+                    V v2 = neighborList.get(j);
                     
-                    // If they form a minimal separator (no subset is a separator)
+                    // Check if {v1,v2} forms a minimal separator
                     if (isMinimalSeparator(v1, v2, source, target)) {
                         edgeSeparators.add(new Pair<>(
                             graph.getVertexIndex(v1),
@@ -50,41 +50,34 @@ public class MinimalSeparators {
     // Helper method to check if two vertices form a minimal separator
     private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
         // Remove v1 and v2 from graph temporarily
-        graph.removeVertex(v1);
-        graph.removeVertex(v2);
+        Set<V> separator = new HashSet<>();
+        separator.add(v1);
+        separator.add(v2);
         
-        // Check if source and target are still connected
-        boolean isConnected = hasPath(source, target);
-        
-        // Restore vertices
-        graph.addVertex(v1);
-        graph.addVertex(v2);
-        
-        // If source and target are disconnected, v1,v2 form a separator
-        return !isConnected;
-    }
-    
-    // Helper method for path finding between two vertices
-    private boolean hasPath(V start, V end) {
+        // Check if source and target are in different components after removal
         Set<V> visited = new HashSet<>();
-        Queue<V> queue = new LinkedList<>();
-        queue.add(start);
-        visited.add(start);
+        visited.addAll(separator);
         
-        while (!queue.isEmpty()) {
+        Queue<V> queue = new LinkedList<>();
+        queue.add(source);
+        visited.add(source);
+        
+        boolean targetFound = false;
+        while (!queue.isEmpty() && !targetFound) {
             V current = queue.poll();
-            if (current.equals(end)) {
-                return true;
-            }
-            
             for (V neighbor : graph.neighborListOf(current)) {
                 if (!visited.contains(neighbor)) {
+                    if (neighbor.equals(target)) {
+                        targetFound = true;
+                        break;
+                    }
                     visited.add(neighbor);
                     queue.add(neighbor);
                 }
             }
         }
         
-        return false;
+        // If target not found, v1 and v2 form a separator
+        return !targetFound;
     }
 }

@@ -14,24 +14,21 @@ public class BoundComputer<K extends Comparable<K>> {
 
         List<Integer> upperBounds = new ArrayList<>(keys.size());
         
-        // For each key, find the smallest value larger than it
+        // Initialize all upper bounds to the size of the list
+        for (int i = 0; i < keys.size(); i++) {
+            upperBounds.add(keys.size());
+        }
+
+        // For each key, find its upper bound by comparing with all other keys
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int upperBound = Integer.MAX_VALUE;
-            
-            // Compare with all other keys
             for (int j = 0; j < keys.size(); j++) {
-                if (i != j) {
-                    K otherKey = keys.get(j);
-                    if (currentKey.compareTo(otherKey) < 0) {
-                        upperBound = Math.min(upperBound, j);
-                    }
+                if (i != j && currentKey.compareTo(keys.get(j)) <= 0) {
+                    upperBounds.set(i, Math.min(upperBounds.get(i), j));
                 }
             }
-            
-            upperBounds.add(upperBound);
         }
-        
+
         return upperBounds;
     }
 }

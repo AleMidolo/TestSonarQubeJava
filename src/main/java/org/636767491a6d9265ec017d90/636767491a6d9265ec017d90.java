@@ -11,11 +11,14 @@ public class ArrayUtils {
     public static final <V> void reverse(V[] arr, int from, int to) {
         // Input validation
         Objects.requireNonNull(arr, "Array cannot be null");
-        if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("Invalid range specified");
+        if (from < 0 || to >= arr.length) {
+            throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
+        }
+        if (from > to) {
+            throw new IllegalArgumentException("From index cannot be greater than to index");
         }
 
-        // Reverse elements in the range
+        // Reverse the elements in the specified range
         while (from < to) {
             // Swap elements at from and to indices
             V temp = arr[from];

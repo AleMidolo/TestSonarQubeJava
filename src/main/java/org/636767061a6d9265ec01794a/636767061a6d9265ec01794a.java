@@ -15,17 +15,17 @@ public class FilenameUtils {
         int lastDirSeparator = indexOfLastSeparator(filename);
         
         // Find last dot in filename
-        int lastDot = filename.lastIndexOf(EXTENSION_SEPARATOR);
+        int lastDotPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
         
         // Return -1 if:
         // - No dot found
         // - Dot is before last directory separator
         // - Dot is the last character
-        if (lastDot == -1 || lastDot < lastDirSeparator || lastDot == filename.length() - 1) {
+        if (lastDotPos == -1 || lastDotPos < lastDirSeparator || lastDotPos == filename.length() - 1) {
             return -1;
         }
         
-        return lastDot;
+        return lastDotPos;
     }
 
     public static int indexOfLastSeparator(String filename) {
@@ -35,7 +35,6 @@ public class FilenameUtils {
         
         int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
         int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
-        
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 }

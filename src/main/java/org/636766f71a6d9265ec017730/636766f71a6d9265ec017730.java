@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CollectionUtils {
-    
+
     /** 
      * दिए गए संग्रह को स्ट्रिंग्स के एक ऐरे में परिवर्तित करता है। लौटाया गया ऐरे <code>null</code> प्रविष्टियाँ नहीं रखता है। ध्यान दें कि {@link Arrays#sort(Object[])} एक {@link NullPointerException} फेंकेगा यदि ऐरे का कोई तत्व <code>null</code> है।
      * @param collection परिवर्तित करने के लिए संग्रह

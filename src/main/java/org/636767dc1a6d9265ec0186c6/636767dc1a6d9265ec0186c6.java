@@ -1,8 +1,10 @@
+import java.util.Set;
+
 public class FieldChecker {
+    
+    private Set<String> properties;
 
-    private Fields properties;
-
-    public FieldChecker(Fields properties) {
+    public FieldChecker(Set<String> properties) {
         this.properties = properties;
     }
 
@@ -10,7 +12,7 @@ public class FieldChecker {
      * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
      */
     private boolean containsAllFields(Fields fields) {
-        for (Field field : fields.getAllFields()) {
+        for (String field : fields.getFieldNames()) {
             if (!properties.contains(field)) {
                 return false;
             }
@@ -20,18 +22,13 @@ public class FieldChecker {
 }
 
 class Fields {
-    // Assuming Fields class has a method to get all fields and check for containment
-    public Field[] getAllFields() {
-        // Implementation to return all fields
-        return new Field[0]; // Placeholder
+    private Set<String> fieldNames;
+
+    public Fields(Set<String> fieldNames) {
+        this.fieldNames = fieldNames;
     }
 
-    public boolean contains(Field field) {
-        // Implementation to check if the field is contained
-        return false; // Placeholder
+    public Set<String> getFieldNames() {
+        return fieldNames;
     }
-}
-
-class Field {
-    // Implementation of Field class
 }

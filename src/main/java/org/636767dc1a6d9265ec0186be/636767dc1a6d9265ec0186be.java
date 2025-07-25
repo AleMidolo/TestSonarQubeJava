@@ -1,5 +1,5 @@
 public class TimeBucketCompressor {
-    
+
     /**
      * दिन के चरण (dayStep) का पालन करते हुए समय बकेट के लम्बे मान को फिर से प्रारूपित करें। जैसे, यदि dayStep == 11 है, तो 20000105 का फिर से प्रारूपित समय बकेट 20000101 होगा, 20000115 का फिर से प्रारूपित समय बकेट 20000112 होगा, और 20000123 का फिर से प्रारूपित समय बकेट 20000123 होगा।
      */
@@ -18,35 +18,40 @@ public class TimeBucketCompressor {
         // Convert the new day of the year back to a date
         return convertDayOfYearToDate(year, newDayOfYear);
     }
-    
+
     private static int getDayOfYear(int year, int month, int day) {
-        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        int dayOfYear = 0;
-        for (int i = 0; i < month - 1; i++) {
+        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (isLeapYear(year)) {
+            daysInMonth[2] = 29;
+        }
+        int dayOfYear = day;
+        for (int i = 1; i < month; i++) {
             dayOfYear += daysInMonth[i];
         }
-        dayOfYear += day;
         return dayOfYear;
     }
-    
+
     private static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
-    
+
     private static long convertDayOfYearToDate(int year, int dayOfYear) {
-        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        int month = 0;
+        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (isLeapYear(year)) {
+            daysInMonth[2] = 29;
+        }
+        int month = 1;
         while (dayOfYear > daysInMonth[month]) {
             dayOfYear -= daysInMonth[month];
             month++;
         }
-        return year * 10000 + (month + 1) * 100 + dayOfYear;
+        return year * 10000 + month * 100 + dayOfYear;
     }
 
     public static void main(String[] args) {
-        long timeBucket = 20000115;
+        long timeBucket = 20000105;
         int dayStep = 11;
         long compressedBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedBucket); // Output: 20000112
+        System.out.println(compressedBucket); // Output: 20000101
     }
 }

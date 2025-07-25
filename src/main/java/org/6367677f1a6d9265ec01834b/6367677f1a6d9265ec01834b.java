@@ -1,10 +1,10 @@
 import java.util.LinkedList;
 
-public class EventBuffer {
+public class LoggingBuffer {
     private LinkedList<LoggingEvent> buffer;
     private int capacity;
 
-    public EventBuffer(int capacity) {
+    public LoggingBuffer(int capacity) {
         this.capacity = capacity;
         this.buffer = new LinkedList<>();
     }
@@ -15,12 +15,13 @@ public class EventBuffer {
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
             buffer.add(o);
-        } else {
-            // Buffer is full, silently discard the event
         }
+        // If the buffer is full, the event is silently discarded
     }
+
+    // Additional methods for the LoggingBuffer can be added here
 }
 
 class LoggingEvent {
-    // Assume this class has necessary fields and methods
+    // Implementation of LoggingEvent class
 }

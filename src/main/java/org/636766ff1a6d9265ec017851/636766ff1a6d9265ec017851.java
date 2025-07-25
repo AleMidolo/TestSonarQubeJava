@@ -18,11 +18,11 @@ public class ByteFinder {
         
         for (int i = pos; i < buffer.length; i++) {
             if (buffer[i] == value) {
-                return i; // Found the byte
+                return i; // Return the index of the found byte
             }
         }
         
-        return -1; // Not found
+        return -1; // Value not found
     }
 
     public static void main(String[] args) {

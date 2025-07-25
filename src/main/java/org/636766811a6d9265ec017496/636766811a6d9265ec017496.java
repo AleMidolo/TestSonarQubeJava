@@ -19,7 +19,8 @@ public class FileIterator {
         if (currentIndex < files.length) {
             File file = files[currentIndex++];
             return new FileInputStream(file);
+        } else {
+            return null;
         }
-        return null;
     }
 }

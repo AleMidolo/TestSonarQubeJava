@@ -1,4 +1,4 @@
-public class SubstringExtractor {
+public class SubstringExample {
 
     /** 
      * निर्दिष्ट स्ट्रिंग से उपस्ट्रिंग प्राप्त करता है, अपवादों से बचते हुए। 
@@ -7,13 +7,7 @@ public class SubstringExtractor {
         if (str == null) {
             return null;
         }
-        if (start < 0) {
-            start = 0;
-        }
-        if (end > str.length()) {
-            end = str.length();
-        }
-        if (start > end) {
+        if (start < 0 || end > str.length() || start > end) {
             return "";
         }
         return str.substring(start, end);
@@ -21,9 +15,10 @@ public class SubstringExtractor {
 
     public static void main(String[] args) {
         String example = "Hello, World!";
+        System.out.println(sub(example, 0, 5)); // Output: Hello
         System.out.println(sub(example, 7, 12)); // Output: World
-        System.out.println(sub(example, -1, 5)); // Output: Hello
-        System.out.println(sub(example, 0, 20)); // Output: Hello, World!
-        System.out.println(sub(example, 5, 3));  // Output: (empty string)
+        System.out.println(sub(example, -1, 5)); // Output: (empty string)
+        System.out.println(sub(example, 0, 20)); // Output: (empty string)
+        System.out.println(sub(null, 0, 5)); // Output: null
     }
 }

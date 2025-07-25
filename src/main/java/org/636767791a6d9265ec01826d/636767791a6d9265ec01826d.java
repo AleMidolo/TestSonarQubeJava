@@ -7,10 +7,10 @@ public class PropertyFinder {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // या आप एक डिफ़ॉल्ट मान लौटाना चाह सकते हैं
+            return null;
         }
         
-        // वेरिएबल प्रतिस्थापन
+        // Perform variable substitution
         for (String propKey : props.stringPropertyNames()) {
             String placeholder = "${" + propKey + "}";
             value = value.replace(placeholder, props.getProperty(propKey));

@@ -1,10 +1,17 @@
-import java.util.Objects;
-
 class Node {
-    private final boolean isVirtual;
+    private Node next;
+    private boolean isVirtual;
 
     public Node(boolean isVirtual) {
         this.isVirtual = isVirtual;
+    }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
     }
 
     public boolean isVirtual() {
@@ -13,8 +20,8 @@ class Node {
 }
 
 class Edge {
-    private final Node from;
-    private final Node to;
+    private Node from;
+    private Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
@@ -30,13 +37,11 @@ class Edge {
     }
 }
 
-class Graph {
+class GraphNode {
     private Node currentNode;
-    private Node nextNode;
 
-    public Graph(Node currentNode, Node nextNode) {
+    public GraphNode(Node currentNode) {
         this.currentNode = currentNode;
-        this.nextNode = nextNode;
     }
 
     /**
@@ -44,14 +49,16 @@ class Graph {
      * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        Node realFrom = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node realTo = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(realFrom, realTo);
-    }
-
-    private Node getRealNode(Node virtualNode) {
-        // Placeholder for logic to get the real node corresponding to a virtual node
-        // This should be replaced with actual implementation
-        return new Node(false); // Assuming a new real node is created for demonstration
+        Node nextNode = currentNode.getNext();
+        if (currentNode.isVirtual()) {
+            // Logic to find the real equivalent of the current node
+            // For simplicity, we assume the current node is not virtual in this example
+            // In a real scenario, you would implement the logic to find the real node
+        }
+        if (nextNode != null && nextNode.isVirtual()) {
+            // Logic to find the real equivalent of the next node
+            // For simplicity, we assume the next node is not virtual in this example
+        }
+        return new Edge(currentNode, nextNode);
     }
 }

@@ -23,10 +23,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+        System.out.println(endsWith("HelloWorld", "world", true)); // true
         System.out.println(endsWith("HelloWorld", "World", false)); // true
-        System.out.println(endsWith("HelloWorld", "world", true));  // true
-        System.out.println(endsWith(null, null, false));            // true
-        System.out.println(endsWith("HelloWorld", null, false));    // false
-        System.out.println(endsWith(null, "World", false));         // false
+        System.out.println(endsWith("HelloWorld", "Hello", false)); // false
+        System.out.println(endsWith(null, null, true)); // true
+        System.out.println(endsWith(null, "test", true)); // false
     }
 }

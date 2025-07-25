@@ -22,14 +22,14 @@ public class BeanMap {
     public void put(String key, Object value) {
         map.put(key, value);
     }
-
+    
     // Main method for testing
     public static void main(String[] args) {
         BeanMap beanMap = new BeanMap();
         beanMap.put("key1", "value1");
-        beanMap.put("key2", 42);
+        beanMap.put("key2", "value2");
         
         Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, 42]
+        System.out.println(values); // Output: [value1, value2]
     }
 }

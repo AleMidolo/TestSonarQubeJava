@@ -1,4 +1,6 @@
-public class TrimArrayElements {
+import java.util.Arrays;
+
+public class TrimArray {
     /** 
      * दिए गए String array के तत्वों को ट्रिम करें, प्रत्येक पर <code>String.trim()</code> कॉल करते हुए।
      * @param array मूल String array
@@ -8,7 +10,6 @@ public class TrimArrayElements {
         if (array == null) {
             return null;
         }
-        
         String[] trimmedArray = new String[array.length];
         for (int i = 0; i < array.length; i++) {
             trimmedArray[i] = array[i] != null ? array[i].trim() : null;
@@ -17,11 +18,8 @@ public class TrimArrayElements {
     }
 
     public static void main(String[] args) {
-        String[] inputArray = {"  Hello  ", "  World  ", null, "  Java  "};
-        String[] trimmedArray = trimArrayElements(inputArray);
-        
-        for (String str : trimmedArray) {
-            System.out.println(str);
-        }
+        String[] input = {"  Hello  ", "  World  ", null, "  Java  "};
+        String[] trimmed = trimArrayElements(input);
+        System.out.println(Arrays.toString(trimmed));
     }
 }

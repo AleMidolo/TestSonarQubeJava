@@ -13,12 +13,16 @@ public class ArrayComparer {
             return false; // Out of bounds check
         }
         
-        return Arrays.equals(Arrays.copyOfRange(data, offset, offset + len), 
-                             Arrays.copyOfRange(internalArray, 0, len));
+        for (int i = 0; i < len; i++) {
+            if (data[offset + i] != internalArray[i]) {
+                return false; // If any byte does not match, return false
+            }
+        }
+        return true; // All bytes matched
     }
     
     private byte[] getInternalArray() {
-        // Example internal array, this should be replaced with actual internal data
-        return new byte[]{1, 2, 3, 4, 5};
+        // Example internal array for demonstration purposes
+        return new byte[] {1, 2, 3, 4, 5};
     }
 }

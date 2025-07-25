@@ -13,7 +13,7 @@ public class Base64Decoder {
     }
 
     public static void main(String[] args) {
-        String encodedString = "SGVsbG8gV29ybGQ="; // Example Base64 encoded string
+        String encodedString = "SGVsbG8gV29ybGQ="; // "Hello World" in Base64
         String decodedString = base64Decode(encodedString);
         System.out.println(decodedString); // Output: Hello World
     }

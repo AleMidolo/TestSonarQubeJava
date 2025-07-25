@@ -1,11 +1,11 @@
 import java.util.function.Predicate;
 
 class Node {
-    // Node properties and methods
+    // Node implementation
 }
 
 class OuterFaceCirculator {
-    // OuterFaceCirculator properties and methods
+    // OuterFaceCirculator implementation
 }
 
 public class Graph {
@@ -23,7 +23,7 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator();
         
         Node currentNode = start;
-        while (currentNode != null && !currentNode.equals(stop)) {
+        while (currentNode != stop) {
             if (predicate.test(currentNode)) {
                 return circulator; // Return circulator for the node that satisfies the predicate
             }
@@ -36,6 +36,6 @@ public class Graph {
     
     private Node getNextNode(Node currentNode, int dir) {
         // Logic to get the next node based on the direction
-        return null; // Placeholder return statement
+        return currentNode; // Placeholder return
     }
 }

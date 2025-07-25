@@ -18,11 +18,12 @@ public class BroadcastManager {
         String filter(String message);
     }
 
-    // Constructor and other methods
+    // Constructor
     public BroadcastManager(Set<Session> sessions) {
         this.sessions = sessions;
     }
 
+    // Setter for filter
     public void setBroadcastFilter(BroadcastFilter filter) {
         this.filter = filter;
     }

@@ -2,17 +2,13 @@ public class Type {
     private String name;
     private int id;
     private boolean isPrimitive;
-
+    
     public Type(String name, int id, boolean isPrimitive) {
         this.name = name;
         this.id = id;
         this.isPrimitive = isPrimitive;
     }
 
-    /**
-     * Returns a hash code value for this type.
-     * @return a hash code value for this type.
-     */
     @Override
     public int hashCode() {
         final int prime = 31;

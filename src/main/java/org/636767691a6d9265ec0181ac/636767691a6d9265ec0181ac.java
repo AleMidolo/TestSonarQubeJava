@@ -40,9 +40,8 @@ public class PathUtils {
         // Build new path
         StringBuilder result = new StringBuilder();
 
-        // Add path components minus the number of ".." references
-        int pathComponentsToKeep = Math.max(0, pathParts.length - backCount);
-        for (int i = 0; i < pathComponentsToKeep; i++) {
+        // Add path components minus the number of "../"
+        for (int i = 0; i < pathParts.length - backCount; i++) {
             result.append(pathParts[i]).append("/");
         }
 

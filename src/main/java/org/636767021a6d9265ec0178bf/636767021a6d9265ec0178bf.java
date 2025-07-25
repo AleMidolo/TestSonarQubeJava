@@ -25,7 +25,7 @@ public class TypeConverter {
             if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
                 return (char) intValue;
             }
-            throw new Exception("Number out of range for Character conversion");
+            throw new Exception("Number value outside of Character range");
         }
 
         if (value instanceof Boolean) {

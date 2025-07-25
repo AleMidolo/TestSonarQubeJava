@@ -13,8 +13,8 @@ public class MetricsCache {
             return true;
         }
         
-        Instant now = Instant.now();
-        Duration timeSinceLastUpdate = Duration.between(timestamp, now);
+        Instant currentTime = Instant.now();
+        Duration timeSinceLastUpdate = Duration.between(timestamp, currentTime);
         
         return timeSinceLastUpdate.compareTo(expiredThreshold) > 0;
     }

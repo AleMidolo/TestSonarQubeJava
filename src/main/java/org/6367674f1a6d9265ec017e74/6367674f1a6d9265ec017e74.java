@@ -3,7 +3,7 @@ import java.util.Queue;
 
 public class QueuePrinter {
     private Queue<Object> queue;
-    
+
     public QueuePrinter() {
         this.queue = new LinkedList<>();
     }
@@ -16,7 +16,7 @@ public class QueuePrinter {
         if (queue.isEmpty()) {
             return "[]";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
@@ -25,7 +25,7 @@ public class QueuePrinter {
             sb.append(", ");
         }
         
-        // Remove last ", " and close bracket
+        // Remove trailing comma and space
         sb.setLength(sb.length() - 2);
         sb.append("]");
         

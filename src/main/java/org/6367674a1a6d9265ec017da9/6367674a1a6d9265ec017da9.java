@@ -52,7 +52,8 @@ public class DoublyLinkedList<E> {
         } else {
             tail.next = node;
             node.prev = tail;
-            tail = node; // Update tail
+            tail = node;
         }
+        node.next = null; // Ensure next is null
     }
 }

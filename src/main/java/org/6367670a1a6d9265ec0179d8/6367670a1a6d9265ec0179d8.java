@@ -11,22 +11,13 @@ public class CustomOutputStream extends OutputStream {
         // Example implementation: write bytes to a hypothetical output
         for (byte value : b) {
             // Here you would write the byte to the actual output destination
-            System.out.write(value);
+            System.out.write(value); // This is just for demonstration
         }
     }
 
     @Override
     public void write(int b) throws IOException {
         // Implementation for writing a single byte
-        System.out.write(b);
-    }
-    
-    public static void main(String[] args) {
-        CustomOutputStream customOutputStream = new CustomOutputStream();
-        try {
-            customOutputStream.write(new byte[]{65, 66, 67}); // Writing A, B, C
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.write(b); // This is just for demonstration
     }
 }

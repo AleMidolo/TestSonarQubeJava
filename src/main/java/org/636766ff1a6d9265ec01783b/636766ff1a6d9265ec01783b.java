@@ -1,5 +1,5 @@
 public class SubstringUtil {
-
+    
     /** 
      * 从指定的字符串中获取子字符串，避免抛出异常。
      */

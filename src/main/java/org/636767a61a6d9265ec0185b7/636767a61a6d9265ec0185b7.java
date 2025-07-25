@@ -1,5 +1,4 @@
-public class CharacterDigitValue {
-
+public class CharToDigit {
     /**
      * 将字符解释为数字（在任何基数下最多为36），并返回其数值。这类似于 {@code Character.digit()}，但我们不接受非ASCII数字。
      */

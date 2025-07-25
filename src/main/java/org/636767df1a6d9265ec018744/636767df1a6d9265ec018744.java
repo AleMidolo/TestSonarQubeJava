@@ -10,19 +10,19 @@ public class TimeRangeSplitter {
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        
+
         while (start < end) {
             long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
             timeRanges.add(new TimeRange(start, rangeEnd));
             start = rangeEnd;
         }
-        
+
         return timeRanges;
     }
 
     public static class TimeRange {
-        private long start;
-        private long end;
+        private final long start;
+        private final long end;
 
         public TimeRange(long start, long end) {
             this.start = start;
@@ -35,6 +35,14 @@ public class TimeRangeSplitter {
 
         public long getEnd() {
             return end;
+        }
+
+        @Override
+        public String toString() {
+            return "TimeRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
         }
     }
 }

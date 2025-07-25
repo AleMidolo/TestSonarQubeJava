@@ -2,10 +2,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UriMatcher {
-    private final String pattern;
+    private static final String URI_PATTERN = "your-regex-pattern-here"; // Replace with your actual regex pattern
+    private final Pattern pattern;
 
-    public UriMatcher(String pattern) {
-        this.pattern = pattern;
+    public UriMatcher() {
+        this.pattern = Pattern.compile(URI_PATTERN);
     }
 
     /** 
@@ -14,14 +15,11 @@ public class UriMatcher {
      * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(uri);
-        
+        Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return new MatchResult(matcher);
-        } else {
-            return null; // No match found
         }
+        return null; // No match found
     }
 
     public static class MatchResult {
@@ -31,20 +29,23 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
+        // Additional methods to retrieve matched groups can be added here
         public String group(int index) {
             return matcher.group(index);
         }
 
-        public int start(int index) {
-            return matcher.start(index);
-        }
-
-        public int end(int index) {
-            return matcher.end(index);
-        }
-
         public int groupCount() {
             return matcher.groupCount();
+        }
+    }
+
+    public static void main(String[] args) {
+        UriMatcher uriMatcher = new UriMatcher();
+        MatchResult result = uriMatcher.match("your-test-uri-here");
+        if (result != null) {
+            System.out.println("Matched: " + result.group(0));
+        } else {
+            System.out.println("No match found.");
         }
     }
 }

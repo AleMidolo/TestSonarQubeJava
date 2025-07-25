@@ -11,21 +11,29 @@ public class MetricsHandler implements java.util.function.Consumer<METRICS> {
     @Override
     public void accept(final METRICS data) {
         if (data != null) {
-            for (Map.Entry<String, Integer> entry : data.getMetrics().entrySet()) {
-                metricsCache.merge(entry.getKey(), entry.getValue(), Integer::sum);
-            }
+            // 假设 METRICS 有一个方法 getKey() 和 getValue()，用于获取键和值
+            String key = data.getKey();
+            int value = data.getValue();
+            metricsCache.merge(key, value, Integer::sum);
         }
     }
 }
 
+// 假设 METRICS 类的定义
 class METRICS {
-    private final Map<String, Integer> metrics;
+    private String key;
+    private int value;
 
-    public METRICS(Map<String, Integer> metrics) {
-        this.metrics = metrics;
+    public METRICS(String key, int value) {
+        this.key = key;
+        this.value = value;
     }
 
-    public Map<String, Integer> getMetrics() {
-        return metrics;
+    public String getKey() {
+        return key;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

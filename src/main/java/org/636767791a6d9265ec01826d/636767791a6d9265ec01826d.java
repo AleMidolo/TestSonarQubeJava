@@ -10,14 +10,33 @@ public class VariableSubstitutor {
         if (value == null) {
             return null;
         }
-        
+
         // Perform variable substitution
-        for (String propKey : props.stringPropertyNames()) {
-            String propValue = props.getProperty(propKey);
-            value = value.replace("${" + propKey + "}", propValue);
+        StringBuilder result = new StringBuilder();
+        int startIndex = 0;
+        while (startIndex < value.length()) {
+            int startVar = value.indexOf("${", startIndex);
+            if (startVar == -1) {
+                result.append(value.substring(startIndex));
+                break;
+            }
+            result.append(value.substring(startIndex, startVar));
+            int endVar = value.indexOf("}", startVar);
+            if (endVar == -1) {
+                result.append(value.substring(startIndex));
+                break;
+            }
+            String varKey = value.substring(startVar + 2, endVar);
+            String varValue = props.getProperty(varKey);
+            if (varValue != null) {
+                result.append(varValue);
+            } else {
+                result.append(value.substring(startVar, endVar + 1)); // Keep the variable if not found
+            }
+            startIndex = endVar + 1;
         }
-        
-        return value;
+
+        return result.toString();
     }
 
     public static void main(String[] args) {

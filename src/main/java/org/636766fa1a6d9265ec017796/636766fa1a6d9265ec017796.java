@@ -11,7 +11,7 @@ public class BooleanArrayConverter {
         }
         Boolean[] objectArray = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            objectArray[i] = Boolean.valueOf(array[i]);
+            objectArray[i] = array[i]; // Autoboxing from boolean to Boolean
         }
         return objectArray;
     }

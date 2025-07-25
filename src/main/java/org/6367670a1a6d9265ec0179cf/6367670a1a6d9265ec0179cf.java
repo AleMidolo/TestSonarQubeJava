@@ -7,7 +7,7 @@ public class CharUtils {
      * @return Character 的 char 值，如果为空则返回默认值
      */
     public static char toChar(final Character ch, final char defaultValue) {
-        return (ch != null) ? ch : defaultValue;
+        return (ch != null) ? ch.charValue() : defaultValue;
     }
 
     public static void main(String[] args) {

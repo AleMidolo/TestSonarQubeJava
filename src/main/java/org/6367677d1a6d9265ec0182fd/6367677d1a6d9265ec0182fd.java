@@ -6,15 +6,13 @@ public class BooleanConverter {
         if (value == null) {
             return dEfault;
         }
-        switch (value.toLowerCase()) {
-            case "真":
-            case "true":
-                return true;
-            case "假":
-            case "false":
-                return false;
-            default:
-                return dEfault;
+        value = value.trim().toLowerCase();
+        if (value.equals("真")) {
+            return true;
+        } else if (value.equals("假")) {
+            return false;
+        } else {
+            return dEfault;
         }
     }
 

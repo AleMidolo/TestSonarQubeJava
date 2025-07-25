@@ -12,14 +12,13 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
             if (targetType.isAssignableFrom(rawClass)) {
-                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
                 Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-
                 for (int i = 0; i < actualTypeArguments.length; i++) {
                     resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
                 }

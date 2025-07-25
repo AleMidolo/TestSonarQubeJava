@@ -15,6 +15,7 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
+        // Test cases
         Boolean[] testArray1 = null;
         Boolean[] testArray2 = {};
         Boolean[] testArray3 = {true, false};

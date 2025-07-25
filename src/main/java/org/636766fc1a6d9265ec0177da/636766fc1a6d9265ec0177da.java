@@ -12,7 +12,7 @@ public class ParameterSeparatorChecker {
         // Test the isParameterSeparator method
         char testChar1 = ',';
         char testChar2 = 'a';
-        char testChar3 = ';';
+        char testChar3 = ' ';
         
         System.out.println(isParameterSeparator(testChar1)); // true
         System.out.println(isParameterSeparator(testChar2)); // false

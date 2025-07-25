@@ -19,6 +19,15 @@ public class PrimeCapacity {
                 prime++;
             }
         }
+        
+        // Check for the 11% error margin if desiredCapacity >= 1000
+        if (desiredCapacity >= 1000) {
+            int upperLimit = (int) (desiredCapacity * 1.11);
+            if (prime > upperLimit) {
+                return nextPrime(upperLimit);
+            }
+        }
+        
         return prime;
     }
 
@@ -28,9 +37,7 @@ public class PrimeCapacity {
         if (num % 2 == 0 || num % 3 == 0) return false;
 
         for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
-                return false;
-            }
+            if (num % i == 0 || num % (i + 2) == 0) return false;
         }
         return true;
     }

@@ -12,23 +12,19 @@ public class StringTrimmer {
         }
         
         StringBuilder result = new StringBuilder();
-        boolean leadingCharFound = false;
-
         for (char c : str.toCharArray()) {
-            if (c == leadingCharacter && !leadingCharFound) {
-                continue; // Skip leading character
+            if (c != leadingCharacter) {
+                result.append(c);
             }
-            leadingCharFound = true; // After the first non-leading character is found
-            result.append(c);
         }
-
+        
         return result.toString();
     }
 
     public static void main(String[] args) {
-        String testString = "aaaHello Worldaaa";
+        String testString = "aaabacada";
         char leadingChar = 'a';
         String trimmedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(trimmedString); // Output: "Hello Worldaaa"
+        System.out.println(trimmedString); // Output: "bcada"
     }
 }

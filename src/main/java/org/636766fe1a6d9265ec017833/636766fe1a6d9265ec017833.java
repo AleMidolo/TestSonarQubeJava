@@ -15,24 +15,50 @@ public class FileDeleter {
         }
         
         if (file.isDirectory()) {
-            for (File subFile : file.listFiles()) {
-                forceDeleteOnExit(subFile);
+            deleteDirectory(file);
+        } else {
+            if (!file.delete()) {
+                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
             }
         }
         
-        if (!file.delete()) {
-            throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-        }
-        
-        // Register the file for deletion on JVM exit
+        // Register a shutdown hook to delete the file on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 if (file.exists()) {
-                    forceDeleteOnExit(file);
+                    forceDelete(file);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }));
+    }
+
+    private static void deleteDirectory(File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    if (!file.delete()) {
+                        throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
+                    }
+                }
+            }
+        }
+        if (!directory.delete()) {
+            throw new IOException("No se pudo eliminar el directorio: " + directory.getAbsolutePath());
+        }
+    }
+
+    private static void forceDelete(File file) throws IOException {
+        if (file.isDirectory()) {
+            deleteDirectory(file);
+        } else {
+            if (!file.delete()) {
+                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
+            }
+        }
     }
 }

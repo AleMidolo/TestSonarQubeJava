@@ -1,34 +1,31 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BroadcastFilter {
+public class BroadcastFilterExample {
 
-    // List to hold the filtered messages
-    private List<Object> filteredMessages = new ArrayList<>();
-
-    /** 
+    /**
      * Invoca el {@link BroadcastFilter}
      * @param msg
      * @return
      */
     protected Object filter(Object msg) {
-        // Example filter logic: only allow non-null messages
-        if (msg != null) {
-            filteredMessages.add(msg);
-            return msg; // Return the message if it passes the filter
+        // Example implementation of a BroadcastFilter
+        List<Object> filteredMessages = new ArrayList<>();
+        
+        // Simulate filtering logic
+        if (msg instanceof String) {
+            String message = (String) msg;
+            if (!message.isEmpty()) {
+                filteredMessages.add(message);
+            }
         }
-        return null; // Return null if the message is filtered out
-    }
-
-    // Method to get all filtered messages
-    public List<Object> getFilteredMessages() {
-        return filteredMessages;
+        
+        return filteredMessages.isEmpty() ? null : filteredMessages;
     }
 
     public static void main(String[] args) {
-        BroadcastFilter broadcastFilter = new BroadcastFilter();
-        System.out.println(broadcastFilter.filter("Hello")); // Should print: Hello
-        System.out.println(broadcastFilter.filter(null)); // Should print: null
-        System.out.println(broadcastFilter.getFilteredMessages()); // Should print: [Hello]
+        BroadcastFilterExample example = new BroadcastFilterExample();
+        Object result = example.filter("Hello, World!");
+        System.out.println(result);
     }
 }

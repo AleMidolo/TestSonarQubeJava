@@ -21,8 +21,8 @@ public class ClassReader {
                ((long) (data[offset + 2] & 0xFF) << 40) |
                ((long) (data[offset + 3] & 0xFF) << 32) |
                ((long) (data[offset + 4] & 0xFF) << 24) |
-               ((data[offset + 5] & 0xFF) << 16) |
-               ((data[offset + 6] & 0xFF) << 8) |
-               (data[offset + 7] & 0xFF);
+               ((long) (data[offset + 5] & 0xFF) << 16) |
+               ((long) (data[offset + 6] & 0xFF) << 8) |
+               ((long) (data[offset + 7] & 0xFF));
     }
 }

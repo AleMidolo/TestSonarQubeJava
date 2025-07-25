@@ -20,22 +20,17 @@ public class ByteVector {
         if (byteLength < 0) {
             throw new IllegalArgumentException("byteLength cannot be negative");
         }
-
-        if (byteArrayValue != null) {
-            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-            }
+        
+        if (byteArrayValue == null) {
+            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
+        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
 
         ensureCapacity(size + byteLength);
-
-        if (byteArrayValue != null) {
-            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        } else {
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
-        }
-
+        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         size += byteLength;
+
         return this;
     }
 

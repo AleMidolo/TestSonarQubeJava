@@ -1,7 +1,8 @@
 public class DigitValueInterpreter {
 
     /** 
-     * Interpreta un carácter como un dígito (en cualquier base hasta 36) y devuelve el valor numérico. Esto es similar a {@code Character.digit()} pero no aceptamos dígitos no ASCII.
+     * Interpreta un carácter como un dígito (en cualquier base hasta 36) y devuelve el valor numérico. 
+     * Esto es similar a {@code Character.digit()} pero no aceptamos dígitos no ASCII.
      */
     private static int valorDígito(final char c) {
         if (c >= '0' && c <= '9') {

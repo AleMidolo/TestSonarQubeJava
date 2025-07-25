@@ -11,17 +11,13 @@ public class MetricsCache {
         if (existingData == null) {
             existingData = data;
         } else {
-            // Combina existingData con data
-            existingData.combine(data);
+            combineMetrics(existingData, data);
         }
     }
 
-    // Método de ejemplo para la clase METRICS
-    public static class METRICS {
-        // Atributos de METRICS
-
-        public void combine(METRICS other) {
-            // Lógica para combinar dos objetos METRICS
-        }
+    private void combineMetrics(METRICS existing, METRICS newData) {
+        // Implementar la lógica para combinar existing y newData
+        // Esto es un ejemplo, la implementación real dependerá de la estructura de METRICS
+        existing.merge(newData);
     }
 }

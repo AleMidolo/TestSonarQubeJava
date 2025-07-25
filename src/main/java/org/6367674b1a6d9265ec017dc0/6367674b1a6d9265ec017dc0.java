@@ -21,25 +21,34 @@ public class Graph<V> {
     }
 
     /** 
-     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
+     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
+     * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
      * @return conjunto de vértices con grado positivo
      */
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         for (Edge<V> edge : edges) {
-            visibleVertices.add(edge.source);
-            visibleVertices.add(edge.destination);
+            visibleVertices.add(edge.getSource());
+            visibleVertices.add(edge.getDestination());
         }
         return visibleVertices;
     }
 
     private static class Edge<V> {
-        V source;
-        V destination;
+        private V source;
+        private V destination;
 
-        Edge(V source, V destination) {
+        public Edge(V source, V destination) {
             this.source = source;
             this.destination = destination;
+        }
+
+        public V getSource() {
+            return source;
+        }
+
+        public V getDestination() {
+            return destination;
         }
     }
 }

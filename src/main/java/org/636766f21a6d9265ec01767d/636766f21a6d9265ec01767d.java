@@ -8,10 +8,11 @@ public class ObjectConverter {
     }
 
     public static void main(String[] args) {
+        // Ejemplos de uso
         Object obj1 = new Object();
         Object obj2 = null;
 
-        System.out.println(toString(obj1)); // Should print the object's string representation
-        System.out.println(toString(obj2)); // Should print null
+        System.out.println(toString(obj1)); // Imprime la representación en String del objeto
+        System.out.println(toString(obj2)); // Imprime null
     }
 }

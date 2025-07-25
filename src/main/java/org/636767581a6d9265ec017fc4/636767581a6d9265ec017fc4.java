@@ -1,13 +1,13 @@
 public class FactorialCalculator {
 
     /**
-     * Calcola il fattoriale di $n$.
-     * @param n il numero di input
-     * @return il fattoriale
+     * Calcular el factorial de $n$.
+     * @param n el número de entrada
+     * @return el factorial
      */
     public static long factorial(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Il fattoriale non è definito per numeri negativi.");
+            throw new IllegalArgumentException("El factorial no está definido para números negativos.");
         }
         long result = 1;
         for (int i = 2; i <= n; i++) {
@@ -17,7 +17,7 @@ public class FactorialCalculator {
     }
 
     public static void main(String[] args) {
-        int n = 5; // Esempio di input
-        System.out.println("Il fattoriale di " + n + " è: " + factorial(n));
+        int n = 5; // Ejemplo de uso
+        System.out.println("El factorial de " + n + " es: " + factorial(n));
     }
 }

@@ -15,9 +15,9 @@ public class ByteReader {
     }
 
     /**
-     * Legge un byte dal <code>buffer</code> e lo riempie nuovamente se necessario.
-     * @return Il prossimo byte dallo stream di input.
-     * @throws IOException se non ci sono più dati disponibili.
+     * Lee un byte del <code>buffer</code> y lo vuelve a llenar según sea necesario.
+     * @return El siguiente byte del flujo de entrada.
+     * @throws IOException si no hay más datos disponibles.
      */
     public byte readByte() throws IOException {
         if (bufferPosition >= bufferLength) {

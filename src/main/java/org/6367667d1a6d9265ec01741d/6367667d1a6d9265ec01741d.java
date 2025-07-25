@@ -4,7 +4,7 @@ import java.lang.reflect.TypeVariable;
 public class TypeResolver {
 
     /**
-     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
+     * Resuelve el primer límite para el {@code typeVariable}, devolviendo {@code Unknown.class} si no se puede resolver ninguno.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
@@ -15,14 +15,14 @@ public class TypeResolver {
         }
     }
 
-    // Classe fittizia per rappresentare un tipo sconosciuto
+    // Clase ficticia para representar el tipo desconocido
     public static class Unknown {
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
+        // Ejemplo de uso
         TypeVariable<?> typeVar = String.class.getTypeParameters()[0];
-        Type resolvedType = resolveBound(typeVar);
-        System.out.println("Resolved Type: " + resolvedType);
+        Type bound = resolveBound(typeVar);
+        System.out.println("Bound: " + bound);
     }
 }

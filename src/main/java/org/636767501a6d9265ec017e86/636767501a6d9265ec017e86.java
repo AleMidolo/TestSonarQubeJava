@@ -1,58 +1,46 @@
-import java.util.NoSuchElementException;
+import java.util.List;
 
-public class LinkedList<E> {
-    private static class ListNode<E> {
-        E element;
-        ListNode<E> next;
-        ListNode<E> prev;
+public class ListNode<E> {
+    private E data;
+    private ListNode<E> next;
+    private ListNode<E> previous;
 
-        ListNode(E element, ListNode<E> next, ListNode<E> prev) {
-            this.element = element;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
-    private ListNode<E> head;
-    private ListNode<E> tail;
-    private ListNode<E> current;
-
-    public LinkedList() {
-        head = null;
-        tail = null;
-        current = null;
-    }
-
-    public void add(E element) {
-        ListNode<E> newNode = new ListNode<>(element, null, tail);
-        if (tail != null) {
-            tail.next = newNode;
-        } else {
-            head = newNode;
-        }
-        tail = newNode;
-    }
-
-    public void setCurrent(ListNode<E> node) {
-        this.current = node;
-    }
-
-    public ListNode<E> getCurrent() {
-        return current;
+    public ListNode(E data) {
+        this.data = data;
+        this.next = null;
+        this.previous = null;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ListNode<E> previousNode() {
-        if (current == null) {
-            throw new NoSuchElementException("No current node is set.");
-        }
-        if (current.prev == null) {
-            throw new NoSuchElementException("No previous node exists.");
-        }
-        current = current.prev;
-        return current;
+    public ListNode<E> nodoAnterior() {
+        return this.previous;
+    }
+
+    // Getters and Setters for data, next, and previous
+    public E getData() {
+        return data;
+    }
+
+    public void setData(E data) {
+        this.data = data;
+    }
+
+    public ListNode<E> getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode<E> next) {
+        this.next = next;
+    }
+
+    public ListNode<E> getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(ListNode<E> previous) {
+        this.previous = previous;
     }
 }

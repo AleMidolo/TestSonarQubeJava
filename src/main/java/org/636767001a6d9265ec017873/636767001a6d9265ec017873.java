@@ -1,15 +1,15 @@
 public class StringUtils {
 
     /**
-     * Inverte una Stringa come per {@link StringBuilder#reverse()}.
-     * Una Stringa <code>null</code> restituisce <code>null</code>.
+     * Invierte una cadena de acuerdo con {@link StringBuilder#reverse()}.
+     * Una cadena <code>null</code> devuelve <code>null</code>.
      * <pre>
      * StringUtils.reverse(null)  = null
      * StringUtils.reverse("")    = ""
      * StringUtils.reverse("bat") = "tab"
      * </pre>
-     * @param str  la Stringa da invertire, può essere null
-     * @return la Stringa invertita, <code>null</code> se l'input è una Stringa null
+     * @param str  la cadena a invertir, puede ser null
+     * @return la cadena invertida, <code>null</code> si la entrada es una cadena null
      */
     public static String reverse(final String str) {
         if (str == null) {
@@ -19,8 +19,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(reverse(null));  // Output: null
-        System.out.println(reverse(""));    // Output: ""
-        System.out.println(reverse("bat")); // Output: tab
+        System.out.println(reverse(null));  // null
+        System.out.println(reverse(""));   // ""
+        System.out.println(reverse("bat")); // "tab"
     }
 }

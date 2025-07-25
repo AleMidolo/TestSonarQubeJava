@@ -1,30 +1,21 @@
 import org.jgrapht.Graph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class GraphUtils {
+public class AutomorfismoIdentidad {
 
     /**
-     * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
-     * @param graph il grafo di input
-     * @param <V> il tipo di vertice del grafo
-     * @param <E> il tipo di arco del grafo
-     * @return una mappatura da grafo a grafo
+     * Calcula un automorfismo de identidad (es decir, un mapeo propio de un grafo en el que cada vértice también se mapea a sí mismo).
+     * @param graph el grafo de entrada
+     * @param <V> el tipo de vértice del grafo
+     * @param <E> el tipo de arista del grafo
+     * @return un mapeo de grafo a grafo
      */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        Map<V, V> vertexMap = new HashMap<>();
-        Map<E, E> edgeMap = new HashMap<>();
-
+    public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> graph) {
+        // Crear un mapeo de identidad donde cada vértice se mapea a sí mismo
+        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
         for (V vertex : graph.vertexSet()) {
-            vertexMap.put(vertex, vertex);
+            mapping.addVertexMapping(vertex, vertex);
         }
-
-        for (E edge : graph.edgeSet()) {
-            edgeMap.put(edge, edge);
-        }
-
-        return new IsomorphicGraphMapping<>(vertexMap, edgeMap, graph, graph);
+        return mapping;
     }
 }

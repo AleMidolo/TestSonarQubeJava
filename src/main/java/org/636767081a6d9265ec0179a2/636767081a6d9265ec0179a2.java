@@ -1,7 +1,8 @@
 /**
- * <p>Metodo di utilità per {@link #createNumber(String)}.</p> <p>Restituisce <code>true</code> se s è <code>null</code>.</p>
- * @param s la String da controllare
- * @return se è composta solo da zeri o <code>null</code>
+ * Método de utilidad para {@link #createNumber(String)}.
+ * Devuelve <code>true</code> si "s" es <code>null</code> o si todos los caracteres son ceros.
+ * @param s la cadena a verificar
+ * @return si son todos ceros o <code>null</code>
  */
 private static boolean isAllZeros(String s) {
     if (s == null) {

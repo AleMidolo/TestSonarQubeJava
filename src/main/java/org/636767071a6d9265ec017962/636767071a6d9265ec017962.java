@@ -1,65 +1,43 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-public class BeanMapExample {
+public class BeanMap {
+    private Map<String, Object> properties;
 
-    /**
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
-     * @param map  il BeanMap le cui proprietà devono essere inserite
-     */
+    public BeanMap(Map<String, Object> properties) {
+        this.properties = properties;
+    }
+
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
-        }
-
-        // Ottieni tutte le chiavi (nomi delle proprietà) dal BeanMap fornito
-        for (Object key : map.keySet()) {
-            // Verifica se la proprietà è scrivibile
-            if (map.isWriteable((String) key)) {
-                // Ottieni il valore della proprietà dal BeanMap fornito
-                Object value = map.get(key);
-                // Imposta il valore della proprietà in questo BeanMap
-                this.put(key, value);
+        try {
+            PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
+            for (PropertyDescriptor descriptor : descriptors) {
+                if (descriptor.getWriteMethod() != null) {
+                    Method readMethod = descriptor.getReadMethod();
+                    if (readMethod != null) {
+                        Object value = readMethod.invoke(map);
+                        this.properties.put(descriptor.getName(), value);
+                    }
+                }
             }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 
-    // Metodo put per impostare il valore di una proprietà
-    private void put(Object key, Object value) {
-        // Implementazione del metodo put per impostare il valore di una proprietà
-        // Questo è un esempio, l'implementazione reale dipenderà dalla tua logica specifica
-        // Ad esempio, potresti usare un Map interno per memorizzare i valori
-        // internalMap.put(key, value);
+    private PropertyDescriptor[] getPropertyDescriptors() {
+        // This method should return the PropertyDescriptor array for the bean.
+        // For simplicity, we assume it's implemented elsewhere.
+        return new PropertyDescriptor[0];
     }
 
-    // Esempio di utilizzo
-    public static void main(String[] args) {
-        // Creazione di un BeanMap di esempio
-        BeanMap sourceMap = new BeanMap(new MyBean());
-        BeanMapExample targetMap = new BeanMapExample();
-
-        // Inserimento delle proprietà scrivibili
-        targetMap.putAllWriteable(sourceMap);
-    }
-}
-
-// Esempio di classe Bean
-class MyBean {
-    private String name;
-    private int age;
-
-    public String getName() {
-        return name;
+    public Object get(String propertyName) {
+        return properties.get(propertyName);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void put(String propertyName, Object value) {
+        properties.put(propertyName, value);
     }
 }

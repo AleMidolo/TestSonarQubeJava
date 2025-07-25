@@ -1,8 +1,8 @@
 import java.io.IOException;
 
 private void checkIfPackedField() throws IOException {
-    // Assuming 'packedField' is a boolean flag indicating if the field is packed
-    if (packedField) {
+    // Assuming 'packed' is a boolean flag indicating whether the field is packed
+    if (packed) {
         // Update internal state to reflect that we are reading a packed field
         // For example, set a flag or update a counter
         isReadingPackedField = true;
@@ -12,28 +12,27 @@ private void checkIfPackedField() throws IOException {
         // For example, read the length of the packed field
         int packedFieldLength = readPackedFieldLength();
         
-        // Update any other internal state as needed
-        updateInternalState(packedFieldLength);
+        // Update the internal state with the length of the packed field
+        currentPackedFieldLength = packedFieldLength;
     } else {
         // If the field is not packed, reset any related state
         isReadingPackedField = false;
         packedFieldCounter = 0;
+        currentPackedFieldLength = 0;
     }
 }
 
-// Example helper methods (assuming they are defined elsewhere in the class)
+// Helper method to read the length of the packed field
 private int readPackedFieldLength() throws IOException {
-    // Implementation to read the length of the packed field
-    // This could involve reading from a stream or other data source
-    return 0; // Placeholder return value
+    // Implement logic to read the length of the packed field
+    // For example, read a varint or a fixed-length integer from the input stream
+    // This is a placeholder implementation
+    return inputStream.read();
 }
 
-private void updateInternalState(int length) {
-    // Implementation to update internal state based on the packed field length
-    // This could involve setting flags, updating counters, etc.
-}
-
-// Example instance variables (assuming they are defined elsewhere in the class)
-private boolean packedField;
-private boolean isReadingPackedField;
-private int packedFieldCounter;
+// Example of internal state variables
+private boolean packed = false; // Indicates if the field is packed
+private boolean isReadingPackedField = false; // Indicates if we are currently reading a packed field
+private int packedFieldCounter = 0; // Counts the number of packed fields read
+private int currentPackedFieldLength = 0; // Stores the length of the current packed field
+private InputStream inputStream; // Example input stream for reading data

@@ -21,20 +21,8 @@ public class BucketList {
         this.head = head;
     }
 
-    public Bucket getHead() {
-        return head;
-    }
-
-    public void setHead(Bucket head) {
-        this.head = head;
-    }
-
-    /**
-     * 在数据结构中将此桶插入到 {@code bucket} 之前。
-     * @param bucket 作为当前桶下一个的桶。
-     */
     public void insertBefore(Bucket bucket) {
-        if (bucket == null || head == null) {
+        if (head == null || bucket == null) {
             return;
         }
 

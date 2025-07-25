@@ -3,7 +3,7 @@ import java.util.UUID;
 public class Main {
     /**
      * Generates a unique row ID based on the provided entity ID.
-     * 
+     *
      * @param entityId The entity ID to be used in generating the row ID.
      * @return A unique row ID as a String.
      */

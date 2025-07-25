@@ -17,7 +17,6 @@ public class MeteorLookup {
     }
 }
 
-// 假设 Meteor 类已经定义
 class Meteor {
-    // Meteor 类的具体实现
+    // Meteor 类的定义
 }

@@ -16,9 +16,12 @@ public class HexDigitConverter {
     }
 
     public static void main(String[] args) {
-        // 测试示例
-        System.out.println(convertHexDigit((byte) '5')); // 输出: 5
-        System.out.println(convertHexDigit((byte) 'a')); // 输出: 10
-        System.out.println(convertHexDigit((byte) 'F')); // 输出: 15
+        // Test cases
+        System.out.println(convertHexDigit((byte) '0')); // 0
+        System.out.println(convertHexDigit((byte) '9')); // 9
+        System.out.println(convertHexDigit((byte) 'a')); // 10
+        System.out.println(convertHexDigit((byte) 'f')); // 15
+        System.out.println(convertHexDigit((byte) 'A')); // 10
+        System.out.println(convertHexDigit((byte) 'F')); // 15
     }
 }

@@ -1,6 +1,5 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.io.IOException;
 
 public class PartialContentChecker {
 
@@ -10,14 +9,14 @@ public class PartialContentChecker {
      */
     public Boolean isPartialContentResponse() {
         try {
-            // 假设我们有一个URL对象
+            // 假设你已经有一个URL对象
             URL url = new URL("http://example.com/resource");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
             int responseCode = connection.getResponseCode();
             return responseCode == HttpURLConnection.HTTP_PARTIAL;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

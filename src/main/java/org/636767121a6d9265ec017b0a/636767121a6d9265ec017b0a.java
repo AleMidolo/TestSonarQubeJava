@@ -7,10 +7,10 @@ private int parseEndOfLine(String headerPart, int end) {
             if (index + 1 < headerPart.length()) {
                 char nextChar = headerPart.charAt(index + 1);
                 if ((currentChar == '\r' && nextChar == '\n') || (currentChar == '\n' && nextChar == '\r')) {
-                    return index; // Return the index of the first character of the line ending sequence
+                    return index; // Return the index of the start of the line ending sequence
                 }
             }
-            // If it's a single line ending character, return its index
+            // If it's a single \r or \n, return the index
             return index;
         }
         index++;

@@ -3,8 +3,8 @@ import java.util.*;
 public class GraphSeparator {
 
     private static class Pair<K, V> {
-        private K key;
-        private V value;
+        private final K key;
+        private final V value;
 
         public Pair(K key, V value) {
             this.key = key;
@@ -50,15 +50,15 @@ public class GraphSeparator {
 
     private List<Pair<Integer, Integer>> getNeighborhood(int vertex, E edge) {
         // Placeholder for the neighborhood computation
-        // This method should return the neighborhood of the given edge
-        // For example, it could return the list of adjacent edges or vertices
+        // This method should return the list of pairs representing the neighborhood of the edge
+        // For example, the neighborhood could be the vertices connected by the edge and their adjacent vertices
         return new ArrayList<>();
     }
 
     private List<Pair<Integer, Integer>> computeMinimalSeparator(List<Pair<Integer, Integer>> neighborhood) {
         // Placeholder for the minimal separator computation
         // This method should compute the minimal separator for the given neighborhood
-        // For example, it could use a graph traversal algorithm to find the separator
+        // For example, using a graph traversal algorithm like BFS or DFS
         return new ArrayList<>();
     }
 
@@ -79,7 +79,8 @@ public class GraphSeparator {
 
         // Print the result
         for (Pair<List<Pair<Integer, Integer>>, E> pair : result) {
-            System.out.println("Edge: " + pair.getValue() + ", Minimal Separator: " + pair.getKey());
+            System.out.println("Edge: " + pair.getValue());
+            System.out.println("Minimal Separator: " + pair.getKey());
         }
     }
 }

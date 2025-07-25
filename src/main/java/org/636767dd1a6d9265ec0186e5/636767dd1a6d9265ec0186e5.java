@@ -13,7 +13,7 @@ public class Channels {
     }
 
     public List<IConsumer> getConsumers() {
-        return this.consumers;
+        return consumers;
     }
 }
 

@@ -5,8 +5,14 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Implement your logic here to decide whether to accept, deny, or remain neutral
-        // For example, if no string matches, return NEUTRAL
-        return Filter.NEUTRAL;
+        // 这里假设我们有一个字符串匹配的逻辑
+        // 如果没有匹配到，返回 Filter.NEUTRAL
+        // 例如，我们可以检查日志消息是否包含某个关键字
+        String message = event.getRenderedMessage();
+        if (message != null && message.contains("keyword")) {
+            return Filter.ACCEPT; // 如果匹配到关键字，返回 ACCEPT
+        } else {
+            return Filter.NEUTRAL; // 如果没有匹配到，返回 NEUTRAL
+        }
     }
 }

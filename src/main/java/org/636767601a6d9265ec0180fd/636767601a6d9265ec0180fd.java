@@ -20,6 +20,4 @@ public class GraphIndex<V, E> {
         }
         index.get(sourceVertex).put(targetVertex, e);
     }
-
-    // 其他方法可以根据需要添加
 }

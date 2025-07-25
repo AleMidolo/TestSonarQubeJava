@@ -17,13 +17,4 @@ public class FrameStack {
         }
         return stack.pop();
     }
-
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(10);
-        frameStack.stack.push(20);
-        System.out.println(frameStack.pop()); // Output: 20
-        System.out.println(frameStack.pop()); // Output: 10
-    }
 }

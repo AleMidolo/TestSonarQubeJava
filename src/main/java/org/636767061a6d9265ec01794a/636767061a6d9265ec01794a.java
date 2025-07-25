@@ -24,8 +24,7 @@ public class FileUtils {
 
     /**
      * Returns the index of the last directory separator character.
-     * This method handles both Unix and Windows separators.
-     * @param filename  the filename to find the last separator in
+     * @param filename  the filename to find the last path separator in, null returns -1
      * @return the index of the last separator character, or -1 if there is no such character
      */
     private static int indexOfLastSeparator(String filename) {
@@ -40,11 +39,9 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(indexOfExtension("file.txt")); // 4
         System.out.println(indexOfExtension("path/to/file.txt")); // 13
         System.out.println(indexOfExtension("path\\to\\file.txt")); // 13
-        System.out.println(indexOfExtension("file")); // -1
         System.out.println(indexOfExtension("path/to/file")); // -1
         System.out.println(indexOfExtension(null)); // -1
     }

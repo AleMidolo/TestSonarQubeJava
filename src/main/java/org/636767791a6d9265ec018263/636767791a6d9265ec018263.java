@@ -1,5 +1,4 @@
-import java.lang.Class;
-import java.lang.ClassNotFoundException;
+import java.util.Objects;
 
 public class ClassFinder {
 
@@ -10,9 +9,7 @@ public class ClassFinder {
      * @throws ClassNotFoundException thrown if class can not be found.
      */
     private Class<?> findClass(final String className) throws ClassNotFoundException {
-        if (className == null) {
-            throw new IllegalArgumentException("Class name cannot be null");
-        }
+        Objects.requireNonNull(className, "Class name must not be null");
         return Class.forName(className);
     }
 }

@@ -6,10 +6,10 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Example initialization, you can add your own template variables here
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+    }
+
+    public void addTemplateVariable(String name) {
+        this.templateVariables.add(name);
     }
 
     /**
@@ -18,12 +18,6 @@ public class Template {
      * @return true if the template variable is a member of the template, otherwise false.
      */
     public final boolean isTemplateVariablePresent(String name) {
-        return templateVariables.contains(name);
-    }
-
-    public static void main(String[] args) {
-        Template template = new Template();
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var4")); // false
+        return this.templateVariables.contains(name);
     }
 }

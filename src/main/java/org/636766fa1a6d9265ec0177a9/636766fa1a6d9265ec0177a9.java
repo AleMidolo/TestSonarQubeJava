@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructorInitializationTracker {
+public class BasicBlock {
     private List<Integer> initializedTypes;
 
-    public ConstructorInitializationTracker() {
+    public BasicBlock() {
         this.initializedTypes = new ArrayList<>();
     }
 
-    /** 
+    /**
      * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
      * @param abstractType an abstract type on which a constructor is invoked.
      */
@@ -18,8 +18,8 @@ public class ConstructorInitializationTracker {
         }
     }
 
-    // Optional: Getter method to retrieve the list of initialized types
+    // Optional: Getter method to access the list of initialized types
     public List<Integer> getInitializedTypes() {
-        return new ArrayList<>(initializedTypes);
+        return initializedTypes;
     }
 }

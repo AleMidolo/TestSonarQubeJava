@@ -1,12 +1,19 @@
 public class Utils {
     /**
-     * Converts an object to its string representation. If the object is null, returns null.
-     * Otherwise, returns the result of the object's toString() method.
-     *
-     * @param object the object to convert to a string
-     * @return the string representation of the object, or null if the object is null
+     * Object to String, when null object then null else return toString();
      */
     public static String toString(Object object) {
         return object == null ? null : object.toString();
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        Object obj1 = null;
+        Object obj2 = "Hello, World!";
+        Object obj3 = 12345;
+
+        System.out.println(toString(obj1)); // Output: null
+        System.out.println(toString(obj2)); // Output: Hello, World!
+        System.out.println(toString(obj3)); // Output: 12345
     }
 }

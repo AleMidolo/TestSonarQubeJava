@@ -11,7 +11,11 @@ public class StringArrayUtils {
         }
         String[] trimmedArray = new String[array.length];
         for (int i = 0; i < array.length; i++) {
-            trimmedArray[i] = array[i] != null ? array[i].trim() : null;
+            if (array[i] != null) {
+                trimmedArray[i] = array[i].trim();
+            } else {
+                trimmedArray[i] = null;
+            }
         }
         return trimmedArray;
     }

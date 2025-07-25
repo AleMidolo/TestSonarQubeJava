@@ -9,7 +9,7 @@ public class MRUConfig {
         String osName = System.getProperty("os.name").toLowerCase();
         String configDirPath;
 
-        if (osName.contains("windows") && osName.contains("2000")) {
+        if (osName.contains("windows 2000")) {
             configDirPath = System.getenv("USERPROFILE") + File.separator + "Documents and Settings" + File.separator + "lf5";
         } else {
             configDirPath = userHome + File.separator + "lf5";
@@ -21,14 +21,10 @@ public class MRUConfig {
             if (created) {
                 System.out.println("Configuration directory created at: " + configDirPath);
             } else {
-                System.err.println("Failed to create configuration directory at: " + configDirPath);
+                System.out.println("Failed to create configuration directory at: " + configDirPath);
             }
         } else {
             System.out.println("Configuration directory already exists at: " + configDirPath);
         }
-    }
-
-    public static void main(String[] args) {
-        createConfigurationDirectory();
     }
 }

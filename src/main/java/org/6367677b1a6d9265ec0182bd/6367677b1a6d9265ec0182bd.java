@@ -1,3 +1,4 @@
+import org.apache.log4j.spi.LoggingEvent;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
@@ -11,45 +12,16 @@ public class LoggerFormatter {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         
-        printWriter.printf("Timestamp: %s%n", event.getTimestamp());
+        printWriter.printf("Timestamp: %d%n", event.getTimeStamp());
         printWriter.printf("Level: %s%n", event.getLevel());
-        printWriter.printf("Message: %s%n", event.getMessage());
+        printWriter.printf("Logger: %s%n", event.getLoggerName());
+        printWriter.printf("Message: %s%n", event.getRenderedMessage());
         
-        if (event.getThrowable() != null) {
-            printWriter.printf("Throwable: %s%n", event.getThrowable().getMessage());
+        if (event.getThrowableInformation() != null) {
+            printWriter.printf("Exception: %s%n", event.getThrowableInformation().getThrowable().toString());
         }
         
         printWriter.flush();
         return stringWriter.toString();
-    }
-}
-
-class LoggingEvent {
-    private long timestamp;
-    private String level;
-    private String message;
-    private Throwable throwable;
-
-    public LoggingEvent(long timestamp, String level, String message, Throwable throwable) {
-        this.timestamp = timestamp;
-        this.level = level;
-        this.message = message;
-        this.throwable = throwable;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Throwable getThrowable() {
-        return throwable;
     }
 }

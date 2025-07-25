@@ -5,24 +5,7 @@ class Node {
 }
 
 class OuterFaceCirculator {
-    private Node currentNode;
-
-    public OuterFaceCirculator(Node start) {
-        this.currentNode = start;
-    }
-
-    public Node getCurrentNode() {
-        return currentNode;
-    }
-
-    public void advance() {
-        // Logic to advance to the next node in the outer face
-    }
-
-    public boolean hasNext() {
-        // Logic to determine if there is a next node
-        return true; // Placeholder
-    }
+    // OuterFaceCirculator implementation
 }
 
 public class GraphTraversal {
@@ -36,15 +19,22 @@ public class GraphTraversal {
      * @return a circulator to the node satisfying the {@code predicate} or to the {@code stop} node
      */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        
-        do {
-            if (predicate.test(circulator.getCurrentNode())) {
-                return circulator;
+        OuterFaceCirculator circulator = new OuterFaceCirculator();
+        Node currentNode = start;
+
+        // Assuming we have a method to get the next node in the specified direction
+        while (!currentNode.equals(stop)) {
+            if (predicate.test(currentNode)) {
+                return circulator; // Return circulator to the current node if it satisfies the predicate
             }
-            circulator.advance();
-        } while (circulator.hasNext() && !circulator.getCurrentNode().equals(stop));
-        
-        return new OuterFaceCirculator(stop);
+            currentNode = getNextNode(currentNode, dir); // Move to the next node in the specified direction
+        }
+
+        return circulator; // Return circulator to the stop node if no node satisfies the predicate
+    }
+
+    private Node getNextNode(Node currentNode, int dir) {
+        // Implementation to get the next node based on the direction
+        return new Node(); // Placeholder return
     }
 }

@@ -17,30 +17,38 @@ public class Mappings {
     }
 
     public static Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulating a history mapping for the current index
-        Mappings currentIndexMappings = new Mappings();
-        currentIndexMappings.addField("id", "integer");
-        currentIndexMappings.addField("name", "string");
-        currentIndexMappings.addField("created_at", "date");
-
+        // Simulated existing fields in the current index for the given tableName
+        Map<String, String> existingFields = getExistingFieldsForTable(tableName);
+        
         Mappings diffMappings = new Mappings();
-
+        
         for (String field : mappings.getFields().keySet()) {
-            if (!currentIndexMappings.getFields().containsKey(field)) {
+            if (!existingFields.containsKey(field)) {
                 diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
-
+        
         return diffMappings;
+    }
+
+    private static Map<String, String> getExistingFieldsForTable(String tableName) {
+        // This method should return the existing fields for the given tableName.
+        // For demonstration purposes, we will return a static map.
+        Map<String, String> existingFields = new HashMap<>();
+        existingFields.put("id", "integer");
+        existingFields.put("name", "string");
+        return existingFields;
     }
 
     public static void main(String[] args) {
         Mappings newMappings = new Mappings();
-        newMappings.addField("id", "integer");
-        newMappings.addField("description", "string");
-        newMappings.addField("updated_at", "date");
+        newMappings.addField("age", "integer");
+        newMappings.addField("address", "string");
 
-        Mappings result = diffStructure("example_table", newMappings);
-        System.out.println("Fields not in current index mappings: " + result.getFields());
+        Mappings result = diffStructure("users", newMappings);
+        System.out.println("New fields that do not exist in the current mappings:");
+        for (String field : result.getFields().keySet()) {
+            System.out.println(field + ": " + result.getFields().get(field));
+        }
     }
 }

@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArrayToList {
+
     /** 
      * Array to List. <p> Works like  {@link Arrays#asList(Object)}, but handles null arrays.
      * @return a list backed by the array.

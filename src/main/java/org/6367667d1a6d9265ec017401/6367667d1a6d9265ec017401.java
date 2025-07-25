@@ -13,9 +13,9 @@ public class StringUnescaper {
         StringBuilder result = new StringBuilder();
         boolean isEscaped = false;
 
-        for (char currentChar : str.toCharArray()) {
+        for (char c : str.toCharArray()) {
             if (isEscaped) {
-                switch (currentChar) {
+                switch (c) {
                     case 'n':
                         result.append('\n');
                         break;
@@ -31,25 +31,25 @@ public class StringUnescaper {
                     case 'b':
                         result.append('\b');
                         break;
-                    case '"':
-                        result.append('"');
+                    case '\\':
+                        result.append('\\');
                         break;
                     case '\'':
                         result.append('\'');
                         break;
-                    case '\\':
-                        result.append('\\');
+                    case '\"':
+                        result.append('\"');
                         break;
                     default:
-                        result.append(currentChar);
+                        result.append(c);
                         break;
                 }
                 isEscaped = false;
             } else {
-                if (currentChar == '\\') {
+                if (c == '\\') {
                     isEscaped = true;
                 } else {
-                    result.append(currentChar);
+                    result.append(c);
                 }
             }
         }
@@ -62,9 +62,13 @@ public class StringUnescaper {
         return result.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
-        String unescapedString = unescapeJava(testString);
-        System.out.println(unescapedString);
+    public static void main(String[] args) {
+        try {
+            String input = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\";
+            String output = unescapeJava(input);
+            System.out.println(output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -27,9 +27,12 @@ class Edge {
         this.to = to;
     }
 
-    @Override
-    public String toString() {
-        return "Edge from " + from + " to " + to;
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
     }
 }
 
@@ -47,8 +50,8 @@ class Graph {
      * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.getRealNode();
-        Node toNode = nextNode.getRealNode();
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(fromNode, toNode);
     }
 }

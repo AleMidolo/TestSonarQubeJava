@@ -11,12 +11,12 @@ public class StringUtil {
             return null;
         }
         
-        int start = 0;
-        while (start < str.length() && Character.isWhitespace(str.charAt(start))) {
-            start++;
+        int startIndex = 0;
+        while (startIndex < str.length() && Character.isWhitespace(str.charAt(startIndex))) {
+            startIndex++;
         }
         
-        return str.substring(start);
+        return str.substring(startIndex);
     }
 
     public static void main(String[] args) {

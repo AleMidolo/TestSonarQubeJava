@@ -7,7 +7,7 @@ public class LoggerAppender {
     private Logger logger;
 
     public LoggerAppender() {
-        logger = Logger.getLogger(LoggerAppender.class);
+        this.logger = Logger.getLogger(LoggerAppender.class);
     }
 
     /** 

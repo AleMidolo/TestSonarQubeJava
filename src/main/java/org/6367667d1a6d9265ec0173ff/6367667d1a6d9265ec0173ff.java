@@ -2,41 +2,35 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 
-    /** 
+    /**
      * Retrieve an instance of  {@link Meteor} based on the {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
      * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example logic to retrieve a Meteor instance based on the request
+        // Example implementation, replace with actual logic to retrieve Meteor instance
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
-            // Simulate a lookup in a database or a collection
-            return findMeteorById(meteorId);
+            // Assuming a method getMeteorById exists to fetch Meteor instance
+            return getMeteorById(meteorId);
         }
         return null;
     }
 
-    private static Meteor findMeteorById(String meteorId) {
-        // Placeholder for actual implementation
-        // In a real scenario, this would query a database or a data structure
-        // For demonstration, we return a new Meteor instance if the ID matches a specific value
-        if ("123".equals(meteorId)) {
-            return new Meteor(meteorId, "Example Meteor");
-        }
-        return null;
+    private static Meteor getMeteorById(String meteorId) {
+        // Placeholder for actual retrieval logic
+        // This should interact with a database or data source to find the Meteor
+        // For demonstration, returning a new Meteor instance
+        return new Meteor(meteorId);
+    }
+}
+
+class Meteor {
+    private String id;
+
+    public Meteor(String id) {
+        this.id = id;
     }
 
-    // Example Meteor class
-    public static class Meteor {
-        private String id;
-        private String name;
-
-        public Meteor(String id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        // Getters and setters can be added here
-    }
+    // Additional properties and methods for the Meteor class
 }

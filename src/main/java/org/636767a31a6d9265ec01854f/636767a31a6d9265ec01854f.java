@@ -14,16 +14,16 @@ public class PackedFieldChecker {
         // For example, we might read a byte and check its value
         int fieldType = readFieldType(); // Hypothetical method to read field type
 
-        if (fieldType == 2) { // Assuming 2 indicates a packed field
+        if (fieldType == 1) { // Assuming 1 indicates a packed field
             isPackedField = true;
         } else {
             isPackedField = false;
         }
     }
 
+    // Hypothetical method to simulate reading a field type
     private int readFieldType() {
-        // Placeholder for reading the field type
-        // In a real implementation, this would read from a data source
-        return 0; // Default return value for demonstration
+        // This would normally read from a data source
+        return 1; // Placeholder return value
     }
 }

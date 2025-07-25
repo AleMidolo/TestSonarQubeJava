@@ -11,16 +11,14 @@ public class StringArrayTrimmer {
         if (array == null) {
             return null;
         }
-        String[] trimmedArray = new String[array.length];
-        for (int i = 0; i < array.length; i++) {
-            trimmedArray[i] = array[i] != null ? array[i].trim() : null;
-        }
-        return trimmedArray;
+        return Arrays.stream(array)
+                     .map(String::trim)
+                     .toArray(String[]::new);
     }
 
     public static void main(String[] args) {
-        String[] testArray = {"  Hello  ", "  World  ", null, "  Java  "};
-        String[] trimmedArray = trimArrayElements(testArray);
-        System.out.println(Arrays.toString(trimmedArray));
+        String[] input = {"  hello  ", "  world  ", null, "  java  "};
+        String[] trimmed = trimArrayElements(input);
+        System.out.println(Arrays.toString(trimmed));
     }
 }

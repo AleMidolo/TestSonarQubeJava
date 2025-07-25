@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class MyComparator implements Comparator<Object> {
+public class CustomComparator implements Comparator<Object> {
     /**
      * Compares two objects for order. Returns a negative integer, zero, or a positive integer 
      * as the first argument is less than, equal to, or greater than the second.

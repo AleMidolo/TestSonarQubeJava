@@ -16,21 +16,19 @@ public class StringTrimmer {
 
         for (char c : str.toCharArray()) {
             if (c == leadingCharacter && !leadingCharFound) {
-                // Skip the leading character
-                continue;
-            } else {
-                leadingCharFound = true;
-                result.append(c);
+                continue; // Skip leading character
             }
+            leadingCharFound = true; // After the first non-leading character is found
+            result.append(c);
         }
-        
+
         return result.toString();
     }
 
     public static void main(String[] args) {
-        String testString = "aaabacada";
+        String testString = "aaaHello Worldaaa";
         char leadingChar = 'a';
-        String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result); // Output: "bacada"
+        String trimmedString = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(trimmedString); // Output: "Hello Worldaaa"
     }
 }

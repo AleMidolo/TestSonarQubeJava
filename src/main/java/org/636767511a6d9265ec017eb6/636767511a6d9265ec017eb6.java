@@ -15,7 +15,7 @@ class OuterFaceCirculator {
         return currentNode;
     }
 
-    public void advance() {
+    public void moveToNext() {
         // Logic to move to the next node in the outer face
     }
 }
@@ -36,9 +36,9 @@ public class Graph {
             if (predicate.test(circulator.getCurrentNode())) {
                 return circulator;
             }
-            circulator.advance();
+            circulator.moveToNext();
         } while (circulator.getCurrentNode() != stop);
         
-        return circulator; // Return circulator at stop if predicate not satisfied
+        return circulator; // Return circulator at stop if no node satisfies the predicate
     }
 }

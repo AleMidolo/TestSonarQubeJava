@@ -51,7 +51,6 @@ public class CategoryTree {
         while (iterator.hasNext()) {
             Category child = iterator.next();
             removedCount += removeInactiveNodes(child);
-
             if (!child.isActive()) {
                 iterator.remove();
                 removedCount++;

@@ -23,11 +23,13 @@ public class StackMapFrameVisitor {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextIndex = 0; // Initialize next index
+            this.nextIndex = 0; // Initialize the next index to 0
         }
 
         public int getNextIndex() {
-            return nextIndex++;
+            return nextIndex;
         }
+
+        // Additional methods to manipulate the frame can be added here
     }
 }

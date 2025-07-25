@@ -12,7 +12,6 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
-        
         try {
             // Codificar '{' y '}' en formato percentil
             String encoded = s.replace("{", "%7B").replace("}", "%7D");

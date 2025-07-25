@@ -1,4 +1,4 @@
-public class FileUtils {
+public class FilePathUtil {
 
     /** 
      * Elimina la extensión del nombre de archivo de la ruta dada, por ejemplo, "mypath/myfile.txt" -> "mypath/myfile".

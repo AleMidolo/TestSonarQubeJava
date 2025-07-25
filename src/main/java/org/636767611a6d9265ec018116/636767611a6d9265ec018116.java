@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class SetIntersection<V> {
+public class SetIntersection {
 
     /** 
      * Método eficiente para calcular la intersección entre dos conjuntos

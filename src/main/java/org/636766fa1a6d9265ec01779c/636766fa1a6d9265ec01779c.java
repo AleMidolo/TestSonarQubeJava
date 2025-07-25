@@ -23,7 +23,7 @@ public class TokenParser {
         
         return token.toString();
     }
-    
+
     private boolean isTerminator(char currentChar, char[] terminators) {
         for (char terminator : terminators) {
             if (currentChar == terminator) {
@@ -32,10 +32,10 @@ public class TokenParser {
         }
         return false;
     }
-    
+
     public static void main(String[] args) {
         TokenParser parser = new TokenParser();
-        char[] terminators = {' ', ',', ';', '.', '!', '?'};
+        char[] terminators = {' ', '\n', '\t', ',', '.'}; // Example terminators
         String token = parser.parseToken(terminators);
         System.out.println("Parsed token: " + token);
     }

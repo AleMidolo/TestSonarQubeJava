@@ -17,9 +17,9 @@ public class BeanMapUtil {
                 // Ignorar propiedades de solo lectura
                 continue;
             }
-            // Aquí se puede agregar la lógica para colocar las propiedades escribibles
-            // en el BeanMap actual, por ejemplo:
-            // this.put(property, map.get(property));
+            // Aquí se puede agregar la lógica para colocar las propiedades escribibles en el BeanMap actual
+            // Por ejemplo, se podría usar un método para establecer el valor de la propiedad
+            // setProperty(property, map.get(property));
         }
     }
 }

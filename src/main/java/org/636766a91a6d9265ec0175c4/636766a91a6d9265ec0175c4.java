@@ -1,34 +1,38 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class StackExtractor {
-
-    private List<String> stack = new ArrayList<>();
+public class FrameStackExtractor {
 
     /**
      * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
      * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
      */
     private void pop(final String descriptor) {
-        // Simulación de la extracción de tipos abstractos de la "frame stack"
-        // Basado en el descriptor proporcionado, se extraen los tipos correspondientes
-        if (descriptor == null || descriptor.isEmpty()) {
-            return;
+        List<String> types = new ArrayList<>();
+        
+        // Simulación de la extracción de tipos basados en el descriptor
+        if (descriptor.startsWith("(") && descriptor.contains(")")) {
+            // Es un descriptor de método, extraer tipos de argumento
+            int start = descriptor.indexOf('(') + 1;
+            int end = descriptor.indexOf(')');
+            String args = descriptor.substring(start, end);
+            for (String type : args.split(",")) {
+                types.add(type.trim());
+            }
+        } else {
+            // Es un descriptor de tipo, agregar el tipo directamente
+            types.add(descriptor);
         }
 
-        // Aquí se simula la lógica de extracción de tipos
-        // En un caso real, esto podría implicar análisis de bytecode o estructuras de datos complejas
-        String[] types = descriptor.split(",");
+        // Simulación de la operación de "pop" en la stack
         for (String type : types) {
-            stack.add(type.trim());
+            System.out.println("Popped type: " + type);
         }
-
-        // Imprimir los tipos extraídos para verificación
-        System.out.println("Tipos extraídos: " + stack);
     }
 
     public static void main(String[] args) {
-        StackExtractor extractor = new StackExtractor();
-        extractor.pop("int, String, double");
+        FrameStackExtractor extractor = new FrameStackExtractor();
+        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
+        extractor.pop("Ljava/lang/String;"); // Ejemplo de un descriptor de tipo
     }
 }

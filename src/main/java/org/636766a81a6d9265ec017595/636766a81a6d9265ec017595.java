@@ -23,7 +23,7 @@ class ByteVector {
         }
     }
 
-    public byte[] toArray() {
+    public byte[] getBytes() {
         return Arrays.copyOf(bytes, size);
     }
 }

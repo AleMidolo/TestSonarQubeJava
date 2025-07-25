@@ -16,9 +16,9 @@ public class HeaderParser {
 
     public static void main(String[] args) {
         HeaderParser parser = new HeaderParser();
-        String headers = "Header1: value1\r\nHeader2: value2\r\n";
-        int end = headers.length();
-        int lineEndIndex = parser.parseEndOfLine(headers, end);
+        String header = "Header1: value1\r\nHeader2: value2\r\n";
+        int end = header.length();
+        int lineEndIndex = parser.parseEndOfLine(header, end);
         System.out.println("End of line index: " + lineEndIndex);
     }
 }

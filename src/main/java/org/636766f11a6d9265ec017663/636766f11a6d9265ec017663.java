@@ -1,5 +1,5 @@
 public class ArrayLengthChecker {
-
+    
     /** 
      * <p>Verifica si dos arreglos tienen la misma longitud, tratando los arreglos <code>null</code> como longitud <code>0</code>.</p>
      * @param array1 el primer arreglo, puede ser <code>null</code>

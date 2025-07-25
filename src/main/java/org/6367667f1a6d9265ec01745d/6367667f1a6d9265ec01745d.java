@@ -3,7 +3,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathDecoder {
+public class PathSegmentDecoder {
 
     /** 
      * Decodifica el componente de ruta de una URI como segmentos de ruta.

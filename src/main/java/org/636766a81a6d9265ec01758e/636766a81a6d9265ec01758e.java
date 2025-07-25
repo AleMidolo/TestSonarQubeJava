@@ -11,17 +11,18 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
+
         int upperLimit = desiredCapacity;
         if (desiredCapacity >= 1000) {
             upperLimit = (int) (desiredCapacity * 1.11);
         }
-        
+
         for (int i = desiredCapacity; i <= upperLimit; i++) {
             if (isPrime(i)) {
                 return i;
             }
         }
-        return upperLimit; // Fallback, should not reach here
+        return upperLimit; // Fallback, should not reach here for valid inputs
     }
 
     private static boolean isPrime(int number) {

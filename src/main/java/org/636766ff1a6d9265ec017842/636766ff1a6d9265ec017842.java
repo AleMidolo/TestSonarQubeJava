@@ -1,5 +1,5 @@
 public class ArrayConverter {
-
+    
     /** 
      * <p>Convierte un array de objetos "Doubles" a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * @param array  un arreglo de <code>Double</code>, puede ser <code>null</code>

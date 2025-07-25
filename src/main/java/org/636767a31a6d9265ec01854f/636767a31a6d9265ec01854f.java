@@ -1,33 +1,19 @@
 import java.io.IOException;
 
-public class PackedFieldChecker {
+private void checkIfPackedField() throws IOException {
+    // Assuming this method is part of a class that has a field to track if it's reading packed fields
+    // For example, let's assume the class has a boolean field `isPackedField`
 
-    private boolean isPacked = false;
-
-    /**
-     * Check if this field have been packed into a length-delimited field. If so, update internal state to reflect that packed fields are being read.
-     * @throws IOException
-     */
-    private void checkIfPackedField() throws IOException {
-        // Assuming some logic to determine if the field is packed
-        // For example, reading a flag or a specific marker from the input stream
-        // Here we simulate the check with a simple condition
-        if (/* some condition to check if the field is packed */) {
-            isPacked = true;
-            // Update internal state to reflect that packed fields are being read
-            // For example, setting a flag or initializing a buffer
-        } else {
-            isPacked = false;
-        }
+    // Check if the field is packed into a length-delimited field
+    if (/* condition to check if the field is packed */) {
+        // Update internal state to reflect that packed fields are being read
+        this.isPackedField = true;
+    } else {
+        this.isPackedField = false;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        PackedFieldChecker checker = new PackedFieldChecker();
-        try {
-            checker.checkIfPackedField();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // If there's a need to throw an IOException based on some condition, you can do so
+    if (/* some error condition */) {
+        throw new IOException("Error while checking if the field is packed.");
     }
 }

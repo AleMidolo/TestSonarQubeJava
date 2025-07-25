@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // Public static empty array reference for memory optimization
+    // Public static empty array reference
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
     /**

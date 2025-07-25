@@ -1,23 +1,64 @@
-import org.apache.commons.geometry.euclidean.twod.Box2D;
-import org.apache.commons.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.lang3.tuple.Pair;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.util.Pair;
 
 public class BoxSplitter {
 
-    /**
-     * Split a box along the x axis into two equal boxes.
-     * @param box the box to split
-     * @return a pair with the two resulting boxes
-     */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
-        Vector2D min = box.getMin();
-        Vector2D max = box.getMax();
+        double minX = box.getMinX();
+        double minY = box.getMinY();
+        double maxX = box.getMaxX();
+        double maxY = box.getMaxY();
+        double width = maxX - minX;
+        double height = maxY - minY;
 
-        double midX = (min.getX() + max.getX()) / 2.0;
+        // Calculate the midpoint along the x-axis
+        double midX = minX + width / 2.0;
 
-        Box2D leftBox = Box2D.from(min, Vector2D.of(midX, max.getY()));
-        Box2D rightBox = Box2D.from(Vector2D.of(midX, min.getY()), max);
+        // Create the left box
+        Box2D leftBox = new Box2D(minX, minY, midX, maxY);
 
-        return Pair.of(leftBox, rightBox);
+        // Create the right box
+        Box2D rightBox = new Box2D(midX, minY, maxX, maxY);
+
+        return new Pair<>(leftBox, rightBox);
+    }
+
+    public static class Box2D {
+        private double minX;
+        private double minY;
+        private double maxX;
+        private double maxY;
+
+        public Box2D(double minX, double minY, double maxX, double maxY) {
+            this.minX = minX;
+            this.minY = minY;
+            this.maxX = maxX;
+            this.maxY = maxY;
+        }
+
+        public double getMinX() {
+            return minX;
+        }
+
+        public double getMinY() {
+            return minY;
+        }
+
+        public double getMaxX() {
+            return maxX;
+        }
+
+        public double getMaxY() {
+            return maxY;
+        }
+    }
+
+    public static void main(String[] args) {
+        Box2D box = new Box2D(0, 0, 10, 5);
+        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(box);
+
+        System.out.println("Left Box: (" + splitBoxes.getKey().getMinX() + ", " + splitBoxes.getKey().getMinY() + ") to (" + splitBoxes.getKey().getMaxX() + ", " + splitBoxes.getKey().getMaxY() + ")");
+        System.out.println("Right Box: (" + splitBoxes.getValue().getMinX() + ", " + splitBoxes.getValue().getMinY() + ") to (" + splitBoxes.getValue().getMaxX() + ", " + splitBoxes.getValue().getMaxY() + ")");
     }
 }

@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 public class LogFormatter {
 
@@ -9,18 +9,25 @@ public class LogFormatter {
      * @return formatted string representation of the logging event.
      */
     public String format(final LoggingEvent event) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        String level = event.getLevel().toString();
-        String message = event.getMessage().toString();
-        String loggerName = event.getLoggerName();
+        StringWriter writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
 
-        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
+        printWriter.println("Logging Event:");
+        printWriter.println("Level: " + event.getLevel());
+        printWriter.println("Message: " + event.getMessage());
+        printWriter.println("Timestamp: " + event.getTimestamp());
+        printWriter.println("Logger Name: " + event.getLoggerName());
+        printWriter.println("Thread Name: " + event.getThreadName());
+
+        if (event.getThrowableInfo() != null) {
+            printWriter.println("Throwable: ");
+            event.getThrowableInfo().printStackTrace(printWriter);
+        }
+
+        printWriter.flush();
+        return writer.toString();
     }
 }
 
 // Assuming LoggingEvent class has the following methods:
-// getTimeStamp(): returns the timestamp of the event as a long
-// getLevel(): returns the logging level (e.g., INFO, ERROR)
-// getMessage(): returns the message of the event
-// getLoggerName(): returns the name of the logger
+// getLevel(), getMessage(), getTimestamp(), getLoggerName(), getThreadName(), getThrowableInfo()

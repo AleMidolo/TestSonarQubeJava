@@ -9,15 +9,15 @@ private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
     }
 
     List<Integer> suffixSums = new ArrayList<>(bounds.size());
-    long totalSum = 0;
+    long totalSum = 0L;
 
     // Calculate the total sum of all elements
     for (int num : bounds) {
         totalSum += num;
     }
 
-    // Compute suffix sums
-    long suffixSum = 0;
+    // Calculate suffix sums
+    long suffixSum = 0L;
     for (int i = bounds.size() - 1; i >= 0; i--) {
         suffixSum += bounds.get(i);
         suffixSums.add(0, (int) suffixSum); // Insert at the beginning to maintain order

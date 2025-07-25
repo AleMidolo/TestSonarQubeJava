@@ -13,6 +13,7 @@ public class ObjectUtils {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(toString(null));         // Output: ""
         System.out.println(toString(""));           // Output: ""
         System.out.println(toString("bat"));        // Output: "bat"

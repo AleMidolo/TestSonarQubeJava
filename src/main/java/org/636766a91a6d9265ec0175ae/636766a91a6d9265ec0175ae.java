@@ -26,7 +26,7 @@ public class ByteVector {
             // Fill with null bytes
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
-            // Copy the specified bytes from byteArrayValue
+            // Copy bytes from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 
@@ -34,12 +34,9 @@ public class ByteVector {
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > buffer.length) {
-            int newCapacity = buffer.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length * 2, requiredCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

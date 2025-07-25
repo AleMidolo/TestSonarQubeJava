@@ -1,7 +1,13 @@
 public class StringUtils {
 
     /**
-     * <p>Reverses a String as per  {@link StringBuilder#reverse()}.</p> <p>A <code>null</code> String returns <code>null</code>.</p> <pre> StringUtils.reverse(null)  = null StringUtils.reverse("")    = "" StringUtils.reverse("bat") = "tab" </pre>
+     * Reverses a String as per {@link StringBuilder#reverse()}.
+     * A <code>null</code> String returns <code>null</code>.
+     * <pre>
+     * StringUtils.reverse(null)  = null
+     * StringUtils.reverse("")    = ""
+     * StringUtils.reverse("bat") = "tab"
+     * </pre>
      * @param str  the String to reverse, may be null
      * @return the reversed String, <code>null</code> if null String input
      */
@@ -13,8 +19,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(reverse(null));   // null
-        System.out.println(reverse(""));     // ""
-        System.out.println(reverse("bat"));  // "tab"
+        System.out.println(reverse(null));  // null
+        System.out.println(reverse(""));    // ""
+        System.out.println(reverse("bat")); // "tab"
     }
 }

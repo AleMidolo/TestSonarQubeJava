@@ -12,44 +12,39 @@ public class LogFormatter {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         String level = event.getLevel().toString();
+        String loggerName = event.getLoggerName();
         String message = event.getMessage();
 
-        return String.format("[%s] %s: %s", timestamp, level, message);
+        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
+    }
+}
+
+class LoggingEvent {
+    private long timeStamp;
+    private String level;
+    private String loggerName;
+    private String message;
+
+    public LoggingEvent(long timeStamp, String level, String loggerName, String message) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.loggerName = loggerName;
+        this.message = message;
     }
 
-    // Assuming LoggingEvent class structure for demonstration purposes
-    public static class LoggingEvent {
-        private long timeStamp;
-        private Level level;
-        private String message;
-
-        public LoggingEvent(long timeStamp, Level level, String message) {
-            this.timeStamp = timeStamp;
-            this.level = level;
-            this.message = message;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-
-        public Level getLevel() {
-            return level;
-        }
-
-        public String getMessage() {
-            return message;
-        }
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
-    // Assuming Level enum for demonstration purposes
-    public enum Level {
-        INFO, WARN, ERROR, DEBUG
+    public String getLevel() {
+        return level;
     }
 
-    public static void main(String[] args) {
-        LogFormatter formatter = new LogFormatter();
-        LoggingEvent event = new LoggingEvent(System.currentTimeMillis(), Level.INFO, "This is a log message.");
-        System.out.println(formatter.format(event));
+    public String getLoggerName() {
+        return loggerName;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

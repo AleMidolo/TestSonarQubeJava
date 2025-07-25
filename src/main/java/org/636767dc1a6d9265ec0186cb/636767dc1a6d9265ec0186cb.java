@@ -4,34 +4,30 @@ import java.nio.file.Paths;
 
 public class ConfigInitializer {
 
-    private String distPath;
-
-    public ConfigInitializer(String distPath) {
-        this.distPath = distPath;
-    }
-
     /**
-     * Initialize config, such as check dist path
+     * Initialize config, such as check dist path.
      */
     public void init() {
-        if (distPath == null || distPath.isEmpty()) {
-            throw new IllegalArgumentException("Distribution path cannot be null or empty.");
-        }
-
+        // Define the dist path
+        String distPath = "path/to/dist";
         Path path = Paths.get(distPath);
+
+        // Check if the dist path exists
         if (!Files.exists(path)) {
-            throw new RuntimeException("Distribution path does not exist: " + distPath);
+            System.out.println("Dist path does not exist. Creating directory...");
+            try {
+                Files.createDirectories(path);
+                System.out.println("Dist path created successfully.");
+            } catch (Exception e) {
+                System.err.println("Failed to create dist path: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Dist path already exists.");
         }
-
-        if (!Files.isDirectory(path)) {
-            throw new RuntimeException("Distribution path is not a directory: " + distPath);
-        }
-
-        System.out.println("Config initialized successfully. Distribution path: " + distPath);
     }
 
     public static void main(String[] args) {
-        ConfigInitializer initializer = new ConfigInitializer("/path/to/dist");
+        ConfigInitializer initializer = new ConfigInitializer();
         initializer.init();
     }
 }

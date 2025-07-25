@@ -43,12 +43,4 @@ public class TimeRangeSplitter {
                     '}';
         }
     }
-
-    public static void main(String[] args) {
-        TimeRangeSplitter splitter = new TimeRangeSplitter();
-        List<TimeRange> ranges = splitter.buildTimeRanges(1633072800000L, 1633094400000L);
-        for (TimeRange range : ranges) {
-            System.out.println(range);
-        }
-    }
 }

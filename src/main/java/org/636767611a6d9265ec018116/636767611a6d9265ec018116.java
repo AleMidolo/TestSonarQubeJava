@@ -1,8 +1,7 @@
-import java.util.HashSet;
 import java.util.Set;
+import java.util.HashSet;
 
 public class SetIntersection {
-
     /**
      * Efficient way to compute the intersection between two sets
      * @param set1 set $1$
@@ -13,21 +12,5 @@ public class SetIntersection {
         Set<V> result = new HashSet<>(set1);
         result.retainAll(set2);
         return result;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Set<Integer> set1 = new HashSet<>();
-        set1.add(1);
-        set1.add(2);
-        set1.add(3);
-
-        Set<Integer> set2 = new HashSet<>();
-        set2.add(2);
-        set2.add(3);
-        set2.add(4);
-
-        Set<Integer> intersectionSet = intersection(set1, set2);
-        System.out.println("Intersection: " + intersectionSet); // Output: Intersection: [2, 3]
     }
 }

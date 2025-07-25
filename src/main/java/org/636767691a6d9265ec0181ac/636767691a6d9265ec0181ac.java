@@ -12,11 +12,17 @@ public class PathUtils {
     public static String applyRelativePath(String path, String relativePath) {
         // Convert the base path to a Path object
         Path basePath = Paths.get(path);
+        
+        // Convert the relative path to a Path object
+        Path relative = Paths.get(relativePath);
+        
         // Resolve the relative path against the base path
-        Path resolvedPath = basePath.resolve(relativePath);
-        // Normalize the path to remove any redundant elements
+        Path resolvedPath = basePath.resolve(relative);
+        
+        // Normalize the path to remove any redundant elements like ".." or "."
         Path normalizedPath = resolvedPath.normalize();
-        // Convert the normalized path back to a string
+        
+        // Return the normalized path as a string
         return normalizedPath.toString();
     }
 
@@ -24,7 +30,7 @@ public class PathUtils {
         // Example usage
         String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
-        String fullPath = applyRelativePath(basePath, relativePath);
-        System.out.println("Full Path: " + fullPath);
+        String result = applyRelativePath(basePath, relativePath);
+        System.out.println(result);  // Output: /usr/local/lib/java
     }
 }

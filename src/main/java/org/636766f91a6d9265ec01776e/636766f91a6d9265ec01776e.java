@@ -16,12 +16,12 @@ public class CustomOutputStream extends OutputStream {
         for (int i = off; i < off + len; i++) {
             System.out.print((char) b[i]); // Print each byte as a character
         }
-        System.out.println(); // New line after writing
+        System.out.flush(); // Ensure all data is flushed
     }
 
     @Override
     public void write(int b) throws IOException {
         // Implement the method to write a single byte if needed
-        System.out.print((char) b); // Print the single byte as a character
+        System.out.print((char) b);
     }
 }

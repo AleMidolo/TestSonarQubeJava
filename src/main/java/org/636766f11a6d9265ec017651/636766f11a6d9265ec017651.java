@@ -1,4 +1,4 @@
-public class ArrayUtils {
+public class ArrayUtil {
 
     private static final Character[] EMPTY_ARRAY = new Character[0];
 
@@ -18,16 +18,12 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Character[] testArray = null;
-        Character[] result = nullToEmpty(testArray);
-        System.out.println("Result length: " + result.length); // Should print 0
+        Character[] nullArray = null;
+        Character[] emptyArray = {};
+        Character[] filledArray = {'a', 'b', 'c'};
 
-        testArray = new Character[]{};
-        result = nullToEmpty(testArray);
-        System.out.println("Result length: " + result.length); // Should print 0
-
-        testArray = new Character[]{'A', 'B', 'C'};
-        result = nullToEmpty(testArray);
-        System.out.println("Result length: " + result.length); // Should print 3
+        System.out.println(nullToEmpty(nullArray).length); // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
+        System.out.println(nullToEmpty(filledArray).length); // Output: 3
     }
 }

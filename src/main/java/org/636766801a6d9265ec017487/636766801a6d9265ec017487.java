@@ -2,6 +2,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class TemplateEncoder {
+    
     /** 
      * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
      * @param s la cadena con cero o más nombres de parámetros de plantilla
@@ -11,6 +12,7 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
+        
         try {
             // Codificar '{' y '}' en formato percentil
             String encoded = s.replace("{", "%7B").replace("}", "%7D");

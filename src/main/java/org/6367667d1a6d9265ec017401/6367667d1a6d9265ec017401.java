@@ -25,20 +25,20 @@ public class StringUnescaper {
                     case 'r':
                         result.append('\r');
                         break;
-                    case 'f':
-                        result.append('\f');
-                        break;
                     case 'b':
                         result.append('\b');
                         break;
-                    case '\\':
-                        result.append('\\');
+                    case 'f':
+                        result.append('\f');
                         break;
-                    case '"':
-                        result.append('"');
+                    case '\"':
+                        result.append('\"');
                         break;
                     case '\'':
                         result.append('\'');
+                        break;
+                    case '\\':
+                        result.append('\\');
                         break;
                     default:
                         result.append(currentChar);

@@ -28,6 +28,6 @@ public class CompatibilityChecker {
         CompatibilityChecker checker = new CompatibilityChecker("bucket1");
         DataTable dataset = new DataTable("bucket1");
         
-        System.out.println(checker.isCompatible(dataset)); // Should print true
+        System.out.println(checker.isCompatible(dataset)); // Output: true
     }
 }

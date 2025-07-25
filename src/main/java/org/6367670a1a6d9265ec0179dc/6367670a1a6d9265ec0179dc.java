@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class StackMapTable {
 
-    private Object[] currentFrame; // Simulating the current frame with an Object array
+    private Object[] currentFrame; // Simulating the current frame with an array
     private Object[] stackMapTableEntries; // Simulating the stack map table entries
 
     /**
@@ -16,25 +16,23 @@ public class StackMapTable {
         }
 
         // Assuming stackMapTableEntries is initialized to the appropriate size
-        int index = 0;
         for (int i = start; i < end; i++) {
-            // Here we would convert the currentFrame types to the appropriate verification_type_info format
-            // For simplicity, we will just copy the references
-            stackMapTableEntries[index++] = currentFrame[i];
+            // Here we would convert the type from currentFrame to the appropriate format
+            // For simplicity, we are just copying the references
+            stackMapTableEntries[i - start] = currentFrame[i];
         }
     }
 
-    public StackMapTable(int frameSize, int stackMapSize) {
-        this.currentFrame = new Object[frameSize];
-        this.stackMapTableEntries = new Object[stackMapSize];
+    public StackMapTable(int currentFrameSize, int stackMapTableSize) {
+        this.currentFrame = new Object[currentFrameSize];
+        this.stackMapTableEntries = new Object[stackMapTableSize];
     }
 
     public static void main(String[] args) {
-        StackMapTable smt = new StackMapTable(10, 10);
+        StackMapTable table = new StackMapTable(10, 5);
         // Example usage
-        smt.currentFrame[0] = "Type1";
-        smt.currentFrame[1] = "Type2";
-        smt.putAbstractTypes(0, 2);
-        System.out.println(Arrays.toString(smt.stackMapTableEntries));
+        table.currentFrame = new Object[] { "Type1", "Type2", "Type3", "Type4", "Type5" };
+        table.putAbstractTypes(1, 4); // This will copy Type2, Type3, Type4 to stackMapTableEntries
+        System.out.println(Arrays.toString(table.stackMapTableEntries));
     }
 }

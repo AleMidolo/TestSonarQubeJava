@@ -21,7 +21,7 @@ public class StringUtil {
 
     public static void main(String[] args) {
         String testString = "   Hello, World!";
-        String trimmedString = trimLeadingWhitespace(testString);
-        System.out.println("'" + trimmedString + "'"); // Output: 'Hello, World!'
+        String result = trimLeadingWhitespace(testString);
+        System.out.println(result); // Output: "Hello, World!"
     }
 }

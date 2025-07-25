@@ -9,11 +9,12 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        Double[] result = new Double[array.length];
+        
+        Double[] objectArray = new Double[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i]; // Autoboxing from double to Double
+            objectArray[i] = array[i]; // Autoboxing from double to Double
         }
-        return result;
+        return objectArray;
     }
 
     public static void main(String[] args) {

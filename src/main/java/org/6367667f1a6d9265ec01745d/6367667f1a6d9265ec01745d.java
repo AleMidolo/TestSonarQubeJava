@@ -31,7 +31,7 @@ public class PathSegmentDecoder {
         
         return segments;
     }
-    
+
     private static String decodeSegment(String segment) {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
@@ -40,7 +40,7 @@ public class PathSegmentDecoder {
             return segment;
         }
     }
-    
+
     public static class PathSegmentImpl {
         private String segment;
 
@@ -55,6 +55,18 @@ public class PathSegmentDecoder {
         @Override
         public String toString() {
             return segment;
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            URI uri = new URI("http://example.com/path/to/resource");
+            List<PathSegmentImpl> segments = decodePath(uri, true);
+            for (PathSegmentImpl segment : segments) {
+                System.out.println(segment);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 }

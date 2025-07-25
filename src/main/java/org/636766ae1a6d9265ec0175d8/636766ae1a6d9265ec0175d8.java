@@ -7,8 +7,8 @@ public class ContentRangeBuilder {
     private String buildContentRange() {
         // Ejemplo de valores para el rango
         long start = 0;
-        long end = 499;
-        long total = 1234;
+        long end = 99;
+        long total = 1000;
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

@@ -51,7 +51,7 @@ public final class UriMatcher {
 
         if (result != null) {
             System.out.println("Match found!");
-            System.out.println("Full match: " + result.group(0));
+            System.out.println("Full URI: " + result.group(0));
             System.out.println("Host: " + result.group(2));
         } else {
             System.out.println("No match found.");

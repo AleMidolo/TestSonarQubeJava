@@ -11,11 +11,16 @@ public class MatchFinder {
      * @return el primer objeto presente, o <code>null</code> si no se encuentra
      */
     public static Object findFirstMatch(Collection source, Collection candidates) {
+        if (source == null || candidates == null) {
+            return null;
+        }
+        
         for (Object candidate : candidates) {
             if (source.contains(candidate)) {
                 return candidate;
             }
         }
+        
         return null;
     }
 }

@@ -11,57 +11,55 @@ public class FrameStack {
             char c = descriptor.charAt(index);
             
             switch (c) {
-                case '(':
-                    // Skip opening parenthesis for method descriptors
+                case '[':
+                    // Skip array dimensions
+                    while (descriptor.charAt(index) == '[') {
+                        index++;
+                    }
+                    // Pop array reference
+                    operandStack.pop();
                     index++;
-                    continue;
+                    break;
+                    
+                case 'L':
+                    // Skip to end of object type
+                    while (descriptor.charAt(index) != ';') {
+                        index++;
+                    }
+                    // Pop object reference
+                    operandStack.pop();
+                    index++;
+                    break;
+                    
+                case '(':
+                    // Skip opening parenthesis for method descriptor
+                    index++;
+                    break;
                     
                 case ')':
                     // End of method arguments
                     return;
                     
-                case 'B': // byte
-                case 'C': // char 
-                case 'I': // int
-                case 'Z': // boolean
-                case 'S': // short
-                case 'F': // float
-                    operandStack.pop();
-                    index++;
-                    break;
-                    
-                case 'J': // long
-                case 'D': // double
-                    operandStack.pop();
-                    operandStack.pop(); // Pop twice for long/double
-                    index++;
-                    break;
-                    
-                case 'L':
-                    // Skip until semicolon for object types
-                    while (descriptor.charAt(index) != ';') {
-                        index++;
-                    }
-                    operandStack.pop();
-                    index++;
-                    break;
-                    
-                case '[':
-                    // Array type - continue to element type
-                    while (descriptor.charAt(index) == '[') {
-                        index++;
-                    }
-                    if (descriptor.charAt(index) == 'L') {
-                        while (descriptor.charAt(index) != ';') {
-                            index++;
-                        }
-                    }
-                    operandStack.pop();
-                    index++;
-                    break;
-                    
                 default:
-                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+                    // Handle primitive types
+                    switch (c) {
+                        case 'D':
+                        case 'J':
+                            // Double and long take two stack slots
+                            operandStack.pop();
+                            operandStack.pop();
+                            break;
+                        case 'F':
+                        case 'I':
+                        case 'B':
+                        case 'C':
+                        case 'S':
+                        case 'Z':
+                            // Other primitives take one slot
+                            operandStack.pop();
+                            break;
+                    }
+                    index++;
             }
         }
     }

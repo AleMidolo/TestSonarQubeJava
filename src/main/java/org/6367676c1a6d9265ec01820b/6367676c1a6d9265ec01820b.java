@@ -10,13 +10,13 @@ public class StringUtils {
             return inString;
         }
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < inString.length(); i++) {
             char ch = inString.charAt(i);
             if (charsToDelete.indexOf(ch) == -1) {
-                sb.append(ch);
+                result.append(ch);
             }
         }
-        return sb.toString();
+        return result.toString();
     }
 }

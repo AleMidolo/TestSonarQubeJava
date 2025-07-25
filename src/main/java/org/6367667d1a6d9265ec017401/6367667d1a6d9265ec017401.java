@@ -31,26 +31,45 @@ public class StringUtils {
                 // Check for escaped sequences
                 String escape = str.substring(i, Math.min(i + 2, str.length()));
                 
-                if (JAVA_ESCAPES.containsKey(escape)) {
-                    result.append(JAVA_ESCAPES.get(escape));
-                    i++; // Skip next character as it's part of escape sequence
-                } else if (escape.charAt(1) == 'u' && i + 5 < str.length()) {
-                    // Handle Unicode escape sequences
-                    String unicode = str.substring(i + 2, i + 6);
+                // Handle unicode escapes
+                if (escape.startsWith("\\u") && i + 5 < str.length()) {
+                    String hex = str.substring(i + 2, i + 6);
                     try {
-                        int code = Integer.parseInt(unicode, 16);
-                        result.append((char) code);
-                        i += 5; // Skip the unicode sequence
+                        result.append((char) Integer.parseInt(hex, 16));
+                        i += 5;
+                        continue;
                     } catch (NumberFormatException e) {
-                        throw new Exception("Invalid Unicode escape sequence: \\u" + unicode);
+                        throw new Exception("Invalid unicode escape sequence");
                     }
-                } else {
-                    // If not a recognized escape sequence, keep the backslash
-                    result.append(currentChar);
                 }
-            } else {
-                result.append(currentChar);
+                
+                // Handle octal escapes
+                if (Character.isDigit(str.charAt(i + 1))) {
+                    int end = Math.min(i + 4, str.length());
+                    int j = i + 1;
+                    while (j < end && Character.isDigit(str.charAt(j))) {
+                        j++;
+                    }
+                    String octal = str.substring(i + 1, j);
+                    try {
+                        result.append((char) Integer.parseInt(octal, 8));
+                        i = j - 1;
+                        continue;
+                    } catch (NumberFormatException e) {
+                        throw new Exception("Invalid octal escape sequence");
+                    }
+                }
+                
+                // Handle common escape sequences
+                String replacement = JAVA_ESCAPES.get(escape);
+                if (replacement != null) {
+                    result.append(replacement);
+                    i++;
+                    continue;
+                }
             }
+            
+            result.append(currentChar);
         }
         
         return result.toString();

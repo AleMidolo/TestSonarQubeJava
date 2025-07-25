@@ -7,8 +7,16 @@ public class TransportInterceptor implements AtmosphereInterceptor {
 
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r != null && r.transport().equals(AtmosphereResource.TRANSPORT.WEBSOCKET)) {
-            r.suspend();
+        if (r != null && r.transport() != null) {
+            switch (r.transport()) {
+                case WEBSOCKET:
+                case STREAMING:
+                case SSE:
+                    r.suspend();
+                    break;
+                default:
+                    break;
+            }
         }
         return Action.CONTINUE;
     }

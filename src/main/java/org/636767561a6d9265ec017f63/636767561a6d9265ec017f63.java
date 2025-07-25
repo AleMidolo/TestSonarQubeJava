@@ -9,11 +9,10 @@ public class GraphIterator implements Iterator<Vertex> {
         visited = new boolean[numVertices];
     }
 
-    @Override
+    @Override 
     public boolean hasNext() {
-        // Iterate through visited array to find any unvisited vertices
-        for (int i = 0; i < numVertices; i++) {
-            if (!visited[i]) {
+        for(int i = 0; i < numVertices; i++) {
+            if(!visited[i]) {
                 return true;
             }
         }

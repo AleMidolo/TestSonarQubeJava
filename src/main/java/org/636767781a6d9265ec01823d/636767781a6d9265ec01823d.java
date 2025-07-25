@@ -8,16 +8,11 @@ public class CustomAppender extends AppenderSkeleton {
     
     private Writer writer;
     
-    public CustomAppender(Writer writer) {
-        this.writer = writer;
-    }
-
     /** 
      * Este método realiza la escritura
      */
     protected void subAppend(LoggingEvent event) {
-        if(layout == null) {
-            errorHandler.error("No layout set for the appender named [" + name + "].");
+        if(layout == null || writer == null) {
             return;
         }
 
@@ -27,8 +22,8 @@ public class CustomAppender extends AppenderSkeleton {
             
             if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
-                if(throwableStrRep != null) {
-                    for(String line : throwableStrRep) {
+                if (throwableStrRep != null) {
+                    for (String line : throwableStrRep) {
                         writer.write(line);
                         writer.write(Layout.LINE_SEP);
                     }
@@ -36,8 +31,9 @@ public class CustomAppender extends AppenderSkeleton {
             }
             
             writer.flush();
-        } catch(IOException e) {
-            errorHandler.error("Failed to write log event", e, 1);
+        } catch (IOException e) {
+            errorHandler.error("Error writing to output writer", e, 
+                             ErrorCode.WRITE_FAILURE);
         }
     }
 
@@ -46,8 +42,8 @@ public class CustomAppender extends AppenderSkeleton {
         if(writer != null) {
             try {
                 writer.close();
-            } catch(IOException e) {
-                errorHandler.error("Failed to close writer", e, 1);
+            } catch (IOException e) {
+                // Ignore
             }
         }
     }
@@ -55,5 +51,9 @@ public class CustomAppender extends AppenderSkeleton {
     @Override
     public boolean requiresLayout() {
         return true;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 }

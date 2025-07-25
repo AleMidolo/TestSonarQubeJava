@@ -20,28 +20,24 @@ public class SocketAppender extends AppenderSkeleton {
     protected void append(LoggingEvent event) {
         String message = layout.format(event);
         
-        // Iterate through all connected clients and send the message
+        // Iterate through all connected clients and send the log message
         for (int i = clientWriters.size() - 1; i >= 0; i--) {
             try {
                 PrintWriter writer = clientWriters.get(i);
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // If there's an error writing to client, remove them from the list
-                removeClient(i);
+                // If there's an error writing to client, remove the connection
+                try {
+                    clientWriters.get(i).close();
+                    connectedClients.get(i).close();
+                } catch (IOException ex) {
+                    // Ignore close errors
+                }
+                clientWriters.remove(i);
+                connectedClients.remove(i);
             }
         }
-    }
-
-    private void removeClient(int index) {
-        try {
-            clientWriters.get(index).close();
-            connectedClients.get(index).close();
-        } catch (IOException e) {
-            // Ignore close errors
-        }
-        clientWriters.remove(index);
-        connectedClients.remove(index);
     }
 
     public void addClient(Socket client) throws IOException {
@@ -52,8 +48,15 @@ public class SocketAppender extends AppenderSkeleton {
     @Override
     public void close() {
         for (int i = 0; i < connectedClients.size(); i++) {
-            removeClient(i);
+            try {
+                clientWriters.get(i).close();
+                connectedClients.get(i).close();
+            } catch (IOException e) {
+                // Ignore close errors
+            }
         }
+        connectedClients.clear();
+        clientWriters.clear();
     }
 
     @Override

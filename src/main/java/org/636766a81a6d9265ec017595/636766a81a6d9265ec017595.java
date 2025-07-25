@@ -18,10 +18,11 @@ public class ByteVector {
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
         if (length + 2 > data.length) {
-            // Double array size if more space needed
-            data = Arrays.copyOf(data, data.length * 2);
+            // Expand array if needed
+            data = Arrays.copyOf(data, Math.max(2 * data.length, length + 2));
         }
         
+        // Add the two bytes
         data[length++] = (byte) byteValue1;
         data[length++] = (byte) byteValue2;
         

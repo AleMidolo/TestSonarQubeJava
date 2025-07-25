@@ -3,16 +3,15 @@ import java.io.InputStream;
 
 public class VarintReader {
     private final InputStream input;
-    private int position;
+    private int position = 0;
     
     public VarintReader(InputStream input) {
         this.input = input;
-        this.position = 0;
     }
 
     public long readRawVarint64() throws IOException {
-        long result = 0;
         int shift = 0;
+        long result = 0;
         while (shift < 64) {
             final int b = input.read();
             if (b == -1) {

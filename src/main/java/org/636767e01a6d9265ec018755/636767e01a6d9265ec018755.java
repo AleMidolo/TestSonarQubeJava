@@ -6,32 +6,31 @@ import java.util.regex.Pattern;
 public class ContentBuilder {
 
     /**
-     * Build content, if it has ats someone set the ats
+     * Build content, if it has @mentions set the mentions
      * @param content The raw content string
-     * @return Processed content with ats extracted
+     * @return Processed content with mentions extracted
      */
-    public static String buildContent(String content) {
+    public String buildContent(String content) {
         if (content == null || content.isEmpty()) {
             return "";
         }
 
         // Pattern to match @mentions
-        Pattern pattern = Pattern.compile("@\\w+");
+        Pattern pattern = Pattern.compile("@(\\w+)");
         Matcher matcher = pattern.matcher(content);
         
         List<String> mentions = new ArrayList<>();
         
         // Find all @mentions
         while (matcher.find()) {
-            String mention = matcher.group();
-            mentions.add(mention.substring(1)); // Remove @ symbol
+            mentions.add(matcher.group(1));
         }
 
         // If mentions found, process them
         if (!mentions.isEmpty()) {
-            // Replace @mentions with proper format
+            // Replace @mentions with proper formatting
             for (String mention : mentions) {
-                content = content.replace("@" + mention, "[AT]" + mention + "[/AT]");
+                content = content.replace("@" + mention, "<@" + mention + ">");
             }
         }
 

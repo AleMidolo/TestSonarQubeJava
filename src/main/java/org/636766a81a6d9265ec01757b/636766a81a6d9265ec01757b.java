@@ -20,7 +20,7 @@ public class JsonSerializer {
                 }
             }
 
-            // Convert object to JSON string
+            // Convert this object to JSON string
             return mapper.writeValueAsString(this);
 
         } catch (Exception e) {

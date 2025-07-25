@@ -15,34 +15,34 @@ public class StackManipulator {
     }
 
     private int getTypeCount(String descriptor) {
-        // 这里假设 descriptor 是一个有效的类型或方法描述符
-        if (descriptor.startsWith("(")) {
-            // 方法描述符，计算参数类型数量
-            int count = 0;
-            for (char c : descriptor.toCharArray()) {
-                if (c == '(') {
-                    continue;
-                } else if (c == ')') {
-                    break;
-                } else {
-                    count++;
+        if (descriptor == null || descriptor.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        for (char c : descriptor.toCharArray()) {
+            if (c == 'L') {
+                count++; // Object type
+                while (c != ';') {
+                    c = descriptor.charAt(++count);
                 }
-            }
-            return count;
-        } else {
-            // 类型描述符，返回相应的类型大小
-            switch (descriptor) {
-                case "I": // int
-                case "F": // float
-                    return 1;
-                case "J": // long
-                case "D": // double
-                    return 2;
-                case "L": // 对象类型
-                    return 1; // 对象类型视为1个
-                default:
-                    throw new IllegalArgumentException("未知的描述符: " + descriptor);
+            } else if (c == '[') {
+                count++; // Array type
+            } else {
+                count++; // Primitive type
             }
         }
+        return count;
+    }
+
+    public void push(Object item) {
+        stack.push(item);
+    }
+
+    public Object peek() {
+        return stack.peek();
+    }
+
+    public boolean isEmpty() {
+        return stack.isEmpty();
     }
 }

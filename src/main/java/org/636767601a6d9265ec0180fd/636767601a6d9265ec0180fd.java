@@ -19,6 +19,7 @@ public class Graph<V, E> {
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
         index.putIfAbsent(sourceVertex, new HashSet<>());
         index.putIfAbsent(targetVertex, new HashSet<>());
+        
         index.get(sourceVertex).add(e);
         index.get(targetVertex).add(e);
     }

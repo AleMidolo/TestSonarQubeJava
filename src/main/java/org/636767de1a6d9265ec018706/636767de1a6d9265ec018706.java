@@ -41,16 +41,16 @@ public class MappingDiff {
     }
 
     public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
         Mappings historicalMappings = new Mappings();
         historicalMappings.addField("id", "integer");
         historicalMappings.addField("address", "string");
-        historicalMappings.addField("phone", "string");
 
+        MappingDiff mappingDiff = new MappingDiff();
         Mappings result = mappingDiff.diffStructure("exampleTable", historicalMappings);
+
         System.out.println("Missing fields in current mappings:");
-        for (String field : result.getFields().keySet()) {
-            System.out.println(field + ": " + result.getFields().get(field));
+        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }

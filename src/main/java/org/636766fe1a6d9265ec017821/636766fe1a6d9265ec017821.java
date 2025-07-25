@@ -24,7 +24,7 @@ public class ArrayDetailAppender {
         ArrayDetailAppender appender = new ArrayDetailAppender();
         StringBuffer buffer = new StringBuffer();
         byte[] byteArray = {1, 2, 3, 4, 5};
-        appender.appendDetail(buffer, "ByteArray", byteArray);
+        appender.appendDetail(buffer, "Byte Array", byteArray);
         System.out.println(buffer.toString());
     }
 }

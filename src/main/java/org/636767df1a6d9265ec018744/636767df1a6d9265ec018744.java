@@ -36,5 +36,13 @@ public class TimeRangeSplitter {
         public long getEnd() {
             return end;
         }
+
+        @Override
+        public String toString() {
+            return "TimeRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
     }
 }

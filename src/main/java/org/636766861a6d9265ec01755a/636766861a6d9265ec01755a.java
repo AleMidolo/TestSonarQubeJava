@@ -2,25 +2,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UriMatcher {
-    private final String pattern;
+    
+    private static final String URI_PATTERN = "your-regex-pattern-here"; // Replace with your actual regex pattern
 
-    public UriMatcher(String pattern) {
-        this.pattern = pattern;
-    }
-
-    /** 
+    /**
      * 将URI与模式进行匹配。
      * @param uri 要与模板匹配的URI。
      * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(uri);
+        Pattern pattern = Pattern.compile(URI_PATTERN);
+        Matcher matcher = pattern.matcher(uri);
         
         if (matcher.matches()) {
             return new MatchResult(matcher);
+        } else {
+            return null; // No match found
         }
-        return null;
     }
 
     public static class MatchResult {
@@ -30,20 +28,6 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String group(int group) {
-            return matcher.group(group);
-        }
-
-        public int start(int group) {
-            return matcher.start(group);
-        }
-
-        public int end(int group) {
-            return matcher.end(group);
-        }
-
-        public int groupCount() {
-            return matcher.groupCount();
-        }
+        // Additional methods to retrieve matched groups can be added here
     }
 }

@@ -1,5 +1,5 @@
 public class ArrayUtil {
-    public static final Byte[] EMPTY_ARRAY = new Byte[0];
+    public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /** 
      * <p>防御性编程技术，将 <code>null</code> 引用转换为一个空引用。</p> 
@@ -10,16 +10,6 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
-        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
-    }
-
-    public static void main(String[] args) {
-        Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
-        Byte[] nonEmptyArray = {1, 2, 3};
-
-        System.out.println(nullToEmpty(nullArray).length); // Output: 0
-        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
+        return (array == null || array.length == 0) ? EMPTY_BYTE_ARRAY : array;
     }
 }

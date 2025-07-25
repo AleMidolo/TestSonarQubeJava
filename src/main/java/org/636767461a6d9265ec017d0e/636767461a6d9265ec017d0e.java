@@ -13,24 +13,12 @@ public class SuffixSumCalculator {
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
         
-        // Calculate total sum
-        for (int num : bounds) {
-            totalSum += num;
-        }
-        
-        // Calculate suffix sums
-        int currentSuffixSum = 0;
+        // Calculate total sum and suffix sums
         for (int i = bounds.size() - 1; i >= 0; i--) {
-            currentSuffixSum += bounds.get(i);
-            suffixSums.add(currentSuffixSum);
+            totalSum += bounds.get(i);
+            suffixSums.add(0, totalSum); // Add to the front to maintain order
         }
         
-        // Reverse the suffix sums to maintain the original order
-        List<Integer> reversedSuffixSums = new ArrayList<>();
-        for (int i = suffixSums.size() - 1; i >= 0; i--) {
-            reversedSuffixSums.add(suffixSums.get(i));
-        }
-        
-        return new Pair<>(reversedSuffixSums, totalSum);
+        return new Pair<>(suffixSums, totalSum);
     }
 }

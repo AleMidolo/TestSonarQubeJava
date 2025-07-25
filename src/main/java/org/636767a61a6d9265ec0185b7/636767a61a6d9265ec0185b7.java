@@ -23,7 +23,5 @@ public class CharacterDigitValue {
         System.out.println(digitValue('Z')); // 35
         System.out.println(digitValue('a')); // 10
         System.out.println(digitValue('z')); // 35
-        // Uncommenting the following line will throw an exception
-        // System.out.println(digitValue('@')); // Invalid character
     }
 }

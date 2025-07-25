@@ -1,6 +1,5 @@
-import java.util.Set;
 import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
+import java.util.Set;
 
 public class GraphUtils {
 
@@ -11,19 +10,19 @@ public class GraphUtils {
      * @return 如果诱导的子图是一个团，则返回真。
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // 如果顶点集合为空或只有一个顶点，则是一个团
-        if (vertices.isEmpty() || vertices.size() == 1) {
-            return true;
+        int vertexCount = vertices.size();
+        if (vertexCount < 2) {
+            return true; // A single vertex or empty set is trivially a clique
         }
 
-        // 检查每对顶点是否都有边相连
+        // Check if every pair of vertices in the set is connected
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // 如果有一对顶点没有边相连，则不是团
+                    return false; // Found a pair that is not connected
                 }
             }
         }
-        return true; // 所有顶点对都有边相连，是一个团
+        return true; // All pairs are connected
     }
 }

@@ -9,16 +9,20 @@ public class ByteVector {
         this.capacity = initialCapacity;
     }
 
+    /**
+     * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+     */
     private void enlarge(final int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        ByteVector vector = new ByteVector(10);
-        vector.enlarge(5);
-        System.out.println("New capacity: " + vector.capacity);
-    }
+    // Other methods to manipulate the byte vector...
 }

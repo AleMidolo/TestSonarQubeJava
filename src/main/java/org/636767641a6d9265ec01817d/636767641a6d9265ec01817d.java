@@ -2,8 +2,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
 
 public class BipartiteGraphGenerator<V, E> {
 
@@ -12,27 +10,37 @@ public class BipartiteGraphGenerator<V, E> {
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assumiamo che resultMap contenga due chiavi: "left" e "right" che rappresentano i due insiemi di vertici
-        List<V> leftVertices = (List<V>) resultMap.get("left");
-        List<V> rightVertices = (List<V>) resultMap.get("right");
+        // Estrai i vertici dalle due partizioni
+        List<V> partition1 = new ArrayList<>();
+        List<V> partition2 = new ArrayList<>();
 
-        if (leftVertices == null || rightVertices == null) {
-            throw new IllegalArgumentException("resultMap deve contenere le chiavi 'left' e 'right'");
+        for (Map.Entry<String, V> entry : resultMap.entrySet()) {
+            if (entry.getKey().startsWith("A")) {
+                partition1.add(entry.getValue());
+            } else if (entry.getKey().startsWith("B")) {
+                partition2.add(entry.getValue());
+            }
         }
 
         // Aggiungi tutti i vertici al grafo
-        for (V vertex : leftVertices) {
+        for (V vertex : partition1) {
             target.addVertex(vertex);
         }
-        for (V vertex : rightVertices) {
+        for (V vertex : partition2) {
             target.addVertex(vertex);
         }
 
-        // Aggiungi tutti gli archi tra i vertici di sinistra e quelli di destra
-        for (V leftVertex : leftVertices) {
-            for (V rightVertex : rightVertices) {
-                target.addEdge(leftVertex, rightVertex);
+        // Crea archi tra tutte le coppie di vertici delle due partizioni
+        for (V v1 : partition1) {
+            for (V v2 : partition2) {
+                target.addEdge(v1, v2);
             }
         }
     }
+}
+
+// Interfaccia Graph per rappresentare un grafo
+interface Graph<V, E> {
+    void addVertex(V vertex);
+    void addEdge(V source, V target);
 }

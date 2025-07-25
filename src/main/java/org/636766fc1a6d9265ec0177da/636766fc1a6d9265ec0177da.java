@@ -5,6 +5,6 @@
  * @return true se il carattere è un separatore, false altrimenti.
  */
 private static boolean isParameterSeparator(final char c) {
-    // Consideriamo come separatori spazi, virgole, parentesi chiuse, punti e virgola, ecc.
-    return c == ' ' || c == ',' || c == ')' || c == ';' || c == '\t' || c == '\n' || c == '\r';
+    // Considera come separatori i caratteri non validi per i nomi di parametri, come spazi, parentesi, virgole, ecc.
+    return !Character.isLetterOrDigit(c) && c != '_';
 }

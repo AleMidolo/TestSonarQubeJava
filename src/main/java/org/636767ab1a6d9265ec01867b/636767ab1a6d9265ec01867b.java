@@ -12,46 +12,51 @@ public class UTF8Writer {
 
         // Ensure the LinkedBuffer has enough space
         if (lb.remaining() < length) {
-            lb = LinkedBuffer.allocate(Math.max(lb.capacity() * 2, length), session);
+            lb = LinkedBuffer.ensureCapacity(lb, length);
         }
 
-        // Write the bytes to the LinkedBuffer
-        lb.put(utf8Bytes, 0, length);
+        // Write the UTF-8 bytes to the LinkedBuffer
+        for (byte b : utf8Bytes) {
+            lb.put(b);
+        }
 
         return lb;
     }
 
-    // Assuming LinkedBuffer and WriteSession classes are defined elsewhere
+    // Assuming LinkedBuffer and WriteSession are defined elsewhere
     public static class LinkedBuffer {
         private byte[] buffer;
         private int position;
-        private int capacity;
 
-        public LinkedBuffer(int capacity, WriteSession session) {
+        public LinkedBuffer(int capacity) {
             this.buffer = new byte[capacity];
             this.position = 0;
-            this.capacity = capacity;
+        }
+
+        public void put(byte b) {
+            if (position >= buffer.length) {
+                throw new IllegalStateException("Buffer overflow");
+            }
+            buffer[position++] = b;
         }
 
         public int remaining() {
-            return capacity - position;
+            return buffer.length - position;
         }
 
-        public void put(byte[] src, int offset, int length) {
-            System.arraycopy(src, offset, buffer, position, length);
-            position += length;
-        }
-
-        public int capacity() {
-            return capacity;
-        }
-
-        public static LinkedBuffer allocate(int capacity, WriteSession session) {
-            return new LinkedBuffer(capacity, session);
+        public static LinkedBuffer ensureCapacity(LinkedBuffer lb, int requiredCapacity) {
+            if (lb.remaining() >= requiredCapacity) {
+                return lb;
+            }
+            int newCapacity = lb.buffer.length + requiredCapacity;
+            LinkedBuffer newBuffer = new LinkedBuffer(newCapacity);
+            System.arraycopy(lb.buffer, 0, newBuffer.buffer, 0, lb.position);
+            newBuffer.position = lb.position;
+            return newBuffer;
         }
     }
 
     public static class WriteSession {
-        // Placeholder for WriteSession class
+        // Placeholder for WriteSession implementation
     }
 }

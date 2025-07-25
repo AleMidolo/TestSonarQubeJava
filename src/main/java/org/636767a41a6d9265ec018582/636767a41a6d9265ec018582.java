@@ -1,40 +1,54 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
-import org.msgpack.core.buffer.LinkedBuffer;
-import org.msgpack.schema.Schema;
+import org.apache.avro.Schema;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.io.DatumWriter;
+import org.objenesis.strategy.StdInstantiatorStrategy;
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.dyuproject.protostuff.Schema;
 
-public class DelimitedMessageWriter {
+public class SerializationUtil {
 
-    /**
-     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
-     * @return la dimensione del messaggio
-     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create a MessagePacker with the provided buffer
-        MessagePacker packer = MessagePack.newDefaultPacker(buffer);
+        // Serialize the message using Protostuff
+        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
-        // Serialize the message using the schema
-        schema.write(packer, message);
+        // Write the length of the message as a varint
+        int length = data.length;
+        writeVarint(out, length);
 
-        // Flush the packer to ensure all data is written to the buffer
-        packer.flush();
+        // Write the serialized message
+        out.write(data);
 
-        // Get the size of the serialized message
-        int messageSize = packer.getTotalWrittenBytes();
+        // Return the size of the message (including the length prefix)
+        return length + computeVarintSize(length);
+    }
 
-        // Write the message size as a varint to the output stream
-        MessageBufferPacker sizePacker = MessagePack.newDefaultBufferPacker();
-        sizePacker.packInt(messageSize);
-        sizePacker.flush();
-        out.write(sizePacker.toByteArray());
+    private static void writeVarint(OutputStream out, int value) throws IOException {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.write(value);
+                return;
+            } else {
+                out.write((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
+    }
 
-        // Write the serialized message to the output stream
-        out.write(buffer.toByteArray());
-
-        // Return the total size of the message (including the size prefix)
-        return messageSize + sizePacker.getTotalWrittenBytes();
+    private static int computeVarintSize(int value) {
+        int size = 0;
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                size++;
+                return size;
+            } else {
+                size++;
+                value >>>= 7;
+            }
+        }
     }
 }

@@ -1,51 +1,34 @@
-import java.util.Objects;
+import java.util.Set;
 
 public class FieldChecker {
 
-    private Fields storedFields;
+    private Set<String> storedFields;
 
-    public FieldChecker(Fields storedFields) {
+    public FieldChecker(Set<String> storedFields) {
         this.storedFields = storedFields;
     }
 
+    /**
+     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+     */
     private boolean containsAllFields(Fields fields) {
-        if (fields == null || storedFields == null) {
-            return false;
+        for (String field : fields.getFieldNames()) {
+            if (!storedFields.contains(field)) {
+                return false;
+            }
         }
-        return Objects.equals(fields.getField1(), storedFields.getField1()) &&
-               Objects.equals(fields.getField2(), storedFields.getField2()) &&
-               Objects.equals(fields.getField3(), storedFields.getField3());
+        return true;
     }
 
-    public static void main(String[] args) {
-        Fields storedFields = new Fields("value1", "value2", "value3");
-        Fields inputFields = new Fields("value1", "value2", "value3");
+    public static class Fields {
+        private Set<String> fieldNames;
 
-        FieldChecker checker = new FieldChecker(storedFields);
-        System.out.println(checker.containsAllFields(inputFields)); // Output: true
-    }
-}
+        public Fields(Set<String> fieldNames) {
+            this.fieldNames = fieldNames;
+        }
 
-class Fields {
-    private String field1;
-    private String field2;
-    private String field3;
-
-    public Fields(String field1, String field2, String field3) {
-        this.field1 = field1;
-        this.field2 = field2;
-        this.field3 = field3;
-    }
-
-    public String getField1() {
-        return field1;
-    }
-
-    public String getField2() {
-        return field2;
-    }
-
-    public String getField3() {
-        return field3;
+        public Set<String> getFieldNames() {
+            return fieldNames;
+        }
     }
 }

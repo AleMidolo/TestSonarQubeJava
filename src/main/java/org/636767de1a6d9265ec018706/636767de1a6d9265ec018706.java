@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Mappings {
     private Map<String, Object> fields;
@@ -20,22 +21,22 @@ public class Mappings {
 public class MappingDiff {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming that the historical mappings for the table are stored in a static map
-        // This is just a placeholder for the actual historical mappings retrieval logic
-        Map<String, Mappings> historicalMappings = getHistoricalMappings();
-
-        Mappings historicalMapping = historicalMappings.get(tableName);
-        if (historicalMapping == null) {
-            return new Mappings(); // No historical mappings, return empty mappings
-        }
+        // Assuming we have a method to get historical mappings for the given table
+        Mappings historicalMappings = getHistoricalMappings(tableName);
 
         Mappings diffMappings = new Mappings();
         Map<String, Object> diffFields = new HashMap<>();
 
-        // Iterate through the input mappings and find fields that are not in historical mappings
-        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
+        // Get the fields from the historical mappings
+        Map<String, Object> historicalFields = historicalMappings.getFields();
+
+        // Get the fields from the input mappings
+        Map<String, Object> inputFields = mappings.getFields();
+
+        // Find fields that are in historical mappings but not in input mappings
+        for (Map.Entry<String, Object> entry : historicalFields.entrySet()) {
             String fieldName = entry.getKey();
-            if (!historicalMapping.getFields().containsKey(fieldName)) {
+            if (!inputFields.containsKey(fieldName)) {
                 diffFields.put(fieldName, entry.getValue());
             }
         }
@@ -44,17 +45,9 @@ public class MappingDiff {
         return diffMappings;
     }
 
-    // Placeholder method to simulate retrieval of historical mappings
-    private Map<String, Mappings> getHistoricalMappings() {
-        Map<String, Mappings> historicalMappings = new HashMap<>();
-        // Example historical mappings for a table
-        Mappings exampleHistoricalMapping = new Mappings();
-        Map<String, Object> exampleFields = new HashMap<>();
-        exampleFields.put("oldField1", "type1");
-        exampleFields.put("oldField2", "type2");
-        exampleHistoricalMapping.setFields(exampleFields);
-
-        historicalMappings.put("exampleTable", exampleHistoricalMapping);
-        return historicalMappings;
+    private Mappings getHistoricalMappings(String tableName) {
+        // This method should retrieve the historical mappings for the given table
+        // For the sake of this example, we return an empty Mappings object
+        return new Mappings();
     }
 }

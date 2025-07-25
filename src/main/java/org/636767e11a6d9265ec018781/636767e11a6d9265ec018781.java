@@ -9,16 +9,24 @@ public class MetricsCache {
      * @param data da aggiungere potenzialmente.
      */
     @Override
-    public void accept(final Map<String, Double> data) {
-        for (Map.Entry<String, Double> entry : data.entrySet()) {
+    public void accept(final METRICS data) {
+        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
             String key = entry.getKey();
             Double value = entry.getValue();
             cache.merge(key, value, Double::sum);
         }
     }
 
-    // Optional: Getter for the cache to inspect the results
-    public Map<String, Double> getCache() {
-        return new HashMap<>(cache);
+    // Assuming METRICS is a class that contains a map of metrics
+    public static class METRICS {
+        private Map<String, Double> metrics;
+
+        public METRICS(Map<String, Double> metrics) {
+            this.metrics = metrics;
+        }
+
+        public Map<String, Double> getMetrics() {
+            return metrics;
+        }
     }
 }

@@ -21,4 +21,19 @@ public class EnumerationToStringArray {
 
         return list.toArray(new String[0]);
     }
+
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        java.util.Vector<String> vector = new java.util.Vector<>();
+        vector.add("Elemento1");
+        vector.add("Elemento2");
+        vector.add("Elemento3");
+
+        Enumeration<String> enumeration = vector.elements();
+        String[] result = toStringArray(enumeration);
+
+        for (String s : result) {
+            System.out.println(s);
+        }
+    }
 }

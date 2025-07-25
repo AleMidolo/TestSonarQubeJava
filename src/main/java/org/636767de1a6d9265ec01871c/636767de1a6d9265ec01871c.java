@@ -12,13 +12,10 @@ public class Accumulator {
      * Accumula il valore con il valore esistente nella stessa chiave fornita.
      */
     public void valueAccumulation(String key, Long value) {
-        if (map.containsKey(key)) {
-            map.put(key, map.get(key) + value);
-        } else {
-            map.put(key, value);
-        }
+        map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
+    // Optional: Method to get the accumulated value for a key
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }

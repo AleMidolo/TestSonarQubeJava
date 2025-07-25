@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class StackMapTableHandler {
+public class StackMapTableWriter {
     private List<VerificationTypeInfo> currentFrame;
     private List<VerificationTypeInfo> stackMapTableEntries;
 
@@ -11,7 +11,7 @@ public class StackMapTableHandler {
      * @param end índice del último tipo en {@link #currentFrame} para escribir (exclusivo).
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
+        if (start < 0 || end > currentFrame.size() || start > end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
 
@@ -21,8 +21,8 @@ public class StackMapTableHandler {
         }
     }
 
-    // Assuming VerificationTypeInfo is a class representing the verification type info
+    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
     private static class VerificationTypeInfo {
-        // Define the structure of VerificationTypeInfo as per JVMS
+        // Implementation of VerificationTypeInfo
     }
 }

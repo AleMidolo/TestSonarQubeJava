@@ -19,7 +19,7 @@ public class TemplateEncoder {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
                 } catch (Exception e) {
-                    // En caso de error, simplemente añade el carácter sin codificar
+                    // This should not happen as UTF-8 is always supported
                     encodedString.append(c);
                 }
             } else {
@@ -30,7 +30,8 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String testString = "This is a {test} string with {template} parameters.";
-        System.out.println(encodeTemplateNames(testString));
+        String input = "This is a {template} string with {parameters}.";
+        String encoded = encodeTemplateNames(input);
+        System.out.println(encoded);
     }
 }

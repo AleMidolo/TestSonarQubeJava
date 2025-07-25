@@ -1,57 +1,39 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.avro.Schema;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.avro.io.BinaryEncoder;
-import org.objenesis.strategy.StdInstantiatorStrategy;
-import com.dyuproject.protostuff.LinkedBuffer;
-import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
+import org.msgpack.core.MessageBufferPacker;
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.core.buffer.LinkedBuffer;
+import org.msgpack.core.buffer.MessageBuffer;
+import org.msgpack.core.buffer.MessageBufferOutput;
+import org.msgpack.core.buffer.OutputStreamBufferOutput;
+import org.msgpack.schema.Schema;
 
-public class SerializationUtil {
+public class MessageSerializer {
 
     /**
      * Serializa el {@code message}, precedido por su longitud, en un {@link OutputStream}.
      * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using Protostuff
-        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
+        // Create a MessageBufferPacker with the provided buffer
+        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
 
-        // Write the length of the message as a varint
-        writeVarint(out, data.length);
+        // Serialize the message using the provided schema
+        schema.write(packer, message);
 
-        // Write the serialized message
-        out.write(data);
+        // Get the serialized message as a byte array
+        byte[] serializedMessage = packer.toByteArray();
 
-        // Return the total size of the message (length + data)
-        return data.length + computeVarintSize(data.length);
-    }
+        // Write the length of the serialized message as a varint
+        MessagePacker lengthPacker = MessagePack.newDefaultPacker(out);
+        lengthPacker.packInt(serializedMessage.length);
+        lengthPacker.flush();
 
-    private static void writeVarint(OutputStream out, int value) throws IOException {
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                out.write(value);
-                return;
-            } else {
-                out.write((value & 0x7F) | 0x80);
-                value >>>= 7;
-            }
-        }
-    }
+        // Write the serialized message to the output stream
+        out.write(serializedMessage);
 
-    private static int computeVarintSize(int value) {
-        int size = 0;
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                size++;
-                return size;
-            } else {
-                size++;
-                value >>>= 7;
-            }
-        }
+        // Return the total size of the message (length + serialized message)
+        return serializedMessage.length + MessagePack.newDefaultBufferPacker().packInt(serializedMessage.length).toByteArray().length;
     }
 }

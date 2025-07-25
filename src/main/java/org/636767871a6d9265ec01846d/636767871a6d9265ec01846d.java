@@ -10,19 +10,23 @@ public class ConfigurationDirectoryCreator {
         String userHome = System.getProperty("user.home");
         
         // Crear la ruta del directorio "lf5"
-        File configDir = new File(userHome, "lf5");
+        String directoryPath = userHome + File.separator + "lf5";
+        
+        // Crear el objeto File para el directorio
+        File directory = new File(directoryPath);
         
         // Verificar si el directorio ya existe
-        if (!configDir.exists()) {
+        if (!directory.exists()) {
             // Intentar crear el directorio
-            boolean dirCreated = configDir.mkdir();
-            if (dirCreated) {
-                System.out.println("Directorio 'lf5' creado exitosamente en: " + configDir.getAbsolutePath());
+            boolean wasCreated = directory.mkdir();
+            
+            if (wasCreated) {
+                System.out.println("Directorio creado exitosamente en: " + directoryPath);
             } else {
-                System.out.println("No se pudo crear el directorio 'lf5' en: " + configDir.getAbsolutePath());
+                System.out.println("No se pudo crear el directorio en: " + directoryPath);
             }
         } else {
-            System.out.println("El directorio 'lf5' ya existe en: " + configDir.getAbsolutePath());
+            System.out.println("El directorio ya existe en: " + directoryPath);
         }
     }
 

@@ -17,7 +17,6 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
         Integer[] arr = {1, 2, 3, 4, 5};
         System.out.println("Antes del intercambio: " + java.util.Arrays.toString(arr));
         swap(arr, 1, 3);

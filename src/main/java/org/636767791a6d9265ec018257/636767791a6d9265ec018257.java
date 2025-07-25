@@ -10,7 +10,7 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Aquí se puede agregar la lógica para actualizar la tabla de registros
+                // Aquí puedes agregar la lógica para actualizar la tabla de registros
                 // Por ejemplo, agregar el LogRecord a un modelo de tabla
                 System.out.println("Mensaje de registro agregado: " + lr.getMessage());
             }

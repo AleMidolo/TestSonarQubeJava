@@ -1,6 +1,3 @@
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,26 +12,31 @@ public class BeanMap {
 
     public void putAllWriteable(BeanMap map) {
         try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
-            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-
-            for (PropertyDescriptor pd : propertyDescriptors) {
-                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
-                    Method readMethod = pd.getReadMethod();
+            PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
+            for (PropertyDescriptor descriptor : descriptors) {
+                if (descriptor.getWriteMethod() != null && descriptor.getReadMethod() != null) {
+                    Method readMethod = descriptor.getReadMethod();
                     Object value = readMethod.invoke(map);
-                    this.properties.put(pd.getName(), value);
+                    this.properties.put(descriptor.getName(), value);
                 }
             }
-        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
-    public Object getProperty(String key) {
-        return properties.get(key);
+    private PropertyDescriptor[] getPropertyDescriptors() {
+        // This method should return the PropertyDescriptor array for the BeanMap.
+        // Implementation depends on the specific BeanMap implementation.
+        // For simplicity, we assume it returns an array of PropertyDescriptor objects.
+        return new PropertyDescriptor[0];
     }
 
-    public void setProperty(String key, Object value) {
-        properties.put(key, value);
+    public Object get(String propertyName) {
+        return properties.get(propertyName);
+    }
+
+    public void put(String propertyName, Object value) {
+        properties.put(propertyName, value);
     }
 }

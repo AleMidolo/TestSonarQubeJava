@@ -41,5 +41,5 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         }
     }
 
-    throw new Exception("No se puede convertir el valor a Character.");
+    throw new Exception("No se puede convertir el valor a Character: " + value.getClass().getName());
 }

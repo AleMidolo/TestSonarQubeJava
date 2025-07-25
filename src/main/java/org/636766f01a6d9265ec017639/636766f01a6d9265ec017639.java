@@ -7,7 +7,7 @@ public class ArrayToList {
 
     /**
      * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)}, pero maneja arreglos nulos.
-     * @param a el arreglo de elementos
+     * @param a el arreglo de elementos.
      * @return una lista respaldada por el arreglo.
      */
     public static <T> List<T> asList(T[] a) {
@@ -19,13 +19,12 @@ public class ArrayToList {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        String[] array = {"Hola", "Mundo"};
-        List<String> lista = asList(array);
-        System.out.println(lista);
+        String[] array = {"a", "b", "c"};
+        List<String> list = asList(array);
+        System.out.println(list); // [a, b, c]
 
-        // Ejemplo con arreglo nulo
-        String[] arrayNulo = null;
-        List<String> listaNula = asList(arrayNulo);
-        System.out.println(listaNula);
+        String[] nullArray = null;
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // []
     }
 }

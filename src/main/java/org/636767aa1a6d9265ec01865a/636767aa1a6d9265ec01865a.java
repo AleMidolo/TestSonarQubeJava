@@ -21,16 +21,22 @@ public class LinkedBuffer {
 
     /**
      * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
+     * @param out El DataOutput donde se escribirá el contenido.
+     * @param node El nodo inicial del LinkedBuffer.
      * @return el tamaño total del contenido del búfer.
+     * @throws IOException Si ocurre un error de entrada/salida.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;
-        while (node != null) {
-            byte[] data = node.getData();
+        LinkedBuffer current = node;
+
+        while (current != null) {
+            byte[] data = current.getData();
             out.write(data);
             totalSize += data.length;
-            node = node.getNext();
+            current = current.getNext();
         }
+
         return totalSize;
     }
 }

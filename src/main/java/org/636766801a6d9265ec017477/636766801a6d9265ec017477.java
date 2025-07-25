@@ -1,42 +1,47 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class FileAdder {
 
-    private List<InputStream> fileList;
-
-    public FileAdder() {
-        this.fileList = new ArrayList<>();
-    }
-
     /**
      * Agrega los archivos especificados en orden inverso.
-     * @param files Arreglo de InputStreams que representan los archivos a agregar.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("El arreglo de archivos no puede ser nulo.");
+        if (files == null || files.length == 0) {
+            return;
         }
 
-        // Convertir el arreglo a una lista para facilitar la manipulación
-        List<InputStream> tempList = new ArrayList<>();
-        for (InputStream file : files) {
-            if (file != null) {
-                tempList.add(file);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            for (int i = files.length - 1; i >= 0; i--) {
+                InputStream file = files[i];
+                if (file != null) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = file.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                }
+            }
+            // Aquí puedes hacer algo con el contenido de outputStream, como guardarlo en un archivo o procesarlo.
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for (InputStream file : files) {
+                if (file != null) {
+                    try {
+                        file.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-
-        // Invertir la lista
-        Collections.reverse(tempList);
-
-        // Agregar los archivos invertidos a la lista principal
-        fileList.addAll(tempList);
-    }
-
-    // Método para obtener la lista de archivos (solo para propósitos de prueba)
-    public List<InputStream> getFileList() {
-        return fileList;
     }
 }

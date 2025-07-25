@@ -10,6 +10,8 @@ public class CustomSet {
 
     /**
      * Inserta un valor en el conjunto. Devuelve verdadero si el conjunto no contenía ya el elemento especificado.
+     * @param val El valor a insertar en el conjunto.
+     * @return Verdadero si el conjunto no contenía ya el elemento, falso en caso contrario.
      */
     public boolean insert(int val) {
         return set.add(val);

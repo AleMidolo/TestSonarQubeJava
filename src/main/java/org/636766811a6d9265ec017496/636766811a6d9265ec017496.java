@@ -12,7 +12,7 @@ public class FileIterator {
         this.fileIterator = files.iterator();
     }
 
-    /** 
+    /**
      * Devuelve el siguiente objeto {@link java.io.File} o {@code null} si no hay más archivos disponibles.
      */
     public InputStream next() throws IOException {

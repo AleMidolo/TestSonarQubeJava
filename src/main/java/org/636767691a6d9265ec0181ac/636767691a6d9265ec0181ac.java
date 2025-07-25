@@ -15,52 +15,37 @@ public class PathUtils {
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
         
-        // Si la ruta relativa comienza con /, la tratamos como ruta absoluta
+        // Eliminar el separador final si existe
+        if (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        
+        // Si la ruta relativa comienza con /, tratarla como ruta absoluta
         if (relativePath.startsWith("/")) {
             return relativePath;
         }
         
-        // Dividir la ruta en componentes
-        String[] pathComponents = path.split("/");
-        String[] relativeComponents = relativePath.split("/");
+        // Dividir la ruta relativa en componentes
+        String[] components = relativePath.split("/");
         
-        // Crear una lista para almacenar los componentes finales
-        java.util.ArrayList<String> finalComponents = new java.util.ArrayList<>();
+        // Convertir la ruta base a Path
+        Path basePath = Paths.get(path);
         
-        // Agregar los componentes de la ruta base
-        for (String component : pathComponents) {
-            if (!component.isEmpty()) {
-                finalComponents.add(component);
-            }
-        }
-        
-        // Procesar los componentes relativos
-        for (String component : relativeComponents) {
+        // Para cada componente de la ruta relativa
+        for (String component : components) {
             if (component.equals("..")) {
-                if (!finalComponents.isEmpty()) {
-                    finalComponents.remove(finalComponents.size() - 1);
+                // Subir un nivel
+                basePath = basePath.getParent();
+                if (basePath == null) {
+                    return "/";
                 }
             } else if (!component.equals(".") && !component.isEmpty()) {
-                finalComponents.add(component);
+                // Agregar el componente a la ruta (ignorar "." y componentes vacíos)
+                basePath = basePath.resolve(component);
             }
         }
         
-        // Construir la ruta final
-        StringBuilder result = new StringBuilder();
-        
-        // Agregar el separador inicial si la ruta original comenzaba con uno
-        if (path.startsWith("/")) {
-            result.append("/");
-        }
-        
-        // Unir los componentes con separadores
-        for (int i = 0; i < finalComponents.size(); i++) {
-            result.append(finalComponents.get(i));
-            if (i < finalComponents.size() - 1) {
-                result.append("/");
-            }
-        }
-        
-        return result.toString();
+        // Convertir el resultado final a String y normalizar los separadores
+        return basePath.toString().replace('\\', '/');
     }
 }

@@ -21,18 +21,13 @@ public class BufferedReader {
      * @throws IOException si no hay más datos disponibles.
      */
     public byte readByte() throws IOException {
-        // Si el buffer está vacío o hemos llegado al final, rellenarlo
         if (pos >= count) {
             count = in.read(buffer);
-            pos = 0;
-            
-            // Si no hay más datos para leer
             if (count == -1) {
                 throw new IOException("No hay más datos disponibles");
             }
+            pos = 0;
         }
-        
-        // Devolver el siguiente byte y actualizar la posición
         return buffer[pos++];
     }
 }

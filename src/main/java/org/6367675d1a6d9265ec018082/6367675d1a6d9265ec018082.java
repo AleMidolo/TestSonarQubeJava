@@ -23,7 +23,7 @@ public class Graph {
         Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
         Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-        // Find edge connecting the nodes
+        // Find edge connecting current and next nodes
         for (Edge edge : edges) {
             if ((edge.getSource() == realCurrent && edge.getTarget() == realNext) ||
                 (edge.getSource() == realNext && edge.getTarget() == realCurrent)) {

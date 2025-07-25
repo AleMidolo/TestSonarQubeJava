@@ -33,8 +33,8 @@ public class FileHandler {
     // Helper method for processing individual files
     private void processFile(File file) {
         // Implementation of file processing
+        // This is a placeholder - add actual file handling logic here
         if (file != null && file.exists()) {
-            // Add file handling logic here
             System.out.println("Processing file: " + file.getName());
         }
     }

@@ -12,9 +12,9 @@ public class StringUtils {
         JAVA_ESCAPES.put("\\n", "\n");
         JAVA_ESCAPES.put("\\r", "\r");
         JAVA_ESCAPES.put("\\f", "\f");
+        JAVA_ESCAPES.put("\\\\", "\\");
         JAVA_ESCAPES.put("\\'", "'");
         JAVA_ESCAPES.put("\\\"", "\"");
-        JAVA_ESCAPES.put("\\\\", "\\");
     }
 
     public static String unescapeJava(String str) throws Exception {
@@ -28,23 +28,24 @@ public class StringUtils {
             char currentChar = str.charAt(i);
             
             if (currentChar == '\\' && i + 1 < str.length()) {
-                // Check for escaped sequence
-                String escape = str.substring(i, i + 2);
+                // Check for escaped sequences
+                String escape = str.substring(i, Math.min(i + 2, str.length()));
+                
                 if (JAVA_ESCAPES.containsKey(escape)) {
                     result.append(JAVA_ESCAPES.get(escape));
                     i++; // Skip next character as it's part of escape sequence
-                } else if (i + 3 < str.length() && 
-                         str.charAt(i + 1) == 'u') {
-                    // Handle unicode escape sequences
-                    String hex = str.substring(i + 2, i + 6);
+                } else if (escape.charAt(1) == 'u' && i + 5 < str.length()) {
+                    // Handle Unicode escape sequences
+                    String unicode = str.substring(i + 2, i + 6);
                     try {
-                        result.append((char) Integer.parseInt(hex, 16));
+                        int code = Integer.parseInt(unicode, 16);
+                        result.append((char) code);
                         i += 5; // Skip the unicode sequence
                     } catch (NumberFormatException e) {
-                        throw new Exception("Invalid unicode escape sequence: \\u" + hex);
+                        throw new Exception("Invalid Unicode escape sequence: \\u" + unicode);
                     }
                 } else {
-                    // Not a recognized escape sequence, keep the backslash
+                    // If not a recognized escape sequence, keep the backslash
                     result.append(currentChar);
                 }
             } else {

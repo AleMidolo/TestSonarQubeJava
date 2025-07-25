@@ -7,7 +7,7 @@ public class FileOperations {
         this.lastWriteTimestamp = Instant.now().toEpochMilli();
     }
 
-    /** 
+    /**
      * La última vez, en milisegundos, que ocurrió una operación de escritura.
      * @return esto
      */

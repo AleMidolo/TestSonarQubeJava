@@ -7,7 +7,7 @@ public class DataTableComparator {
     /**
      * Checks if two DataTables have compatible bucket structures
      * @param dataset The DataTable to compare with
-     * @return true if the bucket structure is the same
+     * @return true if the bucket structure is compatible
      */
     public boolean isCompatible(DataTable dataset) {
         if (dataset == null) {
@@ -18,7 +18,7 @@ public class DataTableComparator {
             return false;
         }
         
-        // Check if both tables reference the same object
+        // Check if comparing same object
         if (this.currentTable == dataset) {
             return true;
         }

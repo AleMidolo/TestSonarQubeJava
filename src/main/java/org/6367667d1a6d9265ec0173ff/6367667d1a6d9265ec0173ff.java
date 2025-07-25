@@ -1,42 +1,31 @@
 import javax.servlet.http.HttpServletRequest;
 
+public class Meteor {
+    // Assuming Meteor has some properties and methods
+}
+
 public class MeteorLookup {
 
     /**
-     * Retrieve an instance of  {@link Meteor} based on the {@link HttpServletRequest}.
+     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
      * @param r {@link HttpServletRequest}
-     * @return a {@link Meteor} or null if not found
+     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example implementation, replace with actual logic to retrieve Meteor instance
-        String meteorId = r.getParameter("meteorId");
-        if (meteorId == null || meteorId.isEmpty()) {
+        // Implementation logic to retrieve a Meteor instance based on the request
+        // This is a placeholder for the actual logic
+        if (r == null) {
             return null;
         }
         
-        // Simulating a database or service call to find a Meteor instance
-        Meteor meteor = findMeteorById(meteorId);
-        return meteor;
-    }
-
-    private static Meteor findMeteorById(String meteorId) {
-        // Placeholder for actual logic to find a Meteor by its ID
-        // In a real application, this would likely involve querying a database or service
-        if ("123".equals(meteorId)) {
-            return new Meteor(meteorId, "Example Meteor");
+        // Example logic to find a Meteor instance
+        String meteorId = r.getParameter("meteorId");
+        if (meteorId != null) {
+            // Here you would typically look up the Meteor instance from a database or a cache
+            // For demonstration, we will return a new instance
+            return new Meteor(); // Replace with actual lookup logic
         }
-        return null;
+        
+        return null; // Return null if no Meteor instance is found
     }
-}
-
-class Meteor {
-    private String id;
-    private String name;
-
-    public Meteor(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    // Getters and setters can be added here
 }

@@ -8,17 +8,17 @@ public class MyMap<K, V> {
         this.map = new HashMap<>();
     }
 
-    /** 
-     * Return <code>true</code> if this map contains a mapping for the specified key.
-     * @param key  the key to be searched for
-     * @return true if the map contains the key
+    /**
+     * 如果此映射包含指定键的映射，则返回<code>true</code>。
+     * @param key 要搜索的键
+     * @return 如果映射包含该键，则返回真
      */
     @Override 
     public boolean containsKey(final Object key) {
         return map.containsKey(key);
     }
 
-    // Additional methods to put and get values for testing purposes
+    // Additional methods to add and retrieve values can be added here
     public void put(K key, V value) {
         map.put(key, value);
     }

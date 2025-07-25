@@ -1,28 +1,47 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelManager {
-    private List<Channels> targetChannels;
+class Channels {
+    private List<IConsumer> consumers;
 
-    public ChannelManager() {
-        this.targetChannels = new ArrayList<>();
+    public Channels() {
+        this.consumers = new ArrayList<>();
     }
 
-    /** 
-     * Add a new target channels.
-     */
-    public void addNewTarget(Channels channels, IConsumer consumer) {
-        if (channels != null && consumer != null) {
-            targetChannels.add(channels);
-            consumer.consume(channels);
-        }
+    public void addConsumer(IConsumer consumer) {
+        consumers.add(consumer);
     }
-}
 
-interface Channels {
-    // Define methods for Channels interface
+    public List<IConsumer> getConsumers() {
+        return consumers;
+    }
 }
 
 interface IConsumer {
-    void consume(Channels channels);
+    void consume();
+}
+
+public class TargetChannelManager {
+
+    /** 
+     * 添加新的目标通道。
+     */
+    public void addNewTarget(Channels channels, IConsumer consumer) {
+        channels.addConsumer(consumer);
+    }
+
+    public static void main(String[] args) {
+        Channels channels = new Channels();
+        TargetChannelManager manager = new TargetChannelManager();
+
+        IConsumer consumer = new IConsumer() {
+            @Override
+            public void consume() {
+                System.out.println("Consuming data...");
+            }
+        };
+
+        manager.addNewTarget(channels, consumer);
+        System.out.println("New target added. Total consumers: " + channels.getConsumers().size());
+    }
 }

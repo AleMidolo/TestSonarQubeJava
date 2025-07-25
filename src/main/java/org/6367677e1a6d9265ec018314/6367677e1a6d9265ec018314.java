@@ -1,68 +1,54 @@
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-class CategoryNode {
+class Node {
     boolean isActive;
-    List<CategoryNode> children;
+    List<Node> children;
 
-    public CategoryNode(boolean isActive) {
+    Node(boolean isActive) {
         this.isActive = isActive;
         this.children = new ArrayList<>();
-    }
-
-    public void addChild(CategoryNode child) {
-        children.add(child);
     }
 }
 
 public class CategoryTree {
-    private CategoryNode root;
+    private Node root;
 
-    public CategoryTree(CategoryNode root) {
+    public CategoryTree(Node root) {
         this.root = root;
     }
 
     /** 
-     * Removes any inactive nodes from the Category tree.
+     * 从类别树中移除所有不活跃的节点。
      */
     protected int removeUnusedNodes() {
-        return removeInactiveNodes(root);
+        return removeUnusedNodes(root);
     }
 
-    private int removeInactiveNodes(CategoryNode node) {
+    private int removeUnusedNodes(Node node) {
         if (node == null) {
             return 0;
         }
 
         int removedCount = 0;
 
-        // Iterate through children and remove inactive nodes
-        Iterator<CategoryNode> iterator = node.children.iterator();
-        while (iterator.hasNext()) {
-            CategoryNode child = iterator.next();
-            removedCount += removeInactiveNodes(child);
-            if (!child.isActive) {
-                iterator.remove();
-                removedCount++;
+        // Recursively remove unused nodes from children
+        List<Node> activeChildren = new ArrayList<>();
+        for (Node child : node.children) {
+            int count = removeUnusedNodes(child);
+            removedCount += count;
+            if (child.isActive || count == 0) {
+                activeChildren.add(child);
             }
         }
+        node.children = activeChildren;
 
-        return removedCount;
-    }
+        // If the current node is not active and has no active children, it should be removed
+        if (!node.isActive && activeChildren.isEmpty()) {
+            removedCount++;
+            return removedCount; // This node is considered removed
+        }
 
-    public static void main(String[] args) {
-        // Example usage
-        CategoryNode root = new CategoryNode(true);
-        CategoryNode child1 = new CategoryNode(false);
-        CategoryNode child2 = new CategoryNode(true);
-        CategoryNode grandChild1 = new CategoryNode(false);
-        child2.addChild(grandChild1);
-        root.addChild(child1);
-        root.addChild(child2);
-
-        CategoryTree tree = new CategoryTree(root);
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed nodes: " + removedNodes);
+        return removedCount; // This node is kept
     }
 }

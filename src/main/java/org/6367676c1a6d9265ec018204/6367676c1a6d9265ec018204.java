@@ -1,11 +1,10 @@
-public class ArrayConcatenation {
+public class StringArrayConcatenator {
 
-    /** 
-     * Concatenate the given String arrays into one, with overlapping array elements included twice. 
-     * The order of elements in the original arrays is preserved.
-     * @param array1 the first array (can be <code>null</code>)
-     * @param array2 the second array (can be <code>null</code>)
-     * @return the new array (<code>null</code> if both given arrays were <code>null</code>)
+    /**
+     * 将给定的字符串数组连接成一个数组，重复的数组元素也会包含在内。<p>原始数组中的元素顺序得以保留。
+     * @param array1 第一个数组（可以为<code>null</code>）
+     * @param array2 第二个数组（可以为<code>null</code>）
+     * @return 新数组（如果两个给定数组都为<code>null</code>，则返回<code>null</code>）
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
@@ -16,16 +15,11 @@ public class ArrayConcatenation {
         int length2 = (array2 != null) ? array2.length : 0;
         String[] result = new String[length1 + length2];
 
-        int index = 0;
         if (array1 != null) {
-            for (String s : array1) {
-                result[index++] = s;
-            }
+            System.arraycopy(array1, 0, result, 0, length1);
         }
         if (array2 != null) {
-            for (String s : array2) {
-                result[index++] = s;
-            }
+            System.arraycopy(array2, 0, result, length1, length2);
         }
 
         return result;
@@ -33,11 +27,15 @@ public class ArrayConcatenation {
 
     public static void main(String[] args) {
         String[] array1 = {"Hello", "World"};
-        String[] array2 = {"World", "Java"};
+        String[] array2 = {"Java", "Programming"};
         String[] result = concatenateStringArrays(array1, array2);
         
-        for (String s : result) {
-            System.out.println(s);
+        if (result != null) {
+            for (String str : result) {
+                System.out.println(str);
+            }
+        } else {
+            System.out.println("Result is null");
         }
     }
 }

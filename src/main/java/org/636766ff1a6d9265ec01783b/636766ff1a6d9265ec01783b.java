@@ -1,7 +1,7 @@
 public class SubstringUtil {
-
+    
     /** 
-     * Gets a substring from the specified String avoiding exceptions. 
+     * 从指定的字符串中获取子字符串，避免抛出异常。
      */
     public static String sub(String str, int start, int end) {
         if (str == null) {
@@ -20,12 +20,10 @@ public class SubstringUtil {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String example = "Hello, World!";
-        System.out.println(sub(example, 7, 12)); // Output: World
-        System.out.println(sub(example, -5, 5));  // Output: Hello
-        System.out.println(sub(example, 0, 20));  // Output: Hello, World!
-        System.out.println(sub(example, 5, 3));   // Output: (empty string)
-        System.out.println(sub(null, 0, 5));      // Output: null
+        System.out.println(sub("Hello, World!", 7, 12)); // 输出: World
+        System.out.println(sub("Hello, World!", -1, 5)); // 输出: Hello
+        System.out.println(sub("Hello, World!", 7, 20)); // 输出: World!
+        System.out.println(sub(null, 0, 5)); // 输出: null
+        System.out.println(sub("Hello", 3, 2)); // 输出: ""
     }
 }

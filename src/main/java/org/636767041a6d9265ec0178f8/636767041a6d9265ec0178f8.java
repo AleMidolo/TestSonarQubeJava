@@ -2,24 +2,25 @@ import java.util.Arrays;
 
 public class StringArrayCopy {
 
-    /** 
-     * This method creates a copy of the provided array, and ensures that all the strings in the newly created array contain only lower-case letters. <p> Using this method to copy string arrays means that changes to the src array do not modify the dst array.
+    /**
+     * 此方法创建提供数组的一个副本，并确保新创建的数组中的所有字符串仅包含小写字母。<p> 使用此方法复制字符串数组意味着对源数组的更改不会修改目标数组。
      */
     private static String[] copyStrings(final String[] src) {
         if (src == null) {
             return null;
         }
-        String[] dst = new String[src.length];
+        String[] dest = new String[src.length];
         for (int i = 0; i < src.length; i++) {
-            dst[i] = src[i] != null ? src[i].toLowerCase() : null;
+            dest[i] = src[i] != null ? src[i].toLowerCase() : null;
         }
-        return dst;
+        return dest;
     }
 
     public static void main(String[] args) {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copyStrings(original);
         
+        // Print original and copied arrays
         System.out.println("Original: " + Arrays.toString(original));
         System.out.println("Copied: " + Arrays.toString(copied));
     }

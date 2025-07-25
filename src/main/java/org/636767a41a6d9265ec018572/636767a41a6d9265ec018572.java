@@ -9,7 +9,7 @@ public class VarintReader {
     }
 
     /** 
-     * Read a raw Varint from the stream.
+     * 从流中读取原始 Varint。
      */
     public long readRawVarint64() throws IOException {
         long result = 0;

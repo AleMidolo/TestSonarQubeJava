@@ -1,26 +1,41 @@
-public class Bucket {
+class Bucket {
+    // Assuming Bucket has some properties and methods
     private Bucket next;
 
-    /** 
-     * Inserts this bucket in the data structure before the {@code bucket}.
-     * @param bucket the bucket, that will be the next to this bucket.
+    public Bucket() {
+        this.next = null;
+    }
+
+    public Bucket getNext() {
+        return next;
+    }
+
+    public void setNext(Bucket next) {
+        this.next = next;
+    }
+
+    /**
+     * 在数据结构中将此桶插入到 {@code bucket} 之前。
+     * @param bucket 作为当前桶下一个的桶。
      */
-    public void insertBefore(Bucket bucket) {
+    void insertBefore(Bucket bucket) {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
         
-        // Assuming we have a way to access the previous bucket
+        // Create a new bucket to insert
+        Bucket newBucket = new Bucket();
+        
+        // Set the new bucket's next to the current bucket
+        newBucket.setNext(bucket);
+        
+        // Find the previous bucket to insert the new bucket before
         Bucket current = this;
-        while (current.next != null && current.next != bucket) {
-            current = current.next;
+        while (current.getNext() != null && current.getNext() != bucket) {
+            current = current.getNext();
         }
         
-        if (current.next == bucket) {
-            this.next = bucket;
-            current.next = this;
-        } else {
-            throw new IllegalArgumentException("The specified bucket is not in the list");
-        }
+        // Insert the new bucket before the specified bucket
+        current.setNext(newBucket);
     }
 }

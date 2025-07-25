@@ -1,43 +1,36 @@
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class AppenderManager {
-    private List<String> appenders;
+    private List<Appender> appenders;
 
-    public AppenderManager() {
-        this.appenders = new ArrayList<>();
+    public AppenderManager(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
     /** 
-     * Remove the appender with the name passed as parameter from the list of appenders.  
+     * 从附加器列表中移除指定名称的附加器。
      */
     public void removeAppender(String name) {
-        Iterator<String> iterator = appenders.iterator();
+        Iterator<Appender> iterator = appenders.iterator();
         while (iterator.hasNext()) {
-            String appender = iterator.next();
-            if (appender.equals(name)) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
                 iterator.remove();
                 break;
             }
         }
     }
+}
 
-    public void addAppender(String name) {
-        appenders.add(name);
+class Appender {
+    private String name;
+
+    public Appender(String name) {
+        this.name = name;
     }
 
-    public List<String> getAppenders() {
-        return appenders;
-    }
-
-    public static void main(String[] args) {
-        AppenderManager manager = new AppenderManager();
-        manager.addAppender("ConsoleAppender");
-        manager.addAppender("FileAppender");
-        
-        System.out.println("Appenders before removal: " + manager.getAppenders());
-        manager.removeAppender("ConsoleAppender");
-        System.out.println("Appenders after removal: " + manager.getAppenders());
+    public String getName() {
+        return name;
     }
 }

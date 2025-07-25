@@ -1,28 +1,31 @@
-import org.apache.log4j.Appender;
-import org.apache.log4j.spi.LoggingEvent;
-import java.util.Enumeration;
-import org.apache.log4j.Logger;
+import java.util.List;
 
-public class LoggerAppender {
-    private Logger logger;
+public class AppenderManager {
+    private List<Appender> appenders;
 
-    public LoggerAppender(Logger logger) {
-        this.logger = logger;
+    public AppenderManager(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
     /** 
-     * Call the <code>doAppend</code> method on all attached appenders.  
+     * 对所有附加的附加器调用<code>doAppend</code>方法。  
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
-        int appendersCalled = 0;
-        Enumeration<Appender> appenders = logger.getAllAppenders();
-        
-        while (appenders.hasMoreElements()) {
-            Appender appender = appenders.nextElement();
-            appender.doAppend(event);
-            appendersCalled++;
+        int appendCount = 0;
+        for (Appender appender : appenders) {
+            if (appender != null) {
+                appender.doAppend(event);
+                appendCount++;
+            }
         }
-        
-        return appendersCalled;
+        return appendCount;
     }
+}
+
+interface Appender {
+    void doAppend(LoggingEvent event);
+}
+
+class LoggingEvent {
+    // Implementation of LoggingEvent
 }

@@ -1,30 +1,36 @@
 import java.util.Map;
 
-public class BipartiteGraphGenerator<V, E> {
+public class Graph<V, E> {
+    // Graph implementation details would go here
+}
+
+public class GraphGenerator<V, E> {
 
     /**
-     * Construct a complete bipartite graph
+     * 构建一个完整的二分图
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        if (resultMap == null || resultMap.size() < 2) {
-            throw new IllegalArgumentException("resultMap must contain at least two vertices.");
+        // Assuming resultMap contains two sets of vertices for the bipartite graph
+        // Split the resultMap into two sets
+        V[] setA = (V[]) new Object[resultMap.size() / 2];
+        V[] setB = (V[]) new Object[resultMap.size() / 2];
+        int indexA = 0, indexB = 0;
+
+        for (Map.Entry<String, V> entry : resultMap.entrySet()) {
+            if (indexA < setA.length) {
+                setA[indexA++] = entry.getValue();
+            } else {
+                setB[indexB++] = entry.getValue();
+            }
         }
 
-        // Split the resultMap into two sets
-        V[] vertices = (V[]) resultMap.values().toArray();
-        int mid = vertices.length / 2;
-
-        // Add edges between the two sets
-        for (int i = 0; i < mid; i++) {
-            for (int j = mid; j < vertices.length; j++) {
-                target.addEdge(vertices[i], vertices[j]);
+        // Add edges between every vertex in setA and every vertex in setB
+        for (V vertexA : setA) {
+            for (V vertexB : setB) {
+                // Assuming a method addEdge exists in Graph class
+                target.addEdge(vertexA, vertexB);
             }
         }
     }
-}
-
-// Assuming a simple Graph interface for demonstration purposes
-interface Graph<V, E> {
-    void addEdge(V source, V destination);
 }

@@ -6,38 +6,37 @@ import java.util.List;
 public class PathSegmentDecoder {
 
     /** 
-     * Decode the path component of a URI as path segments.
-     * @param u the URI. If the path component is an absolute path component then the leading '/' is ignored and is not considered a delimiter of a path segment.
-     * @param decode true if the path segments of the path component should be in decoded form.
-     * @return the list of path segments.
+     * 将URI的路径组件解码为路径段。
+     * @param u URI。如果路径组件是绝对路径组件，则忽略前导'/'，并且不将其视为路径段的分隔符。
+     * @param decode 如果路径组件的路径段应该以解码形式返回，则为真。
+     * @return 路径段的列表。
      */
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
         
-        // Remove leading '/' if it's an absolute path
+        // 如果是绝对路径，忽略前导'/'
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
         
-        String[] pathSegments = path.split("/");
+        String[] pathParts = path.split("/");
         
-        for (String segment : pathSegments) {
+        for (String part : pathParts) {
             if (decode) {
-                segment = decodeSegment(segment);
+                part = decodeURIComponent(part);
             }
-            segments.add(new PathSegmentImpl(segment));
+            segments.add(new PathSegmentImpl(part));
         }
         
         return segments;
     }
 
-    private static String decodeSegment(String segment) {
+    private static String decodeURIComponent(String component) {
         try {
-            return java.net.URLDecoder.decode(segment, "UTF-8");
+            return java.net.URLDecoder.decode(component, "UTF-8");
         } catch (Exception e) {
-            // Handle exception (e.g., log it)
-            return segment; // Return the original segment if decoding fails
+            return component; // 返回原始组件以防解码失败
         }
     }
 

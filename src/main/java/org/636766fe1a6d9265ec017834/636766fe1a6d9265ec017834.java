@@ -2,7 +2,7 @@ import java.util.UUID;
 
 public class SessionUtil {
     /** 
-     * Session ID. 
+     * 会话 ID。 
      */
     public static String sessionId() {
         return UUID.randomUUID().toString();

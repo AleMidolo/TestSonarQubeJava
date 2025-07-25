@@ -1,24 +1,27 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class UriMatcher {
-    private final Pattern pattern;
+public class UriMatcher {
+    
+    private final String pattern;
 
-    public UriMatcher(String template) {
-        this.pattern = Pattern.compile(template);
+    public UriMatcher(String pattern) {
+        this.pattern = pattern;
     }
 
-    /**
-     * Match a URI against the pattern.
-     * @param uri the uri to match against the template.
-     * @return the match result, otherwise null if no match occurs.
+    /** 
+     * 将URI与模式进行匹配。
+     * @param uri 要与模板匹配的URI。
+     * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
-        Matcher matcher = pattern.matcher(uri);
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(uri);
+        
         if (matcher.matches()) {
             return new MatchResult(matcher);
         }
-        return null;
+        return null; // No match found
     }
 
     public static class MatchResult {
@@ -38,12 +41,13 @@ public final class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(https?://)?(www\\.)?example\\.com(/.*)?$");
-        MatchResult result = uriMatcher.match("https://www.example.com/test");
+        UriMatcher uriMatcher = new UriMatcher("^(http|https)://.*$");
+        MatchResult result = uriMatcher.match("https://example.com");
+        
         if (result != null) {
             System.out.println("Matched! Group count: " + result.groupCount());
         } else {
-            System.out.println("No match.");
+            System.out.println("No match found.");
         }
     }
 }

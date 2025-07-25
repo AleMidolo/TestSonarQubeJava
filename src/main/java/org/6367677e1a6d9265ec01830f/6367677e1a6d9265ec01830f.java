@@ -4,26 +4,18 @@ import java.util.Date;
 public class LoggerFormatter {
 
     /**
-     * Produces a formatted string as specified by the conversion pattern.
+     * 根据转换模式生成格式化字符串。
      */
     public String format(LoggingEvent event) {
         StringBuilder formattedString = new StringBuilder();
         
-        // Example conversion pattern
-        String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c] - %m%n";
-        
-        // Replace placeholders with actual values from the LoggingEvent
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
-        String level = event.getLevel().toString();
-        String loggerName = event.getLoggerName();
-        String message = event.getMessage();
-        
-        // Build the formatted string
-        formattedString.append(pattern.replace("%d{yyyy-MM-dd HH:mm:ss}", timestamp)
-                                      .replace("%p", level)
-                                      .replace("%c", loggerName)
-                                      .replace("%m", message)
-                                      .replace("%n", System.lineSeparator()));
+        // Example of formatting: timestamp, log level, message
+        formattedString.append("[")
+                       .append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp())))
+                       .append("] ")
+                       .append(event.getLevel())
+                       .append(": ")
+                       .append(event.getMessage());
         
         return formattedString.toString();
     }
@@ -32,13 +24,11 @@ public class LoggerFormatter {
 class LoggingEvent {
     private long timestamp;
     private String level;
-    private String loggerName;
     private String message;
 
-    public LoggingEvent(long timestamp, String level, String loggerName, String message) {
+    public LoggingEvent(long timestamp, String level, String message) {
         this.timestamp = timestamp;
         this.level = level;
-        this.loggerName = loggerName;
         this.message = message;
     }
 
@@ -48,10 +38,6 @@ class LoggingEvent {
 
     public String getLevel() {
         return level;
-    }
-
-    public String getLoggerName() {
-        return loggerName;
     }
 
     public String getMessage() {

@@ -1,18 +1,18 @@
 import java.util.List;
 
 public class AppenderManager {
-    private List<Appender> attachedAppenders;
+    private List<Appender> appenders;
 
-    public AppenderManager(List<Appender> attachedAppenders) {
-        this.attachedAppenders = attachedAppenders;
+    public AppenderManager(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
     /** 
-     * Returns <code>true</code> if the specified appender is in the list of attached appenders, <code>false</code> otherwise.
+     * 如果指定的Appender在Appender列表中，则返回<code>true</code>，否则返回<code>false</code>。
      * @since 1.2 
      */
     public boolean isAttached(Appender appender) {
-        return attachedAppenders.contains(appender);
+        return appenders.contains(appender);
     }
 }
 

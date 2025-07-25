@@ -1,56 +1,56 @@
-public class StackManipulator {
-    
-    private Stack<Object> outputFrameStack = new Stack<>();
+import java.util.Stack;
 
-    /** 
-     * Pops as many abstract types from the output frame stack as described by the given descriptor.
-     * @param descriptor a type or method descriptor (in which case its argument types are popped).
+public class DescriptorPopper {
+    private Stack<Object> frameStack;
+
+    public DescriptorPopper() {
+        this.frameStack = new Stack<>();
+    }
+
+    /**
+     * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
+     * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
      */
     private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            throw new IllegalArgumentException("Descriptor cannot be null or empty");
-        }
-
-        // Determine if the descriptor is a method descriptor or a type descriptor
-        if (descriptor.startsWith("(")) {
-            // Method descriptor, pop argument types
-            int index = 1; // Start after '('
-            while (descriptor.charAt(index) != ')') {
-                char typeChar = descriptor.charAt(index);
-                int size = getTypeSize(typeChar);
-                for (int i = 0; i < size; i++) {
-                    if (!outputFrameStack.isEmpty()) {
-                        outputFrameStack.pop();
-                    }
-                }
-                index += (typeChar == 'L') ? descriptor.indexOf(';', index) - index + 1 : 1;
-            }
-        } else {
-            // Type descriptor, pop single type
-            int size = getTypeSize(descriptor.charAt(0));
-            for (int i = 0; i < size; i++) {
-                if (!outputFrameStack.isEmpty()) {
-                    outputFrameStack.pop();
-                }
+        int count = getCountFromDescriptor(descriptor);
+        for (int i = 0; i < count; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
             }
         }
     }
 
-    private int getTypeSize(char typeChar) {
-        switch (typeChar) {
-            case 'Z': // boolean
-            case 'B': // byte
-            case 'C': // char
-            case 'S': // short
-            case 'I': // int
+    private int getCountFromDescriptor(String descriptor) {
+        // 这里可以根据描述符解析出需要弹出的数量
+        // 简单示例：假设 descriptor 是一个简单的类型字符
+        switch (descriptor) {
+            case "I": // int
+            case "Z": // boolean
                 return 1;
-            case 'J': // long
-            case 'D': // double
+            case "D": // double
+            case "J": // long
                 return 2;
-            case 'L': // reference type
-                return 1;
+            case "V": // void (方法返回类型)
+                return 0;
             default:
-                throw new IllegalArgumentException("Unknown type: " + typeChar);
+                // 处理方法描述符
+                if (descriptor.startsWith("(") && descriptor.contains(")")) {
+                    String paramTypes = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
+                    return paramTypes.length(); // 每个参数类型都弹出一个
+                }
+                return 1; // 默认情况
         }
+    }
+
+    public void push(Object item) {
+        frameStack.push(item);
+    }
+
+    public static void main(String[] args) {
+        DescriptorPopper popper = new DescriptorPopper();
+        popper.push(new Object());
+        popper.push(new Object());
+        popper.pop("I"); // 弹出一个int类型
+        System.out.println("Remaining items in stack: " + popper.frameStack.size());
     }
 }

@@ -3,8 +3,8 @@ import java.lang.reflect.TypeVariable;
 
 public class TypeResolver {
 
-    /** 
-     * Resolves the first bound for the  {@code typeVariable}, returning  {@code Unknown.class} if none can be resolved.
+    /**
+     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();

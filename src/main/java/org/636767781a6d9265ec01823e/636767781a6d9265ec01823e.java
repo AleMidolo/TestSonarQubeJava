@@ -1,25 +1,27 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LogAppender {
-    private List<Client> connectedClients = new CopyOnWriteArrayList<>();
+    private List<Socket> clientSockets;
 
-    /** 
-     * Handles a log event. For this appender, that means writing the message to each connected client.  
+    public LogAppender(List<Socket> clientSockets) {
+        this.clientSockets = clientSockets;
+    }
+
+    /**
+     * 处理日志事件。对于这个appender，这意味着将消息写入每个连接的客户端。
      */
     protected void append(LoggingEvent event) {
         String message = event.getMessage();
-        for (Client client : connectedClients) {
-            client.sendMessage(message);
+        for (Socket socket : clientSockets) {
+            try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+                out.println(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public void addClient(Client client) {
-        connectedClients.add(client);
-    }
-
-    public void removeClient(Client client) {
-        connectedClients.remove(client);
     }
 }
 
@@ -32,17 +34,5 @@ class LoggingEvent {
 
     public String getMessage() {
         return message;
-    }
-}
-
-class Client {
-    private String clientId;
-
-    public Client(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public void sendMessage(String message) {
-        System.out.println("Sending to " + clientId + ": " + message);
     }
 }

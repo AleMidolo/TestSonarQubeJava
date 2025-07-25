@@ -1,18 +1,34 @@
-private void pop(final int elements) {
-    // Assuming there is a Stack to represent the output frame stack
-    Stack<Object> outputFrameStack = new Stack<>();
+public class Stack {
+    private java.util.Stack<Object> stack;
 
-    // Check if the number of elements to pop is valid
-    if (elements < 0) {
-        throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
+    public Stack() {
+        stack = new java.util.Stack<>();
     }
 
-    // Pop the specified number of elements from the stack
-    for (int i = 0; i < elements; i++) {
-        if (!outputFrameStack.isEmpty()) {
-            outputFrameStack.pop();
-        } else {
-            throw new IllegalStateException("Not enough elements in the stack to pop.");
+    /** 
+     * 从输出帧栈中弹出给定数量的抽象类型。
+     * @param elements 需弹出的抽象类型数量。
+     */
+    private void pop(final int elements) {
+        if (elements < 0) {
+            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
         }
+        for (int i = 0; i < elements; i++) {
+            if (!stack.isEmpty()) {
+                stack.pop();
+            } else {
+                break; // Stop if the stack is empty
+            }
+        }
+    }
+
+    // Method to push elements onto the stack for testing purposes
+    public void push(Object element) {
+        stack.push(element);
+    }
+
+    // Method to check the current size of the stack for testing purposes
+    public int size() {
+        return stack.size();
     }
 }

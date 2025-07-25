@@ -11,15 +11,25 @@ public class BeanMap {
     }
 
     /**
-     * Returns the values for the BeanMap.
-     * @return values for the BeanMap. The returned collection is not modifiable.
+     * 返回 BeanMap 的值。
+     * @return BeanMap 的值。返回的集合是不可修改的。
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Additional methods to add and manipulate the map can be added here
+    // Method to put values into the map for testing purposes
     public void put(String key, Object value) {
         map.put(key, value);
+    }
+    
+    // Main method for testing
+    public static void main(String[] args) {
+        BeanMap beanMap = new BeanMap();
+        beanMap.put("key1", "value1");
+        beanMap.put("key2", 2);
+        
+        Collection<Object> values = beanMap.values();
+        System.out.println(values); // Output: [value1, 2]
     }
 }

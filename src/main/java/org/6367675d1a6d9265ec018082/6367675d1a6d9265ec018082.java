@@ -34,11 +34,6 @@ class Node {
     public boolean isVirtual() {
         return isVirtual;
     }
-
-    public Node getRealNode() {
-        // Assuming the real counterpart is determined by some logic
-        return isVirtual ? new Node(name + "_real", false) : this;
-    }
 }
 
 class Graph {
@@ -50,13 +45,19 @@ class Graph {
         this.nextNode = nextNode;
     }
 
-    /** 
-     * Returns an edge connecting previously returned node with node, which will be returned next. If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
-     * @return an edge from the current node to the next node
+    /**
+     * 返回一个连接之前返回的节点与下一个将要返回的节点之间的边。如果提到的任一节点是虚拟的，则该边将与其真实对应节点相连。
+     * @return 从当前节点到下一个节点的边
      */
     public Edge edgeToNext() {
-        Node realCurrent = currentNode.getRealNode();
-        Node realNext = nextNode.getRealNode();
-        return new Edge(realCurrent, realNext);
+        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(fromNode, toNode);
+    }
+
+    private Node getRealNode(Node virtualNode) {
+        // This method should return the real corresponding node for a virtual node.
+        // For demonstration purposes, we will return a new Node with the same name but not virtual.
+        return new Node(virtualNode.getName(), false);
     }
 }

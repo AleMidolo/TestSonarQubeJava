@@ -2,20 +2,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public final class Buffer {
-    private final ByteArrayOutputStream outputStream;
+    private ByteArrayOutputStream buffer;
 
     public Buffer() {
-        this.outputStream = new ByteArrayOutputStream();
+        this.buffer = new ByteArrayOutputStream();
+    }
+
+    /**
+     * 返回一个包含所有写入缓冲区内容的单字节数组。
+     */
+    public final byte[] toByteArray() {
+        return buffer.toByteArray();
     }
 
     public void write(byte[] data) throws IOException {
-        outputStream.write(data);
+        buffer.write(data);
     }
 
-    /** 
-     * Returns a single byte array containing all the contents written to the buffer(s).
-     */
-    public final byte[] toByteArray() {
-        return outputStream.toByteArray();
+    public void close() throws IOException {
+        buffer.close();
     }
 }

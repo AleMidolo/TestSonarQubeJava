@@ -1,45 +1,49 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // initial capacity
+        this.data = new byte[10]; // Initial capacity
         this.size = 0;
     }
 
     /** 
-     * Puts an array of bytes into this byte vector. The byte vector is automatically enlarged if necessary.
-     * @param byteArrayValue an array of bytes. May be {@literal null} to put {@code byteLength} nullbytes into this byte vector.
-     * @param byteOffset     index of the first byte of byteArrayValue that must be copied.
-     * @param byteLength     number of bytes of byteArrayValue that must be copied.
-     * @return this byte vector.
+     * 将一个字节数组放入此字节向量中。如有必要，字节向量会自动扩展。
+     * @param byteArrayValue 字节数组。如果为 {@literal null}，则在字节向量中添加 {@code byteLength} 个空字节。
+     * @param byteOffset     要复制的 byteArrayValue 的第一个字节的索引。
+     * @param byteLength     要复制的 byteArrayValue 的字节数。
+     * @return 此字节向量。
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
-        }
-        if (byteArrayValue != null) {
-            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+        if (byteArrayValue == null) {
+            ensureCapacity(size + byteLength);
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+            size += byteLength;
+        } else {
+            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
             size += byteLength;
-        } else {
-            ensureCapacity(size + byteLength);
-            for (int i = 0; i < byteLength; i++) {
-                data[size++] = 0; // fill with null bytes
-            }
         }
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
-            byte[] newData = new byte[newCapacity];
-            System.arraycopy(data, 0, newData, 0, size);
-            data = newData;
+    private void ensureCapacity(int newSize) {
+        if (newSize > data.length) {
+            int newCapacity = Math.max(data.length * 2, newSize);
+            data = Arrays.copyOf(data, newCapacity);
         }
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
     }
 }

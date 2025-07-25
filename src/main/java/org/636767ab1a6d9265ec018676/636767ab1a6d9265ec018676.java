@@ -1,18 +1,18 @@
-public class HexDigitChecker {
-
+public class HexChecker {
+    
     /** 
-     * Is this a hex digit?
+     * 这是一个十六进制数字吗？
      */
     private static boolean isHex(final char c) {
-        return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
     }
 
     public static void main(String[] args) {
         // Test the isHex function
-        System.out.println(isHex('A')); // true
-        System.out.println(isHex('g')); // false
-        System.out.println(isHex('5')); // true
-        System.out.println(isHex('f')); // true
-        System.out.println(isHex('Z')); // false
+        System.out.println(isHex('1')); // true
+        System.out.println(isHex('a')); // true
+        System.out.println(isHex('G')); // false
+        System.out.println(isHex('F')); // true
+        System.out.println(isHex('9')); // true
     }
 }

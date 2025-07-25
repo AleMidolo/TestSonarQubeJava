@@ -3,25 +3,36 @@ public class FieldChecker {
     private Fields storedFields;
 
     /**
-     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
-        if (storedFields == null) {
+        if (fields == null || storedFields == null) {
             return false;
         }
-        return storedFields.equals(fields);
+        
+        // Assuming Fields has a method to get all field names
+        for (String fieldName : fields.getFieldNames()) {
+            if (!storedFields.containsField(fieldName)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    // Assuming Fields class has been defined elsewhere
-    public void setStoredFields(Fields fields) {
-        this.storedFields = fields;
-    }
-    
-    public static void main(String[] args) {
-        FieldChecker checker = new FieldChecker();
-        // Example usage
-        Fields fields = new Fields(); // Assuming Fields has a default constructor
-        checker.setStoredFields(fields);
-        System.out.println(checker.containsAllFields(fields)); // Should print true
+    // Assuming a Fields class exists with the necessary methods
+    public static class Fields {
+        private Set<String> fieldNames;
+
+        public Fields(Set<String> fieldNames) {
+            this.fieldNames = fieldNames;
+        }
+
+        public Set<String> getFieldNames() {
+            return fieldNames;
+        }
+
+        public boolean containsField(String fieldName) {
+            return fieldNames.contains(fieldName);
+        }
     }
 }

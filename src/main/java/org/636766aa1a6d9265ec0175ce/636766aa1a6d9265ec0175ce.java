@@ -1,23 +1,42 @@
-public class FrameVisitor {
-    private int currentFrame;
+public class StackMapFrameVisitor {
+    private StackMapFrame currentFrame;
+    private int nextIndex;
 
-    /**
-     * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
-     * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
-     * @param numLocal il numero di variabili locali nel frame.
-     * @param numStack il numero di elementi nello stack nel frame.
-     * @return l'indice del prossimo elemento da scrivere in questo frame.
-     */
-    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Logica per iniziare la visita del frame
-        currentFrame = offset; // Esempio di memorizzazione dell'offset nel frame corrente
-        // Potrebbe essere necessario gestire numLocal e numStack in base alla logica dell'applicazione
-        return currentFrame + numLocal + numStack; // Restituisce l'indice del prossimo elemento
+    public StackMapFrameVisitor() {
+        this.currentFrame = new StackMapFrame();
+        this.nextIndex = 0;
     }
 
-    public static void main(String[] args) {
-        FrameVisitor visitor = new FrameVisitor();
-        int nextIndex = visitor.visitFrameStart(10, 5, 3);
-        System.out.println("Next index to write in the frame: " + nextIndex);
+    /**
+     * Inicia la visita de un nuevo "stack map frame", almacenado en {@link #currentFrame}.
+     * @param offset   el desplazamiento de bytecode de la instrucción a la que corresponde el "frame".
+     * @param numLocal el número de variables locales en el "frame".
+     * @param numStack el número de elementos apilados en el "frame".
+     * @return el índice del siguiente elemento que se escribirá en este "frame".
+     */
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+        currentFrame.setOffset(offset);
+        currentFrame.setNumLocal(numLocal);
+        currentFrame.setNumStack(numStack);
+        nextIndex = 0; // Reset the index for the new frame
+        return nextIndex;
+    }
+
+    private class StackMapFrame {
+        private int offset;
+        private int numLocal;
+        private int numStack;
+
+        public void setOffset(int offset) {
+            this.offset = offset;
+        }
+
+        public void setNumLocal(int numLocal) {
+            this.numLocal = numLocal;
+        }
+
+        public void setNumStack(int numStack) {
+            this.numStack = numStack;
+        }
     }
 }

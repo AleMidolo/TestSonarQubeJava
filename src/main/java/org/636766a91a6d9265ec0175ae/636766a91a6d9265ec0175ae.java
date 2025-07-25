@@ -10,27 +10,29 @@ public class ByteVector {
     }
 
     /** 
-     * Inserisce un array di byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
-     * @param byteArrayValue un array di byte. Può essere {@literal null} per inserire {@code byteLength} byte null in questo vettore di byte.
-     * @param byteOffset     indice del primo byte di byteArrayValue che deve essere copiato.
-     * @param byteLength     numero di byte di byteArrayValue che devono essere copiati.
-     * @return questo vettore di byte.
+     * Coloca un arreglo de bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
+     * @param byteArrayValue un arreglo de bytes. Puede ser {@literal null} para colocar {@code byteLength} bytes nulos en este vector de bytes.
+     * @param byteOffset     índice del primer byte de byteArrayValue que debe ser copiado.
+     * @param byteLength     número de bytes de byteArrayValue que deben ser copiados.
+     * @return este vector de bytes.
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
         if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
+            throw new IllegalArgumentException("byteLength must be non-negative");
         }
         
-        if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+        if (byteArrayValue != null) {
+            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+            }
         }
 
         ensureCapacity(size + byteLength);
         
         if (byteArrayValue != null) {
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        } else {
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
         }
         
         size += byteLength;
@@ -42,13 +44,5 @@ public class ByteVector {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
     }
 }

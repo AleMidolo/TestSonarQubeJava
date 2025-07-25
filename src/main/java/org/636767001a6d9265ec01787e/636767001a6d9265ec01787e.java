@@ -1,26 +1,27 @@
-public class StringBuilderExample {
-    private StringBuilder builder;
+public class MyClass {
+    
+    private StringBuilder stringBuilder;
 
-    public StringBuilderExample() {
-        this.builder = new StringBuilder();
-    }
-
-    /** 
-     * <p> Ottiene la String costruita da questo builder. </p>
-     * @return la stringa costruita
-     */
-    public String toString() {
-        return builder.toString();
+    public MyClass() {
+        stringBuilder = new StringBuilder();
     }
 
     public void append(String str) {
-        builder.append(str);
+        stringBuilder.append(str);
+    }
+
+    /** 
+     * <p> Obtiene la cadena construida por este constructor. </p>
+     * @return la cadena construida
+     */
+    public String toString() {
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) {
-        StringBuilderExample example = new StringBuilderExample();
-        example.append("Hello, ");
-        example.append("World!");
-        System.out.println(example.toString()); // Output: Hello, World!
+        MyClass myClass = new MyClass();
+        myClass.append("Hello, ");
+        myClass.append("World!");
+        System.out.println(myClass.toString()); // Output: Hello, World!
     }
 }

@@ -1,9 +1,10 @@
 public class ArrayConverter {
     
     /** 
-     * <p>Converte un array di double primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>double</code>
-     * @return un array di <code>Double</code>, <code>null</code> se l'array di input è null
+     * <p>Convierte un arreglo de primitivos double a objetos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>double</code>
+     * @return un arreglo de <code>Double</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {

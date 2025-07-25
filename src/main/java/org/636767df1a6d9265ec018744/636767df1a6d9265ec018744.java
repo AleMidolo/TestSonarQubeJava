@@ -6,23 +6,28 @@ public class TimeRangeBuilder {
     private static final long FETCH_DATA_DURATION = 3600000; // Example duration in milliseconds (1 hour)
 
     /**
-     * Suddivide gli intervalli di tempo per garantire che l'orario di inizio e l'orario di fine siano inferiori a {@link #FETCH_DATA_DURATION}
+     * Divide los rangos de tiempo para asegurar que el tiempo de inicio y el tiempo de finalización sean menores que {@link #FETCH_DATA_DURATION}
      */
-    protected List<TimeRange> buildTimeRanges(long start, long end) {
+    protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        
-        while (start < end) {
-            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, rangeEnd));
-            start = rangeEnd;
+
+        if (fin - inicio > FETCH_DATA_DURATION) {
+            long currentStart = inicio;
+            while (currentStart < fin) {
+                long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, fin);
+                timeRanges.add(new TimeRange(currentStart, currentEnd));
+                currentStart = currentEnd;
+            }
+        } else {
+            timeRanges.add(new TimeRange(inicio, fin));
         }
-        
+
         return timeRanges;
     }
 
     public static class TimeRange {
-        private final long start;
-        private final long end;
+        private long start;
+        private long end;
 
         public TimeRange(long start, long end) {
             this.start = start;
@@ -43,14 +48,6 @@ public class TimeRangeBuilder {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeBuilder builder = new TimeRangeBuilder();
-        List<TimeRange> ranges = builder.buildTimeRanges(0, 10000000); // Example usage
-        for (TimeRange range : ranges) {
-            System.out.println(range);
         }
     }
 }

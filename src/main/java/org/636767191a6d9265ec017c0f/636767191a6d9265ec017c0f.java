@@ -1,24 +1,25 @@
-public class ByteArrayEnlarger {
-    
+public class ByteVectorEnlarger {
     private byte[] byteArray;
+    private int currentSize;
 
-    public ByteArrayEnlarger(int initialSize) {
+    public ByteVectorEnlarger(int initialSize) {
         this.byteArray = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
     /**
-     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
-     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'.
+     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
      */
     private void enlarge(final int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Size must be non-negative");
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than zero.");
         }
-        int currentLength = byteArray.length;
-        int newLength = currentLength + size;
-        byte[] newByteArray = new byte[newLength];
-        System.arraycopy(byteArray, 0, newByteArray, 0, currentLength);
+        int newSize = currentSize + size;
+        byte[] newByteArray = new byte[newSize];
+        System.arraycopy(byteArray, 0, newByteArray, 0, currentSize);
         byteArray = newByteArray;
+        currentSize = newSize;
     }
 
     public byte[] getByteArray() {
@@ -26,9 +27,9 @@ public class ByteArrayEnlarger {
     }
 
     public static void main(String[] args) {
-        ByteArrayEnlarger enlarger = new ByteArrayEnlarger(10);
-        System.out.println("Initial length: " + enlarger.getByteArray().length);
-        enlarger.enlarge(5);
-        System.out.println("New length after enlargement: " + enlarger.getByteArray().length);
+        ByteVectorEnlarger vector = new ByteVectorEnlarger(10);
+        System.out.println("Initial size: " + vector.getByteArray().length);
+        vector.enlarge(5);
+        System.out.println("New size after enlargement: " + vector.getByteArray().length);
     }
 }

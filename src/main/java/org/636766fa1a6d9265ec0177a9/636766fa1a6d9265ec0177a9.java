@@ -8,14 +8,12 @@ public class TypeManager {
         initializedTypes = new ArrayList<>();
     }
 
-    /**
-     * Aggiunge un tipo astratto alla lista dei tipi su cui viene invocato un costruttore nel blocco di base.
-     * @param abstractType un tipo astratto su cui viene invocato un costruttore.
+    /** 
+     * Agrega un tipo abstracto a la lista de tipos sobre los cuales se invoca un constructor en el bloque básico.
+     * @param abstractType un tipo abstracto sobre el cual se invoca un constructor.
      */
     private void addInitializedType(final int abstractType) {
-        if (!initializedTypes.contains(abstractType)) {
-            initializedTypes.add(abstractType);
-        }
+        initializedTypes.add(abstractType);
     }
 
     // Method to get the list of initialized types
@@ -27,8 +25,6 @@ public class TypeManager {
         TypeManager manager = new TypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        manager.addInitializedType(1); // This will not be added again
-
-        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
+        System.out.println(manager.getInitializedTypes());
     }
 }

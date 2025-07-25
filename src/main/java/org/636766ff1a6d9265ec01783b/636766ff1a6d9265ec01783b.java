@@ -1,7 +1,7 @@
 public class SubstringUtil {
-    
+
     /** 
-     * Ottiene una sottostringa dalla Stringa specificata evitando eccezioni. 
+     * Obtiene una subcadena de la cadena especificada evitando excepciones. 
      */
     public static String sub(String str, int start, int end) {
         if (str == null) {
@@ -20,11 +20,8 @@ public class SubstringUtil {
     }
 
     public static void main(String[] args) {
-        // Test the sub method
-        System.out.println(sub("Hello, World!", 7, 12)); // Output: World
-        System.out.println(sub("Hello, World!", -5, 5));  // Output: Hello
-        System.out.println(sub("Hello, World!", 0, 20));  // Output: Hello, World!
-        System.out.println(sub(null, 0, 5));               // Output: null
-        System.out.println(sub("Hello", 3, 2));            // Output: (empty string)
+        // Ejemplo de uso
+        String result = sub("Hola Mundo", 0, 4);
+        System.out.println(result); // Salida: Hola
     }
 }

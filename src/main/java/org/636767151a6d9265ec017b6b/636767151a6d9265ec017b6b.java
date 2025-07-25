@@ -1,12 +1,12 @@
 public class StringUtils {
 
     /** 
-     * <p>Controlla se una Stringa inizia con un prefisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
+     * <p>Verifica si una cadena comienza con un prefijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).</p>
      * @see String#startsWith(String)
-     * @param str  la Stringa da controllare, può essere null
-     * @param prefix il prefisso da trovare, può essere null
-     * @param ignoreCase indica se il confronto deve ignorare le maiuscole e minuscole (senza distinzione tra maiuscole e minuscole) o meno.
-     * @return <code>true</code> se la Stringa inizia con il prefisso o entrambi <code>null</code>
+     * @param str  la cadena a verificar, puede ser nula
+     * @param prefix el prefijo a encontrar, puede ser nulo
+     * @param ignoreCase indica si la comparación debe ignorar las mayúsculas y minúsculas (sin distinguir entre mayúsculas y minúsculas) o no.
+     * @return <code>true</code> si la cadena comienza con el prefijo o ambos son <code>null</code>
      */
     private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
         if (str == null && prefix == null) {
@@ -23,11 +23,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(startsWith("Hello World", "Hello", false)); // true
-        System.out.println(startsWith("Hello World", "hello", true));  // true
-        System.out.println(startsWith("Hello World", "World", false)); // false
-        System.out.println(startsWith(null, null, false));             // true
+        System.out.println(startsWith("HelloWorld", "Hello", false)); // true
+        System.out.println(startsWith("HelloWorld", "hello", true));  // true
+        System.out.println(startsWith("HelloWorld", "World", false)); // false
+        System.out.println(startsWith(null, null, false));            // true
         System.out.println(startsWith(null, "Hello", false));         // false
     }
 }

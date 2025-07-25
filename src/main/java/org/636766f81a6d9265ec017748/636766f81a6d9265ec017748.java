@@ -2,7 +2,7 @@ import java.util.Base64;
 
 public class Base64Decoder {
     /** 
-     * Decodifica una stringa seguendo la regola Base64. 
+     * Decodificación de una cadena a una cadena siguiendo la norma Base64. 
      */
     public static String base64Decode(final String s) {
         if (s == null || s.isEmpty()) {

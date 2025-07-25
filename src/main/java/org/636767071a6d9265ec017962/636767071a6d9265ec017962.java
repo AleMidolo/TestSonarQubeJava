@@ -1,33 +1,26 @@
 import org.apache.commons.beanutils.BeanMap;
-import java.util.Map;
 
 public class BeanMapUtil {
 
     /** 
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
-     * @param map  il BeanMap le cui proprietà devono essere inserite
+     * Coloca todas las propiedades escribibles del BeanMap dado en este BeanMap. 
+     * Las propiedades de solo lectura y de solo escritura serán ignoradas.
+     * @param map  el BeanMap cuyas propiedades se van a colocar
      */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+            throw new IllegalArgumentException("El BeanMap no puede ser nulo");
         }
 
         for (Object property : map.keySet()) {
-            if (isWritable(property, map)) {
-                Object value = map.get(property);
-                this.put(property, value);
+            if (map.getPropertyType(property).isAssignableFrom(Object.class)) {
+                // Ignorar propiedades de solo lectura
+                if (map.isWriteable(property)) {
+                    // Aquí se puede agregar la lógica para colocar la propiedad en el BeanMap actual
+                    // Por ejemplo, se podría establecer un valor predeterminado o copiar el valor de otro BeanMap
+                    // map.put(property, someValue); // someValue debe ser definido según la lógica deseada
+                }
             }
         }
-    }
-
-    private boolean isWritable(Object property, BeanMap map) {
-        // Implement logic to check if the property is writable
-        // This is a placeholder for actual writable check
-        return true; // Replace with actual check
-    }
-
-    private void put(Object property, Object value) {
-        // Implement logic to put the property and value into this BeanMap
-        // This is a placeholder for actual put logic
     }
 }

@@ -1,27 +1,27 @@
-public class TimestampManager {
-    private long lastWriteTimeStamp;
+public class OperationTracker {
+    private long lastWriteTime;
 
-    public TimestampManager() {
-        this.lastWriteTimeStamp = System.currentTimeMillis();
+    public OperationTracker() {
+        this.lastWriteTime = System.currentTimeMillis();
     }
 
-    /** 
-     * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
-     * @return questo
+    /**
+     * La última vez, en milisegundos, que ocurrió una operación de escritura.
+     * @return esto
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTimeStamp;
+        return lastWriteTime;
     }
 
     public void writeOperation() {
         // Simulate a write operation
-        lastWriteTimeStamp = System.currentTimeMillis();
+        lastWriteTime = System.currentTimeMillis();
     }
 
     public static void main(String[] args) {
-        TimestampManager manager = new TimestampManager();
-        System.out.println("Last write timestamp: " + manager.lastWriteTimeStampInMilliseconds());
-        manager.writeOperation();
-        System.out.println("Last write timestamp after write: " + manager.lastWriteTimeStampInMilliseconds());
+        OperationTracker tracker = new OperationTracker();
+        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
+        tracker.writeOperation();
+        System.out.println("Last write timestamp after write: " + tracker.lastWriteTimeStampInMilliseconds());
     }
 }

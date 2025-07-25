@@ -1,13 +1,11 @@
-import java.util.Objects;
-
 public class ByteArrayConverter {
 
     /** 
-     * <p>Converte un array di oggetti Byte in primitivi.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Byte</code>, può essere <code>null</code>
-     * @return un array di <code>byte</code>, <code>null</code> se l'array di input è nullo
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Convierte un arreglo de objetos Byte a primitivos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>Byte</code>, puede ser <code>null</code>
+     * @return un array de <code>byte</code>, <code>null</code> si el array de entrada es nulo
+     * @throws NullPointerException si el contenido del array es <code>null</code>
      */
     public static byte[] toPrimitive(final Byte[] array) {
         if (array == null) {
@@ -15,14 +13,20 @@ public class ByteArrayConverter {
         }
         byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Element at index " + i + " is null");
+            if (array[i] == null) {
+                throw new NullPointerException("El contenido del array no puede ser nulo");
+            }
+            result[i] = array[i];
         }
         return result;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Byte[] byteArray = {1, 2, 3, null}; // This will throw NullPointerException
+        // Ejemplo de uso
+        Byte[] byteArray = {1, 2, 3, 4, 5};
         byte[] primitiveArray = toPrimitive(byteArray);
+        for (byte b : primitiveArray) {
+            System.out.print(b + " ");
+        }
     }
 }

@@ -1,34 +1,33 @@
 public class DataTable {
-    // Assuming DataTable has a method to get the bucket
-    private String bucket;
+    private String bucketName;
 
-    public DataTable(String bucket) {
-        this.bucket = bucket;
+    public DataTable(String bucketName) {
+        this.bucketName = bucketName;
     }
 
-    public String getBucket() {
-        return bucket;
+    public String getBucketName() {
+        return bucketName;
     }
 }
 
 public class CompatibilityChecker {
-    private String bucket;
+    private String bucketName;
 
-    public CompatibilityChecker(String bucket) {
-        this.bucket = bucket;
+    public CompatibilityChecker(String bucketName) {
+        this.bucketName = bucketName;
     }
 
     /** 
-     * @return true se il bucket è lo stesso.
+     * @return verdadero si el bucket es el mismo.
      */
     public boolean isCompatible(DataTable dataset) {
-        return this.bucket.equals(dataset.getBucket());
+        return this.bucketName.equals(dataset.getBucketName());
     }
 
     public static void main(String[] args) {
         CompatibilityChecker checker = new CompatibilityChecker("bucket1");
         DataTable dataset = new DataTable("bucket1");
         
-        System.out.println(checker.isCompatible(dataset)); // Should print true
+        System.out.println(checker.isCompatible(dataset)); // Output: true
     }
 }

@@ -1,34 +1,30 @@
 import java.util.List;
 import java.util.Set;
 
-public class VertexMover {
+public class CubeManager {
 
     /**
-     * Sposta tutti i vertici dal bucket con etichetta {@code minLabel} al bucket con etichetta 0. 
-     * Pulisce il bucket con etichetta {@code minLabel}. Aggiorna le etichette di conseguenza.
-     * @param bucketsByLabel i buckets in cui sono memorizzati i vertici
-     * @param labels le etichette dei vertici
-     * @param minLabel il valore minimo del bucket non vuoto
+     * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. 
+     * Limpia el cubo con etiqueta {@code minLabel}. Actualiza el etiquetado en consecuencia.
+     * @param bucketsByLabel los cubos donde se almacenan los vértices
+     * @param labels las etiquetas de los vértices
+     * @param minLabel el valor mínimo del cubo no vacío
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Controlla se il bucket con etichetta minLabel è vuoto
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size() || bucketsByLabel.get(minLabel).isEmpty()) {
-            return; // Non fare nulla se il bucket è vuoto o l'etichetta è fuori range
+        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
+            throw new IllegalArgumentException("minLabel is out of bounds");
         }
 
-        // Ottieni il bucket con etichetta minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
-        
-        // Sposta i vertici dal bucket minLabel al bucket 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-        zeroLabelBucket.addAll(minLabelBucket);
-        
-        // Aggiorna le etichette dei vertici spostati
+
+        // Mover todos los vértices del cubo con etiqueta minLabel al cubo con etiqueta 0
         for (Integer vertex : minLabelBucket) {
-            labels.set(vertex, 0); // Aggiorna l'etichetta del vertice a 0
+            zeroLabelBucket.add(vertex);
+            labels.set(vertex, 0); // Actualizar la etiqueta del vértice
         }
 
-        // Pulisci il bucket con etichetta minLabel
+        // Limpiar el cubo con etiqueta minLabel
         minLabelBucket.clear();
     }
 }

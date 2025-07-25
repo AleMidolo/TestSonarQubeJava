@@ -1,16 +1,16 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-public class CustomAppender {
+public class LoggerAppender {
 
     /**
-     * Questo metodo esegue la scrittura effettiva
+     * Este método realiza la escritura
      */
     protected void subAppend(LoggingEvent event) {
-        // Implementazione della scrittura del LoggingEvent
         if (event != null) {
-            String message = event.getRenderedMessage();
-            System.out.println("Logging Event: " + message);
-            // Qui si può aggiungere ulteriore logica per gestire l'evento di logging
+            // Aquí se puede agregar la lógica para procesar el evento de registro
+            System.out.println("Logging event: " + event.getMessage());
+        } else {
+            System.out.println("No logging event provided.");
         }
     }
 }

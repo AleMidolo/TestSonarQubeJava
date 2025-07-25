@@ -1,51 +1,40 @@
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StackManipulator {
-    private Stack<String> stack;
+public class StackFrameExtractor {
 
-    public StackManipulator() {
-        this.stack = new Stack<>();
-    }
-
-    /** 
-     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
-     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
+    /**
+     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
+     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
+        List<String> extractedTypes = new ArrayList<>();
+        
+        // Simulación de la extracción de tipos a partir del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (int i = args.length() - 1; i >= 0; i--) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each argument type
+            int startIndex = descriptor.indexOf('(') + 1;
+            int endIndex = descriptor.indexOf(')');
+            String args = descriptor.substring(startIndex, endIndex);
+            
+            if (!args.isEmpty()) {
+                String[] types = args.split(",");
+                for (String type : types) {
+                    extractedTypes.add(type.trim());
                 }
             }
         } else {
-            // If it's a single type, just pop once
-            if (!stack.isEmpty()) {
-                stack.pop();
-            }
+            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
+            extractedTypes.add(descriptor);
+        }
+
+        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
+        for (String type : extractedTypes) {
+            System.out.println("Tipo extraído: " + type);
         }
     }
 
-    public void push(String type) {
-        stack.push(type);
-    }
-
-    public Stack<String> getStack() {
-        return stack;
-    }
-
     public static void main(String[] args) {
-        StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
-
-        System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
-        System.out.println("Stack after pop: " + sm.getStack());
+        StackFrameExtractor extractor = new StackFrameExtractor();
+        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
     }
 }

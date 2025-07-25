@@ -5,25 +5,31 @@ public class FieldChecker {
     private boolean isPackedField;
 
     /** 
-     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
+     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Simulazione di controllo se il campo è compresso
-        // In un caso reale, qui ci sarebbe la logica per controllare il campo
-        boolean packedFieldDetected = detectPackedField();
+        // Simulación de la verificación de un campo empaquetado
+        // Aquí se debería incluir la lógica real para determinar si el campo está empaquetado
+        // Por ejemplo, podríamos leer un byte o un conjunto de bytes de un flujo de datos
 
-        if (packedFieldDetected) {
+        // Supongamos que hemos leído un byte y verificamos si indica un campo empaquetado
+        byte fieldIndicator = readFieldIndicator(); // Método simulado para leer un indicador de campo
+
+        if (fieldIndicator == 1) { // Supongamos que 1 indica un campo empaquetado
             isPackedField = true;
-            // Logica aggiuntiva per gestire il campo compresso
         } else {
             isPackedField = false;
         }
     }
 
-    private boolean detectPackedField() {
-        // Logica per rilevare se il campo è compresso
-        // Restituisce true se il campo è compresso, false altrimenti
-        return false; // Placeholder
+    // Método simulado para leer un indicador de campo
+    private byte readFieldIndicator() {
+        // En una implementación real, esto leería de un flujo de datos
+        return 1; // Simulamos que siempre leemos un campo empaquetado
+    }
+
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

@@ -1,26 +1,40 @@
-public void removeFromTreeEdgeList() {
-    // Assuming there are two doubly linked lists for edges: leftEdgeList and rightEdgeList
-    // and that this method is part of a class that has access to these lists.
+public class DoublyLinkedList {
+    private Node head;
+    private Node tail;
 
-    // Remove this edge from the left edge list
-    if (leftEdgeList != null) {
-        if (leftEdgeList.prev != null) {
-            leftEdgeList.prev.next = leftEdgeList.next;
+    private class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
         }
-        if (leftEdgeList.next != null) {
-            leftEdgeList.next.prev = leftEdgeList.prev;
-        }
-        leftEdgeList = null; // Clear the reference
     }
 
-    // Remove this edge from the right edge list
-    if (rightEdgeList != null) {
-        if (rightEdgeList.prev != null) {
-            rightEdgeList.prev.next = rightEdgeList.next;
+    public void removeFromTreeEdgeList() {
+        if (head == null) {
+            return; // List is empty, nothing to remove
         }
-        if (rightEdgeList.next != null) {
-            rightEdgeList.next.prev = rightEdgeList.prev;
+
+        // Remove head
+        if (head.next != null) {
+            head = head.next;
+            head.prev = null;
+        } else {
+            head = null; // List becomes empty
         }
-        rightEdgeList = null; // Clear the reference
+
+        // Remove tail
+        if (tail != null) {
+            if (tail.prev != null) {
+                tail = tail.prev;
+                tail.next = null;
+            } else {
+                tail = null; // List becomes empty
+            }
+        }
     }
+
+    // Additional methods for the doubly linked list can be added here
 }

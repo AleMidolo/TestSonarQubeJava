@@ -28,13 +28,24 @@ class Box2D {
     public double getHeight() {
         return height;
     }
+
+    @Override
+    public String toString() {
+        return "Box2D{" +
+                "x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }
 
 public class BoxSplitter {
+
     /** 
-     * Divide una "Box2D" lungo l'asse x in due "Box2D" uguali.
-     * @param box la scatola da dividere
-     * @return una coppia con le due scatole risultanti
+     * Divide una caja a lo largo del eje x en dos cajas iguales.
+     * @param box la caja a dividir
+     * @return un par con las dos cajas resultantes
      */
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
         double newWidth = box.getWidth() / 2;
@@ -44,9 +55,9 @@ public class BoxSplitter {
     }
 
     public static void main(String[] args) {
-        Box2D box = new Box2D(0, 0, 4, 2);
-        Pair<Box2D, Box2D> result = splitAlongXAxis(box);
-        System.out.println("Box 1: (" + result.getKey().getX() + ", " + result.getKey().getY() + ", " + result.getKey().getWidth() + ", " + result.getKey().getHeight() + ")");
-        System.out.println("Box 2: (" + result.getValue().getX() + ", " + result.getValue().getY() + ", " + result.getValue().getWidth() + ", " + result.getValue().getHeight() + ")");
+        Box2D originalBox = new Box2D(0, 0, 4, 2);
+        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
+        System.out.println("Original Box: " + originalBox);
+        System.out.println("Split Boxes: " + splitBoxes.getKey() + ", " + splitBoxes.getValue());
     }
 }

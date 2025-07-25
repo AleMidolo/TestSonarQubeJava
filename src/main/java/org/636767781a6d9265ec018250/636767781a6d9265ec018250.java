@@ -1,23 +1,17 @@
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.Filter;
+import org.apache.log4j.spi.Filter;
 
-public class FilterDecider {
+public class LogFilter {
 
     /**
-     * Restituisce {@link Filter#NEUTRAL} se non c'è corrispondenza con la stringa.
+     * Devuelve {@link Filter#NEUTRAL} si no hay coincidencia de cadena.
      */
     public int decide(LoggingEvent event) {
-        // Implementazione della logica per decidere se c'è corrispondenza
-        // con la stringa. Se non c'è corrispondenza, restituisce Filter.NEUTRAL.
-        
-        // Esempio di logica: controlla se il messaggio dell'evento è vuoto
-        if (event.getMessage() == null || event.getMessage().isEmpty()) {
-            return Filter.NEUTRAL;
-        }
-        
-        // Altrimenti, puoi implementare altre logiche di corrispondenza qui.
-        
-        // Restituisce un valore di default se non ci sono corrispondenze
+        // Implementación de la lógica para decidir el filtro
+        // Aquí se puede agregar la lógica para verificar coincidencias de cadena
+        // Por ahora, simplemente devolvemos Filter.NEUTRAL si no hay coincidencia
+
+        // Suponiendo que no hay coincidencia de cadena
         return Filter.NEUTRAL;
     }
 }

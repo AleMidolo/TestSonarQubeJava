@@ -4,9 +4,9 @@ import java.util.stream.Collectors;
 public class CollectionConverter {
     
     /** 
-     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>. Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
-     * @param collection La collezione da convertire
-     * @return Un nuovo array di Stringhe.
+     * Convierte la colección dada en un arreglo de Strings. El arreglo devuelto no contiene entradas <code>null</code>. Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará una {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
+     * @param collection La colección a convertir
+     * @return Un nuevo arreglo de Strings.
      */
     static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {

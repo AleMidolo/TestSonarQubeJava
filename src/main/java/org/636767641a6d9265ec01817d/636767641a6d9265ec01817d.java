@@ -3,7 +3,7 @@ import java.util.Map;
 public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * Costruisce un grafo bipartito completo
+     * Construir un grafo bipartito completo
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
@@ -11,14 +11,16 @@ public class BipartiteGraphGenerator<V, E> {
             throw new IllegalArgumentException("resultMap must contain at least two vertices.");
         }
 
-        // Split the resultMap into two sets
-        V[] vertices = (V[]) resultMap.values().toArray();
-        int mid = vertices.length / 2;
+        // Get the keys from the resultMap
+        String[] keys = resultMap.keySet().toArray(new String[0]);
+        int mid = keys.length / 2;
 
-        // Add edges between the two sets
+        // Add edges between the two partitions
         for (int i = 0; i < mid; i++) {
-            for (int j = mid; j < vertices.length; j++) {
-                target.addEdge(vertices[i], vertices[j]);
+            for (int j = mid; j < keys.length; j++) {
+                V vertex1 = resultMap.get(keys[i]);
+                V vertex2 = resultMap.get(keys[j]);
+                target.addEdge(vertex1, vertex2);
             }
         }
     }
@@ -26,5 +28,5 @@ public class BipartiteGraphGenerator<V, E> {
 
 // Assuming a simple Graph interface
 interface Graph<V, E> {
-    void addEdge(V source, V destination);
+    void addEdge(V vertex1, V vertex2);
 }

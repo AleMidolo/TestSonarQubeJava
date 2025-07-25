@@ -1,11 +1,11 @@
 public class SubstringMatcher {
-
+    
     /** 
-     * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
-     * @param str la stringa originale (o StringBuilder)
-     * @param index l'indice nella stringa originale da cui iniziare a confrontare
-     * @param substring la sottostringa da confrontare all'indice specificato
-     * @return {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
+     * @param str la cadena original (o StringBuilder)
+     * @param index el índice en la cadena original para comenzar a comparar
+     * @param substring la subcadena para comparar en el índice dado
+     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null || index < 0 || index + substring.length() > str.length()) {
@@ -22,11 +22,10 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        // Test examples
-        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
-        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
-        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
-        System.out.println(substringMatch("Hello, World!", 13, "!")); // false
+        // Ejemplo de uso
+        String original = "Hello, world!";
+        String sub = "world";
+        boolean result = substringMatch(original, 7, sub);
+        System.out.println(result); // Debería imprimir true
     }
 }

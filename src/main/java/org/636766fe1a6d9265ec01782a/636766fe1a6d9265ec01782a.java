@@ -1,31 +1,31 @@
-public class ConstantPoolReader {
-    private byte[] classFileBuffer;
+public class Utf8Reader {
+    private final byte[] classFileBuffer;
 
-    public ConstantPoolReader(byte[] classFileBuffer) {
+    public Utf8Reader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
-    /**
-     * Legge un'entrata della pool di costanti CONSTANT_Utf8 in {@link #classFileBuffer}.
-     * @param constantPoolEntryIndex l'indice di un'entrata CONSTANT_Utf8 nella tabella delle costanti della classe.
-     * @param charBuffer il buffer da utilizzare per leggere la stringa. Questo buffer deve essere sufficientemente grande. Non viene ridimensionato automaticamente.
-     * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
+    /** 
+     * Lee una entrada CONSTANT_Utf8 de un grupo de constantes en {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex el índice de una entrada CONSTANT_Utf8 en la tabla de constantes de la clase.
+     * @param charBuffer el búfer que se utilizará para leer la cadena. Este búfer debe ser lo suficientemente grande. No se redimensiona automáticamente.
+     * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer is structured correctly and contains the necessary data
         int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
         int length = (classFileBuffer[offset + 1] << 8) | (classFileBuffer[offset + 2] & 0xFF);
         
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) classFileBuffer[offset + 3 + i];
+            charBuffer[i] = (char) ((classFileBuffer[offset + 3 + i] & 0xFF));
         }
         
         return new String(charBuffer, 0, length);
     }
 
     private int getConstantPoolEntryOffset(int index) {
-        // This method should return the offset of the constant pool entry based on the index
-        // For simplicity, let's assume each entry is of fixed size (this is not true in real class files)
-        return index * 4; // Placeholder for actual offset calculation
+        // This method should return the offset of the constant pool entry based on the index.
+        // The implementation of this method depends on the structure of the class file.
+        // For simplicity, let's assume each entry is of fixed size (this is not true in practice).
+        return index * 3; // Placeholder implementation
     }
 }

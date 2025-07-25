@@ -1,12 +1,12 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class EnumerationToArray {
+public class EnumerationToStringArray {
 
     /** 
-     * Copia l'Enumeration fornita in un array di Stringhe. L'Enumeration deve contenere solo elementi di tipo String.
-     * @param enumeration l'Enumeration da copiare
-     * @return l'array di Stringhe (<code>null</code> se l'Enumeration passata era <code>null</code>)
+     * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.
+     * @param enumeration El "Enumeration" a copiar
+     * @return el arreglo de Strings (<code>null</code> si El "Enumeration" pasada era <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
@@ -22,13 +22,15 @@ public class EnumerationToArray {
     }
 
     public static void main(String[] args) {
-        // Example usage
+        // Ejemplo de uso
         Vector<String> vector = new Vector<>();
-        vector.add("Hello");
-        vector.add("World");
-        Enumeration<String> enumeration = vector.elements();
+        vector.add("Elemento 1");
+        vector.add("Elemento 2");
+        vector.add("Elemento 3");
 
+        Enumeration<String> enumeration = vector.elements();
         String[] result = toStringArray(enumeration);
+
         for (String str : result) {
             System.out.println(str);
         }

@@ -1,9 +1,9 @@
 public class CacheExpiration {
 
     /** 
-     * @param timestamp        tempo attuale
-     * @param expiredThreshold rappresenta la durata tra l'ultimo aggiornamento e il momento in cui si rimuove dalla cache.
-     * @return true significa che queste metriche devono essere rimosse dalla cache.
+     * @param timestamp        del tiempo actual
+     * @param expiredThreshold representa la duración entre el último tiempo de actualización y el punto en el tiempo que se eliminará de la caché.
+     * @return true significa que esta métrica debe ser eliminada de la caché.
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
         long currentTime = System.currentTimeMillis();

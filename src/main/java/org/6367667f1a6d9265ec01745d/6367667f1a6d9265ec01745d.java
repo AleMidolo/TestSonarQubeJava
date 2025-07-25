@@ -6,16 +6,16 @@ import java.util.List;
 public class PathSegmentDecoder {
 
     /** 
-     * Decodifica il componente di percorso di un URI come segmenti di percorso.
-     * @param u l'URI. Se il componente di percorso è un componente di percorso assoluto, il '/' iniziale viene ignorato e non è considerato un delimitatore di un segmento di percorso.
-     * @param decode vero se i segmenti di percorso del componente di percorso devono essere in forma decodificata.
-     * @return la lista dei segmenti di percorso.
+     * Decodifica el componente de ruta de una URI como segmentos de ruta.
+     * @param u la URI. Si el componente de ruta es un componente de ruta absoluto, el '/' inicial se ignora y no se considera un delimitador de un segmento de ruta.
+     * @param decode verdadero si los segmentos de ruta del componente de ruta deben estar en forma decodificada.
+     * @return la lista de segmentos de ruta.
      */
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
         
-        // Ignora il primo '/' se presente
+        // Ignorar el '/' inicial si es un componente de ruta absoluto
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
@@ -31,16 +31,16 @@ public class PathSegmentDecoder {
         
         return segments;
     }
-    
+
     private static String decodeSegment(String segment) {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (Exception e) {
-            // In caso di errore nel decoding, restituisce il segmento originale
+            // En caso de error, devolver el segmento original
             return segment;
         }
     }
-    
+
     public static class PathSegmentImpl {
         private String segment;
 
@@ -55,6 +55,18 @@ public class PathSegmentDecoder {
         @Override
         public String toString() {
             return segment;
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            URI uri = new URI("http://example.com/path/to/resource");
+            List<PathSegmentImpl> segments = decodePath(uri, true);
+            for (PathSegmentImpl segment : segments) {
+                System.out.println(segment);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 }

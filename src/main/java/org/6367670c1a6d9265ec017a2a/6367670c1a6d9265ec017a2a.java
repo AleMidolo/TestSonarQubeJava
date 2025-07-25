@@ -1,34 +1,32 @@
-import java.util.Objects;
-
 public class ArrayConverter {
-
+    
     /** 
-     * <p>Converte un array di oggetti Integer in primitivi.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Integer</code>, può essere <code>null</code>
-     * @return un array di <code>int</code>, <code>null</code> se l'array di input è nullo
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Convierte un arreglo de objetos "Integer" a primitivos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>Integer</code>, puede ser <code>null</code>
+     * @return un arreglo de <code>int</code>, <code>null</code> si el arreglo de entrada es nulo
+     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
     public static int[] toPrimitive(final Integer[] array) {
         if (array == null) {
             return null;
         }
-        int[] result = new int[array.length];
+        
+        int[] primitiveArray = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Element at index " + i + " is null");
+                throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            result[i] = array[i];
+            primitiveArray[i] = array[i].intValue();
         }
-        return result;
+        return primitiveArray;
     }
 
     public static void main(String[] args) {
-        Integer[] integerArray = {1, 2, 3, null};
-        try {
-            int[] primitiveArray = toPrimitive(integerArray);
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+        Integer[] integerArray = {1, 2, 3, 4, 5};
+        int[] primitiveArray = toPrimitive(integerArray);
+        for (int num : primitiveArray) {
+            System.out.print(num + " ");
         }
     }
 }

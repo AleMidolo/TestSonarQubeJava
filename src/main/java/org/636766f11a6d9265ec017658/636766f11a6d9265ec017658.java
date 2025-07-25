@@ -1,26 +1,26 @@
-public class FileSeparatorIndex {
+public class FilePathSeparator {
 
     /** 
-     * Restituisce l'indice dell'ultimo carattere separatore di directory. <p> Questo metodo gestirà un file sia in formato Unix che Windows. Viene restituita la posizione dell'ultimo slash o backslash. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
-     * @param filename  il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
-     * @return l'indice dell'ultimo carattere separatore, oppure -1 se non esiste tale carattere
+     * Devuelve el índice del último carácter separador de directorio. <p> Este método manejará un archivo en formato Unix o Windows. Se devuelve la posición de la última barra inclinada o barra invertida. <p> La salida será la misma independientemente de la máquina en la que se ejecute el código.
+     * @param filename  el nombre del archivo en el que se busca el último separador de ruta, null devuelve -1
+     * @return el índice del último carácter separador, o -1 si no existe tal carácter
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
         
-        int lastSlashIndex = filename.lastIndexOf('/');
-        int lastBackslashIndex = filename.lastIndexOf('\\');
+        int lastUnixSeparator = filename.lastIndexOf('/');
+        int lastWindowsSeparator = filename.lastIndexOf('\\');
         
-        return Math.max(lastSlashIndex, lastBackslashIndex);
+        return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\Example\\file.txt")); // Output: 15
-        System.out.println(indexOfLastSeparator("/home/user/example/file.txt")); // Output: 16
-        System.out.println(indexOfLastSeparator("file.txt")); // Output: -1
-        System.out.println(indexOfLastSeparator(null)); // Output: -1
+        // Ejemplos de uso
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 20
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 15
+        System.out.println(indexOfLastSeparator("file.txt")); // -1
+        System.out.println(indexOfLastSeparator(null)); // -1
     }
 }

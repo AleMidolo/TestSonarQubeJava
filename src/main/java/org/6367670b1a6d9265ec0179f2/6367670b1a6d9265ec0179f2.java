@@ -9,21 +9,22 @@ public class MyMap<K, V> {
     }
 
     /** 
-     * Restituisce <code>true</code> se questa mappa contiene una mappatura per la chiave specificata.
-     * @param key  la chiave da cercare
-     * @return true se la mappa contiene la chiave
+     * Devuelve <code>true</code> si este map contiene un mapeo para la llave especificada.
+     * @param key  la llave que se va a buscar
+     * @return true si el mapa contiene la llave
      */
     @Override 
     public boolean containsKey(final Object key) {
         return map.containsKey(key);
     }
 
-    // Additional methods to add and remove entries for testing purposes
+    // Método para agregar elementos al mapa
     public void put(K key, V value) {
         map.put(key, value);
     }
 
-    public void remove(K key) {
-        map.remove(key);
+    // Método para obtener elementos del mapa
+    public V get(K key) {
+        return map.get(key);
     }
 }

@@ -1,7 +1,8 @@
 public class BooleanConverter {
 
     /** 
-     * Se <code>value</code> è "true", viene restituito <code>true</code>. Se <code>value</code> è "false", viene restituito <code>false</code>. Altrimenti, viene restituito <code>default</code>. <p> Non importa se <code>value</code> è maiuscolo o minuscolo. 
+     * Si <code>value</code> es "true", se devuelve <code>true</code>. Si <code>value</code> es "false", se devuelve <code>false</code>. De lo contrario, se devuelve <code>default</code>. 
+     * <p>El caso de <code>value</code> no es importante.  
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
@@ -18,9 +19,10 @@ public class BooleanConverter {
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean("true", false));  // Output: true
-        System.out.println(toBoolean("false", true));  // Output: false
-        System.out.println(toBoolean("other", true));   // Output: true
-        System.out.println(toBoolean(null, false));      // Output: false
+        System.out.println(toBoolean("true", false));  // true
+        System.out.println(toBoolean("false", true));  // false
+        System.out.println(toBoolean("other", true));   // true
+        System.out.println(toBoolean("other", false));  // false
+        System.out.println(toBoolean(null, true));       // true
     }
 }

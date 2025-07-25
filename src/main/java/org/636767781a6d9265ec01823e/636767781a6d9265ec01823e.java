@@ -1,30 +1,58 @@
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class CustomAppender extends AppenderSkeleton {
+class LoggingEvent {
+    private String message;
 
-    @Override
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
+class Logger {
+    private List<Client> clients = new CopyOnWriteArrayList<>();
+
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
     protected void append(LoggingEvent event) {
-        // Get the message from the logging event
-        String message = event.getRenderedMessage();
-        
-        // Here you would implement the logic to send the message to each connected client
-        // For demonstration purposes, we'll just print it to the console
-        System.out.println("Logging to clients: " + message);
-        
-        // Example: Iterate over connected clients and send the message
-        // for (Client client : connectedClients) {
-        //     client.sendMessage(message);
-        // }
+        for (Client client : clients) {
+            client.sendMessage(event.getMessage());
+        }
+    }
+}
+
+class Client {
+    private String name;
+
+    public Client(String name) {
+        this.name = name;
     }
 
-    @Override
-    public void close() {
-        // Clean up resources if necessary
+    public void sendMessage(String message) {
+        System.out.println(name + " received: " + message);
     }
+}
 
-    @Override
-    public boolean requiresLayout() {
-        return false; // Change to true if you are using a layout
+public class Main {
+    public static void main(String[] args) {
+        Logger logger = new Logger();
+        Client client1 = new Client("Client1");
+        Client client2 = new Client("Client2");
+
+        logger.addClient(client1);
+        logger.addClient(client2);
+
+        LoggingEvent event = new LoggingEvent("Hello, clients!");
+        logger.append(event);
     }
 }

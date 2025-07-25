@@ -1,19 +1,20 @@
-public class LogarithmCalculator {
+public class LogCalculator {
 
-    /** 
-     * Calcola floor($\log_2 (n)$) $+ 1$
+    /**
+     * Calcula el piso($\log_2 (n)$) $+ 1$
+     * @param n el número del cual se calculará el logaritmo
+     * @return el resultado de floor(log2(n)) + 1
      */
-    private int computeBinaryLog(int n) {
+    public static int calculateLogPlusOne(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Input must be a positive integer.");
+            throw new IllegalArgumentException("El número debe ser mayor que 0");
         }
         return (int) (Math.floor(Math.log(n) / Math.log(2))) + 1;
     }
 
     public static void main(String[] args) {
-        LogarithmCalculator calculator = new LogarithmCalculator();
-        int n = 16; // Example input
-        int result = calculator.computeBinaryLog(n);
-        System.out.println("The result of computeBinaryLog(" + n + ") is: " + result);
+        int n = 16; // Ejemplo de uso
+        int result = calculateLogPlusOne(n);
+        System.out.println("El resultado de floor(log2(" + n + ")) + 1 es: " + result);
     }
 }

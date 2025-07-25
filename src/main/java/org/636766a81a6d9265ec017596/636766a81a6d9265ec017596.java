@@ -1,36 +1,36 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
+    private byte[] bytes;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.bytes = new byte[10]; // Initial capacity
         this.size = 0;
     }
 
-    /** 
-     * Inserisce un intero in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
-     * @param intValue un intero.
-     * @return questo vettore di byte.
+    /**
+     * Inserta un entero en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
+     * @param intValue un entero.
+     * @return este vector de bytes.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // An int is 4 bytes
-        data[size++] = (byte) (intValue >> 24);
-        data[size++] = (byte) (intValue >> 16);
-        data[size++] = (byte) (intValue >> 8);
-        data[size++] = (byte) intValue;
+        ensureCapacity(size + 4); // 4 bytes for an integer
+        bytes[size++] = (byte) (intValue >> 24);
+        bytes[size++] = (byte) (intValue >> 16);
+        bytes[size++] = (byte) (intValue >> 8);
+        bytes[size++] = (byte) intValue;
         return this;
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+        if (minCapacity - bytes.length > 0) {
+            int newCapacity = Math.max(bytes.length * 2, minCapacity);
+            bytes = Arrays.copyOf(bytes, newCapacity);
         }
     }
 
-    public byte[] getData() {
-        return Arrays.copyOf(data, size);
+    public byte[] toByteArray() {
+        return Arrays.copyOf(bytes, size);
     }
 }

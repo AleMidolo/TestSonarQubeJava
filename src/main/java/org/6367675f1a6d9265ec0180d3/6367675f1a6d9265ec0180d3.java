@@ -4,17 +4,17 @@ import java.util.Map;
 public class GraphUtils {
 
     /** 
-     * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
-     * @param graph il grafo di input
-     * @param <V> il tipo di vertice del grafo
-     * @param <E> il tipo di arco del grafo
-     * @return una mappatura da grafo a grafo
+     * Calcula un automorfismo de identidad (es decir, un mapeo propio de un grafo en el que cada vértice también se mapea a sí mismo).
+     * @param graph el grafo de entrada
+     * @param <V> el tipo de vértice del grafo
+     * @param <E> el tipo de arista del grafo
+     * @return un mapeo de grafo a grafo
      */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
+    public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> grafo) {
         Map<V, V> mapping = new HashMap<>();
         
-        for (V vertex : graph.getVertices()) {
-            mapping.put(vertex, vertex);
+        for (V vertex : grafo.getVertices()) {
+            mapping.put(vertex, vertex); // Mapeo de cada vértice a sí mismo
         }
         
         return new IsomorphicGraphMapping<>(mapping);
@@ -22,10 +22,10 @@ public class GraphUtils {
 }
 
 class Graph<V, E> {
-    // Assume this class has necessary methods like getVertices()
+    // Método ficticio para obtener los vértices del grafo
     public Iterable<V> getVertices() {
-        // Implementation here
-        return null; // Placeholder
+        // Implementación ficticia
+        return null;
     }
 }
 

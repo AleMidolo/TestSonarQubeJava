@@ -3,20 +3,20 @@ import java.util.Properties;
 public class VariableSubstitutor {
 
     /** 
-     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. Quindi esegui la sostituzione delle variabili sul valore trovato.
+     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. Luego realiza la sustitución de variables en el valor encontrado.
      */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
             return null; // or throw an exception based on your needs
         }
-        
-        // Replace variables in the value
+
+        // Perform variable substitution
         for (String propKey : props.stringPropertyNames()) {
             String placeholder = "${" + propKey + "}";
             value = value.replace(placeholder, props.getProperty(propKey));
         }
-        
+
         return value;
     }
 

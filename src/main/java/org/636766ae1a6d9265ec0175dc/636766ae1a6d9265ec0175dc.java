@@ -7,8 +7,8 @@ public class HttpResponseChecker {
     }
 
     /** 
-     * Controlla se la risposta attuale è un Contenuto Parziale (codice HTTP 206)
-     * @return vero se è contenuto parziale, falso altrimenti
+     * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)
+     * @return verdadero si es contenido parcial, falso en caso contrario
      */
     public Boolean isPartialContentResponse() {
         return statusCode == 206;
@@ -16,9 +16,9 @@ public class HttpResponseChecker {
 
     public static void main(String[] args) {
         HttpResponseChecker responseChecker = new HttpResponseChecker(206);
-        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse()); // Should print true
-
-        responseChecker = new HttpResponseChecker(200);
-        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse()); // Should print false
+        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse());
+        
+        HttpResponseChecker responseChecker2 = new HttpResponseChecker(200);
+        System.out.println("Is partial content response: " + responseChecker2.isPartialContentResponse());
     }
 }

@@ -4,17 +4,16 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     /** 
-     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
+     * construir el rango de secuencias del segmento de perfiles actuales
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
-        // Example logic to create sequence ranges
-        // This should be replaced with actual logic to build the ranges
-        for (int i = 0; i < 10; i++) {
-            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
-            sequenceRanges.add(range);
-        }
+        // Aquí se puede agregar la lógica para construir los rangos de secuencias
+        // Por ejemplo, se puede simular la creación de algunos rangos de secuencias
+        sequenceRanges.add(new SequenceRange(1, 10));
+        sequenceRanges.add(new SequenceRange(11, 20));
+        sequenceRanges.add(new SequenceRange(21, 30));
         
         return sequenceRanges;
     }

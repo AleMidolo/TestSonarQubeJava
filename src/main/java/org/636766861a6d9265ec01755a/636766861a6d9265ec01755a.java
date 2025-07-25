@@ -1,19 +1,17 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UriMatcher {
+public final class UriMatcher {
     private final Pattern pattern;
 
-    public UriMatcher(String template) {
-        // Convert the template into a regex pattern
-        String regex = template.replace("{", "(?<").replace("}", ">[^/]+)");
+    public UriMatcher(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 
     /**
-     * Confronta un URI con il modello.
-     * @param uri l'uri da confrontare con il template.
-     * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
+     * Compara una URI con el patrón.
+     * @param uri la URI a comparar con la plantilla.
+     * @return el resultado de la coincidencia, o null si no hay coincidencia.
      */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
@@ -30,17 +28,22 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String getGroup(String name) {
-            return matcher.group(name);
+        public String group(int group) {
+            return matcher.group(group);
+        }
+
+        public int groupCount() {
+            return matcher.groupCount();
         }
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("/users/{userId}/posts/{postId}");
-        MatchResult result = uriMatcher.match("/users/123/posts/456");
+        UriMatcher uriMatcher = new UriMatcher("^(https?://)?(www\\.)?example\\.com(/.*)?$");
+        MatchResult result = uriMatcher.match("https://www.example.com/path");
+
         if (result != null) {
-            System.out.println("Matched userId: " + result.getGroup("userId"));
-            System.out.println("Matched postId: " + result.getGroup("postId"));
+            System.out.println("Match found!");
+            System.out.println("Group count: " + result.groupCount());
         } else {
             System.out.println("No match found.");
         }

@@ -5,9 +5,9 @@ public class ConverterRegistry {
     private Map<Class<?>, Converter> converterMap = new HashMap<>();
 
     /**
-     * Cerca e restituisce qualsiasi {@link Converter} registrato per la classe di destinazione specificata; se non esiste un Converter registrato, restituisce <code>null</code>.
-     * @param clazz Classe per la quale restituire un Converter registrato
-     * @return Il {@link Converter} registrato o <code>null</code> se non trovato
+     * Busca y devuelve cualquier {@link Converter} registrado para la clase de destino especificada; si no hay un Converter registrado, devuelve <code>null</code>.
+     * @param clazz Clase para la cual se debe devolver un Converter registrado
+     * @return El {@link Converter} registrado o <code>null</code> si no se encuentra
      */
     public Converter lookup(final Class<?> clazz) {
         return converterMap.get(clazz);
@@ -18,6 +18,6 @@ public class ConverterRegistry {
     }
 
     public interface Converter {
-        // Define converter methods here
+        // Define methods for the Converter interface
     }
 }

@@ -6,8 +6,8 @@ public class ClassFileBuffer {
     private byte[] buffer;
 
     /**
-     * Svuota e riempie il buffer di questo {@code ClassFileBuffer} con il flusso di byte fornito. 
-     * Il puntatore di lettura viene ripristinato all'inizio dell'array di byte.
+     * Limpia y llena el búfer de este {@code ClassFileBuffer} con el flujo de bytes proporcionado. 
+     * El puntero de lectura se restablece al inicio del arreglo de bytes.
      */
     public void readFrom(final InputStream in) throws IOException {
         if (in == null) {
@@ -23,7 +23,10 @@ public class ClassFileBuffer {
             byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
-        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
+        // Convert the ByteArrayOutputStream to a byte array
         buffer = byteArrayOutputStream.toByteArray();
+        byteArrayOutputStream.close();
     }
+
+    // Additional methods can be added here to manipulate or access the buffer
 }

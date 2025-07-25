@@ -3,50 +3,32 @@ import javax.servlet.http.HttpServletRequest;
 public class MeteorLookup {
 
     /**
-     * Recupera un'istanza di {@link Meteor} basata su {@link HttpServletRequest}.
+     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
-     * @return un {@link Meteor} o null se non trovato
+     * @return un {@link Meteor} o null si no se encuentra
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Simulazione di recupero di un'istanza di Meteor
+        // Simulación de la lógica para recuperar una instancia de Meteor
         String meteorId = r.getParameter("meteorId");
         
         if (meteorId == null || meteorId.isEmpty()) {
-            return null; // Se non c'è un ID meteor, restituisce null
+            return null;
         }
         
-        // Logica per cercare un'istanza di Meteor basata sull'ID
-        // Questo è solo un esempio, in un'applicazione reale si potrebbe cercare in un database
-        Meteor meteor = findMeteorById(meteorId);
-        
-        return meteor;
-    }
-
-    private static Meteor findMeteorById(String meteorId) {
-        // Simulazione di ricerca di un Meteor
-        // In un'applicazione reale, qui ci sarebbe la logica per accedere a un database o a un'altra fonte di dati
-        if ("123".equals(meteorId)) {
-            return new Meteor("123", "Meteor Example");
-        }
-        return null; // Se non trovato
+        // Aquí se debería implementar la lógica para buscar el Meteor en una base de datos o en memoria
+        // Por simplicidad, se devuelve una nueva instancia de Meteor si se encuentra un ID válido
+        return new Meteor(meteorId);
     }
 }
 
 class Meteor {
     private String id;
-    private String name;
 
-    public Meteor(String id, String name) {
+    public Meteor(String id) {
         this.id = id;
-        this.name = name;
     }
 
-    // Getters e Setters
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 }

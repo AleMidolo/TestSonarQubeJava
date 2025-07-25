@@ -1,9 +1,9 @@
-public class FileExtensionUtil {
+public class FileExtensionSeparator {
 
     /**
-     * Restituisce l'indice dell'ultimo carattere separatore dell'estensione, che è un punto. <p> Questo metodo verifica anche che non ci sia un separatore di directory dopo l'ultimo punto. Per fare ciò, utilizza {@link #indexOfLastSeparator(String)} che gestirà un file sia in formato Unix che Windows. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
-     * @param filename  il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
-     * @return l'indice dell'ultimo carattere separatore, o -1 se non esiste tale carattere
+     * Devuelve el índice del último carácter separador de extensión, que es un punto. <p> Este método también verifica que no haya un separador de directorio después del último punto. Para hacer esto, utiliza {@link #indexOfLastSeparator(String)},que manejará un archivo en formato Unix o Windows. <p> La salida será la misma independientemente de la máquina en la que se ejecute el código.
+     * @param filename  el nombre del archivo en el que encontrar el último separador de ruta, null devuelve -1
+     * @return el índice del último carácter separador, o -1 si no existe tal carácter
      */
     public static int indexOfExtension(String filename) {
         if (filename == null) {
@@ -13,7 +13,7 @@ public class FileExtensionUtil {
         int lastDotIndex = filename.lastIndexOf('.');
         int lastSeparatorIndex = indexOfLastSeparator(filename);
 
-        // Verifica che non ci sia un separatore di directory dopo l'ultimo punto
+        // Verifica que no haya un separador de directorio después del último punto
         if (lastDotIndex > lastSeparatorIndex) {
             return lastDotIndex;
         }
@@ -22,21 +22,19 @@ public class FileExtensionUtil {
     }
 
     /**
-     * Restituisce l'indice dell'ultimo separatore di percorso nel nome del file.
-     * @param filename il nome del file
-     * @return l'indice dell'ultimo separatore di percorso, o -1 se non esiste
+     * Encuentra el índice del último separador de directorio en el nombre del archivo.
+     * @param filename el nombre del archivo
+     * @return el índice del último separador de directorio, o -1 si no existe
      */
-    private static int indexOfLastSeparator(String filename) {
+    public static int indexOfLastSeparator(String filename) {
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(indexOfExtension("document.txt")); // Output: 8
-        System.out.println(indexOfExtension("folder/document.txt")); // Output: 8
-        System.out.println(indexOfExtension("folder/document")); // Output: -1
-        System.out.println(indexOfExtension(null)); // Output: -1
+        String filename = "example/directory/file.txt";
+        int index = indexOfExtension(filename);
+        System.out.println("El índice del último carácter separador de extensión es: " + index);
     }
 }

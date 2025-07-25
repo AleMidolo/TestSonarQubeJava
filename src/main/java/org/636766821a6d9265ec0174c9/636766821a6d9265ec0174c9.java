@@ -1,19 +1,20 @@
 import java.io.File;
 
 public class ClassPathRetriever {
-    /**
-     * Restituisce il percorso delle classi dell'istanza JVM corrente come un array di oggetti {@link File}.
+
+    /** 
+     * Devuelve la ruta de clases de la instancia actual de la JVM como un arreglo de objetos {@link File}.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
-        String[] paths = classPath.split(File.pathSeparator);
-        File[] classPathFiles = new File[paths.length];
+        String[] paths = classPath.split(System.getProperty("path.separator"));
+        File[] files = new File[paths.length];
         
         for (int i = 0; i < paths.length; i++) {
-            classPathFiles[i] = new File(paths[i]);
+            files[i] = new File(paths[i]);
         }
         
-        return classPathFiles;
+        return files;
     }
 
     public static void main(String[] args) {

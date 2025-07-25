@@ -1,30 +1,25 @@
 public class LineNumberManager {
     
-    private List<Integer> lineNumbers;
-
-    public LineNumberManager() {
-        lineNumbers = new ArrayList<>();
-    }
+    private int lineNumber;
 
     /** 
-     * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
-     * @param lineNumber un numero di riga sorgente (che dovrebbe essere strettamente positivo).
+     * Agrega un número de línea de origen correspondiente a esta etiqueta.
+     * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Il numero di riga deve essere strettamente positivo.");
+            throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
         }
-        lineNumbers.add(lineNumber);
+        this.lineNumber = lineNumber;
     }
 
-    public List<Integer> getLineNumbers() {
-        return new ArrayList<>(lineNumbers);
+    public int getLineNumber() {
+        return lineNumber;
     }
 
     public static void main(String[] args) {
         LineNumberManager manager = new LineNumberManager();
         manager.addLineNumber(5);
-        manager.addLineNumber(10);
-        System.out.println(manager.getLineNumbers());
+        System.out.println("Número de línea agregado: " + manager.getLineNumber());
     }
 }

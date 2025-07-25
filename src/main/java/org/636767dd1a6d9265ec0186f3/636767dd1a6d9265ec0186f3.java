@@ -1,23 +1,20 @@
 public class ColumnName {
-    
-    // Method to override the name
-    /** 
-     * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String,String)}
-     * @param oldName da sostituire.
-     * @param newName da utilizzare a livello di archiviazione.
+
+    /**
+     * Mantener el mismo reemplazo de nombre que {@link ColumnName#overrideName(String,String)}
+     * @param oldName el nombre a ser reemplazado.
+     * @param newName el nombre a utilizar en el nivel de almacenamiento.
      */
     public void overrideName(String oldName, String newName) {
-        // Logic to replace oldName with newName in the storage
-        // This is a placeholder for the actual implementation
-        System.out.println("Replacing " + oldName + " with " + newName);
-        
-        // Here you would typically update a data structure or database
-        // For example, if you had a map of column names:
-        // columnMap.put(newName, columnMap.remove(oldName));
+        // Implementación del método para reemplazar el nombre
+        // Aquí se puede agregar la lógica para manejar el reemplazo de nombres
+        System.out.println("Reemplazando el nombre: " + oldName + " con " + newName);
+        // Ejemplo de lógica de reemplazo (puede ser diferente según el contexto)
+        // Se podría almacenar en un mapa, base de datos, etc.
     }
 
     public static void main(String[] args) {
         ColumnName columnName = new ColumnName();
-        columnName.overrideName("old_column", "new_column");
+        columnName.overrideName("nombreAntiguo", "nombreNuevo");
     }
 }

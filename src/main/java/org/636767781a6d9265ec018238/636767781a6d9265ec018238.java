@@ -13,5 +13,3 @@ public class AppenderManager {
         return attachedAppenders.contains(appender);
     }
 }
-
-// Assuming Appender is a class or interface that is already defined.

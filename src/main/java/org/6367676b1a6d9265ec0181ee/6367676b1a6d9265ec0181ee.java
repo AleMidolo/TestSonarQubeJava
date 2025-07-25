@@ -21,7 +21,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         String input = "Hello World   ";
-        String result = trimTrailingWhitespace(input);
-        System.out.println("'" + result + "'");  // Output: 'Hello World'
+        String output = trimTrailingWhitespace(input);
+        System.out.println("'" + output + "'");  // Output: 'Hello World'
     }
 }

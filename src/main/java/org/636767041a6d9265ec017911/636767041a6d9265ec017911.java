@@ -8,7 +8,7 @@ public class ObjectRegistry {
      * <p> दिए गए ऑब्जेक्ट को रजिस्टर करता है। अनंत लूप से बचने के लिए रिफ्लेक्शन विधियों द्वारा उपयोग किया जाता है। </p>
      * @param value रजिस्टर करने के लिए ऑब्जेक्ट।
      */
-    static void register(Object value) {
+    public static void register(Object value) {
         if (value == null) {
             throw new IllegalArgumentException("Value cannot be null");
         }
@@ -17,5 +17,11 @@ public class ObjectRegistry {
         } else {
             throw new IllegalStateException("Object already registered");
         }
+    }
+
+    public static void main(String[] args) {
+        Object obj = new Object();
+        register(obj);
+        System.out.println("Object registered successfully.");
     }
 }

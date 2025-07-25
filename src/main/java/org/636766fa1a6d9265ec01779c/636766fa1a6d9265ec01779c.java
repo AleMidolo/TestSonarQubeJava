@@ -8,27 +8,15 @@ private String parseToken(final char[] terminators) {
     }
 
     StringBuilder token = new StringBuilder();
-    char currentChar;
-
+    int currentChar;
+    
     while (true) {
-        currentChar = readNextChar(); // Assume readNextChar() is a method that reads the next character from the input
-        if (terminatorSet.contains(currentChar)) {
+        currentChar = System.in.read();
+        if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
             break;
         }
-        token.append(currentChar);
+        token.append((char) currentChar);
     }
 
     return token.toString();
-}
-
-// Assuming a method to read the next character from the input
-private char readNextChar() {
-    // Implementation depends on the input source (e.g., from a string, file, or stream)
-    // For example, if reading from a string:
-    // if (index < inputString.length()) {
-    //     return inputString.charAt(index++);
-    // } else {
-    //     return '\0'; // End of input
-    // }
-    return '\0'; // Placeholder implementation
 }

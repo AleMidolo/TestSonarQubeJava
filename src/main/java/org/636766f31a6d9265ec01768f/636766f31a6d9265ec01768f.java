@@ -18,10 +18,11 @@ public class ArrayUtils {
     public static void main(String[] args) {
         char[] original = {'a', 'b', 'c'};
         char[] cloned = clone(original);
-        System.out.println(Arrays.toString(cloned)); // Output: [a, b, c]
+        System.out.println("Original: " + Arrays.toString(original));
+        System.out.println("Cloned: " + Arrays.toString(cloned));
 
         char[] nullArray = null;
         char[] clonedNull = clone(nullArray);
-        System.out.println(clonedNull); // Output: null
+        System.out.println("Cloned Null: " + clonedNull);
     }
 }

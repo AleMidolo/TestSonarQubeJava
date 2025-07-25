@@ -4,7 +4,7 @@ public class NonZeroCounter {
      * @param row पंक्ति
      * @return एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या
      */
-    public int nonZeros(int[] row) {
+    public static int nonZeros(int[] row) {
         int count = 0;
         for (int num : row) {
             if (num != 0) {
@@ -15,8 +15,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
         int[] row = {0, 5, 0, 3, 0, 8};
-        System.out.println("Non-zero entries: " + counter.nonZeros(row));
+        System.out.println("Non-zero entries: " + nonZeros(row));
     }
 }

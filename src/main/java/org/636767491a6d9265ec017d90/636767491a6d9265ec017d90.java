@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class ArrayReverser {
 
     /**
      * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
@@ -11,7 +11,6 @@ public class ArrayUtils {
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         Objects.requireNonNull(arr, "ऐरे null नहीं हो सकता");
-
         if (from < 0 || to >= arr.length || from > to) {
             throw new IllegalArgumentException("अमान्य सीमा मान");
         }
@@ -26,11 +25,12 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
+        // उदाहरण उपयोग
         Integer[] arr = {1, 2, 3, 4, 5};
         reverse(arr, 1, 3);
         for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // Output: 1 4 3 2 5
+        // आउटपुट: 1 4 3 2 5
     }
 }

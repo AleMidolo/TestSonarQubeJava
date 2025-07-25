@@ -19,21 +19,18 @@ public class MessageSerializer {
         MessageBufferOutput output = new OutputStreamBufferOutput(out);
         MessagePacker packer = MessagePack.newDefaultPacker(output);
 
-        // Write the size of the message first
-        byte[] serializedMessage = serializeMessage(message, schema, buffer);
-        packer.packInt(serializedMessage.length);
-
-        // Write the serialized message
-        packer.writePayload(serializedMessage);
-        packer.flush();
-
-        return serializedMessage.length;
-    }
-
-    private static <T> byte[] serializeMessage(T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
+        // Serialize the message using the schema
         schema.write(packer, message);
+
+        // Flush the packer to ensure all data is written to the output stream
         packer.flush();
-        return packer.toByteArray();
+
+        // Calculate the size of the serialized message
+        int size = packer.getTotalWrittenBytes();
+
+        // Close the packer to release resources
+        packer.close();
+
+        return size;
     }
 }

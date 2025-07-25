@@ -4,7 +4,9 @@
  */
 @Override
 public String toString() {
-    // Assuming this is part of a class that has a StringBuilder or similar
-    // Here, we assume the class has a StringBuilder named 'builder'
+    StringBuilder builder = new StringBuilder();
+    // Add your logic here to build the string
+    // Example:
+    builder.append("निर्मित स्ट्रिंग");
     return builder.toString();
 }

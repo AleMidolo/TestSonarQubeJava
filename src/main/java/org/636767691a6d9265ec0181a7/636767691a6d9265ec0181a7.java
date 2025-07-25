@@ -1,4 +1,4 @@
-public class StringUtils {
+public class StringTrimmer {
 
     /**
      * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।

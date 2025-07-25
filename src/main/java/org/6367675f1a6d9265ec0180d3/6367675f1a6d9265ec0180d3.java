@@ -12,10 +12,18 @@ public class GraphIdentity {
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
         // Create a mapping where each vertex maps to itself
-        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
+        java.util.Map<V, V> vertexMap = new java.util.HashMap<>();
         for (V vertex : graph.vertexSet()) {
-            mapping.addVertexMapping(vertex, vertex);
+            vertexMap.put(vertex, vertex);
         }
-        return mapping;
+
+        // Create a mapping where each edge maps to itself
+        java.util.Map<E, E> edgeMap = new java.util.HashMap<>();
+        for (E edge : graph.edgeSet()) {
+            edgeMap.put(edge, edge);
+        }
+
+        // Return the identity mapping
+        return new IsomorphicGraphMapping<>(vertexMap, edgeMap, graph, graph);
     }
 }

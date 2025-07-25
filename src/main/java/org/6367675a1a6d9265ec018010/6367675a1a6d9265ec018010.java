@@ -10,7 +10,7 @@ class Bucket {
     /**
      * इस बकेट को डेटा संरचना से हटा देता है।
      */
-    void removeSelf() {
+    public void removeSelf() {
         if (dataStructure != null) {
             dataStructure.remove(this);
         }

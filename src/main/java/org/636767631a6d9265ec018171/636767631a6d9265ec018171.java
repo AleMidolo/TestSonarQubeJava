@@ -23,21 +23,25 @@ public class LinkedList<E> {
             return false;
         }
 
+        if (head == null) {
+            return false;
+        }
+
+        // If the node to be unlinked is the head
         if (head == node) {
             head = head.next;
             return true;
         }
 
         ListNodeImpl<E> current = head;
-        while (current != null && current.next != node) {
+        while (current.next != null) {
+            if (current.next == node) {
+                current.next = current.next.next;
+                return true;
+            }
             current = current.next;
         }
 
-        if (current == null) {
-            return false;
-        }
-
-        current.next = node.next;
-        return true;
+        return false;
     }
 }

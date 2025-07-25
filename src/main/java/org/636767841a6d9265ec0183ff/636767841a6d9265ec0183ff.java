@@ -15,12 +15,17 @@ public class TableUtils {
         // पंक्ति का चयन करें
         table.setRowSelectionInterval(row, row);
 
-        // पंक्ति के दृश्य आयत को प्राप्त करें
-        Rectangle rect = table.getCellRect(row, 0, true);
+        // पंक्ति का आयत प्राप्त करें
+        Rectangle cellRect = table.getCellRect(row, 0, true);
 
-        // JViewport को स्क्रॉल करें ताकि चयनित पंक्ति दिखाई दे
+        // JViewport का आयत प्राप्त करें
         JViewport viewport = pane.getViewport();
-        viewport.scrollRectToVisible(rect);
+        Rectangle viewRect = viewport.getViewRect();
+
+        // यदि पंक्ति दृश्य से बाहर है, तो इसे दृश्य में लाने के लिए स्क्रॉल करें
+        if (!viewRect.contains(cellRect)) {
+            table.scrollRectToVisible(cellRect);
+        }
 
         // तालिका को पुनः पेंट करें
         table.repaint();

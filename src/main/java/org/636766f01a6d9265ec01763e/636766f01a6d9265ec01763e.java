@@ -23,18 +23,14 @@ public class CharsetTranslator {
             case "utf-16le":
                 return StandardCharsets.UTF_16LE.name();
             default:
-                // If the charset is not directly mapped, try to find it in the available charsets
-                if (Charset.isSupported(charset)) {
-                    return Charset.forName(charset).name();
-                } else {
-                    throw new IllegalArgumentException("Unsupported charset: " + charset);
-                }
+                // यदि कोई मानक मैच नहीं है, तो मूल चारसेट नाम लौटाएं
+                return Charset.forName(charset).name();
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
-        System.out.println(javaCharset("utf-8")); // Output: UTF-8
-        System.out.println(javaCharset("iso-8859-1")); // Output: ISO-8859-1
+        // उदाहरण उपयोग
+        System.out.println(javaCharset("utf-8"));  // "UTF-8"
+        System.out.println(javaCharset("iso-8859-1"));  // "ISO-8859-1"
     }
 }

@@ -8,24 +8,24 @@ public class PrimeUtil {
      * @return वह क्षमता जो हैशटेबल के लिए उपयोग की जानी चाहिए।
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-
+        
         int candidate = desiredCapacity;
-        while (true) {
-            if (isPrime(candidate)) {
-                if (desiredCapacity >= 1000) {
-                    double upperBound = desiredCapacity * 1.11;
-                    if (candidate <= upperBound) {
-                        return candidate;
-                    }
-                } else {
-                    return candidate;
-                }
-            }
+        if (candidate % 2 == 0) {
             candidate++;
         }
+        
+        while (!isPrime(candidate)) {
+            candidate += 2;
+            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
+                candidate = nextPrime((int) (desiredCapacity * 1.11));
+                break;
+            }
+        }
+        
+        return candidate;
     }
 
     private static boolean isPrime(int n) {
@@ -38,6 +38,7 @@ public class PrimeUtil {
         if (n % 2 == 0 || n % 3 == 0) {
             return false;
         }
+        
         for (int i = 5; i * i <= n; i += 6) {
             if (n % i == 0 || n % (i + 2) == 0) {
                 return false;

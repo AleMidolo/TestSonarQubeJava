@@ -1,24 +1,24 @@
-class Bucket {
-    Bucket next;
+public class Bucket {
+    private Bucket next;
+    private Bucket prev;
 
-    // Constructor and other methods can be added here
-
-    /**
-     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है।
-     * @param bucket वह बकेट है, जो इस बकेट के बाद आएगा।
-     */
-    void insertBefore(Bucket bucket) {
+    public void insertBefore(Bucket bucket) {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
 
-        // Save the next reference of the current bucket
-        Bucket temp = this.next;
+        // Set the previous of the new bucket to the previous of the current bucket
+        bucket.prev = this.prev;
 
-        // Set the next reference of the current bucket to the new bucket
-        this.next = bucket;
+        // Set the next of the new bucket to the current bucket
+        bucket.next = this;
 
-        // Set the next reference of the new bucket to the saved reference
-        bucket.next = temp;
+        // If there is a previous bucket, set its next to the new bucket
+        if (this.prev != null) {
+            this.prev.next = bucket;
+        }
+
+        // Set the previous of the current bucket to the new bucket
+        this.prev = bucket;
     }
 }

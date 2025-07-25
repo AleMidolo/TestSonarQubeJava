@@ -21,7 +21,7 @@ public class TimeRangeBuilder {
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Assuming TimeRange is a class that holds start and end times
     public static class TimeRange {
         private final long start;
         private final long end;

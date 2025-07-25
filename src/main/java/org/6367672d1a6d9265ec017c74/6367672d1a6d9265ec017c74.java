@@ -5,7 +5,7 @@ public class CustomSet {
     private Set<Integer> set;
 
     public CustomSet() {
-        set = new HashSet<>();
+        this.set = new HashSet<>();
     }
 
     /** 
@@ -13,10 +13,5 @@ public class CustomSet {
      */
     public boolean remove(int val) {
         return set.remove(val);
-    }
-
-    // Optional: Add a method to add elements to the set for testing
-    public void add(int val) {
-        set.add(val);
     }
 }

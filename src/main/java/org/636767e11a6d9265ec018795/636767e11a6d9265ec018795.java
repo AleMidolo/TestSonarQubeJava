@@ -18,9 +18,8 @@ public class BucketCompatibilityChecker {
             return false;
         }
 
-        // Get the first bucket to compare with the rest
+        // Compare all buckets to the first one
         Bucket firstBucket = buckets.get(0);
-
         for (Bucket bucket : buckets) {
             if (!Objects.equals(firstBucket, bucket)) {
                 return false;
@@ -31,11 +30,7 @@ public class BucketCompatibilityChecker {
     }
 }
 
-// Assuming Bucket and DataTable classes are defined elsewhere
-class Bucket {
-    // Bucket properties and methods
-}
-
+// Assuming DataTable and Bucket classes are defined elsewhere
 class DataTable {
     private List<Bucket> buckets;
 
@@ -45,5 +40,30 @@ class DataTable {
 
     public List<Bucket> getBuckets() {
         return buckets;
+    }
+}
+
+class Bucket {
+    // Define the properties and methods of a Bucket
+    // For example:
+    private String name;
+    private int size;
+
+    public Bucket(String name, int size) {
+        this.name = name;
+        this.size = size;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bucket bucket = (Bucket) o;
+        return size == bucket.size && Objects.equals(name, bucket.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, size);
     }
 }

@@ -19,9 +19,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
-        System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", "WORLD")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "Hello")); // true
         System.out.println(startsWithIgnoreCase(null, "prefix")); // false
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
+        System.out.println(startsWithIgnoreCase("string", null)); // false
     }
 }

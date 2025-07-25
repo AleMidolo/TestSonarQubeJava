@@ -15,7 +15,7 @@ public class MappingDiffer {
 
         for (Map.Entry<String, FieldMapping> entry : mappings.getFieldMappings().entrySet()) {
             String fieldName = entry.getKey();
-            if (!currentMappings.getFieldMappings().containsKey(fieldName)) {
+            if (!currentMappings.hasField(fieldName)) {
                 diffMappings.addFieldMapping(fieldName, entry.getValue());
             }
         }
@@ -33,16 +33,20 @@ public class MappingDiffer {
     public static class Mappings {
         private Map<String, FieldMapping> fieldMappings = new HashMap<>();
 
-        public Map<String, FieldMapping> getFieldMappings() {
-            return fieldMappings;
-        }
-
         public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
             fieldMappings.put(fieldName, fieldMapping);
+        }
+
+        public boolean hasField(String fieldName) {
+            return fieldMappings.containsKey(fieldName);
+        }
+
+        public Map<String, FieldMapping> getFieldMappings() {
+            return fieldMappings;
         }
     }
 
     public static class FieldMapping {
-        // Define the properties of FieldMapping as needed
+        // Define the properties of a field mapping here
     }
 }

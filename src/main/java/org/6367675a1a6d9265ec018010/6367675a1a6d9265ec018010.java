@@ -13,13 +13,20 @@ public class Bucket {
         // Logic to remove this bucket from its data structure
         // This is a placeholder for the actual removal logic
         // For example, if this bucket is part of a larger collection, 
-        // you would need to remove it from that collection.
-        System.out.println("Removing this bucket from the data structure.");
-        // Actual removal logic would go here
+        // we would need a reference to that collection to remove it.
+        // Assuming we have a static reference to a collection of buckets
+        BucketCollection.removeBucket(this);
     }
-    
-    public static void main(String[] args) {
-        Bucket bucket = new Bucket();
-        bucket.removeSelf();
+}
+
+class BucketCollection {
+    private static List<Bucket> buckets = new ArrayList<>();
+
+    public static void removeBucket(Bucket bucket) {
+        buckets.remove(bucket);
+    }
+
+    public static void addBucket(Bucket bucket) {
+        buckets.add(bucket);
     }
 }

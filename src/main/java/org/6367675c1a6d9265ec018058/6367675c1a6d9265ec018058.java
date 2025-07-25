@@ -9,20 +9,17 @@ public class UniqueStringSupplier {
      */
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        return new Supplier<String>() {
-            private int current = start;
+        final int[] current = {start}; // Using an array to allow modification in the lambda
 
-            @Override
-            public String get() {
-                return String.valueOf(current++);
-            }
-        };
+        return () -> String.valueOf(current[0]++);
     }
 
     public static void main(String[] args) {
         Supplier<String> stringSupplier = createStringSupplier(1);
-        System.out.println(stringSupplier.get()); // 1
-        System.out.println(stringSupplier.get()); // 2
-        System.out.println(stringSupplier.get()); // 3
+        
+        // Testing the supplier
+        System.out.println(stringSupplier.get()); // Output: 1
+        System.out.println(stringSupplier.get()); // Output: 2
+        System.out.println(stringSupplier.get()); // Output: 3
     }
 }

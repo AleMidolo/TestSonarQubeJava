@@ -11,7 +11,7 @@ public class ConfigurationDirectoryCreator {
         String directoryPath;
 
         if (osName.contains("windows") && osName.contains("2000")) {
-            directoryPath = System.getenv("USERPROFILE") + "\\Documents and Settings\\lf5";
+            directoryPath = System.getProperty("user.home") + "\\Documents and Settings\\lf5";
         } else {
             directoryPath = userHome + File.separator + "lf5";
         }
@@ -20,12 +20,12 @@ public class ConfigurationDirectoryCreator {
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Configuration directory created at: " + directoryPath);
+                System.out.println("Directory created: " + directoryPath);
             } else {
-                System.out.println("Failed to create configuration directory at: " + directoryPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("Configuration directory already exists at: " + directoryPath);
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

@@ -24,6 +24,6 @@ public class StringManipulator {
         String original = "Hello World!";
         String charsToRemove = "lo";
         String modified = deleteAny(original, charsToRemove);
-        System.out.println(modified); // Output: "He Wr!"
+        System.out.println(modified); // Output: He Wrld!
     }
 }

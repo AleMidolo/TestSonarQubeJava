@@ -16,13 +16,16 @@ public class FileReverser {
 
         Arrays.sort(files, (f1, f2) -> f2.getName().compareTo(f1.getName())); // Sort files in reverse order
 
-        for (File file : files) {
-            try {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                Files.write(new File("output.txt").toPath(), content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                e.printStackTrace();
+        File outputFile = new File("output.txt"); // Output file
+        try {
+            for (File file : files) {
+                if (file.exists() && file.isFile()) {
+                    byte[] content = Files.readAllBytes(file.toPath());
+                    Files.write(outputFile.toPath(), content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

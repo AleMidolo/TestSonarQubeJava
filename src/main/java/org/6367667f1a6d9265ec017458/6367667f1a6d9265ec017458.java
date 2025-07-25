@@ -1,10 +1,10 @@
 import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
-public class AtmosphereHandlerManager {
+public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
-    public AtmosphereHandlerManager() {
+    public AtmosphereManager() {
         atmosphereFramework = new AtmosphereFramework();
     }
 

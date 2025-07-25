@@ -17,7 +17,7 @@ public class BucketRelabeler {
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
 
-        // Transfer vertices from minLabel bucket to zeroLabel bucket
+        // Move vertices from minLabel bucket to zero label bucket
         for (Integer vertex : minLabelBucket) {
             zeroLabelBucket.add(vertex);
             labels.set(vertex, 0); // Update the label of the vertex to 0

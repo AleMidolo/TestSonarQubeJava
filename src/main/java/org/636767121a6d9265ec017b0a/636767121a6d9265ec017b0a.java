@@ -4,14 +4,14 @@ private int parseEndOfLine(String headerPart, int end) {
         throw new IllegalArgumentException("End index is out of bounds");
     }
 
-    // Find the end of the line by searching for the line terminators
-    int lineEnd = headerPart.indexOf("\r\n", end);
-    if (lineEnd == -1) {
-        lineEnd = headerPart.indexOf('\n', end);
+    // Find the end of the line by searching for the line break characters
+    int lineEndIndex = headerPart.indexOf("\r\n", end);
+    
+    // If no line break is found, return the length of the headerPart
+    if (lineEndIndex == -1) {
+        return headerPart.length();
     }
-    if (lineEnd == -1) {
-        lineEnd = headerPart.length(); // If no line end found, return the length of the string
-    }
-
-    return lineEnd;
+    
+    // Return the index of the end of the line
+    return lineEndIndex + 2; // +2 to include the length of "\r\n"
 }

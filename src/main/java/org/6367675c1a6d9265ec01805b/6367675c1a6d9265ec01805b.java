@@ -1,19 +1,53 @@
-// Assuming the class has access to the doubly linked list of edges
-// and the edge to be removed is the current edge (this).
+// Assuming the class has a reference to the tree edge lists and the edge to be removed
+public class Tree {
+    private Node head; // Head of the doubly linked list
+    private Node tail; // Tail of the doubly linked list
 
-public class Edge {
-    Edge prev;
-    Edge next;
+    // Node class representing an edge in the tree
+    private class Node {
+        int data;
+        Node prev;
+        Node next;
 
-    public void removeFromTreeEdgeList() {
-        if (this.prev != null) {
-            this.prev.next = this.next;
+        Node(int data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
         }
-        if (this.next != null) {
-            this.next.prev = this.prev;
+    }
+
+    // Method to remove an edge from the doubly linked list
+    public void removeFromTreeEdgeList(Node edgeToRemove) {
+        if (edgeToRemove == null) {
+            return;
         }
-        // Optionally, you can set this.prev and this.next to null to help with garbage collection
-        this.prev = null;
-        this.next = null;
+
+        // If the edge to remove is the head
+        if (edgeToRemove == head) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null; // If the list becomes empty
+            }
+        }
+        // If the edge to remove is the tail
+        else if (edgeToRemove == tail) {
+            tail = tail.prev;
+            if (tail != null) {
+                tail.next = null;
+            } else {
+                head = null; // If the list becomes empty
+            }
+        }
+        // If the edge to remove is in the middle
+        else {
+            edgeToRemove.prev.next = edgeToRemove.next;
+            edgeToRemove.next.prev = edgeToRemove.prev;
+        }
+
+        // Clear the references of the removed edge
+        edgeToRemove.prev = null;
+        edgeToRemove.next = null;
     }
 }

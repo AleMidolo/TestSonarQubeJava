@@ -1,38 +1,29 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public final class ByteBuffer {
+public final class BufferToByteArray {
 
     private ByteArrayOutputStream buffer;
 
-    public ByteBuffer() {
+    public BufferToByteArray() {
         this.buffer = new ByteArrayOutputStream();
     }
 
-    public void write(byte[] data) {
-        try {
-            buffer.write(data);
-        } catch (IOException e) {
-            // Handle the exception, e.g., log it or rethrow as a runtime exception
-            throw new RuntimeException("Failed to write data to buffer", e);
-        }
+    public void write(byte[] data) throws IOException {
+        buffer.write(data);
     }
 
     /**
-     * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
+     * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
      */
     public final byte[] toByteArray() {
         return buffer.toByteArray();
     }
 
-    public static void main(String[] args) {
-        ByteBuffer byteBuffer = new ByteBuffer();
-        byteBuffer.write(new byte[]{1, 2, 3});
-        byteBuffer.write(new byte[]{4, 5, 6});
-
-        byte[] result = byteBuffer.toByteArray();
-        for (byte b : result) {
-            System.out.print(b + " ");
-        }
+    public static void main(String[] args) throws IOException {
+        BufferToByteArray buffer = new BufferToByteArray();
+        buffer.write("Hello, World!".getBytes());
+        byte[] byteArray = buffer.toByteArray();
+        System.out.println(new String(byteArray)); // Output: Hello, World!
     }
 }

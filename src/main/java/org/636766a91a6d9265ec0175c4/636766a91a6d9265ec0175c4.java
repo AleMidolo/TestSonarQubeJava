@@ -1,75 +1,46 @@
 import java.util.Stack;
 
-public class FrameStackProcessor {
+public class FrameStack {
+    private Stack<Object> stack;
 
-    private Stack<String> frameStack;
-
-    public FrameStackProcessor() {
-        this.frameStack = new Stack<>();
+    public FrameStack() {
+        this.stack = new Stack<>();
     }
 
     /**
-     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
-     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            throw new IllegalArgumentException("Descriptor cannot be null or empty");
-        }
+        // Parse the descriptor to determine how many types to pop
+        int count = countTypesInDescriptor(descriptor);
 
-        // Determine the number of types to pop based on the descriptor
-        int typesToPop = 0;
-        if (descriptor.startsWith("(")) {
-            // Method descriptor: count the number of argument types
-            typesToPop = countArgumentTypes(descriptor);
-        } else {
-            // Type descriptor: pop one type
-            typesToPop = 1;
-        }
-
-        // Pop the types from the stack
-        for (int i = 0; i < typesToPop; i++) {
-            if (frameStack.isEmpty()) {
-                throw new IllegalStateException("Frame stack is empty");
+        // Pop the required number of types from the stack
+        for (int i = 0; i < count; i++) {
+            if (!stack.isEmpty()) {
+                stack.pop();
+            } else {
+                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
             }
-            frameStack.pop();
         }
     }
 
     /**
-     * Counts the number of argument types in a method descriptor.
-     * @param descriptor the method descriptor
-     * @return the number of argument types
+     * Helper method to count the number of types in the descriptor.
+     * @param descriptor The descriptor string.
+     * @return The number of types to pop.
      */
-    private int countArgumentTypes(String descriptor) {
-        int count = 0;
-        int index = 1; // Start after the '('
-        while (descriptor.charAt(index) != ')') {
-            char c = descriptor.charAt(index);
-            if (c == 'L') {
-                // Skip to the end of the class name
-                index = descriptor.indexOf(';', index) + 1;
-            } else if (c == '[') {
-                // Skip array brackets
-                index++;
-            } else {
-                // Primitive type
-                index++;
-            }
-            count++;
-        }
-        return count;
+    private int countTypesInDescriptor(String descriptor) {
+        // This is a simplified example; actual implementation depends on descriptor format
+        // For example, if descriptor is "Ljava/lang/String;I", it represents two types: String and int
+        return descriptor.split(";").length;
     }
 
     // Example usage
     public static void main(String[] args) {
-        FrameStackProcessor processor = new FrameStackProcessor();
-        processor.frameStack.push("int");
-        processor.frameStack.push("java.lang.String");
-        processor.frameStack.push("double");
-
-        processor.pop("(Ljava/lang/String;D)V");
-
-        System.out.println(processor.frameStack); // Should print: [int]
+        FrameStack frameStack = new FrameStack();
+        frameStack.stack.push("String");
+        frameStack.stack.push(42);
+        frameStack.pop("Ljava/lang/String;I");
     }
 }

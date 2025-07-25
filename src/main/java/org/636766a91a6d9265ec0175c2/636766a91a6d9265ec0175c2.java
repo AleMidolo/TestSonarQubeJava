@@ -1,20 +1,20 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Integer> stack;
+    private Stack<Integer> outputFrameStack;
 
     public FrameStack() {
-        stack = new Stack<>();
+        outputFrameStack = new Stack<>();
     }
 
     /**
-     * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
-     * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
+     * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
+     * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
      */
     private int pop() {
-        if (stack.isEmpty()) {
-            throw new IllegalStateException("La pila está vacía.");
+        if (outputFrameStack.isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
         }
-        return stack.pop();
+        return outputFrameStack.pop();
     }
 }

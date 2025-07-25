@@ -1,19 +1,23 @@
 import java.util.Collection;
+import java.util.Iterator;
 
 public class CollectionUtils {
 
     /**
-     * Verifica si la colección dada contiene la instancia del elemento proporcionado. <p>Exige que la instancia dada esté presente, en lugar de devolver <code>true</code> para un elemento igual también.
-     * @param collection la colección a verificar
-     * @param element el elemento a buscar
-     * @return <code>true</code> si se encuentra, <code>false</code> en caso contrario
+     * जांचें कि दी गई संग्रह में दी गई तत्व उदाहरण मौजूद है या नहीं। <p>सुनिश्चित करता है कि दी गई उदाहरण मौजूद है, न कि समान तत्व के लिए <code>true</code> लौटाने के लिए।
+     * @param collection जांचने के लिए संग्रह
+     * @param element खोजने के लिए तत्व
+     * @return <code>true</code> यदि पाया गया, <code>false</code> अन्यथा
      */
     public static boolean containsInstance(Collection collection, Object element) {
         if (collection == null || element == null) {
             return false;
         }
-        for (Object item : collection) {
-            if (item == element) {
+        
+        Iterator iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            Object current = iterator.next();
+            if (current == element) {
                 return true;
             }
         }

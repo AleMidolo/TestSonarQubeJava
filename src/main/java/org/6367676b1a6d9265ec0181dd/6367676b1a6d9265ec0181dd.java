@@ -1,10 +1,10 @@
 public class StringUtils {
 
     /**
-     * Devuelve el número de ocurrencias de la subcadena {@code sub} en la cadena {@code str}.
-     * @param str cadena en la que buscar. Devuelve 0 si es nula.
-     * @param sub cadena a buscar. Devuelve 0 si es nula.
-     * @return el número de ocurrencias de la subcadena {@code sub} en la cadena {@code str}.
+     * स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या लौटाता है।
+     * @param str वह स्ट्रिंग जिसमें खोज करनी है। यदि यह null है तो 0 लौटाएं।
+     * @param sub वह स्ट्रिंग जिसे खोजा जाना है। यदि यह null है तो 0 लौटाएं।
+     * @return स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या।
      */
     public static int countOccurrencesOf(String str, String sub) {
         if (str == null || sub == null || sub.isEmpty()) {
@@ -24,7 +24,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         String str = "ababababab";
-        String sub = "aba";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
+        String sub = "ab";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 5
     }
 }

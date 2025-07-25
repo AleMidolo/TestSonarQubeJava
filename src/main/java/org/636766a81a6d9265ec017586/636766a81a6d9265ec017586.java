@@ -1,30 +1,37 @@
 import java.util.Stack;
 
-public class OutputFrame {
-    private Stack<AbstractType> outputFrame;
+public class AbstractTypeHandler {
+    private Stack<Object> outputFrameStack;
 
-    public OutputFrame() {
-        this.outputFrame = new Stack<>();
+    public AbstractTypeHandler() {
+        this.outputFrameStack = new Stack<>();
     }
 
-    /**
-     * Elimina el número dado de tipos abstractos del "output frame" de salida.
-     * @param elements el número de tipos abstractos que deben ser eliminados.
+    /** 
+     * दिए गए संख्या के अमूर्त प्रकारों को आउटपुट फ्रेम स्टैक से पॉप करता है।
+     * @param elements वह संख्या है जो अमूर्त प्रकारों को पॉप करना है।
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
+            throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
         }
-        if (elements > outputFrame.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el output frame para eliminar.");
+        if (outputFrameStack.size() < elements) {
+            throw new IllegalStateException("Not enough elements in the stack to pop.");
         }
         for (int i = 0; i < elements; i++) {
-            outputFrame.pop();
+            outputFrameStack.pop();
         }
     }
 
-    // Clase de ejemplo para AbstractType
-    private static class AbstractType {
-        // Implementación de la clase AbstractType
+    // Example usage
+    public static void main(String[] args) {
+        AbstractTypeHandler handler = new AbstractTypeHandler();
+        handler.outputFrameStack.push("Type1");
+        handler.outputFrameStack.push("Type2");
+        handler.outputFrameStack.push("Type3");
+
+        System.out.println("Before pop: " + handler.outputFrameStack);
+        handler.pop(2);
+        System.out.println("After pop: " + handler.outputFrameStack);
     }
 }

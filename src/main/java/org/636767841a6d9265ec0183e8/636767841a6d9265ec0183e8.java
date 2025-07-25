@@ -1,45 +1,24 @@
 import org.apache.log4j.spi.LoggingEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventBuffer {
-    private LoggingEvent[] buffer;
-    private int size;
-    private int capacity;
+    private List<LoggingEvent> buffer;
 
-    public EventBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new LoggingEvent[capacity];
-        this.size = 0;
+    public EventBuffer() {
+        this.buffer = new ArrayList<>();
     }
 
-    /**
-     * Agrega un <code>evento</code> como el último evento en el búfer.
+    /** 
+     * एक <code>event</code> को बफर में अंतिम घटना के रूप में जोड़ें।
      */
     public void add(LoggingEvent event) {
-        if (size < capacity) {
-            buffer[size] = event;
-            size++;
-        } else {
-            // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
-            // 1. Ignorar el nuevo evento
-            // 2. Sobrescribir el evento más antiguo
-            // 3. Expandir el búfer dinámicamente
-            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo
-            System.arraycopy(buffer, 1, buffer, 0, size - 1);
-            buffer[size - 1] = event;
+        if (event != null) {
+            buffer.add(event);
         }
     }
 
-    // Método para obtener el tamaño actual del búfer
-    public int size() {
-        return size;
-    }
-
-    // Método para obtener el evento en una posición específica
-    public LoggingEvent get(int index) {
-        if (index >= 0 && index < size) {
-            return buffer[index];
-        } else {
-            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
-        }
+    public List<LoggingEvent> getBuffer() {
+        return buffer;
     }
 }

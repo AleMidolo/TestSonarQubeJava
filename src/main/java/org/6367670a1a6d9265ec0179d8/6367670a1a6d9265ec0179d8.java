@@ -4,31 +4,32 @@ import java.io.OutputStream;
 public class CustomOutputStream extends OutputStream {
 
     @Override
-    public void write(int b) throws IOException {
-        // Implementation for writing a single byte
-    }
-
-    /**
-     * @see OutputStream#write(byte[])
-     */
-    @Override
     public void write(final byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException("Byte array is null");
         }
-        write(b, 0, b.length);
+        // Implement the logic to write the byte array to the output stream
+        // For example, writing to a file or another output stream
+        // This is a placeholder implementation
+        for (byte value : b) {
+            write(value);
+        }
     }
 
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException("Byte array is null");
-        }
-        if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException("Invalid offset or length");
-        }
-        for (int i = 0; i < len; i++) {
-            write(b[off + i]);
+    public void write(int b) throws IOException {
+        // Implement the logic to write a single byte to the output stream
+        // This is a placeholder implementation
+        System.out.write(b);
+    }
+
+    public static void main(String[] args) {
+        try {
+            CustomOutputStream stream = new CustomOutputStream();
+            byte[] data = "Hello, World!".getBytes();
+            stream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

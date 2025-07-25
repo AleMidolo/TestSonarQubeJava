@@ -1,36 +1,31 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShardingKeyChecker {
 
+    private Map<String, Integer> shardingKeySequence = new HashMap<>();
+
     /**
-     * Verifica si los índices de la clave de "sharding" son continuos.
-     * 
-     * @param modelName nombre del modelo de la entidad
-     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
+     * @param modelName एंटिटी का मॉडल नाम
+     * @throws IllegalStateException यदि शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं
      */
     private void check(String modelName) throws IllegalStateException {
-        // Expresión regular para encontrar los índices de sharding en el nombre del modelo
-        Pattern pattern = Pattern.compile("_\\d+");
-        Matcher matcher = pattern.matcher(modelName);
-
-        int previousIndex = -1;
-        while (matcher.find()) {
-            String match = matcher.group();
-            int currentIndex = Integer.parseInt(match.substring(1)); // Elimina el "_" y convierte a entero
-
-            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
-                throw new IllegalStateException("Los índices de la clave de sharding no son continuos.");
+        if (!shardingKeySequence.containsKey(modelName)) {
+            shardingKeySequence.put(modelName, 0);
+        } else {
+            int currentSequence = shardingKeySequence.get(modelName);
+            if (currentSequence != shardingKeySequence.size() - 1) {
+                throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं");
             }
-
-            previousIndex = currentIndex;
         }
     }
 
     public static void main(String[] args) {
         ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("model_0_1_2_3"); // Ejemplo de uso
+            checker.check("Model1");
+            checker.check("Model2");
+            checker.check("Model3");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

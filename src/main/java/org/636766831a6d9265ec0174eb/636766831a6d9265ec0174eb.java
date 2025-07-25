@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 
-public class FileReverser {
+public class FileMerger {
 
     /** 
      * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
@@ -16,18 +16,14 @@ public class FileReverser {
 
         Arrays.sort(files, (f1, f2) -> f2.getName().compareTo(f1.getName())); // Sort files in reverse order
 
-        StringBuilder contentBuilder = new StringBuilder();
-        for (File file : files) {
-            try {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                contentBuilder.append(content).append(System.lineSeparator());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
+        File outputFile = new File("merged_output.txt");
         try {
-            Files.write(new File("output.txt").toPath(), contentBuilder.toString().getBytes(), StandardOpenOption.CREATE);
+            for (File file : files) {
+                if (file.exists() && file.isFile()) {
+                    byte[] content = Files.readAllBytes(file.toPath());
+                    Files.write(outputFile.toPath(), content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class SequenceRangeBuilder {
 
-    /**
+    /** 
      * वर्तमान प्रोफाइल खंड स्नैपशॉट खोज अनुक्रम सीमा बनाएं
      */
     public List<SequenceRange> buildSequenceRanges() {
@@ -12,8 +12,7 @@ public class SequenceRangeBuilder {
         // Example logic to create sequence ranges
         // This is just a placeholder; actual logic will depend on specific requirements
         for (int i = 0; i < 10; i++) {
-            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
-            sequenceRanges.add(range);
+            sequenceRanges.add(new SequenceRange(i * 10, (i + 1) * 10 - 1));
         }
         
         return sequenceRanges;

@@ -33,7 +33,6 @@ public class StackPopper {
         stackPopper.push("AbstractType2");
         
         stackPopper.pop("SomeDescriptor");
-        stackPopper.pop("SomeDescriptor");
-        stackPopper.pop("SomeDescriptor");
+        stackPopper.pop("AnotherDescriptor");
     }
 }

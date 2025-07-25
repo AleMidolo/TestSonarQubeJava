@@ -5,15 +5,24 @@ public class ParameterSeparatorChecker {
      */
     private static boolean isParameterSeparator(final char c) {
         // Define the valid parameter separators
-        return c == ',' || c == ';' || c == '&' || c == '|';
+        char[] separators = {',', ';', '&', '|', ' '};
+
+        // Check if the character is a valid separator
+        for (char separator : separators) {
+            if (c == separator) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
         // Test the isParameterSeparator method
-        char testChar1 = ',';
-        char testChar2 = 'a';
-        
-        System.out.println(isParameterSeparator(testChar1)); // true
-        System.out.println(isParameterSeparator(testChar2)); // false
+        System.out.println(isParameterSeparator(',')); // true
+        System.out.println(isParameterSeparator(';')); // true
+        System.out.println(isParameterSeparator('&')); // true
+        System.out.println(isParameterSeparator('|')); // true
+        System.out.println(isParameterSeparator(' ')); // true
+        System.out.println(isParameterSeparator('a')); // false
     }
 }

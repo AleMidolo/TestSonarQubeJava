@@ -33,8 +33,8 @@ public class FileMerger {
             }
         }
 
-        // The outputStream now contains the merged content in reverse order
-        byte[] mergedContent = outputStream.toByteArray();
-        // You can now use mergedContent as needed
+        // The outputStream now contains the combined data in reverse order
+        byte[] combinedData = outputStream.toByteArray();
+        // Further processing can be done with combinedData if needed
     }
 }

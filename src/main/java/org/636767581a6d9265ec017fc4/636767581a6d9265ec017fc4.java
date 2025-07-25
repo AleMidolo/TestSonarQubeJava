@@ -1,5 +1,5 @@
 public class FactorialCalculator {
-    
+
     /** 
      * $n$ का फैक्टरियल निकालें।
      * @param n इनपुट संख्या
@@ -7,7 +7,7 @@ public class FactorialCalculator {
      */
     public static long factorial(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Input must be a non-negative integer.");
+            throw new IllegalArgumentException("Negative numbers do not have factorials.");
         }
         long result = 1;
         for (int i = 2; i <= n; i++) {

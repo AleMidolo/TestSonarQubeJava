@@ -12,14 +12,14 @@ public class ClassFinder {
         }
         return Class.forName(className);
     }
-
+    
     public static void main(String[] args) {
         ClassFinder finder = new ClassFinder();
         try {
             Class<?> clazz = finder.findClass("java.lang.String");
             System.out.println("Class found: " + clazz.getName());
         } catch (ClassNotFoundException e) {
-            System.err.println("Class not found: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

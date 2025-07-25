@@ -19,7 +19,7 @@ public class ArrayToListConverter {
         System.out.println(list); // Output: [Hello, World]
 
         String[] nullArray = null;
-        List<String> emptyList = asList(nullArray);
-        System.out.println(emptyList); // Output: []
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // Output: []
     }
 }

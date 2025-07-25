@@ -13,7 +13,7 @@ public class MyAtmosphereResource {
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
         this.eventListener = e;
         // Logic to add the event listener to the AtmosphereResource
-        // This is a placeholder for actual implementation
-        return null; // Return the AtmosphereResource instance
+        // This is a placeholder as the actual implementation depends on the context
+        return null; // Return the AtmosphereResource instance as needed
     }
 }

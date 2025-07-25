@@ -1,12 +1,12 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for working with arrays.
+ * Utility class for handling Character arrays.
  */
 public class ArrayUtils {
 
     /**
-     * Empty Character array constant
+     * Empty Character array.
      */
     public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 

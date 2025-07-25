@@ -14,6 +14,7 @@ public class BinaryLogCalculator {
             n = n >> 1; // Divide by 2 using right shift
             count++;
         }
+        
         return count;
     }
 }

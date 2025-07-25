@@ -35,9 +35,4 @@ public class TransportInterceptor implements AtmosphereInterceptor {
     public void destroy() {
         // No cleanup needed
     }
-
-    @Override
-    public void configure(AtmosphereConfig config) {
-        // No configuration needed
-    }
 }

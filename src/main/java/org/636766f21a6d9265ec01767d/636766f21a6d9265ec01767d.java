@@ -13,5 +13,4 @@ public class ObjectUtils {
     public static String toString(Object object) {
         return object == null ? null : object.toString();
     }
-
 }

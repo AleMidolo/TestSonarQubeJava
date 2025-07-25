@@ -29,12 +29,12 @@ public class SocketAppender extends AppenderSkeleton {
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // Client likely disconnected, mark for removal
+                // Client likely disconnected
                 disconnectedIndexes.add(i);
             }
         }
         
-        // Remove disconnected clients
+        // Clean up disconnected clients
         for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
             int index = disconnectedIndexes.get(i);
             try {

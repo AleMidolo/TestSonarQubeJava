@@ -12,27 +12,24 @@ public class MinimalSeparators {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get common neighbors of the endpoints
+            // Get common neighbors of source and target vertices
             Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
             Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
             Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
             commonNeighbors.retainAll(targetNeighbors);
             
-            // For each common neighbor pair, check if they form a minimal separator
+            // Compute minimal separators for this edge
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
-            List<V> neighborList = new ArrayList<>(commonNeighbors);
             
-            for (int i = 0; i < neighborList.size(); i++) {
-                for (int j = i + 1; j < neighborList.size(); j++) {
-                    V v1 = neighborList.get(i);
-                    V v2 = neighborList.get(j);
+            // For each pair of common neighbors
+            List<V> commonNeighborsList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < commonNeighborsList.size(); i++) {
+                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
+                    V v1 = commonNeighborsList.get(i);
+                    V v2 = commonNeighborsList.get(j);
                     
-                    // Check if {v1,v2} is a minimal separator
-                    Set<V> separator = new HashSet<>();
-                    separator.add(v1);
-                    separator.add(v2);
-                    
-                    if (isMinimalSeparator(separator)) {
+                    // If they form a minimal separator (no subset is a separator)
+                    if (isMinimalSeparator(v1, v2, source, target)) {
                         edgeSeparators.add(new Pair<>(
                             graph.getVertexIndex(v1),
                             graph.getVertexIndex(v2)
@@ -41,7 +38,7 @@ public class MinimalSeparators {
                 }
             }
             
-            // Add the edge separators to global list
+            // Add edge separators to global list
             if (!edgeSeparators.isEmpty()) {
                 globalSeparators.add(new Pair<>(edgeSeparators, edge));
             }
@@ -50,66 +47,44 @@ public class MinimalSeparators {
         return globalSeparators;
     }
     
-    // Helper method to check if a set of vertices is a minimal separator
-    private boolean isMinimalSeparator(Set<V> separator) {
-        // Remove separator vertices from graph
-        Set<V> remainingVertices = new HashSet<>(graph.vertexSet());
-        remainingVertices.removeAll(separator);
+    // Helper method to check if two vertices form a minimal separator
+    private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
+        // Remove v1 and v2 from graph temporarily
+        graph.removeVertex(v1);
+        graph.removeVertex(v2);
         
-        // Get connected components
-        List<Set<V>> components = getConnectedComponents(remainingVertices);
+        // Check if source and target are still connected
+        boolean isConnected = hasPath(source, target);
         
-        // Check if removing any vertex from separator would still separate components
-        if (components.size() >= 2) {
-            for (V v : separator) {
-                Set<V> smallerSeparator = new HashSet<>(separator);
-                smallerSeparator.remove(v);
-                
-                Set<V> remaining = new HashSet<>(graph.vertexSet());
-                remaining.removeAll(smallerSeparator);
-                
-                List<Set<V>> newComponents = getConnectedComponents(remaining);
-                
-                // If components are still separated, this is not minimal
-                if (newComponents.size() >= 2) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        // Restore vertices
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        
+        // If source and target are disconnected, v1,v2 form a separator
+        return !isConnected;
     }
     
-    // Helper method to get connected components
-    private List<Set<V>> getConnectedComponents(Set<V> vertices) {
-        List<Set<V>> components = new ArrayList<>();
-        Set<V> unvisited = new HashSet<>(vertices);
+    // Helper method for path finding between two vertices
+    private boolean hasPath(V start, V end) {
+        Set<V> visited = new HashSet<>();
+        Queue<V> queue = new LinkedList<>();
+        queue.add(start);
+        visited.add(start);
         
-        while (!unvisited.isEmpty()) {
-            V start = unvisited.iterator().next();
-            Set<V> component = new HashSet<>();
-            
-            // DFS to find component
-            Stack<V> stack = new Stack<>();
-            stack.push(start);
-            
-            while (!stack.isEmpty()) {
-                V current = stack.pop();
-                if (unvisited.contains(current)) {
-                    component.add(current);
-                    unvisited.remove(current);
-                    
-                    for (V neighbor : graph.neighborListOf(current)) {
-                        if (unvisited.contains(neighbor)) {
-                            stack.push(neighbor);
-                        }
-                    }
-                }
+        while (!queue.isEmpty()) {
+            V current = queue.poll();
+            if (current.equals(end)) {
+                return true;
             }
             
-            components.add(component);
+            for (V neighbor : graph.neighborListOf(current)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
         }
         
-        return components;
+        return false;
     }
 }

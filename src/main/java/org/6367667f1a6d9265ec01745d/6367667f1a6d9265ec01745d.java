@@ -43,7 +43,7 @@ public class URIPathDecoder {
             if (decode) {
                 try {
                     // Decode the segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
+                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
                 } catch (Exception e) {
                     // If decoding fails, use the raw segment
                 }

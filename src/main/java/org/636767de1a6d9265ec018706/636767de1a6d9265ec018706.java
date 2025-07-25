@@ -15,31 +15,39 @@ public class MappingDiffer {
         }
 
         // Get the properties from input mappings
-        Map<String, Object> sourceMap = mappings.getSourceAsMap();
-        if (sourceMap == null || !sourceMap.containsKey("properties")) {
-            return null;
-        }
-
-        // Create new mapping without _source
-        Map<String, Object> newMappings = new HashMap<>();
-        Map<String, Object> properties = new HashMap<>();
+        Map<String, Object> inputProperties = mappings.getSourceAsMap();
         
-        // Copy properties excluding _source
-        Map<String, Object> existingProperties = (Map<String, Object>) sourceMap.get("properties");
-        for (Map.Entry<String, Object> entry : existingProperties.entrySet()) {
-            String fieldName = entry.getKey();
-            if (!fieldName.equals("_source")) {
-                properties.put(fieldName, entry.getValue());
+        // Create new map for storing diff properties
+        Map<String, Object> diffProperties = new HashMap<>();
+
+        // Get current index mappings
+        Map<String, Object> currentMappings = getCurrentIndexMappings(tableName);
+        
+        if (currentMappings != null) {
+            // Compare and find fields that don't exist in current mappings
+            for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+                String field = entry.getKey();
+                if (!currentMappings.containsKey(field)) {
+                    diffProperties.put(field, entry.getValue());
+                }
             }
         }
 
-        // Build new mapping
-        newMappings.put("properties", properties);
-        
-        // Create new Mappings object
-        return new Mappings(
-            MapperService.SINGLE_MAPPING_NAME,
-            newMappings
-        );
+        // Remove _source from diff properties if exists
+        diffProperties.remove("_source");
+
+        // Create new Mappings object with diff properties
+        return new Mappings.Builder()
+                .setSourceAsMap(diffProperties)
+                .build();
+    }
+
+    private Map<String, Object> getCurrentIndexMappings(String tableName) {
+        try {
+            // This is a placeholder - actual implementation would need to get mappings from ES cluster
+            return new HashMap<>();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

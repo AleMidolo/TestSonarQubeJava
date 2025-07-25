@@ -12,7 +12,7 @@ public class StringUtils {
         if (str == null || searchStrArray == null) {
             return false;
         }
-        
+
         String lowerStr = str.toLowerCase();
         
         for (String searchStr : searchStrArray) {

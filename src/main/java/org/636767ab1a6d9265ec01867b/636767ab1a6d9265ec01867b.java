@@ -36,25 +36,16 @@ public class UTF8Writer {
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
             } else if (Character.isSurrogate(c)) {
                 // 4 bytes, surrogate pair
+                if (++i >= len) {
+                    throw new IllegalArgumentException("Invalid surrogate pair");
+                }
+                char c2 = str.charAt(i);
+                if (!Character.isSurrogate(c2)) {
+                    throw new IllegalArgumentException("Invalid surrogate pair");
+                }
+                int codePoint = Character.toCodePoint(c, c2);
                 if (buffer.offset + 4 > buffer.buffer.length) {
                     buffer = LinkedBuffer.allocate(buffer.buffer.length);
-                }
-                // Get the complete unicode code point
-                int codePoint;
-                if (Character.isHighSurrogate(c)) {
-                    if (i + 1 < len) {
-                        char low = str.charAt(i + 1);
-                        if (Character.isLowSurrogate(low)) {
-                            codePoint = Character.toCodePoint(c, low);
-                            i++;
-                        } else {
-                            codePoint = '?';
-                        }
-                    } else {
-                        codePoint = '?';
-                    }
-                } else {
-                    codePoint = '?';
                 }
                 buffer.buffer[buffer.offset++] = (byte) (0xF0 | ((codePoint >> 18) & 0x07));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
@@ -72,7 +63,7 @@ public class UTF8Writer {
             i++;
         }
 
-        session.tail = buffer;
+        session.size += buffer.offset - lb.offset;
         return buffer;
     }
 }

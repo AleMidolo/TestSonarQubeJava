@@ -20,19 +20,17 @@ public class UTF8Decoder {
             
             // Try to decode one character
             char[] chars = new char[1];
-            decoder.decode(slice).get(chars);
+            decoder.decode(slice).get(0, chars, 0, 1);
             
             // Append decoded character
             sb.append(chars[0]);
             
-            // Calculate how many bytes were consumed
-            int bytesConsumed = slice.position();
-            
-            // Reset to marked position and skip consumed bytes
+            // Reset to marked position and skip decoded bytes
             bb.reset();
-            bb.position(bb.position() + bytesConsumed);
+            int bytesRead = slice.position();
+            bb.position(bb.position() + bytesRead);
             
-            return i + bytesConsumed;
+            return i + bytesRead;
             
         } catch (CharacterCodingException e) {
             // On error, skip one byte and append replacement character

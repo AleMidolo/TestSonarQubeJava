@@ -16,11 +16,9 @@ public class CharUtils {
      * @return 指定字符的 Character 对象
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch <= 127) {
-            // For ASCII characters, use Character.valueOf() which maintains a cache
+        if (ch <= 127) { // ASCII 7-bit characters
             return Character.valueOf(ch);
         }
-        // For non-ASCII characters, create a new Character object
         return new Character(ch);
     }
 }

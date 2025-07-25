@@ -36,7 +36,7 @@ public class PathDecoder {
         if (path.isEmpty()) {
             return segments;
         }
-        
+
         // Split path into segments
         String[] rawSegments = path.split("/");
         

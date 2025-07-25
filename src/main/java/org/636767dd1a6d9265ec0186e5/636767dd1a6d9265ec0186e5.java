@@ -26,14 +26,8 @@ interface IConsumer {
     void consume();
 }
 
-class Channels {
-    private String channelName;
-    
-    public Channels(String name) {
-        this.channelName = name;
-    }
-    
-    public String getChannelName() {
-        return channelName;
-    }
+enum Channels {
+    CHANNEL1,
+    CHANNEL2,
+    CHANNEL3
 }

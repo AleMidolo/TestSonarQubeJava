@@ -17,10 +17,27 @@ public class StackFrameAnalyzer {
             }
         }
         
-        Type[] types = Type.getArgumentTypes(desc);
-        for (Type type : types) {
-            int size = type.getSize();
-            currentStackSize -= size;
+        // 计算描述符中的类型数量
+        int typeCount = 0;
+        for (int i = 0; i < desc.length(); i++) {
+            char c = desc.charAt(i);
+            if (c == 'D' || c == 'J') {
+                // double和long占用2个栈单元
+                typeCount += 2;
+            } else if (c != '[') {
+                // 其他类型占用1个栈单元
+                // 数组维度标记'['不计入
+                typeCount += 1;
+                // 对象类型需要跳过类名
+                if (c == 'L') {
+                    i = desc.indexOf(';', i);
+                }
+            }
+        }
+        
+        // 从栈中弹出对应数量的元素
+        if (typeCount > 0) {
+            currentStackSize -= typeCount;
         }
     }
 }

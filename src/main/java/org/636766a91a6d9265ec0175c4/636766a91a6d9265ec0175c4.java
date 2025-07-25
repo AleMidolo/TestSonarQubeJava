@@ -8,41 +8,27 @@ public class StackFrameAnalyzer {
      * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
      */
     private void pop(final String descriptor) {
-        char firstChar = descriptor.charAt(0);
-        
-        if (firstChar == '(') {
+        String desc = descriptor;
+        if (desc.charAt(0) == '(') {
             // Method descriptor - pop parameter types
-            Type methodType = Type.getMethodType(descriptor);
-            Type[] argumentTypes = methodType.getArgumentTypes();
-            
-            // Pop arguments in reverse order
-            for (int i = argumentTypes.length - 1; i >= 0; i--) {
-                Type argType = argumentTypes[i];
-                int size = argType.getSize();
-                
-                // Pop 1 or 2 slots depending on type size
-                while (size > 0) {
+            Type[] types = Type.getArgumentTypes(desc);
+            for (int i = types.length - 1; i >= 0; i--) {
+                Type type = types[i];
+                if (type.getSize() == 2) {
+                    currentFrame.pop2();
+                } else {
                     currentFrame.pop();
-                    size--;
                 }
             }
-        } else {
-            // Type descriptor - pop single type
-            Type type = Type.getType(descriptor);
-            int size = type.getSize();
-            
-            // Pop 1 or 2 slots depending on type size  
-            while (size > 0) {
-                currentFrame.pop();
-                size--;
-            }
+            return;
         }
-    }
-    
-    // Frame class to represent the stack frame
-    private static class Frame {
-        public void pop() {
-            // Implementation to pop value from frame
+        
+        // Type descriptor - pop single type
+        Type type = Type.getType(desc);
+        if (type.getSize() == 2) {
+            currentFrame.pop2();
+        } else {
+            currentFrame.pop();
         }
     }
 }

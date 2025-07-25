@@ -21,15 +21,15 @@ public class SocketAppender extends AppenderSkeleton {
             try {
                 PrintWriter writer = writers.get(i);
                 // 检查连接是否仍然有效
-                if (clients.get(i).isConnected() && !clients.get(i).isClosed()) {
+                if (clients.get(i).isConnected()) {
                     writer.println(message);
                     writer.flush();
                 } else {
                     // 移除断开连接的客户端
                     writer.close();
                     clients.get(i).close();
-                    writers.remove(i);
                     clients.remove(i);
+                    writers.remove(i);
                     i--;
                 }
             } catch (IOException e) {
@@ -39,8 +39,8 @@ public class SocketAppender extends AppenderSkeleton {
                 } catch (IOException ex) {
                     // 忽略关闭错误
                 }
-                writers.remove(i);
                 clients.remove(i);
+                writers.remove(i);
                 i--;
             }
         }

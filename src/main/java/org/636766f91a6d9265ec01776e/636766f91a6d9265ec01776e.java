@@ -16,6 +16,10 @@ public class ByteArrayOutputStream extends OutputStream {
             throw new IndexOutOfBoundsException();
         }
 
+        if (len == 0) {
+            return;
+        }
+
         // Ensure capacity
         ensureCapacity(count + len);
         

@@ -5,74 +5,37 @@ public class SymbolTable {
     private final Symbol[] symbols;
     private int size;
     
+    public SymbolTable(int initialCapacity) {
+        this.symbols = new Symbol[initialCapacity];
+        this.size = 1;
+    }
+
     public int addConstantNameAndType(final String name, final String descriptor) {
         int hashCode = Symbol.CONSTANT_NAME_AND_TYPE_TAG + name.hashCode() * descriptor.hashCode();
-        Entry entry = get(hashCode);
+        Symbol symbol = getSymbol(hashCode);
         
-        while (entry != null) {
-            if (entry.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
-                && entry.name.equals(name)
-                && entry.descriptor.equals(descriptor)) {
-                return entry.index;
+        while (symbol != null) {
+            if (symbol.tag == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
+                && symbol.name.equals(name)
+                && symbol.value.equals(descriptor)) {
+                return symbol.index;
             }
-            entry = entry.next;
+            symbol = symbol.next;
         }
-        
-        // 添加name和descriptor到常量池
-        int nameIndex = addConstantUtf8(name);
-        int descriptorIndex = addConstantUtf8(descriptor);
-        
-        // 创建新的NameAndType条目
-        int index = size;
-        entry = new Entry(
-            index,
+
+        symbol = new Symbol(
+            size++,
             Symbol.CONSTANT_NAME_AND_TYPE_TAG,
             name,
             descriptor,
-            nameIndex,
-            descriptorIndex,
-            get(hashCode));
+            hashCode,
+            getSymbol(hashCode));
         
-        put(entry);
-        size++;
-        
-        return index;
+        symbols[symbol.index] = symbol;
+        return symbol.index;
     }
     
-    // 内部辅助类
-    private static class Entry {
-        final int index;
-        final int tag;
-        final String name;
-        final String descriptor;
-        final int nameIndex;
-        final int descriptorIndex; 
-        final Entry next;
-        
-        Entry(int index, int tag, String name, String descriptor, 
-             int nameIndex, int descriptorIndex, Entry next) {
-            this.index = index;
-            this.tag = tag;
-            this.name = name;
-            this.descriptor = descriptor;
-            this.nameIndex = nameIndex;
-            this.descriptorIndex = descriptorIndex;
-            this.next = next;
-        }
-    }
-    
-    // 辅助方法
-    private Entry get(int hashCode) {
+    private Symbol getSymbol(int hashCode) {
         return symbols[hashCode % symbols.length];
-    }
-    
-    private void put(Entry entry) {
-        symbols[entry.hashCode() % symbols.length] = entry;
-    }
-    
-    private int addConstantUtf8(final String value) {
-        // 实际实现会添加UTF8字符串到常量池
-        // 这里简化处理
-        return 0;
     }
 }

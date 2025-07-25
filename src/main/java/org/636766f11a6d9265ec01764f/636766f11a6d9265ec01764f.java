@@ -23,7 +23,7 @@ public class BeanMap {
             
             for (PropertyDescriptor descriptor : descriptors) {
                 Method readMethod = descriptor.getReadMethod();
-                if (readMethod != null && !readMethod.getName().equals("getClass")) {
+                if (readMethod != null && !descriptor.getName().equals("class")) {
                     Object value = readMethod.invoke(bean);
                     values.add(value);
                 }

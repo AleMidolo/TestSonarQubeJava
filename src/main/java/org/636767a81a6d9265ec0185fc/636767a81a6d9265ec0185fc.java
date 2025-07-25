@@ -34,12 +34,13 @@ public class CodedInputStream {
             return false;
         }
         
-        int n = input.read(buffer);
-        if (n <= 0) {
+        int read = input.read(buffer, 0, BUFFER_SIZE);
+        if (read <= 0) {
             return true;
         }
+        
         pos = 0;
-        bufferSize = n;
+        bufferSize = read;
         return false;
     }
 
@@ -60,12 +61,12 @@ public class CodedInputStream {
 
     private byte readRawByte() throws IOException {
         if (pos == bufferSize) {
-            int n = input.read(buffer);
-            if (n <= 0) {
-                throw new IOException("End of input");
+            int read = input.read(buffer, 0, BUFFER_SIZE);
+            if (read <= 0) {
+                throw new IOException("End of stream reached");
             }
             pos = 0;
-            bufferSize = n;
+            bufferSize = read;
         }
         return buffer[pos++];
     }

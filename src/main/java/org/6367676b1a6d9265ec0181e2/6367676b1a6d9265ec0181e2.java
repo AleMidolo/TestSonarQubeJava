@@ -1,6 +1,7 @@
 import java.util.Collection;
 
 public class CollectionUtils {
+
     /**
      * Restituisce il primo elemento in '<code>candidates</code>' che è contenuto in '<code>source</code>'. 
      * Se nessun elemento in '<code>candidates</code>' è presente in '<code>source</code>', restituisce <code>null</code>. 

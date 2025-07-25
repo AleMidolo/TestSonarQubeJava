@@ -9,6 +9,7 @@ public class LogAppender {
 
     /**
      * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
+     * @param event El evento de registro que contiene el mensaje a enviar.
      */
     protected void append(LoggingEvent event) {
         String message = event.getMessage().toString();
@@ -22,7 +23,7 @@ public class LogAppender {
 
     /**
      * Agrega un nuevo cliente a la lista de clientes conectados.
-     * @param clientSocket El socket del cliente.
+     * @param clientSocket El socket del cliente que se conecta.
      */
     public void addClient(Socket clientSocket) {
         try {
@@ -37,7 +38,7 @@ public class LogAppender {
 
     /**
      * Elimina un cliente de la lista de clientes conectados.
-     * @param clientSocket El socket del cliente.
+     * @param clientSocket El socket del cliente que se desconecta.
      */
     public void removeClient(Socket clientSocket) {
         try {

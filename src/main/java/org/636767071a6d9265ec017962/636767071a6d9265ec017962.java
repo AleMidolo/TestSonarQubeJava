@@ -12,14 +12,10 @@ public class BeanMap {
 
     public void putAllWriteable(BeanMap map) {
         try {
-            PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
-            for (PropertyDescriptor descriptor : descriptors) {
-                if (descriptor.getWriteMethod() != null) {
-                    Method readMethod = descriptor.getReadMethod();
-                    if (readMethod != null) {
-                        Object value = readMethod.invoke(map);
-                        this.properties.put(descriptor.getName(), value);
-                    }
+            for (PropertyDescriptor pd : map.getPropertyDescriptors()) {
+                if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
+                    Object value = pd.getReadMethod().invoke(map);
+                    this.properties.put(pd.getName(), value);
                 }
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -28,7 +24,7 @@ public class BeanMap {
     }
 
     private PropertyDescriptor[] getPropertyDescriptors() {
-        // This method should return the PropertyDescriptor array for the bean.
+        // This method should return the PropertyDescriptor array for the BeanMap.
         // For simplicity, we assume it's implemented elsewhere.
         return new PropertyDescriptor[0];
     }

@@ -6,15 +6,16 @@ private String unescapeId(String input) {
         return null;
     }
     
-    // Replace escaped quotes and backslashes
-    String unescaped = input.replaceAll("\\\\([\"\\\\])", "$1");
+    // Patrón para identificar secuencias de escape en identificadores DOT
+    Pattern pattern = Pattern.compile("\\\\(.)");
+    Matcher matcher = pattern.matcher(input);
     
-    // Replace escaped newlines, tabs, etc.
-    unescaped = unescaped.replaceAll("\\\\n", "\n")
-                         .replaceAll("\\\\t", "\t")
-                         .replaceAll("\\\\r", "\r")
-                         .replaceAll("\\\\b", "\b")
-                         .replaceAll("\\\\f", "\f");
+    // Reemplazar las secuencias de escape con el carácter correspondiente
+    StringBuffer result = new StringBuffer();
+    while (matcher.find()) {
+        matcher.appendReplacement(result, matcher.group(1));
+    }
+    matcher.appendTail(result);
     
-    return unescaped;
+    return result.toString();
 }

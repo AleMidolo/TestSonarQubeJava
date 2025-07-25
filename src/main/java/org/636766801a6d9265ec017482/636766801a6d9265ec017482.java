@@ -34,10 +34,12 @@ public class ClassFileBuffer {
         readPointer = 0;
     }
 
+    // Método para obtener el buffer (opcional, dependiendo del uso)
     public byte[] getBuffer() {
         return buffer;
     }
 
+    // Método para obtener el puntero de lectura (opcional, dependiendo del uso)
     public int getReadPointer() {
         return readPointer;
     }

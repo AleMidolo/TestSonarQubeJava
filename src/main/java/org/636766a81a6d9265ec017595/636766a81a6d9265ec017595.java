@@ -19,7 +19,7 @@ public class ByteVector {
         return this;
     }
 
-    // Optional: Method to get the internal byte array for testing or other purposes
+    // Optional: Method to get the byte array representation of the vector
     public byte[] toByteArray() {
         byte[] result = new byte[bytes.size()];
         for (int i = 0; i < bytes.size(); i++) {

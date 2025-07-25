@@ -15,7 +15,7 @@ public class ArrayUtils {
         }
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            result[i] = Objects.requireNonNull(array[i], "El contenido del arreglo no puede ser nulo");
         }
         return result;
     }

@@ -23,9 +23,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
         String str = "ababababab";
-        String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // Debería imprimir 5
+        String sub = "aba";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

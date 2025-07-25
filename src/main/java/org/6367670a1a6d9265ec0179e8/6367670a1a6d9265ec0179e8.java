@@ -1,8 +1,8 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class DefensiveProgramming {
 
-    // Referencia estática para un array vacío de Boolean
+    // Public static empty array reference
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**

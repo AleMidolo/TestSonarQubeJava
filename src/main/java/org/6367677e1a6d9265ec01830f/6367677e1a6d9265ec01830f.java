@@ -3,24 +3,22 @@ import java.util.Date;
 
 public class LogFormatter {
 
+    /**
+     * Produce una cadena formateada según lo especificado por el patrón de conversión.
+     * 
+     * @param event El evento de registro que contiene la información a formatear.
+     * @return Una cadena formateada según el patrón de conversión.
+     */
     public String format(LoggingEvent event) {
-        // Crear un objeto SimpleDateFormat para formatear la fecha
+        // Ejemplo de patrón de conversión: [fecha] [nivel] [mensaje]
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
-        // Obtener la fecha y formatearla
         String formattedDate = dateFormat.format(new Date(event.getTimeStamp()));
         
-        // Formatear el mensaje de log
-        String formattedMessage = String.format("[%s] %s: %s", 
-            formattedDate, 
-            event.getLevel().toString(), 
-            event.getMessage());
-        
-        return formattedMessage;
+        return String.format("[%s] [%s] %s", formattedDate, event.getLevel(), event.getMessage());
     }
 }
 
-// Clase LoggingEvent simulada para el ejemplo
+// Clase de ejemplo para LoggingEvent
 class LoggingEvent {
     private long timeStamp;
     private String level;

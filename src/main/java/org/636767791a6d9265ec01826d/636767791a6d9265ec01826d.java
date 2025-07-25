@@ -1,5 +1,4 @@
 import java.util.Properties;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +8,7 @@ public class PropertySubstitutor {
         // Obtener el valor asociado a la clave
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Si no se encuentra la clave, retornar null
+            return null; // Si no existe la clave, retornar null
         }
 
         // Expresión regular para encontrar variables en el formato ${variable}

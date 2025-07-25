@@ -5,9 +5,8 @@
  * @return La posición del byte encontrado, contando desde el inicio del <code>buffer</code>, o <code>-1</code> si no se encuentra.
  */
 protected int findByte(byte value, int pos) {
-    // Asumimos que 'buffer' es un array de bytes accesible en la clase
     if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Posición inicial inválida");
+        throw new IllegalArgumentException("Posición inicial fuera de los límites del buffer.");
     }
 
     for (int i = pos; i < buffer.length; i++) {
@@ -16,5 +15,5 @@ protected int findByte(byte value, int pos) {
         }
     }
 
-    return -1; // Retorna -1 si no se encuentra el byte
+    return -1;
 }

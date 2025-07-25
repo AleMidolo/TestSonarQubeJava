@@ -15,31 +15,26 @@ public class Cache {
         if (existingData == null) {
             existingData = data;
         } else {
-            // Aquí se combinan los datos existentes con los nuevos datos.
+            // Aquí se combinan los datos existentes con los nuevos.
             // Asumiendo que METRICS tiene un método para combinar datos.
             existingData.combine(data);
         }
     }
 
-    // Método para obtener los datos existentes (opcional)
-    public METRICS getExistingData() {
-        return existingData;
-    }
-}
+    // Clase de ejemplo METRICS (debe ser definida por el usuario)
+    public static class METRICS {
+        private int value;
 
-// Asumiendo que METRICS es una clase con un método combine
-class METRICS {
-    private int value;
+        public METRICS(int value) {
+            this.value = value;
+        }
 
-    public METRICS(int value) {
-        this.value = value;
-    }
+        public void combine(METRICS other) {
+            this.value += other.value;
+        }
 
-    public void combine(METRICS other) {
-        this.value += other.value;
-    }
-
-    public int getValue() {
-        return value;
+        public int getValue() {
+            return value;
+        }
     }
 }

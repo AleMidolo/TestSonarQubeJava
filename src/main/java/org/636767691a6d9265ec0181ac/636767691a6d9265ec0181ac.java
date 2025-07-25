@@ -27,9 +27,10 @@ public class RelativePathApplier {
     }
 
     public static void main(String[] args) {
+        // Ejemplo de uso
         String basePath = "/usr/local/bin";
         String relativePath = "../lib/java";
         String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println("Ruta resultante: " + result);
     }
 }

@@ -12,7 +12,7 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
-
+        
         StringBuilder encodedString = new StringBuilder();
         for (char c : s.toCharArray()) {
             if (c == '{' || c == '}') {
@@ -26,7 +26,6 @@ public class TemplateEncoder {
                 encodedString.append(c);
             }
         }
-
         return encodedString.toString();
     }
 

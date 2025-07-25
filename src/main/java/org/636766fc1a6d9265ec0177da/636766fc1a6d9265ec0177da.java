@@ -5,6 +5,6 @@ private static boolean isParameterSeparator(final char c) {
     // विभाजक वर्णों की सूची
     final String separators = " ,;(){}[]<>+-*/%=&|^~!?:.\t\n\r";
 
-    // जाँचें कि क्या दिया गया वर्ण विभाजक सूची में है
+    // जाँचें कि दिया गया वर्ण विभाजक सूची में है या नहीं
     return separators.indexOf(c) != -1;
 }

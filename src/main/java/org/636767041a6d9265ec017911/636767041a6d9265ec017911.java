@@ -18,10 +18,4 @@ public class ObjectRegistry {
             throw new IllegalStateException("Object already registered");
         }
     }
-
-    public static void main(String[] args) {
-        Object obj = new Object();
-        register(obj);
-        System.out.println("Object registered successfully.");
-    }
 }

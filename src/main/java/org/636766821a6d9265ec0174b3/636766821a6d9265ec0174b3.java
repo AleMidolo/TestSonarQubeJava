@@ -12,21 +12,24 @@ public class BroadcastFilter extends BroadcastReceiver {
      */
     protected Object filter(Object msg) {
         // Implement your filtering logic here
-        // For example, you can check the type of msg and return a filtered result
-        if (msg instanceof Intent) {
-            Intent intent = (Intent) msg;
-            // Example: Filter based on action
-            if ("com.example.ACTION_FILTER".equals(intent.getAction())) {
-                return intent.getExtras(); // Return the extras as filtered result
+        // For example, you can check if the message meets certain criteria
+        if (msg instanceof String) {
+            String message = (String) msg;
+            if (message.contains("important")) {
+                return message; // Return the message if it contains the word "important"
             }
         }
-        return null; // Return null if no filtering is needed or msg is not of expected type
+        return null; // Return null if the message does not meet the criteria
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        Object filteredResult = filter(intent);
-        // Handle the filtered result as needed
+        // You can call the filter method here if needed.
+        Object msg = intent.getSerializableExtra("message");
+        Object filteredMsg = filter(msg);
+        if (filteredMsg != null) {
+            // Handle the filtered message
+        }
     }
 }

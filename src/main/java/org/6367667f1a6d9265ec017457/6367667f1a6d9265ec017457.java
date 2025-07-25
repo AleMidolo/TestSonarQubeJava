@@ -4,9 +4,9 @@ import java.nio.charset.StandardCharsets;
 public class UTF8Decoder {
 
     /**
-     * UTF-8 डिकोडिंग का उपयोग करके ऑक्टेट्स को कैरेक्टर में डिकोड करता है और कैरेक्टर को एक StringBuffer में जोड़ता है।
+     * UTF-8 डिकोडिंग का उपयोग करके ऑक्टेट्स को कैरेक्टर में डिकोड करता है और कैरेक्टर को एक StringBuilder में जोड़ता है।
      * @param i स्ट्रिंग में डिकोड करने के लिए अगले अनचेक किए गए कैरेक्टर का इंडेक्स
-     * @param bb ऑक्टेट्स को रखने वाला ByteBuffer
+     * @param bb ऑक्टेट्स को धारण करने वाला ByteBuffer
      * @param sb डिकोड किए गए कैरेक्टर को जोड़ने के लिए StringBuilder
      * @return स्ट्रिंग में डिकोड करने के लिए अगले अनचेक किए गए कैरेक्टर का इंडेक्स
      */
@@ -36,7 +36,7 @@ public class UTF8Decoder {
             }
             byte b2 = bb.get(i + 1);
             byte b3 = bb.get(i + 2);
-            char c = (char) (((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F));
+            char c = (char) (((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
             sb.append(c);
             return i + 3;
         } else if ((b1 & 0xF8) == 0xF0) {
@@ -57,7 +57,7 @@ public class UTF8Decoder {
     }
 
     public static void main(String[] args) {
-        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0x85}); // Example UTF-8 bytes for 'अ'
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0x85}); // UTF-8 for 'अ'
         StringBuilder sb = new StringBuilder();
         int nextIndex = decodeOctets(0, bb, sb);
         System.out.println("Decoded String: " + sb.toString());

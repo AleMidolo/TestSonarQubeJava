@@ -2,9 +2,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 final class ClassFileReader {
-    private final ByteBuffer classFileBuffer;
+    private final byte[] classFileBuffer;
 
-    public ClassFileReader(ByteBuffer classFileBuffer) {
+    public ClassFileReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
@@ -15,41 +15,34 @@ final class ClassFileReader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry is a CONSTANT_Utf8_info structure
-        // CONSTANT_Utf8_info structure format:
+        // Assuming the constant pool entry index is valid and points to a CONSTANT_Utf8_info structure
+        // The structure of CONSTANT_Utf8_info is:
         // u1 tag (1 byte)
         // u2 length (2 bytes)
         // u1 bytes[length] (variable length)
 
-        // Get the position of the constant pool entry in the class file buffer
-        int entryPosition = getConstantPoolEntryPosition(constantPoolEntryIndex);
+        ByteBuffer buffer = ByteBuffer.wrap(classFileBuffer);
+        buffer.position(constantPoolEntryIndex);
 
         // Read the tag (should be 1 for CONSTANT_Utf8)
-        byte tag = classFileBuffer.get(entryPosition);
+        byte tag = buffer.get();
         if (tag != 1) {
-            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag");
         }
 
         // Read the length of the UTF-8 string
-        int length = classFileBuffer.getShort(entryPosition + 1) & 0xFFFF;
+        int length = buffer.getShort() & 0xFFFF;
 
-        // Read the UTF-8 bytes into a byte array
+        // Read the UTF-8 bytes
         byte[] utf8Bytes = new byte[length];
-        classFileBuffer.position(entryPosition + 3);
-        classFileBuffer.get(utf8Bytes);
+        buffer.get(utf8Bytes);
 
-        // Convert the UTF-8 bytes to a String using the provided charBuffer
-        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
-        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+        // Convert UTF-8 bytes to a Java String
+        String result = new String(utf8Bytes, StandardCharsets.UTF_8);
 
-        return utf8String;
-    }
+        // Copy the characters to the provided charBuffer
+        result.getChars(0, result.length(), charBuffer, 0);
 
-    private int getConstantPoolEntryPosition(int constantPoolEntryIndex) {
-        // This method should return the position of the constant pool entry in the class file buffer
-        // For simplicity, we assume that the constant pool entries are stored sequentially
-        // and that the first entry starts at position 10 (after the magic number, version, etc.)
-        // In a real implementation, this would need to be calculated based on the class file structure
-        return 10 + (constantPoolEntryIndex - 1) * 5; // Simplified calculation
+        return result;
     }
 }

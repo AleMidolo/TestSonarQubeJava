@@ -16,9 +16,8 @@ public class ConstantPool {
         if (nameAndTypeMap.containsKey(key)) {
             return nameAndTypeMap.get(key);
         } else {
-            int index = nextIndex++;
-            nameAndTypeMap.put(key, index);
-            return index;
+            nameAndTypeMap.put(key, nextIndex);
+            return nextIndex++;
         }
     }
 }

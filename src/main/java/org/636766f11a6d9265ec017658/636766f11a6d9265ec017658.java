@@ -10,17 +10,14 @@ public class FilePathUtils {
             return -1;
         }
         
-        int lastForwardSlash = filename.lastIndexOf('/');
-        int lastBackwardSlash = filename.lastIndexOf('\\');
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
         
-        return Math.max(lastForwardSlash, lastBackwardSlash);
+        return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\Documents\\file.txt")); // Should print 20
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // Should print 18
-        System.out.println(indexOfLastSeparator("file.txt")); // Should print -1
-        System.out.println(indexOfLastSeparator(null)); // Should print -1
+        String filename = "C:\\Users\\Example\\Documents\\file.txt";
+        System.out.println(indexOfLastSeparator(filename)); // Output: 23
     }
 }

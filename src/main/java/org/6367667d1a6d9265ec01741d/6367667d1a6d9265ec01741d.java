@@ -26,7 +26,7 @@ public class TypeResolver {
         System.out.println("Resolved bound: " + bound);
     }
 
-    class ExampleClass<T> {
+    public static class ExampleClass<T> {
         // Example class with a type parameter
     }
 }

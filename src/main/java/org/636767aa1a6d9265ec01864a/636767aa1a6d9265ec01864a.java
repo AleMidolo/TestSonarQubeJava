@@ -4,11 +4,12 @@ import java.util.Arrays;
  * बाइट्स को {@code byte[]} में कॉपी करता है।
  */
 public byte[] toByteArray() {
-    // Assuming we have some source of bytes, for example, a predefined array.
-    byte[] sourceBytes = {0x01, 0x02, 0x03, 0x04, 0x05};
+    // Assuming you want to return a copy of the byte array
+    // For demonstration, let's assume we have a source byte array
+    byte[] source = {1, 2, 3, 4, 5}; // Example source array
     
-    // Create a new array and copy the contents of the source array into it.
-    byte[] copiedBytes = Arrays.copyOf(sourceBytes, sourceBytes.length);
+    // Create a new array and copy the contents
+    byte[] copy = Arrays.copyOf(source, source.length);
     
-    return copiedBytes;
+    return copy;
 }

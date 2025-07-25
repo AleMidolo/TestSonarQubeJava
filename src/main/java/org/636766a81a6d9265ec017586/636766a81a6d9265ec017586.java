@@ -7,7 +7,7 @@ public class AbstractTypeHandler {
         this.outputFrameStack = new Stack<>();
     }
 
-    /**
+    /** 
      * दिए गए संख्या के अमूर्त प्रकारों को आउटपुट फ्रेम स्टैक से पॉप करता है।
      * @param elements वह संख्या है जो अमूर्त प्रकारों को पॉप करना है।
      */
@@ -21,5 +21,17 @@ public class AbstractTypeHandler {
         for (int i = 0; i < elements; i++) {
             outputFrameStack.pop();
         }
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        AbstractTypeHandler handler = new AbstractTypeHandler();
+        handler.outputFrameStack.push("Type1");
+        handler.outputFrameStack.push("Type2");
+        handler.outputFrameStack.push("Type3");
+
+        System.out.println("Before pop: " + handler.outputFrameStack);
+        handler.pop(2);
+        System.out.println("After pop: " + handler.outputFrameStack);
     }
 }

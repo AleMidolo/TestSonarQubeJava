@@ -21,11 +21,13 @@ public class Graph<V, E> {
         adjacencyMap.get(sourceVertex).put(targetVertex, e);
     }
 
-    // Optional: Method to get the edge between two vertices
-    public E getEdge(V sourceVertex, V targetVertex) {
-        if (adjacencyMap.containsKey(sourceVertex)) {
-            return adjacencyMap.get(sourceVertex).get(targetVertex);
-        }
-        return null;
+    public static void main(String[] args) {
+        Graph<String, Integer> graph = new Graph<>();
+        graph.addToIndex("A", "B", 1);
+        graph.addToIndex("A", "C", 2);
+        graph.addToIndex("B", "C", 3);
+
+        // Example usage
+        System.out.println("Edges added to the graph.");
     }
 }

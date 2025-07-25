@@ -1,42 +1,23 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class LowerBoundsCalculator<K> {
+public class LowerBoundCalculator<K> {
 
     /** 
-     * Encuentra un límite inferior máximo para cada llave.
-     * @param keys lista de llaves.
-     * @return los límites inferiores de llaves calculados.
+     * प्रत्येक कुंजी के लिए अधिकतम निम्न सीमा खोजता है।
+     * @param keys कुंजी की सूची।
+     * @return गणना की गई कुंजी की निम्न सीमाएँ।
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        Map<K, Integer> lowerBoundsMap = new HashMap<>();
         List<Integer> lowerBounds = new ArrayList<>();
-
+        
         for (K key : keys) {
-            // Calculate the lower bound for the key
-            int lowerBound = calculateLowerBound(key);
-            lowerBoundsMap.put(key, lowerBound);
+            // यहाँ पर कुंजी के लिए निम्न सीमा की गणना करें
+            // यह एक साधारण उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार हो सकती है
+            int lowerBound = key.hashCode() % 100; // उदाहरण के लिए, हैश कोड का उपयोग करना
+            lowerBounds.add(lowerBound);
         }
-
-        for (K key : keys) {
-            lowerBounds.add(lowerBoundsMap.get(key));
-        }
-
+        
         return lowerBounds;
-    }
-
-    private int calculateLowerBound(K key) {
-        // Placeholder for actual lower bound calculation logic
-        // This should be replaced with the actual logic to compute the lower bound
-        return key.hashCode() % 100; // Example logic
-    }
-
-    public static void main(String[] args) {
-        LowerBoundsCalculator<String> calculator = new LowerBoundsCalculator<>();
-        List<String> keys = List.of("key1", "key2", "key3");
-        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds);
     }
 }

@@ -1,14 +1,14 @@
-public class MatrixUtils {
-
+public class NonZeroCounter {
+    
     /**
-     * Obtiene el número de entradas diferentes de cero en una fila.
-     * @param row la fila
-     * @return el número de entradas diferentes de cero en una fila
+     * एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या प्राप्त करें।
+     * @param row पंक्ति
+     * @return एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या
      */
     public int nonZeros(int[] row) {
         int count = 0;
-        for (int value : row) {
-            if (value != 0) {
+        for (int num : row) {
+            if (num != 0) {
                 count++;
             }
         }
@@ -16,8 +16,8 @@ public class MatrixUtils {
     }
 
     public static void main(String[] args) {
-        MatrixUtils utils = new MatrixUtils();
-        int[] row = {1, 0, 2, 0, 3};
-        System.out.println("Número de entradas diferentes de cero: " + utils.nonZeros(row)); // Output: 3
+        NonZeroCounter counter = new NonZeroCounter();
+        int[] row = {1, 0, 2, 0, 3, 4, 0};
+        System.out.println("गैर-शून्य प्रविष्टियों की संख्या: " + counter.nonZeros(row));
     }
 }

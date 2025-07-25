@@ -4,19 +4,16 @@ public class ByteVector {
     private byte[] data;
     private int currentSize;
 
-    public ByteVector(int initialSize) {
-        this.data = new byte[initialSize];
-        this.currentSize = initialSize;
+    public ByteVector(int initialCapacity) {
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /**
-     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'. 
-     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
+     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
+     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
      */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than zero.");
-        }
         int newSize = currentSize + size;
         data = Arrays.copyOf(data, newSize);
         currentSize = newSize;

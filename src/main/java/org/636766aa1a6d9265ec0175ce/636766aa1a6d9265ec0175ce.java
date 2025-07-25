@@ -1,35 +1,23 @@
 public class StackMapFrameVisitor {
-    private StackMapFrame currentFrame;
+    private int currentFrame;
 
     /**
-     * Inicia la visita de un nuevo "stack map frame", almacenado en {@link #currentFrame}.
-     * @param offset   el desplazamiento de bytecode de la instrucción a la que corresponde el "frame".
-     * @param numLocal el número de variables locales en el "frame".
-     * @param numStack el número de elementos apilados en el "frame".
-     * @return el índice del siguiente elemento que se escribirá en este "frame".
+     * एक नए स्टैक मैप फ्रेम की यात्रा शुरू करता है, जो {@link #currentFrame} में संग्रहीत है।
+     * @param offset   उस निर्देश का बाइटकोड ऑफसेट, जिसके लिए फ्रेम संबंधित है।
+     * @param numLocal फ्रेम में स्थानीय चर की संख्या।
+     * @param numStack फ्रेम में स्टैक तत्वों की संख्या।
+     * @return इस फ्रेम में लिखे जाने वाले अगले तत्व का अनुक्रमांक।
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        currentFrame = new StackMapFrame(offset, numLocal, numStack);
-        return currentFrame.getNextIndex();
+        // Logic to handle the start of a new stack map frame
+        // For demonstration, we will just update the currentFrame and return the next index
+        currentFrame = offset + numLocal + numStack; // Example logic
+        return currentFrame;
     }
 
-    private class StackMapFrame {
-        private final int offset;
-        private final int numLocal;
-        private final int numStack;
-        private int nextIndex;
-
-        public StackMapFrame(int offset, int numLocal, int numStack) {
-            this.offset = offset;
-            this.numLocal = numLocal;
-            this.numStack = numStack;
-            this.nextIndex = 0; // Initialize next index
-        }
-
-        public int getNextIndex() {
-            return nextIndex;
-        }
-
-        // Additional methods to manipulate the frame can be added here
+    public static void main(String[] args) {
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
+        int nextIndex = visitor.visitFrameStart(10, 2, 3);
+        System.out.println("Next index to write: " + nextIndex);
     }
 }

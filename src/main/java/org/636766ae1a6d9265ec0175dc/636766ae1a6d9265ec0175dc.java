@@ -7,8 +7,8 @@ public class HttpResponseChecker {
     }
 
     /** 
-     * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)
-     * @return verdadero si es contenido parcial, falso en caso contrario
+     * जांचें कि क्या वास्तविक प्रतिक्रिया आंशिक सामग्री (HTTP 206 कोड) है
+     * @return आंशिक सामग्री है या नहीं
      */
     public Boolean isPartialContentResponse() {
         return statusCode == 206;

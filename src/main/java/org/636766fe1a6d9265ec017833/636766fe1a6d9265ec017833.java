@@ -3,52 +3,38 @@ import java.io.IOException;
 
 public class FileDeleter {
 
-    /** 
-     * Programa un archivo para que se elimine cuando la JVM exista. Si el archivo es un directorio, elimínalo y todos sus subdirectorios.
-     * @param file  archivo o directorio a eliminar, no debe ser {@code null}
-     * @throws NullPointerException si el archivo es {@code null}
-     * @throws IOException en caso de que la eliminación no sea exitosa
+    /**
+     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
+     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
+     * @throws NullPointerException यदि फ़ाइल {@code null} है
+     * @throws IOException यदि हटाना असफल हो जाता है
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("El archivo no debe ser null");
+            throw new NullPointerException("File cannot be null");
         }
-        
-        if (file.isDirectory()) {
-            deleteDirectory(file);
-        } else {
-            if (!file.delete()) {
-                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-            }
-        }
-        
-        // Register the file for deletion on JVM exit
+
+        // Schedule the file for deletion on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                if (file.exists()) {
-                    forceDeleteOnExit(file);
-                }
+                deleteRecursively(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }));
     }
 
-    private static void deleteDirectory(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    if (!file.delete()) {
-                        throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-                    }
+    private static void deleteRecursively(File file) throws IOException {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File subFile : files) {
+                    deleteRecursively(subFile);
                 }
             }
         }
-        if (!directory.delete()) {
-            throw new IOException("No se pudo eliminar el directorio: " + directory.getAbsolutePath());
+        if (!file.delete()) {
+            throw new IOException("Failed to delete file: " + file.getAbsolutePath());
         }
     }
 }

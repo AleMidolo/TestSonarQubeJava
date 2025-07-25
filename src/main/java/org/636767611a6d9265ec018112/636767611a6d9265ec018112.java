@@ -1,15 +1,13 @@
 @Override
-protected V proporcionarSiguienteVertice() {
-    // Implementación del método para proporcionar el siguiente vértice
-    // Aquí se puede agregar la lógica específica para determinar el siguiente vértice
-    // Por ejemplo, si se está utilizando una lista de vértices:
-    
-    if (vertices.isEmpty()) {
-        return null; // O lanzar una excepción si no hay vértices disponibles
-    }
-    
-    // Suponiendo que 'indice' es un campo que mantiene el índice del siguiente vértice a devolver
-    V siguienteVertice = vertices.get(indice);
-    indice = (indice + 1) % vertices.size(); // Actualiza el índice para el siguiente llamado
-    return siguienteVertice;
+protected V provideNextVertex() {
+    // Implementation of the method to provide the next vertex
+    // This is a placeholder implementation and should be replaced with actual logic
+    V nextVertex = getNextVertexFromSomewhere(); // Replace with actual logic to get the next vertex
+    return nextVertex;
+}
+
+// Placeholder method to simulate getting the next vertex
+private V getNextVertexFromSomewhere() {
+    // Logic to retrieve the next vertex
+    return null; // Replace with actual vertex retrieval logic
 }

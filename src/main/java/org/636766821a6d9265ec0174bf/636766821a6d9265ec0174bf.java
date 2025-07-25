@@ -1,10 +1,7 @@
-import java.beans.Introspector;
-import java.lang.reflect.Method;
-
 public class StringUtil {
-
+    
     /** 
-     * Inverso de Introspector.decapitalize
+     * Introspector.decapitalize का उल्टा
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {

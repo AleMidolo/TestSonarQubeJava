@@ -1,24 +1,20 @@
 import java.nio.charset.Charset;
 
-public class CharsetTranslator {
-
+public class CharsetConverter {
     /** 
-     * Traduce un nombre de conjunto de caracteres estándar MIME al equivalente en Java.
-     * @param charset El nombre estándar MIME.
-     * @return El equivalente en Java para este nombre.
+     * एक MIME मानक वर्ण सेट नाम को जावा समकक्ष में अनुवादित करें।
+     * @param charset MIME मानक नाम।
+     * @return इस नाम के लिए जावा समकक्ष।
      */
     private static String javaCharset(String charset) {
-        if (Charset.isSupported(charset)) {
-            return Charset.forName(charset).name();
-        } else {
-            throw new IllegalArgumentException("Charset not supported: " + charset);
-        }
+        Charset cs = Charset.forName(charset);
+        return cs.name();
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
+        // उदाहरण के लिए उपयोग
         String mimeCharset = "UTF-8";
         String javaCharset = javaCharset(mimeCharset);
-        System.out.println("El equivalente en Java para " + mimeCharset + " es: " + javaCharset);
+        System.out.println("Java Charset: " + javaCharset);
     }
 }

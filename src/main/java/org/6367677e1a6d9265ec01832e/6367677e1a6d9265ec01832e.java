@@ -1,10 +1,10 @@
 import java.util.logging.Logger;
 
 public class LoggerChecker {
-
+    
     /**
-     * Verifica si el registrador nombrado existe en la jerarquía. Si es así, devuelve su referencia; de lo contrario, devuelve <code>null</code>.
-     * @param name El nombre del registrador que se busca.
+     * जांचें कि क्या नामित लॉगर पदानुक्रम में मौजूद है। यदि हाँ, तो इसका संदर्भ लौटाएँ, अन्यथा <code>null</code> लौटाएँ।
+     * @param name उस लॉगर का नाम जिसे खोजा जाना है।
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);
@@ -15,9 +15,9 @@ public class LoggerChecker {
         LoggerChecker checker = new LoggerChecker();
         Logger logger = checker.exists("myLogger");
         if (logger != null) {
-            System.out.println("Logger found: " + logger.getName());
+            System.out.println("Logger exists: " + logger.getName());
         } else {
-            System.out.println("Logger not found.");
+            System.out.println("Logger does not exist.");
         }
     }
 }

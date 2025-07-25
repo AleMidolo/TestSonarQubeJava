@@ -1,48 +1,44 @@
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class Cola {
-    private Queue<Object> queue;
+public class QueueRepresentation {
+    private LinkedList<Object> queue;
 
-    public Cola() {
-        this.queue = new LinkedList<>();
+    public QueueRepresentation() {
+        queue = new LinkedList<>();
     }
 
     /** 
-     * Devuelve una representación textual de la cola.
-     * @return una representación textual de la cola.
+     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
+     * @return कतार का पाठ्य प्रतिनिधित्व।
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cola: [");
-        for (Object item : queue) {
-            sb.append(item.toString()).append(", ");
-        }
-        if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Eliminar la última coma y espacio
+        sb.append("Queue: [");
+        for (int i = 0; i < queue.size(); i++) {
+            sb.append(queue.get(i));
+            if (i < queue.size() - 1) {
+                sb.append(", ");
+            }
         }
         sb.append("]");
         return sb.toString();
     }
 
     public void enqueue(Object item) {
-        queue.add(item);
+        queue.addLast(item);
     }
 
     public Object dequeue() {
-        return queue.poll();
-    }
-
-    public boolean isEmpty() {
-        return queue.isEmpty();
+        return queue.isEmpty() ? null : queue.removeFirst();
     }
 
     public static void main(String[] args) {
-        Cola cola = new Cola();
-        cola.enqueue("Elemento 1");
-        cola.enqueue("Elemento 2");
-        System.out.println(cola.toString()); // Cola: [Elemento 1, Elemento 2]
-        cola.dequeue();
-        System.out.println(cola.toString()); // Cola: [Elemento 2]
+        QueueRepresentation queue = new QueueRepresentation();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
+        queue.dequeue();
+        System.out.println(queue.toString()); // Output: Queue: [2, 3]
     }
 }

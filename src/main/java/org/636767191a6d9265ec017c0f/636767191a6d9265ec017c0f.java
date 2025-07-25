@@ -1,34 +1,39 @@
-public class ByteVectorEnlarger {
-    private byte[] byteArray;
+import java.util.Arrays;
+
+public class ByteVector {
+    private byte[] data;
     private int currentSize;
 
-    public ByteVectorEnlarger(int initialSize) {
-        this.byteArray = new byte[initialSize];
-        this.currentSize = initialSize;
+    public ByteVector(int initialCapacity) {
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /**
-     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'.
-     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
+     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
+     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
      */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than zero.");
-        }
         int newSize = currentSize + size;
-        byte[] newByteArray = new byte[newSize];
-        System.arraycopy(byteArray, 0, newByteArray, 0, currentSize);
-        byteArray = newByteArray;
-        currentSize = newSize;
+        data = Arrays.copyOf(data, newSize);
     }
 
-    public byte[] getByteArray() {
-        return byteArray;
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize == data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
     }
 
-    public static void main(String[] args) {
-        ByteVectorEnlarger vector = new ByteVectorEnlarger(5);
-        vector.enlarge(10);
-        System.out.println("New size of byte array: " + vector.getByteArray().length);
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
+        }
+        return data[index];
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

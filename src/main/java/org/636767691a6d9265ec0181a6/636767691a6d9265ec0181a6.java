@@ -1,10 +1,10 @@
 public class StringSplitter {
-    
+
     /** 
-     * Divide una cadena en la primera ocurrencia del delimitador. No incluye el delimitador en el resultado.
-     * @param toSplit la cadena a dividir
-     * @param delimiter el delimitador para dividir la cadena
-     * @return un array de dos elementos donde el índice 0 es antes del delimitador, y el índice 1 es después del delimitador (ninguno de los elementos incluye el delimitador); o <code>null</code> si no se encontró el delimitador en la cadena de entrada dada
+     * एक स्ट्रिंग को डिलीमीटर की पहली उपस्थिति पर विभाजित करें। परिणाम में डिलीमीटर शामिल नहीं है।
+     * @param toSplit वह स्ट्रिंग जिसे विभाजित करना है
+     * @param delimiter वह डिलीमीटर जिससे स्ट्रिंग को विभाजित किया जाएगा
+     * @return एक दो तत्वों वाला एरे जिसमें इंडेक्स 0 डिलीमीटर से पहले का हिस्सा है, और इंडेक्स 1 डिलीमीटर के बाद का हिस्सा है (कोई भी तत्व डिलीमीटर को शामिल नहीं करता); या <code>null</code> यदि दिए गए इनपुट स्ट्रिंग में डिलीमीटर नहीं मिला
      */
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {

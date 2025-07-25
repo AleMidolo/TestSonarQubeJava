@@ -3,10 +3,10 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
 
     /** 
-     * Devuelve una copia del array dado de tamaño 1 mayor que el argumento. El último valor del array se deja con el valor por defecto.
-     * @param array El array a copiar, no debe ser <code>null</code>.
-     * @param newArrayComponentType Si <code>array</code> es <code>null</code>, crea un array de tamaño 1 de este tipo.
-     * @return Una nueva copia del array de tamaño 1 mayor que la entrada.
+     * दिए गए ऐरे की एक प्रति लौटाता है, जो तर्क से 1 बड़ा होता है। ऐरे का अंतिम मान डिफ़ॉल्ट मान पर छोड़ दिया जाता है।
+     * @param array कॉपी करने के लिए ऐरे, <code>null</code> नहीं होना चाहिए।
+     * @param newArrayComponentType यदि <code>array</code> <code>null</code> है, तो इस प्रकार का आकार 1 का ऐरे बनाएं।
+     * @return इनपुट से 1 बड़ा आकार का ऐरे की एक नई प्रति।
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array == null) {

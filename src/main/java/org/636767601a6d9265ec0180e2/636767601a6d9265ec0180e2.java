@@ -2,23 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 
-public class GraphSeparator {
+public class Graph {
+    // Assuming E is a placeholder for the edge type
+    private List<Edge> edges; // List of edges in the graph
+    private List<Vertex> vertices; // List of vertices in the graph
 
-    // Assuming E is a placeholder for an edge type in the graph
-    private class E {
-        // Edge properties can be defined here
-    }
+    // Method to compute the global separator list
+    private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
 
-    private List<E> edges; // List of edges in the graph
-
-    /**
-     * Calcula la lista de separadores globales del {@code grafo}. Más precisamente, para cada arista $e$ en el $G = (V, E)$, calcula la lista de separadores mínimos $S_e$ en el vecindario de $e$ y luego concatena estas listas. Nota: el resultado puede contener duplicados.
-     * @return la lista de separadores mínimos de cada arista $e$ en el grafo inspeccionado
-     */
-    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
-
-        for (E edge : edges) {
+        for (Edge edge : edges) {
             List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
             globalSeparatorList.add(new Pair<>(separators, edge));
         }
@@ -26,10 +19,21 @@ public class GraphSeparator {
         return globalSeparatorList;
     }
 
-    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(E edge) {
-        // Placeholder for the logic to compute separators for a given edge
+    // Placeholder method to compute separators for a given edge
+    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(Edge edge) {
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Add logic to find minimum separators in the neighborhood of the edge
+        // Logic to compute the minimum separators for the given edge
+        // This is a placeholder and should be replaced with actual logic
+        // Example: separators.add(new Pair<>(vertex1, vertex2));
         return separators;
+    }
+
+    // Placeholder classes for Edge and Vertex
+    private class Edge {
+        // Edge properties
+    }
+
+    private class Vertex {
+        // Vertex properties
     }
 }

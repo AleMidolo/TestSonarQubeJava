@@ -1,36 +1,18 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class LoggerFormatter {
-
-    /**
-     * Produce una cadena formateada según lo especificado por el patrón de conversión.
+public class StringFormatter {
+    
+    /** 
+     * रूपांतर पैटर्न द्वारा निर्दिष्ट एक स्वरूपित स्ट्रिंग उत्पन्न करता है।
      */
     public String format(LoggingEvent event) {
         StringBuilder formattedString = new StringBuilder();
         
-        // Get the timestamp of the logging event
-        long timestamp = event.getTimeStamp();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
-        
-        // Get the log level
-        String level = event.getLevel().toString();
-        
-        // Get the logger name
-        String loggerName = event.getLoggerName();
-        
-        // Get the message
-        String message = event.getRenderedMessage();
-        
-        // Format the string
-        formattedString.append(date)
-                       .append(" [")
-                       .append(level)
-                       .append("] ")
-                       .append(loggerName)
-                       .append(": ")
-                       .append(message);
+        // Example formatting logic
+        formattedString.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        formattedString.append("Level: ").append(event.getLevel()).append("\n");
+        formattedString.append("Message: ").append(event.getMessage()).append("\n");
+        formattedString.append("Logger: ").append(event.getLoggerName()).append("\n");
         
         return formattedString.toString();
     }

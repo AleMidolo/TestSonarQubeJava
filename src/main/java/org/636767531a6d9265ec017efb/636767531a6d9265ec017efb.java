@@ -1,49 +1,26 @@
-public class Bucket {
+class Bucket {
     // Assuming Bucket has some properties and methods
-    private String data;
-    private Bucket next;
+}
 
-    public Bucket(String data) {
-        this.data = data;
-        this.next = null;
-    }
+class BucketList {
+    private Bucket head;
 
-    public String getData() {
-        return data;
-    }
-
-    public Bucket getNext() {
-        return next;
-    }
-
-    public void setNext(Bucket next) {
-        this.next = next;
+    public BucketList() {
+        this.head = null;
     }
 
     /**
-     * Inserta este "bucket" en la estructura de datos antes del {@code bucket}.
-     * @param bucket el "bucket", que será el siguiente a este "bucket".
+     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है।
+     * @param bucket वह बकेट है, जो इस बकेट के बाद आएगा।
      */
-    public void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            throw new IllegalArgumentException("Bucket cannot be null");
+    void insertBefore(Bucket bucket) {
+        if (head == null || bucket == null) {
+            return; // No insertion if the list is empty or bucket is null
         }
 
-        // Create a new bucket to insert
-        Bucket newBucket = new Bucket(this.data);
-        
-        // Find the previous bucket
-        Bucket current = this;
-        while (current.next != null && current.next != bucket) {
-            current = current.next;
-        }
-
-        // Insert the new bucket before the specified bucket
-        if (current.next == bucket) {
-            newBucket.next = bucket;
-            current.next = newBucket;
-        } else {
-            throw new IllegalArgumentException("The specified bucket is not in the list");
-        }
+        Bucket newBucket = new Bucket(); // Create a new bucket instance
+        // Logic to insert newBucket before the specified bucket
+        // This is a placeholder for the actual insertion logic
+        // You would need to traverse the list to find the correct position
     }
 }

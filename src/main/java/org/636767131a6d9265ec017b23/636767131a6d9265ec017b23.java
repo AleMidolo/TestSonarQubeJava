@@ -3,12 +3,12 @@ public class LineNumberManager {
     private int lineNumber;
 
     /** 
-     * Agrega un número de línea de origen correspondiente a esta etiqueta.
-     * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
+     * इस लेबल के लिए एक स्रोत पंक्ति संख्या जोड़ता है।
+     * @param lineNumber एक स्रोत पंक्ति संख्या (जो कि सख्ती से सकारात्मक होनी चाहिए)।
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
+            throw new IllegalArgumentException("Line number must be strictly positive.");
         }
         this.lineNumber = lineNumber;
     }
@@ -20,6 +20,6 @@ public class LineNumberManager {
     public static void main(String[] args) {
         LineNumberManager manager = new LineNumberManager();
         manager.addLineNumber(5);
-        System.out.println("Número de línea agregado: " + manager.getLineNumber());
+        System.out.println("Added line number: " + manager.getLineNumber());
     }
 }

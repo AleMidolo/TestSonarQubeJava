@@ -1,41 +1,47 @@
-import java.util.ArrayList;
-import java.util.List;
+public class StackPopper {
+    
+    // Assuming we have a stack to pop from
+    private Stack<Object> stack;
 
-public class StackExtractor {
+    public StackPopper() {
+        this.stack = new Stack<>();
+    }
 
-    private List<String> stack = new ArrayList<>();
-
-    /**
-     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
-     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
+    /** 
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Simulación de la extracción de tipos abstractos de la "frame stack"
-        // Aquí se puede implementar la lógica para analizar el descriptor y extraer los tipos correspondientes.
+        // Example logic to pop based on descriptor
+        // This is a placeholder for actual type checking and popping logic
+        int argCount = getArgumentCountFromDescriptor(descriptor);
         
-        // Ejemplo de cómo se podría extraer tipos basados en el descriptor
-        if (descriptor.startsWith("L")) { // Tipo de objeto
-            String type = descriptor.substring(1, descriptor.length() - 1).replace('/', '.');
-            stack.add(type);
-        } else if (descriptor.startsWith("(")) { // Método
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(1, endIndex);
-            for (String arg : args.split(",")) {
-                pop(arg); // Llamada recursiva para extraer tipos de argumentos
+        for (int i = 0; i < argCount; i++) {
+            if (!stack.isEmpty()) {
+                Object poppedElement = stack.pop();
+                // Process the popped element based on its type
+                System.out.println("Popped: " + poppedElement);
+            } else {
+                System.out.println("Stack is empty, cannot pop more elements.");
+                break;
             }
-        } else {
-            // Manejo de otros tipos (por ejemplo, primitivos)
-            stack.add(descriptor);
         }
     }
 
-    public List<String> getStack() {
-        return stack;
+    private int getArgumentCountFromDescriptor(String descriptor) {
+        // Placeholder for actual logic to determine argument count from descriptor
+        // For simplicity, let's assume it returns a fixed number
+        return 2; // Example: assuming 2 arguments for demonstration
+    }
+
+    public void push(Object item) {
+        stack.push(item);
     }
 
     public static void main(String[] args) {
-        StackExtractor extractor = new StackExtractor();
-        extractor.pop("(Ljava/lang/String;I)V"); // Ejemplo de descriptor de método
-        System.out.println(extractor.getStack());
+        StackPopper stackPopper = new StackPopper();
+        stackPopper.push("First");
+        stackPopper.push("Second");
+        stackPopper.pop("methodDescriptor");
     }
 }

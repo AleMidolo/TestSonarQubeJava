@@ -2,47 +2,23 @@ import java.util.Set;
 
 public class Graph<V> {
     
-    // Assuming there's a method to get the edges of the graph
-    // This is a placeholder for the actual implementation
-    private Set<Edge<V>> getEdges() {
-        // Implementation to retrieve edges
-        return null;
+    // Assuming a method to get incoming weights for a vertex
+    private double getIncomingWeight(V vertex) {
+        // Placeholder for actual implementation
+        // This should return the sum of weights of edges coming into the vertex
+        return 0.0; // Replace with actual logic
     }
 
-    /**
-     * Calcula la suma de los pesos que entran a un vértice
-     * @param v el vértice
-     * @return la suma de los pesos que entran a un vértice
+    /** 
+     * एक वर्टेक्स में प्रवेश करने वाले भारों का योग निकालें
+     * @param v वर्टेक्स
+     * @return एक वर्टेक्स में प्रवेश करने वाले भारों का योग
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-        Set<Edge<V>> edges = getEdges();
-        
-        for (Edge<V> edge : edges) {
-            if (v.contains(edge.getTarget())) {
-                totalWeight += edge.getWeight();
-            }
+        for (V vertex : v) {
+            totalWeight += getIncomingWeight(vertex);
         }
-        
         return totalWeight;
-    }
-    
-    // Placeholder for the Edge class
-    private static class Edge<V> {
-        private V target;
-        private double weight;
-
-        public Edge(V target, double weight) {
-            this.target = target;
-            this.weight = weight;
-        }
-
-        public V getTarget() {
-            return target;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
     }
 }

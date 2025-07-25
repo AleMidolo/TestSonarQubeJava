@@ -1,35 +1,51 @@
 public class TimeBucketCompressor {
-
+    
     /**
-     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. 
-     * Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, 
-     * el "bucket" de tiempo reformateado 20000115 es 20000112, 
-     * y el "bucket" de tiempo reformateado 20000123 es 20000123.
+     * दिन के चरण (dayStep) का पालन करते हुए समय बकेट के लम्बे मान को फिर से प्रारूपित करें। जैसे, यदि dayStep == 11 है, तो 20000105 का फिर से प्रारूपित समय बकेट 20000101 होगा, 20000115 का फिर से प्रारूपित समय बकेट 20000112 होगा, और 20000123 का फिर से प्रारूपित समय बकेट 20000123 होगा।
      */
-    static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
-        // Extraer el año, mes y día del bucket de tiempo
-        int year = (int) (bucketDeTiempo / 10000);
-        int month = (int) ((bucketDeTiempo % 10000) / 100);
-        int day = (int) (bucketDeTiempo % 100);
+    static long compressTimeBucket(long timeBucket, int dayStep) {
+        // Extract year, month, and day from the timeBucket
+        int year = (int) (timeBucket / 10000);
+        int month = (int) ((timeBucket % 10000) / 100);
+        int day = (int) (timeBucket % 100);
         
-        // Calcular el día del año
-        java.time.LocalDate date = java.time.LocalDate.of(year, month, day);
-        int dayOfYear = date.getDayOfYear();
+        // Calculate the day of the year
+        int dayOfYear = getDayOfYear(year, month, day);
         
-        // Calcular el nuevo día del año basado en el paso diario
-        int newDayOfYear = (dayOfYear / pasoDiario) * pasoDiario;
+        // Calculate the new day of the year based on the dayStep
+        int newDayOfYear = (dayOfYear / dayStep) * dayStep;
         
-        // Obtener la nueva fecha
-        java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
-        
-        // Reformatear la nueva fecha a formato largo
-        return Long.parseLong(newDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")));
+        // Convert the new day of the year back to a date
+        return convertDayOfYearToDate(year, newDayOfYear);
     }
-
+    
+    private static int getDayOfYear(int year, int month, int day) {
+        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        int dayOfYear = day;
+        for (int i = 0; i < month - 1; i++) {
+            dayOfYear += daysInMonth[i];
+        }
+        return dayOfYear;
+    }
+    
+    private static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+    
+    private static long convertDayOfYearToDate(int year, int dayOfYear) {
+        int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        int month = 0;
+        while (dayOfYear > daysInMonth[month]) {
+            dayOfYear -= daysInMonth[month];
+            month++;
+        }
+        return year * 10000 + (month + 1) * 100 + dayOfYear;
+    }
+    
     public static void main(String[] args) {
-        long bucketDeTiempo = 20000115;
-        int pasoDiario = 11;
-        long resultado = comprimirBucketDeTiempo(bucketDeTiempo, pasoDiario);
-        System.out.println("Bucket de tiempo reformateado: " + resultado);
+        long timeBucket = 20000105;
+        int dayStep = 11;
+        long compressedBucket = compressTimeBucket(timeBucket, dayStep);
+        System.out.println(compressedBucket); // Output: 20000101
     }
 }

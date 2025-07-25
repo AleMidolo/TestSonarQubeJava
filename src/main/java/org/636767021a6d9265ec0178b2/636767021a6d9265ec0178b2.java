@@ -1,40 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
-public class StackFrameExtractor {
+public class FrameStack {
+    private Stack<Object> stack;
+
+    public FrameStack() {
+        this.stack = new Stack<>();
+    }
 
     /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        List<String> extractedTypes = new ArrayList<>();
-        
-        // Simulación de la extracción de tipos a partir del descriptor
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int startIndex = descriptor.indexOf('(') + 1;
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(startIndex, endIndex);
-            
-            if (!args.isEmpty()) {
-                String[] types = args.split(",");
-                for (String type : types) {
-                    extractedTypes.add(type.trim());
-                }
+        // Assuming descriptor is a string representation of types
+        String[] types = descriptor.split(",");
+        for (String type : types) {
+            if (!stack.isEmpty()) {
+                Object poppedValue = stack.pop();
+                // Here you can add logic to check the type of poppedValue
+                // and ensure it matches the expected type from descriptor
+                System.out.println("Popped: " + poppedValue + " of type: " + type);
+            } else {
+                System.out.println("Stack is empty, cannot pop more values.");
+                break;
             }
-        } else {
-            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
-            extractedTypes.add(descriptor);
-        }
-
-        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
-        for (String type : extractedTypes) {
-            System.out.println("Tipo extraído: " + type);
         }
     }
 
+    public void push(Object value) {
+        stack.push(value);
+    }
+
     public static void main(String[] args) {
-        StackFrameExtractor extractor = new StackFrameExtractor();
-        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
+        FrameStack frameStack = new FrameStack();
+        frameStack.push(1);
+        frameStack.push("Hello");
+        frameStack.push(3.14);
+        
+        frameStack.pop("Integer,String,Double");
     }
 }

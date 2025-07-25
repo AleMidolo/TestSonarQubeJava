@@ -1,11 +1,11 @@
 public class CharacterArrayConverter {
 
     /** 
-     * <p>Convierte un array de objetos "Character" a primitivos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
-     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
+     * <p>एक ऑब्जेक्ट कैरेक्टर्स के एरे को प्रिमिटिव्स में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Character</code> एरे, यह <code>null</code> हो सकता है
+     * @return एक <code>char</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
      */
     public static char[] toPrimitive(final Character[] array) {
         if (array == null) {
@@ -14,7 +14,7 @@ public class CharacterArrayConverter {
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("El contenido del arreglo no puede ser nulo");
+                throw new NullPointerException("Array element at index " + i + " is null");
             }
             result[i] = array[i];
         }
@@ -22,6 +22,7 @@ public class CharacterArrayConverter {
     }
 
     public static void main(String[] args) {
+        // Example usage
         Character[] charArray = { 'a', 'b', 'c' };
         char[] primitiveArray = toPrimitive(charArray);
         for (char c : primitiveArray) {

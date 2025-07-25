@@ -1,21 +1,22 @@
 import java.util.LinkedList;
 
-public class EventLogger {
-    private LinkedList<LoggingEvent> eventBuffer;
+public class EventBuffer {
+    private LinkedList<LoggingEvent> buffer;
 
-    public EventLogger() {
-        eventBuffer = new LinkedList<>();
+    public EventBuffer() {
+        buffer = new LinkedList<>();
     }
 
     /** 
-     * Agrega un <code>evento</code> como el último evento en el búfer.
+     * एक <code>event</code> को बफर में अंतिम घटना के रूप में जोड़ें।
      */
     public void add(LoggingEvent event) {
-        eventBuffer.addLast(event);
+        buffer.addLast(event);
     }
 }
 
 class LoggingEvent {
+    // Assuming LoggingEvent has some properties and methods
     private String message;
 
     public LoggingEvent(String message) {

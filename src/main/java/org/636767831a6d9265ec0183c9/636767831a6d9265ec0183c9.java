@@ -1,36 +1,39 @@
 import java.util.Stack;
 
-public class DiagnosticContext {
-    private static Stack<String> contextStack = new Stack<>();
+public class DiagnosisStack {
+    private static Stack<String> diagnosisStack = new Stack<>();
 
-    /**
-     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. 
-     * El valor devuelto es el valor que se empujó por última vez. 
-     * Si no hay contexto disponible, se devuelve la cadena vacía "".
-     * @return String El contexto de diagnóstico más interno.
+    /** 
+     * इस NDC के शीर्ष पर अंतिम निदान संदर्भ को देखता है बिना उसे हटाए। <p> लौटाई गई मान वह मान है जो अंतिम बार डाला गया था। यदि कोई संदर्भ उपलब्ध नहीं है, तो खाली स्ट्रिंग "" लौटाई जाती है।
+     * @return String सबसे आंतरिक निदान संदर्भ।
      */
     public static String peek() {
-        return contextStack.isEmpty() ? "" : contextStack.peek();
+        if (diagnosisStack.isEmpty()) {
+            return "";
+        }
+        return diagnosisStack.peek();
     }
 
-    // Método para agregar contexto para pruebas
-    public static void push(String context) {
-        contextStack.push(context);
+    // Method to push a diagnosis reference onto the stack
+    public static void push(String diagnosis) {
+        diagnosisStack.push(diagnosis);
     }
 
-    // Método para eliminar contexto para pruebas
+    // Method to pop a diagnosis reference from the stack
     public static String pop() {
-        return contextStack.isEmpty() ? "" : contextStack.pop();
+        if (!diagnosisStack.isEmpty()) {
+            return diagnosisStack.pop();
+        }
+        return "";
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        push("Contexto 1");
-        push("Contexto 2");
-        System.out.println(peek()); // Debería imprimir "Contexto 2"
+        push("Diagnosis 1");
+        push("Diagnosis 2");
+        System.out.println(peek()); // Output: Diagnosis 2
         pop();
-        System.out.println(peek()); // Debería imprimir "Contexto 1"
+        System.out.println(peek()); // Output: Diagnosis 1
         pop();
-        System.out.println(peek()); // Debería imprimir ""
+        System.out.println(peek()); // Output: (empty string)
     }
 }

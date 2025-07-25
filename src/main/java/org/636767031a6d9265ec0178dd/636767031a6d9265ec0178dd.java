@@ -1,21 +1,21 @@
 public class Request {
-    private long contentLength;
+    private String content;
 
-    public Request(long contentLength) {
-        this.contentLength = contentLength;
+    public Request(String content) {
+        this.content = content;
     }
 
     /** 
-     * Recupera la longitud del contenido de la solicitud.
-     * @return La longitud del contenido de la solicitud.
+     * अनुरोध की सामग्री की लंबाई प्राप्त करें।
+     * @return अनुरोध की सामग्री की लंबाई।
      * @since 1.3
      */
     public long contentLength() {
-        return contentLength;
+        return content != null ? content.length() : 0;
     }
 
     public static void main(String[] args) {
-        Request request = new Request(1024);
-        System.out.println("La longitud del contenido de la solicitud es: " + request.contentLength());
+        Request request = new Request("Hello, World!");
+        System.out.println("Content Length: " + request.contentLength());
     }
 }

@@ -1,15 +1,32 @@
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.Filter;
 
-public class LogFilter {
+public class FilterExample {
+
+    public static final int NEUTRAL = 0;
 
     /**
-     * Devuelve {@link Filter#NEUTRAL} si no hay coincidencia de cadena.
+     * यदि कोई स्ट्रिंग मेल नहीं खाता है तो {@link Filter#NEUTRAL} लौटाता है।
      */
     public int decide(LoggingEvent event) {
-        // Implementación de la lógica para decidir el filtro
-        // Aquí se puede agregar la lógica para verificar coincidencias de cadena
-        // Por ahora, simplemente devolveremos Filter.NEUTRAL como se indica en el docstring
-        return Filter.NEUTRAL;
+        // यहाँ पर लॉजिक जोड़े जो यह निर्धारित करता है कि क्या स्ट्रिंग मेल खाता है
+        String message = event.getMessage().toString();
+        
+        // उदाहरण के लिए, हम एक निश्चित स्ट्रिंग की तुलना करेंगे
+        String targetString = "target";
+
+        if (!message.contains(targetString)) {
+            return NEUTRAL;
+        }
+
+        // अन्य निर्णयों के लिए कोड यहाँ जोड़ें
+        return 1; // उदाहरण के लिए, मेल खाने पर 1 लौटाएँ
+    }
+
+    public static void main(String[] args) {
+        // परीक्षण के लिए एक उदाहरण लॉगिंग इवेंट बनाएँ
+        LoggingEvent event = new LoggingEvent("logger", null, System.currentTimeMillis(), 0, "This is a test message", null);
+        FilterExample filterExample = new FilterExample();
+        int result = filterExample.decide(event);
+        System.out.println("Decision: " + result);
     }
 }

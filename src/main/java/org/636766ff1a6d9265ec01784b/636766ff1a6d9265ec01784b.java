@@ -1,10 +1,9 @@
-public class StringUtils {
-
+public class DigitChecker {
     /** 
-     * <p>Verifica si el <code>String</code> contiene solo caracteres numéricos.</p> 
-     * <p><code>Null</code> y un <code>String</code> vacío devolverán <code>false</code>.</p>
-     * @param str  el <code>String</code> a verificar
-     * @return <code>true</code> si str contiene solo caracteres numéricos unicode
+     * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> 
+     * <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
+     * @param str  जांचने के लिए <code>String</code>
+     * @return <code>true</code> यदि str में केवल यूनिकोड संख्या है
      */
     public static boolean isDigits(String str) {
         if (str == null || str.isEmpty()) {

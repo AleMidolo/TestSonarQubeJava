@@ -1,24 +1,27 @@
 public class ByteArrayChecker {
+    
+    private byte[] body;
 
-    private Object body;
-
-    public ByteArrayChecker(Object body) {
+    public ByteArrayChecker(byte[] body) {
         this.body = body;
     }
 
     /** 
-     * Verdadero si el cuerpo es un arreglo de bytes
-     * @return Verdadero si el cuerpo es un arreglo de bytes
+     * यदि बॉडी एक बाइट एरे है तो सत्य है
+     * @return यदि बॉडी एक बाइट एरे है तो सत्य है
      */
     public boolean hasBytes() {
-        return body instanceof byte[];
+        return body != null && body.length > 0;
     }
 
     public static void main(String[] args) {
-        ByteArrayChecker checker1 = new ByteArrayChecker(new byte[]{1, 2, 3});
-        System.out.println(checker1.hasBytes()); // true
+        ByteArrayChecker checker = new ByteArrayChecker(new byte[]{1, 2, 3});
+        System.out.println(checker.hasBytes()); // Output: true
 
-        ByteArrayChecker checker2 = new ByteArrayChecker("Not a byte array");
-        System.out.println(checker2.hasBytes()); // false
+        ByteArrayChecker emptyChecker = new ByteArrayChecker(new byte[]{});
+        System.out.println(emptyChecker.hasBytes()); // Output: false
+
+        ByteArrayChecker nullChecker = new ByteArrayChecker(null);
+        System.out.println(nullChecker.hasBytes()); // Output: false
     }
 }

@@ -1,4 +1,4 @@
-import java.util.NoSuchElementException;
+import java.util.LinkedList;
 
 class ListNode<E> {
     E data;
@@ -15,22 +15,17 @@ class DoublyLinkedList<E> {
     private ListNode<E> tail;
 
     public void addListNode(ListNode<E> node) {
-        if (node == null) return;
         if (head == null) {
             head = node;
             tail = node;
-            node.next = null;
-            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
             tail = node;
-            tail.next = null;
         }
     }
 
     public void removeListNode(ListNode<E> node) {
-        if (node == null) return;
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -41,42 +36,21 @@ class DoublyLinkedList<E> {
         } else {
             tail = node.prev;
         }
-        node.next = null;
-        node.prev = null;
     }
 
     public ListNode<E> getHead() {
         return head;
     }
-    
-    public boolean isEmpty() {
-        return head == null;
-    }
 }
 
-public class Main<E> {
+public class ListNodeMover<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.isEmpty()) {
-            return;
+        ListNode<E> current = list.getHead();
+        while (current != null) {
+            ListNode<E> nextNode = current.next; // Store next node
+            list.removeListNode(current); // Remove from original list
+            list.addListNode(current); // Add to the new list
+            current = nextNode; // Move to the next node
         }
-
-        ListNode<E> currentNode = list.getHead();
-        while (currentNode != null) {
-            ListNode<E> nextNode = currentNode.next; // Store next node
-            list.removeListNode(currentNode); // Remove from the original list
-            addListNode(currentNode); // Add to this list
-            currentNode = nextNode; // Move to the next node
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        DoublyLinkedList<Integer> sourceList = new DoublyLinkedList<>();
-        sourceList.addListNode(new ListNode<>(1));
-        sourceList.addListNode(new ListNode<>(2));
-        sourceList.addListNode(new ListNode<>(3));
-
-        Main<Integer> mainList = new Main<>();
-        mainList.moveAllListNodes(sourceList);
     }
 }

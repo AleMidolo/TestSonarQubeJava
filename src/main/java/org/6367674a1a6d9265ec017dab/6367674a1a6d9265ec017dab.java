@@ -1,21 +1,17 @@
 import java.util.Comparator;
 
 public class FloatComparator implements Comparator<Double> {
-
     /** 
-     * Compara dos valores de punto flotante. Devuelve 0 si son iguales, -1 si {@literal o1 < o2},1 en caso contrario.
-     * @param o1 el primer valor
-     * @param o2 el segundo valor
-     * @return 0 si son iguales, -1 si {@literal o1 < o2},1 en caso contrario
+     * दो फ्लोटिंग पॉइंट मानों की तुलना करता है। यदि वे समान हैं तो 0 लौटाता है, -1 यदि {@literal o1 < o2} है, अन्यथा 1 लौटाता है।
+     * @param o1 पहला मान
+     * @param o2 दूसरा मान
+     * @return यदि वे समान हैं तो 0, -1 यदि {@literal o1 < o2} है, अन्यथा 1
      */
-    @Override 
+    @Override
     public int compare(Double o1, Double o2) {
         if (o1.equals(o2)) {
             return 0;
-        } else if (o1 < o2) {
-            return -1;
-        } else {
-            return 1;
         }
+        return o1 < o2 ? -1 : 1;
     }
 }

@@ -1,34 +1,34 @@
-public class StackFrame {
-    private int[] stack;
-    private int top;
+import java.util.Stack;
 
-    public StackFrame(int size) {
-        stack = new int[size];
-        top = -1;
+public class OutputFrameStack {
+    private Stack<Integer> stack;
+
+    public OutputFrameStack() {
+        stack = new Stack<>();
     }
 
-    /** 
-     * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
-     * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
+    /**
+     * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
+     * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
      */
     private int pop() {
-        if (top == -1) {
+        if (stack.isEmpty()) {
             throw new IllegalStateException("Stack is empty");
         }
-        return stack[top--];
+        return stack.pop();
     }
 
+    // Method to push an element onto the stack for testing purposes
     public void push(int value) {
-        if (top == stack.length - 1) {
-            throw new IllegalStateException("Stack is full");
-        }
-        stack[++top] = value;
+        stack.push(value);
     }
 
+    // Main method for testing
     public static void main(String[] args) {
-        StackFrame stackFrame = new StackFrame(5);
-        stackFrame.push(10);
-        stackFrame.push(20);
-        System.out.println("Popped value: " + stackFrame.pop());
+        OutputFrameStack outputFrameStack = new OutputFrameStack();
+        outputFrameStack.push(10);
+        outputFrameStack.push(20);
+        System.out.println(outputFrameStack.pop()); // Should print 20
+        System.out.println(outputFrameStack.pop()); // Should print 10
     }
 }

@@ -4,53 +4,48 @@ import java.awt.*;
 public class TableRowSelector {
 
     /** 
-     * Selecciona la fila especificada en el JTable indicado y desplaza el JScrollPane especificado hacia la fila recién seleccionada. 
-     * Más importante aún, la llamada a repaint() se retrasa lo suficiente para que la tabla pinte correctamente la fila recién seleccionada, 
-     * que puede estar fuera de la pantalla.
-     * @param row debe pertenecer al JScrollPane especificado
+     * निर्दिष्ट JTable में निर्दिष्ट पंक्ति का चयन करता है और निर्दिष्ट JScrollPane को नए चयनित पंक्ति की ओर स्क्रॉल करता है। सबसे महत्वपूर्ण बात यह है कि repaint() कॉल को इतना देर से किया जाता है कि तालिका नए चयनित पंक्ति को सही तरीके से पेंट कर सके, जो कि स्क्रीन से बाहर हो सकती है।
+     * @param row चयनित पंक्ति का अनुक्रमांक
+     * @param table को निर्दिष्ट JScrollPane से संबंधित होना चाहिए
+     * @param pane JScrollPane जिसमें JTable है
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane cannot be null");
-        }
-        
-        if (row < 0 || row >= table.getRowCount()) {
-            throw new IndexOutOfBoundsException("Row index out of bounds");
-        }
-
-        // Select the specified row
+        // Set the selected row in the table
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
         SwingUtilities.invokeLater(() -> {
             Rectangle rect = table.getCellRect(row, 0, true);
             table.scrollRectToVisible(rect);
-            pane.repaint();
+            table.repaint();
         });
     }
 
     public static void main(String[] args) {
-        // Example usage
-        JFrame frame = new JFrame("Table Row Selector Example");
+        // Sample usage
+        JFrame frame = new JFrame("Table Row Selector");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
-            {"Data 1", "Data 2"},
-            {"Data 3", "Data 4"},
-            {"Data 5", "Data 6"},
-            {"Data 7", "Data 8"},
-            {"Data 9", "Data 10"}
+            {"Row 1", "Data 1"},
+            {"Row 2", "Data 2"},
+            {"Row 3", "Data 3"},
+            {"Row 4", "Data 4"},
+            {"Row 5", "Data 5"},
+            {"Row 6", "Data 6"},
+            {"Row 7", "Data 7"},
+            {"Row 8", "Data 8"},
+            {"Row 9", "Data 9"},
+            {"Row 10", "Data 10"},
         };
-        
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        
-        frame.add(pane, BorderLayout.CENTER);
+        frame.add(pane);
         frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
+
         // Select a row after a delay
-        Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
+        Timer timer = new Timer(1000, e -> selectRow(5, table, pane));
         timer.setRepeats(false);
         timer.start();
     }

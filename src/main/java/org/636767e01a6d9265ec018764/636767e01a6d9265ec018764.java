@@ -22,7 +22,7 @@ class KeyStringValuePair {
 public class PropertyConverter {
 
     /** 
-     * Convertir propiedades del proceso a datos de origen
+     * प्रक्रिया गुणों को स्रोत डेटा में परिवर्तित करें
      */
     private JsonObject convertProperties(List<KeyStringValuePair> properties) {
         JsonObject jsonObject = new JsonObject();

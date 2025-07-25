@@ -11,15 +11,25 @@ public class BeanMap {
     }
 
     /**
-     * Devuelve los valores del BeanMap.
-     * @return valores del BeanMap. La colección devuelta no es modificable.
+     * BeanMap के लिए मान लौटाता है।
+     * @return BeanMap के लिए मान। लौटाई गई संग्रह को संशोधित नहीं किया जा सकता है।
      */
     public Collection<Object> values() {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Método para agregar valores al BeanMap (opcional)
+    // Method to add values to the map for testing purposes
     public void put(String key, Object value) {
         map.put(key, value);
+    }
+    
+    // Main method for testing
+    public static void main(String[] args) {
+        BeanMap beanMap = new BeanMap();
+        beanMap.put("key1", "value1");
+        beanMap.put("key2", "value2");
+
+        Collection<Object> values = beanMap.values();
+        System.out.println(values); // Output: [value1, value2]
     }
 }

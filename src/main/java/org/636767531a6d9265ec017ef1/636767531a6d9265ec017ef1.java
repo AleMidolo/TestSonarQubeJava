@@ -3,10 +3,10 @@ import java.awt.geom.Point2D;
 public class PointComparison {
 
     /** 
-     * Compara dos puntos para verificar su igualdad utilizando una tolerancia de 1e-9.
-     * @param p1 el primer punto
-     * @param p2 el segundo punto
-     * @return si los dos puntos son iguales o no
+     * दो बिंदुओं की समानता की तुलना करें, सहिष्णुता 1e-9 का उपयोग करते हुए।
+     * @param p1 पहला बिंदु
+     * @param p2 दूसरा बिंदु
+     * @return क्या दोनों बिंदु समान हैं या नहीं
      */
     public static boolean equals(Point2D p1, Point2D p2) {
         if (p1 == null || p2 == null) {

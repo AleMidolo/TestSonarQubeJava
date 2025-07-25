@@ -1,17 +1,19 @@
 public class SubstringMatcher {
 
     /** 
-     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
-     * @param str la cadena original (o StringBuilder)
-     * @param index el índice en la cadena original para comenzar a comparar
-     * @param substring la subcadena para comparar en el índice dado
-     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
+     * यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, तो {@code true} लौटाता है, अन्यथा {@code false}।
+     * @param str मूल स्ट्रिंग (या StringBuilder)
+     * @param index मूल स्ट्रिंग में मेल शुरू करने के लिए इंडेक्स
+     * @param substring दी गई इंडेक्स पर मेल करने के लिए उपस्ट्रिंग
+     * @return {@code true} यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, अन्यथा {@code false}।
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
-        if (str == null || substring == null || index < 0 || index + substring.length() > str.length()) {
+        if (str == null || substring == null) {
             return false;
         }
-        
+        if (index < 0 || index + substring.length() > str.length()) {
+            return false;
+        }
         for (int i = 0; i < substring.length(); i++) {
             if (str.charAt(index + i) != substring.charAt(i)) {
                 return false;
@@ -21,10 +23,12 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        String original = "Hello, world!";
-        String sub = "world";
-        boolean result = substringMatch(original, 7, sub);
-        System.out.println(result); // Debería imprimir true
+        // Example usage
+        String str = "Hello, World!";
+        String substring = "World";
+        int index = 7;
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println("Does the substring match? " + result); // Output: true
     }
 }

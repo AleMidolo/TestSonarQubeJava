@@ -1,79 +1,54 @@
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
-class Category {
-    private String name;
-    private boolean active;
-    private LinkedList<Category> children;
+class TreeNode {
+    int value;
+    Set<TreeNode> children;
 
-    public Category(String name, boolean active) {
-        this.name = name;
-        this.active = active;
-        this.children = new LinkedList<>();
+    TreeNode(int value) {
+        this.value = value;
+        this.children = new HashSet<>();
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void addChild(Category child) {
+    void addChild(TreeNode child) {
         children.add(child);
-    }
-
-    public LinkedList<Category> getChildren() {
-        return children;
     }
 }
 
-public class CategoryTree {
-    private Category root;
+class Tree {
+    private TreeNode root;
 
-    public CategoryTree(Category root) {
+    public Tree(TreeNode root) {
         this.root = root;
     }
 
     /** 
-     * Elimina cualquier nodo inactivo del árbol con elementos de tipo "Category".
+     * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
      */
     protected int removeUnusedNodes() {
-        return removeInactiveNodes(root);
+        return removeUnusedNodes(root);
     }
 
-    private int removeInactiveNodes(Category category) {
-        if (category == null) {
+    private int removeUnusedNodes(TreeNode node) {
+        if (node == null) {
             return 0;
         }
 
-        Iterator<Category> iterator = category.getChildren().iterator();
         int removedCount = 0;
 
-        while (iterator.hasNext()) {
-            Category child = iterator.next();
-            removedCount += removeInactiveNodes(child);
-
-            if (!child.isActive()) {
-                iterator.remove();
-                removedCount++;
+        // Recursively remove unused nodes from children
+        Set<TreeNode> toRemove = new HashSet<>();
+        for (TreeNode child : node.children) {
+            removedCount += removeUnusedNodes(child);
+            if (child.children.isEmpty()) {
+                toRemove.add(child);
             }
         }
 
+        // Remove unused children
+        node.children.removeAll(toRemove);
+        removedCount += toRemove.size();
+
         return removedCount;
-    }
-
-    public static void main(String[] args) {
-        Category root = new Category("Root", true);
-        Category child1 = new Category("Child1", false);
-        Category child2 = new Category("Child2", true);
-        Category grandChild1 = new Category("GrandChild1", false);
-        Category grandChild2 = new Category("GrandChild2", true);
-
-        root.addChild(child1);
-        root.addChild(child2);
-        child2.addChild(grandChild1);
-        child2.addChild(grandChild2);
-
-        CategoryTree tree = new CategoryTree(root);
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed nodes: " + removedNodes);
     }
 }

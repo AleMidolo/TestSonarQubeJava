@@ -1,29 +1,42 @@
-public class NameAbbreviator {
+public class AbbreviationUtil {
 
     /** 
-     * Abreviar nombre.
-     * @param buf buffer para agregar la abreviatura.
-     * @param nameStart inicio del nombre a abreviar.
+     * नाम को संक्षिप्त करें।
+     * @param buf संक्षिप्त नाम जोड़ने के लिए बफर।
+     * @param nameStart संक्षिप्त करने के लिए नाम की शुरुआत।
      */
     public void abbreviate(final int nameStart, final StringBuffer buf) {
-        String name = "John Doe"; // Example name, replace with actual name source
-        if (nameStart < 0 || nameStart >= name.length()) {
-            throw new IllegalArgumentException("Invalid nameStart index");
+        if (nameStart < 0 || buf == null) {
+            throw new IllegalArgumentException("Invalid parameters");
         }
 
-        String[] parts = name.split(" ");
-        for (int i = nameStart; i < parts.length; i++) {
-            if (i > nameStart) {
-                buf.append(". "); // Add space between abbreviations
-            }
-            buf.append(parts[i].charAt(0)).append("."); // Append first letter and dot
+        String name = buf.toString();
+        if (nameStart >= name.length()) {
+            return; // Nothing to abbreviate
         }
+
+        StringBuilder abbreviatedName = new StringBuilder();
+        for (int i = nameStart; i < name.length(); i++) {
+            char currentChar = name.charAt(i);
+            if (i == nameStart || name.charAt(i - 1) == ' ') {
+                abbreviatedName.append(currentChar).append(". ");
+            }
+        }
+
+        // Remove the last added space and dot if exists
+        if (abbreviatedName.length() > 0) {
+            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last space
+            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last dot
+        }
+
+        buf.setLength(0); // Clear the buffer
+        buf.append(abbreviatedName.toString()); // Append the abbreviated name
     }
 
     public static void main(String[] args) {
-        NameAbbreviator abbreviator = new NameAbbreviator();
-        StringBuffer buffer = new StringBuffer();
-        abbreviator.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: J. D.
+        AbbreviationUtil util = new AbbreviationUtil();
+        StringBuffer buffer = new StringBuffer("John Doe Smith");
+        util.abbreviate(0, buffer);
+        System.out.println(buffer.toString()); // Output: J. D. S.
     }
 }

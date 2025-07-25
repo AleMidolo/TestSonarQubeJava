@@ -1,41 +1,36 @@
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
-public class Utf8Writer {
+public class UTF8Writer {
 
-    /**
-     * Escribe los bytes codificados en utf8 de la cadena en el {@link LinkedBuffer}.
-     */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || lb == null) {
-            throw new IllegalArgumentException("str and lb cannot be null");
+        if (str == null || session == null || lb == null) {
+            throw new IllegalArgumentException("Arguments cannot be null");
         }
 
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
+        byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+        lb.write(bytes);
         return lb;
     }
-}
 
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
+    public static class LinkedBuffer {
+        private LinkedList<byte[]> buffers = new LinkedList<>();
 
-    public LinkedBuffer(int size) {
-        buffer = new byte[size];
-        position = 0;
-    }
-
-    public void write(byte[] bytes) {
-        if (position + bytes.length > buffer.length) {
-            throw new ArrayIndexOutOfBoundsException("Not enough space in LinkedBuffer");
+        public void write(byte[] data) {
+            buffers.add(data);
         }
-        System.arraycopy(bytes, 0, buffer, position, bytes.length);
-        position += bytes.length;
+
+        // Additional methods for LinkedBuffer can be added here
     }
 
-    // Additional methods for LinkedBuffer can be added here
-}
+    public static class WriteSession {
+        // Implementation of WriteSession can be added here
+    }
 
-class WriteSession {
-    // Implementation of WriteSession can be added here
+    public static void main(String[] args) {
+        // Example usage
+        WriteSession session = new WriteSession();
+        LinkedBuffer lb = new LinkedBuffer();
+        writeUTF8("Hello, World!", session, lb);
+    }
 }

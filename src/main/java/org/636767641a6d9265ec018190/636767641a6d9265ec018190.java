@@ -1,33 +1,29 @@
 import java.util.List;
 import java.util.Set;
 
-public class CubeManager {
+public class BucketRelabeler {
 
     /**
-     * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. Limpia el cubo con etiqueta {@code minLabel}. Actualiza el etiquetado en consecuencia.
-     * @param bucketsByLabel los cubos donde se almacenan los vértices
-     * @param labels las etiquetas de los vértices
-     * @param minLabel el valor mínimo del cubo no vacío
+     * {@code minLabel} लेबल वाले बकेट से सभी वर्टिस को लेबल 0 वाले बकेट में स्थानांतरित करता है। {@code minLabel} लेबल वाले बकेट को साफ करता है। लेबलिंग को तदनुसार अपडेट करता है।
+     * @param bucketsByLabel वे बकेट जहाँ वर्टिस संग्रहीत हैं
+     * @param labels वर्टिस के लेबल
+     * @param minLabel गैर-खाली बकेट का न्यूनतम मान
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Verifica que el cubo con minLabel no esté vacío
-        if (bucketsByLabel.size() <= minLabel || bucketsByLabel.get(minLabel).isEmpty()) {
-            return; // No hay vértices que mover
+        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
+            throw new IllegalArgumentException("minLabel is out of bounds");
         }
 
-        // Mueve los vértices del cubo con minLabel al cubo con etiqueta 0
-        Set<Integer> minLabelVertices = bucketsByLabel.get(minLabel);
-        Set<Integer> zeroLabelVertices = bucketsByLabel.get(0);
+        Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
+        Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
 
-        // Agrega todos los vértices del cubo minLabel al cubo 0
-        zeroLabelVertices.addAll(minLabelVertices);
-
-        // Limpia el cubo con etiqueta minLabel
-        minLabelVertices.clear();
-
-        // Actualiza las etiquetas de los vértices movidos
-        for (Integer vertex : zeroLabelVertices) {
-            labels.set(vertex, 0); // Asigna la etiqueta 0 a los vértices movidos
+        // Move vertices from minLabel bucket to zero label bucket
+        for (Integer vertex : minLabelBucket) {
+            zeroLabelBucket.add(vertex);
+            labels.set(vertex, 0); // Update the label of the vertex to 0
         }
+
+        // Clear the minLabel bucket
+        minLabelBucket.clear();
     }
 }

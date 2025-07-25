@@ -8,23 +8,29 @@ public class MyMap<K, V> {
         this.map = new HashMap<>();
     }
 
-    /** 
-     * Devuelve <code>true</code> si este map contiene un mapeo para la llave especificada.
-     * @param key  la llave que se va a buscar
-     * @return true si el mapa contiene la llave
+    /**
+     * यदि इस मानचित्र में निर्दिष्ट कुंजी के लिए एक मैपिंग है, तो <code>true</code> लौटाएं।
+     * @param key  वह कुंजी जिसे खोजा जाना है
+     * @return यदि मानचित्र में कुंजी है तो true
      */
-    @Override 
+    @Override
     public boolean containsKey(final Object key) {
         return map.containsKey(key);
     }
 
-    // Método para agregar elementos al mapa
+    // Additional methods to add and manage entries in the map
     public void put(K key, V value) {
         map.put(key, value);
     }
 
-    // Método para obtener elementos del mapa
     public V get(K key) {
         return map.get(key);
+    }
+
+    public static void main(String[] args) {
+        MyMap<String, Integer> myMap = new MyMap<>();
+        myMap.put("one", 1);
+        System.out.println(myMap.containsKey("one")); // true
+        System.out.println(myMap.containsKey("two")); // false
     }
 }

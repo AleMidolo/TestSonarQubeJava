@@ -1,7 +1,7 @@
 public class ObjectUtils {
 
     /** 
-     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") si el argumento es <code>null</code>.</p> 
+     * <p>एक <code>Object</code> का <code>toString</code> प्राप्त करता है, यदि <code>null</code> इनपुट हो तो खाली स्ट्रिंग ("") लौटाता है।</p> 
      * <pre> 
      * ObjectUtils.toString(null)         = "" 
      * ObjectUtils.toString("")           = "" 
@@ -10,8 +10,8 @@ public class ObjectUtils {
      * </pre>
      * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)
-     * @param obj  el objeto a procesar mediante <code>toString</code>, puede ser null
-     * @return el resultado de aplicar la función "toString" al objeto pasado, o una cadena vacía si el argumento es <code>null</code>
+     * @param obj  वह Object जिसे <code>toString</code> किया जाना है, यह null हो सकता है
+     * @return पास किए गए Object का toString, या nullStr यदि <code>null</code> इनपुट हो
      * @since 2.0
      */
     public static String toString(Object obj) {
@@ -19,9 +19,9 @@ public class ObjectUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toString(null));         // Output: ""
-        System.out.println(toString(""));           // Output: ""
-        System.out.println(toString("bat"));        // Output: "bat"
-        System.out.println(toString(Boolean.TRUE)); // Output: "true"
+        System.out.println(toString(null));          // Output: ""
+        System.out.println(toString(""));            // Output: ""
+        System.out.println(toString("bat"));         // Output: "bat"
+        System.out.println(toString(Boolean.TRUE));  // Output: "true"
     }
 }

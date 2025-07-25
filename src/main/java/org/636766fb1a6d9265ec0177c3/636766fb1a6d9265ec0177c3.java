@@ -1,6 +1,6 @@
 public class CharUtils {
     /** 
-     * <p>Verifica si el carácter es ASCII de 7 bits.</p> 
+     * <p>जांचता है कि क्या वर्ण ASCII 7 बिट है।</p> 
      * <pre> 
      * CharUtils.isAscii('a')  = true 
      * CharUtils.isAscii('A')  = true 
@@ -9,8 +9,8 @@ public class CharUtils {
      * CharUtils.isAscii('\n') = true 
      * CharUtils.isAscii('&copy;') = false 
      * </pre>
-     * @param ch  el carácter a verificar
-     * @return true si es menor que 128
+     * @param ch  जांचने के लिए वर्ण
+     * @return यदि 128 से कम है तो true
      */
     public static boolean isAscii(final char ch) {
         return ch < 128;

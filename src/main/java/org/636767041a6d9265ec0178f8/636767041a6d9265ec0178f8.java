@@ -1,11 +1,10 @@
-import java.util.Arrays;
-
-public class ArrayCopier {
-
+public class StringArrayCopy {
+    
     /** 
-     * Este método crea una copia del array proporcionado y asegura que todas las cadenas en el nuevo array contengan solo letras minúsculas. <p> Utilizar este método para copiar arrays de cadenas significa que los cambios en el array src no modifican el array dst.
+     * यह विधि प्रदान किए गए ऐरे की एक प्रति बनाती है, और सुनिश्चित करती है कि नए बनाए गए ऐरे में सभी स्ट्रिंग केवल छोटे अक्षरों में हों। 
+     * <p> इस विधि का उपयोग स्ट्रिंग ऐरे की नकल करने के लिए करने का मतलब है कि src ऐरे में किए गए परिवर्तन dst ऐरे को संशोधित नहीं करते हैं।
      */
-    private static String[] copiarCadenas(final String[] src) {
+    private static String[] copyStrings(final String[] src) {
         if (src == null) {
             return null;
         }
@@ -19,8 +18,11 @@ public class ArrayCopier {
 
     public static void main(String[] args) {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
-        String[] copied = copiarCadenas(original);
+        String[] copied = copyStrings(original);
         
-        System.out.println(Arrays.toString(copied)); // Output: [hello, world, java, null, programming]
+        // Print the copied array
+        for (String str : copied) {
+            System.out.println(str);
+        }
     }
 }

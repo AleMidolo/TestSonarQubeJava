@@ -1,20 +1,20 @@
 import java.io.File;
 
-public class ClassPathRetriever {
+public class ClassPathExample {
 
     /** 
-     * Devuelve la ruta de clases de la instancia actual de la JVM como un arreglo de objetos {@link File}.
+     * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
         String[] paths = classPath.split(System.getProperty("path.separator"));
-        File[] classPathFiles = new File[paths.length];
+        File[] files = new File[paths.length];
         
         for (int i = 0; i < paths.length; i++) {
-            classPathFiles[i] = new File(paths[i]);
+            files[i] = new File(paths[i]);
         }
         
-        return classPathFiles;
+        return files;
     }
 
     public static void main(String[] args) {

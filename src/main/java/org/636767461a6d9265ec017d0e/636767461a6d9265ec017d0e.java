@@ -5,26 +5,21 @@ import javafx.util.Pair;
 public class SuffixSumCalculator {
 
     /** 
-     * Calcula una suma de sufijos de los {@code bounds}. Devuelve la suma de sufijos calculada y la suma de todos los elementos en la {@code lista de bounds}.
-     * @param bounds lista de enteros.
-     * @return par calculado de la lista de suma de sufijos y la suma de todos los elementos.
+     * {@code bounds} का एक सुफिक्स सम की गणना करता है। गणना की गई सुफिक्स सम और {@code bounds list} में सभी तत्वों का योग लौटाता है।
+     * @param bounds पूर्णांकों की सूची।
+     * @return गणना की गई सुफिक्स सम सूची और सभी तत्वों का योग।
      */
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-        List<Integer> suffixSums = new ArrayList<>();
+        List<Integer> suffixSum = new ArrayList<>();
         long totalSum = 0;
-        
-        // Calculate total sum and suffix sums
-        for (int i = bounds.size() - 1; i >= 0; i--) {
+        int n = bounds.size();
+
+        // Calculate the suffix sum
+        for (int i = n - 1; i >= 0; i--) {
             totalSum += bounds.get(i);
-            suffixSums.add(totalSum);
+            suffixSum.add(0, totalSum); // Add to the front to maintain order
         }
-        
-        // Reverse the suffix sums to maintain the original order
-        List<Integer> reversedSuffixSums = new ArrayList<>();
-        for (int i = suffixSums.size() - 1; i >= 0; i--) {
-            reversedSuffixSums.add(suffixSums.get(i).intValue());
-        }
-        
-        return new Pair<>(reversedSuffixSums, totalSum);
+
+        return new Pair<>(suffixSum, totalSum);
     }
 }

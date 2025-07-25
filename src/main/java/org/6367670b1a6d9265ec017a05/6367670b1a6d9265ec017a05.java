@@ -9,8 +9,8 @@ public class CharUtils {
     }
 
     /**
-     * Convierte el carácter en una cadena que contiene un solo carácter.
-     * Para caracteres ASCII de 7 bits, utiliza una caché que devolverá el mismo objeto String cada vez.
+     * <p>Convierte el carácter en una cadena que contiene un solo carácter.</p>
+     * <p>Para caracteres ASCII de 7 bits, utiliza una caché que devolverá el mismo objeto String cada vez.</p>
      * <pre>
      * CharUtils.toString(' ')  = " "
      * CharUtils.toString('A')  = "A"

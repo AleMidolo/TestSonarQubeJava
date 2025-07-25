@@ -18,7 +18,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         String str = "ababababab";
-        String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 5
+        String sub = "aba";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

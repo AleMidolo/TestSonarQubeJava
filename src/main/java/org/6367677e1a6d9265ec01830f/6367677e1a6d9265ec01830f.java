@@ -10,7 +10,7 @@ public class LogFormatter {
      * @return Una cadena formateada según el patrón de conversión.
      */
     public String format(LoggingEvent event) {
-        // Ejemplo de patrón de conversión: [fecha] [nivel] [mensaje]
+        // Ejemplo de patrón de formato: [Fecha] [Nivel] Mensaje
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = dateFormat.format(new Date(event.getTimeStamp()));
         
@@ -18,7 +18,7 @@ public class LogFormatter {
     }
 }
 
-// Clase de ejemplo LoggingEvent
+// Clase de ejemplo para LoggingEvent
 class LoggingEvent {
     private long timeStamp;
     private String level;

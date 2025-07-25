@@ -1,47 +1,30 @@
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
-public class BipartiteGraphGenerator<V, E> {
+/**
+ * Construir un grafo bipartito completo
+ */
+@Override
+public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+    // Asumimos que resultMap contiene dos claves: "left" y "right" que representan los dos conjuntos de vértices
+    Set<V> leftSet = new HashSet<>(resultMap.get("left"));
+    Set<V> rightSet = new HashSet<>(resultMap.get("right"));
 
-    /**
-     * Construir un grafo bipartito completo
-     * 
-     * @param target El grafo en el que se construirá el grafo bipartito completo.
-     * @param resultMap Un mapa para almacenar los vértices generados.
-     */
-    @Override
-    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Supongamos que los vértices están divididos en dos conjuntos: U y V
-        Set<V> setU = new HashSet<>();
-        Set<V> setV = new HashSet<>();
+    // Añadir todos los vértices al grafo
+    for (V vertex : leftSet) {
+        target.addVertex(vertex);
+    }
+    for (V vertex : rightSet) {
+        target.addVertex(vertex);
+    }
 
-        // Generar vértices para el conjunto U
-        for (int i = 0; i < 5; i++) {
-            V vertexU = target.addVertex();
-            setU.add(vertexU);
-            resultMap.put("U" + i, vertexU);
-        }
-
-        // Generar vértices para el conjunto V
-        for (int i = 0; i < 5; i++) {
-            V vertexV = target.addVertex();
-            setV.add(vertexV);
-            resultMap.put("V" + i, vertexV);
-        }
-
-        // Conectar cada vértice de U con cada vértice de V
-        for (V u : setU) {
-            for (V v : setV) {
-                target.addEdge(u, v);
-            }
+    // Conectar cada vértice del conjunto izquierdo con cada vértice del conjunto derecho
+    for (V leftVertex : leftSet) {
+        for (V rightVertex : rightSet) {
+            target.addEdge(leftVertex, rightVertex);
         }
     }
-}
-
-// Interface Graph asumida para el ejemplo
-interface Graph<V, E> {
-    V addVertex();
-    E addEdge(V source, V target);
 }

@@ -8,13 +8,13 @@ public class StringUtils {
             return inString;
         }
 
-        // Convert the characters to delete into a set for quick lookup
+        // Convertir el conjunto de caracteres a eliminar en un Set para búsqueda rápida
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
-        // Build the resulting string by skipping characters in the set
+        // Construir la cadena resultante
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {
@@ -26,8 +26,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello, World!";
-        String charsToDelete = "lo";
-        System.out.println(deleteAny(input, charsToDelete)); // Output: He, Wrd!
+        String input = "Hello, World!\nThis is a test.";
+        String charsToDelete = "aeiou\n";
+        String result = deleteAny(input, charsToDelete);
+        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
     }
 }

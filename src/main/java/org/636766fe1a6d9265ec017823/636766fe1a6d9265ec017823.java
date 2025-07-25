@@ -5,7 +5,7 @@ public class ConstantPool {
     private Map<String, Integer> constantNameAndTypeMap;
 
     public ConstantPool() {
-        constantNameAndTypeMap = new HashMap<>();
+        this.constantNameAndTypeMap = new HashMap<>();
     }
 
     /**

@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class PackedFieldChecker {
 
-    private boolean isPacked = false;
+    private boolean isPackedField = false;
 
     /**
      * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
@@ -11,28 +11,18 @@ public class PackedFieldChecker {
     private void checkIfPackedField() throws IOException {
         // Aquí se implementaría la lógica para verificar si el campo está empaquetado.
         // Por ejemplo, se podría leer un byte adicional para verificar si es un campo empaquetado.
-        // Si se detecta que el campo está empaquetado, se actualiza el estado interno.
+        // Si se detecta que es un campo empaquetado, se actualiza el estado interno.
         
         // Ejemplo de lógica (esto es solo un ejemplo, la lógica real dependerá del contexto):
         int nextByte = System.in.read();
         if (nextByte == 0x01) { // Supongamos que 0x01 indica un campo empaquetado
-            isPacked = true;
+            isPackedField = true;
         } else {
-            isPacked = false;
+            isPackedField = false;
         }
     }
 
-    public boolean isPacked() {
-        return isPacked;
-    }
-
-    public static void main(String[] args) {
-        try {
-            PackedFieldChecker checker = new PackedFieldChecker();
-            checker.checkIfPackedField();
-            System.out.println("Is packed: " + checker.isPacked());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

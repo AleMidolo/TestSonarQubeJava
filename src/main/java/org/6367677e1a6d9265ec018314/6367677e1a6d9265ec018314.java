@@ -2,7 +2,7 @@ import java.util.*;
 
 class Category {
     // Assuming Category class has necessary fields and methods
-    // For example, a field to check if the node is active
+    // For example, it might have a boolean field to check if it's active
     private boolean isActive;
 
     public boolean isActive() {

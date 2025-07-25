@@ -20,7 +20,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             int upperBound = 0;
 
             for (int j = 0; j < keys.size(); j++) {
-                if (i != j && currentKey.compareTo(keys.get(j)) < 0) {
+                if (i != j && currentKey.compareTo(keys.get(j)) >= 0) {
                     upperBound++;
                 }
             }

@@ -9,13 +9,13 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
     // Clear the buffer from nameStart onwards
     buf.delete(nameStart, buf.length());
 
-    // Append abbreviated names
+    // Append the abbreviated name
     for (int i = 0; i < words.length; i++) {
+        if (i > 0) {
+            buf.append(" "); // Add space between words
+        }
         if (words[i].length() > 0) {
-            buf.append(words[i].charAt(0)); // Append the first character
-            if (i < words.length - 1) {
-                buf.append('.'); // Append a dot after each abbreviation except the last
-            }
+            buf.append(words[i].charAt(0)); // Append the first character of each word
         }
     }
 }

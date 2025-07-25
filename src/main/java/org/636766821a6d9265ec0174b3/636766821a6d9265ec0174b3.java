@@ -1,22 +1,29 @@
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import java.util.function.Predicate;
 
 /**
  * Invoca el {@link BroadcastFilter}
- * @param msg El mensaje que se desea filtrar.
- * @return El resultado del filtrado, que puede ser un objeto modificado o null si no se aplica ningún filtro.
+ * @param msg el mensaje a filtrar
+ * @return el mensaje filtrado o null si no pasa el filtro
  */
 protected Object filter(Object msg) {
-    if (msg instanceof Intent) {
-        Intent intent = (Intent) msg;
-        // Aquí puedes agregar lógica para filtrar el Intent
-        // Por ejemplo, puedes verificar la acción del Intent y decidir si permitirlo o no
-        if ("com.example.ACTION_FILTER".equals(intent.getAction())) {
-            // Modificar el Intent o devolver null para bloquearlo
-            return null;
+    // Asumimos que BroadcastFilter es una interfaz funcional similar a Predicate
+    BroadcastFilter filter = new BroadcastFilter() {
+        @Override
+        public boolean test(Object message) {
+            // Lógica de filtrado personalizada
+            return message != null; // Ejemplo simple: filtrar mensajes no nulos
         }
+    };
+
+    // Aplicar el filtro
+    if (filter.test(msg)) {
+        return msg;
+    } else {
+        return null;
     }
-    return msg;
+}
+
+// Definición de la interfaz BroadcastFilter
+interface BroadcastFilter extends Predicate<Object> {
+    // Puede incluir métodos adicionales si es necesario
 }

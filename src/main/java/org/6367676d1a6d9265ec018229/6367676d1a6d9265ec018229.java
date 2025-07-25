@@ -22,11 +22,11 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String[] testArray = {"  hello ", "  world  ", null, "  java  "};
-        String[] result = trimArrayElements(testArray);
+        String[] originalArray = {"  hello ", "  world  ", null, "  java  "};
+        String[] trimmedArray = trimArrayElements(originalArray);
         
-        for (String str : result) {
-            System.out.println("'" + str + "'");
+        for (String str : trimmedArray) {
+            System.out.println(str);
         }
     }
 }

@@ -5,11 +5,8 @@ import java.util.regex.Pattern;
 public class PropertySubstitutor {
 
     /**
-     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. Luego realiza la sustitución de variables en el valor encontrado.
-     * 
-     * @param key La clave para buscar en las propiedades.
-     * @param props Las propiedades que contienen los valores.
-     * @return El valor con las variables sustituidas, o null si la clave no existe.
+     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. 
+     * Luego realiza la sustitución de variables en el valor encontrado.
      */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
@@ -17,15 +14,15 @@ public class PropertySubstitutor {
             return null;
         }
 
-        // Expresión regular para encontrar patrones como ${key}
+        // Expresión regular para encontrar variables en el formato ${variable}
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String variableKey = matcher.group(1);
-            String variableValue = props.getProperty(variableKey, "");
-            matcher.appendReplacement(result, Matcher.quoteReplacement(variableValue));
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable, "");
+            matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);
 

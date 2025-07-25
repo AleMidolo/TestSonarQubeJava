@@ -6,10 +6,10 @@ public class StringUtils {
      * Case in-sensitive Checks if the String contains any character in the given set of string.
      * @param str The string to check
      * @param searchChars The set of characters to search for
-     * @return true if str contains any character in searchChars, false otherwise
+     * @return true if str contains any character in searchChars (case insensitive), false otherwise
      */
-    public static boolean containsAny(String str, String searchChars) {
-        if (str == null || str.isEmpty() || searchChars == null || searchChars.isEmpty()) {
+    public static boolean containsAnyIgnoreCase(String str, String searchChars) {
+        if (str == null || searchChars == null) {
             return false;
         }
         

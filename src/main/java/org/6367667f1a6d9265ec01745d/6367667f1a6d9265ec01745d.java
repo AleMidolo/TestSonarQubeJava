@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class URIPathDecoder {
-    
     public static List<String> getPathSegments(URI u, boolean decode) {
         List<String> segments = new ArrayList<>();
         
@@ -30,10 +29,10 @@ public class URIPathDecoder {
             
             if (decode) {
                 try {
-                    // Decode the segment using UTF-8 encoding
+                    // Decode segment using UTF-8 encoding
                     segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
                 } catch (Exception e) {
-                    // If decoding fails, use the raw segment
+                    // If decoding fails, use raw segment
                 }
             }
             segments.add(segment);

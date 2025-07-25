@@ -12,9 +12,7 @@ public class ArrayUtils {
         if (array == null) {
             return null;
         }
-        if (array.length == 0) {
-            return new Integer[0];
-        }
+        
         final Integer[] result = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = Integer.valueOf(array[i]);

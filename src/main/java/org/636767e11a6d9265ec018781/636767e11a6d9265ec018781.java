@@ -13,23 +13,22 @@ public class MetricsCache {
         if (data != null) {
             String key = data.getKey(); // Assuming METRICS has a method getKey()
             cache.merge(key, data, (existingValue, newValue) -> {
-                existingValue.merge(newValue); // Assuming METRICS has a method merge()
+                existingValue.merge(newValue); // Assuming METRICS has a merge method
                 return existingValue;
             });
         }
     }
-    
-    // Assuming METRICS class is defined somewhere
-    public static class METRICS {
-        private String key;
-        // Other fields...
+}
 
-        public String getKey() {
-            return key;
-        }
+class METRICS {
+    private String key;
+    // Other fields...
 
-        public void merge(METRICS other) {
-            // Logic to merge this METRICS with another METRICS
-        }
+    public String getKey() {
+        return key;
+    }
+
+    public void merge(METRICS other) {
+        // Implement merging logic here
     }
 }

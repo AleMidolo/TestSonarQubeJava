@@ -1,11 +1,11 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TypeManager {
-    private Set<Integer> initializedTypes;
+    private List<Integer> initializedTypes;
 
     public TypeManager() {
-        initializedTypes = new HashSet<>();
+        initializedTypes = new ArrayList<>();
     }
 
     /** 
@@ -13,10 +13,12 @@ public class TypeManager {
      * @param abstractType an abstract type on a which a constructor is invoked.
      */
     private void addInitializedType(final int abstractType) {
-        initializedTypes.add(abstractType);
+        if (!initializedTypes.contains(abstractType)) {
+            initializedTypes.add(abstractType);
+        }
     }
 
-    public Set<Integer> getInitializedTypes() {
+    public List<Integer> getInitializedTypes() {
         return initializedTypes;
     }
 
@@ -24,6 +26,8 @@ public class TypeManager {
         TypeManager manager = new TypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        System.out.println(manager.getInitializedTypes());
+        manager.addInitializedType(1); // Duplicate, should not be added
+
+        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }
 }

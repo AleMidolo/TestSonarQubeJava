@@ -1,5 +1,5 @@
 public class BooleanArrayConverter {
-    
+
     /** 
      * <p>Converts an array of primitive booleans to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>boolean</code> array

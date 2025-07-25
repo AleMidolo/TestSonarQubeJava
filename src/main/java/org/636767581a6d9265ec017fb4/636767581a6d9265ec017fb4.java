@@ -11,23 +11,22 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         List<Integer> upperBounds = new ArrayList<>();
-        
         if (keys == null || keys.isEmpty()) {
             return upperBounds; // Return empty list if input is null or empty
         }
 
         // Sort the keys to find upper bounds
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
-
-        for (K key : sortedKeys) {
-            int upperBound = Collections.binarySearch(sortedKeys, key);
+        Collections.sort(keys);
+        
+        for (K key : keys) {
+            // Find the upper bound for each key
+            int upperBound = Collections.binarySearch(keys, key);
             if (upperBound < 0) {
                 upperBound = -(upperBound + 1); // Convert to insertion point
             }
             upperBounds.add(upperBound);
         }
-
+        
         return upperBounds;
     }
 }

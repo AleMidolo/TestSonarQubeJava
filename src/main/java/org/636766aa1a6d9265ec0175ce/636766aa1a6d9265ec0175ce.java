@@ -1,7 +1,7 @@
 public class StackMapFrameVisitor {
     private int currentFrameOffset;
-    private int currentFrameNumLocal;
-    private int currentFrameNumStack;
+    private int currentNumLocal;
+    private int currentNumStack;
 
     /**
      * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
@@ -12,8 +12,8 @@ public class StackMapFrameVisitor {
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         this.currentFrameOffset = offset;
-        this.currentFrameNumLocal = numLocal;
-        this.currentFrameNumStack = numStack;
+        this.currentNumLocal = numLocal;
+        this.currentNumStack = numStack;
         // Assuming the next index to write is the number of local variables
         return numLocal;
     }

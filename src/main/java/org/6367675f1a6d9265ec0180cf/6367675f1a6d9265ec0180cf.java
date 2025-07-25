@@ -4,7 +4,6 @@ import org.jgrapht.alg.clique.CliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class GraphUtils {
@@ -16,20 +15,18 @@ public class GraphUtils {
      * @return true if the induced subgraph is a clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        // Check if the vertices set is empty or has only one vertex
-        if (vertices.isEmpty() || vertices.size() == 1) {
-            return true;
+        if (vertices.size() < 2) {
+            return true; // A single vertex or empty set is trivially a clique
         }
 
-        // Check if every pair of vertices in the set is connected
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Found a pair that is not connected
+                    return false; // Found a pair of vertices that are not connected
                 }
             }
         }
-        return true; // All pairs are connected
+        return true; // All pairs of vertices are connected
     }
 
     public static void main(String[] args) {
@@ -39,14 +36,10 @@ public class GraphUtils {
         graph.addVertex("B");
         graph.addVertex("C");
         graph.addEdge("A", "B");
-        graph.addEdge("B", "C");
         graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
 
-        Set<String> vertices = new HashSet<>();
-        vertices.add("A");
-        vertices.add("B");
-        vertices.add("C");
-
+        Set<String> vertices = Set.of("A", "B", "C");
         System.out.println(isClique(graph, vertices)); // Should print true
     }
 }

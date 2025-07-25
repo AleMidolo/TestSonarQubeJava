@@ -19,13 +19,14 @@ public class MessageSerializer {
         // Write the length as a prefix
         out.write(intToByteArray(length));
         
-        // Write the message bytes
+        // Write the actual message
         out.write(messageBytes);
         
-        // Return the size of the message
-        return length;
+        // Return the total size of the message
+        return length + 4; // 4 bytes for the length prefix
     }
 
+    // Helper method to convert an integer to a byte array
     private static byte[] intToByteArray(int value) {
         return new byte[] {
             (byte) (value >>> 24),

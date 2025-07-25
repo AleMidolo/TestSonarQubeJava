@@ -12,7 +12,7 @@ public class LoggingBuffer {
 
     /** 
      * Place a  {@link LoggingEvent} in the buffer. If the buffer is full then the event is <b>silently dropped</b>. 
-     * It is the caller's responsibility to make sure that the buffer has free space.  
+     * It is the caller's responsability to make sure that the buffer has free space.  
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
@@ -29,8 +29,24 @@ public class LoggingBuffer {
     public boolean isFull() {
         return buffer.size() >= capacity;
     }
-}
 
-class LoggingEvent {
-    // Implementation of LoggingEvent class
+    public static class LoggingEvent {
+        // Implementation of LoggingEvent class
+        private final String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public static void main(String[] args) {
+        LoggingBuffer loggingBuffer = new LoggingBuffer(5);
+        loggingBuffer.put(new LoggingEvent("Event 1"));
+        loggingBuffer.put(new LoggingEvent("Event 2"));
+        System.out.println("Current buffer size: " + loggingBuffer.size());
+    }
 }

@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public class ArrayConverter {
-
+    
     /** 
      * <p>Converts an array of object Integers to primitives.</p> 
      * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
@@ -22,7 +22,7 @@ public class ArrayConverter {
         }
         return result;
     }
-
+    
     public static void main(String[] args) {
         Integer[] integerArray = {1, 2, 3, null};
         try {

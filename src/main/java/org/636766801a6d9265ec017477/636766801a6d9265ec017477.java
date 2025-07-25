@@ -9,12 +9,12 @@ public class FileAdder {
      */
     private void addReverse(final InputStream[] files) {
         Stack<InputStream> stack = new Stack<>();
-
+        
         // Push all files onto the stack
         for (InputStream file : files) {
             stack.push(file);
         }
-
+        
         // Pop files from the stack to process them in reverse order
         while (!stack.isEmpty()) {
             InputStream file = stack.pop();
@@ -29,7 +29,7 @@ public class FileAdder {
 
     private void processFile(InputStream file) throws IOException {
         // Placeholder for file processing logic
-        // For example, read from the InputStream and perform necessary operations
-        // This could involve reading bytes, converting to a string, etc.
+        // For example, reading from the InputStream
+        // This method should be implemented based on specific requirements
     }
 }

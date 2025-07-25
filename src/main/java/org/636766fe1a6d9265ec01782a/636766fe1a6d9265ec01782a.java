@@ -1,7 +1,9 @@
-public class UtfReader {
+import java.nio.ByteBuffer;
+
+public class ConstantPoolReader {
     private byte[] classFileBuffer;
 
-    public UtfReader(byte[] classFileBuffer) {
+    public ConstantPoolReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
@@ -12,14 +14,43 @@ public class UtfReader {
      * @return the String corresponding to the specified CONSTANT_Utf8 entry.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Read the length of the UTF-8 string
-        int length = ((classFileBuffer[constantPoolEntryIndex] & 0xFF) << 8) | (classFileBuffer[constantPoolEntryIndex + 1] & 0xFF);
-        
-        // Read the UTF-8 bytes
-        for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer[constantPoolEntryIndex + 2 + i] & 0xFF);
+        // Assuming the constant pool starts at a specific offset
+        int constantPoolCount = ByteBuffer.wrap(classFileBuffer, 8, 2).getShort(); // Read the constant pool count
+        int offset = 10; // Starting offset after magic number and version
+
+        for (int i = 1; i < constantPoolCount; i++) {
+            int tag = classFileBuffer[offset] & 0xFF; // Read the tag
+            offset++; // Move to the next byte
+
+            switch (tag) {
+                case 1: // CONSTANT_Utf8
+                    int length = ByteBuffer.wrap(classFileBuffer, offset, 2).getShort(); // Read length
+                    offset += 2; // Move past length
+                    if (i == constantPoolEntryIndex) {
+                        // Read the UTF-8 bytes
+                        for (int j = 0; j < length; j++) {
+                            charBuffer[j] = (char) classFileBuffer[offset + j]; // Convert bytes to chars
+                        }
+                        return new String(charBuffer, 0, length); // Return the string
+                    }
+                    offset += length; // Move past the UTF-8 bytes
+                    break;
+                case 7: // CONSTANT_Class
+                case 8: // CONSTANT_String
+                case 9: // CONSTANT_Fieldref
+                case 10: // CONSTANT_Methodref
+                case 11: // CONSTANT_InterfaceMethodref
+                case 12: // CONSTANT_NameAndType
+                case 15: // CONSTANT_MethodHandle
+                case 16: // CONSTANT_MethodType
+                case 18: // CONSTANT_InvokeDynamic
+                    // Handle other constant types (not implemented here)
+                    // Each of these types has a different structure, so we would need to skip the appropriate number of bytes
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown constant pool tag: " + tag);
+            }
         }
-        
-        return new String(charBuffer, 0, length);
+        throw new IndexOutOfBoundsException("Constant pool entry index out of bounds: " + constantPoolEntryIndex);
     }
 }

@@ -17,7 +17,6 @@ public class StringManipulator {
                 result.append(c); // Append character if it's not in charsToDelete
             }
         }
-        
         return result.toString(); // Return the resulting string
     }
 

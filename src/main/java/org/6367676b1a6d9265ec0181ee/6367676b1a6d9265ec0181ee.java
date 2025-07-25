@@ -1,4 +1,5 @@
 public class StringUtil {
+    
     /** 
      * Trim trailing whitespace from the given String.
      * @param str the String to check

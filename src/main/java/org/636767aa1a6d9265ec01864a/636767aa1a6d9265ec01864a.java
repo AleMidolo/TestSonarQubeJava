@@ -2,7 +2,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ByteArrayExample {
-    
+
     /** 
      * Copies bytes to a  {@code byte[]}.
      */

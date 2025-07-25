@@ -1,4 +1,5 @@
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class OctetDecoder {
 
@@ -8,36 +9,40 @@ public class OctetDecoder {
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         while (i < bb.limit()) {
-            int b = bb.get(i) & 0xFF; // Get the byte as an unsigned value
-            if (b >= 0 && b <= 127) { // 1-byte character (ASCII)
+            // Read the next byte
+            byte b = bb.get(i);
+            // Check if the byte is a valid UTF-8 continuation byte
+            if ((b & 0x80) == 0) {
+                // Single byte character (ASCII)
                 sb.append((char) b);
                 i++;
-            } else if (b >= 192 && b <= 223) { // 2-byte character
-                if (i + 1 >= bb.limit()) break; // Check for enough bytes
-                int b2 = bb.get(i + 1) & 0xFF;
-                sb.append((char) (((b & 0x1F) << 6) | (b2 & 0x3F)));
-                i += 2;
-            } else if (b >= 224 && b <= 239) { // 3-byte character
-                if (i + 2 >= bb.limit()) break; // Check for enough bytes
-                int b2 = bb.get(i + 1) & 0xFF;
-                int b3 = bb.get(i + 2) & 0xFF;
-                sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
-                i += 3;
-            } else if (b >= 240 && b <= 247) { // 4-byte character
-                if (i + 3 >= bb.limit()) break; // Check for enough bytes
-                int b2 = bb.get(i + 1) & 0xFF;
-                int b3 = bb.get(i + 2) & 0xFF;
-                int b4 = bb.get(i + 3) & 0xFF;
-                int codePoint = ((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
-                // Convert code point to UTF-16 surrogate pair if necessary
-                if (codePoint > 0xFFFF) {
-                    codePoint -= 0x10000;
-                    sb.append((char) (0xD800 | (codePoint >> 10)));
-                    sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
+            } else if ((b & 0xE0) == 0xC0) {
+                // Two byte character
+                if (i + 1 < bb.limit()) {
+                    int charCode = ((b & 0x1F) << 6) | (bb.get(i + 1) & 0x3F);
+                    sb.append((char) charCode);
+                    i += 2;
                 } else {
-                    sb.append((char) codePoint);
+                    break; // Incomplete byte sequence
                 }
-                i += 4;
+            } else if ((b & 0xF0) == 0xE0) {
+                // Three byte character
+                if (i + 2 < bb.limit()) {
+                    int charCode = ((b & 0x0F) << 12) | ((bb.get(i + 1) & 0x3F) << 6) | (bb.get(i + 2) & 0x3F);
+                    sb.append((char) charCode);
+                    i += 3;
+                } else {
+                    break; // Incomplete byte sequence
+                }
+            } else if ((b & 0xF8) == 0xF0) {
+                // Four byte character
+                if (i + 3 < bb.limit()) {
+                    int charCode = ((b & 0x07) << 18) | ((bb.get(i + 1) & 0x3F) << 12) | ((bb.get(i + 2) & 0x3F) << 6) | (bb.get(i + 3) & 0x3F);
+                    sb.append(Character.toChars(charCode));
+                    i += 4;
+                } else {
+                    break; // Incomplete byte sequence
+                }
             } else {
                 // Invalid byte, skip it
                 i++;

@@ -27,12 +27,9 @@ class Edge {
         this.to = to;
     }
 
-    public Node getFrom() {
-        return from;
-    }
-
-    public Node getTo() {
-        return to;
+    @Override
+    public String toString() {
+        return "Edge from " + from + " to " + to;
     }
 }
 

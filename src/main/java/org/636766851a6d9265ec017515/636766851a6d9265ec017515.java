@@ -10,9 +10,12 @@ public class MyAtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // Logic to suspend the resource if needed
-            r.suspend();
+        if (r.getTransport() != null) {
+            // Logic to suspend the resource based on transport type
+            // For example, if the transport is "LONG_POLLING", we might want to suspend it
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+                r.suspend();
+            }
         }
         return Action.CONTINUE;
     }

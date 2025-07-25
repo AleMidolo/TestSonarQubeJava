@@ -35,15 +35,5 @@ public class BeanMap {
         return properties.get(key);
     }
 
-    public static void main(String[] args) {
-        BeanMap source = new BeanMap();
-        source.put("name", "John");
-        source.put("age", 30);
-
-        BeanMap target = new BeanMap();
-        target.putAllWriteable(source);
-
-        System.out.println(target.get("name")); // Output: John
-        System.out.println(target.get("age"));  // Output: 30
-    }
+    // Other methods for BeanMap implementation...
 }

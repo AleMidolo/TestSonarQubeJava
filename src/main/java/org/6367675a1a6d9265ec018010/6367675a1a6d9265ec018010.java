@@ -1,19 +1,41 @@
 import java.util.*;
 
 class Bucket {
-    // Asumiendo que el bucket es parte de una estructura de datos como una lista o un conjunto
-    private List<Bucket> bucketList; // Ejemplo de estructura de datos que contiene los buckets
+    private String name;
+    private List<Bucket> buckets;
 
-    public Bucket(List<Bucket> bucketList) {
-        this.bucketList = bucketList;
+    public Bucket(String name) {
+        this.name = name;
+        this.buckets = new ArrayList<>();
     }
 
-    /**
-     * Elimina este bucket de la estructura de datos.
-     */
-    void removeSelf() {
-        if (bucketList != null) {
-            bucketList.remove(this);
+    public void addBucket(Bucket bucket) {
+        this.buckets.add(bucket);
+    }
+
+    public void removeSelf() {
+        // Assuming this bucket is part of a larger structure, we need to remove it from its parent.
+        // This is a simplified example where we assume the parent is managing the list of buckets.
+        // In a real-world scenario, you would need to handle the parent reference.
+        for (Bucket bucket : buckets) {
+            bucket.removeSelf();
         }
+        // Clear the list of buckets
+        buckets.clear();
+        // Additional cleanup if needed
+    }
+
+    public static void main(String[] args) {
+        Bucket parentBucket = new Bucket("Parent");
+        Bucket childBucket = new Bucket("Child");
+        parentBucket.addBucket(childBucket);
+
+        System.out.println("Before removal:");
+        System.out.println("Parent has " + parentBucket.buckets.size() + " buckets.");
+
+        childBucket.removeSelf();
+
+        System.out.println("After removal:");
+        System.out.println("Parent has " + parentBucket.buckets.size() + " buckets.");
     }
 }

@@ -2,11 +2,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
-public final class UriMatcher {
+public final class URIMatcher {
 
     private final Pattern pattern;
 
-    public UriMatcher(String regex) {
+    public URIMatcher(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 
@@ -19,12 +19,13 @@ public final class UriMatcher {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher("https://example.com/.*");
+        URIMatcher matcher = new URIMatcher("https://example.com/.*");
         MatchResult result = matcher.match("https://example.com/resource");
         if (result != null) {
             System.out.println("Match found: " + result.group());

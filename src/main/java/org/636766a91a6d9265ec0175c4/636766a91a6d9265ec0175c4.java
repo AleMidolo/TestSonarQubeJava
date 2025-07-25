@@ -17,51 +17,59 @@ public class FrameStackProcessor {
             throw new IllegalArgumentException("Descriptor cannot be null or empty");
         }
 
-        // Determine if the descriptor is a method descriptor
+        // Determine the number of types to pop based on the descriptor
+        int typesToPop = 0;
         if (descriptor.startsWith("(")) {
-            // Extract argument types from method descriptor
-            String[] argumentTypes = extractArgumentTypes(descriptor);
-            for (String type : argumentTypes) {
-                if (!frameStack.isEmpty()) {
-                    frameStack.pop();
-                } else {
-                    throw new IllegalStateException("Frame stack is empty");
-                }
-            }
+            // Method descriptor: count the number of argument types
+            typesToPop = countArgumentTypes(descriptor);
         } else {
-            // Single type descriptor
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
-            } else {
+            // Type descriptor: pop one type
+            typesToPop = 1;
+        }
+
+        // Pop the types from the stack
+        for (int i = 0; i < typesToPop; i++) {
+            if (frameStack.isEmpty()) {
                 throw new IllegalStateException("Frame stack is empty");
             }
+            frameStack.pop();
         }
     }
 
-    private String[] extractArgumentTypes(String methodDescriptor) {
-        // Remove the leading '(' and trailing ')'
-        String argsPart = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
-        // Split the argument types based on the descriptor format
-        // This is a simplified approach and may need to handle complex types like arrays and objects
-        return argsPart.split(";");
+    /**
+     * Counts the number of argument types in a method descriptor.
+     * @param descriptor the method descriptor
+     * @return the number of argument types
+     */
+    private int countArgumentTypes(String descriptor) {
+        int count = 0;
+        int index = 1; // Start after the '('
+        while (descriptor.charAt(index) != ')') {
+            char c = descriptor.charAt(index);
+            if (c == 'L') {
+                // Skip to the end of the class name
+                index = descriptor.indexOf(';', index) + 1;
+            } else if (c == '[') {
+                // Skip array brackets
+                index++;
+            } else {
+                // Primitive type
+                index++;
+            }
+            count++;
+        }
+        return count;
     }
 
-    // For testing purposes
-    public void pushToStack(String type) {
-        frameStack.push(type);
-    }
-
-    public Stack<String> getFrameStack() {
-        return frameStack;
-    }
-
+    // Example usage
     public static void main(String[] args) {
         FrameStackProcessor processor = new FrameStackProcessor();
-        processor.pushToStack("int");
-        processor.pushToStack("java.lang.String");
-        processor.pushToStack("double");
+        processor.frameStack.push("int");
+        processor.frameStack.push("java.lang.String");
+        processor.frameStack.push("double");
 
-        processor.pop("(I)V"); // Pops one argument type (int)
-        System.out.println(processor.getFrameStack()); // Should print [java.lang.String, double]
+        processor.pop("(Ljava/lang/String;D)V");
+
+        System.out.println(processor.frameStack); // Should print: [int]
     }
 }

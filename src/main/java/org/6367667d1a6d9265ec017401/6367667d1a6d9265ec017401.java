@@ -61,7 +61,7 @@ public class UnescapeJava {
 
     public static void main(String[] args) throws Exception {
         String input = "This is a test\\nwith a new line\\tand a tab.";
-        String output = unescapeJava(input);
-        System.out.println(output);
+        String result = unescapeJava(input);
+        System.out.println(result);
     }
 }

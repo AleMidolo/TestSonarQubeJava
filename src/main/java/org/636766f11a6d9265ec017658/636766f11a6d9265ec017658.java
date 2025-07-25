@@ -18,12 +18,8 @@ public class PathUtils {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        String path1 = "C:\\Users\\JohnDoe\\Documents\\file.txt";
-        String path2 = "/home/user/documents/file.txt";
-        String path3 = "file.txt";
-        
-        System.out.println(indexOfLastSeparator(path1)); // Output: 20
-        System.out.println(indexOfLastSeparator(path2)); // Output: 18
-        System.out.println(indexOfLastSeparator(path3)); // Output: -1
+        String path = "C:\\Users\\JohnDoe\\Documents\\file.txt";
+        int lastSeparatorIndex = indexOfLastSeparator(path);
+        System.out.println("Índice del último separador: " + lastSeparatorIndex);
     }
 }

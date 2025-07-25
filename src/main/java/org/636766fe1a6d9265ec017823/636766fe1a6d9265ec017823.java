@@ -5,11 +5,11 @@ public class ConstantPool {
     private Map<String, Integer> constantNameAndTypeMap;
 
     public ConstantPool() {
-        this.constantNameAndTypeMap = new HashMap<>();
+        constantNameAndTypeMap = new HashMap<>();
     }
 
     /**
-     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos. 
+     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos.
      * No hace nada si el grupo de constantes ya contiene un elemento similar.
      *
      * @param name el nombre de un campo o método.

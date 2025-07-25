@@ -15,6 +15,6 @@ public class StringUtils {
     public static void main(String[] args) {
         // Ejemplo de uso
         System.out.println(quoteIfString("miCadena")); // Salida: 'miCadena'
-        System.out.println(quoteIfString(123));        // Salida: 123
+        System.out.println(quoteIfString(123));       // Salida: 123
     }
 }

@@ -5,11 +5,13 @@ public class Acumulador {
     private Map<String, Long> mapa;
 
     public Acumulador() {
-        mapa = new HashMap<>();
+        this.mapa = new HashMap<>();
     }
 
     /**
      * Acumula el valor con el valor existente en la misma clave dada.
+     * @param clave La clave en la que se acumulará el valor.
+     * @param valor El valor a acumular.
      */
     public void acumulacionDeValor(String clave, Long valor) {
         if (mapa.containsKey(clave)) {
@@ -20,6 +22,7 @@ public class Acumulador {
         }
     }
 
+    // Método para obtener el valor acumulado de una clave específica
     public Long obtenerValor(String clave) {
         return mapa.getOrDefault(clave, 0L);
     }

@@ -10,13 +10,25 @@ public class LogFormatter {
     public String format(final LoggingEvent event) {
         StringBuilder formattedEvent = new StringBuilder();
         
-        // Formato básico: [Nivel] [Fecha] [Mensaje]
-        formattedEvent.append("[")
-                      .append(event.getLevel().toString())
-                      .append("] [")
-                      .append(event.getTimeStamp())
-                      .append("] ")
-                      .append(event.getMessage().toString());
+        // Agregar la marca de tiempo
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        
+        // Agregar el nivel de log
+        formattedEvent.append("Level: ").append(event.getLevel().toString()).append("\n");
+        
+        // Agregar el mensaje de log
+        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
+        
+        // Agregar el nombre del logger
+        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
+        
+        // Agregar el hilo que generó el log
+        formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
+        
+        // Agregar la traza de la excepción si existe
+        if (event.getThrowableInformation() != null) {
+            formattedEvent.append("Exception: ").append(event.getThrowableStrRep()).append("\n");
+        }
         
         return formattedEvent.toString();
     }

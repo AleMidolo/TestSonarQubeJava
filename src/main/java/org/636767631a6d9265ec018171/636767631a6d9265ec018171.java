@@ -10,7 +10,7 @@ class ListNodeImpl<E> {
     }
 }
 
-class LinkedList<E> {
+public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
 
@@ -26,6 +26,7 @@ class LinkedList<E> {
         ListNodeImpl<E> next = node.next;
 
         if (prev == null) {
+            // Node is the head
             head = next;
         } else {
             prev.next = next;
@@ -33,13 +34,14 @@ class LinkedList<E> {
         }
 
         if (next == null) {
+            // Node is the tail
             tail = prev;
         } else {
             next.prev = prev;
             node.next = null;
         }
 
-        node.element = null;
+        node.element = null; // Help GC
         return true;
     }
 }

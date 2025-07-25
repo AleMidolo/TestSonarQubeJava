@@ -1,18 +1,12 @@
-package com.example;
+import java.util.Objects;
 
 public class MyClass {
     private String field1;
     private int field2;
-    private double field3;
+    private Object field3;
     
-    @Override
+    @Override 
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((field1 == null) ? 0 : field1.hashCode());
-        result = prime * result + field2;
-        long temp = Double.doubleToLongBits(field3);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return Objects.hash(field1, field2, field3);
     }
 }

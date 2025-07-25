@@ -5,7 +5,7 @@ import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 
 public class UTF8Decoder {
-    
+
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         try {
             CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
@@ -15,27 +15,31 @@ public class UTF8Decoder {
             // Mark current position
             bb.mark();
             
-            // Try to decode remaining bytes
-            while (bb.hasRemaining()) {
-                try {
-                    char[] chars = decoder.decode(bb).toString().toCharArray();
-                    sb.append(chars);
-                    return i + bb.position() - bb.markValue();
-                } catch (CharacterCodingException e) {
-                    // Reset to marked position if decode fails
-                    bb.reset();
-                    // Move forward one byte and try again
-                    bb.get();
-                    sb.append('?');
-                    i++;
-                }
-            }
+            // Create a slice from current position
+            ByteBuffer slice = bb.slice();
             
-            return i;
+            // Decode UTF-8 bytes
+            java.nio.CharBuffer cb = decoder.decode(slice);
             
-        } catch (Exception e) {
-            // In case of any other errors, append replacement char and return next position
-            sb.append('?');
+            // Append decoded characters to StringBuilder
+            sb.append(cb);
+            
+            // Calculate number of bytes consumed
+            int bytesConsumed = (int)(bb.position() - bb.mark());
+            
+            // Reset position to marked position
+            bb.reset();
+            
+            // Skip the consumed bytes
+            bb.position(bb.position() + bytesConsumed);
+            
+            // Return next index
+            return i + bytesConsumed;
+            
+        } catch (CharacterCodingException e) {
+            // On error, skip one byte and add replacement character
+            bb.get();
+            sb.append('\ufffd');
             return i + 1;
         }
     }

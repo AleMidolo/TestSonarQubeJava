@@ -3,7 +3,7 @@ import java.io.DataInputStream;
 
 public class DataReader {
     private DataInputStream input;
-
+    
     public DataReader(DataInputStream input) {
         this.input = input;
     }
@@ -16,7 +16,7 @@ public class DataReader {
         // 首先读取字符串长度
         int length = input.readInt();
         
-        // 如果长度为-1，表示null
+        // 如果长度为-1,表示null值
         if (length == -1) {
             return null;
         }

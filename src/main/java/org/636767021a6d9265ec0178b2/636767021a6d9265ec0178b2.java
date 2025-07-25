@@ -17,10 +17,20 @@ public class StackFrameAnalyzer {
             }
         }
         
+        // 计算描述符中的类型数量
+        int typeCount = 0;
         Type[] types = Type.getArgumentTypes(desc);
+        
         for (Type type : types) {
-            int size = type.getSize();
-            currentStackSize -= size;
+            typeCount += type.getSize();
+        }
+        
+        // 从栈中弹出对应数量的元素
+        currentStackSize -= typeCount;
+        
+        // 确保栈大小不会为负
+        if (currentStackSize < 0) {
+            currentStackSize = 0;
         }
     }
 }

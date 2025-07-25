@@ -2,7 +2,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class LinkedBufferWriter {
-    
+
     /**
      * 将 {@link LinkedBuffer} 的内容写入 {@link DataOutput}。
      * @return 缓冲区的总内容大小。
@@ -30,28 +30,28 @@ public class LinkedBufferWriter {
 
         return totalSize;
     }
-}
 
-// Helper class to represent a LinkedBuffer node
-class LinkedBuffer {
-    private byte[] buffer;
-    private int offset;
-    private int size;
-    private LinkedBuffer next;
+    // LinkedBuffer class for reference
+    private static class LinkedBuffer {
+        private byte[] buffer;
+        private int offset;
+        private int size;
+        private LinkedBuffer next;
 
-    public byte[] getBuffer() {
-        return buffer;
-    }
+        public byte[] getBuffer() {
+            return buffer;
+        }
 
-    public int getOffset() {
-        return offset;
-    }
+        public int getOffset() {
+            return offset;
+        }
 
-    public int getSize() {
-        return size;
-    }
+        public int getSize() {
+            return size;
+        }
 
-    public LinkedBuffer getNext() {
-        return next;
+        public LinkedBuffer getNext() {
+            return next;
+        }
     }
 }

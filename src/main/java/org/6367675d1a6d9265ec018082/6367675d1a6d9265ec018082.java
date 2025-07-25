@@ -1,15 +1,13 @@
 import java.util.*;
 
-public class Graph {
+class Graph {
     private class Node {
         int id;
-        boolean isVirtual;
-        Node realNode;
         List<Edge> edges;
-        
+        Node virtualNode; // Real node if this is virtual
+
         Node(int id) {
             this.id = id;
-            this.isVirtual = false;
             this.edges = new ArrayList<>();
         }
     }
@@ -18,36 +16,36 @@ public class Graph {
         Node source;
         Node target;
         int weight;
-        
-        Edge(Node source, Node target) {
+
+        Edge(Node source, Node target, int weight) {
             this.source = source;
             this.target = target;
-            this.weight = 1;
+            this.weight = weight;
         }
     }
 
     private Node currentNode;
     private Node nextNode;
-    
+    private Map<Node, Node> virtualToReal;
+
     public Edge edgeToNext() {
         if (currentNode == null || nextNode == null) {
             return null;
         }
-        
+
         // Get real nodes if virtual
-        Node realSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
-        Node realTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
-        
+        Node realCurrent = currentNode.virtualNode != null ? 
+                          currentNode.virtualNode : currentNode;
+        Node realNext = nextNode.virtualNode != null ?
+                       nextNode.virtualNode : nextNode;
+
         // Find edge between real nodes
-        for (Edge edge : realSource.edges) {
-            if (edge.target == realTarget) {
+        for (Edge edge : realCurrent.edges) {
+            if (edge.target == realNext) {
                 return edge;
             }
         }
-        
-        // Create new edge if none exists
-        Edge newEdge = new Edge(realSource, realTarget);
-        realSource.edges.add(newEdge);
-        return newEdge;
+
+        return null;
     }
 }

@@ -9,12 +9,12 @@ public class StringUtils {
         if (str == null || str.isEmpty()) {
             return str;
         }
-
+        
         int start = 0;
         while (start < str.length() && str.charAt(start) == leadingCharacter) {
             start++;
         }
-
+        
         return str.substring(start);
     }
 }

@@ -14,12 +14,10 @@ public class ExceptionHandler {
         return thrownString != null && !thrownString.isEmpty();
     }
     
-    // Getter for thrown field
     public Throwable getThrown() {
         return thrown;
     }
     
-    // Setter for thrown field
     public void setThrown(Throwable thrown) {
         this.thrown = thrown;
     }

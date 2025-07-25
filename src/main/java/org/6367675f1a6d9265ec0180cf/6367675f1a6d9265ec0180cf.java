@@ -1,5 +1,7 @@
-import java.util.Set;
 import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
+
+import java.util.Set;
 
 public class GraphUtils {
 
@@ -9,18 +11,14 @@ public class GraphUtils {
      * @param vertices उपग्राफ को प्रेरित करने के लिए वर्टिस।
      * @return यदि प्रेरित उपग्राफ एक क्लिक है तो true।
      */
-    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        if (vertices.size() < 2) {
-            return true; // A single vertex or empty set is trivially a clique
-        }
-
+    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // If there is no edge between any two vertices, it's not a clique
+                    return false;
                 }
             }
         }
-        return true; // All pairs of vertices are connected
+        return true;
     }
 }

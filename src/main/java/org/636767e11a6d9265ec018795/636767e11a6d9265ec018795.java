@@ -1,5 +1,5 @@
 public class DataTable {
-    // Assuming DataTable has a method to get buckets
+    // Assuming DataTable has some properties to compare
     private String[] buckets;
 
     public DataTable(String[] buckets) {

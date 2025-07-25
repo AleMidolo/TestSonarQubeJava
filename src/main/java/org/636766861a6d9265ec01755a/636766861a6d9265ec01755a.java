@@ -38,10 +38,15 @@ public class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(https?://)?(www\\.)?example\\.com(/.*)?$");
-        MatchResult result = uriMatcher.match("https://www.example.com/test");
+        UriMatcher uriMatcher = new UriMatcher("^(http|https)://(www\\.)?example\\.com/(.*)$");
+        MatchResult result = uriMatcher.match("https://www.example.com/path/to/resource");
+        
         if (result != null) {
-            System.out.println("Match found: " + result.group(0));
+            System.out.println("Match found!");
+            System.out.println("Group 0: " + result.group(0)); // Full match
+            System.out.println("Group 1: " + result.group(1)); // Protocol
+            System.out.println("Group 2: " + result.group(2)); // www.
+            System.out.println("Group 3: " + result.group(3)); // Path
         } else {
             System.out.println("No match found.");
         }

@@ -13,7 +13,7 @@ public class BooleanArrayConverter {
         
         Boolean[] result = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Boolean.valueOf(array[i]);
+            result[i] = array[i]; // Autoboxing from boolean to Boolean
         }
         return result;
     }

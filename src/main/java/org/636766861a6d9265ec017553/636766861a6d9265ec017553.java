@@ -5,7 +5,7 @@ public class Template {
     private Set<String> templateVariables;
 
     public Template() {
-        this.templateVariables = new HashSet<>();
+        templateVariables = new HashSet<>();
     }
 
     public void addTemplateVariable(String name) {

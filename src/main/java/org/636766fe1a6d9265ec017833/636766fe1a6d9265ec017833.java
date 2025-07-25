@@ -3,7 +3,7 @@ import java.io.IOException;
 
 public class FileDeleter {
 
-    /** 
+    /**
      * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
      * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
      * @throws NullPointerException यदि फ़ाइल {@code null} है
@@ -14,7 +14,7 @@ public class FileDeleter {
             throw new NullPointerException("File must not be null");
         }
 
-        // Register a shutdown hook to delete the file on JVM exit
+        // Schedule the file for deletion on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 deleteRecursively(file);

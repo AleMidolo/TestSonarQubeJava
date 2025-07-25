@@ -1,4 +1,5 @@
 public class ArrayUtils {
+    
     /** 
      * <p>जांचता है कि क्या प्राइमिटिव डबल्स का एक एरे खाली है या <code>null</code> है।</p>
      * @param array  परीक्षण के लिए एरे
@@ -10,12 +11,13 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        double[] testArray1 = null;
-        double[] testArray2 = {};
-        double[] testArray3 = {1.0, 2.0, 3.0};
+        // Test cases
+        double[] array1 = null;
+        double[] array2 = {};
+        double[] array3 = {1.0, 2.0, 3.0};
 
-        System.out.println(isEmpty(testArray1)); // true
-        System.out.println(isEmpty(testArray2)); // true
-        System.out.println(isEmpty(testArray3)); // false
+        System.out.println(isEmpty(array1)); // true
+        System.out.println(isEmpty(array2)); // true
+        System.out.println(isEmpty(array3)); // false
     }
 }

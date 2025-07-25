@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class GraphUtils<V, E> {
 
-    /**
+    /** 
      * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
      * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
      * @param graph ग्राफ
@@ -21,16 +21,16 @@ public class GraphUtils<V, E> {
         V previousVertex = null;
 
         for (E edge : tour) {
-            V source = graph.getEdgeSource(edge);
-            V target = graph.getEdgeTarget(edge);
+            V sourceVertex = graph.getEdgeSource(edge);
+            V targetVertex = graph.getEdgeTarget(edge);
 
             if (previousVertex == null) {
-                vertexList.add(source);
-            } else if (!previousVertex.equals(source)) {
-                vertexList.add(source);
+                vertexList.add(sourceVertex);
+            } else if (!previousVertex.equals(sourceVertex)) {
+                vertexList.add(sourceVertex);
             }
-            vertexList.add(target);
-            previousVertex = target;
+            vertexList.add(targetVertex);
+            previousVertex = targetVertex;
         }
 
         return new GraphPath<V, E>() {
@@ -45,6 +45,11 @@ public class GraphUtils<V, E> {
             }
 
             @Override
+            public List<E> getEdgeList() {
+                return new ArrayList<>(tour);
+            }
+
+            @Override
             public E getStartEdge() {
                 return graph.getEdge(vertexList.get(0), vertexList.get(1));
             }
@@ -55,13 +60,18 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+            public V getStartVertex() {
+                return vertexList.get(0);
             }
 
             @Override
-            public int getLength() {
-                return vertexList.size() - 1;
+            public V getEndVertex() {
+                return vertexList.get(vertexList.size() - 1);
+            }
+
+            @Override
+            public double getWeight() {
+                return 0; // Weight calculation can be implemented if needed
             }
         };
     }

@@ -15,7 +15,7 @@ public class ShardingKeyChecker {
         
         // Additional logic can be added here
     }
-    
+
     public static void main(String[] args) {
         ShardingKeyChecker checker = new ShardingKeyChecker();
         try {

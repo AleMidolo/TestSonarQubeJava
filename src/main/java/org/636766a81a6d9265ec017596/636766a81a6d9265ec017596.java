@@ -33,7 +33,9 @@ public class ByteVector {
         return Arrays.copyOf(data, size);
     }
 
-    public int getSize() {
-        return size;
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.putInt(123456);
+        System.out.println(Arrays.toString(byteVector.getData()));
     }
 }

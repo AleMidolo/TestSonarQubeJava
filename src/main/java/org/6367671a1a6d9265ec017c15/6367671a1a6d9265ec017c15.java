@@ -20,7 +20,7 @@ public class ByteVector {
                 data[size++] = 0;
             }
         } else {
-            // Validate offset and length
+            // Input validation
             if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid offset or length");
             }

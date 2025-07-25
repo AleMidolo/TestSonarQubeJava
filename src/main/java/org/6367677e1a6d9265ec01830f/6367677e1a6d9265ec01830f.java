@@ -16,8 +16,7 @@ public class CustomFormatter {
         
         // Add timestamp
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        formattedMessage.append(timestamp);
+        formattedMessage.append(dateFormat.format(new Date(event.getTimeStamp())));
         formattedMessage.append(" ");
         
         // Add log level
@@ -32,12 +31,12 @@ public class CustomFormatter {
         // Add message
         formattedMessage.append(event.getRenderedMessage());
         
-        // Add throwable info if exists
-        String[] throwableInfo = event.getThrowableStrRep();
-        if (throwableInfo != null) {
+        // Add throwable if exists
+        String[] throwableStrRep = event.getThrowableStrRep();
+        if (throwableStrRep != null) {
             formattedMessage.append("\n");
-            for (String line : throwableInfo) {
-                formattedMessage.append(line);
+            for (String throwableLine : throwableStrRep) {
+                formattedMessage.append(throwableLine);
                 formattedMessage.append("\n");
             }
         }

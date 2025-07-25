@@ -32,17 +32,15 @@ public class ThreadSnapshotParser {
                     }
                 } else if (isInTimeRange && currentSnapshot != null) {
                     // Parse thread info
-                    if (line.startsWith("Thread-")) {
-                        String[] parts = line.split("\\s+");
-                        if (parts.length >= 2) {
-                            String threadName = parts[0];
-                            String threadState = parts[1];
-                            currentSnapshot.addThread(threadName, threadState);
+                    if (line.trim().length() > 0) {
+                        String[] threadInfo = line.split("\\s+");
+                        if (threadInfo.length >= 2) {
+                            ThreadInfo info = new ThreadInfo();
+                            info.setThreadId(Long.parseLong(threadInfo[0]));
+                            info.setThreadName(threadInfo[1]);
+                            info.setThreadState(threadInfo.length > 2 ? threadInfo[2] : "UNKNOWN");
+                            currentSnapshot.addThreadInfo(info);
                         }
-                    }
-                    // Parse stack trace
-                    else if (line.startsWith("\tat ")) {
-                        currentSnapshot.addStackTraceLine(line.trim());
                     }
                 }
             }
@@ -52,40 +50,54 @@ public class ThreadSnapshotParser {
     }
 }
 
-// Supporting classes (would be in separate files)
 class ThreadSnapshot {
     private long timestamp;
-    private Map<String, String> threads;
-    private List<String> stackTrace;
-    
-    public ThreadSnapshot() {
-        threads = new HashMap<>();
-        stackTrace = new ArrayList<>();
-    }
+    private List<ThreadInfo> threadInfoList = new ArrayList<>();
     
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
     
-    public void addThread(String name, String state) {
-        threads.put(name, state);
+    public void addThreadInfo(ThreadInfo info) {
+        threadInfoList.add(info);
     }
     
-    public void addStackTraceLine(String line) {
-        stackTrace.add(line);
-    }
-    
-    // Getters
     public long getTimestamp() {
         return timestamp;
     }
     
-    public Map<String, String> getThreads() {
-        return threads;
+    public List<ThreadInfo> getThreadInfoList() {
+        return threadInfoList;
+    }
+}
+
+class ThreadInfo {
+    private long threadId;
+    private String threadName;
+    private String threadState;
+    
+    public void setThreadId(long threadId) {
+        this.threadId = threadId;
     }
     
-    public List<String> getStackTrace() {
-        return stackTrace;
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
+    
+    public void setThreadState(String threadState) {
+        this.threadState = threadState;
+    }
+    
+    public long getThreadId() {
+        return threadId;
+    }
+    
+    public String getThreadName() {
+        return threadName;
+    }
+    
+    public String getThreadState() {
+        return threadState;
     }
 }
 

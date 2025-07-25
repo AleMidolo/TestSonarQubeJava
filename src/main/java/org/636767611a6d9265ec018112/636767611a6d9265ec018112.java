@@ -1,21 +1,20 @@
 import java.util.NoSuchElementException;
 
-public class VertexProvider<V> implements Iterator<V> {
-    
+public class VertexIterator<V> implements Iterator<V> {
     private Queue<V> vertexQueue;
     
-    public VertexProvider() {
-        vertexQueue = new LinkedList<>();
-    }
-
     /**
-     * {@inheritDoc}
+     * Returns the next vertex in the iteration.
+     * Throws NoSuchElementException if no vertices remain.
+     * @return the next vertex
      */
     @Override
     protected V provideNextVertex() {
         if (vertexQueue.isEmpty()) {
-            throw new NoSuchElementException("No more vertices available");
+            throw new NoSuchElementException("No more vertices");
         }
-        return vertexQueue.poll();
+        return vertexQueue.remove();
     }
+    
+    // Other required methods omitted for brevity
 }

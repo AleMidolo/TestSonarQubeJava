@@ -7,51 +7,37 @@ public class CharsetConverter {
     private static final Map<String, String> MIME_TO_JAVA_CHARSET = new HashMap<>();
     
     static {
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-1", "ISO8859_1");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-2", "ISO8859_2");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-3", "ISO8859_3");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-4", "ISO8859_4");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-5", "ISO8859_5");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-6", "ISO8859_6");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-7", "ISO8859_7");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-8", "ISO8859_8");
-        MIME_TO_JAVA_CHARSET.put("ISO-8859-9", "ISO8859_9");
-        MIME_TO_JAVA_CHARSET.put("UTF-8", "UTF8");
-        MIME_TO_JAVA_CHARSET.put("US-ASCII", "ASCII");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1250", "Cp1250");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1251", "Cp1251");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1252", "Cp1252");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1253", "Cp1253");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1254", "Cp1254");
-        MIME_TO_JAVA_CHARSET.put("WINDOWS-1257", "Cp1257");
-        MIME_TO_JAVA_CHARSET.put("KOI8-R", "KOI8_R");
-        MIME_TO_JAVA_CHARSET.put("UTF-16BE", "UnicodeBigUnmarked");
-        MIME_TO_JAVA_CHARSET.put("UTF-16LE", "UnicodeLittleUnmarked");
-        MIME_TO_JAVA_CHARSET.put("UTF-16", "Unicode");
+        MIME_TO_JAVA_CHARSET.put("ISO-8859-1", "ISO-8859-1");
+        MIME_TO_JAVA_CHARSET.put("ISO8859_1", "ISO-8859-1");
+        MIME_TO_JAVA_CHARSET.put("ISO-8859-2", "ISO-8859-2"); 
+        MIME_TO_JAVA_CHARSET.put("ISO8859_2", "ISO-8859-2");
+        MIME_TO_JAVA_CHARSET.put("UTF-8", "UTF-8");
+        MIME_TO_JAVA_CHARSET.put("UTF8", "UTF-8");
+        MIME_TO_JAVA_CHARSET.put("US-ASCII", "US-ASCII");
+        MIME_TO_JAVA_CHARSET.put("ASCII", "US-ASCII");
+        MIME_TO_JAVA_CHARSET.put("windows-1252", "windows-1252");
+        MIME_TO_JAVA_CHARSET.put("CP1252", "windows-1252");
     }
 
     private static String javaCharset(String charset) {
-        if (charset == null) {
-            return null;
+        if (charset == null || charset.trim().isEmpty()) {
+            return Charset.defaultCharset().name();
         }
         
-        String upperCharset = charset.toUpperCase();
-        String javaCharset = MIME_TO_JAVA_CHARSET.get(upperCharset);
+        String normalized = charset.trim().toUpperCase();
+        String javaCharset = MIME_TO_JAVA_CHARSET.get(normalized);
         
         if (javaCharset != null) {
             return javaCharset;
         }
         
-        // If no mapping found, try if the charset is directly supported by Java
         try {
-            if (Charset.isSupported(charset)) {
-                return charset;
-            }
-        } catch (IllegalArgumentException e) {
-            // Invalid charset name
+            // Verify if the charset is valid by attempting to get an instance
+            Charset.forName(charset);
+            return charset;
+        } catch (Exception e) {
+            // If charset is not recognized, return default charset
+            return Charset.defaultCharset().name();
         }
-        
-        // Return the original charset if no mapping found and not directly supported
-        return charset;
     }
 }

@@ -17,9 +17,6 @@ public class ContentRangeBuilder {
      * @return valore 'Content-Range'
      */
     private String buildContentRange() {
-        return MessageFormat.format("bytes {0}-{1}/{2}", 
-            String.valueOf(start),
-            String.valueOf(end),
-            String.valueOf(total));
+        return MessageFormat.format("bytes {0}-{1}/{2}", start, end, total);
     }
 }

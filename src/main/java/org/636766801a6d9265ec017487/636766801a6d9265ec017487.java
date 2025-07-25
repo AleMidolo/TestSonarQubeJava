@@ -13,10 +13,11 @@ public class TemplateEncoder {
         
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+            
             if (c == '{') {
                 result.append("%7B");
             } else if (c == '}') {
-                result.append("%7D");
+                result.append("%7D"); 
             } else {
                 result.append(c);
             }

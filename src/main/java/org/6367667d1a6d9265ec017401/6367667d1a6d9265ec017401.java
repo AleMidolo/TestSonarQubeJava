@@ -1,17 +1,18 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringUtils {
+public class StringEscapeUtils {
 
     private static final Map<String, String> JAVA_ESCAPES = new HashMap<>();
+    
     static {
         JAVA_ESCAPES.put("\\t", "\t");
         JAVA_ESCAPES.put("\\b", "\b"); 
         JAVA_ESCAPES.put("\\n", "\n");
         JAVA_ESCAPES.put("\\r", "\r");
         JAVA_ESCAPES.put("\\f", "\f");
-        JAVA_ESCAPES.put("\\'", "'");
         JAVA_ESCAPES.put("\\\"", "\"");
+        JAVA_ESCAPES.put("\\'", "'");
         JAVA_ESCAPES.put("\\\\", "\\");
     }
 
@@ -26,53 +27,39 @@ public class StringUtils {
         }
         
         StringBuilder result = new StringBuilder(str.length());
-        int i = 0;
-        while (i < str.length()) {
+        StringBuilder escape = new StringBuilder(2);
+        boolean inEscape = false;
+        
+        for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            if (ch == '\\') {
-                if (i + 1 < str.length()) {
-                    // Check for unicode escape sequence
-                    if (str.charAt(i + 1) == 'u') {
-                        if (i + 5 < str.length()) {
-                            String hex = str.substring(i + 2, i + 6);
-                            try {
-                                result.append((char) Integer.parseInt(hex, 16));
-                                i += 6;
-                                continue;
-                            } catch (NumberFormatException e) {
-                                throw new Exception("Invalid unicode escape sequence: \\u" + hex);
-                            }
-                        }
-                    }
-                    // Check for octal escape sequence
-                    else if (Character.isDigit(str.charAt(i + 1))) {
-                        int end = Math.min(i + 4, str.length());
-                        int j = i + 1;
-                        while (j < end && Character.isDigit(str.charAt(j))) {
-                            j++;
-                        }
-                        String octal = str.substring(i + 1, j);
-                        try {
-                            result.append((char) Integer.parseInt(octal, 8));
-                            i = j;
-                            continue;
-                        } catch (NumberFormatException e) {
-                            throw new Exception("Invalid octal escape sequence: \\" + octal);
-                        }
-                    }
-                    // Check for standard escape sequences
-                    String escape = str.substring(i, Math.min(i + 2, str.length()));
-                    String unescaped = JAVA_ESCAPES.get(escape);
-                    if (unescaped != null) {
-                        result.append(unescaped);
-                        i += 2;
-                        continue;
-                    }
+            
+            if (inEscape) {
+                escape.append(ch);
+                String escaped = escape.toString();
+                
+                if (JAVA_ESCAPES.containsKey(escaped)) {
+                    result.append(JAVA_ESCAPES.get(escaped));
+                    escape.setLength(0);
+                    inEscape = false;
+                } else if (escaped.length() == 2) {
+                    // Invalid escape sequence
+                    throw new Exception("Invalid escape sequence: " + escaped);
+                }
+            } else {
+                if (ch == '\\') {
+                    inEscape = true;
+                    escape.append(ch);
+                } else {
+                    result.append(ch);
                 }
             }
-            result.append(ch);
-            i++;
         }
+        
+        if (inEscape) {
+            // String ends with backslash
+            throw new Exception("Invalid escape sequence: string ends with backslash");
+        }
+        
         return result.toString();
     }
 }

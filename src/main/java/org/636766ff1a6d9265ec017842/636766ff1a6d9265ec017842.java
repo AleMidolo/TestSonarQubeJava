@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for converting between primitive and wrapper arrays.
+ * Utility class for handling arrays.
  */
 public class ArrayUtils {
 

@@ -20,8 +20,8 @@ public class MessageWriter {
         // 写入消息内容
         out.write(bytes);
         
-        // 返回总字节数
-        return bytes.length + computeRawVarint32Size(bytes.length);
+        // 返回总长度(varint编码的长度 + 消息长度)
+        return computeRawVarint32Size(bytes.length) + bytes.length;
     }
     
     private static void writeRawVarint32(OutputStream out, int value) throws IOException {

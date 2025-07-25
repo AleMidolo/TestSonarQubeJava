@@ -10,7 +10,8 @@ public class TimeBucketCompressor {
     static long compressTimeBucket(long timeBucket, int dayStep) {
         // Convert timeBucket to LocalDate
         String dateStr = String.valueOf(timeBucket);
-        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate date = LocalDate.parse(dateStr, formatter);
         
         // Get day of month
         int dayOfMonth = date.getDayOfMonth();
@@ -29,6 +30,6 @@ public class TimeBucketCompressor {
         LocalDate compressedDate = date.withDayOfMonth(compressedDay);
         
         // Convert back to long
-        return Long.parseLong(compressedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        return Long.parseLong(compressedDate.format(formatter));
     }
 }

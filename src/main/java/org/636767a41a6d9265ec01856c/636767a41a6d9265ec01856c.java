@@ -12,18 +12,18 @@ public class UTF8Utils {
             char c = str.charAt(i);
             
             if (c < 0x80) {
-                // ASCII characters take 1 byte
+                // ASCII character (0x00-0x7F) takes 1 byte
                 size++;
             } else if (c < 0x800) {
-                // 2-byte UTF-8 characters
+                // 2-byte UTF-8 character (0x80-0x7FF)
                 size += 2;
             } else if (Character.isSurrogate(c)) {
-                // 4-byte UTF-8 characters (surrogate pairs)
-                // Skip the next character as it's part of the same code point
-                i++;
+                // 4-byte UTF-8 character (surrogate pair)
+                // Skip the next char as it's part of the same character
                 size += 4;
+                i++;
             } else {
-                // 3-byte UTF-8 characters
+                // 3-byte UTF-8 character
                 size += 3;
             }
         }

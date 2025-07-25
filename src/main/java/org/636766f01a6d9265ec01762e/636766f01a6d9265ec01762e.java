@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for array operations
+ * Array utility methods.
  */
 public class ArrayUtils {
 

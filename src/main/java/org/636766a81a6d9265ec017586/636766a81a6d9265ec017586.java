@@ -12,6 +12,10 @@ public class FrameStack {
      * @param elements 需弹出的抽象类型数量。
      */
     private void pop(final int elements) {
+        if (elements <= 0) {
+            return;
+        }
+
         for (int i = 0; i < elements && !outputStack.isEmpty(); i++) {
             outputStack.pop();
         }

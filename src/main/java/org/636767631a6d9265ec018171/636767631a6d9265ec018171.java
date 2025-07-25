@@ -30,7 +30,6 @@ public class LinkedList<E> {
         final ListNodeImpl<E> next = node.next;
 
         if (prev == null) {
-            // Node is the first element
             first = next;
         } else {
             prev.next = next;
@@ -38,7 +37,6 @@ public class LinkedList<E> {
         }
 
         if (next == null) {
-            // Node is the last element
             last = prev;
         } else {
             next.prev = prev;

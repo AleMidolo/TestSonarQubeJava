@@ -2,35 +2,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SymbolTable {
-    private final List<Symbol> typeTable;
-
+    private List<String> types;
+    
     public SymbolTable() {
-        this.typeTable = new ArrayList<>();
+        types = new ArrayList<>();
     }
-
+    
+    /**
+     * 在此符号表的类型表中添加一个类型。如果类型表已经包含类似类型，则不执行任何操作。
+     * @param value 一个内部类名。
+     * @return 具有给定值的新类型符号或已存在类型符号的索引。
+     */
     public int addType(final String value) {
-        // Check if type already exists
-        for (int i = 0; i < typeTable.size(); i++) {
-            Symbol symbol = typeTable.get(i);
-            if (symbol.getValue().equals(value)) {
-                return i;
+        // 首先检查类型是否已存在
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).equals(value)) {
+                return i; // 返回已存在类型的索引
             }
         }
         
-        // Add new type if not found
-        typeTable.add(new Symbol(value));
-        return typeTable.size() - 1;
-    }
-
-    private static class Symbol {
-        private final String value;
-
-        public Symbol(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
+        // 如果类型不存在，添加到类型表中
+        types.add(value);
+        return types.size() - 1; // 返回新添加类型的索引
     }
 }

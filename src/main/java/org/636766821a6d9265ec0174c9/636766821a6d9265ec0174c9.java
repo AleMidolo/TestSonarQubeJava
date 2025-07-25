@@ -1,19 +1,46 @@
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassPathUtil {
     /**
-     * Returns the class path of the current JVM instance as an array of {@link File} objects.
+     * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
      */
     private static File[] classPath() {
-        String classPath = System.getProperty("java.class.path");
-        String pathSeparator = System.getProperty("path.separator");
-        String[] paths = classPath.split(pathSeparator);
+        List<File> files = new ArrayList<>();
         
-        File[] files = new File[paths.length];
-        for (int i = 0; i < paths.length; i++) {
-            files[i] = new File(paths[i]);
+        // Get system class loader
+        ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        
+        // Check if it's URLClassLoader
+        if (systemClassLoader instanceof URLClassLoader) {
+            URLClassLoader urlClassLoader = (URLClassLoader) systemClassLoader;
+            
+            // Get all URLs from class loader
+            URL[] urls = urlClassLoader.getURLs();
+            
+            // Convert URLs to File objects
+            for (URL url : urls) {
+                try {
+                    files.add(new File(url.toURI()));
+                } catch (Exception e) {
+                    // Skip invalid URLs
+                    continue;
+                }
+            }
         }
         
-        return files;
+        // Get classpath from system property
+        String classPath = System.getProperty("java.class.path");
+        if (classPath != null) {
+            String[] paths = classPath.split(File.pathSeparator);
+            for (String path : paths) {
+                files.add(new File(path));
+            }
+        }
+        
+        return files.toArray(new File[0]);
     }
 }

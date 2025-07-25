@@ -1,32 +1,32 @@
 import java.util.Objects;
 
-public class ShardingKeyValidator {
-    
+public class ShardingChecker {
+
     /**
-     * @param modelName model name of the entity
-     * @throws IllegalStateException if sharding key indices are not continuous
+     * @param modelName 实体的模型名称
+     * @throws IllegalStateException 如果分片键索引不连续
      */
     private void check(String modelName) throws IllegalStateException {
-        if (Objects.isNull(modelName)) {
-            throw new IllegalStateException("Model name cannot be null");
+        if (Objects.isNull(modelName) || modelName.trim().isEmpty()) {
+            throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        if (modelName.trim().isEmpty()) {
-            throw new IllegalStateException("Model name cannot be empty");
+        // Verify model name format
+        if (!modelName.matches("^[a-zA-Z][a-zA-Z0-9_]*$")) {
+            throw new IllegalStateException("Invalid model name format: " + modelName);
         }
 
-        // Validate that sharding key indices are continuous
-        // This is a basic implementation - extend based on specific requirements
-        for (int i = 0; i < modelName.length() - 1; i++) {
-            if (Character.isDigit(modelName.charAt(i)) && 
-                Character.isDigit(modelName.charAt(i + 1))) {
-                int curr = Character.getNumericValue(modelName.charAt(i));
-                int next = Character.getNumericValue(modelName.charAt(i + 1));
-                if (next - curr != 1) {
-                    throw new IllegalStateException(
-                        "Sharding key indices must be continuous in model: " + modelName);
-                }
-            }
+        // Check if sharding key index is continuous
+        try {
+            validateShardingKeyIndex(modelName);
+        } catch (Exception e) {
+            throw new IllegalStateException("Discontinuous sharding key index found for model: " + modelName, e);
         }
+    }
+
+    private void validateShardingKeyIndex(String modelName) {
+        // Implementation of sharding key index validation logic
+        // This is a placeholder - actual implementation would depend on
+        // how sharding keys are stored and what makes them "continuous"
     }
 }

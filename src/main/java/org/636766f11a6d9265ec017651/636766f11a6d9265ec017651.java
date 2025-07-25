@@ -1,28 +1,24 @@
-package org.apache.commons.lang3;
+import java.util.Arrays;
 
-/**
- * Utility class for working with arrays.
- */
 public class ArrayUtils {
-
+    
     /**
-     * Empty Character array constant
+     * Empty Character array constant.
      */
-    public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
-
-    /** 
-     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p>
-     * <p>This method returns an empty array for a <code>null</code> input array.</p>
-     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty 
-     * <code>public static</code> references in this class.</p>
-     *
-     * @param array  the array to check for <code>null</code> or empty
-     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
+    public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
+    
+    /**
+     * <p>防御性编程技术，将 <code>null</code> 引用转换为一个空引用。</p>
+     * <p>该方法对于 <code>null</code> 输入数组返回一个空数组。</p>
+     * <p>作为一种内存优化技术，传入的空数组将被本类中的空 <code>public static</code> 引用覆盖。</p>
+     * 
+     * @param array 要检查是否为 <code>null</code> 或空的数组
+     * @return 相同的数组，如果输入为 <code>null</code> 或空，则返回 <code>public static</code> 空数组
      * @since 2.5
      */
     public static Character[] nullToEmpty(final Character[] array) {
         if (array == null || array.length == 0) {
-            return EMPTY_CHARACTER_OBJECT_ARRAY;
+            return EMPTY_CHARACTER_ARRAY;
         }
         return array;
     }

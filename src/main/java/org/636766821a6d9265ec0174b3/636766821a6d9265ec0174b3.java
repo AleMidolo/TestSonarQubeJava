@@ -1,32 +1,43 @@
-import javax.servlet.ServletContext;
-import org.eclipse.jetty.websocket.api.Session;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BroadcastFilterHandler {
+public class BroadcastHandler {
 
-    private BroadcastFilter filter;
-    private ServletContext context;
+    private List<BroadcastFilter> filters;
 
-    public BroadcastFilterHandler(BroadcastFilter filter, ServletContext context) {
-        this.filter = filter;
-        this.context = context;
+    public BroadcastHandler() {
+        this.filters = new ArrayList<>();
     }
 
-    /** 
-     * Invoke the {@link BroadcastFilter}
-     * @param msg The message to be filtered
-     * @return The filtered message object
+    /**
+     * 调用 {@link BroadcastFilter}
+     * @param msg 需要过滤的消息对象
+     * @return 过滤后的消息对象
      */
     protected Object filter(Object msg) {
-        if (filter == null || msg == null) {
+        if (msg == null || filters.isEmpty()) {
             return msg;
         }
-        
-        try {
-            return filter.filter(msg);
-        } catch (Exception e) {
-            // Log error but don't throw to avoid breaking broadcast chain
-            context.log("Error in broadcast filter", e);
-            return msg;
+
+        Object result = msg;
+        for (BroadcastFilter filter : filters) {
+            result = filter.doFilter(result);
+            if (result == null) {
+                break;
+            }
+        }
+        return result;
+    }
+
+    // Inner interface for filter implementation
+    public interface BroadcastFilter {
+        Object doFilter(Object msg);
+    }
+
+    // Method to add filters
+    public void addFilter(BroadcastFilter filter) {
+        if (filter != null) {
+            filters.add(filter);
         }
     }
 }

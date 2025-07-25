@@ -1,43 +1,40 @@
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.table.*;
 
 public class TableUtils {
     /**
-     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane 
-     * to the newly selected row. More importantly, the call to repaint() delayed long enough to 
-     * have the table properly paint the newly selected row which may be offscreen
-     * @param table should belong to the specified JScrollPane
+     * 选择指定的 JTable 中的行，并将指定的 JScrollPane 滚动到新选择的行。更重要的是，调用 repaint() 的延迟足够长，以便表格能够正确绘制新选择的行，即使该行可能在当前视图之外。
+     * @param table 应该属于指定的 JScrollPane
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (row < 0 || row >= table.getRowCount()) {
             return;
         }
 
-        // Select the row
+        // 选择指定行
         table.setRowSelectionInterval(row, row);
 
-        // Get the rectangle for the selected row
+        // 计算要滚动到的矩形区域
         Rectangle rect = table.getCellRect(row, 0, true);
         
-        // Convert table coordinates to viewport coordinates
-        Rectangle viewRect = table.getVisibleRect();
-        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
-
-        // Scroll to make the rectangle visible
+        // 确保表格滚动到可见区域
         table.scrollRectToVisible(rect);
 
-        // Ensure proper repainting by using SwingUtilities.invokeLater
+        // 使用 SwingUtilities 确保在 EDT 中执行重绘
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Force table repaint
+                // 重新验证并重绘组件
+                pane.revalidate();
                 table.repaint();
                 
-                // Force scroll pane to update
-                pane.revalidate();
-                pane.repaint();
+                // 添加额外延迟以确保正确绘制
+                Timer timer = new Timer(100, e -> {
+                    table.repaint();
+                    ((Timer)e.getSource()).stop();
+                });
+                timer.start();
             }
         });
     }

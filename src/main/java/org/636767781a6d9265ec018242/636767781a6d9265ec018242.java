@@ -1,28 +1,23 @@
-import org.apache.log4j.Appender;
-import org.apache.log4j.LoggingEvent;
-import org.apache.log4j.spi.AppenderAttachable;
-import java.util.Enumeration;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.Appender;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class AppenderManager implements AppenderAttachable {
+public class AppenderManager {
+    private CopyOnWriteArrayList<Appender<LoggingEvent>> appenderList = new CopyOnWriteArrayList<>();
     
-    private Vector appenderList;
-
-    public AppenderManager() {
-        appenderList = new Vector();
-    }
-
     public int appendLoopOnAppenders(LoggingEvent event) {
-        int size = 0;
-        
+        int numberOfAppenders = 0;
         if(appenderList != null && !appenderList.isEmpty()) {
-            size = appenderList.size();
-            Enumeration enumeration = appenderList.elements();
-            while(enumeration.hasMoreElements()) {
-                Appender appender = (Appender) enumeration.nextElement();
-                appender.doAppend(event);
+            Iterator<Appender<LoggingEvent>> iter = appenderList.iterator();
+            while(iter.hasNext()) {
+                Appender<LoggingEvent> appender = iter.next();
+                if(appender != null) {
+                    appender.doAppend(event);
+                    numberOfAppenders++;
+                }
             }
         }
-        
-        return size;
+        return numberOfAppenders;
     }
 }

@@ -1,42 +1,38 @@
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContentBuilder {
 
     /**
-     * build content,if it has ats someone set the ats
+     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
      */
     private Map<String,Object> buildContent(JsonObject jsonObject) {
         Map<String,Object> content = new HashMap<>();
         
-        if (jsonObject == null) {
+        if(jsonObject == null) {
             return content;
         }
 
-        // Add text content if exists
-        if (jsonObject.has("text") && !jsonObject.get("text").isJsonNull()) {
-            content.put("text", jsonObject.get("text").getAsString());
+        // 获取消息内容
+        String text = jsonObject.has("text") ? jsonObject.get("text").getAsString() : "";
+        content.put("text", text);
+
+        // 解析@信息
+        List<Map<String,String>> atList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("@([\\w\\-]+)");
+        Matcher matcher = pattern.matcher(text);
+        
+        while(matcher.find()) {
+            Map<String,String> atInfo = new HashMap<>();
+            String username = matcher.group(1);
+            atInfo.put("username", username);
+            atList.add(atInfo);
         }
 
-        // Handle @ mentions if they exist
-        if (jsonObject.has("ats") && !jsonObject.get("ats").isJsonNull()) {
-            JsonArray atsArray = jsonObject.getAsJsonArray("ats");
-            if (atsArray != null && atsArray.size() > 0) {
-                List<String> atsList = new ArrayList<>();
-                for (JsonElement element : atsArray) {
-                    if (!element.isJsonNull()) {
-                        atsList.add(element.getAsString());
-                    }
-                }
-                if (!atsList.isEmpty()) {
-                    content.put("ats", atsList);
-                }
-            }
+        if(!atList.isEmpty()) {
+            content.put("at", atList);
         }
 
         return content;

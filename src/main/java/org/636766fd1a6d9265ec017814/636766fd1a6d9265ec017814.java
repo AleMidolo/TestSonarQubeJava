@@ -1,15 +1,21 @@
-import java.util.Arrays;
-
 public class ArrayUtils {
     /**
-     * Compares <code>count</code> first bytes in the arrays <code>a</code> and <code>b</code>.
-     * @param a     The first array to compare.
-     * @param b     The second array to compare.
-     * @param count How many bytes should be compared.
-     * @return <code>true</code> if <code>count</code> first bytes in arrays<code>a</code> and <code>b</code> are equal.
+     * 比较数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节。
+     * @param a     第一个要比较的数组。
+     * @param b     第二个要比较的数组。
+     * @param count 要比较的字节数。
+     * @return 如果数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节相等，则返回 <code>true</code>。
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
+        if (a == b) {
+            return true;
+        }
+        
         if (a == null || b == null) {
+            return false;
+        }
+        
+        if (count < 0) {
             return false;
         }
         

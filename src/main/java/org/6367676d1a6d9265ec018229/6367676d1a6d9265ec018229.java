@@ -1,10 +1,10 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class StringArrayUtils {
     /**
-     * Trim the elements of the given String array, calling <code>String.trim()</code> on each of them.
-     * @param array the original String array
-     * @return the resulting array (of the same size) with trimmed elements
+     * 修剪给定字符串数组的元素，对每个元素调用 <code>String.trim()</code> 方法。
+     * @param array 原始字符串数组
+     * @return 包含修剪后的元素的结果数组（大小相同）
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
@@ -13,8 +13,7 @@ public class ArrayUtils {
         
         String[] result = new String[array.length];
         for (int i = 0; i < array.length; i++) {
-            String element = array[i];
-            result[i] = element != null ? element.trim() : null;
+            result[i] = array[i] == null ? null : array[i].trim();
         }
         return result;
     }

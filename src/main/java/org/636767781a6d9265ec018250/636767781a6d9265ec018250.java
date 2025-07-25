@@ -1,19 +1,20 @@
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class LoggingEventFilter extends Filter {
+public class LogFilter extends Filter {
 
-    @Override
+    /**
+     * 如果没有字符串匹配，则返回 {@link Filter#NEUTRAL}。
+     */
     public int decide(LoggingEvent event) {
-        if (event == null) {
+        if (event == null || event.getMessage() == null) {
             return Filter.NEUTRAL;
         }
+
+        String message = event.getMessage().toString();
         
-        String message = event.getRenderedMessage();
-        if (message == null || message.isEmpty()) {
-            return Filter.NEUTRAL;
-        }
-        
+        // Since no specific matching criteria is provided in the docstring,
+        // we return NEUTRAL as specified
         return Filter.NEUTRAL;
     }
 }

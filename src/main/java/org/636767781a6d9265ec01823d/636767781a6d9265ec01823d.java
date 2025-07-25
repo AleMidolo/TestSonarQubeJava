@@ -13,10 +13,12 @@ public class CustomAppender extends AppenderSkeleton {
     }
 
     /**
-     * This method does actual writing
+     * 此方法执行实际的写入操作
      */
+    @Override
     protected void subAppend(LoggingEvent event) {
-        if(layout == null || writer == null) {
+        if(layout == null) {
+            errorHandler.error("No layout set for the appender named [" + name + "].");
             return;
         }
 
@@ -36,7 +38,8 @@ public class CustomAppender extends AppenderSkeleton {
             
             writer.flush();
         } catch(IOException e) {
-            errorHandler.error("Failed to write log event", e, 1);
+            errorHandler.error("Failed to write log event", e, 
+                    org.apache.log4j.spi.ErrorCode.WRITE_FAILURE);
         }
     }
 
@@ -46,7 +49,8 @@ public class CustomAppender extends AppenderSkeleton {
             try {
                 writer.close();
             } catch(IOException e) {
-                // Ignore
+                errorHandler.error("Failed to close writer", e, 
+                        org.apache.log4j.spi.ErrorCode.CLOSE_FAILURE);
             }
         }
     }

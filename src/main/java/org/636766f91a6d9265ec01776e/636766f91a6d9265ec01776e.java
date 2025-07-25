@@ -6,28 +6,32 @@ public class ByteArrayOutputStream extends OutputStream {
     protected byte[] buf;
     protected int count;
     
-    /**
-     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to this byte array output stream.
-     * @param b   the data.
-     * @param off the start offset in the data.
-     * @param len the number of bytes to write.
-     */
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-            ((off + len) > b.length) || ((off + len) < 0)) {
-            throw new IndexOutOfBoundsException();
-        } else if (len == 0) {
-            return;
+        if (b == null) {
+            throw new NullPointerException();
         }
         
-        int newcount = count + len;
-        if (newcount > buf.length) {
-            byte newbuf[] = new byte[Math.max(buf.length << 1, newcount)];
-            System.arraycopy(buf, 0, newbuf, 0, count);
-            buf = newbuf;
+        if (off < 0 || len < 0 || off + len > b.length) {
+            throw new IndexOutOfBoundsException();
         }
+
+        // Ensure capacity
+        ensureCapacity(count + len);
+        
+        // Copy bytes from input array to internal buffer
         System.arraycopy(b, off, buf, count, len);
-        count = newcount;
+        count += len;
+    }
+    
+    private void ensureCapacity(int minCapacity) {
+        // If the capacity is not enough
+        if (minCapacity > buf.length) {
+            // Grow buffer
+            int newCapacity = Math.max(buf.length << 1, minCapacity);
+            byte[] newBuf = new byte[newCapacity];
+            System.arraycopy(buf, 0, newBuf, 0, count);
+            buf = newBuf;
+        }
     }
 }

@@ -1,19 +1,35 @@
 public class ParameterParser {
     /**
-     * Determine whether a parameter name ends at the current position, that is,
-     * whether the given character qualifies as a separator.
+     * 确定参数名称是否在当前位置结束，即给定字符是否符合分隔符的条件。
      */
     private static boolean isParameterSeparator(final char c) {
-        // Parameter name ends if character is:
-        // - whitespace
-        // - closing bracket )
-        // - semicolon ;
-        // - equals sign =
-        // - comma ,
-        return Character.isWhitespace(c) || 
-               c == ')' ||
-               c == ';' ||
-               c == '=' ||
-               c == ',';
+        // Check if character is whitespace
+        if (Character.isWhitespace(c)) {
+            return true;
+        }
+        
+        // Check for common parameter separators
+        switch (c) {
+            case '(':
+            case ')':
+            case '<':
+            case '>':
+            case '@':
+            case ',':
+            case ';':
+            case ':':
+            case '\\':
+            case '"':
+            case '/':
+            case '[':
+            case ']':
+            case '?':
+            case '=':
+            case '{':
+            case '}':
+                return true;
+            default:
+                return false;
+        }
     }
 }

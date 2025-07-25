@@ -1,21 +1,27 @@
 import java.util.Map;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Accumulator {
+public class ValueAccumulator {
+    
     private Map<String, Long> accumulatorMap;
     
-    public Accumulator() {
-        accumulatorMap = new HashMap<>();
+    public ValueAccumulator() {
+        this.accumulatorMap = new ConcurrentHashMap<>();
     }
-
+    
     /**
-     * Accumulate the value with existing value in the same given key.
+     * 将给定键的值与现有值累加。
      */
     public void valueAccumulation(String key, Long value) {
         if (key == null || value == null) {
             return;
         }
         
-        accumulatorMap.merge(key, value, Long::sum);
+        accumulatorMap.compute(key, (k, v) -> {
+            if (v == null) {
+                return value;
+            }
+            return v + value;
+        });
     }
 }

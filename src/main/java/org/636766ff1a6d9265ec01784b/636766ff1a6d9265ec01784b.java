@@ -1,15 +1,14 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
 public class StringUtils {
-
     /**
-     * <p>Checks whether the <code>String</code> contains only digit characters.</p>
-     * <p><code>Null</code> and empty String will return <code>false</code>.</p>
-     * @param str  the <code>String</code> to check
-     * @return <code>true</code> if str contains only unicode numeric
+     * <p>检查给定的 <code>String</code> 是否仅包含数字字符。</p>
+     * <p><code>Null</code> 和空字符串将返回 <code>false</code>。</p>
+     * @param str 要检查的 <code>String</code>
+     * @return 如果 str 仅包含 unicode 数字则返回<code>true</code>
      */
     public static boolean isDigits(String str) {
-        if (Objects.isNull(str) || str.isEmpty()) {
+        if (str == null || str.length() == 0) {
             return false;
         }
         

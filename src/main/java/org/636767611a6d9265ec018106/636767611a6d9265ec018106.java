@@ -1,39 +1,34 @@
-import java.util.Set;
+import java.util.*;
 
-public class Graph<V,E> {
+public class Graph<V> {
+    // 邻接表存储图结构
+    private Map<V, Map<V, Double>> adjacencyMap;
 
-    private Map<V, Map<V, E>> graph = new HashMap<>();
-    private boolean isWeighted = true;
+    public Graph() {
+        adjacencyMap = new HashMap<>();
+    }
 
     /**
-     * Compute the sum of the weights entering a vertex
-     * @param v the vertex
-     * @return the sum of the weights entering a vertex
+     * 计算进入一个顶点的权重总和
+     * @param v 顶点
+     * @return 进入一个顶点的权重总和
      */
     public double vertexWeight(Set<V> v) {
-        double sum = 0.0;
+        double totalWeight = 0.0;
         
-        // For each vertex in the graph
-        for (V vertex : graph.keySet()) {
-            // Get edges going to vertices in set v
-            Map<V, E> edges = graph.get(vertex);
+        // 遍历所有顶点
+        for (V vertex : adjacencyMap.keySet()) {
+            Map<V, Double> edges = adjacencyMap.get(vertex);
             
-            // For each edge
-            for (Map.Entry<V, E> edge : edges.entrySet()) {
-                // If the destination vertex is in set v
-                if (v.contains(edge.getKey())) {
-                    // Add weight to sum if graph is weighted
-                    if (isWeighted) {
-                        sum += (Double) edge.getValue();
-                    }
-                    // Add 1 if unweighted
-                    else {
-                        sum += 1.0;
-                    }
+            // 遍历该顶点的所有出边
+            for (V destination : edges.keySet()) {
+                // 如果目标顶点在给定集合v中,累加权重
+                if (v.contains(destination)) {
+                    totalWeight += edges.get(destination);
                 }
             }
         }
         
-        return sum;
+        return totalWeight;
     }
 }

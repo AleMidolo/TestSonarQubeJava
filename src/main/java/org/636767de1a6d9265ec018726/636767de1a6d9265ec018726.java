@@ -4,51 +4,46 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     private static class SequenceRange {
-        private long startSequence;
-        private long endSequence;
-
-        public SequenceRange(long startSequence, long endSequence) {
-            this.startSequence = startSequence;
-            this.endSequence = endSequence;
+        private long start;
+        private long end;
+        
+        public SequenceRange(long start, long end) {
+            this.start = start;
+            this.end = end;
         }
-
-        public long getStartSequence() {
-            return startSequence;
+        
+        public long getStart() {
+            return start;
         }
-
-        public long getEndSequence() {
-            return endSequence;
+        
+        public long getEnd() {
+            return end; 
         }
     }
 
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         
-        // Get current profile segments
+        // Get current sequence number
         long currentSequence = getCurrentSequence();
-        long snapshotSequence = getSnapshotSequence();
         
-        // Build ranges between current and snapshot sequences
-        if (currentSequence > snapshotSequence) {
-            // Add range from snapshot to current
-            ranges.add(new SequenceRange(snapshotSequence, currentSequence));
-        } else if (currentSequence < snapshotSequence) {
-            // Add range from current to snapshot
-            ranges.add(new SequenceRange(currentSequence, snapshotSequence)); 
+        // Build ranges in chunks of 1000
+        long chunkSize = 1000;
+        long start = 0;
+        
+        while (start < currentSequence) {
+            long end = Math.min(start + chunkSize - 1, currentSequence);
+            ranges.add(new SequenceRange(start, end));
+            start = end + 1;
         }
-        // If equal, no ranges needed
         
         return ranges;
     }
-
-    // Helper methods to get sequences
-    private long getCurrentSequence() {
-        // Implementation to get current sequence
-        return 0L;
-    }
     
-    private long getSnapshotSequence() {
-        // Implementation to get snapshot sequence
-        return 0L;
+    // Helper method to get current sequence
+    private long getCurrentSequence() {
+        // Implementation to get current sequence number
+        // This could read from a file or database
+        return 10000; // Example value
     }
 }

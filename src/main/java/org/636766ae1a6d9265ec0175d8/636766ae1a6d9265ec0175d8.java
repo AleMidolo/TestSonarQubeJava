@@ -13,8 +13,8 @@ public class ContentRangeBuilder {
     }
 
     /**
-     * Build the 'Content-Range' HTTP Header value.
-     * @return 'Content-Range' value
+     * 构建 'Content-Range' HTTP 头部值。
+     * @return 'Content-Range' 值
      */
     private String buildContentRange() {
         StringBuilder contentRange = new StringBuilder();

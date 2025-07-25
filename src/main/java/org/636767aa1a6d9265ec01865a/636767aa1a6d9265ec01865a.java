@@ -1,33 +1,34 @@
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class BufferWriter {
+public class LinkedBufferWriter {
+    
     /**
-     * Writes the contents of the LinkedBuffer into the DataOutput.
-     * @return the total content size of the buffer.
+     * 将 {@link LinkedBuffer} 的内容写入 {@link DataOutput}。
+     * @return 缓冲区的总内容大小。
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         if (out == null || node == null) {
             return 0;
         }
 
-        int size = 0;
+        int totalSize = 0;
         LinkedBuffer current = node;
 
         while (current != null) {
             byte[] buffer = current.getBuffer();
             int offset = current.getOffset();
-            int length = current.getLength();
+            int size = current.getSize();
 
-            if (buffer != null && length > 0) {
-                out.write(buffer, offset, length);
-                size += length;
+            if (buffer != null && size > 0) {
+                out.write(buffer, offset, size);
+                totalSize += size;
             }
-            
-            current = current.next();
+
+            current = current.getNext();
         }
 
-        return size;
+        return totalSize;
     }
 }
 
@@ -35,7 +36,7 @@ public class BufferWriter {
 class LinkedBuffer {
     private byte[] buffer;
     private int offset;
-    private int length;
+    private int size;
     private LinkedBuffer next;
 
     public byte[] getBuffer() {
@@ -46,11 +47,11 @@ class LinkedBuffer {
         return offset;
     }
 
-    public int getLength() {
-        return length;
+    public int getSize() {
+        return size;
     }
 
-    public LinkedBuffer next() {
+    public LinkedBuffer getNext() {
         return next;
     }
 }

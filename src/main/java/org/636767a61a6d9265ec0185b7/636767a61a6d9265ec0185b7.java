@@ -1,7 +1,6 @@
 public class CharacterUtils {
     /**
-     * Interpret a character as a digit (in any base up to 36) and return the numeric value. 
-     * This is like {@code Character.digit()} but we don't accept non-ASCII digits.
+     * 将字符解释为数字（在任何基数下最多为36），并返回其数值。这类似于 {@code Character.digit()}，但我们不接受非ASCII数字。
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {

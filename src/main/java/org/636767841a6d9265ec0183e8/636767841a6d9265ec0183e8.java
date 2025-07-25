@@ -1,29 +1,29 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LogEventBuffer {
-    private final ArrayBlockingQueue<LoggingEvent> buffer;
-    private final int maxSize;
+public class LogBuffer {
+    private List<LoggingEvent> buffer;
+    private static final int MAX_BUFFER_SIZE = 1000;
 
-    public LogEventBuffer(int size) {
-        this.maxSize = size;
-        this.buffer = new ArrayBlockingQueue<>(maxSize);
+    public LogBuffer() {
+        buffer = new ArrayList<>();
     }
 
     /**
-     * Add an <code>event</code> as the last event in the buffer.
+     * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
      */
     public void add(LoggingEvent event) {
         if (event == null) {
             return;
         }
 
-        // If buffer is full, remove oldest event
-        if (buffer.size() == maxSize) {
-            buffer.poll();
+        // 如果缓冲区已满,移除最早的事件
+        if (buffer.size() >= MAX_BUFFER_SIZE) {
+            buffer.remove(0);
         }
 
-        // Add new event to buffer
-        buffer.offer(event);
+        // 添加新事件到缓冲区末尾
+        buffer.add(event);
     }
 }

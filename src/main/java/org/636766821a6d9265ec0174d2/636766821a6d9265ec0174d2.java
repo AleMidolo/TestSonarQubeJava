@@ -1,20 +1,20 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
-import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereRequestImpl;
 
 public class RequestWrapper {
 
     /**
-     * Wrap an {@link HttpServletRequest}.
-     * @param request {@link HttpServletRequest}
-     * @return an {@link AtmosphereRequest}
+     * 包装一个 {@link HttpServletRequest}。
+     * @param request {@link HttpServletRequest} 
+     * @return 一个 {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
         if (request instanceof AtmosphereRequest) {
             return (AtmosphereRequest) request;
         }
-
-        return new AtmosphereRequest.Builder()
+        
+        return new AtmosphereRequestImpl.Builder()
                 .request(request)
                 .build();
     }

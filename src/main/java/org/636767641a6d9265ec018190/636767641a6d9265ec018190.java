@@ -1,27 +1,25 @@
 import java.util.*;
 
-public class BucketLabeler {
-
+public class GraphLabeling {
     /**
-     * Moves all vertices from the bucket with label {@code minLabel} to the bucket with label 0.
-     * Clears the bucket with label {@code minLabel}. Updates the labeling accordingly.
-     * @param bucketsByLabel the buckets vertices are stored in
-     * @param labels the labels of the vertices
-     * @param minLabel the minimum value of the non-empty bucket
+     * 将所有标签为 {@code minLabel} 的桶中的顶点移动到标签为 0 的桶中。清空标签为 {@code minLabel} 的桶。相应地更新标签。
+     * @param bucketsByLabel 存储顶点的桶
+     * @param labels 顶点的标签
+     * @param minLabel 非空桶的最小值
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Get vertices from minLabel bucket
-        Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
+        // 获取标签为minLabel的桶中的所有顶点
+        Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
         
-        // Move vertices to bucket 0
-        bucketsByLabel.get(0).addAll(verticesToMove);
+        // 将这些顶点移动到标签为0的桶中
+        bucketsByLabel.get(0).addAll(minLabelBucket);
         
-        // Update labels for moved vertices
-        for (Integer vertex : verticesToMove) {
+        // 更新这些顶点的标签为0
+        for (Integer vertex : minLabelBucket) {
             labels.set(vertex, 0);
         }
         
-        // Clear minLabel bucket
-        verticesToMove.clear();
+        // 清空标签为minLabel的桶
+        minLabelBucket.clear();
     }
 }

@@ -1,11 +1,10 @@
 import java.util.Objects;
 
 public class PathUtils {
-
     /**
-     * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -> "mypath/myfile".
-     * @param path the file path (may be <code>null</code>)
-     * @return the path with stripped filename extension,or <code>null</code> if none
+     * 从给定路径中去除文件名扩展名，例如 "mypath/myfile.txt" -> "mypath/myfile"。
+     * @param path 文件路径（可能为 <code>null</code>）
+     * @return 去除文件名扩展名后的路径，如果没有扩展名则返回 <code>null</code>
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
@@ -14,12 +13,12 @@ public class PathUtils {
         
         int extIndex = path.lastIndexOf('.');
         if (extIndex == -1) {
-            return path;
+            return null;
         }
-
-        int sepIndex = path.lastIndexOf('/');
-        if (sepIndex > extIndex) {
-            return path;
+        
+        int folderIndex = path.lastIndexOf('/');
+        if (folderIndex > extIndex) {
+            return null;
         }
         
         return path.substring(0, extIndex);

@@ -1,35 +1,34 @@
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatServer {
-    private List<PrintWriter> clientWriters;
-
-    public ChatServer() {
-        clientWriters = new ArrayList<>();
-    }
-
+public class TelnetServer {
+    private List<PrintWriter> clientWriters = new ArrayList<>();
+    
     /**
-     * sends a message to each of the clients in telnet-friendly output.
+     * 以适用于 Telnet 的格式向每个客户端发送消息。
      */
     public synchronized void send(final String message) {
+        // 遍历所有客户端的输出流
         for (PrintWriter writer : clientWriters) {
             try {
+                // 发送消息,添加回车换行符以适配Telnet协议
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // Remove failed client writer
+                // 如果发送失败,从列表中移除该客户端
                 clientWriters.remove(writer);
             }
         }
     }
-
-    // Method to add new client writer
+    
+    // 添加新的客户端连接
     public synchronized void addClient(PrintWriter writer) {
         clientWriters.add(writer);
     }
-
-    // Method to remove client writer
+    
+    // 移除客户端连接
     public synchronized void removeClient(PrintWriter writer) {
         clientWriters.remove(writer);
     }

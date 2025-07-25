@@ -1,22 +1,21 @@
 import java.util.List;
 
 public class StringUtils {
-
     /**
-     * Case in-sensitive Checks if the String contains any character in the given set of string.
-     * @param str The string to check
-     * @param searchStrArray List of strings to search for
-     * @return true if str contains any of the search strings (case insensitive), false otherwise
+     * 不区分大小写，检查字符串是否包含给定字符串集合中的任何字符。
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
-        if (str == null || searchStrArray == null) {
+        if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
             return false;
         }
 
         String lowerStr = str.toLowerCase();
         
         for (String searchStr : searchStrArray) {
-            if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
+            if (searchStr == null) {
+                continue;
+            }
+            if (lowerStr.contains(searchStr.toLowerCase())) {
                 return true;
             }
         }

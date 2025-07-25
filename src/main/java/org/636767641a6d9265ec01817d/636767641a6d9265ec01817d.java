@@ -1,35 +1,41 @@
 import java.util.*;
-import org.jgrapht.*;
 
-public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
+public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E> {
 
     @Override
     public void generateGraph(Graph<V,E> target, Map<String,V> resultMap) {
-        if (target == null) {
-            throw new IllegalArgumentException("Target graph cannot be null");
+        if (target == null || resultMap == null) {
+            throw new IllegalArgumentException("Graph and result map cannot be null");
         }
 
-        // Create two sets of vertices for bipartite graph
-        List<V> partition1 = new ArrayList<>();
-        List<V> partition2 = new ArrayList<>();
+        // Clear the target graph
+        target.clear();
 
-        // Add vertices to the graph and store in partitions
+        // Get vertices from result map
+        List<V> leftSet = new ArrayList<>();
+        List<V> rightSet = new ArrayList<>();
+        
+        // Split vertices into two sets
         for (Map.Entry<String,V> entry : resultMap.entrySet()) {
-            V vertex = entry.getValue();
-            target.addVertex(vertex);
-            
-            // Add to partition1 if key starts with "A", otherwise partition2
-            if (entry.getKey().startsWith("A")) {
-                partition1.add(vertex);
-            } else {
-                partition2.add(vertex);
+            if (entry.getKey().startsWith("L")) {
+                leftSet.add(entry.getValue());
+            } else if (entry.getKey().startsWith("R")) {
+                rightSet.add(entry.getValue());
             }
         }
 
-        // Connect every vertex in partition1 to every vertex in partition2
-        for (V v1 : partition1) {
-            for (V v2 : partition2) {
-                target.addEdge(v1, v2);
+        // Add all vertices to graph
+        for (V vertex : leftSet) {
+            target.addVertex(vertex);
+        }
+        for (V vertex : rightSet) {
+            target.addVertex(vertex);
+        }
+
+        // Connect each vertex in left set to all vertices in right set
+        for (V leftVertex : leftSet) {
+            for (V rightVertex : rightSet) {
+                target.addEdge(leftVertex, rightVertex);
             }
         }
     }

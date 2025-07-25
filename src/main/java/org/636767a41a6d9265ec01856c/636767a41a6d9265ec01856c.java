@@ -1,34 +1,33 @@
 import java.nio.charset.StandardCharsets;
 
 public class UTF8Utils {
-
     /**
-     * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
+     * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        int utf8Size = 0;
+        int size = 0;
         final int end = index + len;
         
         for (int i = index; i < end; i++) {
             char c = str.charAt(i);
             
-            if (c <= 0x7F) {
-                utf8Size++;
-            } else if (c <= 0x7FF) {
-                utf8Size += 2;
+            if (c < 0x80) {
+                // ASCII character (0x00-0x7F) takes 1 byte
+                size++;
+            } else if (c < 0x800) {
+                // 2-byte UTF-8 character (0x80-0x7FF)
+                size += 2;
             } else if (Character.isSurrogate(c)) {
-                if (Character.isHighSurrogate(c) && i + 1 < end && 
-                    Character.isLowSurrogate(str.charAt(i + 1))) {
-                    utf8Size += 4;
-                    i++;
-                } else {
-                    utf8Size += 3;
-                }
+                // 4-byte UTF-8 character (surrogate pair)
+                // Skip the next char as it's part of the same character
+                size += 4;
+                i++;
             } else {
-                utf8Size += 3;
+                // 3-byte UTF-8 character
+                size += 3;
             }
         }
         
-        return utf8Size;
+        return size;
     }
 }

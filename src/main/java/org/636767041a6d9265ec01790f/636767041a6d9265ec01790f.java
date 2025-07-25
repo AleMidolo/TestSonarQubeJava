@@ -1,16 +1,16 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for converting primitive arrays to their object wrapper equivalents.
+ * Utility class for converting primitive arrays to object arrays.
  */
 public class ArrayUtils {
 
     /**
-     * <p>Converts an array of primitive ints to objects.</p>
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>将基本数据类型的 int 数组转换为对象类型。</p> 
+     * <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
      * 
-     * @param array  an <code>int</code> array
-     * @return an <code>Integer</code> array, <code>null</code> if null array input
+     * @param array  一个 <code>int</code> 数组
+     * @return 一个 <code>Integer</code> 数组，如果输入数组为空则返回 <code>null</code>
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {

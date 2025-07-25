@@ -1,32 +1,30 @@
-import java.util.Objects;
-
 public class StringUtils {
-
     /**
-     * Gets a substring from the specified String avoiding exceptions.
+     * 从指定的字符串中获取子字符串，避免抛出异常。
      */
     public static String sub(String str, int start, int end) {
         if (str == null) {
             return null;
         }
-
-        int strLen = str.length();
-
+        
+        int length = str.length();
+        
         if (start < 0) {
             start = 0;
         }
-        if (end > strLen) {
-            end = strLen;
+        
+        if (end > length) {
+            end = length; 
         }
-
+        
         if (start > end) {
             return "";
         }
-
-        if (start > strLen) {
+        
+        if (start > length) {
             return "";
         }
-
+        
         return str.substring(start, end);
     }
 }

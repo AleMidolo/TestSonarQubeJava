@@ -5,29 +5,33 @@ import java.util.List;
 
 public class FileHandler {
     /**
-     * Add the specified files in reverse order.
+     * 以逆序添加指定的文件。
      */
     private void addReverse(final File[] files) {
         if (files == null || files.length == 0) {
             return;
         }
         
+        // Convert array to list for easier reversal
         List<File> fileList = new ArrayList<>();
         for (File file : files) {
             fileList.add(file);
         }
         
+        // Reverse the list
         Collections.reverse(fileList);
         
+        // Add files in reverse order
         for (File file : fileList) {
-            // Add files in reverse order
-            // Implementation specific add logic would go here
-            processFile(file);
+            if (file != null) {
+                add(file);
+            }
         }
     }
     
-    // Helper method for processing files
-    private void processFile(File file) {
-        // Implementation specific file processing
+    // Helper method for adding individual files
+    private void add(File file) {
+        // Implementation of add method would go here
+        // This is just a stub
     }
 }

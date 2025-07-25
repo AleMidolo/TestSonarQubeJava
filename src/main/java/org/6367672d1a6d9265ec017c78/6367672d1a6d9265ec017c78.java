@@ -7,8 +7,8 @@ public class Solution {
         set = new HashSet<>();
     }
     
-    /** 
-     * Inserts a value to the set. Returns true if the set did not already contain the specified element. 
+    /**
+     * 将一个值插入集合。如果集合中尚未包含指定元素，则返回真。
      */
     public boolean insert(int val) {
         return set.add(val);

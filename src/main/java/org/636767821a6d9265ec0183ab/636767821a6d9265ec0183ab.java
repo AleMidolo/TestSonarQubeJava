@@ -1,18 +1,19 @@
-public class Exception {
+public class ExceptionHandler {
     private Throwable thrown;
 
-    /**
-     * @return true if getThrown().toString() is a non-empty string.
-     */
-    public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+    public ExceptionHandler() {
+        this.thrown = null;
+    }
+
+    public void setThrown(Throwable thrown) {
+        this.thrown = thrown;
     }
 
     public Throwable getThrown() {
-        return thrown;
+        return this.thrown;
+    }
+
+    public boolean hasThrown() {
+        return getThrown() != null && getThrown().toString() != null && !getThrown().toString().isEmpty();
     }
 }

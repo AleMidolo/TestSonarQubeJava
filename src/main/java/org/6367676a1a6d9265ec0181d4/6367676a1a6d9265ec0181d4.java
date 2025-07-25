@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 public class ArrayUtils {
+
     /**
      * Append the given String to the given String array, returning a new array consisting of the input array contents plus the given String.
      * @param array the array to append to (can be <code>null</code>)
@@ -14,5 +15,12 @@ public class ArrayUtils {
         String[] newArray = Arrays.copyOf(array, array.length + 1);
         newArray[array.length] = str;
         return newArray;
+    }
+
+    public static void main(String[] args) {
+        String[] array = {"one", "two"};
+        String str = "three";
+        String[] result = addStringToArray(array, str);
+        System.out.println(Arrays.toString(result)); // Output: [one, two, three]
     }
 }

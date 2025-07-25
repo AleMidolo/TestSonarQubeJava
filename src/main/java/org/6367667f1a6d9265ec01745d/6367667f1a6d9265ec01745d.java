@@ -12,7 +12,7 @@ public class URIDecoder {
             return pathSegments;
         }
 
-        // Remove leading '/' if the path is absolute
+        // Remove the leading '/' if it exists and the path is absolute
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
@@ -29,24 +29,25 @@ public class URIDecoder {
     }
 
     public static class PathSegmentImpl {
-        private final String segment;
+        private final String path;
 
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
+        public PathSegmentImpl(String path) {
+            this.path = path;
         }
 
-        public String getSegment() {
-            return segment;
+        public String getPath() {
+            return path;
         }
 
         @Override
         public String toString() {
-            return segment;
+            return "PathSegmentImpl{" +
+                    "path='" + path + '\'' +
+                    '}';
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
         URI uri = URI.create("http://example.com/path/to/resource");
         List<PathSegmentImpl> segments = decodePath(uri, true);
         for (PathSegmentImpl segment : segments) {

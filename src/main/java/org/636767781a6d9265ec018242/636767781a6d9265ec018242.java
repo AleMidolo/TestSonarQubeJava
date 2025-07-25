@@ -1,5 +1,5 @@
-import org.apache.log4j.Appender;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.Appender;
 
 public class Logger {
     private Appender[] appenders;
@@ -10,22 +10,17 @@ public class Logger {
 
     /**
      * Call the <code>doAppend</code> method on all attached appenders.
-     * @param event The logging event to append.
-     * @return The number of appenders that successfully appended the event.
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
+        if (appenders == null) {
+            return 0;
+        }
+
         int count = 0;
-        if (appenders != null) {
-            for (Appender appender : appenders) {
-                if (appender != null) {
-                    try {
-                        appender.doAppend(event);
-                        count++;
-                    } catch (Exception e) {
-                        // Handle or log the exception if necessary
-                        System.err.println("Error appending event: " + e.getMessage());
-                    }
-                }
+        for (Appender appender : appenders) {
+            if (appender != null) {
+                appender.doAppend(event);
+                count++;
             }
         }
         return count;

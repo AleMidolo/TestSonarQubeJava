@@ -10,9 +10,10 @@ public class LogAppender {
 
     /**
      * Handles a log event. For this appender, that means writing the message to each connected client.
+     * @param event The logging event to be handled.
      */
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
+        String message = event.getMessage().toString();
         for (Socket client : clients) {
             try {
                 OutputStream outputStream = client.getOutputStream();
@@ -28,6 +29,7 @@ public class LogAppender {
 
     /**
      * Adds a client to the list of connected clients.
+     * @param client The client socket to be added.
      */
     public void addClient(Socket client) {
         clients.add(client);
@@ -35,6 +37,7 @@ public class LogAppender {
 
     /**
      * Removes a client from the list of connected clients.
+     * @param client The client socket to be removed.
      */
     public void removeClient(Socket client) {
         clients.remove(client);

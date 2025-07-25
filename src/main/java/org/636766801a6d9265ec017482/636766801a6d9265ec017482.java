@@ -8,9 +8,8 @@ public class ClassFileBuffer {
     public void readFrom(final InputStream in) throws IOException {
         // Clear the buffer by setting it to null
         buffer = null;
-        readPointer = 0;
 
-        // Read the input stream into a byte array
+        // Read all bytes from the input stream
         buffer = in.readAllBytes();
 
         // Reset the read pointer to the start of the buffer

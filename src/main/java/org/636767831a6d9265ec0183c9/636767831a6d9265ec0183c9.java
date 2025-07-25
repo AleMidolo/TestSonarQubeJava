@@ -18,8 +18,8 @@ public class NDC {
 
     // Example usage
     public static void main(String[] args) {
-        contextStack.push("Context1");
-        contextStack.push("Context2");
-        System.out.println(peek()); // Output: Context2
+        contextStack.push("Context 1");
+        contextStack.push("Context 2");
+        System.out.println(peek()); // Output: Context 2
     }
 }

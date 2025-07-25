@@ -1,7 +1,6 @@
 /**
  * Checks if an array of primitive doubles is empty or null.
- * 
- * @param array the array to test
+ * @param array  the array to test
  * @return true if the array is empty or null
  * @since 2.1
  */

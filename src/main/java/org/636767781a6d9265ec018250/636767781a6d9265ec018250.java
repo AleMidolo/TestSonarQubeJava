@@ -6,14 +6,15 @@ public class MyFilter {
      * Returns {@link Filter#NEUTRAL} if there is no string match.
      */
     public int decide(LoggingEvent event) {
-        // Assuming we are checking for a specific string in the message
+        // Assuming you want to check for a specific string in the event's message
         String message = event.getMessage().toString();
-        String targetString = "specificString"; // Replace with the actual string to match
-
-        if (message.contains(targetString)) {
-            return Filter.ACCEPT; // or Filter.DENY, depending on your logic
-        } else {
+        
+        // Replace "your_string_to_match" with the actual string you want to match
+        if (!message.contains("your_string_to_match")) {
             return Filter.NEUTRAL;
         }
+        
+        // If there is a match, return Filter.ACCEPT or Filter.DENY based on your logic
+        return Filter.ACCEPT; // or return Filter.DENY;
     }
 }

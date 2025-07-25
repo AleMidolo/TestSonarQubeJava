@@ -1,5 +1,5 @@
-import java.io.StringWriter;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
@@ -9,25 +9,27 @@ public class LogFormatter {
      * @return formatted string representation of the logging event.
      */
     public String format(final LoggingEvent event) {
-        StringWriter writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
-
-        printWriter.println("Logging Event:");
-        printWriter.println("Timestamp: " + event.getTimestamp());
-        printWriter.println("Level: " + event.getLevel());
-        printWriter.println("Message: " + event.getMessage());
-        printWriter.println("Logger Name: " + event.getLoggerName());
-        printWriter.println("Thread Name: " + event.getThreadName());
-
-        if (event.getThrowableInfo() != null) {
-            printWriter.println("Throwable: ");
-            event.getThrowableInfo().printStackTrace(printWriter);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        
+        StringBuilder formattedMessage = new StringBuilder();
+        formattedMessage.append("[").append(timestamp).append("] ");
+        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
+        formattedMessage.append(event.getMessage());
+        
+        if (event.getThrowableStrRep() != null) {
+            formattedMessage.append("\n");
+            for (String line : event.getThrowableStrRep()) {
+                formattedMessage.append(line).append("\n");
+            }
         }
-
-        printWriter.flush();
-        return writer.toString();
+        
+        return formattedMessage.toString();
     }
 }
 
 // Assuming LoggingEvent class has the following methods:
-// getTimestamp(), getLevel(), getMessage(), getLoggerName(), getThreadName(), getThrowableInfo()
+// - getTimeStamp(): returns the timestamp of the event as a long
+// - getLevel(): returns the log level (e.g., INFO, ERROR)
+// - getMessage(): returns the log message as a String
+// - getThrowableStrRep(): returns the stack trace as a String array (if any)

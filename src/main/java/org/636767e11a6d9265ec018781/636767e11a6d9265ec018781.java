@@ -13,7 +13,7 @@ public class Cache {
         String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
         if (cacheMap.containsKey(key)) {
             METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
+            existingData.merge(data); // Assuming METRICS has a merge method to combine data
         } else {
             cacheMap.put(key, data);
         }
@@ -34,9 +34,11 @@ class METRICS {
         return key;
     }
 
-    public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
+    public int getValue() {
+        return value;
     }
 
-    // Other methods and fields as needed
+    public void merge(METRICS other) {
+        this.value += other.getValue();
+    }
 }

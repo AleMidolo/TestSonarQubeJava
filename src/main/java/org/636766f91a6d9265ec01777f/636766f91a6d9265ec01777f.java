@@ -1,7 +1,7 @@
 public class BooleanUtils {
 
     /**
-     * <p>Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.</p>
+     * Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.
      * <pre>
      * BooleanUtils.toBoolean(Boolean.TRUE)  = true
      * BooleanUtils.toBoolean(Boolean.FALSE) = false
@@ -14,9 +14,10 @@ public class BooleanUtils {
         return bool != null && bool;
     }
 
+    // Example usage
     public static void main(String[] args) {
         System.out.println(toBoolean(Boolean.TRUE));  // Output: true
         System.out.println(toBoolean(Boolean.FALSE)); // Output: false
-        System.out.println(toBoolean(null));          // Output: false
+        System.out.println(toBoolean(null));         // Output: false
     }
 }

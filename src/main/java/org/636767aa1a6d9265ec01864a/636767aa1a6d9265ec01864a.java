@@ -1,5 +1,6 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ByteArrayConverter {
 
@@ -7,22 +8,16 @@ public class ByteArrayConverter {
      * Copies bytes to a {@code byte[]}.
      *
      * @return a byte array containing the copied bytes
+     * @throws IOException if an I/O error occurs
      */
-    public byte[] toByteArray() {
-        // Example implementation: Convert a string to a byte array
-        String exampleData = "Hello, World!";
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            outputStream.write(exampleData.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public byte[] toByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[1024];
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
         }
-        return outputStream.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        ByteArrayConverter converter = new ByteArrayConverter();
-        byte[] byteArray = converter.toByteArray();
-        System.out.println(new String(byteArray)); // Output: Hello, World!
+        buffer.flush();
+        return buffer.toByteArray();
     }
 }

@@ -11,7 +11,7 @@ public class StackMapTableWriter {
      * @param end index of last type in {@link #currentFrame} to write (exclusive).
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
+        if (start < 0 || end > currentFrame.size() || start > end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
 
@@ -27,8 +27,9 @@ public class StackMapTableWriter {
      * @return the type in verification_type_info format.
      */
     private Object convertToVerificationTypeInfo(Object type) {
-        // Implement the conversion logic based on the JVMS specification.
-        // This is a placeholder implementation.
+        // Placeholder for actual conversion logic
+        // This method should be implemented based on the specific requirements
+        // of the JVMS verification_type_info format.
         return type;
     }
 }

@@ -22,6 +22,7 @@ public class FieldChecker {
     }
 }
 
+// Assuming Fields class is defined as follows:
 class Fields {
     private Set<String> fieldNames;
 

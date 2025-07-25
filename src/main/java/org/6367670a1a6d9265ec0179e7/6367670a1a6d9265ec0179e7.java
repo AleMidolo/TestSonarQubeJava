@@ -19,12 +19,12 @@ public class ConverterRegistry {
      * @param clazz The class for which the converter is registered
      * @param converter The converter to register
      */
-    public void register(Class<?> clazz, Converter converter) {
+    public void register(final Class<?> clazz, final Converter converter) {
         registry.put(clazz, converter);
     }
 
     // Example Converter interface
     public interface Converter {
-        Object convert(Object source);
+        Object convert(Object input);
     }
 }

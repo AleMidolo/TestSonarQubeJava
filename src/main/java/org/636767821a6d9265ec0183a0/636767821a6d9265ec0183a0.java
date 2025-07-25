@@ -1,6 +1,7 @@
 import java.io.File;
 
 public class FileUtils {
+
     /**
      * Delete's the specified file if it exists
      */

@@ -12,22 +12,26 @@ public class FileHandler {
             return;
         }
         
+        // Convert array to list for easier reversal
         List<File> fileList = new ArrayList<>();
         for (File file : files) {
             fileList.add(file);
         }
         
+        // Reverse the list
         Collections.reverse(fileList);
         
+        // Process files in reverse order
         for (File file : fileList) {
-            // Add files in reverse order
-            // Implementation specific add logic would go here
-            processFile(file);
+            if (file != null) {
+                processFile(file);
+            }
         }
     }
     
-    // Helper method for processing files
+    // Helper method to process individual files
     private void processFile(File file) {
-        // Implementation specific file processing
+        // Implementation for processing individual files would go here
+        // Left empty as it wasn't part of the original requirements
     }
 }

@@ -1,7 +1,7 @@
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class LoggingFilter extends Filter {
+public class LogEventFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
@@ -9,11 +9,8 @@ public class LoggingFilter extends Filter {
             return Filter.NEUTRAL;
         }
         
-        String message = event.getRenderedMessage();
-        if (message == null || message.isEmpty()) {
-            return Filter.NEUTRAL;
-        }
-        
+        // Since no string matching is needed according to docstring,
+        // always return NEUTRAL
         return Filter.NEUTRAL;
     }
 }

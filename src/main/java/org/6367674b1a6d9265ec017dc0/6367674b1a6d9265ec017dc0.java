@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Graph<V,E> {
 
-    // Assume these instance variables exist
+    // Assume these fields exist in the Graph class
     private Map<V, Set<E>> vertexMap; // Maps vertices to their incident edges
     private Map<E, V[]> edgeMap; // Maps edges to their endpoint vertices
 

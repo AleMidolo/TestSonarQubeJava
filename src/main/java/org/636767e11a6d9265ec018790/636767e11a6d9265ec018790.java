@@ -28,9 +28,9 @@ public class ThreadSnapshotLoader {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
         
-        public ProfileAnalyzeTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
+        public ProfileAnalyzeTimeRange(LocalDateTime start, LocalDateTime end) {
+            this.startTime = start;
+            this.endTime = end;
         }
         
         public boolean isInRange(LocalDateTime time) {
@@ -56,11 +56,12 @@ public class ThreadSnapshotLoader {
                             currentThreadState, new ArrayList<>(currentStackTrace)));
                     }
                     
-                    // Start new snapshot
+                    // Parse new timestamp
                     currentTimestamp = parseTimestamp(line);
                     currentStackTrace.clear();
                 } else if (line.startsWith("Thread:")) {
                     currentThreadName = parseThreadName(line);
+                } else if (line.startsWith("State:")) {
                     currentThreadState = parseThreadState(line);
                 } else if (!line.trim().isEmpty()) {
                     currentStackTrace.add(line.trim());
@@ -69,7 +70,7 @@ public class ThreadSnapshotLoader {
             
             // Add last snapshot if in range
             if (currentTimestamp != null && isInAnyTimeRange(currentTimestamp, timeRanges)) {
-                snapshots.add(new ThreadSnapshot(currentTimestamp, currentThreadName,
+                snapshots.add(new ThreadSnapshot(currentTimestamp, currentThreadName, 
                     currentThreadState, new ArrayList<>(currentStackTrace)));
             }
         }
@@ -87,20 +88,18 @@ public class ThreadSnapshotLoader {
     }
     
     private static LocalDateTime parseTimestamp(String line) {
-        // Implementation depends on actual timestamp format in file
-        // This is a placeholder
+        // Implement timestamp parsing based on your file format
+        // This is a placeholder implementation
         return LocalDateTime.now();
     }
     
     private static String parseThreadName(String line) {
-        // Implementation depends on actual thread info format in file
-        // This is a placeholder
-        return line.substring(line.indexOf("Thread:") + 7).trim();
+        // Implement thread name parsing based on your file format
+        return line.substring(line.indexOf(":") + 1).trim();
     }
     
     private static String parseThreadState(String line) {
-        // Implementation depends on actual thread state format in file
-        // This is a placeholder
-        return "RUNNING";
+        // Implement thread state parsing based on your file format
+        return line.substring(line.indexOf(":") + 1).trim();
     }
 }

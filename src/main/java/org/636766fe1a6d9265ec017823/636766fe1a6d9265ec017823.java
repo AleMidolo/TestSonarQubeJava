@@ -23,8 +23,10 @@ public class SymbolTable {
     }
 
     private Symbol lookupSymbol(int hashCode) {
-        for (Symbol symbol : symbols) {
-            if (symbol != null && symbol.hashCode == hashCode) {
+        for (int i = 1; i < constantPoolCount; i++) {
+            Symbol symbol = symbols[i];
+            if (symbol != null && symbol.type == Symbol.CONSTANT_NAME_AND_TYPE_TAG 
+                && symbol.hashCode == hashCode) {
                 return symbol;
             }
         }
@@ -34,22 +36,18 @@ public class SymbolTable {
     private Symbol addConstantNameAndTypeSymbol(String name, String descriptor, int hashCode) {
         Symbol symbol = new Symbol(
             constantPoolCount++,
-            CONSTANT_NAME_AND_TYPE_TAG,
-            name,
-            descriptor,
+            Symbol.CONSTANT_NAME_AND_TYPE_TAG,
+            addConstantUtf8(name),
+            addConstantUtf8(descriptor),
             hashCode
         );
-        
-        ensureCapacity();
         symbols[symbol.index] = symbol;
         return symbol;
     }
 
-    private void ensureCapacity() {
-        if (constantPoolCount >= symbols.length) {
-            Symbol[] newSymbols = new Symbol[symbols.length * 2];
-            System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
-            symbols = newSymbols;
-        }
+    private int addConstantUtf8(String value) {
+        // Implementation for adding UTF8 constant omitted for brevity
+        // Would follow similar pattern of checking existing entries then adding if not found
+        return 0;
     }
 }

@@ -12,12 +12,12 @@ public class Logger {
         // Get enumeration of all attached appenders
         Enumeration<Appender> appenders = getAllAppenders();
         
-        // If no appenders attached, return false
+        // If no appenders, return false
         if (appenders == null) {
             return false;
         }
 
-        // Iterate through appenders to find a match
+        // Check each appender
         while (appenders.hasMoreElements()) {
             Appender currentAppender = appenders.nextElement();
             if (currentAppender == appender) {
@@ -29,7 +29,7 @@ public class Logger {
     }
 
     // Helper method to get appenders
-    private Enumeration<Appender> getAllAppenders() {
-        return appenderList != null ? appenderList.getAllAppenders() : null;
+    public Enumeration<Appender> getAllAppenders() {
+        return appenderList.getAllAppenders();
     }
 }

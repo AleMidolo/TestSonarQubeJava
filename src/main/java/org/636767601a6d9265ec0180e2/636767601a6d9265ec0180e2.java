@@ -1,35 +1,40 @@
 import java.util.*;
 
-public class MinimalSeparators {
-    private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
+public class MinimalSeparatorFinder {
+
+    private Graph<V,E> graph; // Assume Graph class with vertices V and edges E exists
     
+    /**
+     * Computes the global separator list of the {@code graph}. More precisely, for every edge $e$ in the $G = (V, E)$ 
+     * computes list of minimal separators $S_e$ in the neighborhood of $e$ and then concatenates these lists.
+     * Note: the result may contain duplicates
+     * @return the list of minimal separators of every edge $e$ in the inspected graph
+     */
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
-        // Iterate through all edges in the graph
+        // Iterate through all edges in graph
         for (E edge : graph.edgeSet()) {
-            // Get endpoints of the edge
+            // Get vertices incident to edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get common neighbors of the endpoints
-            Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
-            Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
-            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
-            commonNeighbors.retainAll(targetNeighbors);
+            // Get neighborhood of both vertices
+            Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
+            Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
             
-            // Compute minimal separators for this edge
+            // Remove target from source neighbors and vice versa
+            sourceNeighbors.remove(target);
+            targetNeighbors.remove(source);
+            
+            // Find minimal separators in neighborhood
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
             
-            // For each pair of common neighbors
-            List<V> neighborList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < neighborList.size(); i++) {
-                for (int j = i + 1; j < neighborList.size(); j++) {
-                    V v1 = neighborList.get(i);
-                    V v2 = neighborList.get(j);
-                    
-                    // Check if {v1,v2} forms a minimal separator
-                    if (isMinimalSeparator(v1, v2, source, target)) {
+            // For each pair of vertices in neighborhood
+            for (V v1 : sourceNeighbors) {
+                for (V v2 : targetNeighbors) {
+                    if (!graph.containsEdge(v1, v2)) {
+                        // If vertices aren't connected, they form a minimal separator
                         edgeSeparators.add(new Pair<>(
                             graph.getVertexIndex(v1),
                             graph.getVertexIndex(v2)
@@ -47,38 +52,22 @@ public class MinimalSeparators {
         return globalSeparators;
     }
     
-    // Helper method to check if two vertices form a minimal separator
-    private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
-        // Remove v1 and v2 from graph temporarily
-        Set<V> separator = new HashSet<>();
-        separator.add(v1);
-        separator.add(v2);
+    // Helper class for pairs
+    private static class Pair<X,Y> {
+        private final X first;
+        private final Y second;
         
-        // Check if source and target are in different components
-        Set<V> visited = new HashSet<>();
-        visited.add(v1);
-        visited.add(v2);
-        
-        Queue<V> queue = new LinkedList<>();
-        queue.add(source);
-        visited.add(source);
-        
-        boolean foundTarget = false;
-        while (!queue.isEmpty() && !foundTarget) {
-            V current = queue.poll();
-            for (V neighbor : graph.neighborListOf(current)) {
-                if (!visited.contains(neighbor)) {
-                    if (neighbor.equals(target)) {
-                        foundTarget = true;
-                        break;
-                    }
-                    visited.add(neighbor);
-                    queue.add(neighbor);
-                }
-            }
+        public Pair(X first, Y second) {
+            this.first = first;
+            this.second = second;
         }
         
-        // If target not found, v1 and v2 form a separator
-        return !foundTarget;
+        public X getFirst() {
+            return first;
+        }
+        
+        public Y getSecond() {
+            return second;
+        }
     }
 }

@@ -21,16 +21,9 @@ public class ThreadSnapshotParser {
     }
 
     private static ThreadSnapshot parseLine(String line) {
-        // Assuming the line is in a specific format, parse it into a ThreadSnapshot object
+        // Implement the logic to parse a line into a ThreadSnapshot object
         // This is a placeholder implementation
-        String[] parts = line.split(",");
-        if (parts.length < 3) {
-            return null;
-        }
-        long timestamp = Long.parseLong(parts[0]);
-        String threadName = parts[1];
-        String state = parts[2];
-        return new ThreadSnapshot(timestamp, threadName, state);
+        return new ThreadSnapshot();
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
@@ -42,27 +35,16 @@ public class ThreadSnapshotParser {
         return false;
     }
 
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined as follows:
     public static class ThreadSnapshot {
         private long timestamp;
-        private String threadName;
-        private String state;
-
-        public ThreadSnapshot(long timestamp, String threadName, String state) {
-            this.timestamp = timestamp;
-            this.threadName = threadName;
-            this.state = state;
-        }
 
         public long getTimestamp() {
             return timestamp;
         }
 
-        public String getThreadName() {
-            return threadName;
-        }
-
-        public String getState() {
-            return state;
+        public void setTimestamp(long timestamp) {
+            this.timestamp = timestamp;
         }
     }
 
@@ -70,17 +52,20 @@ public class ThreadSnapshotParser {
         private long startTime;
         private long endTime;
 
-        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
         public long getStartTime() {
             return startTime;
         }
 
+        public void setStartTime(long startTime) {
+            this.startTime = startTime;
+        }
+
         public long getEndTime() {
             return endTime;
+        }
+
+        public void setEndTime(long endTime) {
+            this.endTime = endTime;
         }
     }
 }

@@ -8,6 +8,9 @@ public class VarintReader {
         this.input = input;
     }
 
+    /**
+     * Lee un Varint crudo del flujo.
+     */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;

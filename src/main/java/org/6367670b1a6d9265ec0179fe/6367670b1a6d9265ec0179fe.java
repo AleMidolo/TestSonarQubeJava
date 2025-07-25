@@ -25,8 +25,8 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación específica para escribir un byte.
-        // Este método debe ser implementado por la clase que extienda CustomOutputStream.
+        // Implementación específica para escribir un solo byte.
+        // Este método debe ser implementado por la subclase.
         throw new IOException("Método no implementado.");
     }
 }

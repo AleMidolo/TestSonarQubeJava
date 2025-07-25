@@ -3,28 +3,29 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Devuelve un número primo que es <code>&gt;= desiredCapacity</code> y muy cercano a <code>desiredCapacity</code> (dentro del 11% si <code>desiredCapacity &gt;= 1000</code>).
+     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity
+     * (dentro del 11% si desiredCapacity >= 1000).
      * @param desiredCapacity la capacidad deseada por el usuario.
      * @return la capacidad que se debe utilizar para una tabla hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-
         int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
+        if (candidate % 2 == 0) {
             candidate++;
         }
-
-        // Si desiredCapacity >= 1000, asegurarse de que el número primo esté dentro del 11%
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            while (candidate > upperBound) {
-                candidate = nextPrime(candidate + 1);
+        while (!isPrime(candidate)) {
+            candidate += 2;
+            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
+                candidate = desiredCapacity;
+                while (!isPrime(candidate)) {
+                    candidate++;
+                }
+                return candidate;
             }
         }
-
         return candidate;
     }
 
@@ -47,7 +48,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(nextPrime(1000));  // Debería imprimir un número primo >= 1000 y dentro del 11% de 1000
+        System.out.println(nextPrime(1000));  // Ejemplo de uso
     }
 }

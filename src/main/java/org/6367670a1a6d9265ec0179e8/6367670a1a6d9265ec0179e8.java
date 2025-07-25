@@ -1,8 +1,8 @@
 import java.util.Objects;
 
-public class DefensiveProgramming {
+public class ArrayUtils {
 
-    // Public static empty array reference
+    // Public static empty array reference for optimization
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**

@@ -19,13 +19,4 @@ public class ByteArrayConverter {
         }
         return result;
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        Byte[] byteArray = {1, 2, 3, 4, 5};
-        byte[] primitiveArray = toPrimitive(byteArray);
-        for (byte b : primitiveArray) {
-            System.out.print(b + " ");
-        }
-    }
 }

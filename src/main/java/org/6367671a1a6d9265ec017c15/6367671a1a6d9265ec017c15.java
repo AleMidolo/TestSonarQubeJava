@@ -16,7 +16,7 @@ public class ByteVector {
         if (byteOffset < 0) {
             throw new IllegalArgumentException("byteOffset must be non-negative");
         }
-        if (byteArrayValue != null && (byteOffset + byteLength) > byteArrayValue.length) {
+        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 

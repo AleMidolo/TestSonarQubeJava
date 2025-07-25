@@ -4,14 +4,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileAdder {
+
     private List<InputStream> fileList;
 
     public FileAdder() {
         this.fileList = new ArrayList<>();
     }
 
-    /** 
+    /**
      * Agrega los archivos especificados en orden inverso.
+     * @param files Arreglo de InputStreams que representan los archivos a agregar.
      */
     private void addReverse(final InputStream[] files) {
         if (files == null) {

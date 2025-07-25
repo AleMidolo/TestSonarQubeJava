@@ -39,10 +39,9 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("path/to/file.txt")); // 13
-        System.out.println(indexOfExtension("path\\to\\file.txt")); // 13
-        System.out.println(indexOfExtension("path/to/file")); // -1
-        System.out.println(indexOfExtension("path/to/file.")); // 13
+        System.out.println(indexOfExtension("example.txt")); // 7
+        System.out.println(indexOfExtension("path/to/file/example.txt")); // 20
+        System.out.println(indexOfExtension("path/to/file/example")); // -1
         System.out.println(indexOfExtension(null)); // -1
     }
 }

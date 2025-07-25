@@ -10,22 +10,23 @@ public class TimeBucketCompressor {
         // Convertir el bucket de tiempo a una cadena para facilitar el manejo
         String bucketStr = Long.toString(bucketDeTiempo);
         
-        // Crear un LocalDate a partir del bucket de tiempo
+        // Extraer el año, mes y día
+        int year = Integer.parseInt(bucketStr.substring(0, 4));
+        int month = Integer.parseInt(bucketStr.substring(4, 6));
+        int day = Integer.parseInt(bucketStr.substring(6, 8));
+        
+        // Calcular el día reformateado
+        int reformattedDay = ((day - 1) / pasoDiario) * pasoDiario + 1;
+        
+        // Crear una fecha con el día reformateado
+        LocalDate date = LocalDate.of(year, month, reformattedDay);
+        
+        // Formatear la fecha como un número largo
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(bucketStr, formatter);
+        String formattedDate = date.format(formatter);
         
-        // Obtener el día del mes
-        int dayOfMonth = date.getDayOfMonth();
-        
-        // Calcular el nuevo día basado en el pasoDiario
-        int newDay = ((dayOfMonth - 1) / pasoDiario) * pasoDiario + 1;
-        
-        // Crear una nueva fecha con el día ajustado
-        LocalDate newDate = date.withDayOfMonth(newDay);
-        
-        // Convertir la nueva fecha de vuelta a un long
-        String newBucketStr = newDate.format(formatter);
-        return Long.parseLong(newBucketStr);
+        // Convertir la cadena formateada de vuelta a un long
+        return Long.parseLong(formattedDate);
     }
 
     public static void main(String[] args) {

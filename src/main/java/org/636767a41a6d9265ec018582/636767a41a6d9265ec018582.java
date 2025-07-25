@@ -5,8 +5,10 @@ import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.io.BinaryEncoder;
+import org.objenesis.strategy.StdInstantiatorStrategy;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.dyuproject.protostuff.Schema;
 
 public class SerializationUtil {
 
@@ -19,14 +21,13 @@ public class SerializationUtil {
         byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
         // Write the length of the message as a varint
-        int length = data.length;
-        writeVarint(out, length);
+        writeVarint(out, data.length);
 
         // Write the serialized message
         out.write(data);
 
         // Return the total size of the message (length + data)
-        return length + computeVarintSize(length);
+        return data.length + computeVarintSize(data.length);
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {

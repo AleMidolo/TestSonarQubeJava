@@ -1,8 +1,14 @@
 import java.nio.charset.StandardCharsets;
 
 public class UTF8SizeCalculator {
+
     /**
      * Calcula el tamaño de la cadena utf8 que comienza en el índice especificado {@code index} con la longitud especificada {@code length}.
+     *
+     * @param str   La secuencia de caracteres de la cual se calculará el tamaño.
+     * @param index El índice inicial desde donde comenzar el cálculo.
+     * @param len   La longitud de la subcadena a considerar.
+     * @return El tamaño en bytes de la cadena UTF-8.
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
         if (str == null || index < 0 || len < 0 || index + len > str.length()) {
@@ -15,10 +21,10 @@ public class UTF8SizeCalculator {
     }
 
     public static void main(String[] args) {
-        CharSequence str = "Hello, 世界";
+        CharSequence str = "Hello, 世界!";
         int index = 7;
         int len = 2;
         int size = computeUTF8Size(str, index, len);
-        System.out.println("UTF-8 size: " + size); // Output: UTF-8 size: 6
+        System.out.println("UTF-8 size: " + size);  // Output: UTF-8 size: 6
     }
 }

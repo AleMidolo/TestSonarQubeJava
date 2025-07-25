@@ -1,14 +1,14 @@
 public class CharUtils {
 
     /**
-     * <p>Verifica si el carácter es un control ASCII de 7 bits.</p> 
-     * <pre> 
-     * CharUtils.isAsciiControl('a')  = false 
-     * CharUtils.isAsciiControl('A')  = false 
-     * CharUtils.isAsciiControl('3')  = false 
-     * CharUtils.isAsciiControl('-')  = false 
-     * CharUtils.isAsciiControl('\n') = true 
-     * CharUtils.isAsciiControl('&copy;') = false 
+     * Verifica si el carácter es un control ASCII de 7 bits.
+     * <pre>
+     * CharUtils.isAsciiControl('a')  = false
+     * CharUtils.isAsciiControl('A')  = false
+     * CharUtils.isAsciiControl('3')  = false
+     * CharUtils.isAsciiControl('-')  = false
+     * CharUtils.isAsciiControl('\n') = true
+     * CharUtils.isAsciiControl('&copy;') = false
      * </pre>
      * @param ch  el carácter a verificar
      * @return true si es menor que 32 o igual a 127

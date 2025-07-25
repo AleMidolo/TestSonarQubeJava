@@ -46,7 +46,7 @@ public class SequenceRangeBuilder {
         // Implementation to get current sequence
         return 0L;
     }
-    
+
     private long getSnapshotSequence() {
         // Implementation to get snapshot sequence
         return 0L;

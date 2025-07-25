@@ -9,50 +9,43 @@ public class UTF8Decoder {
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         int b1 = bb.get(i) & 0xFF;
         
-        // Single byte character
-        if ((b1 >> 7) == 0) {
+        // 1 byte - ASCII character
+        if ((b1 & 0x80) == 0) {
             sb.append((char)b1);
             return i + 1;
         }
         
-        // Two byte character
-        if ((b1 >> 5) == 0b110) {
+        // 2 bytes
+        if ((b1 & 0xE0) == 0xC0) {
             int b2 = bb.get(i + 1) & 0xFF;
-            if ((b2 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
-            }
-            int cp = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
-            sb.append((char)cp);
+            int ch = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)ch);
             return i + 2;
         }
         
-        // Three byte character
-        if ((b1 >> 4) == 0b1110) {
+        // 3 bytes 
+        if ((b1 & 0xF0) == 0xE0) {
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
-            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
-            }
-            int cp = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
-            sb.append((char)cp);
+            int ch = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)ch);
             return i + 3;
         }
         
-        // Four byte character
-        if ((b1 >> 3) == 0b11110) {
+        // 4 bytes
+        if ((b1 & 0xF8) == 0xF0) {
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
             int b4 = bb.get(i + 3) & 0xFF;
-            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10 || (b4 >> 6) != 0b10) {
-                throw new IllegalArgumentException("Invalid UTF-8 encoding");
-            }
-            int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            int ch = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | 
+                    ((b3 & 0x3F) << 6) | (b4 & 0x3F);
             // Convert to surrogate pair for characters outside BMP
-            sb.append(Character.highSurrogate(cp));
-            sb.append(Character.lowSurrogate(cp));
+            sb.append(Character.highSurrogate(ch));
+            sb.append(Character.lowSurrogate(ch));
             return i + 4;
         }
         
-        throw new IllegalArgumentException("Invalid UTF-8 encoding");
+        // Invalid UTF-8 encoding
+        throw new IllegalArgumentException("Invalid UTF-8 encoding at index " + i);
     }
 }

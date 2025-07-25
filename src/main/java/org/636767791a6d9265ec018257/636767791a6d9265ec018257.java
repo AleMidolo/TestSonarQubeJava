@@ -2,11 +2,10 @@ import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class Logger {
-    
     private LogTable logTable; // Assume LogTable is a custom JTable component
-    
-    public Logger(LogTable table) {
-        this.logTable = table;
+
+    public Logger(LogTable logTable) {
+        this.logTable = logTable;
     }
 
     /**
@@ -17,7 +16,7 @@ public class Logger {
         if (lr == null) {
             return;
         }
-        
+
         // Ensure thread safety by running on EDT
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -28,15 +27,14 @@ public class Logger {
                     lr.getLevel(),
                     lr.getMessage(),
                     lr.getSourceClassName(),
-                    lr.getSourceMethodName()
+                    lr.getSourceMethodName(),
+                    lr.getThrown() != null ? lr.getThrown().getMessage() : null
                 });
-                
+
                 // Auto scroll to the bottom
                 int lastRow = logTable.getModel().getRowCount() - 1;
                 if (lastRow >= 0) {
-                    logTable.scrollRectToVisible(
-                        logTable.getCellRect(lastRow, 0, true)
-                    );
+                    logTable.scrollRectToVisible(logTable.getCellRect(lastRow, 0, true));
                 }
             }
         });

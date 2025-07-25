@@ -1,6 +1,7 @@
 import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FileProcessor {
     
@@ -12,30 +13,28 @@ public class FileProcessor {
             return;
         }
         
-        Deque<InputStream> stack = new ArrayDeque<>();
-        
-        // Add files to stack in reverse order
-        for (int i = files.length - 1; i >= 0; i--) {
-            if (files[i] != null) {
-                stack.push(files[i]);
-            }
+        List<InputStream> fileList = new ArrayList<>();
+        for (InputStream file : files) {
+            fileList.add(file);
         }
         
-        // Process files in reverse order
-        while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
-            processFile(file);
+        Collections.reverse(fileList);
+        
+        for (InputStream file : fileList) {
+            try {
+                processFile(file);
+            } finally {
+                try {
+                    file.close();
+                } catch (Exception e) {
+                    // Handle or log exception
+                }
+            }
         }
     }
     
     // Helper method to process individual files
     private void processFile(InputStream file) {
-        try {
-            // Process the file stream
-            // Implementation details would go here
-            file.close();
-        } catch (Exception e) {
-            // Handle exceptions
-        }
+        // Implementation for processing individual files would go here
     }
 }

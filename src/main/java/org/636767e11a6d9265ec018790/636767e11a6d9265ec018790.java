@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.time.LocalDateTime;
 
-public class ThreadSnapshotLoader {
+public class ThreadAnalyzer {
 
     public static class ThreadSnapshot {
         private LocalDateTime timestamp;
@@ -48,22 +48,24 @@ public class ThreadSnapshotLoader {
             
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Time:")) {
-                    // If we were processing a snapshot, check if it's in range and add it
-                    if (currentTimestamp != null) {
-                        boolean inRange = timeRanges.stream()
-                            .anyMatch(range -> range.isInRange(currentTimestamp));
+                    // If we were processing a thread, save it if it's in the time ranges
+                    if (currentTimestamp != null && currentThreadName != null) {
+                        ThreadSnapshot snapshot = new ThreadSnapshot(
+                            currentTimestamp, 
+                            currentThreadName,
+                            currentThreadState,
+                            new ArrayList<>(currentStackTrace)
+                        );
                         
-                        if (inRange) {
-                            snapshots.add(new ThreadSnapshot(
-                                currentTimestamp,
-                                currentThreadName,
-                                currentThreadState,
-                                new ArrayList<>(currentStackTrace)
-                            ));
+                        for (ProfileAnalyzeTimeRange range : timeRanges) {
+                            if (range.isInRange(currentTimestamp)) {
+                                snapshots.add(snapshot);
+                                break;
+                            }
                         }
                     }
                     
-                    // Start new snapshot
+                    // Start new thread snapshot
                     currentTimestamp = LocalDateTime.parse(line.substring(6));
                     currentStackTrace.clear();
                 } else if (line.startsWith("Thread:")) {
@@ -75,18 +77,20 @@ public class ThreadSnapshotLoader {
                 }
             }
             
-            // Handle last snapshot
-            if (currentTimestamp != null) {
-                boolean inRange = timeRanges.stream()
-                    .anyMatch(range -> range.isInRange(currentTimestamp));
+            // Handle last thread snapshot
+            if (currentTimestamp != null && currentThreadName != null) {
+                ThreadSnapshot snapshot = new ThreadSnapshot(
+                    currentTimestamp,
+                    currentThreadName,
+                    currentThreadState, 
+                    new ArrayList<>(currentStackTrace)
+                );
                 
-                if (inRange) {
-                    snapshots.add(new ThreadSnapshot(
-                        currentTimestamp,
-                        currentThreadName,
-                        currentThreadState,
-                        new ArrayList<>(currentStackTrace)
-                    ));
+                for (ProfileAnalyzeTimeRange range : timeRanges) {
+                    if (range.isInRange(currentTimestamp)) {
+                        snapshots.add(snapshot);
+                        break;
+                    }
                 }
             }
         }

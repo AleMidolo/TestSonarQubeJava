@@ -11,7 +11,7 @@ public class CollectionUtils {
         if (collection == null) {
             return new String[0];
         }
-
+        
         ArrayList<String> list = new ArrayList<>();
         
         for (Object obj : collection) {
@@ -19,7 +19,7 @@ public class CollectionUtils {
                 list.add(obj.toString());
             }
         }
-
+        
         return list.toArray(new String[0]);
     }
 }

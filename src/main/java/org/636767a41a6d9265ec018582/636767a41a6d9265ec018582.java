@@ -13,30 +13,20 @@ public class MessageSerializer {
         // Write message to buffer using schema
         schema.writeTo(output, message);
         
-        // Get the size of the serialized message
+        // Get size of serialized message
         int size = output.getSize();
         
         // Write the size as a varint prefix
-        writeRawVarint32(out, size);
+        while ((size & ~0x7F) != 0) {
+            out.write((size & 0x7F) | 0x80);
+            size >>>= 7;
+        }
+        out.write(size);
         
         // Write the actual message bytes
         LinkedBuffer.writeTo(out, buffer);
         
-        // Clear the buffer
-        buffer.clear();
-        
-        return size;
-    }
-    
-    private static void writeRawVarint32(OutputStream out, int value) throws IOException {
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                out.write(value);
-                return;
-            } else {
-                out.write((value & 0x7F) | 0x80);
-                value >>>= 7;
-            }
-        }
+        // Return total size
+        return output.getSize();
     }
 }

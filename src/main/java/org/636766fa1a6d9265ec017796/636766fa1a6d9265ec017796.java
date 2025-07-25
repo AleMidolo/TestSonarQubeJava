@@ -1,5 +1,8 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
+/**
+ * Utility class for boolean array operations.
+ */
 public class BooleanUtils {
 
     /**

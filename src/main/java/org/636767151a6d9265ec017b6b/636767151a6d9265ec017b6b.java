@@ -13,11 +13,15 @@ public class StringUtils {
         if (str == null || prefix == null) {
             return str == null && prefix == null;
         }
+        
         if (prefix.length() > str.length()) {
             return false;
         }
-        return ignoreCase ? 
-            str.regionMatches(true, 0, prefix, 0, prefix.length()) :
-            str.startsWith(prefix);
+        
+        if (ignoreCase) {
+            return str.regionMatches(true, 0, prefix, 0, prefix.length());
+        }
+        
+        return str.startsWith(prefix);
     }
 }

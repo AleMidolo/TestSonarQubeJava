@@ -16,22 +16,22 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedTypes = new Class<?>[actualTypeArguments.length];
 
-        // Create type variable mapping
-        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
-        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
+        // Get type variables from target type
+        Map<String, Type> typeVariableMap = new HashMap<>();
+        TypeVariable<?>[] typeVariables = targetType.getTypeParameters();
         
-        for (int i = 0; i < typeParameters.length && i < actualTypeArguments.length; i++) {
-            typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
+        for (int i = 0; i < typeVariables.length; i++) {
+            typeVariableMap.put(typeVariables[i].getName(), actualTypeArguments[i]);
         }
 
         // Resolve each type argument
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type actualType = actualTypeArguments[i];
+            Type type = actualTypeArguments[i];
             
-            if (actualType instanceof Class) {
-                resolvedTypes[i] = (Class<?>) actualType;
-            } else if (actualType instanceof TypeVariable) {
-                Type resolvedType = typeVariableMap.get(actualType);
+            if (type instanceof Class) {
+                resolvedTypes[i] = (Class<?>) type;
+            } else if (type instanceof TypeVariable) {
+                Type resolvedType = typeVariableMap.get(((TypeVariable<?>) type).getName());
                 if (resolvedType instanceof Class) {
                     resolvedTypes[i] = (Class<?>) resolvedType;
                 } else {
@@ -42,6 +42,6 @@ public class TypeResolver {
             }
         }
 
-        return resolvedTypes.length > 0 ? resolvedTypes : null;
+        return resolvedTypes;
     }
 }

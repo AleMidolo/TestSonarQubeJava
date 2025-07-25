@@ -17,12 +17,12 @@ public class HexConverter {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(convertHexDigit((byte) '0')); // 0
-        System.out.println(convertHexDigit((byte) '9')); // 9
-        System.out.println(convertHexDigit((byte) 'a')); // 10
-        System.out.println(convertHexDigit((byte) 'f')); // 15
-        System.out.println(convertHexDigit((byte) 'A')); // 10
-        System.out.println(convertHexDigit((byte) 'F')); // 15
+        // Test the convertHexDigit function
+        System.out.println(convertHexDigit((byte) '0')); // Output: 0
+        System.out.println(convertHexDigit((byte) '9')); // Output: 9
+        System.out.println(convertHexDigit((byte) 'a')); // Output: 10
+        System.out.println(convertHexDigit((byte) 'f')); // Output: 15
+        System.out.println(convertHexDigit((byte) 'A')); // Output: 10
+        System.out.println(convertHexDigit((byte) 'F')); // Output: 15
     }
 }

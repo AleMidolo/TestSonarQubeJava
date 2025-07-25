@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class UpperBoundCalculator<K extends Comparable<K>> {
+public class KeyBounds<K extends Comparable<K>> {
 
     /** 
      * Finds a minimum lower bound for every key.
@@ -10,18 +11,19 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         List<Integer> upperBounds = new ArrayList<>();
-        for (K key : keys) {
-            // Assuming the upper bound is the ordinal value of the key
-            // This is a placeholder logic; actual logic may vary based on requirements
-            upperBounds.add(key.hashCode()); // Using hashCode as a simple upper bound
+        if (keys == null || keys.isEmpty()) {
+            return upperBounds; // Return empty list if input is null or empty
         }
+
+        // Sort the keys to find upper bounds
+        Collections.sort(keys);
+        
+        // Compute upper bounds
+        for (K key : keys) {
+            // Assuming the upper bound is the index of the key in the sorted list
+            upperBounds.add(keys.indexOf(key) + 1); // +1 to convert to 1-based index
+        }
+        
         return upperBounds;
-    }
-    
-    public static void main(String[] args) {
-        UpperBoundCalculator<String> calculator = new UpperBoundCalculator<>();
-        List<String> keys = List.of("apple", "banana", "cherry");
-        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
-        System.out.println(upperBounds);
     }
 }

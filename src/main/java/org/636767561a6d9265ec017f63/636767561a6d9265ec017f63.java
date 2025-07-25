@@ -10,11 +10,11 @@ public class Graph {
         this.visitedVertices = new HashSet<>();
     }
 
-    /**
+    /** 
      * Checks whether there exist unvisited vertices.
      * @return true if there exist unvisited vertices.
      */
-    @Override
+    @Override 
     public boolean hasNext() {
         for (Integer vertex : allVertices) {
             if (!visitedVertices.contains(vertex)) {

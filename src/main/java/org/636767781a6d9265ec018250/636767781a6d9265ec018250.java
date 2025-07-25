@@ -9,13 +9,13 @@ public class DecisionMaker {
     public int decide(LoggingEvent event) {
         // Assuming we are checking for a specific string match in the message
         String message = event.getMessage().toString();
-        String targetString = "specificString"; // Replace with the actual string to match
+        String targetString = "match"; // Example target string
 
         if (!message.contains(targetString)) {
             return Filter.NEUTRAL;
         }
         
         // Additional logic can be added here for other conditions
-        return Filter.DENY; // Example return value if the string matches
+        return Filter.ACCEPT; // Assuming we accept if there's a match
     }
 }

@@ -15,8 +15,9 @@ public class LowerBoundCalculator<K> {
         List<Integer> lowerBounds = new ArrayList<>();
 
         for (K key : keys) {
-            // Assuming the lower bound for each key is its hash code
-            int lowerBound = key.hashCode();
+            // Assuming some logic to compute the lower bound for each key
+            // Here we just use a placeholder logic for demonstration
+            int lowerBound = key.hashCode() % 100; // Example logic
             lowerBoundsMap.put(key, lowerBound);
         }
 

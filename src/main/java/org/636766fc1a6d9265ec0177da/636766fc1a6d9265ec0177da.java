@@ -5,7 +5,7 @@ public class ParameterSeparatorChecker {
      */
     private static boolean isParameterSeparator(final char c) {
         // Define the characters that are considered as separators
-        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == ')' || c == ']';
+        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '(' || c == ')';
     }
 
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class ParameterSeparatorChecker {
         System.out.println(isParameterSeparator(',')); // true
         System.out.println(isParameterSeparator(';')); // true
         System.out.println(isParameterSeparator(' ')); // true
+        System.out.println(isParameterSeparator('\n')); // true
         System.out.println(isParameterSeparator('a')); // false
-        System.out.println(isParameterSeparator(')')); // true
     }
 }

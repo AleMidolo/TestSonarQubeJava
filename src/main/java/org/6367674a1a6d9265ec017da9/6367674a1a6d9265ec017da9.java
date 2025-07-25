@@ -37,23 +37,21 @@ class DoublyLinkedList<E> {
     }
 
     public void removeListNode(ListNode<E> node) {
-        if (node == null || head == null) {
-            throw new NoSuchElementException("Node not found or list is empty");
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
         }
-        if (node == head) {
-            head = head.next;
-            if (head != null) {
-                head.prev = null;
-            } else {
-                tail = null;
-            }
-        } else if (node == tail) {
-            tail = tail.prev;
-            tail.next = null;
-        } else {
+        if (node.prev != null) {
             node.prev.next = node.next;
-            node.next.prev = node.prev;
+        } else {
+            head = node.next;
         }
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev;
+        }
+        node.next = null;
+        node.prev = null;
     }
 
     /**

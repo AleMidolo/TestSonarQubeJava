@@ -1,6 +1,18 @@
-import org.objectweb.asm.Label;
+import java.util.Objects;
 
-public class LabelManager {
+class Label {
+    private final int offset;
+
+    public Label(int offset) {
+        this.offset = offset;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+}
+
+public class BytecodeLabelManager {
 
     /**
      * Returns the label corresponding to the given bytecode offset. The default implementation of this method creates a label for the given offset if it has not been already created.
@@ -9,9 +21,11 @@ public class LabelManager {
      * @return a non null Label, which must be equal to labels[bytecodeOffset].
      */
     protected Label readLabel(final int bytecodeOffset, final Label[] labels) {
-        if (labels[bytecodeOffset] == null) {
-            labels[bytecodeOffset] = new Label();
+        if (labels[bytecodeOffset] != null) {
+            return labels[bytecodeOffset];
         }
-        return labels[bytecodeOffset];
+        Label newLabel = new Label(bytecodeOffset);
+        labels[bytecodeOffset] = newLabel;
+        return newLabel;
     }
 }

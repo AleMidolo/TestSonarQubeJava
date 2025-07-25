@@ -20,7 +20,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrArray = List.of("a", "b", "c");
+        List<String> searchStrArray = List.of("a", "b", "C");
         String str = "Hello World";
         boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println(result); // Output: true

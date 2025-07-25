@@ -27,7 +27,7 @@ public class QueueRepresentation {
             sb.append(item.toString()).append(", ");
         }
         if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Remove last comma and space
+            sb.setLength(sb.length() - 2); // Remove the last comma and space
         }
         sb.append("]");
         return sb.toString();

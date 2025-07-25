@@ -16,12 +16,13 @@ public class CharacterArrayConverter {
             if (array[i] == null) {
                 throw new NullPointerException("Array content is null at index " + i);
             }
-            result[i] = array[i].charValue();
+            result[i] = array[i];
         }
         return result;
     }
 
     public static void main(String[] args) {
+        // Example usage
         Character[] charArray = { 'a', 'b', 'c' };
         char[] primitiveArray = toPrimitive(charArray);
         for (char c : primitiveArray) {

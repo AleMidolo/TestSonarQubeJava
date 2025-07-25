@@ -12,4 +12,14 @@ public class ClassFinder {
         Objects.requireNonNull(className, "className must not be null");
         return Class.forName(className);
     }
+
+    public static void main(String[] args) {
+        ClassFinder classFinder = new ClassFinder();
+        try {
+            Class<?> clazz = classFinder.findClass("java.lang.String");
+            System.out.println("Class found: " + clazz.getName());
+        } catch (ClassNotFoundException e) {
+            System.err.println("Class not found: " + e.getMessage());
+        }
+    }
 }

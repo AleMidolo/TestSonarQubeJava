@@ -16,8 +16,8 @@ public class GraphUtils {
 
         for (V v1 : vertices) {
             for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // If there is no edge between any two vertices, it's not a clique
+                if (!v1.equals(v2) && graph.getEdge(v1, v2) == null) {
+                    return false; // If there is no edge between any two distinct vertices, it's not a clique
                 }
             }
         }

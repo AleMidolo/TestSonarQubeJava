@@ -15,7 +15,7 @@ public class ByteVector {
      * @return this byte vector.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // an int takes 4 bytes
+        ensureCapacity(size + 4); // 4 bytes for an int
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);

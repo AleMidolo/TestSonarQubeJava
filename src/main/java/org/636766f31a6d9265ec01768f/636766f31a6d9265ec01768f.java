@@ -10,20 +10,21 @@ public class ArrayCloner {
         if (array == null) {
             return null;
         }
-        return array.clone();
+        char[] clonedArray = new char[array.length];
+        System.arraycopy(array, 0, clonedArray, 0, array.length);
+        return clonedArray;
     }
 
     public static void main(String[] args) {
         char[] original = {'a', 'b', 'c'};
         char[] cloned = clone(original);
         
-        // Print the cloned array
-        if (cloned != null) {
-            for (char c : cloned) {
-                System.out.print(c + " ");
-            }
-        } else {
-            System.out.println("Cloned array is null");
-        }
+        // Print original and cloned arrays
+        System.out.println("Original: " + java.util.Arrays.toString(original));
+        System.out.println("Cloned: " + java.util.Arrays.toString(cloned));
+        
+        // Test with null
+        char[] nullArray = clone(null);
+        System.out.println("Null input: " + nullArray);
     }
 }

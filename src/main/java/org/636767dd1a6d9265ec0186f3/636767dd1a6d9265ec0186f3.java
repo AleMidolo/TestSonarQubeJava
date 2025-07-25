@@ -1,5 +1,5 @@
-public class ColumnNameOverride {
-
+public class ColumnName {
+    
     /**
      * Keep the same name replacement as  {@link ColumnName#overrideName(String,String)}
      * @param oldName to be replaced.
@@ -16,7 +16,12 @@ public class ColumnNameOverride {
             columnNames.put(newName, value);
         } else {
             // If old name does not exist, we can add the new name directly
-            columnNames.put(newName, null); // Assuming null value for new name
+            columnNames.put(newName, null); // or some default value if needed
         }
+    }
+    
+    public static void main(String[] args) {
+        ColumnName columnName = new ColumnName();
+        columnName.overrideName("old_column", "new_column");
     }
 }

@@ -1,8 +1,5 @@
 import org.jgrapht.Graph;
-import org.jgrapht.GraphType;
-import org.jgrapht.alg.clique.CliqueFinder;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.Graphs;
 
 import java.util.Set;
 
@@ -14,7 +11,7 @@ public class GraphUtils {
      * @param vertices the vertices to induce the subgraph from.
      * @return true if the induced subgraph is a clique.
      */
-    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
         if (vertices.size() < 2) {
             return true; // A single vertex or empty set is trivially a clique
         }
@@ -27,19 +24,5 @@ public class GraphUtils {
             }
         }
         return true; // All pairs of vertices are connected
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "C");
-        graph.addEdge("B", "C");
-
-        Set<String> vertices = Set.of("A", "B", "C");
-        System.out.println(isClique(graph, vertices)); // Should print true
     }
 }

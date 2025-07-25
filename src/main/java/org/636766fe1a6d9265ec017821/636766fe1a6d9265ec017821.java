@@ -1,6 +1,6 @@
 public class ArrayDetailAppender {
 
-    /**
+    /** 
      * <p>Append to the <code>toString</code> the detail of a <code>byte</code> array.</p>
      * @param buffer  the <code>StringBuffer</code> to populate
      * @param fieldName  the field name, typically not used as already appended

@@ -15,7 +15,7 @@ public class ConfigurationDirectoryCreator {
             // For Windows, create in Documents and Settings
             directoryPath = System.getenv("USERPROFILE") + "\\lf5";
         } else {
-            // For other platforms, use user.home
+            // For other platforms, create in user.home
             directoryPath = userHome + File.separator + "lf5";
         }
 

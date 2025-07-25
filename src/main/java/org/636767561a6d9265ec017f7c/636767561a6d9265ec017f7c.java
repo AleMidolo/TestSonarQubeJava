@@ -14,7 +14,7 @@ public class GraphUtils<V, E> {
      * @return a graph path
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        if (tour == null || graph == null || tour.isEmpty()) {
+        if (tour == null || tour.isEmpty() || graph == null) {
             return null;
         }
 

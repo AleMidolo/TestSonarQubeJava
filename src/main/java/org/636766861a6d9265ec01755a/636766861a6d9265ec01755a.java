@@ -8,7 +8,7 @@ public final class UriMatcher {
         this.pattern = Pattern.compile(template);
     }
 
-    /**
+    /** 
      * Match a URI against the pattern.
      * @param uri the uri to match against the template.
      * @return the match result, otherwise null if no match occurs.
@@ -28,16 +28,16 @@ public final class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String group(int group) {
-            return matcher.group(group);
+        public String group(int index) {
+            return matcher.group(index);
         }
 
-        public int start(int group) {
-            return matcher.start(group);
+        public int start(int index) {
+            return matcher.start(index);
         }
 
-        public int end(int group) {
-            return matcher.end(group);
+        public int end(int index) {
+            return matcher.end(index);
         }
 
         public int groupCount() {

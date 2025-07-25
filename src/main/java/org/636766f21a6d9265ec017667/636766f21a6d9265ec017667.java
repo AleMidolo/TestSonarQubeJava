@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class ClassReader {
     private byte[] data;
 
@@ -15,12 +17,5 @@ public class ClassReader {
             throw new IndexOutOfBoundsException("Offset is out of bounds");
         }
         return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
-    }
-
-    public static void main(String[] args) {
-        byte[] exampleData = {0x00, 0x01, 0x02, 0x03, 0x04};
-        ClassReader reader = new ClassReader(exampleData);
-        short value = reader.readShort(0);
-        System.out.println("Read short value: " + value);
     }
 }

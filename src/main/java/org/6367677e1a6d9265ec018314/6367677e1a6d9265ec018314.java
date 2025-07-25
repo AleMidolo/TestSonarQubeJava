@@ -37,7 +37,7 @@ public class CategoryTree {
 
         int removedCount = 0;
 
-        // Remove inactive children
+        // Iterate through children and remove inactive nodes
         Iterator<CategoryNode> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();

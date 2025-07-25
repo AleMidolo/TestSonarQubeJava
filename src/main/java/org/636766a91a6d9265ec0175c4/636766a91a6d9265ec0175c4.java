@@ -12,52 +12,59 @@ public class FrameStack {
      * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        int count = getTypeCount(descriptor);
+        if (descriptor == null || descriptor.isEmpty()) {
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
+        }
+
+        int count = 0;
+        boolean isMethodDescriptor = descriptor.startsWith("(");
+        
+        if (isMethodDescriptor) {
+            // Method descriptor, count argument types
+            int index = 1; // Start after '('
+            while (descriptor.charAt(index) != ')') {
+                char typeChar = descriptor.charAt(index);
+                count++;
+                if (typeChar == 'L') {
+                    // Skip to the end of the object type
+                    index = descriptor.indexOf(';', index) + 1;
+                } else {
+                    // Move to the next type
+                    index++;
+                }
+            }
+        } else {
+            // Type descriptor, count types
+            for (char c : descriptor.toCharArray()) {
+                if (c == 'L') {
+                    count++;
+                    // Skip to the end of the object type
+                    while (c != ';') {
+                        c = descriptor.charAt(++count);
+                    }
+                } else {
+                    count++;
+                }
+            }
+        }
+
+        // Pop the types from the stack
         for (int i = 0; i < count; i++) {
             if (!outputFrameStack.isEmpty()) {
                 outputFrameStack.pop();
             } else {
-                throw new IllegalStateException("Output frame stack is empty.");
+                throw new IllegalStateException("Not enough items in the output frame stack to pop");
             }
         }
     }
 
-    private int getTypeCount(String descriptor) {
-        // This method should parse the descriptor and return the number of types to pop.
-        // For simplicity, let's assume a basic implementation that counts the number of argument types.
-        int count = 0;
-        boolean inArray = false;
-        for (char c : descriptor.toCharArray()) {
-            if (c == '(') {
-                inArray = true; // Start of method arguments
-            } else if (c == ')') {
-                inArray = false; // End of method arguments
-            } else if (inArray) {
-                if (c == 'L') {
-                    // Skip to the next semicolon for object types
-                    while (c != ';') {
-                        c = descriptor.charAt(++count);
-                    }
-                    count++; // Count the semicolon
-                } else {
-                    count++; // Count primitive types
-                }
-            }
-        }
-        return count;
-    }
-
+    // Method to push items onto the stack for testing purposes
     public void push(Object item) {
         outputFrameStack.push(item);
     }
 
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.push(new Object());
-        frameStack.push(new Object());
-        frameStack.push(new Object());
-
-        // Example usage
-        frameStack.pop("(Ljava/lang/String;I)V"); // Pops 2 items from the stack
+    // Method to get the current size of the stack for testing purposes
+    public int size() {
+        return outputFrameStack.size();
     }
 }

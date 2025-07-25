@@ -11,6 +11,11 @@ public class TimeRangeSplitter {
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
 
+        if (end - start <= FETCH_DATA_DURATION) {
+            timeRanges.add(new TimeRange(start, end));
+            return timeRanges;
+        }
+
         long currentStart = start;
         while (currentStart < end) {
             long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
@@ -44,14 +49,6 @@ public class TimeRangeSplitter {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeSplitter splitter = new TimeRangeSplitter();
-        List<TimeRange> ranges = splitter.buildTimeRanges(0, 10000000); // Example usage
-        for (TimeRange range : ranges) {
-            System.out.println(range);
         }
     }
 }

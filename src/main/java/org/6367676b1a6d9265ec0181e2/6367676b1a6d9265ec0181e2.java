@@ -15,13 +15,4 @@ public class MatchFinder {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<String> source = List.of("apple", "banana", "cherry");
-        Collection<String> candidates = List.of("grape", "banana", "orange");
-        
-        Object match = findFirstMatch(source, candidates);
-        System.out.println(match); // Output: banana
-    }
 }

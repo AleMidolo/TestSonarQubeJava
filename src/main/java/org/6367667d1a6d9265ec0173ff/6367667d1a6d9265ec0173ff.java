@@ -11,32 +11,32 @@ public class MeteorLookup {
         // Example logic to retrieve a Meteor instance based on the request
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
-            // Simulate a lookup in a database or a collection
+            // Simulate a database or service call to find the Meteor instance
             return findMeteorById(meteorId);
         }
         return null;
     }
 
     private static Meteor findMeteorById(String meteorId) {
-        // Placeholder for actual implementation
-        // In a real scenario, this would query a database or a data structure
-        // For demonstration, we return a new Meteor instance if the ID matches a specific value
-        if ("123".equals(meteorId)) {
-            return new Meteor(meteorId, "Example Meteor");
+        // Placeholder for actual implementation to retrieve a Meteor instance
+        // In a real application, this would likely involve querying a database or service
+        // For demonstration, we return a new Meteor instance if the ID is valid
+        if ("validMeteorId".equals(meteorId)) {
+            return new Meteor(meteorId);
         }
         return null;
     }
 
-    // Example Meteor class
+    // Placeholder for the Meteor class
     public static class Meteor {
         private String id;
-        private String name;
 
-        public Meteor(String id, String name) {
+        public Meteor(String id) {
             this.id = id;
-            this.name = name;
         }
 
-        // Getters and setters can be added here
+        public String getId() {
+            return id;
+        }
     }
 }

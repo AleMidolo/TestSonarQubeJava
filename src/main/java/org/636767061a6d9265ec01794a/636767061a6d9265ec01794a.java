@@ -11,32 +11,34 @@ public class FileExtensionUtil {
         }
 
         int lastDotIndex = filename.lastIndexOf('.');
-        if (lastDotIndex == -1) {
-            return -1; // No dot found
-        }
-
-        // Check for directory separators after the last dot
         int lastSeparatorIndex = indexOfLastSeparator(filename);
-        if (lastSeparatorIndex > lastDotIndex) {
-            return -1; // There is a directory separator after the last dot
+
+        // Check if the last dot is after the last separator
+        if (lastDotIndex > lastSeparatorIndex) {
+            return lastDotIndex;
         }
 
-        return lastDotIndex;
+        return -1;
     }
 
     private static int indexOfLastSeparator(String filename) {
+        if (filename == null) {
+            return -1;
+        }
+
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
+
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(indexOfExtension("example.txt")); // Should return 7
-        System.out.println(indexOfExtension("folder/example.txt")); // Should return 14
-        System.out.println(indexOfExtension("folder/example.")); // Should return 14
-        System.out.println(indexOfExtension("folder/example")); // Should return -1
-        System.out.println(indexOfExtension("folder/example.txt/")); // Should return -1
-        System.out.println(indexOfExtension(null)); // Should return -1
+        System.out.println(indexOfExtension("example.txt")); // Output: 7
+        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
+        System.out.println(indexOfExtension("folder/example")); // Output: -1
+        System.out.println(indexOfExtension("folder\\example.txt")); // Output: 7
+        System.out.println(indexOfExtension("folder\\example")); // Output: -1
+        System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

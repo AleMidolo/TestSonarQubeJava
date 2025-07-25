@@ -14,21 +14,21 @@ public class PathSegmentDecoder {
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
-        
+
         // Ignora il primo '/' se presente
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-        
+
         String[] pathSegments = path.split("/");
-        
+
         for (String segment : pathSegments) {
             if (decode) {
                 segment = decode(segment);
             }
             segments.add(new PathSegmentImpl(segment));
         }
-        
+
         return segments;
     }
 
@@ -36,7 +36,8 @@ public class PathSegmentDecoder {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (Exception e) {
-            return segment; // In caso di errore, restituisce il segmento originale
+            // In caso di errore di decodifica, restituisce il segmento originale
+            return segment;
         }
     }
 
@@ -54,6 +55,18 @@ public class PathSegmentDecoder {
         @Override
         public String toString() {
             return segment;
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            URI uri = new URI("http://example.com/path/to/resource");
+            List<PathSegmentImpl> segments = decodePath(uri, true);
+            for (PathSegmentImpl segment : segments) {
+                System.out.println(segment);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 }

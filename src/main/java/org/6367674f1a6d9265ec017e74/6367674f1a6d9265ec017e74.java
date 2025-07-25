@@ -1,22 +1,10 @@
+import java.util.LinkedList;
+
 public class Queue<T> {
-    private Node<T> front;
-    private Node<T> rear;
-    private int size;
-
-    private static class Node<T> {
-        T data;
-        Node<T> next;
-
-        Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
+    private LinkedList<T> elements;
 
     public Queue() {
-        this.front = null;
-        this.rear = null;
-        this.size = 0;
+        elements = new LinkedList<>();
     }
 
     /**
@@ -25,12 +13,10 @@ public class Queue<T> {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Node<T> current = front;
         sb.append("Queue: [");
-        while (current != null) {
-            sb.append(current.data);
-            current = current.next;
-            if (current != null) {
+        for (int i = 0; i < elements.size(); i++) {
+            sb.append(elements.get(i));
+            if (i < elements.size() - 1) {
                 sb.append(", ");
             }
         }
@@ -38,5 +24,19 @@ public class Queue<T> {
         return sb.toString();
     }
 
-    // Additional methods for the Queue class (enqueue, dequeue, etc.) can be added here
+    public void enqueue(T element) {
+        elements.addLast(element);
+    }
+
+    public T dequeue() {
+        return elements.removeFirst();
+    }
+
+    public boolean isEmpty() {
+        return elements.isEmpty();
+    }
+
+    public int size() {
+        return elements.size();
+    }
 }

@@ -1,5 +1,6 @@
+import java.util.Arrays;
+
 public class ByteArrayEnlarger {
-    
     private byte[] byteArray;
 
     public ByteArrayEnlarger(int initialSize) {
@@ -13,9 +14,7 @@ public class ByteArrayEnlarger {
     private void enlarge(final int size) {
         int currentLength = byteArray.length;
         int newLength = currentLength + size;
-        byte[] newArray = new byte[newLength];
-        System.arraycopy(byteArray, 0, newArray, 0, currentLength);
-        byteArray = newArray;
+        byteArray = Arrays.copyOf(byteArray, newLength);
     }
 
     public byte[] getByteArray() {
@@ -24,8 +23,8 @@ public class ByteArrayEnlarger {
 
     public static void main(String[] args) {
         ByteArrayEnlarger enlarger = new ByteArrayEnlarger(10);
-        System.out.println("Initial length: " + enlarger.getByteArray().length);
+        System.out.println("Original length: " + enlarger.getByteArray().length);
         enlarger.enlarge(5);
-        System.out.println("New length after enlargement: " + enlarger.getByteArray().length);
+        System.out.println("New length: " + enlarger.getByteArray().length);
     }
 }

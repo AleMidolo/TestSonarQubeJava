@@ -22,7 +22,7 @@ public class StringArrayTrimmer {
         String[] trimmedArray = trimArrayElements(originalArray);
         
         for (String str : trimmedArray) {
-            System.out.println("'" + str + "'");
+            System.out.println(str);
         }
     }
 }

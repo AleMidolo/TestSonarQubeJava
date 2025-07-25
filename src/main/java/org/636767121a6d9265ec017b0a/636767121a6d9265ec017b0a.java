@@ -1,17 +1,28 @@
-private int parseEndOfLine(String headerPart, int end) {
-    // Check if the end index is within the bounds of the string
-    if (end < 0 || end >= headerPart.length()) {
-        return -1; // Return -1 if the end index is out of bounds
-    }
+public class HeaderParser {
 
-    // Iterate through the string starting from the end index
-    for (int i = end; i < headerPart.length(); i++) {
-        // Check for the end of line sequence "\r\n"
-        if (i < headerPart.length() - 1 && headerPart.charAt(i) == '\r' && headerPart.charAt(i + 1) == '\n') {
-            return i; // Return the index of the '\r' character
+    /** 
+     * Salta i byte fino alla fine della riga corrente.
+     * @param headerPart Le intestazioni che vengono analizzate.
+     * @param end Indice dell'ultimo byte che deve ancora essere elaborato.
+     * @return Indice della sequenza \r\n, che indica la fine della riga.
+     */
+    private int parseEndOfLine(String headerPart, int end) {
+        int i = end;
+        while (i < headerPart.length()) {
+            if (headerPart.charAt(i) == '\r') {
+                if (i + 1 < headerPart.length() && headerPart.charAt(i + 1) == '\n') {
+                    return i + 1; // Return the index after \r\n
+                }
+            }
+            i++;
         }
+        return headerPart.length(); // Return the length if \r\n is not found
     }
 
-    // If the end of line sequence is not found, return -1
-    return -1;
+    public static void main(String[] args) {
+        HeaderParser parser = new HeaderParser();
+        String headers = "Header1: value1\r\nHeader2: value2\r\n";
+        int endIndex = parser.parseEndOfLine(headers, 0);
+        System.out.println("End of line index: " + endIndex);
+    }
 }

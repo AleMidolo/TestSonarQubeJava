@@ -13,12 +13,12 @@ public class TableRowSelector {
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (table == null || pane == null || row < 0 || row >= table.getRowCount()) {
-            throw new IllegalArgumentException("Invalid table, pane or row index");
+            throw new IllegalArgumentException("Invalid parameters");
         }
 
         // Select the specified row
         table.setRowSelectionInterval(row, row);
-
+        
         // Scroll to the selected row
         SwingUtilities.invokeLater(() -> {
             Rectangle rect = table.getCellRect(row, 0, true);
@@ -41,8 +41,8 @@ public class TableRowSelector {
         };
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        frame.add(pane);
-        frame.setSize(300, 200);
+        frame.add(pane, BorderLayout.CENTER);
+        frame.setSize(400, 300);
         frame.setVisible(true);
 
         // Select a row after a delay

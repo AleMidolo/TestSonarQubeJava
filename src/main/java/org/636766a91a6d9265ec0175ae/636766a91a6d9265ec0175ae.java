@@ -22,20 +22,19 @@ public class ByteVector {
         }
         
         if (byteArrayValue == null) {
-            byte[] nullBytes = new byte[byteLength];
-            return putBytes(nullBytes, 0, byteLength);
-        }
-
-        if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
+        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
             throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }
 
-        return putBytes(byteArrayValue, byteOffset, byteLength);
-    }
-
-    private ByteVector putBytes(byte[] byteArrayValue, int byteOffset, int byteLength) {
         ensureCapacity(size + byteLength);
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        
+        if (byteArrayValue != null) {
+            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        } else {
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+        }
+        
         size += byteLength;
         return this;
     }
@@ -45,13 +44,5 @@ public class ByteVector {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
     }
 }

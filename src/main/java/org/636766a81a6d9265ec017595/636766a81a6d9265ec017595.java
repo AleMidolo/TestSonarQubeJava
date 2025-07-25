@@ -16,7 +16,7 @@ public class ByteVector {
      * @return questo vettore di byte.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        ensureCapacity(size + 2); // Assicurati che ci sia spazio per due byte
+        ensureCapacity(size + 2); // Assicurati che ci sia spazio sufficiente
         bytes[size++] = (byte) byteValue1; // Aggiungi il primo byte
         bytes[size++] = (byte) byteValue2; // Aggiungi il secondo byte
         return this; // Restituisci il vettore di byte
@@ -30,6 +30,6 @@ public class ByteVector {
     }
 
     public byte[] getBytes() {
-        return Arrays.copyOf(bytes, size); // Restituisci una copia del vettore di byte attuale
+        return Arrays.copyOf(bytes, size); // Restituisci una copia del vettore di byte
     }
 }

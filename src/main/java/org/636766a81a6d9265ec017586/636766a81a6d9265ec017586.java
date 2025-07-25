@@ -1,5 +1,5 @@
 public class StackFrame {
-    private final Stack<Object> stack;
+    private final Stack<String> stack;
 
     public StackFrame() {
         this.stack = new Stack<>();
@@ -10,9 +10,6 @@ public class StackFrame {
      * @param elements il numero di tipi astratti che devono essere rimossi.
      */
     private void pop(final int elements) {
-        if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
-        }
         for (int i = 0; i < elements; i++) {
             if (!stack.isEmpty()) {
                 stack.pop();
@@ -22,13 +19,14 @@ public class StackFrame {
         }
     }
 
-    // Additional methods to push and display stack for testing purposes
-    public void push(Object item) {
-        stack.push(item);
+    // Method to push elements onto the stack for testing purposes
+    public void push(String element) {
+        stack.push(element);
     }
 
-    public void displayStack() {
-        System.out.println(stack);
+    // Method to view the current stack for testing purposes
+    public Stack<String> getStack() {
+        return stack;
     }
 
     public static void main(String[] args) {
@@ -36,15 +34,9 @@ public class StackFrame {
         frame.push("Type1");
         frame.push("Type2");
         frame.push("Type3");
-        frame.displayStack(); // Output: [Type1, Type2, Type3]
 
+        System.out.println("Stack before pop: " + frame.getStack());
         frame.pop(2);
-        frame.displayStack(); // Output: [Type1]
-        
-        frame.pop(1);
-        frame.displayStack(); // Output: []
-        
-        frame.pop(1); // No effect, stack is already empty
-        frame.displayStack(); // Output: []
+        System.out.println("Stack after popping 2 elements: " + frame.getStack());
     }
 }

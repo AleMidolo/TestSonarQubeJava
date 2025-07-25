@@ -19,12 +19,11 @@ public class DefensiveProgramming {
 
     public static void main(String[] args) {
         Double[] result1 = nullToEmpty(null);
-        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
-
         Double[] result2 = nullToEmpty(new Double[]{});
-        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
-
         Double[] result3 = nullToEmpty(new Double[]{1.0, 2.0, 3.0});
+
+        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
         System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
     }
 }

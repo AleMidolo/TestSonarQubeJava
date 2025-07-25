@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class FileUtils {
+public class FileDeletion {
 
     /** 
      * Elimina il file specificato se esiste 

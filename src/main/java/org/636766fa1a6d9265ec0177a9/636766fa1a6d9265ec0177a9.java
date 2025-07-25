@@ -3,7 +3,7 @@ public class TypeManager {
     // List to hold initialized types
     private List<Integer> initializedTypes;
 
-    // Constructor to initialize the list
+    // Constructor
     public TypeManager() {
         initializedTypes = new ArrayList<>();
     }
@@ -13,7 +13,9 @@ public class TypeManager {
      * @param abstractType un tipo astratto su cui viene invocato un costruttore.
      */
     private void addInitializedType(final int abstractType) {
-        initializedTypes.add(abstractType);
+        if (!initializedTypes.contains(abstractType)) {
+            initializedTypes.add(abstractType);
+        }
     }
 
     // Method to get the list of initialized types
@@ -25,6 +27,8 @@ public class TypeManager {
         TypeManager manager = new TypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        System.out.println(manager.getInitializedTypes());
+        manager.addInitializedType(1); // This will not be added again
+
+        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }
 }

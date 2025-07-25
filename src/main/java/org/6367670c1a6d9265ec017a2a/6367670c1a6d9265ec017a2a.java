@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class ArrayConverter {
     
     /** 
@@ -11,22 +13,13 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        
-        int[] primitiveArray = new int[array.length];
+        int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            primitiveArray[i] = array[i].intValue();
+            result[i] = array[i].intValue();
         }
-        return primitiveArray;
-    }
-
-    public static void main(String[] args) {
-        Integer[] integerArray = {1, 2, 3, 4, 5};
-        int[] primitiveArray = toPrimitive(integerArray);
-        for (int num : primitiveArray) {
-            System.out.print(num + " ");
-        }
+        return result;
     }
 }

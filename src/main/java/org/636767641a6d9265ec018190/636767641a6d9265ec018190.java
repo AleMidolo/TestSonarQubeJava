@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Set;
 
-public class CubeManager {
+public class CubeMover {
 
     /**
      * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. 
@@ -11,20 +11,24 @@ public class CubeManager {
      * @param minLabel el valor mínimo del cubo no vacío
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
-            throw new IllegalArgumentException("minLabel is out of bounds");
+        // Verifica que el cubo con minLabel no esté vacío
+        if (bucketsByLabel.size() <= minLabel || bucketsByLabel.get(minLabel).isEmpty()) {
+            return; // No hay vértices que mover
         }
 
-        Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
-        Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-
-        // Mover todos los vértices del cubo con etiqueta minLabel al cubo con etiqueta 0
-        for (Integer vertex : minLabelBucket) {
-            zeroLabelBucket.add(vertex);
-            labels.set(vertex, 0); // Actualizar la etiqueta del vértice
+        // Obtiene el cubo con la etiqueta minLabel
+        Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
+        
+        // Mueve los vértices al cubo con etiqueta 0
+        Set<Integer> targetBucket = bucketsByLabel.get(0);
+        targetBucket.addAll(verticesToMove);
+        
+        // Limpia el cubo con etiqueta minLabel
+        verticesToMove.clear();
+        
+        // Actualiza las etiquetas de los vértices movidos
+        for (Integer vertex : targetBucket) {
+            labels.set(vertex, 0); // Asigna la etiqueta 0 a los vértices movidos
         }
-
-        // Limpiar el cubo con etiqueta minLabel
-        minLabelBucket.clear();
     }
 }

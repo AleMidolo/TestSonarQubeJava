@@ -4,14 +4,12 @@ import java.util.logging.LogRecord;
 public class LogTable {
 
     public void addMessage(final LogRecord lr) {
-        // Ensure that the log message is processed on the Swing thread
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Here you would add the log record to your LogTable
-                // For example, you might append it to a JTextArea or a JTable
+                // Aquí se agregaría el código para mostrar el mensaje en la LogTable
+                // Por ejemplo, agregar el LogRecord a un modelo de tabla
                 System.out.println("Log Message: " + lr.getMessage());
-                // Additional code to update the LogTable UI would go here
             }
         });
     }

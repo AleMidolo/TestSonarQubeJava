@@ -16,8 +16,8 @@ public class Graph<V> {
 
     public void addEdge(V source, V destination) {
         edges.add(new Edge<>(source, destination));
-        addVertex(source);
-        addVertex(destination);
+        vertices.add(source);
+        vertices.add(destination);
     }
 
     /** 
@@ -28,19 +28,27 @@ public class Graph<V> {
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         for (Edge<V> edge : edges) {
-            visibleVertices.add(edge.source);
-            visibleVertices.add(edge.destination);
+            visibleVertices.add(edge.getSource());
+            visibleVertices.add(edge.getDestination());
         }
         return visibleVertices;
     }
 
     private static class Edge<V> {
-        V source;
-        V destination;
+        private V source;
+        private V destination;
 
-        Edge(V source, V destination) {
+        public Edge(V source, V destination) {
             this.source = source;
             this.destination = destination;
+        }
+
+        public V getSource() {
+            return source;
+        }
+
+        public V getDestination() {
+            return destination;
         }
     }
 }

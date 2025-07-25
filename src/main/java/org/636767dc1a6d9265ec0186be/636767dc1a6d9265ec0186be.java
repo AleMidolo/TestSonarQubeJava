@@ -27,7 +27,7 @@ public class TimeBucketCompressor {
     }
 
     public static void main(String[] args) {
-        long bucketDeTiempo = 20000105;
+        long bucketDeTiempo = 20000123;
         int pasoDiario = 11;
         long resultado = comprimirBucketDeTiempo(bucketDeTiempo, pasoDiario);
         System.out.println("Bucket de tiempo reformateado: " + resultado);

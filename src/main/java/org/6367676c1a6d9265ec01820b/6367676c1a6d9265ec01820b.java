@@ -1,5 +1,5 @@
 public class StringManipulator {
-    
+
     /** 
      * Elimina cualquier carácter en una cadena dada.
      * @param inString la cadena original
@@ -17,14 +17,13 @@ public class StringManipulator {
                 result.append(c);
             }
         }
-        
         return result.toString();
     }
 
     public static void main(String[] args) {
         String original = "Hello World!";
-        String charsToDelete = "lo";
-        String result = deleteAny(original, charsToDelete);
+        String charsToRemove = "lo";
+        String result = deleteAny(original, charsToRemove);
         System.out.println(result); // Output: "He Wr!"
     }
 }

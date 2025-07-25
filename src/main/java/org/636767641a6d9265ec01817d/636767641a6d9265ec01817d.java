@@ -11,16 +11,14 @@ public class BipartiteGraphGenerator<V, E> {
             throw new IllegalArgumentException("resultMap must contain at least two vertices.");
         }
 
-        // Get the keys from the resultMap
-        String[] keys = resultMap.keySet().toArray(new String[0]);
-        int mid = keys.length / 2;
+        // Split the vertices into two sets
+        V[] vertices = (V[]) resultMap.values().toArray();
+        int mid = vertices.length / 2;
 
-        // Add edges between the two partitions
+        // Add edges between the two sets
         for (int i = 0; i < mid; i++) {
-            for (int j = mid; j < keys.length; j++) {
-                V vertex1 = resultMap.get(keys[i]);
-                V vertex2 = resultMap.get(keys[j]);
-                target.addEdge(vertex1, vertex2);
+            for (int j = mid; j < vertices.length; j++) {
+                target.addEdge(vertices[i], vertices[j]);
             }
         }
     }
@@ -28,5 +26,5 @@ public class BipartiteGraphGenerator<V, E> {
 
 // Assuming a simple Graph interface
 interface Graph<V, E> {
-    void addEdge(V vertex1, V vertex2);
+    void addEdge(V source, V destination);
 }

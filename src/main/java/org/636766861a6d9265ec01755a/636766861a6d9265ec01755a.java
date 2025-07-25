@@ -32,20 +32,16 @@ public final class UriMatcher {
             return matcher.group(group);
         }
 
+        public int start(int group) {
+            return matcher.start(group);
+        }
+
+        public int end(int group) {
+            return matcher.end(group);
+        }
+
         public int groupCount() {
             return matcher.groupCount();
-        }
-    }
-
-    public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(https?://)?(www\\.)?example\\.com(/.*)?$");
-        MatchResult result = uriMatcher.match("https://www.example.com/path");
-
-        if (result != null) {
-            System.out.println("Match found!");
-            System.out.println("Group count: " + result.groupCount());
-        } else {
-            System.out.println("No match found.");
         }
     }
 }

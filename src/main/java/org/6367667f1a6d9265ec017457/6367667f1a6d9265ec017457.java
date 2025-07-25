@@ -13,20 +13,20 @@ public class Decoder {
                 sb.append((char) b);
                 i++;
             } else if ((b & 0xE0) == 0xC0) { // 2-byte character
-                if (i + 1 >= bb.limit()) break; // Check for enough bytes
+                if (i + 1 >= bb.limit()) break; // Check for buffer overflow
                 int b2 = bb.get(i + 1) & 0xFF;
                 if ((b2 & 0xC0) != 0x80) break; // Invalid continuation byte
                 sb.append((char) (((b & 0x1F) << 6) | (b2 & 0x3F)));
                 i += 2;
             } else if ((b & 0xF0) == 0xE0) { // 3-byte character
-                if (i + 2 >= bb.limit()) break; // Check for enough bytes
+                if (i + 2 >= bb.limit()) break; // Check for buffer overflow
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
                 if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) break; // Invalid continuation bytes
                 sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
                 i += 3;
             } else if ((b & 0xF8) == 0xF0) { // 4-byte character
-                if (i + 3 >= bb.limit()) break; // Check for enough bytes
+                if (i + 3 >= bb.limit()) break; // Check for buffer overflow
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
                 int b4 = bb.get(i + 3) & 0xFF;

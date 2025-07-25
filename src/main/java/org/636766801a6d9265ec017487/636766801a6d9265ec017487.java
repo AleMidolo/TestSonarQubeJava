@@ -18,7 +18,7 @@ public class TemplateEncoder {
             String encoded = s.replace("{", "%7B").replace("}", "%7D");
             return encoded;
         } catch (Exception e) {
-            // Manejo de excepciones en caso de error
+            // Manejo de excepciones
             e.printStackTrace();
             return s; // Retornar la cadena original en caso de error
         }

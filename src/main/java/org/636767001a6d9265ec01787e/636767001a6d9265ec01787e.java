@@ -3,11 +3,7 @@ public class MyClass {
     private StringBuilder stringBuilder;
 
     public MyClass() {
-        stringBuilder = new StringBuilder();
-    }
-
-    public void append(String str) {
-        stringBuilder.append(str);
+        this.stringBuilder = new StringBuilder();
     }
 
     /** 
@@ -16,6 +12,10 @@ public class MyClass {
      */
     public String toString() {
         return stringBuilder.toString();
+    }
+
+    public void append(String str) {
+        stringBuilder.append(str);
     }
 
     public static void main(String[] args) {

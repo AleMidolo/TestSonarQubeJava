@@ -9,7 +9,6 @@ public class DotIdentifierUnescaper {
         if (input == null) {
             return null;
         }
-        // Reemplaza las secuencias de escape
         return input.replaceAll("\\\\\"", "\"")
                     .replaceAll("\\\\\\\\", "\\\\")
                     .replaceAll("\\\\n", "\n")

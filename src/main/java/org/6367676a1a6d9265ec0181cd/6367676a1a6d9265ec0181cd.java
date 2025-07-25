@@ -1,5 +1,5 @@
 public class StringUtil {
-
+    
     /** 
      * Elimina los espacios en blanco al inicio de la cadena dada.
      * @param str la cadena a verificar
@@ -10,16 +10,18 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
+        
         int startIndex = 0;
         while (startIndex < str.length() && Character.isWhitespace(str.charAt(startIndex))) {
             startIndex++;
         }
+        
         return str.substring(startIndex);
     }
 
     public static void main(String[] args) {
         String testString = "   Hello, World!";
-        String result = trimLeadingWhitespace(testString);
-        System.out.println(result); // Output: "Hello, World!"
+        String trimmedString = trimLeadingWhitespace(testString);
+        System.out.println("'" + trimmedString + "'"); // Output: 'Hello, World!'
     }
 }

@@ -1,5 +1,5 @@
 public class HexDigitChecker {
-
+    
     /** 
      * ¿Es este un dígito hexadecimal?
      */
@@ -8,11 +8,13 @@ public class HexDigitChecker {
     }
 
     public static void main(String[] args) {
-        // Pruebas
-        System.out.println(esHex('A')); // true
-        System.out.println(esHex('g')); // false
-        System.out.println(esHex('3')); // true
-        System.out.println(esHex('f')); // true
-        System.out.println(esHex('Z')); // false
+        // Test the esHex function
+        char testChar1 = 'A';
+        char testChar2 = 'g';
+        char testChar3 = '5';
+        
+        System.out.println(esHex(testChar1)); // true
+        System.out.println(esHex(testChar2)); // false
+        System.out.println(esHex(testChar3)); // true
     }
 }

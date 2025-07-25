@@ -7,18 +7,23 @@ public class HeaderParser {
      * @return Índice de la secuencia \r\n, que indica el final de la línea.
      */
     private int parseEndOfLine(String headerPart, int end) {
+        // Busca la secuencia de fin de línea \r\n
         int index = headerPart.indexOf("\r\n", 0);
+        
+        // Si no se encuentra, se retorna el índice original
         if (index == -1 || index > end) {
-            return end; // No se encontró el final de la línea o está fuera del rango
+            return end;
         }
-        return index; // Retorna el índice donde se encuentra \r\n
+        
+        // Retorna el índice donde se encuentra la secuencia de fin de línea
+        return index;
     }
 
     public static void main(String[] args) {
         HeaderParser parser = new HeaderParser();
-        String headers = "Header1: value1\r\nHeader2: value2\r\n";
-        int end = headers.length();
-        int lineEndIndex = parser.parseEndOfLine(headers, end);
+        String header = "Header1: value1\r\nHeader2: value2\r\n";
+        int endIndex = header.length();
+        int lineEndIndex = parser.parseEndOfLine(header, endIndex);
         System.out.println("End of line index: " + lineEndIndex);
     }
 }

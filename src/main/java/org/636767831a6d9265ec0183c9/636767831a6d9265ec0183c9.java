@@ -13,13 +13,23 @@ public class DiagnosticContext {
         return contextStack.isEmpty() ? "" : contextStack.peek();
     }
 
-    // Método para empujar un nuevo contexto al stack
+    // Método para agregar contexto para pruebas
     public static void push(String context) {
         contextStack.push(context);
     }
 
-    // Método para eliminar el contexto más interno
+    // Método para eliminar contexto para pruebas
     public static String pop() {
         return contextStack.isEmpty() ? "" : contextStack.pop();
+    }
+
+    public static void main(String[] args) {
+        push("Contexto 1");
+        push("Contexto 2");
+        System.out.println(peek()); // Debería imprimir "Contexto 2"
+        pop();
+        System.out.println(peek()); // Debería imprimir "Contexto 1"
+        pop();
+        System.out.println(peek()); // Debería imprimir ""
     }
 }

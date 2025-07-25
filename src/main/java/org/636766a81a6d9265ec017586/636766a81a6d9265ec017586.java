@@ -15,7 +15,7 @@ public class OutputFrame {
         }
         int toRemove = Math.min(elements, outputFrame.size());
         for (int i = 0; i < toRemove; i++) {
-            outputFrame.remove(outputFrame.size() - 1); // Elimina el último elemento
+            outputFrame.remove(outputFrame.size() - 1);
         }
     }
 

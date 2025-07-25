@@ -18,8 +18,17 @@ public class LoggingBuffer {
         }
         // Si el búfer está lleno, el evento es descartado silenciosamente.
     }
-}
 
-class LoggingEvent {
-    // Implementación de LoggingEvent
+    // Clase interna para representar un evento de registro
+    public static class LoggingEvent {
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 }

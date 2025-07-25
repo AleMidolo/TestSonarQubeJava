@@ -1,5 +1,5 @@
-public class StringManipulator {
-
+public class StringTrimmer {
+    
     /** 
      * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
      * @param str la cadena a verificar
@@ -11,16 +11,24 @@ public class StringManipulator {
             return str;
         }
         
-        int startIndex = 0;
-        while (startIndex < str.length() && str.charAt(startIndex) == leadingCharacter) {
-            startIndex++;
+        StringBuilder result = new StringBuilder();
+        boolean leadingCharFound = false;
+
+        for (char c : str.toCharArray()) {
+            if (c == leadingCharacter && !leadingCharFound) {
+                continue; // Skip leading character
+            }
+            leadingCharFound = true; // After the first non-leading character is found
+            result.append(c);
         }
-        
-        return str.substring(startIndex);
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("aaabbbccc", 'a');
-        System.out.println(result); // Output: bbbccc
+        String testString = "aaabacada";
+        char leadingChar = 'a';
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result); // Output: "bacada"
     }
 }

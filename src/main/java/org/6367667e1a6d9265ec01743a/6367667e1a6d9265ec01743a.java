@@ -1,8 +1,8 @@
 public class OperationTracker {
-    private long lastWriteTime;
+    private long lastWriteTimeStamp;
 
     public OperationTracker() {
-        this.lastWriteTime = System.currentTimeMillis();
+        this.lastWriteTimeStamp = System.currentTimeMillis();
     }
 
     /**
@@ -10,12 +10,12 @@ public class OperationTracker {
      * @return esto
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTime;
+        return lastWriteTimeStamp;
     }
 
     public void writeOperation() {
         // Simulate a write operation
-        lastWriteTime = System.currentTimeMillis();
+        lastWriteTimeStamp = System.currentTimeMillis();
     }
 
     public static void main(String[] args) {

@@ -1,11 +1,5 @@
 public class StackMapFrameVisitor {
     private StackMapFrame currentFrame;
-    private int nextIndex;
-
-    public StackMapFrameVisitor() {
-        this.currentFrame = new StackMapFrame();
-        this.nextIndex = 0;
-    }
 
     /**
      * Inicia la visita de un nuevo "stack map frame", almacenado en {@link #currentFrame}.
@@ -15,28 +9,27 @@ public class StackMapFrameVisitor {
      * @return el índice del siguiente elemento que se escribirá en este "frame".
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        currentFrame.setOffset(offset);
-        currentFrame.setNumLocal(numLocal);
-        currentFrame.setNumStack(numStack);
-        nextIndex = 0; // Reset the index for the new frame
-        return nextIndex;
+        currentFrame = new StackMapFrame(offset, numLocal, numStack);
+        return currentFrame.getNextIndex();
     }
 
     private class StackMapFrame {
-        private int offset;
-        private int numLocal;
-        private int numStack;
+        private final int offset;
+        private final int numLocal;
+        private final int numStack;
+        private int nextIndex;
 
-        public void setOffset(int offset) {
+        public StackMapFrame(int offset, int numLocal, int numStack) {
             this.offset = offset;
-        }
-
-        public void setNumLocal(int numLocal) {
             this.numLocal = numLocal;
+            this.numStack = numStack;
+            this.nextIndex = 0; // Initialize next index
         }
 
-        public void setNumStack(int numStack) {
-            this.numStack = numStack;
+        public int getNextIndex() {
+            return nextIndex;
         }
+
+        // Additional methods to manipulate the frame can be added here
     }
 }

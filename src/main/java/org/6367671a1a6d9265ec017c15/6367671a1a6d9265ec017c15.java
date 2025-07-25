@@ -41,11 +41,11 @@ public class ByteVector {
         }
     }
 
-    public int size() {
-        return size;
+    public byte[] getData() {
+        return Arrays.copyOf(data, size); // Return a copy of the used portion of the array
     }
 
-    public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
+    public int getSize() {
+        return size;
     }
 }

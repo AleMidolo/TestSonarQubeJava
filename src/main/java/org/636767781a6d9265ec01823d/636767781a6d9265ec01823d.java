@@ -22,6 +22,11 @@ public class CustomAppender extends AppenderSkeleton {
             return;
         }
 
+        if(writer == null) {
+            errorHandler.error("No writer set for the appender named [" + name + "].");
+            return;
+        }
+
         try {
             String formattedMessage = layout.format(event);
             writer.write(formattedMessage);
@@ -38,7 +43,8 @@ public class CustomAppender extends AppenderSkeleton {
             
             writer.flush();
         } catch(IOException e) {
-            errorHandler.error("Failed to write log event", e, 1);
+            errorHandler.error("Failed to write to writer", e, 
+                    org.apache.log4j.spi.ErrorCode.WRITE_FAILURE);
         }
     }
 
@@ -48,7 +54,8 @@ public class CustomAppender extends AppenderSkeleton {
             try {
                 writer.close();
             } catch(IOException e) {
-                errorHandler.error("Failed to close writer", e, 1);
+                errorHandler.error("Failed to close writer", e, 
+                        org.apache.log4j.spi.ErrorCode.CLOSE_FAILURE);
             }
             writer = null;
         }

@@ -35,6 +35,6 @@ public class FileHandler {
     // 用于添加单个文件的辅助方法
     private void addFile(File file) {
         // 具体的文件添加实现
-        // 这里可以根据实际需求添加文件处理逻辑
+        // 这里可以根据实际需求实现文件的添加逻辑
     }
 }

@@ -11,6 +11,7 @@ public class StringSplitter {
         }
         
         int index = toSplit.indexOf(delimiter);
+        
         if (index == -1) {
             return null;
         }

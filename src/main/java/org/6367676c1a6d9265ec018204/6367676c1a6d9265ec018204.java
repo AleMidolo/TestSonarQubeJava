@@ -21,13 +21,13 @@ public class ArrayUtils {
             return array1.clone();
         }
         
-        // 创建新数组,长度为两个数组长度之和
+        // 创建新数组存储连接结果
         String[] result = new String[array1.length + array2.length];
         
-        // 复制array1到新数组
+        // 复制array1到result
         System.arraycopy(array1, 0, result, 0, array1.length);
         
-        // 复制array2到新数组
+        // 复制array2到result
         System.arraycopy(array2, 0, result, array1.length, array2.length);
         
         return result;

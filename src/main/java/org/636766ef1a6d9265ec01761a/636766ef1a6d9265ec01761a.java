@@ -17,11 +17,11 @@ public class SymbolTable {
         // 首先检查类型是否已存在
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(value)) {
-                return i; // 如果找到相同的类型，返回其索引
+                return i; // 返回已存在类型的索引
             }
         }
         
-        // 如果类型不存在，添加到列表中
+        // 如果类型不存在，添加到类型表中
         types.add(value);
         return types.size() - 1; // 返回新添加类型的索引
     }

@@ -38,20 +38,19 @@ public class FaceTraversal {
         // Traverse outer face in specified direction until we find matching node or reach stop
         while (current != stop) {
             // Move to next node in specified direction
-            if (dir > 0) {
-                current = getNextNode(current);
-            } else {
-                current = getPreviousNode(current); 
-            }
+            current = (dir > 0) ? getNextNode(current) : getPrevNode(current);
+            
+            // Update circulator
+            circulator = new OuterFaceCirculator(current);
             
             // Check if current node satisfies predicate
             if (predicate.test(current)) {
-                return new OuterFaceCirculator(current);
+                return circulator;
             }
             
-            // Check if we've reached stop node
-            if (current == stop) {
-                return new OuterFaceCirculator(stop);
+            // Check if we've completed a full circuit
+            if (current == start) {
+                break;
             }
         }
         
@@ -59,13 +58,13 @@ public class FaceTraversal {
         return new OuterFaceCirculator(stop);
     }
     
-    // Helper methods to traverse between nodes
+    // Helper methods to get next/previous nodes
     private Node getNextNode(Node node) {
         // Implementation to get next node
         return null;
     }
     
-    private Node getPreviousNode(Node node) {
+    private Node getPrevNode(Node node) {
         // Implementation to get previous node
         return null;
     }

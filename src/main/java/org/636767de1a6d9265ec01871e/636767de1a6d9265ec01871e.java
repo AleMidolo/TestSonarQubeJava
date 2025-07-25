@@ -11,22 +11,21 @@ public class ShardingChecker {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        // Verify model name format
-        if (!modelName.matches("^[a-zA-Z][a-zA-Z0-9_]*$")) {
+        // Validate model name format
+        if (!modelName.matches("^[a-zA-Z0-9_]+$")) {
             throw new IllegalStateException("Invalid model name format: " + modelName);
         }
 
-        // Check if sharding key index is continuous
+        // Check if sharding key indexes are continuous
         try {
-            validateShardingKeyIndex(modelName);
+            validateShardingKeyIndexes(modelName);
         } catch (Exception e) {
-            throw new IllegalStateException("Discontinuous sharding key index found for model: " + modelName, e);
+            throw new IllegalStateException("Discontinuous sharding key indexes found for model: " + modelName, e);
         }
     }
 
-    private void validateShardingKeyIndex(String modelName) {
-        // Implementation of sharding key index validation logic
-        // This is a placeholder - actual implementation would depend on
-        // how sharding keys are stored and what makes them "continuous"
+    private void validateShardingKeyIndexes(String modelName) {
+        // Implementation of sharding key index validation logic would go here
+        // This is just a placeholder method to demonstrate the structure
     }
 }

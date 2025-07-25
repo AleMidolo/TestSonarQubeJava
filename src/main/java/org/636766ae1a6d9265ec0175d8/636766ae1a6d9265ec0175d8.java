@@ -5,10 +5,9 @@ public class ContentRangeBuilder {
      * @return 'Content-Range' 值
      */
     private String buildContentRange() {
-        // 示例值，实际值应根据具体情况生成
-        long start = 0;
-        long end = 499;
-        long total = 1234;
+        long start = 0; // 起始字节
+        long end = 100; // 结束字节
+        long total = 500; // 总字节数
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

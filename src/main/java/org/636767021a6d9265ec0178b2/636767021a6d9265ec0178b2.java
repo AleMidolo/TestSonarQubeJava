@@ -15,60 +15,41 @@ public class StackManipulator {
     }
 
     private int getTypeCount(String descriptor) {
-        // 这里假设 descriptor 是一个有效的类型描述符
-        // 例如 "I" 表示 int，"D" 表示 double，"Lcom/example/MyClass;" 表示对象类型
-        // 方法描述符的参数类型需要解析
+        // 这里假设 descriptor 是一个有效的类型或方法描述符
+        // 例如： "I" 表示 int, "D" 表示 double, "(II)V" 表示两个 int 参数的方法
         if (descriptor.startsWith("(")) {
             // 方法描述符，计算参数类型数量
-            int count = 0;
-            for (int i = 1; i < descriptor.length(); i++) {
-                char c = descriptor.charAt(i);
-                if (c == ')') {
-                    break;
-                }
-                if (c == 'L') {
+            int paramCount = 0;
+            int i = 1; // 跳过开括号
+            while (descriptor.charAt(i) != ')') {
+                if (descriptor.charAt(i) == 'L') {
                     // 对象类型
-                    while (i < descriptor.length() && descriptor.charAt(i) != ';') {
+                    while (descriptor.charAt(i) != ';') {
                         i++;
                     }
-                    count++;
-                } else if (c == '[') {
-                    // 数组类型
-                    while (i < descriptor.length() && descriptor.charAt(i) == '[') {
-                        i++;
-                    }
-                    if (i < descriptor.length() && descriptor.charAt(i) == 'L') {
-                        while (i < descriptor.length() && descriptor.charAt(i) != ';') {
-                            i++;
-                        }
-                    }
-                    count++;
+                    i++; // 跳过分号
                 } else {
                     // 基本类型
-                    count++;
+                    i++;
                 }
+                paramCount++;
             }
-            return count;
+            return paramCount;
         } else {
-            // 基本类型或对象类型
-            return getBasicTypeCount(descriptor);
-        }
-    }
-
-    private int getBasicTypeCount(String descriptor) {
-        switch (descriptor) {
-            case "V": return 0; // void
-            case "Z": return 1; // boolean
-            case "B": return 1; // byte
-            case "C": return 1; // char
-            case "S": return 1; // short
-            case "I": return 1; // int
-            case "J": return 2; // long
-            case "F": return 1; // float
-            case "D": return 2; // double
-            default:
-                // 对象类型
-                return 1; // 视为一个对象
+            // 类型描述符，返回基本类型的数量
+            switch (descriptor) {
+                case "V": return 0; // void
+                case "Z": return 1; // boolean
+                case "B": return 1; // byte
+                case "C": return 1; // char
+                case "S": return 1; // short
+                case "I": return 1; // int
+                case "J": return 2; // long
+                case "F": return 1; // float
+                case "D": return 2; // double
+                case "L": return 1; // 对象类型
+                default: throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+            }
         }
     }
 }

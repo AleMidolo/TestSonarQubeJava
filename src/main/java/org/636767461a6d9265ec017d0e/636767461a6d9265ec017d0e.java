@@ -12,13 +12,13 @@ public class SuffixSumCalculator {
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-
+        
         // Calculate total sum and suffix sums
         for (int i = bounds.size() - 1; i >= 0; i--) {
             totalSum += bounds.get(i);
             suffixSums.add(0, totalSum); // Add to the front to maintain order
         }
-
+        
         return new Pair<>(suffixSums, totalSum);
     }
 }

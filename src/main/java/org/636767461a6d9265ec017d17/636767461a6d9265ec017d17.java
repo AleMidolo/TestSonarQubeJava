@@ -16,12 +16,10 @@ public class StringUnescaper {
             if (escape) {
                 output.append(c);
                 escape = false;
+            } else if (c == '\\') {
+                escape = true;
             } else {
-                if (c == '\\') {
-                    escape = true;
-                } else {
-                    output.append(c);
-                }
+                output.append(c);
             }
         }
         
@@ -30,8 +28,8 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "example\\_id";
+        String input = "example\\ identifier";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example_id
+        System.out.println(output); // Output: example identifier
     }
 }

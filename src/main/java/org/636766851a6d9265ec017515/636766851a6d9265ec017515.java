@@ -10,12 +10,14 @@ public class MyAtmosphereHandler {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // 根据 TRANSPORT 的值进行处理
-        if (r.getRequest().getHeader("Transport") != null) {
-            // 这里可以添加根据 Transport 处理的逻辑
-            // 例如：如果是某种特定的 Transport，执行挂起操作
+        // 根据传输类型进行处理
+        if (r.getTransport() != null) {
+            // 这里可以添加根据传输类型的逻辑
+            // 例如：如果是长轮询，则挂起资源
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+                r.suspend();
+            }
         }
-        // 返回继续的 Action
         return Action.CONTINUE;
     }
 }

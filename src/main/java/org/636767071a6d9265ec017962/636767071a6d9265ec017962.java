@@ -22,5 +22,5 @@ public class BeanMap {
         }
     }
 
-    // Additional methods for BeanMap (like getters and setters) can be added here
+    // Additional methods to manage properties can be added here
 }

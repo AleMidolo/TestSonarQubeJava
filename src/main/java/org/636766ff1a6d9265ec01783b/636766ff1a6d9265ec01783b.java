@@ -20,10 +20,10 @@ public class SubstringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(sub("Hello, World!", 7, 12)); // Output: World
-        System.out.println(sub("Hello, World!", -1, 5)); // Output: Hello
-        System.out.println(sub("Hello, World!", 7, 20)); // Output: World!
-        System.out.println(sub("Hello, World!", 5, 3));  // Output: (empty string)
-        System.out.println(sub(null, 0, 5));              // Output: null
+        System.out.println(sub("Hello, World!", 7, 12)); // 输出: World
+        System.out.println(sub("Hello, World!", -1, 5)); // 输出: Hello
+        System.out.println(sub("Hello, World!", 7, 20)); // 输出: World!
+        System.out.println(sub("Hello, World!", 5, 3));  // 输出: (空字符串)
+        System.out.println(sub(null, 0, 5));              // 输出: null
     }
 }

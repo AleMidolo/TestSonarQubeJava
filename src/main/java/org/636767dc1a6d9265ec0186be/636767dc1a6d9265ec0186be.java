@@ -5,11 +5,11 @@ public class TimeBucketCompressor {
      * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
      *
      * @param timeBucket 时间桶的长整型值
-     * @param dayStep    步长
+     * @param dayStep   步长
      * @return 重新格式化后的时间桶
      */
     static long compressTimeBucket(long timeBucket, int dayStep) {
-        // 将时间桶转换为字符串以便于处理
+        // 将时间桶转换为字符串以便处理
         String timeStr = String.valueOf(timeBucket);
         
         // 提取年、月、日
@@ -33,7 +33,7 @@ public class TimeBucketCompressor {
         month = calendar.get(java.util.Calendar.MONTH) + 1; // 月份从0开始
         day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
         
-        // 格式化为长整型值
+        // 重新格式化为长整型值
         return Long.parseLong(String.format("%04d%02d%02d", year, month, day));
     }
 

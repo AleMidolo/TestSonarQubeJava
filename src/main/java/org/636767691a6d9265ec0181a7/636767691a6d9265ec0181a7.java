@@ -20,7 +20,7 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("///Hello World", '/');
-        System.out.println(result); // Output: "Hello World"
+        String result = trimLeadingCharacter("///example/string", '/');
+        System.out.println(result); // Output: example/string
     }
 }

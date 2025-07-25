@@ -20,7 +20,7 @@ public class UriMatcher {
         if (matcher.matches()) {
             return new MatchResult(matcher);
         } else {
-            return null; // 返回空表示没有匹配
+            return null; // No match found
         }
     }
 
@@ -35,6 +35,14 @@ public class UriMatcher {
             return matcher.group(index);
         }
 
+        public int start(int index) {
+            return matcher.start(index);
+        }
+
+        public int end(int index) {
+            return matcher.end(index);
+        }
+
         public int groupCount() {
             return matcher.groupCount();
         }
@@ -45,7 +53,7 @@ public class UriMatcher {
         MatchResult result = uriMatcher.match("https://www.example.com/path/to/resource");
 
         if (result != null) {
-            System.out.println("Matched! Group count: " + result.groupCount());
+            System.out.println("Matched!");
             System.out.println("Group 0: " + result.group(0)); // Full match
             System.out.println("Group 1: " + result.group(1)); // Protocol
             System.out.println("Group 2: " + result.group(2)); // www.

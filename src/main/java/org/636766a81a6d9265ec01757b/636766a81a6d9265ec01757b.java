@@ -17,7 +17,7 @@ public class JsonSerializer {
         return JSON.toJSONString(obj, features);
     }
 
-    // Example class to demonstrate serialization
+    // Example class to serialize
     public static class MyObject {
         private String name;
         private int value;

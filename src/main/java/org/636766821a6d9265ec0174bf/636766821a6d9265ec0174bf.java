@@ -13,7 +13,7 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String name = "helloWorld";
-        System.out.println(capitalize(name));  // Output: HelloWorld
+        String testName = "helloWorld";
+        System.out.println(capitalize(testName));  // Output: HelloWorld
     }
 }

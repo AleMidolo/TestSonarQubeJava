@@ -1,20 +1,36 @@
-import java.util.function.Predicate;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 
 /**
  * Invoca il {@link BroadcastFilter}
- * @param msg L'oggetto da filtrare
- * @return L'oggetto filtrato o null se non supera il filtro
+ * @param msg the message to be filtered
+ * @return the filtered result
  */
 protected Object filter(Object msg) {
-    // Esempio di implementazione di un filtro
-    Predicate<Object> broadcastFilter = obj -> {
-        // Logica di filtro personalizzata
-        return obj != null; // Esempio: filtra solo oggetti non nulli
-    };
+    // Assuming msg is an Intent, and we are filtering it using a BroadcastReceiver
+    if (msg instanceof Intent) {
+        Intent intent = (Intent) msg;
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Handle the intent here
+            }
+        };
 
-    if (broadcastFilter.test(msg)) {
-        return msg;
+        // Create a filter to match the intent
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(intent.getAction());
+
+        // Register the receiver with the filter
+        Context context = /* obtain your context here */;
+        context.registerReceiver(receiver, filter);
+
+        // Return the filtered result (in this case, the intent itself)
+        return intent;
     } else {
-        return null;
+        // Handle other types of messages if necessary
+        return msg;
     }
 }

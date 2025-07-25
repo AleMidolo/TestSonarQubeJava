@@ -1,4 +1,4 @@
-public class ByteArrayComparator {
+public class ArrayComparator {
     /**
      * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
      * @param a     Il primo array da confrontare.
@@ -23,12 +23,8 @@ public class ByteArrayComparator {
 
     public static void main(String[] args) {
         byte[] array1 = {1, 2, 3, 4, 5};
-        byte[] array2 = {1, 2, 3, 4, 5};
-        byte[] array3 = {1, 2, 3, 4, 6};
-
-        System.out.println(arrayequals(array1, array2, 5)); // true
-        System.out.println(arrayequals(array1, array3, 5)); // false
-        System.out.println(arrayequals(array1, array2, 3)); // true
-        System.out.println(arrayequals(array1, array3, 3)); // true
+        byte[] array2 = {1, 2, 3, 4, 6};
+        int count = 4;
+        System.out.println(arrayequals(array1, array2, count)); // Output: true
     }
 }

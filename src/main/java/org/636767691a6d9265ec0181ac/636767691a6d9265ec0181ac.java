@@ -16,10 +16,10 @@ public class PathUtils {
         // Converti il percorso relativo in un oggetto Path
         Path relative = Paths.get(relativePath);
         
-        // Applica il percorso relativo al percorso di base
+        // Risolvi il percorso relativo rispetto al percorso di base
         Path resolvedPath = basePath.resolve(relative);
         
-        // Normalizza il percorso risultante per rimuovere eventuali ridondanze
+        // Normalizza il percorso per rimuovere eventuali ridondanze (es. "./" o "../")
         Path normalizedPath = resolvedPath.normalize();
         
         // Restituisci il percorso come stringa

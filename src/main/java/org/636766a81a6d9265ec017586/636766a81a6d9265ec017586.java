@@ -22,4 +22,13 @@ public class FrameStack {
             outputFrameStack.pop();
         }
     }
+
+    // Metodi aggiuntivi per gestire lo stack, se necessario
+    public void push(Object element) {
+        outputFrameStack.push(element);
+    }
+
+    public int size() {
+        return outputFrameStack.size();
+    }
 }

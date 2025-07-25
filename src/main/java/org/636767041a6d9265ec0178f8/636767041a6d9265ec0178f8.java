@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class StringArrayCopier {
+public class StringCopier {
 
     /**
      * Questo metodo crea una copia dell'array fornito e garantisce che tutte le stringhe nel nuovo array creato contengano solo lettere minuscole. <p> Utilizzare questo metodo per copiare array di stringhe significa che le modifiche all'array src non modificano l'array dst.

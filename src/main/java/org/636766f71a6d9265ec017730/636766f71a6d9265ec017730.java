@@ -16,22 +16,22 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        // Filtra gli elementi non nulli e li converte in String
-        ArrayList<String> nonNullStrings = new ArrayList<>();
+        // Filtra gli elementi non nulli e li converte in Stringhe
+        ArrayList<String> filteredList = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                nonNullStrings.add(obj.toString());
+                filteredList.add(obj.toString());
             }
         }
 
-        // Converti l'ArrayList in un array di String
-        return nonNullStrings.toArray(new String[0]);
+        // Converti la lista filtrata in un array di Stringhe
+        return filteredList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
         // Esempio di utilizzo
         Collection<Object> collection = Arrays.asList("Hello", null, 123, null, "World");
         String[] result = toNoNullStringArray(collection);
-        System.out.println(Arrays.toString(result));  // Output: [Hello, 123, World]
+        System.out.println(Arrays.toString(result)); // Output: [Hello, 123, World]
     }
 }

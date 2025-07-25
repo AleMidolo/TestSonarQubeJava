@@ -1,6 +1,6 @@
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
@@ -15,16 +15,17 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         }
 
         List<Integer> lowerBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int lowerBound = 0;
 
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                // Se la chiave non è presente, Collections.binarySearch restituisce (-(insertion point) - 1)
-                index = -index - 1;
+            for (int j = 0; j < keys.size(); j++) {
+                if (i != j && keys.get(j).compareTo(currentKey) < 0) {
+                    lowerBound++;
+                }
             }
-            lowerBounds.add(index);
+
+            lowerBounds.add(lowerBound);
         }
 
         return lowerBounds;

@@ -11,9 +11,9 @@ public class ConfigInitializer {
         // Controlla se il percorso di distribuzione esiste
         Path distributionPath = Paths.get("path/to/distribution");
         if (Files.exists(distributionPath)) {
-            System.out.println("Il percorso di distribuzione esiste.");
+            System.out.println("Il percorso di distribuzione esiste: " + distributionPath);
         } else {
-            System.out.println("Il percorso di distribuzione non esiste.");
+            System.out.println("Il percorso di distribuzione non esiste: " + distributionPath);
         }
     }
 

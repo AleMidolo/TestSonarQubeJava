@@ -16,7 +16,7 @@ public class ByteVector {
         if (byteOffset < 0) {
             throw new IllegalArgumentException("byteOffset must be non-negative");
         }
-        if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
+        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
@@ -35,10 +35,7 @@ public class ByteVector {
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > buffer.length) {
-            int newCapacity = buffer.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+            int newCapacity = Math.max(buffer.length * 2, minCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

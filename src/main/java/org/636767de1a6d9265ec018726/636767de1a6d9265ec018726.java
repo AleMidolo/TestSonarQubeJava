@@ -36,10 +36,11 @@ public class ProfileSnapshot {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
         // Example logic to build sequence ranges
+        // This is a placeholder and should be replaced with actual logic
         sequenceRanges.add(new SequenceRange(1, 100));
         sequenceRanges.add(new SequenceRange(101, 200));
         sequenceRanges.add(new SequenceRange(201, 300));
-        
+
         return sequenceRanges;
     }
 

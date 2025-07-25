@@ -20,16 +20,21 @@ public class Mappings {
 public class MappingDiff {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming we have a method to get historical mappings for the given table
-        Mappings historicalMappings = getHistoricalMappings(tableName);
+        // Assuming that the historical mappings for the table are stored in a static map
+        // This is just a placeholder for the actual historical mappings retrieval logic
+        Map<String, Mappings> historicalMappings = getHistoricalMappings();
+
+        Mappings historicalMapping = historicalMappings.get(tableName);
+        if (historicalMapping == null) {
+            return mappings; // If no historical mapping exists, return the input mappings
+        }
 
         Mappings diffMappings = new Mappings();
         Map<String, Object> diffFields = new HashMap<>();
 
-        // Iterate through the input mappings and find fields that are not in historical mappings
         for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!historicalMappings.getFields().containsKey(fieldName)) {
+            if (!historicalMapping.getFields().containsKey(fieldName)) {
                 diffFields.put(fieldName, entry.getValue());
             }
         }
@@ -38,9 +43,9 @@ public class MappingDiff {
         return diffMappings;
     }
 
-    private Mappings getHistoricalMappings(String tableName) {
-        // This method should retrieve the historical mappings for the given table
-        // For the sake of this example, we return an empty Mappings object
-        return new Mappings();
+    private Map<String, Mappings> getHistoricalMappings() {
+        // Placeholder for actual historical mappings retrieval logic
+        // This should return a map of table names to their historical Mappings
+        return new HashMap<>();
     }
 }

@@ -10,15 +10,16 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // Sospendi l'AtmosphereResource in base al valore di TRANSPORT
+        // Check the transport type and suspend the resource if necessary
         if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
         } else if (r.transport() == AtmosphereResource.TRANSPORT.LONG_POLLING) {
-            r.suspend(-1); // Sospendi indefinitamente
-        } else {
-            // Gestisci altri tipi di trasporto se necessario
+            r.suspend(-1); // Suspend indefinitely
+        } else if (r.transport() == AtmosphereResource.TRANSPORT.STREAMING) {
+            r.suspend(30000); // Suspend for 30 seconds
         }
 
+        // Return Action.CONTINUE to allow further processing
         return Action.CONTINUE;
     }
 }

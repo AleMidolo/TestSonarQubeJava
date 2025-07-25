@@ -26,15 +26,13 @@ public class ByteVector {
         }
     }
 
-    // For testing purposes
-    public byte[] getData() {
-        return Arrays.copyOf(data, size);
+    // Optional: Method to get the current size of the vector
+    public int size() {
+        return size;
     }
 
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.put11(0x01, 0x02);
-        byte[] result = byteVector.getData();
-        System.out.println(Arrays.toString(result)); // Output: [1, 2]
+    // Optional: Method to get the byte array
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
     }
 }

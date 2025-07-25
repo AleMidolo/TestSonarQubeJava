@@ -17,4 +17,9 @@ public class FrameStack {
         }
         return stack.pop();
     }
+
+    // Método adicional para agregar elementos a la pila (solo para propósitos de prueba)
+    public void push(int value) {
+        stack.push(value);
+    }
 }

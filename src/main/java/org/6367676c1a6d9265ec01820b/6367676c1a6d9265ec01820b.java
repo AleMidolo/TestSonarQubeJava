@@ -9,15 +9,15 @@ public class StringUtils {
         }
 
         // Convert the characters to delete into a set for quick lookup
-        Set<Character> charsSet = new HashSet<>();
+        Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
-            charsSet.add(c);
+            charsToRemove.add(c);
         }
 
         // Build the resulting string by skipping characters in the set
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (!charsSet.contains(c)) {
+            if (!charsToRemove.contains(c)) {
                 result.append(c);
             }
         }

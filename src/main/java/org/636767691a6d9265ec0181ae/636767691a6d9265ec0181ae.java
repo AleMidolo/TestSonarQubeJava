@@ -2,7 +2,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnumerationToStringArray {
+public class EnumerationUtils {
 
     /**
      * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.
@@ -20,18 +20,5 @@ public class EnumerationToStringArray {
         }
 
         return list.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        java.util.Vector<String> vector = new java.util.Vector<>();
-        vector.add("Hola");
-        vector.add("Mundo");
-        Enumeration<String> enumeration = vector.elements();
-
-        String[] result = toStringArray(enumeration);
-        for (String s : result) {
-            System.out.println(s);
-        }
     }
 }

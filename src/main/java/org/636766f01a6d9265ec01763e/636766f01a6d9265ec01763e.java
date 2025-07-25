@@ -18,15 +18,16 @@ public class CharsetTranslator {
             // Intenta obtener el Charset correspondiente al nombre MIME
             Charset javaCharset = Charset.forName(charset);
             return javaCharset.name();
-        } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // Si el nombre no es válido o no es soportado, devuelve el charset por defecto (UTF-8)
-            return Charset.defaultCharset().name();
+        } catch (IllegalCharsetNameException e) {
+            throw new IllegalArgumentException("Nombre de charset no válido: " + charset, e);
+        } catch (UnsupportedCharsetException e) {
+            throw new IllegalArgumentException("Charset no soportado: " + charset, e);
         }
     }
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        String mimeCharset = "ISO-8859-1";
+        String mimeCharset = "UTF-8";
         String javaCharset = javaCharset(mimeCharset);
         System.out.println("El charset Java equivalente para " + mimeCharset + " es: " + javaCharset);
     }

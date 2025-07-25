@@ -12,24 +12,21 @@ public class PrimeUtil {
         if (desiredCapacity <= 2) {
             return 2;
         }
-        int prime = desiredCapacity;
-        if (prime % 2 == 0) {
-            prime++;
+        int candidate = desiredCapacity;
+        if (candidate % 2 == 0) {
+            candidate++;
         }
-        while (!isPrime(prime)) {
-            prime += 2;
-            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
-                prime = desiredCapacity;
-                if (prime % 2 == 0) {
-                    prime++;
+        while (!isPrime(candidate)) {
+            candidate += 2;
+            // Si desiredCapacity >= 1000, asegurarse de que el candidato no exceda el 11% de desiredCapacity
+            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
+                candidate = desiredCapacity;
+                if (candidate % 2 == 0) {
+                    candidate++;
                 }
-                while (!isPrime(prime)) {
-                    prime += 2;
-                }
-                break;
             }
         }
-        return prime;
+        return candidate;
     }
 
     private static boolean isPrime(int n) {
@@ -51,6 +48,9 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Ejemplo de uso
+        // Ejemplo de uso
+        System.out.println(nextPrime(1000));  // Debería imprimir 1009
+        System.out.println(nextPrime(5000));  // Debería imprimir 5003
+        System.out.println(nextPrime(10));    // Debería imprimir 11
     }
 }

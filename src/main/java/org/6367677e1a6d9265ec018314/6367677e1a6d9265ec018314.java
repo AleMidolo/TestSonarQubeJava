@@ -36,10 +36,10 @@ class TreeNode {
     }
 }
 
-public class TreeManager {
+public class CategoryTree {
     private TreeNode root;
 
-    public TreeManager(TreeNode root) {
+    public CategoryTree(TreeNode root) {
         this.root = root;
     }
 
@@ -86,8 +86,8 @@ public class TreeManager {
         rootNode.addChild(childNode1);
         rootNode.addChild(childNode2);
 
-        TreeManager treeManager = new TreeManager(rootNode);
-        int removedNodes = treeManager.removeUnusedNodes();
+        CategoryTree tree = new CategoryTree(rootNode);
+        int removedNodes = tree.removeUnusedNodes();
         System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

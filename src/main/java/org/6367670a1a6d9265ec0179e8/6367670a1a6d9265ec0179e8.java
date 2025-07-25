@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class ArrayUtils {
 
     // Public static empty array reference
@@ -18,16 +16,5 @@ public class ArrayUtils {
             return EMPTY_BOOLEAN_ARRAY;
         }
         return array;
-    }
-
-    public static void main(String[] args) {
-        // Test cases
-        Boolean[] nullArray = null;
-        Boolean[] emptyArray = new Boolean[0];
-        Boolean[] nonEmptyArray = { true, false };
-
-        System.out.println(Objects.deepEquals(nullToEmpty(nullArray), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(emptyArray), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(nonEmptyArray), nonEmptyArray)); // true
     }
 }

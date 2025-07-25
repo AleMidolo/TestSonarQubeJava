@@ -3,10 +3,10 @@ public class StringUtils {
     /**
      * Invierte una cadena de acuerdo con {@link StringBuilder#reverse()}.
      * Una cadena <code>null</code> devuelve <code>null</code>.
-     * <pre> 
-     * StringUtils.reverse(null)  = null 
-     * StringUtils.reverse("")    = "" 
-     * StringUtils.reverse("bat") = "tab" 
+     * <pre>
+     * StringUtils.reverse(null)  = null
+     * StringUtils.reverse("")    = ""
+     * StringUtils.reverse("bat") = "tab"
      * </pre>
      * @param str  la cadena a invertir, puede ser null
      * @return la cadena invertida, <code>null</code> si la entrada es una cadena null

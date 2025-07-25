@@ -1,7 +1,8 @@
 public class Log2FloorPlusOne {
     /**
      * Calcula el piso(log2(n)) + 1
-     * @param n el número para el cual se calculará el logaritmo
+     * 
+     * @param n el número para el cual se calculará el logaritmo base 2
      * @return el piso(log2(n)) + 1
      */
     public static int calculateLog2FloorPlusOne(int n) {
@@ -17,7 +18,7 @@ public class Log2FloorPlusOne {
     }
 
     public static void main(String[] args) {
-        int n = 10;
+        int n = 10; // Ejemplo de uso
         System.out.println("El piso(log2(" + n + ")) + 1 es: " + calculateLog2FloorPlusOne(n));
     }
 }

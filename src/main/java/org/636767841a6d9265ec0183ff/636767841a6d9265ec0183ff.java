@@ -1,5 +1,6 @@
-import javax.swing.*;
-import javax.swing.table.TableModel;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class TableUtils {
 
@@ -8,25 +9,14 @@ public class TableUtils {
      * @param table debe pertenecer al JScrollPane especificado
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane must not be null");
+        if (row >= 0 && row < table.getRowCount()) {
+            table.setRowSelectionInterval(row, row);
+            table.scrollRectToVisible(table.getCellRect(row, 0, true));
+
+            // Retrasar la llamada a repaint para asegurar que la fila se pinte correctamente
+            SwingUtilities.invokeLater(() -> {
+                pane.repaint();
+            });
         }
-
-        TableModel model = table.getModel();
-        if (row < 0 || row >= model.getRowCount()) {
-            throw new IllegalArgumentException("Row index out of bounds");
-        }
-
-        // Selecciona la fila especificada
-        table.setRowSelectionInterval(row, row);
-
-        // Desplaza el JScrollPane hacia la fila seleccionada
-        Rectangle cellRect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(cellRect);
-
-        // Retrasa la llamada a repaint() para asegurar que la tabla pinte correctamente
-        SwingUtilities.invokeLater(() -> {
-            table.repaint();
-        });
     }
 }

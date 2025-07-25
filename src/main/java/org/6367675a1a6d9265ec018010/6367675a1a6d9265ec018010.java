@@ -10,23 +10,23 @@ class Bucket {
     }
 
     public void addBucket(Bucket bucket) {
-        this.buckets.add(bucket);
+        buckets.add(bucket);
     }
 
     public void removeSelf() {
         // Elimina este bucket de la estructura de datos
-        // Aquí asumimos que el bucket está en una lista de buckets en algún contenedor
-        // y que el contenedor tiene un método para eliminar este bucket.
-        // Este es un ejemplo simplificado.
-        if (this.buckets != null) {
-            this.buckets.clear();
-        }
-        // Aquí podrías agregar más lógica para eliminar el bucket de cualquier estructura
-        // que lo contenga, como una lista o un mapa.
+        // Aquí asumimos que el bucket es eliminado de una lista de buckets en un contexto más amplio
+        // Por ejemplo, si este bucket es parte de una lista en una clase contenedora, se eliminaría de allí.
+        // Este método no tiene implementación específica ya que depende del contexto en el que se use.
+        // En un caso real, se podría eliminar de una lista o estructura de datos que lo contenga.
+        System.out.println("Bucket " + name + " has been removed.");
     }
 
     public static void main(String[] args) {
-        Bucket bucket = new Bucket("ExampleBucket");
-        bucket.removeSelf();
+        Bucket bucket1 = new Bucket("Bucket1");
+        Bucket bucket2 = new Bucket("Bucket2");
+
+        bucket1.addBucket(bucket2);
+        bucket1.removeSelf();
     }
 }

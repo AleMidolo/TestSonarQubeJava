@@ -15,9 +15,8 @@ public class TypeResolver {
         }
     }
 
-    // Clase ficticia para representar un tipo desconocido
+    // Clase ficticia para representar el tipo desconocido
     public static class Unknown {
-        // Esta clase no tiene implementación específica
     }
 
     public static void main(String[] args) {

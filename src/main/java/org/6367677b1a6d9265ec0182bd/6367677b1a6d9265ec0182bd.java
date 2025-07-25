@@ -5,7 +5,7 @@ public class LogFormatter {
     /**
      * Formatea un evento de "logging" para un "writer".
      * @param event evento de "logging" que se va a formatear.
-     * @return una cadena que representa el evento formateado.
+     * @return una cadena formateada que representa el evento de logging.
      */
     public String format(final LoggingEvent event) {
         StringBuilder formattedEvent = new StringBuilder();
@@ -14,20 +14,13 @@ public class LogFormatter {
         formattedEvent.append("[")
                       .append(event.getLevel().toString())
                       .append("] ")
-                      .append(event.getRenderedMessage())
-                      .append("\n");
+                      .append(event.getMessage().toString());
         
-        // Si hay un Throwable, agregar su stack trace
-        if (event.getThrowableInformation() != null) {
-            formattedEvent.append("Exception: ")
-                          .append(event.getThrowableInformation().getThrowable().toString())
-                          .append("\n");
-            for (StackTraceElement element : event.getThrowableInformation().getThrowable().getStackTrace()) {
-                formattedEvent.append("\t")
-                              .append(element.toString())
-                              .append("\n");
-            }
-        }
+        // Opcional: Agregar información adicional como el tiempo y el nombre del logger
+        formattedEvent.append(" - ")
+                      .append(event.getTimeStamp())
+                      .append(" - ")
+                      .append(event.getLoggerName());
         
         return formattedEvent.toString();
     }

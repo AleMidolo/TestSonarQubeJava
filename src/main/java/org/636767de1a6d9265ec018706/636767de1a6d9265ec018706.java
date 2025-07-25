@@ -21,37 +21,39 @@ public class MappingDiff {
 
     /**
      * Devuelve los mapeos con campos que no existen en los mapeos de entrada. Los mapeos de entrada deben ser mapeos de historial del índice actual. No devolver la configuración _source para evitar conflictos de actualización del índice actual.
+     *
+     * @param tableName El nombre de la tabla o índice.
+     * @param mappings Los mapeos de entrada.
+     * @return Mapeos con campos que no existen en los mapeos de entrada.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        Mappings result = new Mappings();
-        Map<String, Object> currentMappings = getCurrentMappings(tableName);
-        Map<String, Object> inputMappings = mappings.getProperties();
+        // Obtener los mapeos actuales de la tabla (simulado aquí)
+        Mappings currentMappings = getCurrentMappings(tableName);
 
-        for (Map.Entry<String, Object> entry : currentMappings.entrySet()) {
+        // Crear un nuevo objeto Mappings para almacenar las diferencias
+        Mappings diffMappings = new Mappings();
+        Map<String, Object> diffProperties = new HashMap<>();
+
+        // Comparar los mapeos actuales con los mapeos de entrada
+        for (Map.Entry<String, Object> entry : currentMappings.getProperties().entrySet()) {
             String key = entry.getKey();
-            if (!inputMappings.containsKey(key) && !key.equals("_source")) {
-                result.getProperties().put(key, entry.getValue());
+            if (!mappings.getProperties().containsKey(key) && !key.equals("_source")) {
+                diffProperties.put(key, entry.getValue());
             }
         }
 
-        return result;
+        diffMappings.setProperties(diffProperties);
+        return diffMappings;
     }
 
-    private Map<String, Object> getCurrentMappings(String tableName) {
-        // Simulación de la obtención de los mapeos actuales de la tabla
-        Map<String, Object> currentMappings = new HashMap<>();
-        currentMappings.put("field1", "type1");
-        currentMappings.put("field2", "type2");
-        currentMappings.put("_source", "sourceConfig");
+    // Método simulado para obtener los mapeos actuales de la tabla
+    private Mappings getCurrentMappings(String tableName) {
+        Mappings currentMappings = new Mappings();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("field1", "type1");
+        properties.put("field2", "type2");
+        properties.put("_source", "enabled");
+        currentMappings.setProperties(properties);
         return currentMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff diff = new MappingDiff();
-        Mappings inputMappings = new Mappings();
-        inputMappings.getProperties().put("field1", "type1");
-
-        Mappings result = diff.diffStructure("exampleTable", inputMappings);
-        System.out.println(result.getProperties()); // Output: {field2=type2}
     }
 }

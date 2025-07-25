@@ -1,6 +1,6 @@
-public class ArrayUtil {
+public class DefensiveProgramming {
 
-    private static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
+    private static final Byte[] EMPTY_ARRAY = new Byte[0];
 
     /** 
      * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p> 
@@ -11,13 +11,11 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_BYTE_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
 
     public static void main(String[] args) {
+        // Test cases
         Byte[] nullArray = null;
         Byte[] emptyArray = new Byte[0];
         Byte[] nonEmptyArray = {1, 2, 3};

@@ -7,7 +7,7 @@ public class ClassReader {
         this.data = data;
     }
 
-    /**
+    /** 
      * Legge un valore short firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o gli adattatori.</i>
      * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
      * @return il valore letto.
@@ -20,7 +20,6 @@ public class ClassReader {
     }
 
     public static void main(String[] args) {
-        // Example usage
         byte[] exampleData = {0x00, 0x01, 0x02, 0x03};
         ClassReader reader = new ClassReader(exampleData);
         short value = reader.readShort(0);

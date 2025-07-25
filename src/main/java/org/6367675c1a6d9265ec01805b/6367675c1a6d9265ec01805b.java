@@ -1,7 +1,7 @@
 public void removeFromTreeEdgeList() {
     // Assuming there are two doubly linked lists for edges: leftEdgeList and rightEdgeList
-    EdgeNode currentLeft = leftEdgeList.head;
-    EdgeNode currentRight = rightEdgeList.head;
+    EdgeNode currentLeft = this.leftEdgeList.head;
+    EdgeNode currentRight = this.rightEdgeList.head;
 
     // Remove this edge from the left edge list
     while (currentLeft != null) {
@@ -9,7 +9,7 @@ public void removeFromTreeEdgeList() {
             if (currentLeft.prev != null) {
                 currentLeft.prev.next = currentLeft.next;
             } else {
-                leftEdgeList.head = currentLeft.next; // Update head if it's the first element
+                this.leftEdgeList.head = currentLeft.next; // Update head if it's the first element
             }
             if (currentLeft.next != null) {
                 currentLeft.next.prev = currentLeft.prev;
@@ -25,7 +25,7 @@ public void removeFromTreeEdgeList() {
             if (currentRight.prev != null) {
                 currentRight.prev.next = currentRight.next;
             } else {
-                rightEdgeList.head = currentRight.next; // Update head if it's the first element
+                this.rightEdgeList.head = currentRight.next; // Update head if it's the first element
             }
             if (currentRight.next != null) {
                 currentRight.next.prev = currentRight.prev;
@@ -42,8 +42,7 @@ class EdgeNode {
     EdgeNode next;
     EdgeNode prev;
 
-    // Constructor
-    EdgeNode(Edge edge) {
+    public EdgeNode(Edge edge) {
         this.edge = edge;
         this.next = null;
         this.prev = null;
@@ -53,13 +52,12 @@ class EdgeNode {
 class EdgeList {
     EdgeNode head;
 
-    // Constructor
-    EdgeList() {
+    public EdgeList() {
         this.head = null;
     }
 }
 
-// Assuming Edge class is defined
+// Assuming Edge class is defined as follows:
 class Edge {
     // Edge properties and methods
 }

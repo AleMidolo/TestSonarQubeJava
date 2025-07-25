@@ -1,8 +1,7 @@
 public class ArrayUtils {
-    
     /** 
      * Inverte l'ordine degli elementi nell'intervallo specificato all'interno dell'array fornito.
-     * @param <V> il tipo di elementi nell'array
+     * @param < V > il tipo di elementi nell'array
      * @param arr l'array
      * @param from l'indice del primo elemento (inclusivo) all'interno dell'intervallo da invertire
      * @param to l'indice dell'ultimo elemento (inclusivo) all'interno dell'intervallo da invertire

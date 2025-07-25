@@ -56,11 +56,11 @@ public class CategoryTree {
         CategoryNode root = new CategoryNode(true);
         CategoryNode child1 = new CategoryNode(false);
         CategoryNode child2 = new CategoryNode(true);
-        CategoryNode grandChild1 = new CategoryNode(false);
-        
+        CategoryNode child3 = new CategoryNode(false);
+
         root.addChild(child1);
         root.addChild(child2);
-        child2.addChild(grandChild1);
+        child2.addChild(child3);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();

@@ -20,24 +20,27 @@ public class ByteVector {
         if (byteLength < 0) {
             throw new IllegalArgumentException("byteLength must be non-negative");
         }
-        
-        if (byteArrayValue == null) {
-            byteArrayValue = new byte[byteLength];
-            Arrays.fill(byteArrayValue, (byte) 0);
-        } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+        if (byteArrayValue != null) {
+            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
+                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
+            }
         }
 
         ensureCapacity(size + byteLength);
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        size += byteLength;
 
+        if (byteArrayValue == null) {
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+        } else {
+            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+        }
+
+        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
     }

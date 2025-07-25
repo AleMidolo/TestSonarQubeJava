@@ -1,6 +1,7 @@
 import java.util.Objects;
 
 public class ArrayConverter {
+
     /** 
      * <p>Converte un array di oggetti Integer in primitivi.</p> 
      * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
@@ -20,5 +21,14 @@ public class ArrayConverter {
             result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        Integer[] integerArray = {1, 2, 3, null};
+        try {
+            int[] primitiveArray = toPrimitive(integerArray);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 
-public class FileDeletionScheduler {
+public class FileDeleter {
 
     /** 
      * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
@@ -14,24 +14,27 @@ public class FileDeletionScheduler {
             throw new NullPointerException("Il file non deve essere null");
         }
 
-        if (file.isDirectory()) {
-            deleteDirectoryOnExit(file);
-        } else {
-            file.deleteOnExit();
-        }
+        // Registrare il file per la cancellazione all'uscita
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                deleteRecursively(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
-    private static void deleteDirectoryOnExit(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectoryOnExit(file);
-                } else {
-                    file.deleteOnExit();
+    private static void deleteRecursively(File file) throws IOException {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File child : files) {
+                    deleteRecursively(child);
                 }
             }
         }
-        directory.deleteOnExit();
+        if (!file.delete()) {
+            throw new IOException("Impossibile cancellare il file: " + file.getAbsolutePath());
+        }
     }
 }

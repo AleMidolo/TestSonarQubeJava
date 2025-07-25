@@ -17,16 +17,17 @@ public class VarintReader {
         while (true) {
             int b = input.read();
             if (b == -1) {
-                throw new IOException("End of stream reached before varint was fully read.");
+                throw new IOException("End of stream reached");
             }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
-                return result;
+                break;
             }
             shift += 7;
             if (shift >= 64) {
-                throw new IOException("Varint is too long.");
+                throw new IOException("Varint is too long");
             }
         }
+        return result;
     }
 }

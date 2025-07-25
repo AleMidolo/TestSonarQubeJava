@@ -1,5 +1,5 @@
 public class ArrayLengthChecker {
-    
+
     /** 
      * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
      * @param array1 il primo array, può essere <code>null</code>

@@ -18,12 +18,12 @@ public class StackManipulator {
             int end = descriptor.indexOf(')');
             String parameters = descriptor.substring(start, end);
             for (String type : parameters.split("")) {
-                if (!type.isEmpty() && !stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each parameter type
+                if (!type.isEmpty()) {
+                    stack.pop(); // Remove the type from the stack
                 }
             }
         } else {
-            // If it's a single type, just pop once
+            // If it's a single type, just pop it
             if (!stack.isEmpty()) {
                 stack.pop();
             }
@@ -40,12 +40,12 @@ public class StackManipulator {
 
     public static void main(String[] args) {
         StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
+        sm.push("int");
         sm.push("String");
-        sm.push("Double");
-
+        sm.push("double");
+        
         System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method with one int parameter
+        sm.pop("(I)V"); // Example descriptor for a method with an int parameter
         System.out.println("Stack after pop: " + sm.getStack());
     }
 }

@@ -1,7 +1,6 @@
 import java.nio.charset.StandardCharsets;
 
 public class UTF8SizeCalculator {
-
     /** 
      * Calcola la dimensione della stringa utf8 che inizia all'indice specificato {@code index} con la lunghezza specificata {@code length}.
      */
@@ -18,8 +17,8 @@ public class UTF8SizeCalculator {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, 世界"; // "Hello, World" in English and "World" in Chinese
-        int utf8Size = computeUTF8Size(testString, 0, testString.length());
-        System.out.println("UTF-8 size: " + utf8Size);
+        String testString = "Hello, 世界"; // Example string
+        int size = computeUTF8Size(testString, 0, 5); // Calculate UTF-8 size for "Hello"
+        System.out.println("UTF-8 size: " + size); // Output: UTF-8 size: 5
     }
 }

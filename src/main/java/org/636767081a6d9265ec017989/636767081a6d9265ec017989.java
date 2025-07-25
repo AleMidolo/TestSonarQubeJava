@@ -24,11 +24,10 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        Boolean[] booleanArray = {true, false, true, null};
-        try {
-            boolean[] result = toPrimitive(booleanArray);
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+        Boolean[] booleanArray = {true, false, true};
+        boolean[] primitiveArray = toPrimitive(booleanArray);
+        for (boolean b : primitiveArray) {
+            System.out.println(b);
         }
     }
 }

@@ -8,7 +8,7 @@ public class FileIterator {
     private int currentIndex;
 
     public FileIterator(File directory) {
-        if (directory.isDirectory()) {
+        if (directory != null && directory.isDirectory()) {
             this.files = directory.listFiles();
         } else {
             this.files = new File[0];

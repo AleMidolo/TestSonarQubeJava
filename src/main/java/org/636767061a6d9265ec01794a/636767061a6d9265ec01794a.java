@@ -33,10 +33,9 @@ public class FileExtensionUtil {
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(indexOfExtension("example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
-        System.out.println(indexOfExtension("folder/example")); // Output: -1
-        System.out.println(indexOfExtension(null)); // Output: -1
+        // Test del metodo
+        String filename = "C:\\path\\to\\file.txt";
+        int index = indexOfExtension(filename);
+        System.out.println("L'indice dell'ultimo carattere separatore dell'estensione è: " + index);
     }
 }

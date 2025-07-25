@@ -1,8 +1,10 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Graph<V, E> {
-    private Map<V, Map<V, E>> adjacencyList;
+    private Map<V, Set<E>> adjacencyList;
 
     public Graph() {
         adjacencyList = new HashMap<>();
@@ -15,7 +17,9 @@ public class Graph<V, E> {
      * @param e l'arco
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        adjacencyList.putIfAbsent(sourceVertex, new HashMap<>());
-        adjacencyList.get(sourceVertex).put(targetVertex, e);
+        adjacencyList.putIfAbsent(sourceVertex, new HashSet<>());
+        adjacencyList.putIfAbsent(targetVertex, new HashSet<>());
+        
+        adjacencyList.get(sourceVertex).add(e);
     }
 }

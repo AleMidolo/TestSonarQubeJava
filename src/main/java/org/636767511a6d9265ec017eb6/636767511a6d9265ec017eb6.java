@@ -15,22 +15,35 @@ class OuterFaceCirculator {
         return currentNode;
     }
 
-    public void moveToNext() {
+    public void advance() {
         // Logic to move to the next node in the outer face
+    }
+
+    public boolean hasNext() {
+        // Logic to determine if there is a next node
+        return true; // Placeholder
     }
 }
 
 public class Graph {
+    /**
+     * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
+     * @param predicate la condizione che il nodo desiderato deve soddisfare
+     * @param start il nodo da cui iniziare la ricerca
+     * @param stop il nodo con cui terminare la ricerca
+     * @param dir la direzione da cui iniziare la traversata
+     * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
+     */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        while (circulator.getCurrentNode() != stop) {
+        do {
             if (predicate.test(circulator.getCurrentNode())) {
                 return circulator;
             }
-            circulator.moveToNext();
-        }
+            circulator.advance();
+        } while (circulator.hasNext() && !circulator.getCurrentNode().equals(stop));
         
-        return circulator; // Return circulator at stop if no node satisfies the predicate
+        return circulator; // Return circulator at stop if predicate not satisfied
     }
 }

@@ -3,12 +3,12 @@ import java.nio.ByteBuffer;
 public class OctetDecoder {
 
     /** 
-     * Decodifica gli ottetti in caratteri utilizzando la decodifica UTF-8 e aggiunge i caratteri ad uno oggetto StringBuffer.
+     * Decodifica gli ottetti in caratteri utilizzando la decodifica UTF-8 e aggiunge i caratteri ad uno oggetto StringBuilder.
      * @return l'indice del prossimo carattere non controllato nella stringa da decodificare
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         while (i < bb.limit()) {
-            int b = bb.get(i) & 0xFF; // Get the byte as an unsigned value
+            int b = bb.get(i) & 0xFF; // Get the byte and convert to unsigned
             if ((b & 0x80) == 0) { // 1-byte character (ASCII)
                 sb.append((char) b);
                 i++;
@@ -28,15 +28,9 @@ public class OctetDecoder {
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
                 int b4 = bb.get(i + 3) & 0xFF;
-                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F));
-                // Convert code point to UTF-16 surrogate pair if necessary
-                if (codePoint > 0xFFFF) {
-                    codePoint -= 0x10000;
-                    sb.append((char) (0xD800 | (codePoint >> 10)));
-                    sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
-                } else {
-                    sb.append((char) codePoint);
-                }
+                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F)) - 0x10000;
+                sb.append((char) (0xD800 + (codePoint >> 10))); // High surrogate
+                sb.append((char) (0xDC00 + (codePoint & 0x3FF))); // Low surrogate
                 i += 4;
             } else {
                 // Invalid byte sequence, break

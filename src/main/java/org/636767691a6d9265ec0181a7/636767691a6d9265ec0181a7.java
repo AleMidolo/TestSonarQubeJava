@@ -33,6 +33,6 @@ public class StringCleaner {
         String testString = "aaabacadae";
         char leadingChar = 'a';
         String cleanedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(cleanedString); // Output: "bcade"
+        System.out.println(cleanedString); // Output: "bcde"
     }
 }

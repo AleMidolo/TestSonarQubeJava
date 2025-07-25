@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppenderManager {
+public class Logger {
     private List<Appender> appenders;
 
-    public AppenderManager() {
+    public Logger() {
         this.appenders = new ArrayList<>();
     }
 
@@ -17,9 +17,7 @@ public class AppenderManager {
     }
 
     public void attachAppender(Appender appender) {
-        if (!appenders.contains(appender)) {
-            appenders.add(appender);
-        }
+        appenders.add(appender);
     }
 
     public void detachAppender(Appender appender) {
@@ -28,22 +26,5 @@ public class AppenderManager {
 }
 
 class Appender {
-    private String name;
-
-    public Appender(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Appender appender = (Appender) obj;
-        return name.equals(appender.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
+    // Implementation of Appender class
 }

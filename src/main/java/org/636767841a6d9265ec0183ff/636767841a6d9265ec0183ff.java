@@ -12,26 +12,28 @@ public class TableRowSelector {
      * @param pane deve appartenere allo JScrollPane specificato
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null || row < 0 || row >= table.getRowCount()) {
-            throw new IllegalArgumentException("Invalid parameters");
+        if (table == null || pane == null) {
+            throw new IllegalArgumentException("Table and pane cannot be null");
+        }
+        
+        if (row < 0 || row >= table.getRowCount()) {
+            throw new IndexOutOfBoundsException("Row index is out of bounds");
         }
 
         // Select the specified row
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
-        Rectangle rect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(rect);
-        
-        // Delay repaint to ensure the row is painted correctly
         SwingUtilities.invokeLater(() -> {
+            Rectangle rect = table.getCellRect(row, 0, true);
+            table.scrollRectToVisible(rect);
             pane.repaint();
         });
     }
 
     public static void main(String[] args) {
-        // Sample usage
-        JFrame frame = new JFrame("Table Row Selector");
+        // Example usage
+        JFrame frame = new JFrame("Table Row Selector Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
@@ -43,7 +45,7 @@ public class TableRowSelector {
         };
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        frame.add(pane);
+        frame.add(pane, BorderLayout.CENTER);
         frame.setSize(400, 300);
         frame.setVisible(true);
 

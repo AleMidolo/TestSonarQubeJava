@@ -5,7 +5,7 @@ public class VertexProvider<V> implements Iterator<V> {
     private Queue<V> vertexQueue;
     
     public VertexProvider() {
-        this.vertexQueue = new LinkedList<>();
+        vertexQueue = new LinkedList<>();
     }
 
     /**

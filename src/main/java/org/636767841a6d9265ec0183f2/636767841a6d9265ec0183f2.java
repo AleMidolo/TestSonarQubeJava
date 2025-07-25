@@ -10,7 +10,7 @@ public class ObjectComparator implements Comparator<Object> {
             return 0;
         }
         if (aObj1 == null) {
-            return -1; 
+            return -1;
         }
         if (aObj2 == null) {
             return 1;

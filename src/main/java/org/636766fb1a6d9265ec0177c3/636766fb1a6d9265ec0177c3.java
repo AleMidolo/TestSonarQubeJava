@@ -11,7 +11,7 @@ public class CharUtils {
      * CharUtils.isAscii('\n') = true
      * CharUtils.isAscii('&copy;') = false
      * </pre>
-     * @param ch il carattere da controllare
+     * @param ch  il carattere da controllare
      * @return true se inferiore a 128
      */
     public static boolean isAscii(final char ch) {

@@ -4,7 +4,7 @@ public class FrameStack {
     private Stack<String> stack;
 
     public FrameStack() {
-        stack = new Stack<>();
+        this.stack = new Stack<>();
     }
 
     /**
@@ -20,12 +20,10 @@ public class FrameStack {
                 case '(':
                     // Skip opening parenthesis for method descriptor
                     index++;
-                    break;
-                    
+                    continue;
                 case ')':
-                    // End of arguments for method descriptor
+                    // End of method arguments
                     return;
-                    
                 case 'B':
                 case 'C': 
                 case 'I':
@@ -38,7 +36,6 @@ public class FrameStack {
                     }
                     index++;
                     break;
-                    
                 case 'D':
                 case 'J':
                     // Pop double slot types
@@ -50,7 +47,6 @@ public class FrameStack {
                     }
                     index++;
                     break;
-                    
                 case 'L':
                     // Skip class descriptor until semicolon
                     if (!stack.isEmpty()) {
@@ -58,15 +54,22 @@ public class FrameStack {
                     }
                     index = descriptor.indexOf(';', index) + 1;
                     break;
-                    
                 case '[':
-                    // Skip array dimension
-                    index++;
+                    // Skip array dimensions
+                    while (index < descriptor.length() && descriptor.charAt(index) == '[') {
+                        index++;
+                    }
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    }
+                    if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
+                        index = descriptor.indexOf(';', index) + 1;
+                    } else {
+                        index++;
+                    }
                     break;
-                    
                 default:
-                    // Invalid descriptor character
-                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
+                    index++;
             }
         }
     }

@@ -10,16 +10,14 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        return Arrays.stream(array)
-                     .boxed()
-                     .toArray(Integer[]::new);
+        return Arrays.stream(array).boxed().toArray(Integer[]::new);
     }
 
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
         System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
-        
+
         Integer[] nullArray = toObject(null);
         System.out.println(nullArray); // Output: null
     }

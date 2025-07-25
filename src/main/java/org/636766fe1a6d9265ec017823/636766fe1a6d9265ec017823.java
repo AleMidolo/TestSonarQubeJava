@@ -18,10 +18,12 @@ public class SymbolTable {
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!constantPool.containsKey(key)) {
-            constantPool.put(key, nextIndex++);
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
+        } else {
+            constantPool.put(key, nextIndex);
+            return nextIndex++;
         }
-        return constantPool.get(key);
     }
 
     public static void main(String[] args) {

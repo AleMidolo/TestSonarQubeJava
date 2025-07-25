@@ -4,19 +4,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonSerializer {
 
-    private ObjectMapper objectMapper;
-
-    public JsonSerializer() {
-        this.objectMapper = new ObjectMapper();
-    }
-
-    /** 
-     * Serialize to JSON  {@link String}
-     * @param features features to be enabled in serialization
-     * @return JSON {@link String}
-     */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // Enable features based on the input
         for (JSONWriter.Feature feature : features) {
             switch (feature) {
                 case PRETTY_PRINT:
@@ -27,17 +19,32 @@ public class JsonSerializer {
                     break;
             }
         }
-        
+
+        // Example object to serialize
+        MyObject myObject = new MyObject("example", 123);
+
         try {
-            // Example object to serialize, replace with actual object
-            Object exampleObject = new Object(); 
-            return objectMapper.writeValueAsString(exampleObject);
+            return objectMapper.writeValueAsString(myObject);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    // Example class to serialize
+    public static class MyObject {
+        private String name;
+        private int value;
+
+        public MyObject(String name, int value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        // Getters and setters (if needed)
+    }
+
+    // Example enum for features
     public enum JSONWriter {
         Feature {
             PRETTY_PRINT
@@ -47,7 +54,7 @@ public class JsonSerializer {
 
     public static void main(String[] args) {
         JsonSerializer serializer = new JsonSerializer();
-        String jsonString = serializer.toString(JSONWriter.Feature.PRETTY_PRINT);
-        System.out.println(jsonString);
+        String json = serializer.toString(JSONWriter.Feature.PRETTY_PRINT);
+        System.out.println(json);
     }
 }

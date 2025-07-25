@@ -11,7 +11,7 @@ public class HeaderParser {
         while (index < headerPart.length()) {
             if (headerPart.charAt(index) == '\r') {
                 if (index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
-                    return index + 1; // Return the index of the \r\n sequence
+                    return index; // Return the index of the \r
                 }
             }
             index++;
@@ -21,7 +21,7 @@ public class HeaderParser {
 
     public static void main(String[] args) {
         HeaderParser parser = new HeaderParser();
-        String headers = "Header1: Value1\r\nHeader2: Value2\r\n";
+        String headers = "Header1: value1\r\nHeader2: value2\r\n";
         int endIndex = parser.parseEndOfLine(headers, 0);
         System.out.println("End of line index: " + endIndex);
     }

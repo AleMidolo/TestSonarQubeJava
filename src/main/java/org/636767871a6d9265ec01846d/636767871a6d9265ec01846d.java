@@ -8,22 +8,15 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String osName = System.getProperty("os.name").toLowerCase();
-        String directoryPath;
-
-        if (osName.contains("win")) {
-            directoryPath = System.getenv("USERPROFILE") + "\\lf5"; // Windows
-        } else {
-            directoryPath = userHome + "/lf5"; // Other platforms
-        }
-
+        String directoryPath = userHome + File.separator + "lf5";
         File directory = new File(directoryPath);
+
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
                 System.out.println("Configuration directory created at: " + directoryPath);
             } else {
-                System.out.println("Failed to create configuration directory at: " + directoryPath);
+                System.err.println("Failed to create configuration directory at: " + directoryPath);
             }
         } else {
             System.out.println("Configuration directory already exists at: " + directoryPath);

@@ -23,19 +23,32 @@ public class FrameStack {
     }
 
     private int getTypeCount(String descriptor) {
-        // This is a simplified version of type counting based on the descriptor.
-        // In a real implementation, you would need to parse the descriptor properly.
+        // This method should parse the descriptor and return the number of types to pop.
+        // For simplicity, let's assume a basic implementation where:
+        // - "I" = 1 (int)
+        // - "J" = 2 (long)
+        // - "F" = 1 (float)
+        // - "D" = 2 (double)
+        // - "L" = 1 (object reference)
+        // - "V" = 0 (void)
+        // - Method descriptors will be handled separately.
+
         int count = 0;
         for (char c : descriptor.toCharArray()) {
-            if (c == '(') {
-                // Start of method parameters
-                continue;
-            } else if (c == ')') {
-                // End of method parameters
-                break;
-            } else {
-                // Each type (e.g., I for int, J for long) counts as one
-                count++;
+            switch (c) {
+                case 'I':
+                case 'F':
+                case 'L':
+                    count += 1;
+                    break;
+                case 'J':
+                case 'D':
+                    count += 2;
+                    break;
+                case 'V':
+                    break; // void does not count
+                default:
+                    throw new IllegalArgumentException("Unknown type in descriptor: " + c);
             }
         }
         return count;
@@ -47,11 +60,11 @@ public class FrameStack {
 
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.push(new Object());
-        frameStack.push(new Object());
-        frameStack.push(new Object());
+        frameStack.push(1); // int
+        frameStack.push(2.0); // double
+        frameStack.push("Hello"); // String
 
-        // Example usage
-        frameStack.pop("(III)V"); // Pops 3 items from the stack
+        // Pop types based on descriptor
+        frameStack.pop("ID"); // Pops an int and a double
     }
 }

@@ -1,5 +1,6 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 
 public class TypeResolver {
 
@@ -17,36 +18,52 @@ public class TypeResolver {
 
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
-            Class<?>[] typeParameters = rawClass.getTypeParameters();
-
-            if (typeParameters.length != actualTypeArguments.length) {
-                return null;
-            }
-
-            Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
+            Class<?>[] typeArguments = new Class[actualTypeArguments.length];
 
             for (int i = 0; i < actualTypeArguments.length; i++) {
-                resolvedArguments[i] = resolveType(actualTypeArguments[i], targetType);
+                Type arg = actualTypeArguments[i];
+                if (arg instanceof Class<?>) {
+                    typeArguments[i] = (Class<?>) arg;
+                } else {
+                    return null; // Cannot resolve type argument
+                }
             }
 
-            return resolvedArguments;
+            return typeArguments;
         }
 
-        return null;
-    }
-
-    private static Class<?> resolveType(Type type, Class<?> targetType) {
-        if (type instanceof Class<?>) {
-            return (Class<?>) type;
-        } else if (type instanceof ParameterizedType) {
-            return (Class<?>) ((ParameterizedType) type).getRawType();
-        } else {
-            return null;
-        }
+        return null; // Not a class type
     }
 
     public static void main(String[] args) {
         // Example usage
-        // You can test the resolveArguments method here
+        Class<?>[] resolvedArgs = resolveArguments(new ParameterizedTypeImpl(List.class, new Type[]{String.class}), List.class);
+        System.out.println(Arrays.toString(resolvedArgs)); // Output: [class java.lang.String]
+    }
+}
+
+// A simple implementation of ParameterizedType for demonstration purposes
+class ParameterizedTypeImpl implements ParameterizedType {
+    private final Class<?> raw;
+    private final Type[] actualTypeArguments;
+
+    public ParameterizedTypeImpl(Class<?> raw, Type[] actualTypeArguments) {
+        this.raw = raw;
+        this.actualTypeArguments = actualTypeArguments;
+    }
+
+    @Override
+    public Type[] getActualTypeArguments() {
+        return actualTypeArguments;
+    }
+
+    @Override
+    public Type getRawType() {
+        return raw;
+    }
+
+    @Override
+    public Type getOwnerType() {
+        return null;
     }
 }

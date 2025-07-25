@@ -16,7 +16,7 @@ public class FileAdder {
     }
     
     private void addFile(File file) {
-        // Implementation for adding the file
+        // Implementation for adding a file
         System.out.println("Adding file: " + file.getName());
     }
     

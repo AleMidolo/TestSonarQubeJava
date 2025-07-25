@@ -18,13 +18,12 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
-        // Test cases
         Byte[] nullArray = null;
-        Byte[] emptyArray = {};
+        Byte[] emptyArray = new Byte[0];
         Byte[] nonEmptyArray = {1, 2, 3};
 
-        System.out.println(nullToEmpty(nullArray).length); // Output: 0
-        System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
+        System.out.println(nullToEmpty(nullArray)); // Should print: []
+        System.out.println(nullToEmpty(emptyArray)); // Should print: []
+        System.out.println(nullToEmpty(nonEmptyArray)); // Should print: [1, 2, 3]
     }
 }

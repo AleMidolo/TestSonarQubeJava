@@ -15,22 +15,21 @@ public class TimeBucketCompressor {
         int daysInMonth = getDaysInMonth(year, month);
         int dayOfMonth = day;
 
-        // Calculate the number of complete daySteps
-        int completeSteps = dayOfMonth / dayStep;
-
-        // Calculate the new day based on the complete steps
-        int newDay = completeSteps * dayStep + 1;
-
-        // If the new day exceeds the days in the month, adjust the month and year
+        // Calculate the new day based on the dayStep
+        int newDay = (dayOfMonth / dayStep) * dayStep;
+        if (newDay < dayOfMonth) {
+            newDay += dayStep;
+        }
+        
+        // Ensure the new day does not exceed the days in the month
         if (newDay > daysInMonth) {
             newDay = daysInMonth;
         }
 
-        // Reconstruct the time bucket
+        // Return the new time bucket
         return year * 10000 + month * 100 + newDay;
     }
 
-    // Helper method to get the number of days in a month
     private static int getDaysInMonth(int year, int month) {
         switch (month) {
             case 1: case 3: case 5: case 7: case 8: case 10: case 12:
@@ -40,11 +39,10 @@ public class TimeBucketCompressor {
             case 2:
                 return (isLeapYear(year)) ? 29 : 28;
             default:
-                return 0; // Invalid month
+                throw new IllegalArgumentException("Invalid month: " + month);
         }
     }
 
-    // Helper method to check if a year is a leap year
     private static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }

@@ -6,16 +6,16 @@ public class CacheExpiration {
      * @return true means this metrics should be removed from cache.
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        return timestamp > expiredThreshold;
+        long currentTime = System.currentTimeMillis();
+        return (currentTime - timestamp) > expiredThreshold;
     }
 
     public static void main(String[] args) {
         CacheExpiration cacheExpiration = new CacheExpiration();
-        long currentTime = System.currentTimeMillis();
-        long threshold = 10000; // 10 seconds
+        long timestamp = System.currentTimeMillis() - 5000; // 5 seconds ago
+        long expiredThreshold = 3000; // 3 seconds
 
-        // Example usage
-        boolean expired = cacheExpiration.isExpired(currentTime - 15000, threshold);
-        System.out.println("Is expired: " + expired); // Should print true
+        boolean result = cacheExpiration.isExpired(timestamp, expiredThreshold);
+        System.out.println("Is expired: " + result); // Should print true
     }
 }

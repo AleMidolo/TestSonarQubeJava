@@ -18,17 +18,15 @@ public class AppenderManager {
             String appender = iterator.next();
             if (appender.equals(name)) {
                 iterator.remove();
-                break; // Exit after removing the first matching appender
+                break;
             }
         }
     }
 
-    // Method to add appenders for testing purposes
     public void addAppender(String name) {
         appenders.add(name);
     }
 
-    // Method to get the list of appenders for testing purposes
     public List<String> getAppenders() {
         return appenders;
     }

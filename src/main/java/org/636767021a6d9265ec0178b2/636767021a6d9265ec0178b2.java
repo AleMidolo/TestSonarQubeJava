@@ -23,7 +23,7 @@ public class StackFrameExtractor {
                 }
             }
         } else {
-            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
+            // Si no es un descriptor de método, se puede manejar de otra forma
             extractedTypes.add(descriptor);
         }
 

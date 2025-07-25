@@ -17,7 +17,7 @@ public class GraphUtils {
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         // Check if the number of edges in the induced subgraph is equal to the number of edges in a complete graph
         int vertexCount = vertices.size();
-        int expectedEdges = vertexCount * (vertexCount - 1) / 2;
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2; // Complete graph edges formula
 
         int actualEdges = 0;
         for (V vertex : vertices) {

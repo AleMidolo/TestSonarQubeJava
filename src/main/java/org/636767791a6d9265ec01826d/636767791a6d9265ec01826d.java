@@ -8,7 +8,7 @@ public class VariableSubstitutor {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // o lanzar una excepción si se prefiere
         }
 
         // Realiza la sustitución de variables
@@ -26,6 +26,6 @@ public class VariableSubstitutor {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // Debería imprimir: Hello, John!
     }
 }

@@ -20,8 +20,7 @@ public class OperationTracker {
 
     public static void main(String[] args) {
         OperationTracker tracker = new OperationTracker();
-        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds());
         tracker.writeOperation();
-        System.out.println("Last write timestamp after write: " + tracker.lastWriteTimeStampInMilliseconds());
+        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
     }
 }

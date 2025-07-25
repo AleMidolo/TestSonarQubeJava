@@ -1,5 +1,4 @@
 public class StringUtils {
-    
     /** 
      * Obtiene la longitud de una cadena o <code>0</code> si la cadena es <code>null</code>.
      * @param str una cadena o <code>null</code>

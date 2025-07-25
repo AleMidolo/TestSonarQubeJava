@@ -17,7 +17,7 @@ public class MatrixUtils {
 
     public static void main(String[] args) {
         MatrixUtils utils = new MatrixUtils();
-        int[] row = {1, 0, 2, 0, 3, 0};
-        System.out.println("Número de entradas diferentes de cero: " + utils.nonZeros(row));
+        int[] row = {1, 0, 2, 0, 3};
+        System.out.println("Número de entradas diferentes de cero: " + utils.nonZeros(row)); // Output: 3
     }
 }

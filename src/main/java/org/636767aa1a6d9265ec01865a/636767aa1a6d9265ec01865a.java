@@ -2,7 +2,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 class LinkedBuffer {
-    // Assuming LinkedBuffer has a method to get its content as byte array
+    // Assuming LinkedBuffer has a method to get its content and size
     private byte[] content;
     private LinkedBuffer next;
 

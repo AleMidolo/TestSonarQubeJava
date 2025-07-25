@@ -10,7 +10,7 @@ public class Graph<V, E> {
         adjacencyList = new HashMap<>();
     }
 
-    /**
+    /** 
      * Agrega una arista al índice.
      * @param sourceVertex el vértice fuente
      * @param targetVertex el vértice objetivo
@@ -22,7 +22,7 @@ public class Graph<V, E> {
         
         adjacencyList.get(sourceVertex).add(e);
         // If you want to maintain a directed graph, do not add the edge to targetVertex
-        // If you want an undirected graph, you can also add the reverse edge
+        // If it's undirected, you might want to add the reverse edge as well
         // adjacencyList.get(targetVertex).add(e); // Uncomment for undirected graph
     }
 }

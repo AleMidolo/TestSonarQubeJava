@@ -14,7 +14,7 @@ public class ByteFinder {
      */
     protected int findByte(byte value, int pos) {
         if (pos < 0 || pos >= buffer.length) {
-            return -1; // Posición fuera de los límites
+            return -1; // Posición fuera de los límites del buffer
         }
         
         for (int i = pos; i < buffer.length; i++) {

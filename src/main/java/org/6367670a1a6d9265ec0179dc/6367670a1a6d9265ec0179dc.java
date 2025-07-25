@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class StackMapTable {
 
-    private Object[] currentFrame; // Simulating the current frame with an array
+    private Object[] currentFrame; // Simulating the current frame with an Object array
     private Object[] stackMapTableEntries; // Simulating the stack map table entries
 
     /**
@@ -24,12 +24,10 @@ public class StackMapTable {
         }
     }
 
-    public static void main(String[] args) {
-        StackMapTable stackMapTable = new StackMapTable();
-        stackMapTable.currentFrame = new Object[]{"Type1", "Type2", "Type3", "Type4"};
-        stackMapTable.stackMapTableEntries = new Object[4]; // Initialize with a size
-
-        stackMapTable.putAbstractTypes(1, 3); // This will copy Type2 and Type3
-        System.out.println(Arrays.toString(stackMapTable.stackMapTableEntries));
+    public StackMapTable(int frameSize, int stackMapSize) {
+        currentFrame = new Object[frameSize];
+        stackMapTableEntries = new Object[stackMapSize];
+        // Initialize currentFrame with some dummy data for demonstration
+        Arrays.fill(currentFrame, new Object());
     }
 }

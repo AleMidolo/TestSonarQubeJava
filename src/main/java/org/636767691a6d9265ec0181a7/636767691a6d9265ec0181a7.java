@@ -15,20 +15,24 @@ public class StringTrimmer {
         boolean leadingCharFound = false;
 
         for (char c : str.toCharArray()) {
-            if (c == leadingCharacter && !leadingCharFound) {
-                continue; // Skip leading character
+            if (c == leadingCharacter) {
+                leadingCharFound = true;
+            } else {
+                if (leadingCharFound) {
+                    result.append(c);
+                } else {
+                    result.append(c);
+                }
             }
-            leadingCharFound = true; // After the first non-leading character is found
-            result.append(c);
         }
-
+        
         return result.toString();
     }
 
     public static void main(String[] args) {
-        String testString = "aaabacada";
+        String testString = "aaaHello Worldaaa";
         char leadingChar = 'a';
         String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result); // Output: "bacada"
+        System.out.println(result); // Output: "Hello World"
     }
 }

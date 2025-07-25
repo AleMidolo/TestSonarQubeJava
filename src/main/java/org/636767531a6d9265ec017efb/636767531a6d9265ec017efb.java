@@ -39,11 +39,7 @@ public class Bucket {
         }
 
         // Insert the new bucket before the specified bucket
-        if (current.next == bucket) {
-            newBucket.next = bucket;
-            current.next = newBucket;
-        } else {
-            throw new IllegalArgumentException("The specified bucket is not in the list");
-        }
+        newBucket.next = bucket;
+        current.next = newBucket;
     }
 }

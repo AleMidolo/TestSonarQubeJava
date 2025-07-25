@@ -1,32 +1,7 @@
-import java.util.HashSet;
-import java.util.Set;
+public final boolean isTemplateVariablePresent(String name) {
+    // Assuming we have a list of template variables stored in a Set for quick lookup
+    Set<String> templateVariables = new HashSet<>(Arrays.asList("var1", "var2", "var3")); // Example template variables
 
-public class Template {
-    private Set<String> templateVariables;
-
-    public Template() {
-        this.templateVariables = new HashSet<>();
-    }
-
-    public void addTemplateVariable(String name) {
-        templateVariables.add(name);
-    }
-
-    /** 
-     * Determina si una variable de plantilla es un miembro de esta plantilla.
-     * @param name nombre La variable de plantilla.
-     * @return true si la variable de plantilla es un miembro de la plantilla, de lo contrario false.
-     */
-    public final boolean isTemplateVariablePresent(String name) {
-        return templateVariables.contains(name);
-    }
-
-    public static void main(String[] args) {
-        Template template = new Template();
-        template.addTemplateVariable("var1");
-        template.addTemplateVariable("var2");
-
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var3")); // false
-    }
+    // Check if the provided name is present in the set of template variables
+    return templateVariables.contains(name);
 }

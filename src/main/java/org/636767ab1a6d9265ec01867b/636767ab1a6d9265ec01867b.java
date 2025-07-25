@@ -7,7 +7,7 @@ public class Utf8Writer {
      */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
         if (str == null || lb == null) {
-            throw new IllegalArgumentException("Input string and LinkedBuffer cannot be null");
+            throw new IllegalArgumentException("str and lb cannot be null");
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);

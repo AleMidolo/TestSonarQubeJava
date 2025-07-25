@@ -35,11 +35,4 @@ public class JsonSerializer {
 
         // Getters and setters (if needed)
     }
-    
-    // Example usage
-    public static void main(String[] args) {
-        JsonSerializer serializer = new JsonSerializer();
-        String json = serializer.toString(JSONWriter.Feature.PrettyFormat);
-        System.out.println(json);
-    }
 }

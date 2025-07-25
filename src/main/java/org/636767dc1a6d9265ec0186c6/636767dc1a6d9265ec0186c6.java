@@ -6,10 +6,9 @@ public class FieldChecker {
      * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
      */
     private boolean containsAllFields(Fields fields) {
-        if (storedFields == null || fields == null) {
+        if (storedFields == null) {
             return false;
         }
-        
         return storedFields.equals(fields);
     }
 
@@ -19,17 +18,10 @@ public class FieldChecker {
     }
     
     public static void main(String[] args) {
-        // Example usage
         FieldChecker checker = new FieldChecker();
-        Fields fields1 = new Fields(); // Assume Fields has a default constructor
-        Fields fields2 = new Fields(); // Assume Fields has a default constructor
-        
-        checker.setStoredFields(fields1);
-        System.out.println(checker.containsAllFields(fields2)); // Should print false
+        // Example usage
+        Fields fields = new Fields(); // Assuming Fields has a default constructor
+        checker.setStoredFields(fields);
+        System.out.println(checker.containsAllFields(fields)); // Should print true
     }
-}
-
-// Placeholder for Fields class
-class Fields {
-    // Implement Fields class properties and methods
 }

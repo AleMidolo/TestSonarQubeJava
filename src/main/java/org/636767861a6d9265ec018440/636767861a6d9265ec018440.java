@@ -25,13 +25,13 @@ public class AbbreviationUtil {
             abbreviation.setLength(abbreviation.length() - 1);
         }
 
-        buf.replace(nameStart, name.length(), abbreviation.toString().trim());
+        buf.append(abbreviation.toString().trim());
     }
 
     public static void main(String[] args) {
-        StringBuffer buffer = new StringBuffer("John Doe Smith");
         AbbreviationUtil util = new AbbreviationUtil();
+        StringBuffer buffer = new StringBuffer("John Doe Smith");
         util.abbreviate(0, buffer);
-        System.out.println(buffer); // Output: J. D. S.
+        System.out.println(buffer.toString()); // Output: John D. S.
     }
 }

@@ -1,12 +1,11 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphType;
-import org.jgrapht.alg.clique.CliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.util.Set;
 
-public class GraphUtils {
+public class CliqueChecker {
 
     /** 
      * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
@@ -26,7 +25,7 @@ public class GraphUtils {
                 }
             }
         }
-        return true; // All pairs are connected, so it's a clique
+        return true; // All pairs are connected, it's a clique
     }
 
     public static void main(String[] args) {

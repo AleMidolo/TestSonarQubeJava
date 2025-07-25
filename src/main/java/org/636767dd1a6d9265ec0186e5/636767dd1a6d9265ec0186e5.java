@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+interface IConsumer {
+    void consume(String message);
+}
+
 class Channels {
     private List<IConsumer> consumers;
 
@@ -15,10 +19,6 @@ class Channels {
     public List<IConsumer> getConsumers() {
         return consumers;
     }
-}
-
-interface IConsumer {
-    void consume(String message);
 }
 
 public class ChannelManager {

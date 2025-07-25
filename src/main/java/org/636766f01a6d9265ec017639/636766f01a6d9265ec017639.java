@@ -20,6 +20,7 @@ public class ArrayUtils {
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
+        // Test with null array
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Output: []

@@ -16,32 +16,31 @@ public class UTF8Writer {
         return lb;
     }
 
+    public static class LinkedBuffer {
+        private final LinkedList<byte[]> buffers = new LinkedList<>();
+
+        public void write(byte[] data) {
+            buffers.add(data);
+        }
+
+        public LinkedList<byte[]> getBuffers() {
+            return buffers;
+        }
+    }
+
+    public static class WriteSession {
+        // Implementation of WriteSession can be added here
+    }
+
     public static void main(String[] args) {
         // Example usage
         WriteSession session = new WriteSession();
         LinkedBuffer lb = new LinkedBuffer();
         writeUTF8("Hello, World!", session, lb);
-        System.out.println(lb);
-    }
-}
-
-class WriteSession {
-    // Implementation of WriteSession
-}
-
-class LinkedBuffer {
-    private LinkedList<byte[]> buffer = new LinkedList<>();
-
-    public void write(byte[] bytes) {
-        buffer.add(bytes);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (byte[] bytes : buffer) {
-            sb.append(new String(bytes, StandardCharsets.UTF_8));
+        
+        // Print the buffers for demonstration
+        for (byte[] buffer : lb.getBuffers()) {
+            System.out.println(new String(buffer, StandardCharsets.UTF_8));
         }
-        return sb.toString();
     }
 }

@@ -15,6 +15,6 @@ public class StringIndexFinder {
         System.out.println(indexOf("Hello, world!", "world")); // Output: 7
         System.out.println(indexOf("Hello, world!", "Java"));  // Output: -1
         System.out.println(indexOf(null, "test"));              // Output: -1
-        System.out.println(indexOf("test", null));              // Output: -1
+        System.out.println(indexOf("Test", null));              // Output: -1
     }
 }

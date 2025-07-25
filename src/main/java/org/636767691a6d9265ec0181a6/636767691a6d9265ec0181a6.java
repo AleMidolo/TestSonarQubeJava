@@ -7,7 +7,7 @@ public class StringSplitter {
      * @return un array di due elementi con l'indice 0 che rappresenta la parte prima del delimitatore, e l'indice 1 che rappresenta la parte dopo il delimitatore (nessun elemento include il delimitatore); oppure <code>null</code> se il delimitatore non è stato trovato nella Stringa di input fornita
      */
     public static String[] split(String toSplit, String delimiter) {
-        if (toSplit == null || delimiter == null || delimiter.isEmpty()) {
+        if (toSplit == null || delimiter == null) {
             return null;
         }
         

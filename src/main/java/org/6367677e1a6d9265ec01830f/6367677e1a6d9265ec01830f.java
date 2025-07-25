@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class LoggerFormatter {
 
-    /**
+    /** 
      * Produce una stringa formattata come specificato dal modello di conversione.
      */
     public String format(LoggingEvent event) {

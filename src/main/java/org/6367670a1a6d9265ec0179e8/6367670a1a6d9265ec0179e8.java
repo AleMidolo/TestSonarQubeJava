@@ -19,7 +19,7 @@ public class ArrayUtil {
 
     public static void main(String[] args) {
         Boolean[] testArray1 = null;
-        Boolean[] testArray2 = {};
+        Boolean[] testArray2 = new Boolean[0];
         Boolean[] testArray3 = {true, false};
 
         System.out.println(nullToEmpty(testArray1).length); // Output: 0

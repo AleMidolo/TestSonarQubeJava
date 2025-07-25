@@ -14,8 +14,8 @@ public class ByteArrayExpander {
      * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            return;
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
         }
         int newSize = currentSize + size;
         byteArray = Arrays.copyOf(byteArray, newSize);

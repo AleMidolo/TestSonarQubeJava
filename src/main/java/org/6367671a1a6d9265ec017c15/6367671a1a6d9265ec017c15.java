@@ -22,7 +22,7 @@ public class ByteVector {
         }
         
         if (byteArrayValue == null) {
-            byteLength = Math.max(byteLength, 0);
+            byteArrayValue = new byte[byteLength]; // Create an array of null bytes
         } else if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
             throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
         }

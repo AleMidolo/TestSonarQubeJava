@@ -1,7 +1,6 @@
 import java.util.Base64;
 
 public class Base64Decoder {
-
     /**
      * Decodifica una stringa seguendo la regola Base64.
      * 

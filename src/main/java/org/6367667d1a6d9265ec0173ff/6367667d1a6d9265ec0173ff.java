@@ -8,28 +8,14 @@ public class MeteorLookup {
      * @return un {@link Meteor} o null se non trovato
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming Meteor is a class with a constructor or factory method
-        // that can be initialized with HttpServletRequest.
-        // This is a placeholder implementation.
-        // You would need to replace this with actual logic to retrieve or create a Meteor instance.
-        
-        // Example: Check if a Meteor instance is stored in the request attributes
-        Meteor meteor = (Meteor) r.getAttribute("meteor");
-        
-        if (meteor == null) {
-            // If not found, you might create a new instance or return null
-            // meteor = new Meteor(r); // Example of creating a new Meteor instance
-            return null;
-        }
-        
-        return meteor;
+        // Assuming Meteor is a class with a constructor or a factory method
+        // Here we are just creating a new instance for demonstration purposes
+        // In a real scenario, you would retrieve the Meteor instance based on the request
+        return new Meteor();
     }
-}
 
-// Assuming Meteor is a class defined elsewhere
-class Meteor {
-    // Example constructor
-    public Meteor(HttpServletRequest request) {
-        // Initialize Meteor based on the request
+    // Assuming Meteor class is defined as follows
+    public static class Meteor {
+        // Class implementation
     }
 }

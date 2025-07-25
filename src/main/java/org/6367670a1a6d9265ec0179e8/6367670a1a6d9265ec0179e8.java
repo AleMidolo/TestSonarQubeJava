@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class DefensiveProgramming {
+public class ArrayUtils {
 
     // Array vuoto pubblico e statico per ottimizzazione della memoria
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
@@ -18,16 +16,5 @@ public class DefensiveProgramming {
             return EMPTY_BOOLEAN_ARRAY;
         }
         return array;
-    }
-
-    // Esempio di utilizzo
-    public static void main(String[] args) {
-        Boolean[] array1 = null;
-        Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = new Boolean[]{true, false};
-
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
     }
 }

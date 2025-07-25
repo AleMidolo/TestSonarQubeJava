@@ -20,9 +20,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "###Hello World!";
+        String testString = "###HelloWorld";
         char leadingChar = '#';
         String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result);  // Output: "Hello World!"
+        System.out.println(result);  // Output: "HelloWorld"
     }
 }

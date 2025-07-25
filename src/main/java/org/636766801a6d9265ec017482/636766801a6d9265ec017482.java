@@ -5,8 +5,8 @@ public class ClassFileBuffer {
     private byte[] buffer;
     private int readPointer;
 
-    public ClassFileBuffer(int bufferSize) {
-        this.buffer = new byte[bufferSize];
+    public ClassFileBuffer() {
+        this.buffer = new byte[0];
         this.readPointer = 0;
     }
 
@@ -16,21 +16,33 @@ public class ClassFileBuffer {
      */
     public void readFrom(final InputStream in) throws IOException {
         // Svuota il buffer
-        this.buffer = new byte[this.buffer.length];
+        this.buffer = new byte[0];
         this.readPointer = 0;
 
-        // Legge i byte dall'InputStream e li scrive nel buffer
+        // Legge tutti i byte dall'InputStream
+        byte[] tempBuffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = in.read(this.buffer)) != -1) {
-            // Se il buffer è pieno, esce dal ciclo
-            if (bytesRead < this.buffer.length) {
-                break;
-            }
+        while ((bytesRead = in.read(tempBuffer)) != -1) {
+            byte[] newBuffer = new byte[this.buffer.length + bytesRead];
+            System.arraycopy(this.buffer, 0, newBuffer, 0, this.buffer.length);
+            System.arraycopy(tempBuffer, 0, newBuffer, this.buffer.length, bytesRead);
+            this.buffer = newBuffer;
         }
 
         // Ripristina il puntatore di lettura all'inizio del buffer
         this.readPointer = 0;
     }
 
-    // Altri metodi della classe...
+    // Metodi aggiuntivi per gestire il buffer e il puntatore di lettura
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    public int getReadPointer() {
+        return readPointer;
+    }
+
+    public void setReadPointer(int readPointer) {
+        this.readPointer = readPointer;
+    }
 }

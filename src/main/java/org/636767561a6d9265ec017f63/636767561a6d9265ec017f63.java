@@ -1,37 +1,27 @@
-import java.util.Iterator;
+import java.util.*;
 
 public class GraphIterator implements Iterator<Integer> {
-    private boolean[] visited;
-    private int currentIndex;
+    private Set<Integer> visited;
+    private Set<Integer> vertices;
 
-    public GraphIterator(boolean[] visited) {
-        this.visited = visited;
-        this.currentIndex = 0;
+    public GraphIterator(Set<Integer> vertices) {
+        this.vertices = vertices;
+        this.visited = new HashSet<>();
     }
 
     @Override
     public boolean hasNext() {
-        for (int i = currentIndex; i < visited.length; i++) {
-            if (!visited[i]) {
-                return true;
-            }
-        }
-        return false;
+        return !visited.containsAll(vertices);
     }
 
     @Override
     public Integer next() {
-        for (int i = currentIndex; i < visited.length; i++) {
-            if (!visited[i]) {
-                currentIndex = i + 1;
-                return i;
+        for (Integer vertex : vertices) {
+            if (!visited.contains(vertex)) {
+                visited.add(vertex);
+                return vertex;
             }
         }
-        throw new NoSuchElementException("No more unvisited vertices");
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Remove operation is not supported");
+        throw new NoSuchElementException("No more vertices to visit");
     }
 }

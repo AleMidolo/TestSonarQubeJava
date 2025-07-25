@@ -3,30 +3,32 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity 
-     * (entro l'11% se desiredCapacity >= 1000).
+     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity (entro l'11% se desiredCapacity >= 1000).
      * @param desiredCapacity la capacità desiderata dall'utente.
      * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-        
-        int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        
-        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            while (candidate > upperBound) {
-                candidate = nextPrime(candidate + 1);
+        while (!isPrime(prime)) {
+            prime += 2;
+            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
+                prime = desiredCapacity;
+                if (prime % 2 == 0) {
+                    prime++;
+                }
+                while (!isPrime(prime)) {
+                    prime += 2;
+                }
+                break;
             }
         }
-        
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {

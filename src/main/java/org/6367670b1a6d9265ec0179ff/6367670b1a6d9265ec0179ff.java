@@ -25,8 +25,8 @@ public class DefensiveProgramming {
         Byte[] array2 = new Byte[0];
         Byte[] array3 = new Byte[]{1, 2, 3};
 
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BYTE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
+        System.out.println(Objects.toString(nullToEmpty(array1))); // []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // [1, 2, 3]
     }
 }

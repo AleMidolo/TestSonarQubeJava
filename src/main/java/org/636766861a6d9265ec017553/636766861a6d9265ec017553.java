@@ -6,10 +6,10 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Example initialization, you can add variables as needed
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+        // Example initialization, you can add more variables as needed
+        this.templateVariables.add("var1");
+        this.templateVariables.add("var2");
+        this.templateVariables.add("var3");
     }
 
     /**

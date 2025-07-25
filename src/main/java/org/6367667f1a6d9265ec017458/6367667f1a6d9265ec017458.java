@@ -26,21 +26,28 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
         
         // Clean up any associated resources
         if (removed != null) {
-            // Notify any registered listeners about handler removal
-            notifyHandlerRemoval(normalizedMapping, removed);
+            // Notify handler of removal
+            try {
+                removed.destroy();
+            } catch (Exception ex) {
+                logger.warn("Failed to destroy AtmosphereHandler: " + removed, ex);
+            }
             
-            // Remove any associated resources
-            cleanupHandler(removed);
+            // Remove any associated interceptors
+            removeInterceptorFromHandler(normalizedMapping);
+            
+            // Remove any associated broadcasters
+            removeBroadcasterFromHandler(normalizedMapping);
         }
 
         return this;
     }
 
-    private void notifyHandlerRemoval(String mapping, AtmosphereHandler handler) {
-        // Implementation for notification logic
+    private void removeInterceptorFromHandler(String mapping) {
+        // Implementation to remove interceptors
     }
 
-    private void cleanupHandler(AtmosphereHandler handler) {
-        // Implementation for cleanup logic
+    private void removeBroadcasterFromHandler(String mapping) {
+        // Implementation to remove broadcasters
     }
 }

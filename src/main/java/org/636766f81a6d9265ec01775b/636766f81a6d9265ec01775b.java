@@ -20,7 +20,7 @@ public class ClassReaderHelper {
                ((long)(b[7] & 0xFF));
     }
     
-    private byte[] b; // Class file byte array
+    private byte[] b; // Class byte array field
     
     public ClassReaderHelper(byte[] classFile) {
         this.b = classFile;

@@ -14,15 +14,10 @@ public class ClassPathUtil {
         // Get system class loader
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         
-        // Check if it's URLClassLoader
+        // Get URLs from system class loader if it's URLClassLoader
         if (systemClassLoader instanceof URLClassLoader) {
             URLClassLoader urlClassLoader = (URLClassLoader) systemClassLoader;
-            
-            // Get all URLs from class loader
-            URL[] urls = urlClassLoader.getURLs();
-            
-            // Convert URLs to File objects
-            for (URL url : urls) {
+            for (URL url : urlClassLoader.getURLs()) {
                 try {
                     files.add(new File(url.toURI()));
                 } catch (Exception e) {

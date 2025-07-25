@@ -13,7 +13,7 @@ public class Graph<V,E> {
             if (edges != null && !edges.isEmpty()) {
                 // 如果顶点有出边,加入集合
                 visibleVertices.add(vertex);
-                // 将所有邻接点也加入集合
+                // 将所有邻接点也加入集合(它们有入边)
                 visibleVertices.addAll(edges.keySet());
             }
         }

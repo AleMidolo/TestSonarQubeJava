@@ -27,7 +27,7 @@ public class TableUtils {
             public void run() {
                 // 重新验证并重绘组件
                 pane.validate();
-                pane.repaint();
+                table.repaint();
                 
                 // 额外延迟以确保正确绘制
                 Timer timer = new Timer(100, e -> {

@@ -19,17 +19,23 @@ public class ConfigInitializer {
                 }
             }
 
-            // Check if directory is writable
+            // Verify directory is writable
             if (!distDir.canWrite()) {
                 throw new IOException("Distribution directory is not writable: " + DEFAULT_DISTRIBUTION_PATH);
             }
 
-            // Additional initialization steps can be added here
+            // Initialize other configuration settings
+            initializeDefaultSettings();
+            
             logger.info("Configuration initialization completed successfully");
             
         } catch (Exception e) {
             logger.severe("Failed to initialize configuration: " + e.getMessage());
             throw new RuntimeException("Configuration initialization failed", e);
         }
+    }
+    
+    private void initializeDefaultSettings() {
+        // Add additional initialization logic here
     }
 }

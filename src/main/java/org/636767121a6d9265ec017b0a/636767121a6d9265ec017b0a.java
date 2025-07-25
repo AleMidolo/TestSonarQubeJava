@@ -20,6 +20,6 @@ public class HeaderParser {
         }
         
         // 如果没有找到行尾,返回字符串末尾
-        return headerPart.length();
+        return headerPart.length() - 1;
     }
 }

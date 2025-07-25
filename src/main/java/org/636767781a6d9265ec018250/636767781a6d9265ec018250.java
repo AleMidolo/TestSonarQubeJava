@@ -10,20 +10,33 @@ public class StringMatchFilter extends Filter {
      * 如果没有字符串匹配，则返回 {@link Filter#NEUTRAL}。
      */
     public int decide(LoggingEvent event) {
-        if(stringToMatch == null || event == null) {
+        // If no string to match against, return neutral
+        if (stringToMatch == null) {
             return Filter.NEUTRAL; 
         }
 
+        // Get the message from the logging event
         String message = event.getRenderedMessage();
         
-        if(message == null) {
+        // If message is null, return neutral
+        if (message == null) {
             return Filter.NEUTRAL;
         }
 
-        if(message.contains(stringToMatch)) {
-            return acceptOnMatch ? Filter.ACCEPT : Filter.DENY;
+        // Check if message contains the string to match
+        boolean matched = message.contains(stringToMatch);
+
+        // If matched and acceptOnMatch is true, accept the event
+        if (matched && acceptOnMatch) {
+            return Filter.ACCEPT;
+        }
+        
+        // If matched and acceptOnMatch is false, deny the event
+        if (matched && !acceptOnMatch) {
+            return Filter.DENY;
         }
 
+        // If no match found, return neutral
         return Filter.NEUTRAL;
     }
 
@@ -33,13 +46,5 @@ public class StringMatchFilter extends Filter {
 
     public void setAcceptOnMatch(boolean acceptOnMatch) {
         this.acceptOnMatch = acceptOnMatch;
-    }
-
-    public String getStringToMatch() {
-        return stringToMatch;
-    }
-
-    public boolean isAcceptOnMatch() {
-        return acceptOnMatch;
     }
 }

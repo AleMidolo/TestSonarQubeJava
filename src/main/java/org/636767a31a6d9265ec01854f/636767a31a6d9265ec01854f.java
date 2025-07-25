@@ -8,45 +8,45 @@ public class WireFormatDecoder {
     
     private final InputStream input;
     private int tag;
-    private boolean isPacked;
-    private int packedLimit;
-    private int currentLimit;
+    private int lastTag;
+    private boolean packedFieldMode;
+    private int packedFieldEndPos;
+    private int currentPosition;
     
     public WireFormatDecoder(InputStream input) {
         this.input = input;
-        this.isPacked = false;
-        this.packedLimit = 0;
-        this.currentLimit = Integer.MAX_VALUE;
     }
 
     private void checkIfPackedField() throws IOException {
+        // Check if current field has packed encoding
         if ((tag & TAG_TYPE_MASK) == WIRETYPE_LENGTH_DELIMITED) {
-            int length = readRawVarint32();
+            // Read packed field length
+            int length = readVarint32();
+            
             if (length > 0) {
-                isPacked = true;
-                packedLimit = currentLimit;
-                currentLimit = currentLimit - length;
+                // Mark start of packed values
+                packedFieldMode = true;
+                // Calculate end position
+                packedFieldEndPos = currentPosition + length;
+                // Save the tag for repeated reads
+                lastTag = tag;
             }
-        } else {
-            isPacked = false;
         }
     }
     
     // Helper method to read variable length 32-bit integer
-    private int readRawVarint32() throws IOException {
+    private int readVarint32() throws IOException {
         int result = 0;
         int shift = 0;
         while (shift < 32) {
             int b = input.read();
-            if (b == -1) {
-                throw new IOException("Unexpected EOF while reading varint");
-            }
+            currentPosition++;
             result |= (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint");
+        throw new IOException("Malformed varint32");
     }
 }

@@ -19,13 +19,14 @@ public class UTF8Decoder {
             ByteBuffer slice = bb.slice();
             
             // Try to decode one character
-            java.nio.CharBuffer cb = java.nio.CharBuffer.allocate(1);
+            char[] chars = new char[1];
+            java.nio.CharBuffer cb = java.nio.CharBuffer.wrap(chars);
+            
             decoder.decode(slice, cb, true);
             decoder.flush(cb);
             
-            // Append decoded character to StringBuilder
-            cb.flip();
-            sb.append(cb.toString());
+            // Append decoded character
+            sb.append(chars[0]);
             
             // Calculate how many bytes were consumed
             int bytesConsumed = slice.position();
@@ -39,7 +40,7 @@ public class UTF8Decoder {
         } catch (CharacterCodingException e) {
             // On error, skip one byte and append replacement character
             bb.get();
-            sb.append('\ufffd');
+            sb.append('\uFFFD');
             return i + 1;
         }
     }

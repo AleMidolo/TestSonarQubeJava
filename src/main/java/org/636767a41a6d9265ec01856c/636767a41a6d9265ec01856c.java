@@ -20,8 +20,8 @@ public class UTF8Utils {
             } else if (Character.isSurrogate(c)) {
                 // 4-byte UTF-8 character (surrogate pair)
                 // Skip the next char as it's part of the same character
-                i++;
                 size += 4;
+                i++;
             } else {
                 // 3-byte UTF-8 character
                 size += 3;

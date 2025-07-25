@@ -15,9 +15,9 @@ public class BeanMap {
         ArrayList<Object> values = new ArrayList<>();
         
         try {
-            for (PropertyDescriptor descriptor : propertyDescriptors) {
-                if (descriptor.getReadMethod() != null) {
-                    Object value = descriptor.getReadMethod().invoke(bean);
+            for (PropertyDescriptor pd : propertyDescriptors) {
+                if (pd.getReadMethod() != null) {
+                    Object value = pd.getReadMethod().invoke(bean);
                     values.add(value);
                 }
             }

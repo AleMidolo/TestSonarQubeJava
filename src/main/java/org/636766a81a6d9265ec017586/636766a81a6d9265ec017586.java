@@ -15,7 +15,7 @@ public class FrameStack {
         if (elements <= 0) {
             return;
         }
-        
+
         for (int i = 0; i < elements && !outputStack.isEmpty(); i++) {
             outputStack.pop();
         }

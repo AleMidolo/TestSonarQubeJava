@@ -13,7 +13,7 @@ public class StringArrayUtils {
         
         String[] result = new String[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.nonNull(array[i]) ? array[i].trim() : null;
+            result[i] = array[i] == null ? null : array[i].trim();
         }
         return result;
     }

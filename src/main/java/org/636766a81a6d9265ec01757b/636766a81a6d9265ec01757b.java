@@ -24,8 +24,8 @@ public class JSONSerializer {
             // Use FastJSON to serialize the object with specified features
             return JSON.toJSONString(value, features);
         } catch (Exception e) {
-            // Return empty string if serialization fails
-            return "";
+            // If serialization fails, return string representation
+            return value.toString();
         }
     }
 }

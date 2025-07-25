@@ -8,27 +8,31 @@ public class TimeBucketCompressor {
      * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
      */
     static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Convert timeBucket to LocalDate
+        // Convert timeBucket to string in format YYYYMMDD
         String dateStr = String.valueOf(timeBucket);
-        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        
+        // Parse the date string to LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate date = LocalDate.parse(dateStr, formatter);
         
         // Get day of month
         int dayOfMonth = date.getDayOfMonth();
         
-        // Calculate compressed day
-        int compressedDay;
-        if (dayOfMonth <= dayStep) {
-            compressedDay = 1;
-        } else if (dayOfMonth <= dayStep * 2) {
-            compressedDay = dayStep + 1;
-        } else {
-            compressedDay = dayStep * 2 + 1;
+        // Calculate which step this date belongs to
+        int stepNumber = (dayOfMonth - 1) / dayStep;
+        
+        // Calculate the first day of this step
+        int newDay = stepNumber * dayStep + 1;
+        
+        // If calculated day is greater than actual day, use the original day
+        if (newDay > dayOfMonth) {
+            newDay = ((stepNumber - 1) * dayStep) + 1;
         }
         
-        // Create new date with compressed day
-        LocalDate compressedDate = date.withDayOfMonth(compressedDay);
+        // Create new date with adjusted day
+        LocalDate newDate = date.withDayOfMonth(newDay);
         
         // Convert back to long
-        return Long.parseLong(compressedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        return Long.parseLong(newDate.format(formatter));
     }
 }

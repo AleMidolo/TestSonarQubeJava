@@ -16,14 +16,6 @@ public class ByteArrayBuffer {
         this.buffer = new byte[capacity];
     }
 
-    /**
-     * 返回一个包含所有写入缓冲区内容的单字节数组。
-     */
-    public final byte[] toByteArray() {
-        return Arrays.copyOf(buffer, size);
-    }
-
-    // Helper methods for writing to buffer
     public void append(byte[] b, int off, int len) {
         if (b == null) {
             return;
@@ -35,17 +27,24 @@ public class ByteArrayBuffer {
         if (len == 0) {
             return;
         }
-        int newsize = size + len;
-        if (newsize > buffer.length) {
+        int newsize = this.size + len;
+        if (newsize > this.buffer.length) {
             expand(newsize);
         }
-        System.arraycopy(b, off, buffer, size, len);
-        size = newsize;
+        System.arraycopy(b, off, this.buffer, this.size, len);
+        this.size = newsize;
     }
 
     private void expand(int newsize) {
-        byte[] newbuffer = new byte[Math.max(buffer.length << 1, newsize)];
-        System.arraycopy(buffer, 0, newbuffer, 0, size);
-        buffer = newbuffer;
+        byte[] newbuffer = new byte[Math.max(this.buffer.length << 1, newsize)];
+        System.arraycopy(this.buffer, 0, newbuffer, 0, this.size);
+        this.buffer = newbuffer;
+    }
+
+    /**
+     * 返回一个包含所有写入缓冲区内容的单字节数组。
+     */
+    public final byte[] toByteArray() {
+        return Arrays.copyOf(buffer, size);
     }
 }

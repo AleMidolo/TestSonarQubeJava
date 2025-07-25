@@ -36,6 +36,6 @@ public class CharacterConverter {
             throw new Exception("Cannot convert Number outside char range: " + intValue);
         }
 
-        throw new Exception("Cannot convert type " + value.getClass().getName() + " to Character");
+        throw new Exception("Cannot convert value of type " + value.getClass().getName() + " to Character");
     }
 }

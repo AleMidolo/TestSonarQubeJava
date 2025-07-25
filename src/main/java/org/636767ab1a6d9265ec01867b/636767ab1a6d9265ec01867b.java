@@ -18,9 +18,9 @@ public class UTF8Writer {
         LinkedBuffer buffer = lb;
         int i = 0;
         char c;
-
-        while (i < len) {
-            c = str.charAt(i++);
+        
+        do {
+            c = str.charAt(i);
             if (c < 0x80) {
                 // 1 byte, 7 bits
                 if (buffer.offset == buffer.buffer.length) {
@@ -34,23 +34,6 @@ public class UTF8Writer {
                 }
                 buffer.buffer[buffer.offset++] = (byte) (0xC0 | ((c >> 6) & 0x1F));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
-            } else if (Character.isSurrogate(c)) {
-                // 4 bytes, surrogate pair
-                if (i >= len) {
-                    throw new IllegalArgumentException("Invalid UTF-16 surrogate pair");
-                }
-                char c2 = str.charAt(i++);
-                if (!Character.isSurrogate(c2)) {
-                    throw new IllegalArgumentException("Invalid UTF-16 surrogate pair");
-                }
-                int codePoint = Character.toCodePoint(c, c2);
-                if (buffer.offset + 4 > buffer.buffer.length) {
-                    buffer = LinkedBuffer.allocate(buffer.buffer.length);
-                }
-                buffer.buffer[buffer.offset++] = (byte) (0xF0 | ((codePoint >> 18) & 0x07));
-                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
-                buffer.buffer[buffer.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
-                buffer.buffer[buffer.offset++] = (byte) (0x80 | (codePoint & 0x3F));
             } else {
                 // 3 bytes, 16 bits
                 if (buffer.offset + 3 > buffer.buffer.length) {
@@ -60,9 +43,8 @@ public class UTF8Writer {
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
                 buffer.buffer[buffer.offset++] = (byte) (0x80 | (c & 0x3F));
             }
-        }
+        } while (++i < len);
 
-        session.size += buffer.offset - lb.offset;
         return buffer;
     }
 }

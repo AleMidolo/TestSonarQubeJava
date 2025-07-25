@@ -1,7 +1,9 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.AsGraphUnion;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphUtils {
 
@@ -13,19 +15,25 @@ public class GraphUtils {
      * @return 从图到图的映射
      */
     public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-        return new IsomorphicGraphMapping<V,E>(
-            graph, // source graph
-            graph, // target graph (same as source for identity mapping)
-            new HashMap<V,V>() {{ // vertex mapping
-                for(V v : graph.vertexSet()) {
-                    put(v, v);
-                }
-            }},
-            new HashMap<E,E>() {{ // edge mapping
-                for(E e : graph.edgeSet()) {
-                    put(e, e);
-                }
-            }}
+        // 创建顶点映射
+        Map<V,V> vertexMap = new HashMap<>();
+        for(V vertex : graph.vertexSet()) {
+            vertexMap.put(vertex, vertex);
+        }
+        
+        // 创建边映射
+        Map<E,E> edgeMap = new HashMap<>();
+        for(E edge : graph.edgeSet()) {
+            edgeMap.put(edge, edge);
+        }
+
+        return new IsomorphicGraphMapping<>(
+            graph,  // 源图
+            graph,  // 目标图
+            vertexMap,  // 顶点映射
+            vertexMap,  // 反向顶点映射
+            edgeMap,    // 边映射
+            edgeMap     // 反向边映射
         );
     }
 }

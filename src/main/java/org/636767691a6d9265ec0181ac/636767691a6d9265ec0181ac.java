@@ -3,7 +3,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
-
     /**
      * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即"/"分隔符）。
      * @param path 起始路径（通常是完整的文件路径）
@@ -19,26 +18,27 @@ public class PathUtils {
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
 
-        // 移除开头的./
-        if (relativePath.startsWith("./")) {
-            relativePath = relativePath.substring(2);
-        }
-
-        // 如果是绝对路径，直接返回
+        // 如果relativePath是绝对路径，直接返回
         if (relativePath.startsWith("/")) {
             return relativePath;
         }
 
-        // 处理父目录引用 ../
+        // 使用Path API处理路径
         Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.getParent();
-        if (resolvedPath == null) {
-            resolvedPath = basePath;
+        
+        // 如果基础路径不是目录，获取其父目录
+        if (!path.endsWith("/")) {
+            basePath = basePath.getParent();
         }
+
+        if (basePath == null) {
+            return relativePath;
+        }
+
+        // 解析并规范化路径
+        Path resolvedPath = basePath.resolve(relativePath).normalize();
         
-        resolvedPath = resolvedPath.resolve(relativePath).normalize();
-        
-        // 转换为标准的正斜杠格式
-        return resolvedPath.toString().replace(File.separatorChar, '/');
+        // 转换为字符串并确保使用正斜杠
+        return resolvedPath.toString().replace('\\', '/');
     }
 }

@@ -7,14 +7,14 @@ public class CharsetConverter {
      * @return इस नाम के लिए जावा समकक्ष।
      */
     private static String javaCharset(String charset) {
-        Charset cs = Charset.forName(charset);
-        return cs.name();
+        Charset javaCharset = Charset.forName(charset);
+        return javaCharset.name();
     }
 
     public static void main(String[] args) {
         // Example usage
         String mimeCharset = "UTF-8";
-        String javaCharset = javaCharset(mimeCharset);
-        System.out.println("Java Charset: " + javaCharset);
+        String javaEquivalent = javaCharset(mimeCharset);
+        System.out.println("Java equivalent of " + mimeCharset + " is " + javaEquivalent);
     }
 }

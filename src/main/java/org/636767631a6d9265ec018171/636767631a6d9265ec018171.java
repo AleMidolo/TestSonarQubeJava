@@ -11,7 +11,11 @@ class ListNodeImpl<E> {
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
 
-    /** 
+    public LinkedList() {
+        this.head = null;
+    }
+
+    /**
      * सूची से गैर-शून्य {@code node} को हटा दें। 
      */
     private boolean unlink(ListNodeImpl<E> node) {

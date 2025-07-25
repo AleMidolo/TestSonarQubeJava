@@ -20,11 +20,8 @@ public class SuffixSumCalculator {
             suffixSum.add(0, totalSum); // Add to the front to maintain order
         }
 
-        // Calculate the sum of all elements in bounds
-        long boundsSum = 0;
-        for (Integer value : bounds) {
-            boundsSum += value;
-        }
+        // Calculate the total sum of bounds
+        long boundsSum = bounds.stream().mapToLong(Integer::longValue).sum();
 
         return new Pair<>(suffixSum, boundsSum);
     }

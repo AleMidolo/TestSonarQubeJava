@@ -18,8 +18,8 @@ public class TemplateEncoder {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    // This should never happen since UTF-8 is a standard encoding
-                    throw new RuntimeException("UTF-8 encoding not supported", e);
+                    // This should never happen since UTF-8 is always supported
+                    throw new RuntimeException(e);
                 }
             } else {
                 encodedString.append(c);

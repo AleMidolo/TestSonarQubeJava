@@ -40,7 +40,7 @@ public class ByteVector {
         return size;
     }
 
-    public byte[] toByteArray() {
+    public byte[] getData() {
         return Arrays.copyOf(data, size);
     }
 }

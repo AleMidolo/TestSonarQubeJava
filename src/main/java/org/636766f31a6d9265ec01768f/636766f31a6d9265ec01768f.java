@@ -17,7 +17,7 @@ public class ArrayCloner {
         char[] original = {'a', 'b', 'c'};
         char[] cloned = clone(original);
         
-        // Print the cloned array
+        // Print cloned array
         if (cloned != null) {
             for (char c : cloned) {
                 System.out.print(c + " ");

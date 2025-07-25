@@ -7,19 +7,17 @@ public class CustomSet {
         set = new HashSet<>();
     }
 
-    /**
+    /** 
      * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
      */
     public boolean remove(int val) {
         return set.remove(val);
     }
 
-    // Method to add elements to the set for testing purposes
     public void add(int val) {
         set.add(val);
     }
 
-    // Method to check if an element exists in the set for testing purposes
     public boolean contains(int val) {
         return set.contains(val);
     }

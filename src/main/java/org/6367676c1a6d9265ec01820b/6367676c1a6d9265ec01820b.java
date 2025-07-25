@@ -1,5 +1,5 @@
 public class StringManipulator {
-
+    
     /** 
      * दिए गए String में से किसी भी चरित्र को हटाएं।
      * @param inString मूल String

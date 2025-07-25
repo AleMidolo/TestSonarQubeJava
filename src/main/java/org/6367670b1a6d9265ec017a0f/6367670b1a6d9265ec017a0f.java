@@ -10,13 +10,11 @@ public class StringUtils {
         }
         
         String lowerStr = str.toLowerCase();
-        
         for (String searchStr : searchStrArray) {
             if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
                 return true;
             }
         }
-        
         return false;
     }
 

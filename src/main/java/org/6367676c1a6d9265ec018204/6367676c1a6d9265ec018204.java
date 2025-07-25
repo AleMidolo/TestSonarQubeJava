@@ -17,14 +17,14 @@ public class ArrayConcatenation {
         List<String> resultList = new ArrayList<>();
 
         if (array1 != null) {
-            for (String s : array1) {
-                resultList.add(s);
+            for (String element : array1) {
+                resultList.add(element);
             }
         }
 
         if (array2 != null) {
-            for (String s : array2) {
-                resultList.add(s);
+            for (String element : array2) {
+                resultList.add(element);
             }
         }
 
@@ -32,10 +32,10 @@ public class ArrayConcatenation {
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"apple", "banana", "cherry"};
-        String[] array2 = {"banana", "date", "fig"};
-        
+        String[] array1 = {"apple", "banana"};
+        String[] array2 = {"banana", "cherry"};
         String[] result = concatenateStringArrays(array1, array2);
+        
         for (String s : result) {
             System.out.println(s);
         }

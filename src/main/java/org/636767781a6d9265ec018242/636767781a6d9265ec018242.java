@@ -11,12 +11,12 @@ public class Logger {
      * सभी जुड़े हुए अपेंडर्स पर <code>doAppend</code> विधि को कॉल करें।  
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
-        int appendCount = 0;
+        int appendersCalled = 0;
         for (Appender appender : appenders) {
             appender.doAppend(event);
-            appendCount++;
+            appendersCalled++;
         }
-        return appendCount;
+        return appendersCalled;
     }
 }
 

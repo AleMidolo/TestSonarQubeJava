@@ -1,5 +1,5 @@
 public class StringUtil {
-    
+
     /** 
      * Rimuove gli spazi bianchi iniziali dalla Stringa fornita.
      * @param str la Stringa da controllare
@@ -20,6 +20,6 @@ public class StringUtil {
     public static void main(String[] args) {
         String testString = "   Hello World!";
         String result = trimLeadingWhitespace(testString);
-        System.out.println("'" + result + "'"); // Output: 'Hello World!'
+        System.out.println(result); // Output: "Hello World!"
     }
 }

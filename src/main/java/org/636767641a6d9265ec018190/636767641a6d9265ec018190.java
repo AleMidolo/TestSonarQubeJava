@@ -11,20 +11,20 @@ public class BucketManager {
      * @param minLabel il valore minimo del bucket non vuoto
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
-            throw new IllegalArgumentException("minLabel is out of bounds");
-        }
-
+        // Get the bucket with the minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
+        // Get the bucket with label 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-
-        // Sposta i vertici dal bucket minLabel a bucket 0
-        for (Integer vertex : minLabelBucket) {
-            zeroLabelBucket.add(vertex);
-            labels.set(vertex, 0); // Aggiorna l'etichetta del vertice
-        }
-
-        // Pulisce il bucket con etichetta minLabel
+        
+        // Move all vertices from minLabel bucket to the bucket with label 0
+        zeroLabelBucket.addAll(minLabelBucket);
+        
+        // Clear the minLabel bucket
         minLabelBucket.clear();
+        
+        // Update labels for the moved vertices
+        for (Integer vertex : zeroLabelBucket) {
+            labels.set(vertex, 0); // Update the label to 0
+        }
     }
 }

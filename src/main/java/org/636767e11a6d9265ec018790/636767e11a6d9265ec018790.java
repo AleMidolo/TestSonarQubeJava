@@ -15,7 +15,7 @@ class ThreadSnapshot {
         this.timestamp = timestamp;
     }
 
-    // Getters and toString method for debugging
+    // Getters and toString() method for debugging
     public String getThreadName() {
         return threadName;
     }

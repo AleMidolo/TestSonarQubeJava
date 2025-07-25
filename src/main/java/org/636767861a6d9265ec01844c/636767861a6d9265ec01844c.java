@@ -9,7 +9,7 @@ public class AppenderManager {
         this.appenders = new ArrayList<>();
     }
 
-    /**
+    /** 
      * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.  
      */
     public void removeAppender(String name) {

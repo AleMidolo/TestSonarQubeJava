@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class ClassReader {
-    private final byte[] data;
+    private byte[] data;
 
     public ClassReader(byte[] data) {
         this.data = data;

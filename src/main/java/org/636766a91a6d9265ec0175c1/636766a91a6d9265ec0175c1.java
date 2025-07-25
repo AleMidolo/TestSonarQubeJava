@@ -15,7 +15,7 @@ public class ByteArrayExpander {
      */
     private void enlarge(final int size) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than zero.");
+            return; // No need to enlarge if size is non-positive
         }
         int newSize = currentSize + size;
         byteArray = Arrays.copyOf(byteArray, newSize);

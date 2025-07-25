@@ -16,22 +16,22 @@ public class TableRowSelector {
             throw new IllegalArgumentException("Invalid parameters");
         }
 
-        // Seleziona la riga
+        // Select the specified row
         table.setRowSelectionInterval(row, row);
         
-        // Scorre lo JScrollPane fino alla riga selezionata
+        // Scroll to the selected row
         Rectangle rect = table.getCellRect(row, 0, true);
         table.scrollRectToVisible(rect);
         
-        // Ritarda la chiamata a repaint
+        // Delay repaint to ensure the row is painted correctly
         SwingUtilities.invokeLater(() -> {
-            table.repaint();
+            pane.repaint();
         });
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
-        JFrame frame = new JFrame("Table Row Selector Example");
+        // Sample usage
+        JFrame frame = new JFrame("Table Row Selector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
@@ -43,13 +43,11 @@ public class TableRowSelector {
         };
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        frame.add(pane, BorderLayout.CENTER);
-        frame.setSize(300, 200);
+        frame.add(pane);
+        frame.setSize(400, 300);
         frame.setVisible(true);
 
-        // Seleziona la riga 2 dopo 1 secondo
-        Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
-        timer.setRepeats(false);
-        timer.start();
+        // Select a row after a delay
+        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
     }
 }

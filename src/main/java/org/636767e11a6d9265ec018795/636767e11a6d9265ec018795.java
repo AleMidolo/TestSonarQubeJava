@@ -26,11 +26,14 @@ public class CompatibilityChecker {
     }
 
     public static void main(String[] args) {
-        CompatibilityChecker checker = new CompatibilityChecker("bucket1");
-        DataTable dataset = new DataTable("bucket1");
-        System.out.println(checker.isCompatible(dataset)); // Should print true
+        DataTable dataset1 = new DataTable("bucket1");
+        DataTable dataset2 = new DataTable("bucket1");
+        DataTable dataset3 = new DataTable("bucket2");
 
-        DataTable dataset2 = new DataTable("bucket2");
-        System.out.println(checker.isCompatible(dataset2)); // Should print false
+        CompatibilityChecker checker = new CompatibilityChecker("bucket1");
+
+        System.out.println(checker.isCompatible(dataset1)); // true
+        System.out.println(checker.isCompatible(dataset2)); // true
+        System.out.println(checker.isCompatible(dataset3)); // false
     }
 }

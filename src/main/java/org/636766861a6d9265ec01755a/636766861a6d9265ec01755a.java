@@ -39,8 +39,8 @@ public class UriMatcher {
         UriMatcher uriMatcher = new UriMatcher("/users/{userId}/posts/{postId}");
         MatchResult result = uriMatcher.match("/users/123/posts/456");
         if (result != null) {
-            System.out.println("Matched userId: " + result.getGroup("userId"));
-            System.out.println("Matched postId: " + result.getGroup("postId"));
+            System.out.println("User ID: " + result.getGroup("userId"));
+            System.out.println("Post ID: " + result.getGroup("postId"));
         } else {
             System.out.println("No match found.");
         }

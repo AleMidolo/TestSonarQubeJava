@@ -3,9 +3,10 @@ import java.io.FileFilter;
 
 public class CustomFileFilter implements FileFilter {
 
+    public static final int NEUTRAL = 0;
+    
     @Override
-    public boolean accept(File pathname) {
-        return true; // NEUTRAL - accepts all files
+    public boolean accept(File file) {
+        return NEUTRAL == 0;
     }
-
 }

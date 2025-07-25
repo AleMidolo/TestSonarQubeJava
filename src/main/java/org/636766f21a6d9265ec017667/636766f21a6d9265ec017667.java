@@ -8,12 +8,12 @@ public class ClassReaderUtils {
      */
     public short readShort(int offset) {
         byte[] classFileBuffer = this.getClassFileBuffer();
-        return (short) (((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF));
+        return (short) ((classFileBuffer[offset] << 8) | (classFileBuffer[offset + 1] & 0xFF));
     }
 
-    // Helper method to get class file buffer
+    // Helper method to get the class file buffer
     private byte[] getClassFileBuffer() {
-        // Implementation would depend on how the class file buffer is stored
+        // Implementation would depend on where the class file buffer is stored
         // This is just a placeholder
         return new byte[0];
     }

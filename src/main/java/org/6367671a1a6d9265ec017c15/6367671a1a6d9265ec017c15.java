@@ -17,7 +17,7 @@ public class ByteVector {
             throw new IllegalArgumentException("Offset cannot be negative"); 
         }
         if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
-            throw new IllegalArgumentException("Invalid offset/length combination");
+            throw new IllegalArgumentException("Array length exceeded");
         }
 
         // Ensure capacity

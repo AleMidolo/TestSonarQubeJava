@@ -32,10 +32,3 @@ public class LogManager {
         });
     }
 }
-
-// Supporting class for compilation
-class LogTable extends JTable {
-    public void addRow(String message) {
-        // Implementation details for adding row to table
-    }
-}

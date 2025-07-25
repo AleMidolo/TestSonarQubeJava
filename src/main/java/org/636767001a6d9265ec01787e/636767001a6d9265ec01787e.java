@@ -8,10 +8,6 @@ public class StringBuilder {
         size = 0;
     }
 
-    /**
-     * <p> Gets the String built by this builder. </p>
-     * @return the built string
-     */
     public String toString() {
         return new String(buffer, 0, size);
     }

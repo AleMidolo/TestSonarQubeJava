@@ -10,7 +10,7 @@ public class SuffixSum {
         int totalSum = 0;
         List<Integer> suffixSum = new ArrayList<>(bounds.size());
 
-        // Fill suffix sum array with 0s initially
+        // Fill suffix sum array with zeros initially
         for (int i = 0; i < bounds.size(); i++) {
             suffixSum.add(0);
         }

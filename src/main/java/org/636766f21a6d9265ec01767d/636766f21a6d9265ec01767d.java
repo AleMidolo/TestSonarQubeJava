@@ -1,5 +1,4 @@
 public class ObjectToStringUtil {
-
     /**
      * 对象转字符串，当对象为空时返回空字符串，否则返回toString();
      */
@@ -8,7 +7,7 @@ public class ObjectToStringUtil {
     }
 
     public static void main(String[] args) {
-        // 测试用例
+        // 测试示例
         Object obj1 = null;
         Object obj2 = "Hello, World!";
         Object obj3 = 12345;

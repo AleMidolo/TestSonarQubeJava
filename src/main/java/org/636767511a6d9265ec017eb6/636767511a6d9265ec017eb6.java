@@ -12,7 +12,7 @@ public class OuterFaceCirculator {
     }
 
     public void next(int dir) {
-        // Assuming dir is either 1 (clockwise) or -1 (counter-clockwise)
+        // Assuming dir is 1 for clockwise and -1 for counter-clockwise
         if (dir == 1) {
             current = current.getNext();
         } else if (dir == -1) {
@@ -52,7 +52,7 @@ public class Node {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Node node = (Node) obj;
-        return this == node; // Assuming identity equality for simplicity
+        return this == node; // Assuming nodes are compared by reference
     }
 }
 
@@ -61,8 +61,7 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
         while (!circulator.isAt(stop)) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
+            if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
             circulator.next(dir);

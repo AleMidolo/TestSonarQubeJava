@@ -1,7 +1,7 @@
 import org.jgrapht.Graph;
 import java.util.Set;
 
-public class GraphUtils {
+public class CliqueChecker {
 
     /**
      * 检查由给定的 <code>vertices</code> 诱导的 <code>graph</code> 的子图是否为完全图，即一个团。

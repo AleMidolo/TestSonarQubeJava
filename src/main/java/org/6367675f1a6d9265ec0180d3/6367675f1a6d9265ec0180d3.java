@@ -11,11 +11,6 @@ public class GraphUtils {
      * @return 从图到图的映射
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        // 创建一个恒等映射，即每个顶点映射到自身
-        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
-        for (V vertex : graph.vertexSet()) {
-            mapping.addVertexMapping(vertex, vertex);
-        }
-        return mapping;
+        return new IsomorphicGraphMapping<>(graph, graph, v -> v, e -> e);
     }
 }

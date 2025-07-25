@@ -15,6 +15,6 @@ public class FileUtils {
 
     public static void main(String[] args) {
         String filename = "C:\\Users\\Example\\Documents\\file.txt";
-        System.out.println(indexOfLastSeparator(filename)); // 输出: 23
+        System.out.println(indexOfLastSeparator(filename)); // 输出: 22
     }
 }

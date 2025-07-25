@@ -20,10 +20,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // 示例用法
+        // Example usage
         int[] originalArray = {1, 2, 3};
         int[] newArray = (int[]) copyArrayGrow1(originalArray, int.class);
-        System.out.println("Original Array Length: " + originalArray.length);
-        System.out.println("New Array Length: " + newArray.length);
+        System.out.println("Original array length: " + originalArray.length);
+        System.out.println("New array length: " + newArray.length);
     }
 }

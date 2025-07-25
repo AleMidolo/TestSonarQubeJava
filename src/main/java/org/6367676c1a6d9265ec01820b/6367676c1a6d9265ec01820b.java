@@ -14,11 +14,13 @@ public class StringUtils {
             return inString;
         }
 
+        // 将 charsToDelete 转换为字符集合
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
+        // 构建结果字符串
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {
@@ -33,6 +35,6 @@ public class StringUtils {
         String input = "Hello, World!\nThis is a test.";
         String charsToDelete = "aeiou\n";
         String result = deleteAny(input, charsToDelete);
-        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
+        System.out.println(result);  // 输出: Hll, Wrld!Ths s  tst.
     }
 }

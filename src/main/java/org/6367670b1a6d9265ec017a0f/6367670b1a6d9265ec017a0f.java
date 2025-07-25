@@ -7,7 +7,7 @@ public class StringUtils {
      * 
      * @param str La cadena en la que se buscará.
      * @param searchStrArray Lista de cadenas que se buscarán en la cadena principal.
-     * @return true si la cadena contiene al menos una de las cadenas de búsqueda, false en caso contrario.
+     * @return true si la cadena contiene alguna de las cadenas de búsqueda, false en caso contrario.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -22,5 +22,14 @@ public class StringUtils {
         }
 
         return false;
+    }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        List<String> searchStrings = List.of("hola", "mundo", "java");
+        String text = "Bienvenido al Mundo de la Programación en Java!";
+        
+        boolean result = containsAnyIgnoreCase(text, searchStrings);
+        System.out.println("¿El texto contiene alguna de las cadenas de búsqueda? " + result);
     }
 }

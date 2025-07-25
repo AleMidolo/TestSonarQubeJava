@@ -16,32 +16,32 @@ final class ClassFileReader {
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
         // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
-        // En un entorno real, se deberían agregar validaciones adicionales.
+        // La entrada CONSTANT_Utf8 tiene un formato específico en el class file.
+        // El primer byte es el tag (1 para CONSTANT_Utf8), seguido de 2 bytes que indican la longitud de la cadena.
+        // Luego, los bytes de la cadena en formato UTF-8.
 
-        // Obtener la posición de la entrada CONSTANT_Utf8 en el búfer.
-        int utf8EntryPosition = getUtf8EntryPosition(constantPoolEntryIndex);
+        // Posicionamos el buffer en la entrada correspondiente.
+        classFileBuffer.position(constantPoolEntryIndex);
 
-        // Leer la longitud de la cadena UTF-8.
-        int length = classFileBuffer.getShort(utf8EntryPosition) & 0xFFFF;
+        // Leemos el tag (debería ser 1 para CONSTANT_Utf8).
+        byte tag = classFileBuffer.get();
+        if (tag != 1) {
+            throw new IllegalArgumentException("El índice no corresponde a una entrada CONSTANT_Utf8.");
+        }
 
-        // Leer los bytes de la cadena UTF-8.
+        // Leemos la longitud de la cadena.
+        int length = classFileBuffer.getShort() & 0xFFFF;
+
+        // Leemos los bytes de la cadena.
         byte[] utf8Bytes = new byte[length];
-        classFileBuffer.position(utf8EntryPosition + 2);
         classFileBuffer.get(utf8Bytes);
 
-        // Convertir los bytes UTF-8 a una cadena Java.
+        // Convertimos los bytes UTF-8 a una cadena Java.
         String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
 
-        // Copiar la cadena al búfer de caracteres proporcionado.
+        // Copiamos la cadena al charBuffer proporcionado.
         utf8String.getChars(0, utf8String.length(), charBuffer, 0);
 
         return utf8String;
-    }
-
-    private int getUtf8EntryPosition(int constantPoolEntryIndex) {
-        // Este método debería calcular la posición de la entrada CONSTANT_Utf8 en el búfer.
-        // Aquí se asume que la posición se calcula de alguna manera basada en el índice.
-        // En un entorno real, esto dependería de la estructura del archivo de clase.
-        return constantPoolEntryIndex * 2; // Ejemplo simplificado.
     }
 }

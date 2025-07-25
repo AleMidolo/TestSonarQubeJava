@@ -15,35 +15,28 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
         }
 
         List<Integer> upperBounds = new ArrayList<>();
-        for (K key : keys) {
-            int upperBound = findUpperBound(keys, key);
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int upperBound = 0;
+
+            for (int j = 0; j < keys.size(); j++) {
+                if (i == j) continue;
+                if (currentKey.compareTo(keys.get(j)) < 0) {
+                    upperBound++;
+                }
+            }
+
             upperBounds.add(upperBound);
         }
 
         return upperBounds;
     }
 
-    /**
-     * Encuentra el límite superior para una clave dada.
-     * @param keys la lista de claves.
-     * @param key la clave para la cual se busca el límite superior.
-     * @return el límite superior de la clave.
-     */
-    private int findUpperBound(List<K> keys, K key) {
-        int low = 0;
-        int high = keys.size() - 1;
-        int result = keys.size();
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (keys.get(mid).compareTo(key) > 0) {
-                result = mid;
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-
-        return result;
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        UpperBoundCalculator<Integer> calculator = new UpperBoundCalculator<>();
+        List<Integer> keys = List.of(1, 3, 2, 4);
+        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
+        System.out.println(upperBounds); // Output: [0, 2, 1, 3]
     }
 }

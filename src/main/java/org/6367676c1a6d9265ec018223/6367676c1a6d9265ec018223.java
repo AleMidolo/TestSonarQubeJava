@@ -8,7 +8,7 @@ public class CollectionUtils {
      * @param element el elemento a buscar
      * @return <code>true</code> si se encuentra, <code>false</code> en caso contrario
      */
-    public static boolean containsInstance(Collection collection, Object element) {
+    public static boolean containsInstance(Collection<?> collection, Object element) {
         if (collection == null || element == null) {
             return false;
         }

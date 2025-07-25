@@ -11,11 +11,11 @@ public class ClassPathUtil {
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("El directorio proporcionado no existe o no es un directorio válido.");
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("El parámetro 'dir' debe ser un directorio válido.");
         }
 
-        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {
@@ -33,7 +33,7 @@ public class ClassPathUtil {
         String directoryPath = "path/to/your/jar/directory";
         addToClassPath(classPath, directoryPath);
 
-        // Imprimir las URLs agregadas al classpath
+        // Imprimir los URLs agregados al classpath
         for (URL url : classPath) {
             System.out.println(url);
         }

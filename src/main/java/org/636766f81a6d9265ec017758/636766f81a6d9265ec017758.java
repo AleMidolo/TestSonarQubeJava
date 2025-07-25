@@ -1,6 +1,9 @@
 @Override
 public int hashCode() {
-    // Implementación básica de hashCode que devuelve un valor constante.
-    // En una implementación real, se debería considerar los atributos de la clase.
-    return 42; // Este es un ejemplo simple, no recomendado para uso real.
+    final int prime = 31;
+    int result = 1;
+    // Assuming this class has fields that need to be included in the hash code calculation
+    // For example, if the class has a field 'id' of type int:
+    // result = prime * result + id;
+    return result;
 }

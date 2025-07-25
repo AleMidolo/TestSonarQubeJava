@@ -1,12 +1,12 @@
 public class ObjectUtils {
 
     /**
-     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") si el argumento es <code>null</code>.</p> 
-     * <pre> 
-     * ObjectUtils.toString(null)         = "" 
-     * ObjectUtils.toString("")           = "" 
-     * ObjectUtils.toString("bat")        = "bat" 
-     * ObjectUtils.toString(Boolean.TRUE) = "true" 
+     * <p>Obtiene el <code>toString</code> de un <code>Object</code> devolviendo una cadena vacía ("") si el argumento es <code>null</code>.</p>
+     * <pre>
+     * ObjectUtils.toString(null)         = ""
+     * ObjectUtils.toString("")           = ""
+     * ObjectUtils.toString("bat")        = "bat"
+     * ObjectUtils.toString(Boolean.TRUE) = "true"
      * </pre>
      * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)

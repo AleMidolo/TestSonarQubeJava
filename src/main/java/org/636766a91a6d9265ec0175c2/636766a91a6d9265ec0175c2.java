@@ -7,13 +7,13 @@ public class FrameStack {
         stack = new Stack<>();
     }
 
-    /**
+    /** 
      * Extrae un tipo abstracto de la pila de marcos de salida y devuelve su valor.
      * @return el tipo abstracto que ha sido extraído de la pila de marcos de salida.
      */
     private int pop() {
         if (stack.isEmpty()) {
-            throw new IllegalStateException("La pila de marcos de salida está vacía.");
+            throw new IllegalStateException("La pila está vacía.");
         }
         return stack.pop();
     }

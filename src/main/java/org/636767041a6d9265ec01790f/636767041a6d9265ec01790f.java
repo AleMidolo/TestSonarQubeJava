@@ -23,9 +23,5 @@ public class ArrayConverter {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
         System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
-
-        int[] nullArray = null;
-        Integer[] nullResult = toObject(nullArray);
-        System.out.println(nullResult); // Output: null
     }
 }

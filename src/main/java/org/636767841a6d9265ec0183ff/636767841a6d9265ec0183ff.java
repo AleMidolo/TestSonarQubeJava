@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TableUtils {
+
     /**
      * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. 
      * Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente 

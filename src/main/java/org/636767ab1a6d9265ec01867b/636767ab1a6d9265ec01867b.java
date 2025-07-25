@@ -11,43 +11,52 @@ public class UTF8Writer {
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         LinkedBuffer currentBuffer = lb;
-        
-        int offset = 0;
-        while (offset < utf8Bytes.length) {
-            int remaining = currentBuffer.buffer.length - currentBuffer.offset;
-            int bytesToCopy = Math.min(remaining, utf8Bytes.length - offset);
-            
-            System.arraycopy(utf8Bytes, offset, currentBuffer.buffer, currentBuffer.offset, bytesToCopy);
-            currentBuffer.offset += bytesToCopy;
-            offset += bytesToCopy;
-            
-            if (offset < utf8Bytes.length) {
-                currentBuffer = new LinkedBuffer(session.nextBufferSize);
-                session.tail = currentBuffer;
+
+        for (byte b : utf8Bytes) {
+            if (currentBuffer.isFull()) {
+                LinkedBuffer nextBuffer = new LinkedBuffer(currentBuffer.getCapacity());
+                currentBuffer.setNext(nextBuffer);
+                currentBuffer = nextBuffer;
+                session.nextBuffer(currentBuffer);
             }
+            currentBuffer.write(b);
         }
-        
+
         return currentBuffer;
     }
-    
-    // Supporting class definitions
-    public static class LinkedBuffer {
-        byte[] buffer;
-        int offset;
-        LinkedBuffer next;
-        
-        public LinkedBuffer(int size) {
-            this.buffer = new byte[size];
+
+    private static class LinkedBuffer {
+        private byte[] buffer;
+        private int offset;
+        private int capacity;
+        private LinkedBuffer next;
+
+        public LinkedBuffer(int capacity) {
+            this.capacity = capacity;
+            this.buffer = new byte[capacity];
             this.offset = 0;
         }
+
+        public boolean isFull() {
+            return offset >= capacity;
+        }
+
+        public void write(byte b) {
+            buffer[offset++] = b;
+        }
+
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public void setNext(LinkedBuffer next) {
+            this.next = next;
+        }
     }
-    
-    public static class WriteSession {
-        LinkedBuffer tail;
-        int nextBufferSize;
-        
-        public WriteSession(int bufferSize) {
-            this.nextBufferSize = bufferSize;
+
+    private static class WriteSession {
+        public void nextBuffer(LinkedBuffer buffer) {
+            // Implementation for managing write session
         }
     }
 }

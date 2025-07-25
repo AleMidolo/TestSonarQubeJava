@@ -10,55 +10,55 @@ public class UTF8Decoder {
         int b1 = bb.get(i) & 0xFF;
         
         // Single byte character (ASCII)
-        if ((b1 & 0x80) == 0) {
+        if(b1 <= 0x7F) {
             sb.append((char)b1);
             return i + 1;
         }
         
-        // 2 byte character
-        if ((b1 & 0xE0) == 0xC0) {
-            if (i + 1 >= bb.limit()) {
-                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        // 2-byte sequence
+        if((b1 & 0xE0) == 0xC0) {
+            if(i + 1 >= bb.limit()) {
+                throw new IllegalArgumentException("Incomplete UTF-8 sequence");
             }
             int b2 = bb.get(i + 1) & 0xFF;
-            if ((b2 & 0xC0) != 0x80) {
+            if((b2 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int ch = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
-            sb.append((char)ch);
+            int codePoint = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)codePoint);
             return i + 2;
         }
         
-        // 3 byte character  
-        if ((b1 & 0xF0) == 0xE0) {
-            if (i + 2 >= bb.limit()) {
-                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        // 3-byte sequence
+        if((b1 & 0xF0) == 0xE0) {
+            if(i + 2 >= bb.limit()) {
+                throw new IllegalArgumentException("Incomplete UTF-8 sequence");
             }
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
-            if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) {
+            if((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int ch = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
-            sb.append((char)ch);
+            int codePoint = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)codePoint);
             return i + 3;
         }
         
-        // 4 byte character
-        if ((b1 & 0xF8) == 0xF0) {
-            if (i + 3 >= bb.limit()) {
-                throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        // 4-byte sequence
+        if((b1 & 0xF8) == 0xF0) {
+            if(i + 3 >= bb.limit()) {
+                throw new IllegalArgumentException("Incomplete UTF-8 sequence");
             }
             int b2 = bb.get(i + 1) & 0xFF;
             int b3 = bb.get(i + 2) & 0xFF;
             int b4 = bb.get(i + 3) & 0xFF;
-            if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) {
+            if((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) {
                 throw new IllegalArgumentException("Invalid UTF-8 sequence");
             }
-            int ch = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
-            // Convert to surrogate pair for characters outside BMP
-            sb.append(Character.highSurrogate(ch));
-            sb.append(Character.lowSurrogate(ch));
+            int codePoint = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | 
+                           ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            sb.append(Character.highSurrogate(codePoint));
+            sb.append(Character.lowSurrogate(codePoint));
             return i + 4;
         }
         

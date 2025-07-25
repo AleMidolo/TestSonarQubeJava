@@ -23,13 +23,13 @@ public class StringSerializer {
             return newBuffer;
         }
 
-        // Copy bytes to current buffer
+        // Copy bytes to existing buffer
         System.arraycopy(utf8Bytes, 0, lb.buffer, lb.offset, size);
         lb.offset += size;
         return lb;
     }
 
-    // Helper class for buffer management
+    // Helper class definitions for compilation
     public static class LinkedBuffer {
         byte[] buffer;
         int offset;
@@ -42,7 +42,6 @@ public class StringSerializer {
         }
     }
 
-    // Helper class for writing session
     public static class WriteSession {
         LinkedBuffer tail;
         

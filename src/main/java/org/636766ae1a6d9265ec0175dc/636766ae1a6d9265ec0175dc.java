@@ -8,7 +8,7 @@ public class ResponseValidator {
         this.response = response;
     }
 
-    /** 
+    /**
      * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)
      * @return verdadero si es contenido parcial, falso en caso contrario
      */

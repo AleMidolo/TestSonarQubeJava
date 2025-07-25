@@ -43,6 +43,7 @@ public class CharsetConverter {
             }
         } catch (IllegalArgumentException e) {
             // If charset is not supported, return default
+            return Charset.defaultCharset().name();
         }
         
         return Charset.defaultCharset().name();

@@ -6,7 +6,7 @@ public class StringUtils {
      * Este método utiliza {@link String#indexOf(String)}.
      *
      * @param str la cadena a verificar, puede ser null
-     * @param searchStr la cadena a encontrar, puede ser null
+     * @param searchStr la cadena a buscar, puede ser null
      * @return el primer índice de searchStr en str, -1 si no se encuentra o si str o searchStr son null
      */
     public static int indexOf(String str, String searchStr) {

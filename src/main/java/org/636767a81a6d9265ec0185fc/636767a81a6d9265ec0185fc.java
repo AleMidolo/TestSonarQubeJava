@@ -21,7 +21,7 @@ public class CodedInputStream {
             return 0;
         }
 
-        lastTag = readVarint32();
+        lastTag = readRawVarint32();
         if (lastTag == 0) {
             // If we actually read zero, that's not a valid tag.
             throw new IOException("Invalid tag: zero is not a valid tag value");
@@ -38,13 +38,12 @@ public class CodedInputStream {
         if (n <= 0) {
             return true;
         }
-        
         pos = 0;
         bufferSize = n;
         return false;
     }
 
-    private int readVarint32() throws IOException {
+    private int readRawVarint32() throws IOException {
         int result = 0;
         int shift = 0;
         
@@ -56,7 +55,7 @@ public class CodedInputStream {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint32");
+        throw new IOException("Malformed varint");
     }
 
     private byte readRawByte() throws IOException {

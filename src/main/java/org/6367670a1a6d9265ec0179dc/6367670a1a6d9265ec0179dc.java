@@ -11,34 +11,29 @@ public class FrameWriter {
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
             int abstractType = currentFrame[i];
-            if (abstractType == Frame.TOP) {
-                stackMapTableEntries[currentIndex++] = 0; // TOP
-            } else if (abstractType == Frame.INTEGER) {
-                stackMapTableEntries[currentIndex++] = 1; // INTEGER
-            } else if (abstractType == Frame.FLOAT) {
-                stackMapTableEntries[currentIndex++] = 2; // FLOAT
-            } else if (abstractType == Frame.DOUBLE) {
-                stackMapTableEntries[currentIndex++] = 3; // DOUBLE
+            if (abstractType == Frame.TOP || abstractType == Frame.UNINITIALIZED_THIS 
+                    || abstractType == Frame.NULL || abstractType == Frame.INTEGER
+                    || abstractType == Frame.FLOAT) {
+                stackMapTableEntries[currentIndex++] = (byte) abstractType;
             } else if (abstractType == Frame.LONG) {
-                stackMapTableEntries[currentIndex++] = 4; // LONG
-            } else if (abstractType == Frame.NULL) {
-                stackMapTableEntries[currentIndex++] = 5; // NULL
-            } else if (abstractType == Frame.UNINITIALIZED_THIS) {
-                stackMapTableEntries[currentIndex++] = 6; // UNINITIALIZED_THIS
-            } else if (abstractType == Frame.OBJECT) {
-                stackMapTableEntries[currentIndex++] = 7; // OBJECT
-                // Write class info index
-                putInt16(currentFrame[++i]);
+                stackMapTableEntries[currentIndex++] = (byte) Frame.LONG;
+                stackMapTableEntries[currentIndex++] = (byte) Frame.TOP;
+                i++;
+            } else if (abstractType == Frame.DOUBLE) {
+                stackMapTableEntries[currentIndex++] = (byte) Frame.DOUBLE;
+                stackMapTableEntries[currentIndex++] = (byte) Frame.TOP;
+                i++;
+            } else if (abstractType == Frame.UNINITIALIZED) {
+                stackMapTableEntries[currentIndex++] = (byte) Frame.UNINITIALIZED;
+                int offset = ((Label) currentFrame[++i]).getOffset();
+                stackMapTableEntries[currentIndex++] = (byte) (offset >>> 8);
+                stackMapTableEntries[currentIndex++] = (byte) offset;
             } else {
-                stackMapTableEntries[currentIndex++] = 8; // UNINITIALIZED
-                // Write offset
-                putInt16(((Label) currentFrame[++i]).getOffset());
+                stackMapTableEntries[currentIndex++] = (byte) Frame.OBJECT;
+                int typeIndex = abstractType;
+                stackMapTableEntries[currentIndex++] = (byte) (typeIndex >>> 8);
+                stackMapTableEntries[currentIndex++] = (byte) typeIndex;
             }
         }
-    }
-    
-    private void putInt16(final int value) {
-        stackMapTableEntries[currentIndex++] = (byte) (value >>> 8);
-        stackMapTableEntries[currentIndex++] = (byte) value;
     }
 }

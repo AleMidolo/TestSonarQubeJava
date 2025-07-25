@@ -1,4 +1,5 @@
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,57 +10,54 @@ import java.util.List;
 public class SocketAppender extends AppenderSkeleton {
     
     private List<Socket> connectedClients;
-    private List<PrintWriter> clientWriters;
-
+    
     public SocketAppender() {
         connectedClients = new ArrayList<>();
-        clientWriters = new ArrayList<>();
     }
-
+    
+    public void addClient(Socket client) {
+        connectedClients.add(client);
+    }
+    
+    public void removeClient(Socket client) {
+        connectedClients.remove(client);
+    }
+    
     @Override
     protected void append(LoggingEvent event) {
-        if (event == null) {
+        if (layout == null) {
+            errorHandler.error("No layout set for appender " + name);
             return;
         }
 
-        String logMessage = layout.format(event);
-
-        // Iterate through all connected clients and send the log message
-        for (int i = clientWriters.size() - 1; i >= 0; i--) {
+        String formattedMessage = layout.format(event);
+        
+        List<Socket> disconnectedClients = new ArrayList<>();
+        
+        for (Socket client : connectedClients) {
             try {
-                PrintWriter writer = clientWriters.get(i);
-                writer.println(logMessage);
-                writer.flush();
-            } catch (Exception e) {
-                // If there's an error writing to client, remove it from the list
-                removeClient(i);
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                writer.println(formattedMessage);
+            } catch (IOException e) {
+                // If we can't write to the socket, assume client disconnected
+                disconnectedClients.add(client);
             }
         }
-    }
-
-    public void addClient(Socket client) throws IOException {
-        if (client != null) {
-            connectedClients.add(client);
-            clientWriters.add(new PrintWriter(client.getOutputStream(), true));
-        }
-    }
-
-    private void removeClient(int index) {
-        try {
-            clientWriters.get(index).close();
-            connectedClients.get(index).close();
-        } catch (IOException e) {
-            // Ignore close exceptions
-        }
-        clientWriters.remove(index);
-        connectedClients.remove(index);
+        
+        // Remove any disconnected clients
+        connectedClients.removeAll(disconnectedClients);
     }
 
     @Override
     public void close() {
-        for (int i = 0; i < connectedClients.size(); i++) {
-            removeClient(i);
+        for (Socket client : connectedClients) {
+            try {
+                client.close();
+            } catch (IOException e) {
+                // Ignore errors on close
+            }
         }
+        connectedClients.clear();
     }
 
     @Override

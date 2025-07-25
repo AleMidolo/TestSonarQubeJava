@@ -13,19 +13,10 @@ public class ContentRangeBuilder {
      */
     private String buildContentRange() {
         if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
-            return null;
+            return String.format("%s */%d", unit, total != null ? total : 0);
         }
         
-        StringBuilder contentRange = new StringBuilder();
-        contentRange.append(unit)
-                   .append(" ")
-                   .append(start)
-                   .append("-")
-                   .append(end)
-                   .append("/")
-                   .append(total);
-                   
-        return contentRange.toString();
+        return String.format("%s %d-%d/%d", unit, start, end, total);
     }
 
     // Setters for builder pattern

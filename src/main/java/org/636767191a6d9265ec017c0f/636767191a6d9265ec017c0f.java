@@ -19,12 +19,13 @@ public class ByteVector {
         int newLength = length;
         
         // Calculate new buffer size needed
-        int minLength = position + size;
-        while (newLength < minLength) {
+        while (position + size > newLength) {
             newLength = newLength * 2;
         }
         
-        // Create new buffer with expanded size
-        buffer = Arrays.copyOf(buffer, newLength);
+        // Only resize if needed
+        if (newLength > length) {
+            buffer = Arrays.copyOf(buffer, newLength);
+        }
     }
 }

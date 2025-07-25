@@ -4,38 +4,47 @@ import java.util.Date;
 
 public class CustomLogFormatter {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-    
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss,SSS";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
+    /** 
+     * Formatea un evento de "logging" para un "writer".
+     * @param event evento de "logging" que se va a formatear.
+     */
     public String format(final LoggingEvent event) {
         if (event == null) {
             return "";
         }
 
-        StringBuilder formattedLog = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         
         // Add timestamp
-        formattedLog.append(DATE_FORMAT.format(new Date(event.getTimeStamp())));
-        formattedLog.append(" ");
+        Date eventDate = new Date(event.getTimeStamp());
+        sb.append(sdf.format(eventDate));
+        sb.append(" ");
         
         // Add log level
-        formattedLog.append("[").append(event.getLevel().toString()).append("] ");
+        sb.append("[").append(event.getLevel().toString()).append("] ");
         
         // Add logger name
-        formattedLog.append(event.getLoggerName());
-        formattedLog.append(" - ");
+        sb.append(event.getLoggerName());
+        sb.append(" - ");
         
         // Add message
-        formattedLog.append(event.getRenderedMessage());
+        sb.append(event.getRenderedMessage());
         
-        // Add throwable information if exists
-        String[] throwableInfo = event.getThrowableStrRep();
-        if (throwableInfo != null) {
-            formattedLog.append("\n");
-            for (String throwableLine : throwableInfo) {
-                formattedLog.append(throwableLine).append("\n");
+        // Add throwable if exists
+        String[] throwableStrRep = event.getThrowableStrRep();
+        if (throwableStrRep != null) {
+            sb.append("\n");
+            for (String throwableLine : throwableStrRep) {
+                sb.append(throwableLine).append("\n");
             }
         }
         
-        return formattedLog.toString();
+        // Add new line at the end
+        sb.append("\n");
+        
+        return sb.toString();
     }
 }

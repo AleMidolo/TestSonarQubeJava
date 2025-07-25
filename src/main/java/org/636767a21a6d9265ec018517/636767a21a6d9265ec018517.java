@@ -1,7 +1,7 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public final class Buffer {
+public class Buffer {
     private ByteArrayOutputStream buffer;
 
     public Buffer() {

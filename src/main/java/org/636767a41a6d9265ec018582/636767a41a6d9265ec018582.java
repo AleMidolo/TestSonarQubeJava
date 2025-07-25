@@ -1,34 +1,34 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
-import org.msgpack.core.buffer.LinkedBuffer;
-import org.msgpack.core.buffer.MessageBuffer;
-import org.msgpack.core.buffer.MessageBufferOutput;
-import org.msgpack.schema.Schema;
+import org.apache.avro.Schema;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.io.DatumWriter;
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.ProtostuffIOUtil;
 
-public class DelimitedMessageWriter {
+public class SerializationUtil {
 
+    /**
+     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
+     * @return the size of the message
+     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create a MessageBufferPacker with the provided buffer
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
+        // Serialize the message using Protostuff
+        byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
-        // Serialize the message using the schema
-        schema.write(packer, message);
+        // Write the length of the message as a prefix
+        int length = data.length;
+        out.write((length >>> 24) & 0xFF);
+        out.write((length >>> 16) & 0xFF);
+        out.write((length >>> 8) & 0xFF);
+        out.write(length & 0xFF);
 
-        // Get the serialized message as a byte array
-        byte[] serializedMessage = packer.toByteArray();
+        // Write the serialized message
+        out.write(data);
 
-        // Write the length of the serialized message as a prefix
-        MessagePacker lengthPacker = MessagePack.newDefaultPacker(out);
-        lengthPacker.packInt(serializedMessage.length);
-        lengthPacker.flush();
-
-        // Write the serialized message to the output stream
-        out.write(serializedMessage);
-
-        // Return the total size of the message (length prefix + serialized message)
-        return Integer.BYTES + serializedMessage.length;
+        // Return the total size of the message (length prefix + data)
+        return 4 + length;
     }
 }

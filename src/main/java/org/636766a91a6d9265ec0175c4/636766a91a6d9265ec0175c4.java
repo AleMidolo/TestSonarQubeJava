@@ -6,45 +6,41 @@ private void pop(final String descriptor) {
         // It's a method descriptor, get argument types
         types = Type.getArgumentTypes(descriptor);
     } else {
-        // It's a single type descriptor
+        // It's a type descriptor, get the single type
         types = new Type[] { Type.getType(descriptor) };
     }
 
     for (Type type : types) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
-            case Type.BYTE:
             case Type.CHAR:
+            case Type.BYTE:
             case Type.SHORT:
             case Type.INT:
-                // Pop int
-                // Assuming outputFrameStack is a stack-like structure
-                outputFrameStack.pop();
-                break;
             case Type.FLOAT:
-                // Pop float
-                outputFrameStack.pop();
-                break;
-            case Type.LONG:
-                // Pop long (takes two slots)
-                outputFrameStack.pop();
-                outputFrameStack.pop();
-                break;
-            case Type.DOUBLE:
-                // Pop double (takes two slots)
-                outputFrameStack.pop();
-                outputFrameStack.pop();
-                break;
             case Type.ARRAY:
             case Type.OBJECT:
-                // Pop reference
-                outputFrameStack.pop();
+                // Pop one slot from the stack
+                // Assuming a method `pop()` exists to pop one slot
+                pop();
+                break;
+            case Type.LONG:
+            case Type.DOUBLE:
+                // Pop two slots from the stack
+                pop();
+                pop();
                 break;
             case Type.VOID:
-                // No pop needed for void
+                // No action needed for void
                 break;
             default:
                 throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
+}
+
+// Assuming a method `pop()` exists to pop one slot from the stack
+private void pop() {
+    // Implementation of popping one slot from the stack
+    // This is a placeholder and should be implemented based on the actual stack structure
 }

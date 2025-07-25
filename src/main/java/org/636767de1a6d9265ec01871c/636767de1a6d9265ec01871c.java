@@ -5,25 +5,27 @@ public class Accumulator {
     private Map<String, Long> map;
 
     public Accumulator() {
-        this.map = new HashMap<>();
+        map = new HashMap<>();
     }
 
     /**
      * Accumulate the value with existing value in the same given key.
+     * If the key does not exist, it initializes the key with the given value.
+     *
+     * @param key   The key to accumulate the value for.
+     * @param value The value to accumulate.
      */
     public void valueAccumulation(String key, Long value) {
         map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
-    // Optional: Method to get the accumulated value for a key
-    public Long getValue(String key) {
+    // Optional: Method to retrieve the accumulated value for a key
+    public Long getAccumulatedValue(String key) {
         return map.getOrDefault(key, 0L);
     }
 
-    public static void main(String[] args) {
-        Accumulator accumulator = new Accumulator();
-        accumulator.valueAccumulation("key1", 10L);
-        accumulator.valueAccumulation("key1", 20L);
-        System.out.println(accumulator.getValue("key1")); // Output: 30
+    // Optional: Method to clear the accumulated values
+    public void clear() {
+        map.clear();
     }
 }

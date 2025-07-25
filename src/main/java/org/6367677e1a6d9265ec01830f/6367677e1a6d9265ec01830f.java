@@ -20,10 +20,10 @@ public class LogFormatter {
 
 class LoggingEvent {
     private long timeStamp;
-    private String level;
+    private Level level;
     private String message;
 
-    public LoggingEvent(long timeStamp, String level, String message) {
+    public LoggingEvent(long timeStamp, Level level, String message) {
         this.timeStamp = timeStamp;
         this.level = level;
         this.message = message;
@@ -33,11 +33,15 @@ class LoggingEvent {
         return timeStamp;
     }
 
-    public String getLevel() {
+    public Level getLevel() {
         return level;
     }
 
     public String getMessage() {
         return message;
     }
+}
+
+enum Level {
+    INFO, WARN, ERROR, DEBUG
 }

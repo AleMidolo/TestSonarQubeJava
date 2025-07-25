@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class StackMapFrameVisitor {
-    private List<Object> currentFrame;
+    private int[] currentFrame;
+    private int nextElementIndex;
 
     public StackMapFrameVisitor() {
-        this.currentFrame = new ArrayList<>();
+        this.currentFrame = new int[0];
+        this.nextElementIndex = 0;
     }
 
     /**
@@ -16,22 +15,16 @@ public class StackMapFrameVisitor {
      * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Clear the current frame to start a new one
-        currentFrame.clear();
+        // Calculate the total size of the frame: offset + numLocal + numStack
+        int frameSize = 1 + numLocal + numStack;
+        currentFrame = new int[frameSize];
 
-        // Add the offset, numLocal, and numStack to the frame
-        currentFrame.add(offset);
-        currentFrame.add(numLocal);
-        currentFrame.add(numStack);
+        // Store the offset in the first position of the frame
+        currentFrame[0] = offset;
 
-        // Return the index of the next element to be written (after offset, numLocal, and numStack)
-        return currentFrame.size();
-    }
+        // Initialize the next element index to 1 (after the offset)
+        nextElementIndex = 1;
 
-    // Example usage
-    public static void main(String[] args) {
-        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
-        int nextIndex = visitor.visitFrameStart(10, 3, 2);
-        System.out.println("Next index to write: " + nextIndex);
+        return nextElementIndex;
     }
 }

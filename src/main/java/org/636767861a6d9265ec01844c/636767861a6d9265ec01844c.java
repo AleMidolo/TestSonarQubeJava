@@ -9,18 +9,21 @@ public class Logger {
         this.appenders = new ArrayList<>();
     }
 
+    /**
+     * Remove the appender with the name passed as parameter from the list of appenders.
+     */
     public void removeAppender(String name) {
         Iterator<Appender> iterator = appenders.iterator();
         while (iterator.hasNext()) {
             Appender appender = iterator.next();
             if (appender.getName().equals(name)) {
                 iterator.remove();
-                break; // Assuming appender names are unique, we can break after removal
+                break; // Assuming names are unique, we can break after removing the first match
             }
         }
     }
 
-    // Assuming Appender class exists with a getName() method
+    // Inner class representing an Appender
     private static class Appender {
         private String name;
 

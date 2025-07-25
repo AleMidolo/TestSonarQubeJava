@@ -10,18 +10,17 @@ public class StringUtils {
         if (str == null) {
             return null;
         }
-        
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-        
         return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String testStr = "###HelloWorld";
+        String testString = "###HelloWorld";
         char leadingChar = '#';
-        System.out.println(trimLeadingCharacter(testStr, leadingChar)); // Output: HelloWorld
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result);  // Output: HelloWorld
     }
 }

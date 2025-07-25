@@ -15,8 +15,8 @@ public class ArrayToListConverter {
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
-        String[] emptyArray = {};
-        List<String> emptyList = asList(emptyArray);
+        Integer[] emptyArray = {};
+        List<Integer> emptyList = asList(emptyArray);
         System.out.println(emptyList); // Output: []
     }
 }

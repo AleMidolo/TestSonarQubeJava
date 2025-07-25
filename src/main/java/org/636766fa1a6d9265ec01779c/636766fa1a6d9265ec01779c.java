@@ -8,7 +8,7 @@ public class TokenParser {
     private String parseToken(final char[] terminators) {
         StringBuilder token = new StringBuilder();
         int ch;
-        
+
         try {
             while ((ch = System.in.read()) != -1) {
                 char currentChar = (char) ch;
@@ -20,7 +20,7 @@ public class TokenParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return token.toString();
     }
 

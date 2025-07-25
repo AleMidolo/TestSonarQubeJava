@@ -20,20 +20,20 @@ public class ClassFileBuffer {
         this.size = 0;
 
         // Use ByteArrayOutputStream to read from InputStream
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] tempBuffer = new byte[1024];
         int bytesRead;
 
         // Read from the InputStream and write to ByteArrayOutputStream
         while ((bytesRead = in.read(tempBuffer)) != -1) {
-            baos.write(tempBuffer, 0, bytesRead);
+            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
         // Convert ByteArrayOutputStream to byte array
-        this.buffer = baos.toByteArray();
+        this.buffer = byteArrayOutputStream.toByteArray();
         this.size = this.buffer.length;
 
-        // Reset the read pointer (if applicable, depending on usage context)
-        // In this case, we just ensure the buffer is filled with new data.
+        // Reset the read pointer (if applicable, depending on how you manage reading)
+        // In this case, we just ensure the buffer is filled with the new data.
     }
 }

@@ -13,7 +13,7 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Input byte array is null");
+            throw new NullPointerException("Byte array is null");
         }
         if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException("Invalid offset or length");
@@ -21,7 +21,6 @@ public class CustomOutputStream extends OutputStream {
         if (position + len > buffer.length) {
             throw new IOException("Not enough space in buffer");
         }
-        
         System.arraycopy(b, off, buffer, position, len);
         position += len;
     }

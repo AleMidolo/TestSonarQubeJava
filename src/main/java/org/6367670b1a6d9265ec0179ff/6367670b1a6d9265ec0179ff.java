@@ -12,14 +12,4 @@ public class ArrayUtil {
     public static Byte[] nullToEmpty(final Byte[] array) {
         return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
-
-    public static void main(String[] args) {
-        Byte[] result1 = nullToEmpty(null);
-        Byte[] result2 = nullToEmpty(new Byte[]{});
-        Byte[] result3 = nullToEmpty(new Byte[]{1, 2, 3});
-
-        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
-    }
 }

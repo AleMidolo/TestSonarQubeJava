@@ -10,18 +10,22 @@ public class LoggingBuffer {
     }
 
     /** 
-     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。 
-     * 调用者有责任确保缓冲区有空闲空间。  
+     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。调用者有责任确保缓冲区有空闲空间。  
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // 如果缓冲区已满，事件将被静默丢弃
+        // If the buffer is full, the event is silently discarded
     }
 
-    // 假设 LoggingEvent 是一个简单的类
+    // Additional methods for demonstration purposes
+    public int size() {
+        return buffer.size();
+    }
+
     public static class LoggingEvent {
+        // Implementation of LoggingEvent class
         private String message;
 
         public LoggingEvent(String message) {
@@ -31,5 +35,12 @@ public class LoggingBuffer {
         public String getMessage() {
             return message;
         }
+    }
+
+    public static void main(String[] args) {
+        LoggingBuffer loggingBuffer = new LoggingBuffer(5);
+        loggingBuffer.put(new LoggingEvent("Event 1"));
+        loggingBuffer.put(new LoggingEvent("Event 2"));
+        System.out.println("Current buffer size: " + loggingBuffer.size());
     }
 }

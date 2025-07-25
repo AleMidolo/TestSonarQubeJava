@@ -5,22 +5,21 @@ public class Graph<V> {
     // Assuming there's a method to get the edges of the graph
     // and each edge has a method to get its weight and destination vertex.
     
-    private Set<Edge<V>> edges; // Set of edges in the graph
-
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
-
-        for (Edge<V> edge : edges) {
-            if (v.contains(edge.getDestination())) {
+        
+        for (V vertex : v) {
+            // Assuming getIncomingEdges is a method that returns the incoming edges for the vertex
+            for (Edge<V> edge : getIncomingEdges(vertex)) {
                 totalWeight += edge.getWeight();
             }
         }
-
+        
         return totalWeight;
     }
-
-    // Edge class representing an edge in the graph
-    private static class Edge<V> {
+    
+    // Placeholder for Edge class
+    private class Edge<V> {
         private V destination;
         private double weight;
 
@@ -29,12 +28,14 @@ public class Graph<V> {
             this.weight = weight;
         }
 
-        public V getDestination() {
-            return destination;
-        }
-
         public double getWeight() {
             return weight;
         }
+    }
+
+    // Placeholder for method to get incoming edges
+    private Set<Edge<V>> getIncomingEdges(V vertex) {
+        // Implementation to retrieve incoming edges for the vertex
+        return Set.of(); // Return an empty set for placeholder
     }
 }

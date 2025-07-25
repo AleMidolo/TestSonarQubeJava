@@ -2,7 +2,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UriMatcher {
-    
     private final String pattern;
 
     public UriMatcher(String pattern) {
@@ -20,8 +19,9 @@ public class UriMatcher {
         
         if (matcher.matches()) {
             return new MatchResult(matcher);
+        } else {
+            return null; // 返回空表示没有匹配
         }
-        return null; // No match found
     }
 
     public static class MatchResult {
@@ -31,8 +31,8 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String group(int group) {
-            return matcher.group(group);
+        public String group(int index) {
+            return matcher.group(index);
         }
 
         public int groupCount() {
@@ -41,11 +41,15 @@ public class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(http|https)://.*$");
-        MatchResult result = uriMatcher.match("https://example.com");
-        
+        UriMatcher uriMatcher = new UriMatcher("^(http|https)://(www\\.)?example\\.com/(.*)$");
+        MatchResult result = uriMatcher.match("https://www.example.com/path/to/resource");
+
         if (result != null) {
             System.out.println("Matched! Group count: " + result.groupCount());
+            System.out.println("Group 0: " + result.group(0)); // Full match
+            System.out.println("Group 1: " + result.group(1)); // Protocol
+            System.out.println("Group 2: " + result.group(2)); // www.
+            System.out.println("Group 3: " + result.group(3)); // Path
         } else {
             System.out.println("No match found.");
         }

@@ -1,7 +1,6 @@
 import java.util.Comparator;
 
 public class FloatComparator implements Comparator<Double> {
-    
     /** 
      * 比较两个浮点值。如果它们相等则返回0，如果 {@literal o1 < o2} 则返回-1，否则返回1
      * @param o1 第一个值

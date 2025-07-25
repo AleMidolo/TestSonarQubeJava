@@ -8,7 +8,7 @@ public class LogManager {
             @Override
             public void run() {
                 // Here you would add the log record to your LogTable
-                // For example, assuming you have a method to update the LogTable
+                // For example, assuming you have a method to update the LogTable:
                 updateLogTable(lr);
             }
         });

@@ -29,13 +29,13 @@ class Bucket {
         // Set the new bucket's next to the current bucket
         newBucket.setNext(bucket);
         
-        // Find the previous bucket to insert the new bucket before
+        // Find the previous bucket to insert before the given bucket
         Bucket current = this;
         while (current.getNext() != null && current.getNext() != bucket) {
             current = current.getNext();
         }
         
-        // Insert the new bucket before the specified bucket
+        // Insert the new bucket before the given bucket
         current.setNext(newBucket);
     }
 }

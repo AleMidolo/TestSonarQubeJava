@@ -22,13 +22,13 @@ public class StackMapTable {
         
         for (int i = start; i < end; i++) {
             Object type = currentFrame.get(i);
-            // Assuming some transformation or processing is needed for the abstract types
-            stackMapTableEntries.add(transformType(type));
+            // Assuming some transformation or verification is needed for the type
+            stackMapTableEntries.add(verifyType(type));
         }
     }
 
-    private Object transformType(Object type) {
-        // Placeholder for type transformation logic
-        return type; // In a real implementation, this would convert the type to the desired format
+    private Object verifyType(Object type) {
+        // Placeholder for type verification logic
+        return type; // Return the verified type
     }
 }

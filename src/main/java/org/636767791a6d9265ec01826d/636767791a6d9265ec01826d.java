@@ -18,21 +18,21 @@ public class PropertyUtils {
         }
 
         // Pattern for ${var} style variables
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)}");
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
+            String varValue = props.getProperty(varName);
             
-            // If no replacement found, leave the original ${var} intact
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
+            // If variable not found, leave the ${var} as is
+            if (varValue == null) {
+                varValue = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid problems with $ and \
-            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+            // Quote replacement string to avoid issues with $ and backslashes
+            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
         }
         matcher.appendTail(result);
 

@@ -13,17 +13,11 @@ public class FaceTraversal {
             this.current = node;
         }
         
-        public Node getCurrent() {
+        public Node getNode() {
             return current;
         }
         
-        public void advance(int direction) {
-            // Implementation to move circulator in given direction
-        }
-        
-        public boolean equals(OuterFaceCirculator other) {
-            return this.current == other.current;
-        }
+        // Other circulator methods
     }
 
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
@@ -31,24 +25,32 @@ public class FaceTraversal {
             return null;
         }
 
+        // Create circulator starting at the start node
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        OuterFaceCirculator stopCirculator = new OuterFaceCirculator(stop);
-
-        // Check start node
-        if (predicate.test(circulator.getCurrent())) {
-            return circulator;
-        }
-
-        // Traverse until we find matching node or reach stop node
-        while (!circulator.equals(stopCirculator)) {
-            circulator.advance(dir);
+        
+        // Keep traversing until we find a matching node or reach the stop node
+        Node current = start;
+        while (current != stop) {
+            if (predicate.test(current)) {
+                return new OuterFaceCirculator(current);
+            }
             
-            if (predicate.test(circulator.getCurrent())) {
-                return circulator;
+            // Move to next node based on direction
+            if (dir > 0) {
+                // Move clockwise
+                current = current.getNextClockwise();
+            } else {
+                // Move counter-clockwise  
+                current = current.getNextCounterClockwise();
+            }
+            
+            // Check if we've gone full circle
+            if (current == start) {
+                break;
             }
         }
-
+        
         // Return circulator pointing to stop node if no match found
-        return stopCirculator;
+        return new OuterFaceCirculator(stop);
     }
 }

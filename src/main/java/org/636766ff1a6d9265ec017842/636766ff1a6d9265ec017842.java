@@ -1,9 +1,9 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for handling Double arrays.
+ * Utility class for converting between primitive and wrapper arrays.
  */
-public class DoubleUtils {
+public class ArrayUtils {
 
     /**
      * <p>将对象类型的 Double 数组转换为基本数据类型的 double 数组。</p>

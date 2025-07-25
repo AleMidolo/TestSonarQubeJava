@@ -8,19 +8,18 @@ public class HeaderParser {
     private int parseEndOfLine(String headerPart, int end) {
         int index = end;
         
-        // 遍历字符串直到找到行尾标记 \r\n
-        while (index < headerPart.length() - 1) {
-            char current = headerPart.charAt(index);
-            char next = headerPart.charAt(index + 1);
-            
+        // 遍历字符串直到找到行尾
+        while (index < headerPart.length()) {
             // 检查是否找到 \r\n 序列
-            if (current == '\r' && next == '\n') {
+            if (index + 1 < headerPart.length() && 
+                headerPart.charAt(index) == '\r' && 
+                headerPart.charAt(index + 1) == '\n') {
                 return index;
             }
             index++;
         }
         
-        // 如果没有找到行尾标记，返回字符串末尾
-        return headerPart.length() - 1;
+        // 如果没有找到行尾,返回字符串末尾
+        return headerPart.length();
     }
 }

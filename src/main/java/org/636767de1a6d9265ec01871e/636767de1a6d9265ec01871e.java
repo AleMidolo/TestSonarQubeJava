@@ -16,7 +16,7 @@ public class ShardingChecker {
             throw new IllegalStateException("Invalid model name format: " + modelName);
         }
 
-        // Check if sharding key index is continuous
+        // Check for continuous sharding key index
         try {
             validateShardingKeyIndex(modelName);
         } catch (Exception e) {

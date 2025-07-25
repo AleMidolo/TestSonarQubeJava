@@ -5,7 +5,7 @@ import org.atmosphere.cpr.AtmosphereHandler;
 import org.atmosphere.cpr.AtmosphereInterceptorAdapter;
 
 public class TransportInterceptor extends AtmosphereInterceptorAdapter {
-
+    
     @Override 
     public Action inspect(AtmosphereResource r) {
         // Get the transport type
@@ -20,18 +20,17 @@ public class TransportInterceptor extends AtmosphereInterceptorAdapter {
                 
             case SSE:
             case STREAMING:
-                // For Server-Sent Events and Streaming, suspend with timeout
-                r.suspend(5000); // 5 second timeout
+                // For Server-Sent Events and Streaming, suspend with a long timeout
+                r.suspend(-1L);
                 break;
                 
             case LONG_POLLING:
-                // For Long-Polling, suspend with shorter timeout
-                r.suspend(30000); // 30 second timeout
+                // For Long-Polling, suspend with a timeout
+                r.suspend(30000); // 30 seconds timeout
                 break;
                 
             default:
-                // For other transports, use default suspension
-                r.suspend();
+                // For other transports, don't suspend
                 break;
         }
         

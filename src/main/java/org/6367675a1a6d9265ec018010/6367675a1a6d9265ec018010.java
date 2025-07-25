@@ -1,42 +1,27 @@
 import java.util.Objects;
 
 public class Bucket {
-    private BucketList bucketList; // 假设桶是BucketList的一部分
+    private BucketManager manager;
     
     /**
      * 从数据结构中移除此桶。
      */
-    void removeSelf() {
-        if (bucketList != null) {
-            bucketList.removeBucket(this);
-            bucketList = null;
+    public void removeSelf() {
+        if (manager != null) {
+            manager.removeBucket(this);
+            manager = null;
         }
     }
     
-    // 构造函数
-    public Bucket(BucketList bucketList) {
-        this.bucketList = bucketList;
+    // 设置管理器的方法
+    public void setManager(BucketManager manager) {
+        this.manager = manager;
     }
-    
-    // getter和setter
-    public BucketList getBucketList() {
-        return bucketList;
-    }
-    
-    public void setBucketList(BucketList bucketList) {
-        this.bucketList = bucketList;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bucket bucket = (Bucket) o;
-        return Objects.equals(bucketList, bucket.bucketList);
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(bucketList);
+}
+
+// 桶管理器类
+class BucketManager {
+    public void removeBucket(Bucket bucket) {
+        // 具体的移除逻辑
     }
 }

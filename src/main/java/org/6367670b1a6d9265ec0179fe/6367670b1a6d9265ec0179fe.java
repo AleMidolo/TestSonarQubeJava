@@ -30,8 +30,9 @@ public class ByteArrayOutputStream extends OutputStream {
         if (minCapacity > buf.length) {
             // 计算新的缓冲区大小(当前大小的2倍)
             int newCapacity = Math.max(buf.length << 1, minCapacity);
-            // 创建新的缓冲区并复制数据
+            // 创建新的缓冲区
             byte[] newBuf = new byte[newCapacity];
+            // 复制原有数据到新缓冲区
             System.arraycopy(buf, 0, newBuf, 0, count);
             buf = newBuf;
         }

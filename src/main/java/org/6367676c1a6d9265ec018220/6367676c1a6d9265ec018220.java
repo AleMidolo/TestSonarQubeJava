@@ -11,24 +11,23 @@ public class FileUtils {
         if (path == null) {
             return null;
         }
-
+        
         int lastSeparatorIndex = path.lastIndexOf('/');
-        int lastDotIndex = path.lastIndexOf('.');
-
-        // यदि कोई डॉट नहीं है या डॉट अंतिम सेपरेटर से पहले है, तो एक्सटेंशन नहीं है
-        if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
+        int extensionIndex = path.lastIndexOf('.');
+        
+        // यदि कोई एक्सटेंशन नहीं है या एक्सटेंशन पथ के अंत में है, तो पथ को वैसे ही लौटाएं
+        if (extensionIndex == -1 || (lastSeparatorIndex != -1 && extensionIndex < lastSeparatorIndex)) {
             return path;
         }
-
-        // एक्सटेंशन को हटा दें
-        return path.substring(0, lastDotIndex);
+        
+        // एक्सटेंशन को हटाकर पथ लौटाएं
+        return path.substring(0, extensionIndex);
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // "mypath/myfile"
-        System.out.println(stripFilenameExtension("mypath/myfile"));    // "mypath/myfile"
-        System.out.println(stripFilenameExtension("myfile.txt"));        // "myfile"
-        System.out.println(stripFilenameExtension("myfile"));            // "myfile"
+        System.out.println(stripFilenameExtension("myfile.txt"));       // "myfile"
+        System.out.println(stripFilenameExtension("mypath/myfile"));     // "mypath/myfile"
         System.out.println(stripFilenameExtension(null));                // null
     }
 }

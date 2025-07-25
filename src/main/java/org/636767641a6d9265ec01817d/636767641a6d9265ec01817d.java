@@ -1,40 +1,41 @@
 import java.util.Map;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
-/**
- * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
- */
-@Override
-public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-    // Assuming V is the vertex type and E is the edge type
-    // Create two partitions of vertices
-    V[] partition1 = (V[]) new Object[resultMap.size() / 2];
-    V[] partition2 = (V[]) new Object[resultMap.size() / 2];
+public class CompleteBipartiteGraphGenerator<V, E> {
 
-    int i = 0;
-    for (Map.Entry<String, V> entry : resultMap.entrySet()) {
-        if (i < partition1.length) {
-            partition1[i] = entry.getValue();
-        } else {
-            partition2[i - partition1.length] = entry.getValue();
-        }
-        i++;
-    }
+    /**
+     * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
+     * 
+     * @param target    The graph to which the bipartite graph will be added.
+     * @param resultMap A map to store the vertices created during the generation.
+     */
+    @Override
+    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+        // Assuming the graph is bipartite with two partitions
+        // Let's assume the partitions are named "A" and "B"
+        // and the vertices are stored in the resultMap with keys "A1", "A2", ..., "B1", "B2", ...
 
-    // Add all vertices to the graph
-    for (V vertex : partition1) {
-        target.addVertex(vertex);
-    }
-    for (V vertex : partition2) {
-        target.addVertex(vertex);
-    }
+        // Clear the target graph and resultMap before starting
+        target.removeAllVertices();
+        resultMap.clear();
 
-    // Add edges between all vertices in partition1 and partition2
-    for (V v1 : partition1) {
-        for (V v2 : partition2) {
-            target.addEdge(v1, v2);
-        }
+        // Create vertices for partition A
+        V a1 = target.addVertex();
+        V a2 = target.addVertex();
+        resultMap.put("A1", a1);
+        resultMap.put("A2", a2);
+
+        // Create vertices for partition B
+        V b1 = target.addVertex();
+        V b2 = target.addVertex();
+        resultMap.put("B1", b1);
+        resultMap.put("B2", b2);
+
+        // Add edges between all vertices in partition A and partition B
+        target.addEdge(a1, b1);
+        target.addEdge(a1, b2);
+        target.addEdge(a2, b1);
+        target.addEdge(a2, b2);
     }
 }

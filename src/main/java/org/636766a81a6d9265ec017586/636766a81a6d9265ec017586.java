@@ -22,16 +22,4 @@ public class AbstractTypeHandler {
             outputFrameStack.pop();
         }
     }
-
-    // Example usage
-    public static void main(String[] args) {
-        AbstractTypeHandler handler = new AbstractTypeHandler();
-        handler.outputFrameStack.push("Type1");
-        handler.outputFrameStack.push("Type2");
-        handler.outputFrameStack.push("Type3");
-
-        System.out.println("Before pop: " + handler.outputFrameStack);
-        handler.pop(2);
-        System.out.println("After pop: " + handler.outputFrameStack);
-    }
 }

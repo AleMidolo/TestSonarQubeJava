@@ -1,49 +1,36 @@
-import java.util.Objects;
+import java.util.List;
+import java.util.Map;
 
-public class BucketCompatibilityChecker {
+public class DataTable {
+    private List<Map<String, Object>> data;
+
+    public DataTable(List<Map<String, Object>> data) {
+        this.data = data;
+    }
+
+    public List<Map<String, Object>> getData() {
+        return data;
+    }
+}
+
+public class BucketChecker {
 
     /**
-     * @param dataset the dataset to check for bucket compatibility
-     * @return true if the buckets are compatible, false otherwise
+     * @return यदि बकेट समान है तो true लौटाता है।
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
+        if (dataset == null || dataset.getData() == null || dataset.getData().isEmpty()) {
             return false;
         }
 
-        // Assuming DataTable has a method getBuckets() that returns a list of buckets
-        List<Bucket> buckets = dataset.getBuckets();
-
-        if (buckets == null || buckets.isEmpty()) {
-            return false;
-        }
-
-        // Get the first bucket to compare with the rest
-        Bucket firstBucket = buckets.get(0);
-
-        for (Bucket bucket : buckets) {
-            if (!Objects.equals(firstBucket, bucket)) {
+        // Assuming compatibility is determined by checking if all rows have the same set of keys
+        Map<String, Object> firstRow = dataset.getData().get(0);
+        for (Map<String, Object> row : dataset.getData()) {
+            if (!row.keySet().equals(firstRow.keySet())) {
                 return false;
             }
         }
 
         return true;
-    }
-}
-
-// Assuming Bucket and DataTable classes are defined as follows:
-class Bucket {
-    // Bucket properties and methods
-}
-
-class DataTable {
-    private List<Bucket> buckets;
-
-    public List<Bucket> getBuckets() {
-        return buckets;
-    }
-
-    public void setBuckets(List<Bucket> buckets) {
-        this.buckets = buckets;
     }
 }

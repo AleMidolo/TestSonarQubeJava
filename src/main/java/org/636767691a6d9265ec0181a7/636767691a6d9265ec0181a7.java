@@ -23,6 +23,6 @@ public class StringTrimmer {
         String input = "###HelloWorld";
         char leadingChar = '#';
         String result = trimLeadingCharacter(input, leadingChar);
-        System.out.println(result); // Output: HelloWorld
+        System.out.println(result);  // Output: HelloWorld
     }
 }

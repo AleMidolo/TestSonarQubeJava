@@ -7,12 +7,13 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String osName = System.getProperty("os.name").toLowerCase();
+        String userHome = System.getProperty("user.home");
         String configDirPath;
 
         if (osName.contains("windows 2000")) {
-            configDirPath = System.getenv("USERPROFILE") + File.separator + "Documents and Settings" + File.separator + "lf5";
+            configDirPath = userHome + File.separator + "Documents and Settings" + File.separator + "lf5";
         } else {
-            configDirPath = System.getProperty("user.home") + File.separator + "lf5";
+            configDirPath = userHome + File.separator + "lf5";
         }
 
         File configDir = new File(configDirPath);

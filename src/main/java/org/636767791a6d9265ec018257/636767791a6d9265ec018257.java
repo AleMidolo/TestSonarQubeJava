@@ -11,8 +11,6 @@ public class LogTable {
             @Override
             public void run() {
                 // यहां लॉग रिकॉर्ड को टेबल में जोड़ने का कोड होगा
-                // उदाहरण के लिए:
-                // logTableModel.addLogRecord(lr);
                 System.out.println("LogRecord added: " + lr.getMessage());
             }
         });

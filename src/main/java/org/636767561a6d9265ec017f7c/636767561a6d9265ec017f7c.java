@@ -1,13 +1,10 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
+import org.jgrapht.alg.shortestpath.GraphWalk;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultGraphPath;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,34 +13,35 @@ import java.util.Set;
  * @param graph ग्राफ
  * @return एक ग्राफ पथ
  */
-protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour cannot be empty.");
+        return new GraphWalk<>(graph, new ArrayList<>(), 0.0);
     }
 
-    // Create a map to store the adjacency of vertices
-    Map<V, V> adjacencyMap = new HashMap<>();
-    for (E edge : tour) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
-        adjacencyMap.put(source, target);
-    }
-
-    // Find the starting vertex
-    V startVertex = adjacencyMap.keySet().iterator().next();
-    V currentVertex = startVertex;
     List<V> vertexList = new ArrayList<>();
-    List<E> edgeList = new ArrayList<>();
+    List<E> edgeList = new ArrayList<>(tour);
 
-    // Traverse the tour
-    do {
-        vertexList.add(currentVertex);
-        V nextVertex = adjacencyMap.get(currentVertex);
-        E edge = graph.getEdge(currentVertex, nextVertex);
-        edgeList.add(edge);
-        currentVertex = nextVertex;
-    } while (!currentVertex.equals(startVertex));
+    // Start with the source vertex of the first edge
+    E firstEdge = edgeList.get(0);
+    V startVertex = graph.getEdgeSource(firstEdge);
+    vertexList.add(startVertex);
 
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, startVertex, startVertex, vertexList, edgeList);
+    // Traverse the edges to build the vertex list
+    V currentVertex = startVertex;
+    for (E edge : edgeList) {
+        V targetVertex = graph.getEdgeTarget(edge);
+        if (targetVertex.equals(currentVertex)) {
+            targetVertex = graph.getEdgeSource(edge);
+        }
+        vertexList.add(targetVertex);
+        currentVertex = targetVertex;
+    }
+
+    // Calculate the total weight of the path
+    double totalWeight = 0.0;
+    for (E edge : edgeList) {
+        totalWeight += graph.getEdgeWeight(edge);
+    }
+
+    return new GraphWalk<>(graph, vertexList, edgeList, totalWeight);
 }

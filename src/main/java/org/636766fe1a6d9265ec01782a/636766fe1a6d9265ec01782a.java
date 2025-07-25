@@ -1,7 +1,7 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final class ClassFileReader {
+public class ClassFileReader {
     private final byte[] classFileBuffer;
 
     public ClassFileReader(byte[] classFileBuffer) {
@@ -15,34 +15,37 @@ final class ClassFileReader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry index is valid and points to a CONSTANT_Utf8_info structure
-        // The structure of CONSTANT_Utf8_info is:
+        // Assuming the constant pool entry is a CONSTANT_Utf8_info structure
+        // The structure is as follows:
         // u1 tag (1 byte)
         // u2 length (2 bytes)
         // u1 bytes[length] (variable length)
 
-        ByteBuffer buffer = ByteBuffer.wrap(classFileBuffer);
-        buffer.position(constantPoolEntryIndex);
+        // Calculate the offset in the classFileBuffer for the given constantPoolEntryIndex
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
 
         // Read the tag (should be 1 for CONSTANT_Utf8)
-        byte tag = buffer.get();
+        byte tag = classFileBuffer[offset];
         if (tag != 1) {
-            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag");
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
         }
 
         // Read the length of the UTF-8 string
-        int length = buffer.getShort() & 0xFFFF;
+        int length = ((classFileBuffer[offset + 1] & 0xFF) << 8 | (classFileBuffer[offset + 2] & 0xFF);
 
-        // Read the UTF-8 bytes
+        // Read the UTF-8 bytes into a byte array
         byte[] utf8Bytes = new byte[length];
-        buffer.get(utf8Bytes);
+        System.arraycopy(classFileBuffer, offset + 3, utf8Bytes, 0, length);
 
-        // Convert UTF-8 bytes to a Java String
-        String result = new String(utf8Bytes, StandardCharsets.UTF_8);
+        // Convert the UTF-8 bytes to a String using the provided charBuffer
+        ByteBuffer byteBuffer = ByteBuffer.wrap(utf8Bytes);
+        return StandardCharsets.UTF_8.decode(byteBuffer).toString();
+    }
 
-        // Copy the characters to the provided charBuffer
-        result.getChars(0, result.length(), charBuffer, 0);
-
-        return result;
+    private int getConstantPoolEntryOffset(int constantPoolEntryIndex) {
+        // This method should calculate the offset of the constant pool entry in the classFileBuffer
+        // based on the constantPoolEntryIndex. This is a simplified example and may not cover all cases.
+        // In a real implementation, you would need to parse the class file structure properly.
+        return constantPoolEntryIndex * 5; // Simplified offset calculation
     }
 }

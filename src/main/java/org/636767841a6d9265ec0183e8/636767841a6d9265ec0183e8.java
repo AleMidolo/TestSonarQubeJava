@@ -1,24 +1,17 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventBuffer {
-    private List<LoggingEvent> buffer;
+    private LoggingEvent lastEvent;
 
-    public EventBuffer() {
-        this.buffer = new ArrayList<>();
-    }
-
-    /** 
+    /**
      * एक <code>event</code> को बफर में अंतिम घटना के रूप में जोड़ें।
+     * @param event जोड़ने के लिए LoggingEvent
      */
     public void add(LoggingEvent event) {
-        if (event != null) {
-            buffer.add(event);
-        }
+        this.lastEvent = event;
     }
 
-    public List<LoggingEvent> getBuffer() {
-        return buffer;
+    public LoggingEvent getLastEvent() {
+        return lastEvent;
     }
 }

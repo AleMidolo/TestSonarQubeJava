@@ -26,8 +26,23 @@ public class ConverterRegistry {
         converterMap.put(clazz, converter);
     }
 
-    // Example Converter interface
-    public interface Converter {
-        Object convert(Object input);
+    public static void main(String[] args) {
+        ConverterRegistry registry = new ConverterRegistry();
+        // Example usage
+        registry.registerConverter(String.class, new StringConverter());
+        Converter converter = registry.lookup(String.class);
+        if (converter != null) {
+            System.out.println("Converter found for String class.");
+        } else {
+            System.out.println("No converter found for String class.");
+        }
     }
+}
+
+interface Converter {
+    // Converter methods can be defined here
+}
+
+class StringConverter implements Converter {
+    // Implementation of StringConverter
 }

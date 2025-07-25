@@ -2,7 +2,7 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-
+    // Assuming a map to store the mappings and handlers
     private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
@@ -18,11 +18,7 @@ public class AtmosphereFramework {
         return false;
     }
 
-    /**
-     * एक {@link AtmosphereHandler} को जोड़ें।
-     * @param mapping मैपिंग जो {@link AtmosphereHandler} को पहचानती है।
-     * @param handler जोड़ा जाने वाला {@link AtmosphereHandler}।
-     */
+    // Assuming this method exists to add handlers
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
     }

@@ -1,14 +1,14 @@
 import java.util.function.Predicate;
 
+class Node {
+    // Assuming Node class has necessary properties and methods
+}
+
+class OuterFaceCirculator {
+    // Assuming OuterFaceCirculator class has necessary properties and methods
+}
+
 public class GraphTraversal {
-
-    private static class Node {
-        // Node implementation details
-    }
-
-    private static class OuterFaceCirculator {
-        // OuterFaceCirculator implementation details
-    }
 
     /**
      * या तो उस नोड के लिए एक सर्कुलेटर खोजता है और लौटाता है जो घटक की सीमा पर है, जो {@code predicate} को संतुष्ट करता है या {@code stop} नोड के लिए एक सर्कुलेटर लौटाता है।
@@ -24,9 +24,10 @@ public class GraphTraversal {
 
         while (current != stop) {
             if (predicate.test(current)) {
-                return circulator; // Return circulator for the node that satisfies the predicate
+                // Return the circulator for the node that satisfies the predicate
+                return circulator;
             }
-            // Move to the next node based on the direction
+            // Move to the next node in the specified direction
             current = getNextNode(current, dir);
         }
 
@@ -35,20 +36,8 @@ public class GraphTraversal {
     }
 
     private Node getNextNode(Node current, int dir) {
-        // Implementation to get the next node based on the direction
-        // This is a placeholder and should be implemented based on the actual graph structure
-        return new Node();
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        GraphTraversal traversal = new GraphTraversal();
-        Node startNode = new Node();
-        Node stopNode = new Node();
-        Predicate<Node> predicate = node -> true; // Example predicate
-        int direction = 1; // Example direction
-
-        OuterFaceCirculator result = traversal.selectOnOuterFace(predicate, startNode, stopNode, direction);
-        // Use the result as needed
+        // Assuming this method returns the next node in the specified direction
+        // Implementation depends on the structure of the graph and the direction
+        return null; // Placeholder, replace with actual implementation
     }
 }

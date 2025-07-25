@@ -1,3 +1,5 @@
+package utils;
+
 public class StringUtils {
     /**
      * Returns {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.

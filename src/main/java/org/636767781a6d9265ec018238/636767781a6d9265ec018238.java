@@ -1,18 +1,35 @@
-import java.util.List;
-import java.util.ArrayList;
 import org.apache.log4j.Appender;
+import java.util.Enumeration;
 
-public class AppenderChecker {
-    private List<Appender> appenderList;
-
-    public AppenderChecker() {
-        appenderList = new ArrayList<>();
-    }
+public class Logger {
+    private AppenderList appenderList;
 
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenderList == null) {
+        if (appender == null) {
             return false;
         }
-        return appenderList.contains(appender);
+
+        // Get enumeration of all attached appenders
+        Enumeration<Appender> appenders = getAllAppenders();
+        
+        // If no appenders exist, return false
+        if (appenders == null) {
+            return false;
+        }
+
+        // Iterate through appenders to find a match
+        while (appenders.hasMoreElements()) {
+            Appender currentAppender = appenders.nextElement();
+            if (currentAppender == appender) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Helper method to get appenders
+    private Enumeration<Appender> getAllAppenders() {
+        return appenderList != null ? appenderList.getAllAppenders() : null;
     }
 }

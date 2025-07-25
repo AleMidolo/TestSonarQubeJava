@@ -1,20 +1,26 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bucket {
-    private List<Object> items;
-    private boolean removed;
-
-    public Bucket() {
-        items = new ArrayList<>();
-        removed = false;
-    }
-
+public class Bucket<T> {
+    private List<T> items;
+    private Bucket<T> next;
+    private Bucket<T> prev;
+    
     /**
      * Removes this bucket from the data structure.
      */
-    public void remove() {
-        items.clear();
-        removed = true;
+    void removeSelf() {
+        if (prev != null) {
+            prev.next = this.next;
+        }
+        
+        if (next != null) {
+            next.prev = this.prev;
+        }
+        
+        // Clear references to help garbage collection
+        this.next = null;
+        this.prev = null;
+        this.items = null;
     }
 }

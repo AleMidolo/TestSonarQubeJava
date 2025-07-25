@@ -1,6 +1,12 @@
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ColumnName {
+    private Map<String, String> nameOverrides;
+
+    public ColumnName() {
+        nameOverrides = new HashMap<>();
+    }
 
     /**
      * Keep the same name replacement as {@link ColumnName#overrideName(String,String)}
@@ -8,18 +14,10 @@ public class ColumnName {
      * @param newName to use in the storage level.
      */
     public void overrideName(String oldName, String newName) {
-        if (Objects.isNull(oldName) || Objects.isNull(newName)) {
+        if (oldName == null || newName == null) {
             throw new IllegalArgumentException("Column names cannot be null");
         }
         
-        if (oldName.isEmpty() || newName.isEmpty()) {
-            throw new IllegalArgumentException("Column names cannot be empty");
-        }
-        
-        // Store the name mapping
-        columnNameMap.put(oldName.toLowerCase(), newName.toLowerCase());
+        nameOverrides.put(oldName.trim(), newName.trim());
     }
-    
-    // Map to store column name mappings
-    private Map<String, String> columnNameMap = new HashMap<>();
 }

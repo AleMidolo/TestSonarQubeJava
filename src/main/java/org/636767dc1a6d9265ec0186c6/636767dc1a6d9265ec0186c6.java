@@ -1,32 +1,25 @@
 import java.util.Properties;
 
-public class PropertyChecker {
+public class FieldValidator {
     private Properties properties;
 
-    public PropertyChecker() {
+    public FieldValidator() {
         this.properties = new Properties();
     }
 
     /**
      * Returns true when the input fields have already been stored in the properties.
-     * @param fields Array of field names to check
-     * @return boolean indicating if all fields exist in properties
      */
-    public boolean areFieldsStored(String[] fields) {
-        if (fields == null || fields.length == 0) {
+    private boolean containsAllFields(Fields fields) {
+        if (fields == null) {
             return false;
         }
 
-        for (String field : fields) {
-            if (field == null || !properties.containsKey(field)) {
+        for (String fieldName : fields.getFieldNames()) {
+            if (!properties.containsKey(fieldName)) {
                 return false;
             }
         }
         return true;
-    }
-
-    // Helper method to add properties for testing
-    public void setProperty(String key, String value) {
-        properties.setProperty(key, value);
     }
 }

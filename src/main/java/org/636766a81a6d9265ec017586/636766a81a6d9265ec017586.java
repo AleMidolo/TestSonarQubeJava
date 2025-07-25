@@ -7,17 +7,15 @@ public class FrameStack {
         outputFrameStack = new Stack<>();
     }
 
-    public void popElements(int elements) {
-        if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be non-negative");
-        }
-
-        if (elements > outputFrameStack.size()) {
-            throw new IllegalStateException("Cannot pop more elements than exist in stack");
-        }
-
+    /**
+     * Pops the given number of abstract types from the output frame stack.
+     * @param elements the number of abstract types that must be popped.
+     */
+    private void pop(final int elements) {
         for (int i = 0; i < elements; i++) {
-            outputFrameStack.pop();
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
+            }
         }
     }
 }

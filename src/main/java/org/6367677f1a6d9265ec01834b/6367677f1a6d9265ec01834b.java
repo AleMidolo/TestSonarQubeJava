@@ -1,21 +1,26 @@
 import org.apache.log4j.spi.LoggingEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class LogBuffer {
-    private ArrayBlockingQueue<LoggingEvent> buffer;
+public class LogEventBuffer {
+    private final ArrayBlockingQueue<LoggingEvent> buffer;
     private static final int DEFAULT_BUFFER_SIZE = 1000;
 
-    public LogBuffer() {
+    public LogEventBuffer() {
         this(DEFAULT_BUFFER_SIZE);
     }
 
-    public LogBuffer(int bufferSize) {
+    public LogEventBuffer(int bufferSize) {
         buffer = new ArrayBlockingQueue<>(bufferSize);
     }
 
-    public void put(LoggingEvent event) {
-        if (event != null) {
-            buffer.offer(event); // Silently drops if buffer is full
+    /** 
+     * Place a {@link LoggingEvent} in the buffer. If the buffer is full
+     * then the event is <b>silently dropped</b>. It is the caller's 
+     * responsibility to make sure that the buffer has free space.  
+     */
+    public void put(LoggingEvent o) {
+        if (o != null) {
+            buffer.offer(o); // Uses offer() instead of add() to silently drop when full
         }
     }
 }

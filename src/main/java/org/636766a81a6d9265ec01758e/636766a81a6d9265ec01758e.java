@@ -1,50 +1,46 @@
-public class HashCapacity {
-    public static int getPrimeCapacity(int desiredCapacity) {
-        if (desiredCapacity < 0) {
-            throw new IllegalArgumentException("Capacity cannot be negative");
-        }
-        
-        if (desiredCapacity < 2) {
+public class PrimeCalculator {
+    /**
+     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity 
+     * (within 11% if desiredCapacity >= 1000).
+     * @param desiredCapacity the capacity desired by the user.
+     * @return the capacity which should be used for a hashtable.
+     */
+    public static int nextPrime(int desiredCapacity) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
         
-        // Start checking from desiredCapacity
+        // Start with odd number >= desiredCapacity
         int num = desiredCapacity;
-        
-        // If even, increment by 1 to start checking from odd number
         if (num % 2 == 0) {
             num++;
         }
         
-        // Keep checking until we find a prime number
         while (!isPrime(num)) {
             num += 2;
-            
-            // Check if we've exceeded the 11% threshold for large capacities
-            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
-                // Go back to desired capacity and find previous prime
-                num = desiredCapacity;
-                while (!isPrime(num)) {
-                    num--;
-                }
-                break;
-            }
         }
         
         return num;
     }
     
+    /**
+     * Helper method to check if a number is prime
+     */
     private static boolean isPrime(int num) {
         if (num <= 1) return false;
-        if (num <= 3) return true;
-        if (num % 2 == 0 || num % 3 == 0) return false;
+        if (num == 2) return true;
+        if (num % 2 == 0) return false;
         
-        // Check up to square root of num
-        for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
+        // Only need to check up to square root
+        int sqrt = (int) Math.sqrt(num);
+        
+        // Check odd divisors up to sqrt
+        for (int i = 3; i <= sqrt; i += 2) {
+            if (num % i == 0) {
                 return false;
             }
         }
+        
         return true;
     }
 }

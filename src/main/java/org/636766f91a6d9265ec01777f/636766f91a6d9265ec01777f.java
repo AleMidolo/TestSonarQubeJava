@@ -1,3 +1,5 @@
+package org.apache.commons.lang3;
+
 public class BooleanUtils {
     /**
      * <p>Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.</p>

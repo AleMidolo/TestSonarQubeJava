@@ -1,26 +1,31 @@
 import java.util.Arrays;
 
-public class ArrayMatcher {
-    private int[] internalArray;
+public class ByteArrayMatcher {
     
-    public ArrayMatcher(int[] array) {
+    private byte[] internalArray;
+    
+    public ByteArrayMatcher(byte[] array) {
         this.internalArray = array;
     }
-
+    
     /**
      * Returns true if the contents of the internal array and the provided array match.
-     * @param otherArray The array to compare against the internal array
-     * @return boolean True if arrays match, false otherwise
      */
-    public boolean matches(int[] otherArray) {
-        if (otherArray == null || internalArray == null) {
+    public boolean equals(final byte[] data, int offset, final int len) {
+        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
         
-        if (otherArray.length != internalArray.length) {
+        if (len != internalArray.length) {
             return false;
         }
         
-        return Arrays.equals(internalArray, otherArray);
+        for (int i = 0; i < len; i++) {
+            if (data[offset + i] != internalArray[i]) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

@@ -1,118 +1,84 @@
 import java.util.*;
 
 public class MinimalSeparators {
-    private Graph graph;
-
-    public MinimalSeparators(Graph graph) {
-        this.graph = graph;
-    }
-
-    public List<Set<Integer>> computeGlobalSeparatorList() {
-        List<Set<Integer>> globalSeparators = new ArrayList<>();
+    private Graph<V,E> graph; // Assuming a Graph class with vertices V and edges E
+    
+    private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
+        List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
-        // Get all edges from the graph
-        Set<Edge> edges = graph.getEdges();
-        
-        // For each edge, find its minimal separators
-        for (Edge e : edges) {
-            int u = e.getSource();
-            int v = e.getTarget();
+        // Iterate through all edges in the graph
+        for (E edge : graph.edgeSet()) {
+            // Get endpoints of the edge
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
             
-            // Get neighbors of both vertices
-            Set<Integer> uNeighbors = graph.getNeighbors(u);
-            Set<Integer> vNeighbors = graph.getNeighbors(v);
+            // Get common neighbors of the endpoints
+            Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
+            Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
+            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
+            commonNeighbors.retainAll(targetNeighbors);
             
-            // Find common neighbors (potential minimal separators)
-            Set<Integer> commonNeighbors = new HashSet<>(uNeighbors);
-            commonNeighbors.retainAll(vNeighbors);
+            // Compute minimal separators for this edge
+            List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
             
-            // For each common neighbor, check if it forms a minimal separator
-            for (Integer w : commonNeighbors) {
-                Set<Integer> potentialSeparator = new HashSet<>();
-                potentialSeparator.add(w);
-                
-                // Check if removing the potential separator disconnects u and v
-                if (isMinimalSeparator(u, v, potentialSeparator)) {
-                    globalSeparators.add(potentialSeparator);
+            // For each pair of common neighbors
+            List<V> neighborList = new ArrayList<>(commonNeighbors);
+            for (int i = 0; i < neighborList.size(); i++) {
+                for (int j = i + 1; j < neighborList.size(); j++) {
+                    V v1 = neighborList.get(i);
+                    V v2 = neighborList.get(j);
+                    
+                    // Check if they form a minimal separator
+                    if (isMinimalSeparator(v1, v2, source, target)) {
+                        edgeSeparators.add(new Pair<>(
+                            graph.getVertexIndex(v1),
+                            graph.getVertexIndex(v2)
+                        ));
+                    }
                 }
             }
             
-            // Also check pairs of common neighbors
-            List<Integer> commonNeighborsList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < commonNeighborsList.size(); i++) {
-                for (int j = i + 1; j < commonNeighborsList.size(); j++) {
-                    Set<Integer> potentialSeparator = new HashSet<>();
-                    potentialSeparator.add(commonNeighborsList.get(i));
-                    potentialSeparator.add(commonNeighborsList.get(j));
-                    
-                    if (isMinimalSeparator(u, v, potentialSeparator)) {
-                        globalSeparators.add(potentialSeparator);
-                    }
-                }
+            // Add edge separators to global list
+            if (!edgeSeparators.isEmpty()) {
+                globalSeparators.add(new Pair<>(edgeSeparators, edge));
             }
         }
         
         return globalSeparators;
     }
     
-    private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a copy of the graph without the separator vertices
-        Graph reducedGraph = graph.copy();
-        for (Integer v : separator) {
-            reducedGraph.removeVertex(v);
-        }
+    // Helper method to check if two vertices form a minimal separator
+    private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
+        // Remove v1 and v2 from graph temporarily
+        Set<V> separator = new HashSet<>();
+        separator.add(v1);
+        separator.add(v2);
         
-        // Check if source and target are disconnected
-        return !hasPath(reducedGraph, source, target);
-    }
-    
-    private boolean hasPath(Graph g, int source, int target) {
-        Set<Integer> visited = new HashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
+        // Check if source and target are in different components
+        Set<V> visited = new HashSet<>();
+        visited.add(v1);
+        visited.add(v2);
+        
+        Queue<V> queue = new LinkedList<>();
         queue.add(source);
         visited.add(source);
         
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            if (current == target) {
-                return true;
-            }
-            
-            for (Integer neighbor : g.getNeighbors(current)) {
+        boolean foundTarget = false;
+        while (!queue.isEmpty() && !foundTarget) {
+            V current = queue.poll();
+            for (V neighbor : graph.neighborListOf(current)) {
                 if (!visited.contains(neighbor)) {
+                    if (neighbor.equals(target)) {
+                        foundTarget = true;
+                        break;
+                    }
                     visited.add(neighbor);
                     queue.add(neighbor);
                 }
             }
         }
         
-        return false;
-    }
-    
-    // Helper class to represent edges
-    private static class Edge {
-        private int source;
-        private int target;
-        
-        public Edge(int source, int target) {
-            this.source = source;
-            this.target = target;
-        }
-        
-        public int getSource() {
-            return source;
-        }
-        
-        public int getTarget() {
-            return target;
-        }
-    }
-    
-    // Interface for the graph implementation
-    private interface Graph {
-        Set<Edge> getEdges();
-        Set<Integer> getNeighbors(int vertex);
-        void removeVertex(int vertex);
-        Graph copy();
+        // If target not reachable, v1 and v2 form a separator
+        return !foundTarget;
     }
 }

@@ -10,27 +10,18 @@ public class ByteArrayBuffer {
 
     /**
      * Returns a single byte array containing all the contents written to the buffer(s).
-     * @return byte array containing buffer contents
      */
-    public byte[] toByteArray() {
-        try {
-            buffer.flush();
-            return buffer.toByteArray();
-        } catch (IOException e) {
-            return new byte[0];
-        }
+    public final byte[] toByteArray() {
+        return buffer.toByteArray();
     }
 
-    // Additional methods for writing to buffer would go here
+    // Helper method to write bytes to buffer
     public void write(byte[] bytes) throws IOException {
         buffer.write(bytes);
     }
 
-    public void write(int b) throws IOException {
+    // Helper method to write a single byte
+    public void write(int b) {
         buffer.write(b);
-    }
-
-    public void write(byte[] bytes, int offset, int length) throws IOException {
-        buffer.write(bytes, offset, length);
     }
 }

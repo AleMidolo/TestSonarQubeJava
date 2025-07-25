@@ -7,9 +7,9 @@ public class Label {
      * Adds a source line number corresponding to this label.
      * @param lineNumber a source line number (which should be strictly positive).
      */
-    public void addLineNumber(int lineNumber) {
+    final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Line number must be strictly positive");
+            throw new IllegalArgumentException("Line number must be positive");
         }
         this.sourceLineNumber = lineNumber;
     }

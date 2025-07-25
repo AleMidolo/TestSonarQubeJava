@@ -1,3 +1,5 @@
+import java.lang.StringBuilder;
+
 public class StringUtils {
     /**
      * <p>Reverses a String as per {@link StringBuilder#reverse()}.</p>
@@ -7,10 +9,10 @@ public class StringUtils {
      * StringUtils.reverse("")    = ""
      * StringUtils.reverse("bat") = "tab"
      * </pre>
-     * @param str the String to reverse, may be null
+     * @param str  the String to reverse, may be null
      * @return the reversed String, <code>null</code> if null String input
      */
-    public static String reverse(String str) {
+    public static String reverse(final String str) {
         if (str == null) {
             return null;
         }

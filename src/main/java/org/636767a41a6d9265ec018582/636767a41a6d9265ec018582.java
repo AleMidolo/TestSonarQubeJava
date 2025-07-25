@@ -1,26 +1,42 @@
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.Schema;
+import com.dyuproject.protostuff.ProtobufOutput;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 public class MessageSerializer {
+
+    public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
+        // Create ProtobufOutput with the provided buffer
+        ProtobufOutput output = new ProtobufOutput(buffer);
+        
+        // Write message to buffer using schema
+        schema.writeTo(output, message);
+        
+        // Get the size of the serialized message
+        int size = output.getSize();
+        
+        // Write the size as a varint prefix
+        writeRawVarint32(out, size);
+        
+        // Write the actual message bytes
+        LinkedBuffer.writeTo(out, buffer);
+        
+        // Clear the buffer
+        buffer.clear();
+        
+        return size;
+    }
     
-    /**
-     * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
-     * @param message The byte array message to serialize
-     * @param out The output stream to write to
-     * @return the size of the message
-     * @throws IOException if an I/O error occurs
-     */
-    public static int serializeMessage(byte[] message, OutputStream out) throws IOException {
-        // Write message length as 4 byte integer
-        ByteBuffer lengthBuffer = ByteBuffer.allocate(4);
-        lengthBuffer.putInt(message.length);
-        out.write(lengthBuffer.array());
-        
-        // Write message content
-        out.write(message);
-        
-        // Return total size (4 bytes for length + message size)
-        return 4 + message.length;
+    private static void writeRawVarint32(OutputStream out, int value) throws IOException {
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                out.write(value);
+                return;
+            } else {
+                out.write((value & 0x7F) | 0x80);
+                value >>>= 7;
+            }
+        }
     }
 }

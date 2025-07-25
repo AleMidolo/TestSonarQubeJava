@@ -1,4 +1,5 @@
-import java.util.*;
+import org.jgrapht.Graph;
+import java.util.Set;
 
 public class GraphUtils {
     /**
@@ -7,29 +8,20 @@ public class GraphUtils {
      * @param vertices the vertices to induce the subgraph from.
      * @return true if the induced subgraph is a clique.
      */
-    public static boolean isClique(Graph graph, Set<Integer> vertices) {
-        // For each pair of vertices in the set
-        for (Integer v1 : vertices) {
-            for (Integer v2 : vertices) {
-                // Skip self loops
-                if (v1.equals(v2)) {
-                    continue;
-                }
-                
-                // If any pair of vertices is not connected by an edge,
-                // then this is not a clique
-                if (!graph.hasEdge(v1, v2)) {
-                    return false;
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+        // For a complete graph, each vertex must connect to all other vertices
+        // Number of edges should be n*(n-1)/2 where n is number of vertices
+        
+        for (V vertex1 : vertices) {
+            for (V vertex2 : vertices) {
+                if (!vertex1.equals(vertex2)) {
+                    // Check if edge exists between vertices
+                    if (!graph.containsEdge(vertex1, vertex2)) {
+                        return false;
+                    }
                 }
             }
         }
-        
-        // If we get here, all vertices are connected to each other
         return true;
     }
-}
-
-// Sample Graph interface that would be needed
-interface Graph {
-    boolean hasEdge(Integer source, Integer target);
 }

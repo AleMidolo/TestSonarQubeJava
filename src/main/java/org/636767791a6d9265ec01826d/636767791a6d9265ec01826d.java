@@ -1,17 +1,13 @@
-import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertyResolver {
-
+public class PropertyUtils {
     /**
-     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
-     * @param key The property key to look up
-     * @param props The Properties object containing key-value pairs
-     * @return The resolved property value with variables substituted
+     * Find the value corresponding to <code>key</code> in <code>props</code>. 
+     * Then perform variable substitution on the found value.
      */
-    public String resolveProperty(String key, Properties props) {
+    public static String findAndSubst(String key, Properties props) {
         if (key == null || props == null) {
             return null;
         }
@@ -21,23 +17,22 @@ public class PropertyResolver {
             return null;
         }
 
-        // Pattern to match ${variable} syntax
+        // Pattern to match ${variable} format
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
+        // Replace each ${variable} with its value from properties
         while (matcher.find()) {
             String varName = matcher.group(1);
-            String replacement = props.getProperty(varName);
+            String varValue = props.getProperty(varName);
             
-            // If variable not found, leave as-is
-            if (replacement == null) {
-                replacement = "${" + varName + "}";
+            // If variable not found, leave as is
+            if (varValue == null) {
+                varValue = "${" + varName + "}";
             }
             
-            // Escape $ and \ in replacement string
-            replacement = replacement.replace("\\", "\\\\").replace("$", "\\$");
-            matcher.appendReplacement(result, replacement);
+            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
         }
         matcher.appendTail(result);
 

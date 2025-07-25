@@ -1,57 +1,73 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProtocolParser {
+public class CodedInputStream {
     private final InputStream input;
-    private int position = 0;
+    private int lastTag = 0;
+    private int pos = 0;
+    private byte[] buffer;
+    private int bufferSize;
     
-    public ProtocolParser(InputStream input) {
+    public CodedInputStream(InputStream input) {
         this.input = input;
+        this.buffer = new byte[4096];
+        this.bufferSize = 0;
     }
 
-    /**
-     * Attempt to read a field tag, returning zero if we have reached EOF. 
-     * Protocol message parsers use this to read tags, since a protocol message 
-     * may legally end wherever a tag occurs, and zero is not a valid tag number.
-     *
-     * @return The tag number read, or 0 if EOF is reached
-     * @throws IOException If there is an error reading from the input stream
-     */
     public int readTag() throws IOException {
-        // Check if we've reached EOF
-        int firstByte = input.read();
-        if (firstByte == -1) {
+        if (isAtEnd()) {
+            lastTag = 0;
             return 0;
         }
+
+        // Read the tag value using variable-length encoding
+        lastTag = readVarint32();
         
-        position++;
-        
-        // For simple tags that fit in 1 byte
-        if ((firstByte & 0x80) == 0) {
-            return firstByte;
+        if (lastTag == 0) {
+            // If we read zero, that means we've hit the end of the stream
+            // or encountered an invalid tag
+            throw new IOException("Invalid tag: zero");
+        }
+
+        return lastTag;
+    }
+
+    private boolean isAtEnd() throws IOException {
+        if (pos < bufferSize) {
+            return false;
         }
         
-        // For multi-byte tags
-        int result = firstByte & 0x7f;
-        int shift = 7;
+        int read = input.read(buffer);
+        if (read <= 0) {
+            return true;
+        }
         
-        while (true) {
-            int nextByte = input.read();
-            if (nextByte == -1) {
-                throw new IOException("Truncated message");
+        pos = 0;
+        bufferSize = read;
+        return false;
+    }
+
+    private int readVarint32() throws IOException {
+        int result = 0;
+        int shift = 0;
+        
+        while (shift < 32) {
+            if (pos >= bufferSize) {
+                if (isAtEnd()) {
+                    throw new IOException("Truncated message");
+                }
             }
             
-            position++;
-            result |= (nextByte & 0x7f) << shift;
+            byte b = buffer[pos++];
+            result |= (b & 0x7F) << shift;
             
-            if ((nextByte & 0x80) == 0) {
+            if ((b & 0x80) == 0) {
                 return result;
             }
             
             shift += 7;
-            if (shift >= 32) {
-                throw new IOException("Tag is too large");
-            }
         }
+        
+        throw new IOException("Malformed varint");
     }
 }

@@ -1,82 +1,61 @@
+import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
+import org.jgrapht.graph.GraphWalk;
 import java.util.*;
 
-public class GraphPathTransformer {
-    
-    public List<Integer> setToPath(Set<Edge> tour, Graph graph) {
-        if (tour == null || tour.isEmpty() || graph == null) {
-            return new ArrayList<>();
+public class TourTransformer<V,E> {
+
+    /**
+     * Transform from a Set representation to a graph path.
+     * @param tour a set containing the edges of the tour
+     * @param graph the graph
+     * @return a graph path
+     */
+    protected GraphPath<V,E> edgeSetToTour(Set<E> tour, Graph<V,E> graph) {
+        if (tour.isEmpty()) {
+            return null;
         }
 
-        List<Integer> path = new ArrayList<>();
-        Edge currentEdge = tour.iterator().next();
-        int currentVertex = currentEdge.getSource();
-        path.add(currentVertex);
-
-        Set<Edge> remainingEdges = new HashSet<>(tour);
-        remainingEdges.remove(currentEdge);
-
-        while (!remainingEdges.isEmpty()) {
-            currentVertex = currentEdge.getDestination();
-            path.add(currentVertex);
-
-            Edge nextEdge = null;
-            for (Edge edge : remainingEdges) {
-                if (edge.getSource() == currentVertex) {
-                    nextEdge = edge;
+        List<E> edges = new ArrayList<>(tour);
+        List<V> vertices = new ArrayList<>();
+        
+        // Get first vertex
+        V start = graph.getEdgeSource(edges.get(0));
+        vertices.add(start);
+        
+        V current = graph.getEdgeTarget(edges.get(0));
+        vertices.add(current);
+        
+        // Remove first edge since it's processed
+        edges.remove(0);
+        
+        // Build path by following edges
+        while (!edges.isEmpty()) {
+            for (Iterator<E> it = edges.iterator(); it.hasNext();) {
+                E edge = it.next();
+                V source = graph.getEdgeSource(edge);
+                V target = graph.getEdgeTarget(edge);
+                
+                if (source.equals(current)) {
+                    current = target;
+                    vertices.add(current);
+                    it.remove();
                     break;
-                }
-                if (edge.getDestination() == currentVertex) {
-                    // Reverse edge direction if needed
-                    nextEdge = new Edge(edge.getDestination(), edge.getSource());
+                } else if (target.equals(current)) {
+                    current = source;
+                    vertices.add(current);
+                    it.remove();
                     break;
                 }
             }
-
-            if (nextEdge == null) {
-                break;
-            }
-
-            currentEdge = nextEdge;
-            remainingEdges.remove(nextEdge);
         }
-
-        return path;
+        
+        // Calculate total weight of path
+        double weight = 0.0;
+        for (E edge : tour) {
+            weight += graph.getEdgeWeight(edge);
+        }
+        
+        return new GraphWalk<>(graph, vertices, weight);
     }
-}
-
-// Supporting classes needed for compilation
-class Edge {
-    private int source;
-    private int destination;
-
-    public Edge(int source, int destination) {
-        this.source = source;
-        this.destination = destination;
-    }
-
-    public int getSource() {
-        return source;
-    }
-
-    public int getDestination() {
-        return destination;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Edge edge = (Edge) o;
-        return source == edge.source && destination == edge.destination;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(source, destination);
-    }
-}
-
-class Graph {
-    // Graph implementation details would go here
-    // This is just a placeholder class for compilation
 }

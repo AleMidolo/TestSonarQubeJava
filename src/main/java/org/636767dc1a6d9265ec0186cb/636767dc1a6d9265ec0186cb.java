@@ -3,31 +3,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 public class ConfigInitializer {
-
-    /**
-     * initialize config, such as check dist path
-     */
-    public void initializeConfig() {
-        // Check and create dist directory if it doesn't exist
-        String distPath = "dist";
-        Path path = Paths.get(distPath);
-        
-        if (!Files.exists(path)) {
-            try {
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to create dist directory", e);
+    private static final Logger logger = Logger.getLogger(ConfigInitializer.class.getName());
+    private static final String DIST_PATH = "dist";
+    
+    public void init() {
+        try {
+            // Check if dist directory exists, create if not
+            Path distPath = Paths.get(DIST_PATH);
+            if (!Files.exists(distPath)) {
+                Files.createDirectory(distPath);
+                logger.info("Created dist directory at: " + distPath.toAbsolutePath());
             }
-        }
 
-        // Verify dist directory is writable
-        File distDir = new File(distPath);
-        if (!distDir.canWrite()) {
-            throw new RuntimeException("Dist directory is not writable");
-        }
+            // Verify dist directory is writable
+            if (!Files.isWritable(distPath)) {
+                throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
+            }
 
-        // Additional config initialization can be added here
+            // Initialize other config settings as needed
+            logger.info("Configuration initialized successfully");
+            
+        } catch (IOException e) {
+            logger.severe("Failed to initialize configuration: " + e.getMessage());
+            throw new RuntimeException("Configuration initialization failed", e);
+        }
     }
 }

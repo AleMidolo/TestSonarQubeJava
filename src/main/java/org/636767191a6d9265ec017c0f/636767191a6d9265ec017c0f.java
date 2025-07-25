@@ -1,26 +1,16 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] buffer;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 64;
-
-    public ByteVector() {
-        buffer = new byte[DEFAULT_CAPACITY];
-        size = 0;
-    }
-
-    public void enlarge(final int size) {
-        if (size <= 0) {
-            return;
-        }
-        
-        int currentCapacity = buffer.length;
-        int requiredCapacity = this.size + size;
-        
-        if (requiredCapacity > currentCapacity) {
-            int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
-            buffer = Arrays.copyOf(buffer, newCapacity);
+    private byte[] data;
+    private int length;
+    
+    private void enlarge(final int size) {
+        int newLength = length + size;
+        if (newLength > data.length) {
+            // Calculate new array size - double current size or add size needed, whichever is larger
+            int newArraySize = Math.max(data.length * 2, newLength);
+            // Create new array and copy existing data
+            data = Arrays.copyOf(data, newArraySize);
         }
     }
 }

@@ -1,27 +1,30 @@
-import java.lang.StringBuilder;
+import java.lang.StringBuffer;
 
 public class NameAbbreviator {
     
     /**
      * Abbreviate name.
-     * @param buf buffer to append abbreviation
-     * @param nameStart start of name to abbreviate
+     * @param buf buffer to append abbreviation.
+     * @param nameStart start of name to abbreviate.
      */
-    public static void abbreviateName(StringBuilder buf, String nameStart) {
-        if (nameStart == null || nameStart.isEmpty()) {
+    public void abbreviate(final int nameStart, final StringBuffer buf) {
+        if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
             return;
         }
 
-        // Add first character
-        buf.append(Character.toUpperCase(nameStart.charAt(0)));
+        // Find first letter after nameStart
+        int pos = nameStart;
+        while (pos < buf.length() && !Character.isLetter(buf.charAt(pos))) {
+            pos++;
+        }
 
-        // Find next capital letter if it exists
-        for (int i = 1; i < nameStart.length(); i++) {
-            char c = nameStart.charAt(i);
-            if (Character.isUpperCase(c)) {
-                buf.append(c);
-                break;
-            }
+        if (pos < buf.length()) {
+            // Keep first letter
+            char firstLetter = buf.charAt(pos);
+            
+            // Delete rest of name and add period
+            buf.delete(pos + 1, buf.length());
+            buf.append('.');
         }
     }
 }

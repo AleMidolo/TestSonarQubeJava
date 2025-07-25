@@ -1,4 +1,6 @@
-public class ByteArrayComparator {
+import java.util.Arrays;
+
+public class ArrayUtils {
     /**
      * Compares <code>count</code> first bytes in the arrays <code>a</code> and <code>b</code>.
      * @param a     The first array to compare.
@@ -6,12 +8,8 @@ public class ByteArrayComparator {
      * @param count How many bytes should be compared.
      * @return <code>true</code> if <code>count</code> first bytes in arrays<code>a</code> and <code>b</code> are equal.
      */
-    public static boolean compareBytes(byte[] a, byte[] b, int count) {
+    public static boolean arrayequals(byte[] a, byte[] b, int count) {
         if (a == null || b == null) {
-            return false;
-        }
-        
-        if (count < 0) {
             return false;
         }
         

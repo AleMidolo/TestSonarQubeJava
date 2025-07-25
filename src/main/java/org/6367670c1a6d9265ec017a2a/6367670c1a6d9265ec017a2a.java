@@ -1,6 +1,10 @@
 package org.apache.commons.lang3;
 
+/**
+ * Utility class for handling Integer arrays
+ */
 public class ArrayUtils {
+
     /**
      * <p>Converts an array of object Integers to primitives.</p>
      * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
@@ -9,7 +13,7 @@ public class ArrayUtils {
      * @return an <code>int</code> array, <code>null</code> if null array input
      * @throws NullPointerException if array content is <code>null</code>
      */
-    public static int[] toPrimitive(Integer[] array) {
+    public static int[] toPrimitive(final Integer[] array) {
         if (array == null) {
             return null;
         }

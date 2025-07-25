@@ -7,7 +7,7 @@ public class ArrayUtils {
      * @param array2 the second array, may be <code>null</code>
      * @return <code>true</code> if length of arrays matches, treating<code>null</code> as an empty array
      */
-    public static boolean isSameLength(final Object[] array1, final Object[] array2) {
+    public static boolean isSameLength(final byte[] array1, final byte[] array2) {
         if (array1 == null && array2 == null) {
             return true;
         }

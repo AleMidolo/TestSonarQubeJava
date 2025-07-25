@@ -1,21 +1,22 @@
 import java.io.File;
 
-public class ClassPathUtils {
-
+public class ClassPathUtil {
     /**
      * Returns the class path of the current JVM instance as an array of {@link File} objects.
-     * @return Array of File objects representing the classpath entries
      */
-    public static File[] getClassPath() {
-        String classPath = System.getProperty("java.class.path");
-        String pathSeparator = System.getProperty("path.separator");
-        String[] pathElements = classPath.split(pathSeparator);
+    private static File[] classPath() {
+        // Get the class path string from system property
+        String classPathString = System.getProperty("java.class.path");
         
-        File[] result = new File[pathElements.length];
-        for (int i = 0; i < pathElements.length; i++) {
-            result[i] = new File(pathElements[i]);
+        // Split the class path string by path separator
+        String[] paths = classPathString.split(File.pathSeparator);
+        
+        // Convert string paths to File objects
+        File[] classPathFiles = new File[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            classPathFiles[i] = new File(paths[i]);
         }
         
-        return result;
+        return classPathFiles;
     }
 }

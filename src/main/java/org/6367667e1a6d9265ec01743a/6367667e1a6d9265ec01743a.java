@@ -1,14 +1,10 @@
 import java.time.Instant;
 
-public class WriteTracker {
-    private long lastWriteTime;
+public class TimeTracker {
+    private long lastWriteTimestamp;
 
-    /**
-     * The last time, in milliseconds, a write operation occurred.
-     * @return this
-     */
-    public WriteTracker recordWriteTime() {
-        this.lastWriteTime = Instant.now().toEpochMilli();
-        return this;
+    public long lastWriteTimeStampInMilliseconds() {
+        lastWriteTimestamp = Instant.now().toEpochMilli();
+        return lastWriteTimestamp;
     }
 }

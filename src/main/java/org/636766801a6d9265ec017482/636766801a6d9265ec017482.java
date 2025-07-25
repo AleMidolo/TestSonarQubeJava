@@ -1,33 +1,33 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
     private int readPointer;
     
-    /**
-     * Clear and fill the buffer with the supplied byte stream. 
-     * The read pointer is reset to the start of the byte array.
-     *
-     * @param inputStream the input stream to read bytes from
-     * @throws IOException if an I/O error occurs while reading the stream
-     */
-    public void fillBuffer(InputStream inputStream) throws IOException {
-        // Create a ByteArrayOutputStream to store bytes
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+    public void readFrom(final InputStream in) throws IOException {
+        // Create output stream to store bytes
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         
-        // Read bytes from input stream
-        byte[] temp = new byte[4096];
+        // Read bytes from input stream in chunks
+        byte[] chunk = new byte[4096];
         int bytesRead;
-        while ((bytesRead = inputStream.read(temp)) != -1) {
-            byteStream.write(temp, 0, bytesRead);
+        
+        while ((bytesRead = in.read(chunk)) != -1) {
+            baos.write(chunk, 0, bytesRead);
         }
         
-        // Clear existing buffer and fill with new bytes
-        buffer = byteStream.toByteArray();
+        // Clear existing buffer
+        buffer = null;
+        
+        // Fill with new bytes
+        buffer = baos.toByteArray();
         
         // Reset read pointer to start
         readPointer = 0;
+        
+        // Close streams
+        baos.close();
     }
 }

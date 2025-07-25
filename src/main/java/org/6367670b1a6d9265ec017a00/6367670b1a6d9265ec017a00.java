@@ -13,12 +13,11 @@ public class ArrayLengthChecker {
     }
 
     public static void main(String[] args) {
-        byte[] array1 = {1, 2, 3};
-        byte[] array2 = {4, 5, 6};
-        byte[] array3 = null;
-
-        System.out.println(isSameLength(array1, array2)); // true
-        System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array3)); // true
+        // Test cases
+        System.out.println(isSameLength(null, null)); // true
+        System.out.println(isSameLength(new byte[]{1, 2, 3}, new byte[]{4, 5, 6})); // true
+        System.out.println(isSameLength(new byte[]{1}, new byte[]{2, 3})); // false
+        System.out.println(isSameLength(null, new byte[]{})); // true
+        System.out.println(isSameLength(new byte[]{}, new byte[]{1})); // false
     }
 }

@@ -31,8 +31,6 @@ public class ByteVector {
         
         if (byteArrayValue != null) {
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        } else {
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
         }
         
         size += byteLength;
@@ -44,5 +42,13 @@ public class ByteVector {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
     }
 }

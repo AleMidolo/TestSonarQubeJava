@@ -11,7 +11,7 @@ public class ArrayComparer {
         }
         
         byte[] internalArray = getInternalArray(); // Assume this method retrieves the internal array
-        if (internalArray.length != len) {
+        if (internalArray.length < len) {
             return false;
         }
         

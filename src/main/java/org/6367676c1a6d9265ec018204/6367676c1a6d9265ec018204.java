@@ -29,7 +29,7 @@ public class ArrayConcatenation {
             }
         }
 
-        // Include overlapping elements twice
+        // Aggiungere gli elementi sovrapposti due volte
         if (array1 != null && array2 != null) {
             for (String s : array1) {
                 for (String t : array2) {

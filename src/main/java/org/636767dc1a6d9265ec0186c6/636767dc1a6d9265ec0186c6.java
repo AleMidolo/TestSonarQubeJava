@@ -10,23 +10,21 @@ public class FieldChecker {
             return false;
         }
         
-        // Assuming Fields has a method to get all field values
         return storedFields.equals(fields);
     }
 
-    // Method to set stored fields for testing purposes
+    // Assuming Fields class has been defined elsewhere
     public void setStoredFields(Fields fields) {
         this.storedFields = fields;
     }
     
-    // Assuming a Fields class exists
-    public static class Fields {
-        // Fields implementation goes here
-        // Override equals method for comparison
-        @Override
-        public boolean equals(Object obj) {
-            // Implement equality check based on field values
-            return super.equals(obj);
-        }
+    public static void main(String[] args) {
+        // Example usage
+        FieldChecker checker = new FieldChecker();
+        Fields fields1 = new Fields(); // Assume Fields has a default constructor
+        Fields fields2 = new Fields(); // Assume Fields has a default constructor
+        
+        checker.setStoredFields(fields1);
+        System.out.println(checker.containsAllFields(fields2)); // Should print false
     }
 }

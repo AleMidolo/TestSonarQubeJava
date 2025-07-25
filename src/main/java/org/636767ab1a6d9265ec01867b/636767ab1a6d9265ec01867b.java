@@ -12,7 +12,7 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.addBytes(utf8Bytes);
+        lb.write(utf8Bytes);
         return lb;
     }
 
@@ -32,7 +32,7 @@ class WriteSession {
 class LinkedBuffer {
     private LinkedList<byte[]> buffer = new LinkedList<>();
 
-    public void addBytes(byte[] bytes) {
+    public void write(byte[] bytes) {
         buffer.add(bytes);
     }
 

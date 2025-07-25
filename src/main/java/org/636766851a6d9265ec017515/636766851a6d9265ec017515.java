@@ -11,12 +11,8 @@ public class MyAtmosphereHandler {
     @Override 
     public Action inspect(AtmosphereResource r) {
         // Check the transport type and suspend the resource accordingly
-        if (r.getTransport() != null) {
-            // Logic to suspend the resource based on transport type
-            // For example, if the transport is "LONG_POLLING", we might want to suspend it
-            if ("LONG_POLLING".equals(r.getTransport())) {
-                r.suspend();
-            }
+        if (r.transport() != null) {
+            r.suspend();
         }
         return Action.CONTINUE;
     }

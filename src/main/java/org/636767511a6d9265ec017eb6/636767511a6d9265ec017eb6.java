@@ -26,16 +26,6 @@ class OuterFaceCirculator {
 }
 
 public class Graph {
-    // Assume Graph class has necessary properties and methods
-
-    /**
-     * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
-     * @param predicate la condizione che il nodo desiderato deve soddisfare
-     * @param start il nodo da cui iniziare la ricerca
-     * @param stop il nodo con cui terminare la ricerca
-     * @param dir la direzione da cui iniziare la traversata
-     * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
-     */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         

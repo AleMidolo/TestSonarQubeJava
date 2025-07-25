@@ -17,7 +17,7 @@ public class DigitValueInterpreter {
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
+        // Test del metodo digitValue
         System.out.println(digitValue('0')); // Output: 0
         System.out.println(digitValue('9')); // Output: 9
         System.out.println(digitValue('A')); // Output: 10

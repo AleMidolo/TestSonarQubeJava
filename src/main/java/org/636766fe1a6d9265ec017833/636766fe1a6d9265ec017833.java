@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 
-public class FileDeletionScheduler {
+public class FileDeleter {
 
     /** 
      * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.

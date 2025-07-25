@@ -10,14 +10,12 @@ public class RequestWrapper {
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
         // Create a new AtmosphereRequest using the provided HttpServletRequest
-        return new AtmosphereRequest() {
-            @Override
-            public HttpServletRequest getRequest() {
-                return request;
-            }
-
-            // Implement other methods as needed
-            // For example, you might want to implement getHeader, getParameter, etc.
-        };
+        AtmosphereRequest atmosphereRequest = new AtmosphereRequest();
+        
+        // Set the necessary attributes from HttpServletRequest to AtmosphereRequest
+        atmosphereRequest.setRequest(request);
+        
+        // Return the wrapped AtmosphereRequest
+        return atmosphereRequest;
     }
 }

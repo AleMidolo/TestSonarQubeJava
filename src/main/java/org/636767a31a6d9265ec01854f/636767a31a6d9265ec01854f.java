@@ -1,45 +1,33 @@
 import java.io.IOException;
 
-public class PackedFieldChecker {
-
-    private boolean isPackedField = false;
+public class FieldReader {
+    private boolean isCompressed;
+    private int compressedLength;
+    private int currentPosition;
+    private byte[] buffer;
 
     /**
-     * 检查该字段是否已被打包为长度限定字段。如果是，则更新内部状态以反映正在读取打包字段。
+     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. 
+     * In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // 假设这里有一些逻辑来检查字段是否已被打包
-        // 例如，读取某个标志位或状态
-        boolean isPacked = readPackedFlag(); // 假设这是一个方法，用于读取打包标志
-
-        if (isPacked) {
-            isPackedField = true;
-            // 更新内部状态以反映正在读取打包字段
-            updateInternalStateForPackedField();
+        if (currentPosition < buffer.length - 4) {
+            // Check for compression marker bytes
+            if (buffer[currentPosition] == 0x1F && buffer[currentPosition + 1] == 0x8B) {
+                // Get compressed length from next 4 bytes
+                compressedLength = ((buffer[currentPosition + 2] & 0xFF) << 24) |
+                                 ((buffer[currentPosition + 3] & 0xFF) << 16) |
+                                 ((buffer[currentPosition + 4] & 0xFF) << 8) |
+                                 (buffer[currentPosition + 5] & 0xFF);
+                
+                isCompressed = true;
+                currentPosition += 6; // Skip marker and length bytes
+            } else {
+                isCompressed = false;
+            }
         } else {
-            isPackedField = false;
-        }
-    }
-
-    private boolean readPackedFlag() {
-        // 模拟读取打包标志的逻辑
-        // 这里可以根据实际情况实现
-        return false; // 假设默认返回false
-    }
-
-    private void updateInternalStateForPackedField() {
-        // 更新内部状态的逻辑
-        // 这里可以根据实际情况实现
-    }
-
-    public static void main(String[] args) {
-        // 示例用法
-        PackedFieldChecker checker = new PackedFieldChecker();
-        try {
-            checker.checkIfPackedField();
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Buffer overflow while checking for packed field");
         }
     }
 }

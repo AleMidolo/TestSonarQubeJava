@@ -1,44 +1,46 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
-
+public class ArrayUtils {
+    /**
+     * Concatenare i dati degli array di Stringa forniti in uno solo, includendo gli elementi sovrapposti due volte.
+     * L'ordine degli elementi negli array originali è preservato.
+     * @param array1 il primo array (può essere <code>null</code>)
+     * @param array2 il secondo array (può essere <code>null</code>) 
+     * @return il nuovo array (<code>null</code> se entrambi gli array forniti erano <code>null</code>)
+     */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-        // 如果两个数组都为null，返回null
+        // If both arrays are null, return null
         if (array1 == null && array2 == null) {
             return null;
         }
+        
+        // If one array is null, return copy of the non-null array
+        if (array1 == null) {
+            return array2.clone();
+        }
+        if (array2 == null) {
+            return array1.clone();
+        }
 
-        // 创建一个List来存储结果
-        List<String> resultList = new ArrayList<>();
-
-        // 如果array1不为null，将其元素添加到结果List中
-        if (array1 != null) {
-            for (String element : array1) {
-                resultList.add(element);
+        // Create list to store concatenated elements
+        List<String> result = new ArrayList<>();
+        
+        // Add all elements from first array
+        for (String s : array1) {
+            if (s != null) {
+                result.add(s);
+            }
+        }
+        
+        // Add all elements from second array
+        for (String s : array2) {
+            if (s != null) {
+                result.add(s);
             }
         }
 
-        // 如果array2不为null，将其元素添加到结果List中
-        if (array2 != null) {
-            for (String element : array2) {
-                resultList.add(element);
-            }
-        }
-
-        // 将List转换为数组并返回
-        return resultList.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // 测试用例
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"d", "e", "f"};
-        String[] result = concatenateStringArrays(array1, array2);
-
-        // 输出结果
-        for (String s : result) {
-            System.out.print(s + " ");
-        }
+        // Convert list to array and return
+        return result.toArray(new String[0]);
     }
 }

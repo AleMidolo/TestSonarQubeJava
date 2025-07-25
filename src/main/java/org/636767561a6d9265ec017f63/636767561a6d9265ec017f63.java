@@ -1,22 +1,14 @@
 import java.util.*;
 
-public class Graph {
-    private Set<Integer> visited;
-    private Set<Integer> vertices;
-
-    public Graph(Set<Integer> vertices) {
-        this.vertices = vertices;
-        this.visited = new HashSet<>();
-    }
-
-    /**
-     * 检查是否存在未访问的顶点。
-     * @return 如果存在未访问的顶点，则返回真。
-     */
+public class GraphTraversal implements Iterator<Vertex> {
+    private boolean[] visited;
+    private int numVertices;
+    
     @Override
     public boolean hasNext() {
-        for (Integer vertex : vertices) {
-            if (!visited.contains(vertex)) {
+        // Iterate through visited array to check if any vertices are unvisited
+        for (int i = 0; i < numVertices; i++) {
+            if (!visited[i]) {
                 return true;
             }
         }

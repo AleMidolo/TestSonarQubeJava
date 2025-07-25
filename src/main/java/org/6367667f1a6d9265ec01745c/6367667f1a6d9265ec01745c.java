@@ -1,44 +1,42 @@
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathUtil {
+public class ClassPathUtils {
 
     /**
-     * 将目录中的所有jar文件添加到类路径中，表示为URL的Vector。
-     * 
-     * @param cpV 用于存储URL的Vector
-     * @param dir 要扫描的目录路径
+     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
      */
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
+        
+        // Verifica che la directory esista ed è effettivamente una directory
         if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("提供的路径不是一个有效的目录: " + dir);
+            return;
         }
 
-        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
-        if (files != null) {
-            for (File file : files) {
+        // Ottiene la lista di tutti i file nella directory
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+
+        // Itera su tutti i file
+        for (File file : files) {
+            // Controlla se il file è un file JAR
+            if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
                 try {
-                    URL url = file.toURI().toURL();
-                    cpV.add(url);
-                } catch (MalformedURLException e) {
+                    // Converte il file in URL e lo aggiunge al vector
+                    URL jarUrl = file.toURI().toURL();
+                    if (!cpV.contains(jarUrl)) {
+                        cpV.add(jarUrl);
+                    }
+                } catch (Exception e) {
+                    // Ignora eventuali errori di conversione
                     e.printStackTrace();
                 }
             }
-        }
-    }
-
-    public static void main(String[] args) {
-        Vector<URL> classPath = new Vector<>();
-        String directoryPath = "path/to/your/directory";
-        addToClassPath(classPath, directoryPath);
-
-        // 打印添加的URL
-        for (URL url : classPath) {
-            System.out.println(url);
         }
     }
 }

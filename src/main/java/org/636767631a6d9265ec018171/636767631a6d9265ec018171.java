@@ -1,45 +1,49 @@
-class ListNodeImpl<E> {
-    E value;
-    ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
-
-    ListNodeImpl(E value) {
-        this.value = value;
-    }
-}
+import java.util.NoSuchElementException;
 
 public class LinkedList<E> {
-    private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
-
-    /**
-     * 从列表中移除非空的 {@code node}。
-     */
+    
+    private class ListNodeImpl<E> {
+        E element;
+        ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
+        
+        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
+            this.element = element;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
+    
+    private ListNodeImpl<E> first;
+    private ListNodeImpl<E> last;
+    private int size;
+    
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {
             return false;
         }
-
-        ListNodeImpl<E> prevNode = node.prev;
-        ListNodeImpl<E> nextNode = node.next;
-
-        if (prevNode == null) {
-            // Node is the head
-            head = nextNode;
+        
+        final ListNodeImpl<E> prev = node.prev;
+        final ListNodeImpl<E> next = node.next;
+        
+        if (prev == null) {
+            // Node is the first element
+            first = next;
         } else {
-            prevNode.next = nextNode;
+            prev.next = next;
             node.prev = null;
         }
-
-        if (nextNode == null) {
-            // Node is the tail
-            tail = prevNode;
+        
+        if (next == null) {
+            // Node is the last element
+            last = prev;
         } else {
-            nextNode.prev = prevNode;
+            next.prev = prev;
             node.next = null;
         }
-
-        node.value = null; // Help GC
+        
+        node.element = null;
+        size--;
         return true;
     }
 }

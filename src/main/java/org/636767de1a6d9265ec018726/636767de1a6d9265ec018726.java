@@ -1,47 +1,49 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRange {
-    private int start;
-    private int end;
+public class SequenceRangeBuilder {
 
-    public SequenceRange(int start, int end) {
-        this.start = start;
-        this.end = end;
+    private static class SequenceRange {
+        private long startSequence;
+        private long endSequence;
+
+        public SequenceRange(long startSequence, long endSequence) {
+            this.startSequence = startSequence;
+            this.endSequence = endSequence;
+        }
+
+        public long getStartSequence() {
+            return startSequence;
+        }
+
+        public long getEndSequence() {
+            return endSequence;
+        }
     }
 
-    public int getStart() {
-        return start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    @Override
-    public String toString() {
-        return "SequenceRange{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
-    }
-}
-
-public class ConfigSnapshot {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
-        // Example logic to build sequence ranges
-        ranges.add(new SequenceRange(0, 100));
-        ranges.add(new SequenceRange(101, 200));
-        ranges.add(new SequenceRange(201, 300));
+        
+        // Get current sequence number
+        long currentSequence = getCurrentSequence();
+        
+        // Build ranges in chunks of 1000
+        long chunkSize = 1000;
+        long startSequence = 0;
+        
+        while (startSequence < currentSequence) {
+            long endSequence = Math.min(startSequence + chunkSize - 1, currentSequence);
+            ranges.add(new SequenceRange(startSequence, endSequence));
+            startSequence = endSequence + 1;
+        }
+        
         return ranges;
     }
-
-    public static void main(String[] args) {
-        ConfigSnapshot snapshot = new ConfigSnapshot();
-        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
-        for (SequenceRange range : ranges) {
-            System.out.println(range);
-        }
+    
+    // Helper method to get current sequence
+    private long getCurrentSequence() {
+        // Implementation would depend on how sequences are tracked
+        // This is just a placeholder
+        return System.currentTimeMillis();
     }
 }

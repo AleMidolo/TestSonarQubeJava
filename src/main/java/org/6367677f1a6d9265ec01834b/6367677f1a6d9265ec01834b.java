@@ -1,21 +1,26 @@
+import org.apache.log4j.spi.LoggingEvent;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 public class LogBuffer {
-    private final BlockingQueue<LoggingEvent> buffer;
+    private final ArrayBlockingQueue<LoggingEvent> buffer;
+    private static final int DEFAULT_BUFFER_SIZE = 1000;
 
-    public LogBuffer(int capacity) {
-        this.buffer = new ArrayBlockingQueue<>(capacity);
+    public LogBuffer() {
+        this(DEFAULT_BUFFER_SIZE);
+    }
+
+    public LogBuffer(int bufferSize) {
+        buffer = new ArrayBlockingQueue<>(bufferSize);
     }
 
     /**
-     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。调用者有责任确保缓冲区有空闲空间。
+     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene 
+     * <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che 
+     * il buffer abbia spazio libero.
      */
     public void put(LoggingEvent o) {
-        if (!buffer.offer(o)) {
-            // 如果缓冲区已满，事件被静默丢弃
+        if (o != null) {
+            buffer.offer(o); // Uses offer() instead of add() to silently discard when full
         }
     }
-
-    // 其他方法，如从缓冲区取出事件等
 }

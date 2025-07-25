@@ -1,18 +1,29 @@
-import java.util.*;
+import java.util.LinkedList;
 
-public class TreeNode {
-    TreeNode left;
-    TreeNode right;
-    TreeNode parent;
+public class TreeEdge {
+    private TreeEdge prev;
+    private TreeEdge next;
+    private LinkedList<TreeEdge> edgeList;
 
+    /**
+     * Rimuove questo arco da entrambe le liste doppiamente collegate degli archi dell'albero.
+     */
     public void removeFromTreeEdgeList() {
-        if (this.parent != null) {
-            if (this.parent.left == this) {
-                this.parent.left = null;
-            } else if (this.parent.right == this) {
-                this.parent.right = null;
-            }
-            this.parent = null;
+        if (prev != null) {
+            prev.next = next;
         }
+        
+        if (next != null) {
+            next.prev = prev;
+        }
+        
+        if (edgeList != null && edgeList.contains(this)) {
+            edgeList.remove(this);
+        }
+        
+        // Reset references
+        prev = null;
+        next = null;
+        edgeList = null;
     }
 }

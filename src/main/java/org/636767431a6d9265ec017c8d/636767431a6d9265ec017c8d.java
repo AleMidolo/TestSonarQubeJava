@@ -1,14 +1,14 @@
-/**
- * 计算 $\log_2 (n)$ 的下限值 + 1
- */
-private int computeBinaryLog(int n) {
-    if (n <= 0) {
-        throw new IllegalArgumentException("n must be a positive integer");
+public class BinaryLogCalculator {
+    /**
+     * Calcola floor(log_2(n)) + 1
+     * Calculates floor(log_2(n)) + 1 by counting the number of bits needed to represent n
+     */
+    private int computeBinaryLog(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Input must be positive");
+        }
+        
+        // Count number of bits needed to represent n
+        return 32 - Integer.numberOfLeadingZeros(n);
     }
-    int log = 0;
-    while (n > 1) {
-        n = n >> 1;
-        log++;
-    }
-    return log + 1;
 }

@@ -1,33 +1,32 @@
 import java.nio.charset.StandardCharsets;
 
-public class UTF8SizeCalculator {
-
+public class UTF8Utils {
     /**
-     * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
-     *
-     * @param str   输入的字符序列
-     * @param index 开始计算的索引
-     * @param len   要计算的字符长度
-     * @return UTF-8 编码后的字节大小
+     * Calcola la dimensione della stringa utf8 che inizia all'indice specificato {@code index} con la lunghezza specificata {@code length}.
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        if (str == null) {
-            throw new IllegalArgumentException("Input string cannot be null");
+        int utf8Size = 0;
+        final int end = index + len;
+        
+        for (int i = index; i < end; i++) {
+            char c = str.charAt(i);
+            
+            if (c < 0x80) {
+                // ASCII character (1 byte)
+                utf8Size++;
+            } else if (c < 0x800) {
+                // 2-byte UTF-8 character
+                utf8Size += 2;
+            } else if (Character.isSurrogate(c)) {
+                // 4-byte UTF-8 character (surrogate pair)
+                utf8Size += 4;
+                i++; // Skip the low surrogate
+            } else {
+                // 3-byte UTF-8 character
+                utf8Size += 3;
+            }
         }
-        if (index < 0 || len < 0 || index + len > str.length()) {
-            throw new IllegalArgumentException("Invalid index or length");
-        }
-
-        String substring = str.subSequence(index, index + len).toString();
-        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
-        return utf8Bytes.length;
-    }
-
-    public static void main(String[] args) {
-        CharSequence str = "Hello, 世界!";
-        int index = 7;
-        int len = 2;
-        int size = computeUTF8Size(str, index, len);
-        System.out.println("UTF-8 size: " + size);  // 输出: UTF-8 size: 6
+        
+        return utf8Size;
     }
 }

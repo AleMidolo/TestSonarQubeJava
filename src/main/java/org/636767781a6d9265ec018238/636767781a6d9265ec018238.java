@@ -1,18 +1,24 @@
-import java.util.List;
+import org.apache.log4j.Appender;
+import java.util.Enumeration;
 
-public class Logger {
-    private List<Appender> appenders;
+public class AppenderManager {
+    private Enumeration<Appender> appenders;
 
     /**
-     * 如果指定的Appender在Appender列表中，则返回<code>true</code>，否则返回<code>false</code>。
-     * @param appender 要检查的Appender
-     * @return 如果Appender在列表中则返回true，否则返回false
+     * Restituisce <code>true</code> se l'appender specificato è presente nell'elenco degli appender allegati, <code>false</code> altrimenti.
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
-        if (appender == null || appenders == null) {
+        if (appender == null) {
             return false;
         }
-        return appenders.contains(appender);
+
+        while (appenders != null && appenders.hasMoreElements()) {
+            Appender currentAppender = appenders.nextElement();
+            if (currentAppender == appender) {
+                return true;
+            }
+        }
+        return false;
     }
 }

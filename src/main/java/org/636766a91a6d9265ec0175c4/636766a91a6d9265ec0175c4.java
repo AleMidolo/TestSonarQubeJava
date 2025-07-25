@@ -1,94 +1,69 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<String> stack;
+public class FrameHandler {
+    private Stack<String> outputStack;
 
-    public FrameStack() {
-        stack = new Stack<>();
+    public FrameHandler() {
+        this.outputStack = new Stack<>();
     }
 
     /**
-     * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
             return;
         }
 
-        // 判断是否是方法描述符
-        if (descriptor.startsWith("(")) {
-            // 方法描述符，解析参数类型
-            int endIndex = descriptor.indexOf(')');
-            if (endIndex == -1) {
-                throw new IllegalArgumentException("Invalid method descriptor: " + descriptor);
-            }
-            String params = descriptor.substring(1, endIndex);
-            int paramCount = countParameters(params);
-            for (int i = 0; i < paramCount; i++) {
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
-            }
-        } else {
-            // 单个类型描述符
-            if (!stack.isEmpty()) {
-                stack.pop();
-            }
-        }
-    }
-
-    /**
-     * 计算参数描述符中的参数数量。
-     * @param params 参数描述符
-     * @return 参数数量
-     */
-    private int countParameters(String params) {
-        int count = 0;
         int index = 0;
-        while (index < params.length()) {
-            char c = params.charAt(index);
-            if (c == 'L') {
-                // 对象类型，跳过直到 ';'
-                int endIndex = params.indexOf(';', index);
-                if (endIndex == -1) {
-                    throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
-                }
-                index = endIndex + 1;
-            } else if (c == '[') {
-                // 数组类型，跳过所有 '['
-                while (index < params.length() && params.charAt(index) == '[') {
+        while (index < descriptor.length()) {
+            char c = descriptor.charAt(index);
+            
+            switch (c) {
+                case '(':
+                    // Skip opening parenthesis for method descriptor
                     index++;
-                }
-                if (index < params.length() && params.charAt(index) == 'L') {
-                    // 对象数组类型，跳过直到 ';'
-                    int endIndex = params.indexOf(';', index);
-                    if (endIndex == -1) {
-                        throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
+                    continue;
+                case ')':
+                    // Stop at closing parenthesis
+                    return;
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'F':
+                case 'I':
+                case 'J':
+                case 'S':
+                case 'Z':
+                    // Pop primitive types
+                    if (!outputStack.isEmpty()) {
+                        outputStack.pop();
                     }
-                    index = endIndex + 1;
-                } else {
-                    // 基本类型数组
+                    if (c == 'D' || c == 'J') {
+                        // Double and Long take two stack slots
+                        if (!outputStack.isEmpty()) {
+                            outputStack.pop();
+                        }
+                    }
                     index++;
-                }
-            } else {
-                // 基本类型
-                index++;
+                    break;
+                case 'L':
+                    // Pop object reference type
+                    if (!outputStack.isEmpty()) {
+                        outputStack.pop();
+                    }
+                    // Skip to semicolon
+                    index = descriptor.indexOf(';', index) + 1;
+                    break;
+                case '[':
+                    // Skip array dimension
+                    index++;
+                    break;
+                default:
+                    index++;
+                    break;
             }
-            count++;
         }
-        return count;
-    }
-
-    // 测试代码
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push("int");
-        frameStack.stack.push("float");
-        frameStack.stack.push("java/lang/Object");
-
-        frameStack.pop("(IFLjava/lang/Object;)V");
-
-        System.out.println(frameStack.stack); // 输出: []
     }
 }

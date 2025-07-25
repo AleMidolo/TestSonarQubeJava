@@ -1,24 +1,33 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
-private List<Integer> computeLowerBounds(List<K> keys) {
-    List<Integer> lowerBounds = new ArrayList<>();
-    if (keys == null || keys.isEmpty()) {
+public class BoundCalculator<K extends Comparable<K>> {
+
+    /**
+     * Trova un limite inferiore massimo per ogni chiave.
+     * @param keys lista delle chiavi.
+     * @return i limiti inferiori delle chiavi calcolati.
+     */
+    private List<Integer> computeLowerBounds(List<K> keys) {
+        if (keys == null || keys.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> lowerBounds = new ArrayList<>(keys.size());
+        
+        for (int i = 0; i < keys.size(); i++) {
+            K currentKey = keys.get(i);
+            int maxLowerBound = 0;
+            
+            for (int j = 0; j < i; j++) {
+                K previousKey = keys.get(j);
+                if (previousKey.compareTo(currentKey) <= 0) {
+                    maxLowerBound = Math.max(maxLowerBound, lowerBounds.get(j) + 1);
+                }
+            }
+            
+            lowerBounds.add(maxLowerBound);
+        }
+        
         return lowerBounds;
     }
-
-    // Assuming K is a comparable type, we can sort the keys and find the lower bounds
-    List<K> sortedKeys = new ArrayList<>(keys);
-    Collections.sort(sortedKeys);
-
-    // The lower bound for the first element is itself
-    lowerBounds.add((Integer) sortedKeys.get(0));
-
-    // For the rest of the elements, the lower bound is the previous element
-    for (int i = 1; i < sortedKeys.size(); i++) {
-        lowerBounds.add((Integer) sortedKeys.get(i - 1));
-    }
-
-    return lowerBounds;
 }

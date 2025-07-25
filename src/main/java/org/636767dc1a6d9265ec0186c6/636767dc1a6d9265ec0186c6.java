@@ -1,27 +1,20 @@
-import java.util.Set;
+import java.util.Objects;
 
-public class Example {
-    private Set<String> storedFields;
+public class FieldValidator {
+    
+    private Set<Fields> storedFields;
 
-    /**
-     * 当输入字段已经存储在属性中时返回真。
-     */
-    private boolean containsAllFields(Fields fields) {
-        for (String field : fields) {
-            if (!storedFields.contains(field)) {
-                return false;
-            }
-        }
-        return true;
+    public FieldValidator() {
+        this.storedFields = new HashSet<>();
     }
 
-    // Assuming Fields is a class that implements Iterable<String>
-    private static class Fields implements Iterable<String> {
-        // Implementation of Fields class
-        @Override
-        public Iterator<String> iterator() {
-            // Return an iterator over the fields
-            return null; // Placeholder, replace with actual implementation
+    /**
+     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+     */
+    private boolean containsAllFields(Fields fields) {
+        if (fields == null) {
+            return false;
         }
+        return storedFields.contains(fields);
     }
 }

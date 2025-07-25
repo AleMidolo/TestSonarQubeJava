@@ -3,24 +3,21 @@ import java.util.Arrays;
 public class ByteVector {
     private byte[] data;
     private int capacity;
-
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.capacity = initialCapacity;
-    }
-
+    private int size;
+    
     /**
-     * 扩展此字节向量，以便能够接收 'size' 个额外的字节。
-     * @param size 此字节向量应该能够接收的额外字节数。
+     * Espande questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Size must be positive");
+            return;
         }
-        int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        
+        int newCapacity = this.capacity + size;
+        byte[] newData = Arrays.copyOf(this.data, newCapacity);
+        
+        this.data = newData;
+        this.capacity = newCapacity;
     }
-
-    // Other methods of the ByteVector class...
 }

@@ -1,28 +1,26 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
-public class BooleanArrayConverter {
+/**
+ * Utility class for boolean operations.
+ */
+public class BooleanUtils {
 
     /**
-     * <p>将基本数据类型的 boolean 数组转换为对象。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
-     * @param array  一个 <code>boolean</code> 数组
-     * @return 一个 <code>Boolean</code> 数组，如果输入数组为空则返回 <code>null</code>
+     * <p>Converte un array di booleani primitivi in oggetti.</p>
+     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * 
+     * @param array  un array di <code>boolean</code>
+     * @return un array di <code>Boolean</code>, <code>null</code> se l'array di input è null
      */
     public static Boolean[] toObject(final boolean[] array) {
         if (array == null) {
             return null;
         }
-        Boolean[] result = new Boolean[array.length];
+        
+        final Boolean[] result = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
+            result[i] = Boolean.valueOf(array[i]);
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        boolean[] testArray = {true, false, true};
-        Boolean[] result = toObject(testArray);
-        for (Boolean b : result) {
-            System.out.println(b);
-        }
     }
 }

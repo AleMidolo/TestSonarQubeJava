@@ -1,25 +1,22 @@
-public class ArrayUtils {
+package org.apache.commons.lang3;
 
+public class ArrayUtils {
     /**
-     * <p>检查两个数组是否具有相同的长度，将 <code>null</code> 数组视为长度 <code>0</code>。</p>
-     * @param array1 第一个数组，可以为 <code>null</code>
-     * @param array2 第二个数组，可以为 <code>null</code>
-     * @return 如果数组的长度匹配则返回<code>true</code>，将 <code>null</code> 视为一个空数组
+     * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
+     * @param array1 il primo array, può essere <code>null</code>
+     * @param array2 il secondo array, può essere <code>null</code>
+     * @return <code>true</code> se la lunghezza degli array corrisponde, trattando <code>null</code> come un array vuoto
      */
     public static boolean isSameLength(final byte[] array1, final byte[] array2) {
-        int length1 = array1 == null ? 0 : array1.length;
-        int length2 = array2 == null ? 0 : array2.length;
-        return length1 == length2;
-    }
-
-    public static void main(String[] args) {
-        byte[] array1 = {1, 2, 3};
-        byte[] array2 = {4, 5, 6};
-        byte[] array3 = null;
-        byte[] array4 = {7, 8};
-
-        System.out.println(isSameLength(array1, array2)); // true
-        System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array4)); // false
+        if (array1 == null && array2 == null) {
+            return true;
+        }
+        if (array1 == null) {
+            return array2.length == 0;
+        }
+        if (array2 == null) {
+            return array1.length == 0;
+        }
+        return array1.length == array2.length;
     }
 }

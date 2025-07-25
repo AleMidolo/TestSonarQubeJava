@@ -1,31 +1,38 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-public class GraphIndex<V, E> {
-    private Map<V, Map<V, E>> index;
+public class Graph<V,E> {
+    
+    // Maps to store vertex and edge relationships
+    private Map<V, Set<E>> sourceVertexToEdgeMap;
+    private Map<V, Set<E>> targetVertexToEdgeMap;
+    private Map<E, V> edgeToSourceVertexMap;
+    private Map<E, V> edgeToTargetVertexMap;
 
-    public GraphIndex() {
-        index = new HashMap<>();
+    public Graph() {
+        sourceVertexToEdgeMap = new HashMap<>();
+        targetVertexToEdgeMap = new HashMap<>();
+        edgeToSourceVertexMap = new HashMap<>();
+        edgeToTargetVertexMap = new HashMap<>();
     }
 
     /**
-     * 将边添加到索引中。
-     * @param sourceVertex 源顶点
-     * @param targetVertex 目标顶点
-     * @param e 边
+     * Aggiunge un arco all'indice.
+     * @param sourceVertex il vertice sorgente
+     * @param targetVertex il vertice di destinazione
+     * @param e l'arco
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!index.containsKey(sourceVertex)) {
-            index.put(sourceVertex, new HashMap<>());
-        }
-        index.get(sourceVertex).put(targetVertex, e);
-    }
-
-    // Optional: Method to retrieve an edge from the index
-    public E getEdge(V sourceVertex, V targetVertex) {
-        if (index.containsKey(sourceVertex)) {
-            return index.get(sourceVertex).get(targetVertex);
-        }
-        return null;
+        // Add edge to source vertex map
+        sourceVertexToEdgeMap.computeIfAbsent(sourceVertex, k -> new HashSet<>()).add(e);
+        
+        // Add edge to target vertex map
+        targetVertexToEdgeMap.computeIfAbsent(targetVertex, k -> new HashSet<>()).add(e);
+        
+        // Map edge to its source and target vertices
+        edgeToSourceVertexMap.put(e, sourceVertex);
+        edgeToTargetVertexMap.put(e, targetVertex);
     }
 }

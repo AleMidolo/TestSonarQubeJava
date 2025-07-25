@@ -1,29 +1,32 @@
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.DataInputStream;
 
-public class StreamReader {
-
-    private final InputStream inputStream;
-
-    public StreamReader(InputStream inputStream) {
-        this.inputStream = inputStream;
+public class DataReader {
+    private DataInputStream in;
+    
+    public DataReader(DataInputStream in) {
+        this.in = in;
     }
 
     /**
-     * 从流中读取 {@code string} 字段值。
+     * Leggi un valore di campo {@code string} dallo stream.
      */
     @Override
     public String readString() throws IOException {
-        int length = inputStream.read();
-        if (length == -1) {
-            throw new IOException("End of stream reached");
+        // Read the string length first
+        int length = in.readInt();
+        
+        if (length < 0) {
+            return null;
         }
+        
+        // Create byte array to hold string data
         byte[] bytes = new byte[length];
-        int bytesRead = inputStream.read(bytes);
-        if (bytesRead != length) {
-            throw new IOException("Expected " + length + " bytes, but only read " + bytesRead);
-        }
-        return new String(bytes, StandardCharsets.UTF_8);
+        
+        // Read the string bytes
+        in.readFully(bytes);
+        
+        // Convert bytes to string using UTF-8 encoding
+        return new String(bytes, "UTF-8");
     }
 }

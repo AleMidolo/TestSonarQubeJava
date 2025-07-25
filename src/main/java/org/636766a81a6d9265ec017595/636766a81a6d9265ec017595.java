@@ -1,24 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class ByteVector {
-    private List<Byte> bytes;
+    private byte[] data;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
 
     public ByteVector() {
-        this.bytes = new ArrayList<>();
+        data = new byte[DEFAULT_CAPACITY];
+        size = 0;
     }
 
     /**
-     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
-     * @param byteValue1 一个字节。
-     * @param byteValue2 另一个字节。
-     * @return 此字节向量。
+     * Inserisce due byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
+     * @param byteValue1 un byte.
+     * @param byteValue2 un altro byte.
+     * @return questo vettore di byte.
      */
-    public final ByteVector put11(final int byteValue1, final int byteValue2) {
-        bytes.add((byte) byteValue1);
-        bytes.add((byte) byteValue2);
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        if (size + 2 > data.length) {
+            // Double array size if more space needed
+            data = Arrays.copyOf(data, data.length * 2);
+        }
+        
+        data[size++] = (byte) byteValue1;
+        data[size++] = (byte) byteValue2;
+        
         return this;
     }
-
-    // 其他方法可以根据需要添加
 }

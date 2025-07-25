@@ -1,48 +1,48 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FileReverser {
+public class FileHandler {
 
     /**
-     * 以逆序添加指定的文件。
+     * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("Files array cannot be null");
+        if (files == null || files.length == 0) {
+            return;
         }
 
-        List<byte[]> fileContents = new ArrayList<>();
-
-        // 读取所有文件内容
+        List<InputStream> fileList = new ArrayList<>();
+        
+        // Add files to list
         for (InputStream file : files) {
-            if (file == null) {
-                throw new IllegalArgumentException("File input stream cannot be null");
+            if (file != null) {
+                fileList.add(file);
             }
+        }
 
-            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = file.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
+        // Reverse the list
+        Collections.reverse(fileList);
+
+        // Process files in reverse order
+        for (InputStream file : fileList) {
+            try {
+                // Add file contents (implementation depends on specific requirements)
+                processFile(file);
+            } finally {
+                try {
+                    file.close();
+                } catch (Exception e) {
+                    // Handle close exception
                 }
-                buffer.flush();
-                fileContents.add(buffer.toByteArray());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read file content", e);
             }
         }
+    }
 
-        // 逆序文件内容
-        Collections.reverse(fileContents);
-
-        // 处理逆序后的文件内容（例如写入到某个地方）
-        for (byte[] content : fileContents) {
-            // 这里可以根据需要处理逆序后的文件内容
-            // 例如写入到输出流或进行其他操作
-        }
+    // Helper method to process individual files
+    private void processFile(InputStream file) {
+        // Implementation depends on specific requirements
+        // Example: read file contents and add to collection/database etc.
     }
 }

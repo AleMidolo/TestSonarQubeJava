@@ -1,28 +1,40 @@
 import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
+import org.atmosphere.cpr.AtmosphereConfig;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class AtmosphereFramework {
-    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
+public class AtmosphereFrameworkImpl extends AtmosphereFramework {
 
-    /**
-     * 移除一个 {@link AtmosphereHandler}。
-     * @param mapping 在调用 {@link #addAtmosphereHandler(String, AtmosphereHandler)} 时使用的映射；
-     * @return 如果成功移除则返回真
+    private final Map<String, AtmosphereHandler> handlers = new ConcurrentHashMap<>();
+
+    /** 
+     * Rimuove un {@link AtmosphereHandler}.
+     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String,AtmosphereHandler)};
+     * @return true se rimosso
      */
-    public boolean removeAtmosphereHandler(String mapping) {
-        if (handlers.containsKey(mapping)) {
-            handlers.remove(mapping);
-            return true;
+    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
+        if (mapping == null || mapping.isEmpty()) {
+            return this;
         }
-        return false;
-    }
 
-    /**
-     * 添加一个 {@link AtmosphereHandler}。
-     * @param mapping 映射
-     * @param handler 处理器
-     */
-    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
-        handlers.put(mapping, handler);
+        // Normalize mapping
+        String normalizedMapping = mapping.startsWith("/") ? mapping : "/" + mapping;
+        
+        // Remove handler if exists
+        AtmosphereHandler removed = handlers.remove(normalizedMapping);
+        
+        if (removed != null) {
+            // Clean up any resources associated with the handler
+            removed.destroy();
+            
+            // Update framework configuration
+            AtmosphereConfig config = getAtmosphereConfig();
+            if (config != null) {
+                config.properties().remove(normalizedMapping);
+            }
+        }
+
+        return this;
     }
 }

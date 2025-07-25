@@ -1,100 +1,63 @@
-import java.util.Objects;
+import java.util.*;
 
-class Edge {
-    private Node from;
-    private Node to;
+public class Graph {
+    private List<Node> nodes;
+    private List<Edge> edges;
+    private int currentNodeIndex;
 
-    public Edge(Node from, Node to) {
-        this.from = from;
-        this.to = to;
-    }
+    // Constructor and other methods...
 
-    public Node getFrom() {
-        return from;
-    }
+    /**
+     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. 
+     * Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
+     * @return un arco dal nodo corrente al nodo successivo
+     */
+    public Edge edgeToNext() {
+        if (nodes == null || nodes.isEmpty() || currentNodeIndex >= nodes.size() - 1) {
+            return null;
+        }
 
-    public Node getTo() {
-        return to;
-    }
+        Node currentNode = nodes.get(currentNodeIndex);
+        Node nextNode = nodes.get(currentNodeIndex + 1);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Edge edge = (Edge) o;
-        return Objects.equals(from, edge.from) && Objects.equals(to, edge.to);
-    }
+        // Get real nodes if virtual
+        Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to);
-    }
+        // Find edge between real nodes
+        for (Edge edge : edges) {
+            if ((edge.getSource().equals(realCurrentNode) && edge.getDestination().equals(realNextNode)) ||
+                (edge.getSource().equals(realNextNode) && edge.getDestination().equals(realCurrentNode))) {
+                return edge;
+            }
+        }
 
-    @Override
-    public String toString() {
-        return "Edge{" +
-                "from=" + from +
-                ", to=" + to +
-                '}';
+        return null;
     }
 }
 
 class Node {
-    private String id;
     private boolean isVirtual;
-
-    public Node(String id, boolean isVirtual) {
-        this.id = id;
-        this.isVirtual = isVirtual;
-    }
-
-    public String getId() {
-        return id;
-    }
-
+    private Node realNode;
+    
     public boolean isVirtual() {
         return isVirtual;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, isVirtual);
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "id='" + id + '\'' +
-                ", isVirtual=" + isVirtual +
-                '}';
+    
+    public Node getRealNode() {
+        return realNode;
     }
 }
 
-class Graph {
-    private Node currentNode;
-    private Node nextNode;
-
-    public Graph(Node currentNode, Node nextNode) {
-        this.currentNode = currentNode;
-        this.nextNode = nextNode;
+class Edge {
+    private Node source;
+    private Node destination;
+    
+    public Node getSource() {
+        return source;
     }
-
-    public Edge edgeToNext() {
-        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(from, to);
-    }
-
-    private Node getRealNode(Node node) {
-        // Assuming that the real node has the same ID but is not virtual
-        return new Node(node.getId(), false);
+    
+    public Node getDestination() {
+        return destination;
     }
 }

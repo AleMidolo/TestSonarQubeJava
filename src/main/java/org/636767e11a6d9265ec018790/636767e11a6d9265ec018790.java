@@ -1,89 +1,120 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class ThreadSnapshotParser {
 
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
-
-        for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
-            if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
-                snapshots.add(snapshot);
-            }
-        }
-
-        return snapshots;
-    }
-
-    private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static class ThreadSnapshot {
-        private long timestamp;
-        private String threadName;
-        private String threadState;
-
-        public ThreadSnapshot(long timestamp, String threadName, String threadState) {
-            this.timestamp = timestamp;
-            this.threadName = threadName;
-            this.threadState = threadState;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public String getThreadName() {
-            return threadName;
-        }
-
-        public String getThreadState() {
-            return threadState;
-        }
-
-        public static ThreadSnapshot fromString(String line) {
-            String[] parts = line.split(",");
-            if (parts.length == 3) {
-                try {
-                    long timestamp = Long.parseLong(parts[0]);
-                    String threadName = parts[1];
-                    String threadState = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, threadState);
-                } catch (NumberFormatException e) {
-                    return null;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            ThreadSnapshot currentSnapshot = null;
+            boolean isInTimeRange = false;
+            
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Time:")) {
+                    // Parse timestamp
+                    long timestamp = Long.parseLong(line.substring(5).trim());
+                    
+                    // Check if timestamp is within any of the time ranges
+                    isInTimeRange = false;
+                    for (ProfileAnalyzeTimeRange range : timeRanges) {
+                        if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
+                            isInTimeRange = true;
+                            break;
+                        }
+                    }
+                    
+                    if (isInTimeRange) {
+                        currentSnapshot = new ThreadSnapshot();
+                        currentSnapshot.setTimestamp(timestamp);
+                        snapshots.add(currentSnapshot);
+                    }
+                } else if (isInTimeRange && currentSnapshot != null) {
+                    // Parse thread info
+                    if (line.trim().length() > 0) {
+                        String[] threadInfo = line.split("\\s+");
+                        if (threadInfo.length >= 2) {
+                            ThreadInfo info = new ThreadInfo();
+                            info.setThreadId(Long.parseLong(threadInfo[0]));
+                            info.setThreadName(threadInfo[1]);
+                            info.setThreadState(threadInfo.length > 2 ? threadInfo[2] : "UNKNOWN");
+                            currentSnapshot.addThreadInfo(info);
+                        }
+                    }
                 }
             }
-            return null;
         }
+        
+        return snapshots;
     }
+}
 
-    public static class ProfileAnalyzeTimeRange {
-        private long startTime;
-        private long endTime;
+class ThreadSnapshot {
+    private long timestamp;
+    private List<ThreadInfo> threadInfoList = new ArrayList<>();
+    
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+    
+    public void addThreadInfo(ThreadInfo info) {
+        threadInfoList.add(info);
+    }
+    
+    public long getTimestamp() {
+        return timestamp;
+    }
+    
+    public List<ThreadInfo> getThreadInfoList() {
+        return threadInfoList;
+    }
+}
 
-        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
+class ThreadInfo {
+    private long threadId;
+    private String threadName;
+    private String threadState;
+    
+    public void setThreadId(long threadId) {
+        this.threadId = threadId;
+    }
+    
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
+    
+    public void setThreadState(String threadState) {
+        this.threadState = threadState;
+    }
+    
+    public long getThreadId() {
+        return threadId;
+    }
+    
+    public String getThreadName() {
+        return threadName;
+    }
+    
+    public String getThreadState() {
+        return threadState;
+    }
+}
 
-        public long getStartTime() {
-            return startTime;
-        }
-
-        public long getEndTime() {
-            return endTime;
-        }
+class ProfileAnalyzeTimeRange {
+    private long startTime;
+    private long endTime;
+    
+    public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+    
+    public long getStartTime() {
+        return startTime;
+    }
+    
+    public long getEndTime() {
+        return endTime;
     }
 }

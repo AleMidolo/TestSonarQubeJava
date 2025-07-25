@@ -1,30 +1,37 @@
+package org.apache.commons.lang3;
+
+/**
+ * Utility class for character operations.
+ */
 public class CharUtils {
 
+    /**
+     * Array cache of commonly used characters converted to String.
+     * We cache the first 128 ASCII characters since they're most common.
+     */
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
+    // Initialize the cache
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        for (int i = 0; i < CHAR_STRING_CACHE.length; i++) {
+            CHAR_STRING_CACHE[i] = String.valueOf((char) i);
         }
     }
 
-    /**
-     * <p>将字符转换为仅包含该字符的字符串。</p> 
-     * <p>对于 ASCII 7 位字符，此方法将使用一个缓存，每次返回相同的字符串对象。</p> 
-     * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  要转换的字符
-     * @return 包含指定字符的字符串
+    /** 
+     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p> 
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p> 
+     * <pre>
+     * CharUtils.toString(' ')  = " "
+     * CharUtils.toString('A')  = "A"
+     * </pre>
+     * @param ch  il carattere da convertire
+     * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {
         if (ch < CHAR_STRING_CACHE.length) {
             return CHAR_STRING_CACHE[ch];
         }
         return String.valueOf(ch);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(toString(' '));  // 输出: " "
-        System.out.println(toString('A'));  // 输出: "A"
-        System.out.println(toString('€'));  // 输出: "€"
     }
 }

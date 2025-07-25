@@ -1,72 +1,48 @@
 import java.util.Objects;
 
 public class DoublyLinkedList<E> {
-
-    private static class ListNodeImpl<E> {
-        E element;
-        ListNodeImpl<E> prev;
-        ListNodeImpl<E> next;
-
-        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-            this.element = element;
-            this.prev = prev;
-            this.next = next;
-        }
-    }
-
-    private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
+    private ListNode<E> head;
+    private ListNode<E> tail;
     private int size;
 
-    public DoublyLinkedList() {
-        head = null;
-        tail = null;
-        size = 0;
+    private static class ListNode<E> {
+        E element;
+        ListNode<E> next;
+        ListNode<E> prev;
+
+        ListNode(E element) {
+            this.element = element;
+        }
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
-        Objects.requireNonNull(node, "Node cannot be null");
-
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-            tail = node;
-        }
-        size++;
-    }
-
-    public void removeListNode(ListNodeImpl<E> node) {
-        Objects.requireNonNull(node, "Node cannot be null");
-
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
-        }
-
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev;
-        }
-
-        node.prev = null;
-        node.next = null;
-        size--;
-    }
-
+    /**
+     * Sposta in modo atomico tutti i {@link ListNode ListNodes} da {@code list} a questa lista 
+     * come se ogni nodo fosse stato rimosso con {@link #removeListNode(ListNodeImpl)} da {@code list} 
+     * e successivamente aggiunto a questa lista tramite {@link #addListNode(ListNodeImpl)}.
+     */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list, "List cannot be null");
-
-        ListNodeImpl<E> current = list.head;
-        while (current != null) {
-            ListNodeImpl<E> next = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
-            current = next;
+        Objects.requireNonNull(list);
+        
+        if (list == this || list.size == 0) {
+            return;
         }
+
+        // If this list is empty, just take the other list's nodes
+        if (size == 0) {
+            this.head = list.head;
+            this.tail = list.tail;
+            this.size = list.size;
+        } else {
+            // Connect the tail of this list to the head of the other list
+            this.tail.next = list.head;
+            list.head.prev = this.tail;
+            this.tail = list.tail;
+            this.size += list.size;
+        }
+
+        // Clear the source list
+        list.head = null;
+        list.tail = null;
+        list.size = 0;
     }
 }

@@ -1,13 +1,25 @@
-/**
- * 构建 'Content-Range' HTTP 头部值。
- * @return 'Content-Range' 值
- */
-private String buildContentRange() {
-    // 假设我们有一个文件的起始字节和结束字节
-    long startByte = 0;
-    long endByte = 1023;
-    long totalBytes = 2048;
+import java.text.MessageFormat;
 
-    // 构建 Content-Range 头部值
-    return String.format("bytes %d-%d/%d", startByte, endByte, totalBytes);
+public class ContentRangeBuilder {
+
+    private long start;
+    private long end; 
+    private long total;
+    
+    public ContentRangeBuilder(long start, long end, long total) {
+        this.start = start;
+        this.end = end;
+        this.total = total;
+    }
+
+    /**
+     * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
+     * @return valore 'Content-Range'
+     */
+    private String buildContentRange() {
+        return MessageFormat.format("bytes {0}-{1}/{2}", 
+            String.valueOf(start),
+            String.valueOf(end),
+            String.valueOf(total));
+    }
 }

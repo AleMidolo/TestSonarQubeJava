@@ -1,15 +1,26 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-class Bucket {
-    private List<Bucket> buckets;
-
-    public Bucket(List<Bucket> buckets) {
-        this.buckets = buckets;
-    }
-
-    public void removeSelf() {
-        if (buckets != null) {
-            buckets.remove(this);
+public class Bucket<T> {
+    private List<T> elements;
+    private Bucket<T> next;
+    private Bucket<T> prev;
+    
+    /**
+     * Rimuove questo bucket dalla struttura dati.
+     */
+    void removeSelf() {
+        if (prev != null) {
+            prev.next = this.next;
         }
+        
+        if (next != null) {
+            next.prev = this.prev;
+        }
+        
+        // Clear references to help garbage collection
+        this.next = null;
+        this.prev = null;
+        this.elements = null;
     }
 }

@@ -1,24 +1,35 @@
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
 
     /**
-     * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即“/”分隔符）。
-     * @param path 起始路径（通常是完整的文件路径）
-     * @param relativePath 要应用的相对路径（相对于上述完整文件路径）
-     * @return 应用相对路径后得到的完整文件路径
+     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
+     * @param path il percorso da cui partire (di solito un percorso di file completo)
+     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
+     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
      */
     public static String applyRelativePath(String path, String relativePath) {
-        Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.resolve(relativePath);
-        return resolvedPath.normalize().toString();
-    }
+        // Normalizza i separatori di percorso
+        path = path.replace('\\', '/');
+        relativePath = relativePath.replace('\\', '/');
+        
+        // Rimuovi eventuali separatori finali
+        if (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        
+        // Gestisci il caso in cui il percorso relativo inizia con "/"
+        if (relativePath.startsWith("/")) {
+            relativePath = relativePath.substring(1);
+        }
 
-    public static void main(String[] args) {
-        String path = "/usr/local/bin";
-        String relativePath = "../lib/java";
-        String result = applyRelativePath(path, relativePath);
-        System.out.println(result);  // 输出: /usr/local/lib/java
+        // Usa Path per risolvere il percorso relativo
+        Path basePath = Paths.get(path);
+        Path resolvedPath = basePath.resolve(relativePath).normalize();
+        
+        // Converti il risultato in una stringa con separatori forward slash
+        return resolvedPath.toString().replace('\\', '/');
     }
 }

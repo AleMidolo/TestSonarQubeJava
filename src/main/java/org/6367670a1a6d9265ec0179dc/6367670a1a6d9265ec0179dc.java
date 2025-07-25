@@ -1,27 +1,53 @@
-import java.util.List;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Frame;
+import org.objectweb.asm.MethodWriter;
+import org.objectweb.asm.ByteVector;
+import org.objectweb.asm.SymbolTable;
 
-public class StackMapTableHandler {
-    private List<VerificationTypeInfo> currentFrame;
-    private List<VerificationTypeInfo> stackMapTableEntries;
-
-    /**
-     * 使用在 StackMapTable 属性中使用的 JVMS verification_type_info 格式，将 {@link #currentFrame} 中的一些抽象类型放入 {@link #stackMapTableEntries} 中。
-     * @param start 要写入的 {@link #currentFrame} 中第一个类型的索引。
-     * @param end 要写入的 {@link #currentFrame} 中最后一个类型的索引（不包括该索引）。
-     */
+public class FrameWriter {
+    private ByteVector stackMapTableEntries;
+    private int[] currentFrame;
+    private SymbolTable symbolTable;
+    
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
-            throw new IllegalArgumentException("Invalid start or end index");
-        }
-
         for (int i = start; i < end; i++) {
-            VerificationTypeInfo typeInfo = currentFrame.get(i);
-            stackMapTableEntries.add(typeInfo);
+            putAbstractType(currentFrame[i]);
         }
     }
-
-    // Assuming VerificationTypeInfo is a class representing the verification type info
-    private static class VerificationTypeInfo {
-        // Define the structure of VerificationTypeInfo as per JVMS
+    
+    private void putAbstractType(final int abstractType) {
+        int type = abstractType >>> Frame.ITEM_TOP;
+        
+        switch (type) {
+            case Frame.ITEM_TOP:
+                stackMapTableEntries.putByte(0);
+                break;
+            case Frame.ITEM_INTEGER:
+                stackMapTableEntries.putByte(1);
+                break;
+            case Frame.ITEM_FLOAT:
+                stackMapTableEntries.putByte(2);
+                break;
+            case Frame.ITEM_DOUBLE:
+                stackMapTableEntries.putByte(3);
+                break;
+            case Frame.ITEM_LONG:
+                stackMapTableEntries.putByte(4);
+                break;
+            case Frame.ITEM_NULL:
+                stackMapTableEntries.putByte(5);
+                break;
+            case Frame.ITEM_UNINITIALIZED_THIS:
+                stackMapTableEntries.putByte(6);
+                break;
+            case Frame.ITEM_OBJECT:
+                stackMapTableEntries.putByte(7);
+                stackMapTableEntries.putShort(symbolTable.addConstantClass(abstractType & Frame.ITEM_MASK).index);
+                break;
+            default:
+                stackMapTableEntries.putByte(8);
+                stackMapTableEntries.putShort((abstractType & Frame.ITEM_MASK));
+                break;
+        }
     }
 }

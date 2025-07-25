@@ -1,15 +1,16 @@
-public class StringUtils {
-
+public class StringArrayTrimmer {
     /**
-     * 修剪给定字符串数组的元素，对每个元素调用 <code>String.trim()</code> 方法。
-     * @param array 原始字符串数组
-     * @return 包含修剪后的元素的结果数组（大小相同）
+     * Rimuove gli spazi bianchi dagli elementi dell'array di Stringhe fornito, chiamando <code>String.trim()</code> su ciascuno di essi.
+     * @param array l'array di Stringhe originale
+     * @return l'array risultante (della stessa dimensione) con elementi privati degli spazi bianchi
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
             return null;
         }
+        
         String[] trimmedArray = new String[array.length];
+        
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
                 trimmedArray[i] = array[i].trim();
@@ -17,14 +18,7 @@ public class StringUtils {
                 trimmedArray[i] = null;
             }
         }
+        
         return trimmedArray;
-    }
-
-    public static void main(String[] args) {
-        String[] array = {"  hello ", "  world  ", null, "  java  "};
-        String[] trimmedArray = trimArrayElements(array);
-        for (String str : trimmedArray) {
-            System.out.println("'" + str + "'");
-        }
     }
 }

@@ -10,16 +10,19 @@ class Bucket {
     }
 
     public void addBucket(Bucket bucket) {
-        this.buckets.add(bucket);
+        buckets.add(bucket);
     }
 
     public void removeSelf() {
-        // Remove this bucket from all parent buckets
-        for (Bucket parent : this.buckets) {
-            parent.buckets.remove(this);
+        // Assuming the bucket is part of a larger structure, we need to remove it from its parent.
+        // This is a simplified example where we assume the bucket is part of a list in a parent bucket.
+        // In a real-world scenario, you would need to handle the parent reference.
+        for (Bucket bucket : buckets) {
+            if (bucket == this) {
+                buckets.remove(this);
+                break;
+            }
         }
-        // Clear the list of parent buckets
-        this.buckets.clear();
     }
 
     @Override
@@ -30,12 +33,12 @@ class Bucket {
     }
 
     public static void main(String[] args) {
-        Bucket bucket1 = new Bucket("Bucket1");
-        Bucket bucket2 = new Bucket("Bucket2");
+        Bucket parentBucket = new Bucket("Parent");
+        Bucket childBucket = new Bucket("Child");
+        parentBucket.addBucket(childBucket);
 
-        bucket1.addBucket(bucket2);
-        System.out.println("Before removal: " + bucket2.buckets);
-        bucket2.removeSelf();
-        System.out.println("After removal: " + bucket2.buckets);
+        System.out.println("Before removal: " + parentBucket.buckets);
+        childBucket.removeSelf();
+        System.out.println("After removal: " + parentBucket.buckets);
     }
 }

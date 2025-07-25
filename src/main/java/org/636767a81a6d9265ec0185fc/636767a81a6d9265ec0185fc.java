@@ -13,7 +13,7 @@ public class TagReader {
      * I parser di messaggi di protocollo utilizzano questo metodo per leggere i tag, poiché un messaggio di protocollo
      * può legalmente terminare ovunque si trovi un tag, e zero non è un numero di tag valido.
      *
-     * @return il tag letto, o 0 se è stato raggiunto EOF
+     * @return il tag letto, o 0 se è stato raggiunto l'EOF
      * @throws IOException se si verifica un errore di I/O durante la lettura
      */
     public int readTag() throws IOException {

@@ -23,7 +23,8 @@ public class ArrayConcatenator {
         }
 
         if (array1 != null && array2 != null) {
-            for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int overlapLength = Math.min(array1.length, array2.length);
+            for (int i = 0; i < overlapLength; i++) {
                 result.add(array1[i] + array2[i]);
             }
         }
@@ -36,9 +37,8 @@ public class ArrayConcatenator {
         String[] array2 = {"1", "2", "3", "4"};
 
         String[] result = concatenateStringArrays(array1, array2);
-
         for (String s : result) {
-            System.out.println(s);
+            System.out.print(s + " ");
         }
     }
 }

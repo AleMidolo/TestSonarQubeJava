@@ -78,6 +78,7 @@ class Graph {
     }
 }
 
+// Example usage
 public class Main {
     public static void main(String[] args) {
         Node currentNode = new Node(1, true);

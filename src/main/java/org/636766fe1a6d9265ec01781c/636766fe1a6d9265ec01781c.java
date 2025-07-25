@@ -6,7 +6,7 @@ public class CharUtils {
     private static final Map<Character, Character> CACHE = new HashMap<>();
 
     static {
-        // Cache dei caratteri ASCII a 7 bit (0-127)
+        // Cache for ASCII characters (0-127)
         for (int i = 0; i < 128; i++) {
             CACHE.put((char) i, (char) i);
         }
@@ -30,8 +30,7 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toCharacterObject(' '));  // Output: ' '
-        System.out.println(toCharacterObject('A'));  // Output: 'A'
-        System.out.println(toCharacterObject('€'));  // Output: '€' (non in cache)
+        System.out.println(toCharacterObject(' '));  // Output:  
+        System.out.println(toCharacterObject('A'));  // Output: A
     }
 }

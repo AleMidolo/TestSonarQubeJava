@@ -19,8 +19,8 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
             K currentKey = keys.get(i);
             int lowerBound = 0;
 
-            for (int j = 0; j < keys.size(); j++) {
-                if (i != j && keys.get(j).compareTo(currentKey) < 0) {
+            for (int j = 0; j < i; j++) {
+                if (keys.get(j).compareTo(currentKey) < 0) {
                     lowerBound++;
                 }
             }

@@ -7,7 +7,7 @@ public class Logger {
      */
     protected void subAppend(LoggingEvent event) {
         // Implementazione della scrittura effettiva del log
-        // Ad esempio, scrivere su console o file
+        // Esempio: stampa il messaggio del log
         System.out.println(event.getMessage());
     }
 }

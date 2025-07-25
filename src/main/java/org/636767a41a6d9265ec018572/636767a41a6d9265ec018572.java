@@ -17,7 +17,7 @@ public class VarintReader {
         while (true) {
             int b = input.read();
             if (b == -1) {
-                throw new IOException("End of stream reached before Varint was fully read.");
+                throw new IOException("End of stream reached before varint was fully read.");
             }
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {

@@ -6,11 +6,11 @@ public class Logger {
      * Este método realiza la escritura
      */
     protected void subAppend(LoggingEvent event) {
-        // Implementación de la escritura del evento de registro
         if (event != null) {
+            // Aquí se puede agregar la lógica para procesar el evento de registro
             System.out.println("Logging event: " + event.getMessage());
         } else {
-            System.out.println("No event to log.");
+            System.out.println("No logging event provided.");
         }
     }
 }

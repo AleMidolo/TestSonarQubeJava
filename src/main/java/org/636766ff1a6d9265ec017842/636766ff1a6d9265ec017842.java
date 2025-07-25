@@ -10,14 +10,15 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        double[] result = new double[array.length];
+        
+        double[] primitiveArray = new double[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            result[i] = array[i];
+            primitiveArray[i] = array[i];
         }
-        return result;
+        return primitiveArray;
     }
 
     public static void main(String[] args) {

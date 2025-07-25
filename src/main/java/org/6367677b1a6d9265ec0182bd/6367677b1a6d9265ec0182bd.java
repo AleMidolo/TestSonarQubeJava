@@ -9,21 +9,13 @@ public class LoggerFormatter {
     public String format(final LoggingEvent event) {
         StringBuilder formattedEvent = new StringBuilder();
         
-        // Formatear la fecha y hora del evento
-        formattedEvent.append(event.getTimeStamp()).append(" - ");
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        formattedEvent.append("Level: ").append(event.getLevel()).append("\n");
+        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
+        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
         
-        // Obtener el nivel de log
-        formattedEvent.append(event.getLevel().toString()).append(" - ");
-        
-        // Obtener el nombre de la clase que genera el evento
-        formattedEvent.append(event.getLoggerName()).append(" - ");
-        
-        // Obtener el mensaje del evento
-        formattedEvent.append(event.getRenderedMessage());
-        
-        // Si hay excepciones, añadirlas al formato
         if (event.getThrowableInformation() != null) {
-            formattedEvent.append("\n").append(event.getThrowableInformation().getThrowable().toString());
+            formattedEvent.append("Exception: ").append(event.getThrowableInformation().getThrowable()).append("\n");
         }
         
         return formattedEvent.toString();

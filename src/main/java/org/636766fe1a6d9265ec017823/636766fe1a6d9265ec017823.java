@@ -21,8 +21,7 @@ public class ConstantPool {
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
         if (!nameAndTypeMap.containsKey(key)) {
-            nameAndTypeMap.put(key, nextIndex);
-            nextIndex++;
+            nameAndTypeMap.put(key, nextIndex++);
         }
         return nameAndTypeMap.get(key);
     }
@@ -31,7 +30,10 @@ public class ConstantPool {
         ConstantPool constantPool = new ConstantPool();
         int index1 = constantPool.addConstantNameAndType("myField", "I");
         int index2 = constantPool.addConstantNameAndType("myField", "I");
-        System.out.println("Index of first entry: " + index1);
-        System.out.println("Index of second entry (should be the same): " + index2);
+        int index3 = constantPool.addConstantNameAndType("myMethod", "(I)V");
+
+        System.out.println("Index of myField: " + index1); // Should print 0
+        System.out.println("Index of myField again: " + index2); // Should print 0
+        System.out.println("Index of myMethod: " + index3); // Should print 1
     }
 }

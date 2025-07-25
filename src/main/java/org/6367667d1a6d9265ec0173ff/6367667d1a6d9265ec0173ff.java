@@ -16,7 +16,7 @@ public class MeteorLookup {
         }
         
         // Aquí se debería implementar la lógica para recuperar el Meteor
-        // Por simplicidad, se devuelve un nuevo Meteor si el ID es válido
+        // Por simplicidad, se devuelve un nuevo Meteor si se encuentra un ID válido
         return new Meteor(meteorId);
     }
 }

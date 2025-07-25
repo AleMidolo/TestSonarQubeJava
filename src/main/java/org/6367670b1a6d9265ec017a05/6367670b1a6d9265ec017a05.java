@@ -24,6 +24,7 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(CharUtils.toString(' ')); // Output: " "
         System.out.println(CharUtils.toString('A')); // Output: "A"
+        System.out.println(CharUtils.toString('Z')); // Output: "Z"
         System.out.println(CharUtils.toString('ñ')); // Output: "ñ"
     }
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameStackExtractor {
+public class StackExtractor {
 
     /**
      * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
@@ -10,7 +10,7 @@ public class FrameStackExtractor {
     private void pop(final String descriptor) {
         List<String> types = new ArrayList<>();
         
-        // Simulación de la extracción de tipos basados en el descriptor
+        // Simulación de la extracción de tipos a partir del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             // Extraer tipos de argumento de un descriptor de método
             int start = descriptor.indexOf('(') + 1;
@@ -24,15 +24,14 @@ public class FrameStackExtractor {
             types.add(descriptor);
         }
 
-        // Simulación de la operación de "pop" en la stack
+        // Aquí se podría realizar la lógica para manejar los tipos extraídos
         for (String type : types) {
-            System.out.println("Popped type: " + type);
+            System.out.println("Tipo extraído: " + type);
         }
     }
 
     public static void main(String[] args) {
-        FrameStackExtractor extractor = new FrameStackExtractor();
-        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
-        extractor.pop("Ljava/lang/String;"); // Ejemplo de un tipo
+        StackExtractor extractor = new StackExtractor();
+        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
     }
 }

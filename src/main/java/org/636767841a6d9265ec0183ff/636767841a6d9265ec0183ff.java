@@ -21,18 +21,18 @@ public class TableRowSelector {
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
+        Rectangle rect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(rect);
+        
+        // Delay repaint to ensure the row is painted correctly
         SwingUtilities.invokeLater(() -> {
-            Rectangle rect = table.getCellRect(row, 0, true);
-            table.scrollRectToVisible(rect);
             pane.repaint();
         });
     }
 
     public static void main(String[] args) {
-        // Sample usage
-        JFrame frame = new JFrame("Table Row Selector");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        // Example usage
+        JFrame frame = new JFrame("Table Row Selector Example");
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
             {"Row 1", "Data 1"},
@@ -41,17 +41,16 @@ public class TableRowSelector {
             {"Row 4", "Data 4"},
             {"Row 5", "Data 5"},
         };
-        
+
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        
         frame.add(pane, BorderLayout.CENTER);
-        frame.setSize(400, 300);
-        frame.setVisible(true);
         
-        // Select a row after a delay
-        Timer timer = new Timer(1000, e -> selectRow(3, table, pane));
-        timer.setRepeats(false);
-        timer.start();
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        // Select a row after the frame is visible
+        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
     }
 }

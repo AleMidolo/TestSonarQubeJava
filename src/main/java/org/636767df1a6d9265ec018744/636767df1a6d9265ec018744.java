@@ -11,15 +11,15 @@ public class TimeRangeBuilder {
     protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> timeRanges = new ArrayList<>();
 
-        if (fin - inicio <= FETCH_DATA_DURATION) {
-            timeRanges.add(new TimeRange(inicio, fin));
-        } else {
+        if (fin - inicio > FETCH_DATA_DURATION) {
             long currentStart = inicio;
             while (currentStart < fin) {
                 long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, fin);
                 timeRanges.add(new TimeRange(currentStart, currentEnd));
                 currentStart = currentEnd;
             }
+        } else {
+            timeRanges.add(new TimeRange(inicio, fin));
         }
 
         return timeRanges;
@@ -48,14 +48,6 @@ public class TimeRangeBuilder {
                     "start=" + start +
                     ", end=" + end +
                     '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        TimeRangeBuilder builder = new TimeRangeBuilder();
-        List<TimeRange> ranges = builder.construirRangosDeTiempo(0, 10000000); // Example usage
-        for (TimeRange range : ranges) {
-            System.out.println(range);
         }
     }
 }

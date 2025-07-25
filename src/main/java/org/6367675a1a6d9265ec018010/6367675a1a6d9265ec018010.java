@@ -1,22 +1,23 @@
 public class Bucket {
-    // Assuming there is a structure to hold the data in the bucket
-    private List<Object> data;
+    // Assuming there is a structure to hold the bucket's data
+    private Object data; // Replace Object with the actual data type
+    private Bucket next; // Reference to the next bucket in the structure
 
-    public Bucket() {
-        this.data = new ArrayList<>();
+    public Bucket(Object data) {
+        this.data = data;
+        this.next = null;
     }
 
     /** 
      * Elimina este bucket de la estructura de datos.
      */
     void removeSelf() {
-        // Logic to remove this bucket from its parent structure
-        // This is a placeholder for the actual removal logic
-        // For example, if this bucket is part of a larger collection, 
-        // you would need to access that collection and remove this instance.
-        // Assuming we have a reference to the parent structure:
-        
-        // ParentStructure parent = ...; // Get reference to the parent structure
-        // parent.removeBucket(this); // Remove this bucket from the parent structure
+        if (this.next != null) {
+            this.data = this.next.data;
+            this.next = this.next.next;
+        } else {
+            this.data = null; // Clear the data
+            // Optionally, handle the case where this is the last bucket
+        }
     }
 }

@@ -12,11 +12,7 @@ public class GraphIterator implements Iterator<Vertex> {
         this.currentIndex = 0;
     }
 
-    /** 
-     * Verifica si existen vértices no visitados.
-     * @return true si existen vértices no visitados.
-     */
-    @Override 
+    @Override
     public boolean hasNext() {
         while (currentIndex < vertices.size()) {
             if (!visited[currentIndex]) {

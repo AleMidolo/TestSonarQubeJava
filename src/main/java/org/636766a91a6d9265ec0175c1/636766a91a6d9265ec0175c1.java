@@ -21,13 +21,4 @@ public class ByteVector {
         data = Arrays.copyOf(data, newSize);
         currentSize = newSize;
     }
-
-    // Additional methods for demonstration purposes
-    public int getCurrentSize() {
-        return currentSize;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
 }

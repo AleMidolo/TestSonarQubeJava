@@ -11,7 +11,7 @@ public class MyAtmosphereHandler {
     @Override 
     public Action inspect(AtmosphereResource r) {
         // Aquí se puede agregar lógica para suspender el recurso basado en el transporte
-        // Por ejemplo, si el transporte es HTTP, se puede suspender el recurso
+        // Por ejemplo, si el transporte es HTTP, se puede suspender
         if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
         }

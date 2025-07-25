@@ -13,14 +13,16 @@ public class HexDecoder {
         } else if (c >= 'A' && c <= 'F') {
             return (char) (c - 'A' + 10);
         } else {
-            return Character.MAX_VALUE; // Carácter inválido
+            return Character.MAX_VALUE;
         }
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        char hexChar = 'A';
-        char decodedValue = decodeHexNibble(hexChar);
-        System.out.println("El valor hexadecimal de " + hexChar + " es: " + (int) decodedValue);
+        // Test cases
+        System.out.println(decodeHexNibble('0')); // Output: 0
+        System.out.println(decodeHexNibble('9')); // Output: 9
+        System.out.println(decodeHexNibble('a')); // Output: 10
+        System.out.println(decodeHexNibble('F')); // Output: 15
+        System.out.println(decodeHexNibble('g')); // Output: 65535 (Character.MAX_VALUE)
     }
 }

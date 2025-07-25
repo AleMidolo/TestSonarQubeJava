@@ -17,7 +17,7 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación del método write(int) si es necesario
+        // Implementación del método write para un solo byte
         System.out.print((char) b);
     }
 }

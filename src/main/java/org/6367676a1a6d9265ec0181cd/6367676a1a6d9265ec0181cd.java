@@ -1,5 +1,5 @@
 public class StringUtil {
-    
+
     /** 
      * Elimina los espacios en blanco al inicio de la cadena dada.
      * @param str la cadena a verificar

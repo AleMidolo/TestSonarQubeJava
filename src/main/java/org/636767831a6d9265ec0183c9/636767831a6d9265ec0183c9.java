@@ -24,6 +24,7 @@ public class DiagnosticContext {
     }
 
     public static void main(String[] args) {
+        // Ejemplo de uso
         push("Contexto 1");
         push("Contexto 2");
         System.out.println(peek()); // Debería imprimir "Contexto 2"

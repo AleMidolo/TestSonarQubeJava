@@ -18,7 +18,7 @@ public class ShardingChecker {
     public static void main(String[] args) {
         ShardingChecker checker = new ShardingChecker();
         try {
-            checker.check("ExampleModel");
+            checker.check("MyModel");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

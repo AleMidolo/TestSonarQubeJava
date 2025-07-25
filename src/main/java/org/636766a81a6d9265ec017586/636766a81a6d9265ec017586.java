@@ -11,7 +11,7 @@ public class OutputFrame {
      */
     private void pop(final int elements) {
         if (elements <= 0) {
-            return; // No hay nada que eliminar
+            return;
         }
         int toRemove = Math.min(elements, outputFrame.size());
         for (int i = 0; i < toRemove; i++) {
@@ -19,24 +19,12 @@ public class OutputFrame {
         }
     }
 
-    // Método para agregar elementos al output frame (para pruebas)
+    // Additional methods to manipulate the outputFrame for testing purposes
     public void push(Object element) {
         outputFrame.add(element);
     }
 
-    // Método para ver el contenido del output frame (para pruebas)
     public List<Object> getOutputFrame() {
         return outputFrame;
-    }
-
-    public static void main(String[] args) {
-        OutputFrame frame = new OutputFrame();
-        frame.push("Element 1");
-        frame.push("Element 2");
-        frame.push("Element 3");
-        
-        System.out.println("Before pop: " + frame.getOutputFrame());
-        frame.pop(2);
-        System.out.println("After pop: " + frame.getOutputFrame());
     }
 }

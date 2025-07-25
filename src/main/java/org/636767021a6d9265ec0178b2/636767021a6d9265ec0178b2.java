@@ -12,9 +12,10 @@ public class StackFrameExtractor {
         
         // Simulación de la extracción de tipos a partir del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
+            int startIndex = descriptor.indexOf('(') + 1;
+            int endIndex = descriptor.indexOf(')');
+            String args = descriptor.substring(startIndex, endIndex);
+            
             if (!args.isEmpty()) {
                 String[] types = args.split(",");
                 for (String type : types) {
@@ -28,7 +29,7 @@ public class StackFrameExtractor {
 
         // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
         for (String type : extractedTypes) {
-            System.out.println("Extracted type: " + type);
+            System.out.println("Tipo extraído: " + type);
         }
     }
 

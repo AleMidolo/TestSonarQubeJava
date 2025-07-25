@@ -31,7 +31,7 @@ public class ConstantPool {
         ConstantPool constantPool = new ConstantPool();
         int index1 = constantPool.addConstantNameAndType("myField", "I");
         int index2 = constantPool.addConstantNameAndType("myField", "I");
-        System.out.println("Index of first entry: " + index1);
-        System.out.println("Index of second entry (should be the same): " + index2);
+        System.out.println("Index of myField: " + index1);
+        System.out.println("Index of myField (duplicate): " + index2);
     }
 }

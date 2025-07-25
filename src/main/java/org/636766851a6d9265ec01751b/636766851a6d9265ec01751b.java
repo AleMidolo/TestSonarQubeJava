@@ -19,8 +19,8 @@ public class HexDecoder {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        char hexChar = 'A';
-        char decodedValue = decodeHexNibble(hexChar);
-        System.out.println("El valor hexadecimal de " + hexChar + " es: " + (int) decodedValue);
+        System.out.println(decodeHexNibble('a')); // Salida: 10
+        System.out.println(decodeHexNibble('F')); // Salida: 15
+        System.out.println(decodeHexNibble('g')); // Salida: 65535 (Character.MAX_VALUE)
     }
 }

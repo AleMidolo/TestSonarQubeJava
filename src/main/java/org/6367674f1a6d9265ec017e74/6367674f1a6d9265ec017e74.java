@@ -1,42 +1,43 @@
-import java.util.*;
+import java.util.Queue;
 
-public class Queue<T> {
-    private LinkedList<T> elements;
+public class QueueToString {
 
-    public Queue() {
-        elements = new LinkedList<>();
-    }
+    private Queue<?> queue;
 
-    public void enqueue(T element) {
-        elements.addLast(element);
-    }
-
-    public T dequeue() {
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    public int size() {
-        return elements.size();
+    public QueueToString(Queue<?> queue) {
+        this.queue = queue;
     }
 
     /**
-     * Returns a textual representation of the queue.
-     * @return a textual representation of the queue.
+     * 返回队列的文本表示。
+     * @return 队列的文本表示。
      */
     @Override
     public String toString() {
-        return elements.toString();
+        if (queue == null) {
+            return "null";
+        }
+        if (queue.isEmpty()) {
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Object element : queue) {
+            sb.append(element).append(", ");
+        }
+        // Remove the trailing ", " from the last element
+        sb.setLength(sb.length() - 2);
+        sb.append("]");
+        return sb.toString();
     }
 
     public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: [1, 2, 3]
+        Queue<String> queue = new java.util.LinkedList<>();
+        queue.add("A");
+        queue.add("B");
+        queue.add("C");
+
+        QueueToString queueToString = new QueueToString(queue);
+        System.out.println(queueToString.toString());
     }
 }

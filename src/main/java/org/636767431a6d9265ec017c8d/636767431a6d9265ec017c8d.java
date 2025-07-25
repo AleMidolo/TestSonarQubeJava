@@ -1,13 +1,13 @@
-public class BinaryLog {
+public class BinaryLogCalculator {
+
     /**
-     * Computes floor(log2(n)) + 1
-     * 
-     * @param n the input number
-     * @return floor(log2(n)) + 1
+     * 计算 $\log_2 (n)$ 的下限值 + 1
+     * @param n 输入的正整数
+     * @return $\log_2 (n)$ 的下限值 + 1
      */
     private static int computeBinaryLog(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("Input must be a positive integer.");
+            throw new IllegalArgumentException("n must be a positive integer");
         }
         int log = 0;
         while (n > 1) {
@@ -18,7 +18,7 @@ public class BinaryLog {
     }
 
     public static void main(String[] args) {
-        int n = 16; // Example input
-        System.out.println("Floor(log2(" + n + ")) + 1 = " + computeBinaryLog(n));
+        int n = 10; // 示例输入
+        System.out.println("log2(" + n + ") 的下限值 + 1 = " + computeBinaryLog(n));
     }
 }

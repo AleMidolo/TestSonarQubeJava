@@ -5,25 +5,31 @@ import java.util.Iterator;
 public class CollectionUtils {
 
     /**
-     * Converts the given Collection into an array of Strings. The returned array does not contain <code>null</code> entries. Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element is <code>null</code>.
-     * @param collection The collection to convert
-     * @return A new array of Strings.
+     * 将给定的集合转换为字符串数组。返回的数组不包含 <code>null</code> 条目。请注意，{@link Arrays#sort(Object[])} 如果数组元素为 <code>null</code> 将抛出 {@link NullPointerException}。
+     * @param collection 要转换的集合
+     * @return 一个新的字符串数组。
      */
-    static String[] toNoNullStringArray(Collection<?> collection) {
+    public static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
 
-        ArrayList<String> nonNullStrings = new ArrayList<>();
+        // 过滤掉 null 元素
+        ArrayList<String> filteredList = new ArrayList<>();
         Iterator<?> iterator = collection.iterator();
-
         while (iterator.hasNext()) {
             Object element = iterator.next();
             if (element != null) {
-                nonNullStrings.add(element.toString());
+                filteredList.add(element.toString());
             }
         }
 
-        return nonNullStrings.toArray(new String[0]);
+        // 转换为数组
+        String[] result = new String[filteredList.size()];
+        for (int i = 0; i < filteredList.size(); i++) {
+            result[i] = filteredList.get(i);
+        }
+
+        return result;
     }
 }

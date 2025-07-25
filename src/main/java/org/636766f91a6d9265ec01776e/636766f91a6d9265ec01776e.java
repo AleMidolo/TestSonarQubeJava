@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ByteArrayOutputStream extends OutputStream {
-    private byte[] buf;
-    private int count;
+    protected byte buf[];
+    protected int count;
 
     public ByteArrayOutputStream() {
         this(32);
@@ -17,15 +17,9 @@ public class ByteArrayOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(int b) throws IOException {
-        ensureCapacity(count + 1);
-        buf[count] = (byte) b;
-        count++;
-    }
-
-    @Override
-    public void write(byte b[], int off, int len) throws IOException {
-        if (off < 0 || len < 0 || off > b.length - len) {
+    public void write(final byte b[], final int off, final int len) throws IOException {
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+            ((off + len) - b.length > 0)) {
             throw new IndexOutOfBoundsException();
         }
         ensureCapacity(count + len);
@@ -56,6 +50,13 @@ public class ByteArrayOutputStream extends OutputStream {
         buf = newBuf;
     }
 
+    @Override
+    public void write(int b) throws IOException {
+        ensureCapacity(count + 1);
+        buf[count] = (byte) b;
+        count++;
+    }
+
     public byte[] toByteArray() {
         return java.util.Arrays.copyOf(buf, count);
     }
@@ -64,8 +65,7 @@ public class ByteArrayOutputStream extends OutputStream {
         return count;
     }
 
-    @Override
-    public String toString() {
-        return new String(buf, 0, count);
+    public void reset() {
+        count = 0;
     }
 }

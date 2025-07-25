@@ -1,18 +1,18 @@
-public class Edge {
-    private Edge prevTreeEdge;
-    private Edge nextTreeEdge;
+import java.util.*;
 
-    /**
-     * Removes this edge from both doubly linked lists of tree edges.
-     */
+public class TreeNode {
+    TreeNode left;
+    TreeNode right;
+    TreeNode parent;
+
     public void removeFromTreeEdgeList() {
-        if (prevTreeEdge != null) {
-            prevTreeEdge.nextTreeEdge = nextTreeEdge;
+        if (this.parent != null) {
+            if (this.parent.left == this) {
+                this.parent.left = null;
+            } else if (this.parent.right == this) {
+                this.parent.right = null;
+            }
+            this.parent = null;
         }
-        if (nextTreeEdge != null) {
-            nextTreeEdge.prevTreeEdge = prevTreeEdge;
-        }
-        prevTreeEdge = null;
-        nextTreeEdge = null;
     }
 }

@@ -4,30 +4,23 @@ import java.nio.file.Paths;
 public class PathUtils {
 
     /**
-     * Apply the given relative path to the given path, assuming standard Java folder separation (i.e. "/" separators).
-     * @param path the path to start from (usually a full file path)
-     * @param relativePath the relative path to apply(relative to the full file path above)
-     * @return the full file path that results from applying the relative path
+     * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即“/”分隔符）。
+     * @param path 起始路径（通常是完整的文件路径）
+     * @param relativePath 要应用的相对路径（相对于上述完整文件路径）
+     * @return 应用相对路径后得到的完整文件路径
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Convert the base path to a Path object
+        // 将路径转换为Path对象
         Path basePath = Paths.get(path);
-        
-        // Resolve the relative path against the base path
+        // 解析相对路径
         Path resolvedPath = basePath.resolve(relativePath);
-        
-        // Normalize the path to remove any redundant elements like ".." or "."
-        Path normalizedPath = resolvedPath.normalize();
-        
-        // Convert the normalized path back to a string
-        return normalizedPath.toString();
+        // 返回规范化后的路径字符串
+        return resolvedPath.normalize().toString();
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String basePath = "/usr/local/bin";
+        String path = "/usr/local/bin";
         String relativePath = "../lib/java";
-        String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println(applyRelativePath(path, relativePath)); // 输出: /usr/local/lib/java
     }
 }

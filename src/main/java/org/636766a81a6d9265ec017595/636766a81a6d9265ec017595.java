@@ -9,10 +9,10 @@ public class ByteVector {
     }
 
     /**
-     * Puts two bytes into this byte vector. The byte vector is automatically enlarged if necessary.
-     * @param byteValue1 a byte.
-     * @param byteValue2 another byte.
-     * @return this byte vector.
+     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
+     * @param byteValue1 一个字节。
+     * @param byteValue2 另一个字节。
+     * @return 此字节向量。
      */
     public final ByteVector put11(final int byteValue1, final int byteValue2) {
         bytes.add((byte) byteValue1);

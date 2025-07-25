@@ -5,30 +5,26 @@ import java.util.regex.Pattern;
 public class PropertySubstitutor {
 
     /**
-     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
      */
     public static String findAndSubst(String key, Properties props) {
-        if (key == null || props == null) {
-            throw new IllegalArgumentException("Key and Properties must not be null");
-        }
-
         String value = props.getProperty(key);
         if (value == null) {
             return null;
         }
 
-        // Pattern to match ${...} placeholders
+        // 正则表达式匹配 ${...} 形式的变量
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String placeholder = matcher.group(1);
-            String replacement = props.getProperty(placeholder);
-            if (replacement != null) {
-                matcher.appendReplacement(result, replacement);
+            String varName = matcher.group(1);
+            String varValue = props.getProperty(varName);
+            if (varValue != null) {
+                matcher.appendReplacement(result, varValue);
             } else {
-                // If no replacement found, leave the placeholder as is
+                // 如果变量未找到，保留原样
                 matcher.appendReplacement(result, matcher.group(0));
             }
         }
@@ -39,10 +35,10 @@ public class PropertySubstitutor {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "John");
+        props.setProperty("name", "Alice");
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result);  // 输出: Hello, Alice!
     }
 }

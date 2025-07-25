@@ -1,13 +1,10 @@
-// Assuming ListNodeImpl is a class that represents a node in a linked list
 class ListNodeImpl<E> {
-    E element;
+    E value;
     ListNodeImpl<E> next;
     ListNodeImpl<E> prev;
 
-    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-        this.element = element;
-        this.prev = prev;
-        this.next = next;
+    ListNodeImpl(E value) {
+        this.value = value;
     }
 }
 
@@ -16,7 +13,7 @@ public class LinkedList<E> {
     private ListNodeImpl<E> tail;
 
     /**
-     * Remove the non null {@code node} from the list.
+     * 从列表中移除非空的 {@code node}。
      */
     private boolean unlink(ListNodeImpl<E> node) {
         if (node == null) {
@@ -42,7 +39,7 @@ public class LinkedList<E> {
             node.next = null;
         }
 
-        node.element = null; // Help GC
+        node.value = null; // Help GC
         return true;
     }
 }

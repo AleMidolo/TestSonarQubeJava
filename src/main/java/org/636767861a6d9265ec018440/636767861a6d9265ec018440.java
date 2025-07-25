@@ -1,21 +1,20 @@
 public void abbreviate(final int nameStart, final StringBuffer buf) {
     if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // Handle invalid input
+        return; // 如果缓冲区为空或起始位置无效，直接返回
     }
 
-    // Split the name into parts based on spaces
-    String[] parts = buf.substring(nameStart).split(" ");
+    // 获取名称部分
+    String name = buf.substring(nameStart);
 
-    // Clear the buffer from the nameStart position
-    buf.delete(nameStart, buf.length());
-
-    // Append the abbreviated name
-    for (int i = 0; i < parts.length; i++) {
-        if (!parts[i].isEmpty()) {
-            buf.append(parts[i].charAt(0)); // Append the first character of each part
-            if (i < parts.length - 1) {
-                buf.append('.'); // Append a dot after each abbreviation except the last
-            }
+    // 缩写逻辑：取每个单词的首字母
+    String[] words = name.split("\\s+");
+    StringBuilder abbreviation = new StringBuilder();
+    for (String word : words) {
+        if (!word.isEmpty()) {
+            abbreviation.append(word.charAt(0));
         }
     }
+
+    // 替换缓冲区中的名称部分为缩写
+    buf.replace(nameStart, buf.length(), abbreviation.toString());
 }

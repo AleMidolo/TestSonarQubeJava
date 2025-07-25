@@ -3,10 +3,10 @@ import java.util.List;
 public class InterceptorChecker {
 
     /**
-     * <p> Checks in the specified list if there is at least one instance of the given {@link AtmosphereInterceptor interceptor} implementation class.</p>
-     * @param interceptorList the interceptors
-     * @param c               the interceptor class
-     * @return {@code false} if an instance of the class already exists in the list, {@code true} otherwise
+     * <p>检查指定列表中是否至少存在一个给定的 {@link AtmosphereInterceptor 拦截器} 实现类的实例。</p>
+     * @param interceptorList 拦截器列表
+     * @param c               拦截器类
+     * @return 如果列表中已经存在该类的实例，则返回 {@code false}，否则返回 {@code true}
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {

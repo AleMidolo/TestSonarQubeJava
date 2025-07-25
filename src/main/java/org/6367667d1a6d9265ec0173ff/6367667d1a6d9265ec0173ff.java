@@ -1,21 +1,24 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class Meteor {
-    // Assuming Meteor class has some properties and methods
-}
-
 public class MeteorLookup {
 
     /**
-     * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
+     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
      * @param r {@link HttpServletRequest}
-     * @return a {@link Meteor} or null if not found
+     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example implementation: retrieve Meteor from session attribute
-        if (r != null) {
-            return (Meteor) r.getSession().getAttribute("meteor");
+        // 假设 Meteor 实例存储在请求属性中
+        Object meteorObj = r.getAttribute("meteor");
+        
+        if (meteorObj instanceof Meteor) {
+            return (Meteor) meteorObj;
+        } else {
+            return null;
         }
-        return null;
     }
+}
+
+class Meteor {
+    // Meteor 类的定义
 }

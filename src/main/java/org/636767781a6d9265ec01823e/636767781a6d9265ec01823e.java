@@ -1,52 +1,41 @@
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogAppender {
-    private List<PrintWriter> clients = new ArrayList<>();
+public class ClientAppender extends AppenderSkeleton {
+    private List<Client> clients = new ArrayList<>();
 
-    /**
-     * Handles a log event. For this appender, that means writing the message to each connected client.
-     */
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
+    @Override
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
-        synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.println(message);
-                client.flush();
-            }
+        String message = layout.format(event);
+        for (Client client : clients) {
+            client.sendMessage(message);
         }
     }
 
-    /**
-     * Adds a new client to the list of connected clients.
-     * @param clientSocket The socket of the connected client.
-     */
-    public void addClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.add(writer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void close() {
+        // Clean up resources if necessary
     }
 
-    /**
-     * Removes a client from the list of connected clients.
-     * @param clientSocket The socket of the client to remove.
-     */
-    public void removeClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.remove(writer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public boolean requiresLayout() {
+        return true;
+    }
+
+    // Dummy Client class for demonstration
+    public static class Client {
+        public void sendMessage(String message) {
+            System.out.println("Sending to client: " + message);
         }
     }
 }

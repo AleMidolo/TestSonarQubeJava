@@ -1,10 +1,10 @@
 /**
- * <p>Check if a String starts with a specified prefix (optionally case insensitive).</p>
+ * 检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。
  * @see String#startsWith(String)
- * @param str  the String to check, may be null
- * @param prefix the prefix to find, may be null
- * @param ignoreCase inidicates whether the compare should ignore case(case insensitive) or not.
- * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
+ * @param str  要检查的字符串，可能为空
+ * @param prefix 要查找的前缀，可能为空
+ * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
+ * @return 如果字符串以前缀开头或两者都是 <code>null</code>则返回<code>true</code>
  */
 private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
     if (str == null && prefix == null) {

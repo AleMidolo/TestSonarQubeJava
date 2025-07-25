@@ -19,19 +19,17 @@ public class UriMatcher {
             return null;
         }
 
-        // Convert pattern to regex by escaping special chars and replacing wildcards
-        String regex = pattern.replaceAll("([.+?^${}()|\\[\\]\\\\])", "\\\\$1")
-                             .replace("*", ".*")
-                             .replace("?", ".");
+        // Convert pattern to regex
+        String regex = pattern.replaceAll("\\*", ".*")
+                             .replaceAll("\\?", ".")
+                             .replaceAll("\\{([^}]+)\\}", "([^/]+)");
         
-        // Add start and end anchors
-        regex = "^" + regex + "$";
-
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(uri);
 
         if (m.matches()) {
-            return m.group(0);
+            // Return the first group if there is one, otherwise return the full match
+            return m.groupCount() > 0 ? m.group(1) : m.group();
         }
 
         return null;

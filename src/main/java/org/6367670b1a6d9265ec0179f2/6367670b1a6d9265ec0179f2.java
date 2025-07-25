@@ -10,6 +10,20 @@ public class MapContains {
      * @return true if the map contains the key
      */
     public boolean containsKey(Object key) {
-        return map.containsKey(key);
+        if (key == null) {
+            for (Map.Entry<Object, Object> entry : map.entrySet()) {
+                if (entry.getKey() == null) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            if (key.equals(entry.getKey())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

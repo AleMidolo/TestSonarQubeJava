@@ -12,61 +12,63 @@ public class StackMapTableWriter {
         for (int i = start; i < end; ++i) {
             int abstractType = currentFrame.getAbstractType(i);
             switch (abstractType) {
-                case Frame.TOP:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.TOP_TYPE));
+                case Frame.ITEM_TOP:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.TOP_VARIABLE_INFO));
                     break;
-                case Frame.INTEGER:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.INTEGER_TYPE));
+                case Frame.ITEM_INTEGER:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.INTEGER_VARIABLE_INFO));
                     break;
-                case Frame.FLOAT:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.FLOAT_TYPE));
+                case Frame.ITEM_FLOAT:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.FLOAT_VARIABLE_INFO));
                     break;
-                case Frame.DOUBLE:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.DOUBLE_TYPE));
+                case Frame.ITEM_DOUBLE:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.DOUBLE_VARIABLE_INFO));
                     break;
-                case Frame.LONG:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.LONG_TYPE));
+                case Frame.ITEM_LONG:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.LONG_VARIABLE_INFO));
                     break;
-                case Frame.NULL:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.NULL_TYPE));
+                case Frame.ITEM_NULL:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.NULL_VARIABLE_INFO));
                     break;
-                case Frame.UNINITIALIZED_THIS:
-                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_THIS_TYPE));
+                case Frame.ITEM_UNINITIALIZED_THIS:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_THIS_VARIABLE_INFO));
+                    break;
+                case Frame.ITEM_OBJECT:
+                    stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.OBJECT_VARIABLE_INFO, 
+                        currentFrame.getObjectType(i)));
                     break;
                 default:
-                    if (abstractType >= Frame.OBJECT && abstractType <= Frame.OBJECT_MAX) {
-                        String className = currentFrame.getObjectType(i);
-                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.OBJECT_TYPE, className));
-                    } else if (abstractType >= Frame.UNINITIALIZED && abstractType <= Frame.UNINITIALIZED_MAX) {
-                        Label label = currentFrame.getUninitializedLabel(i);
-                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_TYPE, label));
+                    // Must be an uninitialized type
+                    if (abstractType > Frame.ITEM_UNINITIALIZED) {
+                        stackMapTableEntries.add(new VerificationTypeInfo(VerificationTypeInfo.UNINITIALIZED_VARIABLE_INFO,
+                            ((Label) currentFrame.getObjectType(i)).getOffset()));
                     }
                     break;
             }
         }
     }
 
-    // Helper class to represent verification type info
+    // Inner class to represent verification type info
     private static class VerificationTypeInfo {
-        static final int TOP_TYPE = 0;
-        static final int INTEGER_TYPE = 1;
-        static final int FLOAT_TYPE = 2;
-        static final int DOUBLE_TYPE = 3;
-        static final int LONG_TYPE = 4;
-        static final int NULL_TYPE = 5;
-        static final int UNINITIALIZED_THIS_TYPE = 6;
-        static final int OBJECT_TYPE = 7;
-        static final int UNINITIALIZED_TYPE = 8;
+        static final int TOP_VARIABLE_INFO = 0;
+        static final int INTEGER_VARIABLE_INFO = 1;
+        static final int FLOAT_VARIABLE_INFO = 2;
+        static final int DOUBLE_VARIABLE_INFO = 3;
+        static final int LONG_VARIABLE_INFO = 4;
+        static final int NULL_VARIABLE_INFO = 5;
+        static final int UNINITIALIZED_THIS_VARIABLE_INFO = 6;
+        static final int OBJECT_VARIABLE_INFO = 7;
+        static final int UNINITIALIZED_VARIABLE_INFO = 8;
 
-        private int type;
+        private int tag;
         private Object info;
 
-        VerificationTypeInfo(int type) {
-            this.type = type;
+        VerificationTypeInfo(int tag) {
+            this.tag = tag;
         }
 
-        VerificationTypeInfo(int type, Object info) {
-            this.type = type;
+        VerificationTypeInfo(int tag, Object info) {
+            this.tag = tag;
             this.info = info;
         }
     }

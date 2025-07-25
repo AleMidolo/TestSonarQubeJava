@@ -4,7 +4,7 @@ import org.objectweb.asm.Constants;
 public class SymbolTable {
     private final Symbol[] symbols;
     private int size;
-
+    
     public SymbolTable(int initialCapacity) {
         this.symbols = new Symbol[initialCapacity];
         this.size = 1;
@@ -29,9 +29,9 @@ public class SymbolTable {
     }
     
     private Symbol lookupSymbol(int hashCode) {
-        for (int i = 0; i < size; i++) {
-            if (symbols[i] != null && symbols[i].hashCode == hashCode) {
-                return symbols[i]; 
+        for (Symbol symbol : symbols) {
+            if (symbol != null && symbol.hashCode == hashCode) {
+                return symbol;
             }
         }
         return null;
@@ -43,7 +43,7 @@ public class SymbolTable {
             System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
             symbols = newSymbols;
         }
-        symbols[size - 1] = symbol;
+        symbols[size] = symbol;
         return symbol;
     }
     

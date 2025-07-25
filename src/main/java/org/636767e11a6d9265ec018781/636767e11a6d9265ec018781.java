@@ -23,22 +23,21 @@ public class MetricsCache<METRICS> {
         } else {
             // Si hay un valor existente, combinar los datos
             try {
-                if (data instanceof Mergeable) {
+                if (currentValue instanceof Mergeable) {
                     ((Mergeable)currentValue).merge(data);
                 } else {
                     // Si no es mergeable, simplemente reemplazar
                     cache.set(data);
                 }
             } catch (Exception e) {
-                // En caso de error al combinar, mantener el valor actual
-                // y registrar el error
-                System.err.println("Error merging metrics data: " + e.getMessage());
+                // En caso de error al combinar, mantener el valor existente
+                cache.set(currentValue);
             }
         }
     }
-}
 
-// Interfaz opcional para objetos que pueden combinarse
-interface Mergeable<T> {
-    void merge(T other);
+    // Interfaz para objetos que pueden combinarse
+    public interface Mergeable<T> {
+        void merge(T other);
+    }
 }

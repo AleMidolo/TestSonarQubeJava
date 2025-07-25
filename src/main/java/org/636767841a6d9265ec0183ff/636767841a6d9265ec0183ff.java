@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.table.TableModel;
 
 public class TableUtils {
+
     /**
      * Selecciona la fila especificada en el JTable indicado y desplaza el JScrollPane especificado hacia la fila recién seleccionada. 
      * Más importante aún, la llamada a repaint() se retrasa lo suficiente para que la tabla pinte correctamente la fila recién seleccionada, 

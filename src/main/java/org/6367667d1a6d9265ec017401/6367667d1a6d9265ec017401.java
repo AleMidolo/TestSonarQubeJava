@@ -3,44 +3,57 @@ import java.util.Map;
 
 public class StringUtils {
 
-    /**
-     * <p>Remueve el "escape" de cualquier literal de Java encontrado en el <code>String</code>. Por ejemplo, convertirá una secuencia de <code>'\'</code> y <code>'n'</code> en un carácter de nueva línea, a menos que el <code>'\'</code> esté precedido por otro <code>'\'</code>.</p>
-     * @param str el <code>String</code> a procesar, puede ser nulo
-     * @return un nuevo <code>String</code> sin carácteres "escape", <code>null</code> si la entrada es un string nulo
-     */
+    private static final Map<String, String> JAVA_ESCAPES;
+    
+    static {
+        JAVA_ESCAPES = new HashMap<>();
+        JAVA_ESCAPES.put("\\t", "\t");
+        JAVA_ESCAPES.put("\\b", "\b");
+        JAVA_ESCAPES.put("\\n", "\n");
+        JAVA_ESCAPES.put("\\r", "\r");
+        JAVA_ESCAPES.put("\\f", "\f");
+        JAVA_ESCAPES.put("\\\\", "\\");
+        JAVA_ESCAPES.put("\\'", "'");
+        JAVA_ESCAPES.put("\\\"", "\"");
+    }
+
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
         
-        // Mapa de caracteres escapados comunes en Java
-        Map<String, String> unescapeMap = new HashMap<>();
-        unescapeMap.put("\\n", "\n"); // nueva línea
-        unescapeMap.put("\\t", "\t"); // tab
-        unescapeMap.put("\\r", "\r"); // retorno de carro
-        unescapeMap.put("\\b", "\b"); // backspace
-        unescapeMap.put("\\f", "\f"); // form feed
-        unescapeMap.put("\\\"", "\""); // comilla doble
-        unescapeMap.put("\\'", "'");   // comilla simple
-        unescapeMap.put("\\\\", "\\"); // backslash
-        
         StringBuilder result = new StringBuilder(str.length());
+        StringBuilder escape = new StringBuilder(2);
+        boolean inEscape = false;
+        
         for (int i = 0; i < str.length(); i++) {
-            if (i < str.length() - 1 && str.charAt(i) == '\\') {
-                // Obtener la secuencia de escape (backslash + siguiente caracter)
-                String escape = str.substring(i, i + 2);
+            char current = str.charAt(i);
+            
+            if (inEscape) {
+                escape.append(current);
+                String escapedSequence = escape.toString();
                 
-                // Si la secuencia está en el mapa, reemplazarla
-                if (unescapeMap.containsKey(escape)) {
-                    result.append(unescapeMap.get(escape));
-                    i++; // Saltar el siguiente caracter ya que fue procesado
-                } else {
-                    // Si no es una secuencia de escape válida, mantener el backslash
-                    result.append(str.charAt(i));
+                if (JAVA_ESCAPES.containsKey(escapedSequence)) {
+                    result.append(JAVA_ESCAPES.get(escapedSequence));
+                    escape.setLength(0);
+                    inEscape = false;
+                } else if (escape.length() == 2) {
+                    // Si no es una secuencia de escape válida, mantener los caracteres originales
+                    result.append(escapedSequence);
+                    escape.setLength(0);
+                    inEscape = false;
                 }
+            } else if (current == '\\') {
+                inEscape = true;
+                escape.append(current);
             } else {
-                result.append(str.charAt(i));
+                result.append(current);
             }
+        }
+        
+        // Si queda algún escape sin procesar al final
+        if (escape.length() > 0) {
+            result.append(escape);
         }
         
         return result.toString();

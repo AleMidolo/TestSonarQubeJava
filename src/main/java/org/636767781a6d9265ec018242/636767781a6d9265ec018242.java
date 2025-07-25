@@ -11,9 +11,6 @@ public class AppenderManager implements AppenderAttachable {
         appenders = new Vector<Appender>();
     }
 
-    /**
-     * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         

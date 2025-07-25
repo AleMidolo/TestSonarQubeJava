@@ -17,25 +17,25 @@ public class ContentBuilder {
                 JsonElement element = entry.getValue();
                 
                 // Handle "ats" field specially
-                if ("ats".equals(key)) {
+                if ("ats".equals(key) && !element.isJsonNull()) {
                     content.put(key, element.getAsString());
                 }
-                // Handle other fields based on their type
-                else if (element.isJsonPrimitive()) {
-                    JsonPrimitive primitive = element.getAsJsonPrimitive();
-                    if (primitive.isString()) {
-                        content.put(key, primitive.getAsString());
-                    } else if (primitive.isNumber()) {
-                        content.put(key, primitive.getAsNumber());
-                    } else if (primitive.isBoolean()) {
-                        content.put(key, primitive.getAsBoolean());
+                // Handle other fields
+                else if (!element.isJsonNull()) {
+                    if (element.isJsonPrimitive()) {
+                        JsonPrimitive primitive = element.getAsJsonPrimitive();
+                        if (primitive.isString()) {
+                            content.put(key, primitive.getAsString());
+                        } else if (primitive.isNumber()) {
+                            content.put(key, primitive.getAsNumber());
+                        } else if (primitive.isBoolean()) {
+                            content.put(key, primitive.getAsBoolean());
+                        }
+                    } else if (element.isJsonObject()) {
+                        content.put(key, buildContent(element.getAsJsonObject()));
+                    } else if (element.isJsonArray()) {
+                        content.put(key, element.getAsJsonArray());
                     }
-                } else if (element.isJsonObject()) {
-                    content.put(key, buildContent(element.getAsJsonObject()));
-                } else if (element.isJsonArray()) {
-                    content.put(key, element.getAsJsonArray());
-                } else if (element.isJsonNull()) {
-                    content.put(key, null);
                 }
             }
         }

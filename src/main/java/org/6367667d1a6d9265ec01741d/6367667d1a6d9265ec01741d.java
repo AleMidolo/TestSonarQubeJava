@@ -15,7 +15,7 @@ public class TypeResolver {
         if (bounds == null || bounds.length == 0) {
             return Unknown.class;
         }
-
+        
         Type bound = bounds[0];
         
         if (bound instanceof TypeVariable) {

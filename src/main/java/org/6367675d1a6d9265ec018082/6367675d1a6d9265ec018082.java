@@ -35,30 +35,31 @@ public class Graph {
         currentNode = nextNode;
         return null;
     }
-}
 
-class Node {
-    private boolean isVirtual;
-    private Node realNode;
+    // Supporting classes
+    private class Node {
+        private boolean isVirtual;
+        private Node realNode;
 
-    public boolean isVirtual() {
-        return isVirtual;
+        public boolean isVirtual() {
+            return isVirtual;
+        }
+
+        public Node getRealNode() {
+            return realNode;
+        }
     }
 
-    public Node getRealNode() {
-        return realNode;
-    }
-}
+    private class Edge {
+        private Node source;
+        private Node target;
 
-class Edge {
-    private Node source;
-    private Node target;
+        public Node getSource() {
+            return source;
+        }
 
-    public Node getSource() {
-        return source;
-    }
-
-    public Node getTarget() {
-        return target;
+        public Node getTarget() {
+            return target;
+        }
     }
 }

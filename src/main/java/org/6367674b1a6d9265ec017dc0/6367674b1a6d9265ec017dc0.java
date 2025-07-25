@@ -3,8 +3,8 @@ import java.util.*;
 public class Graph<V,E> {
 
     // Graph representation using adjacency lists
-    private Map<V, List<Edge<V,E>>> adjacencyList;
-    
+    private Map<V, List<Edge<V,E>>> adjacencyMap;
+
     private class Edge<V,E> {
         private V source;
         private V target; 
@@ -25,8 +25,8 @@ public class Graph<V,E> {
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         
-        // Iterate through all adjacency lists
-        for (Map.Entry<V, List<Edge<V,E>>> entry : adjacencyList.entrySet()) {
+        // Iterate through all vertices and their edges
+        for (Map.Entry<V, List<Edge<V,E>>> entry : adjacencyMap.entrySet()) {
             V vertex = entry.getKey();
             List<Edge<V,E>> edges = entry.getValue();
             
@@ -34,7 +34,7 @@ public class Graph<V,E> {
             if (!edges.isEmpty()) {
                 visibleVertices.add(vertex);
                 
-                // Also add all target vertices
+                // Also add all target vertices of the edges
                 for (Edge<V,E> edge : edges) {
                     visibleVertices.add(edge.target);
                 }

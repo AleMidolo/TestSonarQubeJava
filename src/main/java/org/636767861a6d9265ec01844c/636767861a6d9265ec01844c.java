@@ -23,8 +23,8 @@ public class Logger {
         }
     }
 
-    // Inner class representing an Appender
-    public static class Appender {
+    // Assuming Appender class has a getName() method
+    private static class Appender {
         private String name;
 
         public Appender(String name) {

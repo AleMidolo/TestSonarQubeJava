@@ -1,37 +1,26 @@
 /**
  * Gets a substring from the specified String avoiding exceptions.
- * If the start or end indices are out of bounds, the method adjusts them to the nearest valid index.
+ * If the input string is null, returns an empty string.
+ * If the start or end indices are out of bounds, adjusts them to fit within the string's length.
  *
- * @param str   The input string.
- * @param start The starting index (inclusive).
- * @param end   The ending index (exclusive).
- * @return The substring, or an empty string if the input string is null or the indices are invalid.
+ * @param str   the input string
+ * @param start the starting index (inclusive)
+ * @param end   the ending index (exclusive)
+ * @return the substring, or an empty string if the input is null
  */
 public static String sub(String str, int start, int end) {
     if (str == null) {
         return "";
     }
-    
     int length = str.length();
-    
-    // Adjust start index if it's out of bounds
     if (start < 0) {
         start = 0;
-    } else if (start > length) {
-        start = length;
     }
-    
-    // Adjust end index if it's out of bounds
-    if (end < 0) {
-        end = 0;
-    } else if (end > length) {
+    if (end > length) {
         end = length;
     }
-    
-    // Ensure start is not greater than end
-    if (start > end) {
-        start = end;
+    if (start >= end) {
+        return "";
     }
-    
     return str.substring(start, end);
 }

@@ -20,14 +20,20 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
-        Map<TypeVariable<?>, Type> typeVariableMap = getTypeVariableMap(targetType);
+        Map<String, Type> typeVariableMap = createTypeVariableMap(targetType);
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
             Type typeArgument = actualTypeArguments[i];
-            if (typeArgument instanceof TypeVariable) {
-                resolvedArguments[i] = (Class<?>) typeVariableMap.get(typeArgument);
-            } else if (typeArgument instanceof Class) {
+            if (typeArgument instanceof Class) {
                 resolvedArguments[i] = (Class<?>) typeArgument;
+            } else if (typeArgument instanceof TypeVariable) {
+                TypeVariable<?> typeVariable = (TypeVariable<?>) typeArgument;
+                Type resolvedType = typeVariableMap.get(typeVariable.getName());
+                if (resolvedType instanceof Class) {
+                    resolvedArguments[i] = (Class<?>) resolvedType;
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
@@ -36,11 +42,11 @@ public class TypeResolver {
         return resolvedArguments;
     }
 
-    private static Map<TypeVariable<?>, Type> getTypeVariableMap(Class<?> targetType) {
-        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+    private static Map<String, Type> createTypeVariableMap(Class<?> targetType) {
+        Map<String, Type> typeVariableMap = new HashMap<>();
         TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
         for (TypeVariable<?> typeParameter : typeParameters) {
-            typeVariableMap.put(typeParameter, Object.class); // Default to Object if no specific type is found
+            typeVariableMap.put(typeParameter.getName(), typeParameter);
         }
         return typeVariableMap;
     }

@@ -13,25 +13,24 @@ public class FileAdder {
             return;
         }
 
+        // Convert the array to a list for easier manipulation
         List<File> fileList = new ArrayList<>();
         Collections.addAll(fileList, files);
+
+        // Reverse the list
         Collections.reverse(fileList);
 
-        // Assuming there is a method to add files, e.g., addFile(File file)
+        // Process the files in reverse order
         for (File file : fileList) {
-            addFile(file);
+            // Add your logic here to process each file
+            System.out.println("Processing file: " + file.getName());
         }
     }
 
-    // Dummy method to simulate adding a file
-    private void addFile(File file) {
-        // Implementation to add the file
-        System.out.println("Adding file: " + file.getName());
-    }
-
     public static void main(String[] args) {
-        FileAdder fileAdder = new FileAdder();
+        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
+        FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);
     }
 }

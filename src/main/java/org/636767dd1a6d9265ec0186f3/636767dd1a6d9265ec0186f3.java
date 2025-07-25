@@ -5,7 +5,7 @@ public class ColumnName {
     private Map<String, String> nameMap;
 
     public ColumnName() {
-        nameMap = new HashMap<>();
+        this.nameMap = new HashMap<>();
     }
 
     /**
@@ -21,6 +21,6 @@ public class ColumnName {
     }
 
     public String getNewName(String oldName) {
-        return nameMap.get(oldName);
+        return nameMap.getOrDefault(oldName, oldName);
     }
 }

@@ -16,9 +16,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(indexOf("Hello World", "World")); // Output: 6
-        System.out.println(indexOf("Hello World", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "World"));          // Output: -1
-        System.out.println(indexOf("Hello World", null));    // Output: -1
+        String str = "Hello, World!";
+        String searchStr = "World";
+        int index = indexOf(str, searchStr);
+        System.out.println("Index of '" + searchStr + "' in '" + str + "' is: " + index);
     }
 }

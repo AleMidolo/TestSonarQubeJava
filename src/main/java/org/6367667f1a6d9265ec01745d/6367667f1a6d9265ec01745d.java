@@ -5,11 +5,11 @@ import java.util.List;
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> segments = new ArrayList<>();
+        List<PathSegmentImpl> pathSegments = new ArrayList<>();
         String path = u.getPath();
 
         if (path == null || path.isEmpty()) {
-            return segments;
+            return pathSegments;
         }
 
         // Remove the leading '/' if it exists and the path is absolute
@@ -17,23 +17,21 @@ public class URIDecoder {
             path = path.substring(1);
         }
 
-        String[] parts = path.split("/");
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                String decodedPart = decode ? decodeURIComponent(part) : part;
-                segments.add(new PathSegmentImpl(decodedPart));
+        String[] segments = path.split("/");
+        for (String segment : segments) {
+            if (!segment.isEmpty()) {
+                String decodedSegment = decode ? decodeSegment(segment) : segment;
+                pathSegments.add(new PathSegmentImpl(decodedSegment));
             }
         }
 
-        return segments;
+        return pathSegments;
     }
 
-    private static String decodeURIComponent(String encoded) {
-        try {
-            return java.net.URLDecoder.decode(encoded, "UTF-8");
-        } catch (java.io.UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 encoding not supported", e);
-        }
+    private static String decodeSegment(String segment) {
+        // Implement URI decoding logic here
+        // This is a placeholder for actual URI decoding
+        return java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     public static class PathSegmentImpl {
@@ -49,9 +47,16 @@ public class URIDecoder {
 
         @Override
         public String toString() {
-            return "PathSegmentImpl{" +
-                    "path='" + path + '\'' +
-                    '}';
+            return path;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        URI uri = URI.create("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
         }
     }
 }

@@ -33,41 +33,47 @@ public class OuterFaceCirculator {
 public class Node {
     private Node nextClockwise;
     private Node nextCounterClockwise;
-    private Node previousClockwise;
-    private Node previousCounterClockwise;
 
     public Node getNextClockwise() {
         return nextClockwise;
+    }
+
+    public void setNextClockwise(Node nextClockwise) {
+        this.nextClockwise = nextClockwise;
     }
 
     public Node getNextCounterClockwise() {
         return nextCounterClockwise;
     }
 
+    public void setNextCounterClockwise(Node nextCounterClockwise) {
+        this.nextCounterClockwise = nextCounterClockwise;
+    }
+
     public Node getPreviousClockwise() {
-        return previousClockwise;
+        // Assuming a doubly linked structure
+        return nextCounterClockwise;
     }
 
     public Node getPreviousCounterClockwise() {
-        return previousCounterClockwise;
+        // Assuming a doubly linked structure
+        return nextClockwise;
     }
-
-    // Other methods and fields...
 }
 
 public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = start;
 
-        while (true) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
-                return circulator;
-            }
-            if (currentNode == stop) {
+        do {
+            if (predicate.test(current)) {
                 return circulator;
             }
             circulator.next(dir);
-        }
+            current = circulator.getCurrent();
+        } while (current != stop);
+
+        return circulator;
     }
 }

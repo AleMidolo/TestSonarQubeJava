@@ -1,18 +1,18 @@
 import java.util.*;
 
 class Bucket {
-    private List<Bucket> bucketList;
+    private List<Bucket> buckets;
 
-    public Bucket(List<Bucket> bucketList) {
-        this.bucketList = bucketList;
+    public Bucket(List<Bucket> buckets) {
+        this.buckets = buckets;
     }
 
     /**
      * Removes this bucket from the data structure.
      */
     void removeSelf() {
-        if (bucketList != null) {
-            bucketList.remove(this);
+        if (buckets != null) {
+            buckets.remove(this);
         }
     }
 }

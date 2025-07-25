@@ -7,25 +7,21 @@ private String unescapeId(String input) {
     }
 
     // Replace escaped quotes and backslashes
-    input = input.replace("\\\"", "\"");
-    input = input.replace("\\\\", "\\");
-
-    // Replace escaped newlines, tabs, etc.
-    input = input.replace("\\n", "\n");
-    input = input.replace("\\r", "\r");
-    input = input.replace("\\t", "\t");
-
-    // Replace Unicode escape sequences
-    Pattern unicodePattern = Pattern.compile("\\\\u([0-9a-fA-F]{4})");
-    Matcher matcher = unicodePattern.matcher(input);
-    StringBuffer unescapedBuffer = new StringBuffer();
-
-    while (matcher.find()) {
-        String hex = matcher.group(1);
-        char unicodeChar = (char) Integer.parseInt(hex, 16);
-        matcher.appendReplacement(unescapedBuffer, Character.toString(unicodeChar));
+    StringBuilder unescaped = new StringBuilder();
+    for (int i = 0; i < input.length(); i++) {
+        char currentChar = input.charAt(i);
+        if (currentChar == '\\' && i + 1 < input.length()) {
+            char nextChar = input.charAt(i + 1);
+            if (nextChar == '"' || nextChar == '\\') {
+                unescaped.append(nextChar);
+                i++; // Skip the next character
+            } else {
+                unescaped.append(currentChar);
+            }
+        } else {
+            unescaped.append(currentChar);
+        }
     }
-    matcher.appendTail(unescapedBuffer);
 
-    return unescapedBuffer.toString();
+    return unescaped.toString();
 }

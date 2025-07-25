@@ -7,7 +7,7 @@ public class FrameStack {
         this.outputFrameStack = new Stack<>();
     }
 
-    /**
+    /** 
      * Pops the given number of abstract types from the output frame stack.
      * @param elements the number of abstract types that must be popped.
      */

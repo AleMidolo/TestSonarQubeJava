@@ -21,9 +21,9 @@ public class TelnetServer {
     public synchronized void send(final String message) {
         for (Socket client : clients) {
             try {
-                OutputStream out = client.getOutputStream();
-                out.write(message.getBytes());
-                out.flush();
+                OutputStream outputStream = client.getOutputStream();
+                outputStream.write(message.getBytes());
+                outputStream.flush();
             } catch (IOException e) {
                 // Gestisci l'eccezione, ad esempio rimuovendo il client dalla lista
                 removeClient(client);

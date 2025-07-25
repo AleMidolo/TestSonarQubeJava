@@ -23,18 +23,13 @@ public class Queue<T> {
         return elements.size();
     }
 
+    /**
+     * Restituisce una rappresentazione testuale della coda.
+     * @return una rappresentazione testuale della coda.
+     */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (T element : elements) {
-            sb.append(element);
-            if (elements.indexOf(element) != elements.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
+        return elements.toString();
     }
 
     public static void main(String[] args) {

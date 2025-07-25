@@ -1,4 +1,4 @@
-import java.io.File;
+import java.util.Objects;
 
 public class FileUtils {
 
@@ -15,11 +15,11 @@ public class FileUtils {
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
-        if (extensionIndex > lastSeparatorIndex) {
-            return extensionIndex;
-        } else {
+        if (lastSeparatorIndex > extensionIndex) {
             return -1;
         }
+
+        return extensionIndex;
     }
 
     /**
@@ -32,14 +32,16 @@ public class FileUtils {
             return -1;
         }
 
-        int lastUnixSeparator = filename.lastIndexOf('/');
-        int lastWindowsSeparator = filename.lastIndexOf('\\');
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
 
-        return Math.max(lastUnixSeparator, lastWindowsSeparator);
+        return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        String filename = "path/to/file.txt";
-        System.out.println(indexOfExtension(filename)); // Output: 13
+        System.out.println(indexOfExtension("example/file.txt")); // Output: 13
+        System.out.println(indexOfExtension("example.file/file")); // Output: -1
+        System.out.println(indexOfExtension("example.file/file.txt")); // Output: 18
+        System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

@@ -17,18 +17,22 @@ public class PackedFieldChecker {
         if (flag == 1) {
             isPackedField = true;
             // Aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti
-            System.out.println("Campo compresso rilevato. Stato interno aggiornato.");
+            updateInternalState();
         } else {
             isPackedField = false;
-            System.out.println("Nessun campo compresso rilevato.");
         }
     }
 
-    // Metodo fittizio per leggere un flag (simula la lettura da un input stream)
-    private int readFlag() throws IOException {
+    private int readFlag() {
         // Simula la lettura di un flag da un input stream
         // In un'implementazione reale, questo potrebbe leggere da un InputStream
         return 1; // Ritorna 1 per simulare un campo compresso
+    }
+
+    private void updateInternalState() {
+        // Aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti
+        // Ad esempio, potrebbe impostare un flag o aggiornare un contatore
+        System.out.println("Stato interno aggiornato: campi compressi in lettura.");
     }
 
     public static void main(String[] args) {

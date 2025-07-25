@@ -7,25 +7,37 @@ public class TypeResolver {
      * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
-        if (typeVariable == null) {
-            return Unknown.class;
-        }
-
         Type[] bounds = typeVariable.getBounds();
-        if (bounds.length == 0) {
+        if (bounds.length > 0) {
+            return bounds[0];
+        } else {
             return Unknown.class;
         }
-
-        return bounds[0];
     }
 
     public static class Unknown {
-        // Classe segnaposto per rappresentare un tipo sconosciuto
+        // Classe di segnaposto per rappresentare un tipo sconosciuto
     }
 
     public static void main(String[] args) {
         // Esempio di utilizzo
-        TypeVariable<?> typeVar = String.class.getTypeParameters()[0];
+        TypeVariable<?> typeVar = new TypeVariable<Object>() {
+            @Override
+            public Type[] getBounds() {
+                return new Type[]{Object.class};
+            }
+
+            @Override
+            public String getName() {
+                return "T";
+            }
+
+            @Override
+            public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
+                return TypeResolver.class;
+            }
+        };
+
         Type resolvedType = resolveBound(typeVar);
         System.out.println("Resolved Type: " + resolvedType);
     }

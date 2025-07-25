@@ -10,7 +10,7 @@ public class StringUtils {
      * @return true se la stringa contiene almeno una delle stringhe nella lista, false altrimenti.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
-        if (str == null || searchStrArray == null) {
+        if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
             return false;
         }
 
@@ -21,5 +21,11 @@ public class StringUtils {
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        List<String> searchStrings = List.of("hello", "world", "java");
+        String input = "Hello, this is a test string.";
+        System.out.println(containsAnyIgnoreCase(input, searchStrings)); // Output: true
     }
 }

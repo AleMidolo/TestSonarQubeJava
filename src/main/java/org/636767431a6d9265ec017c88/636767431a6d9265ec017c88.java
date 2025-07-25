@@ -1,6 +1,6 @@
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
@@ -21,7 +21,7 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, binarySearch returns (-(insertion point) - 1)
+                // Se la chiave non è presente, Collections.binarySearch restituisce (-(insertion point) - 1)
                 index = -index - 1;
             }
             lowerBounds.add(index);

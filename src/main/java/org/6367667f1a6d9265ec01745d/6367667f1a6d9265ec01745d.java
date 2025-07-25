@@ -1,8 +1,6 @@
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 public class URIDecoder {
 
@@ -14,31 +12,26 @@ public class URIDecoder {
             return segments;
         }
 
-        // Remove the leading '/' if it's an absolute path
+        // Ignora il '/' iniziale se il percorso è assoluto
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
 
         String[] rawSegments = path.split("/");
         for (String rawSegment : rawSegments) {
-            if (rawSegment.isEmpty()) {
-                continue;
-            }
-
-            String segment = rawSegment;
-            if (decode) {
-                try {
-                    segment = URLDecoder.decode(rawSegment, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    // If decoding fails, use the raw segment
-                    segment = rawSegment;
-                }
-            }
-
+            String segment = decode ? decodeURIComponent(rawSegment) : rawSegment;
             segments.add(new PathSegmentImpl(segment));
         }
 
         return segments;
+    }
+
+    private static String decodeURIComponent(String encoded) {
+        try {
+            return java.net.URLDecoder.decode(encoded, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
     }
 
     public static class PathSegmentImpl {

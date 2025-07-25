@@ -27,7 +27,7 @@ public class SequenceRange {
     }
 }
 
-public class ProfileSnapshot {
+public class ProfileSnapshotBuilder {
 
     /**
      * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
@@ -42,9 +42,9 @@ public class ProfileSnapshot {
     }
 
     public static void main(String[] args) {
-        ProfileSnapshot snapshot = new ProfileSnapshot();
-        List<SequenceRange> sequenceRanges = snapshot.buildSequenceRanges();
-        for (SequenceRange range : sequenceRanges) {
+        ProfileSnapshotBuilder builder = new ProfileSnapshotBuilder();
+        List<SequenceRange> ranges = builder.buildSequenceRanges();
+        for (SequenceRange range : ranges) {
             System.out.println(range);
         }
     }

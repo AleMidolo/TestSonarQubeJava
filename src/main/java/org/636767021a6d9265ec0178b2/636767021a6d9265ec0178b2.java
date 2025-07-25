@@ -13,50 +13,24 @@ public class FrameStack {
         }
 
         if (descriptor.startsWith("(")) {
-            // È un descrittore di metodo, rimuovi i tipi degli argomenti
-            int endOfArgs = descriptor.indexOf(')');
-            if (endOfArgs == -1) {
-                return;
-            }
-            String argsDescriptor = descriptor.substring(1, endOfArgs);
-            removeTypesFromStack(argsDescriptor);
-        } else {
-            // È un singolo tipo, rimuovi solo quel tipo
-            removeTypeFromStack(descriptor);
-        }
-    }
-
-    private void removeTypesFromStack(String argsDescriptor) {
-        int index = 0;
-        while (index < argsDescriptor.length()) {
-            char currentChar = argsDescriptor.charAt(index);
-            if (currentChar == 'L') {
-                // Tipo oggetto, trova il ';'
-                int endIndex = argsDescriptor.indexOf(';', index);
-                if (endIndex == -1) {
-                    break;
+            // Se il descrittore è un descrittore di metodo, rimuove i tipi di argomento
+            String[] parts = descriptor.split("\\)");
+            if (parts.length > 1) {
+                String argumentTypes = parts[0].substring(1);
+                String[] types = argumentTypes.split(";");
+                for (String type : types) {
+                    if (!type.isEmpty()) {
+                        outputFrameStack.pop();
+                    }
                 }
-                String type = argsDescriptor.substring(index, endIndex + 1);
-                removeTypeFromStack(type);
-                index = endIndex + 1;
-            } else if (currentChar == '[') {
-                // Tipo array, trova il tipo base
-                index++;
-            } else {
-                // Tipo primitivo
-                removeTypeFromStack(String.valueOf(currentChar));
-                index++;
             }
-        }
-    }
-
-    private void removeTypeFromStack(String type) {
-        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+        } else {
+            // Se il descrittore è un tipo singolo, rimuove solo quel tipo
             outputFrameStack.pop();
         }
     }
 
-    // Metodo di esempio per aggiungere tipi allo stack (per testing)
+    // Metodo di esempio per aggiungere elementi allo stack (per testing)
     public void push(String type) {
         outputFrameStack.push(type);
     }

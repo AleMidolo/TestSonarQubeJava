@@ -3,7 +3,6 @@ import java.util.Map;
 
 public class SymbolTable {
     private final Map<String, Integer> constantPool = new HashMap<>();
-    private int nextIndex = 1;
 
     /**
      * 将一个 CONSTANT_NameAndType_info 添加到该符号表的常量池中。如果常量池已经包含类似项，则不执行任何操作。
@@ -16,8 +15,9 @@ public class SymbolTable {
         if (constantPool.containsKey(key)) {
             return constantPool.get(key);
         } else {
-            constantPool.put(key, nextIndex);
-            return nextIndex++;
+            int newIndex = constantPool.size() + 1; // Assuming index starts from 1
+            constantPool.put(key, newIndex);
+            return newIndex;
         }
     }
 }

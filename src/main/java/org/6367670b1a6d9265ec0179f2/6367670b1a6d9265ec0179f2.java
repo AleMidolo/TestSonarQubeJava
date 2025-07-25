@@ -13,7 +13,7 @@ public class CustomMap<K, V> implements Map<K, V> {
      * @return 如果映射包含该键，则返回真
      */
     @Override
-    public boolean containsKey(final Object key) {
+    public boolean containsKey(Object key) {
         return internalMap.containsKey(key);
     }
 

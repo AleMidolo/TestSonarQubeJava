@@ -14,10 +14,7 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // 输出: 12
-        System.out.println(indexOfLastSeparator("/home/user/file.txt"));       // 输出: 10
-        System.out.println(indexOfLastSeparator("file.txt"));                  // 输出: -1
-        System.out.println(indexOfLastSeparator(null));                        // 输出: -1
+        String filename = "C:\\Users\\Example\\Documents\\file.txt";
+        System.out.println(indexOfLastSeparator(filename)); // 输出: 23
     }
 }

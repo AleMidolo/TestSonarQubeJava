@@ -25,10 +25,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // 示例用法
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String input = "Hello, this is a test string.";
-        boolean result = containsAnyIgnoreCase(input, searchStrings);
-        System.out.println(result); // 输出: true
+        List<String> searchStrArray = List.of("hello", "world", "java");
+        String str = "Hello, this is a test string.";
+        System.out.println(containsAnyIgnoreCase(str, searchStrArray)); // 输出: true
     }
 }

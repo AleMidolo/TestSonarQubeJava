@@ -1,23 +1,27 @@
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
-import com.google.gson.JsonObject;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 private Map<String, Object> buildContent(JsonObject jsonObject) {
     Map<String, Object> contentMap = new HashMap<>();
     
-    // Assuming the JsonObject contains a field "content" which holds the main content
-    String content = jsonObject.get("content").getAsString();
-    contentMap.put("content", content);
+    // Assuming the JsonObject contains a "text" field with the content
+    String text = jsonObject.get("text").getAsString();
     
-    // Check if the content contains '@' to identify mentions
-    if (content.contains("@")) {
-        // Extract the mentioned user (assuming the format is @username)
-        String[] parts = content.split("@");
-        if (parts.length > 1) {
-            String mentionedUser = parts[1].split("\\s+")[0]; // Get the first word after '@'
-            contentMap.put("mentionedUser", mentionedUser);
-        }
+    // Regular expression to match @mentions
+    Pattern mentionPattern = Pattern.compile("@(\\w+)");
+    Matcher matcher = mentionPattern.matcher(text);
+    
+    // Find all mentions and add them to the map
+    while (matcher.find()) {
+        String mention = matcher.group(1);
+        contentMap.put("@" + mention, true);
     }
+    
+    // Add the original text to the map
+    contentMap.put("text", text);
     
     return contentMap;
 }

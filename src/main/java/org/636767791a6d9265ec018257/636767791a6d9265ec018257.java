@@ -9,13 +9,10 @@ public class LogTable {
     }
 
     public void addMessage(final LogRecord lr) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Assuming the table model is a DefaultTableModel
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.addRow(new Object[]{lr.getLevel(), lr.getMessage()});
-            }
+        SwingUtilities.invokeLater(() -> {
+            // Assuming the table model is a DefaultTableModel
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.addRow(new Object[]{lr.getLevel(), lr.getMessage(), lr.getMillis()});
         });
     }
 }

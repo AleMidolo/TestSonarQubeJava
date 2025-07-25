@@ -1,4 +1,4 @@
-public class StringQuoter {
+public class StringUtils {
 
     /**
      * 如果给定的对象是字符串，则将其转换为带单引号的字符串；否则保持对象不变。
@@ -16,6 +16,6 @@ public class StringQuoter {
         // 测试用例
         System.out.println(quoteIfString("myString")); // 输出: 'myString'
         System.out.println(quoteIfString(123));       // 输出: 123
-        System.out.println(quoteIfString(true));      // 输出: true
+        System.out.println(quoteIfString(null));       // 输出: null
     }
 }

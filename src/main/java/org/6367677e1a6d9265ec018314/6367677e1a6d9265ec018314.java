@@ -15,10 +15,11 @@ class CategoryTree {
         }
     }
 
+    public CategoryTree() {
+        this.root = new Node("Root", true);
+    }
+
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
         return removeUnusedNodesHelper(root);
     }
 
@@ -27,30 +28,31 @@ class CategoryTree {
             return 0;
         }
 
-        int removedCount = 0;
+        int count = 0;
         Iterator<Node> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             Node child = iterator.next();
             if (!child.isActive) {
                 iterator.remove();
-                removedCount++;
+                count++;
             } else {
-                removedCount += removeUnusedNodesHelper(child);
+                count += removeUnusedNodesHelper(child);
             }
         }
 
-        return removedCount;
+        return count;
     }
 
     // Example usage
     public static void main(String[] args) {
         CategoryTree tree = new CategoryTree();
-        // Populate the tree with nodes
-        // tree.root = new Node("Root", true);
-        // tree.root.children.add(new Node("Child1", false));
-        // tree.root.children.add(new Node("Child2", true));
+        Node root = tree.root;
+        root.children.add(new Node("Child1", true));
+        root.children.add(new Node("Child2", false));
+        root.children.get(0).children.add(new Node("Grandchild1", false));
+        root.children.get(0).children.add(new Node("Grandchild2", true));
 
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+        int removedCount = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedCount + " unused nodes.");
     }
 }

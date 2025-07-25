@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class ByteArrayConverter {
 
     /**
@@ -15,8 +13,19 @@ public class ByteArrayConverter {
         }
         byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Array element at index " + i + " is null.");
+            }
+            result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        Byte[] byteArray = {1, 2, 3, 4, 5};
+        byte[] primitiveArray = toPrimitive(byteArray);
+        for (byte b : primitiveArray) {
+            System.out.print(b + " ");
+        }
     }
 }

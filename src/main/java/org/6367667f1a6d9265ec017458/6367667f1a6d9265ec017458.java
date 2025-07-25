@@ -6,7 +6,7 @@ public class AtmosphereFramework {
 
     /**
      * 移除一个 {@link AtmosphereHandler}。
-     * @param mapping 在调用 {@link #addAtmosphereHandler(String, AtmosphereHandler)} 时使用的映射；
+     * @param mapping 在调用 {@link #addAtmosphereHandler(String,AtmosphereHandler)} 时使用的映射；
      * @return 如果成功移除则返回真
      */
     public boolean removeAtmosphereHandler(String mapping) {

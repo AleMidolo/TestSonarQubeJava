@@ -11,7 +11,7 @@ public class ColumnName {
      */
     public void overrideName(String oldName, String newName) {
         if (oldName == null || newName == null) {
-            throw new IllegalArgumentException("Old name and new name cannot be null.");
+            throw new IllegalArgumentException("Old name and new name cannot be null");
         }
         nameMap.put(oldName, newName);
     }

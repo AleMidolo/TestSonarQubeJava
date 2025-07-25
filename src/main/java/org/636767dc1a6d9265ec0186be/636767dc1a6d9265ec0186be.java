@@ -6,7 +6,7 @@ public class TimeBucketCompressor {
     /**
      * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
      */
-    public static long compressTimeBucket(long timeBucket, int dayStep) {
+    static long compressTimeBucket(long timeBucket, int dayStep) {
         // 将时间桶转换为字符串
         String timeBucketStr = Long.toString(timeBucket);
         

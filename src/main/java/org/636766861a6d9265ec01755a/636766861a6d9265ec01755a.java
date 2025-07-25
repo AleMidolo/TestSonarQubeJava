@@ -10,9 +10,8 @@ public final class UriMatcher {
      * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
-        // 假设我们有一个预定义的模式，例如匹配以 "http://" 或 "https://" 开头的URI
-        String regex = "^(http|https)://.*";
-        Pattern pattern = Pattern.compile(regex);
+        // 假设我们有一个预定义的模式，例如匹配路径中的数字
+        Pattern pattern = Pattern.compile("/(\\d+)/");
         Matcher matcher = pattern.matcher(uri);
 
         if (matcher.find()) {
@@ -24,11 +23,9 @@ public final class UriMatcher {
 
     public static void main(String[] args) {
         UriMatcher matcher = new UriMatcher();
-        CharSequence uri = "https://example.com";
-        MatchResult result = matcher.match(uri);
-
+        MatchResult result = matcher.match("/users/123/");
         if (result != null) {
-            System.out.println("Match found: " + result.group());
+            System.out.println("Matched: " + result.group(1));
         } else {
             System.out.println("No match found.");
         }

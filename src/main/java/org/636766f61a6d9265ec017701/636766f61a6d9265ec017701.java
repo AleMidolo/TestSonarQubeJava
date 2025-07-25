@@ -15,10 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
-        String str = "Hello, world! Hello again!";
-        String searchStr = "Hello";
-        int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of '" + searchStr + "' in '" + str + "' is: " + index);
+        // Esempi di utilizzo
+        System.out.println(lastIndexOf("hello world", "o")); // Output: 7
+        System.out.println(lastIndexOf("hello world", "x")); // Output: -1
+        System.out.println(lastIndexOf(null, "o"));         // Output: -1
+        System.out.println(lastIndexOf("hello world", null)); // Output: -1
     }
 }

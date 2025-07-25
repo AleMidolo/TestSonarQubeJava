@@ -24,13 +24,4 @@ public final class BufferUtils {
         }
         return outputStream.toByteArray();
     }
-
-    public static void main(String[] args) {
-        ByteBuffer buffer1 = ByteBuffer.wrap(new byte[]{1, 2, 3});
-        ByteBuffer buffer2 = ByteBuffer.wrap(new byte[]{4, 5, 6});
-        byte[] result = toByteArray(buffer1, buffer2);
-        for (byte b : result) {
-            System.out.print(b + " ");
-        }
-    }
 }

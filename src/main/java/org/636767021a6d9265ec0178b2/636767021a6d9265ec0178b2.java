@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class FrameStack {
+public class FrameStackHandler {
     private Stack<String> outputFrameStack = new Stack<>();
 
     /**
@@ -13,7 +13,7 @@ public class FrameStack {
         }
 
         if (descriptor.startsWith("(")) {
-            // È un descrittore di metodo, rimuovi i tipi degli argomenti
+            // È un descrittore di metodo, rimuovi i tipi di argomento
             int endOfArgs = descriptor.indexOf(')');
             if (endOfArgs == -1) {
                 return; // Descrittore non valido
@@ -24,26 +24,43 @@ public class FrameStack {
             while (index < argsDescriptor.length()) {
                 char currentChar = argsDescriptor.charAt(index);
                 if (currentChar == 'L') {
-                    // Tipo oggetto, rimuovi fino al ';'
+                    // Tipo oggetto, trova il ';'
                     int endOfObject = argsDescriptor.indexOf(';', index);
                     if (endOfObject == -1) {
                         return; // Descrittore non valido
                     }
-                    outputFrameStack.pop(); // Rimuovi il tipo oggetto dallo stack
                     index = endOfObject + 1;
                 } else if (currentChar == '[') {
-                    // Tipo array, rimuovi il tipo base
-                    outputFrameStack.pop(); // Rimuovi il tipo array dallo stack
+                    // Tipo array, salta il '[' e continua
                     index++;
                 } else {
-                    // Tipo primitivo, rimuovi direttamente
-                    outputFrameStack.pop(); // Rimuovi il tipo primitivo dallo stack
+                    // Tipo primitivo (B, C, D, F, I, J, S, Z)
                     index++;
+                }
+
+                if (!outputFrameStack.isEmpty()) {
+                    outputFrameStack.pop();
                 }
             }
         } else {
-            // È un tipo singolo, rimuovi direttamente
-            outputFrameStack.pop(); // Rimuovi il tipo dallo stack
+            // È un tipo singolo, rimuovi un elemento dallo stack
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
+            }
         }
+    }
+
+    // Metodo di esempio per testare la funzione
+    public static void main(String[] args) {
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.outputFrameStack.push("int");
+        handler.outputFrameStack.push("float");
+        handler.outputFrameStack.push("java/lang/Object");
+
+        handler.pop("(I)V"); // Rimuove un int dallo stack
+        System.out.println(handler.outputFrameStack); // Output: [int, float]
+
+        handler.pop("Ljava/lang/Object;"); // Rimuove un Object dallo stack
+        System.out.println(handler.outputFrameStack); // Output: [int]
     }
 }

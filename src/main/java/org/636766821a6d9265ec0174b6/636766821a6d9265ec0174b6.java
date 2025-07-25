@@ -15,31 +15,23 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
-        Map<String, Class<?>> typeVariableMap = createTypeVariableMap(targetType);
+        Map<String, Class<?>> typeVariableMap = new HashMap<>();
+        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
+        for (int i = 0; i < typeParameters.length; i++) {
+            typeVariableMap.put(typeParameters[i].getName(), (Class<?>) actualTypeArguments[i]);
+        }
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type typeArgument = actualTypeArguments[i];
-            if (typeArgument instanceof Class<?>) {
-                resolvedArguments[i] = (Class<?>) typeArgument;
-            } else if (typeArgument instanceof TypeVariable<?>) {
-                TypeVariable<?> typeVariable = (TypeVariable<?>) typeArgument;
+            if (actualTypeArguments[i] instanceof TypeVariable) {
+                TypeVariable<?> typeVariable = (TypeVariable<?>) actualTypeArguments[i];
                 resolvedArguments[i] = typeVariableMap.get(typeVariable.getName());
+            } else if (actualTypeArguments[i] instanceof Class) {
+                resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
             } else {
                 return null;
             }
         }
 
         return resolvedArguments;
-    }
-
-    private static Map<String, Class<?>> createTypeVariableMap(Class<?> targetType) {
-        Map<String, Class<?>> typeVariableMap = new HashMap<>();
-        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
-
-        for (TypeVariable<?> typeParameter : typeParameters) {
-            typeVariableMap.put(typeParameter.getName(), Object.class); // Default to Object if no specific type is found
-        }
-
-        return typeVariableMap;
     }
 }

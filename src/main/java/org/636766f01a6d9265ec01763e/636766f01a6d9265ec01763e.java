@@ -27,7 +27,7 @@ public class CharsetConverter {
                 try {
                     return Charset.forName(charset).name();
                 } catch (Exception e) {
-                    // Se non esiste un charset corrispondente, restituisci UTF-8 come default
+                    // Se il charset non è supportato, restituisci UTF-8 come fallback
                     return StandardCharsets.UTF_8.name();
                 }
         }
@@ -35,8 +35,8 @@ public class CharsetConverter {
 
     public static void main(String[] args) {
         // Esempio di utilizzo
-        System.out.println(javaCharset("utf-8")); // Output: UTF-8
-        System.out.println(javaCharset("iso-8859-1")); // Output: ISO-8859-1
-        System.out.println(javaCharset("unknown-charset")); // Output: UTF-8 (default)
+        System.out.println(javaCharset("utf-8"));  // Output: UTF-8
+        System.out.println(javaCharset("iso-8859-1"));  // Output: ISO-8859-1
+        System.out.println(javaCharset("unknown-charset"));  // Output: UTF-8 (fallback)
     }
 }

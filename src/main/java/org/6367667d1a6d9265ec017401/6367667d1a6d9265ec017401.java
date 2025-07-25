@@ -3,61 +3,58 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
-    /**
-     * <p>Rimuove l'escape da qualsiasi letterale Java trovato nella <code>String</code>. Ad esempio, trasformerà una sequenza di <code>'\'</code> e <code>'n'</code> in un carattere di nuova linea, a meno che il <code>'\'</code> non sia preceduto da un altro <code>'\'</code>.</p>
-     * @param str la <code>String</code> da desescapare, può essere null
-     * @return una nuova <code>String</code> desescapata, <code>null</code> se l'input è una stringa null
-     */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
         StringBuilder sb = new StringBuilder();
-        int length = str.length();
-        for (int i = 0; i < length; i++) {
+        int i = 0;
+        while (i < str.length()) {
             char c = str.charAt(i);
-            if (c == '\\' && i + 1 < length) {
+            if (c == '\\' && i + 1 < str.length()) {
                 char nextChar = str.charAt(i + 1);
                 switch (nextChar) {
                     case 'n':
                         sb.append('\n');
-                        i++;
+                        i += 2;
                         break;
                     case 't':
                         sb.append('\t');
-                        i++;
+                        i += 2;
                         break;
                     case 'r':
                         sb.append('\r');
-                        i++;
+                        i += 2;
                         break;
                     case 'b':
                         sb.append('\b');
-                        i++;
+                        i += 2;
                         break;
                     case 'f':
                         sb.append('\f');
-                        i++;
+                        i += 2;
                         break;
                     case '\'':
                         sb.append('\'');
-                        i++;
+                        i += 2;
                         break;
                     case '\"':
                         sb.append('\"');
-                        i++;
+                        i += 2;
                         break;
                     case '\\':
                         sb.append('\\');
-                        i++;
+                        i += 2;
                         break;
                     default:
                         sb.append(c);
+                        i++;
                         break;
                 }
             } else {
                 sb.append(c);
+                i++;
             }
         }
         return sb.toString();
@@ -67,6 +64,6 @@ public class StringUtils {
         String input = "Ciao\\nMondo\\t!";
         String output = unescapeJava(input);
         System.out.println(output);  // Output: Ciao
-                                    //         Mondo    !
+                                     //         Mondo    !
     }
 }

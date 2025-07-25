@@ -1,31 +1,23 @@
 import java.util.*;
 
 class Bucket {
-    private List<Bucket> bucketList;
+    private List<Bucket> buckets;
 
-    public Bucket(List<Bucket> bucketList) {
-        this.bucketList = bucketList;
+    public Bucket() {
+        this.buckets = new ArrayList<>();
+    }
+
+    public void addBucket(Bucket bucket) {
+        this.buckets.add(bucket);
     }
 
     /**
      * Rimuove questo bucket dalla struttura dati.
      */
-    void removeSelf() {
-        if (bucketList != null) {
-            bucketList.remove(this);
+    public void removeSelf() {
+        for (Bucket bucket : buckets) {
+            bucket.buckets.remove(this);
         }
-    }
-
-    public static void main(String[] args) {
-        List<Bucket> buckets = new ArrayList<>();
-        Bucket bucket1 = new Bucket(buckets);
-        Bucket bucket2 = new Bucket(buckets);
-
-        buckets.add(bucket1);
-        buckets.add(bucket2);
-
-        System.out.println("Before removal: " + buckets.size()); // Output: 2
-        bucket1.removeSelf();
-        System.out.println("After removal: " + buckets.size());  // Output: 1
+        this.buckets.clear();
     }
 }

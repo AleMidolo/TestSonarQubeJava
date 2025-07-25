@@ -37,7 +37,5 @@ public class FrameVisitor {
         public int getNextWriteIndex() {
             return nextWriteIndex;
         }
-
-        // Altri metodi per gestire il frame...
     }
 }

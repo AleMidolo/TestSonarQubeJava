@@ -10,12 +10,11 @@ public class TimeRangeBuilder {
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        long currentStart = start;
 
-        while (currentStart < end) {
-            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd;
+        while (start < end) {
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
 
         return timeRanges;

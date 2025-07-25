@@ -21,10 +21,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] testArray = {"  hello ", "  world  ", null, "  java  "};
-        String[] result = trimArrayElements(testArray);
-        for (String s : result) {
-            System.out.println("'" + s + "'");
+        String[] array = {"  hello ", "  world  ", null, "  java  "};
+        String[] trimmedArray = trimArrayElements(array);
+        for (String str : trimmedArray) {
+            System.out.println(str);
         }
     }
 }

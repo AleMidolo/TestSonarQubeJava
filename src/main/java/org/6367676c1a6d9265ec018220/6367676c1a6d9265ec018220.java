@@ -11,22 +11,20 @@ public class FileUtils {
         if (path == null) {
             return null;
         }
-
-        int lastSeparatorIndex = path.lastIndexOf('/');
+        
         int lastDotIndex = path.lastIndexOf('.');
-
-        // Se non c'è un punto o se il punto è prima dell'ultimo separatore, restituisci il percorso originale
-        if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
-            return path;
+        int lastSeparatorIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+        
+        if (lastDotIndex > lastSeparatorIndex) {
+            return path.substring(0, lastDotIndex);
         }
-
-        return path.substring(0, lastDotIndex);
+        
+        return path;
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("myfile.txt"));      // Output: myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));   // Output: mypath/myfile
-        System.out.println(stripFilenameExtension(null));              // Output: null
+        System.out.println(stripFilenameExtension("mypath/myfile"));    // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(null));               // Output: null
     }
 }

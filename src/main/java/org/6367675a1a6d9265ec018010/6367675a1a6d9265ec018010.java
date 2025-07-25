@@ -1,18 +1,21 @@
 import java.util.*;
 
 class Bucket {
-    private List<Bucket> dataStructure;
+    // Assuming this is part of a larger data structure class
+    private List<Bucket> buckets;
 
-    public Bucket(List<Bucket> dataStructure) {
-        this.dataStructure = dataStructure;
+    public Bucket() {
+        this.buckets = new ArrayList<>();
     }
 
     /**
      * इस बकेट को डेटा संरचना से हटा देता है।
      */
     public void removeSelf() {
-        if (dataStructure != null) {
-            dataStructure.remove(this);
+        if (buckets != null) {
+            buckets.remove(this);
         }
     }
+
+    // Other methods and fields can be added here
 }

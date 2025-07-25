@@ -1,28 +1,25 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class TimeBucketCompressor {
 
     /**
      * दिन के चरण (dayStep) का पालन करते हुए समय बकेट के लम्बे मान को फिर से प्रारूपित करें। जैसे, यदि dayStep == 11 है, तो 20000105 का फिर से प्रारूपित समय बकेट 20000101 होगा, 20000115 का फिर से प्रारूपित समय बकेट 20000112 होगा, और 20000123 का फिर से प्रारूपित समय बकेट 20000123 होगा।
+     *
+     * @param timeBucket समय बकेट का लम्बा मान (YYYYMMDD प्रारूप में)
+     * @param dayStep दिन का चरण (step)
+     * @return फिर से प्रारूपित समय बकेट
      */
     public static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Convert the timeBucket to a LocalDate object
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(String.valueOf(timeBucket), formatter);
+        // Extract year, month, and day from the timeBucket
+        int year = (int) (timeBucket / 10000);
+        int month = (int) ((timeBucket % 10000) / 100);
+        int day = (int) (timeBucket % 100);
 
-        // Calculate the day of the month
-        int dayOfMonth = date.getDayOfMonth();
+        // Calculate the new day based on the dayStep
+        int newDay = ((day - 1) / dayStep) * dayStep + 1;
 
-        // Calculate the compressed day
-        int compressedDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
+        // Reconstruct the timeBucket with the new day
+        long compressedTimeBucket = year * 10000L + month * 100L + newDay;
 
-        // Create the new date with the compressed day
-        LocalDate compressedDate = date.withDayOfMonth(compressedDay);
-
-        // Convert the compressed date back to a long
-        String compressedDateStr = compressedDate.format(formatter);
-        return Long.parseLong(compressedDateStr);
+        return compressedTimeBucket;
     }
 
     public static void main(String[] args) {

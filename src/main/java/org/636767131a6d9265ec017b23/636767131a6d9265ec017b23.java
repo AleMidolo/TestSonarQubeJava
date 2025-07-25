@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Label {
+public class SourceLabel {
     private List<Integer> lineNumbers;
 
-    public Label() {
+    public SourceLabel() {
         this.lineNumbers = new ArrayList<>();
     }
 
@@ -19,7 +19,6 @@ public class Label {
         this.lineNumbers.add(lineNumber);
     }
 
-    // Optional: Method to get the list of line numbers
     public List<Integer> getLineNumbers() {
         return new ArrayList<>(this.lineNumbers);
     }

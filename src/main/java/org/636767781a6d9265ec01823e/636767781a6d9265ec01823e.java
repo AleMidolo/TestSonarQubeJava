@@ -1,26 +1,19 @@
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomAppender extends AppenderSkeleton {
-    private List<Client> clients = new ArrayList<>();
-
-    public void addClient(Client client) {
-        clients.add(client);
-    }
 
     @Override
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
-        for (Client client : clients) {
-            client.write(message);
+        // Iterate over all connected clients and write the log message
+        for (Client client : connectedClients) {
+            client.write(event.getMessage().toString());
         }
     }
 
     @Override
     public void close() {
-        // Cleanup resources if needed
+        // Clean up resources if needed
     }
 
     @Override
@@ -28,10 +21,14 @@ public class CustomAppender extends AppenderSkeleton {
         return false;
     }
 
-    // Dummy Client class for demonstration
-    public static class Client {
+    // Example client class (assuming it exists)
+    private static class Client {
         public void write(String message) {
-            System.out.println("Client received: " + message);
+            // Implementation to write the message to the client
+            System.out.println("Writing to client: " + message);
         }
     }
+
+    // Example list of connected clients (assuming it exists)
+    private List<Client> connectedClients = new ArrayList<>();
 }

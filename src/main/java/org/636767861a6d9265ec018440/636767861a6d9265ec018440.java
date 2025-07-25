@@ -1,22 +1,21 @@
 public void abbreviate(final int nameStart, final StringBuffer buf) {
     if (buf == null || nameStart < 0 || nameStart >= buf.length()) {
-        return; // Invalid input, do nothing
+        return;
     }
 
-    // Split the buffer into parts
-    String fullName = buf.toString();
-    String[] parts = fullName.split(" ");
+    // Split the buffer into words
+    String[] words = buf.substring(nameStart).split("\\s+");
 
-    // Abbreviate each part except the last one
-    for (int i = 0; i < parts.length - 1; i++) {
-        if (!parts[i].isEmpty()) {
-            parts[i] = parts[i].charAt(0) + ".";
+    // Clear the buffer from nameStart
+    buf.delete(nameStart, buf.length());
+
+    // Append the abbreviated name
+    for (int i = 0; i < words.length; i++) {
+        if (i > 0) {
+            buf.append(" ");
+        }
+        if (words[i].length() > 0) {
+            buf.append(words[i].charAt(0));
         }
     }
-
-    // Reconstruct the abbreviated name
-    String abbreviatedName = String.join(" ", parts);
-
-    // Replace the original content in the buffer
-    buf.replace(0, buf.length(), abbreviatedName);
 }

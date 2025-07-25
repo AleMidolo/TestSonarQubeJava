@@ -8,9 +8,9 @@ public class FileReverser {
      * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
      */
     private void addReverse(final InputStream[] files) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            
             // Iterate over the files in reverse order
             for (int i = files.length - 1; i >= 0; i--) {
                 InputStream file = files[i];
@@ -22,21 +22,21 @@ public class FileReverser {
                     outputStream.write(buffer, 0, bytesRead);
                 }
                 
-                // Close the current file input stream
+                // Close the current file
                 file.close();
             }
             
-            // Convert the output stream to a byte array (if needed)
-            byte[] result = outputStream.toByteArray();
-            
-            // Close the output stream
-            outputStream.close();
-            
-            // Use the result as needed (e.g., print, save, etc.)
-            System.out.println(new String(result));
+            // Output the result (for example, to a file or console)
+            System.out.write(outputStream.toByteArray());
             
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

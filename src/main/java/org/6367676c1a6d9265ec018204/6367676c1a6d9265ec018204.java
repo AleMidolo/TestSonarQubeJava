@@ -4,28 +4,24 @@ import java.util.List;
 public class ArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-        // If both arrays are null, return null
+        // Handle null cases
         if (array1 == null && array2 == null) {
             return null;
-        }
-
-        // If one of the arrays is null, return the other array
-        if (array1 == null) {
-            return array2;
-        }
-        if (array2 == null) {
-            return array1;
+        } else if (array1 == null) {
+            return array2.clone();
+        } else if (array2 == null) {
+            return array1.clone();
         }
 
         // Create a list to hold the concatenated elements
         List<String> resultList = new ArrayList<>();
 
-        // Add all elements from array1 to the result list
+        // Add elements from array1
         for (String element : array1) {
             resultList.add(element);
         }
 
-        // Add all elements from array2 to the result list
+        // Add elements from array2
         for (String element : array2) {
             resultList.add(element);
         }
@@ -40,7 +36,6 @@ public class ArrayConcatenator {
         String[] array2 = {"Java", "Programming"};
 
         String[] result = concatenateStringArrays(array1, array2);
-
         for (String element : result) {
             System.out.println(element);
         }

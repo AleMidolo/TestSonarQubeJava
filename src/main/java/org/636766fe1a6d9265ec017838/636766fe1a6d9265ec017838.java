@@ -13,7 +13,6 @@ public class CharacterArrayConverter {
         if (array == null) {
             return null;
         }
-
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
@@ -22,19 +21,8 @@ public class CharacterArrayConverter {
     }
 
     public static void main(String[] args) {
-        Character[] charArray = {'a', 'b', 'c'};
-        char[] primitiveArray = toPrimitive(charArray);
+        Character[] testArray = {'a', 'b', 'c'};
+        char[] primitiveArray = toPrimitive(testArray);
         System.out.println(java.util.Arrays.toString(primitiveArray)); // Output: [a, b, c]
-
-        Character[] nullArray = null;
-        char[] nullPrimitiveArray = toPrimitive(nullArray);
-        System.out.println(nullPrimitiveArray); // Output: null
-
-        Character[] arrayWithNull = {'a', null, 'c'};
-        try {
-            char[] invalidArray = toPrimitive(arrayWithNull);
-        } catch (NullPointerException e) {
-            System.out.println("Caught NullPointerException: " + e.getMessage()); // Output: Caught NullPointerException: Array element cannot be null
-        }
     }
 }

@@ -30,9 +30,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello, World!\nThis is a test.";
-        String charsToDelete = "aeiou\n";
-        String result = deleteAny(input, charsToDelete);
-        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
+        String input = "Hello World!";
+        String charsToDelete = "lo";
+        System.out.println(deleteAny(input, charsToDelete)); // Output: He Wrd!
     }
 }

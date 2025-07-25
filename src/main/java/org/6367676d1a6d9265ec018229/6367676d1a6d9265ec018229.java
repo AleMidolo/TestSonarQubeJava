@@ -1,7 +1,4 @@
-import java.util.Arrays;
-
 public class ArrayTrimmer {
-
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
             return null;
@@ -20,6 +17,8 @@ public class ArrayTrimmer {
     public static void main(String[] args) {
         String[] array = {"  hello ", "  world  ", null, "  java  "};
         String[] trimmedArray = trimArrayElements(array);
-        System.out.println(Arrays.toString(trimmedArray));
+        for (String str : trimmedArray) {
+            System.out.println("'" + str + "'");
+        }
     }
 }

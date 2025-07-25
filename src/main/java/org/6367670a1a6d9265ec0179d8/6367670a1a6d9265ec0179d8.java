@@ -9,24 +9,17 @@ public class CustomOutputStream extends OutputStream {
             throw new NullPointerException("Byte array is null");
         }
         // Implement the logic to write the byte array to the output stream
-        // For example, writing to System.out:
-        System.out.write(b);
+        // For example, writing to a file or another output stream
+        // This is a placeholder implementation
+        for (byte value : b) {
+            write(value);
+        }
     }
 
     @Override
     public void write(int b) throws IOException {
         // Implement the logic to write a single byte to the output stream
-        // For example, writing to System.out:
+        // This is a placeholder implementation
         System.out.write(b);
-    }
-
-    public static void main(String[] args) {
-        try {
-            CustomOutputStream customOutputStream = new CustomOutputStream();
-            byte[] data = "Hello, World!".getBytes();
-            customOutputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

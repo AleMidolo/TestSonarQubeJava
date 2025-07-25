@@ -17,8 +17,17 @@ public class LogBuffer {
             System.out.println("Buffer is full. Event dropped.");
         }
     }
-}
 
-class LoggingEvent {
-    // Placeholder for LoggingEvent class
+    // Example LoggingEvent class (assuming it exists)
+    public static class LoggingEvent {
+        private final String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 }

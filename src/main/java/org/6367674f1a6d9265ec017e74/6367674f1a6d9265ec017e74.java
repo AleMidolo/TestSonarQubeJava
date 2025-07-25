@@ -1,26 +1,18 @@
 import java.util.*;
 
-public class Queue<T> {
-    private LinkedList<T> elements;
+public class QueueToString {
+    private Queue<Object> queue;
 
-    public Queue() {
-        elements = new LinkedList<>();
+    public QueueToString() {
+        this.queue = new LinkedList<>();
     }
 
-    public void enqueue(T element) {
-        elements.addLast(element);
+    public void enqueue(Object item) {
+        queue.add(item);
     }
 
-    public T dequeue() {
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    public int size() {
-        return elements.size();
+    public Object dequeue() {
+        return queue.poll();
     }
 
     /**
@@ -29,14 +21,24 @@ public class Queue<T> {
      */
     @Override
     public String toString() {
-        return elements.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Object item : queue) {
+            sb.append(item);
+            sb.append(", ");
+        }
+        if (!queue.isEmpty()) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: [1, 2, 3]
+        QueueToString q = new QueueToString();
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        System.out.println(q.toString()); // Output: [1, 2, 3]
     }
 }

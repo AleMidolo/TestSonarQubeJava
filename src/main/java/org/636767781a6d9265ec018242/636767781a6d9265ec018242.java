@@ -27,5 +27,5 @@ interface Appender {
 }
 
 class LoggingEvent {
-    // Implementation of LoggingEvent
+    // LoggingEvent implementation
 }

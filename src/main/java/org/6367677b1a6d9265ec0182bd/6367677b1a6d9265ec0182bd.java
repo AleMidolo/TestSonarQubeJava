@@ -12,12 +12,9 @@ public class LogFormatter {
         formattedLog.append("Level: ").append(event.getLevel()).append("\n");
         formattedLog.append("Logger: ").append(event.getLoggerName()).append("\n");
         formattedLog.append("Message: ").append(event.getRenderedMessage()).append("\n");
-        formattedLog.append("Thread: ").append(event.getThreadName()).append("\n");
-        
         if (event.getThrowableInformation() != null) {
             formattedLog.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append("\n");
         }
-        
         return formattedLog.toString();
     }
 }

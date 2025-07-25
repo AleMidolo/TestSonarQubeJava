@@ -21,15 +21,5 @@ public class ByteVector {
         }
     }
 
-    // Additional methods for demonstration purposes
-    public void add(byte b) {
-        if (currentSize >= data.length) {
-            enlarge(1);
-        }
-        data[currentSize++] = b;
-    }
-
-    public int size() {
-        return currentSize;
-    }
+    // Additional methods to manipulate the byte vector can be added here
 }

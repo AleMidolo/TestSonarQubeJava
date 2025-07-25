@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class DescriptorPopper {
-    private Stack<Object> outputFrameStack;
+    private Stack<Object> frameStack;
 
     public DescriptorPopper() {
-        outputFrameStack = new Stack<>();
+        this.frameStack = new Stack<>();
     }
 
     /**
@@ -12,23 +12,28 @@ public class DescriptorPopper {
      * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
      */
     private void pop(final String descriptor) {
-        int count = getCountFromDescriptor(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!outputFrameStack.isEmpty()) {
-                outputFrameStack.pop();
+        int popCount = getPopCount(descriptor);
+        for (int i = 0; i < popCount; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
             }
         }
     }
 
-    private int getCountFromDescriptor(String descriptor) {
-        // 这里可以根据描述符解析出需要弹出的数量
-        // 简单示例：假设 descriptor 是一个字符串，表示类型的数量
-        // 例如 "I" 表示一个 int 类型，"II" 表示两个 int 类型
-        return descriptor.length(); // 这里简单返回长度作为示例
+    private int getPopCount(String descriptor) {
+        // 这里可以根据描述符的格式来计算需要弹出的数量
+        // 简单示例：如果是方法描述符，假设以'('开头，以')'结尾
+        if (descriptor.startsWith("(") && descriptor.endsWith(")")) {
+            // 计算参数数量
+            return descriptor.substring(1, descriptor.length() - 1).split(",").length;
+        } else {
+            // 其他类型描述符，假设每个描述符弹出1个
+            return 1;
+        }
     }
 
     public void push(Object item) {
-        outputFrameStack.push(item);
+        frameStack.push(item);
     }
 
     public static void main(String[] args) {
@@ -36,9 +41,9 @@ public class DescriptorPopper {
         popper.push(new Object());
         popper.push(new Object());
         popper.push(new Object());
-
-        System.out.println("Stack size before pop: " + popper.outputFrameStack.size());
-        popper.pop("II"); // 假设我们要弹出两个对象
-        System.out.println("Stack size after pop: " + popper.outputFrameStack.size());
+        
+        // 示例：弹出方法描述符的参数
+        popper.pop("(I)V"); // 假设弹出一个int类型的参数
+        System.out.println("Pop operation completed.");
     }
 }

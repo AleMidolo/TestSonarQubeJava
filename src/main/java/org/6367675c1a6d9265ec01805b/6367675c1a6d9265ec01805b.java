@@ -27,10 +27,9 @@ public class TreeEdgeList {
         if (parent.children.contains(child)) {
             parent.children.remove(child);
         }
-        // If the tree is undirected, you may also want to remove the reverse edge
-        // Uncomment the following lines if needed
-        // if (child.children.contains(parent)) {
-        //     child.children.remove(parent);
-        // }
+        // Assuming it's a bidirectional edge, we also need to remove the child reference to the parent
+        if (child.children.contains(parent)) {
+            child.children.remove(parent);
+        }
     }
 }

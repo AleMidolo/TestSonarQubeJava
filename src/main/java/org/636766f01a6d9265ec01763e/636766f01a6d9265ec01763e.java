@@ -9,23 +9,21 @@ public class CharsetConverter {
      * @return 此名称的Java等效名称。
      */
     private static String javaCharset(String charset) {
-        if (charset == null || charset.isEmpty()) {
+        if (charset == null) {
             return null;
         }
-        
-        // Convert MIME charset to Java charset
         try {
-            return Charset.forName(charset).name();
+            Charset cs = Charset.forName(charset);
+            return cs.name();
         } catch (IllegalArgumentException e) {
-            // If the charset is not valid, return null or handle accordingly
-            return null;
+            return null; // 返回null如果字符集名称无效
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String mimeCharset = "UTF-8";
-        String javaCharsetName = javaCharset(mimeCharset);
-        System.out.println("Java equivalent of " + mimeCharset + " is: " + javaCharsetName);
+        // 测试示例
+        System.out.println(javaCharset("UTF-8")); // 输出: UTF-8
+        System.out.println(javaCharset("ISO-8859-1")); // 输出: ISO-8859-1
+        System.out.println(javaCharset("invalid-charset")); // 输出: null
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class URIPathDecoder {
 
     public static class PathSegmentImpl {
-        private final String path;
+        private String path;
         
         public PathSegmentImpl(String path) {
             this.path = path;
@@ -21,42 +21,37 @@ public class URIPathDecoder {
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         
-        String path = u.getRawPath();
-        if (path == null || path.isEmpty()) {
+        if (u == null || u.getPath() == null) {
             return segments;
         }
 
+        String path = u.getPath();
+        
         // Remove leading slash for absolute paths
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-
+        
         // Handle empty path
         if (path.isEmpty()) {
             return segments;
         }
-
+        
         // Split path into segments
         String[] rawSegments = path.split("/");
-
-        // Process each segment
+        
         for (String segment : rawSegments) {
-            if (segment.isEmpty()) {
-                continue;
-            }
-
             if (decode) {
                 try {
-                    // Decode the segment using UTF-8 encoding
+                    // Decode segment using UTF-8 encoding
                     segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
                 } catch (Exception e) {
-                    // If decoding fails, use the raw segment
+                    // Keep original segment if decoding fails
                 }
             }
-            
             segments.add(new PathSegmentImpl(segment));
         }
-
+        
         return segments;
     }
 }

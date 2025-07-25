@@ -5,12 +5,17 @@ import java.util.*;
 
 public class TourConverter {
 
+    /**
+     * Trasforma una rappresentazione di un insieme in un percorso di grafo.
+     * @param tour un insieme contenente i bordi del tour
+     * @param graph il grafo
+     * @return un percorso di grafo
+     */
     protected <V,E> GraphPath<V,E> edgeSetToTour(Set<E> tour, Graph<V,E> graph) {
-        if (tour == null || tour.isEmpty() || graph == null) {
+        if (tour == null || tour.isEmpty()) {
             return null;
         }
 
-        // Create lists to store vertices and edges of the path
         List<V> vertexList = new ArrayList<>();
         List<E> edgeList = new ArrayList<>();
         
@@ -19,49 +24,49 @@ public class TourConverter {
         V startVertex = graph.getEdgeSource(firstEdge);
         V currentVertex = graph.getEdgeTarget(firstEdge);
         
-        // Add first vertex and edge
         vertexList.add(startVertex);
+        vertexList.add(currentVertex);
         edgeList.add(firstEdge);
-        
-        // Remove first edge from set
-        Set<E> remainingEdges = new HashSet<>(tour);
-        remainingEdges.remove(firstEdge);
-        
+        tour.remove(firstEdge);
+
         // Build path by connecting edges
-        while (!remainingEdges.isEmpty()) {
-            vertexList.add(currentVertex);
-            
-            // Find next edge that connects to current vertex
-            E nextEdge = null;
-            for (E edge : remainingEdges) {
-                if (graph.getEdgeSource(edge).equals(currentVertex)) {
-                    nextEdge = edge;
-                    currentVertex = graph.getEdgeTarget(edge);
+        while (!tour.isEmpty()) {
+            boolean found = false;
+            for (E edge : tour) {
+                V source = graph.getEdgeSource(edge);
+                V target = graph.getEdgeTarget(edge);
+                
+                if (source.equals(currentVertex)) {
+                    currentVertex = target;
+                    vertexList.add(currentVertex);
+                    edgeList.add(edge);
+                    tour.remove(edge);
+                    found = true;
                     break;
-                } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
-                    nextEdge = edge;
-                    currentVertex = graph.getEdgeSource(edge);
+                } else if (target.equals(currentVertex)) {
+                    currentVertex = source;
+                    vertexList.add(currentVertex);
+                    edgeList.add(edge);
+                    tour.remove(edge);
+                    found = true;
                     break;
                 }
             }
             
-            if (nextEdge == null) {
-                throw new IllegalArgumentException("Invalid tour: edges do not form a continuous path");
+            if (!found) {
+                throw new IllegalArgumentException("The edge set does not form a valid tour");
             }
-            
-            edgeList.add(nextEdge);
-            remainingEdges.remove(nextEdge);
         }
-        
-        // Add final vertex to complete the path
-        vertexList.add(currentVertex);
-        
-        // Calculate total weight of path
-        double weight = 0.0;
-        for (E edge : edgeList) {
-            weight += graph.getEdgeWeight(edge);
+
+        // Verify tour is complete (ends at start vertex)
+        if (!currentVertex.equals(startVertex)) {
+            throw new IllegalArgumentException("The edge set does not form a complete tour");
         }
-        
-        return new GraphWalk<>(graph, vertexList, edgeList, weight);
+
+        double weight = edgeList.stream()
+            .mapToDouble(graph::getEdgeWeight)
+            .sum();
+
+        return new GraphWalk<>(graph, startVertex, startVertex, vertexList, edgeList, weight);
     }
 }

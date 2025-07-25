@@ -6,7 +6,7 @@ public class DataTable {
     public DataTable(int bucket) {
         this.bucket = bucket;
     }
-
+    
     /**
      * @return true se il bucket è lo stesso.
      */
@@ -16,7 +16,7 @@ public class DataTable {
         }
         return this.bucket == dataset.bucket;
     }
-
+    
     // Getter for bucket
     public int getBucket() {
         return bucket;

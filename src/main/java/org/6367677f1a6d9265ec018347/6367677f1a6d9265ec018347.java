@@ -18,13 +18,13 @@ public class ChatServer {
         // Aggiungi newline per compatibilità telnet
         String telnetMessage = message + "\r\n";
         
-        // Itera su tutti i client writer
+        // Itera su tutti i writer dei client
         for (PrintWriter writer : clientWriters) {
             try {
                 writer.print(telnetMessage);
                 writer.flush();
             } catch (Exception e) {
-                // Rimuovi client disconnessi
+                // Rimuovi il writer se c'è un errore di invio
                 clientWriters.remove(writer);
             }
         }

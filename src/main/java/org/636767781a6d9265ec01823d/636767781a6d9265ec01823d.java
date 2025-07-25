@@ -17,7 +17,8 @@ public class CustomAppender extends AppenderSkeleton {
      */
     @Override
     protected void subAppend(LoggingEvent event) {
-        if (layout == null || writer == null) {
+        if(layout == null) {
+            errorHandler.error("No layout set for the appender named [" + name + "].");
             return;
         }
 
@@ -25,10 +26,10 @@ public class CustomAppender extends AppenderSkeleton {
             String formattedMessage = layout.format(event);
             writer.write(formattedMessage);
             
-            if (layout.ignoresThrowable()) {
+            if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
-                if (throwableStrRep != null) {
-                    for (String line : throwableStrRep) {
+                if(throwableStrRep != null) {
+                    for(String line : throwableStrRep) {
                         writer.write(line);
                         writer.write(Layout.LINE_SEP);
                     }
@@ -36,17 +37,17 @@ public class CustomAppender extends AppenderSkeleton {
             }
             
             writer.flush();
-        } catch (IOException e) {
+        } catch(IOException e) {
             errorHandler.error("Failed to write log event", e, 1);
         }
     }
 
     @Override
     public void close() {
-        if (writer != null) {
+        if(writer != null) {
             try {
                 writer.close();
-            } catch (IOException e) {
+            } catch(IOException e) {
                 errorHandler.error("Failed to close writer", e, 1);
             }
             writer = null;

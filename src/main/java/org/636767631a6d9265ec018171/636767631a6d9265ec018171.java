@@ -1,39 +1,43 @@
 class ListNodeImpl<E> {
     E value;
     ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
-
+    
     ListNodeImpl(E value) {
         this.value = value;
+        this.next = null;
     }
 }
 
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
 
     /** 
      * Remove the non null  {@code node} from the list. 
      */
     private boolean unlink(ListNodeImpl<E> node) {
-        if (node == null) {
+        if (node == null || head == null) {
             return false;
         }
 
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next; // node is head
+        // If the node to be removed is the head
+        if (node == head) {
+            head = head.next;
+            return true;
         }
 
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev; // node is tail
+        // Find the previous node
+        ListNodeImpl<E> current = head;
+        while (current != null && current.next != node) {
+            current = current.next;
         }
 
-        node.next = null;
-        node.prev = null;
+        // If the node was not found
+        if (current == null) {
+            return false;
+        }
+
+        // Unlink the node
+        current.next = node.next;
         return true;
     }
 }

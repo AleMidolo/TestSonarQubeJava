@@ -9,11 +9,8 @@ public class StringUtils {
      * @return <code>true</code> if the String ends with the suffix or both <code>null</code>
      */
     private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
-        if (str == null && suffix == null) {
-            return true;
-        }
         if (str == null || suffix == null) {
-            return false;
+            return str == null && suffix == null;
         }
         if (ignoreCase) {
             return str.toLowerCase().endsWith(suffix.toLowerCase());
@@ -27,6 +24,6 @@ public class StringUtils {
         System.out.println(endsWith("HelloWorld", "World", false)); // true
         System.out.println(endsWith("HelloWorld", "Hello", false)); // false
         System.out.println(endsWith(null, null, true)); // true
-        System.out.println(endsWith(null, "test", true)); // false
+        System.out.println(endsWith(null, "suffix", true)); // false
     }
 }

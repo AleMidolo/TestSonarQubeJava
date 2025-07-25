@@ -8,14 +8,6 @@ public class QueueRepresentation {
         this.queue = new LinkedList<>();
     }
 
-    public void enqueue(Object item) {
-        queue.add(item);
-    }
-
-    public Object dequeue() {
-        return queue.poll();
-    }
-
     /** 
      * Returns a textual representation of the queue.
      * @return a textual representation of the queue.
@@ -33,11 +25,19 @@ public class QueueRepresentation {
         return sb.toString();
     }
 
+    public void enqueue(Object item) {
+        queue.add(item);
+    }
+
+    public Object dequeue() {
+        return queue.poll();
+    }
+
     public static void main(String[] args) {
-        QueueRepresentation q = new QueueRepresentation();
-        q.enqueue("First");
-        q.enqueue("Second");
-        q.enqueue("Third");
-        System.out.println(q.toString()); // Output: Queue: [First, Second, Third]
+        QueueRepresentation qr = new QueueRepresentation();
+        qr.enqueue(1);
+        qr.enqueue(2);
+        qr.enqueue(3);
+        System.out.println(qr.toString()); // Output: Queue: [1, 2, 3]
     }
 }

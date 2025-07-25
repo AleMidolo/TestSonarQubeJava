@@ -1,7 +1,7 @@
 public class WriteOperationTracker {
     private long lastWriteTimeStamp;
 
-    /**
+    /** 
      * The last time, in milliseconds, a write operation occurred.
      * @return this
      */

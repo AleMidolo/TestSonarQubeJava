@@ -28,7 +28,7 @@ public class AbstractTypeStack {
         AbstractTypeStack stack = new AbstractTypeStack();
         stack.push(10);
         stack.push(20);
-        System.out.println(stack.pop()); // Outputs: 20
-        System.out.println(stack.pop()); // Outputs: 10
+        System.out.println("Popped value: " + stack.pop()); // Should print 20
+        System.out.println("Popped value: " + stack.pop()); // Should print 10
     }
 }

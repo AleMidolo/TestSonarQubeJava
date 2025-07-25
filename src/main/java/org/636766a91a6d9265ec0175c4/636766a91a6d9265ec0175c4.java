@@ -12,7 +12,7 @@ public class FrameStack {
      * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        int count = getArgumentCount(descriptor);
+        int count = getTypeCount(descriptor);
         for (int i = 0; i < count; i++) {
             if (!outputFrameStack.isEmpty()) {
                 outputFrameStack.pop();
@@ -20,25 +20,27 @@ public class FrameStack {
         }
     }
 
-    private int getArgumentCount(String descriptor) {
+    private int getTypeCount(String descriptor) {
+        // This method should parse the descriptor and return the number of types to pop.
+        // For simplicity, let's assume a basic implementation that counts the number of argument types.
         int count = 0;
-        boolean isArray = false;
-        for (int i = 0; i < descriptor.length(); i++) {
-            char c = descriptor.charAt(i);
+        boolean inArray = false;
+
+        for (char c : descriptor.toCharArray()) {
             if (c == '(') {
-                continue; // Skip the opening parenthesis
+                inArray = true;
             } else if (c == ')') {
-                break; // Stop at the closing parenthesis
-            } else if (c == 'L') {
-                // Skip the class type
-                while (i < descriptor.length() && descriptor.charAt(i) != ';') {
-                    i++;
+                inArray = false;
+            } else if (inArray) {
+                if (c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'C' || c == 'B' || c == 'S' || c == 'L') {
+                    count++;
+                    if (c == 'L') {
+                        // Skip to the next semicolon for object types
+                        while (c != ';') {
+                            c = descriptor.charAt(++count);
+                        }
+                    }
                 }
-                count++;
-            } else if (c == '[') {
-                isArray = true; // Array type
-            } else {
-                count++; // Primitive type
             }
         }
         return count;
@@ -46,14 +48,5 @@ public class FrameStack {
 
     public void push(Object item) {
         outputFrameStack.push(item);
-    }
-
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.push(new Object());
-        frameStack.push(new Object());
-        frameStack.push(new Object());
-        frameStack.pop("(Ljava/lang/Object;I)V"); // Pops 2 items
-        System.out.println("Items left in stack: " + frameStack.outputFrameStack.size());
     }
 }

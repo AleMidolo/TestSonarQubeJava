@@ -1,15 +1,14 @@
 public class ArrayDetailAppender {
 
-    /** 
+    /**
      * <p>Append to the <code>toString</code> the detail of an <code>int</code> array.</p>
      * @param buffer  the <code>StringBuffer</code> to populate
      * @param fieldName  the field name, typically not used as already appended
-     * @param array  the array to add to the <code>toString</code>,not <code>null</code>
+     * @param array  the array to add to the <code>toString</code>, not <code>null</code>
      */
     protected void appendDetail(StringBuffer buffer, String fieldName, int[] array) {
         if (array == null) {
-            buffer.append(fieldName).append(": null");
-            return;
+            throw new IllegalArgumentException("Array must not be null");
         }
         buffer.append(fieldName).append(": [");
         for (int i = 0; i < array.length; i++) {

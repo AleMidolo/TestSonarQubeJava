@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class StackMapTable {
 
     private Object[] currentFrame; // Assuming currentFrame is an array of some abstract types
-    private Object[] stackMapTableEntries; // Assuming this is where we store the entries
+    private Object[] stackMapTableEntries; // Assuming this is where we want to put the types
 
     /**
      * Puts some abstract types of  {@link #currentFrame} in {@link #stackMapTableEntries} , using the JVMS verification_type_info format used in StackMapTable attributes.
@@ -20,5 +20,16 @@ public class StackMapTable {
         System.arraycopy(currentFrame, start, stackMapTableEntries, 0, length);
     }
 
-    // Constructor and other methods can be added here for a complete class
+    // Example constructor and methods for demonstration
+    public StackMapTable(int frameSize, int stackMapSize) {
+        this.currentFrame = new Object[frameSize];
+        this.stackMapTableEntries = new Object[stackMapSize];
+        // Initialize currentFrame with some values for demonstration
+        Arrays.fill(currentFrame, new Object());
+    }
+
+    public static void main(String[] args) {
+        StackMapTable table = new StackMapTable(10, 5);
+        table.putAbstractTypes(2, 5); // Example usage
+    }
 }

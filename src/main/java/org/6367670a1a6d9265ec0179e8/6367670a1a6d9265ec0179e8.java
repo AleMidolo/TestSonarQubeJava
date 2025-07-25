@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ArrayUtil {
 
     private static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
@@ -11,15 +13,16 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_BOOLEAN_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_BOOLEAN_ARRAY : array;
     }
 
     public static void main(String[] args) {
-        Boolean[] testArray = null;
-        Boolean[] result = nullToEmpty(testArray);
-        System.out.println("Result: " + (result.length == 0 ? "Empty Array" : "Not Empty"));
+        Boolean[] testArray1 = null;
+        Boolean[] testArray2 = {};
+        Boolean[] testArray3 = {true, false};
+
+        System.out.println(Arrays.toString(nullToEmpty(testArray1))); // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(testArray2))); // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(testArray3))); // Output: [true, false]
     }
 }

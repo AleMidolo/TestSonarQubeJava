@@ -1,27 +1,15 @@
-public class ShardingKeyChecker {
-
-    /**
-     * @param modelName model name of the entity
-     * @throws IllegalStateException if sharding key indices are not continuous
-     */
-    private void check(String modelName) throws IllegalStateException {
-        // Example sharding key indices for demonstration
-        int[] shardingKeyIndices = {0, 1, 2, 4}; // Non-continuous example
-
-        // Check for continuity
-        for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
-            if (shardingKeyIndices[i] + 1 != shardingKeyIndices[i + 1]) {
-                throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
-            }
+private void check(String modelName) throws IllegalStateException {
+    // Example implementation of checking sharding key indices
+    int[] shardingKeyIndices = getShardingKeyIndices(modelName); // Assume this method retrieves the indices
+    for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
+        if (shardingKeyIndices[i] + 1 != shardingKeyIndices[i + 1]) {
+            throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
         }
     }
+}
 
-    public static void main(String[] args) {
-        ShardingKeyChecker checker = new ShardingKeyChecker();
-        try {
-            checker.check("ExampleModel");
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+// Mock method to simulate retrieval of sharding key indices
+private int[] getShardingKeyIndices(String modelName) {
+    // This is just a placeholder. In a real implementation, this would fetch actual indices.
+    return new int[]{0, 1, 2, 4}; // Example of non-continuous indices
 }

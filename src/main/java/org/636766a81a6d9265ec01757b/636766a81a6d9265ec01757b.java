@@ -27,11 +27,10 @@ public class JsonSerializer {
                     break;
             }
         }
-        
         try {
-            // Example object to serialize, replace with actual object
-            Object exampleObject = new Object(); 
-            return objectMapper.writeValueAsString(exampleObject);
+            // Assuming we are serializing an object, replace 'yourObject' with the actual object to serialize
+            Object yourObject = new Object(); // Replace with actual object
+            return objectMapper.writeValueAsString(yourObject);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
@@ -43,11 +42,5 @@ public class JsonSerializer {
             PRETTY_PRINT
             // Add more features as needed
         }
-    }
-
-    public static void main(String[] args) {
-        JsonSerializer serializer = new JsonSerializer();
-        String jsonString = serializer.toString(JSONWriter.Feature.PRETTY_PRINT);
-        System.out.println(jsonString);
     }
 }

@@ -1,14 +1,21 @@
 import java.util.Objects;
 
 public class DataTable {
-    private String bucketName;
+    // Assuming DataTable has some properties to define its structure
+    private String name;
+    private int[] data;
 
-    public DataTable(String bucketName) {
-        this.bucketName = bucketName;
+    public DataTable(String name, int[] data) {
+        this.name = name;
+        this.data = data;
     }
 
-    public String getBucketName() {
-        return bucketName;
+    public String getName() {
+        return name;
+    }
+
+    public int[] getData() {
+        return data;
     }
 
     /**
@@ -18,6 +25,7 @@ public class DataTable {
         if (dataset == null) {
             return false;
         }
-        return Objects.equals(this.bucketName, dataset.getBucketName());
+        return Objects.equals(this.name, dataset.getName()) && 
+               this.data.length == dataset.getData().length;
     }
 }

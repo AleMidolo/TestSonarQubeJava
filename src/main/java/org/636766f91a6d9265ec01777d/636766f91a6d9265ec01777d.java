@@ -1,8 +1,7 @@
-public class HexDigitConverter {
-
+public class HexConverter {
     /**
-     * @param b एक ASCII एन्कोडेड कैरेक्टर 0-9 a-f A-F
-     * @return कैरेक्टर का बाइट मान 0-16।
+     * @param b An ASCII encoded character 0-9 a-f A-F
+     * @return The byte value of the character 0-16.
      */
     public static byte convertHexDigit(byte b) {
         if (b >= '0' && b <= '9') {
@@ -17,9 +16,13 @@ public class HexDigitConverter {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(convertHexDigit((byte) '5')); // Should print 5
-        System.out.println(convertHexDigit((byte) 'a')); // Should print 10
-        System.out.println(convertHexDigit((byte) 'F')); // Should print 15
+        // Example usage
+        byte digit1 = convertHexDigit((byte) 'A'); // Should return 10
+        byte digit2 = convertHexDigit((byte) '7'); // Should return 7
+        byte digit3 = convertHexDigit((byte) 'f'); // Should return 15
+
+        System.out.println("A -> " + digit1);
+        System.out.println("7 -> " + digit2);
+        System.out.println("f -> " + digit3);
     }
 }

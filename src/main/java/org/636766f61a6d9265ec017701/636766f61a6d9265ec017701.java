@@ -1,11 +1,11 @@
 public class StringUtils {
 
     /**
-     * एक स्ट्रिंग के भीतर अंतिम अनुक्रमांक खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#lastIndexOf(String)} का उपयोग करती है।
+     * Finds the last index within a String, handling <code>null</code>. This method uses  {@link String#lastIndexOf(String)}.
      * 
-     * @param str वह स्ट्रिंग जिसमें खोज करनी है, यह <code>null</code> हो सकती है।
-     * @param searchStr वह स्ट्रिंग जिसे खोजना है, यह <code>null</code> हो सकती है।
-     * @return अंतिम अनुक्रमांक, या <code>-1</code> यदि स्ट्रिंग या खोज स्ट्रिंग <code>null</code> है।
+     * @param str the String to check, may be null
+     * @param searchStr the String to search for, may be null
+     * @return the last index of the search String, or -1 if no match or null input
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -15,10 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(lastIndexOf("Hello World", "o")); // Output: 7
-        System.out.println(lastIndexOf("Hello World", "z")); // Output: -1
-        System.out.println(lastIndexOf(null, "o"));         // Output: -1
-        System.out.println(lastIndexOf("Hello World", null)); // Output: -1
+        // Example usage
+        String str = "Hello, world! Hello again!";
+        String searchStr = "Hello";
+        int index = lastIndexOf(str, searchStr);
+        System.out.println("Last index of \"" + searchStr + "\" in \"" + str + "\" is: " + index);
     }
 }

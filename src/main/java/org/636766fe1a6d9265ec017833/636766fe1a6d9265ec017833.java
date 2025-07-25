@@ -1,13 +1,16 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtils {
 
     /**
-     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
-     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
-     * @throws NullPointerException यदि फ़ाइल {@code null} है
-     * @throws IOException यदि हटाना असफल हो जाता है
+     * Schedules a file to be deleted when JVM exits. If file is directory delete it and all sub-directories.
+     * @param file  file or directory to delete, must not be {@code null}
+     * @throws NullPointerException if the file is {@code null}
+     * @throws IOException in case deletion is unsuccessful
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
@@ -22,10 +25,6 @@ public class FileUtils {
     }
 
     private static void deleteDirectoryOnExit(File directory) throws IOException {
-        if (!directory.exists()) {
-            return;
-        }
-
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
@@ -36,7 +35,6 @@ public class FileUtils {
                 }
             }
         }
-
         directory.deleteOnExit();
     }
 

@@ -1,25 +1,20 @@
 import java.io.File;
+import java.io.IOException;
 
-public class FileDeleter {
-
-    /**
-     * यदि निर्दिष्ट फ़ाइल मौजूद है, तो उसे हटाएं
-     */
-    protected static void deleteFile(String fileName) {
-        File file = new File(fileName);
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("फ़ाइल सफलतापूर्वक हटाई गई: " + fileName);
-            } else {
-                System.out.println("फ़ाइल हटाने में विफल: " + fileName);
-            }
+/**
+ * Deletes the specified file if it exists.
+ * 
+ * @param fileName The name of the file to delete.
+ */
+protected static void deleteFile(String fileName) {
+    File file = new File(fileName);
+    if (file.exists()) {
+        if (file.delete()) {
+            System.out.println("File deleted successfully: " + fileName);
         } else {
-            System.out.println("फ़ाइल मौजूद नहीं है: " + fileName);
+            System.out.println("Failed to delete the file: " + fileName);
         }
-    }
-
-    public static void main(String[] args) {
-        // उदाहरण उपयोग
-        deleteFile("example.txt");
+    } else {
+        System.out.println("File does not exist: " + fileName);
     }
 }

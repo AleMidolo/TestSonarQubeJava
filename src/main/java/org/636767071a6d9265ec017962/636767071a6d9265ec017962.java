@@ -1,26 +1,39 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.util.Map;
+import java.util.HashMap;
+import java.beans.PropertyDescriptor;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 
-public class BeanMapUtils {
+public class BeanMap {
+    private Map<String, Object> properties = new HashMap<>();
 
-    /**
-     * दिए गए BeanMap से सभी लिखने योग्य गुणों को इस BeanMap में डालता है। केवल पढ़ने योग्य और केवल लिखने योग्य गुणों को नजरअंदाज किया जाएगा।
-     * @param map  वह BeanMap जिसके गुणों को डालना है
-     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("BeanMap cannot be null");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        for (Object key : map.keySet()) {
-            if (map.isWriteable(key.toString())) {
-                this.put(key, map.get(key));
+        for (Map.Entry<String, Object> entry : map.properties.entrySet()) {
+            String propertyName = entry.getKey();
+            Object value = entry.getValue();
+
+            try {
+                PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
+                if (pd.getWriteMethod() != null) {
+                    pd.getWriteMethod().invoke(this, value);
+                }
+            } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+                // Ignore properties that cannot be written or do not exist
             }
         }
     }
 
-    // Assuming this method is part of a class that extends or contains a BeanMap
-    private void put(Object key, Object value) {
-        // Implementation of put method to add key-value pair to the BeanMap
-        // This is a placeholder and should be implemented based on the actual BeanMap usage
+    // Example of a property setter
+    public void setProperty(String propertyName, Object value) {
+        properties.put(propertyName, value);
+    }
+
+    // Example of a property getter
+    public Object getProperty(String propertyName) {
+        return properties.get(propertyName);
     }
 }

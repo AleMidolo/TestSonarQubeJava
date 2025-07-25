@@ -1,12 +1,12 @@
 /**
- * निर्दिष्ट <code>position</code> से शुरू होकर <code>buffer</code> में निर्दिष्ट मान के एक बाइट की खोज करता है।
- * @param value वह मान जिसे खोजना है।
- * @param pos   खोजने के लिए प्रारंभिक स्थिति।
- * @return बाइट की स्थिति जो मिली, <code>buffer</code> की शुरुआत से गिनती करते हुए, या <code>-1</code> यदि नहीं मिली।
+ * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
+ * @param value The value to find.
+ * @param pos   The starting position for searching.
+ * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
  */
 protected int findByte(byte value, int pos) {
     if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Invalid position: " + pos);
+        throw new IllegalArgumentException("Position is out of bounds");
     }
     
     for (int i = pos; i < buffer.length; i++) {

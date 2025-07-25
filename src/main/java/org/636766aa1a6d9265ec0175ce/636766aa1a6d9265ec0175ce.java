@@ -1,31 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StackMapFrame {
-    private Map<Integer, Frame> frames = new HashMap<>();
-    private Frame currentFrame;
+public class StackMapFrameVisitor {
+    private List<Object> currentFrame;
 
-    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        currentFrame = new Frame(offset, numLocal, numStack);
-        frames.put(offset, currentFrame);
-        return currentFrame.getNextElementIndex();
+    public StackMapFrameVisitor() {
+        this.currentFrame = new ArrayList<>();
     }
 
-    private static class Frame {
-        private int offset;
-        private int numLocal;
-        private int numStack;
-        private int nextElementIndex;
+    /**
+     * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
+     * @param offset   the bytecode offset of the instruction to which the frame corresponds.
+     * @param numLocal the number of local variables in the frame.
+     * @param numStack the number of stack elements in the frame.
+     * @return the index of the next element to be written in this frame.
+     */
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+        // Clear the current frame to start a new one
+        currentFrame.clear();
 
-        public Frame(int offset, int numLocal, int numStack) {
-            this.offset = offset;
-            this.numLocal = numLocal;
-            this.numStack = numStack;
-            this.nextElementIndex = 0; // Initialize to 0, assuming the first element index is 0
-        }
+        // Add the offset, numLocal, and numStack to the frame
+        currentFrame.add(offset);
+        currentFrame.add(numLocal);
+        currentFrame.add(numStack);
 
-        public int getNextElementIndex() {
-            return nextElementIndex++;
-        }
+        // Return the index of the next element to be written (after offset, numLocal, and numStack)
+        return currentFrame.size();
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
+        int nextIndex = visitor.visitFrameStart(10, 3, 2);
+        System.out.println("Next index to write: " + nextIndex);
     }
 }

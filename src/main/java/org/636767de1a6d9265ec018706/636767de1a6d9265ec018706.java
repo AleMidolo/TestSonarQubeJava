@@ -2,49 +2,60 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Mappings {
-    private Map<String, Object> fields;
+    private Map<String, Object> properties;
 
     public Mappings() {
-        this.fields = new HashMap<>();
+        this.properties = new HashMap<>();
     }
 
-    public Map<String, Object> getFields() {
-        return fields;
+    public Map<String, Object> getProperties() {
+        return properties;
     }
 
-    public void setFields(Map<String, Object> fields) {
-        this.fields = fields;
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
     }
 }
 
 public class MappingDiff {
 
     /**
-     * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
+     * Returns mappings with fields that do not exist in the input mappings. The input mappings should be history mapping from current index. Do not return _source config to avoid current index update conflict.
+     *
+     * @param tableName The name of the table.
+     * @param mappings The current mappings to compare against.
+     * @return A new Mappings object containing only the fields that are not present in the input mappings.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
         Mappings result = new Mappings();
-        Map<String, Object> currentFields = getCurrentMappings(tableName).getFields();
-        Map<String, Object> inputFields = mappings.getFields();
+        Map<String, Object> currentProperties = mappings.getProperties();
+        Map<String, Object> newProperties = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
-            String key = entry.getKey();
-            if (!inputFields.containsKey(key)) {
-                result.getFields().put(key, entry.getValue());
+        // Assuming the tableName is used to fetch the latest mappings from some source
+        // For simplicity, let's assume we have a method to get the latest mappings
+        Mappings latestMappings = getLatestMappings(tableName);
+
+        if (latestMappings != null) {
+            Map<String, Object> latestProperties = latestMappings.getProperties();
+
+            for (Map.Entry<String, Object> entry : latestProperties.entrySet()) {
+                if (!currentProperties.containsKey(entry.getKey())) {
+                    newProperties.put(entry.getKey(), entry.getValue());
+                }
             }
         }
 
+        result.setProperties(newProperties);
         return result;
     }
 
-    // Dummy method to simulate getting current mappings for a table
-    private Mappings getCurrentMappings(String tableName) {
-        Mappings currentMappings = new Mappings();
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("field1", "type1");
-        fields.put("field2", "type2");
-        fields.put("field3", "type3");
-        currentMappings.setFields(fields);
-        return currentMappings;
+    // Dummy method to simulate fetching the latest mappings
+    private Mappings getLatestMappings(String tableName) {
+        Mappings latestMappings = new Mappings();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("field1", "type1");
+        properties.put("field2", "type2");
+        latestMappings.setProperties(properties);
+        return latestMappings;
     }
 }

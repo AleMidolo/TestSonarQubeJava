@@ -1,29 +1,29 @@
 public class StringUtils {
 
     /**
-     * दिए गए स्ट्रिंग से अग्रणी व्हाइटस्पेस को हटाएं।
-     * @param str वह स्ट्रिंग जिसे जांचना है
-     * @return ट्रिम की गई स्ट्रिंग
+     * Trim leading whitespace from the given String.
+     * @param str the String to check
+     * @return the trimmed String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {
         if (str == null) {
             return null;
         }
-
-        int length = str.length();
-        int index = 0;
-
-        while (index < length && Character.isWhitespace(str.charAt(index))) {
-            index++;
+        
+        int len = str.length();
+        int start = 0;
+        
+        while (start < len && Character.isWhitespace(str.charAt(start))) {
+            start++;
         }
-
-        return str.substring(index);
+        
+        return str.substring(start);
     }
 
     public static void main(String[] args) {
-        String input = "   Hello World!";
-        String result = trimLeadingWhitespace(input);
-        System.out.println("'" + result + "'");  // Output: 'Hello World!'
+        String testString = "   Hello, World!";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimLeadingWhitespace(testString) + "'");
     }
 }

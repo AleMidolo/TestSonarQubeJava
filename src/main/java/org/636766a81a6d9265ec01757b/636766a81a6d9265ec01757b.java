@@ -1,16 +1,17 @@
 import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.JSON;
 
-public class JsonSerializer {
+public class MyClass {
 
     /**
-     * JSON में सीरियलाइज़ करें {@link String}
-     * @param features सीरियलाइज़ेशन में सक्षम करने के लिए विशेषताएँ
+     * Serialize to JSON {@link String}
+     * @param features features to be enabled in serialization
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        // Assuming 'this' is the object to be serialized
+        // Assuming this method is part of a class that can be serialized to JSON
+        // Using Fastjson2 to serialize the current object to a JSON string with the specified features
         return JSON.toJSONString(this, features);
     }
 }

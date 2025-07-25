@@ -4,8 +4,8 @@ public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> next;
         ListNodeImpl<E> prev;
+        ListNodeImpl<E> next;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -49,20 +49,18 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list, "The input list cannot be null");
 
-        ListNodeImpl<E> current = list.head;
-        while (current != null) {
-            ListNodeImpl<E> nextNode = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
-            current = nextNode;
+        while (list.head != null) {
+            ListNodeImpl<E> node = list.head;
+            list.removeListNode(node);
+            this.addListNode(node);
         }
     }
 }

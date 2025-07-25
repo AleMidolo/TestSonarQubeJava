@@ -6,11 +6,11 @@ public class ArrayUtils {
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**
-     * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p>
-     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए एक खाली ऐरे लौटाती है।</p>
-     * <p>एक मेमोरी ऑप्टिमाइजेशन तकनीक के रूप में, एक खाली ऐरे जो पास किया गया है, इसे इस वर्ग में मौजूद खाली <code>public static</code> संदर्भों से ओवरराइड किया जाएगा।</p>
-     * @param array  वह ऐरे जिसे <code>null</code> या खाली के लिए जांचना है
-     * @return वही ऐरे, <code>public static</code> खाली ऐरे यदि <code>null</code> या खाली इनपुट हो
+     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p>
+     * <p>This method returns an empty array for a <code>null</code> input array.</p>
+     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty <code>public static</code> references in this class.</p>
+     * @param array  the array to check for <code>null</code> or empty
+     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
@@ -18,16 +18,5 @@ public class ArrayUtils {
             return EMPTY_BOOLEAN_ARRAY;
         }
         return array;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        Boolean[] array1 = null;
-        Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = new Boolean[]{true, false};
-
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [true, false]
     }
 }

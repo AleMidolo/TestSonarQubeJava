@@ -1,5 +1,5 @@
 /**
- * फ़्लोर($\log_2 (n)$) $+ 1$ की गणना करता है
+ * Computes floor(log2(n)) + 1
  */
 private int computeBinaryLog(int n) {
     if (n <= 0) {

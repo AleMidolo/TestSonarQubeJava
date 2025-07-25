@@ -3,11 +3,11 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * केस-संवेदनशीलता की परवाह किए बिना जांच करता है कि स्ट्रिंग में दिए गए स्ट्रिंग सेट में कोई भी वर्ण है या नहीं।
+     * Case in-sensitive Checks if the String contains any character in the given set of string.
      * 
-     * @param str जांच की जाने वाली स्ट्रिंग
-     * @param searchStrArray खोजे जाने वाले स्ट्रिंग्स की सूची
-     * @return true यदि स्ट्रिंग में कोई भी स्ट्रिंग सेट में मौजूद है, अन्यथा false
+     * @param str The string to check.
+     * @param searchStrArray The list of strings to search for.
+     * @return true if the string contains any of the search strings (case insensitive), false otherwise.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null || searchStrArray.isEmpty()) {
@@ -25,9 +25,8 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String inputString = "Hello, this is a test string!";
-        boolean result = containsAnyIgnoreCase(inputString, searchStrings);
-        System.out.println("Contains any: " + result); // Output: Contains any: true
+        List<String> searchStrings = List.of("hello", "world");
+        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
+        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
     }
 }

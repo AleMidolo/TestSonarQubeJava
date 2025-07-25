@@ -1,23 +1,32 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConstantPool {
-    private final Map<String, Integer> nameAndTypeMap = new HashMap<>();
-    private int nextIndex = 1;
+public class SymbolTable {
+    private Map<String, Symbol> constantPool = new HashMap<>();
 
-    /**
-     * इस प्रतीक तालिका के स्थायी पूल में एक CONSTANT_NameAndType_info जोड़ता है। यदि स्थायी पूल में पहले से ही समान आइटम मौजूद है, तो कुछ नहीं करता है।
-     * @param name एक फ़ील्ड या विधि का नाम।
-     * @param descriptor एक फ़ील्ड या विधि का विवरण।
-     * @return दिए गए मान के साथ एक नया या पहले से मौजूद प्रतीक।
-     */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (nameAndTypeMap.containsKey(key)) {
-            return nameAndTypeMap.get(key);
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key).getIndex();
         } else {
-            int index = nextIndex++;
-            nameAndTypeMap.put(key, index);
+            Symbol symbol = new Symbol(name, descriptor, constantPool.size() + 1);
+            constantPool.put(key, symbol);
+            return symbol.getIndex();
+        }
+    }
+
+    private static class Symbol {
+        private final String name;
+        private final String descriptor;
+        private final int index;
+
+        public Symbol(String name, String descriptor, int index) {
+            this.name = name;
+            this.descriptor = descriptor;
+            this.index = index;
+        }
+
+        public int getIndex() {
             return index;
         }
     }

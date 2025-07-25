@@ -1,34 +1,14 @@
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.servlet.http.HttpServletRequest;
 
-public class ContentLengthChecker {
+public class RequestUtils {
 
     /**
-     * अनुरोध की सामग्री की लंबाई प्राप्त करें।
-     * @return अनुरोध की सामग्री की लंबाई।
+     * Retrieve the content length of the request.
+     * @param request The HTTP request object.
+     * @return The content length of the request.
      * @since 1.3
      */
-    public long contentLength() {
-        try {
-            URL url = new URL("https://example.com"); // Replace with your URL
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            long contentLength = connection.getContentLengthLong();
-            connection.disconnect();
-
-            return contentLength;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // Return -1 in case of an error
-        }
-    }
-
-    public static void main(String[] args) {
-        ContentLengthChecker checker = new ContentLengthChecker();
-        long length = checker.contentLength();
-        System.out.println("Content Length: " + length);
+    public static long contentLength(HttpServletRequest request) {
+        return request.getContentLength();
     }
 }

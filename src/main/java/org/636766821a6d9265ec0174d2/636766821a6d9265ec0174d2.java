@@ -4,9 +4,9 @@ import org.atmosphere.cpr.AtmosphereRequest;
 public class RequestWrapper {
 
     /**
-     * एक {@link HttpServletRequest} को लपेटें।
+     * Wrap an {@link HttpServletRequest}.
      * @param request {@link HttpServletRequest}
-     * @return एक {@link AtmosphereRequest}
+     * @return an {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
         return AtmosphereRequest.wrap(request);

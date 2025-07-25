@@ -1,23 +1,27 @@
-public class FilePathUtils {
+public class FileUtils {
 
     /**
-     * अंतिम निर्देशिका विभाजक वर्ण का अनुक्रमांक लौटाता है। <p> यह विधि फ़ाइल को यूनिक्स या विंडोज़ प्रारूप में संभालेगी। अंतिम फॉरवर्ड या बैकस्लैश की स्थिति लौटाई जाती है। <p> आउटपुट उस मशीन के अनुसार समान होगा जिस पर कोड चल रहा है।
-     * @param filename  वह फ़ाइल नाम जिसमें अंतिम पथ विभाजक को खोजना है, null होने पर -1 लौटाता है
-     * @return अंतिम विभाजक वर्ण का अनुक्रमांक, या -1 यदि ऐसा कोई वर्ण नहीं है
+     * Returns the index of the last directory separator character. <p> This method will handle a file in either Unix or Windows format. The position of the last forward or backslash is returned. <p> The output will be the same irrespective of the machine that the code is running on.
+     * @param filename  the filename to find the last path separator in, null returns -1
+     * @return the index of the last separator character, or -1 if there is no such character
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
-        
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
-        
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        String filename = "C:\\Users\\Example\\Documents\\file.txt";
-        System.out.println(indexOfLastSeparator(filename)); // Output: 23
+        // Example usage
+        String filename1 = "C:\\Users\\John\\Documents\\file.txt";
+        String filename2 = "/home/user/documents/file.txt";
+        String filename3 = "file.txt";
+
+        System.out.println(indexOfLastSeparator(filename1)); // Output: 20
+        System.out.println(indexOfLastSeparator(filename2)); // Output: 18
+        System.out.println(indexOfLastSeparator(filename3)); // Output: -1
     }
 }

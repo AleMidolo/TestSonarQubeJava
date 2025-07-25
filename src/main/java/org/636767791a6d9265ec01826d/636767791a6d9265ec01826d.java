@@ -8,15 +8,15 @@ public class VariableSubstitutor {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // 或者抛出异常，视需求而定
+            return null;
         }
-
-        // 进行变量替换
+        
+        // Perform variable substitution
         for (String propKey : props.stringPropertyNames()) {
-            String placeholder = "${" + propKey + "}";
-            value = value.replace(placeholder, props.getProperty(propKey));
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
-
+        
         return value;
     }
 
@@ -26,6 +26,6 @@ public class VariableSubstitutor {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // 输出: Hello, John!
+        System.out.println(result); // Output: Hello, John!
     }
 }

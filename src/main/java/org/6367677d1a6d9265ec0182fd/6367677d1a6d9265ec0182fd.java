@@ -1,4 +1,5 @@
 public class BooleanConverter {
+    
     /** 
      * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。  
      */
@@ -6,13 +7,15 @@ public class BooleanConverter {
         if (value == null) {
             return dEfault;
         }
-        value = value.trim().toLowerCase();
-        if (value.equals("真")) {
-            return true;
-        } else if (value.equals("假")) {
-            return false;
-        } else {
-            return dEfault;
+        switch (value.toLowerCase()) {
+            case "真":
+            case "true":
+                return true;
+            case "假":
+            case "false":
+                return false;
+            default:
+                return dEfault;
         }
     }
 

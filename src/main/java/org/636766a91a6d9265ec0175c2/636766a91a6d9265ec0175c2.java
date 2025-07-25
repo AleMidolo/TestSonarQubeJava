@@ -1,8 +1,8 @@
-public class StackExample {
-    private java.util.Stack<Integer> outputFrameStack;
+public class FrameStack {
+    private java.util.Stack<Integer> stack;
 
-    public StackExample() {
-        outputFrameStack = new java.util.Stack<>();
+    public FrameStack() {
+        stack = new java.util.Stack<>();
     }
 
     /** 
@@ -10,21 +10,21 @@ public class StackExample {
      * @return 从输出帧栈中弹出的抽象类型。
      */
     private int pop() {
-        if (outputFrameStack.isEmpty()) {
+        if (stack.isEmpty()) {
             throw new java.util.EmptyStackException();
         }
-        return outputFrameStack.pop();
+        return stack.pop();
     }
 
     public void push(int value) {
-        outputFrameStack.push(value);
+        stack.push(value);
     }
 
     public static void main(String[] args) {
-        StackExample stackExample = new StackExample();
-        stackExample.push(10);
-        stackExample.push(20);
-        System.out.println(stackExample.pop()); // Outputs: 20
-        System.out.println(stackExample.pop()); // Outputs: 10
+        FrameStack frameStack = new FrameStack();
+        frameStack.push(10);
+        frameStack.push(20);
+        System.out.println(frameStack.pop()); // Outputs: 20
+        System.out.println(frameStack.pop()); // Outputs: 10
     }
 }

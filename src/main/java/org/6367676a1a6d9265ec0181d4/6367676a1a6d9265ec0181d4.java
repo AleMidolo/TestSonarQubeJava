@@ -11,7 +11,6 @@ public class StringArrayAppender {
         if (array == null) {
             return new String[] { str };
         }
-        
         String[] newArray = Arrays.copyOf(array, array.length + 1);
         newArray[array.length] = str;
         return newArray;

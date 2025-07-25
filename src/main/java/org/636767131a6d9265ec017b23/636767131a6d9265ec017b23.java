@@ -1,5 +1,4 @@
 public class LineNumberManager {
-    
     private List<Integer> lineNumbers;
 
     public LineNumberManager() {

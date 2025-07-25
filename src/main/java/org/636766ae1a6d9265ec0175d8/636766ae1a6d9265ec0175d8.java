@@ -6,8 +6,8 @@ public class ContentRangeBuilder {
      */
     private String buildContentRange() {
         long start = 0; // 起始字节
-        long end = 100; // 结束字节
-        long total = 500; // 总字节数
+        long end = 1023; // 结束字节
+        long total = 2048; // 总字节数
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

@@ -35,14 +35,12 @@ public class DoublyLinkedList<E> {
         } else {
             head = node.next; // Node is head
         }
-
         if (node.next != null) {
             node.next.prev = node.prev;
         } else {
             tail = node.prev; // Node is tail
         }
-
-        node.next = null;
+        node.next = null; // Clear references
         node.prev = null;
     }
 

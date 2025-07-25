@@ -2,9 +2,9 @@ public class ByteVector {
     private byte[] data;
     private int currentSize;
 
-    public ByteVector(int initialCapacity) {
-        data = new byte[initialCapacity];
-        currentSize = 0;
+    public ByteVector() {
+        this.data = new byte[10]; // Initial capacity
+        this.currentSize = 0;
     }
 
     /**
@@ -19,5 +19,24 @@ public class ByteVector {
             System.arraycopy(data, 0, newData, 0, currentSize);
             data = newData;
         }
+    }
+
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
+        }
+        return data[index];
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

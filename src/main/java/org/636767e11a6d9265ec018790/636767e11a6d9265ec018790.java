@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class ThreadSnapshotLoader {
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(file.toPath());
+        List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
 
         for (String line : lines) {
             ThreadSnapshot snapshot = parseLineToThreadSnapshot(line);
@@ -19,6 +20,7 @@ public class ThreadSnapshotLoader {
                 snapshots.add(snapshot);
             }
         }
+
         return snapshots;
     }
 
@@ -29,9 +31,10 @@ public class ThreadSnapshotLoader {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        long snapshotTime = snapshot.getTimestamp(); // Assuming ThreadSnapshot has a method to get its timestamp
+        // Implement time range checking logic here
+        // This is a placeholder implementation
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
+            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
                 return true;
             }
         }
@@ -47,7 +50,8 @@ class ThreadSnapshot {
     }
 
     public long getTimestamp() {
-        // Placeholder for actual timestamp extraction logic
+        // Implement logic to extract timestamp from data
+        // This is a placeholder implementation
         return System.currentTimeMillis();
     }
 }

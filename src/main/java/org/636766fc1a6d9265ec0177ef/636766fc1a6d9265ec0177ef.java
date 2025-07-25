@@ -17,10 +17,4 @@ public class ArrayUtils {
                      .map(Object::toString)
                      .toArray(String[]::new);
     }
-    
-    public static void main(String[] args) {
-        Object[] inputArray = { "Hello", null, "World", null, "!" };
-        String[] resultArray = toNoNullStringArray(inputArray);
-        System.out.println(Arrays.toString(resultArray)); // Output: [Hello, World, !]
-    }
 }

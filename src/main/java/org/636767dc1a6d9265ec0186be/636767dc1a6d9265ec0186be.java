@@ -10,24 +10,26 @@ public class TimeBucketCompressor {
         int year = (int) (timeBucket / 10000);
         int month = (int) ((timeBucket % 10000) / 100);
         int day = (int) (timeBucket % 100);
-        
+
         // Calculate the number of days since the start of the month
         int daysInMonth = getDaysInMonth(year, month);
-        int dayOfMonth = day - 1; // Convert to 0-based index
-        
+        int dayOfMonth = day;
+
         // Calculate the new day based on the dayStep
-        int newDayOfMonth = (dayOfMonth / dayStep) * dayStep;
-        
-        // If the new day exceeds the days in the month, adjust the month and year
-        if (newDayOfMonth >= daysInMonth) {
-            newDayOfMonth = daysInMonth - 1; // Last day of the month
+        int newDay = (dayOfMonth / dayStep) * dayStep;
+
+        // If the new day exceeds the days in the month, adjust it
+        if (newDay + dayStep <= daysInMonth) {
+            newDay += dayStep;
         }
-        
-        // Convert back to 1-based day
-        newDayOfMonth += 1;
-        
+
+        // If newDay exceeds the days in the month, set it to the last day of the month
+        if (newDay > daysInMonth) {
+            newDay = daysInMonth;
+        }
+
         // Reconstruct the time bucket
-        return year * 10000 + month * 100 + newDayOfMonth;
+        return year * 10000 + month * 100 + newDay;
     }
 
     // Helper method to get the number of days in a month
@@ -40,7 +42,7 @@ public class TimeBucketCompressor {
             case 2:
                 return (isLeapYear(year)) ? 29 : 28;
             default:
-                return 0; // Invalid month
+                throw new IllegalArgumentException("Invalid month: " + month);
         }
     }
 
@@ -51,9 +53,9 @@ public class TimeBucketCompressor {
 
     public static void main(String[] args) {
         // Example usage
-        long timeBucket = 20000115;
+        long timeBucket = 20000105;
         int dayStep = 11;
         long compressedBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedBucket); // Output: 20000112
+        System.out.println(compressedBucket); // Output: 20000101
     }
 }

@@ -31,7 +31,7 @@ public class VariableSubstitution {
             if (varValue != null) {
                 result.append(varValue);
             } else {
-                result.append(value.substring(startVar, endVar + 1)); // Keep the original if not found
+                result.append(value.substring(startVar, endVar + 1)); // Keep the original variable if not found
             }
             startIndex = endVar + 1;
         }

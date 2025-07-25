@@ -11,36 +11,32 @@ public class FileExtensionUtil {
         }
 
         int lastDotIndex = filename.lastIndexOf('.');
-        int lastSeparatorIndex = indexOfLastSeparator(filename);
-
-        // Check if the last dot is after the last separator
-        if (lastDotIndex > lastSeparatorIndex) {
-            return lastDotIndex;
+        if (lastDotIndex == -1) {
+            return -1; // No dot found
         }
 
-        return -1;
+        // Check for directory separators after the last dot
+        int lastSeparatorIndex = indexOfLastSeparator(filename);
+        if (lastSeparatorIndex > lastDotIndex) {
+            return -1; // There is a directory separator after the last dot
+        }
+
+        return lastDotIndex;
     }
 
-    /**
-     * Returns the index of the last path separator character, which can be either '/' or '\'.
-     * @param filename the filename to find the last path separator in, null returns -1
-     * @return the index of the last path separator character, or -1 if there is no such character
-     */
-    public static int indexOfLastSeparator(String filename) {
-        if (filename == null) {
-            return -1;
-        }
-
+    private static int indexOfLastSeparator(String filename) {
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
-
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String filename = "example/path/to/file.txt";
-        int index = indexOfExtension(filename);
-        System.out.println("Index of last extension separator: " + index);
+        // Test cases
+        System.out.println(indexOfExtension("example.txt")); // Should return 7
+        System.out.println(indexOfExtension("folder/example.txt")); // Should return 7
+        System.out.println(indexOfExtension("folder/example.")); // Should return 7
+        System.out.println(indexOfExtension("folder/example")); // Should return -1
+        System.out.println(indexOfExtension("folder/example.txt/")); // Should return -1
+        System.out.println(indexOfExtension(null)); // Should return -1
     }
 }

@@ -2,54 +2,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Channels {
-    private List<String> targetChannels;
+    private List<IConsumer> consumers;
 
     public Channels() {
-        this.targetChannels = new ArrayList<>();
+        this.consumers = new ArrayList<>();
     }
 
-    public void addChannel(String channel) {
-        targetChannels.add(channel);
+    public void addConsumer(IConsumer consumer) {
+        consumers.add(consumer);
     }
 
-    public List<String> getTargetChannels() {
-        return targetChannels;
+    public List<IConsumer> getConsumers() {
+        return consumers;
     }
 }
 
 interface IConsumer {
-    void consume(String channel);
+    void consume(String message);
 }
 
-public class ChannelManager {
-    private Channels channels;
-
-    public ChannelManager(Channels channels) {
-        this.channels = channels;
-    }
-
+public class TargetManager {
     /** 
      * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        for (String channel : channels.getTargetChannels()) {
-            consumer.consume(channel);
-        }
+        channels.addConsumer(consumer);
     }
 
     public static void main(String[] args) {
         Channels channels = new Channels();
-        channels.addChannel("Sports");
-        channels.addChannel("News");
+        TargetManager targetManager = new TargetManager();
 
         IConsumer consumer = new IConsumer() {
             @Override
-            public void consume(String channel) {
-                System.out.println("Consuming channel: " + channel);
+            public void consume(String message) {
+                System.out.println("Consuming message: " + message);
             }
         };
 
-        ChannelManager manager = new ChannelManager(channels);
-        manager.addNewTarget(channels, consumer);
+        targetManager.addNewTarget(channels, consumer);
+        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
     }
 }

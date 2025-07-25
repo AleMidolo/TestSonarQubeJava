@@ -17,7 +17,6 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(isAsciiControl('a'));  // false
         System.out.println(isAsciiControl('A'));  // false
         System.out.println(isAsciiControl('3'));  // false

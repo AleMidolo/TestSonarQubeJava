@@ -26,16 +26,16 @@ class Bucket {
         // Create a new bucket to insert
         Bucket newBucket = new Bucket();
         
-        // Set the next of the new bucket to the current bucket
+        // Link the new bucket to the next bucket
         newBucket.setNext(bucket);
         
         // If this bucket is the head of the list, we need to update the head
         // Assuming we have a way to access the head of the list
-        // For example, we can have a static reference to the head
+        // For example, if we have a static reference to the head
         // head = newBucket; // Uncomment if you have a head reference
         
-        // If we are inserting in a linked list, we need to find the previous bucket
-        // This part of the code would depend on the structure of the list
-        // For now, we will just assume we have a way to link it properly
+        // If this bucket is part of a linked list, we need to find the previous bucket
+        // This part of the code would depend on how the list is structured
+        // For now, we will just assume we are inserting it correctly
     }
 }

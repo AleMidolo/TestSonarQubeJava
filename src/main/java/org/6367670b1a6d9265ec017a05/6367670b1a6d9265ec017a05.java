@@ -2,8 +2,8 @@ public class CharUtils {
     private static final String[] CACHE = new String[128];
 
     static {
-        for (char c = 0; c < CACHE.length; c++) {
-            CACHE[c] = String.valueOf(c);
+        for (char i = 0; i < CACHE.length; i++) {
+            CACHE[i] = String.valueOf(i);
         }
     }
 

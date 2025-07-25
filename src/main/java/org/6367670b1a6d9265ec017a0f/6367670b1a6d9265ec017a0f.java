@@ -9,6 +9,7 @@ public class StringUtils {
         if (str == null || searchStrArray == null) {
             return false;
         }
+        
         String lowerStr = str.toLowerCase();
         for (String searchStr : searchStrArray) {
             if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
@@ -20,7 +21,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrArray = List.of("a", "b", "C");
+        List<String> searchStrArray = List.of("a", "b", "c");
         String str = "Hello World";
         boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println(result); // Output: true

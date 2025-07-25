@@ -9,9 +9,11 @@ public class UniqueStringSupplier {
      */
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        final int[] current = {start}; // Using an array to hold the mutable integer
+        final int[] current = {start}; // Using an array to hold the current value
 
-        return () -> String.valueOf(current[0]++); // Return the current value and increment
+        return () -> {
+            return String.valueOf(current[0]++); // Return the current value and increment
+        };
     }
 
     public static void main(String[] args) {

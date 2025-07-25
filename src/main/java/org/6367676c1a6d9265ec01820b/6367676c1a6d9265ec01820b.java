@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 public class StringManipulator {
 
     /** 
@@ -7,23 +10,25 @@ public class StringManipulator {
      * @return the resulting String
      */
     public static String deleteAny(String inString, String charsToDelete) {
-        if (inString == null || charsToDelete == null) {
-            return inString; // Return original string if input is null
+        Set<Character> charsToDeleteSet = new HashSet<>();
+        for (char c : charsToDelete.toCharArray()) {
+            charsToDeleteSet.add(c);
         }
 
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (charsToDelete.indexOf(c) == -1) {
-                result.append(c); // Append character if it's not in charsToDelete
+            if (!charsToDeleteSet.contains(c)) {
+                result.append(c);
             }
         }
-        return result.toString(); // Return the resulting string
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
         String original = "Hello World! This is a test string.";
-        String charsToDelete = "aeiou";
-        String result = deleteAny(original, charsToDelete);
-        System.out.println(result); // Output: Hll Wrld! Ths s  tst strng.
+        String charsToRemove = "aeiou";
+        String result = deleteAny(original, charsToRemove);
+        System.out.println(result); // Hll Wrld! Ths s  tst strng.
     }
 }

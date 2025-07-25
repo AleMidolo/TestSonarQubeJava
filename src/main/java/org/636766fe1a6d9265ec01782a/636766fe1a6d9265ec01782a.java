@@ -1,7 +1,7 @@
-import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
 
 public class UtfReader {
-    private byte[] classFileBuffer;
+    private final byte[] classFileBuffer;
 
     public UtfReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
@@ -14,34 +14,25 @@ public class UtfReader {
      * @return the String corresponding to the specified CONSTANT_Utf8 entry.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer contains the constant pool entries
-        // and the format is as per the Java Class File Specification.
+        // Assuming the constant pool starts at a certain offset
+        int offset = getConstantPoolOffset(constantPoolEntryIndex);
         
         // Read the length of the UTF-8 string
-        int offset = getConstantPoolOffset(constantPoolEntryIndex);
-        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
-        
-        // Read the UTF-8 bytes
-        byte[] utf8Bytes = new byte[length];
-        System.arraycopy(classFileBuffer, offset + 2, utf8Bytes, 0, length);
-        
-        // Convert UTF-8 bytes to a String
-        String result = new String(utf8Bytes, StandardCharsets.UTF_8);
-        
-        // Fill the charBuffer if needed
-        if (charBuffer.length >= result.length()) {
-            result.getChars(0, result.length(), charBuffer, 0);
-        } else {
-            throw new IllegalArgumentException("charBuffer is not large enough.");
+        int length = (classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF);
+        offset += 2;
+
+        // Read the UTF-8 bytes and convert to characters
+        for (int i = 0; i < length; i++) {
+            charBuffer[i] = (char) ((classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF));
+            offset += 2;
         }
-        
-        return result;
+
+        return new String(charBuffer, 0, length);
     }
 
     private int getConstantPoolOffset(int index) {
-        // This method should return the correct offset for the given constant pool index.
-        // The implementation of this method depends on the structure of the classFileBuffer.
-        // For simplicity, let's assume each entry is 2 bytes for the index.
-        return index * 2; // Placeholder implementation
+        // This method should return the correct offset for the given constant pool index
+        // For simplicity, let's assume each entry is 4 bytes (this is not accurate for real class files)
+        return index * 4; // Placeholder implementation
     }
 }

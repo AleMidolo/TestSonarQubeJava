@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UpperBoundCalculator<K extends Comparable<K>> {
@@ -14,26 +15,31 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             return upperBounds; // Return empty list if input is null or empty
         }
 
-        for (K key : keys) {
-            // Assuming the upper bound is the index of the key in the sorted list
-            // This is a placeholder logic; actual logic may vary based on requirements
-            int upperBound = findUpperBound(keys, key);
+        // Sort the keys to find upper bounds
+        List<K> sortedKeys = new ArrayList<>(keys);
+        Collections.sort(sortedKeys);
+
+        for (K key : sortedKeys) {
+            int upperBound = findUpperBound(sortedKeys, key);
             upperBounds.add(upperBound);
         }
+
         return upperBounds;
     }
 
-    private int findUpperBound(List<K> keys, K key) {
-        // Placeholder for actual upper bound logic
-        // Here we simply return the index of the key if it exists, or the size of the list
-        int index = keys.indexOf(key);
-        return index >= 0 ? index : keys.size();
-    }
-
-    public static void main(String[] args) {
-        UpperBoundCalculator<Integer> calculator = new UpperBoundCalculator<>();
-        List<Integer> keys = List.of(1, 2, 3, 4, 5);
-        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
-        System.out.println(upperBounds);
+    private int findUpperBound(List<K> sortedKeys, K key) {
+        int left = 0;
+        int right = sortedKeys.size();
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (sortedKeys.get(mid).compareTo(key) <= 0) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        
+        return left; // The index of the first element greater than key
     }
 }

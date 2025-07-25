@@ -23,7 +23,7 @@ public class VertexMover {
             labels.set(vertex, 0); // Update the label to 0
         }
         
-        // Clear the bucket with minLabel
+        // Clear the bucket with label minLabel
         minLabelBucket.clear();
     }
 }

@@ -19,21 +19,21 @@ public class Graph {
      * @return {@code predicate} को संतुष्ट करने वाले नोड के लिए एक सर्कुलेटर या {@code stop} नोड के लिए
      */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        // Implementation of the method
         OuterFaceCirculator circulator = new OuterFaceCirculator();
+        
         Node currentNode = start;
-
-        // Logic to traverse the outer face and find the node satisfying the predicate
         while (currentNode != null && !currentNode.equals(stop)) {
             if (predicate.test(currentNode)) {
-                return circulator; // Return circulator for the node satisfying the predicate
+                return circulator; // Return circulator for the node that satisfies the predicate
             }
-            // Move to the next node in the specified direction
+            // Logic to move to the next node in the specified direction
             currentNode = getNextNode(currentNode, dir);
         }
         
         return circulator; // Return circulator for the stop node if no node satisfies the predicate
     }
-
+    
     private Node getNextNode(Node currentNode, int dir) {
         // Logic to get the next node based on the direction
         return null; // Placeholder return statement

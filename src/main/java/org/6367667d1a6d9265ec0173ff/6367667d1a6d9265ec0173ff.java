@@ -20,7 +20,7 @@ public class MeteorLookup {
 
     private static Meteor findMeteorById(String meteorId) {
         // Placeholder for actual logic to find a Meteor by its ID
-        // This could involve querying a database or some other data source
+        // This could involve querying a database or a collection
         // For demonstration, returning a new Meteor instance
         return new Meteor(meteorId);
     }

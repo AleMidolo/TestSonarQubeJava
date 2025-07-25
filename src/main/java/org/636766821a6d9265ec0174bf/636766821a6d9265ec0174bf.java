@@ -11,10 +11,9 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        // Test the capitalize method
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("java"));   // Output: Java
-        System.out.println(capitalize(""));       // Output: 
-        System.out.println(capitalize(null));     // Output: null
+        // Example usage
+        String testName = "example";
+        String capitalized = capitalize(testName);
+        System.out.println(capitalized); // Output: Example
     }
 }

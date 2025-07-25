@@ -13,7 +13,7 @@ public class UTF8SizeCalculator {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
         if (len < 0 || index + len > str.length()) {
-            throw new IllegalArgumentException("Length is invalid");
+            throw new IllegalArgumentException("Invalid length specified");
         }
 
         String substring = str.subSequence(index, index + len).toString();

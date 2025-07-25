@@ -11,6 +11,7 @@ public class StringArrayUtil {
         if (array == null) {
             return new String[] { str };
         }
+        
         String[] newArray = Arrays.copyOf(array, array.length + 1);
         newArray[array.length] = str;
         return newArray;
@@ -20,6 +21,7 @@ public class StringArrayUtil {
         String[] originalArray = {"apple", "banana"};
         String newString = "cherry";
         String[] updatedArray = addStringToArray(originalArray, newString);
+        
         System.out.println(Arrays.toString(updatedArray)); // Output: [apple, banana, cherry]
     }
 }

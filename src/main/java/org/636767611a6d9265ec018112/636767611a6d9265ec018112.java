@@ -9,6 +9,5 @@ protected V provideNextVertex() {
 // Placeholder method to simulate getting the next vertex
 private V getNextVertexFromSomeSource() {
     // Logic to retrieve the next vertex
-    // This is just a stub and should be replaced with actual retrieval logic
-    return null; // Replace with actual vertex object
+    return null; // Replace with actual vertex retrieval logic
 }

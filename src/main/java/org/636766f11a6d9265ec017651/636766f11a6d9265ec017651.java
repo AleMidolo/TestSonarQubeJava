@@ -22,10 +22,10 @@ public class ArrayUtil {
         // Test cases
         Character[] nullArray = null;
         Character[] emptyArray = {};
-        Character[] filledArray = {'A', 'B', 'C'};
+        Character[] nonEmptyArray = {'A', 'B', 'C'};
 
         System.out.println(nullToEmpty(nullArray).length); // Output: 0
         System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(filledArray).length); // Output: 3
+        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
     }
 }

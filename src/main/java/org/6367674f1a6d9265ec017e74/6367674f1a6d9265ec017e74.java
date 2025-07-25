@@ -1,10 +1,10 @@
 import java.util.LinkedList;
 
-public class QueueRepresentation {
-    private LinkedList<Object> queue;
+public class Queue {
+    private LinkedList<Object> elements;
 
-    public QueueRepresentation() {
-        queue = new LinkedList<>();
+    public Queue() {
+        elements = new LinkedList<>();
     }
 
     /** 
@@ -14,9 +14,9 @@ public class QueueRepresentation {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Queue: [");
-        for (int i = 0; i < queue.size(); i++) {
-            sb.append(queue.get(i));
-            if (i < queue.size() - 1) {
+        for (int i = 0; i < elements.size(); i++) {
+            sb.append(elements.get(i));
+            if (i < elements.size() - 1) {
                 sb.append(", ");
             }
         }
@@ -24,19 +24,20 @@ public class QueueRepresentation {
         return sb.toString();
     }
 
+    // Additional methods to add and remove elements from the queue
     public void enqueue(Object item) {
-        queue.addLast(item);
+        elements.addLast(item);
     }
 
     public Object dequeue() {
-        return queue.isEmpty() ? null : queue.removeFirst();
+        return elements.removeFirst();
     }
 
-    public static void main(String[] args) {
-        QueueRepresentation queue = new QueueRepresentation();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
+    public boolean isEmpty() {
+        return elements.isEmpty();
+    }
+
+    public int size() {
+        return elements.size();
     }
 }

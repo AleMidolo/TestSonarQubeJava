@@ -20,6 +20,7 @@ public class StringUtil {
     public static void main(String[] args) {
         String testString = "Hello World!   ";
         String trimmedString = trimTrailingWhitespace(testString);
-        System.out.println("'" + trimmedString + "'"); // Output: 'Hello World!'
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimmedString + "'");
     }
 }

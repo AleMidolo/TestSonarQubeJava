@@ -7,11 +7,13 @@ public class ShardingKeyChecker {
     private void check(String modelName) throws IllegalStateException {
         // Dummy implementation for demonstration
         // In a real scenario, you would check the sharding keys for continuity
-        boolean isShardingKeyContinuous = false; // This should be replaced with actual logic
+        boolean isShardingKeyContinuous = false; // This should be determined by actual logic
 
         if (!isShardingKeyContinuous) {
-            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं: " + modelName);
+            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं");
         }
+        
+        // Additional logic can be added here
     }
 
     public static void main(String[] args) {

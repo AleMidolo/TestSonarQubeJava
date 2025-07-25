@@ -22,8 +22,7 @@ public class CharacterArrayConverter {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Character[] charArray = {'a', 'b', 'c'};
+        Character[] charArray = { 'a', 'b', 'c' };
         char[] primitiveArray = toPrimitive(charArray);
         for (char c : primitiveArray) {
             System.out.print(c + " ");

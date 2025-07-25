@@ -9,21 +9,20 @@ public class ArrayComparer {
         // Assuming we have an internal array to compare with
         byte[] internalArray = getInternalArray(); // This method should return the internal array
         
-        if (offset < 0 || len < 0 || offset + len > internalArray.length || len > data.length) {
+        if (offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
             return false; // Out of bounds check
         }
         
         for (int i = 0; i < len; i++) {
-            if (internalArray[offset + i] != data[i]) {
+            if (data[offset + i] != internalArray[i]) {
                 return false; // If any byte does not match, return false
             }
         }
         return true; // All bytes matched
     }
     
-    // Placeholder for the internal array
     private byte[] getInternalArray() {
-        // This should return the actual internal array
-        return new byte[] {1, 2, 3, 4, 5}; // Example internal array
+        // Example internal array for demonstration purposes
+        return new byte[]{1, 2, 3, 4, 5};
     }
 }

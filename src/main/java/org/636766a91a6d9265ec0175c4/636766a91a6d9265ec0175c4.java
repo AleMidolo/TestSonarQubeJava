@@ -1,6 +1,6 @@
 public class StackPopper {
     
-    // Assuming we have a stack to hold abstract types
+    // Assuming we have a stack to pop from
     private Stack<Object> stack;
 
     public StackPopper() {
@@ -12,36 +12,25 @@ public class StackPopper {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Example logic to pop elements based on the descriptor
-        // This is a placeholder for actual implementation
-        int argCount = getArgumentCountFromDescriptor(descriptor);
-        
-        for (int i = 0; i < argCount; i++) {
-            if (!stack.isEmpty()) {
-                Object poppedElement = stack.pop();
-                // Process the popped element as needed
-                System.out.println("Popped: " + poppedElement);
-            } else {
-                System.out.println("Stack is empty, cannot pop more elements.");
-                break;
-            }
+        // Example logic to pop based on descriptor
+        // This is a placeholder for actual type checking and popping logic
+        while (!stack.isEmpty()) {
+            Object item = stack.pop();
+            // Here you would check if the item matches the descriptor
+            // For demonstration, we will just print the popped item
+            System.out.println("Popped item: " + item);
         }
     }
 
-    private int getArgumentCountFromDescriptor(String descriptor) {
-        // Placeholder for actual logic to determine argument count from descriptor
-        // For simplicity, let's assume it returns a fixed number
-        return 2; // Example: assuming 2 arguments for demonstration
-    }
-
+    // Method to push items onto the stack for testing
     public void push(Object item) {
         stack.push(item);
     }
 
     public static void main(String[] args) {
         StackPopper stackPopper = new StackPopper();
-        stackPopper.push("AbstractType1");
-        stackPopper.push("AbstractType2");
-        stackPopper.pop("methodDescriptor");
+        stackPopper.push("Test1");
+        stackPopper.push("Test2");
+        stackPopper.pop("SomeDescriptor");
     }
 }

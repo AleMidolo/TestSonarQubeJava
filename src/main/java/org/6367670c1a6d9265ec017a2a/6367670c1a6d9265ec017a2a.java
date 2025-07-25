@@ -15,7 +15,7 @@ public class ArrayConverter {
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Array contains null element at index " + i);
+                throw new NullPointerException("Array element at index " + i + " is null");
             }
             result[i] = array[i];
         }

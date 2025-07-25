@@ -2,6 +2,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class TemplateEncoder {
+    
     /** 
      * एक स्ट्रिंग को एन्कोड करता है जिसमें टेम्पलेट पैरामीटर नाम मौजूद होते हैं, विशेष रूप से '{' और '}' अक्षरों को प्रतिशत-कोडित किया जाएगा।
      * @param s वह स्ट्रिंग जिसमें शून्य या अधिक टेम्पलेट पैरामीटर नाम हैं
@@ -18,8 +19,8 @@ public class TemplateEncoder {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    // This should never happen since UTF-8 is a standard encoding
-                    throw new RuntimeException("UTF-8 encoding not supported", e);
+                    // This should never happen since UTF-8 is always supported
+                    throw new RuntimeException(e);
                 }
             } else {
                 encodedString.append(c);

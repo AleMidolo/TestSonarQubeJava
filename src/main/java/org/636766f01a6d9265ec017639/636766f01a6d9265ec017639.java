@@ -14,12 +14,13 @@ public class ArrayToListConverter {
     }
 
     public static void main(String[] args) {
+        // Example usage
         String[] array = {"Hello", "World"};
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
         String[] nullArray = null;
-        List<String> nullList = asList(nullArray);
-        System.out.println(nullList); // Output: []
+        List<String> emptyList = asList(nullArray);
+        System.out.println(emptyList); // Output: []
     }
 }

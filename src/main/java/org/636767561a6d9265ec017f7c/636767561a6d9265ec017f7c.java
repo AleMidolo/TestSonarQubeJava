@@ -1,10 +1,8 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.util.Triple;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +26,14 @@ public class GraphUtils<V, E> {
 
             if (previousVertex == null) {
                 vertexList.add(sourceVertex);
+                previousVertex = targetVertex;
+            } else {
+                if (!previousVertex.equals(sourceVertex)) {
+                    vertexList.add(previousVertex);
+                }
+                vertexList.add(targetVertex);
+                previousVertex = targetVertex;
             }
-            vertexList.add(targetVertex);
-            previousVertex = targetVertex;
         }
 
         return new GraphPath<V, E>() {
@@ -51,12 +54,12 @@ public class GraphUtils<V, E> {
 
             @Override
             public V getStartVertex() {
-                return vertexList.get(0);
+                return vertexList.isEmpty() ? null : vertexList.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return vertexList.get(vertexList.size() - 1);
+                return vertexList.isEmpty() ? null : vertexList.get(vertexList.size() - 1);
             }
 
             @Override

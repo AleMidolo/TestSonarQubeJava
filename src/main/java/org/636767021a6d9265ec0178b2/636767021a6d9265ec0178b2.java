@@ -18,9 +18,11 @@ public class FrameStack {
             if (!stack.isEmpty()) {
                 Object poppedValue = stack.pop();
                 // Here you can add logic to check if poppedValue matches the type
-                System.out.println("Popped: " + poppedValue + " for type: " + type);
+                // For simplicity, we are just popping values without type checking
+                System.out.println("Popped: " + poppedValue);
             } else {
-                System.out.println("Stack is empty, cannot pop for type: " + type);
+                System.out.println("Stack is empty, cannot pop.");
+                break;
             }
         }
     }
@@ -35,6 +37,6 @@ public class FrameStack {
         frameStack.push("Hello");
         frameStack.push(3.14);
         
-        frameStack.pop("Integer,String,Double");
+        frameStack.pop("Integer,String"); // Example usage
     }
 }

@@ -21,26 +21,26 @@ public class ByteVector {
             return this;
         }
         
-        ensureCapacity(size + byteLength);
+        // Ensure the byteOffset is within bounds
+        if (byteOffset < 0 || byteOffset >= byteArrayValue.length) {
+            throw new IndexOutOfBoundsException("byteOffset is out of bounds");
+        }
+
+        // Calculate the actual length to copy
+        int actualLength = Math.min(byteLength, byteArrayValue.length - byteOffset);
+        ensureCapacity(size + actualLength);
         
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        size += byteLength;
+        // Copy the bytes into the vector
+        System.arraycopy(byteArrayValue, byteOffset, data, size, actualLength);
+        size += actualLength;
         
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - data.length > 0) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
     }
 }

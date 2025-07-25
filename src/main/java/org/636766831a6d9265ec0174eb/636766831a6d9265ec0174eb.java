@@ -1,8 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Collections;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 
 public class FileReverser {
 
@@ -14,31 +14,15 @@ public class FileReverser {
             return;
         }
 
-        // Create a StringBuilder to hold the content
-        StringBuilder contentBuilder = new StringBuilder();
+        Arrays.sort(files, (f1, f2) -> f2.getName().compareTo(f1.getName())); // Sort files in reverse order
 
-        // Reverse the array of files
-        File[] reversedFiles = files.clone();
-        Collections.reverse(java.util.Arrays.asList(reversedFiles));
-
-        // Read each file in reverse order and append its content
-        for (File file : reversedFiles) {
+        for (File file : files) {
             try {
-                String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
-                contentBuilder.append(content).append(System.lineSeparator());
+                String content = new String(Files.readAllBytes(file.toPath()));
+                Files.write(new File("output.txt").toPath(), content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        // Output the combined content (for demonstration purposes)
-        System.out.println(contentBuilder.toString());
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        FileReverser fileReverser = new FileReverser();
-        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        fileReverser.addReverse(files);
     }
 }

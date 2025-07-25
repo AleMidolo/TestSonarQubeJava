@@ -10,7 +10,6 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        
         Double[] objectArray = new Double[array.length];
         for (int i = 0; i < array.length; i++) {
             objectArray[i] = array[i]; // Autoboxing from double to Double
@@ -21,8 +20,6 @@ public class ArrayConverter {
     public static void main(String[] args) {
         double[] primitiveArray = {1.0, 2.0, 3.0};
         Double[] objectArray = toObject(primitiveArray);
-        
-        // Print the result
         for (Double d : objectArray) {
             System.out.println(d);
         }

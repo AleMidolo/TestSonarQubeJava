@@ -14,10 +14,16 @@ public class AtmosphereManager {
      * @return 如果成功移除则返回真
      */
     public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (atmosphereFramework.getAtmosphereHandlers().containsKey(mapping)) {
+        if (mapping == null || mapping.isEmpty()) {
+            return atmosphereFramework;
+        }
+        
+        AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);
+        if (handler != null) {
             atmosphereFramework.removeAtmosphereHandler(mapping);
             return atmosphereFramework;
         }
-        return null; // or throw an exception based on your design choice
+        
+        return atmosphereFramework; // Return the framework even if nothing was removed
     }
 }

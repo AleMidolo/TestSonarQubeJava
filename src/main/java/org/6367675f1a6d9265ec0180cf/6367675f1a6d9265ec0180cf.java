@@ -19,10 +19,10 @@ public class GraphUtils {
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Found a pair that is not connected
+                    return false; // Found a pair of vertices that are not connected
                 }
             }
         }
-        return true; // All pairs are connected
+        return true; // All pairs are connected, thus it's a clique
     }
 }

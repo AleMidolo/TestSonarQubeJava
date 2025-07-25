@@ -26,7 +26,7 @@ public class CustomOutputStream extends OutputStream {
         position += len;
     }
 
-    // Additional methods for testing purposes
+    // Additional methods for demonstration purposes
     public byte[] getBuffer() {
         return buffer;
     }

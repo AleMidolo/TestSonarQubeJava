@@ -21,8 +21,8 @@ public class ValueAccumulator {
 
     public static void main(String[] args) {
         ValueAccumulator accumulator = new ValueAccumulator();
-        accumulator.valueAccumulation("a", 10L);
-        accumulator.valueAccumulation("a", 5L);
-        System.out.println(accumulator.getValue("a")); // Output: 15
+        accumulator.valueAccumulation("testKey", 10L);
+        accumulator.valueAccumulation("testKey", 5L);
+        System.out.println(accumulator.getValue("testKey")); // Output: 15
     }
 }

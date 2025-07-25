@@ -1,5 +1,4 @@
 public class FactorialCalculator {
-    
     /**
      * 计算 $n$ 的阶乘。
      * @param n 输入的数字

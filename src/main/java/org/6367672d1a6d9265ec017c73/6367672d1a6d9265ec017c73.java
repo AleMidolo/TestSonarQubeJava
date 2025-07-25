@@ -14,15 +14,15 @@ public class MessagePrinter {
         if (!messageTimestamps.containsKey(message)) {
             messageTimestamps.put(message, timestamp);
             return true;
-        } else {
-            int lastTimestamp = messageTimestamps.get(message);
-            if (timestamp - lastTimestamp >= 10) {
-                messageTimestamps.put(message, timestamp);
-                return true;
-            } else {
-                return false;
-            }
         }
+        
+        int lastTimestamp = messageTimestamps.get(message);
+        if (timestamp - lastTimestamp >= 10) {
+            messageTimestamps.put(message, timestamp);
+            return true;
+        }
+        
+        return false;
     }
 
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class MessagePrinter {
         System.out.println(printer.shouldPrintMessage(2, "bar")); // true
         System.out.println(printer.shouldPrintMessage(3, "foo")); // false
         System.out.println(printer.shouldPrintMessage(8, "bar")); // false
-        System.out.println(printer.shouldPrintMessage(10, "foo")); // true
-        System.out.println(printer.shouldPrintMessage(11, "bar")); // true
+        System.out.println(printer.shouldPrintMessage(10, "foo")); // false
+        System.out.println(printer.shouldPrintMessage(11, "foo")); // true
     }
 }

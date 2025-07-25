@@ -3,49 +3,42 @@ public class TimeBucketCompressor {
     /**
      * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，
      * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
+     *
+     * @param timeBucket 时间桶的长整型值
+     * @param dayStep    步长
+     * @return 重新格式化后的时间桶
      */
     static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Extract year, month, and day from the timeBucket
-        int year = (int) (timeBucket / 10000);
-        int month = (int) ((timeBucket % 10000) / 100);
-        int day = (int) (timeBucket % 100);
+        // 将时间桶转换为字符串以便处理
+        String timeStr = String.valueOf(timeBucket);
+        // 获取年、月、日
+        int year = Integer.parseInt(timeStr.substring(0, 4));
+        int month = Integer.parseInt(timeStr.substring(4, 6));
+        int day = Integer.parseInt(timeStr.substring(6, 8));
 
-        // Calculate the total number of days from the start of the year
-        int totalDays = (month - 1) * 30 + day; // Simplified calculation for days in month
+        // 计算当前日期的天数
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        int currentDayOfYear = calendar.get(java.util.Calendar.DAY_OF_YEAR);
 
-        // Calculate the new day based on the dayStep
-        int newTotalDays = (totalDays / dayStep) * dayStep;
+        // 计算新的天数
+        int newDayOfYear = (currentDayOfYear / dayStep) * dayStep;
 
-        // Calculate the new day, month, and year
-        int newDay = newTotalDays % 30;
-        int newMonth = (newTotalDays / 30) + 1;
-        if (newDay == 0) {
-            newDay = 30;
-            newMonth--;
-        }
+        // 设置新的日期
+        calendar.set(java.util.Calendar.DAY_OF_YEAR, newDayOfYear);
+        // 获取新的年、月、日
+        year = calendar.get(java.util.Calendar.YEAR);
+        month = calendar.get(java.util.Calendar.MONTH) + 1; // 月份从0开始
+        day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
 
-        // Adjust year and month if necessary
-        if (newMonth > 12) {
-            year += newMonth / 12;
-            newMonth = newMonth % 12;
-            if (newMonth == 0) {
-                newMonth = 12;
-            }
-        }
-
-        // Construct the new timeBucket
-        long newTimeBucket = year * 10000 + newMonth * 100 + newDay;
-        return newTimeBucket;
+        // 重新格式化为长整型值
+        return Long.parseLong(String.format("%04d%02d%02d", year, month, day));
     }
 
     public static void main(String[] args) {
-        long timeBucket1 = 20000105;
-        long timeBucket2 = 20000115;
-        long timeBucket3 = 20000123;
-        int dayStep = 11;
-
-        System.out.println(compressTimeBucket(timeBucket1, dayStep)); // Output: 20000101
-        System.out.println(compressTimeBucket(timeBucket2, dayStep)); // Output: 20000112
-        System.out.println(compressTimeBucket(timeBucket3, dayStep)); // Output: 20000123
+        // 测试示例
+        System.out.println(compressTimeBucket(20000105L, 11)); // 输出: 20000101
+        System.out.println(compressTimeBucket(20000115L, 11)); // 输出: 20000112
+        System.out.println(compressTimeBucket(20000123L, 11)); // 输出: 20000123
     }
 }

@@ -11,19 +11,20 @@ public class ObjectRegistry {
         if (value == null) {
             throw new IllegalArgumentException("Cannot register null object.");
         }
-        if (!registeredObjects.add(value)) {
-            System.out.println("Object is already registered: " + value);
-        } else {
-            System.out.println("Object registered successfully: " + value);
+        if (!registeredObjects.contains(value)) {
+            registeredObjects.add(value);
         }
     }
 
     public static void main(String[] args) {
+        // Example usage
         Object obj1 = new Object();
         Object obj2 = new Object();
         
-        register(obj1); // Should register successfully
-        register(obj2); // Should register successfully
-        register(obj1); // Should indicate that obj1 is already registered
+        register(obj1);
+        register(obj2);
+        register(obj1); // This will not add obj1 again
+
+        System.out.println("Registered objects: " + registeredObjects.size());
     }
 }

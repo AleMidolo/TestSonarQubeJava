@@ -1,7 +1,6 @@
 import java.io.File;
 
 public class ClassPathUtil {
-
     /**
      * 以 {@link File} 对象数组的形式返回当前 JVM 实例的类路径。
      */

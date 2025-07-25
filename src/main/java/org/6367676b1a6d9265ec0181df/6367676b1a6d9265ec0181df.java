@@ -13,6 +13,6 @@ public class StringUtils {
         if (prefix.length() > str.length()) {
             return false;
         }
-        return str.regionMatches(true, 0, prefix, 0, prefix.length());
+        return str.substring(0, prefix.length()).toLowerCase().equals(prefix.toLowerCase());
     }
 }

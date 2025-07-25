@@ -13,39 +13,41 @@ public class MappingDiffer {
             Mappings.Builder diffMappings = new Mappings.Builder();
 
             // Get current index mappings
-            ImmutableOpenMap<String, MappingMetadata> currentMappings = mappings.getMappings();
+            ImmutableOpenMap<String, MappingMetadata> currentMappings = getCurrentIndexMappings(tableName);
             
-            if (currentMappings == null || currentMappings.isEmpty()) {
-                return null;
-            }
-
-            // Get mapping for table
-            MappingMetadata tableMapping = currentMappings.get(tableName);
-            if (tableMapping == null) {
-                return null;
-            }
-
-            // Get properties map
-            Map<String, Object> properties = (Map<String, Object>) tableMapping.getSourceAsMap().get("properties");
+            // Get properties from input mappings
+            Map<String, Object> inputProperties = mappings.getSourceAsMap();
             
-            if (properties == null) {
-                return null;
+            // Iterate through input mappings and find fields that don't exist in current
+            for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+                String fieldName = entry.getKey();
+                
+                // Skip _source field
+                if (fieldName.equals("_source")) {
+                    continue;
+                }
+                
+                // If field doesn't exist in current mappings, add to diff
+                if (!currentMappings.containsKey(fieldName)) {
+                    diffMappings.put(fieldName, entry.getValue());
+                }
             }
-
-            // Create new mapping without _source
-            Map<String, Object> newMapping = new HashMap<>();
-            newMapping.put("properties", properties);
-
-            // Remove _source configuration
-            newMapping.remove("_source");
-
-            // Build new mappings object
-            diffMappings.put(tableName, newMapping);
 
             return diffMappings.build();
 
         } catch (Exception e) {
             throw new RuntimeException("Error diffing mappings structure", e);
+        }
+    }
+
+    // Helper method to get current index mappings
+    private ImmutableOpenMap<String, MappingMetadata> getCurrentIndexMappings(String indexName) {
+        try {
+            GetMappingsRequest request = new GetMappingsRequest().indices(indexName);
+            GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+            return response.getMappings().get(indexName).getMappings();
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting current mappings", e);
         }
     }
 }

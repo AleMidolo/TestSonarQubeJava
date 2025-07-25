@@ -3,73 +3,44 @@ import java.util.Map;
 
 public class StringUtils {
 
-    private static final Map<String, String> JAVA_ESCAPES;
-    
-    static {
-        JAVA_ESCAPES = new HashMap<>();
-        JAVA_ESCAPES.put("\\t", "\t");
-        JAVA_ESCAPES.put("\\b", "\b");
-        JAVA_ESCAPES.put("\\n", "\n");
-        JAVA_ESCAPES.put("\\r", "\r");
-        JAVA_ESCAPES.put("\\f", "\f");
-        JAVA_ESCAPES.put("\\\\", "\\");
-        JAVA_ESCAPES.put("\\'", "'");
-        JAVA_ESCAPES.put("\\\"", "\"");
-    }
-
+    /**
+     * <p>Remueve el "escape" de cualquier literal de Java encontrado en el <code>String</code>. Por ejemplo, convertirá una secuencia de <code>'\'</code> y <code>'n'</code> en un carácter de nueva línea, a menos que el <code>'\'</code> esté precedido por otro <code>'\'</code>.</p>
+     * @param str el <code>String</code> a procesar, puede ser nulo
+     * @return un nuevo <code>String</code> sin carácteres "escape", <code>null</code> si la entrada es un string nulo
+     */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
         
-        StringBuilder result = new StringBuilder(str.length());
+        // Mapa de caracteres escapados comunes en Java
+        Map<String, String> unescapeMap = new HashMap<>();
+        unescapeMap.put("\\n", "\n"); // nueva línea
+        unescapeMap.put("\\t", "\t"); // tab
+        unescapeMap.put("\\r", "\r"); // retorno de carro
+        unescapeMap.put("\\b", "\b"); // backspace
+        unescapeMap.put("\\f", "\f"); // form feed
+        unescapeMap.put("\\\"", "\""); // comilla doble
+        unescapeMap.put("\\'", "'");   // comilla simple
+        unescapeMap.put("\\\\", "\\"); // backslash
         
+        StringBuilder result = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
-            char currentChar = str.charAt(i);
-            
-            if (currentChar == '\\' && i + 1 < str.length()) {
-                // Check for escaped sequences
-                String escape = str.substring(i, Math.min(i + 2, str.length()));
+            if (i < str.length() - 1 && str.charAt(i) == '\\') {
+                // Obtener la secuencia de escape (backslash + siguiente caracter)
+                String escape = str.substring(i, i + 2);
                 
-                // Handle unicode escapes
-                if (escape.startsWith("\\u") && i + 5 < str.length()) {
-                    String hex = str.substring(i + 2, i + 6);
-                    try {
-                        result.append((char) Integer.parseInt(hex, 16));
-                        i += 5;
-                        continue;
-                    } catch (NumberFormatException e) {
-                        throw new Exception("Invalid unicode escape sequence");
-                    }
+                // Si la secuencia está en el mapa, reemplazarla
+                if (unescapeMap.containsKey(escape)) {
+                    result.append(unescapeMap.get(escape));
+                    i++; // Saltar el siguiente caracter ya que fue procesado
+                } else {
+                    // Si no es una secuencia de escape válida, mantener el backslash
+                    result.append(str.charAt(i));
                 }
-                
-                // Handle octal escapes
-                if (Character.isDigit(str.charAt(i + 1))) {
-                    int end = Math.min(i + 4, str.length());
-                    int j = i + 1;
-                    while (j < end && Character.isDigit(str.charAt(j))) {
-                        j++;
-                    }
-                    String octal = str.substring(i + 1, j);
-                    try {
-                        result.append((char) Integer.parseInt(octal, 8));
-                        i = j - 1;
-                        continue;
-                    } catch (NumberFormatException e) {
-                        throw new Exception("Invalid octal escape sequence");
-                    }
-                }
-                
-                // Handle common escape sequences
-                String replacement = JAVA_ESCAPES.get(escape);
-                if (replacement != null) {
-                    result.append(replacement);
-                    i++;
-                    continue;
-                }
+            } else {
+                result.append(str.charAt(i));
             }
-            
-            result.append(currentChar);
         }
         
         return result.toString();

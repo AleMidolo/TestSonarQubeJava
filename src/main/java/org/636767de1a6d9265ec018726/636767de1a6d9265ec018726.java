@@ -34,23 +34,23 @@ public class SequenceRangeBuilder {
         // Sort sequences
         profileSequences.sort(null);
         
-        int rangeStart = profileSequences.get(0);
-        int prev = rangeStart;
+        int start = profileSequences.get(0);
+        int prev = start;
         
         for (int i = 1; i < profileSequences.size(); i++) {
             int current = profileSequences.get(i);
             
             // If there's a gap in sequence, create new range
             if (current > prev + 1) {
-                ranges.add(new SequenceRange(rangeStart, prev));
-                rangeStart = current;
+                ranges.add(new SequenceRange(start, prev));
+                start = current;
             }
             
             prev = current;
         }
         
         // Add final range
-        ranges.add(new SequenceRange(rangeStart, prev));
+        ranges.add(new SequenceRange(start, prev));
         
         return ranges;
     }
@@ -58,6 +58,6 @@ public class SequenceRangeBuilder {
     // Helper method to get profile sequences
     private List<Integer> getProfileSequences() {
         // Implementation would depend on how profile data is stored
-        return new ArrayList<>();
+        return new ArrayList<>(); 
     }
 }

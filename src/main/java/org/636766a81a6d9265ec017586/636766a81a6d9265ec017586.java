@@ -17,23 +17,17 @@ public class StackFrame {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                break; // Stop if the stack is empty
+                break; // Stop if the stack is already empty
             }
         }
     }
 
-    public void push(Object item) {
-        stack.push(item);
+    // Method to push an element onto the stack for testing purposes
+    public void push(Object element) {
+        stack.push(element);
     }
 
-    public Object peek() {
-        return stack.isEmpty() ? null : stack.peek();
-    }
-
-    public boolean isEmpty() {
-        return stack.isEmpty();
-    }
-
+    // Method to get the current size of the stack for testing purposes
     public int size() {
         return stack.size();
     }

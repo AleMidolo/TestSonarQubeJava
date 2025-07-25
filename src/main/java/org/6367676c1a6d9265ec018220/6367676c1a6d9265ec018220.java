@@ -1,5 +1,5 @@
 public class FilePathUtil {
-
+    
     /** 
      * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -&gt; "mypath/myfile".
      * @param path il percorso del file (può essere <code>null</code>)
@@ -21,10 +21,11 @@ public class FilePathUtil {
     }
 
     public static void main(String[] args) {
-        // Test examples
+        // Test cases
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
         System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
         System.out.println(stripFilenameExtension("mypath/myfile."));    // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile.tar.gz")); // Output: mypath/myfile.tar
     }
 }

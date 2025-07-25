@@ -19,8 +19,10 @@ class DoublyLinkedList<E> {
             throw new IllegalArgumentException("Node cannot be null");
         }
         if (head == null) {
-            head = tail = node;
-            node.next = node.prev = null;
+            head = node;
+            tail = node;
+            node.next = null;
+            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;

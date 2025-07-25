@@ -23,11 +23,10 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        // Test cases
         System.out.println(startsWith("Hello World", "Hello", false)); // true
         System.out.println(startsWith("Hello World", "hello", true));  // true
         System.out.println(startsWith("Hello World", "World", false)); // false
-        System.out.println(startsWith(null, null, false));             // true
-        System.out.println(startsWith(null, "Hello", false));         // false
+        System.out.println(startsWith(null, null, false));              // true
+        System.out.println(startsWith(null, "Hello", false));          // false
     }
 }

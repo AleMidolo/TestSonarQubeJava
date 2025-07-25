@@ -1,5 +1,5 @@
 public class ArrayUtils {
-    
+
     /** 
      * <p>Controlla se un array di double primitivi è vuoto o <code>null</code>.</p>
      * @param array  l'array da testare
@@ -11,13 +11,12 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        double[] array1 = null;
-        double[] array2 = {};
-        double[] array3 = {1.0, 2.0, 3.0};
+        double[] testArray1 = null;
+        double[] testArray2 = {};
+        double[] testArray3 = {1.0, 2.0, 3.0};
 
-        System.out.println(isEmpty(array1)); // true
-        System.out.println(isEmpty(array2)); // true
-        System.out.println(isEmpty(array3)); // false
+        System.out.println(isEmpty(testArray1)); // true
+        System.out.println(isEmpty(testArray2)); // true
+        System.out.println(isEmpty(testArray3)); // false
     }
 }

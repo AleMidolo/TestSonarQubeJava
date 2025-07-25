@@ -1,15 +1,15 @@
-class Bucket {
-    // Assuming Bucket has some properties and methods
-    private String data;
+public class Bucket {
+    // Assuming Bucket has some properties, for example:
+    private int value;
     private Bucket next;
 
-    public Bucket(String data) {
-        this.data = data;
+    public Bucket(int value) {
+        this.value = value;
         this.next = null;
     }
 
-    public String getData() {
-        return data;
+    public int getValue() {
+        return value;
     }
 
     public Bucket getNext() {
@@ -21,14 +21,14 @@ class Bucket {
     }
 }
 
-class BucketList {
+public class BucketList {
     private Bucket head;
 
     public BucketList() {
         this.head = null;
     }
 
-    /**
+    /** 
      * Inserisce questo bucket nella struttura dati prima del {@code bucket}.
      * @param bucket il bucket, che sarà il successivo a questo bucket.
      */
@@ -37,10 +37,10 @@ class BucketList {
             return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket("New Bucket"); // Create a new bucket to insert
+        Bucket newBucket = new Bucket(0); // Create a new bucket with a default value
         if (head == bucket) {
             newBucket.setNext(head);
-            head = newBucket; // Insert at the head
+            head = newBucket;
             return;
         }
 
@@ -51,9 +51,7 @@ class BucketList {
 
         if (current != null) {
             newBucket.setNext(bucket);
-            current.setNext(newBucket); // Insert before the specified bucket
+            current.setNext(newBucket);
         }
     }
-
-    // Additional methods for the BucketList can be added here
 }

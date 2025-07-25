@@ -5,7 +5,7 @@ public class ParameterSeparatorChecker {
      */
     private static boolean isParameterSeparator(final char c) {
         // Define a set of characters that are considered as parameter separators
-        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '(' || c == ')';
+        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t' || c == '\r';
     }
 
     public static void main(String[] args) {

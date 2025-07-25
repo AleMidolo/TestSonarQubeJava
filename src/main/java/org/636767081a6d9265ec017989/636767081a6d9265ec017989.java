@@ -24,7 +24,7 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        Boolean[] booleanArray = {true, false, null, true};
+        Boolean[] booleanArray = {true, false, true, null};
         try {
             boolean[] result = toPrimitive(booleanArray);
         } catch (NullPointerException e) {

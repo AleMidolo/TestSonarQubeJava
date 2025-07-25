@@ -14,9 +14,9 @@ public class Queue<T> {
     }
 
     public Queue() {
-        front = null;
-        rear = null;
-        size = 0;
+        this.front = null;
+        this.rear = null;
+        this.size = 0;
     }
 
     /**

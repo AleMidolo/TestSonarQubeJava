@@ -11,10 +11,9 @@ public class LongComparator {
     }
 
     public static void main(String[] args) {
-        long value1 = 10L;
-        long value2 = 20L;
-        System.out.println(compareSigned(value1, value2)); // Output: -1
-        System.out.println(compareSigned(value2, value1)); // Output: 1
-        System.out.println(compareSigned(value1, value1)); // Output: 0
+        // Test the compareSigned method
+        System.out.println(compareSigned(5L, 10L)); // Output: -1
+        System.out.println(compareSigned(10L, 5L)); // Output: 1
+        System.out.println(compareSigned(10L, 10L)); // Output: 0
     }
 }

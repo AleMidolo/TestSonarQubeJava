@@ -1,6 +1,7 @@
-public class MetricsCache {
+import java.util.Objects;
 
-    // Assuming METRICS is a class that holds some data
+public class MetricsHandler {
+
     private METRICS existingData;
 
     /** 
@@ -9,31 +10,35 @@ public class MetricsCache {
      */
     @Override 
     public void accept(final METRICS data) {
-        if (existingData == null) {
-            existingData = data;
-        } else {
-            // Assuming METRICS has a method to merge data
-            existingData.merge(data);
+        if (data != null) {
+            if (existingData == null) {
+                existingData = data;
+            } else {
+                mergeMetrics(existingData, data);
+            }
         }
     }
 
-    // Getter for existingData if needed
-    public METRICS getExistingData() {
-        return existingData;
-    }
-}
-
-// Assuming a METRICS class with a merge method
-class METRICS {
-    // Example fields
-    private int value;
-
-    public METRICS(int value) {
-        this.value = value;
+    private void mergeMetrics(METRICS existing, METRICS newData) {
+        // Implementa la logica di unione dei dati esistenti con i nuovi dati
+        // Ad esempio, sommare i valori o aggiornare i conteggi
+        // existing.setValue(existing.getValue() + newData.getValue());
     }
 
-    public void merge(METRICS other) {
-        // Example merge logic
-        this.value += other.value;
+    // Classe METRICS di esempio
+    public static class METRICS {
+        private int value;
+
+        public METRICS(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
     }
 }

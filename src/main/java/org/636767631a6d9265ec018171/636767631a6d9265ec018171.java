@@ -5,19 +5,12 @@ class ListNodeImpl<E> {
 
     ListNodeImpl(E value) {
         this.value = value;
-        this.next = null;
-        this.prev = null;
     }
 }
 
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
-
-    public LinkedList() {
-        this.head = null;
-        this.tail = null;
-    }
 
     /**
      * 从列表中移除非空的 {@code node}。
@@ -30,21 +23,23 @@ public class LinkedList<E> {
         ListNodeImpl<E> prevNode = node.prev;
         ListNodeImpl<E> nextNode = node.next;
 
-        if (prevNode != null) {
-            prevNode.next = nextNode;
-        } else {
+        if (prevNode == null) {
+            // Node is the head
             head = nextNode;
-        }
-
-        if (nextNode != null) {
-            nextNode.prev = prevNode;
         } else {
-            tail = prevNode;
+            prevNode.next = nextNode;
+            node.prev = null;
         }
 
-        node.prev = null;
-        node.next = null;
+        if (nextNode == null) {
+            // Node is the tail
+            tail = prevNode;
+        } else {
+            nextNode.prev = prevNode;
+            node.next = null;
+        }
 
+        node.value = null; // Help GC
         return true;
     }
 }

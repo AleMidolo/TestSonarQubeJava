@@ -1,38 +1,43 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DotUnescaper {
 
-    /**
-     * 反转义字符串 DOT 标识符。
-     * @param input 输入字符串
-     * @return 反转义后的输出
-     */
+    private static final Map<String, String> ESCAPE_SEQUENCES = new HashMap<>();
+
+    static {
+        ESCAPE_SEQUENCES.put("\\\"", "\"");
+        ESCAPE_SEQUENCES.put("\\n", "\n");
+        ESCAPE_SEQUENCES.put("\\r", "\r");
+        ESCAPE_SEQUENCES.put("\\t", "\t");
+        ESCAPE_SEQUENCES.put("\\\\", "\\");
+    }
+
     private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
 
-        // 定义需要反转义的字符
-        String[][] escapeSequences = {
-            {"\\\"", "\""},
-            {"\\n", "\n"},
-            {"\\r", "\r"},
-            {"\\t", "\t"},
-            {"\\\\", "\\"}
-        };
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int i = 0;
 
-        // 逐个替换反转义字符
-        for (String[] escape : escapeSequences) {
-            input = input.replace(escape[0], escape[1]);
+        while (i < length) {
+            char currentChar = input.charAt(i);
+
+            if (currentChar == '\\' && i + 1 < length) {
+                String escapeSequence = input.substring(i, i + 2);
+                if (ESCAPE_SEQUENCES.containsKey(escapeSequence)) {
+                    result.append(ESCAPE_SEQUENCES.get(escapeSequence));
+                    i += 2;
+                    continue;
+                }
+            }
+
+            result.append(currentChar);
+            i++;
         }
 
-        return input;
-    }
-
-    public static void main(String[] args) {
-        DotUnescaper unescaper = new DotUnescaper();
-        String input = "This\\nis\\ta\\\"test\\\"";
-        System.out.println(unescaper.unescapeId(input));
+        return result.toString();
     }
 }

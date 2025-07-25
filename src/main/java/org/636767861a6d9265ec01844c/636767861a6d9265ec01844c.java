@@ -9,9 +9,12 @@ public class Logger {
         this.appenders = new ArrayList<>();
     }
 
+    public void addAppender(Appender appender) {
+        this.appenders.add(appender);
+    }
+
     /**
      * 从附加器列表中移除指定名称的附加器。
-     * @param name 要移除的附加器的名称
      */
     public void removeAppender(String name) {
         Iterator<Appender> iterator = appenders.iterator();
@@ -24,8 +27,8 @@ public class Logger {
         }
     }
 
-    // 假设 Appender 是一个包含 getName() 方法的类
-    private static class Appender {
+    // Assuming Appender class has a getName() method
+    public static class Appender {
         private String name;
 
         public Appender(String name) {

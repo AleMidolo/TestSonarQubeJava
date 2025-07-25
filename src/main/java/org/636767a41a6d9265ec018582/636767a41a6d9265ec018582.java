@@ -5,6 +5,7 @@ import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.BinaryEncoder;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 
@@ -18,7 +19,7 @@ public class DelimitedMessageWriter {
         int messageSize = serializedMessage.length;
         writeVarint(out, messageSize);
 
-        // Write the serialized message to the output stream
+        // Write the serialized message
         out.write(serializedMessage);
 
         // Return the total size of the message (including the length prefix)

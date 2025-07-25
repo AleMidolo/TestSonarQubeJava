@@ -2,7 +2,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnumerationToStringArray {
+public class EnumerationUtils {
 
     /**
      * 将给定的枚举值复制到字符串数组中。枚举值必须仅包含字符串元素。

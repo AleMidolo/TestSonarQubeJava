@@ -27,8 +27,23 @@ public class ConverterLookup {
         converterMap.put(clazz, converter);
     }
 
-    // Example Converter interface
-    public interface Converter {
-        Object convert(Object input);
+    public static void main(String[] args) {
+        ConverterLookup lookup = new ConverterLookup();
+        // Example usage
+        lookup.registerConverter(String.class, new StringConverter());
+        Converter converter = lookup.lookup(String.class);
+        if (converter != null) {
+            System.out.println("Converter found for String class.");
+        } else {
+            System.out.println("No converter found for String class.");
+        }
     }
+}
+
+interface Converter {
+    // Converter interface methods
+}
+
+class StringConverter implements Converter {
+    // Implementation of StringConverter
 }

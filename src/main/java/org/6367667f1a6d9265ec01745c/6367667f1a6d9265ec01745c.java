@@ -33,10 +33,12 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        addToClassPath(classPath, "path/to/your/directory");
+        String directoryPath = "path/to/your/directory";
+        addToClassPath(classPath, directoryPath);
 
+        // 打印添加的URL
         for (URL url : classPath) {
-            System.out.println("Added to classpath: " + url);
+            System.out.println(url);
         }
     }
 }

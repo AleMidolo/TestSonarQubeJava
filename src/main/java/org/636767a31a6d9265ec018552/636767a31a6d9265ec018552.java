@@ -22,7 +22,7 @@ public class StreamReader {
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Failed to read the expected number of bytes");
+            throw new IOException("Expected " + length + " bytes, but only read " + bytesRead);
         }
         return new String(bytes, StandardCharsets.UTF_8);
     }

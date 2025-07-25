@@ -15,6 +15,6 @@ public class CharUtils {
         System.out.println(isAsciiAlphaUpper('3'));  // false
         System.out.println(isAsciiAlphaUpper('-'));  // false
         System.out.println(isAsciiAlphaUpper('\n')); // false
-        System.out.println(isAsciiAlphaUpper('©')); // false
+        System.out.println(isAsciiAlphaUpper('&'));  // false
     }
 }

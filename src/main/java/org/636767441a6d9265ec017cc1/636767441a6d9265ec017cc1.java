@@ -10,7 +10,8 @@ class TreeNode<T> {
     }
 }
 
-public class BinaryTree<T> {
+public class TreeRotation<T> {
+
     /**
      * 执行右旋转操作。
      * @param node 要旋转的节点

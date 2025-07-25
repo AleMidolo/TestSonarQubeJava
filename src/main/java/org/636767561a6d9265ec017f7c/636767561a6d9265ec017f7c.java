@@ -2,7 +2,6 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
-import org.jgrapht.graph.SimpleGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,37 +15,34 @@ import java.util.Set;
  */
 protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        return new DefaultGraphPath<>(graph, new ArrayList<>(), 0);
+        throw new IllegalArgumentException("Tour cannot be empty");
     }
 
-    // 将边集合转换为顶点列表
+    List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
-    E firstEdge = tour.iterator().next();
+
+    // Start with the first edge
+    E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
-    V currentVertex = startVertex;
+    V endVertex = graph.getEdgeTarget(firstEdge);
 
-    vertexList.add(currentVertex);
+    vertexList.add(startVertex);
+    vertexList.add(endVertex);
 
-    for (E edge : tour) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
+    // Iterate through the remaining edges to build the path
+    for (int i = 1; i < edgeList.size(); i++) {
+        E currentEdge = edgeList.get(i);
+        V source = graph.getEdgeSource(currentEdge);
+        V target = graph.getEdgeTarget(currentEdge);
 
-        if (source.equals(currentVertex)) {
+        if (source.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(target);
-            currentVertex = target;
-        } else if (target.equals(currentVertex)) {
+        } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
-            currentVertex = source;
         } else {
-            throw new IllegalArgumentException("The tour is not a valid path in the graph.");
+            throw new IllegalArgumentException("Tour edges are not connected");
         }
     }
 
-    // 计算路径权重
-    double weight = 0;
-    for (E edge : tour) {
-        weight += graph.getEdgeWeight(edge);
-    }
-
-    return new DefaultGraphPath<>(graph, vertexList, weight);
+    return new DefaultGraphPath<>(graph, vertexList, edgeList);
 }

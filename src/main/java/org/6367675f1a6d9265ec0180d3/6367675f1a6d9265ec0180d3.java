@@ -11,33 +11,15 @@ public class GraphUtils {
      * @return 从图到图的映射
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        return new IsomorphicGraphMapping<>(graph, graph);
-    }
-
-    // Inner class to represent the isomorphic graph mapping
-    public static class IsomorphicGraphMapping<V, E> {
-        private final Graph<V, E> sourceGraph;
-        private final Graph<V, E> targetGraph;
-
-        public IsomorphicGraphMapping(Graph<V, E> sourceGraph, Graph<V, E> targetGraph) {
-            this.sourceGraph = sourceGraph;
-            this.targetGraph = targetGraph;
+        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
+        for (V vertex : graph.vertexSet()) {
+            mapping.addVertexMapping(vertex, vertex);
         }
-
-        public V getVertexMapping(V vertex) {
-            return vertex;
+        for (E edge : graph.edgeSet()) {
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            mapping.addEdgeMapping(edge, edge, source, target);
         }
-
-        public E getEdgeMapping(E edge) {
-            return edge;
-        }
-
-        public Graph<V, E> getSourceGraph() {
-            return sourceGraph;
-        }
-
-        public Graph<V, E> getTargetGraph() {
-            return targetGraph;
-        }
+        return mapping;
     }
 }

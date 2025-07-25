@@ -6,20 +6,16 @@ public class CharUtils {
      * @return 指定字符的 Character 对象
      */
     public static Character toCharacterObject(final char ch) {
-        // ASCII 7-bit characters are in the range 0-127
+        // 对于 ASCII 7 位字符（0-127），使用 Character 的缓存
         if (ch <= 127) {
-            // Use the cached Character objects for ASCII characters
             return Character.valueOf(ch);
-        } else {
-            // For non-ASCII characters, create a new Character object
-            return new Character(ch);
         }
+        // 对于其他字符，直接返回新的 Character 对象
+        return new Character(ch);
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(CharUtils.toCharacterObject(' ') == ' ');  // true
-        System.out.println(CharUtils.toCharacterObject('A') == 'A');  // true
-        System.out.println(CharUtils.toCharacterObject('€') == '€');   // true (non-ASCII character)
+        System.out.println(toCharacterObject(' '));  // 输出:  
+        System.out.println(toCharacterObject('A'));  // 输出: A
     }
 }

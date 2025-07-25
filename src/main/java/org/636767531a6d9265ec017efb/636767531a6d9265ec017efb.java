@@ -22,24 +22,32 @@ public class BucketList {
     }
 
     public void insertBefore(Bucket bucket) {
-        if (head == null || bucket == null) {
-            return;
-        }
-
-        if (head == bucket) {
-            Bucket newBucket = new Bucket(head);
-            head = newBucket;
+        if (head == null) {
+            head = bucket;
             return;
         }
 
         Bucket current = head;
-        while (current.getNext() != null && current.getNext() != bucket) {
+        Bucket previous = null;
+
+        while (current != null && current != bucket) {
+            previous = current;
             current = current.getNext();
         }
 
-        if (current.getNext() == bucket) {
-            Bucket newBucket = new Bucket(bucket);
-            current.setNext(newBucket);
+        if (current == null) {
+            // Bucket not found in the list
+            return;
+        }
+
+        if (previous == null) {
+            // Inserting before the head
+            bucket.setNext(head);
+            head = bucket;
+        } else {
+            // Inserting in the middle or end
+            previous.setNext(bucket);
+            bucket.setNext(current);
         }
     }
 }

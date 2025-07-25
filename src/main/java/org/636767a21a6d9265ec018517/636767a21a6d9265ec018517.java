@@ -1,9 +1,9 @@
 import java.io.ByteArrayOutputStream;
 
-public final class BufferToByteArray {
+public final class Buffer {
     private ByteArrayOutputStream buffer;
 
-    public BufferToByteArray() {
+    public Buffer() {
         this.buffer = new ByteArrayOutputStream();
     }
 
@@ -16,7 +16,7 @@ public final class BufferToByteArray {
     }
 
     public static void main(String[] args) {
-        BufferToByteArray buffer = new BufferToByteArray();
+        Buffer buffer = new Buffer();
         buffer.write(new byte[]{1, 2, 3, 4, 5});
         byte[] result = buffer.toByteArray();
         for (byte b : result) {

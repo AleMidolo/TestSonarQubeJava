@@ -11,22 +11,24 @@ public class ClassPathUtil {
      */
     private static File[] classPath() {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        List<File> classPathEntries = new ArrayList<>();
+        List<File> classPathFiles = new ArrayList<>();
 
         if (classLoader instanceof URLClassLoader) {
             URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
             for (URL url : urlClassLoader.getURLs()) {
-                classPathEntries.add(new File(url.getFile()));
+                if ("file".equals(url.getProtocol())) {
+                    classPathFiles.add(new File(url.getFile()));
+                }
             }
         } else {
             String classPath = System.getProperty("java.class.path");
             String[] paths = classPath.split(System.getProperty("path.separator"));
             for (String path : paths) {
-                classPathEntries.add(new File(path));
+                classPathFiles.add(new File(path));
             }
         }
 
-        return classPathEntries.toArray(new File[0]);
+        return classPathFiles.toArray(new File[0]);
     }
 
     public static void main(String[] args) {

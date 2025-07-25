@@ -11,14 +11,18 @@ public class FileReverser {
      * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
+        if (files == null) {
+            throw new IllegalArgumentException("Files array cannot be null");
         }
 
         List<byte[]> fileContents = new ArrayList<>();
 
         // 读取所有文件内容
         for (InputStream file : files) {
+            if (file == null) {
+                throw new IllegalArgumentException("File input stream cannot be null");
+            }
+
             try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
                 int nRead;
                 byte[] data = new byte[1024];
@@ -28,17 +32,17 @@ public class FileReverser {
                 buffer.flush();
                 fileContents.add(buffer.toByteArray());
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Failed to read file content", e);
             }
         }
 
         // 逆序文件内容
         Collections.reverse(fileContents);
 
-        // 处理逆序后的文件内容（例如写入到输出流或其他操作）
+        // 处理逆序后的文件内容（例如写入到某个地方）
         for (byte[] content : fileContents) {
             // 这里可以根据需要处理逆序后的文件内容
-            // 例如：System.out.write(content);
+            // 例如写入到输出流或进行其他操作
         }
     }
 }

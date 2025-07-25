@@ -28,8 +28,9 @@ public class URIDecoder {
         return pathSegments;
     }
 
+    // Assuming PathSegmentImpl is a class that represents a path segment
     public static class PathSegmentImpl {
-        private final String segment;
+        private String segment;
 
         public PathSegmentImpl(String segment) {
             this.segment = segment;
@@ -42,6 +43,15 @@ public class URIDecoder {
         @Override
         public String toString() {
             return segment;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        URI uri = URI.create("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
         }
     }
 }

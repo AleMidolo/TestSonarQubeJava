@@ -16,5 +16,6 @@ private String parseToken(final char[] terminators) {
         }
         token.append(currentChar);
     }
+
     return token.toString();
 }

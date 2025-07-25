@@ -3,5 +3,5 @@
  * @return 构建的字符串
  */
 public String toString() {
-    return this.toString();
+    return this.builder.toString();
 }

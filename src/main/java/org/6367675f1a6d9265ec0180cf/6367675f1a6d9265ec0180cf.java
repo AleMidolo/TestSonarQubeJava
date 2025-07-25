@@ -14,12 +14,10 @@ public class GraphUtils {
         for (V u : vertices) {
             for (V v : vertices) {
                 if (!u.equals(v) && !graph.containsEdge(u, v)) {
-                    // 如果存在一对顶点之间没有边，则不是团
-                    return false;
+                    return false; // 如果存在一对顶点之间没有边，则不是团
                 }
             }
         }
-        // 所有顶点对之间都有边，是团
-        return true;
+        return true; // 所有顶点对之间都有边，是团
     }
 }

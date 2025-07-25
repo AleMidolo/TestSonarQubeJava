@@ -13,8 +13,7 @@ public class LogBuffer {
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
-            // 如果缓冲区已满，静默丢弃事件
-            // 这里可以选择记录日志或进行其他处理
+            // 如果缓冲区已满，事件被静默丢弃
         }
     }
 

@@ -28,10 +28,9 @@ public class ContentBuilder {
 
         // If mentions found, process them
         if (!mentions.isEmpty()) {
-            // Replace @mentions with HTML/markdown formatting
             for (String mention : mentions) {
-                content = content.replace("@" + mention, 
-                    String.format("<mention>%s</mention>", mention));
+                // Replace @mention with formatted version
+                content = content.replace("@" + mention, "<@" + mention + ">");
             }
         }
 

@@ -39,7 +39,7 @@ public class ByteVector {
         return this;
     }
 
-    // Helper methods for testing
+    // Helper methods for testing/verification
     public byte[] getData() {
         return Arrays.copyOf(data, length);
     }

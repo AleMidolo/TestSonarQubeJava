@@ -18,7 +18,7 @@ public class StringUtils {
         }
         final int strOffset = str.length() - suffix.length();
         
-        return ignoreCase
+        return ignoreCase 
             ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
             : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
     }

@@ -33,6 +33,7 @@ public class ByteOutputStream extends OutputStream {
     
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > buffer.length) {
+            // Grow buffer by doubling size
             int newCapacity = Math.max(buffer.length * 2, minCapacity);
             byte[] newBuffer = new byte[newCapacity];
             System.arraycopy(buffer, 0, newBuffer, 0, pos);

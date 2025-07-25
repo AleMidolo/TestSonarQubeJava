@@ -14,7 +14,7 @@ public class Graph {
      * @return set of vertices with positive degree
      */
     public Set<Integer> getVerticesWithPositiveDegree() {
-        Set<Integer> verticesWithEdges = new HashSet<>();
+        Set<Integer> verticesWithDegree = new HashSet<>();
         
         // Iterate through all edges in adjacency list
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
@@ -23,12 +23,12 @@ public class Graph {
             
             // If vertex has any neighbors, add it to result set
             if (!neighbors.isEmpty()) {
-                verticesWithEdges.add(vertex);
+                verticesWithDegree.add(vertex);
                 // Also add all neighbors since they must have positive degree
-                verticesWithEdges.addAll(neighbors);
+                verticesWithDegree.addAll(neighbors);
             }
         }
         
-        return verticesWithEdges;
+        return verticesWithDegree;
     }
 }

@@ -1,6 +1,7 @@
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class HeaderParser {
+    
     /**
      * Skips bytes until the end of the current line.
      * @param headerPart The headers, which are being parsed.
@@ -11,7 +12,7 @@ public class HeaderParser {
         int pos = end;
         
         // Search for \r\n sequence
-        while (pos + 1 < headerPart.length) {
+        while (pos < headerPart.length - 1) {
             if (headerPart[pos] == '\r' && headerPart[pos + 1] == '\n') {
                 return pos;
             }

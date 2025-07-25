@@ -24,8 +24,8 @@ public class SubstringMatcher {
 
     public static void main(String[] args) {
         // Example usage
-        String str = "Hello, World!";
-        String substring = "World";
+        String str = "Hello, world!";
+        String substring = "world";
         int index = 7;
 
         boolean result = substringMatch(str, index, substring);

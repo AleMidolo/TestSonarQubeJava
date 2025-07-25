@@ -1,9 +1,9 @@
 import java.util.Stack;
 
-public class StackPopper {
+public class AbstractTypeStack {
     private Stack<Object> stack;
 
-    public StackPopper() {
+    public AbstractTypeStack() {
         stack = new Stack<>();
     }
 
@@ -28,12 +28,12 @@ public class StackPopper {
     }
 
     public static void main(String[] args) {
-        StackPopper sp = new StackPopper();
-        sp.push("Element 1");
-        sp.push("Element 2");
-        sp.push("Element 3");
-        
-        sp.pop(2); // Popping 2 elements
-        sp.pop(2); // Attempting to pop more elements than available
+        AbstractTypeStack abstractTypeStack = new AbstractTypeStack();
+        abstractTypeStack.push("Element 1");
+        abstractTypeStack.push("Element 2");
+        abstractTypeStack.push("Element 3");
+
+        abstractTypeStack.pop(2); // Popping 2 elements
+        abstractTypeStack.pop(2); // Attempting to pop more elements than available
     }
 }

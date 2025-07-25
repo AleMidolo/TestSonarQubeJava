@@ -21,14 +21,16 @@ public class GraphUtils<V, E> {
         V previousVertex = null;
 
         for (E edge : tour) {
-            V sourceVertex = graph.getEdgeSource(edge);
-            V targetVertex = graph.getEdgeTarget(edge);
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
 
             if (previousVertex == null) {
-                vertexList.add(sourceVertex);
+                vertexList.add(source);
+            } else if (!previousVertex.equals(source)) {
+                vertexList.add(source);
             }
-            vertexList.add(targetVertex);
-            previousVertex = targetVertex;
+            vertexList.add(target);
+            previousVertex = target;
         }
 
         return new GraphPath<V, E>() {
@@ -38,33 +40,28 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<E> getEdgeList() {
-                return new ArrayList<>(tour);
+            public List<V> getVertexList() {
+                return vertexList;
             }
 
             @Override
-            public V getStartVertex() {
-                return vertexList.get(0);
+            public E getStartEdge() {
+                return graph.getEdge(vertexList.get(0), vertexList.get(1));
             }
 
             @Override
-            public V getEndVertex() {
-                return vertexList.get(vertexList.size() - 1);
+            public E getEndEdge() {
+                return graph.getEdge(vertexList.get(vertexList.size() - 2), vertexList.get(vertexList.size() - 1));
             }
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be added if needed
+                return 0; // Weight calculation can be implemented if needed
             }
 
             @Override
             public int getLength() {
                 return vertexList.size() - 1;
-            }
-
-            @Override
-            public List<V> getVertexList() {
-                return vertexList;
             }
         };
     }

@@ -20,6 +20,9 @@ public class SuffixSumCalculator {
             suffixSum.add(0, totalSum); // Add to the front to maintain order
         }
 
-        return new Pair<>(suffixSum, totalSum);
+        // Calculate the total sum of bounds
+        long boundsSum = bounds.stream().mapToLong(Integer::longValue).sum();
+
+        return new Pair<>(suffixSum, boundsSum);
     }
 }

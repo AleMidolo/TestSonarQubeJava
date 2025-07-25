@@ -1,5 +1,5 @@
 public class LogarithmCalculator {
-
+    
     /** 
      * फ़्लोर($\log_2 (n)$) $+ 1$ की गणना करता है
      */

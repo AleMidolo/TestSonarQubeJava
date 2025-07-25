@@ -29,12 +29,7 @@ public class MappingDiffer {
         return new Mappings();
     }
 
-    // Assuming a simple Field class for demonstration purposes
-    public static class Field {
-        // Field properties
-    }
-
-    // Assuming a simple Mappings class for demonstration purposes
+    // Assuming a simple Mappings class for demonstration
     public static class Mappings {
         private Map<String, Field> fields = new HashMap<>();
 
@@ -45,5 +40,10 @@ public class MappingDiffer {
         public void addField(String name, Field field) {
             fields.put(name, field);
         }
+    }
+
+    // Assuming a simple Field class for demonstration
+    public static class Field {
+        // Field properties can be defined here
     }
 }

@@ -1,5 +1,6 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 
 public class GenericTypeResolver {
 
@@ -22,9 +23,20 @@ public class GenericTypeResolver {
         Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+            resolvedArguments[i] = resolveType(actualTypeArguments[i]);
         }
 
         return resolvedArguments;
+    }
+
+    private static Class<?> resolveType(Type type) {
+        if (type instanceof Class) {
+            return (Class<?>) type;
+        } else if (type instanceof ParameterizedType) {
+            return (Class<?>) ((ParameterizedType) type).getRawType();
+        } else if (type instanceof WildcardType) {
+            return resolveType(((WildcardType) type).getUpperBounds()[0]);
+        }
+        return null;
     }
 }

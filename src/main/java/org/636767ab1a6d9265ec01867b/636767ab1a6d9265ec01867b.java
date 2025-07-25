@@ -9,15 +9,15 @@ public class UTF8Writer {
         }
 
         byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(bytes);
+        lb.writeBytes(bytes);
         return lb;
     }
 
     public static class LinkedBuffer {
-        private LinkedList<byte[]> buffers = new LinkedList<>();
+        private final LinkedList<byte[]> buffers = new LinkedList<>();
 
-        public void write(byte[] data) {
-            buffers.add(data);
+        public void writeBytes(byte[] bytes) {
+            buffers.add(bytes);
         }
 
         // Additional methods for LinkedBuffer can be added here

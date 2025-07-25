@@ -10,14 +10,16 @@ public class ShardingKeyChecker {
         boolean isShardingKeyContinuous = false; // This should be replaced with actual logic
 
         if (!isShardingKeyContinuous) {
-            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं: " + modelName);
+            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं");
         }
+        
+        // Additional logic can be added here
     }
-
+    
     public static void main(String[] args) {
         ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("ExampleModel");
+            checker.check("exampleModel");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

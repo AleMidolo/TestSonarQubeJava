@@ -22,9 +22,8 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(CharUtils.toCharacterObject(' ')); // Output: ' '
-        System.out.println(CharUtils.toCharacterObject('A')); // Output: 'A'
-        System.out.println(CharUtils.toCharacterObject('Z')); // Output: 'Z'
-        System.out.println(CharUtils.toCharacterObject((char) 128)); // Output: ''
+        System.out.println(toCharacterObject(' ')); // Output: ' '
+        System.out.println(toCharacterObject('A')); // Output: 'A'
+        System.out.println(toCharacterObject('ñ')); // Output: 'ñ'
     }
 }

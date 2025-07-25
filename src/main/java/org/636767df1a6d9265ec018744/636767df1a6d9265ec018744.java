@@ -12,17 +12,17 @@ public class TimeRangeBuilder {
         List<TimeRange> timeRanges = new ArrayList<>();
         
         while (start < end) {
-            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, rangeEnd));
-            start = rangeEnd;
+            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, nextEnd));
+            start = nextEnd;
         }
         
         return timeRanges;
     }
 
     public static class TimeRange {
-        private final long start;
-        private final long end;
+        private long start;
+        private long end;
 
         public TimeRange(long start, long end) {
             this.start = start;

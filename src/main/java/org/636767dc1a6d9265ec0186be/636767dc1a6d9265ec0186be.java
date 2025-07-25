@@ -11,26 +11,22 @@ public class TimeBucketCompressor {
         int day = (int) (timeBucket % 100);
 
         // Calculate the total number of days from the start of the year
-        int totalDays = (month - 1) * 30 + day; // Simplified calculation for days in month
+        int totalDays = (month - 1) * 30 + day; // Simplified calculation, not accounting for actual month lengths
 
-        // Calculate the new day bucket based on dayStep
+        // Calculate the new day based on the dayStep
         int newTotalDays = (totalDays / dayStep) * dayStep;
 
-        // Calculate the new day and month
+        // Calculate the new month and day
+        int newMonth = newTotalDays / 30 + 1; // Simplified calculation
         int newDay = newTotalDays % 30;
-        int newMonth = newTotalDays / 30 + 1;
 
-        // Adjust for overflow in days and months
+        // Adjust for month overflow
         if (newDay == 0) {
             newDay = 30;
             newMonth--;
         }
-        if (newMonth > 12) {
-            newMonth = 12;
-            newDay = 30; // Simplified, should handle actual month lengths
-        }
 
-        // Construct the new time bucket
+        // Construct the new timeBucket
         long newTimeBucket = year * 10000 + newMonth * 100 + newDay;
         return newTimeBucket;
     }

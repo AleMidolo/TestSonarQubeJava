@@ -11,30 +11,28 @@ public class GraphGenerator<V, E> {
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+        // Implementation of generating a complete bipartite graph
         // Assuming resultMap contains two sets of vertices for the bipartite graph
-        // For simplicity, we will assume the keys are the vertex identifiers and the values are the vertices themselves
-        
-        // Create two sets of vertices
-        V[] setA = (V[]) new Object[resultMap.size() / 2];
-        V[] setB = (V[]) new Object[resultMap.size() / 2];
-        
-        int indexA = 0;
-        int indexB = 0;
-        
-        // Split the vertices into two sets
+        // For example, keys "A", "B" for set U and "C", "D" for set V
+
+        // Example implementation
+        V[] setU = (V[]) new Object[resultMap.size() / 2];
+        V[] setV = (V[]) new Object[resultMap.size() / 2];
+        int indexU = 0, indexV = 0;
+
         for (Map.Entry<String, V> entry : resultMap.entrySet()) {
-            if (indexA < setA.length) {
-                setA[indexA++] = entry.getValue();
+            if (indexU < setU.length) {
+                setU[indexU++] = entry.getValue();
             } else {
-                setB[indexB++] = entry.getValue();
+                setV[indexV++] = entry.getValue();
             }
         }
-        
-        // Add edges between every vertex in setA and every vertex in setB
-        for (V vertexA : setA) {
-            for (V vertexB : setB) {
-                // Assuming a method addEdge exists in the Graph class
-                target.addEdge(vertexA, vertexB);
+
+        // Add edges between every vertex in set U and every vertex in set V
+        for (V u : setU) {
+            for (V v : setV) {
+                // Assuming addEdge is a method in Graph class to add an edge
+                target.addEdge(u, v);
             }
         }
     }

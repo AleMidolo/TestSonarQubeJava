@@ -17,15 +17,15 @@ public class MeteorLookup {
         if (r == null) {
             return null;
         }
-        
+
         // Example logic to find a Meteor instance
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
             // Here you would typically look up the Meteor instance from a database or a cache
-            // For demonstration, we will return a new instance
+            // For demonstration, we return a new instance if the meteorId is found
             return new Meteor(); // Replace with actual lookup logic
         }
-        
+
         return null; // Return null if no Meteor instance is found
     }
 }

@@ -19,7 +19,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             int upperBound = key.hashCode() + 1;
             upperBounds.add(upperBound);
         }
-
+        
         return upperBounds;
     }
 }

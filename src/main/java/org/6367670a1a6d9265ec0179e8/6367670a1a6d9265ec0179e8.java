@@ -12,4 +12,14 @@ public class ArrayUtil {
     public static Boolean[] nullToEmpty(final Boolean[] array) {
         return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
+
+    public static void main(String[] args) {
+        Boolean[] result1 = nullToEmpty(null);
+        Boolean[] result2 = nullToEmpty(new Boolean[]{});
+        Boolean[] result3 = nullToEmpty(new Boolean[]{true, false});
+
+        System.out.println("Result 1: " + (result1.length == 0)); // Should print true
+        System.out.println("Result 2: " + (result2.length == 0)); // Should print true
+        System.out.println("Result 3: " + (result3.length > 0));  // Should print true
+    }
 }

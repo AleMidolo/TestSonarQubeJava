@@ -1,22 +1,7 @@
 import java.util.Objects;
 
 class Node {
-    // Assuming Node class has some properties
-    private boolean isVirtual;
-    private String name;
-
-    public Node(String name, boolean isVirtual) {
-        this.name = name;
-        this.isVirtual = isVirtual;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    public String getName() {
-        return name;
-    }
+    // Assume Node class has necessary properties and methods
 }
 
 class Edge {
@@ -28,10 +13,7 @@ class Edge {
         this.to = to;
     }
 
-    @Override
-    public String toString() {
-        return "Edge from " + from.getName() + " to " + to.getName();
-    }
+    // Getters and other methods
 }
 
 class Graph {
@@ -48,24 +30,14 @@ class Graph {
      * @return 从当前节点到下一个节点的边
      */
     public Edge edgeToNext() {
-        Node realCurrentNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node realNextNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        Node realCurrentNode = getRealNode(currentNode);
+        Node realNextNode = getRealNode(nextNode);
         return new Edge(realCurrentNode, realNextNode);
     }
 
-    private Node getRealNode(Node virtualNode) {
-        // Logic to get the real node corresponding to the virtual node
-        // For demonstration, we will just return a new Node with "Real" prefix
-        return new Node("Real " + virtualNode.getName(), false);
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Node current = new Node("A", false);
-        Node next = new Node("B", true);
-        Graph graph = new Graph(current, next);
-        Edge edge = graph.edgeToNext();
-        System.out.println(edge);
+    private Node getRealNode(Node node) {
+        // Logic to determine if the node is virtual and return the real node
+        // For simplicity, we assume the node is already real in this example
+        return Objects.requireNonNull(node, "Node cannot be null");
     }
 }

@@ -1,6 +1,9 @@
 public class UtfReader {
-    
-    private byte[] classFileBuffer; // Assuming this is initialized elsewhere
+    private byte[] classFileBuffer;
+
+    public UtfReader(byte[] classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
+    }
 
     /**
      * 读取 {@link #classFileBuffer} 中的 CONSTANT_Utf8 常量池条目。
@@ -9,27 +12,24 @@ public class UtfReader {
      * @return 与指定的 CONSTANT_Utf8 条目对应的字符串。
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer is structured correctly and contains the necessary data
-        int offset = getUtf8Offset(constantPoolEntryIndex);
-        int length = getUtf8Length(constantPoolEntryIndex);
+        // 假设 classFileBuffer 中的常量池条目格式为：
+        // 1. 先是一个 u2 的长度字段
+        // 2. 然后是长度字段指定的字节数的 UTF-8 字节
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
         
-        // Read the UTF-8 bytes and convert them to characters
+        // 读取 UTF-8 字节并转换为字符
+        int charCount = 0;
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer[offset + i] & 0xFF);
+            charBuffer[charCount++] = (char) classFileBuffer[offset + 2 + i];
         }
         
-        return new String(charBuffer, 0, length);
+        return new String(charBuffer, 0, charCount);
     }
 
-    private int getUtf8Offset(int index) {
-        // Logic to retrieve the offset of the UTF-8 entry from the constant pool
-        // This is a placeholder implementation
-        return index; // Replace with actual logic
-    }
-
-    private int getUtf8Length(int index) {
-        // Logic to retrieve the length of the UTF-8 entry from the constant pool
-        // This is a placeholder implementation
-        return 5; // Replace with actual logic
+    private int getConstantPoolEntryOffset(int index) {
+        // 这里需要实现获取常量池条目的偏移量的逻辑
+        // 这只是一个占位符，具体实现取决于 classFileBuffer 的结构
+        return index; // 需要根据实际常量池结构进行调整
     }
 }

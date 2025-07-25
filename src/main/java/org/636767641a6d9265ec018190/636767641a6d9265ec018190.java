@@ -16,7 +16,7 @@ public class BucketRelocator {
         // 获取标签为 0 的桶
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
         
-        // 将标签为 minLabel 的桶中的顶点移动到标签为 0 的桶中
+        // 将 minLabel 桶中的顶点移动到标签为 0 的桶中
         for (Integer vertex : minLabelBucket) {
             zeroLabelBucket.add(vertex);
             labels.set(vertex, 0); // 更新标签为 0

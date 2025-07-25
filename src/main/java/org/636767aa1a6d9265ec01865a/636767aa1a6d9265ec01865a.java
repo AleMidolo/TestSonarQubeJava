@@ -1,7 +1,7 @@
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class LinkedBufferWriter {
+public class BufferWriter {
 
     /**
      * 将 {@link LinkedBuffer} 的内容写入 {@link DataOutput}。

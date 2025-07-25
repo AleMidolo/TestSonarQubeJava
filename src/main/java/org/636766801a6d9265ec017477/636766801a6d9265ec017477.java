@@ -2,28 +2,28 @@ import java.io.InputStream;
 import java.util.Stack;
 
 public class FileAdder {
-
+    
     /** 
      * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
         Stack<InputStream> stack = new Stack<>();
         
-        // Push all files onto the stack
+        // 将所有文件压入栈中
         for (InputStream file : files) {
             stack.push(file);
         }
         
-        // Pop files from the stack to add them in reverse order
+        // 逆序处理文件
         while (!stack.isEmpty()) {
             InputStream file = stack.pop();
-            // Add the file (implementation depends on the context)
-            addFile(file);
+            // 这里可以添加处理文件的逻辑
+            processFile(file);
         }
     }
-
-    private void addFile(InputStream file) {
-        // Implementation for adding the file goes here
-        // For example, reading from the InputStream and processing it
+    
+    private void processFile(InputStream file) {
+        // 处理文件的逻辑
+        // 例如，读取文件内容、保存到数据库等
     }
 }

@@ -2,11 +2,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private final Map<String, Integer> constantNameAndTypeMap;
+    private final Map<String, Integer> constantPool;
     private int nextIndex;
 
     public ConstantPool() {
-        this.constantNameAndTypeMap = new HashMap<>();
+        this.constantPool = new HashMap<>();
         this.nextIndex = 0;
     }
 
@@ -18,10 +18,10 @@ public class ConstantPool {
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (constantNameAndTypeMap.containsKey(key)) {
-            return constantNameAndTypeMap.get(key);
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
         } else {
-            constantNameAndTypeMap.put(key, nextIndex);
+            constantPool.put(key, nextIndex);
             return nextIndex++;
         }
     }
@@ -30,7 +30,10 @@ public class ConstantPool {
         ConstantPool pool = new ConstantPool();
         int index1 = pool.addConstantNameAndType("myField", "I");
         int index2 = pool.addConstantNameAndType("myField", "I");
-        System.out.println("Index of first addition: " + index1);
-        System.out.println("Index of second addition (should be the same): " + index2);
+        int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
+
+        System.out.println("Index of myField: " + index1); // Should print 0
+        System.out.println("Index of myField (duplicate): " + index2); // Should print 0
+        System.out.println("Index of myMethod: " + index3); // Should print 1
     }
 }

@@ -20,7 +20,7 @@ class Bucket {
      */
     void insertBefore(Bucket bucket) {
         if (bucket == null) {
-            throw new IllegalArgumentException("The bucket cannot be null.");
+            throw new IllegalArgumentException("Bucket cannot be null");
         }
         
         // Create a new bucket to insert
@@ -29,19 +29,13 @@ class Bucket {
         // Set the new bucket's next to the current bucket
         newBucket.setNext(bucket);
         
-        // Find the previous bucket to the current bucket
-        // Assuming we have a way to access the previous bucket
-        // This is a placeholder for the actual logic to find the previous bucket
-        Bucket previousBucket = findPreviousBucket(bucket);
-        
-        if (previousBucket != null) {
-            previousBucket.setNext(newBucket);
+        // Find the previous bucket to insert before the given bucket
+        Bucket current = this;
+        while (current.getNext() != null && current.getNext() != bucket) {
+            current = current.getNext();
         }
-    }
-
-    private Bucket findPreviousBucket(Bucket bucket) {
-        // Placeholder for logic to find the previous bucket
-        // This would depend on how the buckets are structured
-        return null; // This should return the actual previous bucket
+        
+        // Insert the new bucket before the given bucket
+        current.setNext(newBucket);
     }
 }

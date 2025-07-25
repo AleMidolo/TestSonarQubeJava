@@ -10,11 +10,4 @@ public class StringUtil {
         }
         return StringUtils.capitalize(name);
     }
-
-    public static void main(String[] args) {
-        System.out.println(capitalize("hello")); // 输出 "Hello"
-        System.out.println(capitalize("world")); // 输出 "World"
-        System.out.println(capitalize(""));      // 输出 ""
-        System.out.println(capitalize(null));    // 输出 null
-    }
 }

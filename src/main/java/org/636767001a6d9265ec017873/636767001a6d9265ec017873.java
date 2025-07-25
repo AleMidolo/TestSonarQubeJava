@@ -19,8 +19,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(reverse(null));   // 输出: null
-        System.out.println(reverse(""));     // 输出: 
-        System.out.println(reverse("bat"));  // 输出: tab
+        System.out.println(reverse(null));  // null
+        System.out.println(reverse(""));    // ""
+        System.out.println(reverse("bat")); // "tab"
     }
 }

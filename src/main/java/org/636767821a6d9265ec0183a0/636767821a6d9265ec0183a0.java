@@ -4,7 +4,6 @@ public class FileDeleter {
 
     /**
      * 如果指定的文件存在，则删除该文件
-     * @param fileName 要删除的文件名
      */
     protected static void deleteFile(String fileName) {
         File file = new File(fileName);

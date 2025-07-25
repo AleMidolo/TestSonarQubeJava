@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
-public final class UriMatcher {
+public final class URIMatcher {
 
     /**
      * 将URI与模式进行匹配。
@@ -23,7 +23,7 @@ public final class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher();
+        URIMatcher matcher = new URIMatcher();
         CharSequence uri = "https://example.com";
         MatchResult result = matcher.match(uri);
 

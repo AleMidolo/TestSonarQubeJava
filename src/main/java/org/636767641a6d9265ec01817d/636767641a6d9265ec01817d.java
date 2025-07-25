@@ -35,7 +35,7 @@ public class BipartiteGraphGenerator<V, E> {
     }
 }
 
-// 假设的 Graph 接口
+// 假设 Graph 接口如下
 interface Graph<V, E> {
     V addVertex();
     E addEdge(V source, V target);

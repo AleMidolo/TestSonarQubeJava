@@ -15,16 +15,18 @@ public class FileHandler {
             return;
         }
         
-        // 将数组转换为列表
+        // 将文件数组转换为列表
         List<File> tempList = new ArrayList<>();
         for (File file : files) {
-            tempList.add(file);
+            if (file != null) {
+                tempList.add(file);
+            }
         }
         
         // 反转列表
         Collections.reverse(tempList);
         
-        // 添加到成员变量中
+        // 将反转后的文件添加到成员变量中
         fileList.addAll(tempList);
     }
 }

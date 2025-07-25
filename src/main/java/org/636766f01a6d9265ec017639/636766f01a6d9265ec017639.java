@@ -18,17 +18,17 @@ public class ArrayToList {
     }
 
     public static void main(String[] args) {
-        // 测试示例
+        // 示例用法
         String[] array = {"a", "b", "c"};
         List<String> list = asList(array);
-        System.out.println(list); // 输出: [a, b, c]
+        System.out.println(list);  // 输出: [a, b, c]
 
         String[] emptyArray = {};
         List<String> emptyList = asList(emptyArray);
-        System.out.println(emptyList); // 输出: []
+        System.out.println(emptyList);  // 输出: []
 
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
-        System.out.println(nullList); // 输出: []
+        System.out.println(nullList);  // 输出: []
     }
 }

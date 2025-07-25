@@ -1,10 +1,12 @@
 import java.util.*;
 
-public class Graph {
-    private boolean[] visited;
+public class GraphTraversal {
+    private Set<Integer> visited;
+    private Set<Integer> vertices;
 
-    public Graph(int vertexCount) {
-        visited = new boolean[vertexCount];
+    public GraphTraversal(Set<Integer> vertices) {
+        this.vertices = vertices;
+        this.visited = new HashSet<>();
     }
 
     /** 
@@ -13,8 +15,8 @@ public class Graph {
      */
     @Override
     public boolean hasNext() {
-        for (boolean v : visited) {
-            if (!v) {
+        for (Integer vertex : vertices) {
+            if (!visited.contains(vertex)) {
                 return true;
             }
         }

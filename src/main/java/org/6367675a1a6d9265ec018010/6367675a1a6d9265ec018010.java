@@ -1,19 +1,15 @@
 import java.util.*;
 
 class Bucket {
-    // Assuming this is part of a larger data structure like a LinkedList or similar
-    private Bucket next;
-    private Bucket prev;
+    private List<Bucket> bucketList;
+
+    public Bucket(List<Bucket> bucketList) {
+        this.bucketList = bucketList;
+    }
 
     public void removeSelf() {
-        if (prev != null) {
-            prev.next = next;
+        if (bucketList != null) {
+            bucketList.remove(this);
         }
-        if (next != null) {
-            next.prev = prev;
-        }
-        // Optionally, you can nullify the references to help with garbage collection
-        next = null;
-        prev = null;
     }
 }

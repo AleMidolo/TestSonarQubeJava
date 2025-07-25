@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class NDC {
+public class DiagnosticContext {
     private static Stack<String> contextStack = new Stack<>();
 
     /**
@@ -8,10 +8,16 @@ public class NDC {
      * @return String 最内层的诊断上下文。
      */
     public static String peek() {
-        if (!contextStack.isEmpty()) {
-            return contextStack.peek();
-        } else {
+        if (contextStack.isEmpty()) {
             return "";
         }
+        return contextStack.peek();
+    }
+
+    // 示例用法
+    public static void main(String[] args) {
+        contextStack.push("Context1");
+        contextStack.push("Context2");
+        System.out.println(peek()); // 输出: Context2
     }
 }

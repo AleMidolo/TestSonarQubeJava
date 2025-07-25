@@ -20,42 +20,18 @@ public class TypeResolver {
         for (Type typeArg : actualTypeArguments) {
             if (typeArg instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArg);
+            } else if (typeArg instanceof ParameterizedType) {
+                Type rawType = ((ParameterizedType) typeArg).getRawType();
+                if (rawType instanceof Class) {
+                    resolvedTypes.add((Class<?>) rawType);
+                } else {
+                    return null;
+                }
             } else {
-                // Handle other cases like TypeVariable, WildcardType, etc.
-                // For simplicity, we return null if any type argument is not a Class.
                 return null;
             }
         }
 
         return resolvedTypes.toArray(new Class<?>[0]);
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Type genericType = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return new Type[] { String.class, Integer.class };
-            }
-
-            @Override
-            public Type getRawType() {
-                return List.class;
-            }
-
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
-        if (resolvedArgs != null) {
-            for (Class<?> arg : resolvedArgs) {
-                System.out.println(arg.getSimpleName());
-            }
-        } else {
-            System.out.println("Unable to resolve arguments.");
-        }
     }
 }

@@ -19,10 +19,9 @@ public class ObjectUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(ObjectUtils.toString(null));         // Output: ""
-        System.out.println(ObjectUtils.toString(""));          // Output: ""
-        System.out.println(ObjectUtils.toString("bat"));        // Output: "bat"
-        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // Output: "true"
+        System.out.println(ObjectUtils.toString(null));         // 输出: ""
+        System.out.println(ObjectUtils.toString(""));          // 输出: ""
+        System.out.println(ObjectUtils.toString("bat"));       // 输出: "bat"
+        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // 输出: "true"
     }
 }

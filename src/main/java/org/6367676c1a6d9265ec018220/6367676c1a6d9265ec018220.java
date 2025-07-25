@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class FileUtil {
+public class FileUtils {
 
     /**
      * 从给定路径中去除文件名扩展名，例如 "mypath/myfile.txt" -> "mypath/myfile"。
@@ -11,15 +11,16 @@ public class FileUtil {
         if (path == null) {
             return null;
         }
-
+        
         int lastDotIndex = path.lastIndexOf('.');
         int lastSeparatorIndex = path.lastIndexOf('/');
-
-        // 如果路径中没有点或者点在最后一个分隔符之前，说明没有扩展名
+        
+        // 如果路径中没有点，或者点在路径分隔符之前（即不是文件名的一部分），则返回null
         if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
             return null;
         }
-
+        
+        // 返回去除扩展名后的路径
         return path.substring(0, lastDotIndex);
     }
 

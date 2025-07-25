@@ -8,33 +8,39 @@ public class ShardKeyChecker {
      * @throws IllegalStateException 如果分片键索引不连续
      */
     private void check(String modelName) throws IllegalStateException {
-        // 假设分片键的格式为 "shard_<index>"
-        Pattern pattern = Pattern.compile("shard_(\\d+)");
+        // 假设分片键的格式为 "modelName_shardIndex"
+        Pattern pattern = Pattern.compile("(.+)_(\\d+)");
         Matcher matcher = pattern.matcher(modelName);
 
-        if (!matcher.find()) {
+        if (!matcher.matches()) {
             throw new IllegalStateException("Invalid model name format: " + modelName);
         }
 
-        int currentIndex = Integer.parseInt(matcher.group(1));
-        int expectedIndex = getExpectedShardIndex(modelName);
+        String baseName = matcher.group(1);
+        int shardIndex = Integer.parseInt(matcher.group(2));
 
-        if (currentIndex != expectedIndex) {
-            throw new IllegalStateException("Shard key index is not continuous. Expected: " + expectedIndex + ", Found: " + currentIndex);
+        // 假设我们有一个方法来获取所有分片索引
+        int[] shardIndices = getAllShardIndices(baseName);
+
+        // 检查分片索引是否连续
+        for (int i = 0; i < shardIndices.length; i++) {
+            if (shardIndices[i] != i) {
+                throw new IllegalStateException("Shard indices are not continuous for model: " + baseName);
+            }
         }
     }
 
-    private int getExpectedShardIndex(String modelName) {
-        // 这里假设有一个方法来获取预期的分片键索引
-        // 例如，从数据库或其他存储中获取最后一个分片键索引并加1
-        // 这里只是一个示例，实际实现可能不同
-        return 0; // 替换为实际逻辑
+    // 假设这个方法返回所有分片索引
+    private int[] getAllShardIndices(String baseName) {
+        // 这里应该是从数据库或其他存储中获取所有分片索引的逻辑
+        // 为了示例，我们返回一个假设的数组
+        return new int[]{0, 1, 2, 3}; // 假设有4个连续的分片
     }
 
     public static void main(String[] args) {
         ShardKeyChecker checker = new ShardKeyChecker();
         try {
-            checker.check("shard_1");
+            checker.check("exampleModel_2");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

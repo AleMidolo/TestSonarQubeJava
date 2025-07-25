@@ -1,4 +1,4 @@
-public class HexDigitConverter {
+public class HexConverter {
     /**
      * @param b 一个 ASCII 编码的字符，范围为 0-9、a-f、A-F
      * @return 字符的字节值，范围为 0-16。
@@ -16,9 +16,9 @@ public class HexDigitConverter {
     }
 
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(convertHexDigit((byte) '5')); // 输出: 5
-        System.out.println(convertHexDigit((byte) 'a')); // 输出: 10
-        System.out.println(convertHexDigit((byte) 'F')); // 输出: 15
+        // Test cases
+        System.out.println(convertHexDigit((byte) '5')); // 5
+        System.out.println(convertHexDigit((byte) 'a')); // 10
+        System.out.println(convertHexDigit((byte) 'F')); // 15
     }
 }

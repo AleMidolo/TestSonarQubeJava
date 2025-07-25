@@ -14,15 +14,22 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        ArrayList<String> list = new ArrayList<>();
+        // 过滤掉 null 元素
+        ArrayList<String> filteredList = new ArrayList<>();
         Iterator<?> iterator = collection.iterator();
         while (iterator.hasNext()) {
             Object element = iterator.next();
             if (element != null) {
-                list.add(element.toString());
+                filteredList.add(element.toString());
             }
         }
 
-        return list.toArray(new String[0]);
+        // 转换为数组
+        String[] result = new String[filteredList.size()];
+        for (int i = 0; i < filteredList.size(); i++) {
+            result[i] = filteredList.get(i);
+        }
+
+        return result;
     }
 }

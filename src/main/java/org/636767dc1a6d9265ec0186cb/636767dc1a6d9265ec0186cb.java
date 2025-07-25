@@ -14,11 +14,12 @@ public class ConfigInitializer {
 
         // 检查路径是否存在
         if (Files.exists(path)) {
-            System.out.println("分发路径存在: " + path.toAbsolutePath());
+            System.out.println("分发路径已存在: " + path.toAbsolutePath());
         } else {
-            System.out.println("分发路径不存在，创建路径: " + path.toAbsolutePath());
+            System.out.println("分发路径不存在，正在创建: " + path.toAbsolutePath());
             try {
                 Files.createDirectories(path);
+                System.out.println("分发路径创建成功: " + path.toAbsolutePath());
             } catch (Exception e) {
                 System.err.println("无法创建分发路径: " + e.getMessage());
             }

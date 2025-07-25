@@ -8,6 +8,10 @@ public class TimeRangeSplitter {
 
     /**
      * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
+     *
+     * @param start 开始时间（毫秒）
+     * @param end   结束时间（毫秒）
+     * @return 拆分后的时间范围列表
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
@@ -21,7 +25,7 @@ public class TimeRangeSplitter {
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Assuming TimeRange is a simple class representing a time range
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -46,5 +50,13 @@ public class TimeRangeSplitter {
                     ", end=" + end +
                     '}';
         }
+    }
+
+    public static void main(String[] args) {
+        TimeRangeSplitter splitter = new TimeRangeSplitter();
+        long start = System.currentTimeMillis() - 2 * FETCH_DATA_DURATION;
+        long end = System.currentTimeMillis();
+        List<TimeRange> timeRanges = splitter.buildTimeRanges(start, end);
+        timeRanges.forEach(System.out::println);
     }
 }

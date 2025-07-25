@@ -6,14 +6,15 @@ public class FileUtils {
      * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
      */
     public static int indexOfExtension(String filename) {
-        if (filename == null) {
+        if (filename == null || filename.isEmpty()) {
             return -1;
         }
 
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
-        if (lastSeparatorIndex > extensionIndex) {
+        // 如果最后一个点号在最后一个分隔符之前，或者没有点号，则返回-1
+        if (extensionIndex <= lastSeparatorIndex) {
             return -1;
         }
 
@@ -22,11 +23,11 @@ public class FileUtils {
 
     /**
      * 返回最后一个路径分隔符的索引。该方法可以处理Unix或Windows格式的文件。
-     * @param filename 要查找最后一个路径分隔符的文件名，如果为空则返回-1
-     * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
+     * @param filename 要查找最后一个路径分隔符的文件名
+     * @return 最后一个路径分隔符的索引，如果没有这样的字符则返回-1
      */
     private static int indexOfLastSeparator(String filename) {
-        if (filename == null) {
+        if (filename == null || filename.isEmpty()) {
             return -1;
         }
 
@@ -40,7 +41,7 @@ public class FileUtils {
         String filename1 = "path/to/file.txt";
         String filename2 = "path\\to\\file.txt";
         String filename3 = "path/to/file";
-        String filename4 = null;
+        String filename4 = "";
 
         System.out.println(indexOfExtension(filename1)); // 输出: 12
         System.out.println(indexOfExtension(filename2)); // 输出: 12

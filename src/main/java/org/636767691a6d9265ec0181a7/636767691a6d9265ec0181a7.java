@@ -1,4 +1,5 @@
 public class StringUtils {
+
     /**
      * 从给定的字符串中修剪所有出现的指定前导字符。
      * @param str 要检查的字符串

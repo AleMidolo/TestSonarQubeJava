@@ -21,7 +21,7 @@ public class SuffixSumCalculator {
         // 计算后缀和
         for (int i = bounds.size() - 1; i >= 0; i--) {
             currentSum += bounds.get(i);
-            suffixSums.add(0, currentSum); // 添加到列表的开头以保持顺序
+            suffixSums.add(0, currentSum); // 在列表开头插入当前后缀和
             totalSum += bounds.get(i);
         }
 

@@ -21,5 +21,6 @@ public class ArrayUtils {
         System.out.println(isSameLength(array1, array2)); // true
         System.out.println(isSameLength(array1, array3)); // false
         System.out.println(isSameLength(array3, array4)); // false
+        System.out.println(isSameLength(array3, array3)); // true
     }
 }

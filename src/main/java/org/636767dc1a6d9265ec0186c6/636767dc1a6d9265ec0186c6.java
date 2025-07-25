@@ -1,5 +1,4 @@
 import java.util.Properties;
-import java.util.Set;
 
 public class FieldChecker {
     private Properties storedProperties;
@@ -12,8 +11,7 @@ public class FieldChecker {
      * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
-        Set<String> fieldNames = fields.getFieldNames();
-        for (String fieldName : fieldNames) {
+        for (String fieldName : fields.getFieldNames()) {
             if (!storedProperties.containsKey(fieldName)) {
                 return false;
             }
@@ -23,13 +21,13 @@ public class FieldChecker {
 }
 
 class Fields {
-    private Set<String> fieldNames;
+    private String[] fieldNames;
 
-    public Fields(Set<String> fieldNames) {
+    public Fields(String[] fieldNames) {
         this.fieldNames = fieldNames;
     }
 
-    public Set<String> getFieldNames() {
+    public String[] getFieldNames() {
         return fieldNames;
     }
 }

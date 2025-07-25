@@ -1,10 +1,10 @@
 import java.util.Map;
 
-public class CustomMap<K, V> implements Map<K, V> {
+public class MyMap<K, V> implements Map<K, V> {
     // Assuming this class has a backing data structure, e.g., a HashMap
     private final Map<K, V> internalMap;
 
-    public CustomMap() {
+    public MyMap() {
         this.internalMap = new java.util.HashMap<>();
     }
 
@@ -13,5 +13,5 @@ public class CustomMap<K, V> implements Map<K, V> {
         return internalMap.containsKey(key);
     }
 
-    // Other methods of the Map interface would need to be implemented here
+    // Other Map interface methods would need to be implemented here
 }

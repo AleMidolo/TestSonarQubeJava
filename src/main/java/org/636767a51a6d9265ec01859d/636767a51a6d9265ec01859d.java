@@ -1,10 +1,10 @@
 import java.util.Arrays;
 
-public class ByteArrayComparator {
+public class ArrayComparator {
 
     private byte[] internalArray;
 
-    public ByteArrayComparator(byte[] internalArray) {
+    public ArrayComparator(byte[] internalArray) {
         this.internalArray = internalArray;
     }
 
@@ -27,12 +27,12 @@ public class ByteArrayComparator {
 
     public static void main(String[] args) {
         byte[] internalArray = {1, 2, 3, 4, 5};
-        ByteArrayComparator comparator = new ByteArrayComparator(internalArray);
+        ArrayComparator comparator = new ArrayComparator(internalArray);
 
         byte[] data = {0, 1, 2, 3, 4, 5, 6};
         int offset = 1;
         int len = 5;
 
-        System.out.println(comparator.equals(data, offset, len)); // Should print true
+        System.out.println(comparator.equals(data, offset, len)); // Output: true
     }
 }

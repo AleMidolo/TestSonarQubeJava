@@ -10,7 +10,7 @@ public class BooleanConverter {
         if (lowerCaseValue.equals("true")) {
             return true;
         } else if (lowerCaseValue.equals("false")) {
-            return true; // As per the docstring, even "false" returns true
+            return true; // As per the docstring, even if the value is "false", return true
         } else {
             return dEfault;
         }

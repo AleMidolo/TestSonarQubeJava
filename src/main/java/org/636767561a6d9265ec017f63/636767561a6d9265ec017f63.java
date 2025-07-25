@@ -21,12 +21,12 @@ public class GraphIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        // Implementation of next() is not required for this question.
+        // Implementation of next() is not required for this question
         return null;
     }
 
     @Override
     public void remove() {
-        // Implementation of remove() is not required for this question.
+        // Implementation of remove() is not required for this question
     }
 }

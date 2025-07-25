@@ -22,7 +22,7 @@ public class StringArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] original = {"Hello", "WORLD", null, "Java"};
+        String[] original = {"Hello", "WORLD", "Java", null, "Programming"};
         String[] copied = copyStrings(original);
 
         System.out.println("Original: " + Arrays.toString(original));

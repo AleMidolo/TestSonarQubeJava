@@ -1,46 +1,71 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Assuming Node class has necessary properties and methods
-}
+public class OuterFaceCirculator {
+    private Node current;
 
-class OuterFaceCirculator {
-    private Node currentNode;
-
-    public OuterFaceCirculator(Node node) {
-        this.currentNode = node;
+    public OuterFaceCirculator(Node start) {
+        this.current = start;
     }
 
-    public Node getCurrentNode() {
-        return currentNode;
+    public Node getCurrent() {
+        return current;
     }
 
-    // Other methods for circulator functionality
-}
-
-public class GraphTraversal {
-
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        Node current = start;
-        OuterFaceCirculator circulator = new OuterFaceCirculator(current);
-
-        // Traverse the outer face in the specified direction
-        while (current != stop) {
-            if (predicate.test(current)) {
-                return new OuterFaceCirculator(current);
-            }
-
-            // Assuming getNextNode is a method that returns the next node in the traversal direction
-            current = getNextNode(current, dir);
+    public void next(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getNextClockwise();
+        } else {
+            current = current.getNextCounterClockwise();
         }
-
-        // If the stop node is reached without finding a node that satisfies the predicate
-        return new OuterFaceCirculator(stop);
     }
 
-    private Node getNextNode(Node node, int dir) {
-        // Implementation of getting the next node based on the direction
-        // This is a placeholder and should be implemented based on the actual graph structure
-        return null;
+    public void previous(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getPreviousClockwise();
+        } else {
+            current = current.getPreviousCounterClockwise();
+        }
+    }
+}
+
+public class Node {
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
+    private Node previousClockwise;
+    private Node previousCounterClockwise;
+
+    public Node getNextClockwise() {
+        return nextClockwise;
+    }
+
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
+    }
+
+    public Node getPreviousClockwise() {
+        return previousClockwise;
+    }
+
+    public Node getPreviousCounterClockwise() {
+        return previousCounterClockwise;
+    }
+
+    // Other methods and fields...
+}
+
+private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+
+    while (true) {
+        Node currentNode = circulator.getCurrent();
+        if (predicate.test(currentNode)) {
+            return circulator;
+        }
+        if (currentNode == stop) {
+            return circulator;
+        }
+        circulator.next(dir);
     }
 }

@@ -1,4 +1,5 @@
 public class StringUtils {
+
     /**
      * Returns {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.
      * @param str the String to check
@@ -21,7 +22,6 @@ public class StringUtils {
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
-        System.out.println(startsWithIgnoreCase(null, "hello")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO WORLD")); // false
     }
 }

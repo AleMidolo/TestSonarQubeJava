@@ -1,42 +1,42 @@
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 public class BeanMap {
     private Map<String, Object> properties;
 
-    public BeanMap(Map<String, Object> properties) {
-        this.properties = properties;
+    public BeanMap() {
+        // Initialize properties map
     }
 
     public void putAllWriteable(BeanMap map) {
+        if (map == null) {
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+        }
+
         try {
             PropertyDescriptor[] descriptors = map.getPropertyDescriptors();
             for (PropertyDescriptor descriptor : descriptors) {
                 if (descriptor.getWriteMethod() != null && descriptor.getReadMethod() != null) {
-                    Method readMethod = descriptor.getReadMethod();
-                    Object value = readMethod.invoke(map);
+                    Object value = descriptor.getReadMethod().invoke(map);
                     this.properties.put(descriptor.getName(), value);
                 }
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to copy properties from the provided BeanMap.", e);
         }
     }
 
     private PropertyDescriptor[] getPropertyDescriptors() {
-        // This method should return the PropertyDescriptor array for the BeanMap.
-        // Implementation depends on the specific BeanMap implementation.
-        // For simplicity, we assume it returns an array of PropertyDescriptor objects.
+        // Implement logic to get property descriptors
         return new PropertyDescriptor[0];
     }
 
-    public Object get(String propertyName) {
+    public Object getProperty(String propertyName) {
         return properties.get(propertyName);
     }
 
-    public void put(String propertyName, Object value) {
+    public void setProperty(String propertyName, Object value) {
         properties.put(propertyName, value);
     }
 }

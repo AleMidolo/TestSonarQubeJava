@@ -1,37 +1,32 @@
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 
-public class BroadcastFilterExample {
+/**
+ * Invoca el {@link BroadcastFilter}
+ * @param msg El mensaje que se desea filtrar.
+ * @return El resultado del filtrado, que puede ser un objeto modificado o null si no se aplica ningún filtro.
+ */
+protected Object filter(Object msg) {
+    if (msg instanceof Intent) {
+        Intent intent = (Intent) msg;
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Aquí se puede realizar cualquier operación con el intent recibido
+            }
+        };
 
-    protected Object filter(Object msg) {
-        // Assuming msg is an Intent or can be converted to one
-        if (msg instanceof Intent) {
-            Intent intent = (Intent) msg;
-            Context context = getContext(); // Assuming this method exists to get the context
-            BroadcastReceiver receiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Handle the broadcast here
-                }
-            };
+        // Simulando el filtrado del intent
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(intent.getAction());
 
-            // Register the receiver with a filter
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(intent.getAction());
-            context.registerReceiver(receiver, filter);
+        // Registrando el receptor con el filtro
+        Context context = null; // Deberías proporcionar un contexto válido aquí
+        context.registerReceiver(receiver, filter);
 
-            // Return the receiver or any other object as needed
-            return receiver;
-        } else {
-            // Handle the case where msg is not an Intent
-            return null;
-        }
+        // Devolviendo el intent filtrado (en este caso, no se modifica)
+        return intent;
     }
-
-    // Dummy method to simulate getting a context
-    private Context getContext() {
-        return null; // Replace with actual context retrieval logic
-    }
+    return null; // Si el mensaje no es un Intent, devuelve null
 }

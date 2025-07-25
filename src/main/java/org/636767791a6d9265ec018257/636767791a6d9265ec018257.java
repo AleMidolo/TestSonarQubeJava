@@ -1,4 +1,4 @@
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class LogTable {
@@ -10,7 +10,7 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Aquí puedes agregar la lógica para actualizar la tabla de registros
+                // Aquí se puede agregar la lógica para actualizar la tabla de registro
                 // Por ejemplo, agregar el LogRecord a un modelo de tabla
                 System.out.println("Mensaje de registro agregado: " + lr.getMessage());
             }

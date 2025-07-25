@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class FileAdder {
+public class FileHandler {
 
     /**
      * Agrega los archivos especificados en orden inverso.
@@ -14,12 +14,17 @@ public class FileAdder {
         }
 
         List<File> fileList = new ArrayList<>();
-        Collections.addAll(fileList, files);
+        for (File file : files) {
+            if (file != null) {
+                fileList.add(file);
+            }
+        }
+
         Collections.reverse(fileList);
 
         // Aquí puedes agregar la lógica para procesar los archivos en orden inverso
         for (File file : fileList) {
-            // Procesar cada archivo
+            // Procesar el archivo
             System.out.println("Procesando archivo: " + file.getName());
         }
     }
@@ -27,7 +32,7 @@ public class FileAdder {
     public static void main(String[] args) {
         // Ejemplo de uso
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        FileAdder fileAdder = new FileAdder();
-        fileAdder.addReverse(files);
+        FileHandler handler = new FileHandler();
+        handler.addReverse(files);
     }
 }

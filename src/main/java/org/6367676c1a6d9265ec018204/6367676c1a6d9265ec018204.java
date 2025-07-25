@@ -28,8 +28,8 @@ public class StringArrayConcatenator {
     public static void main(String[] args) {
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"c", "d", "e"};
-        String[] result = concatenateStringArrays(array1, array2);
 
+        String[] result = concatenateStringArrays(array1, array2);
         for (String element : result) {
             System.out.print(element + " ");
         }

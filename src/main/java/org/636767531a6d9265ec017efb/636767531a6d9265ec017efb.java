@@ -5,8 +5,20 @@ public class Bucket {
         if (bucket == null) {
             throw new IllegalArgumentException("Bucket cannot be null");
         }
-        Bucket prev = this.next;
+        Bucket prev = this.getPrevious();
+        if (prev != null) {
+            prev.next = this;
+        }
         this.next = bucket;
-        bucket.next = prev;
+    }
+
+    private Bucket getPrevious() {
+        // Assuming there is a way to get the previous bucket in the structure
+        // This is a placeholder implementation
+        return null;
+    }
+
+    public Bucket getNext() {
+        return next;
     }
 }

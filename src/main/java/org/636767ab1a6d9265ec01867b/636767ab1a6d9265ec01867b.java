@@ -8,27 +8,44 @@ public class UTF8Writer {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
 
-        // Convert the CharSequence to a byte array using UTF-8 encoding
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
 
-        // Write the bytes to the LinkedBuffer
-        for (byte b : utf8Bytes) {
-            lb = session.write(b, lb);
+        while (buffer.hasRemaining()) {
+            if (lb.remaining() == 0) {
+                lb = session.nextBuffer(lb);
+            }
+            lb.put(buffer.get());
         }
 
         return lb;
     }
 
-    // Assuming LinkedBuffer and WriteSession are defined elsewhere
     public static class LinkedBuffer {
-        // Placeholder for LinkedBuffer implementation
+        private byte[] buffer;
+        private int position;
+
+        public LinkedBuffer(int capacity) {
+            this.buffer = new byte[capacity];
+            this.position = 0;
+        }
+
+        public void put(byte b) {
+            if (position >= buffer.length) {
+                throw new IllegalStateException("Buffer overflow");
+            }
+            buffer[position++] = b;
+        }
+
+        public int remaining() {
+            return buffer.length - position;
+        }
     }
 
     public static class WriteSession {
-        // Placeholder for WriteSession implementation
-        public LinkedBuffer write(byte b, LinkedBuffer lb) {
-            // Placeholder for write implementation
-            return lb;
+        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
+            // Implement logic to get the next buffer in the chain
+            return new LinkedBuffer(currentBuffer.buffer.length);
         }
     }
 }

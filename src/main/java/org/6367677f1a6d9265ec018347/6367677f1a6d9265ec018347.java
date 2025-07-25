@@ -9,6 +9,8 @@ public class TelnetServer {
 
     /**
      * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
+     * 
+     * @param message El mensaje a enviar a los clientes.
      */
     public synchronized void send(final String message) {
         for (Socket client : clients) {
@@ -17,7 +19,7 @@ public class TelnetServer {
                 outputStream.write(message.getBytes());
                 outputStream.flush();
             } catch (IOException e) {
-                // Handle the exception, e.g., remove the client from the list
+                // Manejar la excepción, por ejemplo, eliminando el cliente de la lista
                 clients.remove(client);
                 e.printStackTrace();
             }
@@ -25,14 +27,18 @@ public class TelnetServer {
     }
 
     /**
-     * Adds a new client to the list of connected clients.
+     * Agrega un nuevo cliente a la lista de clientes conectados.
+     * 
+     * @param client El socket del cliente que se conecta.
      */
     public synchronized void addClient(Socket client) {
         clients.add(client);
     }
 
     /**
-     * Removes a client from the list of connected clients.
+     * Elimina un cliente de la lista de clientes conectados.
+     * 
+     * @param client El socket del cliente que se desconecta.
      */
     public synchronized void removeClient(Socket client) {
         clients.remove(client);

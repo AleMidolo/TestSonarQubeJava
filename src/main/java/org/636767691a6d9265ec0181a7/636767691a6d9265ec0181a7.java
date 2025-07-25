@@ -1,4 +1,10 @@
 public class Main {
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        String result = trimLeadingCharacter("###Hello World!", '#');
+        System.out.println(result);  // Output: "Hello World!"
+    }
+
     /**
      * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
      * @param str la cadena a verificar
@@ -9,18 +15,12 @@ public class Main {
         if (str == null || str.isEmpty()) {
             return str;
         }
-        
+
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-        
-        return str.substring(index);
-    }
 
-    public static void main(String[] args) {
-        String testStr = "###HelloWorld";
-        char leadingChar = '#';
-        System.out.println(trimLeadingCharacter(testStr, leadingChar)); // Output: HelloWorld
+        return str.substring(index);
     }
 }

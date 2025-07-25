@@ -16,32 +16,17 @@ public class AppenderManager {
         return appenders.contains(appender);
     }
 
-    public void addAppender(Appender appender) {
-        appenders.add(appender);
+    public void attachAppender(Appender appender) {
+        if (!appenders.contains(appender)) {
+            appenders.add(appender);
+        }
     }
 
-    public void removeAppender(Appender appender) {
+    public void detachAppender(Appender appender) {
         appenders.remove(appender);
     }
 }
 
 class Appender {
-    private String name;
-
-    public Appender(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Appender appender = (Appender) obj;
-        return name.equals(appender.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
+    // Implementation of Appender class
 }

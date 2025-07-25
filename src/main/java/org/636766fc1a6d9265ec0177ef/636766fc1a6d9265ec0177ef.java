@@ -11,6 +11,7 @@ public class ArrayUtils {
         if (array == null) {
             return new String[0];
         }
+        
         return Arrays.stream(array)
                      .filter(obj -> obj != null)
                      .map(Object::toString)

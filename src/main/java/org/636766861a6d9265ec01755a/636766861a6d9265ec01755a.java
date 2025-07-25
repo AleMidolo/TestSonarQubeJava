@@ -6,7 +6,7 @@ public class UriMatcher {
 
     public UriMatcher(String template) {
         // Convert the template into a regex pattern
-        String regex = template.replace("{", "(?<").replace("}", ">[^/]+)");
+        String regex = template.replaceAll("\\{[^}]+\\}", "([^/]+)"); // Replace placeholders with regex groups
         this.pattern = Pattern.compile(regex);
     }
 
@@ -30,17 +30,20 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String getGroup(String name) {
-            return matcher.group(name);
+        public String getGroup(int index) {
+            return matcher.group(index);
+        }
+
+        public int groupCount() {
+            return matcher.groupCount();
         }
     }
 
     public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("/users/{userId}/posts/{postId}");
-        MatchResult result = uriMatcher.match("/users/123/posts/456");
+        UriMatcher uriMatcher = new UriMatcher("/users/{id}/profile");
+        MatchResult result = uriMatcher.match("/users/123/profile");
         if (result != null) {
-            System.out.println("Matched userId: " + result.getGroup("userId"));
-            System.out.println("Matched postId: " + result.getGroup("postId"));
+            System.out.println("Matched! Group 1: " + result.getGroup(1)); // Should print "123"
         } else {
             System.out.println("No match found.");
         }

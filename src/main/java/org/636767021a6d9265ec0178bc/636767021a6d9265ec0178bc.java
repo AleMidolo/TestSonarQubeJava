@@ -1,4 +1,4 @@
-public class StringSearch {
+public class StringIndexFinder {
     
     /** 
      * Trova il primo indice all'interno di una Stringa, gestendo <code>null</code>. Questo metodo utilizza {@link String#indexOf(String)}. 

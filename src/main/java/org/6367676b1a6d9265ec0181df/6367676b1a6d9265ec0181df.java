@@ -1,5 +1,5 @@
-public class StringUtils {
-
+public class StringUtil {
+    
     /** 
      * Restituisce {@code true} se la stringa fornita inizia con il prefisso specificato, ignorando le maiuscole, {@code false} altrimenti.
      * @param str la String da controllare

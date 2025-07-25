@@ -1,4 +1,4 @@
-public class FilePathUtils {
+public class FilePathUtil {
 
     /** 
      * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -&gt; "mypath/myfile".

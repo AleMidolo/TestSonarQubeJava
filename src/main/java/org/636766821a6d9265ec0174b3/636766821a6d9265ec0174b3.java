@@ -3,11 +3,7 @@ import java.util.List;
 
 public class BroadcastFilterExample {
 
-    private List<Object> filters;
-
-    public BroadcastFilterExample() {
-        filters = new ArrayList<>();
-    }
+    private List<Object> filters = new ArrayList<>();
 
     /** 
      * Invoca il {@link BroadcastFilter}
@@ -16,26 +12,29 @@ public class BroadcastFilterExample {
      */
     protected Object filter(Object msg) {
         for (Object filter : filters) {
-            // Assuming filter is a functional interface that takes an Object and returns an Object
-            msg = applyFilter(filter, msg);
+            // Assuming filter is a functional interface with a method apply
+            if (filter instanceof Filter) {
+                msg = ((Filter) filter).apply(msg);
+            }
         }
         return msg;
     }
 
-    private Object applyFilter(Object filter, Object msg) {
-        // Placeholder for filter logic
-        // In a real implementation, this would invoke the filter's logic
-        return msg; // Return the message unmodified for this example
+    public void addFilter(Filter filter) {
+        filters.add(filter);
     }
 
-    public void addFilter(Object filter) {
-        filters.add(filter);
+    public interface Filter {
+        Object apply(Object msg);
     }
 
     public static void main(String[] args) {
         BroadcastFilterExample example = new BroadcastFilterExample();
-        example.addFilter(new Object()); // Add a filter for demonstration
-        Object result = example.filter("Test Message");
-        System.out.println(result);
+        
+        // Example filter that converts message to uppercase
+        example.addFilter(msg -> ((String) msg).toUpperCase());
+        
+        Object result = example.filter("hello world");
+        System.out.println(result); // Output: HELLO WORLD
     }
 }

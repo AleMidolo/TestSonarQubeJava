@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-interface IConsumer {
-    void consume(String message);
-}
-
 class Channels {
     private List<IConsumer> consumers;
 
@@ -19,6 +15,10 @@ class Channels {
     public List<IConsumer> getConsumers() {
         return consumers;
     }
+}
+
+interface IConsumer {
+    void consume(String message);
 }
 
 public class ChannelManager {
@@ -41,9 +41,6 @@ public class ChannelManager {
         };
 
         manager.addNewTarget(channels, consumer);
-        // Test the consumer
-        for (IConsumer c : channels.getConsumers()) {
-            c.consume("Hello, World!");
-        }
+        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
     }
 }

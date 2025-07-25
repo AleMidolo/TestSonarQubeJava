@@ -28,18 +28,10 @@ public class OctetDecoder {
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
                 int b4 = bb.get(i + 3) & 0xFF;
-                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F));
-                // Handle code points outside the Basic Multilingual Plane (BMP)
-                if (codePoint > 0xFFFF) {
-                    codePoint -= 0x10000;
-                    sb.append((char) (0xD800 | (codePoint >> 10)));
-                    sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
-                } else {
-                    sb.append((char) codePoint);
-                }
+                sb.append((char) (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F)));
                 i += 4;
             } else {
-                // Invalid byte sequence, break
+                // Invalid UTF-8 byte sequence, handle error if necessary
                 break;
             }
         }

@@ -1,9 +1,11 @@
 public class ShortArrayConverter {
 
     /**
-     * <p>Converte un array di short primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>short</code>
-     * @return un array di <code>Short</code>, <code>null</code> se l'array di input è nullo
+     * Converte un array di short primitivi in oggetti.
+     * Questo metodo restituisce null per un array di input null.
+     *
+     * @param array un array di short
+     * @return un array di Short, null se l'array di input è nullo
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

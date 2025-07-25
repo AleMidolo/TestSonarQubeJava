@@ -16,7 +16,7 @@ public class TypeResolver {
     }
 
     public static class Unknown {
-        // Classe di default per rappresentare un tipo sconosciuto
+        // Classe di segnaposto per rappresentare un tipo sconosciuto
     }
 
     public static void main(String[] args) {

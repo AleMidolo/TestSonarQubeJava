@@ -1,6 +1,6 @@
 import java.nio.charset.StandardCharsets;
 
-public class UTF8Writer {
+public class Utf8Writer {
 
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
         if (str == null) {
@@ -8,55 +8,35 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        int length = utf8Bytes.length;
-
-        // Ensure the LinkedBuffer has enough space
-        if (lb.remaining() < length) {
-            lb = LinkedBuffer.ensureCapacity(lb, length);
-        }
-
-        // Write the UTF-8 bytes to the LinkedBuffer
         for (byte b : utf8Bytes) {
-            lb.put(b);
+            lb = ensureCapacity(lb, session);
+            lb.buffer[lb.tail++] = b;
         }
 
         return lb;
     }
 
-    // Assuming LinkedBuffer and WriteSession are defined elsewhere
+    private static LinkedBuffer ensureCapacity(LinkedBuffer lb, WriteSession session) {
+        if (lb.tail >= lb.buffer.length) {
+            lb = session.nextBuffer(lb);
+        }
+        return lb;
+    }
+
     public static class LinkedBuffer {
-        private byte[] buffer;
-        private int position;
+        public byte[] buffer;
+        public int tail;
 
-        public LinkedBuffer(int capacity) {
-            this.buffer = new byte[capacity];
-            this.position = 0;
-        }
-
-        public void put(byte b) {
-            if (position >= buffer.length) {
-                throw new IllegalStateException("Buffer overflow");
-            }
-            buffer[position++] = b;
-        }
-
-        public int remaining() {
-            return buffer.length - position;
-        }
-
-        public static LinkedBuffer ensureCapacity(LinkedBuffer lb, int requiredCapacity) {
-            if (lb.remaining() >= requiredCapacity) {
-                return lb;
-            }
-            int newCapacity = lb.buffer.length + requiredCapacity;
-            LinkedBuffer newBuffer = new LinkedBuffer(newCapacity);
-            System.arraycopy(lb.buffer, 0, newBuffer.buffer, 0, lb.position);
-            newBuffer.position = lb.position;
-            return newBuffer;
+        public LinkedBuffer(int size) {
+            this.buffer = new byte[size];
+            this.tail = 0;
         }
     }
 
     public static class WriteSession {
-        // Placeholder for WriteSession implementation
+        public LinkedBuffer nextBuffer(LinkedBuffer current) {
+            // Implementation for obtaining the next buffer
+            return new LinkedBuffer(current.buffer.length); // Example: return a new buffer of the same size
+        }
     }
 }

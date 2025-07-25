@@ -22,9 +22,15 @@ public class FileAdder {
 
         Collections.reverse(fileList);
 
-        // Process the reversed list of files here
+        // Process the reversed list (e.g., add to a collection or perform other operations)
         for (InputStream file : fileList) {
-            // Add your logic to process each file
+            // Example: Add to a collection or process the file
+            // processFile(file);
         }
+    }
+
+    // Example method to process a file (placeholder)
+    private void processFile(InputStream file) {
+        // Implement file processing logic here
     }
 }

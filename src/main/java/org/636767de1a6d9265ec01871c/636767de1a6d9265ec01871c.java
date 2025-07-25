@@ -15,7 +15,6 @@ public class Accumulator {
         map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
-    // Optional: Method to get the accumulated value for a key
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }

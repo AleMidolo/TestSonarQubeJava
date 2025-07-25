@@ -16,8 +16,9 @@ public class FrameStack {
             // È un descrittore di metodo, rimuovi i tipi di argomento
             int endOfArgs = descriptor.indexOf(')');
             if (endOfArgs == -1) {
-                return;
+                return; // Descrittore non valido
             }
+
             String argsDescriptor = descriptor.substring(1, endOfArgs);
             removeTypesFromStack(argsDescriptor);
         } else {
@@ -34,13 +35,13 @@ public class FrameStack {
                 // Tipo oggetto, trova il ';'
                 int endIndex = argsDescriptor.indexOf(';', index);
                 if (endIndex == -1) {
-                    break;
+                    break; // Descrittore non valido
                 }
                 String type = argsDescriptor.substring(index, endIndex + 1);
                 removeTypeFromStack(type);
                 index = endIndex + 1;
             } else if (currentChar == '[') {
-                // Tipo array, rimuovi il tipo base
+                // Tipo array, gestisci il tipo successivo
                 index++;
             } else {
                 // Tipo primitivo
@@ -60,11 +61,11 @@ public class FrameStack {
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
         frameStack.outputFrameStack.push("I");
-        frameStack.outputFrameStack.push("J");
         frameStack.outputFrameStack.push("Ljava/lang/String;");
+        frameStack.outputFrameStack.push("D");
 
-        frameStack.pop("(ILjava/lang/String;)V");
+        frameStack.pop("(ILjava/lang/String;D)V");
 
-        System.out.println(frameStack.outputFrameStack); // Dovrebbe stampare [I]
+        System.out.println(frameStack.outputFrameStack); // Dovrebbe essere vuoto
     }
 }

@@ -11,19 +11,20 @@ public class ArrayConcatenator {
         List<String> result = new ArrayList<>();
 
         if (array1 != null) {
-            for (String element : array1) {
-                result.add(element);
+            for (String s : array1) {
+                result.add(s);
             }
         }
 
         if (array2 != null) {
-            for (String element : array2) {
-                result.add(element);
+            for (String s : array2) {
+                result.add(s);
             }
         }
 
         if (array1 != null && array2 != null) {
-            for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+            int overlapLength = Math.min(array1.length, array2.length);
+            for (int i = 0; i < overlapLength; i++) {
                 result.add(array1[i] + array2[i]);
             }
         }

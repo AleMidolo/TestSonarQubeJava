@@ -18,12 +18,12 @@ public class ArrayToList {
     }
 
     public static void main(String[] args) {
-        // Test case with non-null array
+        // Test con array non nullo
         String[] array = {"a", "b", "c"};
         List<String> list = asList(array);
         System.out.println(list); // Output: [a, b, c]
 
-        // Test case with null array
+        // Test con array nullo
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Output: []

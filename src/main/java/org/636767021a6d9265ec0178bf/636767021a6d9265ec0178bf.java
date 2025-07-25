@@ -18,14 +18,14 @@ public class CharacterConverter {
         if (value instanceof String) {
             String str = (String) value;
             if (str.length() == 0) {
-                return null;
+                throw new Exception("Cannot convert empty String to Character");
             }
             return Character.valueOf(str.charAt(0));
         }
 
         if (value instanceof Number) {
-            int num = ((Number) value).intValue();
-            return Character.valueOf((char) num);
+            int intValue = ((Number) value).intValue();
+            return Character.valueOf((char) intValue);
         }
 
         throw new Exception("Cannot convert value of type " + value.getClass().getName() + " to Character");

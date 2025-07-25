@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class Edge {
     private Node source;
-    private Node destination;
+    private Node target;
     private LinkedList<Edge> treeEdgeList1;
     private LinkedList<Edge> treeEdgeList2;
 

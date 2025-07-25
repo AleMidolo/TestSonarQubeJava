@@ -31,32 +31,35 @@ public class PathDecoder {
             if (decode) {
                 try {
                     // Decode segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
+                    String decodedSegment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
+                    segments.add(new PathSegmentImpl(decodedSegment));
                 } catch (Exception e) {
-                    // Keep original segment if decoding fails
+                    // If decoding fails, add raw segment
+                    segments.add(new PathSegmentImpl(segment));
                 }
+            } else {
+                segments.add(new PathSegmentImpl(segment));
             }
-            segments.add(new PathSegmentImpl(segment));
         }
 
         return segments;
     }
+}
 
-    // Inner class to represent path segments
-    public static class PathSegmentImpl {
-        private final String path;
+// Helper class to represent path segments
+class PathSegmentImpl {
+    private final String path;
 
-        public PathSegmentImpl(String path) {
-            this.path = path;
-        }
+    public PathSegmentImpl(String path) {
+        this.path = path;
+    }
 
-        public String getPath() {
-            return path;
-        }
+    public String getPath() {
+        return path;
+    }
 
-        @Override
-        public String toString() {
-            return path;
-        }
+    @Override
+    public String toString() {
+        return path;
     }
 }

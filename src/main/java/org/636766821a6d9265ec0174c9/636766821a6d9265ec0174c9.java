@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class ClassPathUtil {
+public class ClassPathUtils {
 
     /**
      * Devuelve la ruta de clases de la instancia actual de la JVM como un arreglo de objetos {@link File}.

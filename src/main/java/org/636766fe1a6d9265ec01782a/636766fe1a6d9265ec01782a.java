@@ -4,34 +4,34 @@ public class ClassReader {
     private ByteBuffer classFileBuffer;
     
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Get the UTF8 string length
-        int utfLen = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF;
+        // Get the UTF8 string length from the constant pool entry
+        int utfLength = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF;
         
-        int strLen = 0;
-        int c;
-        int st = constantPoolEntryIndex + 2;
-        int cc = 0;
+        // Position buffer at start of UTF8 bytes
+        int currentPosition = constantPoolEntryIndex + 2;
+        int endPosition = currentPosition + utfLength;
+        int charBufferIndex = 0;
         
-        while (cc < utfLen) {
-            c = classFileBuffer.get(st + cc) & 0xFF;
-            if ((c & 0x80) == 0) {
-                // 0xxxxxxx
-                charBuffer[strLen++] = (char) c;
-            } else if ((c & 0xE0) == 0xC0) {
-                // 110xxxxx 10xxxxxx
-                charBuffer[strLen++] = (char) (((c & 0x1F) << 6) + 
-                    (classFileBuffer.get(st + cc + 1) & 0x3F));
-                cc++;
+        // Read and decode UTF8 bytes
+        while (currentPosition < endPosition) {
+            int currentByte = classFileBuffer.get(currentPosition++) & 0xFF;
+            
+            if ((currentByte & 0x80) == 0) {
+                // Single byte character
+                charBuffer[charBufferIndex++] = (char) currentByte;
+            } else if ((currentByte & 0xE0) == 0xC0) {
+                // Two byte character
+                charBuffer[charBufferIndex++] = (char) (((currentByte & 0x1F) << 6) | 
+                    (classFileBuffer.get(currentPosition++) & 0x3F));
             } else {
-                // 1110xxxx 10xxxxxx 10xxxxxx
-                charBuffer[strLen++] = (char) (((c & 0xF) << 12) + 
-                    ((classFileBuffer.get(st + cc + 1) & 0x3F) << 6) +
-                    (classFileBuffer.get(st + cc + 2) & 0x3F));
-                cc += 2;
+                // Three byte character
+                charBuffer[charBufferIndex++] = (char) (((currentByte & 0xF) << 12) | 
+                    ((classFileBuffer.get(currentPosition++) & 0x3F) << 6) |
+                    (classFileBuffer.get(currentPosition++) & 0x3F));
             }
-            cc++;
         }
         
-        return new String(charBuffer, 0, strLen);
+        // Convert char buffer to String
+        return new String(charBuffer, 0, charBufferIndex);
     }
 }

@@ -1,6 +1,6 @@
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.ProtobufOutput;
+import com.dyuproject.protostuff.ProtobufIOUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -11,14 +11,8 @@ public class MessageSerializer {
      * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create protobuf output with the buffer
-        final ProtobufOutput output = new ProtobufOutput(buffer);
-        
-        // Serialize the message
-        schema.writeTo(output, message);
-        
-        // Get the size of serialized message
-        int size = output.getSize();
+        byte[] serialized = ProtobufIOUtil.toByteArray(message, schema, buffer);
+        int size = serialized.length;
         
         // Write the size as a varint
         while ((size & ~0x7F) != 0) {
@@ -27,10 +21,9 @@ public class MessageSerializer {
         }
         out.write(size);
         
-        // Write the actual message
-        LinkedBuffer.writeTo(out, buffer);
+        // Write the serialized message
+        out.write(serialized);
         
-        // Return total size
-        return output.getSize();
+        return serialized.length;
     }
 }

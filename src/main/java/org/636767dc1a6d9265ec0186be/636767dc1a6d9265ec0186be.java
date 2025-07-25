@@ -30,7 +30,7 @@ public class BucketTiempoUtil {
         // Crear nueva fecha con el día ajustado
         LocalDate nuevaFecha = fecha.withDayOfMonth(nuevoDia);
         
-        // Convertir la fecha de vuelta a long
+        // Convertir la nueva fecha de vuelta a long
         return Long.parseLong(nuevaFecha.format(formatter));
     }
 }

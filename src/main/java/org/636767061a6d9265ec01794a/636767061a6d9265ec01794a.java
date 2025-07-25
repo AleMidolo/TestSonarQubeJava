@@ -22,7 +22,6 @@ public class FilenameUtils {
         int lastSeparator = indexOfLastSeparator(filename);
         
         // Si no hay punto o el último separador está después del último punto
-        // entonces no hay extensión válida
         if (extensionPos == -1 || lastSeparator > extensionPos) {
             return -1;
         }
@@ -30,12 +29,13 @@ public class FilenameUtils {
     }
     
     /**
-     * Método auxiliar para encontrar el último separador de directorio
+     * Devuelve el índice del último separador de directorio.
      */
-    public static int indexOfLastSeparator(String filename) {
+    private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
+        
         int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
         int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
         return Math.max(lastUnixPos, lastWindowsPos);

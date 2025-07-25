@@ -4,10 +4,15 @@ import java.util.ArrayDeque;
 
 public class DiagnosticContext {
     
-    private static final ThreadLocal<Deque<String>> contextStack = ThreadLocal.withInitial(ArrayDeque::new);
+    private static final ThreadLocal<Deque<String>> contextStack = new ThreadLocal<Deque<String>>() {
+        @Override 
+        protected Deque<String> initialValue() {
+            return new ArrayDeque<String>();
+        }
+    };
 
     /**
-     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. <p> 
+     * Observa el último contexto de diagnóstico en la parte superior de este NDC sin eliminarlo. <p>
      * El valor devuelto es el valor que se empujó por última vez. Si no hay contexto disponible, se devuelve la cadena vacía "".
      * @return String El contexto de diagnóstico más interno.
      */

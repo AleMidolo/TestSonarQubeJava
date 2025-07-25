@@ -2,7 +2,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomLogFormatter {
+public class CustomFormatter {
 
     public String format(LoggingEvent event) {
         StringBuilder formattedMessage = new StringBuilder();

@@ -2,7 +2,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Graph<V,E> {
-    
+
     private Set<Edge<V,E>> edges;
     
     /**

@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for boolean array operations.
+ * Utility class for boolean operations.
  */
 public class BooleanUtils {
 

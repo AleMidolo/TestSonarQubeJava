@@ -2,6 +2,7 @@ import org.jgrapht.Graph;
 import java.util.Set;
 
 public class GraphUtils {
+
     /**
      * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
      * @param graph el grafo.
@@ -16,14 +17,12 @@ public class GraphUtils {
                 if (v1.equals(v2)) {
                     continue;
                 }
-                
                 // Si no existe una arista entre ellos, no es un clique
                 if (!graph.containsEdge(v1, v2)) {
                     return false;
                 }
             }
         }
-        
         // Si llegamos aquí, todos los vértices están conectados entre sí
         return true;
     }

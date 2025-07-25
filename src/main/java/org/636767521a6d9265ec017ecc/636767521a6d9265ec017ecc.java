@@ -14,6 +14,12 @@ public class BoxSplitter {
             this.minY = minY;
             this.maxY = maxY;
         }
+
+        // Getters
+        public double getMinX() { return minX; }
+        public double getMaxX() { return maxX; }
+        public double getMinY() { return minY; }
+        public double getMaxY() { return maxY; }
     }
 
     public static class Pair<T,U> {
@@ -24,6 +30,9 @@ public class BoxSplitter {
             this.first = first;
             this.second = second;
         }
+
+        public T getFirst() { return first; }
+        public U getSecond() { return second; }
     }
 
     /** 
@@ -33,12 +42,23 @@ public class BoxSplitter {
      */
     public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
         Objects.requireNonNull(box, "Box cannot be null");
-
-        double midX = (box.minX + box.maxX) / 2.0;
-
-        Box2D leftBox = new Box2D(box.minX, midX, box.minY, box.maxY);
-        Box2D rightBox = new Box2D(midX, box.maxX, box.minY, box.maxY);
-
+        
+        double midX = (box.getMinX() + box.getMaxX()) / 2.0;
+        
+        Box2D leftBox = new Box2D(
+            box.getMinX(),
+            midX,
+            box.getMinY(),
+            box.getMaxY()
+        );
+        
+        Box2D rightBox = new Box2D(
+            midX,
+            box.getMaxX(),
+            box.getMinY(), 
+            box.getMaxY()
+        );
+        
         return new Pair<>(leftBox, rightBox);
     }
 }

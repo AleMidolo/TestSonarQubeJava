@@ -5,7 +5,7 @@ public class Template {
     private Set<String> templateVariables;
 
     public Template() {
-        templateVariables = new HashSet<>();
+        this.templateVariables = new HashSet<>();
     }
 
     public void addTemplateVariable(String name) {
@@ -13,9 +13,9 @@ public class Template {
     }
 
     /** 
-     * यह सुनिश्चित करें कि एक टेम्पलेट वेरिएबल इस टेम्पलेट का सदस्य है या नहीं।
-     * @param name नाम टेम्पलेट वेरिएबल।
-     * @return यदि टेम्पलेट वेरिएबल टेम्पलेट का सदस्य है, तो true, अन्यथा false।
+     * Ascertain if a template variable is a member of this template.
+     * @param name name The template variable.
+     * @return true if the template variable is a member of the template, otherwise false.
      */
     public final boolean isTemplateVariablePresent(String name) {
         return templateVariables.contains(name);

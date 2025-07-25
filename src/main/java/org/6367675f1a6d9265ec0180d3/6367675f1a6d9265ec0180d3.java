@@ -1,32 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphUtils {
-
-    /** 
-     * एक पहचान स्वचालन (यानी एक ग्राफ का आत्म-मैपिंग जिसमें प्रत्येक शीर्षक स्वयं को भी मैप करता है) की गणना करता है।
-     * @param graph इनपुट ग्राफ
-     * @param <V> ग्राफ शीर्षक प्रकार
-     * @param <E> ग्राफ किनारा प्रकार
-     * @return ग्राफ से ग्राफ तक का एक मैपिंग
-     */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        Map<V, V> mapping = new HashMap<>();
-        
-        for (V vertex : graph.getVertices()) {
-            mapping.put(vertex, vertex);
-        }
-        
-        return new IsomorphicGraphMapping<>(mapping);
-    }
-}
-
 class Graph<V, E> {
-    // Assume this class has necessary methods like getVertices()
-    public Iterable<V> getVertices() {
-        // Implementation goes here
-        return null; // Placeholder
-    }
+    // Assume this class has necessary methods and properties for a graph
 }
 
 class IsomorphicGraphMapping<V, E> {
@@ -38,5 +14,26 @@ class IsomorphicGraphMapping<V, E> {
 
     public Map<V, V> getMapping() {
         return mapping;
+    }
+}
+
+public class GraphUtils {
+
+    /** 
+     * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
+     * @param graph the input graph
+     * @param <V> the graph vertex type
+     * @param <E> the graph edge type
+     * @return a mapping from graph to graph
+     */
+    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
+        Map<V, V> mapping = new HashMap<>();
+        
+        // Assuming the graph has a method to get all vertices
+        for (V vertex : graph.getVertices()) {
+            mapping.put(vertex, vertex);
+        }
+        
+        return new IsomorphicGraphMapping<>(mapping);
     }
 }

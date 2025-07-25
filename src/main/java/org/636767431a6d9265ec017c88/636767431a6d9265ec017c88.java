@@ -1,23 +1,30 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LowerBoundCalculator<K> {
 
     /** 
-     * प्रत्येक कुंजी के लिए अधिकतम निम्न सीमा खोजता है।
-     * @param keys कुंजी की सूची।
-     * @return गणना की गई कुंजी की निम्न सीमाएँ।
+     * Finds a maximum lower bound for every key.
+     * @param keys list of keys.
+     * @return the computed key lower bounds.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
+        Map<K, Integer> lowerBoundsMap = new HashMap<>();
         List<Integer> lowerBounds = new ArrayList<>();
-        
+
         for (K key : keys) {
-            // यहाँ पर कुंजी के लिए निम्न सीमा की गणना करें
-            // उदाहरण के लिए, हम कुंजी के हैश को निम्न सीमा मान सकते हैं
-            int lowerBound = key.hashCode(); // यह केवल एक उदाहरण है
-            lowerBounds.add(lowerBound);
+            // Assuming some logic to compute the lower bound for each key
+            // Here we just use the hash code as a placeholder for the lower bound
+            int lowerBound = key.hashCode(); // Replace with actual logic
+            lowerBoundsMap.put(key, lowerBound);
         }
-        
+
+        for (K key : keys) {
+            lowerBounds.add(lowerBoundsMap.get(key));
+        }
+
         return lowerBounds;
     }
 }

@@ -1,8 +1,9 @@
 public class ArrayUtils {
+
     /** 
-     * <p>जांचता है कि क्या प्राइमिटिव डबल्स का एक एरे खाली है या <code>null</code> है।</p>
-     * @param array  परीक्षण के लिए एरे
-     * @return <code>true</code> यदि एरे खाली है या <code>null</code> है
+     * <p>Checks if an array of primitive doubles is empty or <code>null</code>.</p>
+     * @param array  the array to test
+     * @return <code>true</code> if the array is empty or <code>null</code>
      * @since 2.1
      */
     public static boolean isEmpty(final double[] array) {
@@ -10,12 +11,13 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        double[] testArray1 = null;
-        double[] testArray2 = {};
-        double[] testArray3 = {1.0, 2.0, 3.0};
+        // Test cases
+        double[] nullArray = null;
+        double[] emptyArray = {};
+        double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
-        System.out.println(isEmpty(testArray1)); // true
-        System.out.println(isEmpty(testArray2)); // true
-        System.out.println(isEmpty(testArray3)); // false
+        System.out.println(isEmpty(nullArray)); // true
+        System.out.println(isEmpty(emptyArray)); // true
+        System.out.println(isEmpty(nonEmptyArray)); // false
     }
 }

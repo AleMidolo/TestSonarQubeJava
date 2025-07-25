@@ -1,21 +1,21 @@
 public class StackMapFrameVisitor {
-
-    private int currentFrame;
+    private int currentFrameOffset;
+    private int currentNumLocal;
+    private int currentNumStack;
 
     /**
-     * एक नए स्टैक मैप फ्रेम की यात्रा शुरू करता है, जो {@link #currentFrame} में संग्रहीत है।
-     * @param offset   उस निर्देश का बाइटकोड ऑफसेट, जिसके लिए फ्रेम संबंधित है।
-     * @param numLocal फ्रेम में स्थानीय चर की संख्या।
-     * @param numStack फ्रेम में स्टैक तत्वों की संख्या।
-     * @return इस फ्रेम में लिखे जाने वाले अगले तत्व का अनुक्रमांक।
+     * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
+     * @param offset   the bytecode offset of the instruction to which the frame corresponds.
+     * @param numLocal the number of local variables in the frame.
+     * @param numStack the number of stack elements in the frame.
+     * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // यहाँ पर फ्रेम की यात्रा शुरू करने की प्रक्रिया को लागू करें
-        // उदाहरण के लिए, हम currentFrame को अपडेट कर सकते हैं
-        currentFrame = offset; // या किसी अन्य लॉजिक के अनुसार
-        // स्थानीय चर और स्टैक तत्वों की संख्या का उपयोग करें
-        // अगले तत्व का अनुक्रमांक लौटाएं
-        return currentFrame + numLocal + numStack; // यह एक उदाहरण है
+        this.currentFrameOffset = offset;
+        this.currentNumLocal = numLocal;
+        this.currentNumStack = numStack;
+        // Assuming the next index to write is the sum of local and stack elements
+        return numLocal + numStack;
     }
 
     public static void main(String[] args) {

@@ -9,9 +9,9 @@ public class AtmosphereManager {
     }
 
     /** 
-     * एक {@link AtmosphereHandler} को हटाएं।
-     * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String,AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
-     * @return यदि हटाया गया है तो true
+     * Remove an  {@link AtmosphereHandler}.
+     * @param mapping the mapping used when invoking {@link #addAtmosphereHandler(String,AtmosphereHandler)};
+     * @return true if removed
      */
     public boolean removeAtmosphereHandler(String mapping) {
         AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);

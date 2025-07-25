@@ -5,6 +5,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+class ThreadSnapshot {
+    private String threadName;
+    private long timestamp;
+
+    public ThreadSnapshot(String threadName, long timestamp) {
+        this.threadName = threadName;
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "ThreadSnapshot{" +
+                "threadName='" + threadName + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
+}
+
 class ProfileAnalyzeTimeRange {
     private long startTime;
     private long endTime;
@@ -21,53 +43,32 @@ class ProfileAnalyzeTimeRange {
     public long getEndTime() {
         return endTime;
     }
-
-    public boolean isInRange(long time) {
-        return time >= startTime && time <= endTime;
-    }
 }
 
-class ThreadSnapshot {
-    private long timestamp;
-    private String threadInfo;
+public class ThreadSnapshotParser {
 
-    public ThreadSnapshot(long timestamp, String threadInfo) {
-        this.timestamp = timestamp;
-        this.threadInfo = threadInfo;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public String getThreadInfo() {
-        return threadInfo;
-    }
-}
-
-public class ThreadSnapshotLoader {
-    /** 
-     * निर्दिष्ट समय सीमा में थ्रेड स्नैपशॉट लोड करें
+    /**
+     * load thread snapshots in appointing time range
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                long timestamp = Long.parseLong(parts[0]);
-                String threadInfo = parts[1];
+                if (parts.length < 2) continue;
+
+                String threadName = parts[0];
+                long timestamp = Long.parseLong(parts[1]);
 
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (range.isInRange(timestamp)) {
-                        snapshots.add(new ThreadSnapshot(timestamp, threadInfo));
-                        break; // No need to check other ranges if already added
+                    if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
+                        snapshots.add(new ThreadSnapshot(threadName, timestamp));
+                        break;
                     }
                 }
             }
         }
-        
         return snapshots;
     }
 }

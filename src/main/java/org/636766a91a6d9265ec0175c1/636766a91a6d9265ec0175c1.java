@@ -2,38 +2,23 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
-    private int currentSize;
+    private int capacity;
 
     public ByteVector(int initialCapacity) {
-        data = new byte[initialCapacity];
-        currentSize = 0;
+        this.capacity = initialCapacity;
+        this.data = new byte[initialCapacity];
     }
 
-    /**
-     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
-     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
+    /** 
+     * Enlarges this byte vector so that it can receive 'size' more bytes.
+     * @param size number of additional bytes that this byte vector should be able to receive.
      */
     private void enlarge(final int size) {
-        int newSize = currentSize + size;
-        data = Arrays.copyOf(data, newSize);
-    }
-
-    // Additional methods for demonstration purposes
-    public void add(byte b) {
-        if (currentSize == data.length) {
-            enlarge(1);
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
         }
-        data[currentSize++] = b;
-    }
-
-    public byte get(int index) {
-        if (index < 0 || index >= currentSize) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
-        }
-        return data[index];
-    }
-
-    public int size() {
-        return currentSize;
+        int newCapacity = capacity + size;
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 }

@@ -1,17 +1,18 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UriMatcher {
+public final class UriMatcher {
+
     private final Pattern pattern;
 
-    public UriMatcher(String regex) {
-        this.pattern = Pattern.compile(regex);
+    public UriMatcher(String template) {
+        this.pattern = Pattern.compile(template);
     }
 
-    /** 
-     * एक URI को पैटर्न के खिलाफ मिलाएं।
-     * @param uri वह URI जिसे टेम्पलेट के खिलाफ मिलाना है।
-     * @return मिलान का परिणाम, अन्यथा यदि कोई मिलान नहीं होता है तो null।
+    /**
+     * Match a URI against the pattern.
+     * @param uri the uri to match against the template.
+     * @return the match result, otherwise null if no match occurs.
      */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
@@ -32,23 +33,16 @@ public class UriMatcher {
             return matcher.group(group);
         }
 
+        public int start(int group) {
+            return matcher.start(group);
+        }
+
+        public int end(int group) {
+            return matcher.end(group);
+        }
+
         public int groupCount() {
             return matcher.groupCount();
-        }
-    }
-
-    public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(http|https)://(www\\.)?example\\.com/(.*)$");
-        MatchResult result = uriMatcher.match("https://www.example.com/path/to/resource");
-        
-        if (result != null) {
-            System.out.println("Match found!");
-            System.out.println("Group 0: " + result.group(0)); // Full match
-            System.out.println("Group 1: " + result.group(1)); // Protocol
-            System.out.println("Group 2: " + result.group(2)); // www.
-            System.out.println("Group 3: " + result.group(3)); // Path
-        } else {
-            System.out.println("No match found.");
         }
     }
 }

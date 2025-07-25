@@ -2,27 +2,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ValueAccumulator {
-    private Map<String, Long> map;
+    private Map<String, Long> accumulatorMap;
 
     public ValueAccumulator() {
-        map = new HashMap<>();
+        this.accumulatorMap = new HashMap<>();
     }
 
     /** 
-     * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
+     * Accumulate the value with existing value in the same given key.
      */
     public void valueAccumulation(String key, Long value) {
-        map.put(key, map.getOrDefault(key, 0L) + value);
+        accumulatorMap.put(key, accumulatorMap.getOrDefault(key, 0L) + value);
     }
 
     public Long getValue(String key) {
-        return map.getOrDefault(key, 0L);
+        return accumulatorMap.getOrDefault(key, 0L);
     }
 
     public static void main(String[] args) {
-        ValueAccumulator accumulator = new ValueAccumulator();
-        accumulator.valueAccumulation("a", 10L);
-        accumulator.valueAccumulation("a", 5L);
-        System.out.println(accumulator.getValue("a")); // Output: 15
+        ValueAccumulator va = new ValueAccumulator();
+        va.valueAccumulation("a", 10L);
+        va.valueAccumulation("a", 5L);
+        System.out.println(va.getValue("a")); // Output: 15
     }
 }

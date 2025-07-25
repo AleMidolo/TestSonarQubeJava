@@ -1,24 +1,24 @@
+import java.net.HttpURLConnection;
+
 public class HttpResponseChecker {
 
-    private int statusCode;
+    private HttpURLConnection connection;
 
-    public HttpResponseChecker(int statusCode) {
-        this.statusCode = statusCode;
+    public HttpResponseChecker(HttpURLConnection connection) {
+        this.connection = connection;
     }
 
     /** 
-     * जांचें कि क्या वास्तविक प्रतिक्रिया आंशिक सामग्री (HTTP 206 कोड) है
-     * @return आंशिक सामग्री है या नहीं
+     * Check if the actual response is a Partial Content (HTTP 206 code)
+     * @return is partial content or not
      */
     public Boolean isPartialContentResponse() {
-        return statusCode == 206;
-    }
-
-    public static void main(String[] args) {
-        HttpResponseChecker responseChecker = new HttpResponseChecker(206);
-        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse());
-        
-        HttpResponseChecker responseChecker2 = new HttpResponseChecker(200);
-        System.out.println("Is partial content response: " + responseChecker2.isPartialContentResponse());
+        try {
+            int responseCode = connection.getResponseCode();
+            return responseCode == HttpURLConnection.HTTP_PARTIAL; // 206
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

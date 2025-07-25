@@ -1,17 +1,17 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class SetIntersection {
+public class SetOperations<V> {
 
     /** 
-     * दो सेटों के बीच इंटरसेक्शन की गणना करने का कुशल तरीका
-     * @param set1 सेट $1$
-     * @param set2 सेट $2$
-     * @return सेट $1$ और $2$ का इंटरसेक्शन
+     * Efficient way to compute the intersection between two sets
+     * @param set1 set $1$
+     * @param set2 set $2$
+     * @return intersection of set $1$ and $2$
      */
     private Set<V> intersection(Set<V> set1, Set<V> set2) {
-        Set<V> intersectionSet = new HashSet<>(set1);
-        intersectionSet.retainAll(set2);
-        return intersectionSet;
+        Set<V> intersection = new HashSet<>(set1);
+        intersection.retainAll(set2);
+        return intersection;
     }
 }

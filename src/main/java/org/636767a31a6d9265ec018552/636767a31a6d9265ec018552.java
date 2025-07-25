@@ -4,19 +4,24 @@ import java.io.InputStreamReader;
 
 public class StringReader {
 
+    private BufferedReader reader;
+
+    public StringReader() {
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
+    }
+
     /** 
-     * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
+     * Read a  {@code string} field value from the stream.
      */
     @Override 
     public String readString() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter a string: ");
         return reader.readLine();
     }
 
     public static void main(String[] args) {
         StringReader stringReader = new StringReader();
         try {
+            System.out.println("Enter a string:");
             String input = stringReader.readString();
             System.out.println("You entered: " + input);
         } catch (IOException e) {

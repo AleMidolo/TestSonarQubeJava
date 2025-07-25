@@ -16,30 +16,38 @@ public class Graph<V> {
 
     public void addEdge(V source, V destination) {
         edges.add(new Edge<>(source, destination));
-        addVertex(source);
-        addVertex(destination);
+        vertices.add(source);
+        vertices.add(destination);
     }
 
     /** 
-     * सभी वर्टिस को गणना करें जिनका डिग्री सकारात्मक है, जानबूझकर किनारों पर इटरेट करके। यह जटिलता को $O(m)$ पर रखता है जहाँ $m$ किनारों की संख्या है।
-     * @return सकारात्मक डिग्री वाले वर्टिस का सेट
+     * Compute all vertices that have positive degree by iterating over the edges on purpose. This keeps the complexity to $O(m)$ where $m$ is the number of edges.
+     * @return set of vertices with positive degree
      */
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         for (Edge<V> edge : edges) {
-            visibleVertices.add(edge.source);
-            visibleVertices.add(edge.destination);
+            visibleVertices.add(edge.getSource());
+            visibleVertices.add(edge.getDestination());
         }
         return visibleVertices;
     }
 
     private static class Edge<V> {
-        V source;
-        V destination;
+        private V source;
+        private V destination;
 
-        Edge(V source, V destination) {
+        public Edge(V source, V destination) {
             this.source = source;
             this.destination = destination;
+        }
+
+        public V getSource() {
+            return source;
+        }
+
+        public V getDestination() {
+            return destination;
         }
     }
 }

@@ -1,11 +1,11 @@
 public class SubstringMatcher {
-    
+
     /** 
-     * यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, तो {@code true} लौटाता है, अन्यथा {@code false}।
-     * @param str मूल स्ट्रिंग (या StringBuilder)
-     * @param index मूल स्ट्रिंग में मेल शुरू करने के लिए इंडेक्स
-     * @param substring दी गई इंडेक्स पर मेल करने के लिए उपस्ट्रिंग
-     * @return {@code true} यदि दी गई स्ट्रिंग दी गई उपस्ट्रिंग के साथ दी गई इंडेक्स पर मेल खाती है, अन्यथा {@code false}।
+     * Returns  {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
+     * @param str the original string (or StringBuilder)
+     * @param index the index in the original string to start matching against
+     * @param substring the substring to match at the given index
+     * @return {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
@@ -24,11 +24,9 @@ public class SubstringMatcher {
 
     public static void main(String[] args) {
         // Example usage
-        String str = "Hello, world!";
-        String substring = "world";
-        int index = 7;
-        
-        boolean result = substringMatch(str, index, substring);
-        System.out.println("Does the substring match? " + result); // Output: true
+        String original = "Hello, World!";
+        String sub = "World";
+        boolean result = substringMatch(original, 7, sub);
+        System.out.println(result); // Output: true
     }
 }

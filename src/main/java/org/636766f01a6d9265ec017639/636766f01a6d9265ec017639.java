@@ -1,25 +1,28 @@
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class ArrayToListConverter {
+public class ArrayToList {
+
     /** 
-     * एरे को लिस्ट में बदलें। <p> {@link Arrays#asList(Object)} की तरह काम करता है, लेकिन नल एरे को संभालता है।
-     * @return एक लिस्ट जो एरे द्वारा समर्थित है।
+     * Array to List. <p> Works like  {@link Arrays#asList(Object)}, but handles null arrays.
+     * @return a list backed by the array.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
-            return Arrays.asList(); // Return an empty list for null array
+            return Collections.emptyList();
         }
         return Arrays.asList(a);
     }
 
     public static void main(String[] args) {
+        // Example usage
         String[] array = {"Hello", "World"};
         List<String> list = asList(array);
         System.out.println(list); // Output: [Hello, World]
 
         String[] nullArray = null;
-        List<String> emptyList = asList(nullArray);
-        System.out.println(emptyList); // Output: []
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // Output: []
     }
 }

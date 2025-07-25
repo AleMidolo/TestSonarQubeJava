@@ -1,9 +1,9 @@
-public class FilePathUtil {
-    
+public class FilenameStripper {
+
     /** 
-     * दिए गए पथ से फ़ाइल नाम का एक्सटेंशन हटा दें, जैसे "mypath/myfile.txt" -&gt; "mypath/myfile"।
-     * @param path फ़ाइल का पथ (यह <code>null</code> हो सकता है)
-     * @return फ़ाइल नाम के एक्सटेंशन के बिना पथ, या <code>null</code> यदि कोई नहीं है
+     * Strip the filename extension from the given path, e.g. "mypath/myfile.txt" -&gt; "mypath/myfile".
+     * @param path the file path (may be <code>null</code>)
+     * @return the path with stripped filename extension, or <code>null</code> if none
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
@@ -17,11 +17,14 @@ public class FilePathUtil {
             return path.substring(0, lastDotIndex);
         }
         
-        return path;
+        return path; // No extension found
     }
 
     public static void main(String[] args) {
-        String path = "mypath/myfile.txt";
-        System.out.println(stripFilenameExtension(path)); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile")); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension(null)); // Output: null
+        System.out.println(stripFilenameExtension("mypath/myfile.")); // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile.tar.gz")); // Output: mypath/myfile.tar
     }
 }

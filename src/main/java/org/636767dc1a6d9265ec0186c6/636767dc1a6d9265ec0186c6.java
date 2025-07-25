@@ -1,19 +1,18 @@
-import java.util.Set;
+import java.util.Properties;
 
 public class FieldChecker {
-    
-    private Set<String> properties;
+    private Properties properties;
 
-    public FieldChecker(Set<String> properties) {
+    public FieldChecker(Properties properties) {
         this.properties = properties;
     }
 
     /** 
-     * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
+     * Returns true when the input fields have already been stored in the properties.
      */
     private boolean containsAllFields(Fields fields) {
         for (String field : fields.getFieldNames()) {
-            if (!properties.contains(field)) {
+            if (!properties.containsKey(field)) {
                 return false;
             }
         }
@@ -22,13 +21,13 @@ public class FieldChecker {
 }
 
 class Fields {
-    private Set<String> fieldNames;
+    private String[] fieldNames;
 
-    public Fields(Set<String> fieldNames) {
+    public Fields(String[] fieldNames) {
         this.fieldNames = fieldNames;
     }
 
-    public Set<String> getFieldNames() {
+    public String[] getFieldNames() {
         return fieldNames;
     }
 }

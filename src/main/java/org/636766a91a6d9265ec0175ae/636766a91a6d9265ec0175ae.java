@@ -5,34 +5,36 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.data = new byte[10]; // initial capacity
         this.size = 0;
     }
 
     /** 
-     * इस बाइट वेक्टर में बाइट्स का एक एरे डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
-     * @param byteArrayValue बाइट्स का एक एरे। {@code byteLength} नल बाइट्स डालने के लिए {@literal null} हो सकता है।
-     * @param byteOffset     byteArrayValue का पहला बाइट का इंडेक्स जो कॉपी किया जाना चाहिए।
-     * @param byteLength     byteArrayValue के बाइट्स की संख्या जो कॉपी की जानी चाहिए।
-     * @return यह बाइट वेक्टर।
+     * Puts an array of bytes into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param byteArrayValue an array of bytes. May be {@literal null} to put {@code byteLength} nullbytes into this byte vector.
+     * @param byteOffset     index of the first byte of byteArrayValue that must be copied.
+     * @param byteLength     number of bytes of byteArrayValue that must be copied.
+     * @return this byte vector.
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteArrayValue == null || byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-            throw new IllegalArgumentException("Invalid input parameters");
+        if (byteArrayValue == null) {
+            ensureCapacity(size + byteLength);
+            Arrays.fill(data, size, size + byteLength, (byte) 0);
+            size += byteLength;
+        } else {
+            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
+                throw new IndexOutOfBoundsException("Invalid offset or length");
+            }
+            ensureCapacity(size + byteLength);
+            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
+            size += byteLength;
         }
-
-        ensureCapacity(size + byteLength);
-        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        size += byteLength;
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
-            int newCapacity = data.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > data.length) {
+            int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
     }

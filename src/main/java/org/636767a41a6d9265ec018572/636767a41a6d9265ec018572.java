@@ -9,7 +9,7 @@ public class VarintReader {
     }
 
     /** 
-     * स्ट्रीम से एक कच्चा Varint पढ़ें।
+     * Read a raw Varint from the stream.
      */
     public long readRawVarint64() throws IOException {
         long result = 0;

@@ -3,13 +3,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 private Map<String, Object> buildContent(JsonObject jsonObject) {
-    Map<String, Object> content = new HashMap<>();
-    
+    Map<String, Object> contentMap = new HashMap<>();
+
     if (jsonObject.has("ats")) {
-        content.put("ats", jsonObject.get("ats").getAsString());
-    } else {
-        content.put("message", "No ATS set");
+        contentMap.put("ats", jsonObject.get("ats").getAsString());
     }
-    
-    return content;
+
+    // Add other content building logic here if needed
+
+    return contentMap;
 }

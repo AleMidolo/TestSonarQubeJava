@@ -1,27 +1,40 @@
-public class NonZeroCounter {
+public class MatrixUtils {
     
-    /**
-     * एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या प्राप्त करें।
-     * @param row पंक्ति
-     * @return एक पंक्ति के गैर-शून्य प्रविष्टियों की संख्या
+    private int[][] matrix;
+
+    public MatrixUtils(int[][] matrix) {
+        this.matrix = matrix;
+    }
+
+    /** 
+     * Get the number of non-zero entries of a row.
+     * @param row the row
+     * @return the number of non-zero entries of a row
      */
     public int nonZeros(int row) {
-        // Assuming row is represented as an integer where each digit represents an entry
-        String rowString = String.valueOf(row);
-        int count = 0;
+        if (row < 0 || row >= matrix.length) {
+            throw new IllegalArgumentException("Row index out of bounds");
+        }
         
-        for (char ch : rowString.toCharArray()) {
-            if (ch != '0') {
+        int count = 0;
+        for (int value : matrix[row]) {
+            if (value != 0) {
                 count++;
             }
         }
-        
         return count;
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int row = 102030; // Example input
-        System.out.println("Non-zero entries: " + counter.nonZeros(row)); // Output: 3
+        int[][] sampleMatrix = {
+            {1, 0, 3},
+            {0, 0, 0},
+            {4, 5, 0}
+        };
+        
+        MatrixUtils matrixUtils = new MatrixUtils(sampleMatrix);
+        System.out.println("Non-zero entries in row 0: " + matrixUtils.nonZeros(0)); // Output: 2
+        System.out.println("Non-zero entries in row 1: " + matrixUtils.nonZeros(1)); // Output: 0
+        System.out.println("Non-zero entries in row 2: " + matrixUtils.nonZeros(2)); // Output: 2
     }
 }

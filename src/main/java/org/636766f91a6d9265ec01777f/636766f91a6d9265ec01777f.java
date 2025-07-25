@@ -1,14 +1,14 @@
 public class BooleanUtils {
 
     /** 
-     * <p>एक Boolean को boolean में परिवर्तित करता है, <code>null</code> को संभालते हुए <code>false</code> लौटाता है।</p> 
+     * <p>Converts a Boolean to a boolean handling <code>null</code> by returning <code>false</code>.</p> 
      * <pre> 
-     * BooleanUtils.toBoolean(Boolean.TRUE)  = true 
-     * BooleanUtils.toBoolean(Boolean.FALSE) = false 
-     * BooleanUtils.toBoolean(null)          = false 
+     *  BooleanUtils.toBoolean(Boolean.TRUE)  = true 
+     *  BooleanUtils.toBoolean(Boolean.FALSE) = false 
+     *  BooleanUtils.toBoolean(null)          = false 
      * </pre>
-     * @param bool  वह boolean जिसे परिवर्तित करना है
-     * @return <code>true</code> या <code>false</code>, <code>null</code> <code>false</code> लौटाता है
+     * @param bool  the boolean to convert
+     * @return <code>true</code> or <code>false</code>, <code>null</code> returns <code>false</code>
      */
     public static boolean toBoolean(Boolean bool) {
         return bool != null && bool;

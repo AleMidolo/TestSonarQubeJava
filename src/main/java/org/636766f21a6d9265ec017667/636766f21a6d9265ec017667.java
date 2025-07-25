@@ -1,28 +1,26 @@
 public class ClassReader {
-    
-    private byte[] classData;
+    private byte[] data;
 
-    public ClassReader(byte[] classData) {
-        this.classData = classData;
+    public ClassReader(byte[] data) {
+        this.data = data;
     }
 
     /** 
-     * इस {@link ClassReader} में एक साइन किया हुआ शॉर्ट मान पढ़ता है। <i>यह विधि {@link Attribute} उप श्रेणियों के लिए अभिप्रेत है, और सामान्यतः क्लास जनरेटर या एडाप्टर्स द्वारा आवश्यक नहीं होती।</i>
-     * @param offset इस {@link ClassReader} में पढ़े जाने वाले मान का प्रारंभिक ऑफसेट।
-     * @return पढ़ा गया मान।
+     * Reads a signed short value in this  {@link ClassReader}. <i>This method is intended for  {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
+     * @param offset the start offset of the value to be read in this {@link ClassReader}.
+     * @return the read value.
      */
     public short readShort(final int offset) {
-        if (offset < 0 || offset + 2 > classData.length) {
-            throw new IndexOutOfBoundsException("Invalid offset: " + offset);
+        if (offset < 0 || offset + 2 > data.length) {
+            throw new IndexOutOfBoundsException("Offset is out of bounds");
         }
-        return (short) ((classData[offset] << 8) | (classData[offset + 1] & 0xFF));
+        return (short) ((data[offset] << 8) | (data[offset + 1] & 0xFF));
     }
 
     public static void main(String[] args) {
-        // Example usage
-        byte[] data = {0x01, 0x02, 0x03, 0x04};
-        ClassReader reader = new ClassReader(data);
-        short value = reader.readShort(0);
-        System.out.println("Read short value: " + value); // Output: Read short value: 258
+        byte[] exampleData = {0x00, 0x01, 0x02, 0x03, 0x04};
+        ClassReader reader = new ClassReader(exampleData);
+        short value = reader.readShort(1);
+        System.out.println("Read short value: " + value);
     }
 }

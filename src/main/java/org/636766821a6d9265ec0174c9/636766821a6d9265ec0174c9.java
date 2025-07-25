@@ -1,9 +1,9 @@
 import java.io.File;
 
-public class ClassPathExample {
+public class ClassPathRetriever {
 
     /** 
-     * वर्तमान JVM उदाहरण का क्लास पथ {@link File} ऑब्जेक्ट्स के एक ऐरे के रूप में लौटाता है।
+     * Returns the class path of the current JVM instance as an array of  {@link File} objects.
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");

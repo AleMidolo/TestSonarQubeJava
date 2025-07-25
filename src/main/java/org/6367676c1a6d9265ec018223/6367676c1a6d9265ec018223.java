@@ -2,12 +2,15 @@ import java.util.Collection;
 
 public class CollectionUtils {
     /** 
-     * जांचें कि दी गई संग्रह में दी गई तत्व उदाहरण मौजूद है या नहीं। <p>सुनिश्चित करता है कि दी गई उदाहरण मौजूद है, न कि समान तत्व के लिए <code>true</code> लौटाने के लिए।
-     * @param collection जांचने के लिए संग्रह
-     * @param element खोजने के लिए तत्व
-     * @return <code>true</code> यदि पाया गया, <code>false</code> अन्यथा
+     * Check whether the given Collection contains the given element instance. <p>Enforces the given instance to be present, rather than returning <code>true</code> for an equal element as well.
+     * @param collection the Collection to check
+     * @param element the element to look for
+     * @return <code>true</code> if found, <code>false</code> else
      */
     public static boolean containsInstance(Collection collection, Object element) {
+        if (collection == null || element == null) {
+            return false;
+        }
         for (Object obj : collection) {
             if (obj == element) {
                 return true;

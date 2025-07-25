@@ -1,14 +1,22 @@
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.Filter;
 
-public class Filter {
-    public static final int NEUTRAL = 0;
+public class DecisionMaker {
 
     /**
-     * यदि कोई स्ट्रिंग मेल नहीं खाता है तो {@link Filter#NEUTRAL} लौटाता है।
+     * Returns {@link Filter#NEUTRAL} if there is no string match.
      */
     public int decide(LoggingEvent event) {
-        // यहाँ पर लॉजिक जोड़े जो यह निर्धारित करता है कि क्या स्ट्रिंग मेल खाता है
-        // यदि मेल नहीं खाता है, तो NEUTRAL लौटाएँ
-        return NEUTRAL;
+        // Assuming we are checking for a specific string match in the LoggingEvent
+        String message = event.getRenderedMessage();
+        String targetString = "specificString"; // Replace with the actual string to match
+
+        if (message != null && message.contains(targetString)) {
+            // If there is a match, return a different filter value (e.g., Filter.ACCEPT)
+            return Filter.ACCEPT;
+        }
+        
+        // If there is no match, return Filter.NEUTRAL
+        return Filter.NEUTRAL;
     }
 }

@@ -2,38 +2,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MetricsCache {
-    private final Map<String, Integer> cache = new HashMap<>();
+    private Map<String, METRICS> cache = new HashMap<>();
 
     /** 
-     * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
-     * @param data जिसे संभावित रूप से जोड़ा जाना है।
+     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
+     * @param data to be added potentially.
      */
     @Override 
     public void accept(final METRICS data) {
-        // Assuming METRICS has a method getKey() to get the key and getValue() to get the value
-        String key = data.getKey();
-        int value = data.getValue();
-
-        // Merge the value with the existing value in the cache
-        cache.merge(key, value, Integer::sum);
+        if (data != null) {
+            String key = data.getKey(); // Assuming METRICS has a method getKey()
+            cache.merge(key, data, (existingValue, newValue) -> {
+                existingValue.merge(newValue); // Assuming METRICS has a merge method
+                return existingValue;
+            });
+        }
     }
     
-    // Assuming a METRICS class for demonstration purposes
+    // Assuming METRICS class is defined somewhere
     public static class METRICS {
-        private final String key;
-        private final int value;
-
-        public METRICS(String key, int value) {
-            this.key = key;
-            this.value = value;
-        }
+        private String key;
+        // Other fields...
 
         public String getKey() {
             return key;
         }
 
-        public int getValue() {
-            return value;
+        public void merge(METRICS other) {
+            // Logic to merge this METRICS with another METRICS
         }
     }
 }

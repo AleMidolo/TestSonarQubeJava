@@ -1,22 +1,24 @@
-public class ConfigurationInitializer {
+import java.io.File;
 
-    /**
-     * कॉन्फ़िगरेशन को प्रारंभ करें, जैसे कि वितरण पथ की जांच करें
+public class ConfigInitializer {
+
+    /** 
+     * initialize config, such as check dist path
      */
     public void init() {
-        // Check the distribution path
-        String distributionPath = System.getenv("DISTRIBUTION_PATH");
+        String distPath = "path/to/dist"; // Specify your distribution path here
+        File distDirectory = new File(distPath);
         
-        if (distributionPath == null || distributionPath.isEmpty()) {
-            System.out.println("Distribution path is not set. Please configure it.");
+        if (!distDirectory.exists()) {
+            System.out.println("Distribution path does not exist: " + distPath);
+            // You can add code here to create the directory or handle the error
         } else {
-            System.out.println("Distribution path is set to: " + distributionPath);
-            // Additional initialization logic can be added here
+            System.out.println("Distribution path is valid: " + distPath);
         }
     }
 
     public static void main(String[] args) {
-        ConfigurationInitializer initializer = new ConfigurationInitializer();
-        initializer.init();
+        ConfigInitializer configInitializer = new ConfigInitializer();
+        configInitializer.init();
     }
 }

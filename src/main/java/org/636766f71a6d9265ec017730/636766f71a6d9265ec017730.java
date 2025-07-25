@@ -4,9 +4,9 @@ import java.util.Collection;
 public class CollectionUtils {
     
     /** 
-     * दिए गए संग्रह को स्ट्रिंग्स के एक ऐरे में परिवर्तित करता है। लौटाया गया ऐरे <code>null</code> प्रविष्टियाँ नहीं रखता है। ध्यान दें कि {@link Arrays#sort(Object[])} एक {@link NullPointerException} फेंकेगा यदि ऐरे का कोई तत्व <code>null</code> है।
-     * @param collection परिवर्तित करने के लिए संग्रह
-     * @return स्ट्रिंग्स का एक नया ऐरे।
+     * Converts the given Collection into an array of Strings. The returned array does not contain <code>null</code> entries. Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element is <code>null</code>.
+     * @param collection The collection to convert
+     * @return A new array of Strings.
      */
     static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
@@ -21,5 +21,18 @@ public class CollectionUtils {
         }
         
         return stringList.toArray(new String[0]);
+    }
+    
+    public static void main(String[] args) {
+        // Example usage
+        Collection<Object> collection = new ArrayList<>();
+        collection.add("Hello");
+        collection.add(null);
+        collection.add("World");
+        
+        String[] result = toNoNullStringArray(collection);
+        for (String str : result) {
+            System.out.println(str);
+        }
     }
 }

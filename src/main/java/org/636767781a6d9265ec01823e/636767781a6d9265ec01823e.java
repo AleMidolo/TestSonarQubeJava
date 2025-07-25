@@ -1,24 +1,48 @@
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class CustomAppender extends AppenderSkeleton {
+public class LogAppender {
+    private List<Client> connectedClients = new CopyOnWriteArrayList<>();
 
-    @Override
+    /** 
+     * Handles a log event. For this appender, that means writing the message to each connected client.  
+     */
     protected void append(LoggingEvent event) {
-        // यहाँ पर लॉग इवेंट को सभी जुड़े हुए क्लाइंट्स को भेजने की प्रक्रिया होगी
-        String message = event.getRenderedMessage();
-        // सभी जुड़े हुए क्लाइंट्स को संदेश भेजने के लिए कोड यहाँ लिखें
-        // उदाहरण के लिए, एक सॉकेट कनेक्शन का उपयोग करके संदेश भेजना
-        System.out.println("Sending log message to clients: " + message);
+        String message = event.getMessage();
+        for (Client client : connectedClients) {
+            client.sendMessage(message);
+        }
     }
 
-    @Override
-    public void close() {
-        // क्लोज़िंग संसाधनों की प्रक्रिया
+    public void addClient(Client client) {
+        connectedClients.add(client);
     }
 
-    @Override
-    public boolean requiresLayout() {
-        return false;
+    public void removeClient(Client client) {
+        connectedClients.remove(client);
+    }
+}
+
+class LoggingEvent {
+    private String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
+class Client {
+    private String clientId;
+
+    public Client(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void sendMessage(String message) {
+        System.out.println("Sending to " + clientId + ": " + message);
     }
 }

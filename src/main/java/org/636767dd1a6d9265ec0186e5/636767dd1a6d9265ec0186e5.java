@@ -1,42 +1,55 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelManager {
-    
-    public void addNewTarget(Channels channels, IConsumer consumer) {
-        if (channels == null || consumer == null) {
-            throw new IllegalArgumentException("Channels and consumer cannot be null");
-        }
-        
-        List<Channel> channelList = channels.getChannelList();
-        Channel newChannel = new Channel(consumer);
-        channelList.add(newChannel);
-        
-        channels.setChannelList(channelList);
-    }
-}
-
 class Channels {
-    private List<Channel> channelList;
+    private List<String> targetChannels;
 
-    public List<Channel> getChannelList() {
-        return channelList;
+    public Channels() {
+        this.targetChannels = new ArrayList<>();
     }
 
-    public void setChannelList(List<Channel> channelList) {
-        this.channelList = channelList;
-    }
-}
-
-class Channel {
-    private IConsumer consumer;
-
-    public Channel(IConsumer consumer) {
-        this.consumer = consumer;
+    public void addChannel(String channel) {
+        targetChannels.add(channel);
     }
 
-    // Additional methods can be added here
+    public List<String> getTargetChannels() {
+        return targetChannels;
+    }
 }
 
 interface IConsumer {
-    // Define methods that IConsumer should implement
+    void consume(String channel);
+}
+
+public class ChannelManager {
+    private Channels channels;
+
+    public ChannelManager(Channels channels) {
+        this.channels = channels;
+    }
+
+    /** 
+     * Add a new target channels.
+     */
+    public void addNewTarget(Channels channels, IConsumer consumer) {
+        for (String channel : channels.getTargetChannels()) {
+            consumer.consume(channel);
+        }
+    }
+
+    public static void main(String[] args) {
+        Channels channels = new Channels();
+        channels.addChannel("Sports");
+        channels.addChannel("News");
+
+        IConsumer consumer = new IConsumer() {
+            @Override
+            public void consume(String channel) {
+                System.out.println("Consuming channel: " + channel);
+            }
+        };
+
+        ChannelManager manager = new ChannelManager(channels);
+        manager.addNewTarget(channels, consumer);
+    }
 }

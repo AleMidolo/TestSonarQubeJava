@@ -1,9 +1,9 @@
 public class TokenParser {
-
-    /**
-     * एक टोकन को पार्स करता है जब तक कि दिए गए किसी भी समाप्ति चिन्ह का सामना नहीं किया जाता।
-     * @param terminators समाप्ति वर्णों का ऐरे। इनमें से कोई भी वर्ण जब सामना किया जाता है, तो यह टोकन के अंत का संकेत देता है
-     * @return टोकन
+    
+    /** 
+     * Parses out a token until any of the given terminators is encountered.
+     * @param terminators the array of terminating characters. Any of these characters when encountered signify the end of the token
+     * @return the token
      */
     private String parseToken(final char[] terminators) {
         StringBuilder token = new StringBuilder();
@@ -23,7 +23,7 @@ public class TokenParser {
         
         return token.toString();
     }
-
+    
     private boolean isTerminator(char currentChar, char[] terminators) {
         for (char terminator : terminators) {
             if (currentChar == terminator) {
@@ -35,8 +35,9 @@ public class TokenParser {
 
     public static void main(String[] args) {
         TokenParser parser = new TokenParser();
-        char[] terminators = {' ', '\n', '\t', ',', '.'}; // Example terminators
+        char[] terminators = {' ', ',', ';', '\n'};
+        System.out.println("Please enter a token:");
         String token = parser.parseToken(terminators);
-        System.out.println("Parsed Token: " + token);
+        System.out.println("Parsed token: " + token);
     }
 }

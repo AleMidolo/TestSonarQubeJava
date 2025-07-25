@@ -1,22 +1,23 @@
 import java.util.HashSet;
 
-public class MySet {
+public class CustomSet {
     private HashSet<Integer> set;
 
-    public MySet() {
+    public CustomSet() {
         set = new HashSet<>();
     }
 
     /** 
-     * सेट में एक मान डालता है। यदि सेट में पहले से निर्दिष्ट तत्व नहीं था, तो सत्य लौटाता है। 
+     * Inserts a value to the set. Returns true if the set did not already contain the specified element. 
      */
     public boolean insert(int val) {
         return set.add(val);
     }
 
     public static void main(String[] args) {
-        MySet mySet = new MySet();
-        System.out.println(mySet.insert(5)); // true
-        System.out.println(mySet.insert(5)); // false
+        CustomSet customSet = new CustomSet();
+        System.out.println(customSet.insert(1)); // true
+        System.out.println(customSet.insert(1)); // false
+        System.out.println(customSet.insert(2)); // true
     }
 }

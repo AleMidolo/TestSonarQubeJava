@@ -1,37 +1,43 @@
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class QueueRepresentation {
-    private LinkedList<Object> queue;
+    private Queue<Object> queue;
 
     public QueueRepresentation() {
-        queue = new LinkedList<>();
-    }
-
-    public void enqueue(Object item) {
-        queue.addLast(item);
-    }
-
-    public Object dequeue() {
-        return queue.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return queue.isEmpty();
+        this.queue = new LinkedList<>();
     }
 
     /** 
-     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
-     * @return कतार का पाठ्य प्रतिनिधित्व।
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
      */
     public String toString() {
-        return queue.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Queue: [");
+        for (Object item : queue) {
+            sb.append(item.toString()).append(", ");
+        }
+        if (!queue.isEmpty()) {
+            sb.setLength(sb.length() - 2); // Remove the last comma and space
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public void enqueue(Object item) {
+        queue.add(item);
+    }
+
+    public Object dequeue() {
+        return queue.poll();
     }
 
     public static void main(String[] args) {
-        QueueRepresentation queue = new QueueRepresentation();
-        queue.enqueue("First");
-        queue.enqueue("Second");
-        queue.enqueue("Third");
-        System.out.println(queue.toString()); // Output: [First, Second, Third]
+        QueueRepresentation qr = new QueueRepresentation();
+        qr.enqueue("First");
+        qr.enqueue("Second");
+        qr.enqueue("Third");
+        System.out.println(qr.toString()); // Output: Queue: [First, Second, Third]
     }
 }

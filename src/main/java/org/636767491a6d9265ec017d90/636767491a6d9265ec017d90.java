@@ -1,14 +1,14 @@
 public class ArrayReverser {
     /** 
-     * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
-     * @param < V > ऐरे में तत्वों का प्रकार
-     * @param arr ऐरे
-     * @param from उलटने के लिए सीमा के भीतर पहले तत्व का अनुक्रमांक (समावेशी)
-     * @param to उलटने के लिए सीमा के भीतर अंतिम तत्व का अनुक्रमांक (समावेशी)
+     * Reverses the order of the elements in the specified range within the given array.
+     * @param < V > the type of elements in the array
+     * @param arr the array
+     * @param from the index of the first element (inclusive) inside the range to reverse
+     * @param to the index of the last element (inclusive) inside the range to reverse
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {
-            throw new IllegalArgumentException("Invalid indices or array is null");
+            throw new IllegalArgumentException("Invalid range or array");
         }
         
         while (from < to) {

@@ -10,14 +10,22 @@ class TreeNode<T> {
     }
 }
 
-private TreeNode<T> rotateRight(TreeNode<T> node) {
-    if (node == null || node.left == null) {
-        return node; // Cannot rotate right if node is null or left child is null
+public class BinaryTree<T> {
+    
+    /** 
+     * Performs a right node rotation.
+     * @param node a node to rotate
+     * @return a new parent of the {@code node}
+     */
+    private TreeNode<T> rotateRight(TreeNode<T> node) {
+        if (node == null || node.left == null) {
+            return node; // Cannot rotate right if node is null or has no left child
+        }
+
+        TreeNode<T> newParent = node.left; // The new parent will be the left child
+        node.left = newParent.right; // The right child of the new parent becomes the left child of the current node
+        newParent.right = node; // The current node becomes the right child of the new parent
+
+        return newParent; // Return the new parent
     }
-
-    TreeNode<T> newRoot = node.left; // New root will be the left child
-    node.left = newRoot.right; // Right child of new root becomes left child of current node
-    newRoot.right = node; // Current node becomes right child of new root
-
-    return newRoot; // Return the new root
 }

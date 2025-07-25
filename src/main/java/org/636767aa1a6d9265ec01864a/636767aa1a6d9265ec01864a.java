@@ -1,21 +1,26 @@
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-public class ByteArrayConverter {
+public class ByteArrayExample {
     
     /** 
-     * बाइट्स को {@code byte[]} में कॉपी करता है।
+     * Copies bytes to a  {@code byte[]}.
      */
     public byte[] toByteArray() {
-        // Example byte array to demonstrate the functionality
-        byte[] exampleBytes = {1, 2, 3, 4, 5};
-        return exampleBytes.clone(); // Cloning to return a new byte array
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            // Example data to write to the byte array
+            String exampleData = "Hello, World!";
+            byteArrayOutputStream.write(exampleData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     public static void main(String[] args) {
-        ByteArrayConverter converter = new ByteArrayConverter();
-        byte[] byteArray = converter.toByteArray();
-        for (byte b : byteArray) {
-            System.out.print(b + " ");
-        }
+        ByteArrayExample example = new ByteArrayExample();
+        byte[] byteArray = example.toByteArray();
+        System.out.println(new String(byteArray));
     }
 }

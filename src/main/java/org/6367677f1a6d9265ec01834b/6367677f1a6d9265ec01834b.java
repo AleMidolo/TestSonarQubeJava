@@ -1,8 +1,9 @@
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class LoggingBuffer {
-    private LinkedList<LoggingEvent> buffer;
-    private int capacity;
+    private final Queue<LoggingEvent> buffer;
+    private final int capacity;
 
     public LoggingBuffer(int capacity) {
         this.capacity = capacity;
@@ -10,13 +11,14 @@ public class LoggingBuffer {
     }
 
     /** 
-     * एक {@link LoggingEvent} को बफर में रखें। यदि बफर भर गया है तो घटना <b>चुपचाप हटा दी जाती है</b>। यह कॉलर की जिम्मेदारी है कि वह सुनिश्चित करे कि बफर में खाली स्थान है।  
+     * Place a  {@link LoggingEvent} in the buffer. If the buffer is full then the event is <b>silently dropped</b>. 
+     * It is the caller's responsibility to make sure that the buffer has free space.  
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
-            buffer.add(o);
+            buffer.offer(o);
         }
-        // If the buffer is full, the event is silently discarded
+        // If the buffer is full, the event is silently dropped
     }
 
     // Additional methods for demonstration purposes
@@ -24,24 +26,11 @@ public class LoggingBuffer {
         return buffer.size();
     }
 
-    public static class LoggingEvent {
-        private String message;
-
-        public LoggingEvent(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
+    public boolean isFull() {
+        return buffer.size() >= capacity;
     }
+}
 
-    public static void main(String[] args) {
-        LoggingBuffer loggingBuffer = new LoggingBuffer(2);
-        loggingBuffer.put(new LoggingEvent("Event 1"));
-        loggingBuffer.put(new LoggingEvent("Event 2"));
-        loggingBuffer.put(new LoggingEvent("Event 3")); // This will be discarded
-
-        System.out.println("Buffer size: " + loggingBuffer.size()); // Should print 2
-    }
+class LoggingEvent {
+    // Implementation of LoggingEvent class
 }

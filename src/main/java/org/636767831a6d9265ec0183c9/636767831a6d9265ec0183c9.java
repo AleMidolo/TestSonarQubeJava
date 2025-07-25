@@ -1,33 +1,36 @@
 import java.util.Stack;
 
-public class DiagnosisReference {
-    private static Stack<String> diagnosisStack = new Stack<>();
+public class DiagnosticContext {
+    private static Stack<String> contextStack = new Stack<>();
 
-    /**
-     * इस NDC के शीर्ष पर अंतिम निदान संदर्भ को देखता है बिना उसे हटाए। <p> लौटाई गई मान वह मान है जो अंतिम बार डाला गया था। यदि कोई संदर्भ उपलब्ध नहीं है, तो खाली स्ट्रिंग "" लौटाई जाती है।
-     * @return String सबसे आंतरिक निदान संदर्भ।
+    /** 
+     * Looks at the last diagnostic context at the top of this NDC without removing it. 
+     * The returned value is the value that was pushed last. If no context is available, 
+     * then the empty string "" is returned.
+     * @return String The innermost diagnostic context.
      */
     public static String peek() {
-        if (diagnosisStack.isEmpty()) {
-            return "";
-        }
-        return diagnosisStack.peek();
+        return contextStack.isEmpty() ? "" : contextStack.peek();
     }
 
-    // Method to add a diagnosis reference for testing purposes
-    public static void push(String diagnosis) {
-        diagnosisStack.push(diagnosis);
+    // Method to push a new context onto the stack
+    public static void push(String context) {
+        contextStack.push(context);
+    }
+
+    // Method to pop the top context from the stack
+    public static String pop() {
+        return contextStack.isEmpty() ? "" : contextStack.pop();
     }
 
     public static void main(String[] args) {
-        push("Diagnosis 1");
-        push("Diagnosis 2");
-        System.out.println(peek()); // Should print "Diagnosis 2"
-        push("Diagnosis 3");
-        System.out.println(peek()); // Should print "Diagnosis 3"
-        diagnosisStack.pop(); // Remove "Diagnosis 3"
-        System.out.println(peek()); // Should print "Diagnosis 2"
-        diagnosisStack.clear(); // Clear the stack
-        System.out.println(peek()); // Should print ""
+        // Example usage
+        push("Context 1");
+        push("Context 2");
+        System.out.println(peek()); // Output: Context 2
+        pop();
+        System.out.println(peek()); // Output: Context 1
+        pop();
+        System.out.println(peek()); // Output: (empty string)
     }
 }

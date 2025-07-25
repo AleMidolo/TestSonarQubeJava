@@ -1,22 +1,24 @@
-private void putAbstractTypes(final int start, final int end) {
-    // Assuming currentFrame and stackMapTableEntries are defined elsewhere in the class
-    // and that they are of appropriate types to hold the data.
+import java.util.Arrays;
 
-    // Example implementation
-    for (int i = start; i <= end; i++) {
-        // Assuming currentFrame is an array or list that can hold types
-        // and stackMapTableEntries is a structure that holds the verification_type_info format.
-        // Here we would convert the abstract type at index i to the appropriate format
-        // and store it in stackMapTableEntries.
+public class StackMapTable {
 
-        // This is a placeholder for the actual logic to retrieve and store the types.
-        Object abstractType = currentFrame[i]; // Retrieve the abstract type from currentFrame
-        stackMapTableEntries.add(convertToVerificationTypeInfo(abstractType)); // Convert and add to stackMapTableEntries
+    private Object[] currentFrame; // Assuming currentFrame is an array of some abstract types
+    private Object[] stackMapTableEntries; // Assuming this is where we store the entries
+
+    /**
+     * Puts some abstract types of  {@link #currentFrame} in {@link #stackMapTableEntries} , using the JVMS verification_type_info format used in StackMapTable attributes.
+     * @param start index of the first type in {@link #currentFrame} to write.
+     * @param end index of last type in {@link #currentFrame} to write (exclusive).
+     */
+    private void putAbstractTypes(final int start, final int end) {
+        if (start < 0 || end > currentFrame.length || start >= end) {
+            throw new IllegalArgumentException("Invalid start or end index");
+        }
+
+        // Assuming stackMapTableEntries is initialized to the appropriate size
+        int length = end - start;
+        System.arraycopy(currentFrame, start, stackMapTableEntries, 0, length);
     }
-}
 
-// Placeholder method for converting an abstract type to verification_type_info format
-private Object convertToVerificationTypeInfo(Object abstractType) {
-    // Conversion logic goes here
-    return abstractType; // This is just a placeholder
+    // Constructor and other methods can be added here for a complete class
 }

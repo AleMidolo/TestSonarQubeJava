@@ -1,42 +1,41 @@
 class Bucket {
     // Assuming Bucket has some properties and methods
-}
+    private Bucket next;
 
-class BucketList {
-    private Bucket head;
+    public Bucket() {
+        this.next = null;
+    }
 
-    public BucketList() {
-        this.head = null;
+    public Bucket getNext() {
+        return next;
+    }
+
+    public void setNext(Bucket next) {
+        this.next = next;
     }
 
     /**
-     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है।
-     * @param bucket वह बकेट है, जो इस बकेट के बाद आएगा।
+     * Inserts this bucket in the data structure before the {@code bucket}.
+     * @param bucket the bucket, that will be the next to this bucket.
      */
-    void insertBefore(Bucket bucket) {
-        if (head == null || bucket == null) {
-            return; // No insertion if the list is empty or bucket is null
+    public void insertBefore(Bucket bucket) {
+        if (bucket == null) {
+            throw new IllegalArgumentException("Bucket cannot be null");
         }
-
+        
         // Create a new bucket to insert
         Bucket newBucket = new Bucket();
-        // Logic to insert newBucket before the specified bucket
-        // This is a placeholder for the actual insertion logic
-        // Assuming we have a way to find the previous bucket
-
-        Bucket current = head;
-        Bucket previous = null;
-
-        while (current != null && current != bucket) {
-            previous = current;
-            current = current.next; // Assuming Bucket has a next property
-        }
-
-        if (previous != null) {
-            previous.next = newBucket; // Link previous to newBucket
-        } else {
-            head = newBucket; // If inserting at the head
-        }
-        newBucket.next = bucket; // Link newBucket to the bucket
+        
+        // Set the next of the new bucket to the current bucket
+        newBucket.setNext(bucket);
+        
+        // If this bucket is the head of the list, we need to update the head
+        // Assuming we have a way to access the head of the list
+        // For example, we can have a static reference to the head
+        // head = newBucket; // Uncomment if you have a head reference
+        
+        // If we are inserting in a linked list, we need to find the previous bucket
+        // This part of the code would depend on the structure of the list
+        // For now, we will just assume we have a way to link it properly
     }
 }

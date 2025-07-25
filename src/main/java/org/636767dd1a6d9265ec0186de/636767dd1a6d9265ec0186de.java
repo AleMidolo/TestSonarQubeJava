@@ -1,21 +1,23 @@
-public class CacheManager {
-    
+public class CacheExpiration {
+
     /** 
-     * @param timestamp        वर्तमान समय का टाइमस्टैम्प
-     * @param expiredThreshold पिछले अपडेट समय और कैश से हटाए जाने वाले समय बिंदु के बीच की अवधि को दर्शाता है।
-     * @return true का मतलब है कि इस मेट्रिक को कैश से हटाया जाना चाहिए।
+     * @param timestamp        of current time
+     * @param expiredThreshold represents the duration between last update time and the time point removing from cache.
+     * @return true means this metrics should be removed from cache.
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        long currentTime = System.currentTimeMillis();
-        return (currentTime - timestamp) > expiredThreshold;
+        // Assuming the last update time is represented by the timestamp
+        // If the current time minus the last update time exceeds the expired threshold, return true
+        return (System.currentTimeMillis() - timestamp) > expiredThreshold;
     }
 
     public static void main(String[] args) {
-        CacheManager cacheManager = new CacheManager();
-        long timestamp = System.currentTimeMillis() - 5000; // 5 seconds ago
-        long expiredThreshold = 3000; // 3 seconds
+        CacheExpiration cacheExpiration = new CacheExpiration();
+        long currentTime = System.currentTimeMillis();
+        long expiredThreshold = 5000; // 5 seconds
+        long lastUpdateTime = currentTime - 6000; // 6 seconds ago
 
-        boolean result = cacheManager.isExpired(timestamp, expiredThreshold);
+        boolean result = cacheExpiration.isExpired(lastUpdateTime, expiredThreshold);
         System.out.println("Is expired: " + result); // Should print true
     }
 }

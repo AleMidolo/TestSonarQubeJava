@@ -9,13 +9,10 @@ public class TagReader {
     }
 
     /** 
-     * एक फ़ील्ड टैग पढ़ने का प्रयास करें, यदि हम EOF पर पहुँच गए हैं तो शून्य लौटाएँ। प्रोटोकॉल संदेश पार्सर टैग पढ़ने के लिए इसका उपयोग करते हैं, क्योंकि एक प्रोटोकॉल संदेश वैध रूप से किसी भी टैग के स्थान पर समाप्त हो सकता है, और शून्य एक मान्य टैग संख्या नहीं है।
+     * Attempt to read a field tag, returning zero if we have reached EOF. Protocol message parsers use this to read tags, since a protocol message may legally end wherever a tag occurs, and zero is not a valid tag number.
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();
-        if (tag == -1) {
-            return 0; // EOF reached
-        }
-        return tag;
+        return (tag == -1) ? 0 : tag;
     }
 }

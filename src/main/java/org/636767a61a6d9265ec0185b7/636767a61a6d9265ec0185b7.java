@@ -1,7 +1,7 @@
-public class DigitValueConverter {
+public class DigitValueInterpreter {
 
-    /**
-     * किसी अक्षर को अंक के रूप में व्याख्या करें (किसी भी आधार में 36 तक) और संख्यात्मक मान लौटाएं। यह {@code Character.digit()} के समान है लेकिन हम गैर-ASCII अंकों को स्वीकार नहीं करते हैं।
+    /** 
+     * Interpret a character as a digit (in any base up to 36) and return the numeric value. This is like {@code Character.digit()} but we don't accept non-ASCII digits.
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
@@ -11,18 +11,18 @@ public class DigitValueConverter {
         } else if (c >= 'a' && c <= 'z') {
             return c - 'a' + 10; // ASCII 'a' to 'z'
         } else {
-            return -1; // Invalid character
+            return -1; // Non-ASCII digit
         }
     }
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(digitValue('0')); // Output: 0
-        System.out.println(digitValue('9')); // Output: 9
-        System.out.println(digitValue('A')); // Output: 10
-        System.out.println(digitValue('Z')); // Output: 35
-        System.out.println(digitValue('a')); // Output: 10
-        System.out.println(digitValue('z')); // Output: 35
-        System.out.println(digitValue('@')); // Output: -1 (Invalid character)
+        System.out.println(digitValue('0')); // 0
+        System.out.println(digitValue('9')); // 9
+        System.out.println(digitValue('A')); // 10
+        System.out.println(digitValue('Z')); // 35
+        System.out.println(digitValue('a')); // 10
+        System.out.println(digitValue('z')); // 35
+        System.out.println(digitValue('@')); // -1 (non-ASCII digit)
     }
 }

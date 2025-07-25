@@ -1,8 +1,9 @@
 import java.util.List;
 
 public class StringUtils {
+
     /** 
-     * केस-संवेदनशीलता की परवाह किए बिना जांच करता है कि स्ट्रिंग में दिए गए स्ट्रिंग सेट में कोई भी वर्ण है या नहीं। 
+     * Case in-sensitive Checks if the String contains any character in the given set of string. 
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null) {
@@ -19,9 +20,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String testString = "Hello there!";
-        boolean result = containsAnyIgnoreCase(testString, searchStrings);
+        List<String> searchStrArray = List.of("a", "b", "C");
+        String str = "Hello World";
+        boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println(result); // Output: true
     }
 }

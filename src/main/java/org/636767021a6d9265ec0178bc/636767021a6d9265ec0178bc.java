@@ -1,20 +1,20 @@
-public class StringSearch {
-    
+public class StringUtils {
+
     /** 
-     * एक स्ट्रिंग के भीतर पहला इंडेक्स खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#indexOf(String)} का उपयोग करती है। 
+     * Finds the first index within a String, handling <code>null</code>. This method uses  {@link String#indexOf(String)}. 
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
-            return -1; // यदि कोई भी स्ट्रिंग null है, तो -1 लौटाएं
+            return -1;
         }
-        return str.indexOf(searchStr); // स्ट्रिंग के भीतर खोजें
+        return str.indexOf(searchStr);
     }
 
     public static void main(String[] args) {
-        // परीक्षण के लिए कुछ उदाहरण
-        System.out.println(indexOf("Hello, world!", "world")); // 7
-        System.out.println(indexOf("Hello, world!", "Java")); // -1
-        System.out.println(indexOf(null, "test")); // -1
-        System.out.println(indexOf("test", null)); // -1
+        // Test cases
+        System.out.println(indexOf("Hello, World!", "World")); // Output: 7
+        System.out.println(indexOf("Hello, World!", "Java"));  // Output: -1
+        System.out.println(indexOf(null, "World"));             // Output: -1
+        System.out.println(indexOf("Hello, World!", null));    // Output: -1
     }
 }

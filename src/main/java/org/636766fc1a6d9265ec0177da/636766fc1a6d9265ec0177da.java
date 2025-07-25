@@ -1,19 +1,19 @@
 public class ParameterSeparatorChecker {
 
     /** 
-     * यह निर्धारित करें कि क्या एक पैरामीटर नाम वर्तमान स्थिति पर समाप्त होता है, अर्थात्, क्या दिया गया वर्ण एक विभाजक के रूप में योग्य है। 
+     * Determine whether a parameter name ends at the current position, that is, whether the given character qualifies as a separator. 
      */
     private static boolean isParameterSeparator(final char c) {
-        // Define the valid parameter separators
-        return c == ',' || c == ';' || c == '&' || c == '|';
+        // Define the characters that are considered as separators
+        return c == ',' || c == ';' || c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '(' || c == ')';
     }
 
     public static void main(String[] args) {
-        // Test the isParameterSeparator method
-        char testChar1 = ',';
-        char testChar2 = 'a';
-        
-        System.out.println(isParameterSeparator(testChar1)); // true
-        System.out.println(isParameterSeparator(testChar2)); // false
+        // Test cases
+        System.out.println(isParameterSeparator(',')); // true
+        System.out.println(isParameterSeparator(';')); // true
+        System.out.println(isParameterSeparator(' ')); // true
+        System.out.println(isParameterSeparator('a')); // false
+        System.out.println(isParameterSeparator(')')); // true
     }
 }

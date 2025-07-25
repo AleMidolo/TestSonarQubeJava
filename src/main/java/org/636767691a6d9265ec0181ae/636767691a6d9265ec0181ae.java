@@ -4,9 +4,9 @@ import java.util.Vector;
 public class EnumerationToStringArray {
 
     /** 
-     * दिए गए Enumeration को एक String array में कॉपी करें। Enumeration में केवल String तत्व होने चाहिए।
-     * @param enumeration कॉपी करने के लिए Enumeration
-     * @return String array (<code>null</code> यदि पास किया गया Enumeration <code>null</code> था)
+     * Copy the given Enumeration into a String array. The Enumeration must contain String elements only.
+     * @param enumeration the Enumeration to copy
+     * @return the String array (<code>null</code> if the passed-in Enumeration was <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {

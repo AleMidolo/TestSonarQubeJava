@@ -1,32 +1,36 @@
 import java.util.Stack;
 
-public class OutputFrameStack {
-    private Stack<Integer> stack;
+public class AbstractTypeStack {
+    private Stack<Integer> outputFrameStack;
 
-    public OutputFrameStack() {
-        stack = new Stack<>();
+    public AbstractTypeStack() {
+        outputFrameStack = new Stack<>();
     }
 
-    /**
-     * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
-     * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
+    /** 
+     * Pops an abstract type from the output frame stack and returns its value.
+     * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
-        if (stack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty");
+        if (outputFrameStack.isEmpty()) {
+            throw new IllegalStateException("Stack is empty. Cannot pop from an empty stack.");
         }
-        return stack.pop();
+        return outputFrameStack.pop();
     }
 
+    // Method to push an integer onto the stack for testing purposes
     public void push(int value) {
-        stack.push(value);
+        outputFrameStack.push(value);
     }
 
+    // Main method for testing
     public static void main(String[] args) {
-        OutputFrameStack outputFrameStack = new OutputFrameStack();
-        outputFrameStack.push(10);
-        outputFrameStack.push(20);
-        System.out.println(outputFrameStack.pop()); // Outputs: 20
-        System.out.println(outputFrameStack.pop()); // Outputs: 10
+        AbstractTypeStack stack = new AbstractTypeStack();
+        stack.push(10);
+        stack.push(20);
+        System.out.println("Popped value: " + stack.pop()); // Should print 20
+        System.out.println("Popped value: " + stack.pop()); // Should print 10
+        // Uncommenting the next line will throw an exception
+        // System.out.println("Popped value: " + stack.pop()); // Should throw exception
     }
 }

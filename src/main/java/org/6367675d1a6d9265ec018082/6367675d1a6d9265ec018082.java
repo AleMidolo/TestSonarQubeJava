@@ -1,17 +1,5 @@
 import java.util.Objects;
 
-class Node {
-    private final boolean isVirtual;
-
-    public Node(boolean isVirtual) {
-        this.isVirtual = isVirtual;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-}
-
 class Edge {
     private final Node from;
     private final Node to;
@@ -30,6 +18,29 @@ class Edge {
     }
 }
 
+class Node {
+    private final String name;
+    private final boolean isVirtual;
+
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
+        this.isVirtual = isVirtual;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public Node getRealNode() {
+        // Assuming the real counterpart is the same node without the virtual flag
+        return new Node(name, false);
+    }
+}
+
 class Graph {
     private Node currentNode;
     private Node nextNode;
@@ -39,18 +50,13 @@ class Graph {
         this.nextNode = nextNode;
     }
 
-    /**
-     * एक किनारे लौटाता है जो पहले लौटाए गए नोड को अगले लौटाए जाने वाले नोड से जोड़ता है। यदि इनमें से कोई भी नोड आभासी है, तो किनारा इसके वास्तविक समकक्ष पर होगा।
-     * @return वर्तमान नोड से अगले नोड तक एक किनारा
+    /** 
+     * Returns an edge connecting previously returned node with node, which will be returned next. If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
+     * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        Node realFrom = currentNode.isVirtual() ? getRealEquivalent(currentNode) : currentNode;
-        Node realTo = nextNode.isVirtual() ? getRealEquivalent(nextNode) : nextNode;
-        return new Edge(realFrom, realTo);
-    }
-
-    private Node getRealEquivalent(Node virtualNode) {
-        // Placeholder for real equivalent logic
-        return new Node(false); // Assuming a non-virtual node for demonstration
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        return new Edge(fromNode, toNode);
     }
 }

@@ -1,38 +1,54 @@
-public class StackPopper {
-    
-    // Assuming we have a stack to hold abstract types
-    private Stack<Object> stack;
+import java.util.Stack;
 
-    public StackPopper() {
-        stack = new Stack<>();
+public class FrameStack {
+    private Stack<Object> outputFrameStack;
+
+    public FrameStack() {
+        this.outputFrameStack = new Stack<>();
     }
 
-    /** 
-     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
-     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+    /**
+     * Pops as many abstract types from the output frame stack as described by the given descriptor.
+     * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        // Logic to pop elements based on the descriptor
-        // For demonstration, let's assume we just pop one element
-        if (!stack.isEmpty()) {
-            Object poppedElement = stack.pop();
-            System.out.println("Popped element: " + poppedElement + " for descriptor: " + descriptor);
-        } else {
-            System.out.println("Stack is empty. No elements to pop for descriptor: " + descriptor);
+        int count = getTypeCount(descriptor);
+        for (int i = 0; i < count; i++) {
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
+            } else {
+                throw new IllegalStateException("Not enough elements in the stack to pop.");
+            }
         }
     }
 
-    // Method to push elements onto the stack for testing purposes
-    public void push(Object element) {
-        stack.push(element);
+    private int getTypeCount(String descriptor) {
+        // This method should parse the descriptor and return the number of types to pop.
+        // For simplicity, let's assume a basic implementation that counts the number of argument types.
+        int count = 0;
+        boolean inArray = false;
+        for (char c : descriptor.toCharArray()) {
+            if (c == '(') {
+                inArray = true; // Start of method arguments
+            } else if (c == ')') {
+                inArray = false; // End of method arguments
+            } else if (inArray) {
+                if (c == 'L') {
+                    // Object type, consume until the next ';'
+                    count++;
+                    while (c != ';') {
+                        c = descriptor.charAt(++count);
+                    }
+                } else {
+                    // Primitive type
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
-    public static void main(String[] args) {
-        StackPopper sp = new StackPopper();
-        sp.push("AbstractType1");
-        sp.push("AbstractType2");
-        sp.pop("SomeDescriptor");
-        sp.pop("SomeDescriptor");
-        sp.pop("SomeDescriptor");
+    public void push(Object item) {
+        outputFrameStack.push(item);
     }
 }

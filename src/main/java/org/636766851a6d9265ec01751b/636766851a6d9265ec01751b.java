@@ -1,9 +1,9 @@
 public class HexDecoder {
 
     /** 
-     * एक सहायक जो एक स्ट्रिंग से हेक्साडेसिमल संख्या के आधे को डिकोड करता है।
-     * @param c वह ASCII वर्ण है जिसे डिकोड करना है। इसे {@code [0-9a-fA-F]} के रेंज में होना चाहिए।
-     * @return ASCII वर्ण में प्रदर्शित हेक्साडेसिमल मान, या {@link Character#MAX_VALUE} यदि वर्ण अमान्य है।
+     * Helper to decode half of a hexadecimal number from a string.
+     * @param c The ASCII character of the hexadecimal number to decode. Must be in the range  {@code [0-9a-fA-F]}.
+     * @return The hexadecimal value represented in the ASCII character given, or  {@link Character#MAX_VALUE} if the character is invalid.
      */
     private static char decodeHexNibble(final char c) {
         if (c >= '0' && c <= '9') {
@@ -13,16 +13,18 @@ public class HexDecoder {
         } else if (c >= 'A' && c <= 'F') {
             return (char) (c - 'A' + 10);
         } else {
-            return Character.MAX_VALUE; // अमान्य वर्ण
+            return Character.MAX_VALUE; // Invalid character
         }
     }
 
     public static void main(String[] args) {
-        // परीक्षण के लिए कुछ उदाहरण
-        System.out.println(decodeHexNibble('0')); // 0
-        System.out.println(decodeHexNibble('9')); // 9
-        System.out.println(decodeHexNibble('a')); // 10
-        System.out.println(decodeHexNibble('F')); // 15
-        System.out.println(decodeHexNibble('g')); // 65535 (Character.MAX_VALUE)
+        // Test cases
+        System.out.println(decodeHexNibble('0')); // Output: 0
+        System.out.println(decodeHexNibble('9')); // Output: 9
+        System.out.println(decodeHexNibble('a')); // Output: 10
+        System.out.println(decodeHexNibble('f')); // Output: 15
+        System.out.println(decodeHexNibble('A')); // Output: 10
+        System.out.println(decodeHexNibble('F')); // Output: 15
+        System.out.println(decodeHexNibble('g')); // Output: 65535 (Character.MAX_VALUE)
     }
 }

@@ -10,15 +10,10 @@ public class DiagnosticContext {
         return contextStack.peek();
     }
 
-    // Additional methods to push and pop context if needed
-    public static void push(String context) {
-        contextStack.push(context);
-    }
-
-    public static String pop() {
-        if (contextStack.isEmpty()) {
-            return "";
-        }
-        return contextStack.pop();
+    // Example usage
+    public static void main(String[] args) {
+        contextStack.push("Context 1");
+        contextStack.push("Context 2");
+        System.out.println(peek()); // Output: Context 2
     }
 }

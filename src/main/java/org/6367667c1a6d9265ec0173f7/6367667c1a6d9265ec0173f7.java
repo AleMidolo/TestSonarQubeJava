@@ -1,25 +1,21 @@
 import java.util.Arrays;
 
 public class BodyChecker {
-    private Object body;
-
-    public BodyChecker(Object body) {
-        this.body = body;
-    }
 
     /**
      * Verdadero si el cuerpo es un arreglo de bytes
      * @return Verdadero si el cuerpo es un arreglo de bytes
      */
-    public boolean hasBytes() {
+    public boolean hasBytes(Object body) {
         return body instanceof byte[];
     }
 
     public static void main(String[] args) {
-        BodyChecker checker1 = new BodyChecker(new byte[]{1, 2, 3});
-        System.out.println(checker1.hasBytes()); // true
+        BodyChecker checker = new BodyChecker();
+        byte[] byteArray = new byte[10];
+        Object nonByteArray = new Object();
 
-        BodyChecker checker2 = new BodyChecker("Not a byte array");
-        System.out.println(checker2.hasBytes()); // false
+        System.out.println(checker.hasBytes(byteArray)); // true
+        System.out.println(checker.hasBytes(nonByteArray)); // false
     }
 }

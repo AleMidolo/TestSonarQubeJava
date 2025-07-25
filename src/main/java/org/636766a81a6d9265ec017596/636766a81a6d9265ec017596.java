@@ -28,12 +28,12 @@ public class ByteVector {
         }
     }
 
-    // Optional: Method to get the current size of the vector
+    // Optional: Add a method to get the current size of the vector
     public int size() {
         return size;
     }
 
-    // Optional: Method to get the underlying byte array
+    // Optional: Add a method to get the underlying byte array
     public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }

@@ -14,23 +14,12 @@ public class CollectionUtils {
             return null;
         }
 
-        Iterator candidateIterator = candidates.iterator();
-        while (candidateIterator.hasNext()) {
-            Object candidate = candidateIterator.next();
+        for (Object candidate : candidates) {
             if (source.contains(candidate)) {
                 return candidate;
             }
         }
 
         return null;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Collection<String> source = java.util.List.of("apple", "banana", "cherry");
-        Collection<String> candidates = java.util.List.of("banana", "grape", "cherry");
-
-        Object result = findFirstMatch(source, candidates);
-        System.out.println("Primer elemento encontrado: " + result); // Debería imprimir "banana"
     }
 }

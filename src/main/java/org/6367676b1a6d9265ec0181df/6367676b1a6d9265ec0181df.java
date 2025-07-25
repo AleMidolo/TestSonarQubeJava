@@ -1,4 +1,5 @@
 public class StringUtils {
+
     /**
      * Devuelve {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
      * @param str la cadena a verificar
@@ -17,10 +18,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "hola")); // true
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "Mundo")); // false
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "HOLA")); // true
-        System.out.println(startsWithIgnoreCase("Hola Mundo", "mundo")); // false
+        System.out.println(startsWithIgnoreCase("Hello World", "hello")); // true
+        System.out.println(startsWithIgnoreCase("Hello World", "world")); // false
+        System.out.println(startsWithIgnoreCase("Hello World", "HELLO")); // true
+        System.out.println(startsWithIgnoreCase("Hello World", "HELLO WORLD")); // false
     }
 }

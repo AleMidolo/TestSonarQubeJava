@@ -1,4 +1,4 @@
-public class ArrayConverter {
+public class ArrayUtils {
 
     /**
      * <p>Convierte un arreglo de primitivos "shorts" a objetos.</p> 

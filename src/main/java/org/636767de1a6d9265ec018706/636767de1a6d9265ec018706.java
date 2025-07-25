@@ -19,41 +19,39 @@ public class Mappings {
 
 public class MappingDiff {
 
+    /**
+     * Devuelve los mapeos con campos que no existen en los mapeos de entrada. Los mapeos de entrada deben ser mapeos de historial del índice actual. No devolver la configuración _source para evitar conflictos de actualización del índice actual.
+     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming that the current index mappings are stored in a static or external source
-        // For this example, we'll create a mock current index mappings
-        Mappings currentIndexMappings = getCurrentIndexMappings(tableName);
+        Mappings result = new Mappings();
+        Map<String, Object> currentMappings = getCurrentMappings(tableName);
+        Map<String, Object> inputMappings = mappings.getProperties();
 
-        Mappings diffMappings = new Mappings();
-        Map<String, Object> diffProperties = new HashMap<>();
-
-        // Iterate through the input mappings and compare with current index mappings
-        for (Map.Entry<String, Object> entry : mappings.getProperties().entrySet()) {
-            String fieldName = entry.getKey();
-            Object fieldValue = entry.getValue();
-
-            // Skip the _source configuration
-            if ("_source".equals(fieldName)) {
-                continue;
-            }
-
-            // Check if the field exists in the current index mappings
-            if (!currentIndexMappings.getProperties().containsKey(fieldName)) {
-                diffProperties.put(fieldName, fieldValue);
+        for (Map.Entry<String, Object> entry : currentMappings.entrySet()) {
+            String key = entry.getKey();
+            if (!inputMappings.containsKey(key) && !key.equals("_source")) {
+                result.getProperties().put(key, entry.getValue());
             }
         }
 
-        diffMappings.setProperties(diffProperties);
-        return diffMappings;
+        return result;
     }
 
-    private Mappings getCurrentIndexMappings(String tableName) {
-        // Mock implementation to return current index mappings
-        Mappings currentMappings = new Mappings();
-        Map<String, Object> currentProperties = new HashMap<>();
-        currentProperties.put("existingField1", "type1");
-        currentProperties.put("existingField2", "type2");
-        currentMappings.setProperties(currentProperties);
+    private Map<String, Object> getCurrentMappings(String tableName) {
+        // Simulación de la obtención de los mapeos actuales de la tabla
+        Map<String, Object> currentMappings = new HashMap<>();
+        currentMappings.put("field1", "type1");
+        currentMappings.put("field2", "type2");
+        currentMappings.put("_source", "sourceConfig");
         return currentMappings;
+    }
+
+    public static void main(String[] args) {
+        MappingDiff diff = new MappingDiff();
+        Mappings inputMappings = new Mappings();
+        inputMappings.getProperties().put("field1", "type1");
+
+        Mappings result = diff.diffStructure("exampleTable", inputMappings);
+        System.out.println(result.getProperties()); // Output: {field2=type2}
     }
 }

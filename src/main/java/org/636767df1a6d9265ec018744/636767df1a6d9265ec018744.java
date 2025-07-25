@@ -16,16 +16,10 @@ public class TimeRangeDivider {
     protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> rangos = new ArrayList<>();
 
-        long tiempoActual = inicio;
-
-        while (tiempoActual < fin) {
-            long tiempoSiguiente = tiempoActual + FETCH_DATA_DURATION;
-            if (tiempoSiguiente > fin) {
-                tiempoSiguiente = fin;
-            }
-
-            rangos.add(new TimeRange(tiempoActual, tiempoSiguiente));
-            tiempoActual = tiempoSiguiente;
+        while (inicio < fin) {
+            long nuevoFin = Math.min(inicio + FETCH_DATA_DURATION, fin);
+            rangos.add(new TimeRange(inicio, nuevoFin));
+            inicio = nuevoFin;
         }
 
         return rangos;

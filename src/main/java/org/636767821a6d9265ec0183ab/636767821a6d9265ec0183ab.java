@@ -11,10 +11,13 @@ public class Example {
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Output: true
+        Example example1 = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example1.hasThrown()); // Output: true
 
         Example example2 = new Example(null);
         System.out.println(example2.hasThrown()); // Output: false
+
+        Example example3 = new Example(new RuntimeException(""));
+        System.out.println(example3.hasThrown()); // Output: false
     }
 }

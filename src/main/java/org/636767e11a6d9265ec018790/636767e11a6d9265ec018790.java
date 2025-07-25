@@ -12,7 +12,7 @@ public class ThreadSnapshotParser {
         List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
+            ThreadSnapshot snapshot = ThreadSnapshot.parse(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
@@ -34,30 +34,24 @@ public class ThreadSnapshotParser {
     // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
-        private String threadName;
-        private String threadState;
 
-        public ThreadSnapshot(long timestamp, String threadName, String threadState) {
+        public ThreadSnapshot(long timestamp) {
             this.timestamp = timestamp;
-            this.threadName = threadName;
-            this.threadState = threadState;
         }
 
         public long getTimestamp() {
             return timestamp;
         }
 
-        public static ThreadSnapshot fromString(String line) {
-            // Parse the line and return a ThreadSnapshot object
-            // Example parsing logic (adjust as needed):
-            String[] parts = line.split(",");
-            if (parts.length == 3) {
-                long timestamp = Long.parseLong(parts[0]);
-                String threadName = parts[1];
-                String threadState = parts[2];
-                return new ThreadSnapshot(timestamp, threadName, threadState);
+        public static ThreadSnapshot parse(String line) {
+            // Implement parsing logic here
+            // For example, parse the timestamp from the line
+            try {
+                long timestamp = Long.parseLong(line.split(",")[0]);
+                return new ThreadSnapshot(timestamp);
+            } catch (Exception e) {
+                return null;
             }
-            return null;
         }
     }
 

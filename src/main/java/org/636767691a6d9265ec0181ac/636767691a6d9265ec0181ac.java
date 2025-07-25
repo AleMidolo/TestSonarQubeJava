@@ -15,7 +15,7 @@ public class PathResolver {
         // Resolve the relative path against the base path
         Path resolvedPath = basePath.resolve(relativePath);
         
-        // Normalize the path to remove any redundant elements like ".." or "."
+        // Normalize the path to remove any redundant elements
         Path normalizedPath = resolvedPath.normalize();
         
         // Convert the normalized path back to a string

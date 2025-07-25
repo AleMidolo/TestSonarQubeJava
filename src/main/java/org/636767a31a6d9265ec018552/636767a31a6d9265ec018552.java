@@ -1,10 +1,9 @@
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
-    private final InputStream inputStream;
+    private InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -15,15 +14,15 @@ public class StreamReader {
      */
     @Override
     public String readString() throws IOException {
-        int length = inputStream.read();
-        if (length == -1) {
-            throw new IOException("End of stream reached");
+        StringBuilder stringBuilder = new StringBuilder();
+        int data;
+        while ((data = inputStream.read()) != -1) {
+            char character = (char) data;
+            if (character == '\n' || character == '\r') {
+                break; // Stop reading at newline or carriage return
+            }
+            stringBuilder.append(character);
         }
-        byte[] bytes = new byte[length];
-        int bytesRead = inputStream.read(bytes);
-        if (bytesRead != length) {
-            throw new IOException("Failed to read the expected number of bytes");
-        }
-        return new String(bytes, StandardCharsets.UTF_8);
+        return stringBuilder.toString();
     }
 }

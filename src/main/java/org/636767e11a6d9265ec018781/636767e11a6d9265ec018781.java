@@ -6,7 +6,7 @@ public class Cache {
 
     /**
      * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
-     * @param data जिसे संभागित रूप से जोड़ा जाना है।
+     * @param data जिसे संभावित रूप से जोड़ा जाना है।
      */
     @Override
     public void accept(final METRICS data) {
@@ -20,14 +20,14 @@ public class Cache {
     }
 }
 
-// Assuming METRICS class has the following structure
+// Assuming METRICS class has the following methods
 class METRICS {
     private String key;
-    private Map<String, Object> metricsData;
+    private int value;
 
-    public METRICS(String key, Map<String, Object> metricsData) {
+    public METRICS(String key, int value) {
         this.key = key;
-        this.metricsData = metricsData;
+        this.value = value;
     }
 
     public String getKey() {
@@ -35,8 +35,10 @@ class METRICS {
     }
 
     public void merge(METRICS other) {
-        this.metricsData.putAll(other.metricsData);
+        this.value += other.value; // Example merge logic
     }
 
-    // Other methods and fields as needed
+    public int getValue() {
+        return value;
+    }
 }

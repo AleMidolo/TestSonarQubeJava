@@ -12,7 +12,7 @@ public class ByteVector {
     public ByteVector putInt(final int intValue) {
         ensureCapacity(size + 4); // Ensure space for 4 bytes
 
-        // Write the int value in big-endian order
+        // Insert the int value in big-endian order
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);

@@ -7,7 +7,7 @@ public class OutputFrameStack {
         stack = new Stack<>();
     }
 
-    /** 
+    /**
      * आउटपुट फ्रेम स्टैक से एक अमूर्त प्रकार को पॉप करता है और इसका मान लौटाता है।
      * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
      */
@@ -16,5 +16,10 @@ public class OutputFrameStack {
             throw new IllegalStateException("Stack is empty");
         }
         return stack.pop();
+    }
+
+    // Optional: Method to push an element onto the stack for testing purposes
+    public void push(int value) {
+        stack.push(value);
     }
 }

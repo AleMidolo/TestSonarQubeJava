@@ -1,7 +1,7 @@
 import org.jgrapht.Graph;
 import java.util.Set;
 
-public class GraphUtils {
+public class CliqueChecker {
 
     /**
      * जांचें कि <code>graph</code> द्वारा दिए गए <code>vertices</code> से प्रेरित उपग्राफ पूर्ण है, अर्थात् एक क्लिक है।
@@ -11,9 +11,9 @@ public class GraphUtils {
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         // Check if every pair of vertices in the set is connected by an edge
-        for (V u : vertices) {
-            for (V v : vertices) {
-                if (!u.equals(v) && !graph.containsEdge(u, v)) {
+        for (V v1 : vertices) {
+            for (V v2 : vertices) {
+                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
                     return false;
                 }
             }

@@ -6,7 +6,7 @@ public class ByteArrayOutputStream extends OutputStream {
     private int count;
 
     public ByteArrayOutputStream() {
-        this(32);
+        this(32); // Default buffer size
     }
 
     public ByteArrayOutputStream(int size) {
@@ -72,10 +72,5 @@ public class ByteArrayOutputStream extends OutputStream {
     @Override
     public String toString() {
         return new String(buffer, 0, count);
-    }
-
-    @Override
-    public void close() throws IOException {
-        // No resources to close
     }
 }

@@ -1,13 +1,19 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
-public class MyAtmosphereResource extends AtmosphereResource {
+public class MyAtmosphereResource {
 
+    private AtmosphereResource resource;
+
+    /**
+     * एक {@link AtmosphereResourceEventListener} जोड़ें।
+     * @param e AtmosphereResourceEventListener का एक उदाहरण
+     */
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        if (e != null) {
-            this.addEventListener(e);
+        if (resource != null) {
+            resource.addEventListener(e);
         }
-        return this;
+        return resource;
     }
 }

@@ -21,7 +21,7 @@ public class ArrayConverter {
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        for (Integer num : Objects.requireNonNull(objectArray)) {
+        for (Integer num : objectArray) {
             System.out.println(num);
         }
     }

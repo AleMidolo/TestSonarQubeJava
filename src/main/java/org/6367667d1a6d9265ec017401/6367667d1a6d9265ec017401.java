@@ -2,6 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UnescapeJava {
+
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
@@ -46,12 +47,25 @@ public class UnescapeJava {
                             sb.append('\"');
                             i++;
                             break;
-                        default:
-                            sb.append(ch);
+                        case 'u':
+                            if (i + 5 < str.length()) {
+                                String hex = str.substring(i + 2, i + 6);
+                                try {
+                                    int unicode = Integer.parseInt(hex, 16);
+                                    sb.append((char) unicode);
+                                    i += 5;
+                                } catch (NumberFormatException e) {
+                                    throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+                                }
+                            } else {
+                                throw new Exception("Incomplete Unicode escape sequence");
+                            }
                             break;
+                        default:
+                            throw new Exception("Invalid escape sequence: \\" + nextChar);
                     }
                 } else {
-                    sb.append(ch);
+                    throw new Exception("Incomplete escape sequence");
                 }
             } else {
                 sb.append(ch);
@@ -60,8 +74,14 @@ public class UnescapeJava {
         return sb.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        String input = "This is a test\\nstring with\\tescape\\rsequences\\b\\f\\'\\\"\\\\";
-        System.out.println(unescapeJava(input));
+    public static void main(String[] args) {
+        try {
+            String input = "Hello\\nWorld\\t\\u0041";
+            String output = unescapeJava(input);
+            System.out.println(output);  // Output: Hello
+                                         // World   A
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

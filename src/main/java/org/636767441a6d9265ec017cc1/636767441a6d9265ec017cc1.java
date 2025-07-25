@@ -22,10 +22,10 @@ public class TreeRotation<T> {
             return node;
         }
 
-        TreeNode<T> newParent = node.left;
-        node.left = newParent.right;
-        newParent.right = node;
+        TreeNode<T> newRoot = node.left;
+        node.left = newRoot.right;
+        newRoot.right = node;
 
-        return newParent;
+        return newRoot;
     }
 }

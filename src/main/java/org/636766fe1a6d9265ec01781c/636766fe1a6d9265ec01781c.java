@@ -12,11 +12,11 @@ public class CharUtils {
      * CharUtils.toCharacterObject(' ')  = ' '
      * CharUtils.toCharacterObject('A')  = 'A'
      * </pre>
-     * @param ch  वह चरित्र जिसे परिवर्तित करना है
+     * @param ch वह चरित्र जिसे परिवर्तित करना है
      * @return निर्दिष्ट चरित्र का एक Character
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch <= 127) { // ASCII 7-bit characters
+        if (ch <= 127) { // Check if the character is within the ASCII 7-bit range
             return CHAR_CACHE.computeIfAbsent(ch, k -> ch);
         }
         return ch;

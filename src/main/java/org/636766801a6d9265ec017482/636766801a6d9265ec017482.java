@@ -19,19 +19,18 @@ public class ClassFileBuffer {
         }
 
         // Clear the buffer and reset the read pointer
+        this.buffer = new byte[this.buffer.length];
         this.readPointer = 0;
-        int bytesRead = in.read(this.buffer);
 
-        if (bytesRead == -1) {
-            throw new IOException("End of stream reached before reading any data");
+        // Read data from the InputStream into the buffer
+        int bytesRead;
+        while ((bytesRead = in.read(this.buffer)) != -1) {
+            // If the buffer is full, break the loop
+            if (bytesRead == this.buffer.length) {
+                break;
+            }
         }
     }
 
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getReadPointer() {
-        return readPointer;
-    }
+    // Additional methods to access the buffer and readPointer can be added here
 }

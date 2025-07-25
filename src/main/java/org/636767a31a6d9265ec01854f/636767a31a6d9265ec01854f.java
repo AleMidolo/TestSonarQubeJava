@@ -1,30 +1,34 @@
 import java.io.IOException;
 
-private void checkIfPackedField() throws IOException {
-    // Assuming 'field' is a byte array representing the packed field
-    // and 'isPacked' is a boolean indicating whether the field is packed.
-    if (isPacked) {
-        // Update internal state to indicate that packed fields are being read
-        // For example, set a flag or update a status variable
-        isReadingPackedFields = true;
-        
-        // Perform any necessary operations to handle the packed field
-        // For example, read the packed data and process it
-        // This is a placeholder for actual logic
-        byte[] packedData = readPackedData();
-        processPackedData(packedData);
-    } else {
-        // If the field is not packed, reset the state or handle accordingly
-        isReadingPackedFields = false;
+public class PackedFieldChecker {
+
+    private boolean isPackedFieldReading = false;
+
+    /**
+     * जांचें कि क्या यह फ़ील्ड लंबाई-सीमित फ़ील्ड में पैक किया गया है। यदि हाँ, तो आंतरिक स्थिति को अपडेट करें ताकि यह दर्शा सके कि पैक किए गए फ़ील्ड पढ़े जा रहे हैं।
+     * @throws IOException
+     */
+    private void checkIfPackedField() throws IOException {
+        // Assuming some logic to determine if the field is packed
+        boolean isPacked = determineIfFieldIsPacked();
+
+        if (isPacked) {
+            isPackedFieldReading = true;
+            // Additional logic to handle the packed field reading
+        } else {
+            isPackedFieldReading = false;
+        }
     }
-}
 
-// Placeholder methods for reading and processing packed data
-private byte[] readPackedData() throws IOException {
-    // Implement logic to read packed data
-    return new byte[0]; // Placeholder return
-}
+    // Placeholder method to simulate the logic of determining if the field is packed
+    private boolean determineIfFieldIsPacked() {
+        // This method should contain the actual logic to determine if the field is packed
+        // For example, checking a flag or reading from a stream
+        return false; // Placeholder return value
+    }
 
-private void processPackedData(byte[] packedData) {
-    // Implement logic to process packed data
+    // Getter for the internal state
+    public boolean isPackedFieldReading() {
+        return isPackedFieldReading;
+    }
 }

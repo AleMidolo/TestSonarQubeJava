@@ -14,8 +14,11 @@ public class JsonSerializer {
         // For example, let's assume this class has a field `data` that needs to be serialized
         Object data = this.getData(); // Replace with actual data retrieval logic
 
-        // Serialize the data to JSON with the provided features
-        return JSON.toJSONString(data, features);
+        // Configure JSONWriter with the provided features
+        JSONWriter writer = JSONWriter.of(features);
+
+        // Serialize the data to JSON string
+        return JSON.toJSONString(data, writer);
     }
 
     // Dummy method to simulate data retrieval

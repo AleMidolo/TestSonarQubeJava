@@ -1,38 +1,40 @@
-import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContentBuilder {
 
     /**
-     * construir contenido, si tiene "ats" alguien establece el "ats"
+     * Build content, if it has ats someone set the ats
+     * @param content The raw content string
+     * @return Processed content with ats extracted
      */
-    private Map<String,Object> buildContent(JsonObject jsonObject) {
-        Map<String, Object> content = new HashMap<>();
+    public static String buildContent(String content) {
+        if (content == null || content.isEmpty()) {
+            return "";
+        }
+
+        // Pattern to match @mentions
+        Pattern pattern = Pattern.compile("@\\w+");
+        Matcher matcher = pattern.matcher(content);
         
-        if (jsonObject != null) {
-            // Iterate through all entries in JsonObject
-            for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-                String key = entry.getKey();
-                JsonElement element = entry.getValue();
-                
-                // Handle "ats" field specially
-                if ("ats".equals(key) && !element.isJsonNull()) {
-                    content.put("ats", element.getAsString());
-                }
-                // Add other non-null fields to content map
-                else if (!element.isJsonNull()) {
-                    if (element.isJsonPrimitive()) {
-                        content.put(key, element.getAsString());
-                    } else if (element.isJsonObject()) {
-                        content.put(key, buildContent(element.getAsJsonObject()));
-                    } else if (element.isJsonArray()) {
-                        content.put(key, element.getAsJsonArray());
-                    }
-                }
+        List<String> mentions = new ArrayList<>();
+        
+        // Find all @mentions
+        while (matcher.find()) {
+            String mention = matcher.group();
+            mentions.add(mention.substring(1)); // Remove @ symbol
+        }
+
+        // If mentions found, process them
+        if (!mentions.isEmpty()) {
+            // Replace @mentions with proper format
+            for (String mention : mentions) {
+                content = content.replace("@" + mention, "[AT]" + mention + "[/AT]");
             }
         }
-        
+
         return content;
     }
 }

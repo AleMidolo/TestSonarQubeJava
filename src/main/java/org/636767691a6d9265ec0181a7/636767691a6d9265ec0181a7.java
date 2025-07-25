@@ -1,20 +1,22 @@
+package com.example.utils;
+
 public class StringUtils {
     /**
-     * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
-     * @param str la cadena a verificar
-     * @param leadingCharacter el carácter inicial que se debe eliminar
-     * @return la cadena sin el carácter inicial
+     * Trim all occurrences of the supplied leading character from the given String.
+     * @param str the String to check
+     * @param leadingCharacter the leading character to be trimmed
+     * @return the trimmed String
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
         if (str == null || str.isEmpty()) {
             return str;
         }
-        
-        int i = 0;
-        while (i < str.length() && str.charAt(i) == leadingCharacter) {
-            i++;
+
+        int index = 0;
+        while (index < str.length() && str.charAt(index) == leadingCharacter) {
+            index++;
         }
-        
-        return str.substring(i);
+
+        return str.substring(index);
     }
 }

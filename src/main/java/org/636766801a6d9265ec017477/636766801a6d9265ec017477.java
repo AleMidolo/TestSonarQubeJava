@@ -1,51 +1,17 @@
-import java.io.InputStream;
-import java.util.Stack;
-import java.io.IOException;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class FileProcessor {
-
+public class FileHandler {
     /**
-     * Agrega los archivos especificados en orden inverso.
+     * Add the specified files in reverse order.
+     * @param files List of files to add in reverse order
+     * @return List of files in reverse order
      */
-    private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
-        }
-
-        Stack<InputStream> stack = new Stack<>();
-        
-        // Push all files onto stack
-        for (InputStream file : files) {
-            if (file != null) {
-                stack.push(file);
-            }
-        }
-
-        // Process files in reverse order
-        while (!stack.isEmpty()) {
-            InputStream currentFile = stack.pop();
-            try {
-                processFile(currentFile);
-            } catch (IOException e) {
-                // Handle exception appropriately
-                e.printStackTrace();
-            } finally {
-                try {
-                    currentFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    // Helper method to process individual files
-    private void processFile(InputStream file) throws IOException {
-        // Add file processing logic here
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = file.read(buffer)) != -1) {
-            // Process bytes as needed
-        }
+    public List<File> addFilesInReverseOrder(List<File> files) {
+        List<File> reversedFiles = new ArrayList<>(files);
+        Collections.reverse(reversedFiles);
+        return reversedFiles;
     }
 }

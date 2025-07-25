@@ -1,55 +1,70 @@
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
-public class Graph<V,E> {
-
-    private Set<Edge<V,E>> edges;
+public class Graph {
+    // Assume we have an adjacency list representation with Edge objects
+    private Map<Vertex, List<Edge>> adjList;
     
-    /**
-     * Calcula la suma de los pesos que entran a un vértice
-     * @param v el vértice
-     * @return la suma de los pesos que entran a un vértice
-     */
-    public double vertexWeight(Set<V> v) {
+    public double computeIncomingWeightSum(Vertex v) {
         double sum = 0.0;
         
-        for(Edge<V,E> edge : edges) {
-            if(v.contains(edge.getDestination())) {
-                sum += edge.getWeight();
+        // Iterate through all vertices and their edges
+        for (Map.Entry<Vertex, List<Edge>> entry : adjList.entrySet()) {
+            List<Edge> edges = entry.getValue();
+            
+            // Check each edge to see if it points to vertex v
+            for (Edge e : edges) {
+                if (e.getDestination().equals(v)) {
+                    sum += e.getWeight();
+                }
             }
         }
         
         return sum;
     }
     
-    // Edge class to represent weighted edges
-    private class Edge<V,E> {
-        private V source;
-        private V destination;
-        private double weight;
-        private E data;
+    // Helper classes
+    class Vertex {
+        private int id;
         
-        public Edge(V source, V destination, double weight, E data) {
+        public Vertex(int id) {
+            this.id = id;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Vertex vertex = (Vertex) o;
+            return id == vertex.id;
+        }
+        
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+    }
+    
+    class Edge {
+        private Vertex source;
+        private Vertex destination;
+        private double weight;
+        
+        public Edge(Vertex source, Vertex destination, double weight) {
             this.source = source;
             this.destination = destination;
             this.weight = weight;
-            this.data = data;
         }
         
-        public V getSource() {
+        public Vertex getSource() {
             return source;
         }
         
-        public V getDestination() {
+        public Vertex getDestination() {
             return destination;
         }
         
         public double getWeight() {
             return weight;
-        }
-        
-        public E getData() {
-            return data;
         }
     }
 }

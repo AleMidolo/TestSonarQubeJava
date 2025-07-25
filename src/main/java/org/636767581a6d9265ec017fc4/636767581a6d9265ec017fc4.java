@@ -1,12 +1,12 @@
-public class MathUtils {
+public class Factorial {
     /**
-     * Calcular el factorial de $n$.
-     * @param n el número de entrada
-     * @return el factorial
+     * Calculate the factorial of n.
+     * @param n the input number
+     * @return the factorial
      */
     public static long factorial(int n) {
         if (n < 0) {
-            throw new IllegalArgumentException("Factorial not defined for negative numbers");
+            throw new IllegalArgumentException("Factorial is not defined for negative numbers");
         }
         
         if (n == 0 || n == 1) {
@@ -17,6 +17,7 @@ public class MathUtils {
         for (int i = 2; i <= n; i++) {
             result *= i;
         }
+        
         return result;
     }
 }

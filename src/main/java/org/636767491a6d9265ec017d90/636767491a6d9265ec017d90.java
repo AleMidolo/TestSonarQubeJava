@@ -1,18 +1,35 @@
-public class ArrayUtils {
-    /**
-     * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
-     * @param <V> el tipo de elementos en el arreglo
-     * @param arr el arreglo
-     * @param from el índice del primer elemento (inclusive) dentro del rango a invertir
-     * @param to el índice del último elemento (inclusive) dentro del rango a invertir
-     */
-    public static final <V> void reverse(V[] arr, int from, int to) {
+import java.util.Arrays;
+
+public class ArrayReverser {
+    
+    public static <V> void reverseRange(V[] arr, int from, int to) {
+        if (arr == null || from >= to || from < 0 || to >= arr.length) {
+            return;
+        }
+        
         while (from < to) {
+            // Swap elements at from and to indices
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;
+            
             from++;
             to--;
         }
+    }
+    
+    // Example usage:
+    public static void main(String[] args) {
+        Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8};
+        System.out.println("Before: " + Arrays.toString(numbers));
+        
+        reverseRange(numbers, 2, 5);
+        System.out.println("After: " + Arrays.toString(numbers));
+        
+        String[] words = {"apple", "banana", "cherry", "date", "elderberry"};
+        System.out.println("Before: " + Arrays.toString(words));
+        
+        reverseRange(words, 1, 3);
+        System.out.println("After: " + Arrays.toString(words));
     }
 }

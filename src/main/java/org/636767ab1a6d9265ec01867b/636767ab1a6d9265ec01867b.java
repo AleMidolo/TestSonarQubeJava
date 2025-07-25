@@ -1,53 +1,50 @@
 import java.nio.charset.StandardCharsets;
 
-public class StringSerializer {
+public class StringUtils {
     /**
-     * Escribe los bytes codificados en utf8 de la cadena en el {@link LinkedBuffer}.
+     * Writes the utf8-encoded bytes from the string into the LinkedBuffer.
+     * @param str The input string to encode
+     * @param buffer The buffer to write the encoded bytes to
+     * @return The number of bytes written
      */
-    public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || str.length() == 0) {
-            return lb;
+    public static int writeUTF8(String str, LinkedBuffer buffer) {
+        if (str == null || buffer == null) {
+            return 0;
         }
 
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        int size = utf8Bytes.length;
-        
-        // Check if current buffer has enough space
-        if (lb.offset + size > lb.buffer.length) {
-            // Create new buffer if needed
-            LinkedBuffer newBuffer = new LinkedBuffer(Math.max(size, lb.buffer.length));
-            lb.next = newBuffer;
-            session.tail = newBuffer;
-            System.arraycopy(utf8Bytes, 0, newBuffer.buffer, 0, size);
-            newBuffer.offset = size;
-            return newBuffer;
-        }
-
-        // Copy bytes to existing buffer
-        System.arraycopy(utf8Bytes, 0, lb.buffer, lb.offset, size);
-        lb.offset += size;
-        return lb;
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        buffer.write(bytes, 0, bytes.length);
+        return bytes.length;
     }
+}
 
-    // Helper class for buffer management
-    public static class LinkedBuffer {
-        byte[] buffer;
-        int offset;
-        LinkedBuffer next;
-
-        public LinkedBuffer(int size) {
-            this.buffer = new byte[size];
-            this.offset = 0;
-            this.next = null;
-        }
+class LinkedBuffer {
+    private byte[] buffer;
+    private int position;
+    private int capacity;
+    
+    public LinkedBuffer(int size) {
+        buffer = new byte[size];
+        position = 0;
+        capacity = size;
     }
-
-    // Helper class for writing session
-    public static class WriteSession {
-        LinkedBuffer tail;
-        
-        public WriteSession() {
-            this.tail = null;
+    
+    public void write(byte[] bytes, int offset, int length) {
+        if (position + length > capacity) {
+            // Grow buffer if needed
+            byte[] newBuffer = new byte[Math.max(capacity * 2, position + length)];
+            System.arraycopy(buffer, 0, newBuffer, 0, position);
+            buffer = newBuffer;
+            capacity = buffer.length;
         }
+        
+        System.arraycopy(bytes, offset, buffer, position, length);
+        position += length;
+    }
+    
+    public byte[] toByteArray() {
+        byte[] result = new byte[position];
+        System.arraycopy(buffer, 0, result, 0, position);
+        return result;
     }
 }

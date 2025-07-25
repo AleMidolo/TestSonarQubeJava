@@ -1,46 +1,34 @@
 import java.util.*;
 
-public class Graph<V,E> {
+public class Graph {
+    // Assuming we have an adjacency list representation of the graph
+    private Map<Integer, List<Integer>> adjacencyList;
 
-    // Graph representation using adjacency lists
-    private Map<V, List<Edge<V,E>>> adjacencyMap;
-
-    private class Edge<V,E> {
-        private V source;
-        private V target; 
-        private E data;
-        
-        public Edge(V source, V target, E data) {
-            this.source = source;
-            this.target = target;
-            this.data = data;
-        }
+    public Graph() {
+        adjacencyList = new HashMap<>();
     }
 
-    /** 
-     * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
-     * Esto mantiene la complejidad en O(m) donde m es el número de aristas.
-     * @return conjunto de vértices con grado positivo
+    /**
+     * Compute all vertices that have positive degree by iterating over the edges on purpose.
+     * This keeps the complexity to O(m) where m is the number of edges.
+     * @return set of vertices with positive degree
      */
-    private Set<V> initVisibleVertices() {
-        Set<V> visibleVertices = new HashSet<>();
+    public Set<Integer> getVerticesWithPositiveDegree() {
+        Set<Integer> verticesWithDegree = new HashSet<>();
         
-        // Iterate through all vertices and their edges
-        for (Map.Entry<V, List<Edge<V,E>>> entry : adjacencyMap.entrySet()) {
-            V vertex = entry.getKey();
-            List<Edge<V,E>> edges = entry.getValue();
+        // Iterate through all edges in adjacency list
+        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+            int vertex = entry.getKey();
+            List<Integer> neighbors = entry.getValue();
             
-            // If vertex has any edges, add it to visible set
-            if (!edges.isEmpty()) {
-                visibleVertices.add(vertex);
-                
-                // Also add all target vertices of the edges
-                for (Edge<V,E> edge : edges) {
-                    visibleVertices.add(edge.target);
-                }
+            // If vertex has any neighbors, add it to result set
+            if (!neighbors.isEmpty()) {
+                verticesWithDegree.add(vertex);
+                // Also add all neighbors since they must have positive degree
+                verticesWithDegree.addAll(neighbors);
             }
         }
         
-        return visibleVertices;
+        return verticesWithDegree;
     }
 }

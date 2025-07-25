@@ -1,12 +1,12 @@
 import java.util.Arrays;
 
-public class ArrayUtils {
+public class ArrayHashCode {
     /**
-     * Devuelve un código hash basado en el contenido del array especificado. Si el <code>array</code> es <code>null</code>, este método devuelve 0.
-     * @param array el array de tipo long para obtener un código hash
-     * @return el código hash del array de tipo long, que podría ser 0 si el array es null.
+     * Return a hash code based on the contents of the specified array. If <code>array</code> is <code>null</code>, this method returns 0.
+     * @param array the long array to obtain a hashcode
+     * @return the long array's hashcode, which could be 0 if the array is null.
      */
-    public static int nullSafeHashCode(long[] array) {
+    public static int hashCode(long[] array) {
         if (array == null) {
             return 0;
         }

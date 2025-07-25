@@ -1,30 +1,25 @@
+package org.apache.commons.lang3;
+
 public class StringUtils {
-    
     /**
-     * <p>Verifica si una cadena termina con un sufijo especificado (opcionalmente sin distinguir entre mayúsculas y minúsculas).</p>
+     * <p>Check if a String ends with a specified suffix (optionally case insensitive).</p>
      * @see String#endsWith(String)
-     * @param str  la cadena a verificar, puede ser nula
-     * @param suffix el sufijo a encontrar, puede ser nulo
-     * @param ignoreCase indica si la comparación debe ignorar las mayúsculas y minúsculas (sin distinguir entre mayúsculas y minúsculas) o no.
-     * @return <code>true</code> si la cadena termina con el sufijo o ambos son <code>null</code>
+     * @param str  the String to check, may be null
+     * @param suffix the suffix to find, may be null
+     * @param ignoreCase indicates whether the compare should ignore case(case insensitive) or not.
+     * @return <code>true</code> if the String starts with the prefix or both <code>null</code>
      */
-    private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
-        if (str == null && suffix == null) {
-            return true;
-        }
+    public static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
         if (str == null || suffix == null) {
-            return false;
+            return str == suffix;
         }
         if (suffix.length() > str.length()) {
             return false;
         }
+        final int strOffset = str.length() - suffix.length();
         
-        int strOffset = str.length() - suffix.length();
-        
-        if (ignoreCase) {
-            return str.regionMatches(true, strOffset, suffix, 0, suffix.length());
-        } else {
-            return str.regionMatches(strOffset, suffix, 0, suffix.length());
-        }
+        return ignoreCase 
+            ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
+            : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
     }
 }

@@ -1,46 +1,31 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class FileUtils {
 
-    /**
-     * Programa un archivo para que se elimine cuando la JVM exista. Si el archivo es un directorio, elimínalo y todos sus subdirectorios.
-     * @param file  archivo o directorio a eliminar, no debe ser {@code null}
-     * @throws NullPointerException si el archivo es {@code null}
-     * @throws IOException en caso de que la eliminación no sea exitosa
-     */
-    public static void forceDeleteOnExit(File file) throws IOException {
+    public static void forceDeleteOnExit(final File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("El archivo no puede ser null");
+            throw new NullPointerException("File must not be null");
         }
 
         if (!file.exists()) {
             return;
         }
 
-        // Si es un directorio, programar eliminación recursiva de contenidos
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    forceDeleteOnExit(f);
-                }
-            }
+        file.deleteOnExit();
+        
+        if (!file.isDirectory()) {
+            return;
         }
 
-        // Programar eliminación del archivo/directorio
-        try {
-            Path path = file.toPath();
-            if (Files.isSymbolicLink(path)) {
-                // Para enlaces simbólicos, solo eliminar el enlace
-                Files.deleteIfExists(path);
-            } else {
-                file.deleteOnExit();
-            }
-        } catch (SecurityException e) {
-            throw new IOException("No se pudo programar la eliminación del archivo: " + file, e);
+        // Delete contents recursively for directories
+        final File[] files = file.listFiles();
+        if (files == null) {
+            throw new IOException("Failed to list contents of " + file);
+        }
+
+        for (final File f : files) {
+            forceDeleteOnExit(f);
         }
     }
 }

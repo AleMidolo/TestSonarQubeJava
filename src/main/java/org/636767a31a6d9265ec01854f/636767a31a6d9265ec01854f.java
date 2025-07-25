@@ -1,36 +1,46 @@
 import java.io.IOException;
 
 public class FieldReader {
-    private boolean isPackedField = false;
+    private boolean isPacked = false;
     private int currentPosition = 0;
-    private byte[] buffer;
-    private static final byte PACKED_FIELD_MARKER = 0x1C;
+    private int packedLength = 0;
     
     /**
-     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. 
-     * Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
-     * @throws IOException si hay un error al leer el buffer
+     * Check if this field have been packed into a length-delimited field. If so, update internal state to reflect that packed fields are being read.
+     * @throws IOException if there is an error reading the packed field length
      */
-    private void checkIfPackedField() throws IOException {
-        if (currentPosition >= buffer.length) {
-            throw new IOException("Buffer overflow - unable to check for packed field");
-        }
-        
-        if (buffer[currentPosition] == PACKED_FIELD_MARKER) {
-            isPackedField = true;
-            currentPosition++; // Skip the packed field marker
-            
-            // Read the length bytes
-            int length = 0;
-            while (currentPosition < buffer.length && 
-                   Character.isDigit((char)buffer[currentPosition])) {
-                length = length * 10 + (buffer[currentPosition] - '0');
-                currentPosition++;
-            }
-            
-            if (currentPosition >= buffer.length || length <= 0) {
-                throw new IOException("Invalid packed field format");
+    public void checkIfPackedField() throws IOException {
+        // Check if we're at the start of a packed field
+        if (currentPosition > 0 && !isPacked) {
+            // Read the packed field length
+            try {
+                packedLength = readVarint32();
+                isPacked = true;
+                currentPosition = 0;
+            } catch (IOException e) {
+                throw new IOException("Error reading packed field length", e);
             }
         }
+    }
+    
+    // Helper method to read varint32 encoded length
+    private int readVarint32() throws IOException {
+        int result = 0;
+        int shift = 0;
+        while (shift < 32) {
+            byte b = readByte();
+            result |= (b & 0x7F) << shift;
+            if ((b & 0x80) == 0) {
+                return result;
+            }
+            shift += 7;
+        }
+        throw new IOException("Malformed varint32");
+    }
+    
+    // Helper method to read a single byte
+    private byte readByte() throws IOException {
+        // Implementation would depend on underlying input stream
+        throw new IOException("Not implemented");
     }
 }

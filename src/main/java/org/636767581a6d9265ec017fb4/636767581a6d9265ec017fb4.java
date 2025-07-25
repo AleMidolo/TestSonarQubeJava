@@ -1,33 +1,24 @@
-import java.util.ArrayList;
 import java.util.List;
 
-public class BPlusTree<K extends Comparable<K>> {
-
-    private List<Integer> computeUpperBounds(List<K> keys) {
-        List<Integer> upperBounds = new ArrayList<>();
-        
+public class KeyBoundCalculator {
+    /**
+     * Finds a minimum lower bound for every key.
+     * @param keys a list of keys.
+     * @return the computed key upper bound.
+     */
+    public static int findMinLowerBound(List<Integer> keys) {
         if (keys == null || keys.isEmpty()) {
-            return upperBounds;
+            return 0;
         }
 
-        // Initialize first upper bound
-        upperBounds.add(0);
+        int minBound = Integer.MAX_VALUE;
         
-        // Compare each adjacent pair of keys
-        for (int i = 1; i < keys.size(); i++) {
-            K currentKey = keys.get(i);
-            K previousKey = keys.get(i-1);
-            
-            // If keys are equal, use same upper bound
-            if (currentKey.compareTo(previousKey) == 0) {
-                upperBounds.add(upperBounds.get(i-1));
-            }
-            // If keys are different, increment upper bound
-            else {
-                upperBounds.add(upperBounds.get(i-1) + 1);
+        for (Integer key : keys) {
+            if (key != null && key < minBound) {
+                minBound = key;
             }
         }
-        
-        return upperBounds;
+
+        return minBound == Integer.MAX_VALUE ? 0 : minBound;
     }
 }

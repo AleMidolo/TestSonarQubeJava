@@ -1,20 +1,19 @@
 import java.util.Arrays;
 
-public class Parser {
+public class TokenParser {
     private String input;
     private int currentPosition;
     
-    public Parser(String input) {
+    public TokenParser(String input) {
         this.input = input;
         this.currentPosition = 0;
     }
 
-    /**
-     * Analiza un token hasta que se encuentra con cualquiera de los terminadores dados.
-     * @param terminators el arreglo de caracteres terminadores. Cualquiera de estos caracteres, al ser encontrado, indica el final del token.
-     * @return el token
-     */
-    private String parseToken(final char[] terminators) {
+    public String parseToken(char[] terminators) {
+        if (currentPosition >= input.length()) {
+            return "";
+        }
+
         StringBuilder token = new StringBuilder();
         
         while (currentPosition < input.length()) {

@@ -3,25 +3,28 @@ import java.util.Iterator;
 
 public class BeanMapUtils {
     
-    /** 
-     * Coloca todas las propiedades escribibles del BeanMap dado en este BeanMap. 
-     * Las propiedades de solo lectura y de solo escritura serán ignoradas.
-     * @param map el BeanMap cuyas propiedades se van a colocar
+    /**
+     * Puts all of the writable properties from the given BeanMap into this BeanMap. 
+     * Read-only and Write-only properties will be ignored.
+     * @param map the BeanMap whose properties to put
      */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
             return;
         }
 
-        Iterator<?> entries = map.entryIterator();
+        Iterator<?> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
             BeanMap.Entry entry = (BeanMap.Entry) entries.next();
             String propertyName = entry.getKey().toString();
             
-            // Verifica si la propiedad es escribible en ambos BeanMaps
-            if (map.isWriteable(propertyName) && this.isWriteable(propertyName)) {
+            // Check if property is writable in source map
+            if (map.isWriteable(propertyName)) {
                 Object value = entry.getValue();
-                this.put(propertyName, value);
+                // Only put if property exists and is writable in this map
+                if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
+                    this.put(propertyName, value);
+                }
             }
         }
     }

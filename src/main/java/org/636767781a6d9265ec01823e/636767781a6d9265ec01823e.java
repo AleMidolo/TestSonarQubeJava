@@ -1,59 +1,35 @@
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class SocketAppender extends AppenderSkeleton {
+public class SocketAppender {
+    private List<Socket> clients = new CopyOnWriteArrayList<>();
     
-    private final List<PrintWriter> clients = new CopyOnWriteArrayList<>();
-    
-    /**
-     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
-     */
-    @Override
-    protected void append(LoggingEvent event) {
-        String message = layout.format(event);
+    public void handleLogEvent(LoggingEvent event) {
+        String message = event.getRenderedMessage();
         
-        // Iterar sobre la lista de clientes y enviar el mensaje a cada uno
-        for (PrintWriter client : clients) {
+        // Iterate through connected clients and write message
+        for (Socket client : clients) {
             try {
-                client.println(message);
-                client.flush();
-            } catch (Exception e) {
-                // Si hay error al escribir, remover el cliente
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                writer.println(message);
+            } catch (IOException e) {
+                // Remove client if we can't write to it
                 clients.remove(client);
             }
         }
     }
     
-    // Método para agregar un nuevo cliente
-    public void addClient(PrintWriter client) {
+    // Helper method to add new client connections
+    public void addClient(Socket client) {
         clients.add(client);
     }
     
-    // Método para remover un cliente
-    public void removeClient(PrintWriter client) {
+    // Helper method to remove client connections
+    public void removeClient(Socket client) {
         clients.remove(client);
-    }
-    
-    @Override
-    public void close() {
-        // Cerrar todas las conexiones de clientes
-        for (PrintWriter client : clients) {
-            try {
-                client.close();
-            } catch (Exception e) {
-                // Ignorar errores al cerrar
-            }
-        }
-        clients.clear();
-    }
-    
-    @Override
-    public boolean requiresLayout() {
-        return true;
     }
 }

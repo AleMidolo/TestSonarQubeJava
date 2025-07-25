@@ -1,40 +1,33 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class ModelChecker {
-    
-    private void check(String modelName) throws IllegalStateException {
-        if (modelName == null || modelName.isEmpty()) {
-            throw new IllegalStateException("Model name cannot be null or empty");
+public class ShardingKeyValidator {
+
+    /**
+     * @param modelName model name of the entity
+     * @throws IllegalStateException if sharding key indices are not continuous
+     */
+    public void validateShardingKeyIndices(String modelName) {
+        List<Integer> indices = getShardingKeyIndices(modelName);
+        
+        if (indices.isEmpty()) {
+            return;
         }
 
-        // Pattern to match numbers at the end of model name (e.g. "model_1", "model_2")
-        Pattern pattern = Pattern.compile("_(\\d+)$");
-        Matcher matcher = pattern.matcher(modelName);
-
-        if (matcher.find()) {
-            int currentIndex = Integer.parseInt(matcher.group(1));
-            
-            // Check if index is less than 1
-            if (currentIndex < 1) {
-                throw new IllegalStateException("Sharding index must be greater than 0 for model: " + modelName);
-            }
-
-            // Check if there are gaps in the sequence by verifying previous model exists
-            String baseModelName = modelName.substring(0, matcher.start());
-            String previousModelName = baseModelName + "_" + (currentIndex - 1);
-            
-            // If current index is greater than 1, previous model should exist
-            if (currentIndex > 1 && !modelExists(previousModelName)) {
-                throw new IllegalStateException("Non-continuous sharding index detected. Missing model: " + previousModelName);
+        Collections.sort(indices);
+        
+        for (int i = 0; i < indices.size() - 1; i++) {
+            if (indices.get(i + 1) - indices.get(i) != 1) {
+                throw new IllegalStateException("Sharding key indices must be continuous for model: " + modelName);
             }
         }
     }
 
-    // Helper method to check if a model exists
-    private boolean modelExists(String modelName) {
-        // Implementation would depend on how models are stored/managed
-        // This is just a placeholder
-        return true;
+    // Helper method to get sharding key indices
+    private List<Integer> getShardingKeyIndices(String modelName) {
+        // Implementation would retrieve indices from model metadata
+        // Returning empty list for example
+        return new ArrayList<>();
     }
 }

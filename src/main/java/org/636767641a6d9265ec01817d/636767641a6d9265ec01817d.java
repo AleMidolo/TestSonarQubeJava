@@ -1,38 +1,34 @@
 import java.util.*;
-import org.jgrapht.*;
 
-public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
-    private int n1; // number of vertices in first partition
-    private int n2; // number of vertices in second partition
-    
-    public BipartiteGraphGenerator(int n1, int n2) {
-        this.n1 = n1;
-        this.n2 = n2;
-    }
+public class BipartiteGraph {
+    private int V; // Number of vertices
+    private List<List<Integer>> adj; // Adjacency list representation
 
-    @Override
-    public void generateGraph(Graph<V,E> target, Map<String,V> resultMap) {
-        // Create vertices for first partition
-        List<V> partition1 = new ArrayList<>();
-        for(int i = 0; i < n1; i++) {
-            V vertex = resultMap.get("v1" + i);
-            target.addVertex(vertex);
-            partition1.add(vertex);
+    /**
+     * Construct a complete bipartite graph
+     * @param m Number of vertices in first partition
+     * @param n Number of vertices in second partition
+     * @return Adjacency list representation of complete bipartite graph
+     */
+    public List<List<Integer>> constructBipartiteGraph(int m, int n) {
+        // Total vertices is sum of both partitions
+        V = m + n;
+        
+        // Initialize adjacency list
+        adj = new ArrayList<>(V);
+        for(int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
         }
-
-        // Create vertices for second partition  
-        List<V> partition2 = new ArrayList<>();
-        for(int i = 0; i < n2; i++) {
-            V vertex = resultMap.get("v2" + i);
-            target.addVertex(vertex);
-            partition2.add(vertex);
-        }
-
-        // Add edges between all vertices in partition1 and partition2
-        for(V v1 : partition1) {
-            for(V v2 : partition2) {
-                target.addEdge(v1, v2);
+        
+        // Add edges between every vertex in first partition
+        // to every vertex in second partition
+        for(int i = 0; i < m; i++) {
+            for(int j = m; j < V; j++) {
+                adj.get(i).add(j);
+                adj.get(j).add(i);
             }
         }
+        
+        return adj;
     }
 }

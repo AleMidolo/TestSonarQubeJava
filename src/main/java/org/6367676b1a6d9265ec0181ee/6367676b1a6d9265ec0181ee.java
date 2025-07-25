@@ -1,8 +1,8 @@
 public class StringUtils {
     /**
-     * Elimina los espacios en blanco al final del String dado.
-     * @param str el String a verificar
-     * @return el String sin espacios en blanco al final
+     * Trim trailing whitespace from the given String.
+     * @param str the String to check
+     * @return the trimmed String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
@@ -14,7 +14,6 @@ public class StringUtils {
         while (len > 0 && Character.isWhitespace(str.charAt(len - 1))) {
             len--;
         }
-        
         return str.substring(0, len);
     }
 }

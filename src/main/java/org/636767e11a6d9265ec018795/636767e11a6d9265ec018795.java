@@ -1,29 +1,28 @@
 import java.util.Objects;
 
-public class DataTableComparator {
+public class BucketComparator {
     
-    private DataTable currentTable;
+    private String bucketName;
+    private String bucketRegion;
     
+    public BucketComparator(String name, String region) {
+        this.bucketName = name;
+        this.bucketRegion = region;
+    }
+
     /**
-     * Checks if two DataTables have compatible bucket structures
-     * @param dataset The DataTable to compare with
-     * @return true if the bucket structure is the same
+     * @return true if the bucket is same.
      */
-    public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
-        
-        if (this.currentTable == null) {
-            return false;
-        }
-        
-        // Check if both tables reference the same object
-        if (this.currentTable == dataset) {
+    public boolean isSameBucket(Object obj) {
+        if (this == obj) {
             return true;
         }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         
-        // Compare bucket properties
-        return Objects.equals(this.currentTable.getBucket(), dataset.getBucket());
+        BucketComparator other = (BucketComparator) obj;
+        return Objects.equals(bucketName, other.bucketName) && 
+               Objects.equals(bucketRegion, other.bucketRegion);
     }
 }

@@ -1,41 +1,33 @@
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int position;
-    private int length;
+    private int readPointer;
     
     /**
-     * Limpia y llena el búfer de este {@code ClassFileBuffer} con el flujo de bytes proporcionado.
-     * El puntero de lectura se restablece al inicio del arreglo de bytes.
+     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
+     * The read pointer is reset to the start of the byte array.
+     *
+     * @param inputStream The input stream to read bytes from
+     * @throws IOException If an I/O error occurs while reading from the stream
      */
-    public void readFrom(final InputStream in) throws IOException {
-        // Reset buffer state
-        position = 0;
-        length = 0;
-        
-        // If buffer hasn't been initialized yet, create initial buffer
-        if (buffer == null) {
-            buffer = new byte[4096]; // Initial size of 4KB
-        }
+    public void fillBuffer(InputStream inputStream) throws IOException {
+        // Create a ByteArrayOutputStream to store bytes
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         
         // Read bytes from input stream
+        byte[] temp = new byte[4096];
         int bytesRead;
-        int totalBytesRead = 0;
-        
-        while ((bytesRead = in.read(buffer, totalBytesRead, buffer.length - totalBytesRead)) != -1) {
-            totalBytesRead += bytesRead;
-            
-            // If buffer is full but there's more data, resize buffer
-            if (totalBytesRead == buffer.length && in.available() > 0) {
-                byte[] newBuffer = new byte[buffer.length * 2];
-                System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
-                buffer = newBuffer;
-            }
+        while ((bytesRead = inputStream.read(temp)) != -1) {
+            byteStream.write(temp, 0, bytesRead);
         }
         
-        // Set the actual length of data read
-        length = totalBytesRead;
+        // Clear existing buffer and fill with new bytes
+        buffer = byteStream.toByteArray();
+        
+        // Reset read pointer to start
+        readPointer = 0;
     }
 }

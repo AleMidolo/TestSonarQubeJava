@@ -1,20 +1,22 @@
-import java.util.Objects;
+import java.lang.Class;
 
 public class ClassFinder {
 
     /**
-     * Encuentra la clase dada su nombre.
-     * @param className nombre de la clase, no puede ser nulo.
-     * @return clase, no será nula.
-     * @throws ClassNotFoundException lanzada si no se puede encontrar la clase.
+     * Find class given class name.
+     * @param className class name, may not be null.
+     * @return class, will not be null.
+     * @throws ClassNotFoundException thrown if class can not be found.
      */
-    private Class findClass(final String className) throws ClassNotFoundException {
-        Objects.requireNonNull(className, "Class name cannot be null");
+    public static Class<?> findClass(String className) throws ClassNotFoundException {
+        if (className == null) {
+            throw new IllegalArgumentException("Class name cannot be null");
+        }
         
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundException("Could not find class: " + className, e);
+            throw new ClassNotFoundException("Could not find class: " + className);
         }
     }
 }

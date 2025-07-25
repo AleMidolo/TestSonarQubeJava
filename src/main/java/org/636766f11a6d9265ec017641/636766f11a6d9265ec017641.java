@@ -1,24 +1,13 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CustomInputStream extends InputStream {
-
-    private InputStream inputStream;
-
-    public CustomInputStream(InputStream is) {
-        this.inputStream = is;
-    }
+public class InputStreamAvailable {
 
     /**
      * @see InputStream#available()
      */
-    @Override
     public int available() throws IOException {
-        return inputStream.available();
+        return 0;
     }
 
-    @Override
-    public int read() throws IOException {
-        return inputStream.read();
-    }
 }

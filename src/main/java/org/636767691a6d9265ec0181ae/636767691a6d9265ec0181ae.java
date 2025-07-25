@@ -1,24 +1,22 @@
 import java.util.Enumeration;
 import java.util.ArrayList;
 
-public class EnumerationConverter {
-
-    /**
-     * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.
-     * @param enumeration El "Enumeration" a copiar
-     * @return el arreglo de Strings (<code>null</code> si El "Enumeration" pasada era <code>null</code>)
-     */
-    public static String[] toStringArray(Enumeration<String> enumeration) {
+public class EnumerationUtils {
+    
+    public static String[] copyEnumerationToStringArray(Enumeration<?> enumeration) {
         if (enumeration == null) {
             return null;
         }
-
-        ArrayList<String> list = new ArrayList<>();
         
+        ArrayList<String> list = new ArrayList<>();
         while (enumeration.hasMoreElements()) {
-            list.add(enumeration.nextElement());
+            Object element = enumeration.nextElement();
+            if (!(element instanceof String)) {
+                throw new IllegalArgumentException("Enumeration must only contain String elements");
+            }
+            list.add((String) element);
         }
-
-        return list.toArray(new String[list.size()]);
+        
+        return list.toArray(new String[0]);
     }
 }

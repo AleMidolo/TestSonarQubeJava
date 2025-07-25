@@ -1,47 +1,47 @@
-public class HashUtils {
-    /**
-     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity (dentro del 11% si desiredCapacity >= 1000).
-     * @param desiredCapacity la capacidad deseada por el usuario.
-     * @return la capacidad que se debe utilizar para una tabla hash.
-     */
-    public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
+public class HashCapacity {
+    public static int getPrimeCapacity(int desiredCapacity) {
+        if (desiredCapacity < 0) {
+            throw new IllegalArgumentException("Capacity cannot be negative");
+        }
+        
+        if (desiredCapacity < 2) {
             return 2;
         }
         
-        int n = desiredCapacity;
-        if (n % 2 == 0) {
-            n++;
+        // Start checking from desiredCapacity
+        int num = desiredCapacity;
+        
+        // If even, add 1 to start checking from next odd number
+        if (num % 2 == 0) {
+            num++;
         }
         
-        while (!isPrime(n)) {
-            n += 2;
-        }
-        
-        // Verify that the result is within 11% if desiredCapacity >= 1000
-        if (desiredCapacity >= 1000) {
-            double ratio = (double) n / desiredCapacity;
-            if (ratio > 1.11) {
-                throw new IllegalStateException("Could not find a prime number within 11% of desired capacity");
+        // Keep checking until we find a prime number
+        while (!isPrime(num)) {
+            num += 2;
+            
+            // Check if we've exceeded the 11% threshold for large capacities
+            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
+                // Go back to desired capacity and find previous prime
+                num = desiredCapacity;
+                while (!isPrime(num)) {
+                    num--;
+                }
+                break;
             }
         }
         
-        return n;
+        return num;
     }
     
-    private static boolean isPrime(int n) {
-        if (n <= 1) {
-            return false;
-        }
-        if (n <= 3) {
-            return true;
-        }
-        if (n % 2 == 0 || n % 3 == 0) {
-            return false;
-        }
+    private static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
         
-        for (int i = 5; i * i <= n; i += 6) {
-            if (n % i == 0 || n % (i + 2) == 0) {
+        // Check up to square root of num
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }

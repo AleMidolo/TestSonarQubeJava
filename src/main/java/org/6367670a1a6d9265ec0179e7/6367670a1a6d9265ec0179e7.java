@@ -16,7 +16,31 @@ public class ConverterRegistry {
             return null;
         }
         
-        return converters.get(clazz);
+        // Cerca il converter direttamente associato alla classe
+        Converter converter = converters.get(clazz);
+        if (converter != null) {
+            return converter;
+        }
+        
+        // Cerca nelle interfacce implementate
+        for (Class<?> iface : clazz.getInterfaces()) {
+            converter = converters.get(iface);
+            if (converter != null) {
+                return converter;
+            }
+        }
+        
+        // Cerca nella gerarchia delle superclassi
+        Class<?> superClass = clazz.getSuperclass();
+        while (superClass != null) {
+            converter = converters.get(superClass);
+            if (converter != null) {
+                return converter;
+            }
+            superClass = superClass.getSuperclass();
+        }
+        
+        return null;
     }
 }
 

@@ -8,68 +8,47 @@ public class FrameStack {
      * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            return;
-        }
-
-        int index = 0;
-        while (index < descriptor.length()) {
-            char c = descriptor.charAt(index);
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, estrai gli argomenti
+            int endParams = descriptor.indexOf(')');
+            String params = descriptor.substring(1, endParams);
             
-            switch (c) {
-                case '(':
-                    // Skip opening parenthesis for method descriptor
-                    index++;
-                    continue;
-                case ')':
-                    // End of method arguments
-                    return;
-                case 'B':
-                case 'C': 
-                case 'I':
-                case 'S':
-                case 'Z':
-                case 'F':
-                    // Pop single slot types
-                    if (!stack.isEmpty()) {
+            int i = 0;
+            while (i < params.length()) {
+                char c = params.charAt(i);
+                switch (c) {
+                    case 'L': // Tipo riferimento
+                        i = params.indexOf(';', i) + 1;
                         stack.pop();
-                    }
-                    index++;
-                    break;
-                case 'D':
-                case 'J':
-                    // Pop double slot types
-                    if (!stack.isEmpty()) {
-                        stack.pop();
-                        if (!stack.isEmpty()) {
-                            stack.pop();
+                        break;
+                    case '[': // Array
+                        while (params.charAt(i) == '[') i++;
+                        if (params.charAt(i) == 'L') {
+                            i = params.indexOf(';', i) + 1;
+                        } else {
+                            i++;
                         }
-                    }
-                    index++;
-                    break;
-                case 'L':
-                    // Skip until semicolon for object types
-                    if (!stack.isEmpty()) {
                         stack.pop();
-                    }
-                    index = descriptor.indexOf(';', index) + 1;
-                    break;
-                case '[':
-                    // Skip array dimensions
-                    while (index < descriptor.length() && descriptor.charAt(index) == '[') {
-                        index++;
-                    }
-                    if (!stack.isEmpty()) {
+                        break;
+                    case 'J': // long
+                    case 'D': // double
                         stack.pop();
-                    }
-                    if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
-                        index = descriptor.indexOf(';', index) + 1;
-                    } else {
-                        index++;
-                    }
-                    break;
-                default:
-                    index++;
+                        stack.pop(); // Occupa due slot
+                        i++;
+                        break;
+                    default: // Tipo primitivo singolo
+                        stack.pop();
+                        i++;
+                        break;
+                }
+            }
+        } else {
+            // È un singolo tipo
+            if (descriptor.equals("J") || descriptor.equals("D")) {
+                stack.pop();
+                stack.pop(); // long e double occupano due slot
+            } else {
+                stack.pop();
             }
         }
     }

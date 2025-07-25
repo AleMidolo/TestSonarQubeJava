@@ -6,37 +6,41 @@ public class ArrayUtils {
      * Concatenare i dati degli array di Stringa forniti in uno solo, includendo gli elementi sovrapposti due volte.
      * L'ordine degli elementi negli array originali è preservato.
      * @param array1 il primo array (può essere <code>null</code>)
-     * @param array2 il secondo array (può essere <code>null</code>) 
+     * @param array2 il secondo array (può essere <code>null</code>)
      * @return il nuovo array (<code>null</code> se entrambi gli array forniti erano <code>null</code>)
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-        // Return null if both arrays are null
+        // Se entrambi gli array sono null, ritorna null
         if (array1 == null && array2 == null) {
             return null;
         }
         
-        // If one array is null, return copy of the other array
+        // Se uno degli array è null, ritorna una copia dell'altro array
         if (array1 == null) {
             return array2.clone();
         }
         if (array2 == null) {
             return array1.clone();
         }
-
-        // Create list to store concatenated elements
+        
+        // Crea una lista per contenere tutti gli elementi
         List<String> result = new ArrayList<>();
         
-        // Add all elements from first array
+        // Aggiungi tutti gli elementi del primo array
         for (String s : array1) {
-            result.add(s);
+            if (s != null) {
+                result.add(s);
+            }
         }
         
-        // Add all elements from second array
+        // Aggiungi tutti gli elementi del secondo array
         for (String s : array2) {
-            result.add(s);
+            if (s != null) {
+                result.add(s);
+            }
         }
-
-        // Convert list back to array and return
+        
+        // Converti la lista in array e ritorna
         return result.toArray(new String[0]);
     }
 }

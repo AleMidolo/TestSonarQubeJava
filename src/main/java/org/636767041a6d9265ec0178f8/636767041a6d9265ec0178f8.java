@@ -1,14 +1,13 @@
 public class ArrayUtils {
     /**
-     * Questo metodo crea una copia dell'array fornito e garantisce che tutte le stringhe 
-     * nel nuovo array creato contengano solo lettere minuscole.
-     * Utilizzare questo metodo per copiare array di stringhe significa che le modifiche 
-     * all'array src non modificano l'array dst.
-     *
-     * @param src array sorgente da copiare
-     * @return nuovo array con stringhe in minuscolo
+     * Este método crea una copia del array proporcionado y asegura que todas las cadenas 
+     * en el nuevo array contengan solo letras minúsculas.
+     * Utilizar este método para copiar arrays de cadenas significa que los cambios en el 
+     * array src no modifican el array dst.
+     * @param src Array origen que se desea copiar
+     * @return Nuevo array con las cadenas en minúsculas
      */
-    private static String[] copyStrings(final String[] src) {
+    private static String[] copiarCadenas(final String[] src) {
         if (src == null) {
             return null;
         }

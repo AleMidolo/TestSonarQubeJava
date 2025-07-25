@@ -1,48 +1,51 @@
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
+import java.io.IOException;
 
-public class FileHandler {
+public class FileProcessor {
 
     /**
-     * Aggiungi i file specificati in ordine inverso.
+     * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final InputStream[] files) {
         if (files == null || files.length == 0) {
             return;
         }
 
-        List<InputStream> fileList = new ArrayList<>();
+        Stack<InputStream> stack = new Stack<>();
         
-        // Add files to list
+        // Push all files onto stack
         for (InputStream file : files) {
             if (file != null) {
-                fileList.add(file);
+                stack.push(file);
             }
         }
 
-        // Reverse the list
-        Collections.reverse(fileList);
-
         // Process files in reverse order
-        for (InputStream file : fileList) {
+        while (!stack.isEmpty()) {
+            InputStream currentFile = stack.pop();
             try {
-                // Add file contents (implementation depends on specific requirements)
-                processFile(file);
+                processFile(currentFile);
+            } catch (IOException e) {
+                // Handle exception appropriately
+                e.printStackTrace();
             } finally {
                 try {
-                    file.close();
-                } catch (Exception e) {
-                    // Handle close exception
+                    currentFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
     // Helper method to process individual files
-    private void processFile(InputStream file) {
-        // Implementation depends on specific requirements
-        // Example: read file contents and add to collection/database etc.
+    private void processFile(InputStream file) throws IOException {
+        // Add file processing logic here
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = file.read(buffer)) != -1) {
+            // Process bytes as needed
+        }
     }
 }

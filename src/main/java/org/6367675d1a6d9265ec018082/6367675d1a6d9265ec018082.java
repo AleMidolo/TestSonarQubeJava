@@ -3,61 +3,63 @@ import java.util.*;
 public class Graph {
     private List<Node> nodes;
     private List<Edge> edges;
-    private int currentNodeIndex;
+    private Node currentNode;
+    private Iterator<Node> nodeIterator;
 
-    // Constructor and other methods...
+    public Graph() {
+        nodes = new ArrayList<>();
+        edges = new ArrayList<>();
+        nodeIterator = nodes.iterator();
+    }
 
-    /**
-     * Restituisce un arco che collega il nodo precedentemente restituito con il nodo che verrà restituito successivamente. 
-     * Se uno dei nodi menzionati è virtuale, l'arco sarà incidente al suo corrispondente reale.
-     * @return un arco dal nodo corrente al nodo successivo
-     */
     public Edge edgeToNext() {
-        if (nodes == null || nodes.isEmpty() || currentNodeIndex >= nodes.size() - 1) {
+        if (currentNode == null || !nodeIterator.hasNext()) {
             return null;
         }
 
-        Node currentNode = nodes.get(currentNodeIndex);
-        Node nextNode = nodes.get(currentNodeIndex + 1);
-
+        Node nextNode = nodeIterator.next();
+        
         // Get real nodes if virtual
-        Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-        // Find edge between real nodes
+        // Find edge connecting the nodes
         for (Edge edge : edges) {
-            if ((edge.getSource().equals(realCurrentNode) && edge.getDestination().equals(realNextNode)) ||
-                (edge.getSource().equals(realNextNode) && edge.getDestination().equals(realCurrentNode))) {
+            if ((edge.getSource() == realCurrent && edge.getTarget() == realNext) ||
+                (edge.getSource() == realNext && edge.getTarget() == realCurrent)) {
+                currentNode = nextNode;
                 return edge;
             }
         }
 
+        currentNode = nextNode;
         return null;
     }
-}
 
-class Node {
-    private boolean isVirtual;
-    private Node realNode;
-    
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-    
-    public Node getRealNode() {
-        return realNode;
-    }
-}
+    // Supporting classes
+    private class Node {
+        private boolean isVirtual;
+        private Node realNode;
 
-class Edge {
-    private Node source;
-    private Node destination;
-    
-    public Node getSource() {
-        return source;
+        public boolean isVirtual() {
+            return isVirtual;
+        }
+
+        public Node getRealNode() {
+            return realNode;
+        }
     }
-    
-    public Node getDestination() {
-        return destination;
+
+    private class Edge {
+        private Node source;
+        private Node target;
+
+        public Node getSource() {
+            return source;
+        }
+
+        public Node getTarget() {
+            return target;
+        }
     }
 }

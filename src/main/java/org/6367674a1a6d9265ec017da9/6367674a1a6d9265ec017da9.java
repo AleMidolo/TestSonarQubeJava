@@ -16,31 +16,32 @@ public class DoublyLinkedList<E> {
     }
 
     /**
-     * Sposta in modo atomico tutti i {@link ListNode ListNodes} da {@code list} a questa lista 
-     * come se ogni nodo fosse stato rimosso con {@link #removeListNode(ListNodeImpl)} da {@code list} 
-     * e successivamente aggiunto a questa lista tramite {@link #addListNode(ListNodeImpl)}.
+     * Mueve atómicamente todos los {@link ListNode ListNodes} de {@code list} a esta lista 
+     * como si cada nodo se hubiera eliminado con {@link #removeListNode(ListNodeImpl)} de {@code list} 
+     * y posteriormente agregado a esta lista mediante {@link #addListNode(ListNodeImpl)}.
      */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list);
         
-        if (list == this || list.size == 0) {
+        if (list.size == 0 || list == this) {
             return;
         }
 
-        // If this list is empty, just take the other list's nodes
+        // Si esta lista está vacía
         if (size == 0) {
             this.head = list.head;
             this.tail = list.tail;
-            this.size = list.size;
         } else {
-            // Connect the tail of this list to the head of the other list
+            // Conectar el final de esta lista con el inicio de la otra
             this.tail.next = list.head;
             list.head.prev = this.tail;
             this.tail = list.tail;
-            this.size += list.size;
         }
 
-        // Clear the source list
+        // Actualizar tamaños
+        this.size += list.size;
+
+        // Limpiar la lista original
         list.head = null;
         list.tail = null;
         list.size = 0;

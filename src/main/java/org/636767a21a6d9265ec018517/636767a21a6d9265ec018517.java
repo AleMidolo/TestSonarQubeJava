@@ -1,50 +1,35 @@
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-public class ByteArrayOutputStream {
-    private byte[] buffer;
-    private int count;
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-    
-    public ByteArrayOutputStream() {
-        this(32); // Default initial size
-    }
-    
-    public ByteArrayOutputStream(int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Negative initial size: " + size);
-        }
-        buffer = new byte[size];
+public class ByteArrayBuilder {
+    private ByteArrayOutputStream outputStream;
+
+    public ByteArrayBuilder() {
+        outputStream = new ByteArrayOutputStream();
     }
 
     /**
-     * Restituisce un singolo array di byte contenente tutti i contenuti scritti nel/i buffer.
+     * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
      */
     public final byte[] toByteArray() {
-        return Arrays.copyOf(buffer, count);
-    }
-    
-    // Helper method to ensure capacity
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity - buffer.length > 0) {
-            int oldCapacity = buffer.length;
-            int newCapacity = oldCapacity << 1;
-            
-            if (newCapacity - minCapacity < 0) {
-                newCapacity = minCapacity;
-            }
-            
-            if (newCapacity - MAX_ARRAY_SIZE > 0) {
-                newCapacity = hugeCapacity(minCapacity);
-            }
-            
-            buffer = Arrays.copyOf(buffer, newCapacity);
+        try {
+            outputStream.flush();
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            return new byte[0];
         }
     }
-    
-    private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) {
-            throw new OutOfMemoryError();
+
+    // Other methods to write data to the buffer would go here
+    public void write(byte[] data) {
+        try {
+            outputStream.write(data);
+        } catch (IOException e) {
+            // Handle exception
         }
-        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
+    }
+
+    public void write(int b) {
+        outputStream.write(b);
     }
 }

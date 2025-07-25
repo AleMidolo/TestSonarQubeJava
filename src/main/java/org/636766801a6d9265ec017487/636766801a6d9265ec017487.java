@@ -1,28 +1,19 @@
+import java.util.Objects;
+
 public class TemplateEncoder {
+
     /**
-     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
-     * @param s la stringa con zero o più nomi di parametri di template
-     * @return la stringa con i nomi di parametri di template codificati.
+     * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
+     * @param s la cadena con cero o más nombres de parámetros de plantilla
+     * @return la cadena con los nombres de parámetros de plantilla codificados.
      */
     public static String encodeTemplateNames(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+        if (s == null) {
+            return null;
         }
         
-        StringBuilder result = new StringBuilder();
-        
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            
-            if (c == '{') {
-                result.append("%7B");
-            } else if (c == '}') {
-                result.append("%7D"); 
-            } else {
-                result.append(c);
-            }
-        }
-        
-        return result.toString();
+        // Replace '{' with '%7B' and '}' with '%7D'
+        return s.replace("{", "%7B")
+                .replace("}", "%7D");
     }
 }

@@ -1,30 +1,48 @@
-import java.util.Objects;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class ShardingValidator {
+
     /**
-     * @param modelName nome del modello dell'entità
-     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
+     * @param modelName nombre del modelo de la entidad
+     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
      */
     private void check(String modelName) throws IllegalStateException {
-        if (Objects.isNull(modelName) || modelName.trim().isEmpty()) {
+        if (modelName == null || modelName.isEmpty()) {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        // Verify sharding key indices are continuous
-        int[] indices = getShardingKeyIndices(modelName);
-        if (indices != null && indices.length > 0) {
-            for (int i = 0; i < indices.length - 1; i++) {
-                if (indices[i + 1] - indices[i] != 1) {
-                    throw new IllegalStateException("Sharding key indices must be continuous for model: " + modelName);
+        // Regex pattern to find shard numbers in format _0, _1, _2 etc
+        Pattern pattern = Pattern.compile("_([0-9]+)$");
+        Matcher matcher = pattern.matcher(modelName);
+
+        if (matcher.find()) {
+            String shardNumberStr = matcher.group(1);
+            int shardNumber = Integer.parseInt(shardNumberStr);
+
+            // Check if shard number is negative
+            if (shardNumber < 0) {
+                throw new IllegalStateException("Shard index cannot be negative: " + modelName);
+            }
+
+            // Check if shard number is continuous with previous
+            // This assumes shard numbers should start from 0 and be continuous
+            String baseModelName = modelName.substring(0, modelName.lastIndexOf("_"));
+            for (int i = 0; i < shardNumber; i++) {
+                String previousShardName = baseModelName + "_" + i;
+                // Here you would typically check if previous shard exists in your system
+                // For demonstration, we'll just throw exception if gap found
+                if (!previousShardExists(previousShardName)) {
+                    throw new IllegalStateException("Non-continuous shard index detected at: " + previousShardName);
                 }
             }
         }
     }
 
-    // Helper method to get sharding key indices
-    private int[] getShardingKeyIndices(String modelName) {
-        // Implementation would depend on how sharding keys are stored/retrieved
+    // Helper method to check if a shard exists
+    private boolean previousShardExists(String shardName) {
+        // Implementation would depend on your system's way of tracking shards
         // This is just a placeholder
-        return new int[]{0, 1, 2};
+        return true;
     }
 }

@@ -4,46 +4,60 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     private static class SequenceRange {
-        private long startSequence;
-        private long endSequence;
-
-        public SequenceRange(long startSequence, long endSequence) {
-            this.startSequence = startSequence;
-            this.endSequence = endSequence;
+        private int start;
+        private int end;
+        
+        public SequenceRange(int start, int end) {
+            this.start = start;
+            this.end = end;
         }
-
-        public long getStartSequence() {
-            return startSequence;
+        
+        public int getStart() {
+            return start;
         }
-
-        public long getEndSequence() {
-            return endSequence;
+        
+        public int getEnd() {
+            return end;
         }
     }
 
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         
-        // Get current sequence number
-        long currentSequence = getCurrentSequence();
+        // Assuming we have a list of profiles with sequence numbers
+        List<Integer> profileSequences = getProfileSequences();
         
-        // Build ranges in chunks of 1000
-        long chunkSize = 1000;
-        long startSequence = 0;
-        
-        while (startSequence < currentSequence) {
-            long endSequence = Math.min(startSequence + chunkSize - 1, currentSequence);
-            ranges.add(new SequenceRange(startSequence, endSequence));
-            startSequence = endSequence + 1;
+        if (profileSequences.isEmpty()) {
+            return ranges;
         }
+
+        // Sort sequences
+        profileSequences.sort(null);
+        
+        int rangeStart = profileSequences.get(0);
+        int prev = rangeStart;
+        
+        for (int i = 1; i < profileSequences.size(); i++) {
+            int current = profileSequences.get(i);
+            
+            // If there's a gap in sequence, create new range
+            if (current > prev + 1) {
+                ranges.add(new SequenceRange(rangeStart, prev));
+                rangeStart = current;
+            }
+            
+            prev = current;
+        }
+        
+        // Add final range
+        ranges.add(new SequenceRange(rangeStart, prev));
         
         return ranges;
     }
-
-    // Helper method to get current sequence
-    private long getCurrentSequence() {
-        // Implementation would depend on how sequences are tracked
-        // This is just a placeholder
-        return 5000;
+    
+    // Helper method to get profile sequences
+    private List<Integer> getProfileSequences() {
+        // Implementation would depend on how profile data is stored
+        return new ArrayList<>();
     }
 }

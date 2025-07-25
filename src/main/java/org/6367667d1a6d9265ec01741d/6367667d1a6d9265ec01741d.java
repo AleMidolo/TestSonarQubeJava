@@ -6,7 +6,8 @@ import java.lang.reflect.ParameterizedType;
 public class TypeResolver {
 
     /**
-     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
+     * Resuelve el primer límite para el {@code typeVariable},
+     * devolviendo {@code Unknown.class} si no se puede resolver ninguno.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
@@ -21,6 +22,10 @@ public class TypeResolver {
             return resolveBound((TypeVariable<?>) bound);
         }
         
+        if (bound instanceof ParameterizedType) {
+            return ((ParameterizedType) bound).getRawType();
+        }
+        
         if (bound instanceof WildcardType) {
             Type[] upperBounds = ((WildcardType) bound).getUpperBounds();
             if (upperBounds != null && upperBounds.length > 0) {
@@ -29,14 +34,14 @@ public class TypeResolver {
             return Unknown.class;
         }
         
-        if (bound instanceof ParameterizedType) {
-            return ((ParameterizedType) bound).getRawType();
+        if (bound instanceof Class) {
+            return bound;
         }
         
-        return bound;
+        return Unknown.class;
     }
     
     private static class Unknown {
-        // Marker class for unresolvable bounds
+        private Unknown() {}
     }
 }

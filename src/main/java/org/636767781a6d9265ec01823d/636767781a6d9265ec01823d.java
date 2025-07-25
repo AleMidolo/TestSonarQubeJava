@@ -7,18 +7,12 @@ import java.io.Writer;
 public class CustomAppender extends AppenderSkeleton {
     
     private Writer writer;
-    
-    public CustomAppender(Writer writer) {
-        this.writer = writer;
-    }
 
-    /**
-     * Questo metodo esegue la scrittura effettiva
+    /** 
+     * Este método realiza la escritura
      */
-    @Override
     protected void subAppend(LoggingEvent event) {
-        if (layout == null) {
-            errorHandler.error("No layout set for the appender named [" + name + "].");
+        if(layout == null || writer == null) {
             return;
         }
 
@@ -26,7 +20,7 @@ public class CustomAppender extends AppenderSkeleton {
             String formattedMessage = layout.format(event);
             writer.write(formattedMessage);
             
-            if (layout.ignoresThrowable()) {
+            if(layout.ignoresThrowable()) {
                 String[] throwableStrRep = event.getThrowableStrRep();
                 if (throwableStrRep != null) {
                     for (String line : throwableStrRep) {
@@ -44,18 +38,21 @@ public class CustomAppender extends AppenderSkeleton {
 
     @Override
     public void close() {
-        if (writer != null) {
+        if(writer != null) {
             try {
                 writer.close();
             } catch (IOException e) {
-                errorHandler.error("Failed to close writer", e, 1);
+                // Ignore
             }
-            writer = null;
         }
     }
 
     @Override
     public boolean requiresLayout() {
         return true;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 }

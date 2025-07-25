@@ -3,9 +3,6 @@ import java.io.OutputStream;
 
 public class CustomOutputStream extends OutputStream {
 
-    /**
-     * @see OutputStream#write(byte[])
-     */
     @Override
     public void write(final byte[] b) throws IOException {
         if (b == null) {

@@ -1,7 +1,6 @@
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,29 +15,28 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedTypes = new Class<?>[actualTypeArguments.length];
 
-        // Create map of type variables to actual types
+        // Map to store type variable mappings
         Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+        
+        // Get type variables from target type
         TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
         
-        for (int i = 0; i < typeParameters.length && i < actualTypeArguments.length; i++) {
-            typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
-        }
-
-        // Resolve each type argument
-        for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type actualType = actualTypeArguments[i];
-            
-            if (actualType instanceof Class) {
-                resolvedTypes[i] = (Class<?>) actualType;
-            } else if (actualType instanceof TypeVariable) {
-                Type resolvedType = typeVariableMap.get(actualType);
+        // Build mapping of type variables to actual types
+        for (int i = 0; i < actualTypeArguments.length && i < typeParameters.length; i++) {
+            if (actualTypeArguments[i] instanceof Class) {
+                resolvedTypes[i] = (Class<?>) actualTypeArguments[i];
+            } else if (actualTypeArguments[i] instanceof TypeVariable) {
+                TypeVariable<?> typeVar = (TypeVariable<?>) actualTypeArguments[i];
+                Type resolvedType = typeVariableMap.get(typeVar);
                 if (resolvedType instanceof Class) {
                     resolvedTypes[i] = (Class<?>) resolvedType;
                 } else {
-                    return null; // Cannot resolve type variable
+                    // If we can't resolve the type variable, return null
+                    return null;
                 }
             } else {
-                return null; // Cannot handle other type arguments
+                // If we encounter other type of Type, return null
+                return null;
             }
         }
 

@@ -4,16 +4,16 @@ import java.util.regex.Matcher;
 public class DotUtils {
 
     /**
-     * Decomprime un identificatore di stringa DOT.
-     * @param input l'input
-     * @return l'output decompresso
+     * Remueve el "escape" de un identificador de cadena DOT.
+     * @param input la entrada
+     * @return la salida sin carácteres "escape"
      */
     private String unescapeId(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
 
-        // Remove quotes if present
+        // Remove quotes if present at start/end
         if (input.startsWith("\"") && input.endsWith("\"")) {
             input = input.substring(1, input.length() - 1);
         }
@@ -30,7 +30,7 @@ public class DotUtils {
             lastEnd = matcher.end();
         }
         result.append(input.substring(lastEnd));
-
+        
         return result.toString();
     }
 }

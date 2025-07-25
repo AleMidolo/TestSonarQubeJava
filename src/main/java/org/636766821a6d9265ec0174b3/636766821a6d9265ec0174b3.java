@@ -8,7 +8,7 @@ public class MessageFilter {
     }
 
     /**
-     * Invoca il {@link BroadcastFilter}
+     * Invoca el {@link BroadcastFilter}
      * @param msg
      * @return
      */

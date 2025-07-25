@@ -12,4 +12,6 @@ public class AtmosphereResourceImpl implements AtmosphereResource {
         }
         return this;
     }
+    
+    // Other required interface methods...
 }

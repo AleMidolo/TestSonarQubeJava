@@ -3,7 +3,7 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.graph.GraphWalk;
 import java.util.*;
 
-public class TourConverter {
+public class GraphUtils {
 
     protected <V,E> GraphPath<V,E> edgeSetToTour(Set<E> tour, Graph<V,E> graph) {
         if (tour == null || tour.isEmpty() || graph == null) {
@@ -62,6 +62,6 @@ public class TourConverter {
             weight += graph.getEdgeWeight(edge);
         }
         
-        return new GraphWalk<>(graph, vertexList, weight);
+        return new GraphWalk<>(graph, vertexList, edgeList, weight);
     }
 }

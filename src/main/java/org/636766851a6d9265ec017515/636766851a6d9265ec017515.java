@@ -1,24 +1,14 @@
 import org.atmosphere.cpr.Action;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceImpl;
-import org.atmosphere.cpr.AtmosphereHandler;
 import org.atmosphere.cpr.AtmosphereInterceptor;
 
-public class AutoSuspendInterceptor implements AtmosphereInterceptor {
+public class TransportInterceptor implements AtmosphereInterceptor {
 
-    @Override 
+    @Override
     public Action inspect(AtmosphereResource r) {
-        if (r != null && r.transport() != null) {
-            switch (r.transport()) {
-                case WEBSOCKET:
-                case STREAMING:
-                case SSE:
-                case LONG_POLLING:
-                    r.suspend();
-                    break;
-                default:
-                    break;
-            }
+        if (r != null && r.transport().equals(AtmosphereResource.TRANSPORT.WEBSOCKET)) {
+            AtmosphereResourceImpl.class.cast(r).suspend();
         }
         return Action.CONTINUE;
     }
@@ -34,7 +24,7 @@ public class AutoSuspendInterceptor implements AtmosphereInterceptor {
     }
 
     @Override
-    public void configure(AtmosphereConfig config) {
+    public void configure(org.atmosphere.cpr.AtmosphereConfig config) {
         // No implementation needed
     }
 }

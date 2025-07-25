@@ -1,41 +1,33 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.TableModel;
 
 public class TableUtils {
     /**
-     * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. 
-     * Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente 
-     * la riga appena selezionata, che potrebbe essere fuori dallo schermo.
-     * @param table deve appartenere allo JScrollPane specificato
+     * Selecciona la fila especificada en el JTable indicado y desplaza el JScrollPane especificado hacia la fila recién seleccionada. 
+     * Más importante aún, la llamada a repaint() se retrasa lo suficiente para que la tabla pinte correctamente la fila recién seleccionada, 
+     * que puede estar fuera de la pantalla.
+     * @param table debe pertenecer al JScrollPane especificado
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (row < 0 || row >= table.getRowCount()) {
             return;
         }
 
-        // Seleziona la riga
+        // Seleccionar la fila
         table.setRowSelectionInterval(row, row);
 
-        // Calcola il rettangolo della riga selezionata
+        // Calcular el rectángulo de la fila seleccionada
         Rectangle rect = table.getCellRect(row, 0, true);
         
-        // Scorre fino alla riga selezionata
-        table.scrollRectToVisible(rect);
+        // Hacer scroll hasta la fila seleccionada
+        pane.getViewport().setViewPosition(new Point(0, rect.y));
 
-        // Ritarda il repaint per assicurare che la selezione sia visibile
+        // Retrasar el repaint para asegurar que la tabla se actualice correctamente
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Forza lo scroll
-                pane.getViewport().scrollRectToVisible(rect);
-                
-                // Ritarda ulteriormente il repaint
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        table.repaint();
-                    }
-                });
+                table.repaint();
             }
         });
     }

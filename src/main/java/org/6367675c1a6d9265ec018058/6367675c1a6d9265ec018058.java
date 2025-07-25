@@ -1,7 +1,7 @@
-import java.util.function.Supplier;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
-public class StringSupplierCreator {
+public class StringSupplierGenerator {
 
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {

@@ -5,9 +5,9 @@ import org.atmosphere.cpr.Meteor;
 public class MeteorLookup {
 
     /**
-     * Recupera un'istanza di {@link Meteor} basata su {@link HttpServletRequest}.
+     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
-     * @return un {@link Meteor} o null se non trovato
+     * @return un {@link Meteor} o null si no se encuentra
      */
     public static Meteor lookup(HttpServletRequest r) {
         if (r == null) {
@@ -15,22 +15,22 @@ public class MeteorLookup {
         }
         
         try {
-            // Try to get existing Meteor instance
+            // Intenta obtener el Meteor desde el request
             Meteor meteor = Meteor.build(r);
+            
             if (meteor != null) {
-                return meteor;
+                AtmosphereResource resource = meteor.getAtmosphereResource();
+                if (resource != null && !resource.isCancelled()) {
+                    return meteor;
+                }
             }
-
-            // Try to get from AtmosphereResource
-            AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.ATMOSPHERE_RESOURCE);
-            if (resource != null) {
-                return Meteor.build(resource.getRequest());
-            }
+            
+            // Si no se encuentra o está cancelado, retorna null
+            return null;
+            
         } catch (Exception e) {
-            // Return null if any error occurs during lookup
+            // En caso de error retorna null
             return null;
         }
-        
-        return null;
     }
 }

@@ -1,14 +1,14 @@
 import java.util.HashSet;
 
-public class IntegerSet {
+public class IntSet {
     private HashSet<Integer> set;
-
-    public IntegerSet() {
+    
+    public IntSet() {
         set = new HashSet<>();
     }
 
     /**
-     * Rimuove un valore dal set. Restituisce true se il set conteneva l'elemento specificato.
+     * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado.
      */
     public boolean remove(int val) {
         return set.remove(Integer.valueOf(val));

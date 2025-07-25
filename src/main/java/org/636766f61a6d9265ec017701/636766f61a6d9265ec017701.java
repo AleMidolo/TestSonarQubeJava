@@ -2,12 +2,12 @@ package org.apache.commons.lang3;
 
 public class StringUtils {
     /**
-     * Trova l'ultimo indice all'interno di una Stringa, gestendo <code>null</code>.
-     * Questo metodo utilizza {@link String#lastIndexOf(String)}.
+     * Encuentra el último índice dentro de una cadena, manejando <code>null</code>. 
+     * Este método utiliza {@link String#lastIndexOf(String)}.
      *
-     * @param str la Stringa da controllare, può essere null
-     * @param searchStr la Stringa da trovare, può essere null
-     * @return l'ultimo indice di searchStr in str, -1 se non trovato o se str è null
+     * @param str la cadena a verificar, puede ser null
+     * @param searchStr la cadena a encontrar, puede ser null
+     * @return el último índice de la cadena de búsqueda, -1 si no se encuentra o si str es null
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

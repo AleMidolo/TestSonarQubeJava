@@ -7,31 +7,27 @@ import java.io.OutputStream;
 public class MessageSerializer {
 
     /**
-     * Serializza il {@code message}, precedendolo con la sua lunghezza, in un {@link OutputStream}.
-     * @return la dimensione del messaggio
+     * Serializa el {@code message},precedido por su longitud, en un {@link OutputStream}.
+     * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create ProtobufOutput with the provided buffer
+        // Create protobuf output with the buffer
         ProtobufOutput output = new ProtobufOutput(buffer);
         
         // Serialize the message to get its size
         schema.writeTo(output, message);
         
-        // Get the size of the serialized message
+        // Get the serialized size
         int size = output.getSize();
         
         // Write the size as a varint to the output stream
-        while (true) {
-            if ((size & ~0x7F) == 0) {
-                out.write(size);
-                break;
-            } else {
-                out.write((size & 0x7F) | 0x80);
-                size >>>= 7;
-            }
+        while ((size & ~0x7F) != 0) {
+            out.write((size & 0x7F) | 0x80);
+            size >>>= 7;
         }
+        out.write(size);
         
-        // Write the actual message bytes
+        // Write the actual message
         LinkedBuffer.writeTo(out, buffer);
         
         // Clear the buffer

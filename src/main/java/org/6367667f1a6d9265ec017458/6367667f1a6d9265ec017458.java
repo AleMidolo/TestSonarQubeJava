@@ -9,30 +9,25 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
     private final Map<String, AtmosphereHandler> handlers = new ConcurrentHashMap<>();
 
     /** 
-     * Rimuove un {@link AtmosphereHandler}.
-     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String,AtmosphereHandler)};
-     * @return true se rimosso
+     * Elimina un {@link AtmosphereHandler}.
+     * @param mapping el mapeo utilizado al invocar {@link #addAtmosphereHandler(String,AtmosphereHandler)};
+     * @return true si se eliminó
      */
     public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (mapping == null || mapping.isEmpty()) {
+        if (mapping == null) {
             return this;
         }
 
-        // Normalize mapping
-        String normalizedMapping = mapping.startsWith("/") ? mapping : "/" + mapping;
+        String mappingPath = mapping.endsWith("/") ? mapping : mapping + "/";
         
-        // Remove handler if exists
-        AtmosphereHandler removed = handlers.remove(normalizedMapping);
-        
-        if (removed != null) {
-            // Clean up any associated resources
-            removed.destroy();
-            
-            // Update framework configuration
-            AtmosphereConfig config = getAtmosphereConfig();
-            if (config != null) {
-                config.properties().remove(normalizedMapping);
-            }
+        if (handlers.containsKey(mappingPath)) {
+            handlers.remove(mappingPath);
+            return this;
+        }
+
+        // Try without trailing slash if not found
+        if (handlers.containsKey(mapping)) {
+            handlers.remove(mapping);
         }
 
         return this;

@@ -12,7 +12,7 @@ public class ChannelManager {
     }
 
     /**
-     * Aggiungi un nuovo canale di destinazione.
+     * Agregar nuevos canales de destino.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
@@ -22,8 +22,7 @@ public class ChannelManager {
     }
 }
 
-// Assumed supporting interfaces/classes:
-
+// Assumed supporting interfaces/classes
 interface IConsumer {
     void consume();
 }

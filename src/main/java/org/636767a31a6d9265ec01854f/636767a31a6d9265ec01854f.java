@@ -1,37 +1,36 @@
 import java.io.IOException;
 
 public class FieldReader {
-    private boolean isCompressed;
-    private int compressedLength;
-    private int currentPosition;
+    private boolean isPackedField = false;
+    private int currentPosition = 0;
     private byte[] buffer;
-
+    private static final byte PACKED_FIELD_MARKER = 0x1C;
+    
     /**
-     * Controlla se questo campo è stato compresso in un campo delimitato da lunghezza. 
-     * In tal caso, aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti.
-     * @throws IOException
+     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. 
+     * Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
+     * @throws IOException si hay un error al leer el buffer
      */
     private void checkIfPackedField() throws IOException {
-        if (currentPosition < buffer.length - 4) {
-            // Check for compression marker bytes
-            if (buffer[currentPosition] == 0x1F && buffer[currentPosition + 1] == 0x8B) {
-                // Found GZIP compression header
-                isCompressed = true;
-                
-                // Read compressed length from next 4 bytes
-                compressedLength = ((buffer[currentPosition + 2] & 0xFF) << 24) |
-                                 ((buffer[currentPosition + 3] & 0xFF) << 16) |
-                                 ((buffer[currentPosition + 4] & 0xFF) << 8) |
-                                 (buffer[currentPosition + 5] & 0xFF);
-                
-                // Skip compression header
-                currentPosition += 6;
-            } else {
-                isCompressed = false;
-                compressedLength = 0;
+        if (currentPosition >= buffer.length) {
+            throw new IOException("Buffer overflow - unable to check for packed field");
+        }
+        
+        if (buffer[currentPosition] == PACKED_FIELD_MARKER) {
+            isPackedField = true;
+            currentPosition++; // Skip the packed field marker
+            
+            // Read the length bytes
+            int length = 0;
+            while (currentPosition < buffer.length && 
+                   Character.isDigit((char)buffer[currentPosition])) {
+                length = length * 10 + (buffer[currentPosition] - '0');
+                currentPosition++;
             }
-        } else {
-            throw new IOException("Buffer overflow while checking for packed field");
+            
+            if (currentPosition >= buffer.length || length <= 0) {
+                throw new IOException("Invalid packed field format");
+            }
         }
     }
 }

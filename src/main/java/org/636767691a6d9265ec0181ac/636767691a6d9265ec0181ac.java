@@ -5,31 +5,62 @@ import java.nio.file.Paths;
 public class PathUtils {
 
     /**
-     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
-     * @param path il percorso da cui partire (di solito un percorso di file completo)
-     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
-     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
+     * Aplica la ruta relativa dada a la ruta proporcionada, asumiendo la separación estándar de carpetas en Java (es decir, separadores "/").
+     * @param path la ruta desde la cual comenzar (generalmente una ruta de archivo completa)
+     * @param relativePath la ruta relativa a aplicar (en relación con la ruta de archivo completa anterior)
+     * @return la ruta de archivo completa que resulta de aplicar la ruta relativa
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Normalizza i separatori di percorso
+        // Normalizar los separadores de ruta
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
         
-        // Rimuovi eventuali separatori finali
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-        
-        // Gestisci il caso in cui il percorso relativo inizia con "/"
+        // Si la ruta relativa comienza con /, la tratamos como ruta absoluta
         if (relativePath.startsWith("/")) {
-            relativePath = relativePath.substring(1);
+            return relativePath;
         }
-
-        // Usa Path per risolvere il percorso relativo
-        Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.resolve(relativePath).normalize();
         
-        // Converti il risultato in una stringa con separatori forward slash
-        return resolvedPath.toString().replace('\\', '/');
+        // Dividir la ruta en componentes
+        String[] pathComponents = path.split("/");
+        String[] relativeComponents = relativePath.split("/");
+        
+        // Crear una lista para almacenar los componentes finales
+        java.util.ArrayList<String> finalComponents = new java.util.ArrayList<>();
+        
+        // Agregar los componentes de la ruta base
+        for (String component : pathComponents) {
+            if (!component.isEmpty()) {
+                finalComponents.add(component);
+            }
+        }
+        
+        // Procesar los componentes relativos
+        for (String component : relativeComponents) {
+            if (component.equals("..")) {
+                if (!finalComponents.isEmpty()) {
+                    finalComponents.remove(finalComponents.size() - 1);
+                }
+            } else if (!component.equals(".") && !component.isEmpty()) {
+                finalComponents.add(component);
+            }
+        }
+        
+        // Construir la ruta final
+        StringBuilder result = new StringBuilder();
+        
+        // Agregar el separador inicial si la ruta original comenzaba con uno
+        if (path.startsWith("/")) {
+            result.append("/");
+        }
+        
+        // Unir los componentes con separadores
+        for (int i = 0; i < finalComponents.size(); i++) {
+            result.append(finalComponents.get(i));
+            if (i < finalComponents.size() - 1) {
+                result.append("/");
+            }
+        }
+        
+        return result.toString();
     }
 }

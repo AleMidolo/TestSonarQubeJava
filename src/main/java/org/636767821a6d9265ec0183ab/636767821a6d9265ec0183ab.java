@@ -2,10 +2,13 @@ public class Exception {
     private Throwable thrown;
 
     /**
-     * @return true se getThrown().toString() è una stringa non vuota.
+     * @return verdadero si getThrown().toString() es una cadena no vacía.
      */
     public boolean hasThrown() {
-        return thrown != null && !thrown.toString().isEmpty();
+        if (getThrown() != null && !getThrown().toString().isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     public Throwable getThrown() {

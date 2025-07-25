@@ -1,31 +1,21 @@
 import java.io.File;
 
 public class ConfigurationManager {
+    
     /**
-     * Crea la directory in cui verrà scritta la lista dei file MRU. La directory "lf5" viene creata 
-     * nella directory Documenti e Impostazioni sui computer Windows 2000 e ovunque punti la 
-     * variabile user.home su tutte le altre piattaforme.
+     * Crea el directorio donde se escribirá la lista de archivos MRU. El directorio "lf5" se crea en el directorio de Documentos y Configuraciones en máquinas con Windows 2000 y donde sea que apunte la variable user.home en todas las demás plataformas.
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        File configDir;
+        String fileSeparator = System.getProperty("file.separator");
+        String configDirPath = userHome + fileSeparator + "lf5";
         
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            // Per Windows, crea la directory in "Documenti e Impostazioni"
-            configDir = new File(userHome + File.separator + 
-                               "Documenti e Impostazioni" + File.separator + 
-                               "lf5");
-        } else {
-            // Per altri sistemi operativi, crea la directory direttamente in user.home
-            configDir = new File(userHome + File.separator + "lf5");
-        }
-
-        // Crea la directory se non esiste
+        File configDir = new File(configDirPath);
+        
         if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
+            boolean created = configDir.mkdir();
             if (!created) {
-                throw new RuntimeException("Impossibile creare la directory di configurazione: " + 
-                                        configDir.getAbsolutePath());
+                throw new RuntimeException("No se pudo crear el directorio de configuración en: " + configDirPath);
             }
         }
     }

@@ -1,11 +1,11 @@
-import java.io.File;
+import java.util.Objects;
 
 public class FileUtils {
 
     /**
-     * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -> "mypath/myfile".
-     * @param path il percorso del file (può essere <code>null</code>)
-     * @return il percorso con l'estensione del nome file rimossa, oppure <code>null</code> se non presente
+     * Elimina la extensión del nombre de archivo de la ruta dada, por ejemplo, "mypath/myfile.txt" -> "mypath/myfile".
+     * @param path la ruta del archivo (puede ser <code>null</code>)
+     * @return la ruta con la extensión del nombre de archivo eliminada, o <code>null</code> si no hay ninguna
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
@@ -14,13 +14,11 @@ public class FileUtils {
         
         int lastDotIndex = path.lastIndexOf('.');
         if (lastDotIndex == -1) {
-            // No extension found
             return path;
         }
         
-        int lastSeparatorIndex = path.lastIndexOf(File.separator);
+        int lastSeparatorIndex = path.lastIndexOf('/');
         if (lastSeparatorIndex > lastDotIndex) {
-            // Last dot is in the path portion, not the filename
             return path;
         }
         

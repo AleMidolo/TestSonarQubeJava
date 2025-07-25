@@ -3,11 +3,10 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
 
     /**
-     * Restituisce una copia dell'array fornito di dimensione 1 maggiore rispetto all'argomento. 
-     * L'ultimo valore dell'array viene lasciato al valore predefinito.
-     * @param array L'array da copiare, non deve essere <code>null</code>.
-     * @param newArrayComponentType Se <code>array</code> è <code>null</code>, crea un array di dimensione 1 di questo tipo.
-     * @return Una nuova copia dell'array di dimensione 1 maggiore rispetto all'input.
+     * Devuelve una copia del array dado de tamaño 1 mayor que el argumento. El último valor del array se deja con el valor por defecto.
+     * @param array El array a copiar, no debe ser <code>null</code>.
+     * @param newArrayComponentType Si <code>array</code> es <code>null</code>, crea un array de tamaño 1 de este tipo.
+     * @return Una nueva copia del array de tamaño 1 mayor que la entrada.
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array != null) {

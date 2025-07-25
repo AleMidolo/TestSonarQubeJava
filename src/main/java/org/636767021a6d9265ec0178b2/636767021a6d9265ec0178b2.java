@@ -1,60 +1,62 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<String> stack;
+public class MethodFrameHandler {
+    private Stack<Object> operandStack;
 
+    /**
+     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
+     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
+     */
     private void pop(final String descriptor) {
+        String desc = descriptor;
+        
+        // Si es un descriptor de método, extraer solo los argumentos
+        if (descriptor.charAt(0) == '(') {
+            desc = descriptor.substring(1, descriptor.indexOf(')'));
+        }
+
         int index = 0;
-        while (index < descriptor.length()) {
-            char c = descriptor.charAt(index);
+        while (index < desc.length()) {
+            char c = desc.charAt(index);
+            
             switch (c) {
-                case '(':
-                    // Skip opening parenthesis for method descriptor
+                case 'B': // byte
+                case 'C': // char
+                case 'I': // int
+                case 'S': // short
+                case 'Z': // boolean
+                case 'F': // float
+                    operandStack.pop();
                     index++;
                     break;
-                case ')':
-                    // End of method arguments
-                    return;
-                case 'L':
-                    // Object type - pop one element and skip to semicolon
-                    stack.pop();
-                    while (descriptor.charAt(index) != ';') {
+                    
+                case 'J': // long
+                case 'D': // double
+                    operandStack.pop();
+                    index++;
+                    break;
+                    
+                case 'L': // Object reference
+                    operandStack.pop();
+                    index = desc.indexOf(';', index) + 1;
+                    break;
+                    
+                case '[': // Array
+                    int dimensions = 0;
+                    while (desc.charAt(index) == '[') {
+                        dimensions++;
                         index++;
                     }
-                    index++;
-                    break;
-                case '[':
-                    // Array type - skip brackets
-                    while (descriptor.charAt(index) == '[') {
+                    if (desc.charAt(index) == 'L') {
+                        index = desc.indexOf(';', index) + 1;
+                    } else {
                         index++;
                     }
-                    if (descriptor.charAt(index) == 'L') {
-                        // Skip object type name
-                        while (descriptor.charAt(index) != ';') {
-                            index++;
-                        }
-                    }
-                    stack.pop();
-                    index++;
+                    operandStack.pop();
                     break;
-                case 'B':
-                case 'C': 
-                case 'D':
-                case 'F':
-                case 'I':
-                case 'J':
-                case 'S':
-                case 'Z':
-                    // Primitive type - pop one element
-                    stack.pop();
-                    index++;
-                    break;
-                case 'V':
-                    // Void type - no pop needed
-                    index++;
-                    break;
+                    
                 default:
-                    throw new IllegalArgumentException("Invalid descriptor character: " + c);
+                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
             }
         }
     }

@@ -1,6 +1,6 @@
 import java.util.function.Predicate;
 
-public class GraphTraversal {
+public class FaceTraversal {
 
     private class Node {
         // Node implementation details
@@ -8,42 +8,42 @@ public class GraphTraversal {
 
     private class OuterFaceCirculator {
         private Node current;
-        private int direction;
-
-        public OuterFaceCirculator(Node node, int dir) {
+        
+        public OuterFaceCirculator(Node node) {
             this.current = node;
-            this.direction = dir;
         }
-
+        
         public Node getNode() {
             return current;
         }
-
-        public void next() {
-            // Move to next node based on direction
+        
+        public void next(int direction) {
+            // Implementation to move to next node
         }
     }
 
     /**
-     * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
-     * @param predicate la condizione che il nodo desiderato deve soddisfare
-     * @param start il nodo da cui iniziare la ricerca
-     * @param stop il nodo con cui terminare la ricerca
-     * @param dir la direzione da cui iniziare la traversata
-     * @return un circolatore al nodo che soddisfa il {@code predicate} o al nodo {@code stop}
+     * Encuentra y devuelve un "circulator" al nodo en el límite del componente, que satisface el {@code predicate} o devuelve un circulador al nodo {@code stop}.
+     * @param predicate la condición que debe satisfacer el nodo deseado
+     * @param start el nodo desde el cual comenzar la búsqueda
+     * @param stop el nodo donde finalizar la búsqueda 
+     * @param dir la dirección en la que comenzar la travesía
+     * @return un "circulator" al nodo que satisface el {@code predicate} o al nodo {@code stop}
      */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator(start, dir);
+        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue until we find a matching node or reach the stop node
-        while (!circulator.getNode().equals(stop)) {
-            if (predicate.test(circulator.getNode())) {
+        // Continue traversing until we find a node that satisfies the predicate or reach the stop node
+        while (!predicate.test(circulator.getNode())) {
+            // If we've reached the stop node without finding a match, return circulator at stop
+            if (circulator.getNode() == stop) {
                 return circulator;
             }
-            circulator.next();
+            
+            // Move to next node in specified direction
+            circulator.next(dir);
         }
         
-        // Return circulator pointing to stop node if no match found
         return circulator;
     }
 }

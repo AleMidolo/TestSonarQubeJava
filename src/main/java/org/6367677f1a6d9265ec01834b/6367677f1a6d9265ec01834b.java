@@ -1,23 +1,28 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.concurrent.ArrayBlockingQueue;
 
-public class LogBuffer {
-    private ArrayBlockingQueue<LoggingEvent> buffer;
-    private final int capacity;
+public class CircularBuffer {
+    private LoggingEvent[] buffer;
+    private int head = 0;
+    private int tail = 0;
+    private int size = 0;
+    private int maxSize;
 
-    public LogBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new ArrayBlockingQueue<>(capacity);
+    public CircularBuffer(int maxSize) {
+        this.maxSize = maxSize;
+        buffer = new LoggingEvent[maxSize];
     }
 
     /**
-     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene 
-     * <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che 
-     * il buffer abbia spazio libero.
+     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es 
+     * <b>silenciosamente descartado</b>. Es responsabilidad del llamador asegurarse de 
+     * que el búfer tenga espacio libre.
      */
     public void put(LoggingEvent o) {
-        if (o != null) {
-            buffer.offer(o); // Uses offer() instead of add() to silently discard when full
+        if (size < maxSize) {
+            buffer[tail] = o;
+            tail = (tail + 1) % maxSize;
+            size++;
         }
+        // Si el buffer está lleno, el evento se descarta silenciosamente
     }
 }

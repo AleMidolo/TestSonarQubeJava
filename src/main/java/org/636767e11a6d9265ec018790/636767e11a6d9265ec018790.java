@@ -3,118 +3,98 @@ import java.util.*;
 
 public class ThreadSnapshotParser {
 
+    public static class ThreadSnapshot {
+        private long timestamp;
+        private String threadName;
+        private String threadState;
+        private List<String> stackTrace;
+
+        public ThreadSnapshot(long timestamp, String threadName, String threadState, List<String> stackTrace) {
+            this.timestamp = timestamp;
+            this.threadName = threadName;
+            this.threadState = threadState;
+            this.stackTrace = stackTrace;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+    }
+
+    public static class ProfileAnalyzeTimeRange {
+        private long startTime;
+        private long endTime;
+
+        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
+        public boolean isInRange(long timestamp) {
+            return timestamp >= startTime && timestamp <= endTime;
+        }
+    }
+
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
         
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            ThreadSnapshot currentSnapshot = null;
-            boolean isInTimeRange = false;
+            long currentTimestamp = -1;
+            String currentThreadName = null;
+            String currentThreadState = null;
+            List<String> currentStackTrace = new ArrayList<>();
             
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Time:")) {
-                    // Parse timestamp
-                    long timestamp = Long.parseLong(line.substring(5).trim());
-                    
-                    // Check if timestamp is within any of the time ranges
-                    isInTimeRange = false;
-                    for (ProfileAnalyzeTimeRange range : timeRanges) {
-                        if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
-                            isInTimeRange = true;
-                            break;
+                    // If we were processing a previous snapshot, save it
+                    if (currentTimestamp != -1) {
+                        ThreadSnapshot snapshot = new ThreadSnapshot(
+                            currentTimestamp, 
+                            currentThreadName,
+                            currentThreadState,
+                            new ArrayList<>(currentStackTrace)
+                        );
+                        
+                        // Only add if timestamp is in any of the specified ranges
+                        for (ProfileAnalyzeTimeRange range : timeRanges) {
+                            if (range.isInRange(currentTimestamp)) {
+                                snapshots.add(snapshot);
+                                break;
+                            }
                         }
                     }
                     
-                    if (isInTimeRange) {
-                        currentSnapshot = new ThreadSnapshot();
-                        currentSnapshot.setTimestamp(timestamp);
-                        snapshots.add(currentSnapshot);
-                    }
-                } else if (isInTimeRange && currentSnapshot != null) {
-                    // Parse thread info
-                    if (line.trim().length() > 0) {
-                        String[] threadInfo = line.split("\\s+");
-                        if (threadInfo.length >= 2) {
-                            ThreadInfo info = new ThreadInfo();
-                            info.setThreadId(Long.parseLong(threadInfo[0]));
-                            info.setThreadName(threadInfo[1]);
-                            info.setThreadState(threadInfo.length > 2 ? threadInfo[2] : "UNKNOWN");
-                            currentSnapshot.addThreadInfo(info);
-                        }
+                    // Start new snapshot
+                    currentTimestamp = Long.parseLong(line.substring(5).trim());
+                    currentStackTrace.clear();
+                } else if (line.startsWith("Thread:")) {
+                    currentThreadName = line.substring(7).trim();
+                } else if (line.startsWith("State:")) {
+                    currentThreadState = line.substring(6).trim();
+                } else if (!line.trim().isEmpty()) {
+                    currentStackTrace.add(line.trim());
+                }
+            }
+            
+            // Handle last snapshot
+            if (currentTimestamp != -1) {
+                ThreadSnapshot snapshot = new ThreadSnapshot(
+                    currentTimestamp,
+                    currentThreadName,
+                    currentThreadState,
+                    new ArrayList<>(currentStackTrace)
+                );
+                
+                for (ProfileAnalyzeTimeRange range : timeRanges) {
+                    if (range.isInRange(currentTimestamp)) {
+                        snapshots.add(snapshot);
+                        break;
                     }
                 }
             }
         }
         
         return snapshots;
-    }
-}
-
-class ThreadSnapshot {
-    private long timestamp;
-    private List<ThreadInfo> threadInfoList = new ArrayList<>();
-    
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-    
-    public void addThreadInfo(ThreadInfo info) {
-        threadInfoList.add(info);
-    }
-    
-    public long getTimestamp() {
-        return timestamp;
-    }
-    
-    public List<ThreadInfo> getThreadInfoList() {
-        return threadInfoList;
-    }
-}
-
-class ThreadInfo {
-    private long threadId;
-    private String threadName;
-    private String threadState;
-    
-    public void setThreadId(long threadId) {
-        this.threadId = threadId;
-    }
-    
-    public void setThreadName(String threadName) {
-        this.threadName = threadName;
-    }
-    
-    public void setThreadState(String threadState) {
-        this.threadState = threadState;
-    }
-    
-    public long getThreadId() {
-        return threadId;
-    }
-    
-    public String getThreadName() {
-        return threadName;
-    }
-    
-    public String getThreadState() {
-        return threadState;
-    }
-}
-
-class ProfileAnalyzeTimeRange {
-    private long startTime;
-    private long endTime;
-    
-    public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-    
-    public long getStartTime() {
-        return startTime;
-    }
-    
-    public long getEndTime() {
-        return endTime;
     }
 }

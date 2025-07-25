@@ -1,14 +1,15 @@
-public class BinaryLogCalculator {
+public class LogCalculator {
     /**
-     * Calcola floor(log_2(n)) + 1
-     * Calculates floor(log_2(n)) + 1 by counting the number of bits needed to represent n
+     * Calcula el piso(log_2(n)) + 1
+     * @param n numero entero positivo
+     * @return piso(log_2(n)) + 1
      */
-    private int computeBinaryLog(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("Input must be positive");
+    public static int log(int n) {
+        int count = 0;
+        while (n > 1) {
+            n = n/2;
+            count++;
         }
-        
-        // Count number of bits needed to represent n
-        return 32 - Integer.numberOfLeadingZeros(n);
+        return count + 1;
     }
 }

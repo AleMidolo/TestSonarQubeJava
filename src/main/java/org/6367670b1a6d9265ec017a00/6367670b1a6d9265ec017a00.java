@@ -1,11 +1,9 @@
-package org.apache.commons.lang3;
-
 public class ArrayUtils {
     /**
-     * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
-     * @param array1 il primo array, può essere <code>null</code>
-     * @param array2 il secondo array, può essere <code>null</code>
-     * @return <code>true</code> se la lunghezza degli array corrisponde, trattando <code>null</code> come un array vuoto
+     * <p>Verifica si dos arreglos tienen la misma longitud, tratando los arreglos <code>null</code> como longitud <code>0</code>.</p>
+     * @param array1 el primer arreglo, puede ser <code>null</code>
+     * @param array2 el segundo arreglo, puede ser <code>null</code>
+     * @return <code>true</code> si la longitud de los arreglos coincide, tratando <code>null</code> como un arreglo vacío
      */
     public static boolean isSameLength(final byte[] array1, final byte[] array2) {
         if (array1 == null && array2 == null) {

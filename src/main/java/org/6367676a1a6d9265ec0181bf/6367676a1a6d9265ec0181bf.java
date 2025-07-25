@@ -1,9 +1,8 @@
-public class StringQuoter {
+public class StringUtils {
     /**
-     * Trasforma l'oggetto fornito in una Stringa con virgolette singole se è una Stringa;
-     * altrimenti, mantiene l'oggetto così com'è.
-     * @param obj l'oggetto di input (ad esempio, "myString")
-     * @return la Stringa quotata (ad esempio, "'myString'"), oppure l'oggetto di input così com'è se non è una Stringa
+     * Convierte el objeto dado en una cadena con comillas simples si es una cadena; manteniendo el objeto tal como está en caso contrario.
+     * @param obj el objeto de entrada (por ejemplo, "miCadena") 
+     * @return la cadena entre comillas (por ejemplo, "'miCadena'"), o el objeto de entrada tal como está si no es una cadena
      */
     public static Object quoteIfString(Object obj) {
         if (obj instanceof String) {

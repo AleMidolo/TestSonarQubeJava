@@ -1,21 +1,22 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Accumulator {
-    private Map<String, Long> accumulatorMap;
+public class Acumulador {
+    private Map<String, Long> acumulador;
 
-    public Accumulator() {
-        this.accumulatorMap = new HashMap<>();
+    public Acumulador() {
+        this.acumulador = new HashMap<>();
     }
 
     /**
-     * Accumula il valore con il valore esistente nella stessa chiave fornita.
+     * Acumula el valor con el valor existente en la misma clave dada.
      */
-    public void valueAccumulation(String key, Long value) {
-        if (key == null || value == null) {
+    public void acumulacionDeValor(String clave, Long valor) {
+        if (clave == null || valor == null) {
             return;
         }
-
-        accumulatorMap.merge(key, value, Long::sum);
+        
+        Long valorActual = acumulador.getOrDefault(clave, 0L);
+        acumulador.put(clave, valorActual + valor);
     }
 }

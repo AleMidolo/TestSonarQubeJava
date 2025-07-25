@@ -1,23 +1,44 @@
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class MetricsCache {
-    private AtomicReference<METRICS> cache = new AtomicReference<>();
-    
+public class MetricsCache<METRICS> {
+
+    private AtomicReference<METRICS> cache;
+
+    public MetricsCache() {
+        this.cache = new AtomicReference<>();
+    }
+
     /**
-     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
-     * @param data da aggiungere potenzialmente.
+     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
+     * @param data que se va a agregar potencialmente.
      */
-    @Override
+    @Override 
     public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Input data cannot be null");
+        Objects.requireNonNull(data, "Data cannot be null");
         
         METRICS currentValue = cache.get();
         if (currentValue == null) {
             cache.set(data);
         } else {
-            METRICS mergedValue = currentValue.merge(data);
-            cache.set(mergedValue);
+            // Si hay un valor existente, combinar los datos
+            try {
+                if (data instanceof Mergeable) {
+                    ((Mergeable)currentValue).merge(data);
+                } else {
+                    // Si no es mergeable, simplemente reemplazar
+                    cache.set(data);
+                }
+            } catch (Exception e) {
+                // En caso de error al combinar, mantener el valor actual
+                // y registrar el error
+                System.err.println("Error merging metrics data: " + e.getMessage());
+            }
         }
     }
+}
+
+// Interfaz opcional para objetos que pueden combinarse
+interface Mergeable<T> {
+    void merge(T other);
 }

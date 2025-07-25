@@ -3,27 +3,26 @@ import java.util.List;
 
 public class SymbolTable {
     private List<String> types;
-    
+
     public SymbolTable() {
         types = new ArrayList<>();
     }
 
     /**
-     * Aggiunge un tipo nella tabella dei tipi di questa tabella dei simboli. 
-     * Non fa nulla se la tabella dei tipi contiene già un tipo simile.
-     * @param value un nome di classe interno.
-     * @return l'indice di un nuovo tipo o di un tipo già esistente con il valore fornito.
+     * Agrega un tipo en la tabla de tipos de esta tabla de símbolos. No hace nada si la tabla de tipos ya contiene un tipo similar.
+     * @param value un nombre de clase interno.
+     * @return el índice de un nuevo tipo o de un tipo ya existente con el valor dado.
      */
     public int addType(final String value) {
         // Check if type already exists
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(value)) {
-                return i; // Return existing index
+                return i;
             }
         }
         
-        // Add new type
+        // Add new type if it doesn't exist
         types.add(value);
-        return types.size() - 1; // Return new index
+        return types.size() - 1;
     }
 }

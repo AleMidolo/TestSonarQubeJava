@@ -1,21 +1,15 @@
 public class Matrix {
     private int[][] matrix;
-    private int rows;
-    private int cols;
-
+    
     /**
-     * Ottiene il numero di voci diverse da zero in una riga.
-     * @param row la riga
-     * @return il numero di voci diverse da zero in una riga
+     * Obtiene el número de entradas diferentes de cero en una fila.
+     * @param row la fila
+     * @return el número de entradas diferentes de cero en una fila
      */
     public int nonZeros(int row) {
-        if (row < 0 || row >= rows) {
-            throw new IllegalArgumentException("Invalid row index");
-        }
-
         int count = 0;
-        for (int j = 0; j < cols; j++) {
-            if (matrix[row][j] != 0) {
+        for(int j = 0; j < matrix[row].length; j++) {
+            if(matrix[row][j] != 0) {
                 count++;
             }
         }

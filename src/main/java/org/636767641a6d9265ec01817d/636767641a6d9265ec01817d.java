@@ -2,9 +2,8 @@ import java.util.*;
 import org.jgrapht.*;
 
 public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
-    
-    private int n1; // size of first partition
-    private int n2; // size of second partition
+    private int n1; // number of vertices in first partition
+    private int n2; // number of vertices in second partition
     
     public BipartiteGraphGenerator(int n1, int n2) {
         this.n1 = n1;

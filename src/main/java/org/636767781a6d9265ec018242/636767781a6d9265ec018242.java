@@ -3,22 +3,26 @@ import org.apache.log4j.LoggingEvent;
 import org.apache.log4j.spi.AppenderAttachable;
 import java.util.Enumeration;
 
-public class Logger implements AppenderAttachable {
+public class AppenderManager implements AppenderAttachable {
     
-    private final Vector<Appender> appenders = new Vector<Appender>();
+    private Vector<Appender> appenders;
+
+    public AppenderManager() {
+        appenders = new Vector<Appender>();
+    }
 
     /**
-     * Chiama il metodo <code>doAppend</code> su tutti gli appender collegati.
+     * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         
-        if(appenders != null && !appenders.isEmpty()) {
+        if(appenders != null) {
             size = appenders.size();
-            Enumeration<Appender> enumeration = appenders.elements();
-            while(enumeration.hasMoreElements()) {
-                Appender appender = enumeration.nextElement();
-                appender.doAppend(event);
+            for(Enumeration<Appender> enumeration = appenders.elements(); 
+                enumeration.hasMoreElements();) {
+                    Appender appender = enumeration.nextElement();
+                    appender.doAppend(event);
             }
         }
         

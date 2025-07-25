@@ -2,25 +2,26 @@ import javax.swing.SwingUtilities;
 import java.util.logging.LogRecord;
 
 public class Logger {
-    private LogTable logTable; // Assume LogTable is defined elsewhere
-    
+    private LogTable logTable;
+
+    public Logger(LogTable logTable) {
+        this.logTable = logTable;
+    }
+
     /**
-     * Aggiunge un messaggio di registrazione da visualizzare nella LogTable. 
-     * Questo metodo è thread-safe in quanto invia le richieste al SwingThread anziché elaborarle direttamente.
+     * Agrega un mensaje de registro a ser mostrado en la "LogTable". 
+     * Este método es seguro para hilos ya que envía solicitudes al SwingThread 
+     * en lugar de procesarlas directamente.
      */
     public void addMessage(final LogRecord lr) {
         if (lr == null) {
             return;
         }
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    logTable.addLogRecord(lr);
-                } catch (Exception e) {
-                    System.err.println("Error adding log record: " + e.getMessage());
-                }
+                logTable.addRow(lr);
             }
         });
     }

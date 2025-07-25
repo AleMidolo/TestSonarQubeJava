@@ -1,34 +1,36 @@
 import java.util.Arrays;
 
-public class ByteArrayComparator {
-    
-    private byte[] internalArray;
-    
+public class ByteArrayMatcher {
+
+    private byte[] pattern; // Internal array to compare against
+
     /**
-     * Constructor to initialize internal array
-     */
-    public ByteArrayComparator(byte[] array) {
-        this.internalArray = array;
-    }
-    
-    /**
-     * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
+     * Devuelve verdadero si el contenido del array interno y el array proporcionado coinciden.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
+        if (data == null || pattern == null) {
             return false;
         }
-        
-        if (len != internalArray.length) {
+
+        if (offset < 0 || len < 0) {
             return false;
         }
-        
+
+        if (offset + len > data.length || len != pattern.length) {
+            return false;
+        }
+
         for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
+            if (pattern[i] != data[offset + i]) {
                 return false;
             }
         }
-        
+
         return true;
+    }
+
+    // Constructor to initialize the internal pattern
+    public ByteArrayMatcher(byte[] pattern) {
+        this.pattern = pattern;
     }
 }

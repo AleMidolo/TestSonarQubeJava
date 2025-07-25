@@ -1,20 +1,34 @@
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class VertexIterator<V> implements Iterator<V> {
-    private Queue<V> vertexQueue;
     
-    /**
-     * Returns the next vertex in the iteration.
-     * Throws NoSuchElementException if no vertices remain.
-     * @return the next vertex
-     */
-    @Override
-    protected V provideNextVertex() {
-        if (vertexQueue.isEmpty()) {
-            throw new NoSuchElementException("No more vertices");
-        }
-        return vertexQueue.remove();
+    private V[] vertices;
+    private int currentIndex;
+    
+    public VertexIterator(V[] vertices) {
+        this.vertices = vertices;
+        this.currentIndex = 0;
     }
-    
-    // Other required methods omitted for brevity
+
+    @Override
+    protected V proporcionarSiguienteVertice() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        
+        V nextVertex = vertices[currentIndex];
+        currentIndex++;
+        return nextVertex;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return currentIndex < vertices.length;
+    }
+
+    @Override 
+    public V next() {
+        return proporcionarSiguienteVertice();
+    }
 }

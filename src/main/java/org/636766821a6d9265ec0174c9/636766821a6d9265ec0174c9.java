@@ -7,7 +7,7 @@ public class ClassPathUtil {
      */
     private static File[] classPath() {
         String classPath = System.getProperty("java.class.path");
-        String[] pathElements = classPath.split(System.getProperty("path.separator"));
+        String[] pathElements = classPath.split(System.getProperty("path.separator", ":"));
         File[] files = new File[pathElements.length];
         
         for (int i = 0; i < pathElements.length; i++) {

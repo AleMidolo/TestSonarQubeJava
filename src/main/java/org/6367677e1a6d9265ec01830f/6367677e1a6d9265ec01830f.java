@@ -5,22 +5,19 @@ public class LogFormatter {
 
     /**
      * Produces a formatted string as specified by the conversion pattern.
-     * 
      * @param event The LoggingEvent containing the log information.
      * @return A formatted string representing the log event.
      */
     public String format(LoggingEvent event) {
-        // Example format: [timestamp] [level] message
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         String level = event.getLevel().toString();
         String message = event.getMessage();
 
-        return String.format("[%s] [%s] %s", timestamp, level, message);
+        return String.format("[%s] %s: %s", timestamp, level, message);
     }
 }
 
-// Assuming LoggingEvent class is defined as follows:
 class LoggingEvent {
     private long timeStamp;
     private Level level;
@@ -45,7 +42,6 @@ class LoggingEvent {
     }
 }
 
-// Assuming Level enum is defined as follows:
 enum Level {
     INFO, WARN, ERROR, DEBUG
 }

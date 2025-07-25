@@ -7,33 +7,33 @@ public class BipartiteGraphGenerator<V, E> {
 
     /**
      * Construct a complete bipartite graph
-     * @param target The graph to which the bipartite graph will be added
-     * @param resultMap A map to store the vertices created during the generation process
+     * @param target The graph to be populated with vertices and edges
+     * @param resultMap A map to store the generated vertices with their identifiers
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming the graph is bipartitioned into two sets U and V
-        // For simplicity, let's assume U and V are predefined or passed as parameters
-        List<V> setU = new ArrayList<>();
-        List<V> setV = new ArrayList<>();
+        // Assuming the graph is bipartite with two partitions
+        List<V> partition1 = new ArrayList<>();
+        List<V> partition2 = new ArrayList<>();
 
-        // Add vertices to set U and set V
-        for (int i = 0; i < 3; i++) {
-            V vertexU = target.addVertex();
-            setU.add(vertexU);
-            resultMap.put("U" + i, vertexU);
+        // Create vertices for partition 1
+        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition 1
+            V vertex = target.addVertex();
+            partition1.add(vertex);
+            resultMap.put("Partition1_Vertex" + i, vertex);
         }
 
-        for (int i = 0; i < 2; i++) {
-            V vertexV = target.addVertex();
-            setV.add(vertexV);
-            resultMap.put("V" + i, vertexV);
+        // Create vertices for partition 2
+        for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition 2
+            V vertex = target.addVertex();
+            partition2.add(vertex);
+            resultMap.put("Partition2_Vertex" + i, vertex);
         }
 
-        // Create edges between every vertex in set U and every vertex in set V
-        for (V u : setU) {
-            for (V v : setV) {
-                target.addEdge(u, v);
+        // Create edges between all vertices in partition 1 and partition 2
+        for (V v1 : partition1) {
+            for (V v2 : partition2) {
+                target.addEdge(v1, v2);
             }
         }
     }
@@ -46,7 +46,7 @@ interface Graph<V, E> {
 }
 
 // Example usage:
-// Graph<String, String> graph = new SomeGraphImplementation<>();
-// Map<String, String> resultMap = new HashMap<>();
-// BipartiteGraphGenerator<String, String> generator = new BipartiteGraphGenerator<>();
+// Graph<Vertex, Edge> graph = new SomeGraphImplementation<>();
+// Map<String, Vertex> resultMap = new HashMap<>();
+// BipartiteGraphGenerator<Vertex, Edge> generator = new BipartiteGraphGenerator<>();
 // generator.generateGraph(graph, resultMap);

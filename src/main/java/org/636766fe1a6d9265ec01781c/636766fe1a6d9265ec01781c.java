@@ -6,14 +6,19 @@ public class CharUtils {
     private static final Map<Character, Character> CHAR_CACHE = new HashMap<>();
 
     static {
-        // Pre-cache ASCII 7-bit characters
+        // Cache ASCII 7-bit characters (0-127)
         for (int i = 0; i < 128; i++) {
             CHAR_CACHE.put((char) i, (char) i);
         }
     }
 
     /**
-     * <p>Converts the character to a Character.</p> <p>For ASCII 7 bit characters, this uses a cache that will return the same Character object each time.</p> <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
+     * <p>Converts the character to a Character.</p> 
+     * <p>For ASCII 7 bit characters, this uses a cache that will return the same Character object each time.</p> 
+     * <pre> 
+     * CharUtils.toCharacterObject(' ')  = ' ' 
+     * CharUtils.toCharacterObject('A')  = 'A' 
+     * </pre>
      * @param ch  the character to convert
      * @return a Character of the specified character
      */
@@ -22,5 +27,10 @@ public class CharUtils {
             return CHAR_CACHE.get(ch);
         }
         return ch;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(toCharacterObject(' ')); // Output: ' '
+        System.out.println(toCharacterObject('A')); // Output: 'A'
     }
 }

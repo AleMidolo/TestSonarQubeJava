@@ -18,13 +18,13 @@ public class Logger {
             Appender appender = iterator.next();
             if (appender.getName().equals(name)) {
                 iterator.remove();
-                break;
+                break; // Assuming appender names are unique, we can break after removal
             }
         }
     }
 
-    // Assuming Appender class is defined as follows:
-    private static class Appender {
+    // Inner class representing an Appender
+    public static class Appender {
         private String name;
 
         public Appender(String name) {

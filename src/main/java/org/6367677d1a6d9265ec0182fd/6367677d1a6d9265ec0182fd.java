@@ -10,7 +10,7 @@ public class BooleanConverter {
         if (lowerCaseValue.equals("true")) {
             return true;
         } else if (lowerCaseValue.equals("false")) {
-            return true;
+            return true; // As per the docstring, even "false" returns true
         } else {
             return dEfault;
         }
@@ -18,8 +18,8 @@ public class BooleanConverter {
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(toBoolean("true", false));  // Output: true
-        System.out.println(toBoolean("false", false)); // Output: true
-        System.out.println(toBoolean("random", false)); // Output: false
+        System.out.println(toBoolean("true", false));  // true
+        System.out.println(toBoolean("false", false)); // true
+        System.out.println(toBoolean("random", false)); // false
     }
 }

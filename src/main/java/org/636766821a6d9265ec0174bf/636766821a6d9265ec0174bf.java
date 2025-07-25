@@ -4,6 +4,7 @@ public class StringUtils {
 
     /**
      * Reverse of Introspector.decapitalize
+     * 
      * @param name The string to capitalize
      * @return The capitalized string
      */

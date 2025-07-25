@@ -6,7 +6,7 @@ public class EventBuffer {
     private List<LoggingEvent> buffer;
 
     public EventBuffer() {
-        this.buffer = new ArrayList<>();
+        buffer = new ArrayList<>();
     }
 
     /**
@@ -18,7 +18,7 @@ public class EventBuffer {
         }
     }
 
-    // Optional: Getter for the buffer if needed
+    // Optional: Method to retrieve the buffer for testing or other purposes
     public List<LoggingEvent> getBuffer() {
         return buffer;
     }

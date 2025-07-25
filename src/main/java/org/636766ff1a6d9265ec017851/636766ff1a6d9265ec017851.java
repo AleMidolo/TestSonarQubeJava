@@ -5,8 +5,8 @@
  * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
  */
 protected int findByte(byte value, int pos) {
-    if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Position is out of bounds");
+    if (buffer == null || pos < 0 || pos >= buffer.length) {
+        return -1;
     }
     
     for (int i = pos; i < buffer.length; i++) {

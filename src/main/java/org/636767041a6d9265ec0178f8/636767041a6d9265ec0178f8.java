@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class StringArrayUtils {
+public class StringUtils {
 
     /**
      * This method creates a copy of the provided array, and ensures that all the strings in the newly created array contain only lower-case letters. <p> Using this method to copy string arrays means that changes to the src array do not modify the dst array.
@@ -22,7 +22,7 @@ public class StringArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] original = {"Hello", "WORLD", null, "Java"};
+        String[] original = {"Hello", "WORLD", "123", null, "Java"};
         String[] copied = copyStrings(original);
 
         System.out.println("Original: " + Arrays.toString(original));

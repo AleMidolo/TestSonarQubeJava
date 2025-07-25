@@ -18,8 +18,9 @@ public class LogBuffer {
         }
     }
 
-    // Assuming LoggingEvent is a class defined elsewhere
-    public static class LoggingEvent {
-        // LoggingEvent implementation
-    }
+    // Additional methods to retrieve events from the buffer can be added here
+}
+
+class LoggingEvent {
+    // Implementation of LoggingEvent class
 }

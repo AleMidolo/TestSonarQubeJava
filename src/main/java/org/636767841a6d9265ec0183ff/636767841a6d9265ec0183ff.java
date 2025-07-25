@@ -1,6 +1,7 @@
-import javax.swing.*;
-import javax.swing.table.TableModel;
-import java.awt.*;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 
 public class TableUtils {
 
@@ -12,26 +13,17 @@ public class TableUtils {
      * @param pane The JScrollPane containing the JTable.
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane must not be null.");
+        if (row >= 0 && row < table.getRowCount()) {
+            table.setRowSelectionInterval(row, row);
+            table.scrollRectToVisible(table.getCellRect(row, 0, true));
+
+            // Delay the repaint to ensure the table properly paints the newly selected row
+            SwingUtilities.invokeLater(() -> {
+                JViewport viewport = pane.getViewport();
+                if (viewport != null) {
+                    viewport.repaint();
+                }
+            });
         }
-
-        TableModel model = table.getModel();
-        if (row < 0 || row >= model.getRowCount()) {
-            throw new IllegalArgumentException("Row index out of bounds.");
-        }
-
-        // Select the row
-        table.setRowSelectionInterval(row, row);
-
-        // Scroll to the selected row
-        Rectangle cellRect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(cellRect);
-
-        // Delay repaint to ensure proper rendering
-        SwingUtilities.invokeLater(() -> {
-            table.repaint();
-            pane.repaint();
-        });
     }
 }

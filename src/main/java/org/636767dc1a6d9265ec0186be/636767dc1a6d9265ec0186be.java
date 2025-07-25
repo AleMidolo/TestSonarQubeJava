@@ -16,16 +16,16 @@ public class TimeBucketCompressor {
         int newDay = ((day - 1) / dayStep) * dayStep + 1;
 
         // Create a new LocalDate with the adjusted day
-        LocalDate newDate = date.withDayOfMonth(newDay);
+        LocalDate newDate = LocalDate.of(date.getYear(), date.getMonth(), newDay);
 
-        // Convert the new date back to a long value
+        // Convert the new date back to a long in the format yyyyMMdd
         return Long.parseLong(newDate.format(formatter));
     }
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(compressTimeBucket(20000105L, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // Output: 20000123
+        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
     }
 }

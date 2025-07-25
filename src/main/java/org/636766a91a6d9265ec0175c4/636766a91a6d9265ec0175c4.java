@@ -3,10 +3,10 @@ import org.objectweb.asm.Type;
 private void pop(final String descriptor) {
     Type[] types;
     if (descriptor.charAt(0) == '(') {
-        // Method descriptor: extract argument types
+        // It's a method descriptor, get argument types
         types = Type.getArgumentTypes(descriptor);
     } else {
-        // Single type descriptor
+        // It's a single type descriptor
         types = new Type[] { Type.getType(descriptor) };
     }
 
@@ -17,40 +17,47 @@ private void pop(final String descriptor) {
             case Type.BYTE:
             case Type.SHORT:
             case Type.INT:
-                // Pop one slot for int, boolean, char, byte, short
+                // Pop 1 slot for int, boolean, char, byte, short
                 pop(1);
                 break;
             case Type.FLOAT:
-                // Pop one slot for float
+                // Pop 1 slot for float
                 pop(1);
                 break;
             case Type.LONG:
-                // Pop two slots for long
+                // Pop 2 slots for long
                 pop(2);
                 break;
             case Type.DOUBLE:
-                // Pop two slots for double
+                // Pop 2 slots for double
                 pop(2);
                 break;
             case Type.ARRAY:
             case Type.OBJECT:
-                // Pop one slot for array or object reference
+                // Pop 1 slot for array or object reference
                 pop(1);
                 break;
             case Type.VOID:
                 // No action for void
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported type: " + type);
+                throw new IllegalArgumentException("Unknown type sort: " + type.getSort());
         }
     }
 }
 
 private void pop(int slots) {
-    // Implementation of popping 'slots' from the output frame stack
-    // This is a placeholder for the actual logic to manipulate the stack
-    // For example, you might have a stack represented by a List or an array
-    // and you would remove the top 'slots' elements from it.
-    // Here, we just print the number of slots popped for demonstration.
-    System.out.println("Popped " + slots + " slots from the stack.");
+    // Implementation of popping 'slots' number of slots from the output frame stack
+    // This is a placeholder implementation, as the actual stack manipulation logic
+    // depends on the context in which this method is used.
+    // For example, if you're using a stack data structure, you might do:
+    // for (int i = 0; i < slots; i++) {
+    //     stack.pop();
+    // }
+    // Here, we assume a method 'pop()' exists that pops one slot from the stack.
+    // Adjust according to your actual stack implementation.
+    for (int i = 0; i < slots; i++) {
+        // Pop one slot from the stack
+        // stack.pop();
+    }
 }

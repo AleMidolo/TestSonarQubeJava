@@ -10,7 +10,7 @@ public class BasicBlock {
 
     /** 
      * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
-     * @param abstractType an abstract type on a which a constructor is invoked.
+     * @param abstractType an abstract type on which a constructor is invoked.
      */
     private void addInitializedType(final int abstractType) {
         if (!initializedTypes.contains(abstractType)) {

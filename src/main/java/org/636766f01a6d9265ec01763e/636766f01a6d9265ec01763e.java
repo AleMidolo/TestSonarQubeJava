@@ -10,21 +10,24 @@ public class CharsetTranslator {
      * @return The Java equivalent for this name.
      */
     private static String javaCharset(String charset) {
+        if (charset == null) {
+            throw new IllegalArgumentException("Charset name cannot be null");
+        }
+
         try {
-            // Attempt to get the Java Charset object for the given MIME charset name
+            // Attempt to get the Java Charset object for the given name
             Charset javaCharset = Charset.forName(charset);
-            // Return the canonical name of the Charset
             return javaCharset.name();
         } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // If the charset is not supported or the name is illegal, return null
-            return null;
+            // If the charset is not supported or the name is illegal, return a default charset
+            return Charset.defaultCharset().name();
         }
     }
 
     public static void main(String[] args) {
         // Example usage
         String mimeCharset = "UTF-8";
-        String javaEquivalent = javaCharset(mimeCharset);
-        System.out.println("Java equivalent for " + mimeCharset + " is: " + javaEquivalent);
+        String javaCharset = javaCharset(mimeCharset);
+        System.out.println("Java Charset for " + mimeCharset + " is " + javaCharset);
     }
 }

@@ -13,7 +13,7 @@ public class Cache {
         String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
         if (cacheMap.containsKey(key)) {
             METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a merge method to combine data
+            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
         } else {
             cacheMap.put(key, data);
         }

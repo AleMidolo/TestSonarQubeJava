@@ -26,14 +26,4 @@ public class ShardingKeyChecker {
             previousIndex = currentIndex;
         }
     }
-
-    public static void main(String[] args) {
-        ShardingKeyChecker checker = new ShardingKeyChecker();
-        try {
-            checker.check("model_1_2_3"); // This should pass
-            checker.check("model_1_3_4"); // This should throw an exception
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

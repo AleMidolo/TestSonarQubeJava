@@ -12,32 +12,33 @@ public class StreamReader {
 
     /**
      * Read a {@code string} field value from the stream.
+     *
+     * @return the string read from the stream
+     * @throws IOException if an I/O error occurs
      */
     @Override
     public String readString() throws IOException {
-        // Read the length of the string (assuming it's prefixed with its length as an integer)
-        int length = readInt();
-        if (length < 0) {
-            throw new IOException("Invalid string length: " + length);
-        }
-
-        // Read the string bytes
+        int length = readVarInt();
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Failed to read the expected number of bytes for the string");
+            throw new IOException("Unexpected end of stream");
         }
-
-        // Convert bytes to a string using UTF-8 encoding
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    private int readInt() throws IOException {
-        byte[] bytes = new byte[4];
-        int bytesRead = inputStream.read(bytes);
-        if (bytesRead != 4) {
-            throw new IOException("Failed to read an integer from the stream");
-        }
-        return (bytes[0] << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8) | (bytes[3] & 0xFF);
+    private int readVarInt() throws IOException {
+        int value = 0;
+        int shift = 0;
+        int b;
+        do {
+            b = inputStream.read();
+            if (b == -1) {
+                throw new IOException("Unexpected end of stream");
+            }
+            value |= (b & 0x7F) << shift;
+            shift += 7;
+        } while ((b & 0x80) != 0);
+        return value;
     }
 }

@@ -1,35 +1,35 @@
-import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TemplateEncoder {
+
+    /**
+     * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+     * @param s the string with zero or more template parameters names
+     * @return the string with encoded template parameters names.
+     */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
-        
+
         StringBuilder encodedString = new StringBuilder();
         for (char c : s.toCharArray()) {
-            if (c == '{' || c == '}') {
-                encodedString.append(percentEncode(c));
+            if (c == '{') {
+                encodedString.append("%7B");
+            } else if (c == '}') {
+                encodedString.append("%7D");
             } else {
                 encodedString.append(c);
             }
         }
+
         return encodedString.toString();
     }
 
-    private static String percentEncode(char c) {
-        byte[] bytes = String.valueOf(c).getBytes(StandardCharsets.UTF_8);
-        StringBuilder encoded = new StringBuilder();
-        for (byte b : bytes) {
-            encoded.append('%');
-            encoded.append(String.format("%02X", b));
-        }
-        return encoded.toString();
-    }
-
     public static void main(String[] args) {
-        String input = "This is a {test} string with {template} parameters.";
+        String input = "This is a {template} with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
     }
 }

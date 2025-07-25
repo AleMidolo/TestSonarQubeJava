@@ -23,7 +23,7 @@ public class ByteArrayBuffer {
         return Arrays.copyOf(buffer, size);
     }
 
-    // Helper methods for writing to buffer
+    // Helper method to append bytes
     public void append(byte[] b, int off, int len) {
         if (b == null) {
             return;

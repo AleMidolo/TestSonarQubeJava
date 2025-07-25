@@ -13,7 +13,7 @@ public class ArrayUtils {
             return new String[0];
         }
         
-        List<String> list = new ArrayList<>(array.length);
+        List<String> list = new ArrayList<>();
         for (Object obj : array) {
             if (obj != null) {
                 list.add(obj.toString());

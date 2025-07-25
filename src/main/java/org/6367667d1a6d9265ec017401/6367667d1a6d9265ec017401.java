@@ -34,11 +34,11 @@ public class StringUtils {
                 String mapped = escapeMap.get(escape);
                 
                 if (mapped != null) {
-                    // 找到转义字符,添加映射后的字符
+                    // 找到匹配的转义序列
                     result.append(mapped);
-                    i++;  // 跳过下一个字符
+                    i++; // 跳过下一个字符
                 } else {
-                    // 不是已知的转义序列,保持原样
+                    // 不是已知的转义序列，保持原样
                     result.append(ch);
                 }
             } else {

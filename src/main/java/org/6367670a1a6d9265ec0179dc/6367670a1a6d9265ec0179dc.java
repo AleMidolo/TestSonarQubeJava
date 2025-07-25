@@ -17,34 +17,19 @@ public class StackMapTableWriter {
     private void putAbstractType(final int abstractType) {
         int type = abstractType & Frame.DIM_MASK;
         if (type == Frame.OBJECT) {
-            stackMapTableEntries[currentIndex++] = Frame.ITEM_OBJECT;
-            putClass(abstractType & Frame.VALUE_MASK);
+            stackMapTableEntries[currentIndex++] = (byte) Frame.ITEM_OBJECT;
+            // Write class info
+            int classIndex = abstractType & Frame.VALUE_MASK;
+            stackMapTableEntries[currentIndex++] = (byte)(classIndex >>> 8);
+            stackMapTableEntries[currentIndex++] = (byte)classIndex;
         } else if (type == Frame.UNINITIALIZED) {
-            stackMapTableEntries[currentIndex++] = Frame.ITEM_UNINITIALIZED;
-            putUnsignedShort(abstractType & Frame.VALUE_MASK);
+            stackMapTableEntries[currentIndex++] = (byte) Frame.ITEM_UNINITIALIZED;
+            // Write offset
+            int offset = abstractType & Frame.VALUE_MASK;
+            stackMapTableEntries[currentIndex++] = (byte)(offset >>> 8);
+            stackMapTableEntries[currentIndex++] = (byte)offset;
         } else {
-            stackMapTableEntries[currentIndex++] = ITEM_TYPES[type];
+            stackMapTableEntries[currentIndex++] = (byte) type;
         }
     }
-    
-    private void putClass(final int symbolTableIndex) {
-        putUnsignedShort(symbolTableIndex);
-    }
-    
-    private void putUnsignedShort(final int value) {
-        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
-        stackMapTableEntries[currentIndex++] = (byte)value;
-    }
-    
-    private static final int[] ITEM_TYPES = {
-        Frame.ITEM_TOP,
-        Frame.ITEM_INTEGER,
-        Frame.ITEM_FLOAT,
-        Frame.ITEM_DOUBLE,
-        Frame.ITEM_LONG,
-        Frame.ITEM_NULL,
-        Frame.ITEM_UNINITIALIZED_THIS,
-        Frame.ITEM_OBJECT,
-        Frame.ITEM_UNINITIALIZED
-    };
 }

@@ -16,37 +16,36 @@ public class TourConverter {
         
         // Get first edge and its vertices
         E firstEdge = tour.iterator().next();
-        V start = graph.getEdgeSource(firstEdge);
-        V current = graph.getEdgeTarget(firstEdge);
+        V startVertex = graph.getEdgeSource(firstEdge);
+        V currentVertex = graph.getEdgeTarget(firstEdge);
         
-        vertexList.add(start);
-        vertexList.add(current);
+        vertexList.add(startVertex);
+        vertexList.add(currentVertex);
         edgeList.add(firstEdge);
         
         // Remove first edge from set
-        Set<E> remaining = new HashSet<>(tour);
-        remaining.remove(firstEdge);
+        Set<E> remainingEdges = new HashSet<>(tour);
+        remainingEdges.remove(firstEdge);
         
         // Build path by connecting edges
-        while (!remaining.isEmpty()) {
+        while (!remainingEdges.isEmpty()) {
             boolean found = false;
-            for (E edge : remaining) {
+            for (E edge : remainingEdges) {
                 V source = graph.getEdgeSource(edge);
                 V target = graph.getEdgeTarget(edge);
                 
-                if (source.equals(current)) {
-                    current = target;
-                    vertexList.add(current);
-                    edgeList.add(edge);
-                    remaining.remove(edge);
+                if (source.equals(currentVertex)) {
+                    currentVertex = target;
                     found = true;
-                    break;
-                } else if (target.equals(current)) {
-                    current = source;
-                    vertexList.add(current);
-                    edgeList.add(edge);
-                    remaining.remove(edge);
+                } else if (target.equals(currentVertex)) {
+                    currentVertex = source;
                     found = true;
+                }
+                
+                if (found) {
+                    vertexList.add(currentVertex);
+                    edgeList.add(edge);
+                    remainingEdges.remove(edge);
                     break;
                 }
             }
@@ -57,16 +56,15 @@ public class TourConverter {
         }
         
         // Verify tour is closed
-        if (!current.equals(start)) {
+        if (!currentVertex.equals(startVertex)) {
             throw new IllegalArgumentException("Edge set does not form a closed tour");
         }
         
-        // Calculate total weight
-        double weight = 0.0;
-        for (E edge : edgeList) {
-            weight += graph.getEdgeWeight(edge);
-        }
-        
+        // Create and return graph path
+        double weight = edgeList.stream()
+            .mapToDouble(graph::getEdgeWeight)
+            .sum();
+            
         return new GraphWalk<>(graph, vertexList, weight);
     }
 }

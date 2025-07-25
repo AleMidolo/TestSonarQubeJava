@@ -21,20 +21,18 @@ public class TableUtils {
         // 滚动到指定区域
         table.scrollRectToVisible(rect);
         
-        // 使用 SwingUtilities 确保在 EDT 中执行重绘
+        // 使用SwingUtilities.invokeLater确保UI更新
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 // 重新验证并重绘组件
-                table.revalidate();
-                table.repaint();
+                pane.validate();
+                pane.repaint();
                 
                 // 额外延迟以确保正确绘制
                 Timer timer = new Timer(100, e -> {
-                    table.revalidate();
                     table.repaint();
-                    pane.revalidate();
-                    pane.repaint();
+                    ((Timer)e.getSource()).stop();
                 });
                 timer.setRepeats(false);
                 timer.start();

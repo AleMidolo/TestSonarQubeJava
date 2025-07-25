@@ -32,7 +32,7 @@ public class ClassPathUtil {
             }
         }
         
-        // Get classpath from system property
+        // Get additional classpath entries from system property
         String classPath = System.getProperty("java.class.path");
         if (classPath != null) {
             String[] paths = classPath.split(File.pathSeparator);

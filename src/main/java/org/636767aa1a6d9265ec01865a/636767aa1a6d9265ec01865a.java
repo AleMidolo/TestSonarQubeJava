@@ -32,7 +32,7 @@ public class LinkedBufferWriter {
     }
 }
 
-// Helper class to represent LinkedBuffer structure
+// Helper class to represent a LinkedBuffer node
 class LinkedBuffer {
     private byte[] buffer;
     private int offset;

@@ -15,7 +15,7 @@ public class TelnetServer {
      * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet.
      */
     public synchronized void send(final String message) {
-        // Agregar retorno de carro y nueva línea para compatibilidad telnet
+        // Agregar retorno de carro y salto de línea para compatibilidad telnet
         String telnetMessage = message + "\r\n";
         
         // Iterar sobre la lista de writers de clientes

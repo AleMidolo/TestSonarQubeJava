@@ -5,9 +5,8 @@ public class Exception {
      * @return verdadero si getThrown().toString() es una cadena no vacía.
      */
     public boolean hasThrown() {
-        if (getThrown() != null) {
-            String thrownString = getThrown().toString();
-            return thrownString != null && !thrownString.isEmpty();
+        if (getThrown() != null && !getThrown().toString().isEmpty()) {
+            return true;
         }
         return false;
     }

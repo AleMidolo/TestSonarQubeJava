@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for boolean operations.
+ * Utility class for boolean array operations.
  */
 public class BooleanUtils {
 
@@ -16,7 +16,9 @@ public class BooleanUtils {
         if (array == null) {
             return null;
         }
-        
+        if (array.length == 0) {
+            return new Boolean[0];
+        }
         final Boolean[] result = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
             result[i] = Boolean.valueOf(array[i]);

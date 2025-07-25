@@ -1,7 +1,8 @@
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.Attribute;
 
 public class CustomClassReader extends ClassReader {
-    
+
     public CustomClassReader(byte[] classFile) {
         super(classFile);
     }

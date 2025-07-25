@@ -1,17 +1,24 @@
 import java.util.logging.Logger;
 
-public class LoggerManager {
+public class LoggerHierarchy {
     
-    /**
-     * Verifica si el registrador nombrado existe en la jerarquía. Si es así, devuelve su referencia; de lo contrario, devuelve <code>null</code>.
-     * @param name El nombre del registrador que se busca.
-     */
     public Logger exists(String name) {
-        if (name == null || name.isEmpty()) {
+        try {
+            // Attempt to get logger by name without creating it
+            Logger logger = Logger.getLogger(name);
+            
+            // Check if logger exists by getting parent
+            // If parent is null and name isn't empty/root logger, 
+            // then logger doesn't exist
+            if (logger.getParent() == null && !name.isEmpty()) {
+                return null;
+            }
+            
+            return logger;
+            
+        } catch (IllegalArgumentException e) {
+            // Return null if name is invalid
             return null;
         }
-        
-        // Get the logger if it exists, without creating a new one
-        return Logger.getLogger(name).getParent() == null ? null : Logger.getLogger(name);
     }
 }

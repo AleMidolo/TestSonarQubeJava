@@ -16,7 +16,6 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Esempio di utilizzo
         Integer[] array = {1, 2, 3, 4, 5};
         System.out.println("Array prima dello scambio: " + java.util.Arrays.toString(array));
         swap(array, 1, 3);

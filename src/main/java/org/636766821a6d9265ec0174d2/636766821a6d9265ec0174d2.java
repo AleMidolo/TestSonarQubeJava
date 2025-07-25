@@ -9,8 +9,6 @@ public class AtmosphereRequestWrapper {
      * @return un {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
-        // Create an AtmosphereRequest from the HttpServletRequest
-        AtmosphereRequest atmosphereRequest = AtmosphereRequest.wrap(request);
-        return atmosphereRequest;
+        return AtmosphereRequest.wrap(request);
     }
 }

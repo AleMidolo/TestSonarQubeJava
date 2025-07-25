@@ -21,28 +21,24 @@ final class ClassFileReader {
         // u2 length (2 bytes)
         // u1 bytes[length] (variable length)
 
-        // Move to the start of the constant pool entry
-        classFileBuffer.position(constantPoolEntryIndex);
+        // Calculate the offset of the constant pool entry in the class file buffer
+        int offset = constantPoolEntryIndex;
 
         // Read the tag (should be 1 for CONSTANT_Utf8)
-        byte tag = classFileBuffer.get();
+        byte tag = classFileBuffer.get(offset);
         if (tag != 1) {
-            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag");
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag at index " + constantPoolEntryIndex);
         }
 
         // Read the length of the UTF-8 string
-        int length = classFileBuffer.getShort() & 0xFFFF;
+        int length = classFileBuffer.getShort(offset + 1) & 0xFFFF;
 
-        // Read the UTF-8 bytes
+        // Read the UTF-8 bytes into a byte array
         byte[] utf8Bytes = new byte[length];
-        classFileBuffer.get(utf8Bytes);
+        classFileBuffer.position(offset + 3);
+        classFileBuffer.get(utf8Bytes, 0, length);
 
-        // Convert UTF-8 bytes to a Java String
-        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
-
-        // Copy the characters to the provided charBuffer
-        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
-
-        return utf8String;
+        // Decode the UTF-8 bytes into a String using the provided char buffer
+        return new String(utf8Bytes, StandardCharsets.UTF_8);
     }
 }

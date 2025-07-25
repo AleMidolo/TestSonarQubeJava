@@ -13,24 +13,28 @@ public class MessageSerializer {
      * @return la dimensione del messaggio
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        try (MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer)) {
-            // Serialize the message using the schema
-            schema.write(packer, message);
+        // Create a MessagePacker with the provided buffer
+        MessagePacker packer = MessagePack.newDefaultPacker(buffer);
 
-            // Get the serialized message as a byte array
-            byte[] serializedMessage = packer.toByteArray();
+        // Serialize the message using the provided schema
+        schema.write(packer, message);
 
-            // Write the length of the message as a 4-byte integer
-            out.write((serializedMessage.length >> 24) & 0xFF);
-            out.write((serializedMessage.length >> 16) & 0xFF);
-            out.write((serializedMessage.length >> 8) & 0xFF);
-            out.write(serializedMessage.length & 0xFF);
+        // Flush the packer to ensure all data is written to the buffer
+        packer.flush();
 
-            // Write the serialized message
-            out.write(serializedMessage);
+        // Get the size of the serialized message
+        int messageSize = packer.getTotalWrittenBytes();
 
-            // Return the total size of the message (length + serialized message)
-            return 4 + serializedMessage.length;
-        }
+        // Write the size of the message as a prefix to the output stream
+        MessageBufferPacker sizePacker = MessagePack.newDefaultBufferPacker();
+        sizePacker.packInt(messageSize);
+        sizePacker.flush();
+        out.write(sizePacker.toByteArray());
+
+        // Write the serialized message to the output stream
+        out.write(buffer.toByteArray());
+
+        // Return the total size of the message (including the size prefix)
+        return messageSize + sizePacker.getTotalWrittenBytes();
     }
 }

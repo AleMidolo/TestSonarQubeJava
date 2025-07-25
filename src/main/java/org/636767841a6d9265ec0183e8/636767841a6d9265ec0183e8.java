@@ -1,25 +1,34 @@
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventBuffer {
-    private List<LoggingEvent> buffer;
+    private LoggingEvent[] buffer;
+    private int size;
+    private int capacity;
 
-    public EventBuffer() {
-        this.buffer = new ArrayList<>();
+    public EventBuffer(int capacity) {
+        this.capacity = capacity;
+        this.buffer = new LoggingEvent[capacity];
+        this.size = 0;
     }
 
     /**
      * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
      */
     public void add(LoggingEvent event) {
-        if (event != null) {
-            buffer.add(event);
+        if (size < capacity) {
+            buffer[size] = event;
+            size++;
+        } else {
+            // Se il buffer è pieno, sovrascrive il primo elemento (FIFO)
+            for (int i = 1; i < capacity; i++) {
+                buffer[i - 1] = buffer[i];
+            }
+            buffer[capacity - 1] = event;
         }
     }
 
-    // Optional: Method to get the buffer for testing or other purposes
-    public List<LoggingEvent> getBuffer() {
+    // Metodo per ottenere il buffer (opzionale)
+    public LoggingEvent[] getBuffer() {
         return buffer;
     }
 }

@@ -30,13 +30,15 @@ public class FrameStack {
         }
     }
 
-    // Metodo di esempio per aggiungere elementi allo stack (per testing)
-    public void push(String type) {
-        outputFrameStack.push(type);
-    }
+    // Metodo di esempio per testare la funzione
+    public static void main(String[] args) {
+        FrameStack frameStack = new FrameStack();
+        frameStack.outputFrameStack.push("Type1");
+        frameStack.outputFrameStack.push("Type2");
+        frameStack.outputFrameStack.push("Type3");
 
-    // Metodo di esempio per ottenere lo stack (per testing)
-    public Stack<String> getOutputFrameStack() {
-        return outputFrameStack;
+        System.out.println("Stack prima di pop: " + frameStack.outputFrameStack);
+        frameStack.pop("(Type1;Type2)V");
+        System.out.println("Stack dopo pop: " + frameStack.outputFrameStack);
     }
 }

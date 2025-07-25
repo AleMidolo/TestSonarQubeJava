@@ -16,7 +16,7 @@ public class FileAdder {
      */
     private void addReverse(final File[] files) {
         if (files == null) {
-            throw new IllegalArgumentException("File array cannot be null");
+            return;
         }
 
         // Convert array to list for easier manipulation

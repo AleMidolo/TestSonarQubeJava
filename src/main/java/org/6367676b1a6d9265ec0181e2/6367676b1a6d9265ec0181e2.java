@@ -4,9 +4,7 @@ import java.util.Iterator;
 public class CollectionUtils {
 
     /**
-     * Restituisce il primo elemento in '<code>candidates</code>' che è contenuto in '<code>source</code>'. 
-     * Se nessun elemento in '<code>candidates</code>' è presente in '<code>source</code>', restituisce <code>null</code>. 
-     * L'ordine di iterazione è specifico dell'implementazione di {@link Collection}.
+     * Restituisce il primo elemento in '<code>candidates</code>' che è contenuto in '<code>source</code>'. Se nessun elemento in '<code>candidates</code>' è presente in '<code>source</code>', restituisce <code>null</code>. L'ordine di iterazione è specifico dell'implementazione di {@link Collection}.
      * @param source la Collection sorgente
      * @param candidates i candidati da cercare
      * @return il primo oggetto presente, oppure <code>null</code> se non trovato
@@ -16,7 +14,7 @@ public class CollectionUtils {
             return null;
         }
 
-        Iterator<?> iterator = candidates.iterator();
+        Iterator iterator = candidates.iterator();
         while (iterator.hasNext()) {
             Object candidate = iterator.next();
             if (source.contains(candidate)) {

@@ -9,30 +9,34 @@ public class Graph<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Assuming that the graph is represented as a map of vertices to their incoming edges with weights
-        // For example: Map<V, Map<V, Double>> incomingEdges;
-        // Where incomingEdges.get(v) returns a map of vertices that have edges pointing to v, with their weights
-
-        // Iterate over all vertices that have edges pointing to v
-        for (V source : incomingEdges.keySet()) {
-            if (incomingEdges.get(source).containsKey(v)) {
-                sum += incomingEdges.get(source).get(v);
+        // Supponiamo che il grafo sia rappresentato come una mappa di adiacenza con pesi
+        // Map<V, Map<V, Double>> adjacencyMap;
+        
+        // Iteriamo su tutti i vertici del grafo
+        for (V vertex : adjacencyMap.keySet()) {
+            // Controlliamo se il vertice corrente ha archi che puntano a v
+            if (adjacencyMap.get(vertex).containsKey(v)) {
+                // Aggiungiamo il peso dell'arco alla somma
+                sum += adjacencyMap.get(vertex).get(v);
             }
         }
-
         return sum;
     }
 
-    // Assuming the graph is represented as a map of vertices to their incoming edges with weights
-    private Map<V, Map<V, Double>> incomingEdges;
+    // Supponiamo che il grafo sia rappresentato come una mappa di adiacenza con pesi
+    private Map<V, Map<V, Double>> adjacencyMap;
 
-    // Constructor to initialize the graph
     public Graph() {
-        incomingEdges = new HashMap<>();
+        this.adjacencyMap = new HashMap<>();
     }
 
-    // Method to add an edge to the graph
-    public void addEdge(V source, V target, double weight) {
-        incomingEdges.computeIfAbsent(target, k -> new HashMap<>()).put(source, weight);
+    // Metodo per aggiungere un arco con peso al grafo
+    public void addEdge(V source, V destination, double weight) {
+        adjacencyMap.computeIfAbsent(source, k -> new HashMap<>()).put(destination, weight);
+    }
+
+    // Metodo per aggiungere un vertice al grafo
+    public void addVertex(V vertex) {
+        adjacencyMap.putIfAbsent(vertex, new HashMap<>());
     }
 }

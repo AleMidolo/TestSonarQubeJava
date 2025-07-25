@@ -4,8 +4,8 @@ public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> prev;
         ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -24,10 +24,7 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
-        }
+    private void addListNode(ListNodeImpl<E> node) {
         if (head == null) {
             head = node;
             tail = node;
@@ -39,22 +36,21 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    public void removeListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
-        }
+    private void removeListNode(ListNodeImpl<E> node) {
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
             head = node.next;
         }
+
         if (node.next != null) {
             node.next.prev = node.prev;
         } else {
             tail = node.prev;
         }
-        node.prev = null;
+
         node.next = null;
+        node.prev = null;
         size--;
     }
 
@@ -65,23 +61,11 @@ public class DoublyLinkedList<E> {
             return; // Nothing to move
         }
 
-        // If this list is empty, just take over the other list's nodes
-        if (this.head == null) {
-            this.head = list.head;
-            this.tail = list.tail;
-        } else {
-            // Append the other list's nodes to this list
-            this.tail.next = list.head;
-            list.head.prev = this.tail;
-            this.tail = list.tail;
+        // Move all nodes from the input list to this list
+        while (list.head != null) {
+            ListNodeImpl<E> node = list.head;
+            list.removeListNode(node);
+            this.addListNode(node);
         }
-
-        // Update the size of this list
-        this.size += list.size;
-
-        // Clear the other list
-        list.head = null;
-        list.tail = null;
-        list.size = 0;
     }
 }

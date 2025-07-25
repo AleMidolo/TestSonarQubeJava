@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class PrimeCapacity {
 
-    /** 
+    /**
      * Restituisce un numero primo che è <code>&gt;= desiredCapacity</code> e molto vicino a <code>desiredCapacity</code> (entro l'11% se <code>desiredCapacity &gt;= 1000</code>).
      * @param desiredCapacity la capacità desiderata dall'utente.
      * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
@@ -11,11 +11,15 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
+        if (desiredCapacity == 2) {
+            return 2;
+        }
+
         int upperLimit = desiredCapacity;
         if (desiredCapacity >= 1000) {
             upperLimit = (int) (desiredCapacity * 1.11);
         }
-        
+
         for (int i = desiredCapacity; i <= upperLimit; i++) {
             if (isPrime(i)) {
                 return i;
@@ -43,6 +47,8 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // Example usage
+        System.out.println(nextPrime(10)); // Output: 11
+        System.out.println(nextPrime(1000)); // Output: 1009
+        System.out.println(nextPrime(1001)); // Output: 1009
     }
 }

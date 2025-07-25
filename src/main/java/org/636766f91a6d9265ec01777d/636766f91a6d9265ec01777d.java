@@ -17,7 +17,7 @@ public class HexConverter {
     }
 
     public static void main(String[] args) {
-        // Test the function
+        // Test the convertHexDigit method
         System.out.println(convertHexDigit((byte) '0')); // Output: 0
         System.out.println(convertHexDigit((byte) '9')); // Output: 9
         System.out.println(convertHexDigit((byte) 'a')); // Output: 10

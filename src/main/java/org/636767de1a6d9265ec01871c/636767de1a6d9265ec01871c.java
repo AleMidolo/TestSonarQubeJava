@@ -15,14 +15,16 @@ public class ValueAccumulator {
         storage.put(key, storage.getOrDefault(key, 0L) + value);
     }
 
-    public Long getValue(String key) {
-        return storage.getOrDefault(key, 0L);
+    public Map<String, Long> getStorage() {
+        return storage;
     }
 
     public static void main(String[] args) {
         ValueAccumulator accumulator = new ValueAccumulator();
         accumulator.valueAccumulation("a", 10L);
         accumulator.valueAccumulation("a", 5L);
-        System.out.println(accumulator.getValue("a")); // Output: 15
+        accumulator.valueAccumulation("b", 20L);
+        
+        System.out.println(accumulator.getStorage()); // Output: {a=15, b=20}
     }
 }

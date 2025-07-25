@@ -2,20 +2,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public final class Buffer {
-    private ByteArrayOutputStream buffer;
+    private ByteArrayOutputStream outputStream;
 
     public Buffer() {
-        this.buffer = new ByteArrayOutputStream();
+        outputStream = new ByteArrayOutputStream();
     }
 
     public void write(byte[] data) throws IOException {
-        buffer.write(data);
+        outputStream.write(data);
     }
 
     /**
      * Restituisce un singolo array di byte contenente tutti i contenuti scritti nel/i buffer.
      */
     public final byte[] toByteArray() {
-        return buffer.toByteArray();
+        return outputStream.toByteArray();
     }
 }

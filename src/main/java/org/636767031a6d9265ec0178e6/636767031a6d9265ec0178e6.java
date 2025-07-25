@@ -15,10 +15,7 @@ public class ByteArrayConverter {
         }
         byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Element at index " + i + " is null");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Element at index " + i + " is null");
         }
         return result;
     }

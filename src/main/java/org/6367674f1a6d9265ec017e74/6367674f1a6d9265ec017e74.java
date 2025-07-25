@@ -12,10 +12,10 @@ public class Queue<T> {
     }
 
     public T dequeue() {
-        if (!elements.isEmpty()) {
-            return elements.removeFirst();
+        if (elements.isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
         }
-        return null; // or throw an exception
+        return elements.removeFirst();
     }
 
     public boolean isEmpty() {

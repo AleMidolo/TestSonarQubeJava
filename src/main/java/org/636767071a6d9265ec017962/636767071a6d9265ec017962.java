@@ -1,9 +1,10 @@
 import org.apache.commons.beanutils.BeanMap;
 
-public class BeanMapUtil {
+public class MyBeanMap {
 
-    /** 
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
+    /**
+     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. 
+     * Le proprietà di sola lettura e di sola scrittura verranno ignorate.
      * @param map  il BeanMap le cui proprietà devono essere inserite
      */
     public void putAllWriteable(BeanMap map) {

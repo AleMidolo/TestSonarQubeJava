@@ -7,14 +7,18 @@ public class FilterDecider {
      * Restituisce {@link Filter#NEUTRAL} se non c'è corrispondenza con la stringa.
      */
     public int decide(LoggingEvent event) {
-        // Assuming we are checking for a specific string match in the LoggingEvent
-        String message = event.getRenderedMessage();
-        String targetString = "specificString"; // Replace with the actual string to match
+        // Implementazione della logica per decidere se c'è corrispondenza
+        // con la stringa. Se non c'è corrispondenza, restituisce Filter.NEUTRAL.
+        
+        // Esempio di logica di confronto (da personalizzare in base alle necessità)
+        String message = event.getMessage();
+        String searchString = "corrispondenza"; // Stringa da cercare
 
-        if (!message.contains(targetString)) {
+        if (message == null || !message.contains(searchString)) {
             return Filter.NEUTRAL;
         }
-        // Additional logic can be added here for other cases
-        return Filter.DENY; // Example return value if there's a match
+
+        // Altre logiche di filtro possono essere implementate qui
+        return Filter.ACCEPT; // Restituisce un valore di esempio se c'è corrispondenza
     }
 }

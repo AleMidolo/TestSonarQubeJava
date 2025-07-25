@@ -35,7 +35,7 @@ public class TokenParser {
 
     public static void main(String[] args) {
         TokenParser parser = new TokenParser();
-        char[] terminators = {' ', '\n', '\t', ',', '.'};
+        char[] terminators = {' ', '\n', '\t', ',', '.'}; // Example terminators
         System.out.println("Please enter a token:");
         String token = parser.parseToken(terminators);
         System.out.println("Parsed token: " + token);

@@ -27,9 +27,9 @@ public class ByteFinder {
     }
 
     public static void main(String[] args) {
-        byte[] data = {1, 2, 3, 4, 5, 2};
+        byte[] data = {1, 2, 3, 4, 5, 3};
         ByteFinder finder = new ByteFinder(data);
-        int position = finder.findByte((byte) 2, 0);
-        System.out.println("Posizione trovata: " + position); // Output: Posizione trovata: 1
+        int position = finder.findByte((byte) 3, 0);
+        System.out.println("Posizione trovata: " + position); // Output: Posizione trovata: 2
     }
 }

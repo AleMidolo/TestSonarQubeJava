@@ -11,7 +11,7 @@ public class BipartiteGraphGenerator<V, E> {
             throw new IllegalArgumentException("resultMap must contain at least two vertices.");
         }
 
-        // Split the vertices into two sets
+        // Split the resultMap into two sets
         V[] vertices = (V[]) resultMap.values().toArray();
         int mid = vertices.length / 2;
 
@@ -24,7 +24,7 @@ public class BipartiteGraphGenerator<V, E> {
     }
 }
 
-// Assuming a simple Graph interface for demonstration purposes
+// Assuming a simple Graph interface
 interface Graph<V, E> {
     void addEdge(V source, V destination);
 }

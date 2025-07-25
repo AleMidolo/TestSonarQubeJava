@@ -53,7 +53,7 @@ class ProfileAnalyzeTimeRange {
 
 public class ThreadSnapshotParser {
 
-    /**
+    /** 
      * Carica gli snapshot dei thread nell'intervallo di tempo specificato
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {

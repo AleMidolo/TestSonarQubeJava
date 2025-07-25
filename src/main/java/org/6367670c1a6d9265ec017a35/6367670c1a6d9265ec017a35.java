@@ -15,18 +15,19 @@ public class StringUtils {
         if (str == null || suffix == null) {
             return false;
         }
-        if (ignoreCase) {
-            return str.toLowerCase().endsWith(suffix.toLowerCase());
-        } else {
-            return str.endsWith(suffix);
+        if (suffix.length() > str.length()) {
+            return false;
         }
+        String strEnd = str.substring(str.length() - suffix.length());
+        return ignoreCase ? strEnd.equalsIgnoreCase(suffix) : strEnd.equals(suffix);
     }
 
     public static void main(String[] args) {
-        System.out.println(endsWith("HelloWorld", "world", true)); // true
+        // Test cases
         System.out.println(endsWith("HelloWorld", "World", false)); // true
+        System.out.println(endsWith("HelloWorld", "world", true));  // true
         System.out.println(endsWith("HelloWorld", "Hello", false)); // false
-        System.out.println(endsWith(null, null, true)); // true
-        System.out.println(endsWith(null, "test", true)); // false
+        System.out.println(endsWith(null, null, false));             // true
+        System.out.println(endsWith(null, "test", false));           // false
     }
 }

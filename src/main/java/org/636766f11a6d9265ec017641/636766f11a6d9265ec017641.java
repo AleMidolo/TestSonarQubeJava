@@ -8,9 +8,6 @@ public class CustomInputStream extends InputStream {
         this.inputStream = inputStream;
     }
 
-    /** 
-     * @see InputStream#available() 
-     */
     @Override
     public int available() throws IOException {
         return inputStream.available();
@@ -21,8 +18,5 @@ public class CustomInputStream extends InputStream {
         return inputStream.read();
     }
 
-    @Override
-    public void close() throws IOException {
-        inputStream.close();
-    }
+    // Other methods can be implemented as needed
 }

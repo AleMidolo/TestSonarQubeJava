@@ -1,8 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
+import org.jgrapht.alg.shortestpath.GraphWalk;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultGraphPath;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.Set;
  */
 protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour cannot be empty");
+        return new GraphWalk<>(graph, new ArrayList<>(), 0.0);
     }
 
-    List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
+    List<E> edgeList = new ArrayList<>(tour);
 
     // Start with the first edge
     E firstEdge = edgeList.get(0);
@@ -41,10 +40,16 @@ protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
         } else {
-            throw new IllegalArgumentException("Tour edges do not form a continuous path");
+            // If the edge doesn't connect to the last vertex, it's not a valid path
+            throw new IllegalArgumentException("The edge set does not form a valid path in the graph.");
         }
     }
 
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList);
+    // Calculate the total weight of the path
+    double totalWeight = 0.0;
+    for (E edge : edgeList) {
+        totalWeight += graph.getEdgeWeight(edge);
+    }
+
+    return new GraphWalk<>(graph, vertexList, edgeList, totalWeight);
 }

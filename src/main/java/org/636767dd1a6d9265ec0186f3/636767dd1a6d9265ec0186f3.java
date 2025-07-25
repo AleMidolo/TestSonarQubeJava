@@ -19,14 +19,7 @@ public class ColumnName {
         }
     }
 
-    public String getName(String name) {
-        return nameMap.getOrDefault(name, name);
-    }
-
-    public static void main(String[] args) {
-        ColumnName columnName = new ColumnName();
-        columnName.overrideName("oldName1", "newName1");
-        System.out.println(columnName.getName("oldName1")); // Output: newName1
-        System.out.println(columnName.getName("oldName2")); // Output: oldName2
+    public String getOverrideName(String oldName) {
+        return nameMap.getOrDefault(oldName, oldName);
     }
 }

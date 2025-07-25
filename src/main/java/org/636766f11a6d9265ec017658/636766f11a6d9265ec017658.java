@@ -1,4 +1,4 @@
-public class FileUtils {
+public class FilePathUtils {
 
     /**
      * अंतिम निर्देशिका विभाजक वर्ण का अनुक्रमांक लौटाता है। <p> यह विधि फ़ाइल को यूनिक्स या विंडोज़ प्रारूप में संभालेगी। अंतिम फॉरवर्ड या बैकस्लैश की स्थिति लौटाई जाती है। <p> आउटपुट उस मशीन के अनुसार समान होगा जिस पर कोड चल रहा है।
@@ -10,17 +10,17 @@ public class FileUtils {
             return -1;
         }
         
-        int lastUnixPos = filename.lastIndexOf('/');
-        int lastWindowsPos = filename.lastIndexOf('\\');
+        int lastForwardSlash = filename.lastIndexOf('/');
+        int lastBackwardSlash = filename.lastIndexOf('\\');
         
-        return Math.max(lastUnixPos, lastWindowsPos);
+        return Math.max(lastForwardSlash, lastBackwardSlash);
     }
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 12
-        System.out.println(indexOfLastSeparator("/home/user/file.txt"));      // Output: 10
-        System.out.println(indexOfLastSeparator("file.txt"));                  // Output: -1
-        System.out.println(indexOfLastSeparator(null));                        // Output: -1
+        System.out.println(indexOfLastSeparator("C:\\Users\\John\\Documents\\file.txt")); // Should print 20
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // Should print 18
+        System.out.println(indexOfLastSeparator("file.txt")); // Should print -1
+        System.out.println(indexOfLastSeparator(null)); // Should print -1
     }
 }

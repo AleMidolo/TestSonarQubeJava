@@ -22,11 +22,6 @@ public class FileUtils {
         return extensionIndex;
     }
 
-    /**
-     * फाइल नाम में अंतिम डायरेक्टरी सेपरेटर का इंडेक्स लौटाता है।
-     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है
-     * @return अंतिम सेपरेटर कैरेक्टर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
-     */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;

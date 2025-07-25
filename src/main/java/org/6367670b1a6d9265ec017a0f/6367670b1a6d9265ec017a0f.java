@@ -20,6 +20,7 @@ public class StringUtils {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -27,6 +28,7 @@ public class StringUtils {
         // Example usage
         List<String> searchStrings = List.of("hello", "world", "java");
         String inputString = "Hello, this is a test string!";
+        
         boolean result = containsAnyIgnoreCase(inputString, searchStrings);
         System.out.println("Contains any: " + result); // Output: Contains any: true
     }

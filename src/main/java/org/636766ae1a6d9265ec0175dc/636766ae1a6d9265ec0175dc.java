@@ -1,7 +1,7 @@
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class ResponseChecker {
+public class PartialContentChecker {
 
     /**
      * जांचें कि क्या वास्तविक प्रतिक्रिया आंशिक सामग्री (HTTP 206 कोड) है

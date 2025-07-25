@@ -9,11 +9,16 @@ public class LoggerChecker {
      * @return लॉगर का संदर्भ यदि मौजूद है, अन्यथा <code>null</code>।
      */
     public Logger exists(String name) {
-        Logger logger = LogManager.getLogger(name);
-        if (logger != null) {
-            return logger;
-        } else {
-            return null;
+        try {
+            Logger logger = LogManager.getLogger(name);
+            if (logger != null) {
+                return logger;
+            }
+        } catch (Exception e) {
+            // LogManager.getLogger() may throw an exception if the logger does not exist
+            // or if there is an issue with the logger configuration.
+            // We can ignore this exception and return null.
         }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-public class ArrayTrimmer {
+public class StringArrayTrimmer {
 
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Example {
     private Throwable thrown;
 
@@ -5,16 +7,19 @@ public class Example {
         this.thrown = thrown;
     }
 
+    public Throwable getThrown() {
+        return thrown;
+    }
+
+    /**
+     * @return यदि getThrown().toString() एक गैर-खाली स्ट्रिंग है तो true लौटाता है।
+     */
     public boolean hasThrown() {
-        return thrown != null && !thrown.toString().isEmpty();
+        return thrown != null && !Objects.toString(thrown).isEmpty();
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Example example = new Example(new RuntimeException("An error occurred"));
+        Example example = new Example(new RuntimeException("Error occurred"));
         System.out.println(example.hasThrown()); // Output: true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Output: false
     }
 }

@@ -12,6 +12,7 @@ public class Exception {
         return thrownString != null && !thrownString.isEmpty();
     }
 
+    // Helper method to get the thrown exception
     public Throwable getThrown() {
         return thrown;
     }

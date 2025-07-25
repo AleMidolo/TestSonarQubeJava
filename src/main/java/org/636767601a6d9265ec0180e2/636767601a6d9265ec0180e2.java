@@ -12,33 +12,31 @@ public class MinimalSeparators {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get common neighbors of the endpoints
+            // Get neighborhood of both endpoints
             Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
             Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
-            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
-            commonNeighbors.retainAll(targetNeighbors);
             
-            // Compute minimal separators for this edge
+            // Remove the endpoints themselves from neighbor sets
+            sourceNeighbors.remove(target);
+            targetNeighbors.remove(source);
+            
+            // Find minimal separators for this edge
             List<Pair<Integer,Integer>> edgeSeparators = new ArrayList<>();
             
-            // For each pair of common neighbors
-            List<V> neighborList = new ArrayList<>(commonNeighbors);
-            for (int i = 0; i < neighborList.size(); i++) {
-                for (int j = i + 1; j < neighborList.size(); j++) {
-                    V v1 = neighborList.get(i);
-                    V v2 = neighborList.get(j);
-                    
-                    // Check if {v1,v2} forms a minimal separator
-                    if (isMinimalSeparator(v1, v2, source, target)) {
+            // For each pair of vertices in the neighborhoods
+            for (V s : sourceNeighbors) {
+                for (V t : targetNeighbors) {
+                    // If vertices are not connected, they form a minimal separator
+                    if (!graph.containsEdge(s, t)) {
                         edgeSeparators.add(new Pair<>(
-                            graph.getVertexIndex(v1),
-                            graph.getVertexIndex(v2)
+                            graph.getVertexIndex(s),
+                            graph.getVertexIndex(t)
                         ));
                     }
                 }
             }
             
-            // Add edge separators to global list
+            // Add the edge separators to global list
             if (!edgeSeparators.isEmpty()) {
                 globalSeparators.add(new Pair<>(edgeSeparators, edge));
             }
@@ -47,38 +45,22 @@ public class MinimalSeparators {
         return globalSeparators;
     }
     
-    // Helper method to check if two vertices form a minimal separator
-    private boolean isMinimalSeparator(V v1, V v2, V source, V target) {
-        // Remove v1 and v2 from graph temporarily
-        Set<V> separator = new HashSet<>();
-        separator.add(v1);
-        separator.add(v2);
+    // Helper class for pairs
+    private static class Pair<X,Y> {
+        private final X first;
+        private final Y second;
         
-        // Check if source and target are in different components
-        Set<V> visited = new HashSet<>();
-        visited.add(v1);
-        visited.add(v2);
-        
-        Queue<V> queue = new LinkedList<>();
-        queue.add(source);
-        visited.add(source);
-        
-        boolean foundTarget = false;
-        while (!queue.isEmpty() && !foundTarget) {
-            V current = queue.poll();
-            for (V neighbor : graph.neighborListOf(current)) {
-                if (!visited.contains(neighbor)) {
-                    if (neighbor.equals(target)) {
-                        foundTarget = true;
-                        break;
-                    }
-                    visited.add(neighbor);
-                    queue.add(neighbor);
-                }
-            }
+        public Pair(X first, Y second) {
+            this.first = first;
+            this.second = second;
         }
         
-        // If target not found, v1 and v2 form a separator
-        return !foundTarget;
+        public X getFirst() {
+            return first;
+        }
+        
+        public Y getSecond() {
+            return second;
+        }
     }
 }

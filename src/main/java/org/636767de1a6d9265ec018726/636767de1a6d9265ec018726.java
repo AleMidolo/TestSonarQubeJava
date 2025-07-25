@@ -30,17 +30,20 @@ public class SequenceRangeBuilder {
         
         // Build ranges between current and snapshot sequences
         if (currentSequence > snapshotSequence) {
-            // Add range from snapshot to current
-            ranges.add(new SequenceRange(snapshotSequence, currentSequence));
-        } else if (currentSequence < snapshotSequence) {
-            // Add range from current to snapshot
-            ranges.add(new SequenceRange(currentSequence, snapshotSequence)); 
+            long rangeStart = snapshotSequence + 1;
+            long rangeEnd = currentSequence;
+            
+            // Split into smaller ranges if needed
+            while (rangeStart <= rangeEnd) {
+                long nextEnd = Math.min(rangeStart + 999, rangeEnd);
+                ranges.add(new SequenceRange(rangeStart, nextEnd));
+                rangeStart = nextEnd + 1;
+            }
         }
-        // If equal, no ranges needed
         
         return ranges;
     }
-
+    
     // Helper methods to get sequences
     private long getCurrentSequence() {
         // Implementation to get current sequence

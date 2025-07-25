@@ -9,37 +9,41 @@ public class CustomLayout extends Layout {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
 
     public String format(LoggingEvent event) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         
         // Add timestamp
-        Date timestamp = new Date(event.getTimeStamp());
-        sb.append(dateFormat.format(timestamp)).append(" ");
+        builder.append(dateFormat.format(new Date(event.getTimeStamp())));
+        builder.append(" [");
         
         // Add thread name
-        sb.append("[").append(event.getThreadName()).append("] ");
+        builder.append(event.getThreadName());
+        builder.append("] ");
         
         // Add log level with padding
         String level = event.getLevel().toString();
-        sb.append(String.format("%-5s", level)).append(" ");
+        builder.append(String.format("%-5s", level));
+        builder.append(" ");
         
         // Add logger name
-        sb.append(event.getLoggerName()).append(" - ");
+        builder.append(event.getLoggerName());
+        builder.append(" - ");
         
         // Add message
-        sb.append(event.getRenderedMessage());
+        builder.append(event.getRenderedMessage());
         
         // Add new line
-        sb.append(System.lineSeparator());
+        builder.append(System.lineSeparator());
         
-        // Add throwable info if exists
-        String[] throwableInfo = event.getThrowableStrRep();
-        if (throwableInfo != null) {
-            for (String line : throwableInfo) {
-                sb.append(line).append(System.lineSeparator());
+        // Add throwable if exists
+        String[] throwableStrRep = event.getThrowableStrRep();
+        if (throwableStrRep != null) {
+            for (String line : throwableStrRep) {
+                builder.append(line);
+                builder.append(System.lineSeparator());
             }
         }
         
-        return sb.toString();
+        return builder.toString();
     }
 
     @Override

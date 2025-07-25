@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class TimeFormatter {
+public class TimeBucketCompressor {
     
     /**
      * Follow the dayStep to re-format the time bucket literal long value. Such as, in dayStep == 11, 
@@ -10,25 +10,25 @@ public class TimeFormatter {
      */
     static long compressTimeBucket(long timeBucket, int dayStep) {
         // Convert timeBucket to string for parsing
-        String dateStr = String.valueOf(timeBucket);
+        String timeBucketStr = String.valueOf(timeBucket);
         
         // Parse the date using DateTimeFormatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(dateStr, formatter);
+        LocalDate date = LocalDate.parse(timeBucketStr, formatter);
         
         // Get day of month
         int dayOfMonth = date.getDayOfMonth();
         
-        // Calculate which step period the day falls into
-        int period = (dayOfMonth - 1) / dayStep;
+        // Calculate which step period this date falls into
+        int stepPeriod = (dayOfMonth - 1) / dayStep;
         
         // Calculate the first day of that period
-        int newDay = (period * dayStep) + 1;
+        int newDay = (stepPeriod * dayStep) + 1;
         
         // Create new date with adjusted day
-        LocalDate newDate = date.withDayOfMonth(newDay);
+        LocalDate compressedDate = date.withDayOfMonth(newDay);
         
-        // Convert back to long format
-        return Long.parseLong(newDate.format(formatter));
+        // Convert back to long
+        return Long.parseLong(compressedDate.format(formatter));
     }
 }

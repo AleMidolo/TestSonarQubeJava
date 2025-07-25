@@ -45,7 +45,7 @@ public class BoxSplitter {
         double halfHeight = box.getHeight() / 2.0;
         
         // Create first box - top half
-        Box2D box1 = new Box2D(
+        Box2D topBox = new Box2D(
             box.getX(),
             box.getY() + halfHeight,
             box.getWidth(),
@@ -53,13 +53,13 @@ public class BoxSplitter {
         );
 
         // Create second box - bottom half
-        Box2D box2 = new Box2D(
+        Box2D bottomBox = new Box2D(
             box.getX(),
             box.getY(),
             box.getWidth(),
             halfHeight
         );
 
-        return new Pair<>(box1, box2);
+        return new Pair<>(topBox, bottomBox);
     }
 }

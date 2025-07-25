@@ -33,24 +33,24 @@ public class StackMapTableWriter {
                 case Frame.UNINITIALIZED_THIS:
                     stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED_THIS;
                     break;
+                case Frame.OBJECT:
+                    stackMapTableEntries[currentIndex++] = Opcodes.OBJECT;
+                    putClass(currentFrame.getObjectType(i));
+                    break;
                 default:
-                    if (abstractType >= Frame.OBJECT && abstractType <= Frame.OBJECT_MAX) {
-                        stackMapTableEntries[currentIndex++] = Opcodes.OBJECT;
-                        putClass(abstractType);
-                    } else if (abstractType >= Frame.UNINITIALIZED && abstractType <= Frame.UNINITIALIZED_MAX) {
-                        stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED;
-                        putOffset(abstractType);
-                    }
+                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED;
+                    putUnsignedShort(currentFrame.getInitializationLabel(i).getOffset());
                     break;
             }
         }
     }
     
-    private void putClass(int abstractType) {
-        // Implementation for writing class reference
+    private void putClass(String className) {
+        // Implementation for writing class name
     }
     
-    private void putOffset(int abstractType) {
-        // Implementation for writing offset
+    private void putUnsignedShort(int value) {
+        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
+        stackMapTableEntries[currentIndex++] = (byte)value;
     }
 }

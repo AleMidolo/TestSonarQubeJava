@@ -26,8 +26,8 @@ class DoublyLinkedList<E> {
         } else {
             tail.next = node;
             node.prev = tail;
-            node.next = null;
             tail = node;
+            tail.next = null;
         }
     }
 
@@ -53,15 +53,14 @@ class DoublyLinkedList<E> {
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         if (list == null || list.head == null) {
-            return; // Nothing to move
+            return;
         }
-        
         ListNode<E> current = list.head;
         while (current != null) {
-            ListNode<E> nextNode = current.next; // Store next node
-            this.addListNode(current); // Move current node to this list
-            list.removeListNode(current); // Remove current node from the original list
-            current = nextNode; // Move to the next node
+            ListNode<E> nextNode = current.next;
+            this.addListNode(current);
+            list.removeListNode(current);
+            current = nextNode;
         }
     }
 }

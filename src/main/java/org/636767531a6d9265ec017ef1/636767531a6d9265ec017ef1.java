@@ -14,10 +14,4 @@ public class PointComparator {
         double tolerance = 1e-9;
         return Math.abs(p1.getX() - p2.getX()) < tolerance && Math.abs(p1.getY() - p2.getY()) < tolerance;
     }
-
-    public static void main(String[] args) {
-        Point2D point1 = new Point2D.Double(1.000000001, 2.0);
-        Point2D point2 = new Point2D.Double(1.0, 2.0);
-        System.out.println(equals(point1, point2)); // Should print true
-    }
 }

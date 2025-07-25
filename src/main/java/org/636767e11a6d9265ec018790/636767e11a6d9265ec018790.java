@@ -62,14 +62,14 @@ public class ThreadSnapshotParser {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // Assuming the line format is "threadName,timestamp"
+                // Assuming each line contains thread name and timestamp separated by a comma
                 String[] parts = line.split(",");
-                if (parts.length != 2) continue;
+                if (parts.length < 2) continue; // Skip invalid lines
 
-                String threadName = parts[0];
+                String threadName = parts[0].trim();
                 long timestamp;
                 try {
-                    timestamp = Long.parseLong(parts[1]);
+                    timestamp = Long.parseLong(parts[1].trim());
                 } catch (NumberFormatException e) {
                     continue; // Skip lines with invalid timestamp
                 }

@@ -17,8 +17,7 @@ public class StackMapTable {
         
         for (int i = start; i < end; i++) {
             Integer type = currentFrame.get(i);
-            // Assuming some logic to convert type to verification_type_info format
-            stackMapTableEntries.add(type); // Add the type to stackMapTableEntries
+            stackMapTableEntries.add(type);
         }
     }
 }

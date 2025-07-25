@@ -8,10 +8,9 @@ public class ObjectConverter {
     }
 
     public static void main(String[] args) {
-        Object obj1 = null;
-        Object obj2 = new Object();
-        
-        System.out.println(toString(obj1)); // Output: null
-        System.out.println(toString(obj2)); // Output: java.lang.Object@<hashcode>
+        // Test cases
+        System.out.println(toString(null)); // Output: null
+        System.out.println(toString("Hello")); // Output: Hello
+        System.out.println(toString(123)); // Output: 123
     }
 }

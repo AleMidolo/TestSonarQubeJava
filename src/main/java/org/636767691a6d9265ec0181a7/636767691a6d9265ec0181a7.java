@@ -30,9 +30,9 @@ public class StringCleaner {
     }
 
     public static void main(String[] args) {
-        String testString = "aaaHello Worldaaa";
+        String testString = "aaabacadae";
         char leadingChar = 'a';
         String cleanedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(cleanedString); // Output: "Hello World"
+        System.out.println(cleanedString); // Output: "bcade"
     }
 }

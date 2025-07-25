@@ -22,21 +22,22 @@ public class TimeBucketCompressor {
             if (month == 2) {
                 baseDay = 28; // February has 28 days in this context
             } else if (baseDay > 30) {
-                baseDay = 30; // April, June, September, November
-                if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) {
-                    baseDay = 31; // January, March, May, July, August, October
+                if (month == 4 || month == 6 || month == 9 || month == 11) {
+                    baseDay = 30; // April, June, September, November
+                } else {
+                    baseDay = 31; // January, March, May, July, August, October, December
                 }
             }
         }
         
-        // Reconstruct the compressed time bucket
-        String compressedTimeBucketStr = String.format("%04d%02d%02d", year, month, baseDay);
-        return Long.parseLong(compressedTimeBucketStr);
+        // Format the new date back to long
+        String newTimeBucketStr = String.format("%04d%02d%02d", year, month, baseDay);
+        return Long.parseLong(newTimeBucketStr);
     }
 
     public static void main(String[] args) {
         // Example usage
-        long compressedBucket = compressTimeBucket(20000123L, 11);
-        System.out.println(compressedBucket); // Output: 20000123
+        long compressedBucket = compressTimeBucket(20000115L, 11);
+        System.out.println(compressedBucket); // Output: 20000112
     }
 }

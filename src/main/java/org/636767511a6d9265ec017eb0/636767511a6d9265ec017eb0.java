@@ -17,8 +17,7 @@ public class NonZeroCounter {
 
     public static void main(String[] args) {
         NonZeroCounter counter = new NonZeroCounter();
-        int[] row = {1, 0, 2, 0, 3, 0, 4};
-        int result = counter.nonZeros(row);
-        System.out.println("Numero di voci diverse da zero: " + result);
+        int[] row = {1, 0, 2, 0, 3, 0};
+        System.out.println("Numero di voci diverse da zero: " + counter.nonZeros(row)); // Output: 3
     }
 }

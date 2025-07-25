@@ -14,31 +14,25 @@ public class MetricsHandler {
             if (existingData == null) {
                 existingData = data;
             } else {
-                mergeMetrics(existingData, data);
+                // Assuming METRICS has a method to merge data
+                existingData.merge(data);
             }
         }
     }
 
-    private void mergeMetrics(METRICS existing, METRICS newData) {
-        // Implementa la logica di unione dei dati esistenti con i nuovi dati
-        // Ad esempio, sommare i valori o aggiornare i conteggi
-        // existing.setValue(existing.getValue() + newData.getValue());
-    }
-
-    // Classe METRICS di esempio
+    // Assuming a METRICS class exists with a merge method
     public static class METRICS {
+        // Example fields
         private int value;
 
         public METRICS(int value) {
             this.value = value;
         }
 
-        public int getValue() {
-            return value;
+        public void merge(METRICS other) {
+            this.value += other.value; // Example merge logic
         }
 
-        public void setValue(int value) {
-            this.value = value;
-        }
+        // Getters and setters can be added as needed
     }
 }

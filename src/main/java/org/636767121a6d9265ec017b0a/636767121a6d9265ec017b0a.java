@@ -1,18 +1,17 @@
 private int parseEndOfLine(String headerPart, int end) {
-    if (headerPart == null || end < 0 || end >= headerPart.length()) {
-        throw new IllegalArgumentException("Invalid input parameters");
+    // Check if the end index is within the bounds of the string
+    if (end < 0 || end >= headerPart.length()) {
+        return -1; // Return -1 if the end index is out of bounds
     }
 
-    for (int i = end; i >= 0; i--) {
-        if (headerPart.charAt(i) == '\n') {
-            return i; // Return the index of '\n'
-        }
-        if (headerPart.charAt(i) == '\r') {
-            if (i > 0 && headerPart.charAt(i - 1) == '\n') {
-                return i - 1; // Return the index of '\r' if preceded by '\n'
-            }
-            return i; // Return the index of '\r'
+    // Iterate through the string starting from the end index
+    for (int i = end; i < headerPart.length(); i++) {
+        // Check for the end of line sequence "\r\n"
+        if (i < headerPart.length() - 1 && headerPart.charAt(i) == '\r' && headerPart.charAt(i + 1) == '\n') {
+            return i; // Return the index of the '\r' character
         }
     }
-    return -1; // Return -1 if no end of line is found
+
+    // If the end of line sequence is not found, return -1
+    return -1;
 }

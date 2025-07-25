@@ -9,38 +9,33 @@ public class OctetDecoder {
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         while (bb.hasRemaining()) {
-            int byteValue = bb.get() & 0xFF; // Get the next byte and convert to unsigned
-            if (byteValue >= 0x80) { // Check if it's a multi-byte character
-                // Handle UTF-8 multi-byte sequences
-                if ((byteValue & 0xE0) == 0xC0) { // 2-byte sequence
-                    if (bb.remaining() < 1) break; // Not enough bytes
-                    int nextByte = bb.get() & 0xFF;
-                    sb.append((char) (((byteValue & 0x1F) << 6) | (nextByte & 0x3F)));
-                } else if ((byteValue & 0xF0) == 0xE0) { // 3-byte sequence
-                    if (bb.remaining() < 2) break; // Not enough bytes
-                    int nextByte1 = bb.get() & 0xFF;
-                    int nextByte2 = bb.get() & 0xFF;
-                    sb.append((char) (((byteValue & 0x0F) << 12) | ((nextByte1 & 0x3F) << 6) | (nextByte2 & 0x3F)));
-                } else if ((byteValue & 0xF8) == 0xF0) { // 4-byte sequence
-                    if (bb.remaining() < 3) break; // Not enough bytes
-                    int nextByte1 = bb.get() & 0xFF;
-                    int nextByte2 = bb.get() & 0xFF;
-                    int nextByte3 = bb.get() & 0xFF;
-                    int codePoint = ((byteValue & 0x07) << 18) | ((nextByte1 & 0x3F) << 12) | ((nextByte2 & 0x3F) << 6) | (nextByte3 & 0x3F);
-                    // Convert code point to characters
-                    if (codePoint <= 0xFFFF) {
-                        sb.append((char) codePoint);
-                    } else {
-                        codePoint -= 0x10000;
-                        sb.append((char) (0xD800 | (codePoint >> 10)));
-                        sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
-                    }
-                } else {
-                    // Invalid UTF-8 byte sequence
-                    break;
+            int byteValue = bb.get() & 0xFF; // Read the next byte
+            if (byteValue >= 0x80) { // If it's a multi-byte character
+                // Handle UTF-8 decoding
+                byte[] utf8Bytes = new byte[4]; // Max 4 bytes for UTF-8
+                utf8Bytes[0] = (byte) byteValue;
+                int byteCount = 1;
+
+                if ((byteValue & 0xE0) == 0xC0) {
+                    byteCount = 2; // 110xxxxx
+                } else if ((byteValue & 0xF0) == 0xE0) {
+                    byteCount = 3; // 1110xxxx
+                } else if ((byteValue & 0xF8) == 0xF0) {
+                    byteCount = 4; // 11110xxx
                 }
+
+                for (int j = 1; j < byteCount; j++) {
+                    if (!bb.hasRemaining()) {
+                        return i; // Not enough bytes for a complete character
+                    }
+                    utf8Bytes[j] = bb.get();
+                }
+
+                // Decode the UTF-8 bytes to a character
+                String decodedChar = new String(utf8Bytes, 0, byteCount, StandardCharsets.UTF_8);
+                sb.append(decodedChar);
             } else {
-                // Single-byte character (ASCII)
+                // Single byte character
                 sb.append((char) byteValue);
             }
             i++;

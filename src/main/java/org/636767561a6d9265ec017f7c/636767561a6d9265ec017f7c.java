@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GraphTour<V, E> {
+public class GraphTour<V, E extends DefaultEdge> {
 
     /**
      * Trasforma una rappresentazione di un insieme in un percorso di grafo.
@@ -19,68 +19,39 @@ public class GraphTour<V, E> {
      * @return un percorso di grafo
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        List<V> path = new ArrayList<>();
-        Set<V> visited = new HashSet<>();
-
+        List<V> vertices = new ArrayList<>();
         for (E edge : tour) {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
-
-            if (!visited.contains(source)) {
-                path.add(source);
-                visited.add(source);
+            if (!vertices.contains(source)) {
+                vertices.add(source);
             }
-            if (!visited.contains(target)) {
-                path.add(target);
-                visited.add(target);
+            if (!vertices.contains(target)) {
+                vertices.add(target);
             }
         }
-
-        return new GraphPathImpl<>(graph, path);
-    }
-
-    private class GraphPathImpl<V, E> implements GraphPath<V, E> {
-        private final Graph<V, E> graph;
-        private final List<V> vertices;
-
-        public GraphPathImpl(Graph<V, E> graph, List<V> vertices) {
-            this.graph = graph;
-            this.vertices = vertices;
-        }
-
-        @Override
-        public List<V> getVertexList() {
-            return vertices;
-        }
-
-        @Override
-        public E getStartVertex() {
-            return vertices.isEmpty() ? null : vertices.get(0);
-        }
-
-        @Override
-        public E getEndVertex() {
-            return vertices.isEmpty() ? null : vertices.get(vertices.size() - 1);
-        }
-
-        @Override
-        public double getWeight() {
-            double weight = 0.0;
-            for (int i = 0; i < vertices.size() - 1; i++) {
-                E edge = graph.getEdge(vertices.get(i), vertices.get(i + 1));
-                weight += graph.getEdgeWeight(edge);
+        
+        return new GraphPath<V, E>() {
+            @Override
+            public List<E> getEdgeList() {
+                List<E> edgeList = new ArrayList<>(tour);
+                return edgeList;
             }
-            return weight;
-        }
 
-        @Override
-        public int getLength() {
-            return vertices.size() - 1;
-        }
+            @Override
+            public V getStartVertex() {
+                return vertices.get(0);
+            }
 
-        @Override
-        public Graph<V, E> getGraph() {
-            return graph;
-        }
+            @Override
+            public V getEndVertex() {
+                return vertices.get(vertices.size() - 1);
+            }
+
+            @Override
+            public double getWeight() {
+                return 0; // Weight calculation can be implemented if needed
+            }
+        };
     }
 }

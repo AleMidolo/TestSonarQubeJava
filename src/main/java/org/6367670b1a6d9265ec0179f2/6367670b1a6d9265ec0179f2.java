@@ -26,11 +26,4 @@ public class MyMap<K, V> {
     public void remove(K key) {
         map.remove(key);
     }
-    
-    public static void main(String[] args) {
-        MyMap<String, Integer> myMap = new MyMap<>();
-        myMap.put("one", 1);
-        System.out.println(myMap.containsKey("one")); // true
-        System.out.println(myMap.containsKey("two")); // false
-    }
 }

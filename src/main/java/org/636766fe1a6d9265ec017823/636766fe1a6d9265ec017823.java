@@ -27,10 +27,9 @@ public class SymbolTable {
 
     public static void main(String[] args) {
         SymbolTable symbolTable = new SymbolTable();
-        int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        
-        System.out.println("Index of first addition: " + index1);
-        System.out.println("Index of second addition (should be the same): " + index2);
+        int index1 = symbolTable.addConstantNameAndType("myField", "I");
+        int index2 = symbolTable.addConstantNameAndType("myField", "I");
+        System.out.println("Index of myField: " + index1);
+        System.out.println("Index of myField (duplicate): " + index2);
     }
 }

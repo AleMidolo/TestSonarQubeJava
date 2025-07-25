@@ -1,8 +1,7 @@
 import java.beans.Introspector;
-import java.lang.reflect.Method;
 
 public class StringUtil {
-
+    
     /** 
      * Inverso di Introspector.decapitalize
      */
@@ -15,9 +14,8 @@ public class StringUtil {
 
     public static void main(String[] args) {
         // Test the capitalize method
-        System.out.println(capitalize("hello")); // Output: Hello
-        System.out.println(capitalize("java"));   // Output: Java
-        System.out.println(capitalize(""));       // Output: (empty string)
-        System.out.println(capitalize(null));     // Output: null
+        System.out.println(capitalize("example")); // Output: Example
+        System.out.println(capitalize(""));        // Output: (empty string)
+        System.out.println(capitalize(null));      // Output: null
     }
 }

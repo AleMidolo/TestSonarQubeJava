@@ -18,7 +18,7 @@ public class LogBuffer {
         }
     }
 
-    // Example LoggingEvent class (assuming it exists)
+    // Example LoggingEvent class
     public static class LoggingEvent {
         private final String message;
 
@@ -28,6 +28,14 @@ public class LogBuffer {
 
         public String getMessage() {
             return message;
+        }
+    }
+
+    public static void main(String[] args) {
+        LogBuffer logBuffer = new LogBuffer(10);
+
+        for (int i = 0; i < 15; i++) {
+            logBuffer.put(new LoggingEvent("Event " + i));
         }
     }
 }

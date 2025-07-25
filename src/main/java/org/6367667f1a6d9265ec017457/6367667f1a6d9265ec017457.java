@@ -15,44 +15,52 @@ public class UTF8Decoder {
             return i;
         }
 
-        byte firstByte = bb.get(i);
-        int codePoint;
-        int charCount;
-
-        if ((firstByte & 0x80) == 0) {
+        byte b1 = bb.get(i);
+        if ((b1 & 0x80) == 0) {
             // 1-byte character
-            codePoint = firstByte & 0x7F;
-            charCount = 1;
-        } else if ((firstByte & 0xE0) == 0xC0) {
+            sb.append((char) b1);
+            return i + 1;
+        } else if ((b1 & 0xE0) == 0xC0) {
             // 2-byte character
-            codePoint = firstByte & 0x1F;
-            charCount = 2;
-        } else if ((firstByte & 0xF0) == 0xE0) {
+            if (i + 1 >= bb.limit()) {
+                return i;
+            }
+            byte b2 = bb.get(i + 1);
+            char c = (char) (((b1 & 0x1F) << 6) | (b2 & 0x3F));
+            sb.append(c);
+            return i + 2;
+        } else if ((b1 & 0xF0) == 0xE0) {
             // 3-byte character
-            codePoint = firstByte & 0x0F;
-            charCount = 3;
-        } else if ((firstByte & 0xF8) == 0xF0) {
-            // 4-byte character
-            codePoint = firstByte & 0x07;
-            charCount = 4;
+            if (i + 2 >= bb.limit()) {
+                return i;
+            }
+            byte b2 = bb.get(i + 1);
+            byte b3 = bb.get(i + 2);
+            char c = (char) (((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F));
+            sb.append(c);
+            return i + 3;
+        } else if ((b1 & 0xF8) == 0xF0) {
+            // 4-byte character (surrogate pair)
+            if (i + 3 >= bb.limit()) {
+                return i;
+            }
+            byte b2 = bb.get(i + 1);
+            byte b3 = bb.get(i + 2);
+            byte b4 = bb.get(i + 3);
+            int codePoint = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            sb.append(Character.toChars(codePoint));
+            return i + 4;
         } else {
             // Invalid UTF-8 sequence
-            throw new IllegalArgumentException("Invalid UTF-8 sequence");
+            return i;
         }
+    }
 
-        if (i + charCount > bb.limit()) {
-            throw new IllegalArgumentException("Incomplete UTF-8 sequence");
-        }
-
-        for (int j = 1; j < charCount; j++) {
-            byte nextByte = bb.get(i + j);
-            if ((nextByte & 0xC0) != 0x80) {
-                throw new IllegalArgumentException("Invalid UTF-8 sequence");
-            }
-            codePoint = (codePoint << 6) | (nextByte & 0x3F);
-        }
-
-        sb.append(Character.toChars(codePoint));
-        return i + charCount;
+    public static void main(String[] args) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE0, (byte) 0xA4, (byte) 0xBF}); // Example UTF-8 bytes for 'क'
+        StringBuilder sb = new StringBuilder();
+        int index = decodeOctets(0, bb, sb);
+        System.out.println("Decoded String: " + sb.toString());
+        System.out.println("Next index: " + index);
     }
 }

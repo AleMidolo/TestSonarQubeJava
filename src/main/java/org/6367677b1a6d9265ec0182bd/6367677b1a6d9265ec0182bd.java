@@ -22,11 +22,6 @@ public class LogFormatter {
         // Add message
         formattedMessage.append(event.getRenderedMessage());
         
-        // Add throwable information if present
-        if (event.getThrowableInformation() != null) {
-            formattedMessage.append("\n").append(event.getThrowableStrRep());
-        }
-        
         return formattedMessage.toString();
     }
 }

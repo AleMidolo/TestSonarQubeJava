@@ -1,32 +1,27 @@
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
 
-private Map<String, Object> buildContent(JsonObject jsonObject) {
-    Map<String, Object> content = new HashMap<>();
+public class ContentBuilder {
 
-    // Iterate through all the keys in the JsonObject
-    for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-        String key = entry.getKey();
-        JsonElement value = entry.getValue();
+    /**
+     * सामग्री बनाएं, यदि इसमें ats है तो किसी ने ats सेट किया है
+     */
+    private Map<String, Object> buildContent(JsonObject jsonObject) {
+        Map<String, Object> content = new HashMap<>();
 
-        // Check if the key is "ats" and if it has been set
-        if (key.equals("ats") && !value.isJsonNull()) {
-            content.put(key, value.getAsString());
-        } else {
-            // Add other key-value pairs to the content map
-            if (value.isJsonPrimitive()) {
-                content.put(key, value.getAsString());
-            } else if (value.isJsonObject()) {
-                content.put(key, buildContent(value.getAsJsonObject()));
-            } else if (value.isJsonArray()) {
-                // Handle arrays if needed
-                // For simplicity, we'll just add them as a list
-                content.put(key, value.getAsJsonArray());
+        // Check if the JsonObject contains the key "ats"
+        if (jsonObject.has("ats")) {
+            content.put("ats", jsonObject.get("ats").getAsString());
+        }
+
+        // Add other fields from the JsonObject to the content map
+        for (Map.Entry<String, com.google.gson.JsonElement> entry : jsonObject.entrySet()) {
+            if (!entry.getKey().equals("ats")) {
+                content.put(entry.getKey(), entry.getValue().getAsString());
             }
         }
-    }
 
-    return content;
+        return content;
+    }
 }

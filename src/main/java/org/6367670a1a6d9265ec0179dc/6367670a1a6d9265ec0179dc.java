@@ -10,7 +10,7 @@ public class StackMapTableHandler {
      * @param end {@link #currentFrame} में लिखने के लिए अंतिम प्रकार का अनुक्रमांक (असामान्य)।
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
+        if (start < 0 || end > currentFrame.size() || start > end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
 

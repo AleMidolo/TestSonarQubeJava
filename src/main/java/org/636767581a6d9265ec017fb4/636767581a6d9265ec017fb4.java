@@ -19,10 +19,11 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             K currentKey = keys.get(i);
             int upperBound = Integer.MAX_VALUE;
 
-            for (int j = i + 1; j < keys.size(); j++) {
-                if (currentKey.compareTo(keys.get(j)) < 0) {
-                    upperBound = j;
-                    break;
+            for (int j = 0; j < keys.size(); j++) {
+                if (i == j) continue;
+                K otherKey = keys.get(j);
+                if (currentKey.compareTo(otherKey) < 0) {
+                    upperBound = Math.min(upperBound, otherKey.hashCode());
                 }
             }
 

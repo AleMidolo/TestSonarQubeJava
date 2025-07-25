@@ -1,20 +1,34 @@
 import java.io.IOException;
 
-private void checkIfPackedField() throws IOException {
-    // Assuming 'field' is a byte array representing the packed field
-    // and 'isPacked' is a boolean indicating whether the field is packed.
-    if (isPacked) {
-        // Update internal state to indicate that packed fields are being read
-        isReadingPackedFields = true;
-        
-        // Example logic to check if the field is length-limited
-        if (field.length > MAX_FIELD_LENGTH) {
-            throw new IOException("Field length exceeds maximum allowed length.");
+public class PackedFieldChecker {
+
+    private boolean isPackedFieldReading = false;
+
+    /**
+     * जांचें कि क्या यह फ़ील्ड लंबाई-सीमित फ़ील्ड में पैक किया गया है। यदि हाँ, तो आंतरिक स्थिति को अपडेट करें ताकि यह दर्शा सके कि पैक किए गए फ़ील्ड पढ़े जा रहे हैं।
+     * @throws IOException
+     */
+    private void checkIfPackedField() throws IOException {
+        // Assuming some logic to determine if the field is packed
+        boolean isPacked = determineIfFieldIsPacked();
+
+        if (isPacked) {
+            isPackedFieldReading = true;
+            // Additional logic to handle the packed field reading
+        } else {
+            isPackedFieldReading = false;
         }
-        
-        // Additional logic to handle the packed field can be added here
-    } else {
-        // Reset the state if the field is not packed
-        isReadingPackedFields = false;
+    }
+
+    // Placeholder method to simulate the logic of determining if the field is packed
+    private boolean determineIfFieldIsPacked() {
+        // This method should contain the actual logic to determine if the field is packed
+        // For example, checking certain flags or conditions in the data
+        return false; // Placeholder return value
+    }
+
+    // Getter method to check the state of isPackedFieldReading
+    public boolean isPackedFieldReading() {
+        return isPackedFieldReading;
     }
 }

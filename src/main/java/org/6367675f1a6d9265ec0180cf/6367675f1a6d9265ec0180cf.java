@@ -1,5 +1,5 @@
-import org.jgrapht.Graph;
 import java.util.Set;
+import org.jgrapht.Graph;
 
 public class CliqueChecker {
 

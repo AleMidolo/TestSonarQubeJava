@@ -11,12 +11,12 @@ public class PropertySubstitution {
             return null; // Return null if the key is not found
         }
 
-        // Define a regex pattern to match variables in the format ${variable}
-        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        // Define a pattern to match variables in the format ${variable}
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Iterate through the matches and replace variables with their corresponding values
+        // Perform variable substitution
         while (matcher.find()) {
             String variable = matcher.group(1);
             String replacement = props.getProperty(variable, "");

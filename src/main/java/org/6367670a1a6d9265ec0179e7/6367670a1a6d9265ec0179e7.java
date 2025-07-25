@@ -27,7 +27,8 @@ public class ConverterLookup {
         converterMap.put(clazz, converter);
     }
 
+    // Example Converter interface
     public interface Converter {
-        // Converter interface methods can be defined here
+        Object convert(Object input);
     }
 }

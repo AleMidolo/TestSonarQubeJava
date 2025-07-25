@@ -3,9 +3,9 @@ import java.util.Base64;
 public class Base64Decoder {
     /**
      * एक स्ट्रिंग को Base64 नियम के अनुसार एक स्ट्रिंग में डिकोड करना।
-     * 
+     *
      * @param s Base64 एन्कोडेड स्ट्रिंग
-     * @return डिकोड की गई स्ट्रिंग
+     * @return डिकोडेड स्ट्रिंग
      */
     public static String base64Decode(final String s) {
         byte[] decodedBytes = Base64.getDecoder().decode(s);

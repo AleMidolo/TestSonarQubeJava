@@ -28,12 +28,21 @@ public class SequenceRange {
 }
 
 public class ProfileSnapshot {
+
     public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> ranges = new ArrayList<>();
+        List<SequenceRange> sequenceRanges = new ArrayList<>();
         // Example logic to create sequence ranges
-        ranges.add(new SequenceRange(1, 10));
-        ranges.add(new SequenceRange(11, 20));
-        ranges.add(new SequenceRange(21, 30));
-        return ranges;
+        sequenceRanges.add(new SequenceRange(1, 10));
+        sequenceRanges.add(new SequenceRange(11, 20));
+        sequenceRanges.add(new SequenceRange(21, 30));
+        return sequenceRanges;
+    }
+
+    public static void main(String[] args) {
+        ProfileSnapshot snapshot = new ProfileSnapshot();
+        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
+        for (SequenceRange range : ranges) {
+            System.out.println(range);
+        }
     }
 }

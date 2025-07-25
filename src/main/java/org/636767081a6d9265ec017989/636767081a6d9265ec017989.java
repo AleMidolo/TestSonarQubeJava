@@ -21,8 +21,9 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        Boolean[] testArray = {true, false, true};
-        boolean[] primitiveArray = toPrimitive(testArray);
+        // Example usage
+        Boolean[] booleanArray = {true, false, true};
+        boolean[] primitiveArray = toPrimitive(booleanArray);
         for (boolean b : primitiveArray) {
             System.out.println(b);
         }

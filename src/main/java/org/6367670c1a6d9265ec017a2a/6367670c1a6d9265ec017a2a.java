@@ -15,19 +15,8 @@ public class ArrayUtils {
         }
         int[] result = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                throw new NullPointerException("Array element at index " + i + " is null");
-            }
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Integer[] testArray = {1, 2, 3, 4, 5};
-        int[] primitiveArray = toPrimitive(testArray);
-        for (int i : primitiveArray) {
-            System.out.print(i + " ");
-        }
     }
 }

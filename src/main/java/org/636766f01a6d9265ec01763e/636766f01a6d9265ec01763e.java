@@ -29,9 +29,9 @@ public class CharsetTranslator {
     }
 
     public static void main(String[] args) {
-        // परीक्षण उदाहरण
+        // परीक्षण
         System.out.println(javaCharset("utf-8")); // "UTF-8"
         System.out.println(javaCharset("iso-8859-1")); // "ISO-8859-1"
-        System.out.println(javaCharset("unknown-charset")); // "unknown-charset" (यदि यह मान्य है)
+        System.out.println(javaCharset("unknown-charset")); // "unknown-charset" (यदि यह एक वैध चारसेट है)
     }
 }

@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class ThreadSnapshotParser {
 
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
+        List<String> lines = Files.readAllLines(file.toPath());
 
         for (String line : lines) {
             ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
@@ -22,8 +21,9 @@ public class ThreadSnapshotParser {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
+        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
                 return true;
             }
         }
@@ -54,13 +54,12 @@ public class ThreadSnapshotParser {
         }
 
         public static ThreadSnapshot fromString(String line) {
+            // Assuming the line format is: timestamp,threadName,state
             String[] parts = line.split(",");
             if (parts.length == 3) {
                 try {
                     long timestamp = Long.parseLong(parts[0]);
-                    String threadName = parts[1];
-                    String state = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, state);
+                    return new ThreadSnapshot(timestamp, parts[1], parts[2]);
                 } catch (NumberFormatException e) {
                     return null;
                 }

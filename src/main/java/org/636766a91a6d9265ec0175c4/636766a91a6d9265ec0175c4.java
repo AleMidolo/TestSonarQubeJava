@@ -4,7 +4,7 @@ public class FrameStackHandler {
     private Stack<Object> frameStack;
 
     public FrameStackHandler() {
-        this.frameStack = new Stack<>();
+        frameStack = new Stack<>();
     }
 
     /**
@@ -12,31 +12,42 @@ public class FrameStackHandler {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Assuming the descriptor is in the format "L<type>;" for object types or "I", "J", etc. for primitive types
-        // This is a simplified example; actual implementation may need to handle more complex cases
-        int count = countTypesInDescriptor(descriptor);
-        for (int i = 0; i < count; i++) {
+        if (descriptor == null || descriptor.isEmpty()) {
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
+        }
+
+        // Parse the descriptor to determine how many types to pop
+        int popCount = countTypesInDescriptor(descriptor);
+
+        // Pop the required number of types from the stack
+        for (int i = 0; i < popCount; i++) {
             if (!frameStack.isEmpty()) {
                 frameStack.pop();
             } else {
-                throw new IllegalStateException("Frame stack is empty.");
+                throw new IllegalStateException("Frame stack is empty");
             }
         }
     }
 
+    /**
+     * Helper method to count the number of types in the descriptor.
+     * @param descriptor The descriptor string.
+     * @return The number of types to pop.
+     */
     private int countTypesInDescriptor(String descriptor) {
-        // This is a placeholder method to count the number of types in the descriptor
-        // For example, "Ljava/lang/String;" would count as 1, "II" would count as 2, etc.
-        // Actual implementation would need to parse the descriptor properly
-        return descriptor.length(); // Simplified for example purposes
+        // This is a simplified example. In a real implementation, you would need to parse
+        // the descriptor string according to the JVM specification to determine the number
+        // of types to pop.
+        return descriptor.split(";").length;
     }
 
     // Example usage
     public static void main(String[] args) {
         FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push("String");
-        handler.frameStack.push(123);
-        handler.pop("Ljava/lang/String;I");
-        System.out.println(handler.frameStack); // Should be empty after popping
+        handler.frameStack.push("Type1");
+        handler.frameStack.push("Type2");
+        handler.frameStack.push("Type3");
+
+        handler.pop("Type1;Type2;Type3"); // Pops 3 types from the stack
     }
 }

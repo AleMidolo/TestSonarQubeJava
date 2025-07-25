@@ -1,48 +1,32 @@
 import java.util.*;
 
-class Node {
-    int id;
-    boolean active;
-    List<Node> children;
+class CategoryTree {
+    private Map<Integer, List<Integer>> tree;
+    private Set<Integer> activeNodes;
 
-    public Node(int id, boolean active) {
-        this.id = id;
-        this.active = active;
-        this.children = new ArrayList<>();
-    }
-}
-
-class Tree {
-    private Node root;
-
-    public Tree(Node root) {
-        this.root = root;
+    public CategoryTree() {
+        tree = new HashMap<>();
+        activeNodes = new HashSet<>();
     }
 
     /**
      * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
+     * @return हटाए गए नोड्स की संख्या
      */
     protected int removeUnusedNodes() {
-        return removeUnusedNodesHelper(root);
-    }
-
-    private int removeUnusedNodesHelper(Node node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int removedCount = 0;
-        Iterator<Node> iterator = node.children.iterator();
-        while (iterator.hasNext()) {
-            Node child = iterator.next();
-            if (!child.active) {
-                iterator.remove();
-                removedCount++;
-            } else {
-                removedCount += removeUnusedNodesHelper(child);
+        Set<Integer> nodesToRemove = new HashSet<>();
+        for (Integer node : tree.keySet()) {
+            if (!activeNodes.contains(node)) {
+                nodesToRemove.add(node);
             }
         }
 
-        return removedCount;
+        for (Integer node : nodesToRemove) {
+            tree.remove(node);
+        }
+
+        return nodesToRemove.size();
     }
+
+    // Additional methods to build the tree and mark active nodes would be here
 }

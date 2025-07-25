@@ -7,14 +7,14 @@ public class FieldChecker {
      */
     private boolean containsAllFields(Fields fields) {
         // Assuming Fields is a class that contains a Set of field names
-        Set<String> storedFields = getStoredFields(); // Method to retrieve stored fields
-        Set<String> inputFields = fields.getFieldNames(); // Method to get input field names
+        Set<String> storedFields = getStoredFields(); // Method to get stored fields
+        Set<String> inputFields = fields.getFieldNames(); // Method to get input fields
 
-        // Check if all input fields are present in the stored fields
+        // Check if all input fields are present in stored fields
         return storedFields.containsAll(inputFields);
     }
 
-    // Dummy method to simulate retrieval of stored fields
+    // Dummy method to simulate getting stored fields
     private Set<String> getStoredFields() {
         // This should return the actual set of stored fields
         return Set.of("field1", "field2", "field3");
@@ -37,6 +37,6 @@ public class FieldChecker {
         // Example usage
         FieldChecker checker = new FieldChecker();
         Fields inputFields = new Fields(Set.of("field1", "field2"));
-        System.out.println(checker.containsAllFields(inputFields)); // Should print true if fields are stored
+        System.out.println(checker.containsAllFields(inputFields)); // Should print true or false based on stored fields
     }
 }

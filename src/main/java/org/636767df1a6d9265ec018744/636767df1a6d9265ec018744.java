@@ -18,7 +18,7 @@ public class TimeRangeBuilder {
             return ranges;
         }
 
-        // Split into multiple ranges of max duration
+        // Split into multiple ranges of FETCH_DATA_DURATION
         long currentStart = start;
         while (currentStart < end) {
             long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);

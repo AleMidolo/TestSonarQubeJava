@@ -15,16 +15,16 @@ public class ChatServer {
      * Invia un messaggio a ciascuno dei client in un formato compatibile con telnet.
      */
     public synchronized void send(final String message) {
-        // Aggiungi caratteri di fine riga per compatibilità telnet
+        // Aggiungi newline per compatibilità telnet
         String telnetMessage = message + "\r\n";
         
-        // Itera su tutti i writer dei client
+        // Itera su tutti i client writer
         for (PrintWriter writer : clientWriters) {
             try {
                 writer.print(telnetMessage);
                 writer.flush();
             } catch (Exception e) {
-                // Rimuovi il writer se c'è un errore di invio
+                // Rimuovi client disconnessi
                 clientWriters.remove(writer);
             }
         }
@@ -34,10 +34,5 @@ public class ChatServer {
     public synchronized void addClient(Socket clientSocket) throws IOException {
         PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
         clientWriters.add(writer);
-    }
-
-    // Metodo per rimuovere un client
-    public synchronized void removeClient(PrintWriter writer) {
-        clientWriters.remove(writer);
     }
 }

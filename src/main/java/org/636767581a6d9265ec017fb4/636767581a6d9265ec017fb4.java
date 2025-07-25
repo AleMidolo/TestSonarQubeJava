@@ -14,7 +14,7 @@ public class BoundCalculator<K extends Comparable<K>> {
 
         List<Integer> upperBounds = new ArrayList<>(keys.size());
         
-        // Per ogni chiave, trova il limite superiore minimo
+        // Per ogni chiave, trova il suo limite superiore
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
             int upperBound = i;

@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Graph<V> {
-    // Assuming we have a graph representation with edges stored in a set
+    // Assuming we have a graph representation with edges stored in a set/list
     private Set<Edge<V>> edges;
-    
+
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         
@@ -15,7 +15,7 @@ public class Graph<V> {
         
         return visibleVertices;
     }
-    
+
     // Helper Edge class
     private static class Edge<V> {
         private V source;

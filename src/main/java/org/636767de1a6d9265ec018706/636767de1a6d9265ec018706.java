@@ -23,21 +23,24 @@ public class MappingDiff {
      * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        Mappings result = new Mappings();
-        Map<String, Object> currentFields = getCurrentMappings(tableName).getFields();
+        // Assuming we have a method to get the current mappings for the table
+        Mappings currentMappings = getCurrentMappings(tableName);
+
+        Mappings diffMappings = new Mappings();
+        Map<String, Object> currentFields = currentMappings.getFields();
         Map<String, Object> inputFields = mappings.getFields();
 
         for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
-            String key = entry.getKey();
-            if (!inputFields.containsKey(key)) {
-                result.getFields().put(key, entry.getValue());
+            String fieldName = entry.getKey();
+            if (!inputFields.containsKey(fieldName)) {
+                diffMappings.getFields().put(fieldName, entry.getValue());
             }
         }
 
-        return result;
+        return diffMappings;
     }
 
-    // Dummy method to simulate fetching current mappings for a table
+    // Dummy method to simulate getting current mappings for a table
     private Mappings getCurrentMappings(String tableName) {
         Mappings currentMappings = new Mappings();
         Map<String, Object> fields = new HashMap<>();
@@ -49,13 +52,14 @@ public class MappingDiff {
     }
 
     public static void main(String[] args) {
-        MappingDiff diff = new MappingDiff();
+        MappingDiff mappingDiff = new MappingDiff();
+
         Mappings inputMappings = new Mappings();
         Map<String, Object> inputFields = new HashMap<>();
         inputFields.put("field1", "type1");
         inputMappings.setFields(inputFields);
 
-        Mappings result = diff.diffStructure("exampleTable", inputMappings);
-        System.out.println(result.getFields()); // Output: {field2=type2, field3=type3}
+        Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
+        System.out.println(diff.getFields()); // Output: {field2=type2, field3=type3}
     }
 }

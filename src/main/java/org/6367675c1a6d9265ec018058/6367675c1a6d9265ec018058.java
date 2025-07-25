@@ -2,27 +2,26 @@ import java.util.function.Supplier;
 
 public class UniqueStringSupplier {
 
-    /**
-     * एक स्ट्रिंग सप्लायर बनाएं जो अद्वितीय स्ट्रिंग्स लौटाता है। लौटाए गए स्ट्रिंग्स बस प्रारंभ से शुरू होने वाले पूर्णांक हैं।
-     * @param start अनुक्रम कहाँ से शुरू करना है
-     * @return एक स्ट्रिंग सप्लायर
-     */
-    @SuppressWarnings("unchecked")
-    public static Supplier<String> createStringSupplier(int start) {
-        return new Supplier<String>() {
-            private int current = start;
+    private int counter;
 
-            @Override
-            public String get() {
-                return String.valueOf(current++);
-            }
+    public UniqueStringSupplier(int start) {
+        this.counter = start;
+    }
+
+    public Supplier<String> createStringSupplier() {
+        return () -> {
+            String uniqueString = Integer.toString(counter);
+            counter++;
+            return uniqueString;
         };
     }
 
     public static void main(String[] args) {
-        Supplier<String> supplier = createStringSupplier(10);
-        System.out.println(supplier.get()); // 10
-        System.out.println(supplier.get()); // 11
-        System.out.println(supplier.get()); // 12
+        UniqueStringSupplier supplier = new UniqueStringSupplier(10);
+        Supplier<String> stringSupplier = supplier.createStringSupplier();
+
+        System.out.println(stringSupplier.get()); // Output: 10
+        System.out.println(stringSupplier.get()); // Output: 11
+        System.out.println(stringSupplier.get()); // Output: 12
     }
 }

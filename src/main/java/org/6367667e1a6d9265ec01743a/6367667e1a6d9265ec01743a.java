@@ -1,21 +1,21 @@
 import java.util.concurrent.atomic.AtomicLong;
 
-public class LastWriteTimestamp {
-    private final AtomicLong lastWriteTimestamp = new AtomicLong();
+public class LastWriteTimeStamp {
+    private final AtomicLong lastWriteTimeStamp = new AtomicLong();
 
     /**
      * अंतिम बार, मिलीसेकंड में, एक लिखने की प्रक्रिया हुई थी।
      * @return यह
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTimestamp.get();
+        return lastWriteTimeStamp.get();
     }
 
     /**
-     * अंतिम लिखने की प्रक्रिया का समय अपडेट करें।
-     * @param timestamp मिलीसेकंड में समय
+     * लिखने की प्रक्रिया को अपडेट करने के लिए उपयोग किया जाता है।
+     * @param timeStamp मिलीसेकंड में समय
      */
-    public void updateLastWriteTimestamp(long timestamp) {
-        lastWriteTimestamp.set(timestamp);
+    public void updateWriteTimeStamp(long timeStamp) {
+        lastWriteTimeStamp.set(timeStamp);
     }
 }

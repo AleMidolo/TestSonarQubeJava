@@ -1,4 +1,5 @@
 public class HexDigitConverter {
+
     /**
      * @param b एक ASCII एन्कोडेड कैरेक्टर 0-9 a-f A-F
      * @return कैरेक्टर का बाइट मान 0-16।

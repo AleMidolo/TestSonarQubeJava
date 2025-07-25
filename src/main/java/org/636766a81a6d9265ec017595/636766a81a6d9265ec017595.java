@@ -20,7 +20,7 @@ final class ByteVector {
         return this;
     }
 
-    // Optional: Method to get the byte vector as a byte array
+    // Optional: Method to get the byte vector as an array
     public byte[] toByteArray() {
         byte[] byteArray = new byte[vector.size()];
         for (int i = 0; i < vector.size(); i++) {

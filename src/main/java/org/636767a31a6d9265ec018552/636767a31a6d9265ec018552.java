@@ -4,26 +4,26 @@ import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
+    private InputStream inputStream;
+
+    public StreamReader(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
+
     /**
      * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
      */
     @Override
     public String readString() throws IOException {
-        InputStream inputStream = getInputStream(); // Assume this method provides the input stream
-        byte[] lengthBytes = new byte[4];
-        inputStream.read(lengthBytes);
-        int length = (lengthBytes[0] & 0xFF) << 24 |
-                     (lengthBytes[1] & 0xFF) << 16 |
-                     (lengthBytes[2] & 0xFF) << 8 |
-                     (lengthBytes[3] & 0xFF);
-        byte[] stringBytes = new byte[length];
-        inputStream.read(stringBytes);
-        return new String(stringBytes, StandardCharsets.UTF_8);
-    }
-
-    // Dummy method to simulate getting an input stream
-    private InputStream getInputStream() {
-        // This should be replaced with actual logic to get the input stream
-        return null;
+        int length = inputStream.read();
+        if (length == -1) {
+            throw new IOException("End of stream reached");
+        }
+        byte[] bytes = new byte[length];
+        int bytesRead = inputStream.read(bytes);
+        if (bytesRead != length) {
+            throw new IOException("Failed to read the expected number of bytes");
+        }
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

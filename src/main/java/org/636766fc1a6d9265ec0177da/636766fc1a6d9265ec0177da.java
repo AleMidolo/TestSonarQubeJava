@@ -3,8 +3,8 @@
  */
 private static boolean isParameterSeparator(final char c) {
     // विभाजक वर्णों की सूची
-    final String separators = " ,;(){}[]<>+-*/%=&|^~!?:.\t\n\r";
-
+    final String separators = " ,.;:!?()[]{}\"'";
+    
     // जाँचें कि दिया गया वर्ण विभाजक सूची में है या नहीं
     return separators.indexOf(c) != -1;
 }

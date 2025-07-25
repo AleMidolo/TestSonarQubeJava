@@ -1,10 +1,10 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Integer> outputFrameStack;
+public class OutputFrameStack {
+    private Stack<Integer> stack;
 
-    public FrameStack() {
-        outputFrameStack = new Stack<>();
+    public OutputFrameStack() {
+        stack = new Stack<>();
     }
 
     /**
@@ -12,9 +12,14 @@ public class FrameStack {
      * @return वह अमूर्त प्रकार जो आउटपुट फ्रेम स्टैक से पॉप किया गया है।
      */
     private int pop() {
-        if (outputFrameStack.isEmpty()) {
+        if (stack.isEmpty()) {
             throw new IllegalStateException("Stack is empty");
         }
-        return outputFrameStack.pop();
+        return stack.pop();
+    }
+
+    // Optional: Method to push an element onto the stack
+    public void push(int value) {
+        stack.push(value);
     }
 }

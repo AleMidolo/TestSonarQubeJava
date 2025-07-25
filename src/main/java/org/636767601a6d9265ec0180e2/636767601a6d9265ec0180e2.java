@@ -18,43 +18,67 @@ class Pair<K, V> {
     }
 
     @Override
-    public String toString() {
-        return "Pair{" + key + ", " + value + '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(key, pair.key) && Objects.equals(value, pair.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
     }
 }
 
 public class Graph {
-    private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
-        // Placeholder for the graph's adjacency list or edge list
-        // Assuming the graph is represented as a list of edges
-        List<Pair<Integer, Integer>> edges = new ArrayList<>();
-        // Example edges: (1, 2), (2, 3), (3, 4)
-        edges.add(new Pair<>(1, 2));
-        edges.add(new Pair<>(2, 3));
-        edges.add(new Pair<>(3, 4));
+    private Map<Integer, List<Integer>> adjacencyList;
 
-        // Placeholder for the result
+    public Graph() {
+        this.adjacencyList = new HashMap<>();
+    }
+
+    public void addEdge(int u, int v) {
+        adjacencyList.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+        adjacencyList.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+    }
+
+    private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
 
-        // For each edge, compute the minimal separators in its neighborhood
-        for (Pair<Integer, Integer> edge : edges) {
-            // Placeholder for the minimal separators of the current edge
-            List<Pair<Integer, Integer>> separators = new ArrayList<>();
-
-            // Example: Adding some dummy separators
-            separators.add(new Pair<>(1, 3));
-            separators.add(new Pair<>(2, 4));
-
-            // Add the separators for the current edge to the global list
-            globalSeparatorList.add(new Pair<>(separators, edge.getValue()));
+        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+            int u = entry.getKey();
+            for (int v : entry.getValue()) {
+                if (u < v) { // To avoid processing the same edge twice
+                    List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
+                    globalSeparatorList.add(new Pair<>(separators, u));
+                    globalSeparatorList.add(new Pair<>(separators, v));
+                }
+            }
         }
 
         return globalSeparatorList;
     }
 
+    private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
+        // Placeholder for the actual algorithm to find minimal separators
+        // This is a simplified version that just returns the edge itself as a separator
+        List<Pair<Integer, Integer>> separators = new ArrayList<>();
+        separators.add(new Pair<>(u, v));
+        return separators;
+    }
+
     public static void main(String[] args) {
         Graph graph = new Graph();
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 1);
+
         List<Pair<List<Pair<Integer, Integer>>, Integer>> result = graph.computeGlobalSeparatorList();
-        System.out.println(result);
+        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : result) {
+            System.out.println("Edge: " + pair.getValue());
+            System.out.println("Separators: " + pair.getKey());
+        }
     }
 }

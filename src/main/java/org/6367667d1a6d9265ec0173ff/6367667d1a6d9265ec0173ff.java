@@ -22,9 +22,9 @@ public class MeteorLookup {
             }
 
             // Try to get from AtmosphereResource
-            AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.class.getName());
+            AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.ATMOSPHERE_RESOURCE);
             if (resource != null) {
-                return Meteor.build(resource);
+                return Meteor.build(resource.getRequest());
             }
         } catch (Exception e) {
             // Return null if any error occurs during lookup

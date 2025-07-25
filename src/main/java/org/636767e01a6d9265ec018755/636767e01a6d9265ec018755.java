@@ -13,14 +13,13 @@ public class ContentBuilder {
         if (jsonObject != null) {
             // Check if jsonObject contains "ATS" key
             if (jsonObject.containsKey("ATS")) {
-                content.put("ATS", jsonObject.getString("ATS"));
+                content.put("ATS", jsonObject.get("ATS"));
             }
             
             // Add all other key-value pairs from jsonObject to content map
             for (String key : jsonObject.keySet()) {
                 if (!key.equals("ATS")) {
-                    Object value = jsonObject.get(key);
-                    content.put(key, value); 
+                    content.put(key, jsonObject.get(key));
                 }
             }
         }

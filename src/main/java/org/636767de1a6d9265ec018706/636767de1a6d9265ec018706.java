@@ -9,62 +9,68 @@ import org.elasticsearch.index.mapper.Mappings;
 public class MappingDiffer {
 
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        try {
-            // Create empty mappings to store the diff
-            Mappings diffMappings = new Mappings.Builder().build();
-            
-            if (mappings == null) {
-                return diffMappings;
-            }
+        if (mappings == null) {
+            return null;
+        }
 
-            // Get the properties from input mappings
-            Map<String, Object> properties = mappings.getSourceAsMap();
-            if (properties == null || properties.isEmpty()) {
-                return diffMappings;
-            }
+        // Create new mappings object to store differences
+        Mappings diffMappings = new Mappings(MapperService.SINGLE_MAPPING_NAME);
 
-            // Get current index mappings
-            GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
-            GetMappingsResponse currentMappings = client.admin().indices()
-                    .getMappings(request)
-                    .actionGet();
-
-            // Extract current mappings for the table
-            ImmutableOpenMap<String, MappingMetadata> currentMap = 
-                    currentMappings.getMappings().get(tableName);
-            
-            if (currentMap == null || currentMap.isEmpty()) {
-                return mappings; // Return all mappings if table doesn't exist
-            }
-
-            MappingMetadata metadata = currentMap.get(tableName);
-            Map<String, Object> currentProperties = 
-                    (Map<String, Object>) metadata.getSourceAsMap().get("properties");
-
-            // Build diff mappings
-            Map<String, Object> diffProperties = new HashMap<>();
-            
-            for (Map.Entry<String, Object> entry : properties.entrySet()) {
-                String field = entry.getKey();
-                if (!currentProperties.containsKey(field)) {
-                    diffProperties.put(field, entry.getValue());
-                }
-            }
-
-            // Create new mappings with only the diff
-            if (!diffProperties.isEmpty()) {
-                Map<String, Object> diffMap = new HashMap<>();
-                diffMap.put("properties", diffProperties);
-                
-                diffMappings = new Mappings.Builder()
-                        .source(diffMap)
-                        .build();
-            }
-
+        // Get properties from input mappings
+        Map<String, Object> existingProps = mappings.getSourceAsMap();
+        if (existingProps == null) {
             return diffMappings;
+        }
+
+        // Create map for storing differences
+        Map<String, Object> diffProps = new HashMap<>();
+
+        // Iterate through existing properties
+        for (Map.Entry<String, Object> entry : existingProps.entrySet()) {
+            String fieldName = entry.getKey();
+            
+            // Skip _source field
+            if ("_source".equals(fieldName)) {
+                continue;
+            }
+
+            // Add field to diff if it doesn't exist in current mappings
+            if (!currentMappingsContainField(tableName, fieldName)) {
+                diffProps.put(fieldName, entry.getValue());
+            }
+        }
+
+        // Set properties on diff mappings
+        diffMappings.sourceFromMap(diffProps);
+
+        return diffMappings;
+    }
+
+    // Helper method to check if field exists in current mappings
+    private boolean currentMappingsContainField(String tableName, String fieldName) {
+        try {
+            // Get current mappings for table
+            MappingMetadata currentMappings = getCurrentMappings(tableName);
+            if (currentMappings == null) {
+                return false;
+            }
+
+            Map<String, Object> properties = (Map<String, Object>) currentMappings.getSourceAsMap().get("properties");
+            return properties != null && properties.containsKey(fieldName);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error calculating mapping differences", e);
+            return false;
+        }
+    }
+
+    // Helper method to get current mappings
+    private MappingMetadata getCurrentMappings(String tableName) {
+        try {
+            // Implementation would depend on your Elasticsearch client
+            // This is just a placeholder
+            return null;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

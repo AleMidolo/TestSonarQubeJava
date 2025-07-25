@@ -7,10 +7,10 @@ public class PropertyFinder {
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // या कोई डिफ़ॉल्ट मान लौटाएं
         }
         
-        // Perform variable substitution
+        // वेरिएबल प्रतिस्थापन
         for (String propKey : props.stringPropertyNames()) {
             String placeholder = "${" + propKey + "}";
             value = value.replace(placeholder, props.getProperty(propKey));
@@ -25,6 +25,6 @@ public class PropertyFinder {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // "Hello, John!"
     }
 }

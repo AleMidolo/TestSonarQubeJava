@@ -8,7 +8,7 @@ public class ArrayToListConverter {
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
-            return Arrays.asList(); // Return an empty list for null array
+            return Arrays.asList(); // Return an empty list if the array is null
         }
         return Arrays.asList(a);
     }

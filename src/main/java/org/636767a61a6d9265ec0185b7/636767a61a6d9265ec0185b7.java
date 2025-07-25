@@ -1,4 +1,4 @@
-public class DigitValueConverter {
+public class DigitValueCalculator {
 
     /**
      * किसी अक्षर को अंक के रूप में व्याख्या करें (किसी भी आधार में 36 तक) और संख्यात्मक मान लौटाएं। यह {@code Character.digit()} के समान है लेकिन हम गैर-ASCII अंकों को स्वीकार नहीं करते हैं।

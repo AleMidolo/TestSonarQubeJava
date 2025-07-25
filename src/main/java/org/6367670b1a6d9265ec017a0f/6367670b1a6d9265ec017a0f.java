@@ -19,9 +19,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        List<String> searchStrArray = List.of("a", "b", "c");
-        String str = "Hello World";
-        boolean result = containsAnyIgnoreCase(str, searchStrArray);
+        List<String> searchStrings = List.of("a", "b", "c");
+        String testString = "Hello World";
+        boolean result = containsAnyIgnoreCase(testString, searchStrings);
         System.out.println(result); // Output: true
     }
 }

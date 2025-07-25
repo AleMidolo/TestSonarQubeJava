@@ -34,7 +34,7 @@ class Graph {
     private List<Pair<Integer, Integer>> findMinSeparators(Edge edge) {
         // Placeholder for actual logic to find minimum separators for the given edge
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Add logic to compute minimum separators based on the edge's neighbors
+        // Add logic to compute minimum separators based on the edge
         return separators;
     }
 

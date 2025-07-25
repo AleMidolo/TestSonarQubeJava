@@ -18,22 +18,19 @@ public class GraphUtils<V, E> {
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
-        V startVertex = null;
+        V previousVertex = null;
 
         for (E edge : tour) {
-            if (startVertex == null) {
-                startVertex = graph.getEdgeSource(edge);
-            }
-            vertexList.add(graph.getEdgeSource(edge));
-            vertexList.add(graph.getEdgeTarget(edge));
-        }
+            V sourceVertex = graph.getEdgeSource(edge);
+            V targetVertex = graph.getEdgeTarget(edge);
 
-        // Remove duplicates while maintaining order
-        List<V> uniqueVertices = new ArrayList<>();
-        for (V vertex : vertexList) {
-            if (!uniqueVertices.contains(vertex)) {
-                uniqueVertices.add(vertex);
+            if (previousVertex == null) {
+                vertexList.add(sourceVertex);
+            } else if (!previousVertex.equals(sourceVertex)) {
+                vertexList.add(sourceVertex);
             }
+            vertexList.add(targetVertex);
+            previousVertex = targetVertex;
         }
 
         return new GraphPath<V, E>() {
@@ -43,18 +40,18 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<E> getEdgeList() {
-                return new ArrayList<>(tour);
+            public List<V> getVertexList() {
+                return vertexList;
             }
 
             @Override
-            public V getStartVertex() {
-                return uniqueVertices.get(0);
+            public E getStartVertex() {
+                return vertexList.isEmpty() ? null : vertexList.get(0);
             }
 
             @Override
-            public V getEndVertex() {
-                return uniqueVertices.get(uniqueVertices.size() - 1);
+            public E getEndVertex() {
+                return vertexList.isEmpty() ? null : vertexList.get(vertexList.size() - 1);
             }
 
             @Override
@@ -63,8 +60,12 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<V> getVertexList() {
-                return uniqueVertices;
+            public List<E> getEdgeList() {
+                List<E> edgeList = new ArrayList<>();
+                for (int i = 0; i < vertexList.size() - 1; i++) {
+                    edgeList.add(graph.getEdge(vertexList.get(i), vertexList.get(i + 1)));
+                }
+                return edgeList;
             }
         };
     }

@@ -22,7 +22,7 @@ public class ArrayComparer {
     }
     
     private byte[] getInternalArray() {
-        // Example internal array, this should be replaced with actual internal data
+        // Example internal array for demonstration purposes
         return new byte[] {1, 2, 3, 4, 5};
     }
 }

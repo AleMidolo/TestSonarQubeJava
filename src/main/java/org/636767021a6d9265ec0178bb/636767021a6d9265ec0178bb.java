@@ -18,12 +18,12 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
-        Double[] result1 = nullToEmpty(null);
-        Double[] result2 = nullToEmpty(new Double[]{});
-        Double[] result3 = nullToEmpty(new Double[]{1.0, 2.0, 3.0});
+        Double[] nullArray = null;
+        Double[] emptyArray = {};
+        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
-        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println(nullToEmpty(nullArray)); // Should print: []
+        System.out.println(nullToEmpty(emptyArray)); // Should print: []
+        System.out.println(nullToEmpty(nonEmptyArray)); // Should print: [1.0, 2.0, 3.0]
     }
 }

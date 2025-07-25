@@ -13,18 +13,15 @@ public class HexDecoder {
         } else if (c >= 'A' && c <= 'F') {
             return (char) (c - 'A' + 10);
         } else {
-            return Character.MAX_VALUE; // अमान्य वर्ण
+            return Character.MAX_VALUE; // Invalid character
         }
     }
 
     public static void main(String[] args) {
-        // परीक्षण के लिए कुछ उदाहरण
-        System.out.println(decodeHexNibble('0')); // 0
-        System.out.println(decodeHexNibble('9')); // 9
-        System.out.println(decodeHexNibble('a')); // 10
-        System.out.println(decodeHexNibble('f')); // 15
-        System.out.println(decodeHexNibble('A')); // 10
-        System.out.println(decodeHexNibble('F')); // 15
-        System.out.println(decodeHexNibble('g')); // 65535 (Character.MAX_VALUE)
+        // Test the decodeHexNibble method
+        System.out.println(decodeHexNibble('0')); // Output: 0
+        System.out.println(decodeHexNibble('a')); // Output: 10
+        System.out.println(decodeHexNibble('F')); // Output: 15
+        System.out.println(decodeHexNibble('g')); // Output: 65535 (Character.MAX_VALUE)
     }
 }

@@ -41,7 +41,7 @@ class ThreadSnapshot {
     }
 }
 
-public class ThreadSnapshotLoader {
+public class ThreadSnapshotParser {
 
     /** 
      * निर्दिष्ट समय सीमा में थ्रेड स्नैपशॉट लोड करें

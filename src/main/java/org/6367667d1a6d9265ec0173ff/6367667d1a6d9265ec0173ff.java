@@ -3,7 +3,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MeteorLookup {
 
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming there's a method to get Meteor instance based on HttpServletRequest
+        // Assuming there's a method to get a Meteor instance based on the request
         // This is a placeholder for the actual implementation
         if (r == null) {
             return null;
@@ -12,6 +12,7 @@ public class MeteorLookup {
         // Example logic to retrieve a Meteor instance
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
+            // Logic to find and return the Meteor instance based on meteorId
             return findMeteorById(meteorId);
         }
 
@@ -19,19 +20,13 @@ public class MeteorLookup {
     }
 
     private static Meteor findMeteorById(String meteorId) {
-        // Placeholder for actual logic to find a Meteor by its ID
-        // This could involve querying a database or some other data source
-        // For demonstration, returning a new Meteor instance
-        return new Meteor(meteorId);
+        // Placeholder for actual logic to retrieve a Meteor instance
+        // This could involve querying a database or another data source
+        // For now, returning null to indicate not found
+        return null;
     }
 }
 
 class Meteor {
-    private String id;
-
-    public Meteor(String id) {
-        this.id = id;
-    }
-
-    // Additional properties and methods for the Meteor class
+    // Placeholder for the Meteor class implementation
 }

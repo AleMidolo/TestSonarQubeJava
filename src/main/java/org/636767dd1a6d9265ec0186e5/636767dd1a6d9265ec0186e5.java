@@ -34,9 +34,9 @@ class Channel {
         this.consumer = consumer;
     }
 
-    // Additional methods for Channel can be added here
+    // Additional methods can be added here
 }
 
 interface IConsumer {
-    // Define methods for IConsumer
+    // Define methods that IConsumer should implement
 }

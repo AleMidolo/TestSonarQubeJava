@@ -2,7 +2,7 @@ import java.util.logging.LogRecord;
 import javax.swing.SwingUtilities;
 
 public class LogTable {
-
+    
     public void addMessage(final LogRecord lr) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

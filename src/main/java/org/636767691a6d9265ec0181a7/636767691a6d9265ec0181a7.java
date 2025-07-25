@@ -6,20 +6,15 @@ public class Main {
      * @return हटाई गई स्ट्रिंग
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null || str.isEmpty()) {
-            return str;
-        }
-        
         int startIndex = 0;
         while (startIndex < str.length() && str.charAt(startIndex) == leadingCharacter) {
             startIndex++;
         }
-        
         return str.substring(startIndex);
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("aaabbbccc", 'a');
-        System.out.println(result); // Output: bbbccc
+        String result = trimLeadingCharacter("aaaHello World", 'a');
+        System.out.println(result); // Output: "Hello World"
     }
 }

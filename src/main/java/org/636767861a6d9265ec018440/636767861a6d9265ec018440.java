@@ -23,10 +23,10 @@ public class AbbreviationUtil {
             }
         }
 
-        // Remove the last added space and period if exists
+        // Remove the last added space and dot if exists
         if (abbreviatedName.length() > 0) {
             abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last space
-            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last period
+            abbreviatedName.setLength(abbreviatedName.length() - 1); // Remove last dot
         }
 
         buf.setLength(0); // Clear the buffer

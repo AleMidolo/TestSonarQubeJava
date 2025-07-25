@@ -22,13 +22,13 @@ public class ByteFinder {
             }
         }
         
-        return -1; // Byte not found
+        return -1; // Not found
     }
 
     public static void main(String[] args) {
-        byte[] data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        byte[] data = {1, 2, 3, 4, 5, 3, 6};
         ByteFinder finder = new ByteFinder(data);
-        int position = finder.findByte((byte) 5, 0);
-        System.out.println("Position of byte: " + position); // Output: Position of byte: 4
+        int index = finder.findByte((byte) 3, 0);
+        System.out.println("Index of byte: " + index); // Output: Index of byte: 2
     }
 }

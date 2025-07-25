@@ -25,5 +25,8 @@ public class ByteArrayConverter {
         // Example usage
         Byte[] byteArray = {1, 2, 3, null}; // This will throw NullPointerException
         byte[] primitiveArray = toPrimitive(byteArray);
+        for (byte b : primitiveArray) {
+            System.out.println(b);
+        }
     }
 }

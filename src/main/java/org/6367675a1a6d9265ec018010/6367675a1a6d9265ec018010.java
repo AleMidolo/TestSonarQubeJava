@@ -27,6 +27,6 @@ public class Bucket {
 // 桶列表类
 class BucketList {
     public void removeBucket(Bucket bucket) {
-        // 实现桶的移除逻辑
+        // 实现从列表中移除桶的逻辑
     }
 }

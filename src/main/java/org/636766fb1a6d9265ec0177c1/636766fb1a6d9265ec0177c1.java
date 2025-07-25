@@ -1,3 +1,5 @@
+package org.apache.commons.lang3;
+
 public class CharUtils {
     /**
      * <p>检查字符是否为 ASCII 7 位字母大写字母。</p>

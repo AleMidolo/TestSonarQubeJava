@@ -31,7 +31,7 @@ public class PropertyUtils {
                 replacement = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid issues with $ and \
+            // Quote replacement string to avoid problems with $ and \
             matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);

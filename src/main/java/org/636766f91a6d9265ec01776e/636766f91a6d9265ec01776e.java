@@ -16,21 +16,18 @@ public class ByteArrayOutputStream extends OutputStream {
             throw new IndexOutOfBoundsException();
         }
 
-        // Ensure capacity
-        ensureCapacity(count + len);
-        
-        // Copy bytes from input array to internal buffer
-        System.arraycopy(b, off, buf, count, len);
-        count += len;
-    }
-    
-    private void ensureCapacity(int minCapacity) {
-        // If the capacity is not enough, grow the buffer
-        if (minCapacity > buf.length) {
-            int newCapacity = Math.max(buf.length << 1, minCapacity);
-            byte[] newBuf = new byte[newCapacity];
-            System.arraycopy(buf, 0, newBuf, 0, count);
-            buf = newBuf;
+        if (len == 0) {
+            return;
         }
+
+        int newcount = count + len;
+        if (newcount > buf.length) {
+            byte[] newbuf = new byte[Math.max(buf.length << 1, newcount)];
+            System.arraycopy(buf, 0, newbuf, 0, count);
+            buf = newbuf;
+        }
+        
+        System.arraycopy(b, off, buf, count, len);
+        count = newcount;
     }
 }

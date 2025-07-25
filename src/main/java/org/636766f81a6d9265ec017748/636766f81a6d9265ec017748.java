@@ -14,7 +14,6 @@ public class Base64Utils {
             byte[] decodedBytes = Base64.getDecoder().decode(s);
             return new String(decodedBytes, StandardCharsets.UTF_8);
         } catch (IllegalArgumentException e) {
-            // Return empty string if input is not valid base64
             return "";
         }
     }

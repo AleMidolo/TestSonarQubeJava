@@ -17,12 +17,11 @@ public class ColumnNameOverride {
         }
         
         if (newName.isEmpty()) {
-            throw new IllegalArgumentException("newName cannot be empty");
+            throw new IllegalArgumentException("newName cannot be empty"); 
         }
 
-        // Here we would typically have some internal data structure 
-        // to store the name mappings, for example a Map<String,String>
-        // For demonstration, we'll just print the override
-        System.out.println("Overriding name: " + oldName + " -> " + newName);
+        // Here we would typically update the name mapping in some storage
+        // For example, if using a Map to store the override mappings:
+        // nameOverrides.put(oldName, newName);
     }
 }

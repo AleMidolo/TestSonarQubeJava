@@ -4,20 +4,20 @@ import java.util.List;
 public class SequenceRangeBuilder {
 
     private static class SequenceRange {
-        private long startSequence;
-        private long endSequence;
-
-        public SequenceRange(long startSequence, long endSequence) {
-            this.startSequence = startSequence;
-            this.endSequence = endSequence;
+        private long start;
+        private long end;
+        
+        public SequenceRange(long start, long end) {
+            this.start = start;
+            this.end = end;
         }
-
-        public long getStartSequence() {
-            return startSequence;
+        
+        public long getStart() {
+            return start;
         }
-
-        public long getEndSequence() {
-            return endSequence;
+        
+        public long getEnd() {
+            return end; 
         }
     }
 
@@ -27,22 +27,23 @@ public class SequenceRangeBuilder {
         // Get current sequence number
         long currentSequence = getCurrentSequence();
         
-        // Build sequence ranges in chunks of 1000
+        // Build ranges in chunks of 1000
         long chunkSize = 1000;
-        long startSequence = 0;
+        long start = 0;
         
-        while (startSequence < currentSequence) {
-            long endSequence = Math.min(startSequence + chunkSize - 1, currentSequence);
-            ranges.add(new SequenceRange(startSequence, endSequence));
-            startSequence = endSequence + 1;
+        while (start < currentSequence) {
+            long end = Math.min(start + chunkSize - 1, currentSequence);
+            ranges.add(new SequenceRange(start, end));
+            start = end + 1;
         }
         
         return ranges;
     }
     
+    // Helper method to get current sequence
     private long getCurrentSequence() {
         // Implementation to get current sequence number
-        // This could be from a database, file, or other source
-        return System.currentTimeMillis();
+        // This could read from a file or database
+        return 10000; // Example value
     }
 }

@@ -17,13 +17,15 @@ public class JSONSerializer {
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
         if (value == null) {
-            return null;
+            return "null";
         }
-        
-        if (features == null || features.length == 0) {
-            return JSON.toJSONString(value);
+
+        try {
+            // Use FastJSON to serialize the object with specified features
+            return JSON.toJSONString(value, features);
+        } catch (Exception e) {
+            // Return empty string if serialization fails
+            return "";
         }
-        
-        return JSON.toJSONString(value, features);
     }
 }

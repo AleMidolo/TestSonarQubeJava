@@ -7,38 +7,53 @@ public class CategoryTree {
     private int totalNodes = 0;
     
     protected class CategoryNode {
-        private boolean isActive;
+        private boolean active;
         private List<CategoryNode> children;
         
         public CategoryNode() {
-            this.isActive = false;
+            this.active = false;
             this.children = new ArrayList<>();
         }
-    }
-
-    protected int removeUnusedNodes() {
-        int removedCount = 0;
-        if (root != null) {
-            removedCount = removeUnusedNodesRecursive(root);
-        }
-        totalNodes -= removedCount;
-        return removedCount;
-    }
-
-    private int removeUnusedNodesRecursive(CategoryNode node) {
-        int count = 0;
         
-        Iterator<CategoryNode> iterator = node.children.iterator();
+        public boolean isActive() {
+            return active;
+        }
+        
+        public List<CategoryNode> getChildren() {
+            return children;
+        }
+    }
+
+    /**
+     * 从类别树中移除所有不活跃的节点。
+     * @return 被移除的节点数量
+     */
+    protected int removeUnusedNodes() {
+        if (root == null) {
+            return 0;
+        }
+        
+        int initialCount = totalNodes;
+        removeUnusedNodesRecursive(root);
+        
+        return initialCount - totalNodes;
+    }
+    
+    private void removeUnusedNodesRecursive(CategoryNode node) {
+        if (node == null) {
+            return;
+        }
+        
+        Iterator<CategoryNode> iterator = node.getChildren().iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();
-            count += removeUnusedNodesRecursive(child);
             
-            if (!child.isActive && child.children.isEmpty()) {
+            removeUnusedNodesRecursive(child);
+            
+            if (!child.isActive() && child.getChildren().isEmpty()) {
                 iterator.remove();
-                count++;
+                totalNodes--;
             }
         }
-        
-        return count;
     }
 }

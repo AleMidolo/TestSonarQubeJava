@@ -8,45 +8,59 @@ public class WireFormatDecoder {
     
     private final InputStream input;
     private int tag;
-    private int lastTag;
-    private boolean packedFieldMode;
-    private int packedFieldEndPos;
-    private int currentPosition;
+    private boolean isPacked;
+    private int packedLimit;
+    private int currentLimit;
     
     public WireFormatDecoder(InputStream input) {
         this.input = input;
+        this.currentLimit = Integer.MAX_VALUE;
     }
 
     private void checkIfPackedField() throws IOException {
-        // Check if current field has packed encoding
         if ((tag & TAG_TYPE_MASK) == WIRETYPE_LENGTH_DELIMITED) {
-            // Read packed field length
-            int length = readVarint32();
-            
+            int length = readRawVarint32();
             if (length > 0) {
-                // Mark start of packed values
-                packedFieldMode = true;
-                // Calculate end position
-                packedFieldEndPos = currentPosition + length;
-                // Save the tag for repeated reads
-                lastTag = tag;
+                isPacked = true;
+                packedLimit = currentLimit;
+                currentLimit = currentLimit - length;
             }
+        } else {
+            isPacked = false;
         }
     }
     
-    // Helper method to read variable length 32-bit integer
-    private int readVarint32() throws IOException {
-        int result = 0;
-        int shift = 0;
-        while (shift < 32) {
-            int b = input.read();
-            currentPosition++;
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
-            }
-            shift += 7;
+    private int readRawVarint32() throws IOException {
+        byte tmp = (byte) input.read();
+        if (tmp >= 0) {
+            return tmp;
         }
-        throw new IOException("Malformed varint32");
+        int result = tmp & 0x7f;
+        if ((tmp = (byte) input.read()) >= 0) {
+            result |= tmp << 7;
+        } else {
+            result |= (tmp & 0x7f) << 7;
+            if ((tmp = (byte) input.read()) >= 0) {
+                result |= tmp << 14;
+            } else {
+                result |= (tmp & 0x7f) << 14;
+                if ((tmp = (byte) input.read()) >= 0) {
+                    result |= tmp << 21;
+                } else {
+                    result |= (tmp & 0x7f) << 21;
+                    result |= (tmp = (byte) input.read()) << 28;
+                    if (tmp < 0) {
+                        // Discard upper 32 bits.
+                        for (int i = 0; i < 5; i++) {
+                            if (input.read() >= 0) {
+                                return result;
+                            }
+                        }
+                        throw new IOException("Malformed varint");
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 private Set<V> initVisibleVertices() {
     Set<V> visibleVertices = new HashSet<>();
     
-    // 假设 edges 是一个包含图中所有边的集合
+    // 假设 edges 是一个包含所有边的集合，每个边是一个包含两个顶点的数组或对象
     for (Edge<V> edge : edges) {
         visibleVertices.add(edge.getSource());
         visibleVertices.add(edge.getTarget());

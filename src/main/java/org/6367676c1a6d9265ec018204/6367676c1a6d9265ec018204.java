@@ -12,14 +12,14 @@ public class StringArrayConcatenator {
         // 创建一个List来存储结果
         List<String> resultList = new ArrayList<>();
 
-        // 如果array1不为null，将其元素添加到结果List中
+        // 如果array1不为null，将其元素添加到resultList中
         if (array1 != null) {
             for (String element : array1) {
                 resultList.add(element);
             }
         }
 
-        // 如果array2不为null，将其元素添加到结果List中
+        // 如果array2不为null，将其元素添加到resultList中
         if (array2 != null) {
             for (String element : array2) {
                 resultList.add(element);
@@ -31,12 +31,10 @@ public class StringArrayConcatenator {
     }
 
     public static void main(String[] args) {
-        // 测试用例
+        // 测试示例
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"d", "e", "f"};
         String[] result = concatenateStringArrays(array1, array2);
-
-        // 输出结果
         for (String s : result) {
             System.out.print(s + " ");
         }

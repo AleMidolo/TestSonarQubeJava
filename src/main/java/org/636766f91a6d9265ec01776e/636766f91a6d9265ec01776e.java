@@ -22,6 +22,9 @@ public class ByteArrayOutputStream extends OutputStream {
             ((off + len) - b.length > 0)) {
             throw new IndexOutOfBoundsException();
         }
+        if (len == 0) {
+            return;
+        }
         ensureCapacity(count + len);
         System.arraycopy(b, off, buf, count, len);
         count += len;
@@ -58,14 +61,15 @@ public class ByteArrayOutputStream extends OutputStream {
     }
 
     public byte[] toByteArray() {
-        return java.util.Arrays.copyOf(buf, count);
+        return buf.clone();
     }
 
     public int size() {
         return count;
     }
 
-    public void reset() {
-        count = 0;
+    @Override
+    public String toString() {
+        return new String(buf, 0, count);
     }
 }

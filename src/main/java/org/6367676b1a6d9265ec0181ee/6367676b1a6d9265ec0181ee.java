@@ -20,8 +20,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello World!   ";
-        String result = trimTrailingWhitespace(input);
-        System.out.println("'" + result + "'");  // 输出: 'Hello World!'
+        String testString = "Hello World!   ";
+        System.out.println("Original: '" + testString + "'");
+        System.out.println("Trimmed: '" + trimTrailingWhitespace(testString) + "'");
     }
 }

@@ -1,15 +1,21 @@
-/**
- * 如果主体是字节数组，则返回真
- * @return 如果主体是字节数组，则返回真
- */
-public boolean hasBytes() {
-    // 假设主体是一个字节数组
-    byte[] body = getBody(); // 假设getBody()方法返回主体的字节数组
-    return body != null && body instanceof byte[];
-}
+public class ByteChecker {
+    private byte[] body;
 
-// 假设的getBody方法，用于获取主体
-private byte[] getBody() {
-    // 这里返回一个示例字节数组
-    return new byte[0];
+    public ByteChecker(byte[] body) {
+        this.body = body;
+    }
+
+    /** 
+     * 如果主体是字节数组，则返回真
+     * @return 如果主体是字节数组，则返回真
+     */
+    public boolean hasBytes() {
+        return body != null;
+    }
+
+    public static void main(String[] args) {
+        byte[] sampleBytes = {1, 2, 3};
+        ByteChecker checker = new ByteChecker(sampleBytes);
+        System.out.println(checker.hasBytes()); // 输出: true
+    }
 }

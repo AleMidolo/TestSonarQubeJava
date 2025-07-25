@@ -9,7 +9,6 @@ public class TelnetServer {
 
     /**
      * 以适用于 Telnet 的格式向每个客户端发送消息。
-     * 
      * @param message 要发送的消息
      */
     public synchronized void send(final String message) {
@@ -20,7 +19,7 @@ public class TelnetServer {
                 outputStream.flush();
             } catch (IOException e) {
                 e.printStackTrace();
-                // 处理客户端连接异常，例如移除断开连接的客户端
+                // 处理客户端断开连接的情况
                 clients.remove(client);
             }
         }
@@ -28,7 +27,6 @@ public class TelnetServer {
 
     /**
      * 添加一个新的客户端连接。
-     * 
      * @param client 客户端Socket
      */
     public synchronized void addClient(Socket client) {
@@ -37,7 +35,6 @@ public class TelnetServer {
 
     /**
      * 移除一个客户端连接。
-     * 
      * @param client 客户端Socket
      */
     public synchronized void removeClient(Socket client) {

@@ -31,28 +31,38 @@ public class URIDecoder {
 
     private static String decodeSegment(String segment) {
         // Implement URI decoding logic here
-        // For simplicity, we'll use java.net.URLDecoder
+        // For simplicity, this example uses URLDecoder, but you may need to handle specific URI decoding rules
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (java.io.UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 encoding not supported", e);
+            throw new RuntimeException("Failed to decode segment", e);
         }
     }
 
     public static class PathSegmentImpl {
-        private final String segment;
+        private final String path;
 
-        public PathSegmentImpl(String segment) {
-            this.segment = segment;
+        public PathSegmentImpl(String path) {
+            this.path = path;
         }
 
-        public String getSegment() {
-            return segment;
+        public String getPath() {
+            return path;
         }
 
         @Override
         public String toString() {
-            return segment;
+            return "PathSegmentImpl{" +
+                    "path='" + path + '\'' +
+                    '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        URI uri = URI.create("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
         }
     }
 }

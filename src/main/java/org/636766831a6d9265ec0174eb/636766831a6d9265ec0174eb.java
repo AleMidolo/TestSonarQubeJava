@@ -1,11 +1,9 @@
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 public class FileHandler {
-
-    private List<File> fileList = new ArrayList<>();
 
     /**
      * 以逆序添加指定的文件。
@@ -14,19 +12,20 @@ public class FileHandler {
         if (files == null) {
             return;
         }
-        
-        // 将文件数组转换为列表
-        List<File> tempList = new ArrayList<>();
+
+        List<File> fileList = new ArrayList<>();
         for (File file : files) {
             if (file != null) {
-                tempList.add(file);
+                fileList.add(file);
             }
         }
-        
-        // 反转列表
-        Collections.reverse(tempList);
-        
-        // 将反转后的文件添加到成员变量中
-        fileList.addAll(tempList);
+
+        Collections.reverse(fileList);
+
+        // Assuming you want to do something with the reversed list, like adding to another list or processing
+        // For example, printing the file names in reverse order
+        for (File file : fileList) {
+            System.out.println(file.getName());
+        }
     }
 }

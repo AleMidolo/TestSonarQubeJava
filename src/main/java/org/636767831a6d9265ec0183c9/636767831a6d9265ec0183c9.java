@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class DiagnosticContext {
+public class NDC {
     private static Stack<String> contextStack = new Stack<>();
 
     /**
@@ -12,12 +12,5 @@ public class DiagnosticContext {
             return "";
         }
         return contextStack.peek();
-    }
-
-    // 示例用法
-    public static void main(String[] args) {
-        contextStack.push("Context1");
-        contextStack.push("Context2");
-        System.out.println(peek()); // 输出: Context2
     }
 }

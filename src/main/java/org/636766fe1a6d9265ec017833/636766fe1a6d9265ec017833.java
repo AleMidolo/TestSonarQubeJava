@@ -11,7 +11,7 @@ public class FileUtils {
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("File must not be null");
+            throw new NullPointerException("File cannot be null");
         }
 
         file.deleteOnExit();

@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
-public final class URIMatcher {
+public final class UriMatcher {
 
     /**
      * 将URI与模式进行匹配。
@@ -10,9 +10,8 @@ public final class URIMatcher {
      * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
-        // 假设我们有一个预定义的模式，例如匹配以 "http://" 或 "https://" 开头的URI
-        String regex = "^(http|https)://.*";
-        Pattern pattern = Pattern.compile(regex);
+        // 假设我们有一个预定义的模式，例如匹配以 "http://" 开头的URI
+        Pattern pattern = Pattern.compile("^http://.*");
         Matcher matcher = pattern.matcher(uri);
 
         if (matcher.find()) {
@@ -23,10 +22,8 @@ public final class URIMatcher {
     }
 
     public static void main(String[] args) {
-        URIMatcher matcher = new URIMatcher();
-        CharSequence uri = "https://example.com";
-        MatchResult result = matcher.match(uri);
-
+        UriMatcher matcher = new UriMatcher();
+        MatchResult result = matcher.match("http://example.com");
         if (result != null) {
             System.out.println("Match found: " + result.group());
         } else {

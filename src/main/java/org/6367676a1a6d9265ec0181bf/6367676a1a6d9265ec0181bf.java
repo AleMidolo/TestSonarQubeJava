@@ -16,6 +16,6 @@ public class StringUtils {
         // 测试用例
         System.out.println(quoteIfString("myString")); // 输出: 'myString'
         System.out.println(quoteIfString(123));       // 输出: 123
-        System.out.println(quoteIfString(null));      // 输出: null
+        System.out.println(quoteIfString(null));       // 输出: null
     }
 }

@@ -2,16 +2,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UnescapeId {
+
     private static final Map<String, String> ESCAPE_SEQUENCES = new HashMap<>();
 
     static {
         ESCAPE_SEQUENCES.put("\\\"", "\"");
-        ESCAPE_SEQUENCES.put("\\\\", "\\");
         ESCAPE_SEQUENCES.put("\\n", "\n");
-        ESCAPE_SEQUENCES.put("\\r", "\r");
         ESCAPE_SEQUENCES.put("\\t", "\t");
-        ESCAPE_SEQUENCES.put("\\b", "\b");
-        ESCAPE_SEQUENCES.put("\\f", "\f");
+        ESCAPE_SEQUENCES.put("\\\\", "\\");
     }
 
     /**
@@ -39,5 +37,12 @@ public class UnescapeId {
             i++;
         }
         return result.toString();
+    }
+
+    public static void main(String[] args) {
+        UnescapeId unescapeId = new UnescapeId();
+        String input = "This is a \\\"test\\\" string with \\n newline and \\t tab.";
+        String output = unescapeId.unescapeId(input);
+        System.out.println(output);
     }
 }

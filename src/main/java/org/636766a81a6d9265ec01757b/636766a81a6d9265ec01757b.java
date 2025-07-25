@@ -10,7 +10,6 @@ public class MyClass {
      */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        // Assuming this method is part of a class that can be serialized to JSON
         return JSON.toJSONString(this, features);
     }
 }

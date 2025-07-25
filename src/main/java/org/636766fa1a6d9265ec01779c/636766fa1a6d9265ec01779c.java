@@ -1,42 +1,28 @@
-public class TokenParser {
+import java.util.HashSet;
+import java.util.Set;
 
-    /**
-     * 解析一个令牌，直到遇到某个给定的终止符。
-     * @param terminators 终止字符数组。遇到这些字符中的任何一个都表示令牌的结束
-     * @return 令牌
-     */
-    private String parseToken(final char[] terminators) {
-        StringBuilder token = new StringBuilder();
-        int ch;
-        
-        try {
-            while ((ch = System.in.read()) != -1) {
-                char currentChar = (char) ch;
-                if (isTerminator(currentChar, terminators)) {
-                    break;
-                }
-                token.append(currentChar);
+private String parseToken(final char[] terminators) {
+    // Convert the array of terminators to a Set for O(1) lookups
+    Set<Character> terminatorSet = new HashSet<>();
+    for (char c : terminators) {
+        terminatorSet.add(c);
+    }
+
+    StringBuilder token = new StringBuilder();
+    int currentChar;
+
+    try {
+        // Read characters until a terminator is encountered
+        while ((currentChar = System.in.read()) != -1) {
+            char ch = (char) currentChar;
+            if (terminatorSet.contains(ch)) {
+                break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            token.append(ch);
         }
-        
-        return token.toString();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
-    private boolean isTerminator(char currentChar, char[] terminators) {
-        for (char terminator : terminators) {
-            if (currentChar == terminator) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void main(String[] args) {
-        TokenParser parser = new TokenParser();
-        char[] terminators = {' ', '\n', '\t'};
-        String token = parser.parseToken(terminators);
-        System.out.println("Parsed Token: " + token);
-    }
+    return token.toString();
 }

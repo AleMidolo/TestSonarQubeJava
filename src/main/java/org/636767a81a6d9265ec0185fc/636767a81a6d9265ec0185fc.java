@@ -8,14 +8,16 @@ public class TagReader {
         this.inputStream = inputStream;
     }
 
-    /** 
-     * 尝试读取一个字段标签，如果到达文件末尾则返回零。协议消息解析器使用此方法读取标签，因为协议消息可以合法地在任何标签出现的地方结束，而零不是有效的标签编号。
+    /**
+     * Tentativo di leggere un tag di campo, restituendo zero se abbiamo raggiunto la fine del file (EOF).
+     * I parser di messaggi di protocollo utilizzano questo metodo per leggere i tag, poiché un messaggio di protocollo
+     * può legalmente terminare ovunque si trovi un tag, e zero non è un numero di tag valido.
+     *
+     * @return il tag letto, o 0 se è stato raggiunto l'EOF
+     * @throws IOException se si verifica un errore di I/O durante la lettura
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();
-        if (tag == -1) {
-            return 0; // End of file reached
-        }
-        return tag; // Return the read tag
+        return tag == -1 ? 0 : tag;
     }
 }

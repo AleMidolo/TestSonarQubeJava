@@ -1,26 +1,28 @@
-public class StringTrimmer {
-    
+public class StringUtils {
+
     /**
-     * 从给定的字符串中修剪所有出现的指定前导字符。
-     * @param str 要检查的字符串
-     * @param leadingCharacter 要修剪的前导字符
-     * @return 修剪后的字符串
+     * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
+     * @param str la Stringa da controllare
+     * @param leadingCharacter il carattere iniziale da rimuovere
+     * @return la Stringa ripulita
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
-        
+
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-        
+
         return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("///Hello World", '/');
-        System.out.println(result); // Output: "Hello World"
+        String testString = "###HelloWorld";
+        char leadingChar = '#';
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result);  // Output: "HelloWorld"
     }
 }

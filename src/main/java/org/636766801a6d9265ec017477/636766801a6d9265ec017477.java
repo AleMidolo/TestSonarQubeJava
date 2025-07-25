@@ -1,29 +1,41 @@
 import java.io.InputStream;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FileAdder {
-    
-    /** 
-     * 以逆序添加指定的文件。
+
+    private List<InputStream> fileList;
+
+    public FileAdder() {
+        this.fileList = new ArrayList<>();
+    }
+
+    /**
+     * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final InputStream[] files) {
-        Stack<InputStream> stack = new Stack<>();
-        
-        // 将所有文件压入栈中
+        if (files == null) {
+            throw new IllegalArgumentException("Input array cannot be null");
+        }
+
+        // Convert the array to a list for easier manipulation
+        List<InputStream> tempList = new ArrayList<>();
         for (InputStream file : files) {
-            stack.push(file);
+            if (file != null) {
+                tempList.add(file);
+            }
         }
-        
-        // 逆序处理文件
-        while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
-            // 这里可以添加处理文件的逻辑
-            processFile(file);
-        }
+
+        // Reverse the list
+        Collections.reverse(tempList);
+
+        // Add the reversed list to the main file list
+        fileList.addAll(tempList);
     }
-    
-    private void processFile(InputStream file) {
-        // 处理文件的逻辑
-        // 例如，读取文件内容、保存到数据库等
+
+    // Optional: Method to get the file list for verification
+    public List<InputStream> getFileList() {
+        return fileList;
     }
 }

@@ -1,29 +1,26 @@
 import java.util.Collection;
+import java.util.Iterator;
 
-public class InstanceChecker {
-    /** 
-     * 检查给定的集合是否包含给定的元素实例。<p>此方法要求集合中存在该具体实例，而不仅仅是一个相等的元素。
-     * @param collection 要检查的集合
-     * @param element 要查找的元素
-     * @return 如果找到则返回 <code>true</code>，否则返回 <code>false</code>
+public class CollectionUtils {
+
+    /**
+     * Controlla se la Collection fornita contiene l'istanza dell'elemento dato. <p>Imporre che l'istanza fornita sia presente, piuttosto che restituire <code>true</code> per un elemento uguale.
+     * @param collection la Collection da controllare
+     * @param element l'elemento da cercare
+     * @return <code>true</code> se trovato, <code>false</code> altrimenti
      */
     public static boolean containsInstance(Collection collection, Object element) {
-        for (Object obj : collection) {
-            if (obj == element) {
+        if (collection == null || element == null) {
+            return false;
+        }
+
+        Iterator iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            Object current = iterator.next();
+            if (current == element) {
                 return true;
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        // 示例用法
-        Collection<Object> collection = new java.util.ArrayList<>();
-        String str1 = new String("test");
-        String str2 = new String("test");
-        collection.add(str1);
-
-        System.out.println(containsInstance(collection, str1)); // 输出: true
-        System.out.println(containsInstance(collection, str2)); // 输出: false
     }
 }

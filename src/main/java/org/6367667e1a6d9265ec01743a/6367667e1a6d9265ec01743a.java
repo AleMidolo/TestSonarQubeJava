@@ -1,26 +1,26 @@
-public class Example {
-    private long lastWriteTimeStamp;
+import java.util.concurrent.atomic.AtomicLong;
 
-    public Example() {
-        this.lastWriteTimeStamp = System.currentTimeMillis();
-    }
+public class LastWriteTimeStamp {
+    private final AtomicLong lastWriteTimeStamp = new AtomicLong();
 
-    /** 
-     * 上一次写操作发生的时间，单位为毫秒。
-     * @return this
+    /**
+     * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
+     * @return questo
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTimeStamp;
+        return lastWriteTimeStamp.get();
     }
 
-    public void writeData() {
-        // Simulate a write operation
-        lastWriteTimeStamp = System.currentTimeMillis();
+    /**
+     * Aggiorna l'ultimo timestamp di scrittura con il tempo corrente in millisecondi.
+     */
+    public void updateLastWriteTimeStamp() {
+        lastWriteTimeStamp.set(System.currentTimeMillis());
     }
 
     public static void main(String[] args) {
-        Example example = new Example();
-        example.writeData();
-        System.out.println("Last write timestamp: " + example.lastWriteTimeStampInMilliseconds() + " ms");
+        LastWriteTimeStamp timestamp = new LastWriteTimeStamp();
+        timestamp.updateLastWriteTimeStamp();
+        System.out.println("Last write timestamp: " + timestamp.lastWriteTimeStampInMilliseconds());
     }
 }

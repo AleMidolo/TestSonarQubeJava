@@ -1,12 +1,13 @@
 import org.apache.log4j.spi.LoggingEvent;
 
 public class Logger {
-    
+
     /**
-     * 此方法执行实际的写入操作
+     * Questo metodo esegue la scrittura effettiva
      */
     protected void subAppend(LoggingEvent event) {
-        // 实际的写入操作，例如将日志事件写入文件或控制台
-        System.out.println("Logging event: " + event.getMessage());
+        // Implementazione della scrittura effettiva del log
+        // Ad esempio, scrivere su console o file
+        System.out.println(event.getMessage());
     }
 }

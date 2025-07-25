@@ -1,19 +1,45 @@
 public class FrameVisitor {
-    private int[] currentFrame;
-    private int currentIndex;
+    private Frame currentFrame;
+
+    public FrameVisitor(Frame currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 
     /**
-     * 开始访问一个新的栈映射帧，该帧存储在 {@link #currentFrame} 中。
-     * @param offset   与该帧对应的指令的字节码偏移量。
-     * @param numLocal 当前帧中的局部变量数量。
-     * @param numStack 当前帧中的栈元素数量。
-     * @return 下一个要写入该帧的元素的索引。
+     * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
+     * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
+     * @param numLocal il numero di variabili locali nel frame.
+     * @param numStack il numero di elementi nello stack nel frame.
+     * @return l'indice del prossimo elemento da scrivere in questo frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Initialize the current frame with the size of local variables and stack
-        currentFrame = new int[numLocal + numStack];
-        currentIndex = 0; // Reset the index for writing to the frame
-        // You can add logic here to handle the offset if needed
-        return currentIndex; // Return the index for the next element to write
+        // Inizializza il nuovo frame con i parametri forniti
+        currentFrame = new Frame(offset, numLocal, numStack);
+
+        // Restituisce l'indice del prossimo elemento da scrivere nel frame
+        return currentFrame.getNextWriteIndex();
+    }
+
+    // Classe interna per rappresentare un frame
+    private static class Frame {
+        private final int offset;
+        private final int numLocal;
+        private final int numStack;
+        private int nextWriteIndex;
+
+        public Frame(int offset, int numLocal, int numStack) {
+            this.offset = offset;
+            this.numLocal = numLocal;
+            this.numStack = numStack;
+            this.nextWriteIndex = 0; // Inizialmente, il prossimo elemento da scrivere è il primo
+        }
+
+        public int getNextWriteIndex() {
+            return nextWriteIndex;
+        }
+
+        public void incrementWriteIndex() {
+            nextWriteIndex++;
+        }
     }
 }

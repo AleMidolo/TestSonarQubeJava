@@ -1,19 +1,35 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
+public class MyOutputStream extends OutputStream {
     @Override
-    public void write(byte[] b) throws IOException {
+    public void write(byte b[]) throws IOException {
         if (b == null) {
-            throw new IOException("Byte array cannot be null");
+            throw new NullPointerException("Byte array is null");
         }
-        // Here you would implement the logic to write the byte array to the output stream.
-        // For demonstration purposes, we will just print the byte array length.
-        System.out.println("Writing " + b.length + " bytes to the output stream.");
+        // Assuming this method is part of a class that extends OutputStream
+        // and has access to the underlying output mechanism.
+        // For example, writing to a file or network stream.
+        // Here, we just print the bytes to the console as an example.
+        for (byte value : b) {
+            System.out.write(value);
+        }
     }
 
     @Override
     public void write(int b) throws IOException {
-        // Implement the method to write a single byte if needed
+        // This method is required by the OutputStream class.
+        // It writes a single byte to the output stream.
+        System.out.write(b);
+    }
+
+    public static void main(String[] args) {
+        try {
+            MyOutputStream outputStream = new MyOutputStream();
+            byte[] data = {72, 101, 108, 108, 111}; // "Hello" in ASCII
+            outputStream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

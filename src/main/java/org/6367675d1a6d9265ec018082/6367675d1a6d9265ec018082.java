@@ -1,7 +1,34 @@
 import java.util.Objects;
 
 class Node {
-    // Assume Node class has necessary properties and methods
+    private int id;
+    private boolean isVirtual;
+
+    public Node(int id, boolean isVirtual) {
+        this.id = id;
+        this.isVirtual = isVirtual;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return id == node.id && isVirtual == node.isVirtual;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isVirtual);
+    }
 }
 
 class Edge {
@@ -13,7 +40,21 @@ class Edge {
         this.to = to;
     }
 
-    // Getters and other methods
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "from=" + from.getId() +
+                ", to=" + to.getId() +
+                '}';
+    }
 }
 
 class Graph {
@@ -25,19 +66,24 @@ class Graph {
         this.nextNode = nextNode;
     }
 
-    /**
-     * 返回一个连接之前返回的节点与下一个将要返回的节点之间的边。如果提到的任一节点是虚拟的，则该边将与其真实对应节点相连。
-     * @return 从当前节点到下一个节点的边
-     */
     public Edge edgeToNext() {
-        Node realCurrentNode = getRealNode(currentNode);
-        Node realNextNode = getRealNode(nextNode);
-        return new Edge(realCurrentNode, realNextNode);
+        Node from = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node to = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(from, to);
     }
 
     private Node getRealNode(Node node) {
-        // Logic to determine if the node is virtual and return the real node
-        // For simplicity, we assume the node is already real in this example
-        return Objects.requireNonNull(node, "Node cannot be null");
+        // Assuming that the real node has the same ID but is not virtual
+        return new Node(node.getId(), false);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Node currentNode = new Node(1, false);
+        Node nextNode = new Node(2, true);
+        Graph graph = new Graph(currentNode, nextNode);
+        Edge edge = graph.edgeToNext();
+        System.out.println(edge);
     }
 }

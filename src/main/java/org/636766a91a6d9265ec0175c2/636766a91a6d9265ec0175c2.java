@@ -1,30 +1,20 @@
-public class StackExample {
-    private java.util.Stack<Integer> outputFrameStack;
+import java.util.Stack;
 
-    public StackExample() {
-        outputFrameStack = new java.util.Stack<>();
+public class Frame {
+    private Stack<Integer> outputFrameStack;
+
+    public Frame() {
+        this.outputFrameStack = new Stack<>();
     }
 
-    /** 
-     * 从输出帧栈中弹出一个抽象类型并返回其值。
-     * @return 从输出帧栈中弹出的抽象类型。
+    /**
+     * Estrae un tipo astratto dallo stack del frame di output e restituisce il suo valore.
+     * @return il tipo astratto che è stato estratto dallo stack del frame di output.
      */
     private int pop() {
         if (outputFrameStack.isEmpty()) {
-            throw new java.util.EmptyStackException();
+            throw new IllegalStateException("Lo stack del frame di output è vuoto.");
         }
         return outputFrameStack.pop();
-    }
-
-    public void push(int value) {
-        outputFrameStack.push(value);
-    }
-
-    public static void main(String[] args) {
-        StackExample stackExample = new StackExample();
-        stackExample.push(10);
-        stackExample.push(20);
-        System.out.println(stackExample.pop()); // Outputs: 20
-        System.out.println(stackExample.pop()); // Outputs: 10
     }
 }

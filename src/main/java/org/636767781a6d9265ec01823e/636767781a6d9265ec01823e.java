@@ -1,38 +1,56 @@
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
-public class LogAppender {
-    private List<Socket> clientSockets;
+public class CustomAppender extends AppenderSkeleton {
+    private List<PrintWriter> clients = new ArrayList<>();
+    private ServerSocket serverSocket;
 
-    public LogAppender(List<Socket> clientSockets) {
-        this.clientSockets = clientSockets;
+    public CustomAppender(int port) throws IOException {
+        serverSocket = new ServerSocket(port);
+        new Thread(this::acceptClients).start();
     }
 
-    /**
-     * 处理日志事件。对于这个appender，这意味着将消息写入每个连接的客户端。
-     */
+    private void acceptClients() {
+        try {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+                synchronized (clients) {
+                    clients.add(writer);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void append(LoggingEvent event) {
-        String message = event.getMessage();
-        for (Socket socket : clientSockets) {
-            try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-                out.println(message);
-            } catch (IOException e) {
-                e.printStackTrace();
+        String message = layout.format(event);
+        synchronized (clients) {
+            for (PrintWriter writer : clients) {
+                writer.println(message);
             }
         }
     }
-}
 
-class LoggingEvent {
-    private String message;
-
-    public LoggingEvent(String message) {
-        this.message = message;
+    @Override
+    public void close() {
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getMessage() {
-        return message;
+    @Override
+    public boolean requiresLayout() {
+        return true;
     }
 }

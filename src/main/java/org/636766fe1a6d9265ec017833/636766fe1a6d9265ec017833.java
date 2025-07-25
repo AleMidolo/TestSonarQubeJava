@@ -1,40 +1,53 @@
 import java.io.File;
 import java.io.IOException;
 
-public class FileDeleter {
+public class FileUtils {
 
     /**
-     * 安排在JVM退出时删除指定文件。如果文件是目录，则删除该目录及所有子目录。
-     * @param file 要删除的文件或目录，不能为空 {@code null}
-     * @throws NullPointerException 如果文件为 {@code null}
-     * @throws IOException 如果删除不成功
+     * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
+     * @param file  file o directory da cancellare, non deve essere {@code null}
+     * @throws NullPointerException se il file è {@code null}
+     * @throws IOException in caso di cancellazione non riuscita
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("File cannot be null");
+            throw new NullPointerException("File must not be null");
         }
 
-        // Register a shutdown hook to delete the file on JVM exit
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                deleteRecursively(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
+        if (file.isDirectory()) {
+            deleteDirectoryOnExit(file);
+        } else {
+            file.deleteOnExit();
+        }
     }
 
-    private static void deleteRecursively(File file) throws IOException {
-        if (file.isDirectory()) {
-            File[] children = file.listFiles();
-            if (children != null) {
-                for (File child : children) {
-                    deleteRecursively(child);
-                }
+    private static void deleteDirectoryOnExit(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
+
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new IOException("Failed to list contents of " + directory);
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                deleteDirectoryOnExit(file);
+            } else {
+                file.deleteOnExit();
             }
         }
-        if (!file.delete()) {
-            throw new IOException("Failed to delete file: " + file.getAbsolutePath());
+
+        directory.deleteOnExit();
+    }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File("path/to/fileOrDirectory");
+            forceDeleteOnExit(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

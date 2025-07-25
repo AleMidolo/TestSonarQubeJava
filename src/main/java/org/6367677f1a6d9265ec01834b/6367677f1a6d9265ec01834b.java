@@ -1,27 +1,24 @@
-import java.util.LinkedList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
-public class LoggingBuffer {
-    private LinkedList<LoggingEvent> buffer;
-    private int capacity;
+public class LogBuffer {
+    private final BlockingQueue<LoggingEvent> buffer;
 
-    public LoggingBuffer(int capacity) {
-        this.capacity = capacity;
-        this.buffer = new LinkedList<>();
+    public LogBuffer(int capacity) {
+        this.buffer = new ArrayBlockingQueue<>(capacity);
     }
 
-    /** 
-     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。调用者有责任确保缓冲区有空闲空间。  
+    /**
+     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>.
+     * È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.
      */
     public void put(LoggingEvent o) {
-        if (buffer.size() < capacity) {
-            buffer.add(o);
+        if (!buffer.offer(o)) {
+            // Silently discard the event if the buffer is full
         }
-        // 如果缓冲区已满，事件将被静默丢弃
     }
-
-    // 其他可能的方法，例如获取缓冲区内容等
 }
 
 class LoggingEvent {
-    // 假设 LoggingEvent 类的实现
+    // LoggingEvent implementation details
 }

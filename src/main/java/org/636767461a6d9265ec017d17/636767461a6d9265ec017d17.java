@@ -1,35 +1,35 @@
-public class StringUnescaper {
-    
-    /** 
-     * 反转义字符串 DOT 标识符。
-     * @param input 输入字符串
-     * @return 反转义后的输出
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class DotUnescape {
+
+    /**
+     * Decomprime un identificatore di stringa DOT.
+     * @param input l'input
+     * @return l'output decompresso
      */
-    private String unescapeId(String input) {
+    private static String unescapeId(String input) {
         if (input == null) {
             return null;
         }
-        StringBuilder output = new StringBuilder();
-        boolean escape = false;
-        
-        for (char c : input.toCharArray()) {
-            if (escape) {
-                output.append(c);
-                escape = false;
-            } else if (c == '\\') {
-                escape = true;
-            } else {
-                output.append(c);
-            }
+
+        // Pattern per identificare sequenze di escape
+        Pattern pattern = Pattern.compile("\\\\([\\\\\"])");
+        Matcher matcher = pattern.matcher(input);
+
+        // Sostituisci le sequenze di escape con i caratteri corrispondenti
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(result, matcher.group(1));
         }
-        
-        return output.toString();
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        StringUnescaper unescaper = new StringUnescaper();
-        String input = "example\\ identifier";
-        String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example identifier
+        String input = "\\\\escaped\\\"string\\\"";
+        String output = unescapeId(input);
+        System.out.println(output);  // Output: \escaped"string"
     }
 }

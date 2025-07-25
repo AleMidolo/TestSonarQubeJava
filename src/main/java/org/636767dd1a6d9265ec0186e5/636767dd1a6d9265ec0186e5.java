@@ -1,7 +1,7 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-class Channels {
+public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
@@ -9,38 +9,26 @@ class Channels {
     }
 
     public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+        this.consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
-        return consumers;
+        return this.consumers;
     }
 }
 
-interface IConsumer {
-    void consume();
+public interface IConsumer {
+    void consume(String message);
 }
 
-public class TargetChannelManager {
-    /** 
-     * 添加新的目标通道。
+public class TargetManager {
+
+    /**
+     * Aggiungi un nuovo canale di destinazione.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        channels.addConsumer(consumer);
-    }
-
-    public static void main(String[] args) {
-        Channels channels = new Channels();
-        TargetChannelManager manager = new TargetChannelManager();
-
-        IConsumer consumer = new IConsumer() {
-            @Override
-            public void consume() {
-                System.out.println("Consuming data...");
-            }
-        };
-
-        manager.addNewTarget(channels, consumer);
-        System.out.println("New target added. Total consumers: " + channels.getConsumers().size());
+        if (channels != null && consumer != null) {
+            channels.addConsumer(consumer);
+        }
     }
 }

@@ -1,24 +1,24 @@
-public class FilePathUtils {
+public class FileUtils {
 
-    /** 
-     * 返回最后一个目录分隔符字符的索引。<p> 此方法将处理Unix或Windows格式的文件。返回最后一个正斜杠或反斜杠的位置。<p> 无论代码运行在哪台机器上，输出都是相同的。
-     * @param filename  要查找最后一个路径分隔符的文件名，如果为null则返回-1
-     * @return 最后一个分隔符字符的索引，如果没有这样的字符则返回-1
+    /**
+     * Restituisce l'indice dell'ultimo carattere separatore di directory. <p> Questo metodo gestirà un file sia in formato Unix che Windows. Viene restituita la posizione dell'ultimo slash o backslash. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
+     * @param filename  il nome del file in cui trovare l'ultimo separatore di percorso, null restituisce -1
+     * @return l'indice dell'ultimo carattere separatore, oppure -1 se non esiste tale carattere
      */
     public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
-        int lastUnixSeparator = filename.lastIndexOf('/');
-        int lastWindowsSeparator = filename.lastIndexOf('\\');
-        return Math.max(lastUnixSeparator, lastWindowsSeparator);
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
+        return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        // 测试代码
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 17
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 14
-        System.out.println(indexOfLastSeparator("file.txt")); // 输出: -1
-        System.out.println(indexOfLastSeparator(null)); // 输出: -1
+        // Test cases
+        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 14
+        System.out.println(indexOfLastSeparator("/home/user/file.txt"));      // Output: 10
+        System.out.println(indexOfLastSeparator("file.txt"));                 // Output: -1
+        System.out.println(indexOfLastSeparator(null));                      // Output: -1
     }
 }

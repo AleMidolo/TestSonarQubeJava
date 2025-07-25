@@ -1,63 +1,59 @@
-public class StackManipulator {
-    private final Stack<Object> stack = new Stack<>();
+import java.util.Stack;
 
-    /** 
-     * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则弹出其参数类型）。
+public class FrameStack {
+    private Stack<String> outputFrameStack = new Stack<>();
+
+    /**
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        int count = getTypeCount(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
+        }
+
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, rimuovi i tipi di argomento
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            removeTypesFromStack(argsDescriptor);
+        } else {
+            // È un tipo singolo, rimuovi il tipo dallo stack
+            removeTypeFromStack(descriptor);
+        }
+    }
+
+    private void removeTypesFromStack(String argsDescriptor) {
+        int index = 0;
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
+            if (currentChar == 'L') {
+                // Tipo oggetto, trova il punto e virgola
+                int semicolonIndex = argsDescriptor.indexOf(';', index);
+                if (semicolonIndex == -1) {
+                    break;
+                }
+                String type = argsDescriptor.substring(index, semicolonIndex + 1);
+                removeTypeFromStack(type);
+                index = semicolonIndex + 1;
+            } else if (currentChar == '[') {
+                // Tipo array, rimuovi il tipo base
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
+            } else {
+                // Tipo primitivo
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
             }
         }
     }
 
-    private int getTypeCount(String descriptor) {
-        int count = 0;
-        if (descriptor.startsWith("(")) {
-            // Method descriptor, count parameters
-            int i = 1;
-            while (descriptor.charAt(i) != ')') {
-                if (descriptor.charAt(i) == 'L') {
-                    // Object type
-                    while (descriptor.charAt(i) != ';') {
-                        i++;
-                    }
-                    i++; // Move past ';'
-                } else if (descriptor.charAt(i) == '[') {
-                    // Array type
-                    while (descriptor.charAt(i) == '[') {
-                        i++;
-                    }
-                    if (descriptor.charAt(i) == 'L') {
-                        while (descriptor.charAt(i) != ';') {
-                            i++;
-                        }
-                        i++; // Move past ';'
-                    }
-                } else {
-                    // Primitive type
-                    i++;
-                }
-                count++;
-            }
-        } else {
-            // Type descriptor, count based on type
-            if (descriptor.equals("V")) {
-                count = 0; // Void type
-            } else if (descriptor.equals("Z") || descriptor.equals("B") || descriptor.equals("C") || 
-                       descriptor.equals("S") || descriptor.equals("I")) {
-                count = 1; // 1 for primitive types
-            } else if (descriptor.equals("F") || descriptor.equals("D")) {
-                count = 1; // 1 for float/double
-            } else if (descriptor.startsWith("L")) {
-                count = 1; // Object type
-            } else if (descriptor.startsWith("[")) {
-                count = 1; // Array type
-            }
+    private void removeTypeFromStack(String type) {
+        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+            outputFrameStack.pop();
         }
-        return count;
     }
 }

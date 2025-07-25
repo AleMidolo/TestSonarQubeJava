@@ -1,28 +1,32 @@
-public class FilePathUtil {
-    
-    /** 
-     * 从给定路径中去除文件名扩展名，例如 "mypath/myfile.txt" -&gt; "mypath/myfile"。
-     * @param path 文件路径（可能为 <code>null</code>）
-     * @return 去除文件名扩展名后的路径，如果没有扩展名则返回 <code>null</code>
+import java.util.Objects;
+
+public class FileUtils {
+
+    /**
+     * Rimuove l'estensione del nome file dal percorso fornito, ad esempio "mypath/myfile.txt" -> "mypath/myfile".
+     * @param path il percorso del file (può essere <code>null</code>)
+     * @return il percorso con l'estensione del nome file rimossa, oppure <code>null</code> se non presente
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
             return null;
         }
-        
+
+        int lastSeparatorIndex = path.lastIndexOf('/');
         int lastDotIndex = path.lastIndexOf('.');
-        int lastSlashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
-        
-        if (lastDotIndex > lastSlashIndex) {
-            return path.substring(0, lastDotIndex);
+
+        // Se non c'è un punto o se il punto è prima dell'ultimo separatore, restituisci il percorso originale
+        if (lastDotIndex == -1 || (lastSeparatorIndex != -1 && lastDotIndex < lastSeparatorIndex)) {
+            return path;
         }
-        
-        return null;
+
+        return path.substring(0, lastDotIndex);
     }
 
     public static void main(String[] args) {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
-        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: null
+        System.out.println(stripFilenameExtension("myfile.txt"));        // Output: myfile
+        System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
     }
 }

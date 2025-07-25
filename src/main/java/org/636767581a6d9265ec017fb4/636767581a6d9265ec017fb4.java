@@ -1,25 +1,41 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
-    /** 
-     * 为每个键找到一个最小上界。
-     * @param keys 键的列表。
-     * @return 计算得到的键上界。
+    /**
+     * Trova un limite superiore minimo per ogni chiave.
+     * @param keys una lista di chiavi.
+     * @return il limite superiore delle chiavi calcolato.
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
-        List<Integer> upperBounds = new ArrayList<>();
         if (keys == null || keys.isEmpty()) {
-            return upperBounds;
+            return new ArrayList<>();
         }
 
+        // Ordina la lista di chiavi
+        List<K> sortedKeys = new ArrayList<>(keys);
+        Collections.sort(sortedKeys);
+
+        List<Integer> upperBounds = new ArrayList<>();
         for (K key : keys) {
-            // Assuming the upper bound is the next integer greater than the key's hash code
-            int upperBound = key.hashCode() + 1;
-            upperBounds.add(upperBound);
+            // Trova l'indice del primo elemento maggiore di key
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                index = -index - 1;
+            } else {
+                index = index + 1;
+            }
+
+            // Se l'indice è fuori dai limiti, non c'è un limite superiore
+            if (index >= sortedKeys.size()) {
+                upperBounds.add(null);
+            } else {
+                upperBounds.add(index);
+            }
         }
-        
+
         return upperBounds;
     }
 }

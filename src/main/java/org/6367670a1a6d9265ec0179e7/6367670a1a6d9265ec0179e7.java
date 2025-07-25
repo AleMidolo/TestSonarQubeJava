@@ -2,22 +2,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterRegistry {
-    private final Map<Class<?>, Converter> converterMap = new HashMap<>();
 
-    public void registerConverter(Class<?> clazz, Converter converter) {
-        converterMap.put(clazz, converter);
+    private final Map<Class<?>, Converter> registry = new HashMap<>();
+
+    /**
+     * Cerca e restituisce qualsiasi {@link Converter} registrato per la classe di destinazione specificata; se non esiste un Converter registrato, restituisce <code>null</code>.
+     * @param clazz Classe per la quale restituire un Converter registrato
+     * @return Il {@link Converter} registrato o <code>null</code> se non trovato
+     */
+    public Converter lookup(final Class<?> clazz) {
+        return registry.get(clazz);
     }
 
     /**
-     * 查找并返回指定目标类的任何注册的 {@link Converter}；如果没有注册的 Converter，则返回 <code>null</code>。
-     * @param clazz 要返回注册 Converter 的类
-     * @return 注册的 {@link Converter}，如果未找到则返回 <code>null</code>
+     * Registra un {@link Converter} per una specifica classe.
+     * @param clazz Classe per la quale registrare il Converter
+     * @param converter Converter da registrare
      */
-    public Converter lookup(final Class<?> clazz) {
-        return converterMap.get(clazz);
+    public void register(final Class<?> clazz, final Converter converter) {
+        registry.put(clazz, converter);
     }
 
     public interface Converter {
-        // Converter interface methods
+        // Metodi del Converter
     }
 }

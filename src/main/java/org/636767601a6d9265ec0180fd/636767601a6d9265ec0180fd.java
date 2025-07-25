@@ -1,26 +1,23 @@
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-public class Graph<V, E> {
-    private Map<V, Set<E>> index;
+public class GraphIndex<V, E> {
+    private Map<V, Map<V, E>> index;
 
-    public Graph() {
+    public GraphIndex() {
         index = new HashMap<>();
     }
 
-    /** 
-     * 将边添加到索引中。
-     * @param sourceVertex 源顶点
-     * @param targetVertex 目标顶点
-     * @param e 边
+    /**
+     * Aggiunge un arco all'indice.
+     * @param sourceVertex il vertice sorgente
+     * @param targetVertex il vertice di destinazione
+     * @param e l'arco
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        index.putIfAbsent(sourceVertex, new HashSet<>());
-        index.putIfAbsent(targetVertex, new HashSet<>());
-        
-        index.get(sourceVertex).add(e);
-        index.get(targetVertex).add(e);
+        if (!index.containsKey(sourceVertex)) {
+            index.put(sourceVertex, new HashMap<>());
+        }
+        index.get(sourceVertex).put(targetVertex, e);
     }
 }

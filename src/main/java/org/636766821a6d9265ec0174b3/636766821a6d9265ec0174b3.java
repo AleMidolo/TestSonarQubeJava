@@ -1,34 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Predicate;
 
-public class BroadcastFilter {
+/**
+ * Invoca il {@link BroadcastFilter}
+ * @param msg L'oggetto da filtrare
+ * @return L'oggetto filtrato o null se non supera il filtro
+ */
+protected Object filter(Object msg) {
+    // Esempio di implementazione di un filtro
+    Predicate<Object> broadcastFilter = obj -> {
+        // Logica di filtro personalizzata
+        return obj != null; // Esempio: filtra solo oggetti non nulli
+    };
 
-    private List<Object> filters;
-
-    public BroadcastFilter() {
-        this.filters = new ArrayList<>();
-    }
-
-    /**
-     * 调用 {@link BroadcastFilter}
-     * @param msg
-     * @return
-     */
-    protected Object filter(Object msg) {
-        for (Object filter : filters) {
-            // Assuming filter is a functional interface that takes an Object and returns an Object
-            msg = applyFilter(filter, msg);
-        }
+    if (broadcastFilter.test(msg)) {
         return msg;
-    }
-
-    private Object applyFilter(Object filter, Object msg) {
-        // Implement the logic to apply the filter to the message
-        // This is a placeholder for actual filter logic
-        return msg; // Return the modified message after applying the filter
-    }
-
-    public void addFilter(Object filter) {
-        filters.add(filter);
+    } else {
+        return null;
     }
 }

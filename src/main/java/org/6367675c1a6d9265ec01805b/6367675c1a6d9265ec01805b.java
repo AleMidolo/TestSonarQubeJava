@@ -1,35 +1,15 @@
-import java.util.LinkedList;
+public class Edge {
+    private Edge prevInTree;
+    private Edge nextInTree;
 
-class TreeNode {
-    int value;
-    LinkedList<TreeNode> children;
-
-    public TreeNode(int value) {
-        this.value = value;
-        this.children = new LinkedList<>();
-    }
-}
-
-public class TreeEdgeList {
-    private TreeNode root;
-
-    public TreeEdgeList(TreeNode root) {
-        this.root = root;
-    }
-
-    /**
-     * 从树的双向链表中移除该边。
-     */
-    public void removeFromTreeEdgeList(TreeNode parent, TreeNode child) {
-        if (parent == null || child == null) {
-            return;
+    public void removeFromTreeEdgeList() {
+        if (prevInTree != null) {
+            prevInTree.nextInTree = nextInTree;
         }
-        if (parent.children.contains(child)) {
-            parent.children.remove(child);
+        if (nextInTree != null) {
+            nextInTree.prevInTree = prevInTree;
         }
-        // Assuming it's a bidirectional edge, we also need to remove the parent reference from the child
-        if (child.children.contains(parent)) {
-            child.children.remove(parent);
-        }
+        prevInTree = null;
+        nextInTree = null;
     }
 }

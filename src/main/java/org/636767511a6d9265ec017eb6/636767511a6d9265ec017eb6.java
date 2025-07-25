@@ -1,39 +1,54 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Node implementation
-}
-
-class OuterFaceCirculator {
-    private Node currentNode;
+public class OuterFaceCirculator {
+    private Node current;
 
     public OuterFaceCirculator(Node start) {
-        this.currentNode = start;
+        this.current = start;
     }
 
-    public Node getCurrentNode() {
-        return currentNode;
+    public Node getCurrent() {
+        return current;
     }
 
-    public void moveNext() {
-        // Logic to move to the next node in the outer face
-    }
-
-    public boolean hasNext() {
-        // Logic to determine if there is a next node
-        return true; // Placeholder
+    public void next(int dir) {
+        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
+        if (dir == 0) {
+            current = current.getNextClockwise();
+        } else {
+            current = current.getNextCounterClockwise();
+        }
     }
 }
 
-private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-    
-    do {
-        if (predicate.test(circulator.getCurrentNode())) {
-            return circulator;
+public class Node {
+    private Node nextClockwise;
+    private Node nextCounterClockwise;
+
+    public Node getNextClockwise() {
+        return nextClockwise;
+    }
+
+    public Node getNextCounterClockwise() {
+        return nextCounterClockwise;
+    }
+
+    // Other methods and fields...
+}
+
+public class Graph {
+    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = circulator.getCurrent();
+
+        while (current != stop) {
+            if (predicate.test(current)) {
+                return circulator;
+            }
+            circulator.next(dir);
+            current = circulator.getCurrent();
         }
-        circulator.moveNext();
-    } while (circulator.hasNext() && circulator.getCurrentNode() != stop);
-    
-    return circulator; // Returns the circulator pointing to stop if no node matches
+
+        return circulator;
+    }
 }

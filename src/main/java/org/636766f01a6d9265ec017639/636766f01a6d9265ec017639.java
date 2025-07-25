@@ -1,22 +1,31 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class ArrayToListConverter {
-    /** 
-     * 数组转列表。<p> 其工作方式类似于 {@link Arrays#asList(Object)}，但可以处理空数组。
-     * @return 一个由数组支持的列表。
+public class ArrayToList {
+
+    /**
+     * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
+     * @param a l'array da convertire in lista
+     * @return una lista supportata dall'array.
      */
     public static <T> List<T> asList(T[] a) {
-        return a == null ? Arrays.asList() : Arrays.asList(a);
+        if (a == null) {
+            return Collections.emptyList();
+        }
+        return new ArrayList<>(Arrays.asList(a));
     }
 
     public static void main(String[] args) {
-        String[] array = {"Hello", "World"};
+        // Test case
+        String[] array = {"one", "two", "three"};
         List<String> list = asList(array);
-        System.out.println(list); // Output: [Hello, World]
+        System.out.println(list); // Output: [one, two, three]
 
-        String[] emptyArray = {};
-        List<String> emptyList = asList(emptyArray);
-        System.out.println(emptyList); // Output: []
+        // Test case with null array
+        String[] nullArray = null;
+        List<String> nullList = asList(nullArray);
+        System.out.println(nullList); // Output: []
     }
 }

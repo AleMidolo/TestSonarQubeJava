@@ -1,21 +1,22 @@
-public class CacheExpiration {
+public class CacheUtil {
 
-    /** 
-     * @param timestamp        当前时间的时间戳
-     * @param expiredThreshold 表示最后更新时间与从缓存中移除的时间点之间的持续时间。
-     * @return 真值表示该指标应该从缓存中移除。
+    /**
+     * Determines if the given timestamp has expired based on the expired threshold.
+     *
+     * @param timestamp        current time
+     * @param expiredThreshold duration between the last update and the moment when it should be removed from the cache
+     * @return true if the metrics should be removed from the cache
      */
-    public boolean isExpired(long timestamp, long expiredThreshold) {
+    public static boolean isExpired(long timestamp, long expiredThreshold) {
         long currentTime = System.currentTimeMillis();
         return (currentTime - timestamp) > expiredThreshold;
     }
 
     public static void main(String[] args) {
-        CacheExpiration cacheExpiration = new CacheExpiration();
+        // Example usage
         long timestamp = System.currentTimeMillis() - 10000; // 10 seconds ago
-        long expiredThreshold = 5000; // 5 seconds
-
-        boolean result = cacheExpiration.isExpired(timestamp, expiredThreshold);
-        System.out.println("Is expired: " + result); // Should print true
+        long expiredThreshold = 5000; // 5 seconds threshold
+        boolean expired = isExpired(timestamp, expiredThreshold);
+        System.out.println("Is expired: " + expired); // Should print "Is expired: true"
     }
 }

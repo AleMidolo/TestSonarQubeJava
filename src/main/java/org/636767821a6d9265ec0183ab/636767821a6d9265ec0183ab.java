@@ -1,27 +1,25 @@
-public class ExceptionChecker {
-    
-    private Throwable thrown;
-
-    public ExceptionChecker(Throwable thrown) {
-        this.thrown = thrown;
-    }
-
-    /** 
-     * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
+public class Example {
+    /**
+     * @return true se getThrown().toString() è una stringa non vuota.
      */
     public boolean hasThrown() {
-        return thrown != null && !thrown.toString().isEmpty();
+        String thrownString = getThrown().toString();
+        return !thrownString.isEmpty();
     }
 
-    public Throwable getThrown() {
-        return thrown;
+    // Dummy implementation of getThrown() for demonstration purposes
+    private Object getThrown() {
+        // This is a placeholder. Replace with actual logic.
+        return new Object() {
+            @Override
+            public String toString() {
+                return "Example thrown object";
+            }
+        };
     }
 
     public static void main(String[] args) {
-        ExceptionChecker checker = new ExceptionChecker(new Exception("An error occurred"));
-        System.out.println(checker.hasThrown()); // Output: true
-
-        ExceptionChecker emptyChecker = new ExceptionChecker(null);
-        System.out.println(emptyChecker.hasThrown()); // Output: false
+        Example example = new Example();
+        System.out.println(example.hasThrown()); // Output: true
     }
 }

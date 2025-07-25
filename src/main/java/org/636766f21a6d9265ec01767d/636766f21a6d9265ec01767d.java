@@ -1,16 +1,23 @@
 public class ObjectToStringConverter {
 
-    /** 
-     * 对象转字符串，当对象为空时返回空字符串，否则返回toString(); 
+    /**
+     * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString();
      */
     public static String toString(Object object) {
-        return object == null ? "" : object.toString();
+        if (object == null) {
+            return null;
+        }
+        return object.toString();
     }
 
     public static void main(String[] args) {
+        // Test cases
         Object obj1 = null;
-        Object obj2 = new Object();
-        System.out.println("Result for null object: '" + toString(obj1) + "'");
-        System.out.println("Result for non-null object: '" + toString(obj2) + "'");
+        Object obj2 = 123;
+        Object obj3 = "Hello, World!";
+
+        System.out.println(toString(obj1)); // Output: null
+        System.out.println(toString(obj2)); // Output: 123
+        System.out.println(toString(obj3)); // Output: Hello, World!
     }
 }

@@ -1,8 +1,7 @@
 public class HexConverter {
-    
-    /** 
-     * @param b 一个 ASCII 编码的字符，范围为 0-9、a-f、A-F
-     * @return 字符的字节值，范围为 0-16。
+    /**
+     * @param b Un carattere codificato in ASCII da 0-9, a-f, A-F
+     * @return Il valore byte del carattere da 0 a 16.
      */
     public static byte convertHexDigit(byte b) {
         if (b >= '0' && b <= '9') {
@@ -12,17 +11,17 @@ public class HexConverter {
         } else if (b >= 'A' && b <= 'F') {
             return (byte) (b - 'A' + 10);
         } else {
-            throw new IllegalArgumentException("Invalid hex digit: " + (char) b);
+            throw new IllegalArgumentException("Il carattere non è un valore esadecimale valido.");
         }
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(convertHexDigit((byte) '0')); // 0
-        System.out.println(convertHexDigit((byte) '9')); // 9
-        System.out.println(convertHexDigit((byte) 'a')); // 10
-        System.out.println(convertHexDigit((byte) 'f')); // 15
-        System.out.println(convertHexDigit((byte) 'A')); // 10
-        System.out.println(convertHexDigit((byte) 'F')); // 15
+        byte testChar1 = 'A';
+        byte testChar2 = '7';
+        byte testChar3 = 'f';
+
+        System.out.println(convertHexDigit(testChar1)); // Output: 10
+        System.out.println(convertHexDigit(testChar2)); // Output: 7
+        System.out.println(convertHexDigit(testChar3)); // Output: 15
     }
 }

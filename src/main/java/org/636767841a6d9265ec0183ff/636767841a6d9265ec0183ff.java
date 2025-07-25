@@ -1,57 +1,34 @@
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
-public class TableRowSelector {
+public class TableUtils {
 
-    /** 
-     * 选择指定的 JTable 中的行，并将指定的 JScrollPane 滚动到新选择的行。更重要的是，调用 repaint() 的延迟足够长，以便表格能够正确绘制新选择的行，即使该行可能在当前视图之外。
-     * @param row 应该选择的行索引
-     * @param table 应该属于指定的 JScrollPane
-     * @param pane JScrollPane 组件
+    /**
+     * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. 
+     * Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente 
+     * la riga appena selezionata, che potrebbe essere fuori dallo schermo.
+     * @param row l'indice della riga da selezionare
+     * @param table deve appartenere allo JScrollPane specificato
+     * @param pane lo JScrollPane che contiene la JTable
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane cannot be null");
-        }
-        
-        if (row < 0 || row >= table.getRowCount()) {
-            throw new IndexOutOfBoundsException("Row index out of bounds");
+            throw new IllegalArgumentException("Table and pane must not be null.");
         }
 
-        // Select the specified row
+        // Seleziona la riga specificata
         table.setRowSelectionInterval(row, row);
-        
-        // Scroll to the selected row
+
+        // Ottieni il rettangolo che rappresenta la cella della riga selezionata
+        Rectangle cellRect = table.getCellRect(row, 0, true);
+
+        // Scorri lo JScrollPane fino alla riga selezionata
+        pane.getViewport().scrollRectToVisible(cellRect);
+
+        // Ritarda la chiamata a repaint() per permettere alla tabella di dipingere correttamente la riga selezionata
         SwingUtilities.invokeLater(() -> {
-            Rectangle rect = table.getCellRect(row, 0, true);
-            table.scrollRectToVisible(rect);
-            pane.repaint();
+            table.repaint();
         });
-    }
-
-    public static void main(String[] args) {
-        // Sample usage
-        JFrame frame = new JFrame("Table Row Selector");
-        String[] columnNames = {"Column 1", "Column 2"};
-        Object[][] data = {
-            {"Row 1", "Data 1"},
-            {"Row 2", "Data 2"},
-            {"Row 3", "Data 3"},
-            {"Row 4", "Data 4"},
-            {"Row 5", "Data 5"},
-        };
-
-        JTable table = new JTable(data, columnNames);
-        JScrollPane pane = new JScrollPane(table);
-        frame.add(pane, BorderLayout.CENTER);
-        
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-        // Select a row after a delay
-        Timer timer = new Timer(1000, e -> selectRow(3, table, pane));
-        timer.setRepeats(false);
-        timer.start();
     }
 }

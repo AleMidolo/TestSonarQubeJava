@@ -1,41 +1,37 @@
 import java.util.Set;
 
 public class Graph<V> {
-    
-    // Assuming there's a method to get the edges of the graph
-    // and each edge has a method to get its weight and destination vertex.
-    
+
+    /**
+     * Calcola la somma dei pesi che entrano in un vertice
+     * @param v il vertice
+     * @return la somma dei pesi che entrano in un vertice
+     */
     public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
-        
-        for (V vertex : v) {
-            // Assuming getIncomingEdges is a method that returns the incoming edges for the vertex
-            for (Edge<V> edge : getIncomingEdges(vertex)) {
-                totalWeight += edge.getWeight();
+        double sum = 0.0;
+        // Assuming that the graph is represented as a map of vertices to their incoming edges with weights
+        // For example: Map<V, Map<V, Double>> incomingEdges;
+        // Where incomingEdges.get(v) returns a map of vertices that have edges pointing to v, with their weights
+
+        // Iterate over all vertices that have edges pointing to v
+        for (V source : incomingEdges.keySet()) {
+            if (incomingEdges.get(source).containsKey(v)) {
+                sum += incomingEdges.get(source).get(v);
             }
         }
-        
-        return totalWeight;
-    }
-    
-    // Placeholder for Edge class
-    private class Edge<V> {
-        private V destination;
-        private double weight;
-
-        public Edge(V destination, double weight) {
-            this.destination = destination;
-            this.weight = weight;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
+        return sum;
     }
 
-    // Placeholder for method to get incoming edges
-    private Set<Edge<V>> getIncomingEdges(V vertex) {
-        // Implementation to retrieve incoming edges for the vertex
-        return Set.of(); // Return an empty set for placeholder
+    // Assuming the graph structure is represented as follows:
+    private Map<V, Map<V, Double>> incomingEdges;
+
+    // Constructor to initialize the graph
+    public Graph() {
+        incomingEdges = new HashMap<>();
+    }
+
+    // Method to add an edge to the graph
+    public void addEdge(V source, V target, double weight) {
+        incomingEdges.computeIfAbsent(target, k -> new HashMap<>()).put(source, weight);
     }
 }

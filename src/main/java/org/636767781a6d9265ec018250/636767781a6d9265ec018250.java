@@ -1,14 +1,12 @@
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.Filter;
 
-public class Filter {
-    public static final int NEUTRAL = 0;
+public class MyFilter extends Filter {
 
-    /**
-     * 如果没有字符串匹配，则返回 {@link Filter#NEUTRAL}。
-     */
+    @Override
     public int decide(LoggingEvent event) {
-        // Implement your logic here
-        // For demonstration, we will return NEUTRAL if no condition is met
-        return NEUTRAL;
+        // Implementazione della logica di decisione
+        // Se non c'è corrispondenza con la stringa, restituisci Filter.NEUTRAL
+        return Filter.NEUTRAL;
     }
 }

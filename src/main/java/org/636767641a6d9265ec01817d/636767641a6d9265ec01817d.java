@@ -1,39 +1,64 @@
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+
 import java.util.Map;
 
-public class Graph<V, E> {
-    // Graph implementation details would go here
-}
-
-public class GraphGenerator<V, E> {
+public class BipartiteGraphGenerator<V, E> {
 
     /**
-     * 构建一个完整的二分图
+     * Costruisce un grafo bipartito completo
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Implementation of generating a complete bipartite graph
-        // Assuming resultMap contains two sets of vertices for the bipartite graph
-        // For example, keys "A", "B" for set U and "C", "D" for set V
+        // Assumiamo che il grafo sia bipartito con due partizioni A e B
+        // Creiamo i vertici per le due partizioni
+        V[] partitionA = (V[]) new Object[resultMap.size() / 2];
+        V[] partitionB = (V[]) new Object[resultMap.size() / 2];
 
-        // Example implementation
-        V[] setU = (V[]) new Object[resultMap.size() / 2];
-        V[] setV = (V[]) new Object[resultMap.size() / 2];
-        int indexU = 0, indexV = 0;
+        int indexA = 0;
+        int indexB = 0;
 
+        // Dividiamo i vertici in due partizioni
         for (Map.Entry<String, V> entry : resultMap.entrySet()) {
-            if (indexU < setU.length) {
-                setU[indexU++] = entry.getValue();
+            if (indexA < partitionA.length) {
+                partitionA[indexA++] = entry.getValue();
             } else {
-                setV[indexV++] = entry.getValue();
+                partitionB[indexB++] = entry.getValue();
             }
         }
 
-        // Add edges between every vertex in set U and every vertex in set V
-        for (V u : setU) {
-            for (V v : setV) {
-                // Assuming addEdge is a method in Graph class to add an edge
-                target.addEdge(u, v);
+        // Aggiungiamo tutti i vertici al grafo
+        for (V vertex : partitionA) {
+            target.addVertex(vertex);
+        }
+        for (V vertex : partitionB) {
+            target.addVertex(vertex);
+        }
+
+        // Creiamo un arco tra ogni vertice di A e ogni vertice di B
+        for (V vertexA : partitionA) {
+            for (V vertexB : partitionB) {
+                target.addEdge(vertexA, vertexB);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        Map<String, String> resultMap = Map.of(
+                "v1", "A1",
+                "v2", "A2",
+                "v3", "B1",
+                "v4", "B2"
+        );
+
+        BipartiteGraphGenerator<String, DefaultEdge> generator = new BipartiteGraphGenerator<>();
+        generator.generateGraph(graph, resultMap);
+
+        System.out.println("Grafo bipartito generato:");
+        System.out.println("Vertici: " + graph.vertexSet());
+        System.out.println("Archi: " + graph.edgeSet());
     }
 }

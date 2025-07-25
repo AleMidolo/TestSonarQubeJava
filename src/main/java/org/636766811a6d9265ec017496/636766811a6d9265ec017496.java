@@ -1,29 +1,32 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.IOException;
+import java.util.Iterator;
 
-public class FileIterator {
+public class FileIterator implements Iterator<InputStream> {
     private File[] files;
     private int currentIndex;
 
     public FileIterator(File directory) {
-        if (directory.isDirectory()) {
-            this.files = directory.listFiles();
-        } else {
-            this.files = new File[0];
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("Provided path is not a directory");
         }
+        this.files = directory.listFiles();
         this.currentIndex = 0;
     }
 
-    /**
-     * 返回下一个 {@link java.io.File} 对象，如果没有更多文件可用，则返回 {@code null}。
-     */
+    @Override
+    public boolean hasNext() {
+        return currentIndex < files.length;
+    }
+
+    @Override
     public InputStream next() throws IOException {
-        if (currentIndex < files.length) {
-            File file = files[currentIndex++];
-            return new FileInputStream(file);
+        if (!hasNext()) {
+            return null;
         }
-        return null;
+        File nextFile = files[currentIndex++];
+        return new FileInputStream(nextFile);
     }
 }

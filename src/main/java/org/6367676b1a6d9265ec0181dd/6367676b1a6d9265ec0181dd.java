@@ -1,13 +1,13 @@
-public class SubstringCounter {
+public class StringUtils {
 
     /**
-     * 返回子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
-     * @param str 要搜索的字符串。如果为空，则返回 0。
-     * @param sub 要搜索的子字符串。如果为空，则返回 0。
-     * @return 子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
+     * Restituisce il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
+     * @param str stringa in cui cercare. Restituisce 0 se è null.
+     * @param sub stringa da cercare. Restituisce 0 se è null.
+     * @return il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
      */
     public static int countOccurrencesOf(String str, String sub) {
-        if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
+        if (str == null || sub == null || sub.isEmpty()) {
             return 0;
         }
 
@@ -23,8 +23,8 @@ public class SubstringCounter {
     }
 
     public static void main(String[] args) {
-        String str = "hello world, hello universe";
-        String sub = "hello";
+        String str = "ababababab";
+        String sub = "aba";
         System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

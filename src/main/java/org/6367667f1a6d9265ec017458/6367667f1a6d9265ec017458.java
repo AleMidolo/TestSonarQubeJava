@@ -1,23 +1,28 @@
 import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
-public class AtmosphereManager {
-    private AtmosphereFramework atmosphereFramework;
+public class AtmosphereFramework {
+    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
-    public AtmosphereManager() {
-        atmosphereFramework = new AtmosphereFramework();
+    /**
+     * Rimuove un {@link AtmosphereHandler}.
+     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String, AtmosphereHandler)};
+     * @return true se rimosso
+     */
+    public boolean removeAtmosphereHandler(String mapping) {
+        if (handlers.containsKey(mapping)) {
+            handlers.remove(mapping);
+            return true;
+        }
+        return false;
     }
 
     /**
-     * 移除一个 {@link AtmosphereHandler}。
-     * @param mapping 在调用 {@link #addAtmosphereHandler(String,AtmosphereHandler)} 时使用的映射；
-     * @return 如果成功移除则返回真
+     * Aggiunge un {@link AtmosphereHandler}.
+     * @param mapping il mapping da associare all'handler
+     * @param handler l'handler da aggiungere
      */
-    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (atmosphereFramework.getAtmosphereHandlers().containsKey(mapping)) {
-            atmosphereFramework.removeAtmosphereHandler(mapping);
-            return atmosphereFramework;
-        }
-        return null; // or throw an exception based on your design choice
+    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
+        handlers.put(mapping, handler);
     }
 }

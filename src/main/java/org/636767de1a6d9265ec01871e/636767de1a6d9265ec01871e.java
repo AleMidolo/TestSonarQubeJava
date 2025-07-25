@@ -1,34 +1,35 @@
-public class ModelChecker {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ShardingKeyChecker {
 
     /**
-     * @param modelName 实体的模型名称
-     * @throws IllegalStateException 如果分片键索引不连续
+     * Verifica che gli indici della chiave di sharding siano continui per un dato modello.
+     * 
+     * @param modelName nome del modello dell'entità
+     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
      */
     private void check(String modelName) throws IllegalStateException {
-        // Example logic to check for continuity of shard key indices
-        // This is a placeholder for the actual implementation
-        int[] shardKeyIndices = getShardKeyIndices(modelName);
-        
-        for (int i = 0; i < shardKeyIndices.length - 1; i++) {
-            if (shardKeyIndices[i] + 1 != shardKeyIndices[i + 1]) {
-                throw new IllegalStateException("分片键索引不连续: " + modelName);
+        // Estrai gli indici di sharding dal nome del modello
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(modelName);
+
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group());
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Gli indici della chiave di sharding non sono continui.");
             }
+            previousIndex = currentIndex;
         }
     }
 
-    // Placeholder method to simulate fetching shard key indices
-    private int[] getShardKeyIndices(String modelName) {
-        // This should return the actual shard key indices based on the modelName
-        return new int[]{0, 1, 2}; // Example continuous indices
-    }
-
     public static void main(String[] args) {
-        ModelChecker checker = new ModelChecker();
+        ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("exampleModel");
-            System.out.println("检查通过");
+            checker.check("model_1_2_3"); // Esempio di chiamata
         } catch (IllegalStateException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

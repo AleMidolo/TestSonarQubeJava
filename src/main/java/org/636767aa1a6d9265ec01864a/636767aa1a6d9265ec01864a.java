@@ -1,21 +1,19 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ByteArrayExample {
-    
-    private byte[] data;
+public class ByteArrayCopier {
 
-    public ByteArrayExample(byte[] data) {
-        this.data = data;
-    }
-
-    /** 
-     * 将字节复制到 {@code byte[]} 中。
+    /**
+     * Copia i byte in un {@code byte[]}.
+     *
+     * @return un array di byte contenente una copia dei byte
      */
     public byte[] toByteArray() {
+        // Esempio di implementazione: copia i byte da un ByteArrayOutputStream
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            outputStream.write(data);
+            // Scrivi i byte che vuoi copiare nell'outputStream
+            outputStream.write("Esempio di byte".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,13 +21,8 @@ public class ByteArrayExample {
     }
 
     public static void main(String[] args) {
-        byte[] originalData = {1, 2, 3, 4, 5};
-        ByteArrayExample example = new ByteArrayExample(originalData);
-        byte[] copiedData = example.toByteArray();
-        
-        // Print copied data
-        for (byte b : copiedData) {
-            System.out.print(b + " ");
-        }
+        ByteArrayCopier copier = new ByteArrayCopier();
+        byte[] byteArray = copier.toByteArray();
+        System.out.println(new String(byteArray)); // Stampa i byte come stringa
     }
 }

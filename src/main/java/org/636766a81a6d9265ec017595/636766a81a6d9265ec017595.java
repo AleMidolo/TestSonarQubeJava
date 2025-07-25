@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-class ByteVector {
+public class ByteVector {
     private byte[] data;
     private int size;
 
@@ -17,13 +17,24 @@ class ByteVector {
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
+        if (minCapacity > data.length) {
+            int newCapacity = data.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
             data = Arrays.copyOf(data, newCapacity);
         }
     }
 
-    public byte[] toByteArray() {
+    // For testing purposes
+    public byte[] getData() {
         return Arrays.copyOf(data, size);
+    }
+
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.put11(0x01, 0x02);
+        byte[] result = byteVector.getData();
+        System.out.println(Arrays.toString(result)); // Output: [1, 2]
     }
 }

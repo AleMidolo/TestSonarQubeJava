@@ -1,37 +1,25 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-    private byte[] buffer;
-    private int position;
-
-    public CustomOutputStream(int size) {
-        buffer = new byte[size];
-        position = 0;
-    }
+public class ByteOutputStream extends OutputStream {
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Input byte array is null");
+            throw new NullPointerException("Byte array is null");
         }
         if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException("Invalid offset or length");
         }
-        if (position + len > buffer.length) {
-            throw new IOException("Not enough space in buffer");
+        for (int i = off; i < off + len; i++) {
+            write(b[i]);
         }
-        
-        System.arraycopy(b, off, buffer, position, len);
-        position += len;
     }
 
-    // Additional methods for testing purposes
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getPosition() {
-        return position;
+    @Override
+    public void write(int b) throws IOException {
+        // Implementazione di base per scrivere un singolo byte
+        // Questo metodo deve essere sovrascritto per fornire un comportamento specifico
+        throw new UnsupportedOperationException("Single byte write not supported");
     }
 }

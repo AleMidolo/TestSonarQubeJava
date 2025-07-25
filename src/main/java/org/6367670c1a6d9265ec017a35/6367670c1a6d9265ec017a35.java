@@ -1,32 +1,21 @@
-public class StringUtils {
-
-    /** 
-     * <p>检查一个字符串是否以指定的后缀结尾（可选是否区分大小写）。</p>
-     * @see String#endsWith(String)
-     * @param str  要检查的字符串，可以为空
-     * @param suffix 要查找的后缀，可以为空
-     * @param ignoreCase 指定比较是否应忽略大小写（不区分大小写）。
-     * @return 如果字符串以前缀开头或两个都是 <code>null</code>则返回<code>true</code>
-     */
-    private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
-        if (str == null && suffix == null) {
-            return true;
-        }
-        if (str == null || suffix == null) {
-            return false;
-        }
-        if (ignoreCase) {
-            return str.toLowerCase().endsWith(suffix.toLowerCase());
-        } else {
-            return str.endsWith(suffix);
-        }
+/**
+ * <p>Controlla se una Stringa termina con un suffisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
+ * @see String#endsWith(String)
+ * @param str  la Stringa da controllare, può essere null
+ * @param suffix il suffisso da trovare, può essere null
+ * @param ignoreCase indica se il confronto deve ignorare le maiuscole e minuscole (senza distinzione) o meno.
+ * @return <code>true</code> se la Stringa termina con il suffisso o entrambi sono <code>null</code>
+ */
+private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
+    if (str == null && suffix == null) {
+        return true;
     }
-
-    public static void main(String[] args) {
-        System.out.println(endsWith("HelloWorld", "world", true)); // true
-        System.out.println(endsWith("HelloWorld", "World", false)); // true
-        System.out.println(endsWith("HelloWorld", "Hello", false)); // false
-        System.out.println(endsWith(null, null, true)); // true
-        System.out.println(endsWith(null, "test", true)); // false
+    if (str == null || suffix == null) {
+        return false;
+    }
+    if (ignoreCase) {
+        return str.toLowerCase().endsWith(suffix.toLowerCase());
+    } else {
+        return str.endsWith(suffix);
     }
 }

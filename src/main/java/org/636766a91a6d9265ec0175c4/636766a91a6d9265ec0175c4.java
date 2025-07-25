@@ -22,47 +22,60 @@ public class FrameStack {
             if (endIndex == -1) {
                 throw new IllegalArgumentException("Invalid method descriptor: " + descriptor);
             }
-            String paramsDescriptor = descriptor.substring(1, endIndex);
-            popTypes(paramsDescriptor);
+            String params = descriptor.substring(1, endIndex);
+            int paramCount = countParameters(params);
+            for (int i = 0; i < paramCount; i++) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            }
         } else {
             // 单个类型描述符
-            popType(descriptor);
-        }
-    }
-
-    private void popTypes(String paramsDescriptor) {
-        int index = 0;
-        while (index < paramsDescriptor.length()) {
-            char c = paramsDescriptor.charAt(index);
-            if (c == 'L') {
-                // 对象类型，以 ';' 结尾
-                int endIndex = paramsDescriptor.indexOf(';', index);
-                if (endIndex == -1) {
-                    throw new IllegalArgumentException("Invalid object type descriptor: " + paramsDescriptor);
-                }
+            if (!stack.isEmpty()) {
                 stack.pop();
-                index = endIndex + 1;
-            } else if (c == '[') {
-                // 数组类型
-                stack.pop();
-                index++;
-            } else {
-                // 基本类型
-                stack.pop();
-                index++;
             }
         }
     }
 
-    private void popType(String typeDescriptor) {
-        if (typeDescriptor.startsWith("L") || typeDescriptor.startsWith("[")) {
-            // 对象类型或数组类型
-            stack.pop();
-        } else {
-            // 基本类型
-            stack.pop();
+    private int countParameters(String params) {
+        int count = 0;
+        int index = 0;
+        while (index < params.length()) {
+            char c = params.charAt(index);
+            if (c == 'L') {
+                // 对象类型，跳过直到 ';'
+                int endIndex = params.indexOf(';', index);
+                if (endIndex == -1) {
+                    throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
+                }
+                index = endIndex + 1;
+            } else if (c == '[') {
+                // 数组类型，跳过所有 '['
+                while (index < params.length() && params.charAt(index) == '[') {
+                    index++;
+                }
+                if (index < params.length() && params.charAt(index) == 'L') {
+                    // 对象数组类型，跳过直到 ';'
+                    int endIndex = params.indexOf(';', index);
+                    if (endIndex == -1) {
+                        throw new IllegalArgumentException("Invalid parameter descriptor: " + params);
+                    }
+                    index = endIndex + 1;
+                } else {
+                    // 基本类型数组
+                    index++;
+                }
+            } else {
+                // 基本类型
+                index++;
+            }
+            count++;
         }
+        return count;
     }
 
-    // 其他方法...
+    public static void main(String[] args) {
+        FrameStack frameStack = new FrameStack();
+        frameStack.pop("(Ljava/lang/String;I)V");
+    }
 }

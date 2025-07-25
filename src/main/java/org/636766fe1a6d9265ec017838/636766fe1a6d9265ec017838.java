@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class CharacterArrayConverter {
 
     /**
@@ -14,7 +12,10 @@ public class CharacterArrayConverter {
         }
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            if (array[i] == null) {
+                throw new NullPointerException("Array element at index " + i + " is null.");
+            }
+            result[i] = array[i];
         }
         return result;
     }
@@ -22,8 +23,6 @@ public class CharacterArrayConverter {
     public static void main(String[] args) {
         Character[] testArray = {'a', 'b', 'c'};
         char[] primitiveArray = toPrimitive(testArray);
-        for (char c : primitiveArray) {
-            System.out.println(c);
-        }
+        System.out.println(java.util.Arrays.toString(primitiveArray));
     }
 }

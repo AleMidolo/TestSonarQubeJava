@@ -21,7 +21,7 @@ public class BoxSplitter {
         // 创建第二个矩形框（右半部分）
         Box2D rightBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
 
-        // 返回包含两个矩形框的对
+        // 返回两个矩形框的对
         return new Pair<>(leftBox, rightBox);
     }
 

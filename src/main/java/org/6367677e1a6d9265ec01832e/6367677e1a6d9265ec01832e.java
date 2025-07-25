@@ -1,4 +1,5 @@
 import java.util.logging.Logger;
+import java.util.logging.LogManager;
 
 public class LoggerChecker {
 
@@ -8,11 +9,7 @@ public class LoggerChecker {
      * @return 日志记录器的引用，如果不存在则返回 <code>null</code>。
      */
     public Logger exists(String name) {
-        Logger logger = Logger.getLogger(name);
-        if (logger != null) {
-            return logger;
-        } else {
-            return null;
-        }
+        LogManager logManager = LogManager.getLogManager();
+        return logManager.getLogger(name);
     }
 }

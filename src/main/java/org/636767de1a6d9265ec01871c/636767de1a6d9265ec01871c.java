@@ -17,12 +17,12 @@ public class Accumulator {
         }
     }
 
-    // 可选：提供一个方法来获取当前累加结果
+    // 可选：提供一个方法来获取当前累加的结果
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }
 
-    // 可选：提供一个方法来获取整个累加器状态
+    // 可选：提供一个方法来获取整个累加器的状态
     public Map<String, Long> getMap() {
         return new HashMap<>(map);
     }

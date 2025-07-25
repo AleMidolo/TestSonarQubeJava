@@ -24,9 +24,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testStr = "Hello, World!";
-        System.out.println(sub(testStr, 7, 12)); // 输出 "World"
-        System.out.println(sub(testStr, 20, 25)); // 输出 ""
+        String str = "Hello, World!";
+        System.out.println(sub(str, 7, 12)); // 输出 "World"
+        System.out.println(sub(str, -1, 5)); // 输出 "Hello"
+        System.out.println(sub(str, 7, 20)); // 输出 "World!"
         System.out.println(sub(null, 0, 5)); // 输出 ""
     }
 }

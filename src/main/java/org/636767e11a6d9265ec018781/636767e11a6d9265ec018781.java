@@ -29,14 +29,4 @@ public class MetricsCache {
             return metrics;
         }
     }
-
-    public static void main(String[] args) {
-        MetricsCache cache = new MetricsCache();
-        Map<String, Double> data = new HashMap<>();
-        data.put("metric1", 10.0);
-        data.put("metric2", 20.0);
-        METRICS metrics = new METRICS(data);
-        cache.accept(metrics);
-        System.out.println(cache.cache);
-    }
 }

@@ -15,6 +15,6 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
         }
     }
 
-    // 替换原名称部分为缩写
+    // 替换缓冲区中的名称部分为缩写
     buf.replace(nameStart, buf.length(), abbreviation.toString());
 }

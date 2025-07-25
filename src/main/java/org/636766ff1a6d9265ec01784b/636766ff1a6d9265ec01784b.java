@@ -1,5 +1,4 @@
 public class DigitChecker {
-
     /**
      * <p>检查给定的 <code>String</code> 是否仅包含数字字符。</p> <p><code>Null</code> 和空字符串将返回 <code>false</code>。</p>
      * @param str  要检查的 <code>String</code>

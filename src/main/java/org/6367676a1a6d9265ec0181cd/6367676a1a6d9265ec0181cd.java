@@ -15,7 +15,7 @@ public class StringUtils {
         while ((st < len) && (Character.isWhitespace(str.charAt(st)))) {
             st++;
         }
-        return st > 0 ? str.substring(st) : str;
+        return str.substring(st);
     }
 
     public static void main(String[] args) {

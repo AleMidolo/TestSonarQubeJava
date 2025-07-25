@@ -1,13 +1,14 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UnescapeId {
+public class DotUnescaper {
 
     private static final Map<String, String> ESCAPE_SEQUENCES = new HashMap<>();
 
     static {
         ESCAPE_SEQUENCES.put("\\\"", "\"");
         ESCAPE_SEQUENCES.put("\\n", "\n");
+        ESCAPE_SEQUENCES.put("\\r", "\r");
         ESCAPE_SEQUENCES.put("\\t", "\t");
         ESCAPE_SEQUENCES.put("\\\\", "\\");
     }
@@ -25,24 +26,21 @@ public class UnescapeId {
         StringBuilder result = new StringBuilder();
         int i = 0;
         while (i < input.length()) {
-            if (input.charAt(i) == '\\' && i + 1 < input.length()) {
-                String escapeSequence = input.substring(i, i + 2);
-                if (ESCAPE_SEQUENCES.containsKey(escapeSequence)) {
-                    result.append(ESCAPE_SEQUENCES.get(escapeSequence));
-                    i += 2;
-                    continue;
+            boolean matched = false;
+            for (Map.Entry<String, String> entry : ESCAPE_SEQUENCES.entrySet()) {
+                String escapeSeq = entry.getKey();
+                if (input.startsWith(escapeSeq, i)) {
+                    result.append(entry.getValue());
+                    i += escapeSeq.length();
+                    matched = true;
+                    break;
                 }
             }
-            result.append(input.charAt(i));
-            i++;
+            if (!matched) {
+                result.append(input.charAt(i));
+                i++;
+            }
         }
         return result.toString();
-    }
-
-    public static void main(String[] args) {
-        UnescapeId unescapeId = new UnescapeId();
-        String input = "This is a \\\"test\\\" string with \\n newline and \\t tab.";
-        String output = unescapeId.unescapeId(input);
-        System.out.println(output);
     }
 }

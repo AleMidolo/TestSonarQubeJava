@@ -16,9 +16,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // 测试用例
-        System.out.println(indexOf("Hello World", "World")); // 输出: 6
-        System.out.println(indexOf("Hello World", "Java"));  // 输出: -1
-        System.out.println(indexOf(null, "World"));         // 输出: -1
-        System.out.println(indexOf("Hello World", null));    // 输出: -1
+        System.out.println(indexOf("hello world", "world")); // 输出: 6
+        System.out.println(indexOf("hello world", "earth")); // 输出: -1
+        System.out.println(indexOf(null, "world")); // 输出: -1
+        System.out.println(indexOf("hello world", null)); // 输出: -1
     }
 }

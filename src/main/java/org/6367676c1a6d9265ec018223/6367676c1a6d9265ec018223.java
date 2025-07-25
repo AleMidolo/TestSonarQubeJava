@@ -12,8 +12,8 @@ public class CollectionUtils {
         if (collection == null || element == null) {
             return false;
         }
-        for (Object item : collection) {
-            if (item == element) {
+        for (Object obj : collection) {
+            if (obj == element) {
                 return true;
             }
         }

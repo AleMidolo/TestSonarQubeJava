@@ -1,8 +1,7 @@
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 
-final class ClassFileReader {
+public class ClassFileReader {
     private final ByteBuffer classFileBuffer;
 
     public ClassFileReader(ByteBuffer classFileBuffer) {
@@ -16,22 +15,19 @@ final class ClassFileReader {
      * @return 与指定的 CONSTANT_Utf8 条目对应的字符串。
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry is stored as a length-prefixed UTF-8 string
-        // and the constantPoolEntryIndex is the offset in the buffer.
-        classFileBuffer.position(constantPoolEntryIndex);
+        // 假设常量池条目从索引1开始，并且每个条目占用2个字节
+        int offset = constantPoolEntryIndex * 2;
 
-        // Read the length of the UTF-8 string (assuming it's a 2-byte unsigned integer)
-        int length = classFileBuffer.getShort() & 0xFFFF;
+        // 读取字符串长度
+        int length = classFileBuffer.getShort(offset) & 0xFFFF;
+        offset += 2;
 
-        // Read the UTF-8 bytes into a temporary buffer
-        byte[] utf8Bytes = new byte[length];
-        classFileBuffer.get(utf8Bytes);
+        // 读取字符串内容
+        for (int i = 0; i < length; i++) {
+            charBuffer[i] = (char) (classFileBuffer.get(offset + i) & 0xFF);
+        }
 
-        // Decode the UTF-8 bytes into the provided charBuffer
-        CharBuffer decodedBuffer = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes));
-        decodedBuffer.get(charBuffer, 0, decodedBuffer.length());
-
-        // Return the string representation
-        return new String(charBuffer, 0, decodedBuffer.length());
+        // 将字符数组转换为字符串
+        return new String(charBuffer, 0, length);
     }
 }

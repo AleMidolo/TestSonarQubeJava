@@ -19,7 +19,7 @@ public class BinaryReader {
         if (length < 0) {
             return null;
         }
-        
+
         // Create byte array to hold string data
         byte[] bytes = new byte[length];
         

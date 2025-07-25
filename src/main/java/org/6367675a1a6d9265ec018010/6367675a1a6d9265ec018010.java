@@ -19,8 +19,8 @@ public class Bucket<T> {
         }
         
         // Clear references to help garbage collection
-        this.next = null;
-        this.prev = null;
-        this.items = null;
+        items = null;
+        next = null;
+        prev = null;
     }
 }

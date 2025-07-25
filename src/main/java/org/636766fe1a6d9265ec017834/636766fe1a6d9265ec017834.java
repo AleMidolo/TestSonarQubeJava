@@ -3,7 +3,8 @@ import java.util.UUID;
 public class Session {
     /**
      * Session ID.
-     * @return A randomly generated UUID as a String to serve as a unique session identifier
+     * Generates a unique session identifier using UUID
+     * @return String containing random UUID as session ID
      */
     public static String sessionId() {
         return UUID.randomUUID().toString();

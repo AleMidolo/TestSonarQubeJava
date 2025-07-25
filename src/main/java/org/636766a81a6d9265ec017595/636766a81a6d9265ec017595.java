@@ -15,10 +15,9 @@ public class ByteVector {
      * @return this byte vector.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        int newLength = length + 2;
-        if (newLength > data.length) {
+        if (length + 2 > data.length) {
             // Double array size if more space needed
-            int newCapacity = Math.max(2 * data.length, newLength);
+            int newCapacity = Math.max(2 * data.length, length + 2);
             data = Arrays.copyOf(data, newCapacity);
         }
         data[length++] = (byte) byteValue1;

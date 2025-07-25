@@ -14,12 +14,17 @@ public class TransportInterceptor implements AtmosphereInterceptor {
             case WEBSOCKET:
             case SSE:
             case STREAMING:
+                // These transports require suspension
                 r.suspend();
                 break;
             case LONG_POLLING:
-                r.suspend(r.getAtmosphereConfig().getPropertyValue("polling.timeout", 5000L));
+                // Long polling handled separately
+                if (!r.getRequest().getHeader("Connection", "").equalsIgnoreCase("close")) {
+                    r.suspend();
+                }
                 break;
             default:
+                // Other transports don't require suspension
                 break;
         }
         
@@ -28,7 +33,7 @@ public class TransportInterceptor implements AtmosphereInterceptor {
 
     @Override
     public void postInspect(AtmosphereResource r) {
-        // No post inspection needed
+        // No post-inspection needed
     }
 
     @Override

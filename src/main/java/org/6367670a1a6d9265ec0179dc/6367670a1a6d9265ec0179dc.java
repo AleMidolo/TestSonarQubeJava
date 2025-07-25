@@ -6,7 +6,7 @@ import org.objectweb.asm.Type;
 
 public class StackMapTableWriter {
     private ByteVector stackMapTableEntries;
-    private Frame currentFrame;
+    private Object[] currentFrame;
     private static final int ITEM_TOP = 0;
     private static final int ITEM_INTEGER = 1;
     private static final int ITEM_FLOAT = 2;
@@ -19,38 +19,33 @@ public class StackMapTableWriter {
 
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
-            Object type = currentFrame.getStack(i);
+            Object type = currentFrame[i];
             if (type instanceof Integer) {
-                int t = ((Integer) type).intValue();
-                switch (t) {
-                    case Frame.ITEM_TOP:
-                        stackMapTableEntries.putByte(ITEM_TOP);
-                        break;
-                    case Frame.ITEM_INTEGER:
-                        stackMapTableEntries.putByte(ITEM_INTEGER);
-                        break;
-                    case Frame.ITEM_FLOAT:
-                        stackMapTableEntries.putByte(ITEM_FLOAT);
-                        break;
-                    case Frame.ITEM_DOUBLE:
-                        stackMapTableEntries.putByte(ITEM_DOUBLE);
-                        break;
-                    case Frame.ITEM_LONG:
-                        stackMapTableEntries.putByte(ITEM_LONG);
-                        break;
-                    case Frame.ITEM_NULL:
-                        stackMapTableEntries.putByte(ITEM_NULL);
-                        break;
-                    case Frame.ITEM_UNINITIALIZED_THIS:
-                        stackMapTableEntries.putByte(ITEM_UNINITIALIZED_THIS);
-                        break;
-                }
+                int itemType = ((Integer) type).intValue();
+                stackMapTableEntries.putByte(itemType);
             } else if (type instanceof String) {
                 stackMapTableEntries.putByte(ITEM_OBJECT)
-                    .putShort(currentFrame.getTypeIndex((String) type));
+                    .putShort(((String) type).hashCode());
             } else if (type instanceof Label) {
                 stackMapTableEntries.putByte(ITEM_UNINITIALIZED)
-                    .putShort(((Label) type).position);
+                    .putShort(((Label) type).getOffset());
+            } else {
+                // Handle other types like Long, Double, Float etc
+                if (type == Opcodes.LONG) {
+                    stackMapTableEntries.putByte(ITEM_LONG);
+                } else if (type == Opcodes.DOUBLE) {
+                    stackMapTableEntries.putByte(ITEM_DOUBLE);
+                } else if (type == Opcodes.FLOAT) {
+                    stackMapTableEntries.putByte(ITEM_FLOAT);
+                } else if (type == Opcodes.INTEGER) {
+                    stackMapTableEntries.putByte(ITEM_INTEGER);
+                } else if (type == Opcodes.NULL) {
+                    stackMapTableEntries.putByte(ITEM_NULL);
+                } else if (type == Opcodes.UNINITIALIZED_THIS) {
+                    stackMapTableEntries.putByte(ITEM_UNINITIALIZED_THIS);
+                } else {
+                    stackMapTableEntries.putByte(ITEM_TOP);
+                }
             }
         }
     }

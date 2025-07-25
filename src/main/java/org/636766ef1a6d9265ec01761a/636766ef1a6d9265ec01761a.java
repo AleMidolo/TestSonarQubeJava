@@ -5,11 +5,11 @@ public class SymbolTable {
     private List<Symbol> typeTable;
     
     public SymbolTable() {
-        this.typeTable = new ArrayList<>();
+        typeTable = new ArrayList<>();
     }
     
     private static class Symbol {
-        final String value;
+        String value;
         
         Symbol(String value) {
             this.value = value;
@@ -18,7 +18,7 @@ public class SymbolTable {
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof Symbol) {
-                return ((Symbol) obj).value.equals(this.value);
+                return value.equals(((Symbol)obj).value);
             }
             return false;
         }

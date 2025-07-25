@@ -4,7 +4,7 @@ public class StringQuoter {
      * @param obj the input Object (e.g. "myString") 
      * @return the quoted String (e.g. "'myString'"),or the input object as-is if not a String
      */
-    public Object addQuotes(Object obj) {
+    public static Object addQuotes(Object obj) {
         if (obj instanceof String) {
             return "'" + obj + "'";
         }

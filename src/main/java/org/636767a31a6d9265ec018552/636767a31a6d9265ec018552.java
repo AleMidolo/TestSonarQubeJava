@@ -9,7 +9,7 @@ public class StringReader {
      * @throws IOException If an I/O error occurs
      */
     public String readString(DataInputStream in) throws IOException {
-        // Read string length
+        // Read string length first
         int length = in.readInt();
         
         if (length < 0) {

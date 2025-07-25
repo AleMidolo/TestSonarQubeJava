@@ -5,6 +5,11 @@ import org.atmosphere.cpr.AtmosphereHandler;
 
 public class RequestWrapper {
 
+    /**
+     * Wrap an {@link HttpServletRequest}.
+     * @param request {@link HttpServletRequest}
+     * @return an {@link AtmosphereRequest}
+     */
     public AtmosphereRequest wrapRequest(HttpServletRequest request) {
         return AtmosphereRequest.wrap(request);
     }

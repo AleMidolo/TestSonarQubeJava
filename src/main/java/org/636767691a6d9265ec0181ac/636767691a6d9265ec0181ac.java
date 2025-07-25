@@ -40,12 +40,12 @@ public class PathUtils {
         // Build new path
         StringBuilder result = new StringBuilder();
 
-        // Add path components minus the number of "../"
+        // Add remaining parts from original path
         for (int i = 0; i < pathParts.length - backCount; i++) {
             result.append(pathParts[i]).append("/");
         }
 
-        // Add remaining relative path components
+        // Add parts from relative path (skipping the "../" parts)
         for (int i = backCount; i < relativeParts.length; i++) {
             if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
                 result.append(relativeParts[i]);

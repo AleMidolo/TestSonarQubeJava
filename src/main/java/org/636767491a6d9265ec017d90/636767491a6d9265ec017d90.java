@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class ArrayReverser {
     
     public static <V> void reverseRange(V[] arr, int from, int to) {
-        if (arr == null || from >= to || from < 0 || to >= arr.length) {
-            return;
+        if (arr == null || from < 0 || to >= arr.length || from > to) {
+            throw new IllegalArgumentException("Invalid input parameters");
         }
         
         while (from < to) {

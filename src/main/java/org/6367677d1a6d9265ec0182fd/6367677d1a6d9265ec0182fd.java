@@ -5,7 +5,7 @@ public class BooleanParser {
      * Otherwise, <code>default</code> is returned.
      * Case of value is unimportant.
      * @param value The string to parse
-     * @param defaultValue The default value to return if not "true" or "false"
+     * @param defaultValue The default value to return if not true/false
      * @return boolean result of parsing
      */
     public static boolean parseBoolean(String value, boolean defaultValue) {

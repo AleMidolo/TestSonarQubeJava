@@ -13,9 +13,10 @@ public class StackMapFrameVisitor {
         
         // Initialize the current frame with the given parameters
         currentFrame = new Frame(offset);
-        currentFrame.initInputFrame(locals, stack);
+        currentFrame.setLocal(numLocal, locals);
+        currentFrame.setStack(numStack, stack);
         
-        // The next element to be written will be the first local variable
+        // Return index for next element (start at 0)
         return 0;
     }
 }

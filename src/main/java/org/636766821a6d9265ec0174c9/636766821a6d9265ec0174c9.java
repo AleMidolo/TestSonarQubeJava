@@ -1,6 +1,7 @@
 import java.io.File;
 
 public class ClassPathUtils {
+
     /**
      * Returns the class path of the current JVM instance as an array of {@link File} objects.
      * @return Array of File objects representing the classpath entries

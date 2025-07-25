@@ -10,16 +10,13 @@ public class ProfileSegmentSearchRanges {
     public List<SearchRange> buildProfileSegmentSearchRanges() {
         List<SearchRange> ranges = new ArrayList<>();
         
-        // Add search ranges in sequence
-        ranges.add(new SearchRange(0, 100));    // First 100 segments
-        ranges.add(new SearchRange(100, 500));  // Next 400 segments
-        ranges.add(new SearchRange(500, 1000)); // Next 500 segments
-        ranges.add(new SearchRange(1000, -1));  // Remaining segments
+        // Add default search range
+        ranges.add(new SearchRange(0, Integer.MAX_VALUE));
         
         return ranges;
     }
     
-    // Inner class to represent a search range
+    // Helper class to define a search range
     public static class SearchRange {
         private int start;
         private int end;

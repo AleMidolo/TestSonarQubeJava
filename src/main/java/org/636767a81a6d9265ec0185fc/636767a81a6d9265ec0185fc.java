@@ -31,8 +31,8 @@ public class ProtocolParser {
             return firstByte;
         }
         
-        // For tags that use multiple bytes (varint encoding)
-        int result = firstByte & 0x7F;
+        // For multi-byte tags
+        int result = firstByte & 0x7f;
         int shift = 7;
         
         while (true) {
@@ -42,10 +42,10 @@ public class ProtocolParser {
             }
             
             position++;
-            result |= (nextByte & 0x7F) << shift;
+            result |= (nextByte & 0x7f) << shift;
             
             if ((nextByte & 0x80) == 0) {
-                break;
+                return result;
             }
             
             shift += 7;
@@ -53,11 +53,5 @@ public class ProtocolParser {
                 throw new IOException("Tag is too large");
             }
         }
-        
-        return result;
-    }
-    
-    public int getPosition() {
-        return position;
     }
 }

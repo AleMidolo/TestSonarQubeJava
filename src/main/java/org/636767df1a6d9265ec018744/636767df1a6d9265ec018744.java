@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeRangeSplitter {
-    
     // Maximum duration between start and end time
     private static final Duration FETCH_DATA_DURATION = Duration.ofHours(24);
 
     /**
-     * Split time ranges to insure the start time and end time is smaller than FETCH_DATA_DURATION
+     * Split time ranges to ensure the start time and end time is smaller than FETCH_DATA_DURATION
      * @param startTime Start time as Instant
      * @param endTime End time as Instant
      * @return List of TimeRange objects containing split time ranges

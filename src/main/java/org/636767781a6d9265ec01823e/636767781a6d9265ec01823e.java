@@ -3,32 +3,28 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class SocketAppender extends AbstractAppender {
+public class SocketAppender {
     private List<Socket> clients = new CopyOnWriteArrayList<>();
     
-    public void append(LogEvent event) {
-        String message = event.getMessage().getFormattedMessage();
+    public void handleLogEvent(LoggingEvent event) {
+        String message = event.getRenderedMessage();
         
-        // Write message to each connected client
+        // Iterate through connected clients and write message
         for (Socket client : clients) {
             try {
-                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                out.println(message);
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                writer.println(message);
             } catch (IOException e) {
-                // Remove client if we can't write to it
+                // Remove failed client
                 clients.remove(client);
             }
         }
     }
     
+    // Helper method to add new client connections
     public void addClient(Socket client) {
         clients.add(client);
-    }
-    
-    public void removeClient(Socket client) {
-        clients.remove(client);
     }
 }

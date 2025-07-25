@@ -15,17 +15,11 @@ public class ByteVector {
             return;
         }
         
-        int newCapacity = buffer.length;
-        int minCapacity = size + this.size;
-
-        // If current capacity is not enough
-        if (minCapacity > newCapacity) {
-            // Double the capacity until it's large enough
-            while (newCapacity < minCapacity) {
-                newCapacity = newCapacity * 2;
-            }
-            
-            // Create new array and copy contents
+        int currentCapacity = buffer.length;
+        int requiredCapacity = this.size + size;
+        
+        if (requiredCapacity > currentCapacity) {
+            int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

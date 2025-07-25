@@ -13,6 +13,7 @@ public class TemplateEncoder {
         }
         
         // Replace { with %7B and } with %7D
-        return s.replace("{", "%7B").replace("}", "%7D");
+        return s.replace("{", "%7B")
+                .replace("}", "%7D");
     }
 }

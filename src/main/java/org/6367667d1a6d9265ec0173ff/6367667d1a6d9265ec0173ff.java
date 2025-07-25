@@ -22,7 +22,7 @@ public class MeteorLookup {
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
             // Here you would typically look up the Meteor instance from a database or a cache
-            // For demonstration, we return a new instance
+            // For demonstration, we will return a new instance
             return new Meteor(); // Replace with actual lookup logic
         }
         

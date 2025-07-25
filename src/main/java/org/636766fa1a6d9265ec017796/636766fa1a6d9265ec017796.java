@@ -9,9 +9,10 @@ public class BooleanArrayConverter {
         if (array == null) {
             return null;
         }
+        
         Boolean[] objectArray = new Boolean[array.length];
         for (int i = 0; i < array.length; i++) {
-            objectArray[i] = array[i]; // Autoboxing from boolean to Boolean
+            objectArray[i] = Boolean.valueOf(array[i]);
         }
         return objectArray;
     }
@@ -19,6 +20,7 @@ public class BooleanArrayConverter {
     public static void main(String[] args) {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
+        
         for (Boolean b : objectArray) {
             System.out.println(b);
         }

@@ -15,10 +15,9 @@ public class CharsetConverter {
         
         // Convert MIME charset to Java charset
         try {
-            Charset javaCharset = Charset.forName(charset);
-            return javaCharset.name();
+            return Charset.forName(charset).name();
         } catch (IllegalArgumentException e) {
-            // If the charset is not recognized, return null or handle accordingly
+            // If the charset is not valid, return null or handle accordingly
             return null;
         }
     }
@@ -26,7 +25,7 @@ public class CharsetConverter {
     public static void main(String[] args) {
         // Example usage
         String mimeCharset = "UTF-8";
-        String javaEquivalent = javaCharset(mimeCharset);
-        System.out.println("Java equivalent of " + mimeCharset + " is: " + javaEquivalent);
+        String javaCharsetName = javaCharset(mimeCharset);
+        System.out.println("Java equivalent of " + mimeCharset + " is: " + javaCharsetName);
     }
 }

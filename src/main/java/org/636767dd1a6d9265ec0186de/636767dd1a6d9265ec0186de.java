@@ -12,8 +12,8 @@ public class CacheExpiration {
 
     public static void main(String[] args) {
         CacheExpiration cacheExpiration = new CacheExpiration();
-        long timestamp = System.currentTimeMillis() - 10000; // 10 seconds ago
-        long expiredThreshold = 5000; // 5 seconds
+        long timestamp = System.currentTimeMillis() - 5000; // 5 seconds ago
+        long expiredThreshold = 3000; // 3 seconds
 
         boolean result = cacheExpiration.isExpired(timestamp, expiredThreshold);
         System.out.println("Is expired: " + result); // Should print true

@@ -15,14 +15,14 @@ public class GraphUtils {
             return true; // A single vertex or empty set is trivially a clique
         }
 
-        // Check if every pair of vertices in the set is connected
+        // Check all pairs of vertices in the set
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // Found a pair that is not connected
+                    return false; // If any pair is not connected, it's not a clique
                 }
             }
         }
-        return true; // All pairs are connected
+        return true; // All pairs are connected, it's a clique
     }
 }

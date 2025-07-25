@@ -18,18 +18,22 @@ public class ConstantPool {
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!constantPool.containsKey(key)) {
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
+        } else {
             constantPool.put(key, nextIndex);
-            nextIndex++;
+            return nextIndex++;
         }
-        return constantPool.get(key);
     }
 
     public static void main(String[] args) {
         ConstantPool pool = new ConstantPool();
         int index1 = pool.addConstantNameAndType("myField", "I");
         int index2 = pool.addConstantNameAndType("myField", "I");
-        System.out.println("Index of first addition: " + index1);
-        System.out.println("Index of second addition (should be the same): " + index2);
+        int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
+
+        System.out.println("Index of myField: " + index1); // Should print 0
+        System.out.println("Index of myField (duplicate): " + index2); // Should print 0
+        System.out.println("Index of myMethod: " + index3); // Should print 1
     }
 }

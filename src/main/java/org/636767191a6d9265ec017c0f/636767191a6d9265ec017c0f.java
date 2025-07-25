@@ -12,10 +12,10 @@ public class ByteVector {
      * @param size 此字节向量应该能够接收的额外字节数。
      */
     private void enlarge(final int size) {
-        int newSize = currentSize + size;
-        if (newSize > data.length) {
-            int newCapacity = Math.max(data.length * 2, newSize);
-            byte[] newData = new byte[newCapacity];
+        int requiredSize = currentSize + size;
+        if (requiredSize > data.length) {
+            int newSize = Math.max(data.length * 2, requiredSize);
+            byte[] newData = new byte[newSize];
             System.arraycopy(data, 0, newData, 0, currentSize);
             data = newData;
         }

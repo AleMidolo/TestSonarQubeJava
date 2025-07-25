@@ -3,7 +3,7 @@ public class Bucket {
 
     // Constructor
     public Bucket() {
-        // Initialize properties if needed
+        // Initialization code
     }
 
     /**

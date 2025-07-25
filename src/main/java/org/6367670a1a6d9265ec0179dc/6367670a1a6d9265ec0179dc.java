@@ -3,8 +3,8 @@ import java.util.List;
 
 public class StackMapTable {
 
-    private List<Object> currentFrame; // Assuming currentFrame holds some abstract types
-    private List<Object> stackMapTableEntries;
+    private List<VerificationTypeInfo> currentFrame;
+    private List<VerificationTypeInfo> stackMapTableEntries;
 
     public StackMapTable() {
         this.currentFrame = new ArrayList<>();
@@ -17,19 +17,25 @@ public class StackMapTable {
      * @param end 要写入的 {@link #currentFrame} 中最后一个类型的索引（不包括该索引）。
      */
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
-            throw new IllegalArgumentException("Invalid start or end index");
-        }
-        
         for (int i = start; i < end; i++) {
-            Object type = currentFrame.get(i);
-            // Assuming some transformation or processing is needed for the abstract types
-            stackMapTableEntries.add(transformType(type));
+            VerificationTypeInfo typeInfo = currentFrame.get(i);
+            if (typeInfo.isAbstractType()) {
+                stackMapTableEntries.add(typeInfo);
+            }
         }
     }
 
-    private Object transformType(Object type) {
-        // Placeholder for type transformation logic
-        return type; // In a real implementation, this would convert the type to the desired format
+    // Assuming VerificationTypeInfo is a class that has a method isAbstractType()
+    private static class VerificationTypeInfo {
+        // Example fields and methods
+        private boolean isAbstract;
+
+        public VerificationTypeInfo(boolean isAbstract) {
+            this.isAbstract = isAbstract;
+        }
+
+        public boolean isAbstractType() {
+            return isAbstract;
+        }
     }
 }

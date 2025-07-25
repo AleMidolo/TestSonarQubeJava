@@ -5,7 +5,7 @@ public class ContentRangeBuilder {
      * @return 'Content-Range' 值
      */
     private String buildContentRange() {
-        // 示例值，实际值应根据具体情况生成
+        // 示例值，实际值应根据具体情况计算
         long start = 0;
         long end = 499;
         long total = 1234;

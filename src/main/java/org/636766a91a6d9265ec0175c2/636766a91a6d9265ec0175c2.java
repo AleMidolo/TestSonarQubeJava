@@ -1,10 +1,8 @@
 public class StackExample {
-    private int[] stack;
-    private int top;
+    private java.util.Stack<Integer> outputFrameStack;
 
-    public StackExample(int size) {
-        stack = new int[size];
-        top = -1;
+    public StackExample() {
+        outputFrameStack = new java.util.Stack<>();
     }
 
     /** 
@@ -12,21 +10,18 @@ public class StackExample {
      * @return 从输出帧栈中弹出的抽象类型。
      */
     private int pop() {
-        if (top == -1) {
-            throw new IllegalStateException("Stack is empty");
+        if (outputFrameStack.isEmpty()) {
+            throw new java.util.EmptyStackException();
         }
-        return stack[top--];
+        return outputFrameStack.pop();
     }
 
     public void push(int value) {
-        if (top == stack.length - 1) {
-            throw new IllegalStateException("Stack is full");
-        }
-        stack[++top] = value;
+        outputFrameStack.push(value);
     }
 
     public static void main(String[] args) {
-        StackExample stackExample = new StackExample(5);
+        StackExample stackExample = new StackExample();
         stackExample.push(10);
         stackExample.push(20);
         System.out.println(stackExample.pop()); // Outputs: 20

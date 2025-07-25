@@ -6,7 +6,7 @@ public class ExceptionChecker {
         this.thrown = thrown;
     }
 
-    /** 
+    /**
      * @return 如果 getThrown().toString() 是一个非空字符串，则返回真。
      */
     public boolean hasThrown() {

@@ -25,11 +25,21 @@ public class GraphGenerator<V, E> {
             }
         }
 
-        // Add edges between every vertex in setA and every vertex in setB
+        // Add vertices to the target graph
+        for (V vertex : setA) {
+            // Add vertex to target graph
+            // target.addVertex(vertex);
+        }
+        for (V vertex : setB) {
+            // Add vertex to target graph
+            // target.addVertex(vertex);
+        }
+
+        // Connect every vertex in setA to every vertex in setB
         for (V vertexA : setA) {
             for (V vertexB : setB) {
-                // Assuming a method addEdge exists in Graph class
-                target.addEdge(vertexA, vertexB);
+                // Add edge between vertexA and vertexB
+                // target.addEdge(vertexA, vertexB);
             }
         }
     }

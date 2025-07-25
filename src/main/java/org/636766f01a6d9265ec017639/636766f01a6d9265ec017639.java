@@ -8,7 +8,7 @@ public class ArrayToList {
     /**
      * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
      * @param a l'array da convertire in lista
-     * @return una lista supportata dall'array.
+     * @return una lista supportata dall'array. Se l'array è null, restituisce una lista vuota.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {
@@ -18,12 +18,11 @@ public class ArrayToList {
     }
 
     public static void main(String[] args) {
-        // Test case
-        String[] array = {"one", "two", "three"};
-        List<String> list = asList(array);
-        System.out.println(list); // Output: [one, two, three]
+        // Esempio di utilizzo
+        String[] array = {"uno", "due", "tre"};
+        List<String> lista = asList(array);
+        System.out.println(lista); // Output: [uno, due, tre]
 
-        // Test case with null array
         String[] nullArray = null;
         List<String> nullList = asList(nullArray);
         System.out.println(nullList); // Output: []

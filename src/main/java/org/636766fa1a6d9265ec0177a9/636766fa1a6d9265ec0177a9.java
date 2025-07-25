@@ -21,13 +21,4 @@ public class TypeInitializer {
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
     }
-
-    public static void main(String[] args) {
-        TypeInitializer initializer = new TypeInitializer();
-        initializer.addInitializedType(1);
-        initializer.addInitializedType(2);
-        initializer.addInitializedType(1); // Duplicate, should not be added
-
-        System.out.println(initializer.getInitializedTypes()); // Output: [1, 2]
-    }
 }

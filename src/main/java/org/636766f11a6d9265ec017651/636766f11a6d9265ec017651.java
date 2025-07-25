@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class DefensiveProgramming {
 
     // Array vuoto pubblico e statico per ottimizzazione della memoria
@@ -18,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
+    // Esempio di utilizzo
     public static void main(String[] args) {
-        // Test del metodo
-        Character[] nullArray = null;
-        Character[] emptyArray = new Character[0];
-        Character[] nonEmptyArray = {'a', 'b', 'c'};
+        Character[] array1 = null;
+        Character[] array2 = new Character[0];
+        Character[] array3 = new Character[]{'a', 'b', 'c'};
 
-        System.out.println(nullToEmpty(nullArray) == EMPTY_CHARACTER_ARRAY); // true
-        System.out.println(nullToEmpty(emptyArray) == EMPTY_CHARACTER_ARRAY); // true
-        System.out.println(nullToEmpty(nonEmptyArray) == nonEmptyArray); // true
+        System.out.println(Objects.toString(nullToEmpty(array1))); // []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // [a, b, c]
     }
 }

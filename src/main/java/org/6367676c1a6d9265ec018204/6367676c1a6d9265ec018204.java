@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
+public class StringArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
@@ -11,14 +11,14 @@ public class ArrayConcatenator {
         List<String> result = new ArrayList<>();
 
         if (array1 != null) {
-            for (String element : array1) {
-                result.add(element);
+            for (String s : array1) {
+                result.add(s);
             }
         }
 
         if (array2 != null) {
-            for (String element : array2) {
-                result.add(element);
+            for (String s : array2) {
+                result.add(s);
             }
         }
 
@@ -26,12 +26,12 @@ public class ArrayConcatenator {
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"c", "d", "e"};
-
+        String[] array1 = {"Hello", "World"};
+        String[] array2 = {"Java", "Code"};
         String[] result = concatenateStringArrays(array1, array2);
-        for (String element : result) {
-            System.out.print(element + " ");
+
+        for (String s : result) {
+            System.out.println(s);
         }
     }
 }

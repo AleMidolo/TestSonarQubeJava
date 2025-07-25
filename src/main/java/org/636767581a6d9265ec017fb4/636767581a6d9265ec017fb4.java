@@ -32,7 +32,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
     private int findUpperBound(List<K> keys, K key) {
         int low = 0;
         int high = keys.size() - 1;
-        int result = -1;
+        int result = keys.size();
 
         while (low <= high) {
             int mid = low + (high - low) / 2;
@@ -44,6 +44,13 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             }
         }
 
-        return result == -1 ? keys.size() : result;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        UpperBoundCalculator<Integer> calculator = new UpperBoundCalculator<>();
+        List<Integer> keys = List.of(1, 3, 5, 7, 9);
+        List<Integer> upperBounds = calculator.computeUpperBounds(keys);
+        System.out.println(upperBounds); // Output: [1, 2, 3, 4, 5]
     }
 }

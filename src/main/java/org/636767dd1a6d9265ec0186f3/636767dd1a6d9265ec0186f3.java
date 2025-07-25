@@ -14,15 +14,17 @@ public class ColumnName {
             throw new IllegalArgumentException("I nomi non possono essere nulli.");
         }
         if (columnNames.containsKey(oldName)) {
-            String existingNewName = columnNames.get(oldName);
-            columnNames.remove(oldName);
-            columnNames.put(newName, existingNewName);
-        } else {
             columnNames.put(oldName, newName);
+        } else {
+            throw new IllegalArgumentException("Il nome da sostituire non esiste.");
         }
     }
 
-    public String getNewName(String oldName) {
-        return columnNames.getOrDefault(oldName, oldName);
+    public String getColumnName(String key) {
+        return columnNames.getOrDefault(key, key);
+    }
+
+    public void addColumnName(String key, String value) {
+        columnNames.put(key, value);
     }
 }

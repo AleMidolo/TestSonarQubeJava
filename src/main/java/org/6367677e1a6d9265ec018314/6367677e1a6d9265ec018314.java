@@ -1,24 +1,24 @@
 import java.util.*;
 
 class CategoryTree {
-    private static class Node {
-        int id;
-        boolean active;
-        List<Node> children;
+    private Node root;
 
-        Node(int id, boolean active) {
-            this.id = id;
-            this.active = active;
+    private class Node {
+        String name;
+        List<Node> children;
+        boolean active;
+
+        Node(String name) {
+            this.name = name;
             this.children = new ArrayList<>();
+            this.active = true;
         }
     }
 
-    private Node root;
-
-    public CategoryTree(Node root) {
-        this.root = root;
-    }
-
+    /**
+     * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
+     * @return il numero di nodi rimossi.
+     */
     protected int removeUnusedNodes() {
         if (root == null) {
             return 0;
@@ -27,36 +27,24 @@ class CategoryTree {
     }
 
     private int removeUnusedNodesHelper(Node node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int removedCount = 0;
+        int count = 0;
         Iterator<Node> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             Node child = iterator.next();
             if (!child.active) {
                 iterator.remove();
-                removedCount++;
+                count++;
             } else {
-                removedCount += removeUnusedNodesHelper(child);
+                count += removeUnusedNodesHelper(child);
             }
         }
-
-        return removedCount;
+        return count;
     }
 
+    // Example usage
     public static void main(String[] args) {
-        Node root = new Node(1, true);
-        Node child1 = new Node(2, false);
-        Node child2 = new Node(3, true);
-        Node child3 = new Node(4, false);
-        root.children.add(child1);
-        root.children.add(child2);
-        child2.children.add(child3);
-
-        CategoryTree tree = new CategoryTree(root);
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+        CategoryTree tree = new CategoryTree();
+        // Populate the tree with nodes and set some as inactive
+        // tree.removeUnusedNodes();
     }
 }

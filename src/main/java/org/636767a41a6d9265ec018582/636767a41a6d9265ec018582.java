@@ -13,28 +13,23 @@ public class MessageSerializer {
      * @return la dimensione del messaggio
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create a MessagePacker with the provided buffer
-        MessagePacker packer = MessagePack.newDefaultPacker(buffer);
+        try (MessagePacker packer = MessagePack.newDefaultPacker(buffer)) {
+            // Serialize the message using the provided schema
+            schema.write(packer, message);
 
-        // Serialize the message using the provided schema
-        schema.write(packer, message);
+            // Get the serialized message as a byte array
+            byte[] serializedMessage = packer.toByteArray();
 
-        // Flush the packer to ensure all data is written to the buffer
-        packer.flush();
+            // Write the length of the message as a varint
+            MessageBufferPacker lengthPacker = MessagePack.newDefaultBufferPacker();
+            lengthPacker.packInt(serializedMessage.length);
 
-        // Get the size of the serialized message
-        int messageSize = packer.getTotalWrittenBytes();
+            // Write the length and the serialized message to the output stream
+            out.write(lengthPacker.toByteArray());
+            out.write(serializedMessage);
 
-        // Write the size of the message as a prefix to the output stream
-        MessageBufferPacker sizePacker = MessagePack.newDefaultBufferPacker();
-        sizePacker.packInt(messageSize);
-        sizePacker.flush();
-        out.write(sizePacker.toByteArray());
-
-        // Write the serialized message to the output stream
-        out.write(buffer.toByteArray());
-
-        // Return the total size of the message (including the size prefix)
-        return messageSize + sizePacker.getTotalWrittenBytes();
+            // Return the total size of the message (length + serialized message)
+            return lengthPacker.toByteArray().length + serializedMessage.length;
+        }
     }
 }

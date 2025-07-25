@@ -1,4 +1,4 @@
-public class StringQuoter {
+public class StringUtils {
 
     /**
      * Trasforma l'oggetto fornito in una Stringa con virgolette singole se è una Stringa; altrimenti, mantiene l'oggetto così com'è.

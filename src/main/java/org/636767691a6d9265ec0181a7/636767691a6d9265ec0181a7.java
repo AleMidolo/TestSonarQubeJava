@@ -23,6 +23,6 @@ public class StringUtils {
         String testString = "###HelloWorld";
         char leadingChar = '#';
         String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result);  // Output: HelloWorld
+        System.out.println(result);  // Output: "HelloWorld"
     }
 }

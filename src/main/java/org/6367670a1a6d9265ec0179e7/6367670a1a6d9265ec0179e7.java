@@ -1,9 +1,13 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConverterRegistry {
+public class ConverterLookup {
 
-    private final Map<Class<?>, Converter> registry = new HashMap<>();
+    private final Map<Class<?>, Converter> converterMap;
+
+    public ConverterLookup() {
+        this.converterMap = new HashMap<>();
+    }
 
     /**
      * Cerca e restituisce qualsiasi {@link Converter} registrato per la classe di destinazione specificata; se non esiste un Converter registrato, restituisce <code>null</code>.
@@ -11,20 +15,19 @@ public class ConverterRegistry {
      * @return Il {@link Converter} registrato o <code>null</code> se non trovato
      */
     public Converter lookup(final Class<?> clazz) {
-        return registry.get(clazz);
+        return converterMap.get(clazz);
     }
 
     /**
-     * Registra un {@link Converter} per una specifica classe.
+     * Registra un Converter per una specifica classe.
      * @param clazz La classe per cui registrare il Converter
      * @param converter Il Converter da registrare
      */
-    public void register(final Class<?> clazz, final Converter converter) {
-        registry.put(clazz, converter);
+    public void registerConverter(final Class<?> clazz, final Converter converter) {
+        converterMap.put(clazz, converter);
     }
 
-    // Example Converter interface
     public interface Converter {
-        Object convert(Object input);
+        // Metodi del Converter
     }
 }

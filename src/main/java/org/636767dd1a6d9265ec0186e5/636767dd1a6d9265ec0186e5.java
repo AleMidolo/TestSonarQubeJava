@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.ArrayList;
 
 public class Channels {
     private List<IConsumer> consumers;
@@ -9,7 +8,7 @@ public class Channels {
     }
 
     public void addConsumer(IConsumer consumer) {
-        this.consumers.add(consumer);
+        consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {

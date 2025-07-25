@@ -11,8 +11,10 @@ public class Bucket {
      */
     void removeSelf() {
         // Logic to remove this bucket from its parent structure
-        // This is a placeholder as the actual removal logic depends on the parent structure
-        // For example, if this bucket is part of a list of buckets in a parent class:
-        // parent.remove(this);
+        // This is a placeholder as the actual implementation depends on the context
+        // For example, if this bucket is part of a larger collection, we would need a reference to that collection
+        // Here we will just clear the data for demonstration purposes
+        data.clear();
+        System.out.println("Bucket removed and data cleared.");
     }
 }

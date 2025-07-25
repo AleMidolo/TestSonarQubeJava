@@ -2,7 +2,7 @@ public class FieldChecker {
 
     private Fields storedFields;
 
-    /** 
+    /**
      * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
@@ -12,14 +12,14 @@ public class FieldChecker {
         
         // Assuming Fields has a method to get all field names
         for (String fieldName : fields.getFieldNames()) {
-            if (!storedFields.contains(fieldName)) {
+            if (!storedFields.containsField(fieldName)) {
                 return false;
             }
         }
         return true;
     }
 
-    // Assuming a Fields class exists with necessary methods
+    // Assuming a Fields class exists with the necessary methods
     public static class Fields {
         private Set<String> fieldNames;
 
@@ -31,7 +31,7 @@ public class FieldChecker {
             return fieldNames;
         }
 
-        public boolean contains(String fieldName) {
+        public boolean containsField(String fieldName) {
             return fieldNames.contains(fieldName);
         }
     }

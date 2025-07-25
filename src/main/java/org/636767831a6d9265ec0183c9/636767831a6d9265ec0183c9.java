@@ -22,14 +22,4 @@ public class DiagnosticContext {
     public static String pop() {
         return contextStack.isEmpty() ? "" : contextStack.pop();
     }
-
-    public static void main(String[] args) {
-        push("Contexto 1");
-        push("Contexto 2");
-        System.out.println(peek()); // Debería imprimir "Contexto 2"
-        pop();
-        System.out.println(peek()); // Debería imprimir "Contexto 1"
-        pop();
-        System.out.println(peek()); // Debería imprimir ""
-    }
 }

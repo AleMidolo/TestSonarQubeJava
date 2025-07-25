@@ -22,7 +22,7 @@ public class Graph<V, E> {
         
         adjacencyList.get(sourceVertex).add(e);
         // If you want to maintain a directed graph, do not add the edge to targetVertex
-        // If you want an undirected graph, you can also add the edge in the reverse direction
+        // If you want to maintain an undirected graph, you can add the edge to targetVertex as well
         // adjacencyList.get(targetVertex).add(e);
     }
 }

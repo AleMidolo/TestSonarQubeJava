@@ -22,11 +22,11 @@ public class FileDeleter {
             }
         }
         
-        // Register a shutdown hook to delete the file on JVM exit
+        // Register the file for deletion on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 if (file.exists()) {
-                    forceDelete(file);
+                    forceDeleteOnExit(file);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -49,16 +49,6 @@ public class FileDeleter {
         }
         if (!directory.delete()) {
             throw new IOException("No se pudo eliminar el directorio: " + directory.getAbsolutePath());
-        }
-    }
-
-    private static void forceDelete(File file) throws IOException {
-        if (file.isDirectory()) {
-            deleteDirectory(file);
-        } else {
-            if (!file.delete()) {
-                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-            }
         }
     }
 }

@@ -27,7 +27,9 @@ public class StackMapFrameVisitor {
         }
 
         public int getNextIndex() {
-            return nextIndex++;
+            return nextIndex;
         }
+
+        // Additional methods to manipulate the frame can be added here
     }
 }

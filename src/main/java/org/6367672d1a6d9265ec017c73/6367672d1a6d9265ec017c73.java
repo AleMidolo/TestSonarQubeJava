@@ -10,7 +10,8 @@ public class MessagePrinter {
 
     /** 
      * Devuelve "true" si el mensaje debe imprimirse en la tiempo dada, de lo contrario devuelve falso. 
-     * Si este método devuelve falso, el mensaje no se imprimirá. El tiempo está en segundos. 
+     * Si este método devuelve falso, el mensaje no se imprimirá. 
+     * El tiempo está en segundos. 
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (!messageTimestamps.containsKey(message)) {

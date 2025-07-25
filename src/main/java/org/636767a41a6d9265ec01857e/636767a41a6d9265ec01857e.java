@@ -13,7 +13,8 @@ public class LongComparator {
     public static void main(String[] args) {
         long value1 = 10L;
         long value2 = 20L;
-        int result = compareSigned(value1, value2);
-        System.out.println("Comparison result: " + result); // Output: Comparison result: -1
+        System.out.println(compareSigned(value1, value2)); // Output: -1
+        System.out.println(compareSigned(value2, value1)); // Output: 1
+        System.out.println(compareSigned(value1, value1)); // Output: 0
     }
 }

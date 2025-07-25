@@ -27,7 +27,7 @@ public class StackFrameExtractor {
             extractedTypes.add(descriptor);
         }
 
-        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
+        // Aquí se podría realizar alguna acción con los tipos extraídos
         for (String type : extractedTypes) {
             System.out.println("Tipo extraído: " + type);
         }

@@ -14,7 +14,7 @@ public class TableRowSelector {
         }
         
         if (row < 0 || row >= table.getRowCount()) {
-            throw new IndexOutOfBoundsException("Row index out of bounds");
+            throw new IndexOutOfBoundsException("Row index is out of bounds");
         }
 
         // Select the specified row
@@ -31,8 +31,6 @@ public class TableRowSelector {
     public static void main(String[] args) {
         // Sample usage
         JFrame frame = new JFrame("Table Row Selector");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
             {"Row 1", "Data 1"},
@@ -40,17 +38,22 @@ public class TableRowSelector {
             {"Row 3", "Data 3"},
             {"Row 4", "Data 4"},
             {"Row 5", "Data 5"},
+            {"Row 6", "Data 6"},
+            {"Row 7", "Data 7"},
+            {"Row 8", "Data 8"},
+            {"Row 9", "Data 9"},
+            {"Row 10", "Data 10"},
         };
-        
+
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        
-        frame.add(pane, BorderLayout.CENTER);
-        frame.setSize(300, 200);
+        frame.add(pane);
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
+
         // Select a row after a delay
-        Timer timer = new Timer(1000, e -> selectRow(3, table, pane));
+        Timer timer = new Timer(1000, e -> selectRow(5, table, pane));
         timer.setRepeats(false);
         timer.start();
     }

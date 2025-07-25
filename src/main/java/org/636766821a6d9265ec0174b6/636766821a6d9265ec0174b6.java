@@ -18,25 +18,13 @@ public class GenericTypeResolver {
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
             if (rawClass.isAssignableFrom(targetType)) {
-                return resolveFromTargetType(actualTypeArguments, targetType);
+                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+                for (int i = 0; i < actualTypeArguments.length; i++) {
+                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+                }
+                return resolvedArguments;
             }
         }
         return null;
-    }
-
-    private static Class<?>[] resolveFromTargetType(Type[] actualTypeArguments, Class<?> targetType) {
-        // Aquí se puede implementar la lógica para resolver los argumentos de tipo
-        // basándose en la jerarquía de clases y las variables de tipo.
-        // Este es un ejemplo simple que devuelve las clases de los argumentos.
-        Class<?>[] resolvedClasses = new Class<?>[actualTypeArguments.length];
-        for (int i = 0; i < actualTypeArguments.length; i++) {
-            resolvedClasses[i] = (Class<?>) actualTypeArguments[i];
-        }
-        return resolvedClasses;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        // Aquí se puede agregar código para probar la función resolveArguments
     }
 }

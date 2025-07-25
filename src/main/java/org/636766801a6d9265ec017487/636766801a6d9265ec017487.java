@@ -13,18 +13,17 @@ public class TemplateEncoder {
         }
         try {
             // Codificar '{' y '}' en formato percentil
-            String encoded = s.replace("{", "%7B").replace("}", "%7D");
+            String encoded = s.replace("{", URLEncoder.encode("{", "UTF-8"))
+                              .replace("}", URLEncoder.encode("}", "UTF-8"));
             return encoded;
-        } catch (Exception e) {
-            // Manejo de excepciones
-            e.printStackTrace();
-            return s; // Retornar la cadena original en caso de error
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Encoding not supported", e);
         }
     }
 
     public static void main(String[] args) {
         String input = "Hello {name}, welcome to {place}!";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded); // Salida: Hello %7Bname%7D, welcome to %7Bplace%7D!
+        System.out.println(encoded); // Output: Hello %7Bname%7D, welcome to %7Bplace%7D!
     }
 }

@@ -1,5 +1,5 @@
 public class ArrayConverter {
-    
+
     /** 
      * <p>Convierte un array de objetos "Doubles" a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * @param array  un arreglo de <code>Double</code>, puede ser <code>null</code>
@@ -11,14 +11,14 @@ public class ArrayConverter {
             return null;
         }
         
-        double[] primitiveArray = new double[array.length];
+        double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            primitiveArray[i] = array[i];
+            result[i] = array[i];
         }
-        return primitiveArray;
+        return result;
     }
 
     public static void main(String[] args) {

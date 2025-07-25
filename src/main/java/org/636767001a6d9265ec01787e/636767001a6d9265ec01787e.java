@@ -14,15 +14,15 @@ public class MyClass {
         return stringBuilder.toString();
     }
 
-    // Método para agregar texto a la cadena
-    public void append(String text) {
-        stringBuilder.append(text);
+    // Method to append a string to the builder for demonstration purposes
+    public void append(String str) {
+        stringBuilder.append(str);
     }
 
     public static void main(String[] args) {
         MyClass myClass = new MyClass();
-        myClass.append("Hola, ");
-        myClass.append("mundo!");
-        System.out.println(myClass.toString()); // Imprime: Hola, mundo!
+        myClass.append("Hello, ");
+        myClass.append("World!");
+        System.out.println(myClass.toString()); // Output: Hello, World!
     }
 }

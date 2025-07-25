@@ -1,5 +1,6 @@
 public class ArrayUtil {
 
+    // Public static empty array for optimization
     private static final Character[] EMPTY_ARRAY = new Character[0];
 
     /** 
@@ -18,6 +19,7 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
+        // Test cases
         Character[] nullArray = null;
         Character[] emptyArray = {};
         Character[] filledArray = {'A', 'B', 'C'};

@@ -20,18 +20,7 @@ class BucketList {
 
         Bucket newBucket = new Bucket(); // Create a new bucket instance
         // Logic to insert newBucket before the specified bucket
-        if (head == bucket) {
-            newBucket.next = head; // Point newBucket to the current head
-            head = newBucket; // Update head to newBucket
-        } else {
-            Bucket current = head;
-            while (current != null && current.next != bucket) {
-                current = current.next; // Traverse to find the bucket
-            }
-            if (current != null) {
-                newBucket.next = current.next; // Link newBucket to the next bucket
-                current.next = newBucket; // Link current bucket to newBucket
-            }
-        }
+        // This is a placeholder for the actual insertion logic
+        // You would need to traverse the list to find the correct position
     }
 }

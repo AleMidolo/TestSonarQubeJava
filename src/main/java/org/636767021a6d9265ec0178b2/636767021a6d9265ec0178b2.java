@@ -12,29 +12,29 @@ public class FrameStack {
      * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is a string representation of the type to pop
-        // For simplicity, we will just print the descriptor and pop elements
-        System.out.println("Popping elements for descriptor: " + descriptor);
-        
-        // Example logic to pop elements based on descriptor
-        while (!stack.isEmpty()) {
-            Object element = stack.pop();
-            // Here we would check if the element matches the descriptor
-            // For demonstration, we will just print the popped element
-            System.out.println("Popped element: " + element);
+        // Assuming descriptor is a string representation of types
+        String[] types = descriptor.split(",");
+        for (String type : types) {
+            if (!stack.isEmpty()) {
+                Object poppedValue = stack.pop();
+                // Here you can add logic to check if poppedValue matches the type
+                System.out.println("Popped: " + poppedValue + " for type: " + type);
+            } else {
+                System.out.println("Stack is empty, cannot pop for type: " + type);
+            }
         }
     }
 
-    public void push(Object item) {
-        stack.push(item);
+    public void push(Object value) {
+        stack.push(value);
     }
 
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.push("First");
-        frameStack.push("Second");
-        frameStack.push("Third");
+        frameStack.push(1);
+        frameStack.push("Hello");
+        frameStack.push(3.14);
         
-        frameStack.pop("String"); // Example call to pop method
+        frameStack.pop("Integer,String,Double");
     }
 }

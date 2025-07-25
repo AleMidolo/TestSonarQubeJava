@@ -18,7 +18,7 @@ public class MyMap<K, V> {
         return map.containsKey(key);
     }
 
-    // Additional methods to add and manage entries in the map
+    // Additional methods to put and get values for testing purposes
     public void put(K key, V value) {
         map.put(key, value);
     }

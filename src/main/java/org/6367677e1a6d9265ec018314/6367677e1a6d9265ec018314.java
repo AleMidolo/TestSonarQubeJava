@@ -15,7 +15,7 @@ class TreeNode {
     }
 }
 
-class Tree {
+public class Tree {
     private TreeNode root;
 
     public Tree(TreeNode root) {

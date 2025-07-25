@@ -9,36 +9,30 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        int prime = desiredCapacity;
-        boolean found = false;
-
-        while (!found) {
-            if (isPrime(prime)) {
-                found = true;
-            } else {
-                prime++;
-            }
+        int capacity = desiredCapacity;
+        if (capacity % 2 == 0) {
+            capacity++;
         }
-        
-        if (desiredCapacity >= 1000) {
-            int upperLimit = (int) (desiredCapacity * 1.11);
-            while (prime < upperLimit) {
-                if (isPrime(prime)) {
-                    return prime;
-                }
-                prime++;
-            }
+        while (!isPrime(capacity) || (desiredCapacity >= 1000 && capacity > desiredCapacity * 1.11)) {
+            capacity += 2;
         }
-        
-        return prime;
+        return capacity;
     }
 
-    private static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        if (num <= 3) return true;
-        if (num % 2 == 0 || num % 3 == 0) return false;
-        for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) return false;
+    private static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        if (number <= 3) {
+            return true;
+        }
+        if (number % 2 == 0 || number % 3 == 0) {
+            return false;
+        }
+        for (int i = 5; i * i <= number; i += 6) {
+            if (number % i == 0 || number % (i + 2) == 0) {
+                return false;
+            }
         }
         return true;
     }

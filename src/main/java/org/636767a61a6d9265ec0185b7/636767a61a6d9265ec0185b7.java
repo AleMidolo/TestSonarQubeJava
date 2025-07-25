@@ -5,11 +5,11 @@ public class DigitValueCalculator {
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
-            return c - '0'; // ASCII '0' to '9'
+            return c - '0'; // ASCII value for '0' is 48
         } else if (c >= 'A' && c <= 'Z') {
-            return c - 'A' + 10; // ASCII 'A' to 'Z'
+            return c - 'A' + 10; // ASCII value for 'A' is 65
         } else if (c >= 'a' && c <= 'z') {
-            return c - 'a' + 10; // ASCII 'a' to 'z'
+            return c - 'a' + 10; // ASCII value for 'a' is 97
         } else {
             return -1; // Invalid character
         }

@@ -26,7 +26,7 @@ public class ByteFinder {
     }
 
     public static void main(String[] args) {
-        byte[] data = {1, 2, 3, 4, 5, 3, 6};
+        byte[] data = {1, 2, 3, 4, 5, 3};
         ByteFinder finder = new ByteFinder(data);
         int index = finder.findByte((byte) 3, 0);
         System.out.println("Index of byte: " + index); // Output: Index of byte: 2

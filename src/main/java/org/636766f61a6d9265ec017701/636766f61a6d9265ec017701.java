@@ -1,5 +1,4 @@
 public class StringSearch {
-    
     /** 
      * एक स्ट्रिंग के भीतर अंतिम अनुक्रमांक खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#lastIndexOf(String)} का उपयोग करती है। 
      */
@@ -12,7 +11,7 @@ public class StringSearch {
 
     public static void main(String[] args) {
         // उदाहरण के लिए परीक्षण
-        String str = "Hello, world! Hello, universe!";
+        String str = "Hello, world! Hello again!";
         String searchStr = "Hello";
         int index = lastIndexOf(str, searchStr);
         System.out.println("The last index of '" + searchStr + "' is: " + index);

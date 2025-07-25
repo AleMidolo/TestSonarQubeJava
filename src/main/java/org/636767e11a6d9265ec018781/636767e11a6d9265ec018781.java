@@ -22,17 +22,14 @@ public class MetricsCache {
     // Assuming METRICS class is defined somewhere
     public static class METRICS {
         private String key;
-
-        public METRICS(String key) {
-            this.key = key;
-        }
+        // Other fields...
 
         public String getKey() {
             return key;
         }
 
         public void merge(METRICS other) {
-            // Implement merging logic here
+            // Logic to merge this METRICS with another METRICS
         }
     }
 }

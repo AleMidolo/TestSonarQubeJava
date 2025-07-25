@@ -1,5 +1,5 @@
 public class LogarithmCalculator {
-
+    
     /** 
      * Computes floor($\log_2 (n)$) $+ 1$
      */
@@ -7,7 +7,7 @@ public class LogarithmCalculator {
         if (n <= 0) {
             throw new IllegalArgumentException("Input must be a positive integer.");
         }
-        return (int) (Math.log(n) / Math.log(2)) + 1;
+        return (int)(Math.log(n) / Math.log(2)) + 1;
     }
 
     public static void main(String[] args) {

@@ -53,6 +53,11 @@ public class GraphUtils<V, E> {
                 }
                 return weight;
             }
+
+            @Override
+            public String toString() {
+                return "GraphPath from " + startVertex + " to " + endVertex + " with edges " + tour;
+            }
         };
     }
 }

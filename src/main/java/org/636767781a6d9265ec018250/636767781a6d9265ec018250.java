@@ -1,5 +1,5 @@
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.Filter;
+import org.apache.log4j.Filter;
 
 public class DecisionMaker {
 
@@ -12,9 +12,11 @@ public class DecisionMaker {
         String targetString = "specificString"; // Replace with the actual string to match
 
         if (message != null && message.contains(targetString)) {
-            return Filter.ACCEPT; // Assuming we return ACCEPT if there's a match
+            // If there is a match, return a different filter value (e.g., Filter.ACCEPT)
+            return Filter.ACCEPT;
         }
         
-        return Filter.NEUTRAL; // Return NEUTRAL if there's no match
+        // If there is no match, return Filter.NEUTRAL
+        return Filter.NEUTRAL;
     }
 }

@@ -3,9 +3,9 @@ import java.util.Set;
 
 public class VertexMover {
 
-    /** 
-     * Moves all vertices from the bucket with label  {@code minLabel} to the bucket with label 0.
-     * Clears the bucket with label  {@code minLabel}. Updates the labeling accordingly.
+    /**
+     * Moves all vertices from the bucket with label {@code minLabel} to the bucket with label 0.
+     * Clears the bucket with label {@code minLabel}. Updates the labeling accordingly.
      * @param bucketsByLabel the buckets vertices are stored in
      * @param labels the labels of the vertices
      * @param minLabel the minimum value of the non-empty bucket
@@ -17,13 +17,13 @@ public class VertexMover {
         // Get the bucket with label 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
         
-        // Move all vertices from minLabel bucket to the bucket with label 0
+        // Move all vertices from minLabel bucket to the zero label bucket
         for (Integer vertex : minLabelBucket) {
             zeroLabelBucket.add(vertex);
             labels.set(vertex, 0); // Update the label of the vertex to 0
         }
         
-        // Clear the bucket with label minLabel
+        // Clear the minLabel bucket
         minLabelBucket.clear();
     }
 }

@@ -1,5 +1,5 @@
 import java.beans.Introspector;
-import java.util.Locale;
+import java.beans.PropertyDescriptor;
 
 public class StringUtil {
 
@@ -10,7 +10,7 @@ public class StringUtil {
         if (name == null || name.isEmpty()) {
             return name;
         }
-        return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
     public static void main(String[] args) {

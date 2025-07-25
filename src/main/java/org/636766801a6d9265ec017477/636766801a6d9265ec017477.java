@@ -22,7 +22,7 @@ public class FileAdder {
                 // Process the file (this is just a placeholder for actual file handling logic)
                 processFile(file);
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // Handle the exception as needed
             }
         }
     }
@@ -30,6 +30,6 @@ public class FileAdder {
     private void processFile(InputStream file) throws IOException {
         // Placeholder for file processing logic
         // For example, reading from the InputStream
-        // This method should contain the actual implementation of how to handle the InputStream
+        // This method should be implemented based on specific requirements
     }
 }

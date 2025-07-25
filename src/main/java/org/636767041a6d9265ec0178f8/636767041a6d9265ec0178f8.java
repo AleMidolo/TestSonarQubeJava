@@ -20,7 +20,6 @@ public class StringArrayCopy {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copyStrings(original);
         
-        // Print original and copied arrays
         System.out.println("Original: " + Arrays.toString(original));
         System.out.println("Copied: " + Arrays.toString(copied));
     }

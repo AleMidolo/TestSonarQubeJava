@@ -1,13 +1,18 @@
 public class ByteSearcher {
     
-    /**
+    private byte[] buffer;
+
+    public ByteSearcher(byte[] buffer) {
+        this.buffer = buffer;
+    }
+
+    /** 
      * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
      * @param value The value to find.
      * @param pos   The starting position for searching.
      * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
      */
     protected int findByte(byte value, int pos) {
-        byte[] buffer = getBuffer(); // Assume this method retrieves the buffer to search in
         if (pos < 0 || pos >= buffer.length) {
             return -1; // Invalid starting position
         }
@@ -20,10 +25,11 @@ public class ByteSearcher {
         
         return -1; // Byte not found
     }
-    
-    // Placeholder for the buffer retrieval method
-    private byte[] getBuffer() {
-        // Example buffer for demonstration purposes
-        return new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    public static void main(String[] args) {
+        byte[] data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        ByteSearcher searcher = new ByteSearcher(data);
+        int position = searcher.findByte((byte) 5, 0);
+        System.out.println("Position of byte: " + position); // Output: Position of byte: 4
     }
 }

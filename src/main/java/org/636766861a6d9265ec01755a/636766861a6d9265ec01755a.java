@@ -8,7 +8,7 @@ public final class UriMatcher {
         this.pattern = Pattern.compile(template);
     }
 
-    /** 
+    /**
      * Match a URI against the pattern.
      * @param uri the uri to match against the template.
      * @return the match result, otherwise null if no match occurs.
@@ -28,20 +28,22 @@ public final class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String group(int index) {
-            return matcher.group(index);
-        }
-
-        public int start(int index) {
-            return matcher.start(index);
-        }
-
-        public int end(int index) {
-            return matcher.end(index);
+        public String group(int group) {
+            return matcher.group(group);
         }
 
         public int groupCount() {
             return matcher.groupCount();
+        }
+    }
+
+    public static void main(String[] args) {
+        UriMatcher uriMatcher = new UriMatcher("^(https?://)?(www\\.)?example\\.com(/.*)?$");
+        MatchResult result = uriMatcher.match("https://www.example.com/test");
+        if (result != null) {
+            System.out.println("Matched! Group count: " + result.groupCount());
+        } else {
+            System.out.println("No match.");
         }
     }
 }

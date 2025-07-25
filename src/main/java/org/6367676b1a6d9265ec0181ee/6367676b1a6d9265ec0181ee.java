@@ -1,4 +1,5 @@
 public class StringUtil {
+    
     /** 
      * Trim trailing whitespace from the given String.
      * @param str the String to check
@@ -19,6 +20,6 @@ public class StringUtil {
     public static void main(String[] args) {
         String testString = "Hello, World!   ";
         String trimmedString = trimTrailingWhitespace(testString);
-        System.out.println("'" + trimmedString + "'");
+        System.out.println("'" + trimmedString + "'"); // Output: 'Hello, World!'
     }
 }

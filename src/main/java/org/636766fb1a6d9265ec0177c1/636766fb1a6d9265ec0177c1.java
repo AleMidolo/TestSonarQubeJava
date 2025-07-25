@@ -1,5 +1,4 @@
 public class CharUtils {
-    
     /** 
      * <p>Checks whether the character is ASCII 7 bit alphabetic upper case.</p> 
      * <pre> 

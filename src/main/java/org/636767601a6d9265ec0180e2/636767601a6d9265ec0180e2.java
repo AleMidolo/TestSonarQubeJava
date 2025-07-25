@@ -12,7 +12,7 @@ public class MinimalSeparators {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get common neighbors of source and target vertices
+            // Get common neighbors of the endpoints
             Set<V> sourceNeighbors = new HashSet<>(graph.neighborListOf(source));
             Set<V> targetNeighbors = new HashSet<>(graph.neighborListOf(target));
             Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
@@ -54,21 +54,22 @@ public class MinimalSeparators {
         separator.add(v1);
         separator.add(v2);
         
-        // Check if source and target are in different components after removal
+        // Check if source and target are in different components
         Set<V> visited = new HashSet<>();
-        visited.addAll(separator);
+        visited.add(v1);
+        visited.add(v2);
         
         Queue<V> queue = new LinkedList<>();
         queue.add(source);
         visited.add(source);
         
-        boolean targetFound = false;
-        while (!queue.isEmpty() && !targetFound) {
+        boolean foundTarget = false;
+        while (!queue.isEmpty() && !foundTarget) {
             V current = queue.poll();
             for (V neighbor : graph.neighborListOf(current)) {
                 if (!visited.contains(neighbor)) {
                     if (neighbor.equals(target)) {
-                        targetFound = true;
+                        foundTarget = true;
                         break;
                     }
                     visited.add(neighbor);
@@ -78,6 +79,6 @@ public class MinimalSeparators {
         }
         
         // If target not found, v1 and v2 form a separator
-        return !targetFound;
+        return !foundTarget;
     }
 }

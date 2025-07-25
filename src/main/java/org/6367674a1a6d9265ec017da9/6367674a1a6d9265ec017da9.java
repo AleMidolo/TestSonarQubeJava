@@ -22,12 +22,11 @@ public class DoublyLinkedList<E> {
             return;
         }
 
-        // If this list is empty, just point to the other list's nodes
-        if (size == 0) {
+        // Connect the lists
+        if (this.size == 0) {
             this.head = list.head;
             this.tail = list.tail;
         } else {
-            // Connect the tail of this list to head of other list
             this.tail.next = list.head;
             list.head.prev = this.tail;
             this.tail = list.tail;
@@ -36,7 +35,7 @@ public class DoublyLinkedList<E> {
         // Update size
         this.size += list.size;
 
-        // Clear the other list
+        // Clear the source list
         list.head = null;
         list.tail = null;
         list.size = 0;

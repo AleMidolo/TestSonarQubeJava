@@ -24,7 +24,6 @@ public class ByteSearcher {
                 return i;
             }
         }
-        
         return -1;
     }
 }

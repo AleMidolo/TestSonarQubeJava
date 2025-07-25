@@ -24,7 +24,7 @@ public class BufferWriter {
                 size += length;
             }
             
-            current = current.getNext();
+            current = current.next();
         }
 
         return size;
@@ -38,12 +38,6 @@ class LinkedBuffer {
     private int length;
     private LinkedBuffer next;
 
-    public LinkedBuffer(byte[] buffer, int offset, int length) {
-        this.buffer = buffer;
-        this.offset = offset;
-        this.length = length;
-    }
-
     public byte[] getBuffer() {
         return buffer;
     }
@@ -56,11 +50,7 @@ class LinkedBuffer {
         return length;
     }
 
-    public LinkedBuffer getNext() {
+    public LinkedBuffer next() {
         return next;
-    }
-
-    public void setNext(LinkedBuffer next) {
-        this.next = next;
     }
 }

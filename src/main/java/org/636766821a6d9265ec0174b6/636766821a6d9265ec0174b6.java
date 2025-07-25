@@ -16,38 +16,35 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedTypes = new Class<?>[actualTypeArguments.length];
 
-        // Get type variables from target type
-        Map<String, Type> typeVariableMap = new HashMap<>();
-        TypeVariable<?>[] typeVariables = targetType.getTypeParameters();
+        // Create type variable mapping
+        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
         
+        for (int i = 0; i < typeParameters.length && i < actualTypeArguments.length; i++) {
+            typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
+        }
+
+        // Resolve each type argument
         for (int i = 0; i < actualTypeArguments.length; i++) {
             Type actualType = actualTypeArguments[i];
             
             if (actualType instanceof Class) {
                 resolvedTypes[i] = (Class<?>) actualType;
             } else if (actualType instanceof TypeVariable) {
-                String variableName = ((TypeVariable<?>) actualType).getName();
-                
-                // Try to find matching type variable in target type
-                for (int j = 0; j < typeVariables.length; j++) {
-                    if (typeVariables[j].getName().equals(variableName)) {
-                        // Get bounds of type variable
-                        Type[] bounds = typeVariables[j].getBounds();
-                        if (bounds != null && bounds.length > 0 && bounds[0] instanceof Class) {
-                            resolvedTypes[i] = (Class<?>) bounds[0];
-                        }
-                        break;
-                    }
-                }
-                
-                if (resolvedTypes[i] == null) {
-                    // Could not resolve type variable
-                    return null;
+                Type resolvedType = typeVariableMap.get(actualType);
+                if (resolvedType instanceof Class) {
+                    resolvedTypes[i] = (Class<?>) resolvedType;
+                } else {
+                    return null; // Cannot resolve type variable
                 }
             } else {
-                // Cannot resolve other types
-                return null;
+                return null; // Cannot handle other type arguments
             }
+        }
+
+        // Check if all arguments were resolved
+        if (Arrays.stream(resolvedTypes).anyMatch(type -> type == null)) {
+            return null;
         }
 
         return resolvedTypes;

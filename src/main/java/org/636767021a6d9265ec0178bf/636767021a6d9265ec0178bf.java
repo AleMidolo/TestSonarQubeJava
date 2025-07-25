@@ -16,7 +16,7 @@ public class CharacterConverter {
                 return value;
             }
             
-            String str = value.toString(); 
+            String str = value.toString();
             if (str.length() == 1) {
                 return Character.valueOf(str.charAt(0));
             } else if (str.length() > 1) {

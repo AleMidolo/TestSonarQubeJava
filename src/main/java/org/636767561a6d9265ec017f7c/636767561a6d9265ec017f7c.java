@@ -16,19 +16,20 @@ public class TourTransformer<V,E> {
             return null;
         }
 
-        List<E> edges = new ArrayList<>();
-        List<V> vertices = new ArrayList<>();
+        // Create lists to store vertices and edges in order
+        List<V> vertexList = new ArrayList<>();
+        List<E> edgeList = new ArrayList<>();
         
         // Get first edge and its vertices
         E firstEdge = tour.iterator().next();
         V start = graph.getEdgeSource(firstEdge);
         V current = graph.getEdgeTarget(firstEdge);
         
-        edges.add(firstEdge);
-        vertices.add(start);
-        vertices.add(current);
+        vertexList.add(start);
+        vertexList.add(current);
+        edgeList.add(firstEdge);
         
-        // Remove first edge from consideration
+        // Remove first edge from set
         Set<E> remaining = new HashSet<>(tour);
         remaining.remove(firstEdge);
         
@@ -41,35 +42,36 @@ public class TourTransformer<V,E> {
                 
                 if (source.equals(current)) {
                     current = target;
-                    edges.add(edge);
-                    vertices.add(current);
-                    remaining.remove(edge);
                     found = true;
-                    break;
                 } else if (target.equals(current)) {
                     current = source;
-                    edges.add(edge);
-                    vertices.add(current);
-                    remaining.remove(edge);
                     found = true;
+                }
+                
+                if (found) {
+                    vertexList.add(current);
+                    edgeList.add(edge);
+                    remaining.remove(edge);
                     break;
                 }
             }
             
             if (!found) {
-                throw new IllegalArgumentException("Edge set does not form a valid tour");
+                throw new IllegalArgumentException("Invalid tour: edges do not form a continuous path");
             }
         }
         
-        // Verify tour is complete (ends where it started)
+        // Verify tour is complete (ends at start)
         if (!current.equals(start)) {
-            throw new IllegalArgumentException("Edge set does not form a complete tour");
+            throw new IllegalArgumentException("Invalid tour: path does not end at starting vertex");
         }
         
-        double weight = edges.stream()
-            .mapToDouble(graph::getEdgeWeight)
-            .sum();
-            
-        return new GraphWalk<>(graph, vertices, weight);
+        // Calculate total weight
+        double weight = 0.0;
+        for (E edge : edgeList) {
+            weight += graph.getEdgeWeight(edge);
+        }
+        
+        return new GraphWalk<>(graph, vertexList, weight);
     }
 }

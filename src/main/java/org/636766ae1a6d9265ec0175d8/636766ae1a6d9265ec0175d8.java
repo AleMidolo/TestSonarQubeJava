@@ -1,16 +1,11 @@
 import java.util.Objects;
 
 public class ContentRangeBuilder {
+
     private Long start;
     private Long end; 
     private Long total;
-    
-    public ContentRangeBuilder() {
-        this.start = 0L;
-        this.end = 0L;
-        this.total = 0L;
-    }
-    
+
     public ContentRangeBuilder(Long start, Long end, Long total) {
         this.start = start;
         this.end = end;
@@ -22,17 +17,19 @@ public class ContentRangeBuilder {
      * @return 'Content-Range' value
      */
     private String buildContentRange() {
-        if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
-            return "";
-        }
-        
         StringBuilder contentRange = new StringBuilder();
         contentRange.append("bytes ");
-        contentRange.append(start);
-        contentRange.append("-");
-        contentRange.append(end);
-        contentRange.append("/");
-        contentRange.append(total);
+        
+        if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
+            contentRange.append("*/");
+            contentRange.append(Objects.nonNull(total) ? total : "*");
+        } else {
+            contentRange.append(start)
+                       .append("-")
+                       .append(end)
+                       .append("/")
+                       .append(total);
+        }
         
         return contentRange.toString();
     }

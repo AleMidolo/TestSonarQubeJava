@@ -11,17 +11,17 @@ public class BucketLabeler {
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
         // Get vertices from minLabel bucket
-        Set<Integer> vertices = bucketsByLabel.get(minLabel);
+        Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
         
         // Move vertices to bucket 0
-        bucketsByLabel.get(0).addAll(vertices);
+        bucketsByLabel.get(0).addAll(verticesToMove);
         
         // Update labels for moved vertices
-        for (Integer vertex : vertices) {
+        for (Integer vertex : verticesToMove) {
             labels.set(vertex, 0);
         }
         
         // Clear minLabel bucket
-        vertices.clear();
+        verticesToMove.clear();
     }
 }

@@ -33,12 +33,8 @@ public class BucketChecker {
      * @return true if the bucket is the same.
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
-        // Assuming the current instance has a bucket to compare with
-        // For example, let's assume the current instance has a bucket "defaultBucket"
-        String defaultBucket = "defaultBucket";
-        return defaultBucket.equals(dataset.getBucket());
+        // Assuming we have a reference bucket to compare against
+        DataTable referenceDataset = new DataTable("referenceBucket");
+        return referenceDataset.equals(dataset);
     }
 }

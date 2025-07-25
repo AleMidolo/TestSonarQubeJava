@@ -15,18 +15,14 @@ public class TypeResolver {
         }
     }
 
+    // Placeholder for Unknown.class
     public static class Unknown {
-        // Placeholder class to represent an unknown type
     }
 
     public static void main(String[] args) {
         // Example usage
-        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
+        TypeVariable<?> typeVariable = String.class.getTypeParameters()[0];
         Type bound = resolveBound(typeVariable);
         System.out.println("Resolved bound: " + bound);
-    }
-
-    class ExampleClass<T> {
-        // Example class with a type parameter
     }
 }

@@ -2,10 +2,8 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    /**
-     * Empty array constant to optimize memory usage.
-     */
-    private static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
+    // Public static empty array reference
+    public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
      * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p>

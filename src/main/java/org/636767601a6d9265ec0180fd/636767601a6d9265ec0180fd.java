@@ -21,9 +21,4 @@ public class Graph<V, E> {
         // Add the edge to the adjacency map
         adjacencyMap.get(sourceVertex).put(targetVertex, e);
     }
-
-    // Optional: Method to get the adjacency map for testing or other purposes
-    public Map<V, Map<V, E>> getAdjacencyMap() {
-        return adjacencyMap;
-    }
 }

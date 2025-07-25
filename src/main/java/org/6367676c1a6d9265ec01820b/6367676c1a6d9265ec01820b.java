@@ -3,6 +3,12 @@ import java.util.Set;
 
 public class StringUtils {
 
+    /**
+     * Delete any character in a given String.
+     * @param inString the original String
+     * @param charsToDelete a set of characters to delete. E.g. "az\n" will delete 'a's, 'z's and new lines.
+     * @return the resulting String
+     */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
             return inString;
@@ -26,8 +32,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello, World!";
-        String charsToDelete = "lo";
-        System.out.println(deleteAny(input, charsToDelete)); // Output: He, Wrd!
+        String input = "Hello, World!\nThis is a test.";
+        String charsToDelete = "aeiou\n";
+        String result = deleteAny(input, charsToDelete);
+        System.out.println(result);  // Output: Hll, Wrld!Ths s  tst.
     }
 }

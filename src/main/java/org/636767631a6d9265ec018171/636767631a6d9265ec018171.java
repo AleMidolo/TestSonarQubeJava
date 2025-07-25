@@ -1,23 +1,19 @@
+// Assuming ListNodeImpl is a class that represents a node in a linked list
 class ListNodeImpl<E> {
-    E value;
+    E element;
     ListNodeImpl<E> next;
     ListNodeImpl<E> prev;
 
-    ListNodeImpl(E value) {
-        this.value = value;
-        this.next = null;
-        this.prev = null;
+    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
+        this.element = element;
+        this.prev = prev;
+        this.next = next;
     }
 }
 
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
-
-    public LinkedList() {
-        this.head = null;
-        this.tail = null;
-    }
 
     /**
      * Remove the non null {@code node} from the list.
@@ -27,24 +23,26 @@ public class LinkedList<E> {
             return false;
         }
 
-        // If the node is the head
-        if (node.prev == null) {
-            head = node.next;
+        ListNodeImpl<E> prev = node.prev;
+        ListNodeImpl<E> next = node.next;
+
+        if (prev == null) {
+            // Node is the head
+            head = next;
         } else {
-            node.prev.next = node.next;
+            prev.next = next;
+            node.prev = null;
         }
 
-        // If the node is the tail
-        if (node.next == null) {
-            tail = node.prev;
+        if (next == null) {
+            // Node is the tail
+            tail = prev;
         } else {
-            node.next.prev = node.prev;
+            next.prev = prev;
+            node.next = null;
         }
 
-        // Clear the node's references
-        node.next = null;
-        node.prev = null;
-
+        node.element = null; // Help GC
         return true;
     }
 }

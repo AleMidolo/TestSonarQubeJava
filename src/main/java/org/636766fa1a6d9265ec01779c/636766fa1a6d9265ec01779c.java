@@ -1,21 +1,14 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 private String parseToken(final char[] terminators) {
-    Set<Character> terminatorSet = new HashSet<>();
-    for (char c : terminators) {
-        terminatorSet.add(c);
-    }
-
     StringBuilder token = new StringBuilder();
-    int currentChar;
-    while ((currentChar = System.in.read()) != -1) {
-        char ch = (char) currentChar;
-        if (terminatorSet.contains(ch)) {
+    int ch;
+    while ((ch = System.in.read()) != -1) {
+        char currentChar = (char) ch;
+        if (Arrays.binarySearch(terminators, currentChar) >= 0) {
             break;
         }
-        token.append(ch);
+        token.append(currentChar);
     }
-
     return token.toString();
 }

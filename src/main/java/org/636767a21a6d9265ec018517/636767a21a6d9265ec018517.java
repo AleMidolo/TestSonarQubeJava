@@ -17,6 +17,9 @@ public final class Buffer {
         }
     }
 
+    /**
+     * Returns a single byte array containing all the contents written to the buffer(s).
+     */
     public final byte[] toByteArray() {
         return buffer.toByteArray();
     }

@@ -3,31 +3,15 @@ import java.nio.charset.StandardCharsets;
 
 final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
     // Assuming classFileBuffer is a ByteBuffer containing the class file data
-    // and constantPoolEntryIndex is the index of the CONSTANT_Utf8 entry in the constant pool.
+    // and constantPool is an array of constant pool entries.
+    // This is a simplified implementation assuming the constant pool entry is already parsed.
 
-    // Calculate the offset of the CONSTANT_Utf8 entry in the class file buffer
-    int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+    // Get the CONSTANT_Utf8_info structure from the constant pool
+    int utf8Length = classFileBuffer.getShort(constantPoolEntryIndex + 1) & 0xFFFF; // Length of the UTF-8 string
+    byte[] utf8Bytes = new byte[utf8Length];
+    classFileBuffer.position(constantPoolEntryIndex + 3); // Skip tag and length
+    classFileBuffer.get(utf8Bytes, 0, utf8Length);
 
-    // Read the length of the UTF-8 string (2 bytes)
-    int length = classFileBuffer.getShort(offset) & 0xFFFF;
-    offset += 2;
-
-    // Decode the UTF-8 bytes into the charBuffer
-    for (int i = 0; i < length; i++) {
-        charBuffer[i] = (char) (classFileBuffer.get(offset + i) & 0xFF);
-    }
-
-    // Convert the charBuffer to a String
-    return new String(charBuffer, 0, length);
+    // Decode the UTF-8 bytes into a String using the provided charBuffer
+    return new String(utf8Bytes, StandardCharsets.UTF_8);
 }
-
-// Helper method to get the offset of a constant pool entry
-private int getConstantPoolEntryOffset(int constantPoolEntryIndex) {
-    // This method should return the offset of the constant pool entry in the classFileBuffer.
-    // The implementation depends on the structure of the constant pool in the class file.
-    // For simplicity, this is a placeholder implementation.
-    return constantPoolEntryIndex * 8; // Example offset calculation
-}
-
-// Assuming classFileBuffer is a ByteBuffer containing the class file data
-private ByteBuffer classFileBuffer;

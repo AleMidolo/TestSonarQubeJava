@@ -19,6 +19,6 @@ public class BinaryLog {
 
     public static void main(String[] args) {
         int n = 16; // Example input
-        System.out.println("Result: " + computeBinaryLog(n));
+        System.out.println("Floor(log2(" + n + ")) + 1 = " + computeBinaryLog(n));
     }
 }

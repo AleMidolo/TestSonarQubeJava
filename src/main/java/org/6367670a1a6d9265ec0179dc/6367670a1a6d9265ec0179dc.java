@@ -1,8 +1,8 @@
 import java.util.List;
 
 public class StackMapTable {
-    private List<Object> currentFrame;
-    private List<Object> stackMapTableEntries;
+    private List<VerificationTypeInfo> currentFrame;
+    private List<VerificationTypeInfo> stackMapTableEntries;
 
     /**
      * Puts some abstract types of {@link #currentFrame} in {@link #stackMapTableEntries},
@@ -16,8 +16,13 @@ public class StackMapTable {
         }
 
         for (int i = start; i < end; i++) {
-            Object type = currentFrame.get(i);
-            stackMapTableEntries.add(type);
+            VerificationTypeInfo typeInfo = currentFrame.get(i);
+            stackMapTableEntries.add(typeInfo);
         }
+    }
+
+    // Assuming VerificationTypeInfo is a class representing the verification type info
+    private static class VerificationTypeInfo {
+        // Define the structure of VerificationTypeInfo as per JVMS
     }
 }

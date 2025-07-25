@@ -17,12 +17,13 @@ public class CliqueChecker {
                 if (u.equals(v)) {
                     continue;
                 }
-                // Check if there is an edge between u and v
+                // Check if there is no edge between u and v
                 if (!graph.containsEdge(u, v)) {
                     return false;
                 }
             }
         }
+        // If all pairs are connected, it's a clique
         return true;
     }
 }

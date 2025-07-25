@@ -1,5 +1,4 @@
-public class StringUtils {
-    
+public class StringUtil {
     /** 
      * Returns  {@code true} if the given string starts with the specified case-insensitive prefix, {@code false} otherwise.
      * @param str the String to check

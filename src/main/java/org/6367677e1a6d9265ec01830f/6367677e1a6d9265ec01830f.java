@@ -10,16 +10,16 @@ public class LoggerFormatter {
         StringBuilder formattedString = new StringBuilder();
         
         // Example conversion pattern
-        String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c] - %m%n";
+        String pattern = "[%d{ISO8601}] [%p] [%c] - %m%n";
         
         // Replace placeholders with actual values from the LoggingEvent
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
         String level = event.getLevel().toString();
         String loggerName = event.getLoggerName();
         String message = event.getMessage();
         
         // Build the formatted string
-        formattedString.append(pattern.replace("%d{yyyy-MM-dd HH:mm:ss}", timestamp)
+        formattedString.append(pattern.replace("%d{ISO8601}", date)
                                       .replace("%p", level)
                                       .replace("%c", loggerName)
                                       .replace("%m", message)

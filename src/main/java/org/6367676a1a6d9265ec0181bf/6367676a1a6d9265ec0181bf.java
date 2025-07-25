@@ -1,4 +1,5 @@
 public class QuoteUtil {
+
     /** 
      * Turn the given Object into a String with single quotes if it is a String; keeping the Object as-is else.
      * @param obj the input Object (e.g. "myString")
@@ -14,6 +15,6 @@ public class QuoteUtil {
     public static void main(String[] args) {
         System.out.println(quoteIfString("myString")); // Output: 'myString'
         System.out.println(quoteIfString(123));        // Output: 123
-        System.out.println(quoteIfString(null));       // Output: null
+        System.out.println(quoteIfString(null));        // Output: null
     }
 }

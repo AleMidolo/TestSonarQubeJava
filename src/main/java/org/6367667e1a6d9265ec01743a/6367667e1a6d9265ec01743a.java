@@ -1,7 +1,7 @@
 public class WriteOperationTracker {
     private long lastWriteTimeStamp;
 
-    /**
+    /** 
      * The last time, in milliseconds, a write operation occurred.
      * @return this
      */
@@ -9,12 +9,8 @@ public class WriteOperationTracker {
         return lastWriteTimeStamp;
     }
 
-    // Method to simulate a write operation
     public void writeOperation() {
-        // Perform the write operation
-        // ...
-
-        // Update the last write timestamp
+        // Simulate a write operation
         lastWriteTimeStamp = System.currentTimeMillis();
     }
 

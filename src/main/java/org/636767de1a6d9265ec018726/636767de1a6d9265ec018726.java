@@ -3,18 +3,17 @@ import java.util.List;
 
 public class SequenceRangeBuilder {
 
-    /**
+    /** 
      * build current profiles segment snapshot search sequence ranges
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
         // Example logic to build sequence ranges
-        // This is just a placeholder; actual logic will depend on specific requirements
+        // This is a placeholder and should be replaced with actual logic
         for (int i = 0; i < 10; i++) {
-            int start = i * 10;
-            int end = start + 9;
-            sequenceRanges.add(new SequenceRange(start, end));
+            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
+            sequenceRanges.add(range);
         }
         
         return sequenceRanges;

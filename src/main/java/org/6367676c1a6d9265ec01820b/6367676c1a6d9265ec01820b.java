@@ -17,13 +17,13 @@ public class StringManipulator {
                 result.append(c); // Append character if it's not in charsToDelete
             }
         }
-        return result.toString(); // Return the modified string
+        return result.toString(); // Return the resulting string
     }
 
     public static void main(String[] args) {
         String original = "Hello World! This is a test string.";
         String charsToDelete = "aeiou";
-        String modified = deleteAny(original, charsToDelete);
-        System.out.println(modified); // Output: Hll Wrld! Ths s  tst strng.
+        String result = deleteAny(original, charsToDelete);
+        System.out.println(result); // Output: Hll Wrld! Ths s  tst strng.
     }
 }

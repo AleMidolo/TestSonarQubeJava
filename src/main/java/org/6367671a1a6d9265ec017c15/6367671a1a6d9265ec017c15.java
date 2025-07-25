@@ -41,12 +41,4 @@ public class ByteVector {
             data = Arrays.copyOf(data, newCapacity);
         }
     }
-
-    public int size() {
-        return size;
-    }
-
-    public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
-    }
 }

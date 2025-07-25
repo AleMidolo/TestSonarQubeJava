@@ -6,13 +6,17 @@ public class ColumnNameOverride {
      * @param newName to use in the storage level.
      */
     public void overrideName(String oldName, String newName) {
-        // Assuming we have a map to store the column names
+        // Assuming we have a map to store column names
         java.util.Map<String, String> columnNames = new java.util.HashMap<>();
 
-        // Replace the old name with the new name in the map
+        // Check if the old name exists in the map
         if (columnNames.containsKey(oldName)) {
+            // Replace the old name with the new name
             String value = columnNames.remove(oldName);
             columnNames.put(newName, value);
+        } else {
+            // If old name does not exist, we can add the new name directly
+            columnNames.put(newName, null); // Assuming null value for new name
         }
     }
 }

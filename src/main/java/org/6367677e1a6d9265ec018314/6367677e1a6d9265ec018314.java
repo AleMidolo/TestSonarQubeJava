@@ -36,12 +36,12 @@ public class CategoryTree {
         }
 
         int removedCount = 0;
-        Iterator<CategoryNode> iterator = node.children.iterator();
 
+        // Iterate over children and remove inactive nodes
+        Iterator<CategoryNode> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             CategoryNode child = iterator.next();
             removedCount += removeInactiveNodes(child);
-
             if (!child.isActive) {
                 iterator.remove();
                 removedCount++;
@@ -56,10 +56,11 @@ public class CategoryTree {
         CategoryNode root = new CategoryNode(true);
         CategoryNode child1 = new CategoryNode(false);
         CategoryNode child2 = new CategoryNode(true);
-        CategoryNode grandChild1 = new CategoryNode(false);
-        child2.addChild(grandChild1);
+        CategoryNode grandChild = new CategoryNode(false);
+
         root.addChild(child1);
         root.addChild(child2);
+        child2.addChild(grandChild);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();

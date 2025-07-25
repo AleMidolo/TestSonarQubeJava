@@ -16,13 +16,15 @@ public class StringUnescaper {
             if (isEscaped) {
                 output.append(c);
                 isEscaped = false;
-            } else if (c == '\\') {
-                isEscaped = true;
             } else {
-                output.append(c);
+                if (c == '\\') {
+                    isEscaped = true;
+                } else {
+                    output.append(c);
+                }
             }
         }
-
+        
         return output.toString();
     }
 

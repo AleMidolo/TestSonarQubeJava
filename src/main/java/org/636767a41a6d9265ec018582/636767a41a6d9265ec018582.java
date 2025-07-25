@@ -17,7 +17,7 @@ public class MessageSerializer {
         int length = messageBytes.length;
         
         // Write the length as a varint
-        writeVarint(out, length);
+        writeVarint32(out, length);
         
         // Write the message bytes to the output stream
         out.write(messageBytes);
@@ -25,7 +25,7 @@ public class MessageSerializer {
         return length;
     }
 
-    private static void writeVarint(OutputStream out, int value) throws IOException {
+    private static void writeVarint32(OutputStream out, int value) throws IOException {
         while ((value & ~0x7F) != 0) {
             out.write((value & 0x7F) | 0x80);
             value >>>= 7;

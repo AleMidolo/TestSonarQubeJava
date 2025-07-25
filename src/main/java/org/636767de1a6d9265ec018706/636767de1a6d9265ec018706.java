@@ -1,60 +1,45 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MappingDiffer {
+public class Mappings {
+    private Map<String, String> fields;
 
-    public static class Mappings {
-        private Map<String, Object> fields;
-
-        public Mappings() {
-            this.fields = new HashMap<>();
-        }
-
-        public void addField(String fieldName, Object fieldValue) {
-            fields.put(fieldName, fieldValue);
-        }
-
-        public Map<String, Object> getFields() {
-            return fields;
-        }
+    public Mappings() {
+        this.fields = new HashMap<>();
     }
 
-    /**
-     * Returns mappings with fields that not exist in the input mappings. The input mappings should be history mapping from current index. 
-     * Do not return _source config to avoid current index update conflict.
-     */
-    public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulated existing fields in the current index
-        Map<String, Object> existingFields = getExistingFields(tableName);
-        
+    public void addField(String fieldName, String fieldType) {
+        fields.put(fieldName, fieldType);
+    }
+
+    public Map<String, String> getFields() {
+        return fields;
+    }
+
+    public static Mappings diffStructure(String tableName, Mappings mappings) {
+        // Simulating a history mapping for the current index
+        Mappings currentIndexMappings = new Mappings();
+        currentIndexMappings.addField("id", "integer");
+        currentIndexMappings.addField("name", "string");
+        currentIndexMappings.addField("created_at", "date");
+
         Mappings diffMappings = new Mappings();
-        
-        for (String field : existingFields.keySet()) {
-            if (!mappings.getFields().containsKey(field)) {
-                diffMappings.addField(field, existingFields.get(field));
+
+        for (String field : mappings.getFields().keySet()) {
+            if (!currentIndexMappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
-        
+
         return diffMappings;
     }
 
-    private Map<String, Object> getExistingFields(String tableName) {
-        // This method simulates fetching existing fields from a database or index.
-        // In a real implementation, this would query the actual data source.
-        Map<String, Object> existingFields = new HashMap<>();
-        existingFields.put("id", "integer");
-        existingFields.put("name", "string");
-        existingFields.put("created_at", "date");
-        existingFields.put("updated_at", "date");
-        return existingFields;
-    }
-
     public static void main(String[] args) {
-        MappingDiffer mappingDiffer = new MappingDiffer();
-        Mappings currentMappings = new Mappings();
-        currentMappings.addField("name", "string");
-        
-        Mappings diff = mappingDiffer.diffStructure("example_table", currentMappings);
-        System.out.println("Fields not in current mappings: " + diff.getFields());
+        Mappings inputMappings = new Mappings();
+        inputMappings.addField("description", "text");
+        inputMappings.addField("updated_at", "date");
+
+        Mappings result = diffStructure("example_table", inputMappings);
+        System.out.println("Fields not in current index mappings: " + result.getFields());
     }
 }

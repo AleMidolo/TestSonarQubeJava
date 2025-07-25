@@ -12,54 +12,66 @@ public class FrameStack {
             return;
         }
 
-        // 判断是否是方法描述符
+        // 判断描述符是否为方法描述符
         if (descriptor.startsWith("(")) {
             // 方法描述符，解析参数类型
             int endIndex = descriptor.indexOf(')');
             if (endIndex == -1) {
                 throw new IllegalArgumentException("Invalid method descriptor: " + descriptor);
             }
-            String params = descriptor.substring(1, endIndex);
-            int paramCount = 0;
-            for (int i = 0; i < params.length(); i++) {
-                char c = params.charAt(i);
-                if (c == 'L') {
-                    // 对象类型，跳过直到分号
-                    i = params.indexOf(';', i);
-                    if (i == -1) {
-                        throw new IllegalArgumentException("Invalid object type in descriptor: " + params);
-                    }
-                } else if (c == '[') {
-                    // 数组类型，跳过所有数组维度
-                    while (i < params.length() && params.charAt(i) == '[') {
-                        i++;
-                    }
-                    if (i >= params.length()) {
-                        throw new IllegalArgumentException("Invalid array type in descriptor: " + params);
-                    }
-                    if (params.charAt(i) == 'L') {
-                        // 对象数组类型，跳过直到分号
-                        i = params.indexOf(';', i);
-                        if (i == -1) {
-                            throw new IllegalArgumentException("Invalid object array type in descriptor: " + params);
-                        }
-                    }
-                }
-                paramCount++;
-            }
+
+            String paramsDescriptor = descriptor.substring(1, endIndex);
+            int paramCount = getParamCount(paramsDescriptor);
+
             // 弹出相应数量的类型
             for (int i = 0; i < paramCount; i++) {
-                if (stack.isEmpty()) {
-                    throw new IllegalStateException("Stack underflow while popping method parameters");
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                } else {
+                    throw new IllegalStateException("Stack underflow");
                 }
-                stack.pop();
             }
         } else {
-            // 单个类型描述符，直接弹出一个类型
-            if (stack.isEmpty()) {
-                throw new IllegalStateException("Stack underflow while popping single type");
+            // 单个类型描述符，弹出一个类型
+            if (!stack.isEmpty()) {
+                stack.pop();
+            } else {
+                throw new IllegalStateException("Stack underflow");
             }
-            stack.pop();
         }
     }
+
+    /**
+     * 计算参数描述符中的参数数量。
+     * @param paramsDescriptor 参数描述符
+     * @return 参数数量
+     */
+    private int getParamCount(String paramsDescriptor) {
+        int count = 0;
+        int i = 0;
+        while (i < paramsDescriptor.length()) {
+            char c = paramsDescriptor.charAt(i);
+            if (c == 'L') {
+                // 对象类型，跳过直到分号
+                i = paramsDescriptor.indexOf(';', i) + 1;
+            } else if (c == '[') {
+                // 数组类型，跳过所有数组维度
+                while (i < paramsDescriptor.length() && paramsDescriptor.charAt(i) == '[') {
+                    i++;
+                }
+                if (i < paramsDescriptor.length() && paramsDescriptor.charAt(i) == 'L') {
+                    i = paramsDescriptor.indexOf(';', i) + 1;
+                } else {
+                    i++;
+                }
+            } else {
+                // 基本类型
+                i++;
+            }
+            count++;
+        }
+        return count;
+    }
+
+    // 其他方法...
 }

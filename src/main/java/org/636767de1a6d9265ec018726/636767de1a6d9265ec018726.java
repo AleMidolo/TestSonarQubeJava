@@ -31,7 +31,7 @@ public class ConfigSnapshot {
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
         // Example logic to build sequence ranges
-        ranges.add(new SequenceRange(0, 10));
+        ranges.add(new SequenceRange(1, 10));
         ranges.add(new SequenceRange(11, 20));
         ranges.add(new SequenceRange(21, 30));
         return ranges;

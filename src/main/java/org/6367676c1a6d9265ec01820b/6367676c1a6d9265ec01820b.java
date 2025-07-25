@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 public class StringUtils {
 
     /**
@@ -11,13 +14,18 @@ public class StringUtils {
             return inString;
         }
 
+        Set<Character> charsToRemove = new HashSet<>();
+        for (char c : charsToDelete.toCharArray()) {
+            charsToRemove.add(c);
+        }
+
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < inString.length(); i++) {
-            char currentChar = inString.charAt(i);
-            if (charsToDelete.indexOf(currentChar) == -1) {
-                result.append(currentChar);
+        for (char c : inString.toCharArray()) {
+            if (!charsToRemove.contains(c)) {
+                result.append(c);
             }
         }
+
         return result.toString();
     }
 

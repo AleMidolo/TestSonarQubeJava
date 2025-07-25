@@ -1,4 +1,4 @@
-public class ArrayUtils {
+public class ArrayCompare {
     /**
      * 比较数组 <code>a</code> 和 <code>b</code> 中的前 <code>count</code> 个字节。
      * @param a     第一个要比较的数组。
@@ -29,7 +29,6 @@ public class ArrayUtils {
 
         System.out.println(arrayequals(a, b, count)); // true
         System.out.println(arrayequals(a, c, count)); // true
-        System.out.println(arrayequals(a, b, 5));    // true
-        System.out.println(arrayequals(a, c, 5));    // false
+        System.out.println(arrayequals(a, c, 5));     // false
     }
 }

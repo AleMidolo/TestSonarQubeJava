@@ -12,14 +12,42 @@ public class Bucket {
     public void setNext(Bucket next) {
         this.next = next;
     }
+}
+
+public class BucketList {
+    private Bucket head;
+
+    public BucketList(Bucket head) {
+        this.head = head;
+    }
 
     public void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            throw new IllegalArgumentException("Bucket cannot be null");
+        if (head == null) {
+            head = bucket;
+            return;
         }
 
-        Bucket currentNext = this.next;
-        this.next = bucket;
-        bucket.setNext(currentNext);
+        Bucket current = head;
+        Bucket previous = null;
+
+        while (current != null && current != bucket) {
+            previous = current;
+            current = current.getNext();
+        }
+
+        if (current == null) {
+            // Bucket not found in the list
+            return;
+        }
+
+        if (previous == null) {
+            // Inserting before the head
+            bucket.setNext(head);
+            head = bucket;
+        } else {
+            // Inserting in the middle or end
+            previous.setNext(bucket);
+            bucket.setNext(current);
+        }
     }
 }

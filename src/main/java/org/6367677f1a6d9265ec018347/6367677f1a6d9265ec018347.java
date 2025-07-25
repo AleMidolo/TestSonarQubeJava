@@ -25,7 +25,7 @@ public class TelnetServer {
     }
 
     /**
-     * 添加一个新的客户端连接。
+     * 添加客户端到列表中。
      * @param client 客户端Socket
      */
     public synchronized void addClient(Socket client) {
@@ -33,7 +33,7 @@ public class TelnetServer {
     }
 
     /**
-     * 移除一个客户端连接。
+     * 从列表中移除客户端。
      * @param client 客户端Socket
      */
     public synchronized void removeClient(Socket client) {

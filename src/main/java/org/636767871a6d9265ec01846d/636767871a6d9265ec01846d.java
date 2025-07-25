@@ -1,7 +1,6 @@
 import java.io.File;
-import java.io.IOException;
 
-public class ConfigurationDirectoryCreator {
+public class MRUDirectoryCreator {
 
     /**
      * 创建将要写入MRU文件列表的目录。在Windows 2000机器上，"lf5"目录会在“文档和设置”目录中创建，而在其他平台上则会在user.home变量指向的位置创建。
@@ -24,7 +23,7 @@ public class ConfigurationDirectoryCreator {
             if (created) {
                 System.out.println("Directory created: " + directoryPath);
             } else {
-                System.err.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
             System.out.println("Directory already exists: " + directoryPath);

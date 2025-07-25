@@ -12,7 +12,7 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toChar(null, 'X'));  // 输出: X
+        System.out.println(toChar(null, 'X')); // 输出: X
         System.out.println(toChar(' ', 'X'));  // 输出:  
         System.out.println(toChar('A', 'X'));  // 输出: A
     }

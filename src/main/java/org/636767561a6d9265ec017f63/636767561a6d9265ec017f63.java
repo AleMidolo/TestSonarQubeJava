@@ -1,10 +1,10 @@
 import java.util.*;
 
-public class GraphTraversal {
+public class Graph {
     private Set<Integer> visited;
     private Set<Integer> vertices;
 
-    public GraphTraversal(Set<Integer> vertices) {
+    public Graph(Set<Integer> vertices) {
         this.vertices = vertices;
         this.visited = new HashSet<>();
     }

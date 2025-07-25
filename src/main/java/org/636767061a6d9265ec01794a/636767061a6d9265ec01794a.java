@@ -9,39 +9,38 @@ public class FileUtils {
         if (filename == null) {
             return -1;
         }
-
+        
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
-
-        // 如果最后一个点号在最后一个分隔符之前，或者没有点号，则返回-1
+        
         if (lastSeparatorIndex > extensionIndex) {
             return -1;
         }
-
+        
         return extensionIndex;
     }
 
     /**
-     * 返回最后一个路径分隔符的索引。该方法可以处理Unix或Windows格式的文件。
+     * 返回最后一个路径分隔符的索引。
      * @param filename 要查找最后一个路径分隔符的文件名
-     * @return 最后一个分隔符的索引，如果没有这样的字符则返回-1
+     * @return 最后一个路径分隔符的索引，如果没有这样的字符则返回-1
      */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }
-
+        
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
-
+        
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("path/to/file.txt")); // 输出: 13
-        System.out.println(indexOfExtension("path/to/file"));    // 输出: -1
-        System.out.println(indexOfExtension("path/to/file."));  // 输出: 13
-        System.out.println(indexOfExtension("path/to/.file"));   // 输出: -1
-        System.out.println(indexOfExtension(null));             // 输出: -1
+        System.out.println(indexOfExtension("example/file.txt")); // 输出: 13
+        System.out.println(indexOfExtension("example/file"));    // 输出: -1
+        System.out.println(indexOfExtension("example/file."));  // 输出: 13
+        System.out.println(indexOfExtension("example/file.txt.zip")); // 输出: 17
+        System.out.println(indexOfExtension(null));              // 输出: -1
     }
 }

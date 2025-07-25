@@ -1,5 +1,5 @@
 /**
- * <p>检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。</p>
+ * 检查一个字符串是否以指定的前缀开头（可选是否忽略大小写）。
  * @see String#startsWith(String)
  * @param str  要检查的字符串，可能为空
  * @param prefix 要查找的前缀，可能为空
@@ -14,7 +14,7 @@ private static boolean startsWith(final String str, final String prefix, final b
         return false;
     }
     if (ignoreCase) {
-        return str.toLowerCase().startsWith(prefix.toLowerCase());
+        return str.regionMatches(true, 0, prefix, 0, prefix.length());
     } else {
         return str.startsWith(prefix);
     }

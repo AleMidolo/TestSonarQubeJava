@@ -1,7 +1,7 @@
 public class CharUtils {
 
     /**
-     * Converts the Character to a char handling <code>null</code>.
+     * Converts the Character to a char handling null.
      * <pre>
      * CharUtils.toChar(null, 'X') = 'X'
      * CharUtils.toChar(' ', 'X')  = ' '
@@ -15,6 +15,7 @@ public class CharUtils {
         return ch != null ? ch : defaultValue;
     }
 
+    // Example usage
     public static void main(String[] args) {
         System.out.println(toChar(null, 'X')); // Output: X
         System.out.println(toChar(' ', 'X'));  // Output:  

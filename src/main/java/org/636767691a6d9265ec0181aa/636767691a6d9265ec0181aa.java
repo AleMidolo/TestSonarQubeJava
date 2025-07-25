@@ -1,4 +1,4 @@
-import java.util.Objects;
+import java.util.Arrays;
 
 public class HashCodeUtil {
 
@@ -11,11 +11,7 @@ public class HashCodeUtil {
         if (array == null) {
             return 0;
         }
-        int result = 1;
-        for (long element : array) {
-            result = 31 * result + Long.hashCode(element);
-        }
-        return result;
+        return Arrays.hashCode(array);
     }
 
     public static void main(String[] args) {

@@ -24,11 +24,16 @@ public class TypeResolver {
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
             Type typeArgument = actualTypeArguments[i];
-            if (typeArgument instanceof Class<?>) {
+            if (typeArgument instanceof Class) {
                 resolvedArguments[i] = (Class<?>) typeArgument;
-            } else if (typeArgument instanceof TypeVariable<?>) {
+            } else if (typeArgument instanceof TypeVariable) {
                 TypeVariable<?> typeVariable = (TypeVariable<?>) typeArgument;
-                resolvedArguments[i] = (Class<?>) typeVariableMap.get(typeVariable.getName());
+                Type resolvedType = typeVariableMap.get(typeVariable.getName());
+                if (resolvedType instanceof Class) {
+                    resolvedArguments[i] = (Class<?>) resolvedType;
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
@@ -41,38 +46,8 @@ public class TypeResolver {
         Map<String, Type> typeVariableMap = new HashMap<>();
         TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
         for (TypeVariable<?> typeParameter : typeParameters) {
-            typeVariableMap.put(typeParameter.getName(), typeParameter.getBounds()[0]);
+            typeVariableMap.put(typeParameter.getName(), typeParameter);
         }
         return typeVariableMap;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Type genericType = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return new Type[] { String.class };
-            }
-
-            @Override
-            public Type getRawType() {
-                return Map.class;
-            }
-
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-
-        Class<?> targetType = Map.class;
-        Class<?>[] resolvedArguments = resolveArguments(genericType, targetType);
-        if (resolvedArguments != null) {
-            for (Class<?> arg : resolvedArguments) {
-                System.out.println(arg);
-            }
-        } else {
-            System.out.println("Arguments could not be resolved.");
-        }
     }
 }

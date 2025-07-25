@@ -12,16 +12,17 @@ public class ArrayComparator {
      * Returns true if the contents of the internal array and the provided array match.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+        if (data == null || internalArray == null) {
             return false;
         }
-
+        if (offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+            return false;
+        }
         for (int i = 0; i < len; i++) {
             if (internalArray[i] != data[offset + i]) {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -33,6 +34,6 @@ public class ArrayComparator {
         int offset = 1;
         int len = 5;
 
-        System.out.println(comparator.equals(data, offset, len)); // Output: true
+        System.out.println(comparator.equals(data, offset, len)); // Should print true
     }
 }

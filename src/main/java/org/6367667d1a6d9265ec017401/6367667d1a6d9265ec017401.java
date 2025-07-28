@@ -65,13 +65,9 @@ public class UnescapeJava {
         return result.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String escapedString = "Hello\\nWorld! This is a test\\tstring.";
-            String unescapedString = unescapeJava(escapedString);
-            System.out.println(unescapedString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String input = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\";
+        String output = unescapeJava(input);
+        System.out.println(output);
     }
 }

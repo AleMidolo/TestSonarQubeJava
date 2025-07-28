@@ -10,7 +10,7 @@ public class ConfigurationDirectoryCreator {
         String osName = System.getProperty("os.name").toLowerCase();
         String directoryPath;
 
-        if (osName.contains("win") && osName.contains("2000")) {
+        if (osName.contains("windows") && osName.contains("2000")) {
             directoryPath = System.getenv("USERPROFILE") + "\\Documents and Settings\\lf5";
         } else {
             directoryPath = userHome + File.separator + "lf5";

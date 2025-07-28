@@ -17,7 +17,7 @@ public class HashCodeUtil {
         long[] array1 = {1L, 2L, 3L};
         long[] array2 = null;
 
-        System.out.println(nullSafeHashCode(array1)); // Example usage
-        System.out.println(nullSafeHashCode(array2)); // Example usage
+        System.out.println(nullSafeHashCode(array1)); // Output: hash code of array1
+        System.out.println(nullSafeHashCode(array2)); // Output: 0
     }
 }

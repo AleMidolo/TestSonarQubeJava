@@ -17,12 +17,12 @@ public class StringArrayUtil {
         newArray[array.length] = str;
         return newArray;
     }
-
+    
     public static void main(String[] args) {
-        String[] originalArray = {"Hello", "World"};
-        String newString = "!";
-        String[] updatedArray = addStringToArray(originalArray, newString);
+        String[] originalArray = {"apple", "banana"};
+        String newString = "cherry";
         
-        System.out.println(Arrays.toString(updatedArray)); // Output: [Hello, World, !]
+        String[] updatedArray = addStringToArray(originalArray, newString);
+        System.out.println(Arrays.toString(updatedArray)); // Output: [apple, banana, cherry]
     }
 }

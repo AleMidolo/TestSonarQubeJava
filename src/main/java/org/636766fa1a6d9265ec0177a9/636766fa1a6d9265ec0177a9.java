@@ -13,6 +13,7 @@ public class AbstractTypeManager {
      * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
      */
     private void addInitializedType(final int abstractType) {
+        // Add the abstract type to the list if it's not already present
         if (!initializedTypes.contains(abstractType)) {
             initializedTypes.add(abstractType);
         }
@@ -27,7 +28,7 @@ public class AbstractTypeManager {
         AbstractTypeManager manager = new AbstractTypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        manager.addInitializedType(1); // Duplicate, should not be added
+        manager.addInitializedType(1); // This will not add a duplicate
 
         System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
     }

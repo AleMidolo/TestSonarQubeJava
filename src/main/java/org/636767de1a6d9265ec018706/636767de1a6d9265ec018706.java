@@ -10,38 +10,45 @@ public class MappingDiffer {
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
         // Assuming Mappings is a class that holds a map of field names to their configurations
-        Mappings currentMappings = getCurrentMappings(tableName);
-        Mappings diffMappings = new Mappings();
-
-        for (Map.Entry<String, FieldMapping> entry : currentMappings.getFieldMappings().entrySet()) {
+        Mappings result = new Mappings();
+        
+        // Get the current mappings for the table
+        Map<String, FieldMapping> currentMappings = getCurrentMappings(tableName);
+        
+        // Iterate through the provided mappings
+        for (Map.Entry<String, FieldMapping> entry : mappings.getMappings().entrySet()) {
             String fieldName = entry.getKey();
-            if (!mappings.getFieldMappings().containsKey(fieldName)) {
-                diffMappings.addFieldMapping(fieldName, entry.getValue());
+            FieldMapping fieldMapping = entry.getValue();
+            
+            // Check if the field is not present in the current mappings
+            if (!currentMappings.containsKey(fieldName)) {
+                // Add to result if it's a new field
+                result.addMapping(fieldName, fieldMapping);
             }
         }
-
-        return diffMappings;
+        
+        return result;
     }
-
-    private Mappings getCurrentMappings(String tableName) {
+    
+    private Map<String, FieldMapping> getCurrentMappings(String tableName) {
         // This method should retrieve the current mappings for the given table name
-        // Placeholder for actual implementation
-        return new Mappings();
+        // For the sake of this example, we will return an empty map
+        return new HashMap<>();
     }
-
+    
     // Placeholder classes for Mappings and FieldMapping
     public static class Mappings {
-        private Map<String, FieldMapping> fieldMappings = new HashMap<>();
-
-        public Map<String, FieldMapping> getFieldMappings() {
-            return fieldMappings;
+        private Map<String, FieldMapping> mappings = new HashMap<>();
+        
+        public Map<String, FieldMapping> getMappings() {
+            return mappings;
         }
-
-        public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
-            fieldMappings.put(fieldName, fieldMapping);
+        
+        public void addMapping(String fieldName, FieldMapping fieldMapping) {
+            mappings.put(fieldName, fieldMapping);
         }
     }
-
+    
     public static class FieldMapping {
         // Define the properties of FieldMapping as needed
     }

@@ -4,7 +4,10 @@ import java.io.InputStreamReader;
 
 public class StringReader {
 
-    @Override
+    /** 
+     * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
+     */
+    @Override 
     public String readString() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter a string: ");

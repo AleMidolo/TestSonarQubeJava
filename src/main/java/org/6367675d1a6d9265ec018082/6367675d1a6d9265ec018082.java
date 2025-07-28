@@ -1,47 +1,40 @@
-class Node {
-    private Node next;
-    private boolean isVirtual;
+import java.util.Objects;
 
-    public Node(boolean isVirtual) {
-        this.isVirtual = isVirtual;
+class Node {
+    private Edge edge;
+    private Node next;
+
+    public Node(Edge edge, Node next) {
+        this.edge = edge;
+        this.next = next;
+    }
+
+    public Edge getEdge() {
+        return edge;
     }
 
     public Node getNext() {
         return next;
     }
-
-    public void setNext(Node next) {
-        this.next = next;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
 }
 
 class Edge {
-    private Node from;
-    private Node to;
+    private String label;
 
-    public Edge(Node from, Node to) {
-        this.from = from;
-        this.to = to;
+    public Edge(String label) {
+        this.label = label;
     }
 
-    public Node getFrom() {
-        return from;
-    }
-
-    public Node getTo() {
-        return to;
+    public String getLabel() {
+        return label;
     }
 }
 
-public class Graph {
+public class GraphNode {
     private Node currentNode;
 
-    public Graph(Node startNode) {
-        this.currentNode = startNode;
+    public GraphNode(Node currentNode) {
+        this.currentNode = currentNode;
     }
 
     /**
@@ -49,21 +42,16 @@ public class Graph {
      * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        Node nextNode = currentNode.getNext();
-        if (nextNode == null) {
-            return null; // या कोई अन्य हैंडलिंग
+        if (currentNode == null || currentNode.getNext() == null) {
+            return null; // No edge if current or next node is null
         }
-
-        // यदि वर्तमान नोड या अगला नोड आभासी है, तो वास्तविक समकक्ष पर जाएं
-        Node fromNode = currentNode.isVirtual() ? getRealEquivalent(currentNode) : currentNode;
-        Node toNode = nextNode.isVirtual() ? getRealEquivalent(nextNode) : nextNode;
-
-        return new Edge(fromNode, toNode);
-    }
-
-    private Node getRealEquivalent(Node node) {
-        // यहाँ वास्तविक समकक्ष प्राप्त करने की लॉजिक लागू करें
-        // यह एक प्लेसहोल्डर है, वास्तविक कार्यान्वयन आवश्यक है
-        return node; // अस्थायी रूप से खुद को लौटाता है
+        Edge nextEdge = currentNode.getEdge();
+        Node nextNode = currentNode.getNext();
+        
+        // If the next node is virtual, return the edge of the next node
+        if (nextNode.getEdge() == null) {
+            return nextEdge; // Return the edge of the current node
+        }
+        return nextNode.getEdge(); // Return the edge of the next node
     }
 }

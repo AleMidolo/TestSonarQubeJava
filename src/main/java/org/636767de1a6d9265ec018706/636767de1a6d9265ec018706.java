@@ -22,9 +22,9 @@ public class Mappings {
         
         Mappings diffMappings = new Mappings();
         
-        for (String fieldName : mappings.getFields().keySet()) {
-            if (!existingFields.containsKey(fieldName)) {
-                diffMappings.addField(fieldName, mappings.getFields().get(fieldName));
+        for (String field : mappings.getFields().keySet()) {
+            if (!existingFields.containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
         
@@ -33,7 +33,7 @@ public class Mappings {
 
     private static Map<String, Object> getExistingFieldsFromIndex(String tableName) {
         // This method should interact with the actual index to retrieve existing fields.
-        // For demonstration purposes, we will return a static map.
+        // For demonstration purposes, we will return a hardcoded map.
         Map<String, Object> existingFields = new HashMap<>();
         existingFields.put("existingField1", "value1");
         existingFields.put("existingField2", "value2");
@@ -44,9 +44,8 @@ public class Mappings {
         Mappings inputMappings = new Mappings();
         inputMappings.addField("newField1", "value1");
         inputMappings.addField("existingField1", "value2");
-        inputMappings.addField("newField2", "value3");
-
+        
         Mappings result = diffStructure("exampleTable", inputMappings);
-        System.out.println("Diff Mappings: " + result.getFields());
+        System.out.println("Fields not in current index: " + result.getFields());
     }
 }

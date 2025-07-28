@@ -13,4 +13,8 @@ public class ObjectRegistry {
             registeredObjects.add(value);
         }
     }
+    
+    public static Set<Object> getRegisteredObjects() {
+        return new HashSet<>(registeredObjects);
+    }
 }

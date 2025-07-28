@@ -13,7 +13,7 @@ public class AbstractTypeStack {
      */
     private int pop() {
         if (outputFrameStack.isEmpty()) {
-            throw new IllegalStateException("Stack is empty. Cannot pop from an empty stack.");
+            throw new IllegalStateException("Stack is empty. Cannot pop.");
         }
         return outputFrameStack.pop();
     }

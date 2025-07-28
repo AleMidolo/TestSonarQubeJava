@@ -1,12 +1,10 @@
-import java.util.Arrays;
-
 public class ByteVector {
     private byte[] data;
-    private int capacity;
+    private int currentSize;
 
     public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.capacity = initialCapacity;
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /** 
@@ -14,11 +12,41 @@ public class ByteVector {
      * @param size number of additional bytes that this byte vector should be able to receive.
      */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            return;
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
         }
-        int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        int newSize = currentSize + size;
+        byte[] newData = new byte[newSize];
+        System.arraycopy(data, 0, newData, 0, currentSize);
+        data = newData;
+    }
+
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public int size() {
+        return currentSize;
+    }
+
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        return data[index];
+    }
+
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector(5);
+        for (int i = 0; i < 10; i++) {
+            byteVector.add((byte) i);
+        }
+        for (int i = 0; i < byteVector.size(); i++) {
+            System.out.println(byteVector.get(i));
+        }
     }
 }

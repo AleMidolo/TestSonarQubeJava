@@ -14,7 +14,7 @@ public class StackMapFrameVisitor {
         this.currentFrameOffset = offset;
         this.currentNumLocal = numLocal;
         this.currentNumStack = numStack;
-        // Assuming the next index to write is the number of local variables
+        // Return the index of the next element to be written, which is the number of local variables
         return numLocal;
     }
 

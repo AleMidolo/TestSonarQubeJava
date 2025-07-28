@@ -18,12 +18,12 @@ public class MyMap<K, V> {
         return map.containsKey(key);
     }
 
-    // Additional methods to add and remove entries for testing purposes
+    // Additional methods to put and get values for testing purposes
     public void put(K key, V value) {
         map.put(key, value);
     }
 
-    public void remove(K key) {
-        map.remove(key);
+    public V get(K key) {
+        return map.get(key);
     }
 }

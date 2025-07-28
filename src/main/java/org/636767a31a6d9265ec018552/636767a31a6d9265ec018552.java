@@ -1,12 +1,13 @@
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class StringReader {
-    private DataInputStream dataInputStream;
 
-    public StringReader(InputStream inputStream) {
-        this.dataInputStream = new DataInputStream(inputStream);
+    private BufferedReader reader;
+
+    public StringReader(InputStreamReader inputStreamReader) {
+        this.reader = new BufferedReader(inputStreamReader);
     }
 
     /** 
@@ -14,9 +15,17 @@ public class StringReader {
      */
     @Override 
     public String readString() throws IOException {
-        int length = dataInputStream.readInt();
-        byte[] bytes = new byte[length];
-        dataInputStream.readFully(bytes);
-        return new String(bytes, "UTF-8");
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        try {
+            StringReader stringReader = new StringReader(new InputStreamReader(System.in));
+            System.out.println("Enter a string:");
+            String input = stringReader.readString();
+            System.out.println("You entered: " + input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class FileUtils {
 
     /**
@@ -13,11 +15,11 @@ public class FileUtils {
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
-        if (lastSeparatorIndex > extensionIndex) {
+        if (extensionIndex > lastSeparatorIndex) {
+            return extensionIndex;
+        } else {
             return -1;
         }
-
-        return extensionIndex;
     }
 
     /**
@@ -30,10 +32,10 @@ public class FileUtils {
             return -1;
         }
 
-        int lastUnixPos = filename.lastIndexOf('/');
-        int lastWindowsPos = filename.lastIndexOf('\\');
+        int lastUnixSeparator = filename.lastIndexOf('/');
+        int lastWindowsSeparator = filename.lastIndexOf('\\');
 
-        return Math.max(lastUnixPos, lastWindowsPos);
+        return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {

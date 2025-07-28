@@ -1,6 +1,6 @@
 import java.nio.charset.StandardCharsets;
 
-public class Utf8Writer {
+public class UTF8Writer {
 
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
         if (str == null) {
@@ -8,35 +8,57 @@ public class Utf8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        for (byte b : utf8Bytes) {
-            lb = ensureCapacity(lb, session);
-            lb.buffer[lb.tail++] = b;
+        int length = utf8Bytes.length;
+
+        // Ensure the buffer has enough space
+        if (lb.remaining() < length) {
+            lb = LinkedBuffer.allocate(Math.max(lb.capacity() * 2, length));
         }
+
+        // Write the length of the UTF-8 bytes first
+        session.writeVarInt32(length, lb);
+
+        // Write the actual UTF-8 bytes
+        lb.put(utf8Bytes, 0, length);
 
         return lb;
     }
+}
 
-    private static LinkedBuffer ensureCapacity(LinkedBuffer lb, WriteSession session) {
-        if (lb.tail >= lb.buffer.length) {
-            lb = session.nextBuffer(lb);
-        }
-        return lb;
+class LinkedBuffer {
+    private byte[] buffer;
+    private int position;
+
+    public LinkedBuffer(int capacity) {
+        this.buffer = new byte[capacity];
+        this.position = 0;
     }
 
-    public static class LinkedBuffer {
-        public byte[] buffer;
-        public int tail;
-
-        public LinkedBuffer(int size) {
-            this.buffer = new byte[size];
-            this.tail = 0;
-        }
+    public int remaining() {
+        return buffer.length - position;
     }
 
-    public static class WriteSession {
-        public LinkedBuffer nextBuffer(LinkedBuffer current) {
-            // Implementation for obtaining the next buffer
-            return new LinkedBuffer(current.buffer.length); // Example: return a new buffer of the same size
+    public int capacity() {
+        return buffer.length;
+    }
+
+    public void put(byte[] src, int offset, int length) {
+        System.arraycopy(src, offset, buffer, position, length);
+        position += length;
+    }
+
+    public static LinkedBuffer allocate(int capacity) {
+        return new LinkedBuffer(capacity);
+    }
+}
+
+class WriteSession {
+    public void writeVarInt32(int value, LinkedBuffer lb) {
+        // Simplified implementation for writing a variable-length integer
+        while ((value & 0xFFFFFF80) != 0) {
+            lb.put(new byte[]{(byte) ((value & 0x7F) | 0x80)}, 0, 1);
+            value >>>= 7;
         }
+        lb.put(new byte[]{(byte) (value & 0x7F)}, 0, 1);
     }
 }

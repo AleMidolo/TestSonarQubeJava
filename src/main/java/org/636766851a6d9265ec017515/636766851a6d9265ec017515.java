@@ -1,5 +1,4 @@
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
 
 public class AtmosphereResourceInspector {
@@ -11,12 +10,12 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r.transport() == TRANSPORT.WEBSOCKET) {
+        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
-        } else if (r.transport() == TRANSPORT.LONG_POLLING) {
-            r.suspend(-1); // Sospende indefinitamente
-        } else {
-            // Altri trasporti non gestiti
+        } else if (r.transport() == AtmosphereResource.TRANSPORT.LONG_POLLING) {
+            r.suspend(-1);
+        } else if (r.transport() == AtmosphereResource.TRANSPORT.STREAMING) {
+            r.suspend(-1);
         }
         return Action.CONTINUE;
     }

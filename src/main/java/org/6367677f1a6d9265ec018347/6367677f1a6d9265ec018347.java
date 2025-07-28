@@ -7,30 +7,28 @@ import java.util.List;
 public class TelnetServer {
     private List<Socket> clients = new ArrayList<>();
 
+    public synchronized void addClient(Socket client) {
+        clients.add(client);
+    }
+
+    public synchronized void removeClient(Socket client) {
+        clients.remove(client);
+    }
+
     /**
      * Invia un messaggio a ciascuno dei client in un formato compatibile con telnet.
      */
     public synchronized void send(final String message) {
         for (Socket client : clients) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
+                OutputStream out = client.getOutputStream();
+                out.write(message.getBytes());
+                out.flush();
             } catch (IOException e) {
                 // Gestisci l'eccezione, ad esempio rimuovendo il client dalla lista
-                clients.remove(client);
+                removeClient(client);
                 e.printStackTrace();
             }
         }
-    }
-
-    // Metodo per aggiungere un client alla lista
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
-    }
-
-    // Metodo per rimuovere un client dalla lista
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
     }
 }

@@ -1,10 +1,11 @@
 public class BooleanArrayConverter {
 
     /**
-     * <p>Converte un array di booleani primitivi in oggetti.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>boolean</code>
-     * @return un array di <code>Boolean</code>, <code>null</code> se l'array di input è null
+     * Converte un array di booleani primitivi in oggetti.
+     * Questo metodo restituisce null per un array di input null.
+     *
+     * @param array un array di boolean
+     * @return un array di Boolean, null se l'array di input è null
      */
     public static Boolean[] toObject(final boolean[] array) {
         if (array == null) {

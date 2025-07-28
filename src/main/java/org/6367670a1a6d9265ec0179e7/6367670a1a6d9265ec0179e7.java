@@ -22,7 +22,7 @@ public class ConverterRegistry {
         registry.put(clazz, converter);
     }
 
-    // Example Converter interface
+    // Esempio di interfaccia Converter
     public interface Converter {
         Object convert(Object input);
     }

@@ -1,10 +1,11 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new java.util.ArrayList<>();
+        this.consumers = new ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
@@ -12,7 +13,7 @@ public class Channels {
     }
 
     public List<IConsumer> getConsumers() {
-        return this.consumers;
+        return consumers;
     }
 }
 
@@ -20,7 +21,7 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetManager {
+public class ChannelManager {
 
     /**
      * Aggiungi un nuovo canale di destinazione.

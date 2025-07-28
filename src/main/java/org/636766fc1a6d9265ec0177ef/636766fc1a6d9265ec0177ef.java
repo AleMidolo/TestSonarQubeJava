@@ -22,14 +22,4 @@ public class ArrayUtils {
 
         return nonNullList.toArray(new String[0]);
     }
-
-    public static void main(String[] args) {
-        // Esempio di utilizzo
-        Object[] testArray = { "Hello", null, "World", null, "Java" };
-        String[] result = toNoNullStringArray(testArray);
-
-        for (String str : result) {
-            System.out.println(str);
-        }
-    }
 }

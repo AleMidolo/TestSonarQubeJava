@@ -6,8 +6,8 @@ public class DefensiveProgramming {
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
-     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p> 
-     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p> 
+     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
+     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>
      * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
      * @param array  l'array da controllare per <code>null</code> o vuoto
      * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
@@ -20,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
-        Character[] array1 = null;
-        Character[] array2 = new Character[0];
-        Character[] array3 = new Character[]{'a', 'b', 'c'};
+        // Test cases
+        Character[] nullArray = null;
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [a, b, c]
+        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Output: []
+        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [a, b, c]
     }
 }

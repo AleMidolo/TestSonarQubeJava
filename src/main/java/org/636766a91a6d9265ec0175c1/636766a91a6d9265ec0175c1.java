@@ -17,10 +17,8 @@ public class ByteVector {
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");
         }
-
         int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        data = newData;
+        data = Arrays.copyOf(data, newCapacity);
         capacity = newCapacity;
     }
 

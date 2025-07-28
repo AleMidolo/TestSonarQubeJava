@@ -1,8 +1,12 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
-public class MetricsCache {
-    private Map<String, Double> cache = new HashMap<>();
+public class Cache {
+
+    private METRICS existingData;
+
+    public Cache(METRICS initialData) {
+        this.existingData = initialData;
+    }
 
     /**
      * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
@@ -10,23 +14,31 @@ public class MetricsCache {
      */
     @Override
     public void accept(final METRICS data) {
-        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            cache.merge(key, value, Double::sum);
+        Objects.requireNonNull(data, "Data cannot be null");
+        if (existingData == null) {
+            existingData = data;
+        } else {
+            existingData.merge(data);
         }
     }
 
-    // Assuming METRICS is a class that contains a map of metrics
-    public static class METRICS {
-        private Map<String, Double> metrics;
+    public METRICS getExistingData() {
+        return existingData;
+    }
+}
 
-        public METRICS(Map<String, Double> metrics) {
-            this.metrics = metrics;
-        }
+class METRICS {
+    private int value;
 
-        public Map<String, Double> getMetrics() {
-            return metrics;
-        }
+    public METRICS(int value) {
+        this.value = value;
+    }
+
+    public void merge(METRICS other) {
+        this.value += other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

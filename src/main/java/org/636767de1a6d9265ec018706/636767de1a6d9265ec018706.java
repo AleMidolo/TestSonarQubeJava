@@ -25,7 +25,7 @@ public class MappingDiff {
      * Non restituire la configurazione _source per evitare conflitti di aggiornamento dell'indice corrente.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulazione delle mappature storiche
+        // Simulazione di mappature storiche
         Mappings historicalMappings = getHistoricalMappings(tableName);
         
         Mappings diffMappings = new Mappings();
@@ -54,10 +54,10 @@ public class MappingDiff {
         Mappings currentMappings = new Mappings();
         currentMappings.addField("name", "string");
         
-        Mappings result = mappingDiff.diffStructure("example_table", currentMappings);
+        Mappings diff = mappingDiff.diffStructure("example_table", currentMappings);
         
         System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
+        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
             System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
         }
     }

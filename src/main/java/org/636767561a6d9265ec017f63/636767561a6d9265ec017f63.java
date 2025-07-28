@@ -37,9 +37,8 @@ public class GraphIterator implements Iterator<Vertex> {
         currentIndex++;
         return vertex;
     }
-    
-    // Assuming Vertex is a class defined elsewhere
-    public static class Vertex {
-        // Vertex properties and methods
-    }
+}
+
+class Vertex {
+    // Vertex implementation
 }

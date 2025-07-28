@@ -9,7 +9,7 @@ public class CustomAppender extends AppenderSkeleton {
         String message = event.getRenderedMessage();
         
         // Here you would implement the logic to send the message to each connected client
-        // For demonstration purposes, we'll just print it to the console
+        // For demonstration purposes, we will just print the message to the console
         System.out.println("Logging to clients: " + message);
         
         // You can add your logic to handle connected clients and send the message to them

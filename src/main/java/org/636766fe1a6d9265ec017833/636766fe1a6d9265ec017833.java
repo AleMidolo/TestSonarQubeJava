@@ -13,7 +13,7 @@ public class FileDeletionScheduler {
         if (file == null) {
             throw new NullPointerException("Il file non deve essere null");
         }
-        
+
         if (file.isDirectory()) {
             deleteDirectoryOnExit(file);
         } else {

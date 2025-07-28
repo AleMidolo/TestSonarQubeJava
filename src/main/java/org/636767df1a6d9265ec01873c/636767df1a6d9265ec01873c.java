@@ -4,7 +4,7 @@ public class Entity {
      * @return l'id della riga
      */
     public String id(String entityId) {
-        // Assuming the entityId is the row ID we want to return
+        // Assuming the entityId is the row id we want to return
         return entityId;
     }
 

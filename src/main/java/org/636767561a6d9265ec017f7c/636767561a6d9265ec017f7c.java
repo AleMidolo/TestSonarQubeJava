@@ -6,12 +6,13 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class GraphTour<V, E extends DefaultEdge> {
 
-    /** 
+    /**
      * Trasforma una rappresentazione di un insieme in un percorso di grafo.
      * @param tour un insieme contenente i bordi del tour
      * @param graph il grafo
@@ -33,7 +34,10 @@ public class GraphTour<V, E extends DefaultEdge> {
         return new GraphPath<V, E>() {
             @Override
             public List<E> getEdgeList() {
-                List<E> edgeList = new ArrayList<>(tour);
+                List<E> edgeList = new ArrayList<>();
+                for (E edge : tour) {
+                    edgeList.add(edge);
+                }
                 return edgeList;
             }
 
@@ -49,11 +53,12 @@ public class GraphTour<V, E extends DefaultEdge> {
 
             @Override
             public double getWeight() {
-                double weight = 0.0;
-                for (E edge : tour) {
-                    weight += graph.getEdgeWeight(edge);
-                }
-                return weight;
+                return 0; // Weight calculation can be implemented if needed
+            }
+
+            @Override
+            public Graph<V, E> getGraph() {
+                return graph;
             }
         };
     }

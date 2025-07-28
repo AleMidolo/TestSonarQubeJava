@@ -1,38 +1,24 @@
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EnumToStringArray {
+public class EnumerationToStringArray {
 
-    /** 
-     * 将给定的枚举值复制到字符串数组中。枚举值必须仅包含字符串元素。
-     * @param enumeration 要复制的枚举值
-     * @return 字符串数组（如果传入的枚举为 <code>null</code>，则返回 <code>null</code>）
+    /**
+     * Copia l'Enumeration fornita in un array di Stringhe. L'Enumeration deve contenere solo elementi di tipo String.
+     * @param enumeration l'Enumeration da copiare
+     * @return l'array di Stringhe (<code>null</code> se l'Enumeration passata era <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {
             return null;
         }
 
-        Vector<String> vector = new Vector<>();
+        List<String> list = new ArrayList<>();
         while (enumeration.hasMoreElements()) {
-            vector.add(enumeration.nextElement());
+            list.add(enumeration.nextElement());
         }
 
-        return vector.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // 示例用法
-        Vector<String> vector = new Vector<>();
-        vector.add("Apple");
-        vector.add("Banana");
-        vector.add("Cherry");
-
-        Enumeration<String> enumeration = vector.elements();
-        String[] result = toStringArray(enumeration);
-
-        for (String str : result) {
-            System.out.println(str);
-        }
+        return list.toArray(new String[0]);
     }
 }

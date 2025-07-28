@@ -1,30 +1,16 @@
-import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.gson.JsonObject;
 
-public class ContentBuilder {
+private Map<String, Object> buildContent(JsonObject jsonObject) {
+    Map<String, Object> content = new HashMap<>();
 
-    /** 
-     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
-     */
-    private Map<String, Object> buildContent(JsonObject jsonObject) {
-        Map<String, Object> contentMap = new HashMap<>();
-        
-        // Assuming the JsonObject has a field "content" that we need to check for '@'
-        String content = jsonObject.get("content").getAsString();
-        
-        if (content.contains("@")) {
-            // Extract the mentioned user(s) from the content
-            String[] parts = content.split(" ");
-            for (String part : parts) {
-                if (part.startsWith("@")) {
-                    String mentionedUser = part.substring(1); // Remove '@'
-                    contentMap.put("mentionedUser", mentionedUser);
-                }
-            }
-        }
-        
-        contentMap.put("originalContent", content);
-        return contentMap;
+    if (jsonObject.has("ATS")) {
+        content.put("ATS", jsonObject.get("ATS").getAsString());
     }
+
+    // Aggiungi altri campi se necessario
+    // Esempio: content.put("altroCampo", jsonObject.get("altroCampo").getAsString());
+
+    return content;
 }

@@ -1,30 +1,34 @@
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TemplateEncoder {
-    /**
-     * 对包含模板参数名称的字符串进行编，特别是字符 '{' 和 '}' 将被百分比编码。
-     * @param s 包含零个或多个模板参数名称的字符串
-     * @return 编码后的模板参数名称字符串。
-     */
+
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
-        
-        try {
-            // Encode the string using UTF-8 and replace '{' and '}' with their percent-encoded values
-            String encoded = URLEncoder.encode(s, "UTF-8");
-            encoded = encoded.replace("+", "%20"); // Replace spaces with %20
-            return encoded.replace("%7B", "{").replace("%7D", "}");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 encoding not supported", e);
+
+        // Create a map to hold the characters to be encoded and their corresponding encoded values
+        Map<Character, String> encodingMap = new HashMap<>();
+        encodingMap.put('{', "%7B");
+        encodingMap.put('}', "%7D");
+
+        StringBuilder encodedString = new StringBuilder();
+
+        for (char c : s.toCharArray()) {
+            if (encodingMap.containsKey(c)) {
+                encodedString.append(encodingMap.get(c));
+            } else {
+                encodedString.append(c);
+            }
         }
+
+        return encodedString.toString();
     }
 
     public static void main(String[] args) {
-        String input = "Hello {name}, welcome to {place}!";
+        String input = "This is a {template} with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
     }
 }

@@ -1,9 +1,9 @@
-public class QuoteIfStringExample {
+public class StringQuoter {
 
     /**
-     * 如果给定的对象是字符串，则将其转换为带单引号的字符串；否则保持对象不变。
-     * @param obj 输入对象（例如："myString"）
-     * @return 带引号的字符串（例如："‘myString’"），如果不是字符串，则返回输入对象本身
+     * Trasforma l'oggetto fornito in una Stringa con virgolette singole se è una Stringa; altrimenti, mantiene l'oggetto così com'è.
+     * @param obj l'oggetto di input (ad esempio, "myString")
+     * @return la Stringa quotata (ad esempio, "'myString'"), oppure l'oggetto di input così com'è se non è una Stringa
      */
     public static Object quoteIfString(Object obj) {
         if (obj instanceof String) {
@@ -13,8 +13,9 @@ public class QuoteIfStringExample {
     }
 
     public static void main(String[] args) {
-        System.out.println(quoteIfString("myString")); // 输出: 'myString'
-        System.out.println(quoteIfString(123));        // 输出: 123
-        System.out.println(quoteIfString(null));       // 输出: null
+        // Test cases
+        System.out.println(quoteIfString("myString")); // Output: 'myString'
+        System.out.println(quoteIfString(123));       // Output: 123
+        System.out.println(quoteIfString(true));      // Output: true
     }
 }

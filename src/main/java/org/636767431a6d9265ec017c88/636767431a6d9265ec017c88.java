@@ -1,23 +1,32 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class LowerBoundCalculator<K> {
+public class LowerBoundsCalculator<K extends Comparable<K>> {
 
-    /** 
-     * 为每个键找到一个最大下界。
-     * @param keys 键的列表。
-     * @return 计算出的键的下界。
+    /**
+     * Trova un limite inferiore massimo per ogni chiave.
+     * @param keys lista delle chiavi.
+     * @return i limiti inferiori delle chiavi calcolati.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        List<Integer> lowerBounds = new ArrayList<>();
-        
-        for (K key : keys) {
-            // Here we assume a simple logic to compute lower bounds.
-            // In a real scenario, this logic would depend on the specific requirements.
-            int lowerBound = key.hashCode() % 100; // Example logic
-            lowerBounds.add(lowerBound);
+        if (keys == null || keys.isEmpty()) {
+            return Collections.emptyList();
         }
-        
+
+        List<Integer> lowerBounds = new ArrayList<>();
+        List<K> sortedKeys = new ArrayList<>(keys);
+        Collections.sort(sortedKeys);
+
+        for (K key : keys) {
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                // Se la chiave non è presente, Collections.binarySearch restituisce (-(insertion point) - 1)
+                index = -index - 1;
+            }
+            lowerBounds.add(index);
+        }
+
         return lowerBounds;
     }
 }

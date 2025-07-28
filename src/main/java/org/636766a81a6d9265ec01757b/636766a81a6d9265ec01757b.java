@@ -1,53 +1,17 @@
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONWriter;
+import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.JSON;
 
-public class JsonSerializer {
+public class MyClass {
 
     /**
-     * 序列化为 JSON {@link String}
-     * @param features 在序列化中启用的特性
+     * Serializza in JSON {@link String}
+     * @param features funzionalità da abilitare nella serializzazione
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
-        // Example object to serialize
-        MyObject obj = new MyObject("example", 123);
-        
-        // Serialize the object to JSON string with the provided features
-        return JSON.toJSONString(obj, features);
-    }
-
-    // Example class to serialize
-    public static class MyObject {
-        private String name;
-        private int value;
-
-        public MyObject(String name, int value) {
-            this.name = name;
-            this.value = value;
-        }
-
-        // Getters and setters (if needed)
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-    }
-
-    public static void main(String[] args) {
-        JsonSerializer serializer = new JsonSerializer();
-        String jsonString = serializer.toString(JSONWriter.Feature.PrettyFormat);
-        System.out.println(jsonString);
+        // Assuming this method is part of a class that can be serialized to JSON
+        // Using Fastjson2 to serialize the object to a JSON string with the specified features
+        return JSON.toJSONString(this, features);
     }
 }

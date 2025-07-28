@@ -1,36 +1,31 @@
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AppenderManager {
+public class Logger {
     private List<Appender> appenders;
 
-    public AppenderManager(List<Appender> appenders) {
-        this.appenders = appenders;
+    public Logger() {
+        this.appenders = new ArrayList<>();
     }
 
-    /** 
-     * 从附加器列表中移除指定名称的附加器。
+    /**
+     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.
+     * @param name Il nome dell'appender da rimuovere.
      */
     public void removeAppender(String name) {
-        Iterator<Appender> iterator = appenders.iterator();
-        while (iterator.hasNext()) {
-            Appender appender = iterator.next();
-            if (appender.getName().equals(name)) {
-                iterator.remove();
-                break;
-            }
+        appenders.removeIf(appender -> appender.getName().equals(name));
+    }
+
+    // Classe interna per rappresentare un Appender
+    private static class Appender {
+        private String name;
+
+        public Appender(String name) {
+            this.name = name;
         }
-    }
-}
 
-class Appender {
-    private String name;
-
-    public Appender(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        public String getName() {
+            return name;
+        }
     }
 }

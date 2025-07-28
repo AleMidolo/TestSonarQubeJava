@@ -1,39 +1,47 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int size;
+    private int readPointer;
 
-    public ClassFileBuffer() {
-        this.buffer = new byte[0];
-        this.size = 0;
+    public ClassFileBuffer(int bufferSize) {
+        this.buffer = new byte[bufferSize];
+        this.readPointer = 0;
     }
 
     /**
-     * 清空并用提供的字节流填充此 {@code ClassFileBuffer} 的缓冲区。读取指针重置为字节数组的起始位置。
+     * Svuota e riempie il buffer di questo {@code ClassFileBuffer} con il flusso di byte fornito. 
+     * Il puntatore di lettura viene ripristinato all'inizio dell'array di byte.
      */
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the existing buffer
-        this.buffer = new byte[0];
-        this.size = 0;
+        // Svuota il buffer
+        this.buffer = new byte[this.buffer.length];
+        this.readPointer = 0;
 
-        // Use ByteArrayOutputStream to read the InputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] tempBuffer = new byte[1024];
+        // Legge i byte dall'InputStream e li inserisce nel buffer
         int bytesRead;
-
-        // Read from the InputStream and write to ByteArrayOutputStream
-        while ((bytesRead = in.read(tempBuffer)) != -1) {
-            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
+        while ((bytesRead = in.read(this.buffer, this.readPointer, this.buffer.length - this.readPointer)) != -1) {
+            this.readPointer += bytesRead;
+            if (this.readPointer >= this.buffer.length) {
+                break;
+            }
         }
 
-        // Convert ByteArrayOutputStream to byte array
-        this.buffer = byteArrayOutputStream.toByteArray();
-        this.size = this.buffer.length;
+        // Ripristina il puntatore di lettura all'inizio del buffer
+        this.readPointer = 0;
+    }
 
-        // Reset the read pointer (if applicable, depending on how you manage reading)
-        // In this case, we just ensure the buffer is ready to be read from the start
+    // Metodi aggiuntivi per gestire il buffer e il puntatore di lettura
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    public int getReadPointer() {
+        return readPointer;
+    }
+
+    public void setReadPointer(int readPointer) {
+        this.readPointer = readPointer;
     }
 }

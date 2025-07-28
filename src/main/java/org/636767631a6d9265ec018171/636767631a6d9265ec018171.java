@@ -16,31 +16,32 @@ public class LinkedList<E> {
     }
 
     /**
-     * 从列表中移除非空的 {@code node}。
+     * Rimuove il nodo non nullo {@code node} dalla lista.
      */
     private boolean unlink(ListNodeImpl<E> node) {
-        if (node == null || head == null) {
+        if (node == null) {
             return false;
         }
 
-        // If the node to unlink is the head
+        // Caso speciale: il nodo da rimuovere è la testa
         if (node == head) {
             head = head.next;
             return true;
         }
 
-        // Find the previous node
+        // Trova il nodo precedente a quello da rimuovere
         ListNodeImpl<E> current = head;
         while (current != null && current.next != node) {
             current = current.next;
         }
 
-        // If the node was found
-        if (current != null) {
-            current.next = node.next;
-            return true;
+        // Se il nodo non è stato trovato nella lista
+        if (current == null) {
+            return false;
         }
 
-        return false; // Node not found
+        // Rimuovi il nodo dalla lista
+        current.next = node.next;
+        return true;
     }
 }

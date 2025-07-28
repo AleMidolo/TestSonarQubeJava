@@ -1,29 +1,17 @@
-import java.util.HashMap;
 import java.util.Map;
 
-public class MyMap<K, V> {
-    private Map<K, V> map;
+public class MyMap<K, V> implements Map<K, V> {
+    // Assuming this class has a private field `entries` that stores the key-value pairs
+    private final Map<K, V> entries;
 
-    public MyMap() {
-        this.map = new HashMap<>();
+    public MyMap(Map<K, V> entries) {
+        this.entries = entries;
     }
 
-    /**
-     * 如果此映射包含指定键的映射，则返回<code>true</code>。
-     * @param key 要搜索的键
-     * @return 如果映射包含该键，则返回真
-     */
-    @Override 
+    @Override
     public boolean containsKey(final Object key) {
-        return map.containsKey(key);
+        return entries.containsKey(key);
     }
 
-    // Additional methods to put and get values for testing purposes
-    public void put(K key, V value) {
-        map.put(key, value);
-    }
-
-    public V get(K key) {
-        return map.get(key);
-    }
+    // Other methods of the Map interface would need to be implemented here
 }

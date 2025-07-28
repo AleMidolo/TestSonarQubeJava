@@ -1,31 +1,50 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MetricsHandler implements java.util.function.Consumer<METRICS> {
-    private final Map<String, Integer> metricsCache = new HashMap<>();
+public class MetricsCache {
+    private Map<String, METRICS> cache = new HashMap<>();
 
     /**
-     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
-     * @param data 需要添加的数据。
+     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
+     * @param data da aggiungere potenzialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        if (data != null) {
-            for (Map.Entry<String, Integer> entry : data.getMetrics().entrySet()) {
-                metricsCache.merge(entry.getKey(), entry.getValue(), Integer::sum);
-            }
+        if (data == null) {
+            return;
+        }
+
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve a unique identifier
+        METRICS existingData = cache.get(key);
+
+        if (existingData == null) {
+            cache.put(key, data);
+        } else {
+            // Merge the existing data with the new data
+            existingData.merge(data); // Assuming METRICS has a method merge(METRICS) to combine data
         }
     }
-}
 
-class METRICS {
-    private final Map<String, Integer> metrics;
+    // Assuming METRICS is a class with necessary methods
+    public static class METRICS {
+        private String key;
+        private Map<String, Object> metricsData;
 
-    public METRICS(Map<String, Integer> metrics) {
-        this.metrics = metrics;
-    }
+        public METRICS(String key, Map<String, Object> metricsData) {
+            this.key = key;
+            this.metricsData = metricsData;
+        }
 
-    public Map<String, Integer> getMetrics() {
-        return metrics;
+        public String getKey() {
+            return key;
+        }
+
+        public void merge(METRICS other) {
+            if (other != null && other.metricsData != null) {
+                for (Map.Entry<String, Object> entry : other.metricsData.entrySet()) {
+                    this.metricsData.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
     }
 }

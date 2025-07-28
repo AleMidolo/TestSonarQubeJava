@@ -2,24 +2,29 @@ import java.nio.charset.StandardCharsets;
 
 public class UTF8SizeCalculator {
 
-    /** 
-     * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
+    /**
+     * Calcola la dimensione della stringa utf8 che inizia all'indice specificato {@code index} con la lunghezza specificata {@code length}.
+     *
+     * @param str   La sequenza di caratteri da cui calcolare la dimensione UTF-8.
+     * @param index L'indice iniziale della sottostringa.
+     * @param len   La lunghezza della sottostringa.
+     * @return La dimensione in byte della sottostringa in formato UTF-8.
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
-        if (str == null) {
-            throw new IllegalArgumentException("Input string cannot be null");
-        }
-        if (index < 0 || len < 0 || index + len > str.length()) {
-            throw new IndexOutOfBoundsException("Index or length is out of bounds");
+        if (str == null || index < 0 || len < 0 || index + len > str.length()) {
+            throw new IllegalArgumentException("Invalid input parameters");
         }
 
         String substring = str.subSequence(index, index + len).toString();
-        return substring.getBytes(StandardCharsets.UTF_8).length;
+        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
+        return utf8Bytes.length;
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, 世界"; // Example string
-        int size = computeUTF8Size(testString, 7, 2); // Calculate size of "世界"
-        System.out.println("UTF-8 size: " + size); // Output the size
+        CharSequence str = "Ciao, mondo!";
+        int index = 0;
+        int len = 4;
+        int size = computeUTF8Size(str, index, len);
+        System.out.println("Dimensione UTF-8: " + size + " byte");
     }
 }

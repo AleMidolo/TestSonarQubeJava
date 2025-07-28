@@ -1,29 +1,43 @@
-public class ArrayComparer {
-    
-    /** 
-     * 如果内部数组的内容与提供的数组匹配，则返回真。
+import java.util.Arrays;
+
+public class ByteArrayComparator {
+
+    /**
+     * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
+     *
+     * @param data   L'array di byte da confrontare.
+     * @param offset L'indice iniziale nell'array interno da cui iniziare il confronto.
+     * @param len    La lunghezza del segmento da confrontare.
+     * @return true se i contenuti corrispondono, false altrimenti.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
+        // Supponiamo che l'array interno sia 'internalData'
+        byte[] internalData = getInternalData(); // Metodo fittizio per ottenere l'array interno
+
+        // Controllo dei limiti
+        if (offset < 0 || len < 0 || offset + len > internalData.length || len > data.length) {
             return false;
         }
-        
-        byte[] internalArray = getInternalArray(); // 假设这是获取内部数组的方法
-        if (internalArray.length < len) {
-            return false;
-        }
-        
+
+        // Confronto i segmenti degli array
         for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
+            if (internalData[offset + i] != data[i]) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
-    private byte[] getInternalArray() {
-        // 这里返回内部数组的示例实现
-        return new byte[] {1, 2, 3, 4, 5}; // 示例内部数组
+
+    // Metodo fittizio per ottenere l'array interno
+    private byte[] getInternalData() {
+        return new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 }; // Esempio di array interno
+    }
+
+    public static void main(String[] args) {
+        ByteArrayComparator comparator = new ByteArrayComparator();
+        byte[] data = { 0x02, 0x03, 0x04 };
+        boolean result = comparator.equals(data, 1, 3);
+        System.out.println(result); // Output: true
     }
 }

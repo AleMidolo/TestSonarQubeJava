@@ -1,21 +1,20 @@
 import java.util.List;
 
-public class AppenderManager {
+public class Logger {
     private List<Appender> appenders;
 
-    public AppenderManager(List<Appender> appenders) {
-        this.appenders = appenders;
-    }
-
-    /** 
-     * 如果指定的Appender在Appender列表中，则返回<code>true</code>，否则返回<code>false</code>。
-     * @since 1.2 
+    /**
+     * Restituisce <code>true</code> se l'appender specificato è presente nell'elenco degli appender allegati, <code>false</code> altrimenti.
+     * @param appender L'appender da cercare.
+     * @return <code>true</code> se l'appender è presente, <code>false</code> altrimenti.
+     * @since 1.2
      */
     public boolean isAttached(Appender appender) {
         return appenders.contains(appender);
     }
 }
 
-class Appender {
-    // Appender class implementation
+// Assuming Appender is a class or interface defined elsewhere
+interface Appender {
+    // Appender methods
 }

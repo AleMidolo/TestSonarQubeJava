@@ -1,20 +1,19 @@
-public class ContentRangeBuilder {
+/**
+ * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
+ * @return valore 'Content-Range'
+ */
+private String buildContentRange() {
+    // Assuming you have the following variables defined in your class:
+    // long start: the start byte of the range
+    // long end: the end byte of the range
+    // long totalSize: the total size of the resource
 
-    /**
-     * 构建 'Content-Range' HTTP 头部值。
-     * @return 'Content-Range' 值
-     */
-    private String buildContentRange() {
-        long start = 0; // 起始字节
-        long end = 1023; // 结束字节
-        long total = 2048; // 总字节数
+    // Example values (you should replace these with actual values)
+    long start = 0;
+    long end = 1023;
+    long totalSize = 2048;
 
-        return String.format("bytes %d-%d/%d", start, end, total);
-    }
-
-    public static void main(String[] args) {
-        ContentRangeBuilder builder = new ContentRangeBuilder();
-        String contentRange = builder.buildContentRange();
-        System.out.println(contentRange);
-    }
+    // Construct the Content-Range header value
+    String contentRange = String.format("bytes %d-%d/%d", start, end, totalSize);
+    return contentRange;
 }

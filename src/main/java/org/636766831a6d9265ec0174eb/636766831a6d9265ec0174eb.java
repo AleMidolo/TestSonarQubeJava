@@ -1,28 +1,32 @@
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 
-public class FileManager {
+public class FileAdder {
 
-    /** 
-     * 以逆序添加指定的文件。
+    /**
+     * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final File[] files) {
-        if (files == null || files.length == 0) {
+        if (files == null) {
             return;
         }
-        
-        for (int i = files.length - 1; i >= 0; i--) {
-            addFile(files[i]);
-        }
-    }
 
-    private void addFile(File file) {
-        // Implementation for adding a file
-        System.out.println("Adding file: " + file.getName());
+        List<File> fileList = new ArrayList<>();
+        Collections.addAll(fileList, files);
+        Collections.reverse(fileList);
+
+        // Example of processing the reversed list
+        for (File file : fileList) {
+            System.out.println(file.getName());
+        }
     }
 
     public static void main(String[] args) {
-        FileManager fileManager = new FileManager();
+        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        fileManager.addReverse(files);
+        FileAdder fileAdder = new FileAdder();
+        fileAdder.addReverse(files);
     }
 }

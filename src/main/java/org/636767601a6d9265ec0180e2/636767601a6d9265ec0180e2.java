@@ -1,36 +1,61 @@
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
 
-public class GraphSeparator {
+public class Graph {
 
-    // Assuming E is a class representing an edge in the graph
-    private List<E> edges; // List of edges in the graph
+    // Assuming E is a generic type representing an edge
+    private static class E {
+        // Edge properties and methods
+    }
 
-    /**
-     * 计算图 {@code graph} 的全局分隔符列表。更准确地说，对于图 $G = (V, E)$ 中的每条边 $e$，计算边 $e$ 邻域中的最小分隔符列表 $S_e$，然后将这些列表连接起来。注意：结果可能包含重复项。
-     * @return 被检查图中每条边 $e$ 的最小分隔符列表
-     */
+    private static class Pair<A, B> {
+        private A first;
+        private B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
+    }
+
+    // Method to compute the global separator list
     private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
+        // Placeholder for the graph's edges
+        List<E> edges = new ArrayList<>();
+        // Placeholder for the result
         List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
+        // Iterate over each edge in the graph
         for (E edge : edges) {
-            List<Pair<Integer, Integer>> separatorList = computeSeparatorForEdge(edge);
-            globalSeparatorList.add(new Pair<>(separatorList, edge));
+            // Compute the minimal separators in the neighborhood of the edge
+            List<Pair<Integer, Integer>> separators = computeMinimalSeparators(edge);
+
+            // Add the pair (separators, edge) to the global list
+            globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
         return globalSeparatorList;
     }
 
-    // Placeholder method to compute the separator for a given edge
-    private List<Pair<Integer, Integer>> computeSeparatorForEdge(E edge) {
-        // Implement the logic to find the minimum separator for the given edge
-        // This is a placeholder and should be replaced with actual logic
+    // Placeholder method to compute minimal separators for a given edge
+    private List<Pair<Integer, Integer>> computeMinimalSeparators(E edge) {
+        // This method should implement the logic to find minimal separators in the neighborhood of the edge
+        // For now, it returns an empty list
         return new ArrayList<>();
     }
 
-    // Placeholder class for edge representation
-    private static class E {
-        // Edge properties and methods
+    public static void main(String[] args) {
+        // Example usage
+        Graph graph = new Graph();
+        List<Pair<List<Pair<Integer, Integer>>, E>> result = graph.computeGlobalSeparatorList();
+        // Process the result as needed
     }
 }

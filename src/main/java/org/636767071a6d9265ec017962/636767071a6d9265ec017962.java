@@ -1,34 +1,64 @@
-import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.beanutils.BeanMap;
 
-public class BeanMap {
-    private Map<String, Object> properties = new HashMap<>();
+public class MyBeanMap {
+
+    private Object bean;
+
+    public MyBeanMap(Object bean) {
+        this.bean = bean;
+    }
 
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            return;
+            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
-        
-        for (String propertyName : map.properties.keySet()) {
-            try {
-                PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, this.getClass());
-                if (descriptor.getWriteMethod() != null) {
-                    this.properties.put(propertyName, map.properties.get(propertyName));
-                }
-            } catch (Exception e) {
-                // Ignore properties that do not have a corresponding PropertyDescriptor
+
+        BeanMap thisBeanMap = new BeanMap(this.bean);
+        for (Object key : map.keySet()) {
+            if (thisBeanMap.isWriteable((String) key)) {
+                thisBeanMap.put(key, map.get(key));
             }
         }
     }
 
-    // Example method to set properties for testing
-    public void setProperty(String name, Object value) {
-        properties.put(name, value);
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        MyBean myBean = new MyBean();
+        MyBean anotherBean = new MyBean();
+
+        BeanMap beanMap = new BeanMap(myBean);
+        BeanMap anotherBeanMap = new BeanMap(anotherBean);
+
+        // Imposta alcune proprietà scrivibili
+        anotherBeanMap.put("property1", "value1");
+        anotherBeanMap.put("property2", "value2");
+
+        MyBeanMap myBeanMap = new MyBeanMap(myBean);
+        myBeanMap.putAllWriteable(anotherBeanMap);
+
+        // Verifica che le proprietà siano state copiate correttamente
+        System.out.println(beanMap.get("property1")); // Output: value1
+        System.out.println(beanMap.get("property2")); // Output: value2
+    }
+}
+
+class MyBean {
+    private String property1;
+    private String property2;
+
+    public String getProperty1() {
+        return property1;
     }
 
-    // Example method to get properties for testing
-    public Object getProperty(String name) {
-        return properties.get(name);
+    public void setProperty1(String property1) {
+        this.property1 = property1;
+    }
+
+    public String getProperty2() {
+        return property2;
+    }
+
+    public void setProperty2(String property2) {
+        this.property2 = property2;
     }
 }

@@ -1,57 +1,51 @@
+import java.util.Objects;
+
 public class FieldChecker {
-    
+
     private Fields storedFields;
 
     public FieldChecker(Fields storedFields) {
         this.storedFields = storedFields;
     }
 
-    /**
-     * 当输入字段已经存储在属性中时返回真。
-     */
     private boolean containsAllFields(Fields fields) {
-        for (Field field : fields.getAllFields()) {
-            if (!storedFields.contains(field)) {
-                return false;
-            }
+        if (fields == null || storedFields == null) {
+            return false;
         }
-        return true;
+        return Objects.equals(fields.getField1(), storedFields.getField1()) &&
+               Objects.equals(fields.getField2(), storedFields.getField2()) &&
+               Objects.equals(fields.getField3(), storedFields.getField3());
+    }
+
+    public static void main(String[] args) {
+        Fields storedFields = new Fields("value1", "value2", "value3");
+        Fields inputFields = new Fields("value1", "value2", "value3");
+
+        FieldChecker checker = new FieldChecker(storedFields);
+        System.out.println(checker.containsAllFields(inputFields)); // Output: true
     }
 }
 
 class Fields {
-    private Set<Field> fieldSet;
+    private String field1;
+    private String field2;
+    private String field3;
 
-    public Fields(Set<Field> fieldSet) {
-        this.fieldSet = fieldSet;
+    public Fields(String field1, String field2, String field3) {
+        this.field1 = field1;
+        this.field2 = field2;
+        this.field3 = field3;
     }
 
-    public Set<Field> getAllFields() {
-        return fieldSet;
+    public String getField1() {
+        return field1;
     }
 
-    public boolean contains(Field field) {
-        return fieldSet.contains(field);
-    }
-}
-
-class Field {
-    private String name;
-
-    public Field(String name) {
-        this.name = name;
+    public String getField2() {
+        return field2;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Field)) return false;
-        Field other = (Field) obj;
-        return name.equals(other.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
+    public String getField3() {
+        return field3;
     }
 }

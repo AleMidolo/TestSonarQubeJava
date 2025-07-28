@@ -1,44 +1,30 @@
 public class TimeBucketCompressor {
 
     /**
-     * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，
-     * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
+     * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale.
+     * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101,
+     * per 20000115 è 20000112, e per 20000123 è 20000123.
+     *
+     * @param timeBucket Il bucket temporale da comprimere, in formato YYYYMMDD.
+     * @param dayStep Il passo giornaliero per la compressione.
+     * @return Il bucket temporale compresso.
      */
-    static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Extract year, month, and day from the timeBucket
-        int year = (int) (timeBucket / 10000);
-        int month = (int) ((timeBucket % 10000) / 100);
+    public static long compressTimeBucket(long timeBucket, int dayStep) {
+        // Estrai l'anno e il mese dal timeBucket
+        long yearMonth = (timeBucket / 100) * 100;
         int day = (int) (timeBucket % 100);
 
-        // Calculate the total number of days from the start of the year
-        int totalDays = (month - 1) * 30 + day; // Simplified calculation, not accounting for actual month lengths
+        // Calcola il giorno compresso
+        int compressedDay = ((day - 1) / dayStep) * dayStep + 1;
 
-        // Calculate the new day based on the dayStep
-        int newTotalDays = (totalDays / dayStep) * dayStep;
-
-        // Calculate the new month and day
-        int newMonth = newTotalDays / 30 + 1; // Simplified calculation
-        int newDay = newTotalDays % 30;
-
-        // Adjust for month overflow
-        if (newDay == 0) {
-            newDay = 30;
-            newMonth--;
-        }
-
-        // Construct the new timeBucket
-        long newTimeBucket = year * 10000 + newMonth * 100 + newDay;
-        return newTimeBucket;
+        // Ricostruisci il timeBucket compresso
+        return yearMonth + compressedDay;
     }
 
     public static void main(String[] args) {
-        long timeBucket1 = 20000105;
-        long timeBucket2 = 20000115;
-        long timeBucket3 = 20000123;
-        int dayStep = 11;
-
-        System.out.println(compressTimeBucket(timeBucket1, dayStep)); // Output: 20000101
-        System.out.println(compressTimeBucket(timeBucket2, dayStep)); // Output: 20000112
-        System.out.println(compressTimeBucket(timeBucket3, dayStep)); // Output: 20000123
+        // Esempi di utilizzo
+        System.out.println(compressTimeBucket(20000105L, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115L, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123L, 11)); // Output: 20000123
     }
 }

@@ -1,42 +1,28 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
-    private int currentSize;
+    private int capacity;
 
-    public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
-        this.currentSize = 0;
+    public ByteVector(int initialCapacity) {
+        this.data = new byte[initialCapacity];
+        this.capacity = initialCapacity;
     }
 
     /**
-     * 扩展此字节向量，以便能够接收 'size' 个额外的字节。
-     * @param size 此字节向量应该能够接收的额外字节数。
+     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
-        int requiredSize = currentSize + size;
-        if (requiredSize > data.length) {
-            int newSize = Math.max(data.length * 2, requiredSize);
-            byte[] newData = new byte[newSize];
-            System.arraycopy(data, 0, newData, 0, currentSize);
-            data = newData;
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
         }
+
+        int newCapacity = capacity + size;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        data = newData;
+        capacity = newCapacity;
     }
 
-    // Additional methods for demonstration purposes
-    public void add(byte b) {
-        if (currentSize >= data.length) {
-            enlarge(1);
-        }
-        data[currentSize++] = b;
-    }
-
-    public int size() {
-        return currentSize;
-    }
-
-    public byte get(int index) {
-        if (index < 0 || index >= currentSize) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
-        }
-        return data[index];
-    }
+    // Other methods of the ByteVector class...
 }

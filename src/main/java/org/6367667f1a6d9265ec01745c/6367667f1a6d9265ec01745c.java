@@ -1,17 +1,18 @@
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathAdder {
+public class ClassPathUtil {
 
-    /** 
-     * 将目录中的所有jar文件添加到类路径中，表示为URL的Vector。
+    /**
+     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("The provided directory does not exist or is not a directory.");
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("Provided path is not a directory: " + dir);
         }
 
         File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
@@ -19,17 +20,21 @@ public class ClassPathAdder {
             for (File file : files) {
                 try {
                     cpV.add(file.toURI().toURL());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException("Failed to convert file to URL: " + file.getAbsolutePath(), e);
                 }
             }
         }
     }
 
     public static void main(String[] args) {
-        Vector<URL> classPathVector = new Vector<>();
-        addToClassPath(classPathVector, "path/to/your/directory");
+        Vector<URL> classPath = new Vector<>();
+        String directoryPath = "path/to/your/jar/directory";
+        addToClassPath(classPath, directoryPath);
+
         // Print the URLs added to the classpath
-        classPathVector.forEach(System.out::println);
+        for (URL url : classPath) {
+            System.out.println(url);
+        }
     }
 }

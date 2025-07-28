@@ -1,50 +1,68 @@
 import java.util.Stack;
 
-public class DescriptorPopper {
-    private Stack<Object> outputFrameStack;
-
-    public DescriptorPopper() {
-        this.outputFrameStack = new Stack<>();
-    }
+public class FrameStack {
+    private Stack<String> outputFrameStack = new Stack<>();
 
     /**
-     * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则会弹出其参数类型）。
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        int count = getCountFromDescriptor(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!outputFrameStack.isEmpty()) {
-                outputFrameStack.pop();
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
+        }
+
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, rimuovi i tipi di argomento
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            removeTypesFromStack(argsDescriptor);
+        } else {
+            // È un singolo tipo, rimuovi solo quel tipo
+            removeTypeFromStack(descriptor);
+        }
+    }
+
+    private void removeTypesFromStack(String argsDescriptor) {
+        int index = 0;
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
+            if (currentChar == 'L') {
+                // Tipo oggetto, trova il ';'
+                int endIndex = argsDescriptor.indexOf(';', index);
+                if (endIndex == -1) {
+                    break;
+                }
+                String type = argsDescriptor.substring(index, endIndex + 1);
+                removeTypeFromStack(type);
+                index = endIndex + 1;
+            } else if (currentChar == '[') {
+                // Tipo array, trova il tipo base
+                index++;
             } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
+                // Tipo primitivo
+                removeTypeFromStack(String.valueOf(currentChar));
+                index++;
             }
         }
     }
 
-    private int getCountFromDescriptor(String descriptor) {
-        // This is a simplified version of counting based on descriptor.
-        // In a real scenario, you would parse the descriptor string properly.
-        if (descriptor.startsWith("(")) {
-            // Method descriptor, count parameters
-            return (descriptor.split(";").length - 1) / 2; // Simplified count
-        } else {
-            // Type descriptor, count based on type length
-            return descriptor.length(); // Simplified count
+    private void removeTypeFromStack(String type) {
+        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+            outputFrameStack.pop();
         }
     }
 
-    public void push(Object item) {
-        outputFrameStack.push(item);
+    // Metodo di esempio per aggiungere tipi allo stack (per testing)
+    public void push(String type) {
+        outputFrameStack.push(type);
     }
 
-    public static void main(String[] args) {
-        DescriptorPopper popper = new DescriptorPopper();
-        popper.push(new Object());
-        popper.push(new Object());
-        popper.push(new Object());
-
-        // Example usage
-        popper.pop("(II)V"); // Assuming this pops 2 items for the method descriptor
+    // Metodo di esempio per ottenere lo stack (per testing)
+    public Stack<String> getOutputFrameStack() {
+        return outputFrameStack;
     }
 }

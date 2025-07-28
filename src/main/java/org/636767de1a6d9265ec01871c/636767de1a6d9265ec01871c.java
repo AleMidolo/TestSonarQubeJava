@@ -1,28 +1,29 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValueAccumulator {
+public class Accumulator {
     private Map<String, Long> map;
 
-    public ValueAccumulator() {
+    public Accumulator() {
         this.map = new HashMap<>();
     }
 
-    /** 
-     * 将给定键的值与现有值累加。
+    /**
+     * Accumula il valore con il valore esistente nella stessa chiave fornita.
      */
     public void valueAccumulation(String key, Long value) {
         map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
+    // Optional: Method to get the accumulated value for a key
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }
 
     public static void main(String[] args) {
-        ValueAccumulator accumulator = new ValueAccumulator();
-        accumulator.valueAccumulation("a", 10L);
-        accumulator.valueAccumulation("a", 5L);
-        System.out.println(accumulator.getValue("a")); // Output: 15
+        Accumulator accumulator = new Accumulator();
+        accumulator.valueAccumulation("key1", 10L);
+        accumulator.valueAccumulation("key1", 20L);
+        System.out.println(accumulator.getValue("key1")); // Output: 30
     }
 }

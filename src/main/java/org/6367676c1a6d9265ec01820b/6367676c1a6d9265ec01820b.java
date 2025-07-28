@@ -1,29 +1,34 @@
-public class StringManipulator {
+import java.util.HashSet;
+import java.util.Set;
 
-    /**
-     * 删除给定字符串中的所有给定字符。
-     * @param inString 原始字符串
-     * @param charsToDelete 要删除的字符集合。例如 "az\n" 将删除 'a'、'z' 和换行符。
-     * @return 结果字符串
-     */
+public class StringUtils {
+
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
-            return inString; // Return original string if input is null
+            return inString;
         }
-        
+
+        // Convert the characters to delete into a set for quick lookup
+        Set<Character> charsToRemove = new HashSet<>();
+        for (char c : charsToDelete.toCharArray()) {
+            charsToRemove.add(c);
+        }
+
+        // Build the resulting string by skipping characters in the set
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (charsToDelete.indexOf(c) == -1) {
-                result.append(c); // Append character if it's not in charsToDelete
+            if (!charsToRemove.contains(c)) {
+                result.append(c);
             }
         }
-        return result.toString(); // Return the modified string
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String original = "Hello, World!";
-        String charsToRemove = "lo";
-        String result = deleteAny(original, charsToRemove);
-        System.out.println(result); // Output: "He, Wr!"
+        String input = "Hello, World!";
+        String charsToDelete = "lo";
+        String result = deleteAny(input, charsToDelete);
+        System.out.println(result);  // Output: He, Wrd!
     }
 }

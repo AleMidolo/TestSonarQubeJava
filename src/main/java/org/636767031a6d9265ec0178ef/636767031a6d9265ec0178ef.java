@@ -3,10 +3,10 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
 
     /**
-     * 返回给定数组的副本，大小比参数大1。数组的最后一个值保留为默认值。
-     * @param array 要复制的数组，不能为 <code>null</code>。
-     * @param newArrayComponentType 如果 <code>array</code> 为 <code>null</code>，则创建一个该类型的大小为1的数组。
-     * @return 一个新复制的数组，大小比输入数组大1。
+     * Restituisce una copia dell'array fornito di dimensione 1 maggiore rispetto all'argomento. L'ultimo valore dell'array viene lasciato al valore predefinito.
+     * @param array L'array da copiare, non deve essere <code>null</code>.
+     * @param newArrayComponentType Se <code>array</code> è <code>null</code>, crea un array di dimensione 1 di questo tipo.
+     * @return Una nuova copia dell'array di dimensione 1 maggiore rispetto all'input.
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array == null) {
@@ -15,20 +15,17 @@ public class ArrayUtils {
 
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
-        
         System.arraycopy(array, 0, newArray, 0, length);
-        
         return newArray;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Integer[] originalArray = {1, 2, 3};
-        Integer[] newArray = (Integer[]) copyArrayGrow1(originalArray, Integer.class);
-        
-        // Print the new array
-        for (Integer value : newArray) {
-            System.out.print(value + " ");
+        // Esempio di utilizzo
+        int[] originalArray = {1, 2, 3};
+        int[] newArray = (int[]) copyArrayGrow1(originalArray, int.class);
+
+        for (int i : newArray) {
+            System.out.print(i + " ");
         }
     }
 }

@@ -1,49 +1,37 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.MatchResult;
 
-public class UriMatcher {
-    private final String pattern;
+public final class UriMatcher {
 
-    public UriMatcher(String pattern) {
-        this.pattern = pattern;
+    private final Pattern pattern;
+
+    public UriMatcher(String template) {
+        // Convert the template to a regex pattern
+        String regex = template.replaceAll("\\{([^}]+)\\}", "([^/]+)");
+        this.pattern = Pattern.compile(regex);
     }
 
-    /** 
-     * 将URI与模式进行匹配。
-     * @param uri 要与模板匹配的URI。
-     * @return 匹配结果，如果没有匹配则返回空。
-     */
     public final MatchResult match(CharSequence uri) {
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(uri);
-        
+        Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
-            return new MatchResult(matcher);
+            return matcher.toMatchResult();
+        } else {
+            return null;
         }
-        return null;
     }
 
-    public static class MatchResult {
-        private final Matcher matcher;
+    public static void main(String[] args) {
+        UriMatcher matcher = new UriMatcher("/users/{userId}/posts/{postId}");
+        MatchResult result = matcher.match("/users/123/posts/456");
 
-        public MatchResult(Matcher matcher) {
-            this.matcher = matcher;
-        }
-
-        public String group(int group) {
-            return matcher.group(group);
-        }
-
-        public int start(int group) {
-            return matcher.start(group);
-        }
-
-        public int end(int group) {
-            return matcher.end(group);
-        }
-
-        public int groupCount() {
-            return matcher.groupCount();
+        if (result != null) {
+            System.out.println("Match found!");
+            for (int i = 1; i <= result.groupCount(); i++) {
+                System.out.println("Group " + i + ": " + result.group(i));
+            }
+        } else {
+            System.out.println("No match found.");
         }
     }
 }

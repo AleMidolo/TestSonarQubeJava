@@ -8,30 +8,37 @@ public class Decoder {
      */
     private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         while (i < bb.limit()) {
-            byte b = bb.get(i);
-            if ((b & 0x80) == 0) { // 1-byte character
+            int b = bb.get(i) & 0xFF; // 获取字节并确保为无符号
+            if ((b & 0x80) == 0) { // 1字节字符
                 sb.append((char) b);
                 i++;
-            } else if ((b & 0xE0) == 0xC0) { // 2-byte character
-                if (i + 1 >= bb.limit()) break; // Not enough bytes
-                char c = (char) (((b & 0x1F) << 6) | (bb.get(i + 1) & 0x3F));
-                sb.append(c);
+            } else if ((b & 0xE0) == 0xC0) { // 2字节字符
+                if (i + 1 >= bb.limit()) break; // 检查边界
+                int b2 = bb.get(i + 1) & 0xFF;
+                if ((b2 & 0xC0) != 0x80) break; // 验证有效性
+                sb.append((char) (((b & 0x1F) << 6) | (b2 & 0x3F)));
                 i += 2;
-            } else if ((b & 0xF0) == 0xE0) { // 3-byte character
-                if (i + 2 >= bb.limit()) break; // Not enough bytes
-                char c = (char) (((b & 0x0F) << 12) | ((bb.get(i + 1) & 0x3F) << 6) | (bb.get(i + 2) & 0x3F));
-                sb.append(c);
+            } else if ((b & 0xF0) == 0xE0) { // 3字节字符
+                if (i + 2 >= bb.limit()) break; // 检查边界
+                int b2 = bb.get(i + 1) & 0xFF;
+                int b3 = bb.get(i + 2) & 0xFF;
+                if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) break; // 验证有效性
+                sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
                 i += 3;
-            } else if ((b & 0xF8) == 0xF0) { // 4-byte character
-                if (i + 3 >= bb.limit()) break; // Not enough bytes
-                int codePoint = ((b & 0x07) << 18) | ((bb.get(i + 1) & 0x3F) << 12) | ((bb.get(i + 2) & 0x3F) << 6) | (bb.get(i + 3) & 0x3F);
-                sb.append(Character.toChars(codePoint));
+            } else if ((b & 0xF8) == 0xF0) { // 4字节字符
+                if (i + 3 >= bb.limit()) break; // 检查边界
+                int b2 = bb.get(i + 1) & 0xFF;
+                int b3 = bb.get(i + 2) & 0xFF;
+                int b4 = bb.get(i + 3) & 0xFF;
+                if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) break; // 验证有效性
+                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F)) - 0x10000;
+                sb.append((char) (0xD800 | (codePoint >> 10)));
+                sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
                 i += 4;
             } else {
-                // Invalid byte, break or handle error
-                break;
+                break; // 无效字节，停止解码
             }
         }
-        return i;
+        return i; // 返回下一个未检查字符的索引
     }
 }

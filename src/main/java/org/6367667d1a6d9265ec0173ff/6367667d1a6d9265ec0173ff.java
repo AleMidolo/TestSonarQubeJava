@@ -13,7 +13,7 @@ public class MeteorLookup {
      */
     public static Meteor lookup(HttpServletRequest r) {
         // Implementation logic to retrieve a Meteor instance based on the request
-        // This is a placeholder implementation
+        // This is a placeholder for the actual logic
         if (r == null) {
             return null;
         }

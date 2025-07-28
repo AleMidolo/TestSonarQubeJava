@@ -35,9 +35,9 @@ public class ByteVector {
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - data.length > 0) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
             byte[] newData = new byte[newCapacity];
             System.arraycopy(data, 0, newData, 0, size);
             data = newData;

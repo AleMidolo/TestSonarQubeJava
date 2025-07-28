@@ -12,6 +12,10 @@ public class ByteVector {
      * @param size 此字节向量应该能够接收的额外字节数。
      */
     private void enlarge(final int size) {
+        if (size <= 0) {
+            return; // No need to enlarge for non-positive sizes
+        }
+        
         int newSize = currentSize + size;
         if (newSize > data.length) {
             int newCapacity = Math.max(data.length * 2, newSize);
@@ -21,22 +25,5 @@ public class ByteVector {
         }
     }
 
-    // Additional methods for demonstration purposes
-    public void add(byte b) {
-        if (currentSize >= data.length) {
-            enlarge(1);
-        }
-        data[currentSize++] = b;
-    }
-
-    public byte get(int index) {
-        if (index < 0 || index >= currentSize) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
-        }
-        return data[index];
-    }
-
-    public int size() {
-        return currentSize;
-    }
+    // Additional methods to manipulate the byte vector can be added here
 }

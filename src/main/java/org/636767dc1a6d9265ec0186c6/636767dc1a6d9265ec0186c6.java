@@ -1,5 +1,5 @@
 public class FieldChecker {
-
+    
     private Fields storedFields;
 
     public FieldChecker(Fields storedFields) {
@@ -42,13 +42,12 @@ class Field {
         this.name = name;
     }
 
-    // Override equals and hashCode for proper comparison in Sets
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Field)) return false;
-        Field field = (Field) obj;
-        return name.equals(field.name);
+        Field other = (Field) obj;
+        return name.equals(other.name);
     }
 
     @Override

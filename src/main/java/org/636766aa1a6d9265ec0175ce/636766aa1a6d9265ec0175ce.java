@@ -1,4 +1,4 @@
-public class StackFrameVisitor {
+public class FrameVisitor {
     private int currentFrame;
     
     /**
@@ -10,15 +10,15 @@ public class StackFrameVisitor {
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         // Initialize the current frame with the provided parameters
-        currentFrame = offset; // This could be a more complex structure in a real implementation
-        
+        this.currentFrame = offset; // Assuming currentFrame is set to offset for demonstration
         // Logic to handle local variables and stack elements can be added here
-        // For now, we will just return the next index based on numLocal and numStack
-        return numLocal + numStack;
+        
+        // Return the next index to write to the frame
+        return numLocal + numStack; // Example logic to return the next index
     }
     
     public static void main(String[] args) {
-        StackFrameVisitor visitor = new StackFrameVisitor();
+        FrameVisitor visitor = new FrameVisitor();
         int nextIndex = visitor.visitFrameStart(10, 5, 3);
         System.out.println("Next index to write: " + nextIndex);
     }

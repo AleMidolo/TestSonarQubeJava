@@ -1,5 +1,4 @@
 public class BooleanConverter {
-    
     /** 
      * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。  
      */

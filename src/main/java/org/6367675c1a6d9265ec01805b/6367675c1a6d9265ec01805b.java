@@ -24,11 +24,12 @@ public class TreeEdgeList {
         if (parent == null || child == null) {
             return;
         }
-        
-        // Remove child from parent's children list
-        parent.children.remove(child);
-        
-        // Optionally, if you want to remove the parent reference from child
-        // child.parent = null; // Assuming you have a parent reference in TreeNode
+        if (parent.children.contains(child)) {
+            parent.children.remove(child);
+        }
+        // Assuming it's a bidirectional edge, we also need to remove the reverse edge
+        if (child.children.contains(parent)) {
+            child.children.remove(parent);
+        }
     }
 }

@@ -51,11 +51,7 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                double weight = 0.0;
-                for (E edge : tour) {
-                    weight += graph.getEdgeWeight(edge);
-                }
-                return weight;
+                return 0; // Weight calculation can be implemented if needed
             }
 
             @Override

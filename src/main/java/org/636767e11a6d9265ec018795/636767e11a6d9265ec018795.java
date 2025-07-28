@@ -1,13 +1,15 @@
-public class DataTable {
-    // Assuming DataTable has a method to get the bucket
-    private String bucket;
+import java.util.Objects;
 
-    public DataTable(String bucket) {
-        this.bucket = bucket;
+public class DataTable {
+    // Assuming DataTable has a method to get the bucket identifier
+    private String bucketId;
+
+    public DataTable(String bucketId) {
+        this.bucketId = bucketId;
     }
 
-    public String getBucket() {
-        return bucket;
+    public String getBucketId() {
+        return bucketId;
     }
 }
 
@@ -18,20 +20,10 @@ public class CompatibilityChecker {
         this.currentDataset = dataset;
     }
 
-    /** 
+    /**
      * @return 如果桶相同则返回真。
      */
     public boolean isCompatible(DataTable dataset) {
-        return this.currentDataset.getBucket().equals(dataset.getBucket());
-    }
-
-    public static void main(String[] args) {
-        DataTable dataset1 = new DataTable("bucket1");
-        DataTable dataset2 = new DataTable("bucket1");
-        DataTable dataset3 = new DataTable("bucket2");
-
-        CompatibilityChecker checker = new CompatibilityChecker(dataset1);
-        System.out.println(checker.isCompatible(dataset2)); // true
-        System.out.println(checker.isCompatible(dataset3)); // false
+        return Objects.equals(this.currentDataset.getBucketId(), dataset.getBucketId());
     }
 }

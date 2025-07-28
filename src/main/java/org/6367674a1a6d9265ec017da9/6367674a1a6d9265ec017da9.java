@@ -52,5 +52,6 @@ public class DoublyLinkedList<E> {
             node.prev = tail;
             tail = node; // Update tail
         }
+        node.next = null; // Clear next reference
     }
 }

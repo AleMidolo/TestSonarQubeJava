@@ -1,32 +1,31 @@
 import java.util.function.Predicate;
 
+class Node {
+    // Node implementation
+}
+
+class OuterFaceCirculator {
+    private Node currentNode;
+
+    public OuterFaceCirculator(Node start) {
+        this.currentNode = start;
+    }
+
+    public Node getCurrentNode() {
+        return currentNode;
+    }
+
+    public void moveNext() {
+        // Logic to move to the next node in the outer face
+    }
+
+    public boolean hasNext() {
+        // Logic to determine if there is a next node
+        return true; // Placeholder
+    }
+}
+
 public class Graph {
-    
-    private class Node {
-        // Node implementation
-    }
-
-    private class OuterFaceCirculator {
-        private Node current;
-
-        public OuterFaceCirculator(Node start) {
-            this.current = start;
-        }
-
-        public Node getCurrent() {
-            return current;
-        }
-
-        public void moveNext() {
-            // Logic to move to the next node
-        }
-
-        public boolean hasNext() {
-            // Logic to check if there is a next node
-            return true; // Placeholder
-        }
-    }
-
     /**
      * 查找并返回一个循环器，指向满足 {@code predicate} 的组件边界上的节点，或者返回指向 {@code stop} 节点的循环器。
      * @param predicate 期望节点应满足的条件
@@ -39,11 +38,11 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
         do {
-            if (predicate.test(circulator.getCurrent())) {
+            if (predicate.test(circulator.getCurrentNode())) {
                 return circulator;
             }
             circulator.moveNext();
-        } while (circulator.hasNext() && circulator.getCurrent() != stop);
+        } while (circulator.hasNext() && !circulator.getCurrentNode().equals(stop));
         
         return circulator; // Return the circulator pointing to stop if no match found
     }

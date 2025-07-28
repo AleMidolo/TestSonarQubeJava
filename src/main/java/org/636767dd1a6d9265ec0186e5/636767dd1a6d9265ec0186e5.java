@@ -18,7 +18,7 @@ class Channels {
 }
 
 interface IConsumer {
-    void consume(String message);
+    void consume();
 }
 
 public class TargetChannelManager {
@@ -36,15 +36,12 @@ public class TargetChannelManager {
 
         IConsumer consumer = new IConsumer() {
             @Override
-            public void consume(String message) {
-                System.out.println("Consuming message: " + message);
+            public void consume() {
+                System.out.println("Consuming data...");
             }
         };
 
         manager.addNewTarget(channels, consumer);
-        // Test the added consumer
-        for (IConsumer c : channels.getConsumers()) {
-            c.consume("Hello, World!");
-        }
+        System.out.println("New target added. Total consumers: " + channels.getConsumers().size());
     }
 }

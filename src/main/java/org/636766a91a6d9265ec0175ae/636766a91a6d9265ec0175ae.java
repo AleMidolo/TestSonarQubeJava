@@ -18,7 +18,7 @@ public class ByteVector {
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
         if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
+            throw new IllegalArgumentException("byteLength cannot be negative");
         }
         
         if (byteArrayValue != null) {

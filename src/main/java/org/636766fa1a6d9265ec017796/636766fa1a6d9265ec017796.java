@@ -1,5 +1,5 @@
 public class BooleanArrayConverter {
-    
+
     /** 
      * <p>Convierte un arreglo de booleanos primitivos a objetos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * @param array  un arreglo de <code>boolean</code>
@@ -19,8 +19,6 @@ public class BooleanArrayConverter {
     public static void main(String[] args) {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
-        
-        // Print the result
         for (Boolean b : objectArray) {
             System.out.println(b);
         }

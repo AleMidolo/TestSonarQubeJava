@@ -11,9 +11,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOf("Hello, world!", "world")); // Output: 7
-        System.out.println(indexOf("Hello, world!", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "test"));              // Output: -1
-        System.out.println(indexOf("test", null));              // Output: -1
+        // Ejemplos de uso
+        System.out.println(indexOf("Hola Mundo", "Mundo")); // Salida: 5
+        System.out.println(indexOf("Hola Mundo", "Adiós")); // Salida: -1
+        System.out.println(indexOf(null, "Mundo")); // Salida: -1
+        System.out.println(indexOf("Hola Mundo", null)); // Salida: -1
     }
 }

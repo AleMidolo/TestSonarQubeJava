@@ -15,6 +15,6 @@ public class QuoteConverter {
     public static void main(String[] args) {
         System.out.println(quoteIfString("miCadena")); // Output: 'miCadena'
         System.out.println(quoteIfString(123));        // Output: 123
-        System.out.println(quoteIfString(null));       // Output: null
+        System.out.println(quoteIfString(null));        // Output: null
     }
 }

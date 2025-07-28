@@ -26,15 +26,16 @@ public class FileExtensionSeparator {
      * @param filename el nombre del archivo
      * @return el índice del último separador de directorio, o -1 si no existe
      */
-    public static int indexOfLastSeparator(String filename) {
+    private static int indexOfLastSeparator(String filename) {
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
     }
 
     public static void main(String[] args) {
-        String filename = "example/directory/file.txt";
+        // Ejemplo de uso
+        String filename = "C:\\Users\\example\\file.txt";
         int index = indexOfExtension(filename);
-        System.out.println("El índice del último carácter separador de extensión es: " + index);
+        System.out.println("El índice del último separador de extensión es: " + index);
     }
 }

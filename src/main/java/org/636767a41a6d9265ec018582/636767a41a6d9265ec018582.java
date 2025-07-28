@@ -22,7 +22,7 @@ public class MessageSerializer {
         // Write the message bytes to the output stream
         out.write(messageBytes);
         
-        // Return the total size of the message including the length
+        // Return the total size of the message
         return length + getVarintSize(length);
     }
 

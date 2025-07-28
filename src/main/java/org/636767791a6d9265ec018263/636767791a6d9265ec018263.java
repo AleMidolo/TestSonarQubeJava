@@ -14,14 +14,4 @@ public class ClassFinder {
         }
         return Class.forName(className);
     }
-    
-    public static void main(String[] args) {
-        ClassFinder finder = new ClassFinder();
-        try {
-            Class<?> clazz = finder.findClass("java.lang.String");
-            System.out.println("Clase encontrada: " + clazz.getName());
-        } catch (ClassNotFoundException e) {
-            System.err.println("Clase no encontrada: " + e.getMessage());
-        }
-    }
 }

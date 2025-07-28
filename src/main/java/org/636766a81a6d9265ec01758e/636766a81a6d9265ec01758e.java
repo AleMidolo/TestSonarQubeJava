@@ -43,8 +43,6 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        int desiredCapacity = 1000;
-        int nextPrimeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + nextPrimeCapacity);
+        System.out.println(nextPrime(1000)); // Example usage
     }
 }

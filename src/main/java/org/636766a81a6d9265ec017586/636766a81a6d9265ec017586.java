@@ -13,10 +13,9 @@ public class OutputFrame {
         if (elements <= 0) {
             return;
         }
-        int size = outputFrame.size();
-        int toRemove = Math.min(elements, size);
+        int toRemove = Math.min(elements, outputFrame.size());
         for (int i = 0; i < toRemove; i++) {
-            outputFrame.remove(size - 1 - i);
+            outputFrame.remove(outputFrame.size() - 1);
         }
     }
 

@@ -18,7 +18,7 @@ public class SeparadorParametro {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        char testChar = ',';
+        char testChar = ';';
         System.out.println("¿Es separador? " + esSeparadorDeParametro(testChar)); // Debería imprimir true
     }
 }

@@ -1,8 +1,8 @@
-public class StackFrame {
+public class StackExample {
     private int[] stack;
     private int top;
 
-    public StackFrame(int size) {
+    public StackExample(int size) {
         stack = new int[size];
         top = -1;
     }
@@ -26,9 +26,9 @@ public class StackFrame {
     }
 
     public static void main(String[] args) {
-        StackFrame stackFrame = new StackFrame(5);
-        stackFrame.push(10);
-        stackFrame.push(20);
-        System.out.println("Popped value: " + stackFrame.pop());
+        StackExample stack = new StackExample(5);
+        stack.push(10);
+        stack.push(20);
+        System.out.println("Popped value: " + stack.pop());
     }
 }

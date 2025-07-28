@@ -19,25 +19,24 @@ public class GraphUtils {
         
         return new IsomorphicGraphMapping<>(mapping);
     }
-    
-    // Suponiendo que existen las clases Graph y IsomorphicGraphMapping
-    public static class Graph<V, E> {
-        // Método para obtener los vértices del grafo
-        public Iterable<V> getVertices() {
-            // Implementación del método
-            return null; // Placeholder
-        }
+}
+
+class Graph<V, E> {
+    // Implementación del grafo
+    public Iterable<V> getVertices() {
+        // Retornar los vértices del grafo
+        return null; // Placeholder
+    }
+}
+
+class IsomorphicGraphMapping<V, E> {
+    private final Map<V, V> mapping;
+
+    public IsomorphicGraphMapping(Map<V, V> mapping) {
+        this.mapping = mapping;
     }
 
-    public static class IsomorphicGraphMapping<V, E> {
-        private final Map<V, V> mapping;
-
-        public IsomorphicGraphMapping(Map<V, V> mapping) {
-            this.mapping = mapping;
-        }
-
-        public Map<V, V> getMapping() {
-            return mapping;
-        }
+    public Map<V, V> getMapping() {
+        return mapping;
     }
 }

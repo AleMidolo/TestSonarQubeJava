@@ -23,7 +23,7 @@ public class ByteFinder {
             }
         }
         
-        return -1; // Retorna -1 si no se encuentra el byte
+        return -1; // No se encontró el byte
     }
 
     public static void main(String[] args) {

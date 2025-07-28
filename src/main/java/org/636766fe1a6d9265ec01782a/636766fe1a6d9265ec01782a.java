@@ -1,7 +1,7 @@
-public class Utf8Reader {
-    private byte[] classFileBuffer;
+public class UtfReader {
+    private final byte[] classFileBuffer;
 
-    public Utf8Reader(byte[] classFileBuffer) {
+    public UtfReader(byte[] classFileBuffer) {
         this.classFileBuffer = classFileBuffer;
     }
 
@@ -16,8 +16,9 @@ public class Utf8Reader {
         int length = ((classFileBuffer[constantPoolEntryIndex] & 0xFF) << 8) | (classFileBuffer[constantPoolEntryIndex + 1] & 0xFF);
         
         // Read the UTF-8 bytes
+        int utf8StartIndex = constantPoolEntryIndex + 2; // Skip the length bytes
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer[constantPoolEntryIndex + 2 + i] & 0xFF);
+            charBuffer[i] = (char) classFileBuffer[utf8StartIndex + i];
         }
         
         return new String(charBuffer, 0, length);

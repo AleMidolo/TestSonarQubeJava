@@ -31,8 +31,9 @@ public class TableRowSelector {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        JFrame frame = new JFrame("Table Row Selector Example");
+        // Sample usage
+        JFrame frame = new JFrame("Table Row Selector");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
             {"Row 1", "Data 1"},
@@ -41,16 +42,15 @@ public class TableRowSelector {
             {"Row 4", "Data 4"},
             {"Row 5", "Data 5"},
         };
-
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
         frame.add(pane, BorderLayout.CENTER);
-        
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
         frame.setVisible(true);
 
-        // Select a row after the frame is visible
-        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
+        // Select a row after a delay
+        SwingUtilities.invokeLater(() -> {
+            selectRow(2, table, pane); // Select the third row
+        });
     }
 }

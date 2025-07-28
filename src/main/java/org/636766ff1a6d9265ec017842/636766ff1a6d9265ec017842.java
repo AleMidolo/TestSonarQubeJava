@@ -11,14 +11,14 @@ public class ArrayConverter {
             return null;
         }
         
-        double[] primitiveArray = new double[array.length];
+        double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del arreglo no puede ser nulo");
             }
-            primitiveArray[i] = array[i];
+            result[i] = array[i];
         }
-        return primitiveArray;
+        return result;
     }
 
     public static void main(String[] args) {

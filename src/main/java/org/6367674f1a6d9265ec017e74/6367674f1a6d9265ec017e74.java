@@ -25,6 +25,7 @@ public class Cola {
         return sb.toString();
     }
 
+    // Métodos adicionales para manipular la cola
     public void enqueue(Object item) {
         queue.add(item);
     }
@@ -41,6 +42,8 @@ public class Cola {
         Cola cola = new Cola();
         cola.enqueue("Elemento 1");
         cola.enqueue("Elemento 2");
-        System.out.println(cola.toString()); // Debe imprimir la representación textual de la cola
+        System.out.println(cola.toString()); // Salida: Cola: [Elemento 1, Elemento 2]
+        cola.dequeue();
+        System.out.println(cola.toString()); // Salida: Cola: [Elemento 2]
     }
 }

@@ -10,7 +10,7 @@ public class StackExtractor {
     private void pop(final String descriptor) {
         List<String> types = new ArrayList<>();
         
-        // Simulación de la extracción de tipos a partir del descriptor
+        // Simulación de la extracción de tipos del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             // Extraer tipos de argumento de un descriptor de método
             int start = descriptor.indexOf('(') + 1;
@@ -24,14 +24,15 @@ public class StackExtractor {
             types.add(descriptor);
         }
 
-        // Aquí se podría realizar la lógica para manejar los tipos extraídos
+        // Simulación de la operación de "pop" en la stack
         for (String type : types) {
-            System.out.println("Tipo extraído: " + type);
+            System.out.println("Popped type: " + type);
         }
     }
 
     public static void main(String[] args) {
         StackExtractor extractor = new StackExtractor();
-        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
+        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
+        extractor.pop("Ljava/lang/String;"); // Ejemplo de un tipo
     }
 }

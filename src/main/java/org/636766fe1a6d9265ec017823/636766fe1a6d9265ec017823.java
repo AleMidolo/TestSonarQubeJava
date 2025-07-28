@@ -27,10 +27,10 @@ public class ConstantPool {
     }
 
     public static void main(String[] args) {
-        ConstantPool constantPool = new ConstantPool();
-        int index1 = constantPool.addConstantNameAndType("myField", "I");
-        int index2 = constantPool.addConstantNameAndType("myField", "I");
-        int index3 = constantPool.addConstantNameAndType("myMethod", "(I)V");
+        ConstantPool pool = new ConstantPool();
+        int index1 = pool.addConstantNameAndType("myField", "I");
+        int index2 = pool.addConstantNameAndType("myField", "I");
+        int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
 
         System.out.println("Index of myField: " + index1); // Should print 0
         System.out.println("Index of myField again: " + index2); // Should print 0

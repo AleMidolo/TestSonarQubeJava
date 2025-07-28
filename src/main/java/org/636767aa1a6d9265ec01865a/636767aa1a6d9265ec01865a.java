@@ -2,25 +2,12 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 class LinkedBuffer {
-    // Assuming LinkedBuffer has a method to get its content as byte array
-    private byte[] content;
-    private LinkedBuffer next;
+    byte[] data;
+    LinkedBuffer next;
 
-    public LinkedBuffer(byte[] content) {
-        this.content = content;
+    public LinkedBuffer(byte[] data) {
+        this.data = data;
         this.next = null;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public LinkedBuffer getNext() {
-        return next;
-    }
-
-    public void setNext(LinkedBuffer next) {
-        this.next = next;
     }
 }
 
@@ -35,10 +22,9 @@ public class BufferWriter {
         LinkedBuffer current = node;
 
         while (current != null) {
-            byte[] content = current.getContent();
-            out.write(content);
-            totalSize += content.length;
-            current = current.getNext();
+            out.write(current.data);
+            totalSize += current.data.length;
+            current = current.next;
         }
 
         return totalSize;

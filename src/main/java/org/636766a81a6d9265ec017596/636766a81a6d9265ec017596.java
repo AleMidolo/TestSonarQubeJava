@@ -15,16 +15,15 @@ public class ByteVector {
      * @return este vector de bytes.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // 4 bytes for an integer
-        bytes[size++] = (byte) (intValue >> 24);
-        bytes[size++] = (byte) (intValue >> 16);
-        bytes[size++] = (byte) (intValue >> 8);
-        bytes[size++] = (byte) intValue;
+        ensureCapacity(size + Integer.BYTES);
+        for (int i = 0; i < Integer.BYTES; i++) {
+            bytes[size++] = (byte) (intValue >> (i * 8));
+        }
         return this;
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - bytes.length > 0) {
+        if (minCapacity > bytes.length) {
             int newCapacity = Math.max(bytes.length * 2, minCapacity);
             bytes = Arrays.copyOf(bytes, newCapacity);
         }

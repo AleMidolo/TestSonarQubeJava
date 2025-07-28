@@ -1,6 +1,6 @@
 import java.nio.ByteBuffer;
 
-public class OctetDecoder {
+public class Decoder {
 
     /** 
      * Decodifica octetos a caracteres utilizando la decodificación UTF-8 y agrega los caracteres a un StringBuffer.
@@ -25,19 +25,19 @@ public class OctetDecoder {
                 if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) break; // Invalid continuation bytes
                 sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
                 i += 3;
+            } else if ((b & 0xF8) == 0xF0) { // 4-byte character
+                if (i + 3 >= bb.limit()) break; // Check for enough bytes
+                int b2 = bb.get(i + 1) & 0xFF;
+                int b3 = bb.get(i + 2) & 0xFF;
+                int b4 = bb.get(i + 3) & 0xFF;
+                if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) break; // Invalid continuation bytes
+                int codePoint = ((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+                sb.append(Character.toChars(codePoint));
+                i += 4;
             } else {
                 break; // Invalid byte, stop decoding
             }
         }
         return i; // Return the index of the next unprocessed byte
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        ByteBuffer bb = ByteBuffer.wrap(new byte[]{(byte) 0xE2, (byte) 0x82, (byte) 0xAC}); // UTF-8 for €
-        StringBuilder sb = new StringBuilder();
-        int nextIndex = decodeOctets(0, bb, sb);
-        System.out.println("Decoded String: " + sb.toString());
-        System.out.println("Next Index: " + nextIndex);
     }
 }

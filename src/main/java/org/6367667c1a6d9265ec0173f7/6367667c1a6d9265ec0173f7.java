@@ -1,5 +1,5 @@
 public class ByteArrayChecker {
-
+    
     private Object body;
 
     public ByteArrayChecker(Object body) {

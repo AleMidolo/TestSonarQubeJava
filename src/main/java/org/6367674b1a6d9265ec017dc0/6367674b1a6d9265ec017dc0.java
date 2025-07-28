@@ -16,8 +16,8 @@ public class Graph<V> {
 
     public void addEdge(V source, V destination) {
         edges.add(new Edge<>(source, destination));
-        vertices.add(source);
-        vertices.add(destination);
+        addVertex(source);
+        addVertex(destination);
     }
 
     /** 

@@ -1,6 +1,6 @@
 public class ClassReader {
     
-    private byte[] data; // Assuming data is a byte array representing the class data
+    private byte[] data;
 
     public ClassReader(byte[] data) {
         this.data = data;
@@ -13,15 +13,15 @@ public class ClassReader {
      */
     public long readLong(final int offset) {
         if (offset < 0 || offset + 8 > data.length) {
-            throw new IndexOutOfBoundsException("Offset is out of bounds");
+            throw new IndexOutOfBoundsException("Invalid offset: " + offset);
         }
-        return ((long) data[offset] << 56) |
-               ((long) (data[offset + 1] & 255) << 48) |
-               ((long) (data[offset + 2] & 255) << 40) |
-               ((long) (data[offset + 3] & 255) << 32) |
-               ((long) (data[offset + 4] & 255) << 24) |
-               ((data[offset + 5] & 255) << 16) |
-               ((data[offset + 6] & 255) << 8) |
-               (data[offset + 7] & 255);
+        return ((long) (data[offset] & 0xFF) << 56) |
+               ((long) (data[offset + 1] & 0xFF) << 48) |
+               ((long) (data[offset + 2] & 0xFF) << 40) |
+               ((long) (data[offset + 3] & 0xFF) << 32) |
+               ((long) (data[offset + 4] & 0xFF) << 24) |
+               ((data[offset + 5] & 0xFF) << 16) |
+               ((data[offset + 6] & 0xFF) << 8) |
+               (data[offset + 7] & 0xFF);
     }
 }

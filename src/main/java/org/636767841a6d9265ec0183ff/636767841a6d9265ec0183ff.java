@@ -10,11 +10,7 @@ public class TableRowSelector {
      * @param pane JScrollPane जिसमें JTable है
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane cannot be null");
-        }
-        
-        // Select the specified row
+        // Set the selected row
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
@@ -29,26 +25,21 @@ public class TableRowSelector {
         // Sample usage
         JFrame frame = new JFrame("Table Row Selector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
-            {"Row 1", "Data 1"},
-            {"Row 2", "Data 2"},
-            {"Row 3", "Data 3"},
-            {"Row 4", "Data 4"},
-            {"Row 5", "Data 5"},
+            {"Data 1", "Data 2"},
+            {"Data 3", "Data 4"},
+            {"Data 5", "Data 6"},
+            {"Data 7", "Data 8"},
+            {"Data 9", "Data 10"},
         };
-        
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
-        
         frame.add(pane, BorderLayout.CENTER);
         frame.setSize(400, 300);
         frame.setVisible(true);
-        
-        // Select row 2 after a delay
-        Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
-        timer.setRepeats(false);
-        timer.start();
+
+        // Select a row after a delay
+        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
     }
 }

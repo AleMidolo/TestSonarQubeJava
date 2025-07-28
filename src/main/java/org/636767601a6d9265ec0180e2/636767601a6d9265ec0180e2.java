@@ -20,47 +20,43 @@ class Graph {
         edges.add(edge);
     }
 
+    /** 
+     * {@code graph} के वैश्विक विभाजक सूची की गणना करता है। अधिक सटीकता से, $G = (V, E)$ में हर किनारे $e$ के लिए, $e$ के पड़ोस में न्यूनतम विभाजकों की सूची $S_e$ की गणना करता है और फिर इन सूचियों को जोड़ता है। नोट: परिणाम में डुप्लिकेट हो सकते हैं।
+     * @return निरीक्षित ग्राफ में हर किनारे $e$ के न्यूनतम विभाजकों की सूची
+     */
     private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparators = new ArrayList<>();
+        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
 
         for (Edge edge : edges) {
             List<Pair<Integer, Integer>> separators = findMinSeparators(edge);
-            globalSeparators.add(new Pair<>(separators, edge));
+            globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
-        return globalSeparators;
+        return globalSeparatorList;
     }
 
     private List<Pair<Integer, Integer>> findMinSeparators(Edge edge) {
-        // Placeholder for actual logic to find minimum separators for the given edge
+        // Placeholder for actual separator finding logic
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Add logic to compute minimum separators based on the edge
+        // Logic to find minimum separators for the given edge
         return separators;
     }
 
     // Pair class to hold two values
-    static class Pair<A, B> {
-        private A first;
-        private B second;
+    public static class Pair<A, B> {
+        public final A first;
+        public final B second;
 
         public Pair(A first, B second) {
             this.first = first;
             this.second = second;
         }
-
-        public A getFirst() {
-            return first;
-        }
-
-        public B getSecond() {
-            return second;
-        }
     }
 
     // Edge class to represent an edge in the graph
-    static class Edge {
-        private int start;
-        private int end;
+    public static class Edge {
+        private final int start;
+        private final int end;
 
         public Edge(int start, int end) {
             this.start = start;

@@ -9,46 +9,40 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        int capacity = desiredCapacity;
-        if (capacity % 2 == 0) {
-            capacity++;
-        }
-        while (true) {
-            if (isPrime(capacity)) {
+        int prime = desiredCapacity;
+        boolean found = false;
+
+        // If desiredCapacity is greater than or equal to 1000, we allow a margin of 11%
+        int margin = (desiredCapacity >= 1000) ? (int) (desiredCapacity * 0.11) : 0;
+
+        while (!found) {
+            if (isPrime(prime)) {
                 if (desiredCapacity >= 1000) {
-                    int upperLimit = (int) (desiredCapacity * 1.11);
-                    if (capacity <= upperLimit) {
-                        return capacity;
+                    if (prime <= desiredCapacity + margin) {
+                        found = true;
                     }
                 } else {
-                    return capacity;
+                    found = true;
                 }
             }
-            capacity += 2;
+            prime++;
         }
+        return prime;
     }
 
     private static boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        }
-        if (num <= 3) {
-            return true;
-        }
-        if (num % 2 == 0 || num % 3 == 0) {
-            return false;
-        }
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
         for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
-                return false;
-            }
+            if (num % i == 0 || num % (i + 2) == 0) return false;
         }
         return true;
     }
 
     public static void main(String[] args) {
         int desiredCapacity = 1000;
-        int primeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + primeCapacity);
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + nextPrimeCapacity);
     }
 }

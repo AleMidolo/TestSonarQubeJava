@@ -20,18 +20,18 @@ public class FieldChecker {
 }
 
 class Fields {
-    // Assuming Fields class has a method to get all fields and check if a field exists
+    // Assuming Fields class has a method to get all fields and check for containment
     public Field[] getAllFields() {
-        // Implementation here
+        // Implementation to return all fields
         return new Field[0]; // Placeholder
     }
 
     public boolean contains(Field field) {
-        // Implementation here
+        // Implementation to check if the field is contained
         return false; // Placeholder
     }
 }
 
 class Field {
-    // Field class implementation
+    // Implementation of Field class
 }

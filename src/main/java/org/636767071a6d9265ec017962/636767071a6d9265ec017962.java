@@ -21,7 +21,7 @@ public class BeanMapUtil {
     }
 
     private boolean isWriteable(Object property, BeanMap map) {
-        // Logic to check if the property is writable
+        // Logic to check if the property is writeable
         // This is a placeholder; actual implementation may vary
         return true; // Replace with actual check
     }

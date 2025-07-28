@@ -6,30 +6,39 @@ public class AbbreviationUtil {
      * @param nameStart संक्षिप्त करने के लिए नाम की शुरुआत।
      */
     public void abbreviate(final int nameStart, final StringBuffer buf) {
-        // Example name for abbreviation
-        String name = "Johnathan Doe";
-        
-        // Check if nameStart is within bounds
-        if (nameStart < 0 || nameStart >= name.length()) {
-            throw new IllegalArgumentException("nameStart is out of bounds");
+        if (nameStart < 0 || buf == null) {
+            throw new IllegalArgumentException("Invalid parameters");
         }
 
-        // Append the first character of the name
-        buf.append(name.charAt(nameStart));
-
-        // Append a dot for abbreviation
-        buf.append('.');
-
-        // If there are more characters in the name, append the last character
-        if (nameStart < name.length() - 1) {
-            buf.append(name.charAt(name.length() - 1));
+        String name = buf.toString();
+        if (nameStart >= name.length()) {
+            return; // Nothing to abbreviate
         }
+
+        StringBuilder abbreviatedName = new StringBuilder();
+        abbreviatedName.append(name.substring(0, nameStart)); // Add the part before the abbreviation
+
+        // Abbreviate the name
+        String[] parts = name.substring(nameStart).split(" ");
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                abbreviatedName.append(part.charAt(0)).append("."); // Add the first character of each part
+            }
+        }
+
+        // Remove the last dot if exists
+        if (abbreviatedName.length() > 0 && abbreviatedName.charAt(abbreviatedName.length() - 1) == '.') {
+            abbreviatedName.setLength(abbreviatedName.length() - 1);
+        }
+
+        buf.setLength(0); // Clear the buffer
+        buf.append(abbreviatedName); // Set the abbreviated name
     }
 
     public static void main(String[] args) {
         AbbreviationUtil util = new AbbreviationUtil();
-        StringBuffer buffer = new StringBuffer();
-        util.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: J.D
+        StringBuffer buffer = new StringBuffer("John Doe Smith");
+        util.abbreviate(5, buffer);
+        System.out.println(buffer); // Output: John D.S
     }
 }

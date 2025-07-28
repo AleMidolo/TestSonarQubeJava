@@ -1,40 +1,42 @@
 import java.util.Objects;
 
 class Node {
-    private Edge edge;
-    private Node next;
+    private final boolean isVirtual;
 
-    public Node(Edge edge, Node next) {
-        this.edge = edge;
-        this.next = next;
+    public Node(boolean isVirtual) {
+        this.isVirtual = isVirtual;
     }
 
-    public Edge getEdge() {
-        return edge;
-    }
-
-    public Node getNext() {
-        return next;
+    public boolean isVirtual() {
+        return isVirtual;
     }
 }
 
 class Edge {
-    private String label;
+    private final Node from;
+    private final Node to;
 
-    public Edge(String label) {
-        this.label = label;
+    public Edge(Node from, Node to) {
+        this.from = from;
+        this.to = to;
     }
 
-    public String getLabel() {
-        return label;
+    public Node getFrom() {
+        return from;
+    }
+
+    public Node getTo() {
+        return to;
     }
 }
 
-public class GraphNode {
+class Graph {
     private Node currentNode;
+    private Node nextNode;
 
-    public GraphNode(Node currentNode) {
+    public Graph(Node currentNode, Node nextNode) {
         this.currentNode = currentNode;
+        this.nextNode = nextNode;
     }
 
     /**
@@ -42,24 +44,14 @@ public class GraphNode {
      * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        if (currentNode == null || currentNode.getNext() == null) {
-            return null; // या कोई अन्य उपयुक्त कार्रवाई
-        }
-        return currentNode.getEdge();
+        Node realFrom = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node realTo = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(realFrom, realTo);
     }
 
-    public static void main(String[] args) {
-        Edge edge1 = new Edge("Edge1");
-        Edge edge2 = new Edge("Edge2");
-        Node nextNode = new Node(edge2, null);
-        Node currentNode = new Node(edge1, nextNode);
-        GraphNode graphNode = new GraphNode(currentNode);
-
-        Edge edgeToNext = graphNode.edgeToNext();
-        if (edgeToNext != null) {
-            System.out.println("Edge to next node: " + edgeToNext.getLabel());
-        } else {
-            System.out.println("No edge to next node.");
-        }
+    private Node getRealNode(Node virtualNode) {
+        // Placeholder for logic to get the real node corresponding to a virtual node
+        // This should be replaced with actual implementation
+        return new Node(false); // Assuming a new real node is created for demonstration
     }
 }

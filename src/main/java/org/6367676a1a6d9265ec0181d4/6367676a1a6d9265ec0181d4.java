@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 public class StringArrayUtil {
+    
     /** 
      * दिए गए स्ट्रिंग को दिए गए स्ट्रिंग एरे में जोड़ें, एक नया एरे लौटाते हुए जिसमें इनपुट एरे की सामग्री और दिया गया स्ट्रिंग शामिल हो।
      * @param array वह एरे जिसमें जोड़ना है (यह <code>null</code> हो सकता है)
@@ -9,17 +10,19 @@ public class StringArrayUtil {
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null) {
-            return new String[]{str};
+            return new String[] { str };
         }
+        
         String[] newArray = Arrays.copyOf(array, array.length + 1);
-        newArray[newArray.length - 1] = str;
+        newArray[array.length] = str;
         return newArray;
     }
-
+    
     public static void main(String[] args) {
-        String[] originalArray = {"apple", "banana"};
-        String newString = "cherry";
+        String[] originalArray = {"Hello", "World"};
+        String newString = "!";
         String[] updatedArray = addStringToArray(originalArray, newString);
-        System.out.println(Arrays.toString(updatedArray)); // Output: [apple, banana, cherry]
+        
+        System.out.println(Arrays.toString(updatedArray)); // Output: [Hello, World, !]
     }
 }

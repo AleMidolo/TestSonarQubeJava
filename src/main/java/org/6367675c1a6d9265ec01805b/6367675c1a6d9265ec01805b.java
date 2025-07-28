@@ -12,15 +12,33 @@ public class TreeEdgeRemover {
     /** 
      * इस किनारे को पेड़ के किनारों की दोनों डबल लिंक्ड सूचियों से हटा देता है।
      */
-    public void removeFromTreeEdgeList() {
-        Edge edgeToRemove = new Edge(); // Assume this edge is defined or passed as a parameter
-
+    public void removeFromTreeEdgeList(Edge edgeToRemove) {
         edgeList1.remove(edgeToRemove);
         edgeList2.remove(edgeToRemove);
     }
 
     // Assuming Edge is a class that represents an edge in the tree
-    private class Edge {
-        // Edge properties and methods
+    public static class Edge {
+        private int start;
+        private int end;
+
+        public Edge(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        // Getters, setters, equals, and hashCode methods can be added here
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Edge edge = (Edge) obj;
+            return start == edge.start && end == edge.end;
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * start + end;
+        }
     }
 }

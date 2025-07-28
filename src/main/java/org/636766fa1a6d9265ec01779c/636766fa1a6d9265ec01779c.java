@@ -12,25 +12,26 @@ public class TokenParser {
         try {
             while ((ch = System.in.read()) != -1) {
                 char currentChar = (char) ch;
-                if (isTerminator(currentChar, terminators)) {
+                boolean isTerminator = false;
+
+                for (char terminator : terminators) {
+                    if (currentChar == terminator) {
+                        isTerminator = true;
+                        break;
+                    }
+                }
+
+                if (isTerminator) {
                     break;
                 }
+
                 token.append(currentChar);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        return token.toString();
-    }
 
-    private boolean isTerminator(char currentChar, char[] terminators) {
-        for (char terminator : terminators) {
-            if (currentChar == terminator) {
-                return true;
-            }
-        }
-        return false;
+        return token.toString();
     }
 
     public static void main(String[] args) {

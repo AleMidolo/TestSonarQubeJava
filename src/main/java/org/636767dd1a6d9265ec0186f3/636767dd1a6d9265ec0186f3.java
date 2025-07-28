@@ -20,14 +20,11 @@ public class ColumnName {
         }
     }
 
-    public void addColumnName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Il nome non può essere nullo.");
-        }
-        columnNames.put(name, name);
+    public String getColumnName(String key) {
+        return columnNames.get(key);
     }
 
-    public String getColumnName(String name) {
-        return columnNames.get(name);
+    public void addColumnName(String key, String value) {
+        columnNames.put(key, value);
     }
 }

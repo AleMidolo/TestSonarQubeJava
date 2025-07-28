@@ -38,6 +38,9 @@ public class FrameVisitor {
             return nextElementIndex;
         }
 
-        // Altri metodi per gestire il frame...
+        // Metodo per aggiornare l'indice del prossimo elemento
+        public void setNextElementIndex(int nextElementIndex) {
+            this.nextElementIndex = nextElementIndex;
+        }
     }
 }

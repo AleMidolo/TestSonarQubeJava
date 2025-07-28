@@ -21,7 +21,7 @@ class CategoryTree {
 
     /**
      * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
-     * @return Il numero di nodi rimossi.
+     * @return il numero di nodi rimossi
      */
     protected int removeUnusedNodes() {
         if (root == null) {
@@ -55,12 +55,9 @@ class CategoryTree {
         Node child1 = new Node(2, false);
         Node child2 = new Node(3, true);
         Node child3 = new Node(4, false);
-        Node child4 = new Node(5, true);
-
         root.children.add(child1);
         root.children.add(child2);
         child2.children.add(child3);
-        child2.children.add(child4);
 
         CategoryTree tree = new CategoryTree(root);
         int removedNodes = tree.removeUnusedNodes();

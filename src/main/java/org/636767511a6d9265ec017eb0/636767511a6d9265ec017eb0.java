@@ -1,8 +1,7 @@
 public class NonZeroCounter {
-
     /**
      * Ottiene il numero di voci diverse da zero in una riga.
-     * @param row la riga rappresentata come un array di interi
+     * @param row la riga
      * @return il numero di voci diverse da zero in una riga
      */
     public static int nonZeros(int[] row) {

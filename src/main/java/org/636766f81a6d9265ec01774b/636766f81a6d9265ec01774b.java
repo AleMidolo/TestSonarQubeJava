@@ -20,7 +20,6 @@ public class ByteReader {
         if (!buffer.hasRemaining()) {
             refillBuffer();
         }
-
         try {
             return buffer.get();
         } catch (BufferUnderflowException e) {
@@ -32,7 +31,7 @@ public class ByteReader {
         buffer.clear();
         int bytesRead = inputStream.read(buffer.array());
         if (bytesRead == -1) {
-            throw new IOException("End of stream reached");
+            throw new IOException("No more data available");
         }
         buffer.limit(bytesRead);
     }

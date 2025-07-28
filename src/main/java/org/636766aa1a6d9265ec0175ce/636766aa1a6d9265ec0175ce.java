@@ -1,5 +1,4 @@
 public class StackMapFrameVisitor {
-
     private int currentFrame;
 
     /**
@@ -10,12 +9,11 @@ public class StackMapFrameVisitor {
      * @return इस फ्रेम में लिखे जाने वाले अगले तत्व का अनुक्रमांक।
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // यहाँ पर फ्रेम की यात्रा शुरू करने की प्रक्रिया को लागू करें
-        // उदाहरण के लिए, हम currentFrame को अपडेट कर सकते हैं
-        currentFrame = offset; // या किसी अन्य लॉजिक के अनुसार
-        // स्थानीय चर और स्टैक तत्वों की संख्या का उपयोग करें
-        // अगले तत्व का अनुक्रमांक लौटाएं
-        return currentFrame + numLocal + numStack; // यह एक उदाहरण है
+        // Logic to handle the start of a new stack map frame
+        // For demonstration, we will just update the currentFrame and return the next index
+        currentFrame++;
+        // Here we can add logic to process the offset, numLocal, and numStack if needed
+        return currentFrame; // Returning the next index to write to
     }
 
     public static void main(String[] args) {

@@ -8,20 +8,22 @@ public class StringUtils {
         if (str == null || searchStrArray == null) {
             return false;
         }
+        
         String lowerStr = str.toLowerCase();
+        
         for (String searchStr : searchStrArray) {
             if (searchStr != null && lowerStr.contains(searchStr.toLowerCase())) {
                 return true;
             }
         }
+        
         return false;
     }
 
     public static void main(String[] args) {
-        // Example usage
-        List<String> searchStrings = List.of("hello", "world", "java");
-        String testString = "Hello there!";
-        boolean result = containsAnyIgnoreCase(testString, searchStrings);
+        List<String> searchStrArray = List.of("a", "b", "c");
+        String str = "Hello World";
+        boolean result = containsAnyIgnoreCase(str, searchStrArray);
         System.out.println(result); // Output: true
     }
 }

@@ -8,18 +8,15 @@ public class UtfReader {
      * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer contains the necessary data
-        // and the constantPoolEntryIndex points to the correct entry.
-        
-        // Read the length of the UTF-8 string
-        int length = (classFileBuffer[constantPoolEntryIndex] << 8) | classFileBuffer[constantPoolEntryIndex + 1];
+        // Assuming the first two bytes of the entry give the length of the UTF-8 string
+        int length = ((classFileBuffer[constantPoolEntryIndex] & 0xFF) << 8) | (classFileBuffer[constantPoolEntryIndex + 1] & 0xFF);
         
         // Read the UTF-8 string into the charBuffer
         for (int i = 0; i < length; i++) {
             charBuffer[i] = classFileBuffer[constantPoolEntryIndex + 2 + i];
         }
         
-        // Return the string constructed from the charBuffer
+        // Return the string created from the charBuffer
         return new String(charBuffer, 0, length);
     }
 }

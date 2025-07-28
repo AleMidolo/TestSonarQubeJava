@@ -9,7 +9,7 @@ public class CharUtils {
 
     /**
      * <p>चरित्र को एक Character में परिवर्तित करता है।</p> 
-     * <p>ASCII 7 बिट चरित्रों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही Character ऑब्जेक्ट लौटाता है।</p> 
+     * <p>ASCII 7 बिट चरित्रों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही Character ऑब्जेक्ट लौटाता है。</p> 
      * <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
      * @param ch  वह चरित्र जिसे परिवर्तित करना है
      * @return निर्दिष्ट चरित्र का एक Character

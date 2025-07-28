@@ -13,8 +13,8 @@ public class LowerBoundCalculator<K> {
         
         for (K key : keys) {
             // यहाँ पर कुंजी के लिए निम्न सीमा की गणना करें
-            // यह एक साधारण उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार हो सकती है
-            int lowerBound = key.hashCode() % 100; // उदाहरण के लिए, हैश कोड का उपयोग करना
+            // उदाहरण के लिए, हम कुंजी के हैश को निम्न सीमा मान सकते हैं
+            int lowerBound = key.hashCode(); // यह केवल एक उदाहरण है
             lowerBounds.add(lowerBound);
         }
         

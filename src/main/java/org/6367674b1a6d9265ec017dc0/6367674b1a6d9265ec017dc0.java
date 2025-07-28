@@ -2,8 +2,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Graph<V> {
-    private final Set<V> vertices;
-    private final Set<Edge<V>> edges;
+    private Set<V> vertices;
+    private Set<Edge<V>> edges;
 
     public Graph() {
         this.vertices = new HashSet<>();
@@ -16,8 +16,8 @@ public class Graph<V> {
 
     public void addEdge(V source, V destination) {
         edges.add(new Edge<>(source, destination));
-        addVertex(source);
-        addVertex(destination);
+        vertices.add(source);
+        vertices.add(destination);
     }
 
     /** 

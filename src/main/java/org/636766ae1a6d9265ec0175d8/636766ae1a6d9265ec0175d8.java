@@ -7,7 +7,7 @@ public class ContentRangeBuilder {
     private String buildContentRange() {
         long start = 0; // प्रारंभिक बाइट
         long end = 499; // अंतिम बाइट
-        long total = 1234; // कुल बाइट्स
+        long total = 1234; // कुल बाइट
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

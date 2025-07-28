@@ -11,7 +11,7 @@ public class StringSearch {
     }
 
     public static void main(String[] args) {
-        // Example usage
+        // उदाहरण के लिए परीक्षण
         String str = "Hello, world! Hello, universe!";
         String searchStr = "Hello";
         int index = lastIndexOf(str, searchStr);

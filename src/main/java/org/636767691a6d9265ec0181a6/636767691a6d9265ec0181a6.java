@@ -7,7 +7,7 @@ public class StringSplitter {
      * @return एक दो तत्वों वाला एरे जिसमें इंडेक्स 0 डिलीमीटर से पहले का हिस्सा है, और इंडेक्स 1 डिलीमीटर के बाद का हिस्सा है (कोई भी तत्व डिलीमीटर को शामिल नहीं करता); या <code>null</code> यदि दिए गए इनपुट स्ट्रिंग में डिलीमीटर नहीं मिला
      */
     public static String[] split(String toSplit, String delimiter) {
-        if (toSplit == null || delimiter == null) {
+        if (toSplit == null || delimiter == null || delimiter.isEmpty()) {
             return null;
         }
         

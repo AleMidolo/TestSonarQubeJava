@@ -6,7 +6,7 @@ import java.util.Vector;
 public class ClassPathAdder {
 
     /** 
-     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
+     * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
      */
     @SuppressWarnings("unchecked") 
     public static void addToClassPath(Vector<URL> cpV, String dir) {
@@ -23,14 +23,14 @@ public class ClassPathAdder {
                 }
             }
         } else {
-            System.out.println("Directory does not exist or is not a directory: " + dir);
+            System.out.println("El directorio no existe o no es un directorio válido.");
         }
     }
 
     public static void main(String[] args) {
         Vector<URL> classpath = new Vector<>();
-        addToClassPath(classpath, "path/to/your/jar/directory");
-        // Print the classpath URLs
+        addToClassPath(classpath, "ruta/al/directorio/de/jars");
+        // Imprimir los URLs añadidos al classpath
         classpath.forEach(System.out::println);
     }
 }

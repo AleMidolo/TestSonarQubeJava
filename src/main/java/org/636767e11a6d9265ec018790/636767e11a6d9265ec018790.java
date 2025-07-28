@@ -15,21 +15,12 @@ class ThreadSnapshot {
         this.timestamp = timestamp;
     }
 
-    // Getters and toString method for debugging
     public String getThreadName() {
         return threadName;
     }
 
     public long getTimestamp() {
         return timestamp;
-    }
-
-    @Override
-    public String toString() {
-        return "ThreadSnapshot{" +
-                "threadName='" + threadName + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
     }
 }
 
@@ -49,12 +40,16 @@ class ProfileAnalyzeTimeRange {
     public long getEndTime() {
         return endTime;
     }
+
+    public boolean isInRange(long timestamp) {
+        return timestamp >= startTime && timestamp <= endTime;
+    }
 }
 
 public class ThreadSnapshotParser {
 
     /** 
-     * Carica gli snapshot dei thread nell'intervallo di tempo specificato
+     * Cargar instantáneas de hilos en el rango de tiempo especificado
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
@@ -74,11 +69,10 @@ public class ThreadSnapshotParser {
                     continue; // Skip lines with invalid timestamp
                 }
 
-                // Check if the timestamp falls within any of the specified time ranges
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
+                    if (range.isInRange(timestamp)) {
                         snapshots.add(new ThreadSnapshot(threadName, timestamp));
-                        break; // No need to check other ranges
+                        break; // No need to check other ranges once added
                     }
                 }
             }

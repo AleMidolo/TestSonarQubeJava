@@ -1,9 +1,10 @@
 public class ArrayConverter {
     
     /** 
-     * <p>Converte un array di int primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>int</code>
-     * @return un array di <code>Integer</code>, <code>null</code> se l'array di input è nullo
+     * <p>Convierte un arreglo de enteros primitivos a objetos.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  un arreglo de <code>int</code>
+     * @return un arreglo de <code>Integer</code>, <code>null</code> si el arreglo de entrada es nulo
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
@@ -23,7 +24,7 @@ public class ArrayConverter {
         
         // Print the result
         for (Integer num : objectArray) {
-            System.out.println(num);
+            System.out.print(num + " ");
         }
     }
 }

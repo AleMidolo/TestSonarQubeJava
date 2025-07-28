@@ -1,10 +1,10 @@
 public class ArrayCloner {
     
     /** 
-     * <p>Clona un array restituendo un risultato di tipo cast e gestendo <code>null</code>.</p> 
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  l'array da clonare, può essere <code>null</code>
-     * @return l'array clonato, <code>null</code> se l'input è <code>null</code>
+     * <p>Clona un arreglo devolviendo un resultado con tipo convertido y manejando <code>null</code>.</p> 
+     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * @param array  el arreglo a clonar, puede ser <code>null</code>
+     * @return el arreglo clonado, <code>null</code> si la entrada es <code>null</code>
      */
     public static char[] clone(final char[] array) {
         if (array == null) {

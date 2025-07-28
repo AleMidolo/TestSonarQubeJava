@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class LoggerFormatter {
 
-    /** 
-     * Produce una stringa formattata come specificato dal modello di conversione.
+    /**
+     * Produce una cadena formateada según lo especificado por el patrón de conversión.
      */
     public String format(LoggingEvent event) {
         StringBuilder formattedString = new StringBuilder();

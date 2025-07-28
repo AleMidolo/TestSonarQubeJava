@@ -2,8 +2,13 @@ import java.util.Arrays;
 
 public class PrimeCapacity {
 
+    /**
+     * Devuelve un número primo que es <code>&gt;= desiredCapacity</code> y muy cercano a <code>desiredCapacity</code> (dentro del 11% si <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity la capacidad deseada por el usuario.
+     * @return la capacidad que se debe utilizar para una tabla hash.
+     */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity < 2) {
+        if (desiredCapacity <= 1) {
             return 2;
         }
 
@@ -17,7 +22,7 @@ public class PrimeCapacity {
                 return i;
             }
         }
-        return upperLimit; // Fallback, should not reach here for valid input
+        return upperLimit; // Fallback, should not reach here for valid inputs
     }
 
     private static boolean isPrime(int number) {
@@ -39,7 +44,8 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(10)); // Example usage
-        System.out.println(nextPrime(1000)); // Example usage
+        int desiredCapacity = 1000;
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + nextPrimeCapacity);
     }
 }

@@ -1,29 +1,21 @@
 public class Bucket {
-    // Assuming there is a structure to hold the buckets, e.g., a list or a map
-    private static List<Bucket> bucketList = new ArrayList<>();
+    // Assuming there is a structure to hold the elements of the bucket
+    private List<Object> elements;
 
-    public void removeSelf() {
-        // Remove this bucket from the bucketList
-        bucketList.remove(this);
+    public Bucket() {
+        elements = new ArrayList<>();
     }
 
-    // Method to add a bucket to the list for demonstration purposes
-    public static void addBucket(Bucket bucket) {
-        bucketList.add(bucket);
-    }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        Bucket bucket1 = new Bucket();
-        Bucket bucket2 = new Bucket();
+    /** 
+     * Elimina este bucket de la estructura de datos.
+     */
+    void removeSelf() {
+        // Logic to remove this bucket from its parent structure
+        // This is a placeholder as the actual removal logic depends on the parent structure
+        // For example, if this bucket is part of a list of buckets in a parent class:
+        // parent.remove(this);
         
-        addBucket(bucket1);
-        addBucket(bucket2);
-        
-        System.out.println("Buckets before removal: " + bucketList.size()); // Should print 2
-        
-        bucket1.removeSelf();
-        
-        System.out.println("Buckets after removal: " + bucketList.size()); // Should print 1
+        // Clear the elements in the bucket
+        elements.clear();
     }
 }

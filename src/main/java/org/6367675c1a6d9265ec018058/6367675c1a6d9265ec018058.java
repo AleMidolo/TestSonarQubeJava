@@ -1,10 +1,11 @@
 import java.util.function.Supplier;
 
-public class StringSupplier {
+public class UniqueStringSupplier {
+
     /** 
-     * Crea un fornitore di stringhe che restituisce stringhe uniche. Le stringhe restituite sono semplicemente interi che partono da start.
-     * @param start da dove iniziare la sequenza
-     * @return un fornitore di stringhe
+     * Crea un proveedor de cadenas que devuelve cadenas únicas. Las cadenas devueltas son simplemente enteros que comienzan desde el inicio.
+     * @param start desde dónde comenzar la secuencia
+     * @return un proveedor de cadenas
      */
     @SuppressWarnings("unchecked") 
     public static Supplier<String> createStringSupplier(int start) {
@@ -19,9 +20,9 @@ public class StringSupplier {
     }
 
     public static void main(String[] args) {
-        Supplier<String> stringSupplier = createStringSupplier(5);
-        System.out.println(stringSupplier.get()); // Output: 5
-        System.out.println(stringSupplier.get()); // Output: 6
-        System.out.println(stringSupplier.get()); // Output: 7
+        Supplier<String> stringSupplier = createStringSupplier(0);
+        System.out.println(stringSupplier.get()); // 0
+        System.out.println(stringSupplier.get()); // 1
+        System.out.println(stringSupplier.get()); // 2
     }
 }

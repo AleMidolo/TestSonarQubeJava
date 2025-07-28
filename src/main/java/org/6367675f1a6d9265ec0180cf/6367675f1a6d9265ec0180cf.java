@@ -1,44 +1,32 @@
-import org.jgrapht.Graph;
-import org.jgrapht.GraphType;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
 import java.util.Set;
+import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
 
-public class CliqueChecker {
+public class GraphUtils {
 
     /** 
-     * Controlla se il sottografo di <code>graph</code> indotto dai dati <code>vertices</code> è completo, cioè un clique.
-     * @param graph il grafo.
-     * @param vertices i vertici da cui indurre il sottografo.
-     * @return true se il sottografo indotto è un clique.
+     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
+     * @param graph el grafo.
+     * @param vertices los vértices de los que se inducirá el subgrafo.
+     * @return true si el subgrafo inducido es un clique.
      */
-    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        if (vertices.size() < 2) {
-            return true; // A single vertex or empty set is trivially a clique
-        }
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+        // Check if the number of edges in the induced subgraph equals the number of edges in a complete graph
+        int expectedEdges = vertices.size() * (vertices.size() - 1) / 2;
+        int actualEdges = 0;
 
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // If any pair of vertices is not connected, it's not a clique
+        for (V vertex : vertices) {
+            for (E edge : graph.outgoingEdgesOf(vertex)) {
+                V targetVertex = Graphs.getOppositeVertex(graph, edge, vertex);
+                if (vertices.contains(targetVertex)) {
+                    actualEdges++;
                 }
             }
         }
-        return true; // All pairs are connected, it's a clique
-    }
 
-    public static void main(String[] args) {
-        // Example usage
-        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addEdge("A", "B");
-        graph.addEdge("B", "C");
-        graph.addEdge("A", "C");
+        // Each edge is counted twice (once from each vertex), so divide by 2
+        actualEdges /= 2;
 
-        Set<String> vertices = Set.of("A", "B", "C");
-        System.out.println(isClique(graph, vertices)); // Should print true
+        return actualEdges == expectedEdges;
     }
 }

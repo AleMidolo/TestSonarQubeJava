@@ -5,8 +5,8 @@ import java.util.Map;
 private Map<String, Object> buildContent(JsonObject jsonObject) {
     Map<String, Object> content = new HashMap<>();
     
-    if (jsonObject.has("ATS")) {
-        content.put("ATS", jsonObject.get("ATS").getAsString());
+    if (jsonObject.has("ats")) {
+        content.put("ats", jsonObject.get("ats").getAsString());
     }
     
     return content;

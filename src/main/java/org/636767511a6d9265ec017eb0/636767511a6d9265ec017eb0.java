@@ -1,9 +1,9 @@
-public class NonZeroCounter {
-    
-    /** 
-     * Ottiene il numero di voci diverse da zero in una riga.
-     * @param row la riga
-     * @return il numero di voci diverse da zero in una riga
+public class MatrixUtils {
+
+    /**
+     * Obtiene el número de entradas diferentes de cero en una fila.
+     * @param row la fila
+     * @return el número de entradas diferentes de cero en una fila
      */
     public int nonZeros(int[] row) {
         int count = 0;
@@ -16,9 +16,8 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int[] row = {1, 0, 2, 3, 0, 4};
-        int result = counter.nonZeros(row);
-        System.out.println("Numero di voci diverse da zero: " + result);
+        MatrixUtils utils = new MatrixUtils();
+        int[] row = {1, 0, 2, 0, 3};
+        System.out.println("Número de entradas diferentes de cero: " + utils.nonZeros(row));
     }
 }

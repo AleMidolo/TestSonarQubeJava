@@ -1,48 +1,42 @@
-public class StackFrame {
-    private final Stack<Object> stack;
+public class OutputFrame {
+    private List<Object> outputFrame;
 
-    public StackFrame() {
-        this.stack = new Stack<>();
+    public OutputFrame() {
+        this.outputFrame = new ArrayList<>();
     }
 
-    /** 
-     * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
-     * @param elements il numero di tipi astratti che devono essere rimossi.
+    /**
+     * Elimina el número dado de tipos abstractos del "output frame" de salida.
+     * @param elements el número de tipos abstractos que deben ser eliminados.
      */
     private void pop(final int elements) {
-        if (elements < 0) {
-            throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
+        if (elements <= 0) {
+            return; // No hay nada que eliminar
         }
-        for (int i = 0; i < elements; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
-            } else {
-                break; // Stop if the stack is empty
-            }
+        int toRemove = Math.min(elements, outputFrame.size());
+        for (int i = 0; i < toRemove; i++) {
+            outputFrame.remove(outputFrame.size() - 1); // Elimina el último elemento
         }
     }
 
-    // Additional methods to push and view the stack for testing purposes
-    public void push(Object item) {
-        stack.push(item);
+    // Método para agregar elementos al output frame (para pruebas)
+    public void push(Object element) {
+        outputFrame.add(element);
     }
 
-    public Object peek() {
-        return stack.isEmpty() ? null : stack.peek();
-    }
-
-    public boolean isEmpty() {
-        return stack.isEmpty();
+    // Método para ver el contenido del output frame (para pruebas)
+    public List<Object> getOutputFrame() {
+        return outputFrame;
     }
 
     public static void main(String[] args) {
-        StackFrame frame = new StackFrame();
-        frame.push("Type1");
-        frame.push("Type2");
-        frame.push("Type3");
-
-        System.out.println("Stack before pop: " + frame.stack);
+        OutputFrame frame = new OutputFrame();
+        frame.push("Element 1");
+        frame.push("Element 2");
+        frame.push("Element 3");
+        
+        System.out.println("Before pop: " + frame.getOutputFrame());
         frame.pop(2);
-        System.out.println("Stack after popping 2 elements: " + frame.stack);
+        System.out.println("After pop: " + frame.getOutputFrame());
     }
 }

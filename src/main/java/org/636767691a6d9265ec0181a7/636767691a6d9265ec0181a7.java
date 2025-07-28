@@ -1,38 +1,26 @@
-public class StringCleaner {
-    
+public class StringManipulator {
+
     /** 
-     * Rimuove tutte le occorrenze del carattere iniziale fornito dalla Stringa data.
-     * @param str la Stringa da controllare
-     * @param leadingCharacter il carattere iniziale da rimuovere
-     * @return la Stringa ripulita
+     * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
+     * @param str la cadena a verificar
+     * @param leadingCharacter el carácter inicial que se debe eliminar
+     * @return la cadena sin el carácter inicial
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
         if (str == null || str.isEmpty()) {
             return str;
         }
         
-        StringBuilder result = new StringBuilder();
-        boolean leadingCharFound = false;
-
-        for (char c : str.toCharArray()) {
-            if (c == leadingCharacter) {
-                leadingCharFound = true;
-            } else {
-                if (leadingCharFound) {
-                    result.append(c);
-                } else {
-                    result.append(c);
-                }
-            }
+        int startIndex = 0;
+        while (startIndex < str.length() && str.charAt(startIndex) == leadingCharacter) {
+            startIndex++;
         }
         
-        return result.toString();
+        return str.substring(startIndex);
     }
 
     public static void main(String[] args) {
-        String testString = "aaabacadae";
-        char leadingChar = 'a';
-        String cleanedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(cleanedString); // Output: "bcde"
+        String result = trimLeadingCharacter("aaabbbccc", 'a');
+        System.out.println(result); // Output: bbbccc
     }
 }

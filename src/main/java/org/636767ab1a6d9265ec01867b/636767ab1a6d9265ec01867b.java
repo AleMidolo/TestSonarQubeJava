@@ -1,10 +1,9 @@
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
 
-public class UTF8Writer {
+public class Utf8Writer {
 
     /** 
-     * Scrive i byte codificati in utf8 dalla stringa nel {@link LinkedBuffer}.
+     * Escribe los bytes codificados en utf8 de la cadena en el {@link LinkedBuffer}.
      */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
         if (str == null || lb == null) {
@@ -15,32 +14,28 @@ public class UTF8Writer {
         lb.write(utf8Bytes);
         return lb;
     }
+}
 
-    public static class LinkedBuffer {
-        private final LinkedList<byte[]> buffers = new LinkedList<>();
+class LinkedBuffer {
+    private byte[] buffer;
+    private int position;
 
-        public void write(byte[] data) {
-            buffers.add(data);
-        }
-
-        public LinkedList<byte[]> getBuffers() {
-            return buffers;
-        }
+    public LinkedBuffer(int size) {
+        buffer = new byte[size];
+        position = 0;
     }
 
-    public static class WriteSession {
-        // Implementation of WriteSession can be added here
+    public void write(byte[] bytes) {
+        if (position + bytes.length > buffer.length) {
+            throw new ArrayIndexOutOfBoundsException("Not enough space in LinkedBuffer");
+        }
+        System.arraycopy(bytes, 0, buffer, position, bytes.length);
+        position += bytes.length;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        WriteSession session = new WriteSession();
-        LinkedBuffer lb = new LinkedBuffer();
-        writeUTF8("Hello, World!", session, lb);
-        
-        // Print the buffers for demonstration
-        for (byte[] buffer : lb.getBuffers()) {
-            System.out.println(new String(buffer, StandardCharsets.UTF_8));
-        }
-    }
+    // Additional methods for LinkedBuffer can be added here
+}
+
+class WriteSession {
+    // Implementation of WriteSession can be added here
 }

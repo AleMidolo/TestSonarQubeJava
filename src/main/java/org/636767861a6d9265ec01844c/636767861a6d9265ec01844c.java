@@ -1,16 +1,15 @@
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class AppenderManager {
     private List<String> appenders;
 
-    public AppenderManager() {
-        this.appenders = new ArrayList<>();
+    public AppenderManager(List<String> appenders) {
+        this.appenders = appenders;
     }
 
     /** 
-     * Rimuove l'appender con il nome passato come parametro dalla lista degli appenders.  
+     * Elimina el "appender" con el nombre pasado como parámetro de la lista de "appenders".  
      */
     public void removeAppender(String name) {
         Iterator<String> iterator = appenders.iterator();
@@ -21,13 +20,5 @@ public class AppenderManager {
                 break;
             }
         }
-    }
-
-    public void addAppender(String name) {
-        appenders.add(name);
-    }
-
-    public List<String> getAppenders() {
-        return appenders;
     }
 }

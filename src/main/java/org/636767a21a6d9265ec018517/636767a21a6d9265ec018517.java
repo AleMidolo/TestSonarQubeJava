@@ -13,7 +13,7 @@ public final class Buffer {
     }
 
     /**
-     * Restituisce un singolo array di byte contenente tutti i contenuti scritti nel/i buffer.
+     * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
      */
     public final byte[] toByteArray() {
         return outputStream.toByteArray();

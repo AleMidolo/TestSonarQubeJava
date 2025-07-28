@@ -1,54 +1,26 @@
-public class DotIdentifierDecompressor {
+public class DotIdentifierUnescaper {
 
     /** 
-     * Decomprime un identificatore di stringa DOT.
-     * @param input l'input
-     * @return l'output decompresso
+     * Remueve el "escape" de un identificador de cadena DOT.
+     * @param input la entrada
+     * @return la salida sin carácteres "escape"
      */
     private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
-        
-        StringBuilder output = new StringBuilder();
-        boolean escape = false;
-
-        for (char c : input.toCharArray()) {
-            if (escape) {
-                switch (c) {
-                    case 'n':
-                        output.append('\n');
-                        break;
-                    case 't':
-                        output.append('\t');
-                        break;
-                    case '\\':
-                        output.append('\\');
-                        break;
-                    case '"':
-                        output.append('"');
-                        break;
-                    default:
-                        output.append(c);
-                        break;
-                }
-                escape = false;
-            } else {
-                if (c == '\\') {
-                    escape = true;
-                } else {
-                    output.append(c);
-                }
-            }
-        }
-
-        return output.toString();
+        // Reemplaza las secuencias de escape
+        return input.replaceAll("\\\\\"", "\"")
+                    .replaceAll("\\\\\\\\", "\\\\")
+                    .replaceAll("\\\\n", "\n")
+                    .replaceAll("\\\\r", "\r")
+                    .replaceAll("\\\\t", "\t");
     }
 
     public static void main(String[] args) {
-        DotIdentifierDecompressor decompressor = new DotIdentifierDecompressor();
-        String input = "Hello\\nWorld\\t!";
-        String output = decompressor.unescapeId(input);
-        System.out.println(output);
+        DotIdentifierUnescaper unescaper = new DotIdentifierUnescaper();
+        String escapedId = "This is a test string with an escaped quote: \\\" and a backslash: \\\\";
+        String unescapedId = unescaper.unescapeId(escapedId);
+        System.out.println(unescapedId);
     }
 }

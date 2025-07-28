@@ -5,26 +5,31 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.bytes = new byte[0];
+        this.bytes = new byte[2]; // Initial capacity
         this.size = 0;
     }
 
-    /**
-     * Inserisce due byte in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
+    /** 
+     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
      * @param byteValue1 un byte.
-     * @param byteValue2 un altro byte.
-     * @return questo vettore di byte.
+     * @param byteValue2 otro byte.
+     * @return este vector de bytes.
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
-        if (size + 2 > bytes.length) {
-            bytes = Arrays.copyOf(bytes, Math.max(size + 2, bytes.length * 2));
-        }
+        ensureCapacity(size + 2);
         bytes[size++] = (byte) byteValue1;
         bytes[size++] = (byte) byteValue2;
         return this;
     }
 
-    public byte[] getBytes() {
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - bytes.length > 0) {
+            int newCapacity = Math.max(bytes.length * 2, minCapacity);
+            bytes = Arrays.copyOf(bytes, newCapacity);
+        }
+    }
+
+    public byte[] toArray() {
         return Arrays.copyOf(bytes, size);
     }
 }

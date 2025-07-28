@@ -17,7 +17,7 @@ public class FileIterator {
     }
 
     /** 
-     * Restituisce il prossimo oggetto {@link java.io.File} oppure {@code null} se non ci sono più file disponibili.
+     * Devuelve el siguiente objeto {@link java.io.File} o {@code null} si no hay más archivos disponibles.
      */
     public InputStream next() throws IOException {
         if (currentIndex < files.length) {

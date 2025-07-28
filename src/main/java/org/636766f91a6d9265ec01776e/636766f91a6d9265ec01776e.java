@@ -16,6 +16,7 @@ public class CustomOutputStream extends OutputStream {
         for (int i = off; i < off + len; i++) {
             System.out.print((char) b[i]); // Print each byte as a character
         }
+        System.out.flush(); // Ensure all data is flushed
     }
 
     @Override
@@ -23,14 +24,10 @@ public class CustomOutputStream extends OutputStream {
         // Implement the method to write a single byte if needed
         System.out.print((char) b);
     }
-
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws IOException {
         CustomOutputStream customOutputStream = new CustomOutputStream();
         byte[] data = "Hello, World!".getBytes();
-        try {
-            customOutputStream.write(data, 0, data.length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        customOutputStream.write(data, 0, data.length);
     }
 }

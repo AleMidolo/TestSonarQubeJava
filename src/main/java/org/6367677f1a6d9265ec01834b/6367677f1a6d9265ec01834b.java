@@ -10,16 +10,16 @@ public class LoggingBuffer {
     }
 
     /** 
-     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.  
+     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es <b>silenciosamente descartado</b>. Es responsabilidad del llamador asegurarse de que el búfer tenga espacio libre.  
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // If the buffer is full, the event is silently discarded
+        // Si el búfer está lleno, el evento es descartado silenciosamente.
     }
 }
 
 class LoggingEvent {
-    // Assume this class has necessary fields and methods
+    // Implementación de LoggingEvent
 }

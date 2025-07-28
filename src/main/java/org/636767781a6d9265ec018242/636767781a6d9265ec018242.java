@@ -8,7 +8,7 @@ public class Logger {
     }
 
     /** 
-     * Chiama il metodo <code>doAppend</code> su tutti gli appender collegati.  
+     * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.  
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int appendCount = 0;
@@ -25,5 +25,5 @@ interface Appender {
 }
 
 class LoggingEvent {
-    // Event details
+    // Implementation of LoggingEvent
 }

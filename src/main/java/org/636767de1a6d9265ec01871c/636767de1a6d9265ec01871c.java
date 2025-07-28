@@ -1,28 +1,30 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValueAccumulator {
-    private Map<String, Long> storage;
+public class Accumulador {
+    private Map<String, Long> acumulaciones;
 
-    public ValueAccumulator() {
-        storage = new HashMap<>();
+    public Accumulador() {
+        acumulaciones = new HashMap<>();
     }
 
     /** 
-     * Accumula il valore con il valore esistente nella stessa chiave fornita.
+     * Acumula el valor con el valor existente en la misma clave dada.
      */
-    public void valueAccumulation(String key, Long value) {
-        storage.put(key, storage.getOrDefault(key, 0L) + value);
+    public void acumulacionDeValor(String clave, Long valor) {
+        acumulaciones.put(clave, acumulaciones.getOrDefault(clave, 0L) + valor);
     }
 
-    public Long getValue(String key) {
-        return storage.getOrDefault(key, 0L);
+    public Map<String, Long> getAcumulaciones() {
+        return acumulaciones;
     }
 
     public static void main(String[] args) {
-        ValueAccumulator accumulator = new ValueAccumulator();
-        accumulator.valueAccumulation("a", 10L);
-        accumulator.valueAccumulation("a", 5L);
-        System.out.println(accumulator.getValue("a")); // Output: 15
+        Accumulador acumulador = new Accumulador();
+        acumulador.acumulacionDeValor("clave1", 10L);
+        acumulador.acumulacionDeValor("clave1", 5L);
+        acumulador.acumulacionDeValor("clave2", 20L);
+        
+        System.out.println(acumulador.getAcumulaciones()); // {clave1=15, clave2=20}
     }
 }

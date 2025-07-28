@@ -3,14 +3,14 @@ import java.lang.Character;
 public class Converter {
 
     /**
-     * <p>Converte l'oggetto di input in un java.lang.Character.</p>
-     * @param type Il tipo di dato in cui questo valore dovrebbe essere convertito.
-     * @param value Il valore di input da convertire.
-     * @return Il valore convertito.
-     * @throws Exception se la conversione non può essere eseguita con successo
+     * <p>Convierte el objeto de entrada en un java.lang.Character.</p>
+     * @param type Tipo de dato al que este valor debe ser convertido.
+     * @param value El valor de entrada que se va a convertir.
+     * @return El valor convertido.
+     * @throws Exception si la conversión no se puede realizar con éxito.
      * @since 1.8.0
      */
-    @Override
+    @Override 
     protected Object convertToType(final Class<?> type, final Object value) throws Exception {
         if (type == Character.class) {
             if (value instanceof String && ((String) value).length() == 1) {
@@ -18,9 +18,9 @@ public class Converter {
             } else if (value instanceof Character) {
                 return value;
             } else {
-                throw new Exception("Conversione non riuscita: valore non valido per Character.");
+                throw new Exception("No se puede convertir el valor a Character.");
             }
         }
-        throw new Exception("Tipo non supportato: " + type.getName());
+        throw new Exception("Tipo no soportado: " + type.getName());
     }
 }

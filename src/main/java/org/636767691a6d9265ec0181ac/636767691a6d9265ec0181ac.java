@@ -3,10 +3,10 @@ import java.nio.file.Paths;
 
 public class PathUtil {
     /** 
-     * Applica il percorso relativo fornito al percorso dato, assumendo la separazione standard delle cartelle Java (cioè i separatori "/").
-     * @param path il percorso da cui partire (di solito un percorso di file completo)
-     * @param relativePath il percorso relativo da applicare (rispetto al percorso di file completo sopra)
-     * @return il percorso di file completo che risulta dall'applicazione del percorso relativo
+     * Aplica la ruta relativa dada a la ruta proporcionada, asumiendo la separación estándar de carpetas en Java (es decir, separadores "/").
+     * @param path la ruta desde la cual comenzar (generalmente una ruta de archivo completa)
+     * @param relativePath la ruta relativa a aplicar (en relación con la ruta de archivo completa anterior)
+     * @return la ruta de archivo completa que resulta de aplicar la ruta relativa
      */
     public static String applyRelativePath(String path, String relativePath) {
         Path basePath = Paths.get(path);
@@ -15,9 +15,9 @@ public class PathUtil {
     }
 
     public static void main(String[] args) {
-        String path = "/home/user/documents/file.txt";
-        String relativePath = "../images/picture.png";
+        String path = "/home/user/documents";
+        String relativePath = "../pictures/image.png";
         String result = applyRelativePath(path, relativePath);
-        System.out.println(result); // Output: /home/user/images/picture.png
+        System.out.println(result); // Output: /home/user/pictures/image.png
     }
 }

@@ -13,19 +13,19 @@ class TreeNode<T> {
 public class BinaryTree<T> {
 
     /**
-     * Esegue una rotazione a destra del nodo.
-     * @param node un nodo da ruotare
-     * @return un nuovo genitore del {@code node}
+     * Realiza una rotación a la derecha de un nodo.
+     * @param node un nodo a rotar
+     * @return un nuevo padre del {@code node}
      */
     private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {
-            return node; // Non è possibile ruotare
+            return node; // No se puede rotar
         }
 
-        TreeNode<T> newRoot = node.left; // Il nuovo genitore sarà il nodo sinistro
-        node.left = newRoot.right; // Il nodo destro del nuovo genitore diventa il nodo sinistro del nodo originale
-        newRoot.right = node; // Il nodo originale diventa il nodo destro del nuovo genitore
+        TreeNode<T> newRoot = node.left; // El nuevo padre será el hijo izquierdo
+        node.left = newRoot.right; // El hijo derecho del nuevo padre se convierte en hijo izquierdo del nodo original
+        newRoot.right = node; // El nodo original se convierte en el hijo derecho del nuevo padre
 
-        return newRoot; // Restituisce il nuovo genitore
+        return newRoot; // Retorna el nuevo padre
     }
 }

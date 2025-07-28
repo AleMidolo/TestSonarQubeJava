@@ -1,29 +1,23 @@
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.JSONWriter;
 
 public class JsonSerializer {
 
-    /**
-     * Serializza in JSON {@link String}
-     * @param features funzionalità da abilitare nella serializzazione
+    /** 
+     * Serializar a JSON {@link String}
+     * @param features características que se habilitarán en la serialización
      * @return JSON {@link String}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") 
     public String toString(JSONWriter.Feature... features) {
         // Example object to serialize
         MyObject obj = new MyObject("example", 123);
         
-        // Convert features to SerializerFeature
-        SerializerFeature[] serializerFeatures = new SerializerFeature[features.length];
-        for (int i = 0; i < features.length; i++) {
-            serializerFeatures[i] = SerializerFeature.valueOf(features[i].name());
-        }
-        
-        // Serialize the object to JSON
-        return JSON.toJSONString(obj, serializerFeatures);
+        // Serialize the object to JSON string with the provided features
+        return JSON.toJSONString(obj, features);
     }
 
-    // Example class to serialize
+    // Example class to demonstrate serialization
     public static class MyObject {
         private String name;
         private int value;
@@ -34,5 +28,26 @@ public class JsonSerializer {
         }
 
         // Getters and setters (if needed)
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+    }
+
+    public static void main(String[] args) {
+        JsonSerializer serializer = new JsonSerializer();
+        String jsonString = serializer.toString(JSONWriter.Feature.PrettyFormat);
+        System.out.println(jsonString);
     }
 }

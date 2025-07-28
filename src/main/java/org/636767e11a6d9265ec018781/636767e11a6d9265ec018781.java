@@ -1,41 +1,23 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class MetricsCache {
 
-    private final Map<String, Integer> cache = new HashMap<>();
+    private METRICS existingData;
 
     /** 
-     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
-     * @param data da aggiungere potenzialmente.
+     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
+     * @param data que se va a agregar potencialmente.
      */
     @Override 
     public void accept(final METRICS data) {
-        if (data != null) {
-            // Assuming METRICS has a method getKey() to get the key and getValue() to get the value
-            String key = data.getKey();
-            Integer value = data.getValue();
-
-            cache.merge(key, value, Integer::sum);
+        if (existingData == null) {
+            existingData = data;
+        } else {
+            combineMetrics(existingData, data);
         }
     }
 
-    // Assuming a METRICS class for demonstration purposes
-    public static class METRICS {
-        private final String key;
-        private final Integer value;
-
-        public METRICS(String key, Integer value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public Integer getValue() {
-            return value;
-        }
+    private void combineMetrics(METRICS existing, METRICS newData) {
+        // Implementar la lógica para combinar existing con newData
+        // Esto es un ejemplo, la implementación real dependerá de la estructura de METRICS
+        existing.merge(newData);
     }
 }

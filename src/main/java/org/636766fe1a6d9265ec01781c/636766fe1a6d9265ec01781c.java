@@ -8,22 +8,23 @@ public class CharUtils {
     }
 
     /**
-     * <p>Converte il carattere in un oggetto Character.</p>
-     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto Character ogni volta.</p>
-     * <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
-     * @param ch  il carattere da convertire
-     * @return un oggetto Character del carattere specificato
+     * <p>Convierte el carácter a un objeto "Character".</p> 
+     * <p>Para caracteres ASCII de 7 bits, utiliza una caché que devolverá el mismo objeto "Character" cada vez.</p> 
+     * <pre> CharUtils.toCharacterObject(' ')  = ' ' 
+     * CharUtils.toCharacterObject('A')  = 'A' </pre>
+     * @param ch  el carácter a convertir
+     * @return un objeto "Character" del carácter especificado
      */
     public static Character toCharacterObject(final char ch) {
         if (ch >= 0 && ch < 128) {
             return cache[ch];
         }
-        return Character.valueOf(ch);
+        return new Character(ch);
     }
 
     public static void main(String[] args) {
         System.out.println(toCharacterObject(' ')); // Output: ' '
         System.out.println(toCharacterObject('A')); // Output: 'A'
-        System.out.println(toCharacterObject('ñ')); // Output: 'ñ'
+        System.out.println(toCharacterObject((char) 200)); // Output: 'È'
     }
 }

@@ -1,52 +1,35 @@
 public class TimeBucketCompressor {
 
     /**
-     * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. 
-     * Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, 
-     * per 20000115 è 20000112, e per 20000123 è 20000123.
+     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. 
+     * Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, 
+     * el "bucket" de tiempo reformateado 20000115 es 20000112, 
+     * y el "bucket" de tiempo reformateado 20000123 es 20000123.
      */
-    static long compressTimeBucket(long timeBucket, int dayStep) {
-        // Estrai l'anno, il mese e il giorno dal timeBucket
-        int year = (int) (timeBucket / 10000);
-        int month = (int) ((timeBucket % 10000) / 100);
-        int day = (int) (timeBucket % 100);
+    static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
+        // Extraer el año, mes y día del bucket de tiempo
+        int year = (int) (bucketDeTiempo / 10000);
+        int month = (int) ((bucketDeTiempo % 10000) / 100);
+        int day = (int) (bucketDeTiempo % 100);
         
-        // Calcola il giorno riformattato
-        int newDay = (day - 1) / dayStep * dayStep + 1;
+        // Calcular el día del año
+        java.time.LocalDate date = java.time.LocalDate.of(year, month, day);
+        int dayOfYear = date.getDayOfYear();
         
-        // Gestisci il caso in cui il nuovo giorno supera il numero di giorni nel mese
-        int daysInMonth = getDaysInMonth(year, month);
-        if (newDay > daysInMonth) {
-            newDay = daysInMonth;
-        }
+        // Calcular el nuevo día del año basado en el paso diario
+        int newDayOfYear = (dayOfYear / pasoDiario) * pasoDiario;
         
-        // Riformatta il bucket temporale
-        return year * 10000 + month * 100 + newDay;
-    }
-
-    // Funzione di supporto per ottenere il numero di giorni in un mese
-    private static int getDaysInMonth(int year, int month) {
-        switch (month) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-                return 31;
-            case 4: case 6: case 9: case 11:
-                return 30;
-            case 2:
-                return isLeapYear(year) ? 29 : 28;
-            default:
-                return 0; // mese non valido
-        }
-    }
-
-    // Funzione di supporto per determinare se un anno è bisestile
-    private static boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        // Obtener la nueva fecha
+        java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
+        
+        // Reformatear la nueva fecha a formato largo
+        return newDate.getYear() * 10000 + newDate.getMonthValue() * 100 + newDate.getDayOfMonth();
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
+        long bucketDeTiempo = 20000105;
+        int pasoDiario = 11;
+        long resultado = comprimirBucketDeTiempo(bucketDeTiempo, pasoDiario);
+        System.out.println("Bucket de tiempo reformateado: " + resultado);
     }
 }

@@ -3,11 +3,11 @@ public class ArrayUtil {
     private static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /** 
-     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p> 
-     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p> 
-     * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
-     * @param array  l'array da controllare per <code>null</code> o vuoto
-     * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
+     * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p> 
+     * <p>Este método devuelve un array vacío para un array de entrada <code>null</code>.</p> 
+     * <p>Como técnica de optimización de memoria, un array vacío pasado se sobrescribirá con las referencias vacías <code>public static</code> en esta clase.</p>
+     * @param array  el array a verificar si es <code>null</code> o vacío
+     * @return el mismo array, un array vacío <code>public static</code> si la entrada es <code>null</code> o vacía
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
@@ -20,8 +20,8 @@ public class ArrayUtil {
     public static void main(String[] args) {
         // Test cases
         Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
-        Byte[] nonEmptyArray = new Byte[]{1, 2, 3};
+        Byte[] emptyArray = {};
+        Byte[] nonEmptyArray = {1, 2, 3};
 
         System.out.println(nullToEmpty(nullArray).length); // Output: 0
         System.out.println(nullToEmpty(emptyArray).length); // Output: 0

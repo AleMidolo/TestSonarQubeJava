@@ -1,19 +1,24 @@
-public class ParameterSeparatorChecker {
+public class SeparadorParametro {
 
     /** 
-     * Determina se un nome di parametro termina nella posizione attuale, cioè se il carattere fornito può essere considerato un separatore. 
+     * Determina si un nombre de parámetro termina en la posición actual, es decir, si el carácter dado califica como un separador. 
      */
-    private static boolean isParameterSeparator(final char c) {
-        // Consider common parameter separators
-        return c == ',' || c == ';' || c == '&' || c == '|' || c == ' ' || c == '\n' || c == '\t';
+    private static boolean esSeparadorDeParametro(final char c) {
+        // Definimos los caracteres que consideramos como separadores
+        char[] separadores = {',', ';', ' ', '\t', '\n', '\r', '(', ')', '{', '}', '[', ']', '=', '&', '|', '<', '>', '?', ':', '/'};
+        
+        // Verificamos si el carácter dado es un separador
+        for (char separador : separadores) {
+            if (c == separador) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
-        // Test the isParameterSeparator method
-        char testChar1 = ',';
-        char testChar2 = 'a';
-        
-        System.out.println(isParameterSeparator(testChar1)); // true
-        System.out.println(isParameterSeparator(testChar2)); // false
+        // Ejemplo de uso
+        char testChar = ';';
+        System.out.println("¿Es separador? " + esSeparadorDeParametro(testChar)); // Debería imprimir true
     }
 }

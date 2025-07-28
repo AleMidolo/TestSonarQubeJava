@@ -1,4 +1,4 @@
-public class FilePathUtil {
+public class FileUtils {
 
     /** 
      * Elimina la extensión del nombre de archivo de la ruta dada, por ejemplo, "mypath/myfile.txt" -> "mypath/myfile".
@@ -25,7 +25,7 @@ public class FilePathUtil {
         System.out.println(stripFilenameExtension("mypath/myfile.txt")); // Output: mypath/myfile
         System.out.println(stripFilenameExtension("mypath/myfile"));     // Output: mypath/myfile
         System.out.println(stripFilenameExtension(null));                // Output: null
-        System.out.println(stripFilenameExtension("mypath/myfile."));   // Output: mypath/myfile
+        System.out.println(stripFilenameExtension("mypath/myfile."));    // Output: mypath/myfile
         System.out.println(stripFilenameExtension("mypath/myfile.tar.gz")); // Output: mypath/myfile.tar
     }
 }

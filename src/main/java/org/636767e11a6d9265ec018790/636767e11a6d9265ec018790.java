@@ -72,7 +72,7 @@ public class ThreadSnapshotParser {
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
                     if (range.isInRange(timestamp)) {
                         snapshots.add(new ThreadSnapshot(threadName, timestamp));
-                        break; // No need to check other ranges if already added
+                        break; // No need to check other ranges once added
                     }
                 }
             }

@@ -18,24 +18,16 @@ public class GraphUtils<V, E> {
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
-        V startVertex = null;
-
         for (E edge : tour) {
-            if (startVertex == null) {
-                startVertex = graph.getEdgeSource(edge);
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            if (!vertexList.contains(source)) {
+                vertexList.add(source);
             }
-            vertexList.add(graph.getEdgeSource(edge));
-            vertexList.add(graph.getEdgeTarget(edge));
-        }
-
-        // Remove duplicates while maintaining order
-        List<V> uniqueVertices = new ArrayList<>();
-        for (V vertex : vertexList) {
-            if (!uniqueVertices.contains(vertex)) {
-                uniqueVertices.add(vertex);
+            if (!vertexList.contains(target)) {
+                vertexList.add(target);
             }
         }
-
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -43,8 +35,13 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<V> getVertexList() {
-                return uniqueVertices;
+            public V getStartVertex() {
+                return vertexList.get(0);
+            }
+
+            @Override
+            public V getEndVertex() {
+                return vertexList.get(vertexList.size() - 1);
             }
 
             @Override
@@ -53,18 +50,16 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public V getStartVertex() {
-                return uniqueVertices.get(0);
-            }
-
-            @Override
-            public V getEndVertex() {
-                return uniqueVertices.get(uniqueVertices.size() - 1);
-            }
-
-            @Override
             public double getWeight() {
                 return 0; // Weight calculation can be implemented if needed
+            }
+
+            @Override
+            public String toString() {
+                return "GraphPath{" +
+                        "vertices=" + vertexList +
+                        ", edges=" + tour +
+                        '}';
             }
         };
     }

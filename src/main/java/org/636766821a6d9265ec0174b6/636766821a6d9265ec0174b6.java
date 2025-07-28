@@ -12,26 +12,31 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
-        if (!targetType.isAssignableFrom((Class<?>) rawType)) {
-            return null;
-        }
-
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-
-        for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type argument = actualTypeArguments[i];
-            if (argument instanceof Class) {
-                resolvedArguments[i] = (Class<?>) argument;
-            } else if (argument instanceof ParameterizedType) {
-                resolvedArguments[i] = (Class<?>) ((ParameterizedType) argument).getRawType();
-            } else {
-                return null; // No se puede resolver el argumento
+        if (rawType instanceof Class<?>) {
+            Class<?> rawClass = (Class<?>) rawType;
+            if (rawClass.isAssignableFrom(targetType)) {
+                return resolveFromTargetType(actualTypeArguments, targetType);
             }
         }
+        return null;
+    }
 
-        return resolvedArguments;
+    private static Class<?>[] resolveFromTargetType(Type[] actualTypeArguments, Class<?> targetType) {
+        // Aquí se puede implementar la lógica para resolver los argumentos de tipo
+        // basándose en la jerarquía de clases y las variables de tipo.
+        // Este es un ejemplo simple que devuelve las clases de los argumentos.
+        Class<?>[] resolvedClasses = new Class<?>[actualTypeArguments.length];
+        for (int i = 0; i < actualTypeArguments.length; i++) {
+            resolvedClasses[i] = (Class<?>) actualTypeArguments[i];
+        }
+        return resolvedClasses;
+    }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        // Aquí se puede agregar código para probar la función resolveArguments
     }
 }

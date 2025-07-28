@@ -9,7 +9,9 @@ public class LogFilter {
     public int decide(LoggingEvent event) {
         // Implementación de la lógica para decidir el filtro
         // Aquí se puede agregar la lógica para verificar coincidencias de cadena
-        // Por ahora, simplemente devolvemos Filter.NEUTRAL como se indica en el docstring
+        // Por ahora, simplemente devolvemos Filter.NEUTRAL si no hay coincidencia
+
+        // Suponiendo que no hay coincidencia de cadena
         return Filter.NEUTRAL;
     }
 }

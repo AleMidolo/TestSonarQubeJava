@@ -1,8 +1,6 @@
 import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 
 public class StringUtil {
-
     /** 
      * Inverso de Introspector.decapitalize
      */
@@ -18,6 +16,6 @@ public class StringUtil {
         System.out.println(capitalize("hello")); // Output: Hello
         System.out.println(capitalize("java"));   // Output: Java
         System.out.println(capitalize(""));       // Output: (empty string)
-        System.out.println(capitalize(null));     // Output: null
+        System.out.println(capitalize(null));      // Output: null
     }
 }

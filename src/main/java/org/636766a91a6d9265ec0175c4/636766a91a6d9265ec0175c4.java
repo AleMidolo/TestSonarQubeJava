@@ -21,12 +21,13 @@ public class StackExtractor {
             int endIndex = descriptor.indexOf(')');
             String args = descriptor.substring(1, endIndex);
             for (String arg : args.split(",")) {
-                pop(arg); // Llamada recursiva para extraer tipos de argumentos
+                if (!arg.isEmpty()) {
+                    String type = arg.replace('L', ' ').trim();
+                    stack.add(type);
+                }
             }
-        } else {
-            // Manejo de otros tipos (por ejemplo, primitivos)
-            stack.add(descriptor);
         }
+        // Aquí se pueden agregar más condiciones para otros tipos de descriptores
     }
 
     public List<String> getStack() {
@@ -35,7 +36,8 @@ public class StackExtractor {
 
     public static void main(String[] args) {
         StackExtractor extractor = new StackExtractor();
-        extractor.pop("(Ljava/lang/String;I)V"); // Ejemplo de descriptor de método
+        extractor.pop("Ljava/lang/String;");
+        extractor.pop("(Ljava/lang/String;I)V");
         System.out.println(extractor.getStack());
     }
 }

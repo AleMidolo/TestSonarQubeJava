@@ -10,26 +10,16 @@ public class LoggerFormatter {
     public String format(LoggingEvent event) {
         StringBuilder formattedString = new StringBuilder();
         
-        // Get the timestamp of the logging event
-        long timestamp = event.getTimeStamp();
-        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
-        
-        // Get the log level
+        // Example of formatting: timestamp, log level, logger name, and message
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
         String level = event.getLevel().toString();
-        
-        // Get the logger name
         String loggerName = event.getLoggerName();
-        
-        // Get the message
         String message = event.getRenderedMessage();
         
-        // Format the string
-        formattedString.append(date)
-                       .append(" [")
-                       .append(level)
-                       .append("] ")
-                       .append(loggerName)
-                       .append(": ")
+        formattedString.append("[").append(timestamp).append("] ")
+                       .append("[").append(level).append("] ")
+                       .append("[").append(loggerName).append("] ")
                        .append(message);
         
         return formattedString.toString();

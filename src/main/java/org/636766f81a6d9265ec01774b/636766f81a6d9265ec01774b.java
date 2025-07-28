@@ -3,35 +3,30 @@ import java.io.InputStream;
 
 public class ByteReader {
     private InputStream buffer;
-    private int currentByte;
-    private boolean endOfStream;
+    private byte[] byteBuffer;
+    private int bufferSize;
+    private int currentIndex;
 
     public ByteReader(InputStream buffer) {
         this.buffer = buffer;
-        this.currentByte = -1;
-        this.endOfStream = false;
+        this.byteBuffer = new byte[1024]; // Buffer size can be adjusted
+        this.bufferSize = 0;
+        this.currentIndex = 0;
     }
 
-    /** 
+    /**
      * Lee un byte del <code>buffer</code> y lo vuelve a llenar según sea necesario.
      * @return El siguiente byte del flujo de entrada.
      * @throws IOException si no hay más datos disponibles.
      */
     public byte readByte() throws IOException {
-        if (endOfStream) {
-            throw new IOException("No hay más datos disponibles.");
-        }
-
-        if (currentByte == -1) {
-            currentByte = buffer.read();
-            if (currentByte == -1) {
-                endOfStream = true;
+        if (currentIndex >= bufferSize) {
+            bufferSize = buffer.read(byteBuffer);
+            currentIndex = 0;
+            if (bufferSize == -1) {
                 throw new IOException("No hay más datos disponibles.");
             }
         }
-
-        byte result = (byte) currentByte;
-        currentByte = -1; // Reset for the next read
-        return result;
+        return byteBuffer[currentIndex++];
     }
 }

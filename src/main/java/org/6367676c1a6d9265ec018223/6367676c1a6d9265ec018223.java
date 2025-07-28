@@ -8,6 +8,9 @@ public class CollectionUtils {
      * @return <code>true</code> si se encuentra, <code>false</code> en caso contrario
      */
     public static boolean containsInstance(Collection collection, Object element) {
+        if (collection == null || element == null) {
+            return false;
+        }
         for (Object obj : collection) {
             if (obj == element) {
                 return true;

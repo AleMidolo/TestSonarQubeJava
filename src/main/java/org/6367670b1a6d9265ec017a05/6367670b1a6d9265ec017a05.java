@@ -1,4 +1,5 @@
 public class CharUtils {
+    
     private static final String[] CACHE = new String[128];
 
     static {

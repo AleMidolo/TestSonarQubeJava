@@ -20,6 +20,6 @@ public class FileUtils {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        deleteFile("ruta/al/archivo.txt");
+        deleteFile("ruta/del/archivo.txt");
     }
 }

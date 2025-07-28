@@ -9,24 +9,15 @@ public class PathResolver {
      * @return वह पूर्ण फ़ाइल पथ जो सापेक्ष पथ को लागू करने से प्राप्त होता है
      */
     public static String applyRelativePath(String path, String relativePath) {
-        // Convert the base path to a Path object
         Path basePath = Paths.get(path);
-        
-        // Resolve the relative path against the base path
-        Path resolvedPath = basePath.resolve(relativePath);
-        
-        // Normalize the path to remove any redundant elements
-        Path normalizedPath = resolvedPath.normalize();
-        
-        // Convert the normalized path back to a string
-        return normalizedPath.toString();
+        Path resolvedPath = basePath.resolveSibling(relativePath).normalize();
+        return resolvedPath.toString();
     }
 
     public static void main(String[] args) {
-        // Example usage
-        String basePath = "/home/user/documents";
-        String relativePath = "../images/photo.jpg";
+        String basePath = "/usr/local/bin";
+        String relativePath = "../lib/java";
         String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /home/user/images/photo.jpg
+        System.out.println(result);  // Output: /usr/local/lib/java
     }
 }

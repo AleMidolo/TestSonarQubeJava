@@ -14,7 +14,7 @@ public class ClassReader {
      */
     public short readShort(final int offset) {
         if (offset < 0 || offset + 2 > data.length) {
-            throw new IndexOutOfBoundsException("Offset is out of bounds");
+            throw new IndexOutOfBoundsException("Invalid offset or insufficient data length");
         }
         ByteBuffer buffer = ByteBuffer.wrap(data, offset, 2);
         return buffer.getShort();

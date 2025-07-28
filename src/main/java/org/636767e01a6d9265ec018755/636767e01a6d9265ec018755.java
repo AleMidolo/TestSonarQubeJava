@@ -13,7 +13,7 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
     // Add other fields from the JsonObject to the content map
     for (Map.Entry<String, com.google.gson.JsonElement> entry : jsonObject.entrySet()) {
         String key = entry.getKey();
-        if (!key.equals("ats")) {
+        if (!key.equals("ats")) { // Skip "ats" since it's already handled
             content.put(key, entry.getValue().getAsString());
         }
     }

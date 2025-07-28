@@ -1,28 +1,35 @@
 import java.util.*;
 
 class Bucket {
-    // Assuming the Bucket class has some data structure to hold its data
     private List<Object> data;
 
     public Bucket() {
         this.data = new ArrayList<>();
     }
 
-    /**
-     * इस बकेट को डेटा संरचना से हटा देता है।
-     */
+    public void add(Object item) {
+        data.add(item);
+    }
+
     public void removeSelf() {
-        // Assuming the Bucket is part of a larger data structure, like a list or map
-        // Here, we simulate removing the bucket from a list
-        // In a real scenario, you would need to access the parent data structure
-        // and remove this bucket from it.
-        
-        // For example, if the bucket is part of a list:
-        // parentList.remove(this);
-        
-        // Clear the data inside the bucket
+        // Clear all data in the bucket
         data.clear();
     }
 
-    // Other methods of the Bucket class...
+    public List<Object> getData() {
+        return new ArrayList<>(data);
+    }
+}
+
+// Example usage
+public class Main {
+    public static void main(String[] args) {
+        Bucket bucket = new Bucket();
+        bucket.add("Item1");
+        bucket.add("Item2");
+
+        System.out.println("Before removal: " + bucket.getData());
+        bucket.removeSelf();
+        System.out.println("After removal: " + bucket.getData());
+    }
 }

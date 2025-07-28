@@ -1,35 +1,40 @@
 import java.util.Map;
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
-public class GraphGenerator<V, E> {
+/**
+ * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
+ */
+@Override
+public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+    // Assuming V is the vertex type and E is the edge type
+    // Create two partitions of vertices
+    V[] partition1 = (V[]) new Object[resultMap.size() / 2];
+    V[] partition2 = (V[]) new Object[resultMap.size() / 2];
 
-    /**
-     * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
-     * 
-     * @param target    The graph to which the bipartite graph will be added.
-     * @param resultMap A map to store the vertices created during the generation process.
-     */
-    @Override
-    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Create two sets of vertices for the bipartite graph
-        V[] setA = (V[]) new Object[5]; // Example size, can be adjusted
-        V[] setB = (V[]) new Object[5]; // Example size, can be adjusted
-
-        // Add vertices to the graph and store them in the resultMap
-        for (int i = 0; i < setA.length; i++) {
-            setA[i] = target.addVertex();
-            resultMap.put("A" + i, setA[i]);
+    int i = 0;
+    for (Map.Entry<String, V> entry : resultMap.entrySet()) {
+        if (i < partition1.length) {
+            partition1[i] = entry.getValue();
+        } else {
+            partition2[i - partition1.length] = entry.getValue();
         }
-        for (int i = 0; i < setB.length; i++) {
-            setB[i] = target.addVertex();
-            resultMap.put("B" + i, setB[i]);
-        }
+        i++;
+    }
 
-        // Connect every vertex in setA to every vertex in setB
-        for (V a : setA) {
-            for (V b : setB) {
-                target.addEdge(a, b);
-            }
+    // Add all vertices to the graph
+    for (V vertex : partition1) {
+        target.addVertex(vertex);
+    }
+    for (V vertex : partition2) {
+        target.addVertex(vertex);
+    }
+
+    // Add edges between all vertices in partition1 and partition2
+    for (V v1 : partition1) {
+        for (V v2 : partition2) {
+            target.addEdge(v1, v2);
         }
     }
 }

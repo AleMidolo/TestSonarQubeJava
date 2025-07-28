@@ -2,9 +2,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class TelnetClient {
+    private Socket socket;
     private PrintWriter out;
 
     public TelnetClient(Socket socket) throws Exception {
+        this.socket = socket;
         this.out = new PrintWriter(socket.getOutputStream(), true);
     }
 
@@ -14,6 +16,15 @@ public class TelnetClient {
     public synchronized void send(final String message) {
         if (out != null) {
             out.println(message);
+        }
+    }
+
+    public void close() throws Exception {
+        if (out != null) {
+            out.close();
+        }
+        if (socket != null) {
+            socket.close();
         }
     }
 }

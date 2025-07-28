@@ -3,34 +3,47 @@ import java.util.Objects;
 public class BucketCompatibilityChecker {
 
     /**
-     * @param dataset डेटा टेबल जिसकी जांच की जानी है
-     * @return यदि बकेट समान है तो true लौटाता है।
+     * @param dataset the dataset to check for bucket compatibility
+     * @return true if the buckets are compatible, false otherwise
      */
     public boolean isCompatible(DataTable dataset) {
-        // Assuming DataTable has a method getBucket() that returns the bucket identifier
-        String bucket1 = dataset.getBucket();
-        String bucket2 = this.getBucket(); // Assuming this class has a getBucket() method
+        if (dataset == null) {
+            return false;
+        }
 
-        // Compare the two buckets
-        return Objects.equals(bucket1, bucket2);
-    }
+        // Assuming DataTable has a method getBuckets() that returns a list of buckets
+        List<Bucket> buckets = dataset.getBuckets();
 
-    // Assuming this class has a method to get the bucket identifier
-    public String getBucket() {
-        // Return the bucket identifier for this instance
-        return "defaultBucket"; // Replace with actual logic
+        if (buckets == null || buckets.isEmpty()) {
+            return false;
+        }
+
+        // Get the first bucket to compare with the rest
+        Bucket firstBucket = buckets.get(0);
+
+        for (Bucket bucket : buckets) {
+            if (!Objects.equals(firstBucket, bucket)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
-// Assuming DataTable class is defined as follows:
-class DataTable {
-    private String bucket;
+// Assuming Bucket and DataTable classes are defined as follows:
+class Bucket {
+    // Bucket properties and methods
+}
 
-    public DataTable(String bucket) {
-        this.bucket = bucket;
+class DataTable {
+    private List<Bucket> buckets;
+
+    public List<Bucket> getBuckets() {
+        return buckets;
     }
 
-    public String getBucket() {
-        return bucket;
+    public void setBuckets(List<Bucket> buckets) {
+        this.buckets = buckets;
     }
 }

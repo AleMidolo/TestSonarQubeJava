@@ -11,21 +11,29 @@ public class TimeBucketCompressor {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date = LocalDate.parse(String.valueOf(timeBucket), formatter);
 
-        // Calculate the day of the month to determine the compressed day
+        // Calculate the day of the month to adjust
         int dayOfMonth = date.getDayOfMonth();
-        int compressedDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
+        int adjustedDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
 
-        // Create the compressed date
-        LocalDate compressedDate = LocalDate.of(date.getYear(), date.getMonth(), compressedDay);
+        // Create a new date with the adjusted day
+        LocalDate adjustedDate = date.withDayOfMonth(adjustedDay);
 
-        // Convert the compressed date back to a long in the format yyyyMMdd
-        return Long.parseLong(compressedDate.format(formatter));
+        // Convert the adjusted date back to a long
+        return Long.parseLong(adjustedDate.format(formatter));
     }
 
     public static void main(String[] args) {
         // Example usage
-        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
+        long timeBucket1 = 20000105;
+        int dayStep1 = 11;
+        System.out.println(compressTimeBucket(timeBucket1, dayStep1)); // Output: 20000101
+
+        long timeBucket2 = 20000115;
+        int dayStep2 = 11;
+        System.out.println(compressTimeBucket(timeBucket2, dayStep2)); // Output: 20000112
+
+        long timeBucket3 = 20000123;
+        int dayStep3 = 11;
+        System.out.println(compressTimeBucket(timeBucket3, dayStep3)); // Output: 20000123
     }
 }

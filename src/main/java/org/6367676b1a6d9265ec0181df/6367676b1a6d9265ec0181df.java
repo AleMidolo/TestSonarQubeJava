@@ -18,9 +18,12 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO WORLD")); // false
+        System.out.println(startsWithIgnoreCase(null, "hello")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
     }
 }

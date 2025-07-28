@@ -18,13 +18,9 @@ public class ByteArrayOutputStream extends OutputStream {
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
-        if (b == null) {
-            throw new NullPointerException();
-        } else if ((off < 0) || (off > b.length) || (len < 0) ||
-                   ((off + len) > b.length) || ((off + len) < 0)) {
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+            ((off + len) - b.length > 0)) {
             throw new IndexOutOfBoundsException();
-        } else if (len == 0) {
-            return;
         }
         ensureCapacity(count + len);
         System.arraycopy(b, off, buffer, count, len);
@@ -72,10 +68,5 @@ public class ByteArrayOutputStream extends OutputStream {
     @Override
     public String toString() {
         return new String(buffer, 0, count);
-    }
-
-    @Override
-    public void close() throws IOException {
-        // No resources to close
     }
 }

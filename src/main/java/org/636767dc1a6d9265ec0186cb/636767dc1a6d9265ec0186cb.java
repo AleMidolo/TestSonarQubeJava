@@ -11,7 +11,8 @@ public class ConfigInitializer {
         
         if (!distDirectory.exists()) {
             System.out.println("Distribution path does not exist: " + distPath);
-            // You can add code here to create the directory or handle the error
+            // You can add code here to create the directory if needed
+            // distDirectory.mkdirs();
         } else {
             System.out.println("Distribution path is valid: " + distPath);
         }

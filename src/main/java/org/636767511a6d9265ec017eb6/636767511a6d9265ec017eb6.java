@@ -8,8 +8,8 @@ class OuterFaceCirculator {
     // OuterFaceCirculator implementation
 }
 
-public class GraphTraversal {
-
+public class Graph {
+    
     /**
      * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the  {@code predicate} or returns a circulator to the {@code stop} node.
      * @param predicate the condition the desired node should satisfy
@@ -19,22 +19,26 @@ public class GraphTraversal {
      * @return a circulator to the node satisfying the {@code predicate} or to the {@code stop} node
      */
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator();
+        // Implementation of the method
         Node currentNode = start;
+        OuterFaceCirculator circulator = new OuterFaceCirculator(); // Initialize circulator
 
-        // Assuming we have a method to get the next node in the specified direction
-        while (!currentNode.equals(stop)) {
+        // Traverse the outer face starting from the start node
+        while (currentNode != stop) {
             if (predicate.test(currentNode)) {
-                return circulator; // Return circulator to the current node if it satisfies the predicate
+                // If the predicate is satisfied, return the circulator to the current node
+                return circulator; // Assuming circulator can be set to currentNode
             }
-            currentNode = getNextNode(currentNode, dir); // Move to the next node in the specified direction
+            // Move to the next node in the specified direction
+            currentNode = getNextNode(currentNode, dir);
         }
-
-        return circulator; // Return circulator to the stop node if no node satisfies the predicate
+        
+        // If no node satisfies the predicate, return circulator to the stop node
+        return circulator; // Assuming circulator can be set to stop node
     }
 
     private Node getNextNode(Node currentNode, int dir) {
-        // Implementation to get the next node based on the direction
-        return new Node(); // Placeholder return
+        // Logic to get the next node based on the direction
+        return new Node(); // Placeholder for actual next node logic
     }
 }

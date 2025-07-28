@@ -23,9 +23,6 @@ public class ValueAccumulator {
         ValueAccumulator va = new ValueAccumulator();
         va.valueAccumulation("a", 10L);
         va.valueAccumulation("a", 5L);
-        va.valueAccumulation("b", 20L);
-        
-        System.out.println("Value for key 'a': " + va.getValue("a")); // Output: 15
-        System.out.println("Value for key 'b': " + va.getValue("b")); // Output: 20
+        System.out.println(va.getValue("a")); // Output: 15
     }
 }

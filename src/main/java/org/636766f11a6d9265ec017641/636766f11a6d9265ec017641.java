@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MyInputStream extends InputStream {
+public class CustomInputStream extends InputStream {
     private byte[] data;
     private int currentIndex;
 
-    public MyInputStream(byte[] data) {
+    public CustomInputStream(byte[] data) {
         this.data = data;
         this.currentIndex = 0;
     }

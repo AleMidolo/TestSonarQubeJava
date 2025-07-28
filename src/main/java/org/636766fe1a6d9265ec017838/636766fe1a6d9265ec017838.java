@@ -16,7 +16,7 @@ public class CharacterArrayConverter {
             if (array[i] == null) {
                 throw new NullPointerException("Array content is null at index " + i);
             }
-            result[i] = array[i].charValue();
+            result[i] = array[i];
         }
         return result;
     }

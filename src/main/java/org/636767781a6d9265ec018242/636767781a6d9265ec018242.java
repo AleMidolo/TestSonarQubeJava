@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 public class LoggerAppender {
     private Logger logger;
 
-    public LoggerAppender() {
-        this.logger = Logger.getLogger(LoggerAppender.class);
+    public LoggerAppender(Logger logger) {
+        this.logger = logger;
     }
 
     /** 

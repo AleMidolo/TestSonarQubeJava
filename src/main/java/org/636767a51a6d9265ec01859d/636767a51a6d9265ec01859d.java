@@ -16,4 +16,13 @@ public class ArrayComparer {
         }
         return Arrays.equals(internalArray, 0, len, data, offset, offset + len);
     }
+
+    public static void main(String[] args) {
+        byte[] internal = {1, 2, 3, 4, 5};
+        ArrayComparer comparer = new ArrayComparer(internal);
+        
+        byte[] external = {0, 1, 2, 3, 4, 5};
+        boolean result = comparer.equals(external, 1, 5); // Should return true
+        System.out.println(result); // Output: true
+    }
 }

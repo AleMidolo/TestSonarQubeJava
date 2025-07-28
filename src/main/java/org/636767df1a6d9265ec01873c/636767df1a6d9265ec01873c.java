@@ -1,6 +1,6 @@
 public class Entity {
     
-    /** 
+    /**
      * @return the row id
      */
     public String id(String entityId) {

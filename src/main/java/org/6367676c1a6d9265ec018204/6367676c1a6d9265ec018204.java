@@ -18,14 +18,14 @@ public class StringArrayConcatenator {
         List<String> resultList = new ArrayList<>();
 
         if (array1 != null) {
-            for (String element : array1) {
-                resultList.add(element);
+            for (String s : array1) {
+                resultList.add(s);
             }
         }
 
         if (array2 != null) {
-            for (String element : array2) {
-                resultList.add(element);
+            for (String s : array2) {
+                resultList.add(s);
             }
         }
 
@@ -36,6 +36,7 @@ public class StringArrayConcatenator {
         String[] array1 = {"a", "b", "c"};
         String[] array2 = {"b", "c", "d"};
         String[] result = concatenateStringArrays(array1, array2);
+        
         for (String s : result) {
             System.out.print(s + " ");
         }

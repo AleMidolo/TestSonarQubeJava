@@ -10,11 +10,11 @@ public class MyAtmosphereHandler {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // 根据传输类型进行处理
-        if (r.getTransport() != null) {
+        // 根据传输类型挂起资源
+        if (r.transport() != null) {
             // 这里可以添加根据不同传输类型的逻辑
-            // 例如：如果是长轮询，则挂起资源
-            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+            // 例如：如果是长轮询，则挂起
+            if (r.transport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
                 r.suspend();
             }
         }

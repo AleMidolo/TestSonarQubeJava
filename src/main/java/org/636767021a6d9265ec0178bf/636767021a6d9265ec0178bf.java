@@ -18,9 +18,9 @@ public class Converter {
             } else if (value instanceof Character) {
                 return value;
             } else {
-                throw new Exception("Cannot convert value to Character");
+                throw new Exception("Cannot convert to Character: " + value);
             }
         }
-        throw new Exception("Unsupported type: " + type.getName());
+        throw new Exception("Unsupported type: " + type);
     }
 }

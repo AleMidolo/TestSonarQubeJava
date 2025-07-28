@@ -1,5 +1,5 @@
 public class SubstringUtil {
-
+    
     /** 
      * 从指定的字符串中获取子字符串，避免抛出异常。
      */
@@ -23,7 +23,7 @@ public class SubstringUtil {
         System.out.println(sub("Hello, World!", 7, 12)); // 输出: World
         System.out.println(sub("Hello, World!", -1, 5)); // 输出: Hello
         System.out.println(sub("Hello, World!", 7, 20)); // 输出: World!
-        System.out.println(sub("Hello, World!", 5, 5));  // 输出: (空字符串)
-        System.out.println(sub(null, 0, 5));              // 输出: null
+        System.out.println(sub(null, 0, 5)); // 输出: null
+        System.out.println(sub("Hello", 3, 2)); // 输出: ""
     }
 }

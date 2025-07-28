@@ -18,7 +18,7 @@ public class QueueToString {
         for (Object item : queue) {
             sb.append(item.toString()).append(", ");
         }
-        if (!queue.isEmpty()) {
+        if (sb.length() > 1) {
             sb.setLength(sb.length() - 2); // Remove the last comma and space
         }
         sb.append("]");

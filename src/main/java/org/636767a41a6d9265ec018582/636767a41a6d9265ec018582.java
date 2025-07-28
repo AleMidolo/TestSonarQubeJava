@@ -10,23 +10,20 @@ public class MessageWriter {
      * @return 消息的大小
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message using the provided schema
+        // Serialize the message
         int size = schema.getSerializedSize(message);
-        
-        // Write the size of the message to the output stream
+        // Write the size of the message
         out.write(intToByteArray(size));
-        
-        // Serialize the message and write it to the output stream
+        // Write the message itself
         schema.writeTo(out, message, buffer);
-        
         return size;
     }
 
     private static byte[] intToByteArray(int value) {
         return new byte[] {
-            (byte) (value >> 24),
-            (byte) (value >> 16),
-            (byte) (value >> 8),
+            (byte) (value >>> 24),
+            (byte) (value >>> 16),
+            (byte) (value >>> 8),
             (byte) value
         };
     }

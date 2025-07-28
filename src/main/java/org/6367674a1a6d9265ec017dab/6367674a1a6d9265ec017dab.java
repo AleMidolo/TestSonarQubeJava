@@ -15,11 +15,4 @@ public class FloatComparator implements Comparator<Double> {
         }
         return o1 < o2 ? -1 : 1;
     }
-    
-    public static void main(String[] args) {
-        FloatComparator comparator = new FloatComparator();
-        System.out.println(comparator.compare(1.0, 2.0)); // Output: -1
-        System.out.println(comparator.compare(2.0, 1.0)); // Output: 1
-        System.out.println(comparator.compare(1.0, 1.0)); // Output: 0
-    }
 }

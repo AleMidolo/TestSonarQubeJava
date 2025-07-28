@@ -1,4 +1,5 @@
 public class Entity {
+    
     /**
      * @return 行 ID
      */

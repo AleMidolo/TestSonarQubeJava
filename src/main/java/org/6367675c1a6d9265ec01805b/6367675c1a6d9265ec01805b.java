@@ -27,7 +27,7 @@ public class TreeEdgeList {
         if (parent.children.contains(child)) {
             parent.children.remove(child);
         }
-        // Assuming it's a bidirectional edge, we also need to remove the child reference to the parent
+        // Assuming it's a bidirectional edge, we also need to remove the parent reference from the child
         if (child.children.contains(parent)) {
             child.children.remove(parent);
         }

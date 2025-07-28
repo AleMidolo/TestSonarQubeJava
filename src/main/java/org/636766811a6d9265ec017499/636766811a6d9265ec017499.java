@@ -17,8 +17,8 @@ public class InterceptorChecker {
         return true; // 不存在该类的实例
     }
     
-    // 假设 AtmosphereInterceptor 是一个接口或抽象类
+    // Assuming AtmosphereInterceptor is defined somewhere
     public interface AtmosphereInterceptor {
-        // 方法定义
+        // Interface methods
     }
 }

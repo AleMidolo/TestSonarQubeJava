@@ -21,8 +21,8 @@ public class TimeRangeSplitter {
     }
 
     public static class TimeRange {
-        private final long start;
-        private final long end;
+        private long start;
+        private long end;
 
         public TimeRange(long start, long end) {
             this.start = start;
@@ -35,14 +35,6 @@ public class TimeRangeSplitter {
 
         public long getEnd() {
             return end;
-        }
-
-        @Override
-        public String toString() {
-            return "TimeRange{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
         }
     }
 }

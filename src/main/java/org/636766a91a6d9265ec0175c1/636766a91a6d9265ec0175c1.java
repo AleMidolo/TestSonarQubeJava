@@ -2,9 +2,9 @@ public class ByteVector {
     private byte[] data;
     private int currentSize;
 
-    public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
-        this.currentSize = 0;
+    public ByteVector(int initialCapacity) {
+        data = new byte[initialCapacity];
+        currentSize = 0;
     }
 
     /**
@@ -20,6 +20,4 @@ public class ByteVector {
             data = newData;
         }
     }
-
-    // Additional methods to manipulate the byte vector can be added here
 }

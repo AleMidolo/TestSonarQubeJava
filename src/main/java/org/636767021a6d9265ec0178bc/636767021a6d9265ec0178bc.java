@@ -14,7 +14,7 @@ public class StringSearch {
         // 测试代码
         System.out.println(indexOf("Hello, world!", "world")); // 输出: 7
         System.out.println(indexOf("Hello, world!", "Java"));  // 输出: -1
-        System.out.println(indexOf(null, "world"));             // 输出: -1
-        System.out.println(indexOf("Hello, world!", null));     // 输出: -1
+        System.out.println(indexOf(null, "test"));              // 输出: -1
+        System.out.println(indexOf("test", null));              // 输出: -1
     }
 }

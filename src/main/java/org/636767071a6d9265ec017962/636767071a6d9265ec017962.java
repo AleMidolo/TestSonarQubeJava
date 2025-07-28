@@ -7,9 +7,9 @@ public class BeanMap {
 
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+            return;
         }
-
+        
         for (String propertyName : map.properties.keySet()) {
             try {
                 PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, this.getClass());

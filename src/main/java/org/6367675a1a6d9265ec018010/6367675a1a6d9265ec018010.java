@@ -3,7 +3,7 @@ public class Bucket {
 
     // Constructor
     public Bucket() {
-        // Initialization code
+        // Initialize properties if needed
     }
 
     /**
@@ -11,8 +11,12 @@ public class Bucket {
      */
     void removeSelf() {
         // Logic to remove this bucket from the data structure
-        // This could involve notifying a parent structure or updating references
+        // This is a placeholder for the actual removal logic
         System.out.println("Removing this bucket from the data structure.");
-        // Example: if this bucket is part of a linked list, you would update the next reference of the previous bucket
+    }
+
+    public static void main(String[] args) {
+        Bucket bucket = new Bucket();
+        bucket.removeSelf();
     }
 }

@@ -1,5 +1,5 @@
+import org.jgrapht.Graph;
 import java.util.Set;
-import java.util.HashSet;
 
 public class GraphUtils {
 
@@ -10,22 +10,19 @@ public class GraphUtils {
      * @return 如果诱导的子图是一个团，则返回真。
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        if (vertices.size() < 2) {
+        int vertexCount = vertices.size();
+        if (vertexCount < 2) {
             return true; // A single vertex or empty set is trivially a clique
         }
 
+        // Check if every pair of vertices in the set is connected
         for (V v1 : vertices) {
             for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.hasEdge(v1, v2)) {
+                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
                     return false; // Found a pair of vertices that are not connected
                 }
             }
         }
-        return true; // All pairs of vertices are connected
-    }
-    
-    // Assuming a simple Graph interface for demonstration purposes
-    interface Graph<V, E> {
-        boolean hasEdge(V source, V target);
+        return true; // All pairs are connected, thus it's a clique
     }
 }

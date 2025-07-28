@@ -13,7 +13,7 @@ public final class ByteBuffer {
         try {
             buffer.write(data);
         } catch (IOException e) {
-            // Handle the exception, though ByteArrayOutputStream.write does not throw IOException
+            // Handle the exception as needed
             e.printStackTrace();
         }
     }

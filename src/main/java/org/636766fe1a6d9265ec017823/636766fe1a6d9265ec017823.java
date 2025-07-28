@@ -21,7 +21,7 @@ public class ConstantPool {
         if (constantNameAndTypeMap.containsKey(key)) {
             return constantNameAndTypeMap.get(key);
         } else {
-            int newIndex = constantNameAndTypeMap.size() + 1; // Simulando un índice único
+            int newIndex = constantNameAndTypeMap.size() + 1;
             constantNameAndTypeMap.put(key, newIndex);
             return newIndex;
         }

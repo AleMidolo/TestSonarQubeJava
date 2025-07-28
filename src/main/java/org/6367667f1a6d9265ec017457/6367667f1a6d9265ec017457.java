@@ -20,27 +20,27 @@ private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         // 4 bytes
         numBytes = 4;
     } else {
-        // Carácter no válido
-        throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        // Secuencia inválida
+        throw new IllegalArgumentException("Secuencia de bytes UTF-8 inválida");
     }
-    
-    // Verificar si hay suficientes bytes en el buffer
+
+    // Verificar que hay suficientes bytes en el buffer
     if (i + numBytes > bb.limit()) {
-        throw new IllegalArgumentException("Incomplete UTF-8 sequence");
+        throw new IllegalArgumentException("No hay suficientes bytes para decodificar el carácter UTF-8");
     }
-    
+
     // Crear un array para almacenar los bytes del carácter
-    byte[] bytes = new byte[numBytes];
+    byte[] charBytes = new byte[numBytes];
     for (int j = 0; j < numBytes; j++) {
-        bytes[j] = bb.get(i + j);
+        charBytes[j] = bb.get(i + j);
     }
-    
+
     // Decodificar los bytes a un String
-    String str = new String(bytes, StandardCharsets.UTF_8);
-    
-    // Agregar el carácter al StringBuilder
-    sb.append(str);
-    
+    String decodedChar = new String(charBytes, StandardCharsets.UTF_8);
+
+    // Agregar el carácter decodificado al StringBuilder
+    sb.append(decodedChar);
+
     // Retornar el índice del siguiente carácter no verificado
     return i + numBytes;
 }

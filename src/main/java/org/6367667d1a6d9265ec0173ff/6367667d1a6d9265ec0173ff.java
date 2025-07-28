@@ -2,23 +2,26 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 
+    /**
+     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
+     * @param r {@link HttpServletRequest}
+     * @return un {@link Meteor} o null si no se encuentra
+     */
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming Meteor is a class that can be retrieved from the request attributes
-        // or session attributes. Adjust the logic based on your actual implementation.
+        // Aquí se implementaría la lógica para buscar y retornar una instancia de Meteor
+        // basada en el HttpServletRequest. Por ejemplo, se podría buscar en la sesión o en
+        // algún atributo de la solicitud.
         
-        // Check if the Meteor instance is stored in the request attributes
+        // Ejemplo de implementación básica:
         Meteor meteor = (Meteor) r.getAttribute("meteor");
-        if (meteor != null) {
-            return meteor;
+        if (meteor == null) {
+            meteor = (Meteor) r.getSession().getAttribute("meteor");
         }
-
-        // If not found in request attributes, check the session attributes
-        meteor = (Meteor) r.getSession().getAttribute("meteor");
-        if (meteor != null) {
-            return meteor;
-        }
-
-        // If still not found, return null
-        return null;
+        
+        return meteor;
     }
+}
+
+class Meteor {
+    // Implementación de la clase Meteor
 }

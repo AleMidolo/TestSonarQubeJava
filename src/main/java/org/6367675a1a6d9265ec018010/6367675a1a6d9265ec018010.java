@@ -1,35 +1,34 @@
 import java.util.*;
 
 class Bucket {
-    private String name;
+    // Asumiendo que Bucket es parte de una estructura de datos más grande
     private List<Bucket> buckets;
 
-    public Bucket(String name) {
-        this.name = name;
+    public Bucket() {
         this.buckets = new ArrayList<>();
     }
 
     public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
+        this.buckets.add(bucket);
     }
 
+    /**
+     * Elimina este bucket de la estructura de datos.
+     */
     public void removeSelf() {
-        // Remove this bucket from its parent's list of buckets
-        for (Bucket parent : buckets) {
-            parent.buckets.remove(this);
+        // Asumiendo que la estructura de datos es una lista de buckets
+        // y que este método se llama desde un objeto Bucket específico.
+        // Si este bucket está en una lista, se elimina de la lista.
+        if (this.buckets.contains(this)) {
+            this.buckets.remove(this);
         }
-        // Clear the list of buckets to remove references to other buckets
-        buckets.clear();
     }
 
     public static void main(String[] args) {
-        Bucket parentBucket = new Bucket("Parent");
-        Bucket childBucket = new Bucket("Child");
+        Bucket bucket1 = new Bucket();
+        Bucket bucket2 = new Bucket();
 
-        parentBucket.addBucket(childBucket);
-        System.out.println("Before removal: " + parentBucket.buckets.contains(childBucket));
-        
-        childBucket.removeSelf();
-        System.out.println("After removal: " + parentBucket.buckets.contains(childBucket));
+        bucket1.addBucket(bucket2);
+        bucket2.removeSelf(); // Elimina bucket2 de la lista de buckets de bucket1
     }
 }

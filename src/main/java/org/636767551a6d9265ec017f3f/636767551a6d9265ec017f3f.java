@@ -1,5 +1,4 @@
 public class ArrayUtils {
-
     /**
      * Intercambia los dos elementos en los índices especificados en el arreglo dado.
      * @param <V> el tipo de elementos en el arreglo
@@ -19,8 +18,8 @@ public class ArrayUtils {
     public static void main(String[] args) {
         // Ejemplo de uso
         Integer[] arr = {1, 2, 3, 4, 5};
-        System.out.println("Arreglo antes del intercambio: " + java.util.Arrays.toString(arr));
+        System.out.println("Antes del intercambio: " + java.util.Arrays.toString(arr));
         swap(arr, 1, 3);
-        System.out.println("Arreglo después del intercambio: " + java.util.Arrays.toString(arr));
+        System.out.println("Después del intercambio: " + java.util.Arrays.toString(arr));
     }
 }

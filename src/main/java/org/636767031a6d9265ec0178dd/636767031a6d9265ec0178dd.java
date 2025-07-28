@@ -15,20 +15,11 @@ public class HttpRequest {
      * @return La longitud del contenido de la solicitud.
      * @since 1.3
      */
-    public long contentLength() {
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("HEAD");
-            return connection.getContentLengthLong();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
+    public long contentLength() throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("HEAD");
+        connection.connect();
+        return connection.getContentLengthLong();
     }
 
     public static void main(String[] args) {

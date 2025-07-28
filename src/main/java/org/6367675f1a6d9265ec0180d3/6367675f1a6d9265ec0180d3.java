@@ -12,10 +12,10 @@ public class AutomorfismoIdentidad {
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identidad(Graph<V, E> graph) {
         // Crear un mapeo de identidad donde cada vértice se mapea a sí mismo
-        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
+        IsomorphicGraphMapping<V, E> identityMapping = new IsomorphicGraphMapping<>(graph, graph);
         for (V vertex : graph.vertexSet()) {
-            mapping.addVertexMapping(vertex, vertex);
+            identityMapping.addVertexMapping(vertex, vertex);
         }
-        return mapping;
+        return identityMapping;
     }
 }

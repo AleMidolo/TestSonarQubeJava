@@ -14,7 +14,7 @@ public class StringUtils {
             return inString;
         }
 
-        // Crear un conjunto de caracteres a eliminar
+        // Convertir el conjunto de caracteres a eliminar en un Set para acceso rápido
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);

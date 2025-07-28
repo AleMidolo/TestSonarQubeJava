@@ -16,12 +16,12 @@ public class SuffixSumCalculator {
 
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int suffixSum = 0;
+        int currentSuffixSum = 0;
 
         // Calcular la suma total y la suma de sufijos
         for (int i = bounds.size() - 1; i >= 0; i--) {
-            suffixSum += bounds.get(i);
-            suffixSums.add(suffixSum);
+            currentSuffixSum += bounds.get(i);
+            suffixSums.add(currentSuffixSum);
             totalSum += bounds.get(i);
         }
 
@@ -31,7 +31,7 @@ public class SuffixSumCalculator {
         return new Pair<>(suffixSums, totalSum);
     }
 
-    // Clase Pair para devolver dos valores
+    // Clase Pair para representar el par de resultados
     public static class Pair<A, B> {
         private final A first;
         private final B second;

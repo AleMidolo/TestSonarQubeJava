@@ -20,6 +20,5 @@ public class LogBuffer {
 }
 
 class LoggingEvent {
-    // Assuming LoggingEvent is a class with some fields and methods
-    // You can define the actual implementation of LoggingEvent as needed
+    // Assume LoggingEvent is a class with necessary fields and methods
 }

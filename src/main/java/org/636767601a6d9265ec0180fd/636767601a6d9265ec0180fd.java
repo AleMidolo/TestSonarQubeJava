@@ -20,12 +20,4 @@ public class GraphIndex<V, E> {
         }
         index.get(sourceVertex).put(targetVertex, e);
     }
-
-    // Método adicional para obtener la arista entre dos vértices
-    public E getEdge(V sourceVertex, V targetVertex) {
-        if (index.containsKey(sourceVertex)) {
-            return index.get(sourceVertex).get(targetVertex);
-        }
-        return null;
-    }
 }

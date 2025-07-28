@@ -13,13 +13,8 @@ public class FrameStack {
      */
     private int pop() {
         if (stack.isEmpty()) {
-            throw new IllegalStateException("La pila está vacía, no se puede extraer ningún elemento.");
+            throw new IllegalStateException("La pila está vacía.");
         }
         return stack.pop();
-    }
-
-    // Método adicional para agregar elementos a la pila (solo para propósitos de prueba)
-    public void push(int value) {
-        stack.push(value);
     }
 }

@@ -3,8 +3,8 @@ import java.util.function.Predicate;
 public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node start) {
-        this.current = start;
+    public OuterFaceCirculator(Node node) {
+        this.current = node;
     }
 
     public Node getCurrent() {
@@ -12,13 +12,15 @@ public class OuterFaceCirculator {
     }
 
     public void next() {
-        // Assuming each node has a method to get the next node in the direction
-        this.current = this.current.getNext(dir);
+        // Implement the logic to move to the next node in the outer face
+        // This is a placeholder and should be replaced with actual traversal logic
+        current = current.getNext(dir);
     }
 
     public void previous() {
-        // Assuming each node has a method to get the previous node in the direction
-        this.current = this.current.getPrevious(dir);
+        // Implement the logic to move to the previous node in the outer face
+        // This is a placeholder and should be replaced with actual traversal logic
+        current = current.getPrevious(dir);
     }
 }
 
@@ -27,23 +29,27 @@ public class Node {
     private Node previous;
 
     public Node getNext(int dir) {
+        // Implement the logic to get the next node based on direction
         return next;
     }
 
     public Node getPrevious(int dir) {
+        // Implement the logic to get the previous node based on direction
         return previous;
     }
 }
 
-public class GraphTraversal {
+public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = start;
 
-        while (circulator.getCurrent() != stop) {
-            if (predicate.test(circulator.getCurrent())) {
+        while (current != stop) {
+            if (predicate.test(current)) {
                 return circulator;
             }
             circulator.next();
+            current = circulator.getCurrent();
         }
 
         return new OuterFaceCirculator(stop);

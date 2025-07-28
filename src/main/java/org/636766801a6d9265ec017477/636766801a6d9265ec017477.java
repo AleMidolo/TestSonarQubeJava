@@ -21,9 +21,13 @@ public class FileAdder {
 
         // Convertir el array a una lista para facilitar la manipulación
         List<InputStream> tempList = new ArrayList<>();
-        Collections.addAll(tempList, files);
+        for (InputStream file : files) {
+            if (file != null) {
+                tempList.add(file);
+            }
+        }
 
-        // Invertir la lista
+        // Invertir el orden de la lista
         Collections.reverse(tempList);
 
         // Agregar los archivos en orden inverso

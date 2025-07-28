@@ -58,7 +58,7 @@ class Node {
 
     public Node getRealCounterpart() {
         if (isVirtual) {
-            return new Node(id.replace("virtual-", ""), false);
+            return new Node(id.replace("-virtual", ""), false);
         }
         return this;
     }

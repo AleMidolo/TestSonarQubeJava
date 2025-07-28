@@ -1,51 +1,44 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
+import org.jgrapht.graph.SimpleGraph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-/**
- * Transforma una representación de conjunto en un camino de grafo.
- * @param tour un conjunto que contiene los bordes del recorrido
- * @param graph el grafo
- * @return un camino de grafo
- */
-protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("El conjunto de bordes no puede estar vacío.");
+        throw new IllegalArgumentException("The tour set cannot be empty.");
     }
 
-    // Crear una lista de vértices basada en los bordes del tour
+    List<E> edgeList = new ArrayList<>(tour);
     List<V> vertexList = new ArrayList<>();
-    Iterator<E> edgeIterator = tour.iterator();
-    E firstEdge = edgeIterator.next();
+
+    // Start with the first edge
+    E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
     V endVertex = graph.getEdgeTarget(firstEdge);
 
     vertexList.add(startVertex);
     vertexList.add(endVertex);
 
-    while (edgeIterator.hasNext()) {
-        E edge = edgeIterator.next();
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
+    // Iterate through the remaining edges to build the path
+    for (int i = 1; i < edgeList.size(); i++) {
+        E currentEdge = edgeList.get(i);
+        V source = graph.getEdgeSource(currentEdge);
+        V target = graph.getEdgeTarget(currentEdge);
 
         if (source.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(target);
         } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
         } else {
-            throw new IllegalArgumentException("El conjunto de bordes no forma un camino válido.");
+            throw new IllegalArgumentException("The tour set does not form a continuous path.");
         }
     }
 
-    // Verificar si el camino es cerrado (ciclo)
-    if (!vertexList.get(0).equals(vertexList.get(vertexList.size() - 1))) {
-        throw new IllegalArgumentException("El conjunto de bordes no forma un ciclo válido.");
-    }
-
-    // Crear el GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, tour);
+    // Create and return the GraphPath
+    return new DefaultGraphPath<>(graph, vertexList, edgeList);
 }

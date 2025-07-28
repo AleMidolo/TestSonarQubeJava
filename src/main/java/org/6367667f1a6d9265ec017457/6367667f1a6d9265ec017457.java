@@ -24,7 +24,7 @@ private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
         throw new IllegalArgumentException("Invalid UTF-8 sequence");
     }
 
-    // Verificar que hay suficientes bytes disponibles
+    // Verificar que hay suficientes bytes restantes en el buffer
     if (i + numBytes > bb.limit()) {
         throw new IllegalArgumentException("Incomplete UTF-8 sequence");
     }

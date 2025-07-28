@@ -17,18 +17,34 @@ public class StackFrame {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                break; // Stop if the stack is already empty
+                break; // Stop if the stack is empty
             }
         }
     }
 
-    // Method to push an element onto the stack for testing purposes
-    public void push(Object element) {
-        stack.push(element);
+    // Additional methods to push and display stack for testing purposes
+    public void push(Object item) {
+        stack.push(item);
     }
 
-    // Method to get the current size of the stack for testing purposes
-    public int size() {
-        return stack.size();
+    public void displayStack() {
+        System.out.println(stack);
+    }
+
+    public static void main(String[] args) {
+        StackFrame frame = new StackFrame();
+        frame.push("Type1");
+        frame.push("Type2");
+        frame.push("Type3");
+        frame.displayStack(); // Output: [Type1, Type2, Type3]
+
+        frame.pop(2);
+        frame.displayStack(); // Output: [Type1]
+        
+        frame.pop(1);
+        frame.displayStack(); // Output: []
+        
+        frame.pop(1); // No effect, stack is already empty
+        frame.displayStack(); // Output: []
     }
 }

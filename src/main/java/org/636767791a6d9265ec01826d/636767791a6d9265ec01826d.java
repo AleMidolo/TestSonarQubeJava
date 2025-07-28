@@ -10,13 +10,13 @@ public class VariableSubstitutor {
         if (value == null) {
             return null; // or throw an exception based on your needs
         }
-        
+
         // Replace variables in the value
         for (String propKey : props.stringPropertyNames()) {
-            String placeholder = "${" + propKey + "}";
-            value = value.replace(placeholder, props.getProperty(propKey));
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
-        
+
         return value;
     }
 

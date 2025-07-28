@@ -12,7 +12,6 @@ public class MyAtmosphereHandler {
     public Action inspect(AtmosphereResource r) {
         // Check the transport type and suspend the resource accordingly
         if (r.transport() != null) {
-            // Logic to suspend the resource based on transport type
             r.suspend();
         }
         return Action.CONTINUE;

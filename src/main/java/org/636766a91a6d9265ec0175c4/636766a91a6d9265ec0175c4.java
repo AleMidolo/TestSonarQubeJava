@@ -16,16 +16,14 @@ public class StackManipulator {
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
-            String parameters = descriptor.substring(start, end);
-            for (int i = parameters.length() - 1; i >= 0; i--) {
-                char param = parameters.charAt(i);
-                // Pop the corresponding type from the stack
+            String args = descriptor.substring(start, end);
+            for (int i = 0; i < args.length(); i++) {
                 if (!stack.isEmpty()) {
-                    stack.pop();
+                    stack.pop(); // Remove the top element for each argument type
                 }
             }
         } else {
-            // If it's a single type descriptor, just pop it
+            // If it's a single type descriptor, just pop one element
             if (!stack.isEmpty()) {
                 stack.pop();
             }
@@ -42,10 +40,10 @@ public class StackManipulator {
 
     public static void main(String[] args) {
         StackManipulator sm = new StackManipulator();
-        sm.push("int");
+        sm.push("Integer");
         sm.push("String");
-        sm.push("double");
-        
+        sm.push("Double");
+
         System.out.println("Stack before pop: " + sm.getStack());
         sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
         System.out.println("Stack after pop: " + sm.getStack());

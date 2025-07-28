@@ -34,11 +34,11 @@ public class StringUnescaper {
                     case '\\':
                         result.append('\\');
                         break;
+                    case '"':
+                        result.append('"');
+                        break;
                     case '\'':
                         result.append('\'');
-                        break;
-                    case '\"':
-                        result.append('\"');
                         break;
                     default:
                         result.append(c);
@@ -54,21 +54,12 @@ public class StringUnescaper {
             }
         }
 
-        // If the last character was an escape character, we need to append it
-        if (isEscaped) {
-            result.append('\\');
-        }
-
         return result.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String escapedString = "Hello\\nWorld! This is a test\\tstring.";
-            String unescapedString = unescapeJava(escapedString);
-            System.out.println(unescapedString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
+        String unescapedString = unescapeJava(testString);
+        System.out.println(unescapedString);
     }
 }

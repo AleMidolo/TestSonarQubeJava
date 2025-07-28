@@ -25,10 +25,10 @@ public class SubstringMatcher {
     public static void main(String[] args) {
         // Test examples
         System.out.println(substringMatch("Hello, World!", 7, "World")); // true
-        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
-        System.out.println(substringMatch("Hello, World!", 5, ", W"));    // true
         System.out.println(substringMatch("Hello, World!", 7, "world")); // false
-        System.out.println(substringMatch("Hello, World!", 12, "!"));    // true
-        System.out.println(substringMatch("Hello, World!", 13, "!"));    // false
+        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
+        System.out.println(substringMatch("Hello, World!", 5, ", W")); // true
+        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
+        System.out.println(substringMatch("Hello, World!", 13, "!")); // false
     }
 }

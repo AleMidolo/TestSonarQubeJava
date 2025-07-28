@@ -14,7 +14,7 @@ public class FileDeletionScheduler {
             throw new NullPointerException("Il file non deve essere null");
         }
 
-        // Registrare il file per la cancellazione al termine della JVM
+        // Registrare il file per la cancellazione all'uscita
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 deleteRecursively(file);
@@ -28,8 +28,8 @@ public class FileDeletionScheduler {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             if (files != null) {
-                for (File subFile : files) {
-                    deleteRecursively(subFile);
+                for (File child : files) {
+                    deleteRecursively(child);
                 }
             }
         }

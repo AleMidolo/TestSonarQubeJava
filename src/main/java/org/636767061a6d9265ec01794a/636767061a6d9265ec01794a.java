@@ -33,9 +33,11 @@ public class FileExtensionUtil {
     }
 
     public static void main(String[] args) {
-        // Test del metodo
-        String filename = "C:\\path\\to\\file.txt";
-        int index = indexOfExtension(filename);
-        System.out.println("L'indice dell'ultimo punto è: " + index);
+        // Esempi di utilizzo
+        System.out.println(indexOfExtension("document.txt")); // Output: 8
+        System.out.println(indexOfExtension("folder/document.txt")); // Output: 8
+        System.out.println(indexOfExtension("folder\\document.txt")); // Output: 8
+        System.out.println(indexOfExtension("folder\\document")); // Output: -1
+        System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

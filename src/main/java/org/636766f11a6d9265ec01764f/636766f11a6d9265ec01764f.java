@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BeanMap {
-    private final Map<String, Object> map;
+    private Map<String, Object> map;
 
     public BeanMap() {
         this.map = new HashMap<>();
@@ -26,9 +26,9 @@ public class BeanMap {
     public static void main(String[] args) {
         BeanMap beanMap = new BeanMap();
         beanMap.put("key1", "value1");
-        beanMap.put("key2", "value2");
+        beanMap.put("key2", 42);
         
         Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, value2]
+        System.out.println(values); // Output: [value1, 42]
     }
 }

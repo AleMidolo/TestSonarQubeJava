@@ -13,12 +13,12 @@ public class TableRowSelector {
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
         if (table == null || pane == null || row < 0 || row >= table.getRowCount()) {
-            throw new IllegalArgumentException("Invalid parameters");
+            throw new IllegalArgumentException("Invalid table, pane or row index");
         }
 
         // Select the specified row
         table.setRowSelectionInterval(row, row);
-        
+
         // Scroll to the selected row
         SwingUtilities.invokeLater(() -> {
             Rectangle rect = table.getCellRect(row, 0, true);

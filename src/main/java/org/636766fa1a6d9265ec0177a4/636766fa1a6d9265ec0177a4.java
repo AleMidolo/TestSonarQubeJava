@@ -1,4 +1,5 @@
 public class ArrayConverter {
+    
     /** 
      * <p>Converte un array di double primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
      * @param array  un array di <code>double</code>

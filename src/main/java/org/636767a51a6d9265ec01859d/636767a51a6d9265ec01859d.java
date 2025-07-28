@@ -24,6 +24,6 @@ public class ArrayComparer {
         
         byte[] external = {0, 1, 2, 3, 4, 5};
         boolean result = comparer.equals(external, 1, 5);
-        System.out.println(result); // Output: true
+        System.out.println(result); // Should print true
     }
 }

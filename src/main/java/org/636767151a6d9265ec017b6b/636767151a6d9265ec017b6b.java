@@ -1,4 +1,4 @@
-public class StringUtil {
+public class StringUtils {
 
     /** 
      * <p>Controlla se una Stringa inizia con un prefisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
@@ -23,6 +23,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(startsWith("Hello World", "Hello", false)); // true
         System.out.println(startsWith("Hello World", "hello", true));  // true
         System.out.println(startsWith("Hello World", "World", false)); // false

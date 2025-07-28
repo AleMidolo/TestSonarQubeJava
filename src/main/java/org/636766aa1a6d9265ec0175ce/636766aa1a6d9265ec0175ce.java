@@ -13,7 +13,7 @@ public class FrameVisitor {
         currentFrame = offset; // Memorizza l'offset nel frame corrente
         // Potresti voler gestire numLocal e numStack qui, ad esempio, inizializzando strutture dati
 
-        // Restituisce l'indice del prossimo elemento da scrivere nel frame
+        // Restituisce l'indice del prossimo elemento da scrivere
         return numLocal + numStack; // Esempio di calcolo dell'indice
     }
 

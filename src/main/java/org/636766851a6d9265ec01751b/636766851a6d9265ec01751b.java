@@ -19,9 +19,9 @@ public class HexDecoder {
 
     public static void main(String[] args) {
         // Test the decodeHexNibble function
-        System.out.println(decodeHexNibble('0')); // Output: 0
         System.out.println(decodeHexNibble('a')); // Output: 10
         System.out.println(decodeHexNibble('F')); // Output: 15
+        System.out.println(decodeHexNibble('5')); // Output: 5
         System.out.println(decodeHexNibble('g')); // Output: 65535 (Character.MAX_VALUE)
     }
 }

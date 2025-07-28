@@ -23,10 +23,10 @@ public class MeteorLookup {
     }
 
     private static Meteor findMeteorById(String meteorId) {
-        // Logica fittizia per trovare un Meteor
-        // In un'applicazione reale, qui ci sarebbe una chiamata a un database o un'altra fonte di dati
+        // Simulazione di ricerca di un Meteor
+        // In un'applicazione reale, qui ci sarebbe la logica per recuperare l'oggetto Meteor
         if ("123".equals(meteorId)) {
-            return new Meteor("123", "Meteor Example");
+            return new Meteor(meteorId, "Meteor Name");
         }
         return null; // Se non trovato
     }

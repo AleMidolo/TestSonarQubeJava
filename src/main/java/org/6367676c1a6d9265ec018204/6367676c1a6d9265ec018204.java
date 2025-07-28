@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenation {
-
+public class StringArrayConcatenator {
+    
     /** 
-     * दिए गए String arrays को एक में जोड़ें, जिसमें ओवरलैपिंग array तत्वों को दो बार शामिल किया गया है। <p> मूल arrays में तत्वों का क्रम संरक्षित रहता है।
-     * @param array1 पहला array (यह <code>null</code> हो सकता है)
-     * @param array2 दूसरा array (यह <code>null</code> हो सकता है)
-     * @return नया array (<code>null</code> यदि दोनों दिए गए arrays <code>null</code> थे)
+     * Concatenate the given String arrays into one, with overlapping array elements included twice. 
+     * The order of elements in the original arrays is preserved.
+     * @param array1 the first array (can be <code>null</code>)
+     * @param array2 the second array (can be <code>null</code>)
+     * @return the new array (<code>null</code> if both given arrays were <code>null</code>)
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
@@ -32,12 +33,12 @@ public class ArrayConcatenation {
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"apple", "banana", "cherry"};
-        String[] array2 = {"banana", "date", "fig"};
-        
+        String[] array1 = {"a", "b", "c"};
+        String[] array2 = {"b", "c", "d"};
         String[] result = concatenateStringArrays(array1, array2);
+        
         for (String s : result) {
-            System.out.println(s);
+            System.out.print(s + " ");
         }
     }
 }

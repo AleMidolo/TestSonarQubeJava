@@ -1,34 +1,26 @@
-import org.apache.commons.beanutils.BeanMap;
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BeanMapUtil {
+public class BeanMap {
+    private Map<String, Object> properties = new HashMap<>();
 
-    /** 
-     * दिए गए BeanMap से सभी लिखने योग्य गुणों को इस BeanMap में डालता है। केवल पढ़ने योग्य और केवल लिखने योग्य गुणों को नजरअंदाज किया जाएगा।
-     * @param map  वह BeanMap जिसके गुणों को डालना है
-     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("BeanMap cannot be null");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        for (Object property : map.keySet()) {
-            if (isWriteable(property, map)) {
-                // Assuming we have a method to get the value to put
-                Object value = getValueForProperty(property);
-                map.put(property, value);
+        for (String propertyName : map.properties.keySet()) {
+            try {
+                PropertyDescriptor descriptor = new PropertyDescriptor(propertyName, this.getClass());
+                if (descriptor.getWriteMethod() != null) {
+                    this.properties.put(propertyName, map.properties.get(propertyName));
+                }
+            } catch (Exception e) {
+                // Ignore properties that do not have a corresponding PropertyDescriptor
             }
         }
     }
 
-    private boolean isWriteable(Object property, BeanMap map) {
-        // Logic to determine if the property is writable
-        // This is a placeholder; actual implementation may vary
-        return true; // Replace with actual check
-    }
-
-    private Object getValueForProperty(Object property) {
-        // Logic to get the value for the property
-        // This is a placeholder; actual implementation may vary
-        return new Object(); // Replace with actual value retrieval
-    }
+    // Additional methods to manage properties can be added here
 }

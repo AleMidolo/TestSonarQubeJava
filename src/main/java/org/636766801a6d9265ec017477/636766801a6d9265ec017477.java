@@ -1,40 +1,28 @@
 import java.io.InputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Stack;
 
-public class FileMerger {
-
-    /** 
-     * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
-     */
-    private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
-        }
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            for (int i = files.length - 1; i >= 0; i--) {
-                InputStream inputStream = files[i];
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                inputStream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // The outputStream now contains the merged content in reverse order
-        byte[] mergedContent = outputStream.toByteArray();
-        // You can now use mergedContent as needed
+private void addReverse(final InputStream[] files) {
+    Stack<InputStream> stack = new Stack<>();
+    
+    // Push all InputStreams onto the stack
+    for (InputStream file : files) {
+        stack.push(file);
     }
+    
+    // Pop from the stack to process in reverse order
+    while (!stack.isEmpty()) {
+        InputStream file = stack.pop();
+        try {
+            // Process the file (this is a placeholder for actual file processing logic)
+            processFile(file);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception as needed
+        }
+    }
+}
+
+// Placeholder method for processing the InputStream
+private void processFile(InputStream file) throws IOException {
+    // Implement the logic to read from the InputStream and add the file
 }

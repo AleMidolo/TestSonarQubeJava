@@ -10,7 +10,7 @@ public class AppenderManager {
     }
 
     /**
-     * पैरामीटर के रूप में दिए गए नाम के साथ एपेंडर को एपेंडर्स की सूची से हटा दें।  
+     * Remove the appender with the name passed as parameter from the list of appenders.  
      */
     public void removeAppender(String name) {
         Iterator<String> iterator = appenders.iterator();
@@ -18,7 +18,7 @@ public class AppenderManager {
             String appender = iterator.next();
             if (appender.equals(name)) {
                 iterator.remove();
-                break; // Exit after removing the first matching appender
+                break;
             }
         }
     }
@@ -37,10 +37,8 @@ public class AppenderManager {
         AppenderManager manager = new AppenderManager();
         manager.addAppender("ConsoleAppender");
         manager.addAppender("FileAppender");
-        manager.addAppender("DatabaseAppender");
-
         System.out.println("Before removal: " + manager.getAppenders());
-        manager.removeAppender("FileAppender");
+        manager.removeAppender("ConsoleAppender");
         System.out.println("After removal: " + manager.getAppenders());
     }
 }

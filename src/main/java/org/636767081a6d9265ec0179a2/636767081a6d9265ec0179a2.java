@@ -1,27 +1,22 @@
-public class NumberUtils {
+public class Utility {
 
     /** 
-     * <p>{@link #createNumber(String)} के लिए उपयोगिता विधि।</p> 
-     * <p>यदि s <code>null</code> है तो <code>true</code> लौटाता है।</p>
-     * @param s वह String जिसे जांचना है
-     * @return यदि यह सभी शून्य हैं या <code>null</code> है
+     * <p>Utility method for  {@link #createNumber(String)}.</p> <p>Returns <code>true</code> if s is <code>null</code>.</p>
+     * @param s the String to check
+     * @return if it is all zeros or <code>null</code>
      */
     private static boolean isAllZeros(String s) {
         if (s == null) {
             return true;
         }
-        for (char c : s.toCharArray()) {
-            if (c != '0') {
-                return false;
-            }
-        }
-        return true;
+        return s.chars().allMatch(c -> c == '0');
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(isAllZeros(null)); // true
         System.out.println(isAllZeros("0000")); // true
         System.out.println(isAllZeros("0001")); // false
-        System.out.println(isAllZeros("")); // true
+        System.out.println(isAllZeros("")); // false
     }
 }

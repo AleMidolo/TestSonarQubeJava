@@ -1,34 +1,29 @@
-public class AbstractTypeManager {
-    
-    // List to hold initialized types
-    private List<Integer> initializedTypes;
+import java.util.HashSet;
+import java.util.Set;
 
-    // Constructor to initialize the list
-    public AbstractTypeManager() {
-        initializedTypes = new ArrayList<>();
+public class TypeManager {
+    private Set<Integer> initializedTypes;
+
+    public TypeManager() {
+        initializedTypes = new HashSet<>();
     }
 
     /** 
-     * एक अमूर्त प्रकार को उन प्रकारों की सूची में जोड़ता है जिन पर एक कंस्ट्रक्टर मूलभूत ब्लॉक में लागू होता है।
-     * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
+     * Adds an abstract type to the list of types on which a constructor is invoked in the basic block.
+     * @param abstractType an abstract type on a which a constructor is invoked.
      */
     private void addInitializedType(final int abstractType) {
-        if (!initializedTypes.contains(abstractType)) {
-            initializedTypes.add(abstractType);
-        }
+        initializedTypes.add(abstractType);
     }
 
-    // Method to get the list of initialized types
-    public List<Integer> getInitializedTypes() {
+    public Set<Integer> getInitializedTypes() {
         return initializedTypes;
     }
 
     public static void main(String[] args) {
-        AbstractTypeManager manager = new AbstractTypeManager();
+        TypeManager manager = new TypeManager();
         manager.addInitializedType(1);
         manager.addInitializedType(2);
-        manager.addInitializedType(1); // Duplicate, should not be added
-
-        System.out.println(manager.getInitializedTypes()); // Output: [1, 2]
+        System.out.println(manager.getInitializedTypes());
     }
 }

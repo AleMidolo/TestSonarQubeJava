@@ -1,9 +1,9 @@
 public class StringUnescaper {
-    
+
     /** 
-     * एक स्ट्रिंग DOT पहचानकर्ता को अनएस्केप करें।
-     * @param input इनपुट
-     * @return अनएस्केप किया गया आउटपुट
+     * Unescape a string DOT identifier.
+     * @param input the input
+     * @return the unescaped output
      */
     private String unescapeId(String input) {
         if (input == null) {
@@ -16,10 +16,12 @@ public class StringUnescaper {
             if (isEscaped) {
                 output.append(c);
                 isEscaped = false;
-            } else if (c == '\\') {
-                isEscaped = true;
             } else {
-                output.append(c);
+                if (c == '\\') {
+                    isEscaped = true;
+                } else {
+                    output.append(c);
+                }
             }
         }
 
@@ -28,8 +30,8 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "example\\:identifier";
+        String input = "some\\ identifier\\ with\\ escapes";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example:identifier
+        System.out.println(output); // Output: some identifier with escapes
     }
 }

@@ -8,7 +8,7 @@ public class AppenderManager {
     }
 
     /** 
-     * यदि निर्दिष्ट ऐपेंडर संलग्न ऐपेंडरों की सूची में है, तो <code>true</code> लौटाता है, अन्यथा <code>false</code>।
+     * Returns <code>true</code> if the specified appender is in the list of attached appenders, <code>false</code> otherwise.
      * @since 1.2 
      */
     public boolean isAttached(Appender appender) {

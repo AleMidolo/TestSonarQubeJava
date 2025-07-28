@@ -1,20 +1,17 @@
-import java.lang.reflect.Method;
+import java.lang.Character;
 
 public class Converter {
 
     /**
-     * <p>इनपुट ऑब्जेक्ट को java.lang.Character में परिवर्तित करें।</p>
-     * @param type वह डेटा प्रकार जिसमें इस मान को परिवर्तित किया जाना चाहिए।
-     * @param value वह इनपुट मान जिसे परिवर्तित किया जाना है।
-     * @return परिवर्तित मान।
-     * @throws Exception यदि परिवर्तित करना सफलतापूर्वक नहीं किया जा सकता है
+     * <p>Convert the input object into a java.lang.Character.</p>
+     * @param type Data type to which this value should be converted.
+     * @param value The input value to be converted.
+     * @return The converted value.
+     * @throws Exception if conversion cannot be performed successfully
      * @since 1.8.0
      */
     @Override
     protected Object convertToType(final Class<?> type, final Object value) throws Exception {
-        if (value == null) {
-            return null;
-        }
         if (type == Character.class) {
             if (value instanceof String) {
                 String strValue = (String) value;
@@ -29,6 +26,6 @@ public class Converter {
                 throw new Exception("Unsupported type for conversion to Character.");
             }
         }
-        throw new Exception("Unsupported target type: " + type.getName());
+        throw new Exception("Conversion to the specified type is not supported.");
     }
 }

@@ -1,22 +1,22 @@
 public class CharUtils {
-    private static final String[] cache = new String[128];
+    private static final String[] CACHE = new String[128];
 
     static {
-        for (int i = 0; i < cache.length; i++) {
-            cache[i] = String.valueOf((char) i);
+        for (char c = 0; c < CACHE.length; c++) {
+            CACHE[c] = String.valueOf(c);
         }
     }
 
     /**
-     * <p>एक वर्ण को एक स्ट्रिंग में परिवर्तित करता है जिसमें केवल वही वर्ण होता है।</p> 
-     * <p>ASCII 7 बिट वर्णों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही स्ट्रिंग ऑब्जेक्ट लौटाता है।</p> 
+     * <p>Converts the character to a String that contains the one character.</p>
+     * <p>For ASCII 7 bit characters, this uses a cache that will return the same String object each time.</p>
      * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  वह वर्ण जिसे परिवर्तित करना है
-     * @return एक स्ट्रिंग जो निर्दिष्ट वर्ण को समाहित करती है
+     * @param ch  the character to convert
+     * @return a String containing the one specified character
      */
     public static String toString(final char ch) {
-        if (ch >= 0 && ch < 128) {
-            return cache[ch];
+        if (ch < 128) {
+            return CACHE[ch];
         }
         return String.valueOf(ch);
     }

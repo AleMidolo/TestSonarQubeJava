@@ -1,31 +1,31 @@
+import java.util.Arrays;
+
 public class PrimeCapacity {
 
     /**
-     * एक प्रमुख संख्या लौटाता है जो <code>&gt;= desiredCapacity</code> है और <code>desiredCapacity</code> के बहुत करीब है (यदि <code>desiredCapacity &gt;= 1000</code> है तो 11% के भीतर)।
-     * @param desiredCapacity उपयोगकर्ता द्वारा इच्छित क्षमता।
-     * @return वह क्षमता जो हैशटेबल के लिए उपयोग की जानी चाहिए।
+     * Returns a prime number which is <code>&gt;= desiredCapacity</code> and very close to <code>desiredCapacity</code> (within 11% if <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity the capacity desired by the user.
+     * @return the capacity which should be used for a hashtable.
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        int capacity = desiredCapacity;
-        if (capacity % 2 == 0) {
-            capacity++;
+        if (desiredCapacity == 2) {
+            return 2;
         }
-        while (true) {
-            if (isPrime(capacity)) {
-                if (desiredCapacity >= 1000) {
-                    int upperLimit = (int) (desiredCapacity * 1.11);
-                    if (capacity <= upperLimit) {
-                        return capacity;
-                    }
-                } else {
-                    return capacity;
-                }
+
+        int upperLimit = desiredCapacity;
+        if (desiredCapacity >= 1000) {
+            upperLimit = (int) (desiredCapacity * 1.11);
+        }
+
+        for (int i = desiredCapacity; i <= upperLimit; i++) {
+            if (isPrime(i)) {
+                return i;
             }
-            capacity += 2; // Check only odd numbers
         }
+        return upperLimit; // Fallback, should not reach here
     }
 
     private static boolean isPrime(int number) {
@@ -47,8 +47,7 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        int desiredCapacity = 1000;
-        int nextPrimeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + nextPrimeCapacity);
+        System.out.println(nextPrime(1000)); // Example usage
+        System.out.println(nextPrime(15));   // Example usage
     }
 }

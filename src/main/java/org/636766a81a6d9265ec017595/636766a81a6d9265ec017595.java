@@ -1,43 +1,42 @@
 import java.util.Arrays;
 
-class ByteVector {
+public class ByteVector {
     private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[2]; // Initial capacity
+        this.data = new byte[10]; // initial capacity
         this.size = 0;
     }
 
-    public void put(int value) {
-        if (size == data.length) {
-            data = Arrays.copyOf(data, data.length * 2); // Double the size
+    /** 
+     * Puts two bytes into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param byteValue1 a byte.
+     * @param byteValue2 another byte.
+     * @return this byte vector.
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        ensureCapacity(size + 2);
+        data[size++] = (byte) byteValue1;
+        data[size++] = (byte) byteValue2;
+        return this;
+    }
+
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - data.length > 0) {
+            int newCapacity = Math.max(data.length * 2, minCapacity);
+            data = Arrays.copyOf(data, newCapacity);
         }
-        data[size++] = (byte) value;
     }
 
     public byte[] toArray() {
         return Arrays.copyOf(data, size);
     }
-}
-
-public class Main {
-    /**
-     * इस बाइट वेक्टर में दो बाइट डालता है। यदि आवश्यक हो तो बाइट वेक्टर स्वचालित रूप से बड़ा हो जाता है।
-     * @param byteValue1 एक बाइट।
-     * @param byteValue2 एक और बाइट।
-     * @return यह बाइट वेक्टर।
-     */
-    final ByteVector put11(final int byteValue1, final int byteValue2) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.put(byteValue1);
-        byteVector.put(byteValue2);
-        return byteVector;
-    }
 
     public static void main(String[] args) {
-        Main main = new Main();
-        ByteVector result = main.put11(10, 20);
-        System.out.println(Arrays.toString(result.toArray())); // Output the byte vector
+        ByteVector byteVector = new ByteVector();
+        byteVector.put11(1, 2);
+        byteVector.put11(3, 4);
+        System.out.println(Arrays.toString(byteVector.toArray())); // Output: [1, 2, 3, 4]
     }
 }

@@ -1,46 +1,23 @@
+import java.util.Objects;
+
 public class DataTable {
-    // Assuming DataTable has a method to get buckets
-    private String[] buckets;
+    private String bucketName;
 
-    public DataTable(String[] buckets) {
-        this.buckets = buckets;
+    public DataTable(String bucketName) {
+        this.bucketName = bucketName;
     }
 
-    public String[] getBuckets() {
-        return buckets;
-    }
-}
-
-public class CompatibilityChecker {
-    private String[] myBuckets;
-
-    public CompatibilityChecker(String[] myBuckets) {
-        this.myBuckets = myBuckets;
+    public String getBucketName() {
+        return bucketName;
     }
 
-    /** 
-     * @return यदि बकेट समान है तो true लौटाता है।
+    /**
+     * @return true if the bucket is same.
      */
     public boolean isCompatible(DataTable dataset) {
-        String[] datasetBuckets = dataset.getBuckets();
-        if (myBuckets.length != datasetBuckets.length) {
+        if (dataset == null) {
             return false;
         }
-        for (int i = 0; i < myBuckets.length; i++) {
-            if (!myBuckets[i].equals(datasetBuckets[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        String[] myBuckets = {"bucket1", "bucket2", "bucket3"};
-        CompatibilityChecker checker = new CompatibilityChecker(myBuckets);
-
-        String[] datasetBuckets = {"bucket1", "bucket2", "bucket3"};
-        DataTable dataset = new DataTable(datasetBuckets);
-
-        System.out.println(checker.isCompatible(dataset)); // Should print true
+        return Objects.equals(this.bucketName, dataset.getBucketName());
     }
 }

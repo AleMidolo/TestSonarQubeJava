@@ -9,13 +9,16 @@ public class ByteVector {
         currentSize = 0;
     }
 
-    /**
-     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
-     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
+    /** 
+     * Enlarges this byte vector so that it can receive 'size' more bytes.
+     * @param size number of additional bytes that this byte vector should be able to receive.
      */
     private void enlarge(final int size) {
-        int newSize = currentSize + size;
-        data = Arrays.copyOf(data, newSize);
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
+        }
+        int newCapacity = currentSize + size;
+        data = Arrays.copyOf(data, newCapacity);
     }
 
     // Additional methods for demonstration purposes
@@ -28,7 +31,7 @@ public class ByteVector {
 
     public byte get(int index) {
         if (index < 0 || index >= currentSize) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
         return data[index];
     }

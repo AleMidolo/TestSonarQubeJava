@@ -2,17 +2,17 @@ import java.util.Set;
 
 public class Graph<V> {
     
-    // Assuming a method to get incoming weights for a vertex
+    // Assuming there's a method to get the incoming edges for a vertex
     private double getIncomingWeight(V vertex) {
         // Placeholder for actual implementation
-        // This should return the sum of weights of edges coming into the vertex
+        // This should return the sum of weights of edges entering the vertex
         return 0.0; // Replace with actual logic
     }
 
     /** 
-     * एक वर्टेक्स में प्रवेश करने वाले भारों का योग निकालें
-     * @param v वर्टेक्स
-     * @return एक वर्टेक्स में प्रवेश करने वाले भारों का योग
+     * Compute the sum of the weights entering a vertex
+     * @param v the vertex
+     * @return the sum of the weights entering a vertex
      */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;

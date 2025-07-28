@@ -1,22 +1,42 @@
 import java.util.Properties;
 
-public class PropertyFinder {
+public class VariableSubstitution {
+
     /** 
-     * <code>props</code> में <code>key</code> के अनुसार मान खोजें। फिर पाए गए मान पर वेरिएबल प्रतिस्थापन करें।
+     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
      */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // or throw an exception based on your needs
         }
-        
+
         // Perform variable substitution
-        for (String propKey : props.stringPropertyNames()) {
-            String placeholder = "${" + propKey + "}";
-            value = value.replace(placeholder, props.getProperty(propKey));
+        StringBuilder result = new StringBuilder();
+        int startIndex = 0;
+        while (startIndex < value.length()) {
+            int startVar = value.indexOf("${", startIndex);
+            if (startVar == -1) {
+                result.append(value.substring(startIndex));
+                break;
+            }
+            result.append(value.substring(startIndex, startVar));
+            int endVar = value.indexOf("}", startVar);
+            if (endVar == -1) {
+                result.append(value.substring(startVar)); // No closing brace found
+                break;
+            }
+            String varKey = value.substring(startVar + 2, endVar);
+            String varValue = props.getProperty(varKey);
+            if (varValue != null) {
+                result.append(varValue);
+            } else {
+                result.append(value.substring(startVar, endVar + 1)); // Keep the original if not found
+            }
+            startIndex = endVar + 1;
         }
-        
-        return value;
+
+        return result.toString();
     }
 
     public static void main(String[] args) {

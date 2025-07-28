@@ -1,17 +1,30 @@
-private int parseEndOfLine(String headerPart, int end) {
-    // Check if the end index is within the bounds of the headerPart string
-    if (end < 0 || end >= headerPart.length()) {
-        throw new IllegalArgumentException("End index is out of bounds");
+public class HeaderParser {
+
+    /** 
+     * Skips bytes until the end of the current line.
+     * @param headerPart The headers, which are being parsed.
+     * @param end Index of the last byte, which has yet been processed.
+     * @return Index of the \r\n sequence, which indicates end of line.
+     */
+    private int parseEndOfLine(String headerPart, int end) {
+        int index = end;
+        while (index < headerPart.length()) {
+            char currentChar = headerPart.charAt(index);
+            if (currentChar == '\r') {
+                // Check for the next character to see if it's a newline
+                if (index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
+                    return index + 1; // Return the index of the newline character
+                }
+            }
+            index++;
+        }
+        return headerPart.length(); // Return the length if no end of line is found
     }
 
-    // Find the end of the line by searching for the line break characters
-    int lineEndIndex = headerPart.indexOf("\r\n", end);
-    
-    // If no line break is found, return the length of the headerPart
-    if (lineEndIndex == -1) {
-        return headerPart.length();
+    public static void main(String[] args) {
+        HeaderParser parser = new HeaderParser();
+        String headers = "Header1: Value1\r\nHeader2: Value2\r\n";
+        int endIndex = parser.parseEndOfLine(headers, 0);
+        System.out.println("End of line index: " + endIndex);
     }
-    
-    // Return the index of the end of the line
-    return lineEndIndex + 2; // +2 to include the length of "\r\n"
 }

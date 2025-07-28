@@ -8,7 +8,7 @@ public class CustomSet {
     }
 
     /** 
-     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
+     * Removes a value from the set. Returns true if the set contained the specified element. 
      */
     public boolean remove(int val) {
         return set.remove(val);

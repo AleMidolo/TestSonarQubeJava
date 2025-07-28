@@ -1,19 +1,20 @@
 public class LongComparator {
 
     /** 
-     * निर्दिष्ट {@code long} मानों की तुलना करता है। लौटाए गए मान का संकेत {@code ((Long) a).compareTo(b)} के समान है। <p> <b>Java 7 और बाद के लिए नोट:</b> इस विधि को अप्रचलित माना जाना चाहिए; इसके बजाय समकक्ष {@link Long#compare} विधि का उपयोग करें।
-     * @param a तुलना के लिए पहला {@code long}
-     * @param b तुलना के लिए दूसरा {@code long}
-     * @return यदि {@code a} {@code b} से कम है तो नकारात्मक मान; यदि {@code a} {@code b} से अधिक है तो सकारात्मक मान; या यदि वे समान हैं तो शून्य
+     * Compares the two specified  {@code long} values. The sign of the value returned is the same as that of{@code ((Long) a).compareTo(b)}. <p> <b>Note for Java 7 and later:</b> this method should be treated as deprecated; use the equivalent {@link Long#compare} method instead.
+     * @param a the first  {@code long} to compare
+     * @param b the second  {@code long} to compare
+     * @return a negative value if {@code a} is less than {@code b}; a positive value if  {@code a} is greater than{@code b}; or zero if they are equal
      */
     private static int compareSigned(long a, long b) {
-        return Long.compare(a, b);
+        return (a < b) ? -1 : (a > b) ? 1 : 0;
     }
 
     public static void main(String[] args) {
-        long num1 = 10L;
-        long num2 = 20L;
-        int result = compareSigned(num1, num2);
-        System.out.println("Comparison result: " + result); // Output: Comparison result: -1
+        long x = 5L;
+        long y = 10L;
+        System.out.println(compareSigned(x, y)); // Output: -1
+        System.out.println(compareSigned(y, x)); // Output: 1
+        System.out.println(compareSigned(x, x)); // Output: 0
     }
 }

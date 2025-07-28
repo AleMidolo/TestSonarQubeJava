@@ -3,23 +3,21 @@ import java.util.function.Supplier;
 public class UniqueStringSupplier {
 
     /**
-     * एक स्ट्रिंग सप्लायर बनाएं जो अद्वितीय स्ट्रिंग्स लौटाता है। लौटाए गए स्ट्रिंग्स बस प्रारंभ से शुरू होने वाले पूर्णांक हैं।
-     * @param start अनुक्रम कहाँ से शुरू करना है
-     * @return एक स्ट्रिंग सप्लायर
+     * Create a string supplier which returns unique strings. The returns strings are simply integers starting from start.
+     * @param start where to start the sequence
+     * @return a string supplier
      */
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        final int[] current = {start}; // Using an array to allow modification in the lambda
+        final int[] current = {start}; // Using an array to hold the mutable integer
 
-        return () -> String.valueOf(current[0]++);
+        return () -> String.valueOf(current[0]++); // Return the current value and increment
     }
 
     public static void main(String[] args) {
-        Supplier<String> stringSupplier = createStringSupplier(1);
-        
-        // Testing the supplier
-        System.out.println(stringSupplier.get()); // Output: 1
-        System.out.println(stringSupplier.get()); // Output: 2
-        System.out.println(stringSupplier.get()); // Output: 3
+        Supplier<String> supplier = createStringSupplier(5);
+        System.out.println(supplier.get()); // Outputs: 5
+        System.out.println(supplier.get()); // Outputs: 6
+        System.out.println(supplier.get()); // Outputs: 7
     }
 }

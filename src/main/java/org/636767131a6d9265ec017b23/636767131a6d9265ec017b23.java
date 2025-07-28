@@ -1,10 +1,9 @@
-public class LineNumberManager {
-    
+public class Label {
     private int lineNumber;
 
     /** 
-     * इस लेबल के लिए एक स्रोत पंक्ति संख्या जोड़ता है।
-     * @param lineNumber एक स्रोत पंक्ति संख्या (जो कि सख्ती से सकारात्मक होनी चाहिए)।
+     * Adds a source line number corresponding to this label.
+     * @param lineNumber a source line number (which should be strictly positive).
      */
     final void addLineNumber(final int lineNumber) {
         if (lineNumber <= 0) {
@@ -18,8 +17,8 @@ public class LineNumberManager {
     }
 
     public static void main(String[] args) {
-        LineNumberManager manager = new LineNumberManager();
-        manager.addLineNumber(5);
-        System.out.println("Line Number: " + manager.getLineNumber());
+        Label label = new Label();
+        label.addLineNumber(10);
+        System.out.println("Line number added: " + label.getLineNumber());
     }
 }

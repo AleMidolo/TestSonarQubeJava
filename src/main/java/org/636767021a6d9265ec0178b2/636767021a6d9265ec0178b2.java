@@ -1,42 +1,70 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack;
+    private Stack<Object> outputFrameStack;
 
     public FrameStack() {
-        this.stack = new Stack<>();
+        this.outputFrameStack = new Stack<>();
     }
 
     /**
-     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
-     * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+     * Pops as many abstract types from the output frame stack as described by the given descriptor.
+     * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is a string representation of the types to pop
-        String[] types = descriptor.split(",");
-        for (String type : types) {
-            if (!stack.isEmpty()) {
-                Object poppedValue = stack.pop();
-                // Here you can add logic to check the type of poppedValue
-                // and ensure it matches the expected type from descriptor
-                System.out.println("Popped: " + poppedValue + " of type: " + poppedValue.getClass().getSimpleName());
+        if (descriptor == null || descriptor.isEmpty()) {
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
+        }
+
+        int count = 0;
+        boolean isMethodDescriptor = descriptor.startsWith("(");
+        
+        if (isMethodDescriptor) {
+            // Method descriptor, count argument types
+            int index = 1; // Start after '('
+            while (descriptor.charAt(index) != ')') {
+                char typeChar = descriptor.charAt(index);
+                count += getTypeSize(typeChar);
+                index += getTypeLength(typeChar);
+            }
+        } else {
+            // Type descriptor, count based on the type
+            count = getTypeSize(descriptor.charAt(0));
+        }
+
+        // Pop the types from the stack
+        for (int i = 0; i < count; i++) {
+            if (!outputFrameStack.isEmpty()) {
+                outputFrameStack.pop();
             } else {
-                System.out.println("Stack is empty, cannot pop.");
-                break;
+                throw new IllegalStateException("Not enough elements in the stack to pop");
             }
         }
     }
 
-    public void push(Object value) {
-        stack.push(value);
+    private int getTypeSize(char typeChar) {
+        switch (typeChar) {
+            case 'I': // int
+            case 'B': // byte
+            case 'C': // char
+            case 'S': // short
+            case 'Z': // boolean
+            case 'F': // float
+                return 1;
+            case 'J': // long
+            case 'D': // double
+                return 2;
+            case 'L': // object reference
+                return 1; // reference types are treated as 1
+            default:
+                throw new IllegalArgumentException("Unknown type: " + typeChar);
+        }
     }
 
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.push(1);
-        frameStack.push("Hello");
-        frameStack.push(3.14);
-        
-        frameStack.pop("Integer,String"); // Example usage
+    private int getTypeLength(char typeChar) {
+        if (typeChar == 'L') {
+            return 1; // Object reference type
+        }
+        return 1; // All other types are single character
     }
 }

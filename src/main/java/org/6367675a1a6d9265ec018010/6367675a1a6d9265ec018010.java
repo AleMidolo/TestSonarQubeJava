@@ -1,32 +1,20 @@
 public class Bucket {
-    // Assuming there is a data structure to hold the elements of the bucket
-    private List<Object> elements;
+    private Bucket next; // Reference to the next bucket in the data structure
 
+    // Constructor
     public Bucket() {
-        elements = new ArrayList<>();
+        this.next = null;
     }
 
     /** 
-     * इस बकेट को डेटा संरचना से हटा देता है।
+     * Removes this bucket from the data structure.
      */
     public void removeSelf() {
-        // Logic to remove this bucket from its data structure
-        // This is a placeholder for the actual removal logic
-        // For example, if this bucket is part of a larger collection, 
-        // we would need a reference to that collection to remove it.
-        // Assuming we have a static reference to a collection of buckets
-        BucketCollection.removeBucket(this);
-    }
-}
-
-class BucketCollection {
-    private static List<Bucket> buckets = new ArrayList<>();
-
-    public static void removeBucket(Bucket bucket) {
-        buckets.remove(bucket);
-    }
-
-    public static void addBucket(Bucket bucket) {
-        buckets.add(bucket);
+        if (next != null) {
+            // If there is a next bucket, we can skip this bucket
+            next = next.next;
+        }
+        // If this is the last bucket, we simply set next to null
+        // This bucket will be eligible for garbage collection
     }
 }

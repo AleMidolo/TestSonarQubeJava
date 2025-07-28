@@ -1,38 +1,25 @@
 import java.io.PrintWriter;
-import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelnetServer {
-    private Socket clientSocket;
-    private PrintWriter out;
-
-    public TelnetServer(Socket socket) {
-        this.clientSocket = socket;
-        try {
-            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private final List<PrintWriter> clients = new ArrayList<>();
 
     /** 
-     * प्रत्येक क्लाइंट को टेलनेट-फ्रेंडली आउटपुट में एक संदेश भेजता है। 
+     * sends a message to each of the clients in telnet-friendly output. 
      */
     public synchronized void send(final String message) {
-        if (out != null) {
-            out.println(message);
+        for (PrintWriter client : clients) {
+            client.println(message);
+            client.flush();
         }
     }
 
-    public void close() {
-        try {
-            if (out != null) {
-                out.close();
-            }
-            if (clientSocket != null) {
-                clientSocket.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public synchronized void addClient(PrintWriter client) {
+        clients.add(client);
+    }
+
+    public synchronized void removeClient(PrintWriter client) {
+        clients.remove(client);
     }
 }

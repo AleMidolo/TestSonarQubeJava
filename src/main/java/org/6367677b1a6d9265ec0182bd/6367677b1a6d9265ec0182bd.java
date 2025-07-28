@@ -1,19 +1,27 @@
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 public class LoggerFormatter {
-    /**
-     * एक लॉगिंग इवेंट को एक लेखक के लिए प्रारूपित करता है।
-     * @param event प्रारूपित करने के लिए लॉगिंग इवेंट।
-     * @return प्रारूपित लॉगिंग इवेंट का स्ट्रिंग प्रतिनिधित्व।
+
+    /** 
+     * Formats a logging event to a writer.
+     * @param event logging event to be formatted.
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
-        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
-        formattedEvent.append("Level: ").append(event.getLevel()).append("\n");
-        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
-        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
-        formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
         
-        return formattedEvent.toString();
+        printWriter.printf("Timestamp: %d%n", event.getTimeStamp());
+        printWriter.printf("Level: %s%n", event.getLevel());
+        printWriter.printf("Logger: %s%n", event.getLoggerName());
+        printWriter.printf("Message: %s%n", event.getRenderedMessage());
+        
+        if (event.getThrowableInformation() != null) {
+            printWriter.printf("Exception: %s%n", event.getThrowableInformation().getThrowable().toString());
+        }
+        
+        printWriter.flush();
+        return stringWriter.toString();
     }
 }

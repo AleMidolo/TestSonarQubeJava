@@ -1,16 +1,18 @@
 public class ShardingKeyChecker {
 
     /**
-     * @param modelName एंटिटी का मॉडल नाम
-     * @throws IllegalStateException यदि शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं
+     * @param modelName model name of the entity
+     * @throws IllegalStateException if sharding key indices are not continuous
      */
     private void check(String modelName) throws IllegalStateException {
-        // Dummy implementation for demonstration
-        // In a real scenario, you would check the sharding keys for continuity
-        boolean isShardingKeyContinuous = false; // This should be replaced with actual logic
+        // Example of sharding key indices for demonstration
+        int[] shardingKeyIndices = {0, 1, 2, 4}; // Non-continuous example
 
-        if (!isShardingKeyContinuous) {
-            throw new IllegalStateException("शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं: " + modelName);
+        // Check for continuity in sharding key indices
+        for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
+            if (shardingKeyIndices[i] + 1 != shardingKeyIndices[i + 1]) {
+                throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
+            }
         }
     }
 

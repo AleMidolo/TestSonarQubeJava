@@ -1,29 +1,29 @@
 import java.util.List;
 import java.util.Set;
 
-public class BucketRelabeler {
+public class VertexMover {
 
-    /**
-     * {@code minLabel} लेबल वाले बकेट से सभी वर्टिस को लेबल 0 वाले बकेट में स्थानांतरित करता है। {@code minLabel} लेबल वाले बकेट को साफ करता है। लेबलिंग को तदनुसार अपडेट करता है।
-     * @param bucketsByLabel वे बकेट जहाँ वर्टिस संग्रहीत हैं
-     * @param labels वर्टिस के लेबल
-     * @param minLabel गैर-खाली बकेट का न्यूनतम मान
+    /** 
+     * Moves all vertices from the bucket with label  {@code minLabel} to the bucket with label 0.
+     * Clears the bucket with label  {@code minLabel}. Updates the labeling accordingly.
+     * @param bucketsByLabel the buckets vertices are stored in
+     * @param labels the labels of the vertices
+     * @param minLabel the minimum value of the non-empty bucket
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        if (minLabel < 0 || minLabel >= bucketsByLabel.size()) {
-            throw new IllegalArgumentException("minLabel is out of bounds");
-        }
-
+        // Get the bucket with the minLabel
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
+        
+        // Move all vertices from minLabel bucket to the bucket with label 0
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-
-        // Move vertices from minLabel bucket to zero label bucket
+        zeroLabelBucket.addAll(minLabelBucket);
+        
+        // Update the labels of the vertices moved
         for (Integer vertex : minLabelBucket) {
-            zeroLabelBucket.add(vertex);
-            labels.set(vertex, 0); // Update the label of the vertex to 0
+            labels.set(vertex, 0); // Update the label to 0
         }
-
-        // Clear the minLabel bucket
+        
+        // Clear the bucket with minLabel
         minLabelBucket.clear();
     }
 }

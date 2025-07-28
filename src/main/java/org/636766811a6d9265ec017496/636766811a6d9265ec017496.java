@@ -7,19 +7,19 @@ public class FileIterator {
     private File[] files;
     private int currentIndex;
 
-    public FileIterator(File[] files) {
-        this.files = files;
+    public FileIterator(File directory) {
+        this.files = directory.listFiles();
         this.currentIndex = 0;
     }
 
-    /**
-     * अगला {@link java.io.File} ऑब्जेक्ट लौटाएं या {@code null} लौटाएं यदि कोई और फ़ाइल उपलब्ध नहीं है।
+    /** 
+     * Return the next {@link java.io.File} object or {@code null} if no more files are available.
      */
     public InputStream next() throws IOException {
-        if (currentIndex < files.length) {
-            File file = files[currentIndex++];
-            return new FileInputStream(file);
+        if (files == null || currentIndex >= files.length) {
+            return null;
         }
-        return null;
+        File file = files[currentIndex++];
+        return new FileInputStream(file);
     }
 }

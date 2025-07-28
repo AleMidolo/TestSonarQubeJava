@@ -13,7 +13,7 @@ public final class Buffer {
     }
 
     /** 
-     * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
+     * Returns a single byte array containing all the contents written to the buffer(s).
      */
     public final byte[] toByteArray() {
         return buffer.toByteArray();

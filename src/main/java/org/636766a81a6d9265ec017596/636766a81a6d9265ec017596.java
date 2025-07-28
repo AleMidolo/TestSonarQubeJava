@@ -5,20 +5,21 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.data = new byte[10]; // initial capacity
         this.size = 0;
     }
 
-    /**
-     * इस बाइट वेक्टर में एक int डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
-     * @param intValue एक int।
-     * @return यह बाइट वेक्टर।
+    /** 
+     * Puts an int into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param intValue an int.
+     * @return this byte vector.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + Integer.BYTES);
-        for (int i = 0; i < Integer.BYTES; i++) {
-            data[size++] = (byte) (intValue >> (i * 8));
-        }
+        ensureCapacity(size + 4); // an int takes 4 bytes
+        data[size++] = (byte) (intValue >> 24);
+        data[size++] = (byte) (intValue >> 16);
+        data[size++] = (byte) (intValue >> 8);
+        data[size++] = (byte) intValue;
         return this;
     }
 
@@ -29,11 +30,13 @@ public class ByteVector {
         }
     }
 
-    public byte[] getData() {
+    public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }
 
-    public int getSize() {
-        return size;
+    public static void main(String[] args) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.putInt(123456);
+        System.out.println(Arrays.toString(byteVector.toByteArray()));
     }
 }

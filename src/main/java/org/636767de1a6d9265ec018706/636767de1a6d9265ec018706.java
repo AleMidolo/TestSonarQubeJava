@@ -1,52 +1,48 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MappingDiffer {
-    
-    /**
-     * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। 
-     * इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। 
-     * वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
-     */
-    public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming Mappings is a class that holds a map of field names to their configurations
-        Mappings currentMappings = getCurrentMappings(tableName);
+public class Mappings {
+    private Map<String, String> fields;
+
+    public Mappings() {
+        this.fields = new HashMap<>();
+    }
+
+    public void addField(String fieldName, String fieldType) {
+        fields.put(fieldName, fieldType);
+    }
+
+    public Map<String, String> getFields() {
+        return fields;
+    }
+
+    public static Mappings diffStructure(String tableName, Mappings mappings) {
+        // Simulated existing mappings for the current index
+        Mappings existingMappings = new Mappings();
+        existingMappings.addField("id", "integer");
+        existingMappings.addField("name", "string");
+        existingMappings.addField("created_at", "date");
+
         Mappings diffMappings = new Mappings();
 
-        for (Map.Entry<String, FieldMapping> entry : mappings.getFieldMappings().entrySet()) {
-            String fieldName = entry.getKey();
-            if (!currentMappings.hasField(fieldName)) {
-                diffMappings.addFieldMapping(fieldName, entry.getValue());
+        for (String field : mappings.getFields().keySet()) {
+            if (!existingMappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
 
         return diffMappings;
     }
 
-    private Mappings getCurrentMappings(String tableName) {
-        // This method should retrieve the current mappings for the given table name
-        // For the sake of this example, we will return an empty Mappings object
-        return new Mappings();
-    }
+    public static void main(String[] args) {
+        Mappings newMappings = new Mappings();
+        newMappings.addField("email", "string");
+        newMappings.addField("address", "string");
 
-    // Assuming FieldMapping is a class that represents the mapping of a single field
-    public static class Mappings {
-        private Map<String, FieldMapping> fieldMappings = new HashMap<>();
-
-        public void addFieldMapping(String fieldName, FieldMapping fieldMapping) {
-            fieldMappings.put(fieldName, fieldMapping);
+        Mappings result = diffStructure("users", newMappings);
+        System.out.println("New fields that do not exist in the current mappings:");
+        for (Map.Entry<String, String> entry : result.getFields().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-
-        public boolean hasField(String fieldName) {
-            return fieldMappings.containsKey(fieldName);
-        }
-
-        public Map<String, FieldMapping> getFieldMappings() {
-            return fieldMappings;
-        }
-    }
-
-    public static class FieldMapping {
-        // Define the properties of a field mapping here
     }
 }

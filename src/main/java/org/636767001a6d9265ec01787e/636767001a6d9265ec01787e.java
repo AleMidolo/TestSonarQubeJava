@@ -1,21 +1,20 @@
 public class StringBuilderExample {
-    
-    private StringBuilder stringBuilder;
+    private StringBuilder builder;
 
     public StringBuilderExample() {
-        stringBuilder = new StringBuilder();
-    }
-
-    public void append(String str) {
-        stringBuilder.append(str);
+        this.builder = new StringBuilder();
     }
 
     /** 
-     * <p> इस बिल्डर द्वारा निर्मित स्ट्रिंग प्राप्त करता है। </p>
-     * @return निर्मित स्ट्रिंग
+     * <p> Gets the String built by this builder. </p>
+     * @return the built string
      */
     public String toString() {
-        return stringBuilder.toString();
+        return builder.toString();
+    }
+
+    public void append(String str) {
+        builder.append(str);
     }
 
     public static void main(String[] args) {

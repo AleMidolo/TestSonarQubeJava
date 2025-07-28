@@ -23,10 +23,12 @@ public class FieldChecker {
         }
     }
 
-    // Método simulado para leer un indicador de campo
     private byte readFieldIndicator() {
-        // Lógica para leer el indicador de campo
-        // Retornamos un valor simulado
-        return 1; // Simulando que el campo está empaquetado
+        // Simulación de lectura de un indicador de campo
+        return 1; // Retornamos 1 para simular que el campo está empaquetado
+    }
+
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

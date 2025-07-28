@@ -19,13 +19,11 @@ public class TimeBucketCompressor {
         // Calcular el nuevo día del año basado en el paso diario
         int newDayOfYear = (dayOfYear / pasoDiario) * pasoDiario;
         
-        // Obtener la nueva fecha a partir del nuevo día del año
+        // Obtener la nueva fecha
         java.time.LocalDate newDate = java.time.LocalDate.ofYearDay(year, newDayOfYear);
         
         // Reformatear la nueva fecha a formato largo
-        long nuevoBucketDeTiempo = newDate.getYear() * 10000 + newDate.getMonthValue() * 100 + newDate.getDayOfMonth();
-        
-        return nuevoBucketDeTiempo;
+        return Long.parseLong(newDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd")));
     }
 
     public static void main(String[] args) {

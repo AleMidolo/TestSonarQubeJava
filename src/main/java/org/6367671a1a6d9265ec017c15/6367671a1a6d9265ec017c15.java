@@ -20,7 +20,7 @@ public class ByteVector {
         if (byteLength < 0) {
             throw new IllegalArgumentException("byteLength cannot be negative");
         }
-
+        
         if (byteArrayValue != null) {
             if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");

@@ -15,10 +15,13 @@ public class LowerBoundsCalculator<K> {
         List<Integer> lowerBounds = new ArrayList<>();
 
         for (K key : keys) {
-            // Simulate the computation of a lower bound for each key
+            // Calculate the lower bound for the key
             int lowerBound = calculateLowerBound(key);
             lowerBoundsMap.put(key, lowerBound);
-            lowerBounds.add(lowerBound);
+        }
+
+        for (K key : keys) {
+            lowerBounds.add(lowerBoundsMap.get(key));
         }
 
         return lowerBounds;
@@ -26,7 +29,8 @@ public class LowerBoundsCalculator<K> {
 
     private int calculateLowerBound(K key) {
         // Placeholder for actual lower bound calculation logic
-        return key.hashCode() % 100; // Example logic using hashCode
+        // This should be replaced with the actual logic to compute the lower bound
+        return key.hashCode() % 100; // Example logic
     }
 
     public static void main(String[] args) {

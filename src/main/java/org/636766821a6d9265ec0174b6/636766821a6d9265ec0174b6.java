@@ -17,7 +17,7 @@ public class GenericTypeResolver {
 
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
-            if (rawClass.equals(targetType)) {
+            if (rawClass.isAssignableFrom(targetType)) {
                 Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
                 for (int i = 0; i < actualTypeArguments.length; i++) {
                     resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
@@ -25,7 +25,6 @@ public class GenericTypeResolver {
                 return resolvedArguments;
             }
         }
-
         return null;
     }
 }

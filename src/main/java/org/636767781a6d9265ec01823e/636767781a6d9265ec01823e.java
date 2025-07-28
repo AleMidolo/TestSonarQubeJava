@@ -24,6 +24,9 @@ class Logger {
         clients.remove(client);
     }
 
+    /**
+     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.  
+     */
     protected void append(LoggingEvent event) {
         for (Client client : clients) {
             client.sendMessage(event.getMessage());

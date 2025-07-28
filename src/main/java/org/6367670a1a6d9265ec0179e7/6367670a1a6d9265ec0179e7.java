@@ -1,8 +1,13 @@
 import java.util.HashMap;
 import java.util.Map;
 
+interface Converter {
+    // Define the methods that a Converter should implement
+    Object convert(Object source);
+}
+
 public class ConverterRegistry {
-    private Map<Class<?>, Converter> converterMap = new HashMap<>();
+    private final Map<Class<?>, Converter> converterMap = new HashMap<>();
 
     /**
      * Busca y devuelve cualquier {@link Converter} registrado para la clase de destino especificada; si no hay un Converter registrado, devuelve <code>null</code>.
@@ -13,11 +18,8 @@ public class ConverterRegistry {
         return converterMap.get(clazz);
     }
 
+    // Método para registrar un Converter
     public void registerConverter(Class<?> clazz, Converter converter) {
         converterMap.put(clazz, converter);
-    }
-
-    public interface Converter {
-        // Define methods for the Converter interface
     }
 }

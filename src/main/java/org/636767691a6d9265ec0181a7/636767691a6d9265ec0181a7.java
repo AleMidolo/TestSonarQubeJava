@@ -7,24 +7,28 @@ public class StringTrimmer {
      * @return la cadena sin el carácter inicial
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
         
         StringBuilder result = new StringBuilder();
+        boolean leadingCharFound = false;
+
         for (char c : str.toCharArray()) {
-            if (c != leadingCharacter) {
-                result.append(c);
+            if (c == leadingCharacter && !leadingCharFound) {
+                continue; // Skip the leading character
             }
+            leadingCharFound = true; // After the first non-leading character is found
+            result.append(c);
         }
-        
+
         return result.toString();
     }
 
     public static void main(String[] args) {
         String testString = "aaabacada";
         char leadingChar = 'a';
-        String trimmedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(trimmedString); // Output: "bcada"
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result); // Output: "bacada"
     }
 }

@@ -17,7 +17,7 @@ public class FileAdder {
         // Pop files from the stack to add them in reverse order
         while (!stack.isEmpty()) {
             InputStream file = stack.pop();
-            // Here you would add the file to your desired location
+            // Here you would add the file to your desired structure
             // For demonstration, we will just print the file reference
             System.out.println("Adding file: " + file);
         }

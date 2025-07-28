@@ -1,7 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BroadcastFilterExample {
+public class BroadcastFilter {
+
+    private List<Object> filters;
+
+    public BroadcastFilter() {
+        this.filters = new ArrayList<>();
+    }
 
     /**
      * Invoca el {@link BroadcastFilter}
@@ -9,23 +15,21 @@ public class BroadcastFilterExample {
      * @return
      */
     protected Object filter(Object msg) {
-        // Example implementation of a BroadcastFilter
-        List<Object> filteredMessages = new ArrayList<>();
-        
-        // Simulate filtering logic
-        if (msg instanceof String) {
-            String message = (String) msg;
-            if (!message.isEmpty()) {
-                filteredMessages.add(message);
+        for (Object filter : filters) {
+            // Apply each filter to the message
+            // This is a placeholder for actual filter logic
+            if (filter instanceof Filter) {
+                msg = ((Filter) filter).apply(msg);
             }
         }
-        
-        return filteredMessages.isEmpty() ? null : filteredMessages;
+        return msg;
     }
 
-    public static void main(String[] args) {
-        BroadcastFilterExample example = new BroadcastFilterExample();
-        Object result = example.filter("Hello, World!");
-        System.out.println(result);
+    public void addFilter(Object filter) {
+        filters.add(filter);
+    }
+
+    interface Filter {
+        Object apply(Object msg);
     }
 }

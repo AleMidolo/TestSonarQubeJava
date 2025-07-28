@@ -39,12 +39,12 @@ public class CategoryTree {
         return removeInactiveNodes(root);
     }
 
-    private int removeInactiveNodes(Category node) {
-        if (node == null) {
+    private int removeInactiveNodes(Category category) {
+        if (category == null) {
             return 0;
         }
 
-        Iterator<Category> iterator = node.getChildren().iterator();
+        Iterator<Category> iterator = category.getChildren().iterator();
         int removedCount = 0;
 
         while (iterator.hasNext()) {

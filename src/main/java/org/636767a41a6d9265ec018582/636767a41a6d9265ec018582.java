@@ -22,8 +22,7 @@ public class MessageSerializer {
         // Write the message bytes to the output stream
         out.write(messageBytes);
         
-        // Return the total size of the message
-        return length + getVarintSize(length);
+        return length;
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {
@@ -32,14 +31,5 @@ public class MessageSerializer {
             value >>>= 7;
         }
         out.write(value);
-    }
-
-    private static int getVarintSize(int value) {
-        int size = 0;
-        while ((value & ~0x7F) != 0) {
-            size++;
-            value >>>= 7;
-        }
-        return size + 1; // for the last byte
     }
 }

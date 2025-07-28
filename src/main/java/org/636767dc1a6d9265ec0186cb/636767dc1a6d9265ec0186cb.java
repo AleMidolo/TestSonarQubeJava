@@ -8,7 +8,7 @@ public class ConfigurationInitializer {
      * inicializa la configuración, como verificar la ruta de distribución
      */
     public void init() {
-        String distributionPath = "path/to/distribution"; // Cambiar a la ruta real
+        String distributionPath = "path/to/distribution"; // Cambia esto a la ruta real
         Path path = Paths.get(distributionPath);
         
         if (Files.exists(path) && Files.isDirectory(path)) {

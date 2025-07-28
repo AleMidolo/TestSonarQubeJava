@@ -1,4 +1,5 @@
 public class ArrayUtils {
+
     /** 
      * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
      * @param <V> el tipo de elementos en el arreglo
@@ -8,7 +9,7 @@ public class ArrayUtils {
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {
-            throw new IllegalArgumentException("Invalid indices or null array");
+            throw new IllegalArgumentException("Invalid indices or array is null");
         }
         
         while (from < to) {

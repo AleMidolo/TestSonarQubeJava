@@ -2,7 +2,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 class LinkedBuffer {
-    // Assuming LinkedBuffer has a method to get its content as byte array
+    // Assuming LinkedBuffer has a method to get its content and size
     private byte[] content;
     private LinkedBuffer next;
 
@@ -25,7 +25,6 @@ class LinkedBuffer {
 }
 
 public class BufferWriter {
-
     /** 
      * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
      * @return el tamaño total del contenido del búfer.

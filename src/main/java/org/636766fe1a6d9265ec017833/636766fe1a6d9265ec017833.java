@@ -15,14 +15,16 @@ public class FileDeleter {
         }
         
         if (file.isDirectory()) {
-            deleteDirectory(file);
-        } else {
-            if (!file.delete()) {
-                throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
+            for (File subFile : file.listFiles()) {
+                forceDeleteOnExit(subFile);
             }
         }
         
-        // Programar la eliminación al salir
+        if (!file.delete()) {
+            throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
+        }
+        
+        // Register the file for deletion on JVM exit
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 if (file.exists()) {
@@ -32,23 +34,5 @@ public class FileDeleter {
                 e.printStackTrace();
             }
         }));
-    }
-
-    private static void deleteDirectory(File directory) throws IOException {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    if (!file.delete()) {
-                        throw new IOException("No se pudo eliminar el archivo: " + file.getAbsolutePath());
-                    }
-                }
-            }
-        }
-        if (!directory.delete()) {
-            throw new IOException("No se pudo eliminar el directorio: " + directory.getAbsolutePath());
-        }
     }
 }

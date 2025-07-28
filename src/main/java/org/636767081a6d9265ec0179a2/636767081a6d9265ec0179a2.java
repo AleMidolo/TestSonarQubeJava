@@ -14,6 +14,7 @@ public class Utility {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(isAllZeros(null)); // true
         System.out.println(isAllZeros("0000")); // true
         System.out.println(isAllZeros("0001")); // false

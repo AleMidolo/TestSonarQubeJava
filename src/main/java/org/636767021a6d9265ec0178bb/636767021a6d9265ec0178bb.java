@@ -20,6 +20,14 @@ public class ArrayUtil {
     public static void main(String[] args) {
         Double[] testArray = null;
         Double[] result = nullToEmpty(testArray);
-        System.out.println("Result: " + (result.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result length: " + result.length); // Should print 0
+
+        testArray = new Double[0];
+        result = nullToEmpty(testArray);
+        System.out.println("Result length: " + result.length); // Should print 0
+
+        testArray = new Double[]{1.0, 2.0, 3.0};
+        result = nullToEmpty(testArray);
+        System.out.println("Result length: " + result.length); // Should print 3
     }
 }

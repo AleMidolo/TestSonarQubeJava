@@ -14,7 +14,6 @@ public class MyClass {
         return stringBuilder.toString();
     }
 
-    // Method to append a string to the builder for demonstration purposes
     public void append(String str) {
         stringBuilder.append(str);
     }

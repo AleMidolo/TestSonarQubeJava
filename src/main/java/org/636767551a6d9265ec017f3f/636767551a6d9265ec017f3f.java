@@ -11,7 +11,7 @@ public class ArrayUtils {
             throw new IllegalArgumentException("El arreglo no puede ser nulo.");
         }
         if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
-            throw new IndexOutOfBoundsException("Índice fuera de los límites del arreglo.");
+            throw new IndexOutOfBoundsException("Índices fuera de los límites del arreglo.");
         }
         V temp = arr[i];
         arr[i] = arr[j];

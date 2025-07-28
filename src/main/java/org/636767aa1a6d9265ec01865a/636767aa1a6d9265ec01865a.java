@@ -2,17 +2,29 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 class LinkedBuffer {
-    byte[] data;
-    LinkedBuffer next;
+    // Assuming LinkedBuffer has a method to get its content and size
+    private byte[] content;
+    private LinkedBuffer next;
 
-    public LinkedBuffer(byte[] data) {
-        this.data = data;
+    public LinkedBuffer(byte[] content) {
+        this.content = content;
         this.next = null;
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public LinkedBuffer getNext() {
+        return next;
+    }
+
+    public void setNext(LinkedBuffer next) {
+        this.next = next;
     }
 }
 
 public class BufferWriter {
-
     /** 
      * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
      * @return el tamaño total del contenido del búfer.
@@ -22,9 +34,10 @@ public class BufferWriter {
         LinkedBuffer current = node;
 
         while (current != null) {
-            out.write(current.data);
-            totalSize += current.data.length;
-            current = current.next;
+            byte[] content = current.getContent();
+            out.write(content);
+            totalSize += content.length;
+            current = current.getNext();
         }
 
         return totalSize;

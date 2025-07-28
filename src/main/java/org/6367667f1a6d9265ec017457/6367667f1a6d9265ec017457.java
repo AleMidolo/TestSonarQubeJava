@@ -1,6 +1,6 @@
 import java.nio.ByteBuffer;
 
-public class Decoder {
+public class OctetDecoder {
 
     /** 
      * Decodifica octetos a caracteres utilizando la decodificación UTF-8 y agrega los caracteres a un StringBuffer.
@@ -31,11 +31,12 @@ public class Decoder {
                 int b3 = bb.get(i + 2) & 0xFF;
                 int b4 = bb.get(i + 3) & 0xFF;
                 if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) break; // Invalid continuation bytes
-                int codePoint = ((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
-                sb.append(Character.toChars(codePoint));
+                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F)) - 0x10000;
+                sb.append((char) (0xD800 | (codePoint >> 10)));
+                sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
                 i += 4;
             } else {
-                break; // Invalid byte, stop decoding
+                break; // Invalid byte
             }
         }
         return i; // Return the index of the next unprocessed byte

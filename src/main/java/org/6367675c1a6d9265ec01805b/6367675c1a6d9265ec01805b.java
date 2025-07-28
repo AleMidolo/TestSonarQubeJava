@@ -35,6 +35,4 @@ public class DoublyLinkedList {
             }
         }
     }
-
-    // Additional methods for the doubly linked list can be added here
 }

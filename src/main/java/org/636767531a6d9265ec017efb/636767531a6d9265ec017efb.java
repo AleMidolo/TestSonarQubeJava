@@ -1,7 +1,7 @@
-public class Bucket {
+class Bucket {
     // Assuming Bucket has some properties and methods
     private String data;
-    private Bucket next;
+    Bucket next;
 
     public Bucket(String data) {
         this.data = data;
@@ -11,38 +11,41 @@ public class Bucket {
     public String getData() {
         return data;
     }
+}
 
-    public Bucket getNext() {
-        return next;
-    }
+class BucketList {
+    private Bucket head;
 
-    public void setNext(Bucket next) {
-        this.next = next;
+    public BucketList() {
+        this.head = null;
     }
 
     /**
      * Inserta este "bucket" en la estructura de datos antes del {@code bucket}.
      * @param bucket el "bucket", que será el siguiente a este "bucket".
      */
-    public void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            throw new IllegalArgumentException("Bucket cannot be null");
+    void insertBefore(Bucket bucket) {
+        if (head == null || bucket == null) {
+            return; // No hay nada que insertar antes de un bucket nulo o si la lista está vacía
         }
 
-        // Create a new bucket to insert
-        Bucket newBucket = new Bucket(this.data);
-        
-        // Link the new bucket to the next bucket
-        newBucket.setNext(bucket);
-        
-        // Find the previous bucket to link to the new bucket
-        Bucket current = this;
-        while (current != null) {
-            if (current.getNext() == bucket) {
-                current.setNext(newBucket);
-                break;
-            }
-            current = current.getNext();
+        Bucket newBucket = new Bucket("New Bucket Data"); // Create a new bucket to insert
+        if (head == bucket) {
+            newBucket.next = head;
+            head = newBucket; // Insert at the head
+            return;
+        }
+
+        Bucket current = head;
+        while (current != null && current.next != bucket) {
+            current = current.next;
+        }
+
+        if (current != null) {
+            newBucket.next = current.next;
+            current.next = newBucket; // Insert before the specified bucket
         }
     }
+
+    // Additional methods for the BucketList can be added here
 }

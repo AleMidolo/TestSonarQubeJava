@@ -7,27 +7,18 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String os = System.getProperty("os.name").toLowerCase();
-        String configDirPath;
+        String directoryPath = userHome + File.separator + "lf5";
+        File directory = new File(directoryPath);
 
-        if (os.contains("win")) {
-            // For Windows, we create the directory in the user's home directory
-            configDirPath = userHome + "\\lf5";
-        } else {
-            // For other platforms, we also create it in the user's home directory
-            configDirPath = userHome + "/lf5";
-        }
-
-        File configDir = new File(configDirPath);
-        if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
+        if (!directory.exists()) {
+            boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + configDirPath);
+                System.out.println("Directorio creado: " + directoryPath);
             } else {
-                System.out.println("Failed to create directory: " + configDirPath);
+                System.out.println("No se pudo crear el directorio: " + directoryPath);
             }
         } else {
-            System.out.println("Directory already exists: " + configDirPath);
+            System.out.println("El directorio ya existe: " + directoryPath);
         }
     }
 

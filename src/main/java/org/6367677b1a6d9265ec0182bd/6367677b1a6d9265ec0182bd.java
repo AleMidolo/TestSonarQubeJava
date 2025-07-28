@@ -12,13 +12,13 @@ public class LoggerFormatter {
         // Formatear la fecha y hora del evento
         formattedEvent.append(event.getTimeStamp()).append(" - ");
         
-        // Formatear el nivel de log
+        // Obtener el nivel de log
         formattedEvent.append(event.getLevel().toString()).append(" - ");
         
-        // Formatear el nombre de la clase que genera el evento
+        // Obtener el nombre de la clase que genera el evento
         formattedEvent.append(event.getLoggerName()).append(" - ");
         
-        // Formatear el mensaje del evento
+        // Obtener el mensaje del evento
         formattedEvent.append(event.getRenderedMessage());
         
         // Si hay excepciones, añadirlas al formato

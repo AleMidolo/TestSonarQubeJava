@@ -30,7 +30,7 @@ class Edge {
     // Additional methods can be added here
 }
 
-class Graph {
+public class Graph {
     private Node currentNode;
     private Node nextNode;
 

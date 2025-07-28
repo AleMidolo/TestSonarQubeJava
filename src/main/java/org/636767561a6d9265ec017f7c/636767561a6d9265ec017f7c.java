@@ -18,13 +18,16 @@ public class GraphUtils<V, E> {
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
+        V startVertex = null;
+
         for (E edge : tour) {
-            if (graph.containsEdge(edge)) {
-                vertexList.add(graph.getEdgeSource(edge));
-                vertexList.add(graph.getEdgeTarget(edge));
+            if (startVertex == null) {
+                startVertex = graph.getEdgeSource(edge);
             }
+            vertexList.add(graph.getEdgeSource(edge));
+            vertexList.add(graph.getEdgeTarget(edge));
         }
-        
+
         // Remove duplicates while maintaining order
         List<V> uniqueVertices = new ArrayList<>();
         for (V vertex : vertexList) {
@@ -32,7 +35,7 @@ public class GraphUtils<V, E> {
                 uniqueVertices.add(vertex);
             }
         }
-        
+
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -45,23 +48,23 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public E getStartVertex() {
-                return uniqueVertices.isEmpty() ? null : uniqueVertices.get(0);
+            public List<E> getEdgeList() {
+                return new ArrayList<>(tour);
             }
 
             @Override
-            public E getEndVertex() {
-                return uniqueVertices.isEmpty() ? null : uniqueVertices.get(uniqueVertices.size() - 1);
+            public V getStartVertex() {
+                return uniqueVertices.get(0);
+            }
+
+            @Override
+            public V getEndVertex() {
+                return uniqueVertices.get(uniqueVertices.size() - 1);
             }
 
             @Override
             public double getWeight() {
                 return 0; // Weight calculation can be implemented if needed
-            }
-
-            @Override
-            public List<E> getEdgeList() {
-                return new ArrayList<>(tour);
             }
         };
     }

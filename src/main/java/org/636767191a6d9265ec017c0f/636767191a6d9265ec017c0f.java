@@ -25,14 +25,10 @@ public class ByteVectorEnlarger {
         return byteArray;
     }
 
-    public int getCurrentSize() {
-        return currentSize;
-    }
-
     public static void main(String[] args) {
         ByteVectorEnlarger vector = new ByteVectorEnlarger(10);
-        System.out.println("Current size: " + vector.getCurrentSize());
+        System.out.println("Initial size: " + vector.getByteArray().length);
         vector.enlarge(5);
-        System.out.println("New size: " + vector.getCurrentSize());
+        System.out.println("New size after enlargement: " + vector.getByteArray().length);
     }
 }

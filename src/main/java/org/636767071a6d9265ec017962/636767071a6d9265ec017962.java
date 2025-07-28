@@ -18,7 +18,7 @@ public class BeanMapUtil {
                 continue;
             }
             // Aquí se puede agregar la lógica para colocar las propiedades escribibles en el BeanMap actual
-            // Por ejemplo, se podría usar un método para establecer el valor de la propiedad
+            // Por ejemplo, se podría usar un método para establecer el valor en el BeanMap actual
             // setProperty(property, map.get(property));
         }
     }

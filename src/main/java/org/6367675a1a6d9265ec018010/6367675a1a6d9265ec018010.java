@@ -3,7 +3,7 @@ public class Bucket {
     private List<Object> data;
 
     public Bucket() {
-        this.data = new ArrayList<>();
+        data = new ArrayList<>();
     }
 
     /** 

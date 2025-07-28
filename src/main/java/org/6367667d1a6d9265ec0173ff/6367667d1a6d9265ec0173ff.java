@@ -8,7 +8,7 @@ public class MeteorLookup {
      * @return un {@link Meteor} o null si no se encuentra
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Simulación de la búsqueda de una instancia de Meteor
+        // Simulación de la búsqueda de un Meteor basado en el HttpServletRequest
         String meteorId = r.getParameter("meteorId");
         
         if (meteorId == null || meteorId.isEmpty()) {
@@ -16,8 +16,7 @@ public class MeteorLookup {
         }
         
         // Aquí se debería implementar la lógica para recuperar el Meteor
-        // Por simplicidad, se devuelve una nueva instancia de Meteor
-        // En un caso real, se buscaría en una base de datos o en otro almacenamiento
+        // Por simplicidad, se devuelve un nuevo Meteor si se encuentra un ID válido
         return new Meteor(meteorId);
     }
 }

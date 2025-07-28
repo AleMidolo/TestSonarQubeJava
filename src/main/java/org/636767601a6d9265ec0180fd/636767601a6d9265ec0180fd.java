@@ -21,7 +21,8 @@ public class Graph<V, E> {
         adjacencyList.putIfAbsent(targetVertex, new HashSet<>());
         
         adjacencyList.get(sourceVertex).add(e);
-        // If the edge is directed, you might not want to add it to the target vertex
-        // adjacencyList.get(targetVertex).add(e); // Uncomment if undirected
+        // If you want to maintain a directed graph, do not add the edge to targetVertex
+        // If it's undirected, you might want to add the reverse edge as well
+        // adjacencyList.get(targetVertex).add(e); // Uncomment for undirected graph
     }
 }

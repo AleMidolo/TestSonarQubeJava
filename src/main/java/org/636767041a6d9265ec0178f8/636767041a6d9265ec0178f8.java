@@ -21,6 +21,7 @@ public class ArrayCopier {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copiarCadenas(original);
         
-        System.out.println(Arrays.toString(copied)); // Output: [hello, world, java, null, programming]
+        System.out.println("Original: " + Arrays.toString(original));
+        System.out.println("Copied: " + Arrays.toString(copied));
     }
 }

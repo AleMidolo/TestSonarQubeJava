@@ -22,10 +22,13 @@ public class Converter {
                 }
             } else if (value instanceof Character) {
                 return value;
+            } else if (value instanceof Number) {
+                return (char) ((Number) value).intValue();
             } else {
                 throw new Exception("Unsupported type for conversion to Character.");
             }
+        } else {
+            throw new Exception("Conversion to type " + type.getName() + " is not supported.");
         }
-        throw new Exception("Conversion to the specified type is not supported.");
     }
 }

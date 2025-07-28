@@ -15,7 +15,7 @@ public class CharUtils {
      * @return a String containing the one specified character
      */
     public static String toString(final char ch) {
-        if (ch >= 0 && ch < CACHE.length) {
+        if (ch < 128) {
             return CACHE[ch];
         }
         return String.valueOf(ch);

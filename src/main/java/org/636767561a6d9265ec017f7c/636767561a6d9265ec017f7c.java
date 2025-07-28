@@ -18,22 +18,29 @@ public class GraphUtils<V, E> {
             return null;
         }
 
-        V startVertex = graph.getEdgeSource(tour.iterator().next());
-        V endVertex = graph.getEdgeTarget(tour.iterator().next());
+        // Create a list to hold the vertices in the path
         List<V> vertexList = new ArrayList<>();
-        vertexList.add(startVertex);
+        E previousEdge = null;
 
         for (E edge : tour) {
+            // Get the source and target vertices of the edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
+
+            // Add the source vertex if it's not already in the list
             if (!vertexList.contains(source)) {
                 vertexList.add(source);
             }
+
+            // Add the target vertex
             if (!vertexList.contains(target)) {
                 vertexList.add(target);
             }
+
+            previousEdge = edge;
         }
 
+        // Create a GraphPath object
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -47,29 +54,22 @@ public class GraphUtils<V, E> {
 
             @Override
             public V getStartVertex() {
-                return startVertex;
+                return vertexList.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return endVertex;
+                return vertexList.get(vertexList.size() - 1);
             }
 
             @Override
             public double getWeight() {
-                double weight = 0.0;
-                for (E edge : tour) {
-                    weight += graph.getEdgeWeight(edge);
-                }
-                return weight;
+                return 0; // Weight calculation can be added if needed
             }
 
             @Override
-            public String toString() {
-                return "GraphPath{" +
-                        "vertices=" + vertexList +
-                        ", edges=" + tour +
-                        '}';
+            public int getLength() {
+                return tour.size();
             }
         };
     }

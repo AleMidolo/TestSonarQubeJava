@@ -1,33 +1,9 @@
 public class Bucket {
-    private DataStructure dataStructure;
+    // Assuming there is a data structure that holds the buckets
+    private static List<Bucket> bucketList = new ArrayList<>();
 
-    public Bucket(DataStructure dataStructure) {
-        this.dataStructure = dataStructure;
-    }
-
-    /** 
-     * Removes this bucket from the data structure.
-     */
     public void removeSelf() {
-        if (dataStructure != null) {
-            dataStructure.removeBucket(this);
-        }
-    }
-}
-
-class DataStructure {
-    // Assume there's a list or set of buckets
-    private List<Bucket> buckets;
-
-    public DataStructure() {
-        buckets = new ArrayList<>();
-    }
-
-    public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
-    }
-
-    public void removeBucket(Bucket bucket) {
-        buckets.remove(bucket);
+        // Remove this bucket from the bucketList
+        bucketList.remove(this);
     }
 }

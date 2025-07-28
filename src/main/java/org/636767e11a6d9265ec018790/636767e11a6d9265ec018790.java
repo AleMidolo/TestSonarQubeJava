@@ -6,15 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ThreadSnapshot {
-    // Assuming ThreadSnapshot has a timestamp and other relevant fields
+    private String threadName;
     private long timestamp;
 
-    public ThreadSnapshot(long timestamp) {
+    public ThreadSnapshot(String threadName, long timestamp) {
+        this.threadName = threadName;
         this.timestamp = timestamp;
     }
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "ThreadSnapshot{" +
+                "threadName='" + threadName + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }
 
@@ -43,23 +52,23 @@ public class ThreadSnapshotParser {
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // Assuming each line contains a timestamp in milliseconds
-                long timestamp = Long.parseLong(line.trim());
-                ThreadSnapshot snapshot = new ThreadSnapshot(timestamp);
-                
+                String[] parts = line.split(",");
+                if (parts.length < 2) continue;
+
+                String threadName = parts[0];
+                long timestamp = Long.parseLong(parts[1]);
+
                 for (ProfileAnalyzeTimeRange range : timeRanges) {
                     if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
-                        snapshots.add(snapshot);
+                        snapshots.add(new ThreadSnapshot(threadName, timestamp));
                         break; // No need to check other ranges if already added
                     }
                 }
             }
         }
-        
         return snapshots;
     }
 }

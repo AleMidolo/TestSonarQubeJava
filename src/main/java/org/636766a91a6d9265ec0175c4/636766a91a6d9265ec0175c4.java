@@ -12,7 +12,7 @@ public class FrameStack {
      * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
     private void pop(final String descriptor) {
-        int count = getTypeCount(descriptor);
+        int count = getCountFromDescriptor(descriptor);
         for (int i = 0; i < count; i++) {
             if (!outputFrameStack.isEmpty()) {
                 outputFrameStack.pop();
@@ -20,25 +20,19 @@ public class FrameStack {
         }
     }
 
-    private int getTypeCount(String descriptor) {
-        // This method should parse the descriptor and return the number of types to pop.
-        // For simplicity, let's assume a basic implementation that counts the number of argument types.
+    private int getCountFromDescriptor(String descriptor) {
+        // This is a simplified version of counting types based on the descriptor.
+        // In a real implementation, you would need to parse the descriptor properly.
         int count = 0;
-        boolean inArray = false;
-
         for (char c : descriptor.toCharArray()) {
-            if (c == '(') {
-                inArray = true;
-            } else if (c == ')') {
-                inArray = false;
-            } else if (inArray) {
-                if (c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'C' || c == 'B' || c == 'S' || c == 'L') {
-                    count++;
-                    if (c == 'L') {
-                        // Skip to the next semicolon for object types
-                        while (c != ';') {
-                            c = descriptor.charAt(++count);
-                        }
+            if (c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'C' || c == 'B' || c == 'S' || c == 'L') {
+                count++;
+            } else if (c == '(') {
+                // Start of method descriptor, count arguments
+                while (c != ')') {
+                    c = descriptor.charAt(++count);
+                    if (c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'C' || c == 'B' || c == 'S' || c == 'L') {
+                        count++;
                     }
                 }
             }

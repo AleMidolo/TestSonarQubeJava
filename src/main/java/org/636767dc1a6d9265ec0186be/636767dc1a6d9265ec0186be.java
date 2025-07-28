@@ -13,20 +13,18 @@ public class TimeBucketCompressor {
         
         // Calculate the number of days since the start of the month
         int daysInMonth = getDaysInMonth(year, month);
-        int dayOfMonth = day;
-
+        int dayOfMonth = day - 1; // Convert to 0-based index
+        
         // Calculate the new day based on the dayStep
-        int newDay = (dayOfMonth / dayStep) * dayStep;
-        if (newDay < dayOfMonth) {
-            newDay += dayStep;
+        int newDayOfMonth = (dayOfMonth / dayStep) * dayStep;
+        
+        // If the new day exceeds the number of days in the month, adjust it
+        if (newDayOfMonth >= daysInMonth) {
+            newDayOfMonth = daysInMonth - 1; // Last day of the month
         }
-
-        // Ensure the new day does not exceed the days in the month
-        if (newDay > daysInMonth) {
-            newDay = daysInMonth;
-        }
-
-        // Return the new time bucket
+        
+        // Create the new time bucket
+        int newDay = newDayOfMonth + 1; // Convert back to 1-based index
         return year * 10000 + month * 100 + newDay;
     }
 
@@ -40,7 +38,7 @@ public class TimeBucketCompressor {
             case 2:
                 return (isLeapYear(year)) ? 29 : 28;
             default:
-                return 0; // Invalid month
+                throw new IllegalArgumentException("Invalid month: " + month);
         }
     }
 
@@ -51,9 +49,9 @@ public class TimeBucketCompressor {
 
     public static void main(String[] args) {
         // Example usage
-        long timeBucket = 20000105;
+        long timeBucket = 20000115;
         int dayStep = 11;
         long compressedBucket = compressTimeBucket(timeBucket, dayStep);
-        System.out.println(compressedBucket); // Output: 20000101
+        System.out.println(compressedBucket); // Output: 20000112
     }
 }

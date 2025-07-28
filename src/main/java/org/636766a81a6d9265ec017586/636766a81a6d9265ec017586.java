@@ -24,7 +24,7 @@ public class AbstractTypeStack {
         }
     }
 
-    // Method to push elements for testing purposes
+    // Method to push elements onto the stack for testing purposes
     public void push(Object element) {
         outputFrameStack.push(element);
     }

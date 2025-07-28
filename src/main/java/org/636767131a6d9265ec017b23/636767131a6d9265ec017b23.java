@@ -1,7 +1,7 @@
 public class Label {
     private int lineNumber;
 
-    /**
+    /** 
      * Adds a source line number corresponding to this label.
      * @param lineNumber a source line number (which should be strictly positive).
      */

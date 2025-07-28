@@ -23,16 +23,7 @@ public class MyMap<K, V> {
         map.put(key, value);
     }
 
-    public V get(K key) {
-        return map.get(key);
-    }
-
-    public static void main(String[] args) {
-        MyMap<String, Integer> myMap = new MyMap<>();
-        myMap.put("one", 1);
-        myMap.put("two", 2);
-        
-        System.out.println(myMap.containsKey("one")); // true
-        System.out.println(myMap.containsKey("three")); // false
+    public void remove(K key) {
+        map.remove(key);
     }
 }

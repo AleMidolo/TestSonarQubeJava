@@ -16,12 +16,8 @@ public class PointComparator {
     }
 
     public static void main(String[] args) {
-        Point2D point1 = new Point2D.Double(1.0, 2.0);
-        Point2D point2 = new Point2D.Double(1.0 + 1e-10, 2.0);
-        Point2D point3 = new Point2D.Double(1.0, 2.0 + 1e-10);
-        
-        System.out.println(equals(point1, point2)); // true
-        System.out.println(equals(point1, point3)); // true
-        System.out.println(equals(point1, null));    // false
+        Point2D point1 = new Point2D.Double(1.000000001, 2.0);
+        Point2D point2 = new Point2D.Double(1.0, 2.0);
+        System.out.println(equals(point1, point2)); // Should print true
     }
 }

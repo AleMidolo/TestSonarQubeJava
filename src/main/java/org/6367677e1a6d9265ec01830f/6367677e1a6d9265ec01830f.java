@@ -10,16 +10,16 @@ public class LoggerFormatter {
         StringBuilder formattedString = new StringBuilder();
         
         // Example conversion pattern
-        String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c] - %m%n";
+        String pattern = "[%d{ISO8601}] [%p] [%c] - %m%n";
         
-        // Replace placeholders with actual values from the LoggingEvent
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
+        // Replace placeholders with actual event data
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date(event.getTimestamp()));
         String level = event.getLevel().toString();
         String loggerName = event.getLoggerName();
         String message = event.getMessage();
         
         // Build the formatted string
-        formattedString.append(pattern.replace("%d{yyyy-MM-dd HH:mm:ss}", timestamp)
+        formattedString.append(pattern.replace("%d{ISO8601}", timestamp)
                                       .replace("%p", level)
                                       .replace("%c", loggerName)
                                       .replace("%m", message)
@@ -31,11 +31,11 @@ public class LoggerFormatter {
 
 class LoggingEvent {
     private long timestamp;
-    private String level;
+    private LogLevel level;
     private String loggerName;
     private String message;
 
-    public LoggingEvent(long timestamp, String level, String loggerName, String message) {
+    public LoggingEvent(long timestamp, LogLevel level, String loggerName, String message) {
         this.timestamp = timestamp;
         this.level = level;
         this.loggerName = loggerName;
@@ -46,7 +46,7 @@ class LoggingEvent {
         return timestamp;
     }
 
-    public String getLevel() {
+    public LogLevel getLevel() {
         return level;
     }
 
@@ -57,4 +57,8 @@ class LoggingEvent {
     public String getMessage() {
         return message;
     }
+}
+
+enum LogLevel {
+    DEBUG, INFO, WARN, ERROR, FATAL
 }

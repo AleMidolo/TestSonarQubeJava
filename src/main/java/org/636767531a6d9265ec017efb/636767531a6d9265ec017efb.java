@@ -6,12 +6,12 @@ class Bucket {
         this.next = null;
     }
 
-    public Bucket getNext() {
-        return next;
-    }
-
     public void setNext(Bucket next) {
         this.next = next;
+    }
+
+    public Bucket getNext() {
+        return next;
     }
 
     /**
@@ -29,13 +29,18 @@ class Bucket {
         // Link the new bucket to the next bucket
         newBucket.setNext(bucket);
         
-        // If this bucket is the head, we need to update the head reference
-        // Assuming we have a way to access the head of the list
-        // For example, we can have a static reference or a method to get the head
-        // head = newBucket; // Uncomment this if you have a head reference
+        // Assuming we have a way to access the previous bucket
+        // This is a placeholder for the actual logic to find the previous bucket
+        Bucket previousBucket = findPreviousBucket(bucket);
         
-        // If this bucket is not the head, we need to find the previous bucket
-        // This part of the code would depend on how the buckets are structured
-        // For example, if we have a linked list, we would traverse to find the previous bucket
+        if (previousBucket != null) {
+            previousBucket.setNext(newBucket);
+        }
+    }
+
+    private Bucket findPreviousBucket(Bucket bucket) {
+        // Placeholder for logic to find the previous bucket
+        // This would depend on the specific data structure being used
+        return null; // This should return the actual previous bucket
     }
 }

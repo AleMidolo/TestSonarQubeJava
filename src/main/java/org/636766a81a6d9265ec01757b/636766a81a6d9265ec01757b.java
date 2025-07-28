@@ -4,43 +4,57 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonSerializer {
 
-    private ObjectMapper objectMapper;
-
-    public JsonSerializer() {
-        this.objectMapper = new ObjectMapper();
-    }
-
-    /** 
-     * Serialize to JSON  {@link String}
-     * @param features features to be enabled in serialization
-     * @return JSON {@link String}
-     */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // Enable features based on the input
         for (JSONWriter.Feature feature : features) {
             switch (feature) {
                 case PRETTY_PRINT:
                     objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
                     break;
-                // Add more features as needed
-                default:
+                case WRITE_NULLS:
+                    objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS);
                     break;
+                // Add more features as needed
             }
         }
+
+        // Example object to serialize
+        MyObject myObject = new MyObject("example", 123);
+
         try {
-            // Assuming we are serializing an object, replace 'yourObject' with the actual object to serialize
-            Object yourObject = new Object(); // Replace with actual object
-            return objectMapper.writeValueAsString(yourObject);
+            return objectMapper.writeValueAsString(myObject);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public enum JSONWriter {
-        Feature {
-            PRETTY_PRINT
-            // Add more features as needed
+    // Example class to serialize
+    public static class MyObject {
+        private String name;
+        private int value;
+
+        public MyObject(String name, int value) {
+            this.name = name;
+            this.value = value;
         }
+
+        // Getters and setters (if needed)
+    }
+
+    // Example enum for features
+    public enum JSONWriter {
+        PRETTY_PRINT,
+        WRITE_NULLS
+        // Add more features as needed
+    }
+
+    public static void main(String[] args) {
+        JsonSerializer serializer = new JsonSerializer();
+        String json = serializer.toString(JSONWriter.PRETTY_PRINT, JSONWriter.WRITE_NULLS);
+        System.out.println(json);
     }
 }

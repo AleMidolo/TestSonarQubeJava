@@ -15,15 +15,7 @@ public class BipartiteGraphGenerator<V, E> {
         V[] vertices = (V[]) resultMap.values().toArray();
         int mid = vertices.length / 2;
 
-        // Add vertices to the target graph
-        for (int i = 0; i < mid; i++) {
-            target.addVertex(vertices[i]);
-        }
-        for (int i = mid; i < vertices.length; i++) {
-            target.addVertex(vertices[i]);
-        }
-
-        // Create edges between the two sets of vertices
+        // Add edges between the two sets
         for (int i = 0; i < mid; i++) {
             for (int j = mid; j < vertices.length; j++) {
                 target.addEdge(vertices[i], vertices[j]);
@@ -32,8 +24,7 @@ public class BipartiteGraphGenerator<V, E> {
     }
 }
 
-// Assuming a simple Graph interface
+// Assuming a simple Graph interface for demonstration purposes
 interface Graph<V, E> {
-    void addVertex(V vertex);
-    void addEdge(V vertex1, V vertex2);
+    void addEdge(V source, V destination);
 }

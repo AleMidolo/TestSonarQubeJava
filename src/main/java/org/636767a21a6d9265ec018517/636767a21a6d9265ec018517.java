@@ -12,7 +12,7 @@ public final class Buffer {
         buffer.write(data);
     }
 
-    /** 
+    /**
      * Returns a single byte array containing all the contents written to the buffer(s).
      */
     public final byte[] toByteArray() {

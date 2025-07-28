@@ -9,7 +9,7 @@ public class LogAppender {
 
     /**
      * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
-     * @param event El evento de registro que contiene el mensaje a ser escrito.
+     * @param event El evento de registro que contiene el mensaje a ser enviado.
      */
     protected void append(LoggingEvent event) {
         String message = event.getMessage().toString();
@@ -38,16 +38,11 @@ public class LogAppender {
 
     /**
      * Elimina un cliente de la lista de clientes conectados.
-     * @param clientSocket El socket del cliente que se desconecta.
+     * @param writer El PrintWriter asociado al cliente que se desconecta.
      */
-    public void removeClient(Socket clientSocket) {
-        try {
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.remove(writer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void removeClient(PrintWriter writer) {
+        synchronized (clients) {
+            clients.remove(writer);
         }
     }
 }

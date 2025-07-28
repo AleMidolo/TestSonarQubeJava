@@ -1,29 +1,34 @@
-import java.util.function.Predicate;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 
-/**
- * Invoca el {@link BroadcastFilter}
- * @param msg el mensaje a filtrar
- * @return el mensaje filtrado o null si no pasa el filtro
- */
-protected Object filter(Object msg) {
-    // Asumimos que BroadcastFilter es una interfaz funcional similar a Predicate
-    BroadcastFilter filter = new BroadcastFilter() {
-        @Override
-        public boolean test(Object message) {
-            // Lógica de filtrado personalizada
-            return message != null; // Ejemplo simple: filtrar mensajes no nulos
+public class BroadcastFilterExample {
+
+    protected Object filter(Object msg) {
+        // Assuming msg is an Intent or can be converted to one
+        if (msg instanceof Intent) {
+            Intent intent = (Intent) msg;
+            BroadcastReceiver receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    // Handle the broadcast here
+                }
+            };
+
+            // Create an IntentFilter to specify the actions to listen for
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(intent.getAction());
+
+            // Register the receiver with the filter
+            Context context = null; // You need to provide a valid Context here
+            context.registerReceiver(receiver, filter);
+
+            // Return the filtered result or the original message
+            return intent;
+        } else {
+            // If the message is not an Intent, return it as is
+            return msg;
         }
-    };
-
-    // Aplicar el filtro
-    if (filter.test(msg)) {
-        return msg;
-    } else {
-        return null;
     }
-}
-
-// Definición de la interfaz BroadcastFilter
-interface BroadcastFilter extends Predicate<Object> {
-    // Puede incluir métodos adicionales si es necesario
 }

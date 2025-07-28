@@ -1,11 +1,11 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public final class Buffer {
+public final class ByteBuffer {
 
     private ByteArrayOutputStream buffer;
 
-    public Buffer() {
+    public ByteBuffer() {
         this.buffer = new ByteArrayOutputStream();
     }
 
@@ -13,7 +13,8 @@ public final class Buffer {
         try {
             buffer.write(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            // Handle the exception, e.g., log it or rethrow as a runtime exception
+            throw new RuntimeException("Failed to write data to buffer", e);
         }
     }
 
@@ -25,10 +26,11 @@ public final class Buffer {
     }
 
     public static void main(String[] args) {
-        Buffer buffer = new Buffer();
-        buffer.write(new byte[]{1, 2, 3});
-        buffer.write(new byte[]{4, 5, 6});
-        byte[] result = buffer.toByteArray();
+        ByteBuffer byteBuffer = new ByteBuffer();
+        byteBuffer.write(new byte[]{1, 2, 3});
+        byteBuffer.write(new byte[]{4, 5, 6});
+
+        byte[] result = byteBuffer.toByteArray();
         for (byte b : result) {
             System.out.print(b + " ");
         }

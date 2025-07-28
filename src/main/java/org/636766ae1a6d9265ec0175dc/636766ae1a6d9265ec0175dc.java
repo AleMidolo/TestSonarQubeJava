@@ -1,7 +1,7 @@
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class ResponseChecker {
+public class HttpResponseChecker {
 
     /**
      * Verifica si la respuesta actual es un Contenido Parcial (código HTTP 206)

@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.Objects;
 
 public class ArrayConverter {
 
@@ -22,6 +22,6 @@ public class ArrayConverter {
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        System.out.println(Arrays.toString(objectArray));
+        System.out.println(java.util.Arrays.toString(objectArray));
     }
 }

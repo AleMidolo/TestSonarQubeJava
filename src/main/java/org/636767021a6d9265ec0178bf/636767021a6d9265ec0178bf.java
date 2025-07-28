@@ -2,6 +2,7 @@ import java.util.Objects;
 
 /**
  * Convierte el objeto de entrada en un java.lang.Character.
+ * 
  * @param type Tipo de dato al que este valor debe ser convertido.
  * @param value El valor de entrada que se va a convertir.
  * @return El valor convertido.
@@ -40,5 +41,5 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         }
     }
 
-    throw new Exception("No se puede convertir el valor a Character.");
+    throw new Exception("No se puede convertir el valor a Character: " + value);
 }

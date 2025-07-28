@@ -5,13 +5,12 @@ public class DataTable {
 
     public boolean isCompatible(DataTable dataset) {
         // Assuming compatibility is determined by comparing the bucket of the current instance with the bucket of the provided dataset
-        // For simplicity, let's assume the bucket is a String field in the DataTable class
         return Objects.equals(this.getBucket(), dataset.getBucket());
     }
 
-    // Assuming a getter method for the bucket
-    public String getBucket() {
-        // Return the bucket value
-        return "exampleBucket"; // Replace with actual bucket retrieval logic
+    // Assuming a method to get the bucket
+    private String getBucket() {
+        // Implementation to return the bucket
+        return "exampleBucket"; // Placeholder, replace with actual logic
     }
 }

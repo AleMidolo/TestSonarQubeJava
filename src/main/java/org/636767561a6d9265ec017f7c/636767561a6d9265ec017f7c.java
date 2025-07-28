@@ -1,44 +1,65 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
+import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
-import org.jgrapht.graph.SimpleGraph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+/**
+ * Transforma una representación de conjunto en un camino de grafo.
+ * @param tour un conjunto que contiene los bordes del recorrido
+ * @param graph el grafo
+ * @return un camino de grafo
+ */
+protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("The tour set cannot be empty.");
+        throw new IllegalArgumentException("El conjunto de bordes no puede estar vacío.");
     }
 
-    List<E> edgeList = new ArrayList<>(tour);
+    // Crear una lista para almacenar los vértices del camino
     List<V> vertexList = new ArrayList<>();
 
-    // Start with the first edge
-    E firstEdge = edgeList.get(0);
-    V startVertex = graph.getEdgeSource(firstEdge);
-    V endVertex = graph.getEdgeTarget(firstEdge);
+    // Crear un mapa para almacenar los bordes y sus vértices
+    Map<V, V> edgeMap = new HashMap<>();
+    for (E edge : tour) {
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
+        edgeMap.put(source, target);
+    }
 
-    vertexList.add(startVertex);
-    vertexList.add(endVertex);
-
-    // Iterate through the remaining edges to build the path
-    for (int i = 1; i < edgeList.size(); i++) {
-        E currentEdge = edgeList.get(i);
-        V source = graph.getEdgeSource(currentEdge);
-        V target = graph.getEdgeTarget(currentEdge);
-
-        if (source.equals(vertexList.get(vertexList.size() - 1))) {
-            vertexList.add(target);
-        } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
-            vertexList.add(source);
-        } else {
-            throw new IllegalArgumentException("The tour set does not form a continuous path.");
+    // Encontrar el vértice inicial (un vértice que no es el objetivo de ningún borde)
+    V startVertex = null;
+    for (V vertex : edgeMap.keySet()) {
+        if (!edgeMap.containsValue(vertex)) {
+            startVertex = vertex;
+            break;
         }
     }
 
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList);
+    if (startVertex == null) {
+        throw new IllegalArgumentException("El conjunto de bordes no forma un camino válido.");
+    }
+
+    // Construir la lista de vértices
+    V currentVertex = startVertex;
+    while (currentVertex != null) {
+        vertexList.add(currentVertex);
+        currentVertex = edgeMap.get(currentVertex);
+    }
+
+    // Crear la lista de bordes en el orden correcto
+    List<E> edgeList = new ArrayList<>();
+    for (int i = 0; i < vertexList.size() - 1; i++) {
+        V source = vertexList.get(i);
+        V target = vertexList.get(i + 1);
+        E edge = graph.getEdge(source, target);
+        if (edge == null) {
+            throw new IllegalArgumentException("El conjunto de bordes no forma un camino válido en el grafo.");
+        }
+        edgeList.add(edge);
+    }
+
+    // Crear y retornar el GraphPath
+    return new DefaultGraphPath<>(graph, startVertex, vertexList.get(vertexList.size() - 1), edgeList, 0.0);
 }

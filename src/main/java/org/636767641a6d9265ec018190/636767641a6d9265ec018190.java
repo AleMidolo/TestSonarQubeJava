@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Set;
 
 private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-    // Obtener el cubo con la etiqueta mínima
+    // Obtener el cubo con la etiqueta minLabel
     Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
     
     // Obtener el cubo con la etiqueta 0

@@ -1,52 +1,60 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> frameStack = new Stack<>();
+    private Stack<String> frameStack;
 
-    /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
-     */
+    public FrameStack() {
+        frameStack = new Stack<>();
+    }
+
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
             return;
         }
 
-        // Si el descriptor es un método, extraemos los tipos de argumento
+        // Assuming descriptor is in the format "(Ljava/lang/String;I)V" or similar
+        // We need to extract the argument types from the descriptor
         if (descriptor.startsWith("(")) {
-            // Extraer los tipos de argumento del descriptor
-            String[] parts = descriptor.split("\\)");
-            if (parts.length > 1) {
-                String argumentTypes = parts[0].substring(1);
-                String[] types = argumentTypes.split(";");
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
 
-                for (String type : types) {
-                    if (!type.isEmpty()) {
-                        // Extraer el tipo base (eliminar 'L' y ';' si es un objeto)
-                        String baseType = type.replace("L", "").replace(";", "");
-                        // Extraer el tipo de la pila
-                        if (!frameStack.isEmpty()) {
-                            frameStack.pop();
-                        }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            int index = 0;
+            while (index < argsDescriptor.length()) {
+                char ch = argsDescriptor.charAt(index);
+                if (ch == 'L') {
+                    // Object type, e.g., Ljava/lang/String;
+                    int semicolonIndex = argsDescriptor.indexOf(';', index);
+                    if (semicolonIndex == -1) {
+                        break;
                     }
+                    String type = argsDescriptor.substring(index, semicolonIndex + 1);
+                    frameStack.pop(); // Pop the corresponding type from the stack
+                    index = semicolonIndex + 1;
+                } else if (ch == '[') {
+                    // Array type, e.g., [I
+                    frameStack.pop(); // Pop the corresponding type from the stack
+                    index++;
+                } else {
+                    // Primitive type, e.g., I, J, F, D, etc.
+                    frameStack.pop(); // Pop the corresponding type from the stack
+                    index++;
                 }
             }
         } else {
-            // Si es un tipo simple, extraer un solo elemento de la pila
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
-            }
+            // Single type descriptor, e.g., Ljava/lang/String;
+            frameStack.pop(); // Pop the corresponding type from the stack
         }
     }
 
     public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.frameStack.push("Type1");
-        frameStack.frameStack.push("Type2");
-        frameStack.frameStack.push("Type3");
-
-        frameStack.pop("(Ljava/lang/String;I)V");
-
-        System.out.println(frameStack.frameStack); // Debería imprimir [Type1]
+        FrameStack stack = new FrameStack();
+        stack.frameStack.push("Ljava/lang/String;");
+        stack.frameStack.push("I");
+        stack.pop("(Ljava/lang/String;I)V");
+        // After popping, the stack should be empty
+        System.out.println(stack.frameStack.isEmpty()); // Should print true
     }
 }

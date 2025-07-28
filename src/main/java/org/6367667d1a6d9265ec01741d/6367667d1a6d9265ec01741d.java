@@ -15,18 +15,14 @@ public class TypeResolver {
         }
     }
 
+    // Clase ficticia para representar el tipo desconocido
     public static class Unknown {
-        // Clase vacía para representar un tipo desconocido
     }
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
+        TypeVariable<?> typeVariable = String.class.getTypeParameters()[0];
         Type bound = resolveBound(typeVariable);
         System.out.println("Bound: " + bound);
-    }
-
-    class ExampleClass<T> {
-        // Clase de ejemplo con un parámetro de tipo
     }
 }

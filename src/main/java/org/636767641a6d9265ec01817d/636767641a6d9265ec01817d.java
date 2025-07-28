@@ -1,30 +1,40 @@
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
 
-/**
- * Construir un grafo bipartito completo
- */
-@Override
-public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-    // Asumimos que resultMap contiene dos claves: "left" y "right" que representan los dos conjuntos de vértices
-    Set<V> leftSet = new HashSet<>(resultMap.get("left"));
-    Set<V> rightSet = new HashSet<>(resultMap.get("right"));
+public class BipartiteGraphGenerator<V, E> {
 
-    // Añadir todos los vértices al grafo
-    for (V vertex : leftSet) {
-        target.addVertex(vertex);
-    }
-    for (V vertex : rightSet) {
-        target.addVertex(vertex);
-    }
+    /**
+     * Construir un grafo bipartito completo
+     * @param target El grafo en el que se generará el grafo bipartito
+     * @param resultMap Un mapa para almacenar los vértices generados
+     */
+    @Override
+    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
+        // Crear dos conjuntos de vértices para las dos particiones
+        Set<V> partitionA = new HashSet<>();
+        Set<V> partitionB = new HashSet<>();
 
-    // Conectar cada vértice del conjunto izquierdo con cada vértice del conjunto derecho
-    for (V leftVertex : leftSet) {
-        for (V rightVertex : rightSet) {
-            target.addEdge(leftVertex, rightVertex);
+        // Generar vértices para la partición A
+        for (int i = 0; i < 5; i++) {
+            V vertexA = target.addVertex();
+            partitionA.add(vertexA);
+            resultMap.put("A" + i, vertexA);
+        }
+
+        // Generar vértices para la partición B
+        for (int i = 0; i < 5; i++) {
+            V vertexB = target.addVertex();
+            partitionB.add(vertexB);
+            resultMap.put("B" + i, vertexB);
+        }
+
+        // Conectar todos los vértices de la partición A con todos los de la partición B
+        for (V vertexA : partitionA) {
+            for (V vertexB : partitionB) {
+                target.addEdge(vertexA, vertexB);
+            }
         }
     }
 }

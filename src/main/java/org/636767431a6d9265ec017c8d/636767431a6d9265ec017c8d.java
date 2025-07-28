@@ -1,13 +1,12 @@
 public class Log2FloorPlusOne {
     /**
      * Calcula el piso(log2(n)) + 1
-     * 
-     * @param n El número para el cual se calculará el logaritmo base 2.
-     * @return El piso de log2(n) + 1.
+     * @param n el número para el cual se calculará el logaritmo
+     * @return el piso(log2(n)) + 1
      */
     public static int calculateLog2FloorPlusOne(int n) {
         if (n <= 0) {
-            throw new IllegalArgumentException("n debe ser un número positivo.");
+            throw new IllegalArgumentException("n debe ser un número positivo");
         }
         int log2 = 0;
         while (n > 1) {

@@ -16,15 +16,17 @@ public class ByteVector {
         if (byteOffset < 0) {
             throw new IllegalArgumentException("byteOffset must be non-negative");
         }
-        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
+        if (byteArrayValue != null && (byteOffset + byteLength) > byteArrayValue.length) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
         ensureCapacity(size + byteLength);
 
         if (byteArrayValue == null) {
+            // Fill with null bytes
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
+            // Copy bytes from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 
@@ -41,5 +43,9 @@ public class ByteVector {
 
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

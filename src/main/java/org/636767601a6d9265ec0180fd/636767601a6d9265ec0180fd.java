@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphIndex<V, E> {
-    private Map<V, Map<V, E>> index;
+public class Graph<V, E> {
+    private Map<V, Map<V, E>> adjacencyMap;
 
-    public GraphIndex() {
-        index = new HashMap<>();
+    public Graph() {
+        adjacencyMap = new HashMap<>();
     }
 
     /**
@@ -15,9 +15,11 @@ public class GraphIndex<V, E> {
      * @param e la arista
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!index.containsKey(sourceVertex)) {
-            index.put(sourceVertex, new HashMap<>());
+        if (!adjacencyMap.containsKey(sourceVertex)) {
+            adjacencyMap.put(sourceVertex, new HashMap<>());
         }
-        index.get(sourceVertex).put(targetVertex, e);
+        adjacencyMap.get(sourceVertex).put(targetVertex, e);
     }
+
+    // Other methods of the Graph class can be added here
 }

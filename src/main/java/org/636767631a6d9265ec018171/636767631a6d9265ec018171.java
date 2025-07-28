@@ -1,9 +1,9 @@
 class ListNodeImpl<E> {
-    E data;
+    E value;
     ListNodeImpl<E> next;
 
-    ListNodeImpl(E data) {
-        this.data = data;
+    ListNodeImpl(E value) {
+        this.value = value;
         this.next = null;
     }
 }

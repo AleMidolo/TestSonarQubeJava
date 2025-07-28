@@ -4,10 +4,6 @@ import org.apache.camel.support.processor.DelegatingProcessor;
 
 public class MyBroadcastFilter extends DelegatingProcessor {
 
-    public MyBroadcastFilter(Processor processor) {
-        super(processor);
-    }
-
     /**
      * {@link BroadcastFilter} को कॉल करें
      * @param msg
@@ -15,7 +11,7 @@ public class MyBroadcastFilter extends DelegatingProcessor {
      */
     protected Object filter(Object msg) {
         // Implement your filtering logic here
-        // For demonstration, we will just return the message as is
+        // For demonstration, let's just return the message as is
         return msg;
     }
 }

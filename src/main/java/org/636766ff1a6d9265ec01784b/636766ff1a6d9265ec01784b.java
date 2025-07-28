@@ -1,7 +1,7 @@
 public class DigitChecker {
     /** 
      * <p>जांचता है कि <code>String</code> में केवल अंक के अक्षर हैं या नहीं।</p> 
-     * <p><code>Null</code> और खाली String <code>false</code> लौटाएगा。</p>
+     * <p><code>Null</code> और खाली String <code>false</code> लौटाएगा।</p>
      * @param str  जांचने के लिए <code>String</code>
      * @return <code>true</code> यदि str में केवल यूनिकोड संख्या है
      */

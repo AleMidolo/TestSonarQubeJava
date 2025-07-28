@@ -13,7 +13,7 @@ public class UTF8SizeCalculator {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
         if (len < 0 || index + len > str.length()) {
-            throw new IllegalArgumentException("Invalid length specified");
+            throw new IllegalArgumentException("Length is invalid");
         }
 
         String substring = str.subSequence(index, index + len).toString();
@@ -24,6 +24,6 @@ public class UTF8SizeCalculator {
     public static void main(String[] args) {
         String testString = "Hello, 世界"; // Example string
         int size = computeUTF8Size(testString, 0, 5); // Compute size of "Hello"
-        System.out.println("UTF-8 size: " + size); // Output the size
+        System.out.println("UTF-8 size: " + size); // Output: UTF-8 size: 5
     }
 }

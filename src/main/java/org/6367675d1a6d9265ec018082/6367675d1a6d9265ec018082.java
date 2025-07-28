@@ -1,14 +1,10 @@
+import java.util.Objects;
+
 class Node {
-    private Node next;
-    private boolean isVirtual;
+    private final boolean isVirtual;
 
-    public Node(Node next, boolean isVirtual) {
-        this.next = next;
+    public Node(boolean isVirtual) {
         this.isVirtual = isVirtual;
-    }
-
-    public Node getNext() {
-        return next;
     }
 
     public boolean isVirtual() {
@@ -17,8 +13,8 @@ class Node {
 }
 
 class Edge {
-    private Node from;
-    private Node to;
+    private final Node from;
+    private final Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
@@ -34,11 +30,13 @@ class Edge {
     }
 }
 
-class GraphNode {
+class Graph {
     private Node currentNode;
+    private Node nextNode;
 
-    public GraphNode(Node currentNode) {
+    public Graph(Node currentNode, Node nextNode) {
         this.currentNode = currentNode;
+        this.nextNode = nextNode;
     }
 
     /**
@@ -46,16 +44,14 @@ class GraphNode {
      * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        Node nextNode = currentNode.getNext();
         Node realFrom = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node realTo = nextNode != null && nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-
+        Node realTo = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
         return new Edge(realFrom, realTo);
     }
 
-    private Node getRealNode(Node node) {
-        // Logic to get the real equivalent of a virtual node
-        // This is a placeholder; actual implementation may vary
-        return node; // Assuming the node itself is returned for simplicity
+    private Node getRealNode(Node virtualNode) {
+        // Placeholder for logic to get the real node corresponding to a virtual node
+        // This should be replaced with actual implementation
+        return new Node(false); // Assuming a real node is not virtual
     }
 }

@@ -31,10 +31,7 @@ public class ByteVector {
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity - data.length > 0) {
-            int newCapacity = data.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+            int newCapacity = Math.max(data.length * 2, minCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
     }

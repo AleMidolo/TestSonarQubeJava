@@ -15,12 +15,12 @@ public class GraphGenerator<V, E> {
         V[] setA = (V[]) resultMap.values().toArray();
         V[] setB = (V[]) resultMap.values().toArray();
 
-        // Create edges between every vertex in setA and every vertex in setB
+        // Create edges between every vertex in set A and every vertex in set B
         for (V vertexA : setA) {
             for (V vertexB : setB) {
                 if (!vertexA.equals(vertexB)) {
                     // Add edge between vertexA and vertexB in the target graph
-                    // target.addEdge(vertexA, vertexB); // Uncomment and implement this method
+                    // target.addEdge(vertexA, vertexB); // Assuming addEdge method exists
                 }
             }
         }

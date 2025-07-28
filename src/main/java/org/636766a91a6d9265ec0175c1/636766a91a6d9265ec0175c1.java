@@ -18,4 +18,23 @@ public class ByteVector {
         data = Arrays.copyOf(data, newSize);
         currentSize = newSize;
     }
+
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
+        }
+        return data[index];
+    }
+
+    public int size() {
+        return currentSize;
+    }
 }

@@ -8,11 +8,7 @@ public class LoggerChecker {
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);
-        // Check if the logger is configured and has handlers
-        if (logger.getHandlers().length > 0) {
-            return logger;
-        }
-        return null;
+        return logger.getHandlers().length > 0 ? logger : null;
     }
 
     public static void main(String[] args) {

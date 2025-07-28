@@ -12,21 +12,28 @@ public class StackPopper {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Example logic to pop based on descriptor
+        // Example logic to pop elements based on the descriptor
         // This is a placeholder for actual implementation
-        // Assuming descriptor is a string representation of the type
+        int argCount = getArgumentCountFromDescriptor(descriptor);
         
-        // Here we would typically check the descriptor and pop the appropriate types
-        // For demonstration, we will just pop one item from the stack
-        if (!stack.isEmpty()) {
-            Object poppedItem = stack.pop();
-            System.out.println("Popped item: " + poppedItem + " for descriptor: " + descriptor);
-        } else {
-            System.out.println("Stack is empty. No items to pop for descriptor: " + descriptor);
+        for (int i = 0; i < argCount; i++) {
+            if (!stack.isEmpty()) {
+                Object poppedElement = stack.pop();
+                // Process the popped element as needed
+                System.out.println("Popped: " + poppedElement);
+            } else {
+                System.out.println("Stack is empty, cannot pop more elements.");
+                break;
+            }
         }
     }
 
-    // Method to push items onto the stack for testing purposes
+    private int getArgumentCountFromDescriptor(String descriptor) {
+        // Placeholder for actual logic to determine argument count from descriptor
+        // For simplicity, let's assume it returns a fixed number
+        return 2; // Example: assuming 2 arguments for demonstration
+    }
+
     public void push(Object item) {
         stack.push(item);
     }
@@ -35,9 +42,6 @@ public class StackPopper {
         StackPopper stackPopper = new StackPopper();
         stackPopper.push("AbstractType1");
         stackPopper.push("AbstractType2");
-        
-        stackPopper.pop("SomeDescriptor");
-        stackPopper.pop("SomeDescriptor");
-        stackPopper.pop("SomeDescriptor");
+        stackPopper.pop("methodDescriptor");
     }
 }

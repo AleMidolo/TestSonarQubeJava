@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpperBoundCalculator<K> {
-
+    
     /** 
      * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
      * @param keys कुंजियों की एक सूची।
@@ -13,8 +13,8 @@ public class UpperBoundCalculator<K> {
         
         for (K key : keys) {
             // यहाँ पर कुंजी के लिए ऊपरी सीमा की गणना करें
-            // यह एक साधारण उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार हो सकती है
-            int upperBound = key.hashCode(); // उदाहरण के लिए, कुंजी का हैश कोड उपयोग कर रहे हैं
+            // यह एक उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार होनी चाहिए
+            int upperBound = key.hashCode(); // उदाहरण के लिए, कुंजी का हैशकोड उपयोग कर रहे हैं
             upperBounds.add(upperBound);
         }
         

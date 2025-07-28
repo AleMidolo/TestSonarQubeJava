@@ -15,12 +15,14 @@ public class Utf8Decoder {
             } else if (b < 0xE0) { // 2-byte character
                 if (i + 1 >= bb.limit()) break; // Check for enough bytes
                 int b2 = bb.get(i + 1) & 0xFF;
+                if ((b2 & 0xC0) != 0x80) break; // Invalid continuation byte
                 sb.append((char) (((b & 0x1F) << 6) | (b2 & 0x3F)));
                 i += 2;
             } else if (b < 0xF0) { // 3-byte character
                 if (i + 2 >= bb.limit()) break; // Check for enough bytes
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
+                if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80) break; // Invalid continuation bytes
                 sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
                 i += 3;
             } else { // 4-byte character
@@ -28,9 +30,9 @@ public class Utf8Decoder {
                 int b2 = bb.get(i + 1) & 0xFF;
                 int b3 = bb.get(i + 2) & 0xFF;
                 int b4 = bb.get(i + 3) & 0xFF;
-                int codePoint = (((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F)) - 0x10000;
-                sb.append((char) (0xD800 | (codePoint >> 10)));
-                sb.append((char) (0xDC00 | (codePoint & 0x3FF)));
+                if ((b2 & 0xC0) != 0x80 || (b3 & 0xC0) != 0x80 || (b4 & 0xC0) != 0x80) break; // Invalid continuation bytes
+                int codePoint = ((b & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+                sb.append(Character.toChars(codePoint));
                 i += 4;
             }
         }

@@ -10,7 +10,11 @@ public class TableRowSelector {
      * @param pane JScrollPane जिसमें JTable है
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        // Set the selected row
+        if (table == null || pane == null) {
+            throw new IllegalArgumentException("Table and pane cannot be null");
+        }
+        
+        // Select the specified row
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
@@ -42,7 +46,7 @@ public class TableRowSelector {
         frame.setSize(400, 300);
         frame.setVisible(true);
         
-        // Select a row after a delay
+        // Select row 2 after a delay
         Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
         timer.setRepeats(false);
         timer.start();

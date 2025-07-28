@@ -2,9 +2,12 @@
  * <p> Ottiene la String costruita da questo builder. </p>
  * @return la stringa costruita
  */
+@Override
 public String toString() {
-    // Assuming this is part of a StringBuilder-like class
-    // and the internal buffer is stored in a char array called 'value'
-    // and the current length is stored in an int called 'count'
-    return new String(value, 0, count);
+    // Assuming the builder has a StringBuilder or similar structure to hold the string
+    // For example, if the builder has a StringBuilder named 'builder':
+    // return builder.toString();
+    
+    // Placeholder implementation
+    return "String built by the builder";
 }

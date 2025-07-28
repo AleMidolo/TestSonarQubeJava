@@ -5,7 +5,7 @@ public class ColumnName {
     private Map<String, String> columnNames = new HashMap<>();
 
     /**
-     * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String,String)}
+     * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String, String)}
      * @param oldName da sostituire.
      * @param newName da utilizzare a livello di archiviazione.
      */
@@ -21,7 +21,7 @@ public class ColumnName {
     }
 
     public String getColumnName(String key) {
-        return columnNames.getOrDefault(key, key);
+        return columnNames.get(key);
     }
 
     public void addColumnName(String key, String value) {

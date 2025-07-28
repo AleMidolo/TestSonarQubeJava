@@ -27,6 +27,6 @@ public class GraphIterator implements Iterator<Integer> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Remove operation is not supported.");
+        // Implementation of remove() method would go here
     }
 }

@@ -28,7 +28,7 @@ public class PathSegmentImpl {
     }
 }
 
-public class URIUtils {
+public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
@@ -43,15 +43,24 @@ public class URIUtils {
             path = path.substring(1);
         }
 
-        String[] pathSegments = path.split("/");
-        for (String segment : pathSegments) {
-            if (decode) {
-                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
+        String[] rawSegments = path.split("/");
+        for (String rawSegment : rawSegments) {
+            if (rawSegment.isEmpty()) {
+                continue;
             }
+            String segment = decode ? decodeURIComponent(rawSegment) : rawSegment;
             segments.add(new PathSegmentImpl(segment, decode));
         }
 
         return segments;
+    }
+
+    private static String decodeURIComponent(String encoded) {
+        try {
+            return java.net.URLDecoder.decode(encoded, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
     }
 
     public static void main(String[] args) {

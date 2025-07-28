@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class StackMapTable {
+public class StackMapTableWriter {
     private List<VerificationTypeInfo> currentFrame;
     private List<VerificationTypeInfo> stackMapTableEntries;
 

@@ -16,8 +16,9 @@ public final class UriMatcher {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public static void main(String[] args) {

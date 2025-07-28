@@ -1,11 +1,11 @@
 public class EntityIdHandler {
 
     /**
-     * @param entityId the entity identifier
-     * @return the id of the row
+     * @param entityId the entity ID to process
+     * @return the ID of the row
      */
     public String id(String entityId) {
-        // Assuming the entityId is already in the correct format for the row ID
+        // Assuming the entityId is already the row ID or can be directly returned
         return entityId;
     }
 

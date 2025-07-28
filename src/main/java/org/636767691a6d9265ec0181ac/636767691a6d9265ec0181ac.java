@@ -12,24 +12,23 @@ public class PathUtils {
     public static String applyRelativePath(String path, String relativePath) {
         // Converti il percorso di base in un oggetto Path
         Path basePath = Paths.get(path);
-        
+
         // Converti il percorso relativo in un oggetto Path
         Path relative = Paths.get(relativePath);
-        
+
         // Risolvi il percorso relativo rispetto al percorso di base
         Path resolvedPath = basePath.resolve(relative);
-        
-        // Normalizza il percorso per rimuovere eventuali ridondanze (es. "./" o "../")
+
+        // Normalizza il percorso per rimuovere eventuali ridondanze
         Path normalizedPath = resolvedPath.normalize();
-        
+
         // Restituisci il percorso come stringa
         return normalizedPath.toString();
     }
 
     public static void main(String[] args) {
-        String basePath = "/usr/local/bin";
+        String path = "/usr/local/bin";
         String relativePath = "../lib/java";
-        String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println(applyRelativePath(path, relativePath)); // Output: /usr/local/lib/java
     }
 }

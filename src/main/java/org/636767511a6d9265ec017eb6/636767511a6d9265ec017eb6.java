@@ -29,11 +29,17 @@ public class Node {
         return nextClockwise;
     }
 
+    public void setNextClockwise(Node nextClockwise) {
+        this.nextClockwise = nextClockwise;
+    }
+
     public Node getNextCounterClockwise() {
         return nextCounterClockwise;
     }
 
-    // Other methods and fields...
+    public void setNextCounterClockwise(Node nextCounterClockwise) {
+        this.nextCounterClockwise = nextCounterClockwise;
+    }
 }
 
 public class Graph {

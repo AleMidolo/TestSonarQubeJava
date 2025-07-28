@@ -10,7 +10,7 @@ private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int
     minLabelBucket.clear();
     
     // Aggiorna le etichette dei vertici spostati
-    for (Integer vertex : zeroLabelBucket) {
+    for (int vertex : zeroLabelBucket) {
         labels.set(vertex, 0);
     }
 }

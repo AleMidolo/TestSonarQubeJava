@@ -11,27 +11,27 @@ public class FileUtils {
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("File must not be null");
+            throw new NullPointerException("Il file non può essere null");
         }
 
-        file.deleteOnExit();
-
         if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                for (File subFile : files) {
-                    forceDeleteOnExit(subFile);
-                }
-            }
+            deleteDirectoryOnExit(file);
+        } else {
+            file.deleteOnExit();
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            File file = new File("path/to/your/file_or_directory");
-            forceDeleteOnExit(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void deleteDirectoryOnExit(File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectoryOnExit(file);
+                } else {
+                    file.deleteOnExit();
+                }
+            }
         }
+        directory.deleteOnExit();
     }
 }

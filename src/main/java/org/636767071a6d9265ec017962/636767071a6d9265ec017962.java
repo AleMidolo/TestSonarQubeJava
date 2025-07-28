@@ -1,43 +1,48 @@
 import org.apache.commons.beanutils.BeanMap;
 
-public class MyBeanMap {
+public class BeanMapExample {
 
-    private Object bean;
-
-    public MyBeanMap(Object bean) {
-        this.bean = bean;
-    }
-
+    /**
+     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
+     * @param map  il BeanMap le cui proprietà devono essere inserite
+     */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
 
-        BeanMap thisBeanMap = new BeanMap(this.bean);
+        // Ottieni tutte le chiavi (nomi delle proprietà) dal BeanMap fornito
         for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key)) {
-                thisBeanMap.put(key, map.get(key));
+            // Verifica se la proprietà è scrivibile
+            if (map.isWriteable((String) key)) {
+                // Ottieni il valore della proprietà dal BeanMap fornito
+                Object value = map.get(key);
+                // Imposta il valore della proprietà in questo BeanMap
+                this.put(key, value);
             }
         }
     }
 
-    // Example usage
+    // Metodo put per impostare il valore di una proprietà
+    private void put(Object key, Object value) {
+        // Implementazione del metodo put per impostare il valore di una proprietà
+        // Questo è un esempio, l'implementazione reale dipenderà dalla tua logica specifica
+        // Ad esempio, potresti usare un Map interno per memorizzare i valori
+        // internalMap.put(key, value);
+    }
+
+    // Esempio di utilizzo
     public static void main(String[] args) {
-        MyBean myBean = new MyBean();
-        MyBean anotherBean = new MyBean();
-        anotherBean.setName("John");
-        anotherBean.setAge(30);
+        // Creazione di un BeanMap di esempio
+        BeanMap sourceMap = new BeanMap(new MyBean());
+        BeanMapExample targetMap = new BeanMapExample();
 
-        BeanMap anotherBeanMap = new BeanMap(anotherBean);
-        MyBeanMap myBeanMap = new MyBeanMap(myBean);
-
-        myBeanMap.putAllWriteable(anotherBeanMap);
-
-        System.out.println("Name: " + myBean.getName()); // Should print "John"
-        System.out.println("Age: " + myBean.getAge());   // Should print "30"
+        // Inserimento delle proprietà scrivibili
+        targetMap.putAllWriteable(sourceMap);
     }
 }
 
+// Esempio di classe Bean
 class MyBean {
     private String name;
     private int age;

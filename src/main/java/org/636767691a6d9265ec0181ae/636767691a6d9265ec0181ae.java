@@ -1,7 +1,7 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class EnumerationToStringArray {
+public class EnumerationToArray {
 
     /** 
      * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.

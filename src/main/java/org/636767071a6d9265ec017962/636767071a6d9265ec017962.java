@@ -15,12 +15,11 @@ public class BeanMapUtil {
         for (Object property : map.keySet()) {
             if (map.getPropertyType(property).isAssignableFrom(Object.class)) {
                 // Ignorar propiedades de solo lectura
-                if (map.isWriteable(property)) {
-                    // Aquí se puede agregar la lógica para colocar la propiedad en el BeanMap actual
-                    // Por ejemplo, se podría establecer un valor predeterminado o copiar el valor de otro BeanMap
-                    // map.put(property, someValue); // someValue debe ser definido según la lógica deseada
-                }
+                continue;
             }
+            // Aquí se puede agregar la lógica para colocar las propiedades escribibles en el BeanMap actual
+            // Por ejemplo, se podría usar un método para establecer el valor de la propiedad
+            // setProperty(property, map.get(property));
         }
     }
 }

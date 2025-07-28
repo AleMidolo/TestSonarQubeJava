@@ -16,8 +16,8 @@ public class PathUtil {
 
     public static void main(String[] args) {
         String path = "/home/user/documents";
-        String relativePath = "../pictures/image.png";
+        String relativePath = "projects/java";
         String result = applyRelativePath(path, relativePath);
-        System.out.println(result); // Output: /home/user/pictures/image.png
+        System.out.println(result); // Output: /home/user/projects/java
     }
 }

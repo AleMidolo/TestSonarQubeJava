@@ -22,10 +22,10 @@ public class GraphUtils {
 }
 
 class Graph<V, E> {
-    // Método ficticio para obtener los vértices del grafo
+    // Implementación del grafo
     public Iterable<V> getVertices() {
-        // Implementación ficticia
-        return null;
+        // Retornar los vértices del grafo
+        return null; // Placeholder
     }
 }
 

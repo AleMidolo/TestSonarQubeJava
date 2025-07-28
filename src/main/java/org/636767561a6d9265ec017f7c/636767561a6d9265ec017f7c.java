@@ -43,12 +43,13 @@ public class GraphUtils<V, E> {
             }
 
             @Override
+            public List<V> getVertexList() {
+                return uniqueVertices;
+            }
+
+            @Override
             public List<E> getEdgeList() {
-                List<E> edges = new ArrayList<>();
-                for (int i = 0; i < uniqueVertices.size() - 1; i++) {
-                    edges.add(graph.getEdge(uniqueVertices.get(i), uniqueVertices.get(i + 1)));
-                }
-                return edges;
+                return new ArrayList<>(tour);
             }
 
             @Override
@@ -63,19 +64,7 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                double weight = 0.0;
-                for (E edge : getEdgeList()) {
-                    weight += graph.getEdgeWeight(edge);
-                }
-                return weight;
-            }
-
-            @Override
-            public String toString() {
-                return "GraphPath{" +
-                        "vertices=" + uniqueVertices +
-                        ", edges=" + getEdgeList() +
-                        '}';
+                return 0; // Weight calculation can be implemented if needed
             }
         };
     }

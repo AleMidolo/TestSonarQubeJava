@@ -1,6 +1,10 @@
-import java.util.Set;
 import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
+import org.jgrapht.GraphType;
+import org.jgrapht.alg.clique.CliqueFinder;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+
+import java.util.Set;
 
 public class GraphUtils {
 
@@ -10,14 +14,15 @@ public class GraphUtils {
      * @param vertices los vértices de los que se inducirá el subgrafo.
      * @return true si el subgrafo inducido es un clique.
      */
-    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        // Check if the number of edges in the induced subgraph equals the number of edges in a complete graph
-        int expectedEdges = vertices.size() * (vertices.size() - 1) / 2;
-        int actualEdges = 0;
+    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Check if the number of edges in the induced subgraph is equal to the number of edges in a complete graph
+        int vertexCount = vertices.size();
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2;
 
+        int actualEdges = 0;
         for (V vertex : vertices) {
             for (E edge : graph.outgoingEdgesOf(vertex)) {
-                V targetVertex = Graphs.getOppositeVertex(graph, edge, vertex);
+                V targetVertex = graph.getEdgeTarget(edge);
                 if (vertices.contains(targetVertex)) {
                     actualEdges++;
                 }
@@ -28,5 +33,20 @@ public class GraphUtils {
         actualEdges /= 2;
 
         return actualEdges == expectedEdges;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
+
+        Set<String> vertices = Set.of("A", "B", "C");
+        boolean result = isClique(graph, vertices);
+        System.out.println("Is clique: " + result); // Should print true
     }
 }

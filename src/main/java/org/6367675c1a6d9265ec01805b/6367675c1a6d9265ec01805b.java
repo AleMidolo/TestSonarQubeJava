@@ -17,7 +17,7 @@ public class DoublyLinkedList {
             return; // List is empty, nothing to remove
         }
 
-        // Remove head
+        // Remove the head node
         if (head.next != null) {
             head = head.next;
             head.prev = null;
@@ -25,7 +25,7 @@ public class DoublyLinkedList {
             head = null; // List becomes empty
         }
 
-        // Remove tail
+        // Remove the tail node
         if (tail != null) {
             if (tail.prev != null) {
                 tail = tail.prev;
@@ -35,6 +35,4 @@ public class DoublyLinkedList {
             }
         }
     }
-
-    // Additional methods for the doubly linked list can be added here
 }

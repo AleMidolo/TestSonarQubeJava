@@ -19,5 +19,5 @@ public class InterceptorChecker {
 }
 
 class AtmosphereInterceptor {
-    // Implementation of AtmosphereInterceptor
+    // Implementación de la clase AtmosphereInterceptor
 }

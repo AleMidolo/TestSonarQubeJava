@@ -5,7 +5,6 @@ public class LoggerChecker {
     /**
      * Verifica si el registrador nombrado existe en la jerarquía. Si es así, devuelve su referencia; de lo contrario, devuelve <code>null</code>.
      * @param name El nombre del registrador que se busca.
-     * @return El registrador si existe, de lo contrario <code>null</code>.
      */
     public Logger exists(String name) {
         Logger logger = Logger.getLogger(name);

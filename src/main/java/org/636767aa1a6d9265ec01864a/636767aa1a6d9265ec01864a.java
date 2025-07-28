@@ -9,9 +9,9 @@ public class ByteArrayExample {
     public byte[] toByteArray() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
-            // Example data to write to the byte array
-            String exampleData = "Hello, World!";
-            byteArrayOutputStream.write(exampleData.getBytes());
+            // Simulating byte data to copy
+            byte[] data = {1, 2, 3, 4, 5};
+            byteArrayOutputStream.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -20,7 +20,9 @@ public class ByteArrayExample {
 
     public static void main(String[] args) {
         ByteArrayExample example = new ByteArrayExample();
-        byte[] byteArray = example.toByteArray();
-        System.out.println(new String(byteArray));
+        byte[] result = example.toByteArray();
+        for (byte b : result) {
+            System.out.print(b + " ");
+        }
     }
 }

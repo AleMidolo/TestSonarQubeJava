@@ -1,5 +1,6 @@
-public class StringUtil {
+import java.beans.Introspector;
 
+public class StringUtil {
     /** 
      * Inverso de Introspector.decapitalize
      */

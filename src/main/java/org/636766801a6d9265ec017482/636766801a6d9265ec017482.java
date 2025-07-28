@@ -18,14 +18,13 @@ public class ClassFileBuffer {
         byte[] tempBuffer = new byte[1024];
         int bytesRead;
 
-        // Read from the InputStream and write to the ByteArrayOutputStream
+        // Read bytes from the InputStream and write them to the ByteArrayOutputStream
         while ((bytesRead = in.read(tempBuffer)) != -1) {
             byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
         }
 
         // Convert the ByteArrayOutputStream to a byte array
         buffer = byteArrayOutputStream.toByteArray();
-        byteArrayOutputStream.close();
     }
 
     // Additional methods can be added here to manipulate or access the buffer

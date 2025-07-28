@@ -24,7 +24,7 @@ public class ArrayConverter {
         
         // Print the result
         for (Integer num : objectArray) {
-            System.out.print(num + " ");
+            System.out.println(num);
         }
     }
 }

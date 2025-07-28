@@ -1,4 +1,4 @@
-public class HttpHeaderBuilder {
+public class ContentRangeBuilder {
 
     /**
      * Construye el valor del encabezado HTTP 'Content-Range'.
@@ -14,7 +14,7 @@ public class HttpHeaderBuilder {
     }
 
     public static void main(String[] args) {
-        HttpHeaderBuilder builder = new HttpHeaderBuilder();
+        ContentRangeBuilder builder = new ContentRangeBuilder();
         String contentRange = builder.buildContentRange();
         System.out.println(contentRange);
     }

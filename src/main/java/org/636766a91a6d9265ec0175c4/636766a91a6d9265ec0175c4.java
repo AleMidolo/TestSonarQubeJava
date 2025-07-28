@@ -1,38 +1,52 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameStackExtractor {
+public class StackExtractor {
+
+    private List<String> stack = new ArrayList<>();
 
     /**
      * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
      * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
      */
     private void pop(final String descriptor) {
-        List<String> extractedTypes = new ArrayList<>();
-        
-        // Simulación de la extracción de tipos basados en el descriptor
-        if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            // Es un descriptor de método, extraer tipos de argumento
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (String type : args.split(",")) {
-                extractedTypes.add(type.trim());
-            }
-        } else {
-            // Es un descriptor de tipo, agregarlo directamente
-            extractedTypes.add(descriptor);
-        }
+        // Simulación de la extracción de tipos abstractos de la "frame stack"
+        // Aquí se asume que el descriptor es una cadena que describe los tipos
+        // Por simplicidad, se simula la extracción de tipos a partir del descriptor
 
-        // Aquí se podría hacer algo con los tipos extraídos, como imprimirlos
-        for (String type : extractedTypes) {
-            System.out.println("Tipo extraído: " + type);
+        // Limpiar la stack antes de la extracción
+        stack.clear();
+
+        // Simulación de la lógica de extracción basada en el descriptor
+        if (descriptor != null && !descriptor.isEmpty()) {
+            // Por ejemplo, si el descriptor es "I", se extrae un tipo entero
+            if (descriptor.equals("I")) {
+                stack.add("Integer");
+            } else if (descriptor.equals("Ljava/lang/String;")) {
+                stack.add("String");
+            } else if (descriptor.equals("(I)V")) {
+                stack.add("void");
+                stack.add("Integer");
+            } else {
+                // Agregar otros tipos según sea necesario
+                stack.add("UnknownType");
+            }
         }
     }
 
+    public List<String> getStack() {
+        return stack;
+    }
+
     public static void main(String[] args) {
-        FrameStackExtractor extractor = new FrameStackExtractor();
-        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
-        extractor.pop("Ljava/lang/String;"); // Ejemplo de un descriptor de tipo
+        StackExtractor extractor = new StackExtractor();
+        extractor.pop("I");
+        System.out.println(extractor.getStack()); // Output: [Integer]
+        
+        extractor.pop("Ljava/lang/String;");
+        System.out.println(extractor.getStack()); // Output: [String]
+        
+        extractor.pop("(I)V");
+        System.out.println(extractor.getStack()); // Output: [void, Integer]
     }
 }

@@ -19,7 +19,7 @@ public class Cola {
             sb.append(item.toString()).append(", ");
         }
         if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Remove last comma and space
+            sb.setLength(sb.length() - 2); // Eliminar la última coma y espacio
         }
         sb.append("]");
         return sb.toString();
@@ -41,8 +41,6 @@ public class Cola {
         Cola cola = new Cola();
         cola.enqueue("Elemento 1");
         cola.enqueue("Elemento 2");
-        System.out.println(cola.toString()); // Output: Cola: [Elemento 1, Elemento 2]
-        cola.dequeue();
-        System.out.println(cola.toString()); // Output: Cola: [Elemento 2]
+        System.out.println(cola.toString()); // Debe imprimir la representación textual de la cola
     }
 }

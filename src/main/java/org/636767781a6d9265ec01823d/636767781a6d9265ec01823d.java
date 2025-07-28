@@ -1,7 +1,7 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-public class LoggerAppender {
-
+public class Logger {
+    
     /**
      * Este método realiza la escritura
      */

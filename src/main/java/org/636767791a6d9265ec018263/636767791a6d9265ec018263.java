@@ -1,5 +1,7 @@
-public class ClassFinder {
+import java.lang.Class;
 
+public class ClassFinder {
+    
     /** 
      * Encuentra la clase dada su nombre.
      * @param className nombre de la clase, no puede ser nulo.
@@ -12,7 +14,7 @@ public class ClassFinder {
         }
         return Class.forName(className);
     }
-
+    
     public static void main(String[] args) {
         ClassFinder finder = new ClassFinder();
         try {

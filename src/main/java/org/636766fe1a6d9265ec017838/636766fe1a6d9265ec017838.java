@@ -1,8 +1,7 @@
 public class CharacterArrayConverter {
 
     /** 
-     * <p>Convierte un array de objetos "Character" a primitivos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * <p>Convierte un array de objetos "Character" a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
      * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
      * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
      * @throws NullPointerException si el contenido del arreglo es <code>null</code>

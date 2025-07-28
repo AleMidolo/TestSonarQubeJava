@@ -12,11 +12,8 @@ public class TypeResolver {
         if (bounds.length > 0) {
             return bounds[0];
         }
-        return Object.class; // Returning Object.class as a fallback instead of Unknown.class
+        return Unknown.class;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        // This part is just for demonstration and won't be executed in a real scenario
-    }
+    public static class Unknown {}
 }

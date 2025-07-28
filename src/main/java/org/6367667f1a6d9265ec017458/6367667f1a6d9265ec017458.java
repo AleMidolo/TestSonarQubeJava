@@ -5,7 +5,7 @@ public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
     public AtmosphereManager() {
-        atmosphereFramework = new AtmosphereFramework();
+        this.atmosphereFramework = new AtmosphereFramework();
     }
 
     /** 

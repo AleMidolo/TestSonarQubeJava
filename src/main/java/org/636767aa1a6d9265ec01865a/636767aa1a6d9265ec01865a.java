@@ -25,7 +25,6 @@ class LinkedBuffer {
 }
 
 public class BufferWriter {
-
     /** 
      * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
      * @return el tamaño total del contenido del búfer.

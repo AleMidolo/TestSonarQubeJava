@@ -9,14 +9,9 @@ public class ObjectToStringConverter {
 
     public static void main(String[] args) {
         Object obj1 = null;
-        Object obj2 = new Object() {
-            @Override
-            public String toString() {
-                return "Custom Object String";
-            }
-        };
-
-        System.out.println(toString(obj1)); // Output: ""
-        System.out.println(toString(obj2)); // Output: "Custom Object String"
+        Object obj2 = new Object();
+        
+        System.out.println("Result for null object: '" + toString(obj1) + "'");
+        System.out.println("Result for non-null object: '" + toString(obj2) + "'");
     }
 }

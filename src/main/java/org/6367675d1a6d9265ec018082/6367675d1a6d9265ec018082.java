@@ -1,25 +1,40 @@
 import java.util.Objects;
 
+class Node {
+    // Assuming Node class has some properties
+    private boolean isVirtual;
+    private String name;
+
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
+        this.isVirtual = isVirtual;
+    }
+
+    public boolean isVirtual() {
+        return isVirtual;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
 class Edge {
-    private final Node from;
-    private final Node to;
+    private Node from;
+    private Node to;
 
     public Edge(Node from, Node to) {
         this.from = from;
         this.to = to;
     }
 
-    // Getters and other methods can be added here
-}
-
-class Node {
-    private final String name;
-
-    public Node(String name) {
-        this.name = name;
+    public Node getFrom() {
+        return from;
     }
 
-    // Getters and other methods can be added here
+    public Node getTo() {
+        return to;
+    }
 }
 
 class Graph {
@@ -36,26 +51,14 @@ class Graph {
      * @return 从当前节点到下一个节点的边
      */
     public Edge edgeToNext() {
-        Node realCurrentNode = getRealNode(currentNode);
-        Node realNextNode = getRealNode(nextNode);
-        return new Edge(realCurrentNode, realNextNode);
+        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
+        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        return new Edge(fromNode, toNode);
     }
 
-    private Node getRealNode(Node node) {
-        // Assuming a method to determine if a node is virtual
-        if (isVirtual(node)) {
-            return getCorrespondingRealNode(node);
-        }
-        return node;
-    }
-
-    private boolean isVirtual(Node node) {
-        // Implement logic to determine if the node is virtual
-        return false; // Placeholder
-    }
-
-    private Node getCorrespondingRealNode(Node node) {
-        // Implement logic to get the real corresponding node
-        return new Node("Real_" + node.name); // Placeholder
+    private Node getRealNode(Node virtualNode) {
+        // Logic to get the real node corresponding to the virtual node
+        // For demonstration, we will just return a new Node with the same name but not virtual
+        return new Node(virtualNode.getName(), false);
     }
 }

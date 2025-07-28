@@ -21,11 +21,10 @@ public class ArrayComparator {
 
     public static void main(String[] args) {
         byte[] array1 = {1, 2, 3, 4, 5};
-        byte[] array2 = {1, 2, 3, 4, 5};
-        byte[] array3 = {1, 2, 3, 0, 5};
+        byte[] array2 = {1, 2, 3, 4, 6};
+        int count = 4;
 
-        System.out.println(arrayequals(array1, array2, 5)); // true
-        System.out.println(arrayequals(array1, array3, 3)); // true
-        System.out.println(arrayequals(array1, array3, 4)); // false
+        boolean result = arrayequals(array1, array2, count);
+        System.out.println("Arrays are equal: " + result);
     }
 }

@@ -4,14 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BeanMap {
-    private final Map<String, Object> map;
+    private Map<String, Object> map;
 
     public BeanMap() {
         this.map = new HashMap<>();
-    }
-
-    public void put(String key, Object value) {
-        map.put(key, value);
     }
 
     /**
@@ -22,12 +18,18 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
+    // Method to add values to the map for testing purposes
+    public void put(String key, Object value) {
+        map.put(key, value);
+    }
+
+    // Main method for testing
     public static void main(String[] args) {
         BeanMap beanMap = new BeanMap();
         beanMap.put("key1", "value1");
         beanMap.put("key2", 2);
         
         Collection<Object> values = beanMap.values();
-        System.out.println(values);
+        System.out.println(values); // Output: [value1, 2]
     }
 }

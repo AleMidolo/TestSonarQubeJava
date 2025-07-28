@@ -1,6 +1,6 @@
 public class LogCalculator {
-
-    /**
+    
+    /** 
      * 计算 $\log_2 (n)$ 的下限值 + 1
      */
     private int computeBinaryLog(int n) {

@@ -10,16 +10,13 @@ public class MyAtmosphereHandler {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // Check the transport type of the AtmosphereResource
-        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // Perform any necessary actions for WebSocket transport
-            // For example, you might want to suspend the resource
-            r.suspend();
-        } else if (r.transport() == AtmosphereResource.TRANSPORT.STREAMING) {
-            // Handle streaming transport if needed
-            r.suspend();
+        if (r.getTransport() != null) {
+            // Logic to suspend the resource based on the transport type
+            // For example, if the transport is "LONG_POLLING", we can suspend it
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+                r.suspend();
+            }
         }
-        // Continue processing
         return Action.CONTINUE;
     }
 }

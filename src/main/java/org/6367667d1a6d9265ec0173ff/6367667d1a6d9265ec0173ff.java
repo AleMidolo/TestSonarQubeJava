@@ -12,6 +12,7 @@ public class MeteorLookup {
         // Example logic to retrieve a Meteor instance
         String meteorId = r.getParameter("meteorId");
         if (meteorId != null) {
+            // Logic to find and return a Meteor instance based on meteorId
             return findMeteorById(meteorId);
         }
 
@@ -19,9 +20,9 @@ public class MeteorLookup {
     }
 
     private static Meteor findMeteorById(String meteorId) {
-        // Placeholder for actual logic to find a Meteor by its ID
-        // This could involve querying a database or some other data source
-        // For now, returning a new Meteor instance for demonstration purposes
+        // Placeholder for actual logic to retrieve a Meteor instance
+        // This could involve querying a database or a collection
+        // For demonstration, returning a new Meteor instance
         return new Meteor(meteorId);
     }
 }

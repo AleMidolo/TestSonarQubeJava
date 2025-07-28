@@ -1,5 +1,5 @@
 public class DataTable {
-    // Assuming DataTable has some properties to compare
+    // Assuming DataTable has a method to get buckets
     private String[] buckets;
 
     public DataTable(String[] buckets) {
@@ -12,10 +12,10 @@ public class DataTable {
 }
 
 public class CompatibilityChecker {
-    private String[] buckets;
+    private String[] myBuckets;
 
-    public CompatibilityChecker(String[] buckets) {
-        this.buckets = buckets;
+    public CompatibilityChecker(String[] myBuckets) {
+        this.myBuckets = myBuckets;
     }
 
     /** 
@@ -23,14 +23,24 @@ public class CompatibilityChecker {
      */
     public boolean isCompatible(DataTable dataset) {
         String[] datasetBuckets = dataset.getBuckets();
-        if (buckets.length != datasetBuckets.length) {
+        if (myBuckets.length != datasetBuckets.length) {
             return false;
         }
-        for (int i = 0; i < buckets.length; i++) {
-            if (!buckets[i].equals(datasetBuckets[i])) {
+        for (int i = 0; i < myBuckets.length; i++) {
+            if (!myBuckets[i].equals(datasetBuckets[i])) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        String[] myBuckets = {"bucket1", "bucket2", "bucket3"};
+        CompatibilityChecker checker = new CompatibilityChecker(myBuckets);
+
+        String[] datasetBuckets = {"bucket1", "bucket2", "bucket3"};
+        DataTable dataset = new DataTable(datasetBuckets);
+
+        System.out.println(checker.isCompatible(dataset)); // Should print true
     }
 }

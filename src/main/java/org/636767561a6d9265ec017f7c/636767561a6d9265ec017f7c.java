@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class GraphUtils<V, E> {
 
-    /** 
+    /**
      * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
      * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
      * @param graph ग्राफ
@@ -26,8 +26,6 @@ public class GraphUtils<V, E> {
 
             if (previousVertex == null) {
                 vertexList.add(sourceVertex);
-            } else if (!previousVertex.equals(sourceVertex)) {
-                vertexList.add(sourceVertex);
             }
             vertexList.add(targetVertex);
             previousVertex = targetVertex;
@@ -40,23 +38,8 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<V> getVertexList() {
-                return vertexList;
-            }
-
-            @Override
             public List<E> getEdgeList() {
                 return new ArrayList<>(tour);
-            }
-
-            @Override
-            public E getStartEdge() {
-                return graph.getEdge(vertexList.get(0), vertexList.get(1));
-            }
-
-            @Override
-            public E getEndEdge() {
-                return graph.getEdge(vertexList.get(vertexList.size() - 2), vertexList.get(vertexList.size() - 1));
             }
 
             @Override
@@ -71,7 +54,15 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+                return 0; // Weight calculation can be added if needed
+            }
+
+            @Override
+            public String toString() {
+                return "GraphPath{" +
+                        "vertices=" + vertexList +
+                        ", edges=" + tour +
+                        '}';
             }
         };
     }

@@ -1,6 +1,4 @@
-import java.util.Objects;
-
-public class ArrayConverter {
+public class ByteArrayConverter {
 
     /** 
      * <p>एक ऑब्जेक्ट बाइट्स के एरे को प्रिमिटिव में परिवर्तित करता है।</p> 

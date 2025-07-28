@@ -22,6 +22,7 @@ public class FilePathUtil {
 
     public static void main(String[] args) {
         String path = "mypath/myfile.txt";
-        System.out.println(stripFilenameExtension(path)); // Output: mypath/myfile
+        String result = stripFilenameExtension(path);
+        System.out.println(result); // Output: mypath/myfile
     }
 }

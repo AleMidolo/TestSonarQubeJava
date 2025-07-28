@@ -2,9 +2,11 @@ import java.util.Arrays;
 
 public class ByteArrayExpander {
     private byte[] byteArray;
+    private int currentSize;
 
     public ByteArrayExpander(int initialSize) {
         this.byteArray = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
     /**
@@ -12,21 +14,19 @@ public class ByteArrayExpander {
      * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Size must be non-negative");
+        if (size <= 0) {
+            return; // No need to enlarge if size is non-positive
         }
-        int newSize = byteArray.length + size;
+        int newSize = currentSize + size;
         byteArray = Arrays.copyOf(byteArray, newSize);
+        currentSize = newSize;
     }
 
     public byte[] getByteArray() {
         return byteArray;
     }
 
-    public static void main(String[] args) {
-        ByteArrayExpander expander = new ByteArrayExpander(5);
-        System.out.println("Initial size: " + expander.getByteArray().length);
-        expander.enlarge(10);
-        System.out.println("New size after enlargement: " + expander.getByteArray().length);
+    public int getCurrentSize() {
+        return currentSize;
     }
 }

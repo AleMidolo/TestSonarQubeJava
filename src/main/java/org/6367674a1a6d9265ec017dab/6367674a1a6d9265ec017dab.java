@@ -12,14 +12,10 @@ public class DoubleComparator implements Comparator<Double> {
     public int compare(Double o1, Double o2) {
         if (o1.equals(o2)) {
             return 0;
+        } else if (o1 < o2) {
+            return -1;
+        } else {
+            return 1;
         }
-        return o1 < o2 ? -1 : 1;
-    }
-    
-    public static void main(String[] args) {
-        DoubleComparator comparator = new DoubleComparator();
-        System.out.println(comparator.compare(1.0, 2.0)); // Output: -1
-        System.out.println(comparator.compare(2.0, 1.0)); // Output: 1
-        System.out.println(comparator.compare(2.0, 2.0)); // Output: 0
     }
 }

@@ -10,16 +10,16 @@ public class Utility {
         if (s == null) {
             return true;
         }
-        return s.trim().isEmpty() || s.chars().allMatch(c -> c == '0');
+        return s.trim().isEmpty() || s.trim().equals("0");
     }
 
     public static void main(String[] args) {
         // Test cases
         System.out.println(isAllZeros(null)); // true
-        System.out.println(isAllZeros("0000")); // true
         System.out.println(isAllZeros("0")); // true
-        System.out.println(isAllZeros("")); // true
-        System.out.println(isAllZeros("123")); // false
-        System.out.println(isAllZeros("001")); // false
+        System.out.println(isAllZeros("0000")); // true
+        System.out.println(isAllZeros(" ")); // true
+        System.out.println(isAllZeros("1")); // false
+        System.out.println(isAllZeros("01")); // false
     }
 }

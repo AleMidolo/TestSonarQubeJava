@@ -10,7 +10,7 @@ public void removeFromTreeEdgeList() {
         if (leftEdgeList.next != null) {
             leftEdgeList.next.prev = leftEdgeList.prev;
         }
-        leftEdgeList = null; // Clear the reference
+        leftEdgeList = null; // Clear reference to help with garbage collection
     }
 
     // Remove this edge from the right edge list
@@ -21,6 +21,6 @@ public void removeFromTreeEdgeList() {
         if (rightEdgeList.next != null) {
             rightEdgeList.next.prev = rightEdgeList.prev;
         }
-        rightEdgeList = null; // Clear the reference
+        rightEdgeList = null; // Clear reference to help with garbage collection
     }
 }

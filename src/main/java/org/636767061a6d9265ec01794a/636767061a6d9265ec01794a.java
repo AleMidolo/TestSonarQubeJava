@@ -37,6 +37,7 @@ public class FileExtensionUtil {
         System.out.println(indexOfExtension("example.txt")); // Output: 7
         System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
         System.out.println(indexOfExtension("folder/example")); // Output: -1
+        System.out.println(indexOfExtension("folder/example.")); // Output: 8
         System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

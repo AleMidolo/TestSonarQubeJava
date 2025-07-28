@@ -1,5 +1,5 @@
 public class StringUtil {
-    
+
     /** 
      * Rimuove gli spazi bianchi finali dalla Stringa fornita.
      * @param str la Stringa da controllare

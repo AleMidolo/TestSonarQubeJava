@@ -7,8 +7,8 @@ public class StringCleaner {
      * @return la Stringa ripulita
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
-        if (str == null) {
-            return null;
+        if (str == null || str.isEmpty()) {
+            return str;
         }
         
         StringBuilder result = new StringBuilder();
@@ -30,9 +30,9 @@ public class StringCleaner {
     }
 
     public static void main(String[] args) {
-        String testString = "aaabacadae";
+        String testString = "aaaHello Worldaaa";
         char leadingChar = 'a';
         String cleanedString = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(cleanedString); // Output: "bcde"
+        System.out.println(cleanedString); // Output: "Hello World"
     }
 }

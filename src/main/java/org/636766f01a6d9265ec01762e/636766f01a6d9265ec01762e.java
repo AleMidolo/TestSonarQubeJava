@@ -1,5 +1,4 @@
 public class ArrayUtils {
-
     /** 
      * <p>Controlla se un array di double primitivi è vuoto o <code>null</code>.</p>
      * @param array  l'array da testare

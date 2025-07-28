@@ -11,17 +11,13 @@ public class StringUtils {
         if (str == null || prefix == null) {
             return false;
         }
-        if (prefix.length() > str.length()) {
-            return false;
-        }
-        return str.substring(0, prefix.length()).equalsIgnoreCase(prefix);
+        return str.toLowerCase().startsWith(prefix.toLowerCase());
     }
 
     public static void main(String[] args) {
-        // Test examples
         System.out.println(startsWithIgnoreCase("Hello World", "hello")); // true
-        System.out.println(startsWithIgnoreCase("Hello World", "WORLD")); // false
-        System.out.println(startsWithIgnoreCase("Java Programming", "java")); // true
-        System.out.println(startsWithIgnoreCase("Java Programming", "Python")); // false
+        System.out.println(startsWithIgnoreCase("Hello World", "world")); // false
+        System.out.println(startsWithIgnoreCase("Hello World", null)); // false
+        System.out.println(startsWithIgnoreCase(null, "hello")); // false
     }
 }

@@ -34,11 +34,11 @@ public class StringUnescaper {
                     case '\\':
                         result.append('\\');
                         break;
+                    case '"':
+                        result.append('"');
+                        break;
                     case '\'':
                         result.append('\'');
-                        break;
-                    case '\"':
-                        result.append('\"');
                         break;
                     default:
                         result.append(c);
@@ -54,14 +54,19 @@ public class StringUnescaper {
             }
         }
 
+        // If the string ends with an escape character, we need to append it
+        if (isEscaped) {
+            result.append('\\');
+        }
+
         return result.toString();
     }
 
     public static void main(String[] args) {
         try {
-            String input = "Hello\\nWorld! This is a test\\tstring with escaped characters.";
-            String output = unescapeJava(input);
-            System.out.println(output);
+            String escapedString = "Hello\\nWorld! This is a test\\tstring.";
+            String unescapedString = unescapeJava(escapedString);
+            System.out.println(unescapedString);
         } catch (Exception e) {
             e.printStackTrace();
         }

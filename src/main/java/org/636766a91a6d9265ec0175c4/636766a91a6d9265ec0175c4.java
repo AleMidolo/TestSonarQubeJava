@@ -1,9 +1,9 @@
 import java.util.Stack;
 
-public class StackManipulator {
+public class DescriptorPopper {
     private Stack<String> stack;
 
-    public StackManipulator() {
+    public DescriptorPopper() {
         this.stack = new Stack<>();
     }
 
@@ -17,14 +17,14 @@ public class StackManipulator {
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
             String args = descriptor.substring(start, end);
-            for (int i = 0; i < args.length(); i++) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each argument type
+            for (char arg : args.toCharArray()) {
+                if (!stack.isEmpty() && stack.peek().equals(String.valueOf(arg))) {
+                    stack.pop();
                 }
             }
         } else {
-            // If it's a single type descriptor, just pop once
-            if (!stack.isEmpty()) {
+            // If it's a type descriptor, just pop it if it exists
+            if (!stack.isEmpty() && stack.peek().equals(descriptor)) {
                 stack.pop();
             }
         }
@@ -34,18 +34,18 @@ public class StackManipulator {
         stack.push(type);
     }
 
-    public String peek() {
-        return stack.isEmpty() ? null : stack.peek();
+    public Stack<String> getStack() {
+        return stack;
     }
 
     public static void main(String[] args) {
-        StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
+        DescriptorPopper popper = new DescriptorPopper();
+        popper.push("I");
+        popper.push("J");
+        popper.push("V");
 
-        System.out.println("Stack before pop: " + sm.stack);
-        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
-        System.out.println("Stack after pop: " + sm.stack);
+        System.out.println("Stack before pop: " + popper.getStack());
+        popper.pop("(IJ)V");
+        System.out.println("Stack after pop: " + popper.getStack());
     }
 }

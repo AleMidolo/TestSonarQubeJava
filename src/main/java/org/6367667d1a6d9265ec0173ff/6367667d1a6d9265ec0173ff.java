@@ -12,7 +12,7 @@ public class MeteorLookup {
         String meteorId = r.getParameter("meteorId");
         
         if (meteorId == null || meteorId.isEmpty()) {
-            return null; // Se non c'è un ID meteor, restituisci null
+            return null; // Se non c'è un ID meteor, restituisce null
         }
         
         // Logica per cercare un'istanza di Meteor basata sull'ID

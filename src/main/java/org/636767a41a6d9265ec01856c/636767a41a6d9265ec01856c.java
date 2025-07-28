@@ -17,8 +17,8 @@ public class UTF8SizeCalculator {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello, 世界"; // Example string
-        int size = computeUTF8Size(testString, 0, 5); // Calculate UTF-8 size for "Hello"
-        System.out.println("UTF-8 size: " + size); // Output the size
+        String testString = "Hello, 世界"; // "Hello, World" in English and "World" in Chinese
+        int utf8Size = computeUTF8Size(testString, 0, testString.length());
+        System.out.println("UTF-8 size: " + utf8Size);
     }
 }

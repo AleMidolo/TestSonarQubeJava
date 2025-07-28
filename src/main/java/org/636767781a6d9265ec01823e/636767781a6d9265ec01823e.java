@@ -7,13 +7,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogAppender extends AppenderSkeleton {
-    private List<PrintWriter> clients = new ArrayList<>();
+public class ClientLogAppender extends AppenderSkeleton {
     private ServerSocket serverSocket;
+    private List<PrintWriter> clients = new ArrayList<>();
 
-    public LogAppender(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
-        new Thread(this::acceptClients).start();
+    public ClientLogAppender() {
+        try {
+            serverSocket = new ServerSocket(8080); // Porta su cui il server ascolta
+            new Thread(this::acceptClients).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void acceptClients() {

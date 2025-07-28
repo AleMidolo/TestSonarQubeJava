@@ -15,7 +15,7 @@ public class ClassPathUtil {
             throw new IllegalArgumentException("Provided path is not a directory: " + dir);
         }
 
-        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {

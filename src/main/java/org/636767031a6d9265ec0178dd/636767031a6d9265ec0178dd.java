@@ -20,11 +20,10 @@ public class HttpRequest {
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
-            connection.connect();
             return connection.getContentLengthLong();
         } catch (IOException e) {
             e.printStackTrace();
-            return -1;
+            return -1; // Return -1 in case of an error
         } finally {
             if (connection != null) {
                 connection.disconnect();

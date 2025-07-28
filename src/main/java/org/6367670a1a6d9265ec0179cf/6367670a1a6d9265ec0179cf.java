@@ -1,11 +1,11 @@
 public class CharUtils {
 
     /**
-     * Converte il Character in un char gestendo <code>null</code>.
-     * <pre>
-     * CharUtils.toChar(null, 'X') = 'X'
-     * CharUtils.toChar(' ', 'X')  = ' '
-     * CharUtils.toChar('A', 'X')  = 'A'
+     * <p>Converte il Character in un char gestendo <code>null</code>.</p> 
+     * <pre> 
+     * CharUtils.toChar(null, 'X') = 'X' 
+     * CharUtils.toChar(' ', 'X')  = ' ' 
+     * CharUtils.toChar('A', 'X')  = 'A' 
      * </pre>
      * @param ch  il carattere da convertire
      * @param defaultValue  il valore da utilizzare se il Character è null

@@ -1,5 +1,4 @@
 public class StringSplitter {
-
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
             return null;

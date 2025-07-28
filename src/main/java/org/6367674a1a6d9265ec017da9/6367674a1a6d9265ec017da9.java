@@ -59,17 +59,18 @@ public class DoublyLinkedList<E> {
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
+        Objects.requireNonNull(list, "The input list cannot be null");
 
         if (list.head == null) {
-            return; // No nodes to move
+            return; // Nothing to move
         }
 
-        // Move all nodes from the source list to this list
+        // If this list is empty, just take over the other list's nodes
         if (this.head == null) {
             this.head = list.head;
             this.tail = list.tail;
         } else {
+            // Append the other list's nodes to this list
             this.tail.next = list.head;
             list.head.prev = this.tail;
             this.tail = list.tail;
@@ -78,7 +79,7 @@ public class DoublyLinkedList<E> {
         // Update the size of this list
         this.size += list.size;
 
-        // Clear the source list
+        // Clear the other list
         list.head = null;
         list.tail = null;
         list.size = 0;

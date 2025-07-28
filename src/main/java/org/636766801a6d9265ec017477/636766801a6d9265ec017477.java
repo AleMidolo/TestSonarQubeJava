@@ -19,23 +19,16 @@ public class FileAdder {
             throw new IllegalArgumentException("Input array cannot be null");
         }
 
-        // Convert array to list for easier manipulation
-        List<InputStream> tempList = new ArrayList<>();
-        for (InputStream file : files) {
-            if (file != null) {
-                tempList.add(file);
+        // Add files to the list in reverse order
+        for (int i = files.length - 1; i >= 0; i--) {
+            if (files[i] != null) {
+                fileList.add(files[i]);
             }
         }
-
-        // Reverse the list
-        Collections.reverse(tempList);
-
-        // Add to the main list
-        fileList.addAll(tempList);
     }
 
-    // Optional: Method to get the list of files
+    // Optional: Method to get the list of files (for testing or further processing)
     public List<InputStream> getFileList() {
-        return new ArrayList<>(fileList);
+        return Collections.unmodifiableList(fileList);
     }
 }

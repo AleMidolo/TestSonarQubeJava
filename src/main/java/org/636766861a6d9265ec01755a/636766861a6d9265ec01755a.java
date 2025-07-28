@@ -4,18 +4,16 @@ import java.util.regex.MatchResult;
 
 public final class UriMatcher {
 
-    /**
-     * Confronta un URI con il modello.
-     * @param uri l'uri da confrontare con il template.
-     * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
-     */
-    public final MatchResult match(CharSequence uri) {
-        // Definisci il pattern del template (esempio: "/resource/{id}")
-        String template = "/resource/\\d+"; // Esempio di pattern per un URI con un ID numerico
-        Pattern pattern = Pattern.compile(template);
-        Matcher matcher = pattern.matcher(uri);
+    private final Pattern pattern;
 
-        // Se c'è una corrispondenza, restituisci il risultato
+    public UriMatcher(String template) {
+        // Convert the template to a regex pattern
+        String regex = template.replaceAll("\\{([^}]+)\\}", "(?<$1>[^/]+)");
+        this.pattern = Pattern.compile(regex);
+    }
+
+    public final MatchResult match(CharSequence uri) {
+        Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
         } else {
@@ -24,12 +22,13 @@ public final class UriMatcher {
     }
 
     public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher();
-        CharSequence uri = "/resource/123";
-        MatchResult result = matcher.match(uri);
+        UriMatcher matcher = new UriMatcher("/users/{userId}/posts/{postId}");
+        MatchResult result = matcher.match("/users/123/posts/456");
 
         if (result != null) {
-            System.out.println("URI matches the template: " + result.group());
+            System.out.println("Match found!");
+            System.out.println("User ID: " + result.group("userId"));
+            System.out.println("Post ID: " + result.group("postId"));
         } else {
             System.out.println("No match found.");
         }

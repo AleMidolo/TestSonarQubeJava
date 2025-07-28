@@ -1,8 +1,8 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
+import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
-import org.jgrapht.graph.SimpleGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,14 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         throw new IllegalArgumentException("Il tour non può essere vuoto.");
     }
 
-    List<V> vertexList = new ArrayList<>();
     List<E> edgeList = new ArrayList<>(tour);
+    List<V> vertexList = new ArrayList<>();
 
-    // Trova il primo vertice del percorso
+    // Inizia con il primo vertice del primo arco
     E firstEdge = edgeList.get(0);
     V startVertex = graph.getEdgeSource(firstEdge);
     vertexList.add(startVertex);
 
-    // Costruisci il percorso
     V currentVertex = startVertex;
     for (E edge : edgeList) {
         V source = graph.getEdgeSource(edge);
@@ -42,6 +41,11 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         } else {
             throw new IllegalArgumentException("Il tour non è un percorso valido nel grafo.");
         }
+    }
+
+    // Verifica che il percorso sia un ciclo
+    if (!currentVertex.equals(startVertex)) {
+        throw new IllegalArgumentException("Il tour non è un ciclo valido nel grafo.");
     }
 
     return new DefaultGraphPath<>(graph, vertexList, edgeList, 0);

@@ -26,8 +26,8 @@ public class DefensiveProgramming {
         Character[] emptyArray = new Character[0];
         Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Output: []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Output: []
-        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Output: [a, b, c]
+        System.out.println(nullToEmpty(nullArray) == EMPTY_CHARACTER_ARRAY); // true
+        System.out.println(nullToEmpty(emptyArray) == EMPTY_CHARACTER_ARRAY); // true
+        System.out.println(nullToEmpty(nonEmptyArray) == nonEmptyArray); // true
     }
 }

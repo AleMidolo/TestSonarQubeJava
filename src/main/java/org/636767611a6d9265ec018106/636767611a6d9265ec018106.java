@@ -1,6 +1,6 @@
 import java.util.Set;
 
-public class GraphUtils<V> {
+public class Graph<V> {
 
     /**
      * Calcola la somma dei pesi che entrano in un vertice
@@ -10,27 +10,29 @@ public class GraphUtils<V> {
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         // Assuming that the graph is represented as a map of vertices to their incoming edges with weights
-        // For example: Map<V, Map<V, Double>> graph;
-        // Where graph.get(v) returns a map of incoming edges to v with their weights
+        // For example: Map<V, Map<V, Double>> incomingEdges;
+        // Where incomingEdges.get(v) returns a map of vertices that have edges pointing to v, with their weights
 
-        // Iterate over all vertices in the set
-        for (V vertex : v) {
-            // Assuming that the graph is accessible within this method
-            // For each vertex, sum the weights of incoming edges
-            if (graph.containsKey(vertex)) {
-                for (Double weight : graph.get(vertex).values()) {
-                    sum += weight;
-                }
+        // Iterate over all vertices that have edges pointing to v
+        for (V source : incomingEdges.keySet()) {
+            if (incomingEdges.get(source).containsKey(v)) {
+                sum += incomingEdges.get(source).get(v);
             }
         }
+
         return sum;
     }
 
-    // Assuming the graph is stored as a class member
-    private Map<V, Map<V, Double>> graph;
+    // Assuming the graph is represented as a map of vertices to their incoming edges with weights
+    private Map<V, Map<V, Double>> incomingEdges;
 
     // Constructor to initialize the graph
-    public GraphUtils(Map<V, Map<V, Double>> graph) {
-        this.graph = graph;
+    public Graph() {
+        incomingEdges = new HashMap<>();
+    }
+
+    // Method to add an edge to the graph
+    public void addEdge(V source, V target, double weight) {
+        incomingEdges.computeIfAbsent(target, k -> new HashMap<>()).put(source, weight);
     }
 }

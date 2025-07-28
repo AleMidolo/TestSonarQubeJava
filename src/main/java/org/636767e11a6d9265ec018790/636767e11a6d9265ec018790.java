@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,16 +9,28 @@ public class ThreadSnapshotParser {
 
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
         List<ThreadSnapshot> snapshots = new ArrayList<>();
-        List<String> lines = Files.readAllLines(file.toPath());
+        List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
+            ThreadSnapshot snapshot = parseLineToSnapshot(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
         }
 
         return snapshots;
+    }
+
+    private static ThreadSnapshot parseLineToSnapshot(String line) {
+        // Assuming the line is in a specific format, e.g., "timestamp,threadId,state"
+        String[] parts = line.split(",");
+        if (parts.length < 3) {
+            return null;
+        }
+        long timestamp = Long.parseLong(parts[0]);
+        long threadId = Long.parseLong(parts[1]);
+        String state = parts[2];
+        return new ThreadSnapshot(timestamp, threadId, state);
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
@@ -31,40 +44,25 @@ public class ThreadSnapshotParser {
 
     public static class ThreadSnapshot {
         private long timestamp;
-        private String threadName;
-        private String threadState;
+        private long threadId;
+        private String state;
 
-        public ThreadSnapshot(long timestamp, String threadName, String threadState) {
+        public ThreadSnapshot(long timestamp, long threadId, String state) {
             this.timestamp = timestamp;
-            this.threadName = threadName;
-            this.threadState = threadState;
+            this.threadId = threadId;
+            this.state = state;
         }
 
         public long getTimestamp() {
             return timestamp;
         }
 
-        public String getThreadName() {
-            return threadName;
+        public long getThreadId() {
+            return threadId;
         }
 
-        public String getThreadState() {
-            return threadState;
-        }
-
-        public static ThreadSnapshot fromString(String line) {
-            String[] parts = line.split(",");
-            if (parts.length == 3) {
-                try {
-                    long timestamp = Long.parseLong(parts[0]);
-                    String threadName = parts[1];
-                    String threadState = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, threadState);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-            return null;
+        public String getState() {
+            return state;
         }
     }
 

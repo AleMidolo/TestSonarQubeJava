@@ -1,35 +1,23 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-    byte firstByte = bb.get(i);
-    int codePoint;
-    int bytesToRead;
+public class Decoder {
 
-    if ((firstByte & 0x80) == 0) { // 1-byte character
-        codePoint = firstByte & 0x7F;
-        bytesToRead = 1;
-    } else if ((firstByte & 0xE0) == 0xC0) { // 2-byte character
-        codePoint = firstByte & 0x1F;
-        bytesToRead = 2;
-    } else if ((firstByte & 0xF0) == 0xE0) { // 3-byte character
-        codePoint = firstByte & 0x0F;
-        bytesToRead = 3;
-    } else if ((firstByte & 0xF8) == 0xF0) { // 4-byte character
-        codePoint = firstByte & 0x07;
-        bytesToRead = 4;
-    } else {
-        throw new IllegalArgumentException("Invalid UTF-8 sequence");
+    /**
+     * Decodifica gli ottetti in caratteri utilizzando la decodifica UTF-8 e aggiunge i caratteri ad uno oggetto StringBuffer.
+     * @param i l'indice iniziale da cui iniziare la decodifica
+     * @param bb il ByteBuffer contenente i dati da decodificare
+     * @param sb il StringBuilder a cui aggiungere i caratteri decodificati
+     * @return l'indice del prossimo carattere non controllato nella stringa da decodificare
+     */
+    private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
+        int length = bb.remaining();
+        byte[] bytes = new byte[length];
+        bb.get(bytes);
+        
+        String decodedString = new String(bytes, i, length - i, StandardCharsets.UTF_8);
+        sb.append(decodedString);
+        
+        return length; // Restituisce l'indice del prossimo carattere non controllato
     }
-
-    for (int j = 1; j < bytesToRead; j++) {
-        byte nextByte = bb.get(i + j);
-        if ((nextByte & 0xC0) != 0x80) {
-            throw new IllegalArgumentException("Invalid UTF-8 sequence");
-        }
-        codePoint = (codePoint << 6) | (nextByte & 0x3F);
-    }
-
-    sb.append(Character.toChars(codePoint));
-    return i + bytesToRead;
 }

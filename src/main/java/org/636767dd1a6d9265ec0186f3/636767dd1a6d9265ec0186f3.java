@@ -18,17 +18,17 @@ public class ColumnName {
             columnNames.remove(oldName);
             columnNames.put(newName, existingNewName);
         } else {
-            columnNames.put(newName, oldName);
+            columnNames.put(oldName, newName);
         }
     }
 
-    public String getOriginalName(String newName) {
-        return columnNames.get(newName);
+    public String getNewName(String oldName) {
+        return columnNames.get(oldName);
     }
 
     public static void main(String[] args) {
         ColumnName columnName = new ColumnName();
         columnName.overrideName("oldColumn", "newColumn");
-        System.out.println(columnName.getOriginalName("newColumn")); // Output: oldColumn
+        System.out.println(columnName.getNewName("oldColumn")); // Output: newColumn
     }
 }

@@ -5,9 +5,14 @@ public class AtmosphereResourceImpl implements AtmosphereResource {
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Assuming this class has a mechanism to store listeners
-        // For example, a list of listeners
-        // listeners.add(e);
-        return this; // Return the current instance for method chaining
+        // Implementation to add the event listener
+        // Assuming this class has a list to store listeners
+        if (e != null) {
+            listeners.add(e);
+        }
+        return this;
     }
+
+    // Assuming this class has a list to store listeners
+    private List<AtmosphereResourceEventListener> listeners = new ArrayList<>();
 }

@@ -1,6 +1,10 @@
 import java.util.function.Predicate;
 
-public class OuterFaceCirculator {
+class Node {
+    // Assume Node class has necessary fields and methods
+}
+
+class OuterFaceCirculator {
     private Node current;
 
     public OuterFaceCirculator(Node start) {
@@ -11,45 +15,34 @@ public class OuterFaceCirculator {
         return current;
     }
 
-    public void next(int dir) {
-        // Assuming dir is either 0 (clockwise) or 1 (counter-clockwise)
-        if (dir == 0) {
-            current = current.getNextClockwise();
-        } else {
-            current = current.getNextCounterClockwise();
-        }
+    public void next() {
+        // Implement logic to move to the next node in the outer face
+    }
+
+    public void previous() {
+        // Implement logic to move to the previous node in the outer face
     }
 }
 
-public class Node {
-    private Node nextClockwise;
-    private Node nextCounterClockwise;
+public class GraphTraversal {
 
-    public Node getNextClockwise() {
-        return nextClockwise;
-    }
-
-    public Node getNextCounterClockwise() {
-        return nextCounterClockwise;
-    }
-
-    // Other methods and fields...
-}
-
-public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
-        Node current = circulator.getCurrent();
 
-        while (current != stop) {
-            if (predicate.test(current)) {
+        while (true) {
+            Node currentNode = circulator.getCurrent();
+            if (predicate.test(currentNode)) {
                 return circulator;
             }
-            circulator.next(dir);
-            current = circulator.getCurrent();
-        }
+            if (currentNode.equals(stop)) {
+                return circulator;
+            }
 
-        // If the loop ends, return the circulator pointing to the stop node
-        return circulator;
+            if (dir == 1) {
+                circulator.next();
+            } else {
+                circulator.previous();
+            }
+        }
     }
 }

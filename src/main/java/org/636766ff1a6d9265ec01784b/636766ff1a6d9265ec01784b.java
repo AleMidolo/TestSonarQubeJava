@@ -1,7 +1,7 @@
 public class StringUtils {
 
     /**
-     * <p>Controlla se la <code>String</code> contiene solo caratteri numerici.</p> 
+     * <p>Controlla se la <code>String</code> contiene solo caratteri numerici.</p>
      * <p><code>Null</code> e stringhe vuote restituiranno <code>false</code>.</p>
      * @param str  la <code>String</code> da controllare
      * @return <code>true</code> se str contiene solo numeri unicode

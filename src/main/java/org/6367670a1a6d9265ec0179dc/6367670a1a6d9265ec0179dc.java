@@ -20,8 +20,8 @@ public class StackMapTable {
         }
     }
 
-    // Classe interna per rappresentare il tipo di verifica
+    // Classe di esempio per VerificationTypeInfo
     private static class VerificationTypeInfo {
-        // Implementazione del tipo di verifica
+        // Implementazione della classe VerificationTypeInfo
     }
 }

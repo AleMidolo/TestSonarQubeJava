@@ -1,11 +1,12 @@
-import java.io.DataInput;
 import java.io.IOException;
+import java.io.InputStream;
 
-public class MyReader {
-    private DataInput input;
+public class StreamReader {
 
-    public MyReader(DataInput input) {
-        this.input = input;
+    private InputStream inputStream;
+
+    public StreamReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     /**
@@ -13,6 +14,15 @@ public class MyReader {
      */
     @Override
     public String readString() throws IOException {
-        return input.readUTF();
+        StringBuilder stringBuilder = new StringBuilder();
+        int data;
+        while ((data = inputStream.read()) != -1) {
+            char character = (char) data;
+            if (character == '\n' || character == '\r') {
+                break; // Stop reading at newline or carriage return
+            }
+            stringBuilder.append(character);
+        }
+        return stringBuilder.toString();
     }
 }

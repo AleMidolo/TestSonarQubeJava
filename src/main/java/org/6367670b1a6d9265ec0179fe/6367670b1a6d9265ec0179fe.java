@@ -1,25 +1,31 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class MyOutputStream extends OutputStream {
-    @Override
-    public void write(byte b[]) throws IOException {
-        if (b == null) {
-            throw new NullPointerException("Byte array is null");
-        }
-        // Assuming this method is part of a class that extends OutputStream
-        // and has access to the underlying output mechanism.
-        // For example, writing to a file or network stream.
-        // Here, we just print the bytes to the console as an example.
-        for (byte value : b) {
-            System.out.write(value);
-        }
-    }
+public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // This method is required by the OutputStream class.
-        // It writes a single byte to the output stream.
-        System.out.write(b);
+        // Implementazione del metodo write(int b) se necessario
+    }
+
+    @Override
+    public void write(byte b[]) throws IOException {
+        if (b == null) {
+            throw new NullPointerException("L'array di byte non può essere null");
+        }
+        write(b, 0, b.length);
+    }
+
+    @Override
+    public void write(byte b[], int off, int len) throws IOException {
+        if (b == null) {
+            throw new NullPointerException("L'array di byte non può essere null");
+        }
+        if (off < 0 || len < 0 || off + len > b.length) {
+            throw new IndexOutOfBoundsException("Offset o lunghezza non validi");
+        }
+        for (int i = 0; i < len; i++) {
+            write(b[off + i]);
+        }
     }
 }

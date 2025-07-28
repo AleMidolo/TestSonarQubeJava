@@ -27,6 +27,11 @@ public class GraphIterator implements Iterator<Integer> {
                 return i;
             }
         }
-        throw new IllegalStateException("No more unvisited vertices");
+        throw new NoSuchElementException("No more unvisited vertices");
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Remove operation is not supported");
     }
 }

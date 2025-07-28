@@ -20,7 +20,7 @@ public class ByteArrayConverter {
         ByteArrayConverter converter = new ByteArrayConverter(originalData);
         byte[] copiedData = converter.toByteArray();
 
-        // Print copied data
+        // Print the copied data
         for (byte b : copiedData) {
             System.out.print(b + " ");
         }

@@ -11,18 +11,13 @@ public class MyAtmosphereHandler {
     @Override
     public Action inspect(AtmosphereResource r) {
         // 根据传输类型进行处理
-        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // 处理 WebSocket 传输
-            // 这里可以添加具体的逻辑
-        } else if (r.transport() == AtmosphereResource.TRANSPORT.STREAMING) {
-            // 处理流式传输
-            // 这里可以添加具体的逻辑
-        } else {
-            // 处理其他类型的传输
-            // 这里可以添加具体的逻辑
+        if (r.getTransport() != null) {
+            // 这里可以添加根据不同传输类型的逻辑
+            // 例如：如果是长轮询，则挂起资源
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+                r.suspend();
+            }
         }
-        
-        // 返回继续的动作
         return Action.CONTINUE;
     }
 }

@@ -11,12 +11,8 @@ public class Bucket {
      */
     void removeSelf() {
         // Logic to remove this bucket from the data structure
-        // This is a placeholder for the actual removal logic
+        // This could involve notifying a parent structure or updating references
         System.out.println("Removing this bucket from the data structure.");
-    }
-
-    public static void main(String[] args) {
-        Bucket bucket = new Bucket();
-        bucket.removeSelf();
+        // Example: if this bucket is part of a linked list, you would update the next reference of the previous bucket
     }
 }

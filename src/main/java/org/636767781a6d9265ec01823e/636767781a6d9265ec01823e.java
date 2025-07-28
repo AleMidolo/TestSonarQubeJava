@@ -15,8 +15,8 @@ public class LogAppender {
      */
     protected void append(LoggingEvent event) {
         String message = event.getMessage();
-        for (Socket socket : clientSockets) {
-            try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+        for (Socket clientSocket : clientSockets) {
+            try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
                 out.println(message);
             } catch (IOException e) {
                 e.printStackTrace();

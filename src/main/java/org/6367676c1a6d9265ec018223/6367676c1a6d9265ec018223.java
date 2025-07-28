@@ -8,9 +8,6 @@ public class InstanceChecker {
      * @return 如果找到则返回 <code>true</code>，否则返回 <code>false</code>
      */
     public static boolean containsInstance(Collection collection, Object element) {
-        if (collection == null || element == null) {
-            return false;
-        }
         for (Object obj : collection) {
             if (obj == element) {
                 return true;
@@ -20,12 +17,13 @@ public class InstanceChecker {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Collection<Object> myCollection = new java.util.ArrayList<>();
-        String myString = new String("Hello");
-        myCollection.add(myString);
-        
-        System.out.println(containsInstance(myCollection, myString)); // true
-        System.out.println(containsInstance(myCollection, new String("Hello"))); // false
+        // 示例用法
+        Collection<Object> collection = new java.util.ArrayList<>();
+        String str1 = new String("test");
+        String str2 = new String("test");
+        collection.add(str1);
+
+        System.out.println(containsInstance(collection, str1)); // 输出: true
+        System.out.println(containsInstance(collection, str2)); // 输出: false
     }
 }

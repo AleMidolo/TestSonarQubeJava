@@ -12,5 +12,5 @@ public class MyAtmosphereResource implements AtmosphereResource {
         return this; // Returning the current instance for method chaining
     }
 
-    // Other methods and properties of AtmosphereResource would go here
+    // Other methods and properties of AtmosphereResource would be implemented here
 }

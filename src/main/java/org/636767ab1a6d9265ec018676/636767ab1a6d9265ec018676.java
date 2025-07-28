@@ -9,9 +9,10 @@ public class HexChecker {
 
     public static void main(String[] args) {
         // Test the isHex function
+        System.out.println(isHex('1')); // true
         System.out.println(isHex('a')); // true
         System.out.println(isHex('G')); // false
-        System.out.println(isHex('5')); // true
         System.out.println(isHex('F')); // true
+        System.out.println(isHex('9')); // true
     }
 }

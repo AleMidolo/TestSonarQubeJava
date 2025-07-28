@@ -10,33 +10,22 @@ public class MetricsHandler implements java.util.function.Consumer<METRICS> {
      */
     @Override
     public void accept(final METRICS data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Data cannot be null");
+        if (data != null) {
+            for (Map.Entry<String, Integer> entry : data.getMetrics().entrySet()) {
+                metricsCache.merge(entry.getKey(), entry.getValue(), Integer::sum);
+            }
         }
-        
-        // Assuming METRICS has a method getName() and getValue()
-        String name = data.getName();
-        int value = data.getValue();
-        
-        metricsCache.merge(name, value, Integer::sum);
     }
 }
 
-// Assuming a METRICS class exists
 class METRICS {
-    private String name;
-    private int value;
+    private final Map<String, Integer> metrics;
 
-    public METRICS(String name, int value) {
-        this.name = name;
-        this.value = value;
+    public METRICS(Map<String, Integer> metrics) {
+        this.metrics = metrics;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
-        return value;
+    public Map<String, Integer> getMetrics() {
+        return metrics;
     }
 }

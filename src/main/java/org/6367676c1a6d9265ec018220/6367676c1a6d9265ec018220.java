@@ -11,9 +11,9 @@ public class FilePathUtil {
         }
         
         int lastDotIndex = path.lastIndexOf('.');
-        int lastSeparatorIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+        int lastSlashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
         
-        if (lastDotIndex > lastSeparatorIndex) {
+        if (lastDotIndex > lastSlashIndex) {
             return path.substring(0, lastDotIndex);
         }
         

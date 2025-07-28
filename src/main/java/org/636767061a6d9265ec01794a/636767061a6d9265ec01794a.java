@@ -40,11 +40,9 @@ public class FileNameUtils {
     public static void main(String[] args) {
         // 测试示例
         System.out.println(indexOfExtension("example.txt")); // 输出: 7
-        System.out.println(indexOfExtension("folder/example.txt")); // 输出: 7
+        System.out.println(indexOfExtension("folder/example.txt")); // 输出: 14
         System.out.println(indexOfExtension("folder/example")); // 输出: -1
-        System.out.println(indexOfExtension("folder\\example.txt")); // 输出: 7
-        System.out.println(indexOfExtension("folder\\example")); // 输出: -1
+        System.out.println(indexOfExtension("folder/example.")); // 输出: 14
         System.out.println(indexOfExtension(null)); // 输出: -1
-        System.out.println(indexOfExtension("")); // 输出: -1
     }
 }

@@ -21,10 +21,12 @@ public class CustomOutputStream extends OutputStream {
         if (position + len > buffer.length) {
             throw new IOException("Not enough space in buffer");
         }
+        
         System.arraycopy(b, off, buffer, position, len);
         position += len;
     }
 
+    // Additional methods for demonstration purposes
     public byte[] getBuffer() {
         return buffer;
     }

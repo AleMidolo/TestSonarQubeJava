@@ -1,7 +1,6 @@
 import java.util.Properties;
 
-public class VariableSubstitutor {
-
+public class PropertyFinder {
     /** 
      * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
      */
@@ -10,13 +9,13 @@ public class VariableSubstitutor {
         if (value == null) {
             return null;
         }
-
+        
         // Perform variable substitution
         for (String propKey : props.stringPropertyNames()) {
             String propValue = props.getProperty(propKey);
             value = value.replace("${" + propKey + "}", propValue);
         }
-
+        
         return value;
     }
 

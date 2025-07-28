@@ -4,9 +4,9 @@ public class Logger {
     private List<Appender> appenders;
 
     /**
-     * Restituisce <code>true</code> se l'appender specificato è presente nell'elenco degli appender allegati, <code>false</code> altrimenti.
-     * @param appender L'appender da cercare.
-     * @return <code>true</code> se l'appender è presente, <code>false</code> altrimenti.
+     * Devuelve <code>true</code> si el "appender" especificado está en la lista de "appenders" adjuntos, <code>false</code> en caso contrario.
+     * @param appender El appender a verificar.
+     * @return <code>true</code> si el appender está en la lista, <code>false</code> en caso contrario.
      * @since 1.2
      */
     public boolean isAttached(Appender appender) {
@@ -16,5 +16,3 @@ public class Logger {
         return appenders.contains(appender);
     }
 }
-
-// Assuming Appender is a class or interface that is already defined.

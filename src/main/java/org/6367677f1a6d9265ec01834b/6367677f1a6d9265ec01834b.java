@@ -9,22 +9,17 @@ public class LogBuffer {
     }
 
     /**
-     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>.
-     * È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.
+     * Coloca un {@link LoggingEvent} en el búfer. Si el búfer está lleno, el evento es <b>silenciosamente descartado</b>.
+     * Es responsabilidad del llamador asegurarse de que el búfer tenga espacio libre.
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
             // Silently discard the event if the buffer is full
         }
     }
-
-    // Optional: Method to retrieve events from the buffer
-    public LoggingEvent take() throws InterruptedException {
-        return buffer.take();
-    }
 }
 
-// Assuming LoggingEvent is a class defined elsewhere
 class LoggingEvent {
-    // Implementation of LoggingEvent
+    // Assuming LoggingEvent is a class with some fields and methods
+    // You can define the actual implementation of LoggingEvent as needed
 }

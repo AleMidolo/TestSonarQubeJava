@@ -1,27 +1,38 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
-public final class BufferUtils {
+public final class ByteBuffer {
+
+    private ByteArrayOutputStream buffer;
+
+    public ByteBuffer() {
+        this.buffer = new ByteArrayOutputStream();
+    }
+
+    public void write(byte[] data) {
+        try {
+            buffer.write(data);
+        } catch (IOException e) {
+            // Handle the exception, though ByteArrayOutputStream.write does not throw IOException
+            e.printStackTrace();
+        }
+    }
 
     /**
-     * Restituisce un singolo array di byte contenente tutti i contenuti scritti nel/i buffer.
+     * Devuelve un único array de bytes que contiene todos los contenidos escritos en el/los buffer(s).
      */
-    public static byte[] toByteArray(ByteBuffer... buffers) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            for (ByteBuffer buffer : buffers) {
-                if (buffer.hasArray()) {
-                    outputStream.write(buffer.array(), buffer.arrayOffset() + buffer.position(), buffer.remaining());
-                } else {
-                    byte[] data = new byte[buffer.remaining()];
-                    buffer.get(data);
-                    outputStream.write(data);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to write buffer contents to byte array", e);
+    public final byte[] toByteArray() {
+        return buffer.toByteArray();
+    }
+
+    public static void main(String[] args) {
+        ByteBuffer byteBuffer = new ByteBuffer();
+        byteBuffer.write(new byte[]{1, 2, 3});
+        byteBuffer.write(new byte[]{4, 5, 6});
+
+        byte[] result = byteBuffer.toByteArray();
+        for (byte b : result) {
+            System.out.print(b + " ");
         }
-        return outputStream.toByteArray();
     }
 }

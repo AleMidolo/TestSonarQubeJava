@@ -4,9 +4,9 @@ import java.util.List;
 public class ArrayUtils {
 
     /**
-     * Restituisce un nuovo array di Stringhe senza elementi null. Metodo interno utilizzato per normalizzare le liste di esclusione (array e collezioni). Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
-     * @param array L'array da controllare
-     * @return L'array fornito o un nuovo array senza null.
+     * Devuelve un nuevo arreglo de Strings sin elementos nulos. Método interno utilizado para normalizar listas de exclusión (arreglo y colecciones). Tenga en cuenta que {@link Arrays#sort(Object[])} lanzará un {@link NullPointerException} si un elemento del arreglo es <code>null</code>.
+     * @param array El arreglo a verificar
+     * @return El arreglo dado o un nuevo arreglo sin nulos.
      */
     static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {

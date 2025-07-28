@@ -6,22 +6,22 @@ import java.util.regex.Pattern;
 public class PropertySubstitutor {
 
     public static String findAndSubst(String key, Properties props) {
-        // Ottieni il valore associato alla chiave
+        // Obtener el valor asociado a la clave
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Se la chiave non esiste, restituisci null
+            return null; // Si no se encuentra la clave, retornar null
         }
 
-        // Pattern per trovare le variabili nel formato ${var}
+        // Expresión regular para encontrar variables en el formato ${variable}
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Sostituisci ogni variabile con il valore corrispondente
+        // Realizar la sustitución de variables
         while (matcher.find()) {
-            String varName = matcher.group(1);
-            String varValue = props.getProperty(varName, "");
-            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable, "");
+            matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);
 
@@ -30,10 +30,10 @@ public class PropertySubstitutor {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
+        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result); // Output: Hello, World!
     }
 }

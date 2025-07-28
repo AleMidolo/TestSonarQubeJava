@@ -1,35 +1,30 @@
 import java.util.Stack;
 
-public class Frame {
-    private Stack<Object> outputStack;
+public class OutputFrame {
+    private Stack<AbstractType> outputStack;
 
-    public Frame() {
-        this.outputStack = new Stack<>();
+    public OutputFrame() {
+        outputStack = new Stack<>();
     }
 
     /**
-     * Rimuove il numero specificato di tipi astratti dallo stack del frame di output.
-     * @param elements il numero di tipi astratti che devono essere rimossi.
+     * Elimina el número dado de tipos abstractos del "output frame" de salida.
+     * @param elements el número de tipos abstractos que deben ser eliminados.
      */
     private void pop(final int elements) {
         if (elements < 0) {
-            throw new IllegalArgumentException("Il numero di elementi da rimuovere non può essere negativo.");
+            throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (outputStack.size() < elements) {
-            throw new IllegalStateException("Non ci sono abbastanza elementi nello stack per rimuovere.");
+        if (elements > outputStack.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
             outputStack.pop();
         }
     }
 
-    // Metodo di esempio per aggiungere elementi allo stack (per testing)
-    public void push(Object element) {
-        outputStack.push(element);
-    }
-
-    // Metodo di esempio per ottenere la dimensione dello stack (per testing)
-    public int size() {
-        return outputStack.size();
+    // Clase de ejemplo para AbstractType
+    private static class AbstractType {
+        // Implementación de tipo abstracto
     }
 }

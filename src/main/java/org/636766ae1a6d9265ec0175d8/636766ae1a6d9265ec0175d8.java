@@ -1,18 +1,13 @@
 /**
- * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
- * @return valore 'Content-Range'
+ * Construye el valor del encabezado HTTP 'Content-Range'.
+ * @return valor de 'Content-Range'
  */
 private String buildContentRange() {
-    // Assuming you have the following variables defined in your class:
-    // private long start; // The start byte of the range
-    // private long end;   // The end byte of the range
-    // private long total; // The total size of the file or resource
+    // Supongamos que tenemos los siguientes valores para el rango y el tamaño total
+    long start = 0; // Inicio del rango
+    long end = 1023; // Fin del rango
+    long total = 2048; // Tamaño total del recurso
 
-    // Example values for start, end, and total
-    long start = 0;
-    long end = 1023;
-    long total = 2048;
-
-    // Construct the Content-Range header value
+    // Construir el valor del encabezado Content-Range
     return String.format("bytes %d-%d/%d", start, end, total);
 }

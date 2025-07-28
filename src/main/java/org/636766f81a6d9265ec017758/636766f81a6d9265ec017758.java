@@ -1,11 +1,9 @@
 @Override
 public int hashCode() {
-    // Implementazione di base di hashCode
-    // Questo è un esempio semplice, ma in un caso reale, dovresti considerare
-    // tutti i campi rilevanti per calcolare un hash code univoco.
     final int prime = 31;
     int result = 1;
-    // Supponiamo che questa classe abbia un campo 'id' di tipo int
-    // result = prime * result + id;
+    // Assuming this class has fields that need to be included in the hash code calculation
+    // Example: result = prime * result + (field1 == null ? 0 : field1.hashCode());
+    // Example: result = prime * result + (field2 == null ? 0 : field2.hashCode());
     return result;
 }

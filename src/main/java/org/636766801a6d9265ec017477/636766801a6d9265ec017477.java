@@ -5,33 +5,24 @@ import java.util.List;
 
 public class FileAdder {
 
-    private List<InputStream> fileList;
-
-    public FileAdder() {
-        this.fileList = new ArrayList<>();
-    }
-
     /**
-     * Aggiungi i file specificati in ordine inverso.
+     * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("Input array cannot be null");
+        if (files == null || files.length == 0) {
+            return;
         }
 
-        // Convert array to list for easier manipulation
-        List<InputStream> tempList = new ArrayList<>();
-        Collections.addAll(tempList, files);
+        List<InputStream> fileList = new ArrayList<>();
+        for (InputStream file : files) {
+            fileList.add(file);
+        }
 
-        // Reverse the list
-        Collections.reverse(tempList);
+        Collections.reverse(fileList);
 
-        // Add to the main list
-        fileList.addAll(tempList);
-    }
-
-    // Optional: Method to get the list of files
-    public List<InputStream> getFileList() {
-        return new ArrayList<>(fileList);
+        // Aquí puedes agregar la lógica para procesar los archivos en orden inverso
+        for (InputStream file : fileList) {
+            // Procesar cada archivo
+        }
     }
 }

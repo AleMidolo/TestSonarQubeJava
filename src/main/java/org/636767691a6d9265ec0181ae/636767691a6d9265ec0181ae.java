@@ -2,12 +2,12 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnumerationToStringArray {
+public class EnumerationUtils {
 
     /**
-     * Copia l'Enumeration fornita in un array di Stringhe. L'Enumeration deve contenere solo elementi di tipo String.
-     * @param enumeration l'Enumeration da copiare
-     * @return l'array di Stringhe (<code>null</code> se l'Enumeration passata era <code>null</code>)
+     * Copia el "Enumeration" dado en un arreglo de String. El "Enumeration" debe contener solo elementos de tipo String.
+     * @param enumeration El "Enumeration" a copiar
+     * @return el arreglo de Strings (<code>null</code> si El "Enumeration" pasada era <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<String> enumeration) {
         if (enumeration == null) {

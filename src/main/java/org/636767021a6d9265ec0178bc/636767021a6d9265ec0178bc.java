@@ -1,11 +1,11 @@
 public class StringUtils {
 
     /**
-     * Trova il primo indice all'interno di una Stringa, gestendo <code>null</code>. Questo metodo utilizza {@link String#indexOf(String)}.
+     * Encuentra el primer índice dentro de una cadena, manejando <code>null</code>. Este método utiliza {@link String#indexOf(String)}.
      * 
-     * @param str La stringa in cui cercare, può essere <code>null</code>.
-     * @param searchStr La stringa da cercare, può essere <code>null</code>.
-     * @return L'indice della prima occorrenza di <code>searchStr</code> in <code>str</code>, oppure -1 se non trovato o se una delle stringhe è <code>null</code>.
+     * @param str La cadena en la que se buscará, puede ser <code>null</code>.
+     * @param searchStr La cadena que se buscará, puede ser <code>null</code>.
+     * @return El índice de la primera ocurrencia de <code>searchStr</code> en <code>str</code>, o -1 si no se encuentra o si alguna de las cadenas es <code>null</code>.
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -15,10 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(indexOf("Hello World", "World")); // Output: 6
-        System.out.println(indexOf("Hello World", "Java"));  // Output: -1
-        System.out.println(indexOf(null, "World"));         // Output: -1
-        System.out.println(indexOf("Hello World", null));    // Output: -1
+        // Ejemplo de uso
+        String str = "Hola, mundo!";
+        String searchStr = "mundo";
+        int index = indexOf(str, searchStr);
+        System.out.println("Índice de '" + searchStr + "' en '" + str + "': " + index);
     }
 }

@@ -2,29 +2,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> columnNames = new HashMap<>();
+    private Map<String, String> nameMap;
+
+    public ColumnName() {
+        this.nameMap = new HashMap<>();
+    }
 
     /**
-     * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String, String)}
-     * @param oldName da sostituire.
-     * @param newName da utilizzare a livello di archiviazione.
+     * Mantener el mismo reemplazo de nombre que {@link ColumnName#overrideName(String,String)}
+     * @param oldName el nombre a ser reemplazado.
+     * @param newName el nombre a utilizar en el nivel de almacenamiento.
      */
     public void overrideName(String oldName, String newName) {
         if (oldName == null || newName == null) {
-            throw new IllegalArgumentException("I nomi non possono essere nulli.");
+            throw new IllegalArgumentException("Neither oldName nor newName can be null.");
         }
-        if (columnNames.containsKey(oldName)) {
-            columnNames.put(oldName, newName);
-        } else {
-            throw new IllegalArgumentException("Il nome da sostituire non esiste.");
-        }
+        nameMap.put(oldName, newName);
     }
 
-    public String getColumnName(String key) {
-        return columnNames.get(key);
-    }
-
-    public void addColumnName(String key, String value) {
-        columnNames.put(key, value);
+    public String getOverrideName(String oldName) {
+        return nameMap.getOrDefault(oldName, oldName);
     }
 }

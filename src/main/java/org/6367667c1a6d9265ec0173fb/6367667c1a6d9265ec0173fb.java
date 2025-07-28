@@ -6,7 +6,7 @@ public class AtmosphereResourceImpl extends AtmosphereResource {
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
         if (e != null) {
-            this.eventListeners.add(e);
+            this.getBroadcaster().addAtmosphereResourceEventListener(e);
         }
         return this;
     }

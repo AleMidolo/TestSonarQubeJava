@@ -9,10 +9,10 @@ public class GraphIndex<V, E> {
     }
 
     /**
-     * Aggiunge un arco all'indice.
-     * @param sourceVertex il vertice sorgente
-     * @param targetVertex il vertice di destinazione
-     * @param e l'arco
+     * Agrega una arista al índice.
+     * @param sourceVertex el vértice fuente
+     * @param targetVertex el vértice objetivo
+     * @param e la arista
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
         if (!index.containsKey(sourceVertex)) {

@@ -1,23 +1,22 @@
 public class BooleanUtils {
 
     /**
-     * <p>Converte un Boolean in un boolean gestendo <code>null</code> restituendo <code>false</code>.</p>
+     * Convierte un Boolean a un boolean manejando null devolviendo false.
      * <pre>
      * BooleanUtils.toBoolean(Boolean.TRUE)  = true
      * BooleanUtils.toBoolean(Boolean.FALSE) = false
      * BooleanUtils.toBoolean(null)          = false
      * </pre>
-     * @param bool  il boolean da convertire
-     * @return <code>true</code> o <code>false</code>, <code>null</code> restituisce <code>false</code>
+     * @param bool el booleano a convertir
+     * @return true o false, null devuelve false
      */
     public static boolean toBoolean(Boolean bool) {
         return bool != null && bool;
     }
 
-    // Example usage
     public static void main(String[] args) {
-        System.out.println(toBoolean(Boolean.TRUE));  // Output: true
-        System.out.println(toBoolean(Boolean.FALSE)); // Output: false
-        System.out.println(toBoolean(null));          // Output: false
+        System.out.println(toBoolean(Boolean.TRUE));  // true
+        System.out.println(toBoolean(Boolean.FALSE)); // false
+        System.out.println(toBoolean(null));          // false
     }
 }

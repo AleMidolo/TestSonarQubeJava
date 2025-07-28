@@ -10,11 +10,18 @@ public class ByteVector {
     }
 
     private void enlarge(final int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
         int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        this.data = newData;
-        this.capacity = newCapacity;
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 
-    // Other methods of the ByteVector class can be added here
+    // Example usage
+    public static void main(String[] args) {
+        ByteVector vector = new ByteVector(10);
+        vector.enlarge(5);
+        System.out.println("New capacity: " + vector.capacity);
+    }
 }

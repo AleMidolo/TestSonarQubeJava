@@ -1,28 +1,27 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
 
 public class TemplateEncoder {
 
     /**
-     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
-     * @param s la stringa con zero o più nomi di parametri di template
-     * @return la stringa con i nomi di parametri di template codificati.
+     * Codifica una cadena con nombres de parámetros de plantilla presentes, específicamente los caracteres '{' y '}' serán codificados en formato percentil.
+     * @param s la cadena con cero o más nombres de parámetros de plantilla
+     * @return la cadena con los nombres de parámetros de plantilla codificados.
      */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
 
-        // Mappa per la codifica dei caratteri speciali
-        Map<Character, String> encodingMap = new HashMap<>();
-        encodingMap.put('{', "%7B");
-        encodingMap.put('}', "%7D");
-
         StringBuilder encodedString = new StringBuilder();
-
         for (char c : s.toCharArray()) {
-            if (encodingMap.containsKey(c)) {
-                encodedString.append(encodingMap.get(c));
+            if (c == '{' || c == '}') {
+                try {
+                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
+                } catch (Exception e) {
+                    // En caso de error, simplemente añade el carácter sin codificar
+                    encodedString.append(c);
+                }
             } else {
                 encodedString.append(c);
             }
@@ -32,8 +31,7 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} string with {parameters}.";
-        String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: This is a %7Btemplate%7D string with %7Bparameters%7D.
+        String testString = "This is a {test} string with {template} parameters.";
+        System.out.println(encodeTemplateNames(testString));
     }
 }

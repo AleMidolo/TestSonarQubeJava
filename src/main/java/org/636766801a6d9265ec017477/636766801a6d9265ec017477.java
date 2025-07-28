@@ -8,10 +8,6 @@ public class FileMerger {
      * निर्दिष्ट फ़ाइलों को उल्टे क्रम में जोड़ें।
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
-        }
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             for (int i = files.length - 1; i >= 0; i--) {
@@ -32,9 +28,7 @@ public class FileMerger {
                 e.printStackTrace();
             }
         }
-
         // The outputStream now contains the merged content in reverse order
-        byte[] mergedContent = outputStream.toByteArray();
-        // You can now use mergedContent as needed
+        // Further processing can be done as needed
     }
 }

@@ -1,13 +1,17 @@
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class TelnetClient {
-    private Socket socket;
+public class TelnetServer {
+    private Socket clientSocket;
     private PrintWriter out;
 
-    public TelnetClient(String host, int port) throws Exception {
-        this.socket = new Socket(host, port);
-        this.out = new PrintWriter(socket.getOutputStream(), true);
+    public TelnetServer(Socket socket) {
+        this.clientSocket = socket;
+        try {
+            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /** 
@@ -19,20 +23,14 @@ public class TelnetClient {
         }
     }
 
-    public void close() throws Exception {
-        if (out != null) {
-            out.close();
-        }
-        if (socket != null) {
-            socket.close();
-        }
-    }
-
-    public static void main(String[] args) {
+    public void close() {
         try {
-            TelnetClient client = new TelnetClient("localhost", 23);
-            client.send("Hello, Telnet!");
-            client.close();
+            if (out != null) {
+                out.close();
+            }
+            if (clientSocket != null) {
+                clientSocket.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

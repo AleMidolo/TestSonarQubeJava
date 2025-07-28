@@ -17,7 +17,7 @@ public class ClassFileBuffer {
         pointer = 0; // Reset the pointer
         int bytesRead = in.read(buffer);
         if (bytesRead == -1) {
-            throw new IOException("End of stream reached");
+            throw new IOException("End of stream reached before reading any bytes.");
         }
     }
 }

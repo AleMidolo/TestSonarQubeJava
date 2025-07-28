@@ -12,7 +12,7 @@ public class LogarithmCalculator {
 
     public static void main(String[] args) {
         LogarithmCalculator calculator = new LogarithmCalculator();
-        int n = 8; // Example input
+        int n = 16; // Example input
         int result = calculator.computeBinaryLog(n);
         System.out.println("The result of computeBinaryLog(" + n + ") is: " + result);
     }

@@ -28,11 +28,11 @@ public class UnescapeJava {
                     case 'r':
                         result.append('\r');
                         break;
-                    case 'b':
-                        result.append('\b');
-                        break;
                     case 'f':
                         result.append('\f');
+                        break;
+                    case 'b':
+                        result.append('\b');
                         break;
                     case '\\':
                         result.append('\\');
@@ -57,7 +57,7 @@ public class UnescapeJava {
             }
         }
 
-        // If the string ends with an escape character, append it as is
+        // If the last character was a backslash, append it
         if (isEscaped) {
             result.append('\\');
         }
@@ -66,8 +66,8 @@ public class UnescapeJava {
     }
 
     public static void main(String[] args) throws Exception {
-        String escapedString = "Hello\\nWorld! This is a test\\tstring.";
-        String unescapedString = unescapeJava(escapedString);
-        System.out.println(unescapedString);
+        String input = "Hello\\nWorld! This is a test string with a tab\\tcharacter.";
+        String output = unescapeJava(input);
+        System.out.println(output);
     }
 }

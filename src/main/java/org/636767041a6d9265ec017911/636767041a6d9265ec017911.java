@@ -12,14 +12,17 @@ public class ObjectRegistrar {
         }
 
         Class<?> clazz = value.getClass();
-        Method[] methods = clazz.getDeclaredMethods();
-
         System.out.println("Registering object of class: " + clazz.getName());
-        for (Method method : methods) {
-            System.out.println("Found method: " + method.getName());
-        }
 
-        // Additional registration logic can be added here
+        // Example of using reflection to invoke a method
+        try {
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method method : methods) {
+                System.out.println("Found method: " + method.getName());
+            }
+        } catch (SecurityException e) {
+            System.err.println("Security exception while accessing methods: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {

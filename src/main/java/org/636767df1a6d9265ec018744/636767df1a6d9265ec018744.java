@@ -21,8 +21,8 @@ public class TimeRangeBuilder {
     }
 
     public static class TimeRange {
-        private final long start;
-        private final long end;
+        private long start;
+        private long end;
 
         public TimeRange(long start, long end) {
             this.start = start;

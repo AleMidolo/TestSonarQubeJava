@@ -14,10 +14,12 @@ public class CustomSet {
         return set.remove(val);
     }
 
+    // Method to add elements to the set for testing purposes
     public void add(int val) {
         set.add(val);
     }
 
+    // Method to check if an element exists in the set for testing purposes
     public boolean contains(int val) {
         return set.contains(val);
     }

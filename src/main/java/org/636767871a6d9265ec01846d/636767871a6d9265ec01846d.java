@@ -20,12 +20,12 @@ public class ConfigurationDirectoryCreator {
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + directoryPath);
+                System.out.println("Configuration directory created at: " + directoryPath);
             } else {
-                System.out.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create configuration directory at: " + directoryPath);
             }
         } else {
-            System.out.println("Directory already exists: " + directoryPath);
+            System.out.println("Configuration directory already exists at: " + directoryPath);
         }
     }
 

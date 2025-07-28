@@ -24,7 +24,7 @@ public class GraphUtils {
 class Graph<V, E> {
     // Assume this class has necessary methods like getVertices()
     public Iterable<V> getVertices() {
-        // Implementation goes here
+        // Implementation here
         return null; // Placeholder
     }
 }

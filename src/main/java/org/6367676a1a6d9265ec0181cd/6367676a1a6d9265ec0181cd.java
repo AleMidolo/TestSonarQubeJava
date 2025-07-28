@@ -1,5 +1,4 @@
 public class StringUtil {
-    
     /** 
      * दिए गए स्ट्रिंग से अग्रणी व्हाइटस्पेस को हटाएं।
      * @param str वह स्ट्रिंग जिसे जांचना है
@@ -10,13 +9,11 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
-        
-        int startIndex = 0;
-        while (startIndex < str.length() && Character.isWhitespace(str.charAt(startIndex))) {
-            startIndex++;
+        int index = 0;
+        while (index < str.length() && Character.isWhitespace(str.charAt(index))) {
+            index++;
         }
-        
-        return str.substring(startIndex);
+        return str.substring(index);
     }
 
     public static void main(String[] args) {

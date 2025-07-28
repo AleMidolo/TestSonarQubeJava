@@ -14,7 +14,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("aaaHello World", 'a');
-        System.out.println(result); // Output: Hello World
+        String result = trimLeadingCharacter("aaabbbccc", 'a');
+        System.out.println(result); // Output: bbbccc
     }
 }

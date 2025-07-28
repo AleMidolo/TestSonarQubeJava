@@ -11,19 +11,16 @@ public class ArrayUtil {
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_BOOLEAN_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_BOOLEAN_ARRAY : array;
     }
 
     public static void main(String[] args) {
-        Boolean[] result1 = nullToEmpty(null);
-        Boolean[] result2 = nullToEmpty(new Boolean[]{});
-        Boolean[] result3 = nullToEmpty(new Boolean[]{true, false});
+        Boolean[] testArray1 = null;
+        Boolean[] testArray2 = {};
+        Boolean[] testArray3 = {true, false};
 
-        System.out.println("Result 1: " + (result1.length == 0)); // true
-        System.out.println("Result 2: " + (result2.length == 0)); // true
-        System.out.println("Result 3: " + java.util.Arrays.toString(result3)); // [true, false]
+        System.out.println(nullToEmpty(testArray1).length); // Output: 0
+        System.out.println(nullToEmpty(testArray2).length); // Output: 0
+        System.out.println(nullToEmpty(testArray3).length); // Output: 2
     }
 }

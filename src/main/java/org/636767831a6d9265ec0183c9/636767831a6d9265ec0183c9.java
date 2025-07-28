@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class DiagnosisStack {
+public class DiagnosisReference {
     private static Stack<String> diagnosisStack = new Stack<>();
 
     /** 
@@ -14,26 +14,20 @@ public class DiagnosisStack {
         return diagnosisStack.peek();
     }
 
-    // Method to push a diagnosis reference onto the stack
+    // Method to add a diagnosis reference for testing purposes
     public static void push(String diagnosis) {
         diagnosisStack.push(diagnosis);
-    }
-
-    // Method to pop a diagnosis reference from the stack
-    public static String pop() {
-        if (!diagnosisStack.isEmpty()) {
-            return diagnosisStack.pop();
-        }
-        return "";
     }
 
     public static void main(String[] args) {
         push("Diagnosis 1");
         push("Diagnosis 2");
-        System.out.println(peek()); // Output: Diagnosis 2
-        pop();
-        System.out.println(peek()); // Output: Diagnosis 1
-        pop();
-        System.out.println(peek()); // Output: (empty string)
+        System.out.println(peek()); // Should print "Diagnosis 2"
+        push("Diagnosis 3");
+        System.out.println(peek()); // Should print "Diagnosis 3"
+        diagnosisStack.pop(); // Remove "Diagnosis 3"
+        System.out.println(peek()); // Should print "Diagnosis 2"
+        diagnosisStack.clear(); // Clear the stack
+        System.out.println(peek()); // Should print ""
     }
 }

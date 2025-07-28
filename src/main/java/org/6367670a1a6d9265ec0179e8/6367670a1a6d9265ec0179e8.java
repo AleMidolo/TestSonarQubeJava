@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class DefensiveProgramming {
 
     // Array vuoto pubblico e statico per ottimizzazione della memoria
@@ -18,14 +20,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
-        Boolean[] array1 = null;
-        Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = {true, false, true};
+        // Test cases
+        Boolean[] nullArray = null;
+        Boolean[] emptyArray = new Boolean[0];
+        Boolean[] nonEmptyArray = { true, false, true };
 
-        System.out.println(nullToEmpty(array1) == EMPTY_BOOLEAN_ARRAY); // true
-        System.out.println(nullToEmpty(array2) == EMPTY_BOOLEAN_ARRAY); // true
-        System.out.println(nullToEmpty(array3) == array3); // true
+        System.out.println(Arrays.toString(nullToEmpty(nullArray)));      // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(emptyArray)));    // Output: []
+        System.out.println(Arrays.toString(nullToEmpty(nonEmptyArray))); // Output: [true, false, true]
     }
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringArrayConcatenator {
+public class ArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
@@ -11,23 +11,20 @@ public class StringArrayConcatenator {
         List<String> result = new ArrayList<>();
 
         if (array1 != null) {
-            for (String s : array1) {
-                result.add(s);
+            for (String element : array1) {
+                result.add(element);
             }
         }
 
         if (array2 != null) {
-            for (String s : array2) {
-                result.add(s);
+            for (String element : array2) {
+                result.add(element);
             }
         }
 
-        // Handle overlapping elements by adding them twice
-        if (array1 != null && array2 != null && array1.length > 0 && array2.length > 0) {
-            String lastElementOfArray1 = array1[array1.length - 1];
-            String firstElementOfArray2 = array2[0];
-            if (lastElementOfArray1.equals(firstElementOfArray2)) {
-                result.add(lastElementOfArray1);
+        if (array1 != null && array2 != null) {
+            for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
+                result.add(array1[i] + array2[i]);
             }
         }
 
@@ -36,10 +33,12 @@ public class StringArrayConcatenator {
 
     public static void main(String[] args) {
         String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"c", "d", "e"};
+        String[] array2 = {"1", "2", "3", "4"};
+
         String[] result = concatenateStringArrays(array1, array2);
+
         for (String s : result) {
-            System.out.print(s + " ");
+            System.out.println(s);
         }
     }
 }

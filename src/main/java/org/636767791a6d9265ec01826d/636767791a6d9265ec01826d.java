@@ -1,38 +1,35 @@
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PropertySubstitutor {
 
+    /**
+     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. Quindi esegui la sostituzione delle variabili sul valore trovato.
+     */
     public static String findAndSubst(String key, Properties props) {
-        // Ottieni il valore associato alla chiave
+        if (key == null || props == null) {
+            throw new IllegalArgumentException("Key and properties must not be null");
+        }
+
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Se la chiave non esiste, restituisci null
+            return null;
         }
 
-        // Pattern per trovare variabili nel formato ${var}
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-        Matcher matcher = pattern.matcher(value);
-        StringBuffer result = new StringBuffer();
-
-        // Sostituisci ogni variabile con il valore corrispondente
-        while (matcher.find()) {
-            String varName = matcher.group(1);
-            String varValue = props.getProperty(varName, "");
-            matcher.appendReplacement(result, Matcher.quoteReplacement(varValue));
+        // Esegui la sostituzione delle variabili
+        for (String propKey : props.stringPropertyNames()) {
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
-        matcher.appendTail(result);
 
-        return result.toString();
+        return value;
     }
 
     public static void main(String[] args) {
         Properties props = new Properties();
+        props.setProperty("name", "John");
         props.setProperty("greeting", "Hello, ${name}!");
-        props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, World!
+        System.out.println(result);  // Output: Hello, John!
     }
 }

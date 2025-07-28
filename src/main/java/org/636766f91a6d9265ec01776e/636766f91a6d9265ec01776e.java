@@ -19,7 +19,7 @@ public class ByteOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         // Implementazione di base per scrivere un singolo byte
-        // Questo metodo deve essere sovrascritto per fornire un comportamento specifico
-        throw new UnsupportedOperationException("Single byte write not supported");
+        // Questo metodo deve essere sovrascritto per una vera implementazione
+        throw new UnsupportedOperationException("Single byte write not implemented");
     }
 }

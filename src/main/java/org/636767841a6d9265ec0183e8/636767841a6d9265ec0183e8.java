@@ -6,10 +6,10 @@ public class EventBuffer {
     private List<LoggingEvent> buffer;
 
     public EventBuffer() {
-        this.buffer = new ArrayList<>();
+        buffer = new ArrayList<>();
     }
 
-    /**
+    /** 
      * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
      */
     public void add(LoggingEvent event) {

@@ -43,9 +43,30 @@ public class UTF8Writer {
     }
 
     public static class WriteSession {
-        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
-            // Implement logic to get the next buffer in the chain
-            return new LinkedBuffer(currentBuffer.buffer.length);
+        private LinkedBuffer currentBuffer;
+
+        public WriteSession(LinkedBuffer initialBuffer) {
+            this.currentBuffer = initialBuffer;
+        }
+
+        public LinkedBuffer nextBuffer(LinkedBuffer current) {
+            // Simulate getting a new buffer, e.g., from a pool or allocating a new one
+            LinkedBuffer newBuffer = new LinkedBuffer(current.buffer.length);
+            currentBuffer = newBuffer;
+            return newBuffer;
+        }
+    }
+
+    public static void main(String[] args) {
+        LinkedBuffer lb = new LinkedBuffer(10);
+        WriteSession session = new WriteSession(lb);
+        CharSequence str = "Hello, UTF-8!";
+        lb = writeUTF8(str, session, lb);
+
+        // Print the contents of the buffer
+        System.out.println("Buffer contents:");
+        for (byte b : lb.buffer) {
+            System.out.print((char) b);
         }
     }
 }

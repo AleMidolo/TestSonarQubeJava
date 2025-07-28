@@ -15,7 +15,7 @@ public class Example {
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Test exception"));
-        System.out.println(example.hasThrown()); // Should print true
+        Example example = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example.hasThrown()); // Output: true
     }
 }

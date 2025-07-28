@@ -12,13 +12,19 @@ public class ThreadSnapshotParser {
         List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
+            ThreadSnapshot snapshot = parseLineToSnapshot(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
         }
 
         return snapshots;
+    }
+
+    private static ThreadSnapshot parseLineToSnapshot(String line) {
+        // Implement logic to parse a line into a ThreadSnapshot object
+        // This is a placeholder implementation
+        return new ThreadSnapshot();
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
@@ -30,42 +36,16 @@ public class ThreadSnapshotParser {
         return false;
     }
 
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
     public static class ThreadSnapshot {
         private long timestamp;
-        private String threadName;
-        private String state;
-
-        public ThreadSnapshot(long timestamp, String threadName, String state) {
-            this.timestamp = timestamp;
-            this.threadName = threadName;
-            this.state = state;
-        }
 
         public long getTimestamp() {
             return timestamp;
         }
 
-        public String getThreadName() {
-            return threadName;
-        }
-
-        public String getState() {
-            return state;
-        }
-
-        public static ThreadSnapshot fromString(String line) {
-            String[] parts = line.split(",");
-            if (parts.length == 3) {
-                try {
-                    long timestamp = Long.parseLong(parts[0]);
-                    String threadName = parts[1];
-                    String state = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, state);
-                } catch (NumberFormatException e) {
-                    return null;
-                }
-            }
-            return null;
+        public void setTimestamp(long timestamp) {
+            this.timestamp = timestamp;
         }
     }
 
@@ -73,17 +53,20 @@ public class ThreadSnapshotParser {
         private long startTime;
         private long endTime;
 
-        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
         public long getStartTime() {
             return startTime;
         }
 
+        public void setStartTime(long startTime) {
+            this.startTime = startTime;
+        }
+
         public long getEndTime() {
             return endTime;
+        }
+
+        public void setEndTime(long endTime) {
+            this.endTime = endTime;
         }
     }
 }

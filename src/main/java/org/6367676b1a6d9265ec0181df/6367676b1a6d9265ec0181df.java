@@ -1,5 +1,4 @@
 public class StringUtils {
-
     /**
      * Devuelve {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
      * @param str la cadena a verificar

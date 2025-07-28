@@ -16,7 +16,6 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplos de uso
         System.out.println(toChar(null, 'X')); // Output: X
         System.out.println(toChar(' ', 'X'));  // Output:  
         System.out.println(toChar('A', 'X'));  // Output: A

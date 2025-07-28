@@ -4,17 +4,14 @@ public class Cache {
 
     private METRICS existingData;
 
-    public Cache(METRICS initialData) {
-        this.existingData = initialData;
-    }
-
     /**
      * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
      * @param data que se va a agregar potencialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Data cannot be null");
+        Objects.requireNonNull(data, "Data no puede ser nulo");
+
         if (existingData == null) {
             existingData = data;
         } else {
@@ -24,12 +21,13 @@ public class Cache {
         }
     }
 
+    // Método para obtener los datos existentes (opcional)
     public METRICS getExistingData() {
         return existingData;
     }
 }
 
-// Asumiendo que la clase METRICS tiene un método combine para combinar datos.
+// Asumiendo que METRICS es una clase con un método combine
 class METRICS {
     private int value;
 

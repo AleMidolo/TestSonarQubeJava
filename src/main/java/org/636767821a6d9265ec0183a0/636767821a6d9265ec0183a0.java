@@ -4,6 +4,7 @@ public class FileDeleter {
 
     /**
      * Elimina el archivo especificado si existe
+     * 
      * @param fileName El nombre del archivo a eliminar
      */
     protected static void deleteFile(String fileName) {

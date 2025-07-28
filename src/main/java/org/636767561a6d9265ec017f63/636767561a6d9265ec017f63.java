@@ -11,7 +11,6 @@ public class Graph {
 
     @Override
     public boolean hasNext() {
-        // Verifica si existen vértices no visitados
         return !visitedVertices.containsAll(allVertices);
     }
 }

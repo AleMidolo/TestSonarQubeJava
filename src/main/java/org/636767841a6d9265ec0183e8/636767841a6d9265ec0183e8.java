@@ -19,28 +19,23 @@ public class EventBuffer {
             buffer[size] = event;
             size++;
         } else {
-            // Si el búfer está lleno, se puede manejar de diferentes maneras, como sobrescribir el primer evento.
-            // Aquí simplemente no se agrega el evento.
-            System.out.println("Buffer is full. Event not added.");
+            // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
+            // 1. Ignorar el nuevo evento
+            // 2. Sobrescribir el evento más antiguo (implementación FIFO)
+            // 3. Lanzar una excepción
+            // Aquí se implementa la opción 2: Sobrescribir el evento más antiguo
+            System.arraycopy(buffer, 1, buffer, 0, size - 1);
+            buffer[size - 1] = event;
         }
     }
 
-    // Método para obtener el tamaño actual del búfer
+    // Método para obtener el búfer (opcional)
+    public LoggingEvent[] getBuffer() {
+        return buffer;
+    }
+
+    // Método para obtener el tamaño actual del búfer (opcional)
     public int getSize() {
         return size;
-    }
-
-    // Método para obtener la capacidad del búfer
-    public int getCapacity() {
-        return capacity;
-    }
-
-    // Método para obtener un evento específico del búfer
-    public LoggingEvent getEvent(int index) {
-        if (index >= 0 && index < size) {
-            return buffer[index];
-        } else {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
     }
 }

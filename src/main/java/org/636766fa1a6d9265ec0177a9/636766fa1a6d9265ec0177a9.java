@@ -18,5 +18,5 @@ public class BasicBlock {
         }
     }
 
-    // Other methods and fields can be added here
+    // Other methods of the BasicBlock class...
 }

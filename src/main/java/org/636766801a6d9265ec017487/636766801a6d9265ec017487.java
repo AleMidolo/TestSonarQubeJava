@@ -12,14 +12,14 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
-        
+
         StringBuilder encodedString = new StringBuilder();
         for (char c : s.toCharArray()) {
             if (c == '{' || c == '}') {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
                 } catch (Exception e) {
-                    // En caso de error, simplemente añade el carácter sin codificar
+                    // En caso de error, simplemente agregamos el carácter sin codificar
                     encodedString.append(c);
                 }
             } else {

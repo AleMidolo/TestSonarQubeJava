@@ -1,15 +1,9 @@
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 public class FileAdder {
-
-    private List<File> fileList;
-
-    public FileAdder() {
-        this.fileList = new ArrayList<>();
-    }
 
     /**
      * Aggiungi i file specificati in ordine inverso.
@@ -19,28 +13,21 @@ public class FileAdder {
             return;
         }
 
-        // Convert array to list for easier manipulation
-        List<File> tempList = new ArrayList<>();
-        Collections.addAll(tempList, files);
+        List<File> fileList = new ArrayList<>();
+        Collections.addAll(fileList, files);
+        Collections.reverse(fileList);
 
-        // Reverse the list
-        Collections.reverse(tempList);
-
-        // Add to the main list
-        fileList.addAll(tempList);
-    }
-
-    public List<File> getFileList() {
-        return fileList;
+        // Example of processing the files in reverse order
+        for (File file : fileList) {
+            // Add your logic here to process each file
+            System.out.println("Processing file: " + file.getName());
+        }
     }
 
     public static void main(String[] args) {
-        FileAdder fileAdder = new FileAdder();
+        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
+        FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);
-
-        for (File file : fileAdder.getFileList()) {
-            System.out.println(file.getName());
-        }
     }
 }

@@ -7,7 +7,7 @@ public class ArrayComparator {
      *
      * @param data   L'array di byte da confrontare.
      * @param offset L'indice iniziale nell'array interno da cui iniziare il confronto.
-     * @param len    La lunghezza del segmento da confrontare.
+     * @param len    La lunghezza della porzione da confrontare.
      * @return true se i contenuti corrispondono, false altrimenti.
      */
     public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {

@@ -34,19 +34,14 @@ public class LogAppender extends AppenderSkeleton {
     protected void append(LoggingEvent event) {
         String message = layout.format(event);
         synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.println(message);
+            for (PrintWriter writer : clients) {
+                writer.println(message);
             }
         }
     }
 
     @Override
     public void close() {
-        synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.close();
-            }
-        }
         try {
             serverSocket.close();
         } catch (IOException e) {

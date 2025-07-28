@@ -3,29 +3,28 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity 
-     * (entro l'11% se desiredCapacity >= 1000).
+     * Restituisce un numero primo che è >= desiredCapacity e molto vicino a desiredCapacity (entro l'11% se desiredCapacity >= 1000).
      * @param desiredCapacity la capacità desiderata dall'utente.
      * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-
         int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
+        if (candidate % 2 == 0) {
             candidate++;
         }
-
-        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            if (candidate > upperBound) {
-                candidate = findClosestPrimeWithinBound(desiredCapacity, upperBound);
+        while (!isPrime(candidate)) {
+            candidate += 2;
+            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
+                candidate = desiredCapacity;
+                while (!isPrime(candidate)) {
+                    candidate++;
+                }
+                return candidate;
             }
         }
-
         return candidate;
     }
 
@@ -45,17 +44,6 @@ public class PrimeUtil {
             }
         }
         return true;
-    }
-
-    private static int findClosestPrimeWithinBound(int desiredCapacity, int upperBound) {
-        int candidate = desiredCapacity;
-        while (candidate <= upperBound) {
-            if (isPrime(candidate)) {
-                return candidate;
-            }
-            candidate++;
-        }
-        return -1; // Non dovrebbe mai accadere se upperBound è sufficientemente grande
     }
 
     public static void main(String[] args) {

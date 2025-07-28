@@ -1,7 +1,7 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
 
-public class AtmosphereRequestWrapper {
+public class RequestWrapper {
 
     /**
      * Fornisce un {@link HttpServletRequest}.

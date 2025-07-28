@@ -20,8 +20,7 @@ public class DotUnescape {
         // Sostituisci le sequenze di escape con i caratteri corrispondenti
         StringBuffer result = new StringBuffer();
         while (matcher.find()) {
-            String escapedChar = matcher.group(1);
-            matcher.appendReplacement(result, escapedChar);
+            matcher.appendReplacement(result, matcher.group(1));
         }
         matcher.appendTail(result);
 
@@ -29,8 +28,8 @@ public class DotUnescape {
     }
 
     public static void main(String[] args) {
-        String input = "This is a \\\"test\\\" string with \\\\escaped\\\\ characters.";
+        String input = "\\\\\\\"Hello\\\\World\\\"";
         String output = unescapeId(input);
-        System.out.println(output);  // Output: This is a "test" string with \escaped\ characters.
+        System.out.println(output);  // Output: \\"Hello\\World"
     }
 }

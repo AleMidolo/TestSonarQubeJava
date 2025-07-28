@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> outputFrameStack = new Stack<>();
+    private Stack<String> outputStack = new Stack<>();
 
     /**
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
@@ -14,11 +14,11 @@ public class FrameStack {
 
         if (descriptor.startsWith("(")) {
             // È un descrittore di metodo, rimuovi i tipi di argomento
-            int endOfArgs = descriptor.indexOf(')');
-            if (endOfArgs == -1) {
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
                 return;
             }
-            String argsDescriptor = descriptor.substring(1, endOfArgs);
+            String argsDescriptor = descriptor.substring(1, endIndex);
             removeTypesFromStack(argsDescriptor);
         } else {
             // È un singolo tipo, rimuovi solo quel tipo
@@ -51,18 +51,20 @@ public class FrameStack {
     }
 
     private void removeTypeFromStack(String type) {
-        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
-            outputFrameStack.pop();
+        if (!outputStack.isEmpty() && outputStack.peek().equals(type)) {
+            outputStack.pop();
         }
     }
 
-    // Metodo di esempio per aggiungere tipi allo stack (per testing)
-    public void push(String type) {
-        outputFrameStack.push(type);
-    }
+    // Metodo di esempio per testare la funzionalità
+    public static void main(String[] args) {
+        FrameStack frameStack = new FrameStack();
+        frameStack.outputStack.push("I");
+        frameStack.outputStack.push("Ljava/lang/String;");
+        frameStack.outputStack.push("D");
 
-    // Metodo di esempio per ottenere lo stack (per testing)
-    public Stack<String> getOutputFrameStack() {
-        return outputFrameStack;
+        System.out.println("Stack prima di pop: " + frameStack.outputStack);
+        frameStack.pop("(ILjava/lang/String;D)V");
+        System.out.println("Stack dopo pop: " + frameStack.outputStack);
     }
 }

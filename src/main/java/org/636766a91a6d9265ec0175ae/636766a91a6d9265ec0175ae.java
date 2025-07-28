@@ -16,7 +16,7 @@ public class ByteVector {
         if (byteOffset < 0) {
             throw new IllegalArgumentException("byteOffset must be non-negative");
         }
-        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
+        if (byteArrayValue != null && (byteOffset + byteLength) > byteArrayValue.length) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
@@ -26,6 +26,7 @@ public class ByteVector {
             // Fill with null bytes (0)
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
+            // Copy the specified range from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 
@@ -35,10 +36,7 @@ public class ByteVector {
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > buffer.length) {
-            int newCapacity = buffer.length * 2;
-            if (newCapacity < minCapacity) {
-                newCapacity = minCapacity;
-            }
+            int newCapacity = Math.max(buffer.length * 2, minCapacity);
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

@@ -16,7 +16,7 @@ public class ByteVector {
         if (byteOffset < 0) {
             throw new IllegalArgumentException("byteOffset must be non-negative");
         }
-        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
+        if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
@@ -41,11 +41,8 @@ public class ByteVector {
         }
     }
 
+    // Optional: Method to get the current buffer (for testing or debugging)
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
-    }
-
-    public int size() {
-        return size;
     }
 }

@@ -22,12 +22,12 @@ public class DefensiveProgramming {
 
     // Example usage
     public static void main(String[] args) {
-        Character[] array1 = null;
-        Character[] array2 = new Character[0];
-        Character[] array3 = new Character[]{'a', 'b', 'c'};
+        Character[] nullArray = null;
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = {'a', 'b', 'c'};
 
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [a, b, c]
+        System.out.println(nullToEmpty(nullArray).length);      // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length);    // Output: 0
+        System.out.println(nullToEmpty(nonEmptyArray).length);  // Output: 3
     }
 }

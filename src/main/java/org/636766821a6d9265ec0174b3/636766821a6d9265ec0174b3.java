@@ -1,32 +1,32 @@
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 
 public class BroadcastFilterExample {
 
     protected Object filter(Object msg) {
-        // Assuming msg is an Intent or can be cast to an Intent
+        // Assuming msg is an Intent or can be converted to one
         if (msg instanceof Intent) {
             Intent intent = (Intent) msg;
-            Context context = getContext(); // Assuming this method provides the context
-            IntentFilter filter = new IntentFilter(intent.getAction());
             BroadcastReceiver receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     // Handle the broadcast here
                 }
             };
+
+            // Register the receiver with a filter
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(intent.getAction());
+            Context context = /* Obtain a valid Context object */;
             context.registerReceiver(receiver, filter);
+
+            // Return the receiver or any other object as needed
             return receiver;
         } else {
-            throw new IllegalArgumentException("msg must be an instance of Intent");
+            // Handle the case where msg is not an Intent
+            return null;
         }
-    }
-
-    // Dummy method to simulate context retrieval
-    private Context getContext() {
-        // This should return the actual context in a real implementation
-        return null;
     }
 }

@@ -4,7 +4,7 @@ public class Graph<V> {
     private Map<V, Set<V>> adjacencyList;
 
     public Graph() {
-        this.adjacencyList = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
     /**
@@ -25,5 +25,11 @@ public class Graph<V> {
         return visibleVertices;
     }
 
-    // Other methods for adding vertices and edges would go here
+    // Example usage
+    public static void main(String[] args) {
+        Graph<String> graph = new Graph<>();
+        // Add vertices and edges here
+        Set<String> visibleVertices = graph.initVisibleVertices();
+        System.out.println("Visible Vertices: " + visibleVertices);
+    }
 }

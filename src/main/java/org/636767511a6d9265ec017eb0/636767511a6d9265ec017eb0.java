@@ -16,7 +16,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        int[] row = {0, 5, 0, 3, 0, 0, 8};
+        int[] row = {0, 5, 0, 3, 0, 0, 7};
         System.out.println("Número de entradas diferentes de cero: " + nonZeros(row));
     }
 }

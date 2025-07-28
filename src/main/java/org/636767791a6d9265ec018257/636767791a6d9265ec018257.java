@@ -10,10 +10,9 @@ public class LogTable {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Aquí se procesaría el LogRecord y se agregaría a la tabla
-                // Por ejemplo, podríamos agregar el mensaje a un modelo de tabla
-                // tableModel.addRow(new Object[]{lr.getMessage()});
-                System.out.println("Mensaje agregado: " + lr.getMessage());
+                // Aquí se puede agregar la lógica para actualizar la tabla de registros
+                // Por ejemplo, agregar el LogRecord a un modelo de tabla
+                System.out.println("Mensaje de registro agregado: " + lr.getMessage());
             }
         });
     }

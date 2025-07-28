@@ -26,7 +26,6 @@ public class ByteVector {
             // Fill with null bytes (0)
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
-            // Copy bytes from byteArrayValue to buffer
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 
@@ -41,11 +40,8 @@ public class ByteVector {
         }
     }
 
+    // Optional: Method to get the current buffer (for testing or debugging)
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
-    }
-
-    public int size() {
-        return size;
     }
 }

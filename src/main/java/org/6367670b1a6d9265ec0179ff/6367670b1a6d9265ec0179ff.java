@@ -19,4 +19,15 @@ public class ArrayUtils {
         }
         return array;
     }
+
+    // Example usage
+    public static void main(String[] args) {
+        Byte[] array1 = null;
+        Byte[] array2 = new Byte[0];
+        Byte[] array3 = new Byte[]{1, 2, 3};
+
+        System.out.println(Objects.toString(nullToEmpty(array1))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // Output: [1, 2, 3]
+    }
 }

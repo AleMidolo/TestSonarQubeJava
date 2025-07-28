@@ -1,9 +1,4 @@
-public class Main {
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        String result = trimLeadingCharacter("###Hello World!", '#');
-        System.out.println(result);  // Output: "Hello World!"
-    }
+public class StringUtils {
 
     /**
      * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
@@ -22,5 +17,12 @@ public class Main {
         }
 
         return str.substring(index);
+    }
+
+    public static void main(String[] args) {
+        String testString = "###HelloWorld";
+        char leadingChar = '#';
+        String result = trimLeadingCharacter(testString, leadingChar);
+        System.out.println(result);  // Output: HelloWorld
     }
 }

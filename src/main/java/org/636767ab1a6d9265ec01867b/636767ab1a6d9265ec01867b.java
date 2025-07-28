@@ -1,4 +1,5 @@
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
 
 public class UTF8Writer {
 
@@ -8,42 +9,42 @@ public class UTF8Writer {
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        for (byte b : utf8Bytes) {
+        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
+
+        while (buffer.hasRemaining()) {
             if (lb.remaining() == 0) {
-                lb = session.nextBuffer(lb);
+                lb = session.allocateNewBuffer();
             }
-            lb.put(b);
+            lb.put(buffer.get());
         }
 
         return lb;
     }
+}
 
-    // Assuming LinkedBuffer and WriteSession are defined as follows:
-    public static class LinkedBuffer {
-        private byte[] buffer;
-        private int position;
+class LinkedBuffer {
+    private byte[] buffer;
+    private int position;
 
-        public LinkedBuffer(int capacity) {
-            this.buffer = new byte[capacity];
-            this.position = 0;
-        }
-
-        public void put(byte b) {
-            if (position >= buffer.length) {
-                throw new IllegalStateException("Buffer overflow");
-            }
-            buffer[position++] = b;
-        }
-
-        public int remaining() {
-            return buffer.length - position;
-        }
+    public LinkedBuffer(int capacity) {
+        this.buffer = new byte[capacity];
+        this.position = 0;
     }
 
-    public static class WriteSession {
-        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
-            // Implement logic to get the next buffer in the chain
-            return new LinkedBuffer(currentBuffer.buffer.length); // Example implementation
+    public void put(byte b) {
+        if (position >= buffer.length) {
+            throw new IndexOutOfBoundsException("Buffer overflow");
         }
+        buffer[position++] = b;
+    }
+
+    public int remaining() {
+        return buffer.length - position;
+    }
+}
+
+class WriteSession {
+    public LinkedBuffer allocateNewBuffer() {
+        return new LinkedBuffer(1024); // Default buffer size
     }
 }

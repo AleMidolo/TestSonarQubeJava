@@ -11,17 +11,16 @@ public class ArrayComparator {
      * @return true si los contenidos coinciden, false en caso contrario.
      */
     public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {
-        if (internalArray == null || data == null) {
+        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len != internalArray.length) {
             return false;
         }
-        if (offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
-            return false;
-        }
+
         for (int i = 0; i < len; i++) {
             if (internalArray[i] != data[offset + i]) {
                 return false;
             }
         }
+
         return true;
     }
 }

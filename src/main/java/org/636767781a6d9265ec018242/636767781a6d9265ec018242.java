@@ -14,13 +14,15 @@ public class Logger {
      * @return El número de appenders a los que se les envió el evento.
      */
     public int appendLoopOnAppenders(LoggingEvent event) {
+        if (appenders == null) {
+            return 0;
+        }
+
         int count = 0;
-        if (appenders != null) {
-            for (Appender appender : appenders) {
-                if (appender != null) {
-                    appender.doAppend(event);
-                    count++;
-                }
+        for (Appender appender : appenders) {
+            if (appender != null) {
+                appender.doAppend(event);
+                count++;
             }
         }
         return count;

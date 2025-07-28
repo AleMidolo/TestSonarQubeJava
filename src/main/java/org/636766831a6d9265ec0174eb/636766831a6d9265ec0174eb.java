@@ -9,8 +9,8 @@ public class FileAdder {
      * Agrega los archivos especificados en orden inverso.
      */
     private void addReverse(final File[] files) {
-        if (files == null) {
-            throw new IllegalArgumentException("El array de archivos no puede ser nulo.");
+        if (files == null || files.length == 0) {
+            return;
         }
 
         List<File> fileList = new ArrayList<>();
@@ -19,14 +19,12 @@ public class FileAdder {
 
         // Aquí puedes agregar la lógica para procesar los archivos en orden inverso
         for (File file : fileList) {
-            // Procesar cada archivo
             System.out.println("Procesando archivo: " + file.getName());
         }
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        File[] files = { new File("archivo1.txt"), new File("archivo2.txt"), new File("archivo3.txt") };
+        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
         FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);
     }

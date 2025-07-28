@@ -11,17 +11,13 @@ public class ConfigurationDirectoryCreator {
         
         // Crear la ruta del directorio "lf5"
         String configDirPath = userHome + File.separator + "lf5";
-        
-        // Crear el objeto File para el directorio
         File configDir = new File(configDirPath);
         
-        // Verificar si el directorio ya existe
+        // Crear el directorio si no existe
         if (!configDir.exists()) {
-            // Intentar crear el directorio
-            boolean dirCreated = configDir.mkdir();
-            
-            if (dirCreated) {
-                System.out.println("Directorio creado exitosamente: " + configDirPath);
+            boolean created = configDir.mkdir();
+            if (created) {
+                System.out.println("Directorio creado: " + configDirPath);
             } else {
                 System.out.println("No se pudo crear el directorio: " + configDirPath);
             }

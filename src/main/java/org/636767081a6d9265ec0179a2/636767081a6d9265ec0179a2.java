@@ -1,6 +1,6 @@
 /**
  * Método de utilidad para {@link #createNumber(String)}.
- * Devuelve <code>true</code> si "s" es <code>null</code> o si todos los caracteres en la cadena son ceros.
+ * Devuelve <code>true</code> si "s" es <code>null</code> o si todos los caracteres son ceros.
  * @param s la cadena a verificar
  * @return si son todos ceros o <code>null</code>
  */

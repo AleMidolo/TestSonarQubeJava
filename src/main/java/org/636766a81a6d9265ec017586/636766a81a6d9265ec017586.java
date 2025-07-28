@@ -1,10 +1,10 @@
 import java.util.Stack;
 
 public class OutputFrame {
-    private Stack<AbstractType> outputFrame;
+    private Stack<AbstractType> outputStack;
 
     public OutputFrame() {
-        this.outputFrame = new Stack<>();
+        this.outputStack = new Stack<>();
     }
 
     /**
@@ -15,15 +15,15 @@ public class OutputFrame {
         if (elements < 0) {
             throw new IllegalArgumentException("El número de elementos a eliminar no puede ser negativo.");
         }
-        if (elements > outputFrame.size()) {
-            throw new IllegalArgumentException("No hay suficientes elementos en el output frame para eliminar.");
+        if (elements > outputStack.size()) {
+            throw new IllegalArgumentException("No hay suficientes elementos en el stack para eliminar.");
         }
         for (int i = 0; i < elements; i++) {
-            outputFrame.pop();
+            outputStack.pop();
         }
     }
 
-    // Clase de ejemplo para AbstractType
+    // Ejemplo de clase AbstractType para completar la implementación
     private static class AbstractType {
         // Implementación de la clase AbstractType
     }

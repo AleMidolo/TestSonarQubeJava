@@ -9,24 +9,27 @@ public class PrimeUtil {
      * @return la capacidad que se debe utilizar para una tabla hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-        
-        int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        
-        // Verificar si el candidato está dentro del 11% de desiredCapacity si desiredCapacity >= 1000
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            if (candidate > upperBound) {
-                candidate = nextPrime(upperBound);
+        while (!isPrime(prime)) {
+            prime += 2;
+            if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
+                prime = desiredCapacity;
+                if (prime % 2 == 0) {
+                    prime++;
+                }
+                while (!isPrime(prime)) {
+                    prime += 2;
+                }
+                break;
             }
         }
-        
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {

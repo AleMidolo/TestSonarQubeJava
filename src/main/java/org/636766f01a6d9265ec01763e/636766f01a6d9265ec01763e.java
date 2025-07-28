@@ -19,7 +19,7 @@ public class CharsetTranslator {
             Charset javaCharset = Charset.forName(charset);
             return javaCharset.name();
         } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // Si el charset no es soportado o el nombre es inválido, devuelve el charset por defecto (UTF-8)
+            // Si el nombre no es válido o no es soportado, devuelve el charset por defecto (UTF-8)
             return Charset.defaultCharset().name();
         }
     }

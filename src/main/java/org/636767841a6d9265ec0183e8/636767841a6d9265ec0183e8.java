@@ -29,13 +29,17 @@ public class EventBuffer {
         }
     }
 
-    // Método para obtener el búfer (opcional)
-    public LoggingEvent[] getBuffer() {
-        return buffer;
+    // Método para obtener el tamaño actual del búfer
+    public int size() {
+        return size;
     }
 
-    // Método para obtener el tamaño actual del búfer (opcional)
-    public int getSize() {
-        return size;
+    // Método para obtener el evento en una posición específica
+    public LoggingEvent get(int index) {
+        if (index >= 0 && index < size) {
+            return buffer[index];
+        } else {
+            throw new IndexOutOfBoundsException("Índice fuera de los límites del búfer");
+        }
     }
 }

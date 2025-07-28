@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // Referencia estática para un array vacío
+    // Referencia estática para un array vacío de Double
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
     /**
@@ -18,16 +18,5 @@ public class ArrayUtils {
             return EMPTY_DOUBLE_ARRAY;
         }
         return array;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Double[] array1 = null;
-        Double[] array2 = new Double[0];
-        Double[] array3 = {1.0, 2.0, 3.0};
-
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [1.0, 2.0, 3.0]
     }
 }

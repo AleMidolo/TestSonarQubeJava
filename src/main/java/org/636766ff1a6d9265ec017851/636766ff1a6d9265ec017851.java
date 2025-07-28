@@ -6,14 +6,14 @@
  */
 protected int findByte(byte value, int pos) {
     if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Posición inicial fuera de los límites del buffer.");
+        throw new IndexOutOfBoundsException("Posición fuera de los límites del buffer");
     }
-
+    
     for (int i = pos; i < buffer.length; i++) {
         if (buffer[i] == value) {
             return i;
         }
     }
-
+    
     return -1;
 }

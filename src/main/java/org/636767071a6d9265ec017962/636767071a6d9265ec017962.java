@@ -27,11 +27,13 @@ public class BeanMap {
         }
     }
 
-    public Object getProperty(String key) {
+    public void put(String key, Object value) {
+        properties.put(key, value);
+    }
+
+    public Object get(String key) {
         return properties.get(key);
     }
 
-    public void setProperty(String key, Object value) {
-        properties.put(key, value);
-    }
+    // Other methods for BeanMap implementation...
 }

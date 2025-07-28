@@ -4,23 +4,19 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
     }
 
     // Split the string into parts starting from nameStart
-    String name = buf.substring(nameStart);
-    String[] parts = name.split("\\s+"); // Split by whitespace
-
-    if (parts.length == 0) {
-        return; // No parts to abbreviate
-    }
+    String fullName = buf.substring(nameStart);
+    String[] parts = fullName.split("\\s+");
 
     // Abbreviate each part except the last one
     for (int i = 0; i < parts.length - 1; i++) {
         if (!parts[i].isEmpty()) {
-            parts[i] = parts[i].substring(0, 1) + "."; // Take the first character and add a dot
+            parts[i] = parts[i].charAt(0) + ".";
         }
     }
 
     // Reconstruct the abbreviated name
     String abbreviatedName = String.join(" ", parts);
 
-    // Replace the original name with the abbreviated version
+    // Replace the original name with the abbreviated name in the buffer
     buf.replace(nameStart, buf.length(), abbreviatedName);
 }

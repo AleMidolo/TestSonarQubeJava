@@ -27,7 +27,7 @@ public class FrameVisitor {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextIndex = 0; // Inicializa el índice en 0
+            this.nextIndex = 0; // Inicializa el índice del siguiente elemento a 0
         }
 
         public int getNextIndex() {

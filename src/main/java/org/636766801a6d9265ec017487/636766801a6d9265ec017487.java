@@ -12,14 +12,14 @@ public class TemplateEncoder {
         if (s == null) {
             return null;
         }
-
+        
         StringBuilder encodedString = new StringBuilder();
         for (char c : s.toCharArray()) {
             if (c == '{' || c == '}') {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
                 } catch (Exception e) {
-                    // En caso de error, simplemente agregamos el carácter sin codificar
+                    // In case of encoding error, append the original character
                     encodedString.append(c);
                 }
             } else {
@@ -30,7 +30,8 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String testString = "This is a {test} string with {template} parameters.";
-        System.out.println(encodeTemplateNames(testString));
+        String input = "This is a {template} string with {parameters}.";
+        String encoded = encodeTemplateNames(input);
+        System.out.println(encoded);
     }
 }

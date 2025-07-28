@@ -39,20 +39,17 @@ public class FrameStackProcessor {
     }
 
     private String[] extractArgumentTypes(String methodDescriptor) {
-        // Remove the leading '(' and trailing ')'
-        String argsPart = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
-        // Split the argument types based on the descriptor format
-        // This is a simplified approach and may need to handle complex types like arrays and objects
-        return argsPart.split("(?<=\\D)(?=\\D)|(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        // Simplified extraction of argument types from method descriptor
+        // This is a placeholder and should be replaced with actual parsing logic
+        // For example, "(Ljava/lang/String;I)V" would return ["Ljava/lang/String;", "I"]
+        return methodDescriptor.substring(1, methodDescriptor.indexOf(')')).split(";");
     }
 
     // Example usage
     public static void main(String[] args) {
         FrameStackProcessor processor = new FrameStackProcessor();
-        processor.frameStack.push("int");
-        processor.frameStack.push("float");
-        processor.frameStack.push("java/lang/String");
-
-        processor.pop("(IFLjava/lang/String;)V"); // Pops 3 elements from the stack
+        processor.frameStack.push("Ljava/lang/String;");
+        processor.frameStack.push("I");
+        processor.pop("(Ljava/lang/String;I)V");
     }
 }

@@ -10,8 +10,14 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // Implementación para suspender el recurso basado en el transporte
-        // Aquí se podría agregar lógica adicional si es necesario
+        // Suspender el recurso basado en el transporte
+        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
+            r.suspend();
+        } else if (r.transport() == AtmosphereResource.TRANSPORT.LONG_POLLING) {
+            r.suspend(-1); // Suspender indefinidamente
+        } else {
+            // Otros transportes no requieren suspensión
+        }
         return Action.CONTINUE;
     }
 }

@@ -8,65 +8,26 @@ public class UTF8Writer {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
 
+        // Convert the CharSequence to a byte array using UTF-8 encoding
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
 
-        while (buffer.hasRemaining()) {
-            if (lb.remaining() == 0) {
-                lb = session.nextBuffer(lb);
-            }
-            lb.put(buffer.get());
+        // Write the bytes to the LinkedBuffer
+        for (byte b : utf8Bytes) {
+            lb = session.write(b, lb);
         }
 
         return lb;
     }
 
+    // Assuming LinkedBuffer and WriteSession are defined elsewhere
     public static class LinkedBuffer {
-        private byte[] buffer;
-        private int position;
-
-        public LinkedBuffer(int capacity) {
-            this.buffer = new byte[capacity];
-            this.position = 0;
-        }
-
-        public void put(byte b) {
-            if (position >= buffer.length) {
-                throw new IllegalStateException("Buffer overflow");
-            }
-            buffer[position++] = b;
-        }
-
-        public int remaining() {
-            return buffer.length - position;
-        }
+        // Implementation of LinkedBuffer
     }
 
     public static class WriteSession {
-        private LinkedBuffer currentBuffer;
-
-        public WriteSession(LinkedBuffer initialBuffer) {
-            this.currentBuffer = initialBuffer;
-        }
-
-        public LinkedBuffer nextBuffer(LinkedBuffer current) {
-            // Simulate getting a new buffer, e.g., from a pool or allocating a new one
-            LinkedBuffer newBuffer = new LinkedBuffer(current.buffer.length);
-            currentBuffer = newBuffer;
-            return newBuffer;
-        }
-    }
-
-    public static void main(String[] args) {
-        LinkedBuffer lb = new LinkedBuffer(10);
-        WriteSession session = new WriteSession(lb);
-        CharSequence str = "Hello, UTF-8!";
-        lb = writeUTF8(str, session, lb);
-
-        // Print the contents of the buffer
-        System.out.println("Buffer contents:");
-        for (byte b : lb.buffer) {
-            System.out.print((char) b);
+        public LinkedBuffer write(byte b, LinkedBuffer lb) {
+            // Implementation of write method
+            return lb;
         }
     }
 }

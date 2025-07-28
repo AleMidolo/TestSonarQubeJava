@@ -8,16 +8,16 @@ public class StringUtils {
             return inString;
         }
 
-        // Convertir el conjunto de caracteres a eliminar en un Set para búsqueda rápida
-        Set<Character> charsToRemove = new HashSet<>();
+        // Convert the characters to delete into a set for quick lookup
+        Set<Character> charsSet = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
-            charsToRemove.add(c);
+            charsSet.add(c);
         }
 
-        // Construir la cadena resultante
+        // Build the resulting string by skipping characters in the set
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
-            if (!charsToRemove.contains(c)) {
+            if (!charsSet.contains(c)) {
                 result.append(c);
             }
         }

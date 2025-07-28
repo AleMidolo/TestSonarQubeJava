@@ -16,13 +16,13 @@ public class StackMapTableHandler {
         }
 
         for (int i = start; i < end; i++) {
-            VerificationTypeInfo typeInfo = currentFrame.get(i);
+            VerficationTypeInfo typeInfo = currentFrame.get(i);
             stackMapTableEntries.add(typeInfo);
         }
     }
 
-    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
-    private static class VerificationTypeInfo {
-        // Implementation details of VerificationTypeInfo
+    // Assuming VerficationTypeInfo is a class representing the verification_type_info structure
+    private static class VerficationTypeInfo {
+        // Define the structure of verification_type_info here
     }
 }

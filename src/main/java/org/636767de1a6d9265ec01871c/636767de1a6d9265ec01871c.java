@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Acumulador {
+
     private Map<String, Long> mapa;
 
     public Acumulador() {
@@ -19,7 +20,7 @@ public class Acumulador {
         mapa.put(clave, mapa.getOrDefault(clave, 0L) + valor);
     }
 
-    // Método adicional para obtener el valor acumulado de una clave
+    // Método para obtener el valor acumulado de una clave específica
     public Long obtenerValor(String clave) {
         return mapa.getOrDefault(clave, 0L);
     }

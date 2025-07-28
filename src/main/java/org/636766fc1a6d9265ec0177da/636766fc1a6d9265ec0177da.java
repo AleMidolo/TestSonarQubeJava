@@ -5,6 +5,6 @@
  * @return true si el carácter es un separador, false en caso contrario.
  */
 private static boolean esSeparadorDeParametro(final char c) {
-    // Los separadores comunes son espacios, comas, paréntesis, etc.
-    return c == ' ' || c == ',' || c == '(' || c == ')' || c == ';' || c == '\t' || c == '\n' || c == '\r';
+    // Consideramos como separadores los espacios, comas, paréntesis de cierre, y otros caracteres comunes.
+    return c == ' ' || c == ',' || c == ')' || c == ']' || c == '}' || c == '\t' || c == '\n' || c == '\r';
 }

@@ -9,11 +9,10 @@ public class ConfigurationInitializer {
         
         if (distributionPath == null || distributionPath.isEmpty()) {
             throw new IllegalArgumentException("Distribution path is not set.");
-        } else {
-            System.out.println("Distribution path is set to: " + distributionPath);
         }
-
+        
         // Additional initialization logic can be added here
+        System.out.println("Configuration initialized with distribution path: " + distributionPath);
     }
 
     public static void main(String[] args) {

@@ -38,18 +38,12 @@ class DoublyLinkedList<E> {
         }
     }
 
-    public ListNode<E> getHead() {
-        return head;
-    }
-}
-
-public class ListNodeMover<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        ListNode<E> current = list.getHead();
+        ListNode<E> current = head;
         while (current != null) {
             ListNode<E> nextNode = current.next; // Store next node
-            list.removeListNode(current); // Remove from original list
-            list.addListNode(current); // Add to the new list
+            removeListNode(current); // Remove current node from this list
+            list.addListNode(current); // Add current node to the new list
             current = nextNode; // Move to the next node
         }
     }

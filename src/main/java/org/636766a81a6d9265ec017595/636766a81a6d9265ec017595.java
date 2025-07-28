@@ -5,19 +5,15 @@ class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[2]; // Initial capacity
+        this.data = new byte[2]; // Initial capacity of 2
         this.size = 0;
     }
 
-    public void put(byte value) {
+    public void put(int byteValue) {
         if (size == data.length) {
-            resize();
+            data = Arrays.copyOf(data, data.length * 2); // Double the size
         }
-        data[size++] = value;
-    }
-
-    private void resize() {
-        data = Arrays.copyOf(data, data.length * 2);
+        data[size++] = (byte) byteValue;
     }
 
     public byte[] toArray() {
@@ -34,14 +30,14 @@ public class Main {
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
         ByteVector byteVector = new ByteVector();
-        byteVector.put((byte) byteValue1);
-        byteVector.put((byte) byteValue2);
+        byteVector.put(byteValue1);
+        byteVector.put(byteValue2);
         return byteVector;
     }
 
     public static void main(String[] args) {
         Main main = new Main();
         ByteVector result = main.put11(10, 20);
-        System.out.println(Arrays.toString(result.toArray()));
+        System.out.println(Arrays.toString(result.toArray())); // Output the byte vector
     }
 }

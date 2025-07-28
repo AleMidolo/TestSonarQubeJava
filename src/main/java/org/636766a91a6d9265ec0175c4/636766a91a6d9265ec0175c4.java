@@ -1,10 +1,10 @@
 public class StackPopper {
     
-    // Assuming we have a stack to pop from
+    // Assuming we have a stack to hold abstract types
     private Stack<Object> stack;
 
     public StackPopper() {
-        this.stack = new Stack<>();
+        stack = new Stack<>();
     }
 
     /** 
@@ -12,36 +12,28 @@ public class StackPopper {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Example logic to pop based on descriptor
-        // This is a placeholder for actual type checking and popping logic
-        int argCount = getArgumentCountFromDescriptor(descriptor);
-        
-        for (int i = 0; i < argCount; i++) {
-            if (!stack.isEmpty()) {
-                Object poppedElement = stack.pop();
-                // Process the popped element based on its type
-                System.out.println("Popped: " + poppedElement);
-            } else {
-                System.out.println("Stack is empty, cannot pop more elements.");
-                break;
-            }
+        // Logic to pop elements based on the descriptor
+        // For demonstration, let's assume we just pop one element
+        if (!stack.isEmpty()) {
+            Object poppedElement = stack.pop();
+            System.out.println("Popped element: " + poppedElement + " for descriptor: " + descriptor);
+        } else {
+            System.out.println("Stack is empty. No elements to pop for descriptor: " + descriptor);
         }
     }
 
-    private int getArgumentCountFromDescriptor(String descriptor) {
-        // Placeholder for actual logic to determine argument count from descriptor
-        // For simplicity, let's assume it returns a fixed number
-        return 2; // Example: assuming 2 arguments for demonstration
-    }
-
-    public void push(Object item) {
-        stack.push(item);
+    // Method to push elements onto the stack for testing
+    public void push(Object element) {
+        stack.push(element);
     }
 
     public static void main(String[] args) {
         StackPopper stackPopper = new StackPopper();
-        stackPopper.push("First");
-        stackPopper.push("Second");
-        stackPopper.pop("methodDescriptor");
+        stackPopper.push("AbstractType1");
+        stackPopper.push("AbstractType2");
+        
+        stackPopper.pop("SomeDescriptor");
+        stackPopper.pop("SomeDescriptor");
+        stackPopper.pop("SomeDescriptor");
     }
 }

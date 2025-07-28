@@ -24,22 +24,22 @@ public class PrimeCapacity {
                     return capacity;
                 }
             }
-            capacity += 2; // Check only odd numbers
+            capacity += 2;
         }
     }
 
-    private static boolean isPrime(int number) {
-        if (number <= 1) {
+    private static boolean isPrime(int num) {
+        if (num <= 1) {
             return false;
         }
-        if (number <= 3) {
+        if (num <= 3) {
             return true;
         }
-        if (number % 2 == 0 || number % 3 == 0) {
+        if (num % 2 == 0 || num % 3 == 0) {
             return false;
         }
-        for (int i = 5; i * i <= number; i += 6) {
-            if (number % i == 0 || number % (i + 2) == 0) {
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }

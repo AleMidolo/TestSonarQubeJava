@@ -36,6 +36,6 @@ public class FileExtensionUtil {
         // Example usage
         String filename = "example/path/to/file.txt";
         int index = indexOfExtension(filename);
-        System.out.println("Index of last extension separator: " + index);
+        System.out.println("Last extension separator index: " + index);
     }
 }

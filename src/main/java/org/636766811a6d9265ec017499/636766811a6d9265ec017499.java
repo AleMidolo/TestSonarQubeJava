@@ -18,7 +18,7 @@ public class InterceptorChecker {
     }
     
     // Assuming AtmosphereInterceptor is defined somewhere in your codebase
-    public static abstract class AtmosphereInterceptor {
-        // Implementation of AtmosphereInterceptor
+    public static class AtmosphereInterceptor {
+        // Implementation details for AtmosphereInterceptor
     }
 }

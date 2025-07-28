@@ -9,7 +9,6 @@ public class StringUnescaper {
         if (input == null) {
             return null;
         }
-        
         StringBuilder output = new StringBuilder();
         boolean isEscaped = false;
 
@@ -29,8 +28,8 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "Hello\\ World\\!";
+        String input = "example\\:identifier";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: Hello World!
+        System.out.println(output); // Output: example:identifier
     }
 }

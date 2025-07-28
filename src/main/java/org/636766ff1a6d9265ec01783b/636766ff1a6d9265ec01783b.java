@@ -19,6 +19,6 @@ public class SubstringExample {
         System.out.println(sub(example, -1, 5));  // Output: (empty string)
         System.out.println(sub(example, 0, 5));   // Output: Hello
         System.out.println(sub(example, 5, 5));   // Output: (empty string)
-        System.out.println(sub(null, 0, 5));       // Output: null
+        System.out.println(sub(example, 7, 20));  // Output: (empty string)
     }
 }

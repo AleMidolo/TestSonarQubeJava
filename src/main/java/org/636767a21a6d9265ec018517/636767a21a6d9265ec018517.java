@@ -12,21 +12,17 @@ public final class Buffer {
         outputStream.write(data);
     }
 
-    /** 
+    /**
      * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
      */
     public final byte[] toByteArray() {
         return outputStream.toByteArray();
     }
 
-    public static void main(String[] args) {
-        try {
-            Buffer buffer = new Buffer();
-            buffer.write("Hello, World!".getBytes());
-            byte[] byteArray = buffer.toByteArray();
-            System.out.println(new String(byteArray));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        Buffer buffer = new Buffer();
+        buffer.write("Hello, World!".getBytes());
+        byte[] byteArray = buffer.toByteArray();
+        System.out.println(new String(byteArray));
     }
 }

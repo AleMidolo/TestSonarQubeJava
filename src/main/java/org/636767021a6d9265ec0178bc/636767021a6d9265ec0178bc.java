@@ -13,8 +13,8 @@ public class StringSearch {
     public static void main(String[] args) {
         // परीक्षण के लिए कुछ उदाहरण
         System.out.println(indexOf("Hello, world!", "world")); // 7
-        System.out.println(indexOf("Hello, world!", "Java"));  // -1
-        System.out.println(indexOf(null, "test"));              // -1
-        System.out.println(indexOf("test", null));              // -1
+        System.out.println(indexOf("Hello, world!", "Java")); // -1
+        System.out.println(indexOf(null, "test")); // -1
+        System.out.println(indexOf("test", null)); // -1
     }
 }

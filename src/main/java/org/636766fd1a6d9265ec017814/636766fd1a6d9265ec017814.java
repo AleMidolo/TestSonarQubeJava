@@ -1,4 +1,4 @@
-public class ArrayComparator {
+public class ArrayComparer {
     
     /** 
      * <code>a</code> और <code>b</code> ऐरे में पहले <code>count</code> बाइट्स की तुलना करता है।

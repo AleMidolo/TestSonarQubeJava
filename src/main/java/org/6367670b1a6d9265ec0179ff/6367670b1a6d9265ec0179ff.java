@@ -3,7 +3,7 @@ public class ArrayUtil {
     // Public static empty array for optimization
     public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
-    /** 
+    /**
      * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p> 
      * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए एक खाली ऐरे लौटाती है।</p> 
      * <p>एक मेमोरी ऑप्टिमाइजेशन तकनीक के रूप में, एक खाली ऐरे जो पास किया गया है, इसे इस वर्ग में खाली <code>public static</code> संदर्भों के साथ ओवरराइड किया जाएगा।</p>

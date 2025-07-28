@@ -11,13 +11,14 @@ public class StackMapFrameVisitor {
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         // Logic to handle the start of a new stack map frame
         // For demonstration, we will just update the currentFrame and return the next index
-        currentFrame = offset + numLocal + numStack; // Example logic
-        return currentFrame;
+        currentFrame++;
+        // Here we can add logic to process the offset, numLocal, and numStack if needed
+        return currentFrame; // Returning the next index to write to
     }
 
     public static void main(String[] args) {
         StackMapFrameVisitor visitor = new StackMapFrameVisitor();
-        int nextIndex = visitor.visitFrameStart(10, 2, 3);
+        int nextIndex = visitor.visitFrameStart(10, 5, 3);
         System.out.println("Next index to write: " + nextIndex);
     }
 }

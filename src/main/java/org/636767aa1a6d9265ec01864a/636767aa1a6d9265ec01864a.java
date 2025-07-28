@@ -6,14 +6,16 @@ public class ByteArrayConverter {
      * बाइट्स को {@code byte[]} में कॉपी करता है।
      */
     public byte[] toByteArray() {
-        // Example byte array to demonstrate the functionality
+        // Example byte array for demonstration
         byte[] exampleBytes = {1, 2, 3, 4, 5};
-        return exampleBytes.clone(); // Cloning to return a new byte array
+        return exampleBytes;
     }
 
     public static void main(String[] args) {
         ByteArrayConverter converter = new ByteArrayConverter();
         byte[] byteArray = converter.toByteArray();
+        
+        // Print the byte array
         for (byte b : byteArray) {
             System.out.print(b + " ");
         }

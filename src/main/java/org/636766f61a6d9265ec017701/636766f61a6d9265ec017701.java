@@ -15,7 +15,7 @@ public class StringUtil {
         System.out.println(lastIndexOf("Hello World", "o")); // Output: 7
         System.out.println(lastIndexOf("Hello World", "l")); // Output: 9
         System.out.println(lastIndexOf("Hello World", "x")); // Output: -1
-        System.out.println(lastIndexOf(null, "o")); // Output: -1
+        System.out.println(lastIndexOf(null, "o"));          // Output: -1
         System.out.println(lastIndexOf("Hello World", null)); // Output: -1
     }
 }

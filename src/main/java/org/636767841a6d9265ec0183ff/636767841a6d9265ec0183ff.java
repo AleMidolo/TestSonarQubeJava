@@ -4,7 +4,7 @@ import java.awt.*;
 public class TableRowSelector {
 
     /** 
-     * Selects a the specified row in the specified JTable and scrolls the specified JScrollPane to the newly selected row. More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscreen.
+     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane to the newly selected row. More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscreen.
      * @param row should belong to the specified JScrollPane
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
@@ -20,11 +20,9 @@ public class TableRowSelector {
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
-        Rectangle rect = table.getCellRect(row, 0, true);
-        table.scrollRectToVisible(rect);
-        
-        // Delay repaint to ensure the row is painted properly
         SwingUtilities.invokeLater(() -> {
+            Rectangle rect = table.getCellRect(row, 0, true);
+            table.scrollRectToVisible(rect);
             pane.repaint();
         });
     }
@@ -41,7 +39,7 @@ public class TableRowSelector {
             {"Row 2", "Data 2"},
             {"Row 3", "Data 3"},
             {"Row 4", "Data 4"},
-            {"Row 5", "Data 5"}
+            {"Row 5", "Data 5"},
         };
 
         JTable table = new JTable(data, columnNames);

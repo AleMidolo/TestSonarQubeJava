@@ -11,7 +11,6 @@ public class MyAtmosphereResourceInspector {
     @Override
     public Action inspect(AtmosphereResource r) {
         if (r.getTransport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            // Logic to suspend the resource if needed
             r.suspend();
         }
         return Action.CONTINUE;

@@ -23,8 +23,8 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello {name}, welcome to {place}!";
-        String encodedString = encodeTemplateNames(testString);
-        System.out.println(encodedString);
+        String input = "Hello {name}, welcome to {place}!";
+        String encoded = encodeTemplateNames(input);
+        System.out.println(encoded);
     }
 }

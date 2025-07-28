@@ -15,18 +15,20 @@ public class GraphUtils {
      * @return true if the induced subgraph is a clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Check if the number of vertices is less than 2
         if (vertices.size() < 2) {
             return true; // A single vertex or empty set is trivially a clique
         }
 
+        // Check all pairs of vertices in the set
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // If any pair of vertices is not connected, it's not a clique
+                    return false; // If any pair is not connected, it's not a clique
                 }
             }
         }
-        return true; // All pairs are connected, so it's a clique
+        return true; // All pairs are connected, it's a clique
     }
 
     public static void main(String[] args) {

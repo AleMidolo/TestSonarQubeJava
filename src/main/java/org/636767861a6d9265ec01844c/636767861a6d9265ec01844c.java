@@ -18,7 +18,7 @@ public class AppenderManager {
             String appender = iterator.next();
             if (appender.equals(name)) {
                 iterator.remove();
-                break;
+                break; // Exit after removing the first matching appender
             }
         }
     }
@@ -37,8 +37,10 @@ public class AppenderManager {
         AppenderManager manager = new AppenderManager();
         manager.addAppender("ConsoleAppender");
         manager.addAppender("FileAppender");
-        System.out.println("Before removal: " + manager.getAppenders());
-        manager.removeAppender("ConsoleAppender");
-        System.out.println("After removal: " + manager.getAppenders());
+        manager.addAppender("DatabaseAppender");
+
+        System.out.println("Appenders before removal: " + manager.getAppenders());
+        manager.removeAppender("FileAppender");
+        System.out.println("Appenders after removal: " + manager.getAppenders());
     }
 }

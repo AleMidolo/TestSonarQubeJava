@@ -1,6 +1,6 @@
 import java.util.Collection;
 
-public class CollectionUtils {
+public class InstanceChecker {
     /** 
      * Check whether the given Collection contains the given element instance. <p>Enforces the given instance to be present, rather than returning <code>true</code> for an equal element as well.
      * @param collection the Collection to check

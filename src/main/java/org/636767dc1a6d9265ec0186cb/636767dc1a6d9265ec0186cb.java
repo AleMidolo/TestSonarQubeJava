@@ -7,11 +7,12 @@ public class ConfigInitializer {
      */
     public void init() {
         String distPath = "path/to/dist"; // Specify your distribution path here
-        File distDirectory = new File(distPath);
+        File distDir = new File(distPath);
         
-        if (!distDirectory.exists()) {
+        if (!distDir.exists()) {
             System.out.println("Distribution path does not exist: " + distPath);
-            // You can add code here to create the directory or handle the error
+            // You can add code here to create the directory if needed
+            // distDir.mkdirs();
         } else {
             System.out.println("Distribution path is valid: " + distPath);
         }

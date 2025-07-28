@@ -1,12 +1,13 @@
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
+    private int readPointer;
 
-    public ClassFileBuffer() {
-        this.buffer = new byte[0];
+    public ClassFileBuffer(int size) {
+        this.buffer = new byte[size];
+        this.readPointer = 0;
     }
 
     /** 
@@ -14,20 +15,13 @@ public class ClassFileBuffer {
      * The read pointer is reset to the start of the byte array.
      */
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the existing buffer
-        this.buffer = new byte[0];
+        // Clear the buffer
+        readPointer = 0;
 
-        // Use ByteArrayOutputStream to read the InputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] tempBuffer = new byte[1024];
+        // Read bytes from the InputStream
         int bytesRead;
-
-        // Read from the InputStream and write to the ByteArrayOutputStream
-        while ((bytesRead = in.read(tempBuffer)) != -1) {
-            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
+        while ((bytesRead = in.read(buffer)) != -1) {
+            readPointer += bytesRead;
         }
-
-        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
-        this.buffer = byteArrayOutputStream.toByteArray();
     }
 }

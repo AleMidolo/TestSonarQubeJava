@@ -12,14 +12,12 @@ public class LoggerFormatter {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         
-        printWriter.printf("Timestamp: %d%n", event.getTimeStamp());
-        printWriter.printf("Level: %s%n", event.getLevel());
-        printWriter.printf("Logger: %s%n", event.getLoggerName());
-        printWriter.printf("Message: %s%n", event.getRenderedMessage());
-        
-        if (event.getThrowableInformation() != null) {
-            printWriter.printf("Exception: %s%n", event.getThrowableInformation().getThrowable().toString());
-        }
+        printWriter.println("Logging Event:");
+        printWriter.println("Level: " + event.getLevel());
+        printWriter.println("Message: " + event.getMessage());
+        printWriter.println("Time: " + event.getTimeStamp());
+        printWriter.println("Thread: " + event.getThreadName());
+        printWriter.println("Logger: " + event.getLoggerName());
         
         printWriter.flush();
         return stringWriter.toString();

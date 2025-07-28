@@ -1,6 +1,5 @@
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 public class CharsetTranslator {
 
@@ -10,23 +9,33 @@ public class CharsetTranslator {
      * @return The Java equivalent for this name.
      */
     private static String javaCharset(String charset) {
-        Map<String, String> mimeToJavaCharsetMap = new HashMap<>();
-        mimeToJavaCharsetMap.put("UTF-8", "UTF-8");
-        mimeToJavaCharsetMap.put("ISO-8859-1", "ISO-8859-1");
-        mimeToJavaCharsetMap.put("US-ASCII", "US-ASCII");
-        mimeToJavaCharsetMap.put("UTF-16", "UTF-16");
-        mimeToJavaCharsetMap.put("UTF-16BE", "UTF-16BE");
-        mimeToJavaCharsetMap.put("UTF-16LE", "UTF-16LE");
-        mimeToJavaCharsetMap.put("windows-1252", "windows-1252");
-        mimeToJavaCharsetMap.put("windows-1251", "windows-1251");
-        mimeToJavaCharsetMap.put("windows-1250", "windows-1250");
-        mimeToJavaCharsetMap.put("windows-1253", "windows-1253");
-        mimeToJavaCharsetMap.put("windows-1254", "windows-1254");
-        mimeToJavaCharsetMap.put("windows-1255", "windows-1255");
-        mimeToJavaCharsetMap.put("windows-1256", "windows-1256");
-        mimeToJavaCharsetMap.put("windows-1257", "windows-1257");
-        mimeToJavaCharsetMap.put("windows-1258", "windows-1258");
+        if (charset == null) {
+            return null;
+        }
+        
+        switch (charset.toLowerCase()) {
+            case "utf-8":
+                return StandardCharsets.UTF_8.name();
+            case "iso-8859-1":
+                return StandardCharsets.ISO_8859_1.name();
+            case "us-ascii":
+                return StandardCharsets.US_ASCII.name();
+            case "utf-16":
+                return StandardCharsets.UTF_16.name();
+            case "utf-16be":
+                return StandardCharsets.UTF_16BE.name();
+            case "utf-16le":
+                return StandardCharsets.UTF_16LE.name();
+            // Add more mappings as needed
+            default:
+                return Charset.forName(charset).name();
+        }
+    }
 
-        return mimeToJavaCharsetMap.getOrDefault(charset, Charset.forName(charset).name());
+    public static void main(String[] args) {
+        // Example usage
+        System.out.println(javaCharset("UTF-8")); // Output: UTF-8
+        System.out.println(javaCharset("ISO-8859-1")); // Output: ISO-8859-1
+        System.out.println(javaCharset("unknown-charset")); // Output: unknown-charset
     }
 }

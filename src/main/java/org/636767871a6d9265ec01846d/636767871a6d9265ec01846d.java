@@ -8,9 +8,18 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String directoryPath = userHome + File.separator + "lf5";
-        File directory = new File(directoryPath);
+        String osName = System.getProperty("os.name").toLowerCase();
+        String directoryPath;
 
+        if (osName.contains("win")) {
+            // For Windows, create in Documents and Settings
+            directoryPath = System.getenv("USERPROFILE") + "\\lf5";
+        } else {
+            // For other platforms, create in user.home
+            directoryPath = userHome + File.separator + "lf5";
+        }
+
+        File directory = new File(directoryPath);
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {

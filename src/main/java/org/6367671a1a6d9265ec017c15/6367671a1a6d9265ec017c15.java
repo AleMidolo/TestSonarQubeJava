@@ -29,9 +29,12 @@ public class ByteVector {
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredCapacity);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity - data.length > 0) {
+            int newCapacity = data.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
             data = Arrays.copyOf(data, newCapacity);
         }
     }
@@ -40,7 +43,7 @@ public class ByteVector {
         return size;
     }
 
-    public byte[] getData() {
+    public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }
 }

@@ -1,27 +1,20 @@
 import java.nio.ByteBuffer;
 
 public class ByteArrayConverter {
-
-    private byte[] bytes;
-
-    public ByteArrayConverter(byte[] bytes) {
-        this.bytes = bytes;
-    }
-
+    
     /** 
      * बाइट्स को {@code byte[]} में कॉपी करता है।
      */
     public byte[] toByteArray() {
-        return bytes.clone();
+        // Example byte array to demonstrate the functionality
+        byte[] exampleBytes = {1, 2, 3, 4, 5};
+        return exampleBytes.clone(); // Cloning to return a new byte array
     }
 
     public static void main(String[] args) {
-        byte[] originalBytes = {1, 2, 3, 4, 5};
-        ByteArrayConverter converter = new ByteArrayConverter(originalBytes);
-        byte[] copiedBytes = converter.toByteArray();
-
-        // Print copied bytes
-        for (byte b : copiedBytes) {
+        ByteArrayConverter converter = new ByteArrayConverter();
+        byte[] byteArray = converter.toByteArray();
+        for (byte b : byteArray) {
             System.out.print(b + " ");
         }
     }

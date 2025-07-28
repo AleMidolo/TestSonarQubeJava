@@ -1,9 +1,9 @@
 class ListNodeImpl<E> {
-    E value;
+    E data;
     ListNodeImpl<E> next;
 
-    ListNodeImpl(E value) {
-        this.value = value;
+    ListNodeImpl(E data) {
+        this.data = data;
         this.next = null;
     }
 }
@@ -15,7 +15,7 @@ public class LinkedList<E> {
         this.head = null;
     }
 
-    /**
+    /** 
      * सूची से गैर-शून्य {@code node} को हटा दें। 
      */
     private boolean unlink(ListNodeImpl<E> node) {

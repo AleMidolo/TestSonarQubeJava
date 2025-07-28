@@ -28,8 +28,8 @@ public class StringUnescaper {
 
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "example\\:identifier";
+        String input = "Hello\\ World\\!";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example:identifier
+        System.out.println(output); // Output: Hello World!
     }
 }

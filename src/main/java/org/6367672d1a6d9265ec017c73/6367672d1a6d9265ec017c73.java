@@ -32,6 +32,8 @@ public class MessagePrinter {
         System.out.println(printer.shouldPrintMessage(1, "foo")); // true
         System.out.println(printer.shouldPrintMessage(2, "bar")); // true
         System.out.println(printer.shouldPrintMessage(3, "foo")); // false
-        System.out.println(printer.shouldPrintMessage(11, "foo")); // true
+        System.out.println(printer.shouldPrintMessage(8, "bar")); // false
+        System.out.println(printer.shouldPrintMessage(10, "foo")); // true
+        System.out.println(printer.shouldPrintMessage(11, "bar")); // true
     }
 }

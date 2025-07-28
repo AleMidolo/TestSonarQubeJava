@@ -1,5 +1,5 @@
 public class FactorialCalculator {
-
+    
     /** 
      * $n$ का फैक्टरियल निकालें।
      * @param n इनपुट संख्या

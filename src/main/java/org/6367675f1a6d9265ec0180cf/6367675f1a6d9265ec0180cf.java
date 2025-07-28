@@ -1,7 +1,5 @@
-import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
-
 import java.util.Set;
+import org.jgrapht.Graph;
 
 public class GraphUtils {
 
@@ -11,14 +9,24 @@ public class GraphUtils {
      * @param vertices उपग्राफ को प्रेरित करने के लिए वर्टिस।
      * @return यदि प्रेरित उपग्राफ एक क्लिक है तो true।
      */
-    private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false;
+    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
+        // Check if the number of edges in the induced subgraph equals the number of edges in a complete graph
+        int vertexCount = vertices.size();
+        int expectedEdges = vertexCount * (vertexCount - 1) / 2; // Complete graph edges formula
+
+        int actualEdges = 0;
+        for (V vertex : vertices) {
+            for (E edge : graph.outgoingEdgesOf(vertex)) {
+                V targetVertex = graph.getEdgeTarget(edge);
+                if (vertices.contains(targetVertex)) {
+                    actualEdges++;
                 }
             }
         }
-        return true;
+
+        // Each edge is counted twice (once from each vertex), so divide by 2
+        actualEdges /= 2;
+
+        return actualEdges == expectedEdges;
     }
 }

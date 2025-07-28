@@ -2,7 +2,7 @@ import java.io.File;
 
 public class ConfigurationDirectoryCreator {
 
-    /** 
+    /**
      * वह निर्देशिका बनाता है जहाँ MRU फ़ाइल सूची लिखी जाएगी। "lf5" निर्देशिका Windows 2000 मशीनों पर Documents और Settings निर्देशिका में बनाई जाती है और सभी अन्य प्लेटफार्मों पर जहाँ भी user.home वेरिएबल इंगित करता है।
      */
     public static void createConfigurationDirectory() {
@@ -20,12 +20,12 @@ public class ConfigurationDirectoryCreator {
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Configuration directory created at: " + directoryPath);
+                System.out.println("Directory created: " + directoryPath);
             } else {
-                System.out.println("Failed to create configuration directory at: " + directoryPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("Configuration directory already exists at: " + directoryPath);
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

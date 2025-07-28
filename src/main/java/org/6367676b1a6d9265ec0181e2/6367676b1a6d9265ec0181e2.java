@@ -1,5 +1,4 @@
 import java.util.Collection;
-import java.util.Iterator;
 
 public class MatchFinder {
     /** 

@@ -7,36 +7,27 @@ public class QueueRepresentation {
         queue = new LinkedList<>();
     }
 
-    /** 
-     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
-     * @return कतार का पाठ्य प्रतिनिधित्व।
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Queue: [");
-        for (int i = 0; i < queue.size(); i++) {
-            sb.append(queue.get(i));
-            if (i < queue.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
     public void enqueue(Object item) {
         queue.addLast(item);
     }
 
     public Object dequeue() {
-        return queue.isEmpty() ? null : queue.removeFirst();
+        return queue.removeFirst();
+    }
+
+    /** 
+     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
+     * @return कतार का पाठ्य प्रतिनिधित्व।
+     */
+    public String toString() {
+        return queue.toString();
     }
 
     public static void main(String[] args) {
         QueueRepresentation queue = new QueueRepresentation();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
+        queue.enqueue("First");
+        queue.enqueue("Second");
+        queue.enqueue("Third");
+        System.out.println(queue.toString()); // Output: [First, Second, Third]
     }
 }

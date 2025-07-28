@@ -1,14 +1,14 @@
 private int parseEndOfLine(String headerPart, int end) {
-    if (headerPart == null || end < 0 || end >= headerPart.length()) {
-        throw new IllegalArgumentException("Invalid headerPart or end index");
+    if (headerPart == null || end < 0 || end > headerPart.length()) {
+        throw new IllegalArgumentException("Invalid input parameters");
     }
 
-    int lineEndIndex = headerPart.indexOf("\r\n", end);
-    if (lineEndIndex == -1) {
-        lineEndIndex = headerPart.length(); // If no CRLF found, return the length of the string
+    int lineEnd = headerPart.indexOf("\r\n", end);
+    if (lineEnd == -1) {
+        lineEnd = headerPart.length();
     } else {
-        lineEndIndex += 2; // Include the length of "\r\n"
+        lineEnd += 2; // Include the length of "\r\n"
     }
 
-    return lineEndIndex;
+    return lineEnd;
 }

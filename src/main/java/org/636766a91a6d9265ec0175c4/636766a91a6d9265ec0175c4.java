@@ -12,19 +12,23 @@ public class StackPopper {
      * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
      */
     private void pop(final String descriptor) {
-        // Logic to pop elements based on the descriptor
-        // For demonstration, let's assume we just pop one element
+        // Example logic to pop based on descriptor
+        // This is a placeholder for actual implementation
+        // Assuming descriptor is a string representation of the type
+        
+        // Here we would typically check the descriptor and pop the appropriate types
+        // For demonstration, we will just pop one item from the stack
         if (!stack.isEmpty()) {
-            Object poppedElement = stack.pop();
-            System.out.println("Popped element: " + poppedElement + " for descriptor: " + descriptor);
+            Object poppedItem = stack.pop();
+            System.out.println("Popped item: " + poppedItem + " for descriptor: " + descriptor);
         } else {
-            System.out.println("Stack is empty. No elements to pop for descriptor: " + descriptor);
+            System.out.println("Stack is empty. No items to pop for descriptor: " + descriptor);
         }
     }
 
-    // Method to push elements onto the stack for testing purposes
-    public void push(Object element) {
-        stack.push(element);
+    // Method to push items onto the stack for testing purposes
+    public void push(Object item) {
+        stack.push(item);
     }
 
     public static void main(String[] args) {
@@ -33,6 +37,7 @@ public class StackPopper {
         stackPopper.push("AbstractType2");
         
         stackPopper.pop("SomeDescriptor");
-        stackPopper.pop("AnotherDescriptor");
+        stackPopper.pop("SomeDescriptor");
+        stackPopper.pop("SomeDescriptor");
     }
 }

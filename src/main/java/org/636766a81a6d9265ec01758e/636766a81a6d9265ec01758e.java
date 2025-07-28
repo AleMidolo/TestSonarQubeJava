@@ -9,46 +9,43 @@ public class PrimeCapacity {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        int capacity = desiredCapacity;
-        if (capacity % 2 == 0) {
-            capacity++;
-        }
-        while (true) {
-            if (isPrime(capacity)) {
-                if (desiredCapacity >= 1000) {
-                    int upperLimit = (int) (desiredCapacity * 1.11);
-                    if (capacity <= upperLimit) {
-                        return capacity;
-                    }
-                } else {
-                    return capacity;
-                }
+        int prime = desiredCapacity;
+        boolean found = false;
+
+        while (!found) {
+            if (isPrime(prime)) {
+                found = true;
+            } else {
+                prime++;
             }
-            capacity += 2; // Check only odd numbers
         }
+        
+        if (desiredCapacity >= 1000) {
+            int upperLimit = (int) (desiredCapacity * 1.11);
+            while (prime < upperLimit) {
+                if (isPrime(prime)) {
+                    return prime;
+                }
+                prime++;
+            }
+        }
+        
+        return prime;
     }
 
-    private static boolean isPrime(int number) {
-        if (number <= 1) {
-            return false;
-        }
-        if (number <= 3) {
-            return true;
-        }
-        if (number % 2 == 0 || number % 3 == 0) {
-            return false;
-        }
-        for (int i = 5; i * i <= number; i += 6) {
-            if (number % i == 0 || number % (i + 2) == 0) {
-                return false;
-            }
+    private static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) return false;
         }
         return true;
     }
 
     public static void main(String[] args) {
         int desiredCapacity = 1000;
-        int primeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + primeCapacity);
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + nextPrimeCapacity);
     }
 }

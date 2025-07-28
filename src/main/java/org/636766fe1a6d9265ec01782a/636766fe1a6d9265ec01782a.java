@@ -13,20 +13,26 @@ public class Utf8Reader {
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
         // Assuming the classFileBuffer contains the constant pool and the necessary offsets
-        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
-        int length = (classFileBuffer[offset] << 8) | (classFileBuffer[offset + 1] & 0xFF);
+        int offset = getUtf8Offset(constantPoolEntryIndex);
+        int length = getUtf8Length(constantPoolEntryIndex);
         
         // Read the UTF-8 bytes and convert to characters
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) classFileBuffer[offset + 2 + i];
+            charBuffer[i] = (char) classFileBuffer[offset + i];
         }
         
         return new String(charBuffer, 0, length);
     }
 
-    private int getConstantPoolEntryOffset(int index) {
-        // This method should return the correct offset for the given constant pool entry index
-        // For simplicity, let's assume each entry is of fixed size (this is not true in real class files)
-        return index * 2; // Placeholder implementation
+    private int getUtf8Offset(int index) {
+        // Logic to retrieve the offset of the UTF-8 entry in the constant pool
+        // This is a placeholder implementation
+        return index; // Replace with actual logic
+    }
+
+    private int getUtf8Length(int index) {
+        // Logic to retrieve the length of the UTF-8 entry in the constant pool
+        // This is a placeholder implementation
+        return 5; // Replace with actual logic
     }
 }

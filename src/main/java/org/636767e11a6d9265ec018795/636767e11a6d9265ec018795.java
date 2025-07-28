@@ -33,14 +33,4 @@ public class CompatibilityChecker {
         }
         return true;
     }
-
-    public static void main(String[] args) {
-        String[] myBuckets = {"bucket1", "bucket2", "bucket3"};
-        CompatibilityChecker checker = new CompatibilityChecker(myBuckets);
-
-        String[] datasetBuckets = {"bucket1", "bucket2", "bucket3"};
-        DataTable dataset = new DataTable(datasetBuckets);
-
-        System.out.println(checker.isCompatible(dataset)); // Should print true
-    }
 }

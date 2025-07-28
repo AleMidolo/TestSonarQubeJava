@@ -1,15 +1,14 @@
 import org.apache.commons.beanutils.BeanMap;
 
-public class MyBeanMap {
+public class BeanMapUtil {
 
-    /**
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. 
-     * Le proprietà di sola lettura e di sola scrittura verranno ignorate.
+    /** 
+     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. Le proprietà di sola lettura e di sola scrittura verranno ignorate.
      * @param map  il BeanMap le cui proprietà devono essere inserite
      */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
         for (Object property : map.keySet()) {
@@ -22,8 +21,8 @@ public class MyBeanMap {
 
     private boolean isWritable(Object property, BeanMap map) {
         // Implement logic to check if the property is writable
-        // This is a placeholder for actual writable check logic
-        return true; // Assume all properties are writable for this example
+        // This is a placeholder for actual writable check
+        return true; // Replace with actual check
     }
 
     private void put(Object property, Object value) {

@@ -1,6 +1,6 @@
 public class TokenParser {
     
-    /** 
+    /**
      * Analizza un token fino a quando non viene incontrato uno dei caratteri terminatori forniti.
      * @param terminators l'array di caratteri terminatori. Qualsiasi di questi caratteri, quando incontrato, segna la fine del token
      * @return il token
@@ -23,7 +23,7 @@ public class TokenParser {
         
         return token.toString();
     }
-    
+
     private boolean isTerminator(char currentChar, char[] terminators) {
         for (char terminator : terminators) {
             if (currentChar == terminator) {

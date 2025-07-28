@@ -25,6 +25,21 @@ public class LoggingBuffer {
     }
 
     public static class LoggingEvent {
-        // Implementation of LoggingEvent class
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public static void main(String[] args) {
+        LoggingBuffer loggingBuffer = new LoggingBuffer(5);
+        loggingBuffer.put(new LoggingEvent("Event 1"));
+        loggingBuffer.put(new LoggingEvent("Event 2"));
+        System.out.println("Current buffer size: " + loggingBuffer.size());
     }
 }

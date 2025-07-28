@@ -7,7 +7,7 @@ import java.util.Vector;
 public static void addToClassPath(Vector<URL> cpV, String dir) {
     File directory = new File(dir);
     if (!directory.exists() || !directory.isDirectory()) {
-        throw new IllegalArgumentException("The provided directory does not exist or is not a directory: " + dir);
+        throw new IllegalArgumentException("The provided directory does not exist or is not a directory.");
     }
 
     File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));

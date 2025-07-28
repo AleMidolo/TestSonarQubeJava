@@ -17,7 +17,7 @@ public class FileSeparatorIndex {
     }
 
     public static void main(String[] args) {
-        // Test examples
+        // Test cases
         System.out.println(indexOfLastSeparator("C:\\Users\\Example\\file.txt")); // Output: 15
         System.out.println(indexOfLastSeparator("/home/user/example/file.txt")); // Output: 16
         System.out.println(indexOfLastSeparator("file.txt")); // Output: -1

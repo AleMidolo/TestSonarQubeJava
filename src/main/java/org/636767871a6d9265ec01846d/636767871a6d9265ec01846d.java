@@ -13,12 +13,12 @@ public class ConfigurationDirectoryCreator {
         if (!directory.exists()) {
             boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory 'lf5' creata con successo in: " + directoryPath);
+                System.out.println("Directory created: " + directoryPath);
             } else {
-                System.out.println("Impossibile creare la directory 'lf5' in: " + directoryPath);
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("La directory 'lf5' esiste già in: " + directoryPath);
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

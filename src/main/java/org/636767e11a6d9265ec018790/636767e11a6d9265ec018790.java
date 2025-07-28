@@ -15,7 +15,7 @@ class ThreadSnapshot {
         this.timestamp = timestamp;
     }
 
-    // Getters and toString() method for debugging
+    // Getters and toString method for debugging
     public String getThreadName() {
         return threadName;
     }
@@ -53,7 +53,7 @@ class ProfileAnalyzeTimeRange {
 
 public class ThreadSnapshotParser {
 
-    /** 
+    /**
      * Carica gli snapshot dei thread nell'intervallo di tempo specificato
      */
     public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {

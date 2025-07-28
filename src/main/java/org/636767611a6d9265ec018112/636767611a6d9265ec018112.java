@@ -1,13 +1,21 @@
-@Override
-protected V provideNextVertex() {
-    // Implementation of the method to provide the next vertex
-    // This is a placeholder implementation and should be replaced with actual logic
-    V nextVertex = getNextVertexFromSomewhere(); // Replace with actual logic to get the next vertex
-    return nextVertex;
-}
+import java.util.Iterator;
 
-// Placeholder method to simulate getting the next vertex
-private V getNextVertexFromSomewhere() {
-    // Logic to retrieve the next vertex
-    return null; // Replace with actual vertex retrieval logic
+public class VertexProvider<V> {
+    private Iterator<V> vertexIterator;
+
+    public VertexProvider(Iterator<V> vertexIterator) {
+        this.vertexIterator = vertexIterator;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override 
+    protected V provideNextVertex() {
+        if (vertexIterator.hasNext()) {
+            return vertexIterator.next();
+        } else {
+            return null; // or throw an exception based on your design
+        }
+    }
 }

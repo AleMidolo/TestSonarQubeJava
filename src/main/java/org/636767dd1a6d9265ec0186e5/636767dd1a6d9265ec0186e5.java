@@ -41,6 +41,6 @@ public class ChannelManager {
         };
 
         manager.addNewTarget(channels, consumer);
-        channels.getConsumers().forEach(c -> c.consume("Hello, World!"));
+        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
     }
 }

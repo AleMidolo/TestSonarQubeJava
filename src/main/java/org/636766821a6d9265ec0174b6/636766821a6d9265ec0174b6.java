@@ -38,6 +38,34 @@ public class GenericTypeResolver {
 
     public static void main(String[] args) {
         // Example usage
-        // Assuming you have a class with generics to test the method
+        Type genericType = new ParameterizedTypeImpl(List.class, new Type[]{String.class});
+        Class<?>[] resolved = resolveArguments(genericType, List.class);
+        System.out.println(Arrays.toString(resolved)); // Should print [class java.lang.String]
+    }
+}
+
+// Helper class to create a ParameterizedType for testing
+class ParameterizedTypeImpl implements ParameterizedType {
+    private final Class<?> raw;
+    private final Type[] actualTypeArguments;
+
+    public ParameterizedTypeImpl(Class<?> raw, Type[] actualTypeArguments) {
+        this.raw = raw;
+        this.actualTypeArguments = actualTypeArguments;
+    }
+
+    @Override
+    public Type[] getActualTypeArguments() {
+        return actualTypeArguments;
+    }
+
+    @Override
+    public Type getRawType() {
+        return raw;
+    }
+
+    @Override
+    public Type getOwnerType() {
+        return null;
     }
 }

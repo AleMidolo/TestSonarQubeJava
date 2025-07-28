@@ -30,6 +30,6 @@ public class LowerBoundCalculator<K> {
     private int calculateLowerBound(K key) {
         // Logica per calcolare il limite inferiore per la chiave
         // Qui si può implementare la logica specifica per il calcolo
-        return key.hashCode() % 100; // Esempio di calcolo basato sul codice hash
+        return key.hashCode() % 100; // Esempio di calcolo
     }
 }

@@ -1,7 +1,7 @@
-public class Bucket {
-    // Assuming Bucket has some properties, for example:
+class Bucket {
+    // Assuming Bucket has some properties
     private int value;
-    private Bucket next;
+    Bucket next;
 
     public Bucket(int value) {
         this.value = value;
@@ -11,17 +11,9 @@ public class Bucket {
     public int getValue() {
         return value;
     }
-
-    public Bucket getNext() {
-        return next;
-    }
-
-    public void setNext(Bucket next) {
-        this.next = next;
-    }
 }
 
-public class BucketList {
+class BucketList {
     private Bucket head;
 
     public BucketList() {
@@ -39,19 +31,19 @@ public class BucketList {
 
         Bucket newBucket = new Bucket(0); // Create a new bucket with a default value
         if (head == bucket) {
-            newBucket.setNext(head);
+            newBucket.next = head;
             head = newBucket;
             return;
         }
 
         Bucket current = head;
-        while (current != null && current.getNext() != bucket) {
-            current = current.getNext();
+        while (current != null && current.next != bucket) {
+            current = current.next;
         }
 
         if (current != null) {
-            newBucket.setNext(bucket);
-            current.setNext(newBucket);
+            newBucket.next = bucket;
+            current.next = newBucket;
         }
     }
 }

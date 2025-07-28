@@ -1,5 +1,5 @@
 public class StringUtil {
-
+    
     /** 
      * Finds the last index within a String, handling <code>null</code>. This method uses  {@link String#lastIndexOf(String)}. 
      */
@@ -15,7 +15,7 @@ public class StringUtil {
         System.out.println(lastIndexOf("Hello World", "o")); // Output: 7
         System.out.println(lastIndexOf("Hello World", "l")); // Output: 9
         System.out.println(lastIndexOf("Hello World", "x")); // Output: -1
-        System.out.println(lastIndexOf(null, "o"));          // Output: -1
+        System.out.println(lastIndexOf(null, "o")); // Output: -1
         System.out.println(lastIndexOf("Hello World", null)); // Output: -1
     }
 }

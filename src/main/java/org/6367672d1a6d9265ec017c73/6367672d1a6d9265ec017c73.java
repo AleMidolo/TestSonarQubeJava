@@ -29,8 +29,11 @@ public class MessagePrinter {
 
     public static void main(String[] args) {
         MessagePrinter printer = new MessagePrinter();
-        System.out.println(printer.shouldPrintMessage(1, "Hello")); // true
-        System.out.println(printer.shouldPrintMessage(2, "Hello")); // false
-        System.out.println(printer.shouldPrintMessage(11, "Hello")); // true
+        System.out.println(printer.shouldPrintMessage(1, "foo")); // true
+        System.out.println(printer.shouldPrintMessage(2, "bar")); // true
+        System.out.println(printer.shouldPrintMessage(3, "foo")); // false
+        System.out.println(printer.shouldPrintMessage(8, "bar")); // false
+        System.out.println(printer.shouldPrintMessage(10, "foo")); // false
+        System.out.println(printer.shouldPrintMessage(11, "foo")); // true
     }
 }

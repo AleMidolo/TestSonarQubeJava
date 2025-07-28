@@ -11,10 +11,10 @@ public class InterceptorChecker {
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
-                return false; // An instance of the class already exists
+                return false;
             }
         }
-        return true; // No instance of the class exists
+        return true;
     }
     
     // Assuming AtmosphereInterceptor is defined somewhere

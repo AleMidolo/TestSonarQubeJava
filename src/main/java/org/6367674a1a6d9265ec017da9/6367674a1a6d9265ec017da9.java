@@ -14,18 +14,25 @@ class DoublyLinkedList<E> {
     private ListNode<E> head;
     private ListNode<E> tail;
 
+    public DoublyLinkedList() {
+        head = null;
+        tail = null;
+    }
+
     public void addListNode(ListNode<E> node) {
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
         }
         if (head == null) {
-            head = tail = node;
-            node.next = node.prev = null;
+            head = node;
+            tail = node;
+            node.next = null;
+            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
-            node.next = null;
             tail = node;
+            tail.next = null;
         }
     }
 
@@ -49,19 +56,27 @@ class DoublyLinkedList<E> {
         }
     }
 
+    /**
+     * Atomically moves all {@link ListNode ListNodes} from {@code list} to this list as if each node was removed with
+     * {@link #removeListNode(ListNodeImpl)} from {@code list} and subsequently added to this list by
+     * {@link #addListNode(ListNodeImpl)}.
+     */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         if (list == null || list.head == null) {
             return; // Nothing to move
         }
-        
-        ListNode<E> current = list.head;
-        while (current != null) {
-            ListNode<E> nextNode = current.next; // Store next node
-            list.removeListNode(current); // Remove from the original list
-            this.addListNode(current); // Add to this list
-            current = nextNode; // Move to the next node
+
+        if (this.head == null) {
+            this.head = list.head;
+            this.tail = list.tail;
+        } else {
+            this.tail.next = list.head;
+            list.head.prev = this.tail;
+            this.tail = list.tail;
         }
-        list.head = null; // Clear the original list
+
+        // Clear the original list
+        list.head = null;
         list.tail = null;
     }
 }

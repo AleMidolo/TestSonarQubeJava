@@ -1,23 +1,5 @@
 import java.util.Objects;
 
-class Edge {
-    private final Node from;
-    private final Node to;
-
-    public Edge(Node from, Node to) {
-        this.from = from;
-        this.to = to;
-    }
-
-    public Node getFrom() {
-        return from;
-    }
-
-    public Node getTo() {
-        return to;
-    }
-}
-
 class Node {
     private final boolean isVirtual;
     private final Node realNode;
@@ -32,11 +14,26 @@ class Node {
     }
 
     public Node getRealNode() {
-        return realNode;
+        return isVirtual ? realNode : this;
     }
 }
 
-public class Graph {
+class Edge {
+    private final Node from;
+    private final Node to;
+
+    public Edge(Node from, Node to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    @Override
+    public String toString() {
+        return "Edge from " + from + " to " + to;
+    }
+}
+
+class Graph {
     private Node currentNode;
     private Node nextNode;
 
@@ -50,8 +47,8 @@ public class Graph {
      * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        Node fromNode = currentNode.getRealNode();
+        Node toNode = nextNode.getRealNode();
         return new Edge(fromNode, toNode);
     }
 }

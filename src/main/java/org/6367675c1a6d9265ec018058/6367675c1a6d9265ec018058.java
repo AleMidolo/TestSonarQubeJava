@@ -11,9 +11,7 @@ public class UniqueStringSupplier {
     public static Supplier<String> createStringSupplier(int start) {
         final int[] current = {start}; // Using an array to hold the current value
 
-        return () -> {
-            return String.valueOf(current[0]++); // Return the current value and increment
-        };
+        return () -> Integer.toString(current[0]++); // Return the current value as a string and increment
     }
 
     public static void main(String[] args) {

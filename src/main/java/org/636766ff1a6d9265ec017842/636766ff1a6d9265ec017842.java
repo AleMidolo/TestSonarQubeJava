@@ -15,7 +15,7 @@ public class ArrayConverter {
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("Array content is null at index: " + i);
+                throw new NullPointerException("Array content is null at index " + i);
             }
             result[i] = array[i];
         }

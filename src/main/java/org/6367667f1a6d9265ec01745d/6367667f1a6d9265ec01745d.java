@@ -1,4 +1,5 @@
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PathSegmentDecoder {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (Exception e) {
-            // Handle decoding exception
+            // Handle exception (e.g., log it)
             return segment; // Return the original segment if decoding fails
         }
     }
@@ -55,15 +56,11 @@ public class PathSegmentDecoder {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            URI uri = new URI("http://example.com/path/to/resource");
-            List<PathSegmentImpl> segments = decodePath(uri, true);
-            for (PathSegmentImpl segment : segments) {
-                System.out.println(segment);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void main(String[] args) throws URISyntaxException {
+        URI uri = new URI("http://example.com/path/to/resource");
+        List<PathSegmentImpl> segments = decodePath(uri, true);
+        for (PathSegmentImpl segment : segments) {
+            System.out.println(segment);
         }
     }
 }

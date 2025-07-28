@@ -12,11 +12,9 @@ public class ConfigurationDirectoryCreator {
         String directoryPath;
 
         if (osName.contains("win")) {
-            // For Windows, create in Documents and Settings
             directoryPath = System.getenv("USERPROFILE") + "\\lf5";
         } else {
-            // For other platforms, create in user.home
-            directoryPath = userHome + File.separator + "lf5";
+            directoryPath = userHome + "/lf5";
         }
 
         File directory = new File(directoryPath);
@@ -25,7 +23,7 @@ public class ConfigurationDirectoryCreator {
             if (created) {
                 System.out.println("Configuration directory created at: " + directoryPath);
             } else {
-                System.err.println("Failed to create configuration directory at: " + directoryPath);
+                System.out.println("Failed to create configuration directory at: " + directoryPath);
             }
         } else {
             System.out.println("Configuration directory already exists at: " + directoryPath);

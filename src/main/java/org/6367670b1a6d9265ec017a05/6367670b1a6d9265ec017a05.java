@@ -2,8 +2,8 @@ public class CharUtils {
     private static final String[] CACHE = new String[128];
 
     static {
-        for (char i = 0; i < CACHE.length; i++) {
-            CACHE[i] = String.valueOf(i);
+        for (char c = 0; c < CACHE.length; c++) {
+            CACHE[c] = String.valueOf(c);
         }
     }
 
@@ -15,7 +15,7 @@ public class CharUtils {
      * @return a String containing the one specified character
      */
     public static String toString(final char ch) {
-        if (ch < 128) {
+        if (ch >= 0 && ch < CACHE.length) {
             return CACHE[ch];
         }
         return String.valueOf(ch);

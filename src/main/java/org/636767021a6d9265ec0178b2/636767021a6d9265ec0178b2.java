@@ -7,7 +7,7 @@ public class AbstractTypePoper {
         this.outputFrameStack = new Stack<>();
     }
 
-    /**
+    /** 
      * Pops as many abstract types from the output frame stack as described by the given descriptor.
      * @param descriptor a type or method descriptor (in which case its argument types are popped).
      */
@@ -23,37 +23,28 @@ public class AbstractTypePoper {
     }
 
     private int getCountFromDescriptor(String descriptor) {
-        // This is a simplified version of counting types based on the descriptor.
-        // In a real implementation, you would parse the descriptor string properly.
+        // This is a simplified example. You would need to parse the descriptor properly.
         if (descriptor.startsWith("(")) {
-            // Method descriptor, count argument types
-            int count = 0;
-            for (char c : descriptor.toCharArray()) {
-                if (c == ',') {
-                    count++;
-                }
-            }
-            return count + 1; // +1 for the last argument
+            // Method descriptor, count the argument types
+            return (descriptor.split(",").length - 1);
         } else {
-            // Type descriptor, count as one
+            // Type descriptor, count as 1
             return 1;
         }
     }
 
-    // Method to simulate pushing to the stack for testing purposes
-    public void push(Object obj) {
-        outputFrameStack.push(obj);
+    public void push(Object item) {
+        outputFrameStack.push(item);
     }
 
-    // Main method for testing
     public static void main(String[] args) {
         AbstractTypePoper poper = new AbstractTypePoper();
         poper.push(new Object());
         poper.push(new Object());
         poper.push(new Object());
 
-        // Pop types based on a method descriptor
-        poper.pop("(II)V"); // This should pop 2 items
-        System.out.println("Popped successfully.");
+        // Example usage
+        poper.pop("(Ljava/lang/String;)V"); // Pops 1 item
+        System.out.println("Popped from stack.");
     }
 }

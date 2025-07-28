@@ -10,65 +10,61 @@ public class StringUnescaper {
             return null;
         }
 
-        StringBuilder unescaped = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         boolean isEscaped = false;
 
-        for (char c : str.toCharArray()) {
+        for (char currentChar : str.toCharArray()) {
             if (isEscaped) {
-                switch (c) {
+                switch (currentChar) {
                     case 'n':
-                        unescaped.append('\n');
+                        result.append('\n');
                         break;
                     case 't':
-                        unescaped.append('\t');
+                        result.append('\t');
                         break;
                     case 'r':
-                        unescaped.append('\r');
-                        break;
-                    case 'b':
-                        unescaped.append('\b');
+                        result.append('\r');
                         break;
                     case 'f':
-                        unescaped.append('\f');
+                        result.append('\f');
                         break;
-                    case '\"':
-                        unescaped.append('\"');
+                    case 'b':
+                        result.append('\b');
+                        break;
+                    case '"':
+                        result.append('"');
                         break;
                     case '\'':
-                        unescaped.append('\'');
+                        result.append('\'');
                         break;
                     case '\\':
-                        unescaped.append('\\');
+                        result.append('\\');
                         break;
                     default:
-                        unescaped.append(c);
+                        result.append(currentChar);
                         break;
                 }
                 isEscaped = false;
             } else {
-                if (c == '\\') {
+                if (currentChar == '\\') {
                     isEscaped = true;
                 } else {
-                    unescaped.append(c);
+                    result.append(currentChar);
                 }
             }
         }
 
         // If the last character was an escape character, append it
         if (isEscaped) {
-            unescaped.append('\\');
+            result.append('\\');
         }
 
-        return unescaped.toString();
+        return result.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
-            String result = unescapeJava(testString);
-            System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
+        String unescapedString = unescapeJava(testString);
+        System.out.println(unescapedString);
     }
 }

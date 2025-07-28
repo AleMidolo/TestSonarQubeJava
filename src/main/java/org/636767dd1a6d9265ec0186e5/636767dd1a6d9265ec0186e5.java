@@ -1,34 +1,41 @@
 import java.util.List;
-
-public class Channels {
-    private List<String> channels;
-
-    public Channels(List<String> channels) {
-        this.channels = channels;
-    }
-
-    public List<String> getChannels() {
-        return channels;
-    }
-
-    public void setChannels(List<String> channels) {
-        this.channels = channels;
-    }
-}
-
-public interface IConsumer {
-    void consume(String channel);
-}
+import java.util.ArrayList;
 
 public class ChannelManager {
 
+    private List<IConsumer> consumers = new ArrayList<>();
+
     /**
      * Agregar nuevos canales de destino.
+     * @param channels Los canales a agregar.
+     * @param consumer El consumidor asociado a los canales.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        List<String> channelList = channels.getChannels();
-        for (String channel : channelList) {
-            consumer.consume(channel);
+        if (channels != null && consumer != null) {
+            // Asociar el consumidor con los canales
+            channels.setConsumer(consumer);
+            // Agregar el consumidor a la lista de consumidores
+            consumers.add(consumer);
+        } else {
+            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
+    }
+}
+
+// Definición de la interfaz IConsumer
+interface IConsumer {
+    void consume(String message);
+}
+
+// Definición de la clase Channels
+class Channels {
+    private IConsumer consumer;
+
+    public void setConsumer(IConsumer consumer) {
+        this.consumer = consumer;
+    }
+
+    public IConsumer getConsumer() {
+        return consumer;
     }
 }

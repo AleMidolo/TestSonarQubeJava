@@ -7,7 +7,7 @@ public class ArrayToList {
 
     /**
      * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)}, pero maneja arreglos nulos.
-     * @param a el arreglo de elementos
+     * @param a el arreglo de elementos.
      * @return una lista respaldada por el arreglo.
      */
     public static <T> List<T> asList(T[] a) {

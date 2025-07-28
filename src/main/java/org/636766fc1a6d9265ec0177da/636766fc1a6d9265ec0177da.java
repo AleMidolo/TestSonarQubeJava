@@ -5,6 +5,6 @@
  * @return true si el carácter es un separador, false en caso contrario.
  */
 private static boolean esSeparadorDeParametro(final char c) {
-    // Consideramos como separadores los espacios, comas, paréntesis de cierre, y otros caracteres comunes.
-    return c == ' ' || c == ',' || c == ')' || c == ']' || c == '}' || c == '\t' || c == '\n' || c == '\r';
+    // Consideramos como separadores los espacios en blanco, comas, paréntesis de cierre, etc.
+    return Character.isWhitespace(c) || c == ',' || c == ')' || c == ';';
 }

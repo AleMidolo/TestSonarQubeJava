@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 public class StreamReader {
 
-    private InputStream inputStream;
+    private final InputStream inputStream;
 
     public StreamReader(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -12,9 +12,6 @@ public class StreamReader {
 
     /**
      * Lee el valor de un campo de tipo {@code string} del flujo.
-     * 
-     * @return el valor del campo de tipo {@code string} leído del flujo.
-     * @throws IOException si ocurre un error de entrada/salida.
      */
     @Override
     public String readString() throws IOException {

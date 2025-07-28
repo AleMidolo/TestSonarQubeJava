@@ -1,5 +1,5 @@
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.Appender;
+import org.apache.log4j.spi.LoggingEvent;
 
 public class Logger {
     private Appender[] appenders;

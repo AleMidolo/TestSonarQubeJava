@@ -12,28 +12,21 @@ public class BroadcastFilter extends BroadcastReceiver {
      */
     protected Object filter(Object msg) {
         // Implement your filtering logic here
-        // For example, you can check if the message is of a certain type
+        // For example, you can check the type of msg and return a filtered result
         if (msg instanceof Intent) {
             Intent intent = (Intent) msg;
-            // Perform some action based on the intent
-            // For example, you can check the action of the intent
-            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-                // Handle boot completed event
-                return "Boot completed event filtered";
+            // Example: Filter based on action
+            if ("com.example.ACTION_FILTER".equals(intent.getAction())) {
+                return intent.getExtras(); // Return the extras as filtered result
             }
         }
-        // Return null or the filtered message
-        return null;
+        return null; // Return null if no filtering is needed or msg is not of expected type
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        // You can call the filter method here if needed
-        Object filteredMsg = filter(intent);
-        if (filteredMsg != null) {
-            // Handle the filtered message
-            System.out.println(filteredMsg);
-        }
+        Object filteredResult = filter(intent);
+        // Handle the filtered result as needed
     }
 }

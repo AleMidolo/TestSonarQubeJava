@@ -1,47 +1,36 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Iterator;
 
 public class AppenderManager {
-    private List<String> appenders;
+    private List<Appender> appenders;
 
-    public AppenderManager() {
-        this.appenders = new ArrayList<>();
+    public AppenderManager(List<Appender> appenders) {
+        this.appenders = appenders;
     }
 
-    /**
-     * पैरामीटर के रूप में दिए गए नाम के साथ एपेंडर को एपेंडर्स की सूची से हटा दें।
-     * @param name एपेंडर का नाम जिसे हटाना है
+    /** 
+     * पैरामीटर के रूप में दिए गए नाम के साथ एपेंडर को एपेंडर्स की सूची से हटा दें।  
      */
     public void removeAppender(String name) {
-        Iterator<String> iterator = appenders.iterator();
+        Iterator<Appender> iterator = appenders.iterator();
         while (iterator.hasNext()) {
-            String appender = iterator.next();
-            if (appender.equals(name)) {
+            Appender appender = iterator.next();
+            if (appender.getName().equals(name)) {
                 iterator.remove();
                 break;
             }
         }
     }
+}
 
-    // Optional: Method to add appenders for testing
-    public void addAppender(String name) {
-        appenders.add(name);
+class Appender {
+    private String name;
+
+    public Appender(String name) {
+        this.name = name;
     }
 
-    // Optional: Method to get appenders for testing
-    public List<String> getAppenders() {
-        return appenders;
-    }
-
-    public static void main(String[] args) {
-        AppenderManager manager = new AppenderManager();
-        manager.addAppender("Appender1");
-        manager.addAppender("Appender2");
-        manager.addAppender("Appender3");
-
-        System.out.println("Before removal: " + manager.getAppenders());
-        manager.removeAppender("Appender2");
-        System.out.println("After removal: " + manager.getAppenders());
+    public String getName() {
+        return name;
     }
 }

@@ -1,10 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConverterLookupService {
+public class ConverterLookup {
+
     private final Map<Class<?>, Converter> converterMap;
 
-    public ConverterLookupService() {
+    public ConverterLookup() {
         this.converterMap = new HashMap<>();
     }
 
@@ -26,8 +27,8 @@ public class ConverterLookupService {
         converterMap.put(clazz, converter);
     }
 
-    // Example Converter interface
+    // Assuming Converter is an interface or class defined elsewhere
     public interface Converter {
-        Object convert(Object input);
+        // Define converter methods here
     }
 }

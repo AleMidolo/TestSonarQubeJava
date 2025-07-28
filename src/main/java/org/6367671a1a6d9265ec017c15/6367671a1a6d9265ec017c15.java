@@ -18,7 +18,7 @@ public class ByteVector {
             }
         } else {
             if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IllegalArgumentException("Invalid byteOffset or byteLength");
+                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
@@ -39,5 +39,9 @@ public class ByteVector {
 
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

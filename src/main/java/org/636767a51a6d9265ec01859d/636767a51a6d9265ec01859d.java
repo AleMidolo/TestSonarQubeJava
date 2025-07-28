@@ -1,29 +1,26 @@
-/**
- * यदि आंतरिक ऐरे की सामग्री और प्रदान किए गए ऐरे में मेल खाते हैं, तो सत्य लौटाता है।
- */
-public boolean equals(final byte[] data, int offset, final int len) {
-    if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
-        return false;
-    }
+import java.util.Arrays;
 
-    // Assuming `internalArray` is the internal array to compare with
-    if (internalArray == null || internalArray.length != len) {
-        return false;
-    }
+public class ArrayComparator {
 
-    for (int i = 0; i < len; i++) {
-        if (internalArray[i] != data[offset + i]) {
+    /**
+     * यदि आंतरिक ऐरे की सामग्री और प्रदान किए गए ऐरे में मेल खाते हैं, तो सत्य लौटाता है।
+     * 
+     * @param data प्रदान किया गया ऐरे
+     * @param offset ऐरे में शुरुआती स्थिति
+     * @param len तुलना करने के लिए लंबाई
+     * @return सत्य यदि मेल खाते हैं, अन्यथा असत्य
+     */
+    public boolean equals(final byte[] internalArray, final byte[] data, int offset, final int len) {
+        if (internalArray == null || data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
             return false;
         }
+
+        for (int i = 0; i < len; i++) {
+            if (internalArray[i] != data[offset + i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
-
-    return true;
-}
-
-// Assuming `internalArray` is a class-level variable
-private byte[] internalArray;
-
-// Constructor or method to set the internal array
-public void setInternalArray(byte[] array) {
-    this.internalArray = array;
 }

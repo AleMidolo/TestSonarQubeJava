@@ -26,9 +26,8 @@ public class SuffixSumCalculator {
 
     public static void main(String[] args) {
         SuffixSumCalculator calculator = new SuffixSumCalculator();
-        List<Integer> bounds = List.of(1, 2, 3, 4, 5);
+        List<Integer> bounds = List.of(1, 2, 3, 4);
         Pair<List<Integer>, Long> result = calculator.computeSuffixSum(bounds);
-
         System.out.println("Suffix Sums: " + result.getKey());
         System.out.println("Total Sum: " + result.getValue());
     }

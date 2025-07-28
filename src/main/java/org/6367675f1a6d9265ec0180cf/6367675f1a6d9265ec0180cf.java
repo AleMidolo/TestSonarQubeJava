@@ -11,9 +11,9 @@ public class GraphUtils {
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         // Check if every pair of vertices in the set is connected by an edge
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
+        for (V u : vertices) {
+            for (V v : vertices) {
+                if (!u.equals(v) && !graph.containsEdge(u, v)) {
                     return false;
                 }
             }

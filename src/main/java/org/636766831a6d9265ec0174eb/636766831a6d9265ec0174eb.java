@@ -1,27 +1,30 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Stack;
+import java.util.Scanner;
 
 private void addReverse(final File[] files) {
-    Stack<String> stack = new Stack<>();
-    
-    // Read all files and push their content into the stack
-    for (File file : files) {
-        try (java.util.Scanner scanner = new java.util.Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                stack.push(scanner.nextLine());
+    try {
+        StringBuilder combinedContent = new StringBuilder();
+        
+        // Read each file in reverse order
+        for (int i = files.length - 1; i >= 0; i--) {
+            File file = files[i];
+            if (file.exists() && file.isFile()) {
+                Scanner scanner = new Scanner(file);
+                while (scanner.hasNextLine()) {
+                    combinedContent.append(scanner.nextLine()).append("\n");
+                }
+                scanner.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-    
-    // Write the content in reverse order to a new file
-    try (FileWriter writer = new FileWriter("reversed_output.txt")) {
-        while (!stack.isEmpty()) {
-            writer.write(stack.pop() + System.lineSeparator());
+        
+        // Write the combined content to a new file
+        File outputFile = new File("combined_reverse.txt");
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            writer.write(combinedContent.toString());
         }
+        
     } catch (IOException e) {
         e.printStackTrace();
     }

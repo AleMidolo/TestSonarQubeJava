@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAppender extends AppenderSkeleton {
-    private List<String> connectedClients = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
-    public void addClient(String client) {
-        connectedClients.add(client);
+    public void addClient(Client client) {
+        clients.add(client);
     }
 
     @Override
     protected void append(LoggingEvent event) {
         String message = event.getRenderedMessage();
-        for (String client : connectedClients) {
-            System.out.println("Sending to client " + client + ": " + message);
+        for (Client client : clients) {
+            client.write(message);
         }
     }
 
@@ -26,5 +26,12 @@ public class CustomAppender extends AppenderSkeleton {
     @Override
     public boolean requiresLayout() {
         return false;
+    }
+
+    // Dummy Client class for demonstration
+    public static class Client {
+        public void write(String message) {
+            System.out.println("Client received: " + message);
+        }
     }
 }

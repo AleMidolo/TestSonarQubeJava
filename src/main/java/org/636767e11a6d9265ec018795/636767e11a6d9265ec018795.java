@@ -3,46 +3,34 @@ import java.util.Objects;
 public class BucketCompatibilityChecker {
 
     /**
-     * @param dataset the dataset to check for bucket compatibility
-     * @return true if the buckets are compatible, false otherwise
+     * @param dataset डेटा टेबल जिसकी जांच की जानी है
+     * @return यदि बकेट समान है तो true लौटाता है।
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
+        // Assuming DataTable has a method getBucket() that returns the bucket identifier
+        String bucket1 = dataset.getBucket();
+        String bucket2 = this.getBucket(); // Assuming this class has a getBucket() method
 
-        // Assuming DataTable has a method getBuckets() that returns an array of buckets
-        Bucket[] buckets = dataset.getBuckets();
+        // Compare the two buckets
+        return Objects.equals(bucket1, bucket2);
+    }
 
-        if (buckets == null || buckets.length == 0) {
-            return false;
-        }
-
-        // Compare all buckets to the first one
-        Bucket firstBucket = buckets[0];
-        for (Bucket bucket : buckets) {
-            if (!Objects.equals(bucket, firstBucket)) {
-                return false;
-            }
-        }
-
-        return true;
+    // Assuming this class has a method to get the bucket identifier
+    public String getBucket() {
+        // Return the bucket identifier for this instance
+        return "defaultBucket"; // Replace with actual logic
     }
 }
 
-// Assuming Bucket and DataTable classes are defined elsewhere
-class Bucket {
-    // Bucket properties and methods
-}
-
+// Assuming DataTable class is defined as follows:
 class DataTable {
-    private Bucket[] buckets;
+    private String bucket;
 
-    public DataTable(Bucket[] buckets) {
-        this.buckets = buckets;
+    public DataTable(String bucket) {
+        this.bucket = bucket;
     }
 
-    public Bucket[] getBuckets() {
-        return buckets;
+    public String getBucket() {
+        return bucket;
     }
 }

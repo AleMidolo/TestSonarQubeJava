@@ -3,7 +3,7 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
         return; // Invalid input, do nothing
     }
 
-    // Split the buffer into words
+    // Split the buffer into words starting from nameStart
     String[] words = buf.substring(nameStart).split("\\s+");
 
     // Abbreviate each word except the last one
@@ -16,6 +16,6 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
     // Reconstruct the abbreviated name
     String abbreviatedName = String.join(" ", words);
 
-    // Replace the original name with the abbreviated name
+    // Replace the original name with the abbreviated version
     buf.replace(nameStart, buf.length(), abbreviatedName);
 }

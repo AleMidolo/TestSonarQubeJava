@@ -4,14 +4,15 @@ public class ConfigurationInitializer {
      * कॉन्फ़िगरेशन को प्रारंभ करें, जैसे कि वितरण पथ की जांच करें
      */
     public void init() {
-        String distributionPath = System.getProperty("distribution.path");
+        // Check the distribution path
+        String distributionPath = System.getenv("DISTRIBUTION_PATH");
         
         if (distributionPath == null || distributionPath.isEmpty()) {
-            throw new IllegalArgumentException("Distribution path is not set.");
+            System.out.println("Distribution path is not set. Please configure it.");
+        } else {
+            System.out.println("Distribution path is set to: " + distributionPath);
+            // Additional initialization logic can be added here
         }
-        
-        // Perform additional initialization logic here
-        System.out.println("Configuration initialized with distribution path: " + distributionPath);
     }
 
     public static void main(String[] args) {

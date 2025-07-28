@@ -1,7 +1,6 @@
 import java.util.Collection;
-import java.util.Iterator;
 
-public class Main {
+public class MatchFinder {
     /** 
      * '<code>candidates</code>' में से पहला तत्व लौटाएं जो '<code>source</code>' में मौजूद है। यदि '<code>candidates</code>' में कोई तत्व '<code>source</code>' में नहीं है, तो <code>null</code> लौटाएं। पुनरावृत्ति का क्रम {@link Collection} कार्यान्वयन विशिष्ट है।
      * @param source स्रोत संग्रह
@@ -15,14 +14,5 @@ public class Main {
             }
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<String> source = List.of("apple", "banana", "cherry");
-        Collection<String> candidates = List.of("grape", "banana", "orange");
-
-        Object match = findFirstMatch(source, candidates);
-        System.out.println(match); // Output: banana
     }
 }

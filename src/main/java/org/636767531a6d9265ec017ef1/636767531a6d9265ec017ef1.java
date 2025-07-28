@@ -1,6 +1,7 @@
 import java.awt.geom.Point2D;
 
 public class PointComparison {
+
     /** 
      * दो बिंदुओं की समानता की तुलना करें, सहिष्णुता 1e-9 का उपयोग करते हुए।
      * @param p1 पहला बिंदु

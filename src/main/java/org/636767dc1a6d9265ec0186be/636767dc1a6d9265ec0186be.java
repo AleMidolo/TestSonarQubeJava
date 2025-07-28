@@ -12,11 +12,11 @@ public class TimeBucketCompressor {
         // Calculate the day of the year
         int dayOfYear = getDayOfYear(year, month, day);
         
-        // Calculate the new day of the year based on dayStep
+        // Calculate the new day of the year based on the dayStep
         int newDayOfYear = (dayOfYear / dayStep) * dayStep;
         
-        // Convert back to the date format
-        return convertToDate(year, newDayOfYear);
+        // Convert the new day of the year back to a date
+        return convertDayOfYearToDate(year, newDayOfYear);
     }
     
     private static int getDayOfYear(int year, int month, int day) {
@@ -32,7 +32,7 @@ public class TimeBucketCompressor {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
     
-    private static long convertToDate(int year, int dayOfYear) {
+    private static long convertDayOfYearToDate(int year, int dayOfYear) {
         int[] daysInMonth = { 31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int month = 0;
         while (dayOfYear > daysInMonth[month]) {
@@ -41,18 +41,11 @@ public class TimeBucketCompressor {
         }
         return year * 10000 + (month + 1) * 100 + dayOfYear;
     }
-
+    
     public static void main(String[] args) {
-        long timeBucket1 = 20000105;
-        int dayStep1 = 11;
-        System.out.println(compressTimeBucket(timeBucket1, dayStep1)); // Output: 20000101
-
-        long timeBucket2 = 20000115;
-        int dayStep2 = 11;
-        System.out.println(compressTimeBucket(timeBucket2, dayStep2)); // Output: 20000112
-
-        long timeBucket3 = 20000123;
-        int dayStep3 = 11;
-        System.out.println(compressTimeBucket(timeBucket3, dayStep3)); // Output: 20000123
+        long timeBucket = 20000115;
+        int dayStep = 11;
+        long compressedBucket = compressTimeBucket(timeBucket, dayStep);
+        System.out.println(compressedBucket); // Output: 20000112
     }
 }

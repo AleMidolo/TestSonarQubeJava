@@ -36,6 +36,8 @@ class DoublyLinkedList<E> {
         } else {
             tail = node.prev;
         }
+        node.next = null;
+        node.prev = null;
     }
 
     public ListNode<E> getHead() {

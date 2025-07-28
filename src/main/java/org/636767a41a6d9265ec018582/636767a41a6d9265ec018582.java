@@ -12,10 +12,8 @@ public class MessageSerializer {
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message to a byte array
         int size = schema.getSerializedSize(message);
-        // Write the size of the message
         out.write(intToByteArray(size));
-        // Serialize the message and write it to the output stream
-        schema.writeTo(message, out, buffer);
+        schema.writeTo(out, message, buffer);
         return size;
     }
 

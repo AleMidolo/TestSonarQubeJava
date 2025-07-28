@@ -1,5 +1,5 @@
 public class ArrayLengthChecker {
-    
+
     /** 
      * <p>जांचता है कि क्या दो ऐरे एक ही लंबाई के हैं, <code>null</code> ऐरे को लंबाई <code>0</code> के रूप में मानते हुए।</p>
      * @param array1 पहला ऐरे, <code>null</code> हो सकता है

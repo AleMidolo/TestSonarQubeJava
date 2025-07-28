@@ -1,8 +1,10 @@
+import java.util.Set;
+
 public class FieldChecker {
+    
+    private Set<String> properties;
 
-    private Fields properties;
-
-    public FieldChecker(Fields properties) {
+    public FieldChecker(Set<String> properties) {
         this.properties = properties;
     }
 
@@ -11,7 +13,7 @@ public class FieldChecker {
      */
     private boolean containsAllFields(Fields fields) {
         for (String field : fields.getFieldNames()) {
-            if (!properties.containsField(field)) {
+            if (!properties.contains(field)) {
                 return false;
             }
         }
@@ -28,9 +30,5 @@ class Fields {
 
     public Set<String> getFieldNames() {
         return fieldNames;
-    }
-
-    public boolean containsField(String field) {
-        return fieldNames.contains(field);
     }
 }

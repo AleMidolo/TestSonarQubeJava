@@ -1,78 +1,37 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javafx.util.Pair;
 
-class Graph {
-    private List<Pair<Integer, Integer>> vertices;
-    private List<Edge> edges;
+public class Graph {
+    // Assuming E is a placeholder for the edge type in the graph
+    private List<Edge> edges; // List of edges in the graph
+    private List<Vertex> vertices; // List of vertices in the graph
 
-    public Graph() {
-        this.vertices = new ArrayList<>();
-        this.edges = new ArrayList<>();
-    }
-
-    public void addVertex(int x, int y) {
-        vertices.add(new Pair<>(x, y));
-    }
-
-    public void addEdge(Edge edge) {
-        edges.add(edge);
-    }
-
+    // Method to compute the global separator list
     private List<Pair<List<Pair<Integer, Integer>>, Edge>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparators = new ArrayList<>();
+        List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
 
         for (Edge edge : edges) {
-            List<Pair<Integer, Integer>> separators = findMinSeparators(edge);
-            globalSeparators.add(new Pair<>(separators, edge));
+            List<Pair<Integer, Integer>> separators = computeSeparatorsForEdge(edge);
+            globalSeparatorList.add(new Pair<>(separators, edge));
         }
 
-        return globalSeparators;
+        return globalSeparatorList;
     }
 
-    private List<Pair<Integer, Integer>> findMinSeparators(Edge edge) {
-        // Placeholder for actual separator finding logic
-        List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Logic to find minimum separators for the given edge
-        return separators;
+    // Placeholder method to compute separators for a given edge
+    private List<Pair<Integer, Integer>> computeSeparatorsForEdge(Edge edge) {
+        // Logic to compute the minimum separators for the given edge
+        // This is a stub and should be replaced with actual implementation
+        return new ArrayList<>();
     }
 
-    // Pair class to hold two values
-    public static class Pair<K, V> {
-        private K key;
-        private V value;
-
-        public Pair(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
-        }
+    // Placeholder classes for Edge and Vertex
+    private class Edge {
+        // Edge properties
     }
 
-    // Edge class to represent an edge in the graph
-    public static class Edge {
-        private int start;
-        private int end;
-
-        public Edge(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
+    private class Vertex {
+        // Vertex properties
     }
 }

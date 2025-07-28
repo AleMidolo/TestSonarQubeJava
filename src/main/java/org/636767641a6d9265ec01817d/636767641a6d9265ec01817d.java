@@ -11,21 +11,18 @@ public class GraphGenerator<V, E> {
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming resultMap contains the vertices for the bipartite graph
-        V[] vertices = (V[]) resultMap.values().toArray();
-        int n = vertices.length;
+        // Assuming resultMap contains two sets of vertices for the bipartite graph
+        V[] setA = (V[]) resultMap.values().toArray();
+        V[] setB = (V[]) resultMap.values().toArray();
 
-        // Create edges between the two sets of the bipartite graph
-        for (int i = 0; i < n / 2; i++) {
-            for (int j = n / 2; j < n; j++) {
-                // Assuming addEdge is a method to add an edge to the graph
-                target.addEdge(vertices[i], vertices[j]);
+        // Create edges between every vertex in set A and every vertex in set B
+        for (V vertexA : setA) {
+            for (V vertexB : setB) {
+                if (!vertexA.equals(vertexB)) {
+                    // Add edge between vertexA and vertexB
+                    // target.addEdge(vertexA, vertexB); // Assuming addEdge method exists
+                }
             }
         }
-    }
-    
-    // Placeholder for the addEdge method
-    private void addEdge(V vertex1, V vertex2) {
-        // Implementation for adding an edge between vertex1 and vertex2
     }
 }

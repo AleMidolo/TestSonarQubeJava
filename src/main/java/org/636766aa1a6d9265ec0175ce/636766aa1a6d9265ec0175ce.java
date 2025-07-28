@@ -12,10 +12,10 @@ public class StackMapFrameVisitor {
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         // यहाँ पर फ्रेम की यात्रा शुरू करने की प्रक्रिया को लागू करें
         // उदाहरण के लिए, हम currentFrame को अपडेट कर सकते हैं
-        currentFrame = offset + numLocal + numStack;
-        
+        currentFrame = offset; // या किसी अन्य लॉजिक के अनुसार
+        // स्थानीय चर और स्टैक तत्वों की संख्या का उपयोग करें
         // अगले तत्व का अनुक्रमांक लौटाएं
-        return currentFrame;
+        return currentFrame + numLocal + numStack; // यह एक उदाहरण है
     }
 
     public static void main(String[] args) {

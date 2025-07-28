@@ -10,30 +10,33 @@ class BucketList {
     }
 
     /**
-     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है。
+     * इस बकेट को डेटा संरचना में {@code bucket} से पहले डालता है।
      * @param bucket वह बकेट है, जो इस बकेट के बाद आएगा।
      */
     void insertBefore(Bucket bucket) {
-        if (bucket == null) {
-            throw new IllegalArgumentException("Bucket cannot be null");
+        if (head == null || bucket == null) {
+            return; // No insertion if the list is empty or bucket is null
         }
 
-        Bucket newBucket = new Bucket(); // Create a new bucket instance
+        // Create a new bucket to insert
+        Bucket newBucket = new Bucket();
         // Logic to insert newBucket before the specified bucket
-        if (head == null) {
-            head = newBucket; // If the list is empty, set head to newBucket
-        } else {
-            // Traverse the list to find the bucket before which to insert
-            Bucket current = head;
-            while (current != null) {
-                if (current.equals(bucket)) {
-                    // Insert newBucket before current
-                    // Assuming we have a way to link buckets
-                    // This is a placeholder for the actual insertion logic
-                    break;
-                }
-                current = current.next; // Assuming Bucket has a next property
-            }
+        // This is a placeholder for the actual insertion logic
+        // Assuming we have a way to find the previous bucket
+
+        Bucket current = head;
+        Bucket previous = null;
+
+        while (current != null && current != bucket) {
+            previous = current;
+            current = current.next; // Assuming Bucket has a next property
         }
+
+        if (previous != null) {
+            previous.next = newBucket; // Link previous to newBucket
+        } else {
+            head = newBucket; // If inserting at the head
+        }
+        newBucket.next = bucket; // Link newBucket to the bucket
     }
 }

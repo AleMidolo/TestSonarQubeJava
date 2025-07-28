@@ -44,14 +44,13 @@ class Graph {
      * @return वर्तमान नोड से अगले नोड तक एक किनारा
      */
     public Edge edgeToNext() {
-        Node realFrom = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node realTo = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
+        Node realFrom = currentNode.isVirtual() ? getRealEquivalent(currentNode) : currentNode;
+        Node realTo = nextNode.isVirtual() ? getRealEquivalent(nextNode) : nextNode;
         return new Edge(realFrom, realTo);
     }
 
-    private Node getRealNode(Node virtualNode) {
-        // Placeholder for logic to get the real node corresponding to a virtual node
-        // This should be replaced with actual implementation
-        return new Node(false); // Assuming a new real node is created for demonstration
+    private Node getRealEquivalent(Node virtualNode) {
+        // Placeholder for real equivalent logic
+        return new Node(false); // Assuming a non-virtual node for demonstration
     }
 }

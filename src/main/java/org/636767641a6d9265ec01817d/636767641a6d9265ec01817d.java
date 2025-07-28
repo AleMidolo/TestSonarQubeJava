@@ -1,30 +1,28 @@
 import java.util.Map;
 
-public class BipartiteGraphGenerator<V, E> {
+public class Graph<V, E> {
+    // Graph implementation details would go here
+}
+
+public class GraphGenerator<V, E> {
 
     /**
-     * Construir un grafo bipartito completo
+     * एक पूर्ण द्विभाजित ग्राफ का निर्माण करें
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        if (resultMap == null || resultMap.size() < 2) {
-            throw new IllegalArgumentException("resultMap must contain at least two vertices.");
-        }
+        // Assuming resultMap contains two sets of vertices for the bipartite graph
+        V[] setA = (V[]) resultMap.values().toArray();
+        V[] setB = (V[]) resultMap.values().toArray();
 
-        // Split the resultMap into two sets
-        V[] vertices = (V[]) resultMap.values().toArray();
-        int mid = vertices.length / 2;
-
-        // Add edges between the two sets
-        for (int i = 0; i < mid; i++) {
-            for (int j = mid; j < vertices.length; j++) {
-                target.addEdge(vertices[i], vertices[j]);
+        // Create edges between every vertex in setA and every vertex in setB
+        for (V vertexA : setA) {
+            for (V vertexB : setB) {
+                if (!vertexA.equals(vertexB)) {
+                    // Add edge between vertexA and vertexB in the target graph
+                    // target.addEdge(vertexA, vertexB); // Uncomment and implement this method
+                }
             }
         }
     }
-}
-
-// Assuming a simple Graph interface
-interface Graph<V, E> {
-    void addEdge(V source, V destination);
 }

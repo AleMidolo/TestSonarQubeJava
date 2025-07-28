@@ -3,28 +3,27 @@ import java.util.Arrays;
 public class ArrayComparer {
     
     /** 
-     * Devuelve verdadero si el contenido del array interno y el array proporcionado coinciden.
+     * यदि आंतरिक ऐरे की सामग्री और प्रदान किए गए ऐरे में मेल खाते हैं, तो सत्य लौटाता है।
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
-            return false;
-        }
+        // Assuming we have an internal array to compare with
+        byte[] internalArray = getInternalArray(); // This method should return the internal array
         
-        byte[] internalArray = getInternalArray(); // Assume this method retrieves the internal array
-        if (internalArray.length < len) {
-            return false;
+        if (offset < 0 || len < 0 || offset + len > internalArray.length || len > data.length) {
+            return false; // Out of bounds check
         }
         
         for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
-                return false;
+            if (internalArray[offset + i] != data[i]) {
+                return false; // If any byte does not match, return false
             }
         }
-        return true;
+        return true; // All bytes matched
     }
     
+    // Placeholder for the internal array retrieval
     private byte[] getInternalArray() {
-        // This method should return the internal byte array for comparison
-        return new byte[] {1, 2, 3, 4, 5}; // Example internal array
+        // Example internal array
+        return new byte[] {1, 2, 3, 4, 5};
     }
 }

@@ -1,11 +1,10 @@
-public class ArrayUtils {
-
+public class ArrayReverser {
     /** 
-     * Invierte el orden de los elementos en el rango especificado dentro del arreglo dado.
-     * @param <V> el tipo de elementos en el arreglo
-     * @param arr el arreglo
-     * @param from el índice del primer elemento (inclusive) dentro del rango a invertir
-     * @param to el índice del último elemento (inclusive) dentro del rango a invertir
+     * निर्दिष्ट सीमा के भीतर दिए गए ऐरे में तत्वों के क्रम को उलटता है।
+     * @param < V > ऐरे में तत्वों का प्रकार
+     * @param arr ऐरे
+     * @param from उलटने के लिए सीमा के भीतर पहले तत्व का अनुक्रमांक (समावेशी)
+     * @param to उलटने के लिए सीमा के भीतर अंतिम तत्व का अनुक्रमांक (समावेशी)
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {

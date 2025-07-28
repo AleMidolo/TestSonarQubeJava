@@ -4,16 +4,18 @@ import org.atmosphere.cpr.Action;
 public class MyAtmosphereHandler {
 
     /**
-     * Suspende automáticamente el {@link AtmosphereResource} basado en el valor de {@link AtmosphereResource.TRANSPORT}.
-     * @param r un {@link AtmosphereResource}
+     * {@link AtmosphereResource} को {@link AtmosphereResource.TRANSPORT} मान के आधार पर स्वचालित रूप से निलंबित करें।
+     * @param r एक {@link AtmosphereResource}
      * @return {@link Action#CONTINUE}
      */
-    @Override 
+    @Override
     public Action inspect(AtmosphereResource r) {
-        // Aquí se puede agregar lógica para suspender el recurso basado en el transporte
-        // Por ejemplo, si el transporte es HTTP, se puede suspender el recurso
-        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
-            r.suspend();
+        if (r.getTransport() != null) {
+            // Logic to suspend the resource based on the transport type
+            // For example, if the transport is "LONG_POLLING", we can suspend it
+            if (r.getTransport().equals(AtmosphereResource.TRANSPORT.LONG_POLLING)) {
+                r.suspend();
+            }
         }
         return Action.CONTINUE;
     }

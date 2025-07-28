@@ -1,46 +1,46 @@
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathDecoder {
+public class PathSegmentDecoder {
 
     /** 
-     * Decodifica el componente de ruta de una URI como segmentos de ruta.
-     * @param u la URI. Si el componente de ruta es un componente de ruta absoluto, el '/' inicial se ignora y no se considera un delimitador de un segmento de ruta.
-     * @param decode verdadero si los segmentos de ruta del componente de ruta deben estar en forma decodificada.
-     * @return la lista de segmentos de ruta.
+     * URI के पथ घटक को पथ खंडों के रूप में डिकोड करें।
+     * @param u URI। यदि पथ घटक एक पूर्ण पथ घटक है, तो अग्रणी '/' को अनदेखा किया जाता है और इसे पथ खंड के विभाजक के रूप में नहीं माना जाता है।
+     * @param decode यदि पथ घटक के पथ खंडों को डिकोडेड रूप में होना चाहिए तो true।
+     * @return पथ खंडों की सूची।
      */
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
         
-        // Ignorar el '/' inicial si es un componente de ruta absoluto
+        // Remove leading '/' if present
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
         
-        String[] pathSegments = path.split("/");
+        // Split the path into segments
+        String[] parts = path.split("/");
         
-        for (String segment : pathSegments) {
+        for (String part : parts) {
             if (decode) {
-                segment = decodeSegment(segment);
+                part = decodeURIComponent(part);
             }
-            segments.add(new PathSegmentImpl(segment));
+            segments.add(new PathSegmentImpl(part));
         }
         
         return segments;
     }
-
-    private static String decodeSegment(String segment) {
+    
+    private static String decodeURIComponent(String component) {
         try {
-            return java.net.URLDecoder.decode(segment, "UTF-8");
+            return java.net.URLDecoder.decode(component, "UTF-8");
         } catch (Exception e) {
-            // En caso de error, devolver el segmento original
-            return segment;
+            return component; // Return the original if decoding fails
         }
     }
-
+    
+    // Dummy implementation of PathSegmentImpl for demonstration purposes
     public static class PathSegmentImpl {
         private String segment;
 
@@ -48,25 +48,9 @@ public class PathDecoder {
             this.segment = segment;
         }
 
-        public String getSegment() {
-            return segment;
-        }
-
         @Override
         public String toString() {
             return segment;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            URI uri = new URI("http://example.com/path/to/resource");
-            List<PathSegmentImpl> segments = decodePath(uri, true);
-            for (PathSegmentImpl segment : segments) {
-                System.out.println(segment);
-            }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         }
     }
 }

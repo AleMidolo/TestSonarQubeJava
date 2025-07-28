@@ -1,24 +1,19 @@
-public class HeaderParser {
-
-    /** 
-     * Omite bytes hasta el final de la línea actual.
-     * @param headerPart Las cabeceras que se están analizando.
-     * @param end Índice del último byte que aún no ha sido procesado.
-     * @return Índice de la secuencia \r\n, que indica el final de la línea.
-     */
-    private int parseEndOfLine(String headerPart, int end) {
-        int index = headerPart.indexOf("\r\n", 0);
-        if (index == -1 || index > end) {
-            return end; // No se encontró el final de la línea o está fuera del rango
-        }
-        return index; // Retorna el índice donde se encuentra \r\n
+private int parseEndOfLine(String headerPart, int end) {
+    // Check if the end index is within the bounds of the headerPart string
+    if (end < 0 || end >= headerPart.length()) {
+        throw new IllegalArgumentException("End index is out of bounds");
     }
 
-    public static void main(String[] args) {
-        HeaderParser parser = new HeaderParser();
-        String headers = "Header1: value1\r\nHeader2: value2\r\n";
-        int end = headers.length();
-        int lineEndIndex = parser.parseEndOfLine(headers, end);
-        System.out.println("End of line index: " + lineEndIndex);
+    // Find the end of the line by searching for the line terminators
+    int lineEnd = headerPart.indexOf("\r\n", end);
+    if (lineEnd == -1) {
+        lineEnd = headerPart.indexOf('\n', end);
     }
+    if (lineEnd == -1) {
+        // If no line end is found, return the length of the headerPart
+        return headerPart.length();
+    }
+
+    // Return the index of the end of the line
+    return lineEnd + 2; // +2 to include the length of the line terminators
 }

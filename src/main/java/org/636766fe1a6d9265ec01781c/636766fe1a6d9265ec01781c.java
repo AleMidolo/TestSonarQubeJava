@@ -1,25 +1,30 @@
 public class CharUtils {
+    private static final Character[] cache = new Character[128];
+
+    static {
+        for (int i = 0; i < cache.length; i++) {
+            cache[i] = (char) i;
+        }
+    }
+
     /**
-     * <p>Convierte el carácter a un objeto "Character".</p> 
-     * <p>Para caracteres ASCII de 7 bits, utiliza una caché que devolverá el mismo objeto "Character" cada vez.</p> 
+     * <p>चरित्र को एक Character में परिवर्तित करता है।</p> 
+     * <p>ASCII 7 बिट चरित्रों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही Character ऑब्जेक्ट लौटाता है।</p> 
      * <pre> CharUtils.toCharacterObject(' ')  = ' ' CharUtils.toCharacterObject('A')  = 'A' </pre>
-     * @param ch  el carácter a convertir
-     * @return un objeto "Character" del carácter especificado
+     * @param ch  वह चरित्र जिसे परिवर्तित करना है
+     * @return निर्दिष्ट चरित्र का एक Character
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch >= 0 && ch <= 127) {
-            return CharacterCache.cache[ch];
+        if (ch >= 0 && ch < 128) {
+            return cache[ch];
         }
         return new Character(ch);
     }
 
-    private static class CharacterCache {
-        private static final Character[] cache = new Character[128];
-
-        static {
-            for (int i = 0; i < cache.length; i++) {
-                cache[i] = new Character((char) i);
-            }
-        }
+    public static void main(String[] args) {
+        System.out.println(CharUtils.toCharacterObject(' ')); // Output: ' '
+        System.out.println(CharUtils.toCharacterObject('A')); // Output: 'A'
+        System.out.println(CharUtils.toCharacterObject('Z')); // Output: 'Z'
+        System.out.println(CharUtils.toCharacterObject((char) 128)); // Output: ''
     }
 }

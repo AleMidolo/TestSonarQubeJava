@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSONWriter;
 public class JsonSerializer {
 
     /** 
-     * Serializar a JSON {@link String}
-     * @param features características que se habilitarán en la serialización
+     * JSON में सीरियलाइज़ करें {@link String}
+     * @param features सीरियलाइज़ेशन में सक्षम करने के लिए विशेषताएँ
      * @return JSON {@link String}
      */
-    @SuppressWarnings("unchecked") 
+    @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
         // Example object to serialize
         MyObject obj = new MyObject("example", 123);

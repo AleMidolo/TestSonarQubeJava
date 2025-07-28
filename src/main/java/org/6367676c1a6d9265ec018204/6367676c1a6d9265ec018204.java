@@ -1,43 +1,43 @@
-public class ArrayConcatenator {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArrayConcatenation {
 
     /** 
-     * Concatenar los arreglos de cadenas dados en uno solo, incluyendo los elementos de los arreglos que se superponen dos veces. 
-     * El orden de los elementos en los arreglos originales se preserva.
-     * @param array1 el primer arreglo (puede ser <code>null</code>)
-     * @param array2 el segundo arreglo (puede ser <code>null</code>)
-     * @return el nuevo arreglo (<code>null</code> si ambos arreglos dados eran <code>null</code>)
+     * दिए गए String arrays को एक में जोड़ें, जिसमें ओवरलैपिंग array तत्वों को दो बार शामिल किया गया है। <p> मूल arrays में तत्वों का क्रम संरक्षित रहता है।
+     * @param array1 पहला array (यह <code>null</code> हो सकता है)
+     * @param array2 दूसरा array (यह <code>null</code> हो सकता है)
+     * @return नया array (<code>null</code> यदि दोनों दिए गए arrays <code>null</code> थे)
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null && array2 == null) {
             return null;
         }
 
-        int length1 = (array1 != null) ? array1.length : 0;
-        int length2 = (array2 != null) ? array2.length : 0;
-        String[] result = new String[length1 + length2];
+        List<String> resultList = new ArrayList<>();
 
-        int index = 0;
         if (array1 != null) {
             for (String s : array1) {
-                result[index++] = s;
-            }
-        }
-        if (array2 != null) {
-            for (String s : array2) {
-                result[index++] = s;
+                resultList.add(s);
             }
         }
 
-        return result;
+        if (array2 != null) {
+            for (String s : array2) {
+                resultList.add(s);
+            }
+        }
+
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"c", "d", "e"};
-        String[] result = concatenateStringArrays(array1, array2);
+        String[] array1 = {"apple", "banana", "cherry"};
+        String[] array2 = {"banana", "date", "fig"};
         
+        String[] result = concatenateStringArrays(array1, array2);
         for (String s : result) {
-            System.out.print(s + " ");
+            System.out.println(s);
         }
     }
 }

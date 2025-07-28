@@ -1,27 +1,31 @@
-import java.util.Arrays;
-
 public class PrimeCapacity {
 
     /**
-     * Devuelve un número primo que es <code>&gt;= desiredCapacity</code> y muy cercano a <code>desiredCapacity</code> (dentro del 11% si <code>desiredCapacity &gt;= 1000</code>).
-     * @param desiredCapacity la capacidad deseada por el usuario.
-     * @return la capacidad que se debe utilizar para una tabla hash.
+     * एक प्रमुख संख्या लौटाता है जो <code>&gt;= desiredCapacity</code> है और <code>desiredCapacity</code> के बहुत करीब है (यदि <code>desiredCapacity &gt;= 1000</code> है तो 11% के भीतर)।
+     * @param desiredCapacity उपयोगकर्ता द्वारा इच्छित क्षमता।
+     * @return वह क्षमता जो हैशटेबल के लिए उपयोग की जानी चाहिए।
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 1) {
             return 2;
         }
-        int upperLimit = desiredCapacity;
-        if (desiredCapacity >= 1000) {
-            upperLimit = (int) (desiredCapacity * 1.11);
+        int capacity = desiredCapacity;
+        if (capacity % 2 == 0) {
+            capacity++;
         }
-        
-        for (int i = desiredCapacity; i <= upperLimit; i++) {
-            if (isPrime(i)) {
-                return i;
+        while (true) {
+            if (isPrime(capacity)) {
+                if (desiredCapacity >= 1000) {
+                    int upperLimit = (int) (desiredCapacity * 1.11);
+                    if (capacity <= upperLimit) {
+                        return capacity;
+                    }
+                } else {
+                    return capacity;
+                }
             }
+            capacity += 2; // Check only odd numbers
         }
-        return upperLimit; // Fallback, should not reach here
     }
 
     private static boolean isPrime(int number) {
@@ -44,7 +48,7 @@ public class PrimeCapacity {
 
     public static void main(String[] args) {
         int desiredCapacity = 1000;
-        int nextPrimeCapacity = nextPrime(desiredCapacity);
-        System.out.println("Next prime capacity: " + nextPrimeCapacity);
+        int primeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity: " + primeCapacity);
     }
 }

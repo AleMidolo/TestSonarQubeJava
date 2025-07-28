@@ -8,7 +8,7 @@ public class CustomSet {
     }
 
     /** 
-     * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado. 
+     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
      */
     public boolean remove(int val) {
         return set.remove(val);

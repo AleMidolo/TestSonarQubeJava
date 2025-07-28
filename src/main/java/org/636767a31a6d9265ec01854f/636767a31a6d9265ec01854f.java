@@ -2,33 +2,25 @@ import java.io.IOException;
 
 public class FieldChecker {
 
-    private boolean isPackedField;
+    private boolean isPacked;
+    private int internalPosition;
 
-    /** 
-     * Verifica si este campo ha sido empaquetado en un campo delimitado por longitud. Si es así, actualiza el estado interno para reflejar que se están leyendo campos empaquetados.
+    /**
+     * जांचें कि क्या यह फ़ील्ड लंबाई-सीमित फ़ील्ड में पैक किया गया है। यदि हाँ, तो आंतरिक स्थिति को अपडेट करें ताकि यह दर्शा सके कि पैक किए गए फ़ील्ड पढ़े जा रहे हैं।
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Simulación de la verificación de un campo empaquetado
-        // Aquí se debería incluir la lógica para determinar si el campo está empaquetado
-        // Por ejemplo, podríamos leer un byte o un conjunto de bytes de un flujo de datos
-
-        // Supongamos que hemos leído un byte y verificamos si indica un campo empaquetado
-        byte fieldIndicator = readFieldIndicator(); // Método simulado para leer un indicador de campo
-
-        if (fieldIndicator == 1) { // Supongamos que 1 indica un campo empaquetado
-            isPackedField = true;
+        if (isPacked) {
+            // Update internal position to indicate that packed fields are being read
+            internalPosition++;
         } else {
-            isPackedField = false;
+            throw new IOException("Field is not packed.");
         }
     }
 
-    private byte readFieldIndicator() {
-        // Simulación de lectura de un indicador de campo
-        return 1; // Retornamos 1 para simular que el campo está empaquetado
-    }
-
-    public boolean isPackedField() {
-        return isPackedField;
+    // Constructor and other methods can be added here
+    public FieldChecker(boolean isPacked) {
+        this.isPacked = isPacked;
+        this.internalPosition = 0;
     }
 }

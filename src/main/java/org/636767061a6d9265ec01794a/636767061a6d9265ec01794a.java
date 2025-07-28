@@ -1,17 +1,9 @@
-public class FileExtensionSeparator {
+public class FileExtensionUtil {
 
-    public static void main(String[] args) {
-        // Example usage
-        System.out.println(indexOfExtension("example.file.txt")); // Output: 12
-        System.out.println(indexOfExtension("example.file.")); // Output: 12
-        System.out.println(indexOfExtension("examplefile")); // Output: -1
-        System.out.println(indexOfExtension(null)); // Output: -1
-    }
-
-    /** 
-     * Devuelve el índice del último carácter separador de extensión, que es un punto. <p> Este método también verifica que no haya un separador de directorio después del último punto. Para hacer esto, utiliza {@link #indexOfLastSeparator(String)},que manejará un archivo en formato Unix o Windows. <p> La salida será la misma independientemente de la máquina en la que se ejecute el código.
-     * @param filename  el nombre del archivo en el que encontrar el último separador de ruta, null devuelve -1
-     * @return el índice del último carácter separador, o -1 si no existe tal carácter
+    /**
+     * अंतिम एक्सटेंशन सेपरेटर कैरेक्टर का इंडेक्स लौटाता है, जो कि एक डॉट है। <p> यह मेथड यह भी जांचता है कि अंतिम डॉट के बाद कोई डायरेक्टरी सेपरेटर नहीं है। ऐसा करने के लिए यह {@link #indexOfLastSeparator(String)} का उपयोग करता है, जो कि Unix या Windows फॉर्मेट में फाइल को संभालेगा। <p> आउटपुट उस मशीन के अनुसार समान होगा जिस पर कोड चल रहा है।
+     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है, null पर -1 लौटाता है
+     * @return अंतिम सेपरेटर कैरेक्टर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
      */
     public static int indexOfExtension(String filename) {
         if (filename == null) {
@@ -21,7 +13,7 @@ public class FileExtensionSeparator {
         int lastDotIndex = filename.lastIndexOf('.');
         int lastSeparatorIndex = indexOfLastSeparator(filename);
 
-        // Check if the last dot is after the last directory separator
+        // Check if the last dot is after the last separator
         if (lastDotIndex > lastSeparatorIndex) {
             return lastDotIndex;
         }
@@ -30,13 +22,20 @@ public class FileExtensionSeparator {
     }
 
     /**
-     * Encuentra el índice del último separador de directorio en el nombre del archivo.
-     * @param filename el nombre del archivo
-     * @return el índice del último separador de directorio, o -1 si no existe
+     * अंतिम पथ सेपरेटर का इंडेक्स लौटाता है। यह Unix और Windows दोनों फॉर्मेट के लिए काम करता है।
+     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है
+     * @return अंतिम पथ सेपरेटर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
      */
-    public static int indexOfLastSeparator(String filename) {
+    private static int indexOfLastSeparator(String filename) {
         int lastUnixSeparator = filename.lastIndexOf('/');
         int lastWindowsSeparator = filename.lastIndexOf('\\');
         return Math.max(lastUnixSeparator, lastWindowsSeparator);
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        String filename = "example/path/to/file.txt";
+        int index = indexOfExtension(filename);
+        System.out.println("Index of last extension separator: " + index);
     }
 }

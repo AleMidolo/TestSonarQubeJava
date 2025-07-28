@@ -1,46 +1,55 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceRangeBuilder {
+public class ProfileSegment {
 
-    /** 
-     * construir el rango de secuencias del segmento de perfiles actuales
+    /**
+     * वर्तमान प्रोफाइल खंड स्नैपशॉट खोज अनुक्रम सीमा बनाएं
      */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
-        // Example logic to build sequence ranges
-        // This is a placeholder and should be replaced with actual logic
+        // Example logic to create sequence ranges
+        // This is just a placeholder; actual logic will depend on specific requirements
         for (int i = 0; i < 10; i++) {
-            sequenceRanges.add(new SequenceRange(i, i + 1));
+            SequenceRange range = new SequenceRange(i * 10, (i + 1) * 10 - 1);
+            sequenceRanges.add(range);
         }
         
         return sequenceRanges;
     }
 
+    public static class SequenceRange {
+        private int start;
+        private int end;
+
+        public SequenceRange(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public int getStart() {
+            return start;
+        }
+
+        public int getEnd() {
+            return end;
+        }
+
+        @Override
+        public String toString() {
+            return "SequenceRange{" +
+                    "start=" + start +
+                    ", end=" + end +
+                    '}';
+        }
+    }
+
     public static void main(String[] args) {
-        SequenceRangeBuilder builder = new SequenceRangeBuilder();
-        List<SequenceRange> ranges = builder.buildSequenceRanges();
+        ProfileSegment profileSegment = new ProfileSegment();
+        List<SequenceRange> ranges = profileSegment.buildSequenceRanges();
         for (SequenceRange range : ranges) {
             System.out.println(range);
         }
-    }
-}
-
-class SequenceRange {
-    private int start;
-    private int end;
-
-    public SequenceRange(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    @Override
-    public String toString() {
-        return "SequenceRange{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
     }
 }

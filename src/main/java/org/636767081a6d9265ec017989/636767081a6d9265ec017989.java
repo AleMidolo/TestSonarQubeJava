@@ -1,11 +1,13 @@
-public class BooleanArrayConverter {
+import java.util.Objects;
 
+public class BooleanArrayConverter {
+    
     /** 
-     * <p>Convierte un array de objetos Boolean a primitivos.</p> 
-     * <p>Este método devuelve <code>null</code> para un array de entrada <code>null</code>.</p>
-     * @param array  un array de <code>Boolean</code>, puede ser <code>null</code>
-     * @return un array de <code>boolean</code>, <code>null</code> si el array de entrada es nulo
-     * @throws NullPointerException si el contenido del array es <code>null</code>
+     * <p>एक ऑब्जेक्ट बूलियन के ऐरे को प्राइमिटिव में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Boolean</code> ऐरे, यह <code>null</code> हो सकता है
+     * @return एक <code>boolean</code> ऐरे, यदि इनपुट ऐरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि ऐरे की सामग्री <code>null</code> है
      */
     public static boolean[] toPrimitive(final Boolean[] array) {
         if (array == null) {
@@ -14,22 +16,10 @@ public class BooleanArrayConverter {
         boolean[] primitiveArray = new boolean[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("El contenido del array no puede ser nulo");
+                throw new NullPointerException("Array element at index " + i + " is null");
             }
             primitiveArray[i] = array[i];
         }
         return primitiveArray;
-    }
-
-    public static void main(String[] args) {
-        Boolean[] booleanArray = {true, false, null, true};
-        try {
-            boolean[] result = toPrimitive(booleanArray);
-            for (boolean b : result) {
-                System.out.println(b);
-            }
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

@@ -6,30 +6,23 @@ import com.google.protobuf.LinkedBuffer;
 public class MessageSerializer {
 
     /** 
-     * Serializa el {@code message},precedido por su longitud, en un {@link OutputStream}.
-     * @return el tamaño del mensaje
+     * {@code message} को इसके आकार के साथ प्रारंभ करते हुए {@link OutputStream} में सीरियलाइज़ करता है।
+     * @return संदेश का आकार
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message to a byte array
-        byte[] messageBytes = schema.encode(message, buffer);
-        
-        // Get the length of the message
-        int length = messageBytes.length;
-        
-        // Write the length of the message as a varint
-        writeVarint(out, length);
-        
-        // Write the message bytes to the output stream
-        out.write(messageBytes);
-        
-        return length;
+        int size = schema.getSerializedSize(message);
+        out.write(intToByteArray(size));
+        schema.writeTo(out, message, buffer);
+        return size;
     }
 
-    private static void writeVarint(OutputStream out, int value) throws IOException {
-        while ((value & ~0x7F) != 0) {
-            out.write((value & 0x7F) | 0x80);
-            value >>>= 7;
-        }
-        out.write(value);
+    private static byte[] intToByteArray(int value) {
+        return new byte[] {
+            (byte) (value & 0xFF),
+            (byte) ((value >> 8) & 0xFF),
+            (byte) ((value >> 16) & 0xFF),
+            (byte) ((value >> 24) & 0xFF)
+        };
     }
 }

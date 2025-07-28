@@ -11,29 +11,24 @@ import java.util.Set;
 public class GraphUtils<V, E> {
 
     /**
-     * Transforma una representación de conjunto en un camino de grafo.
-     * @param tour un conjunto que contiene los bordes del recorrido
-     * @param graph el grafo
-     * @return un camino de grafo
+     * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
+     * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
+     * @param graph ग्राफ
+     * @return एक ग्राफ पथ
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         List<V> vertexList = new ArrayList<>();
-        V startVertex = null;
+        V previousVertex = null;
 
         for (E edge : tour) {
-            if (startVertex == null) {
-                startVertex = graph.getEdgeSource(edge);
-            }
-            vertexList.add(graph.getEdgeSource(edge));
-            vertexList.add(graph.getEdgeTarget(edge));
-        }
+            V sourceVertex = graph.getEdgeSource(edge);
+            V targetVertex = graph.getEdgeTarget(edge);
 
-        // Remove duplicates while maintaining order
-        List<V> uniqueVertices = new ArrayList<>();
-        for (V vertex : vertexList) {
-            if (!uniqueVertices.contains(vertex)) {
-                uniqueVertices.add(vertex);
+            if (previousVertex == null) {
+                vertexList.add(sourceVertex);
             }
+            vertexList.add(targetVertex);
+            previousVertex = targetVertex;
         }
 
         return new GraphPath<V, E>() {
@@ -43,28 +38,33 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public List<V> getVertexList() {
-                return uniqueVertices;
-            }
-
-            @Override
             public List<E> getEdgeList() {
                 return new ArrayList<>(tour);
             }
 
             @Override
             public V getStartVertex() {
-                return startVertex;
+                return vertexList.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return uniqueVertices.get(uniqueVertices.size() - 1);
+                return vertexList.get(vertexList.size() - 1);
             }
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+                return 0; // Weight calculation can be added if needed
+            }
+
+            @Override
+            public int getLength() {
+                return vertexList.size() - 1;
+            }
+
+            @Override
+            public List<V> getVertexList() {
+                return vertexList;
             }
         };
     }

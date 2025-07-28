@@ -1,10 +1,10 @@
 public class StringManipulator {
 
     /** 
-     * Elimina cualquier carácter en una cadena dada.
-     * @param inString la cadena original
-     * @param charsToDelete un conjunto de caracteres a eliminar. Por ejemplo, "az\n" eliminará las 'a', 'z' y los saltos de línea.
-     * @return la cadena resultante
+     * दिए गए String में से किसी भी चरित्र को हटाएं।
+     * @param inString मूल String
+     * @param charsToDelete हटाने के लिए चरित्रों का सेट। उदाहरण के लिए, "az\n" 'a', 'z' और नए लाइनों को हटा देगा।
+     * @return परिणामस्वरूप String
      */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
@@ -14,16 +14,16 @@ public class StringManipulator {
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (charsToDelete.indexOf(c) == -1) {
-                result.append(c);
+                result.append(c); // Append character if it's not in charsToDelete
             }
         }
-        return result.toString();
+        return result.toString(); // Return the modified string
     }
 
     public static void main(String[] args) {
-        String original = "Hello World!\nThis is a test string.";
-        String charsToRemove = "aeiou\n";
-        String result = deleteAny(original, charsToRemove);
-        System.out.println(result); // Output: Hll Wrld!This s  tst strng.
+        String original = "Hello World!";
+        String charsToRemove = "lo";
+        String modified = deleteAny(original, charsToRemove);
+        System.out.println(modified); // Output: "He Wrld!"
     }
 }

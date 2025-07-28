@@ -1,30 +1,23 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UpperBoundCalculator<K> {
-
+    
     /** 
-     * Encuentra un límite superior mínimo para cada clave.
-     * @param keys una lista de claves.
-     * @return el límite superior de clave calculado.
+     * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
+     * @param keys कुंजियों की एक सूची।
+     * @return गणना की गई कुंजी की ऊपरी सीमा।
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
-        Map<K, Integer> upperBoundsMap = new HashMap<>();
         List<Integer> upperBounds = new ArrayList<>();
-
+        
         for (K key : keys) {
-            // Simulamos el cálculo de un límite superior para cada clave
-            // Aquí simplemente asignamos un valor arbitrario para el ejemplo
-            int upperBound = key.hashCode() % 100; // Ejemplo de cálculo
-            upperBoundsMap.put(key, upperBound);
+            // यहाँ पर कुंजी के लिए ऊपरी सीमा की गणना करें
+            // यह एक उदाहरण है, वास्तविक गणना आपकी आवश्यकताओं के अनुसार होनी चाहिए
+            int upperBound = key.hashCode(); // उदाहरण के लिए, कुंजी का हैश कोड
+            upperBounds.add(upperBound);
         }
-
-        for (K key : keys) {
-            upperBounds.add(upperBoundsMap.get(key));
-        }
-
+        
         return upperBounds;
     }
 }

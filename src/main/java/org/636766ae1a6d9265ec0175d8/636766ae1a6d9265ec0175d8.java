@@ -1,14 +1,13 @@
 public class ContentRangeBuilder {
 
     /**
-     * Construye el valor del encabezado HTTP 'Content-Range'.
-     * @return valor de 'Content-Range'
+     * 'Content-Range' HTTP हेडर मान बनाएं।
+     * @return 'Content-Range' मान
      */
     private String buildContentRange() {
-        // Ejemplo de valores para el rango
-        long start = 0;
-        long end = 99;
-        long total = 1000;
+        long start = 0; // प्रारंभिक बाइट
+        long end = 499; // अंतिम बाइट
+        long total = 1234; // कुल बाइट्स
 
         return String.format("bytes %d-%d/%d", start, end, total);
     }

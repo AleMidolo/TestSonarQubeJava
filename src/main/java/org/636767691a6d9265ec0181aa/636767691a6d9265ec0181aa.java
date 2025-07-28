@@ -1,19 +1,16 @@
+import java.util.Arrays;
+
 public class HashCodeUtil {
-    
     /** 
-     * Devuelve un código hash basado en el contenido del array especificado. Si el <code>array</code> es <code>null</code>, este método devuelve 0.
-     * @param array el array de tipo long para obtener un código hash
-     * @return el código hash del array de tipo long, que podría ser 0 si el array es null.
+     * निर्दिष्ट एरे की सामग्री के आधार पर एक हैश कोड लौटाता है। यदि <code>array</code> <code>null</code> है, तो यह विधि 0 लौटाती है।
+     * @param array वह लॉन्ग एरे जिससे हैशकोड प्राप्त करना है
+     * @return लॉन्ग एरे का हैशकोड, जो कि 0 हो सकता है यदि एरे null है।
      */
     public static int nullSafeHashCode(long[] array) {
         if (array == null) {
             return 0;
         }
-        int result = 1;
-        for (long element : array) {
-            result = 31 * result + Long.hashCode(element);
-        }
-        return result;
+        return Arrays.hashCode(array);
     }
 
     public static void main(String[] args) {

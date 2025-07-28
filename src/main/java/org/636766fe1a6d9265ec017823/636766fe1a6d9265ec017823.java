@@ -2,36 +2,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private final Map<String, Integer> nameAndTypeMap;
+    private final Map<String, Integer> constantNameAndTypeMap;
     private int nextIndex;
 
     public ConstantPool() {
-        this.nameAndTypeMap = new HashMap<>();
-        this.nextIndex = 0;
+        this.constantNameAndTypeMap = new HashMap<>();
+        this.nextIndex = 1; // Start indexing from 1
     }
 
     /**
-     * Agrega una entrada CONSTANT_NameAndType_info de un grupo de constantes de esta tabla de símbolos. 
-     * No hace nada si el grupo de constantes ya contiene un elemento similar.
-     *
-     * @param name el nombre de un campo o método.
-     * @param descriptor un descriptor de campo o método.
-     * @return un nuevo símbolo o uno ya existente con el valor dado.
+     * इस प्रतीक तालिका के स्थायी पूल में एक CONSTANT_NameAndType_info जोड़ता है। यदि स्थायी पूल में पहले से ही समान आइटम मौजूद है, तो कुछ नहीं करता है।
+     * @param name एक फ़ील्ड या विधि का नाम।
+     * @param descriptor एक फ़ील्ड या विधि का विवरण।
+     * @return दिए गए मान के साथ एक नया या पहले से मौजूद प्रतीक।
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!nameAndTypeMap.containsKey(key)) {
-            nameAndTypeMap.put(key, nextIndex);
-            nextIndex++;
+        if (!constantNameAndTypeMap.containsKey(key)) {
+            constantNameAndTypeMap.put(key, nextIndex++);
         }
-        return nameAndTypeMap.get(key);
+        return constantNameAndTypeMap.get(key);
     }
 
     public static void main(String[] args) {
-        ConstantPool constantPool = new ConstantPool();
-        int index1 = constantPool.addConstantNameAndType("myField", "I");
-        int index2 = constantPool.addConstantNameAndType("myField", "I");
-        System.out.println("Index of myField: " + index1);
-        System.out.println("Index of myField (duplicate): " + index2);
+        ConstantPool pool = new ConstantPool();
+        int index1 = pool.addConstantNameAndType("myField", "I");
+        int index2 = pool.addConstantNameAndType("myField", "I");
+        int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
+
+        System.out.println("Index of myField: " + index1); // Should print 1
+        System.out.println("Index of myField again: " + index2); // Should print 1
+        System.out.println("Index of myMethod: " + index3); // Should print 2
     }
 }

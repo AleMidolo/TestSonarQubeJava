@@ -5,13 +5,13 @@ public class AtmosphereManager {
     private AtmosphereFramework atmosphereFramework;
 
     public AtmosphereManager() {
-        this.atmosphereFramework = new AtmosphereFramework();
+        atmosphereFramework = new AtmosphereFramework();
     }
 
     /** 
-     * Elimina un {@link AtmosphereHandler}.
-     * @param mapping el mapeo utilizado al invocar {@link #addAtmosphereHandler(String,AtmosphereHandler)};
-     * @return true si se eliminó
+     * एक {@link AtmosphereHandler} को हटाएं।
+     * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String,AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
+     * @return यदि हटाया गया है तो true
      */
     public boolean removeAtmosphereHandler(String mapping) {
         AtmosphereHandler handler = atmosphereFramework.getAtmosphereHandler(mapping);

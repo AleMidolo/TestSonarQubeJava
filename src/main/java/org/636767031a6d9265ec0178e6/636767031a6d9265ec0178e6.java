@@ -1,28 +1,32 @@
 public class ByteArrayConverter {
 
     /** 
-     * <p>Convierte un arreglo de objetos Byte a primitivos.</p> <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Byte</code>, puede ser <code>null</code>
-     * @return un array de <code>byte</code>, <code>null</code> si el array de entrada es nulo
-     * @throws NullPointerException si el contenido del array es <code>null</code>
+     * <p>एक ऑब्जेक्ट बाइट्स के एरे को प्रिमिटिव में परिवर्तित करता है।</p> 
+     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * @param array  एक <code>Byte</code> एरे, यह <code>null</code> हो सकता है
+     * @return एक <code>byte</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
+     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
      */
     public static byte[] toPrimitive(final Byte[] array) {
         if (array == null) {
             return null;
         }
-        byte[] result = new byte[array.length];
+        byte[] primitiveArray = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("El contenido del array no puede ser nulo");
+                throw new NullPointerException("Array element at index " + i + " is null");
             }
-            result[i] = array[i];
+            primitiveArray[i] = array[i];
         }
-        return result;
+        return primitiveArray;
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        Byte[] byteArray = {1, 2, 3, null}; // Esto lanzará una NullPointerException
+        // Example usage
+        Byte[] byteArray = {1, 2, 3, null}; // This will throw NullPointerException
         byte[] primitiveArray = toPrimitive(byteArray);
+        for (byte b : primitiveArray) {
+            System.out.print(b + " ");
+        }
     }
 }

@@ -10,32 +10,22 @@ public class ByteVector {
     }
 
     /** 
-     * Coloca un arreglo de bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
-     * @param byteArrayValue un arreglo de bytes. Puede ser {@literal null} para colocar {@code byteLength} bytes nulos en este vector de bytes.
-     * @param byteOffset     índice del primer byte de byteArrayValue que debe ser copiado.
-     * @param byteLength     número de bytes de byteArrayValue que deben ser copiados.
-     * @return este vector de bytes.
+     * इस बाइट वेक्टर में बाइट्स का एक एरे डालता है। यदि आवश्यक हो तो बाइट वेक्टर को स्वचालित रूप से बढ़ा दिया जाता है।
+     * @param byteArrayValue बाइट्स का एक एरे। {@code byteLength} नल बाइट्स डालने के लिए {@literal null} हो सकता है।
+     * @param byteOffset     byteArrayValue का पहला बाइट का इंडेक्स जो कॉपी किया जाना चाहिए।
+     * @param byteLength     byteArrayValue के बाइट्स की संख्या जो कॉपी की जानी चाहिए।
+     * @return यह बाइट वेक्टर।
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength cannot be negative");
+        if (byteArrayValue == null || byteLength <= 0) {
+            return this;
         }
         
-        if (byteArrayValue != null) {
-            if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-            }
-        }
-
         ensureCapacity(size + byteLength);
-
-        if (byteArrayValue != null) {
-            System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-        } else {
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
-        }
-
+        
+        System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         size += byteLength;
+        
         return this;
     }
 

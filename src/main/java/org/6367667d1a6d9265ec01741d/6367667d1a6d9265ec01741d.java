@@ -1,11 +1,10 @@
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 public class TypeResolver {
 
     /** 
-     * Resuelve el primer límite para el {@code typeVariable},devolviendo {@code Unknown.class} si no se puede resolver ninguno.
+     * {@code typeVariable} के लिए पहला बाउंड हल करता है, यदि कोई हल नहीं किया जा सकता है तो {@code Unknown.class} लौटाता है।
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();

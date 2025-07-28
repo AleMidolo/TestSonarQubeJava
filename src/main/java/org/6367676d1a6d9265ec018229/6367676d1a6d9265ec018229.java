@@ -1,26 +1,23 @@
 import java.util.Arrays;
 
-public class StringArrayTrimmer {
-    
+public class TrimArray {
     /** 
-     * Recorta los elementos del arreglo de Strings dado, llamando a <code>String.trim()</code> en cada uno de ellos.
-     * @param arreglo de Strings original
-     * @return el arreglo resultante (del mismo tamaño) con elementos recortados
+     * दिए गए String array के तत्वों को ट्रिम करें, प्रत्येक पर <code>String.trim()</code> कॉल करते हुए।
+     * @param array मूल String array
+     * @return परिणामस्वरूप array (उसी आकार का) जिसमें ट्रिम किए गए तत्व हैं
      */
     public static String[] trimArrayElements(String[] array) {
         if (array == null) {
             return null;
         }
-        String[] trimmedArray = new String[array.length];
-        for (int i = 0; i < array.length; i++) {
-            trimmedArray[i] = array[i] != null ? array[i].trim() : null;
-        }
-        return trimmedArray;
+        return Arrays.stream(array)
+                     .map(String::trim)
+                     .toArray(String[]::new);
     }
 
     public static void main(String[] args) {
-        String[] originalArray = {"  Hello  ", "  World  ", null, "  Java  "};
-        String[] trimmedArray = trimArrayElements(originalArray);
-        System.out.println(Arrays.toString(trimmedArray));
+        String[] input = {"  Hello  ", "  World  ", "  Java  "};
+        String[] trimmed = trimArrayElements(input);
+        System.out.println(Arrays.toString(trimmed)); // Output: [Hello, World, Java]
     }
 }

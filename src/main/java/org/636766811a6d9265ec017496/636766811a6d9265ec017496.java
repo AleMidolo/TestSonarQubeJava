@@ -7,17 +7,13 @@ public class FileIterator {
     private File[] files;
     private int currentIndex;
 
-    public FileIterator(File directory) {
-        if (directory.isDirectory()) {
-            this.files = directory.listFiles();
-        } else {
-            this.files = new File[0];
-        }
+    public FileIterator(File[] files) {
+        this.files = files;
         this.currentIndex = 0;
     }
 
     /** 
-     * Devuelve el siguiente objeto {@link java.io.File} o {@code null} si no hay más archivos disponibles.
+     * अगला {@link java.io.File} ऑब्जेक्ट लौटाएं या {@code null} लौटाएं यदि कोई और फ़ाइल उपलब्ध नहीं है।
      */
     public InputStream next() throws IOException {
         if (currentIndex < files.length) {

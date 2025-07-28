@@ -1,40 +1,26 @@
-public class DoublyLinkedList {
-    private Node head;
-    private Node tail;
+import java.util.LinkedList;
 
-    private class Node {
-        int data;
-        Node next;
-        Node prev;
+public class TreeEdgeRemover {
+    private LinkedList<Edge> edgeList1;
+    private LinkedList<Edge> edgeList2;
 
-        Node(int data) {
-            this.data = data;
-        }
+    public TreeEdgeRemover() {
+        edgeList1 = new LinkedList<>();
+        edgeList2 = new LinkedList<>();
     }
 
+    /** 
+     * इस किनारे को पेड़ के किनारों की दोनों डबल लिंक्ड सूचियों से हटा देता है।
+     */
     public void removeFromTreeEdgeList() {
-        if (head == null) {
-            return; // List is empty, nothing to remove
-        }
+        Edge edgeToRemove = new Edge(); // Assume this edge is defined or passed as a parameter
 
-        // Remove the head node
-        if (head.next != null) {
-            head = head.next;
-            head.prev = null;
-        } else {
-            head = null; // List becomes empty
-        }
-
-        // Remove the tail node
-        if (tail != null) {
-            if (tail.prev != null) {
-                tail = tail.prev;
-                tail.next = null;
-            } else {
-                tail = null; // List becomes empty
-            }
-        }
+        edgeList1.remove(edgeToRemove);
+        edgeList2.remove(edgeToRemove);
     }
 
-    // Additional methods for the doubly linked list can be added here
+    // Assuming Edge is a class that represents an edge in the tree
+    private class Edge {
+        // Edge properties and methods
+    }
 }

@@ -1,61 +1,24 @@
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
 
-class LoggingEvent {
-    private String message;
+public class CustomAppender extends AppenderSkeleton {
 
-    public LoggingEvent(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-}
-
-class Logger {
-    private List<Client> clients = new CopyOnWriteArrayList<>();
-
-    public void addClient(Client client) {
-        clients.add(client);
-    }
-
-    public void removeClient(Client client) {
-        clients.remove(client);
-    }
-
-    /**
-     * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.  
-     */
+    @Override
     protected void append(LoggingEvent event) {
-        for (Client client : clients) {
-            client.sendMessage(event.getMessage());
-        }
-    }
-}
-
-class Client {
-    private String name;
-
-    public Client(String name) {
-        this.name = name;
+        // यहाँ पर लॉग इवेंट को सभी जुड़े हुए क्लाइंट्स को भेजने की प्रक्रिया होगी
+        String message = event.getRenderedMessage();
+        // सभी जुड़े हुए क्लाइंट्स को संदेश भेजने के लिए कोड यहाँ लिखें
+        // उदाहरण के लिए, एक सॉकेट कनेक्शन का उपयोग करके संदेश भेजना
+        System.out.println("Sending log message to clients: " + message);
     }
 
-    public void sendMessage(String message) {
-        System.out.println(name + " received: " + message);
+    @Override
+    public void close() {
+        // क्लोज़िंग संसाधनों की प्रक्रिया
     }
-}
 
-public class Main {
-    public static void main(String[] args) {
-        Logger logger = new Logger();
-        Client client1 = new Client("Client1");
-        Client client2 = new Client("Client2");
-
-        logger.addClient(client1);
-        logger.addClient(client2);
-
-        LoggingEvent event = new LoggingEvent("This is a log message.");
-        logger.append(event);
+    @Override
+    public boolean requiresLayout() {
+        return false; // यदि लेआउट की आवश्यकता नहीं है
     }
 }

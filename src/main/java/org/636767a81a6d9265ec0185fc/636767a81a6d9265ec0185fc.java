@@ -1,18 +1,15 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProtocolMessageParser {
+public class TagReader {
     private InputStream inputStream;
 
-    public ProtocolMessageParser(InputStream inputStream) {
+    public TagReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
     /** 
-     * Intenta leer una etiqueta de campo, devolviendo cero si hemos alcanzado el EOF. 
-     * Los analizadores de mensajes de protocolo utilizan esto para leer etiquetas, 
-     * ya que un mensaje de protocolo puede terminar legalmente donde ocurra una etiqueta, 
-     * y cero no es un número de etiqueta válido.
+     * एक फ़ील्ड टैग पढ़ने का प्रयास करें, यदि हम EOF पर पहुँच गए हैं तो शून्य लौटाएँ। प्रोटोकॉल संदेश पार्सर टैग पढ़ने के लिए इसका उपयोग करते हैं, क्योंकि एक प्रोटोकॉल संदेश वैध रूप से किसी भी टैग के स्थान पर समाप्त हो सकता है, और शून्य एक मान्य टैग संख्या नहीं है।
      */
     public int readTag() throws IOException {
         int tag = inputStream.read();

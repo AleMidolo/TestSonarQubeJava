@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 public class GenericTypeResolver {
 
     /** 
-     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
+     * {@code genericType} के लिए तर्कों को {@code targetType} के प्रकार चर जानकारी का उपयोग करके हल करता है। यदि {@code genericType} पैरामीटराइज्ड नहीं है या यदि तर्कों को हल नहीं किया जा सकता है, तो {@code null} लौटाता है।
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -12,19 +12,19 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Type rawType = parameterizedType.getRawType();
 
-        if (rawType instanceof Class<?>) {
-            Class<?> rawClass = (Class<?>) rawType;
-            if (rawClass.isAssignableFrom(targetType)) {
-                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-                for (int i = 0; i < actualTypeArguments.length; i++) {
-                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
-                }
-                return resolvedArguments;
-            }
+        if (!rawType.equals(targetType)) {
+            return null;
         }
-        return null;
+
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+
+        for (int i = 0; i < actualTypeArguments.length; i++) {
+            resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
+        }
+
+        return resolvedArguments;
     }
 }

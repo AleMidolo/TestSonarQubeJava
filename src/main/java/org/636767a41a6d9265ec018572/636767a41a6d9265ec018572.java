@@ -9,27 +9,24 @@ public class VarintReader {
     }
 
     /** 
-     * Lee un Varint crudo del flujo.
+     * स्ट्रीम से एक कच्चा Varint पढ़ें।
      */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;
-        int byteRead;
-
         while (true) {
-            byteRead = input.read();
-            if (byteRead == -1) {
-                throw new IOException("End of stream reached before completing Varint.");
+            int b = input.read();
+            if (b == -1) {
+                throw new IOException("End of stream reached");
             }
-            result |= (long) (byteRead & 0x7F) << shift;
-            if ((byteRead & 0x80) == 0) {
-                break;
+            result |= (long) (b & 0x7F) << shift;
+            if ((b & 0x80) == 0) {
+                return result;
             }
             shift += 7;
             if (shift >= 64) {
-                throw new IOException("Varint is too long.");
+                throw new IOException("Varint is too long");
             }
         }
-        return result;
     }
 }

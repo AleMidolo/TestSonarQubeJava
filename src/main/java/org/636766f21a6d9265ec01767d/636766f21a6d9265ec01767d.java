@@ -1,16 +1,17 @@
-public class ObjectConverter {
-    
+public class ObjectToStringConverter {
+
     /** 
-     * Convierte un objeto a String; si el objeto es nulo, devuelve nulo, de lo contrario, devuelve toString(); 
+     * ऑब्जेक्ट को स्ट्रिंग में बदलें, जब ऑब्जेक्ट null हो तो null लौटाएं, अन्यथा toString() लौटाएं; 
      */
     public static String toString(Object object) {
         return object == null ? null : object.toString();
     }
 
     public static void main(String[] args) {
-        // Ejemplos de uso
-        System.out.println(toString(null)); // Debe imprimir: null
-        System.out.println(toString("Hola")); // Debe imprimir: Hola
-        System.out.println(toString(123)); // Debe imprimir: 123
+        Object obj1 = new Object();
+        Object obj2 = null;
+
+        System.out.println(toString(obj1)); // Prints the string representation of obj1
+        System.out.println(toString(obj2)); // Prints null
     }
 }

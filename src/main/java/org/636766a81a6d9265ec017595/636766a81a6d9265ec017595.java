@@ -1,29 +1,47 @@
 import java.util.Arrays;
 
 class ByteVector {
-    private byte[] bytes;
+    private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.bytes = new byte[2]; // Initial capacity
+        this.data = new byte[2]; // Initial capacity
         this.size = 0;
     }
 
-    public final ByteVector put11(final int byteValue1, final int byteValue2) {
-        ensureCapacity(size + 2);
-        bytes[size++] = (byte) byteValue1;
-        bytes[size++] = (byte) byteValue2;
-        return this;
-    }
-
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity - bytes.length > 0) {
-            int newCapacity = Math.max(bytes.length * 2, minCapacity);
-            bytes = Arrays.copyOf(bytes, newCapacity);
+    public void put(byte value) {
+        if (size == data.length) {
+            resize();
         }
+        data[size++] = value;
     }
 
-    public byte[] getBytes() {
-        return Arrays.copyOf(bytes, size);
+    private void resize() {
+        data = Arrays.copyOf(data, data.length * 2);
+    }
+
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
+    }
+}
+
+public class Main {
+    /**
+     * इस बाइट वेक्टर में दो बाइट डालता है। यदि आवश्यक हो तो बाइट वेक्टर स्वचालित रूप से बड़ा हो जाता है।
+     * @param byteValue1 एक बाइट।
+     * @param byteValue2 एक और बाइट।
+     * @return यह बाइट वेक्टर।
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        ByteVector byteVector = new ByteVector();
+        byteVector.put((byte) byteValue1);
+        byteVector.put((byte) byteValue2);
+        return byteVector;
+    }
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        ByteVector result = main.put11(10, 20);
+        System.out.println(Arrays.toString(result.toArray()));
     }
 }

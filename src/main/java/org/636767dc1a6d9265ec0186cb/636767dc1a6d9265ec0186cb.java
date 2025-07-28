@@ -1,21 +1,19 @@
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class ConfigurationInitializer {
 
-    /** 
-     * inicializa la configuración, como verificar la ruta de distribución
+    /**
+     * कॉन्फ़िगरेशन को प्रारंभ करें, जैसे कि वितरण पथ की जांच करें
      */
     public void init() {
-        String distributionPath = "path/to/distribution"; // Cambia esto a la ruta real
-        Path path = Paths.get(distributionPath);
+        // Check the distribution path
+        String distributionPath = System.getProperty("distribution.path");
         
-        if (Files.exists(path) && Files.isDirectory(path)) {
-            System.out.println("La ruta de distribución es válida: " + distributionPath);
+        if (distributionPath == null || distributionPath.isEmpty()) {
+            throw new IllegalArgumentException("Distribution path is not set.");
         } else {
-            System.out.println("La ruta de distribución no es válida: " + distributionPath);
+            System.out.println("Distribution path is set to: " + distributionPath);
         }
+
+        // Additional initialization logic can be added here
     }
 
     public static void main(String[] args) {

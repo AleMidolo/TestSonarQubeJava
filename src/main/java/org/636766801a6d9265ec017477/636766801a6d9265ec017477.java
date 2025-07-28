@@ -22,10 +22,9 @@ public class FileAdder {
 
         Collections.reverse(fileList);
 
-        // Process the reversed list as needed
+        // Process the reversed list of files here
         for (InputStream file : fileList) {
-            // Add your logic to handle the InputStream here
-            // For example, you could read from the InputStream or add it to a collection
+            // Add your logic to process each file
         }
     }
 }

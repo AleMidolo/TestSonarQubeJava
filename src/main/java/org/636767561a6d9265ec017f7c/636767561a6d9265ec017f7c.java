@@ -4,12 +4,12 @@ import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Trasforma una rappresentazione di un insieme in un percorso di grafo.
- * @param <V> il tipo di vertice del grafo
- * @param <E> il tipo di bordo del grafo
  * @param tour un insieme contenente i bordi del tour
  * @param graph il grafo
  * @return un percorso di grafo
@@ -19,40 +19,31 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         throw new IllegalArgumentException("Il tour non può essere vuoto.");
     }
 
-    // Trova il vertice iniziale
-    V startVertex = null;
-    for (E edge : tour) {
-        startVertex = graph.getEdgeSource(edge);
-        break;
-    }
+    List<E> edgeList = new ArrayList<>(tour);
+    List<V> vertexList = new ArrayList<>();
 
-    // Costruisci il percorso
-    List<E> edgeList = new ArrayList<>();
+    // Aggiungi il primo vertice del primo arco
+    E firstEdge = edgeList.get(0);
+    V startVertex = graph.getEdgeSource(firstEdge);
+    vertexList.add(startVertex);
+
+    // Costruisci la lista dei vertici seguendo gli archi
     V currentVertex = startVertex;
-    Set<E> remainingEdges = new HashSet<>(tour);
+    for (E edge : edgeList) {
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
 
-    while (!remainingEdges.isEmpty()) {
-        boolean edgeFound = false;
-        for (E edge : remainingEdges) {
-            if (graph.getEdgeSource(edge).equals(currentVertex)) {
-                edgeList.add(edge);
-                currentVertex = graph.getEdgeTarget(edge);
-                remainingEdges.remove(edge);
-                edgeFound = true;
-                break;
-            } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
-                edgeList.add(edge);
-                currentVertex = graph.getEdgeSource(edge);
-                remainingEdges.remove(edge);
-                edgeFound = true;
-                break;
-            }
-        }
-        if (!edgeFound) {
-            throw new IllegalArgumentException("Il tour non è valido o il grafo non è connesso.");
+        if (source.equals(currentVertex)) {
+            vertexList.add(target);
+            currentVertex = target;
+        } else if (target.equals(currentVertex)) {
+            vertexList.add(source);
+            currentVertex = source;
+        } else {
+            throw new IllegalArgumentException("Il tour non è un percorso valido nel grafo.");
         }
     }
 
-    // Costruisci il GraphPath
-    return new DefaultGraphPath<>(graph, startVertex, currentVertex, edgeList, 0.0);
+    // Crea il percorso di grafo
+    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0);
 }

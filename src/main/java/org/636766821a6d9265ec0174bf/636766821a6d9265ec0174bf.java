@@ -5,7 +5,7 @@ public class StringUtils {
     /**
      * Inverso di Introspector.decapitalize
      * Capitalizes the first letter of the given string.
-     *
+     * 
      * @param name the string to capitalize
      * @return the capitalized string
      */

@@ -16,9 +16,9 @@ public class HexConverter {
     }
 
     public static void main(String[] args) {
-        byte testChar1 = '5'; // 5 in ASCII
-        byte testChar2 = 'a'; // a in ASCII
-        byte testChar3 = 'F'; // F in ASCII
+        byte testChar1 = '5'; // Esempio di carattere numerico
+        byte testChar2 = 'a'; // Esempio di carattere minuscolo
+        byte testChar3 = 'F'; // Esempio di carattere maiuscolo
 
         System.out.println(convertHexDigit(testChar1)); // Output: 5
         System.out.println(convertHexDigit(testChar2)); // Output: 10

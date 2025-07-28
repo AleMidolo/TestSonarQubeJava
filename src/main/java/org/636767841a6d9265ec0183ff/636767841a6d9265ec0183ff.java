@@ -13,18 +13,21 @@ public class TableRowSelector {
         if (table == null || pane == null) {
             throw new IllegalArgumentException("Table and JScrollPane cannot be null");
         }
+        
         if (row < 0 || row >= table.getRowCount()) {
-            throw new IndexOutOfBoundsException("Row index out of bounds");
+            throw new IndexOutOfBoundsException("Row index is out of bounds");
         }
 
         // Select the specified row
         table.setRowSelectionInterval(row, row);
         
         // Scroll to the selected row
+        Rectangle rect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(rect);
+        
+        // Delay repaint to ensure the row is painted properly
         SwingUtilities.invokeLater(() -> {
-            Rectangle rect = table.getCellRect(row, 0, true);
-            table.scrollRectToVisible(rect);
-            pane.repaint();
+            table.repaint();
         });
     }
 
@@ -34,11 +37,11 @@ public class TableRowSelector {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
-            {"Row 1", "Data 1"},
-            {"Row 2", "Data 2"},
-            {"Row 3", "Data 3"},
-            {"Row 4", "Data 4"},
-            {"Row 5", "Data 5"},
+            {"Data 1", "Data 2"},
+            {"Data 3", "Data 4"},
+            {"Data 5", "Data 6"},
+            {"Data 7", "Data 8"},
+            {"Data 9", "Data 10"}
         };
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
@@ -47,6 +50,8 @@ public class TableRowSelector {
         frame.setVisible(true);
 
         // Select a row after a delay
-        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
+        Timer timer = new Timer(1000, e -> selectRow(2, table, pane));
+        timer.setRepeats(false);
+        timer.start();
     }
 }

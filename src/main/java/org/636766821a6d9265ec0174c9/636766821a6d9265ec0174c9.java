@@ -1,7 +1,7 @@
 import java.io.File;
 
 public class ClassPathRetriever {
-    
+
     /** 
      * Returns the class path of the current JVM instance as an array of  {@link File} objects.
      */

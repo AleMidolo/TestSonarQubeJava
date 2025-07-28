@@ -15,16 +15,12 @@ public class ArrayUtil {
     }
 
     public static void main(String[] args) {
-        Character[] testArray = null;
-        Character[] result = nullToEmpty(testArray);
-        System.out.println(result.length); // Output: 0
+        Character[] testArray1 = null;
+        Character[] testArray2 = {};
+        Character[] testArray3 = {'A', 'B', 'C'};
 
-        testArray = new Character[]{};
-        result = nullToEmpty(testArray);
-        System.out.println(result.length); // Output: 0
-
-        testArray = new Character[]{'A', 'B', 'C'};
-        result = nullToEmpty(testArray);
-        System.out.println(result.length); // Output: 3
+        System.out.println(nullToEmpty(testArray1).length); // Output: 0
+        System.out.println(nullToEmpty(testArray2).length); // Output: 0
+        System.out.println(nullToEmpty(testArray3).length); // Output: 3
     }
 }

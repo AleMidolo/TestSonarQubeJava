@@ -1,10 +1,10 @@
 private void pop(final int elements) {
-    // Assuming there is a stack to hold the abstract types
-    Stack<AbstractType> outputFrameStack = new Stack<>();
+    // Assuming there is a Stack to represent the output frame stack
+    Stack<Object> outputFrameStack = new Stack<>();
 
     // Check if the number of elements to pop is valid
     if (elements < 0) {
-        throw new IllegalArgumentException("Number of elements to pop cannot be negative.");
+        throw new IllegalArgumentException("Number of elements to pop must be non-negative.");
     }
 
     // Pop the specified number of elements from the stack
@@ -12,7 +12,7 @@ private void pop(final int elements) {
         if (!outputFrameStack.isEmpty()) {
             outputFrameStack.pop();
         } else {
-            throw new EmptyStackException();
+            throw new IllegalStateException("Not enough elements in the stack to pop.");
         }
     }
 }

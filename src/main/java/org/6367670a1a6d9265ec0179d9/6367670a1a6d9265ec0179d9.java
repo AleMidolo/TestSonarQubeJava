@@ -1,4 +1,4 @@
-public class StringUtils {
+public class StringUtil {
     
     /** 
      * Gets a String's length or <code>0</code> if the String is <code>null</code>.

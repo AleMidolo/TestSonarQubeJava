@@ -11,8 +11,8 @@ class TreeNode<T> {
 }
 
 public class BinaryTree<T> {
-    
-    /** 
+
+    /**
      * Performs a right node rotation.
      * @param node a node to rotate
      * @return a new parent of the {@code node}

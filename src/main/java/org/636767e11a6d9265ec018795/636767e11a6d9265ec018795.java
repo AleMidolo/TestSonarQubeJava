@@ -1,14 +1,29 @@
-import java.util.Objects;
-
 public class DataTable {
-    private String bucketName;
+    // Assuming DataTable has some properties to compare
+    private String name;
+    private int size;
 
-    public DataTable(String bucketName) {
-        this.bucketName = bucketName;
+    public DataTable(String name, int size) {
+        this.name = name;
+        this.size = size;
     }
 
-    public String getBucketName() {
-        return bucketName;
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    // Other methods and properties of DataTable
+}
+
+public class Bucket {
+    private DataTable dataTable;
+
+    public Bucket(DataTable dataTable) {
+        this.dataTable = dataTable;
     }
 
     /**
@@ -18,6 +33,7 @@ public class DataTable {
         if (dataset == null) {
             return false;
         }
-        return Objects.equals(this.bucketName, dataset.getBucketName());
+        return this.dataTable.getName().equals(dataset.getName()) &&
+               this.dataTable.getSize() == dataset.getSize();
     }
 }

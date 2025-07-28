@@ -8,7 +8,7 @@ public class GraphSeparator {
         List<Pair<List<Pair<Integer, Integer>>, Edge>> globalSeparatorList = new ArrayList<>();
         
         // Assuming we have a method to get all edges in the graph
-        List<Edge> edges = getEdges();
+        List<Edge> edges = getEdges(); 
         
         for (Edge edge : edges) {
             List<Pair<Integer, Integer>> minimalSeparators = findMinimalSeparators(edge);

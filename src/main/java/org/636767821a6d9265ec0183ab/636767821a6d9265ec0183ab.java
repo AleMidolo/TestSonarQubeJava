@@ -1,5 +1,5 @@
 public class ExceptionChecker {
-
+    
     private Throwable thrown;
 
     public ExceptionChecker(Throwable thrown) {

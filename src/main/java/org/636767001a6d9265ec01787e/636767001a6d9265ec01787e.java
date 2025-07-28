@@ -5,16 +5,16 @@ public class StringBuilderExample {
         this.builder = new StringBuilder();
     }
 
+    public void append(String str) {
+        builder.append(str);
+    }
+
     /** 
      * <p> Gets the String built by this builder. </p>
      * @return the built string
      */
     public String toString() {
         return builder.toString();
-    }
-
-    public void append(String str) {
-        builder.append(str);
     }
 
     public static void main(String[] args) {

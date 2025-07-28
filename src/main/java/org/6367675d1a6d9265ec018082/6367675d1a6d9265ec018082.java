@@ -19,12 +19,16 @@ class Edge {
 }
 
 class Node {
+    private final String name;
     private final boolean isVirtual;
-    private final Node realNode;
 
-    public Node(boolean isVirtual, Node realNode) {
+    public Node(String name, boolean isVirtual) {
+        this.name = name;
         this.isVirtual = isVirtual;
-        this.realNode = realNode;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isVirtual() {
@@ -32,11 +36,12 @@ class Node {
     }
 
     public Node getRealNode() {
-        return realNode;
+        // Assuming the real counterpart is determined by some logic
+        return isVirtual ? new Node(name + "_real", false) : this;
     }
 }
 
-public class Graph {
+class Graph {
     private Node currentNode;
     private Node nextNode;
 
@@ -50,8 +55,8 @@ public class Graph {
      * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
-        return new Edge(fromNode, toNode);
+        Node realCurrent = currentNode.getRealNode();
+        Node realNext = nextNode.getRealNode();
+        return new Edge(realCurrent, realNext);
     }
 }

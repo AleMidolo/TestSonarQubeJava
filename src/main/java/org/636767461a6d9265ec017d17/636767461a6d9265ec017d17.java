@@ -10,16 +10,18 @@ public class StringUnescaper {
             return null;
         }
         StringBuilder output = new StringBuilder();
-        boolean isEscaped = false;
+        boolean escaping = false;
 
         for (char c : input.toCharArray()) {
-            if (isEscaped) {
+            if (escaping) {
                 output.append(c);
-                isEscaped = false;
-            } else if (c == '\\') {
-                isEscaped = true;
+                escaping = false;
             } else {
-                output.append(c);
+                if (c == '\\') {
+                    escaping = true;
+                } else {
+                    output.append(c);
+                }
             }
         }
 

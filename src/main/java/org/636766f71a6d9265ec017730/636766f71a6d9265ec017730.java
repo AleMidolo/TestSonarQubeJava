@@ -22,17 +22,4 @@ public class CollectionUtils {
         
         return stringList.toArray(new String[0]);
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<Object> collection = new ArrayList<>();
-        collection.add("Hello");
-        collection.add(null);
-        collection.add("World");
-        
-        String[] result = toNoNullStringArray(collection);
-        for (String str : result) {
-            System.out.println(str);
-        }
-    }
 }

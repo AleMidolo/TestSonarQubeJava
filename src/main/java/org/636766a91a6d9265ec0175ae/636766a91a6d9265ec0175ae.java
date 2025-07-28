@@ -15,20 +15,21 @@ public class ByteVector {
      * @return this byte vector.
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteArrayValue == null) {
-            // If byteArrayValue is null, fill with null bytes
-            ensureCapacity(size + byteLength);
-            for (int i = 0; i < byteLength; i++) {
-                data[size++] = 0;
-            }
-        } else {
-            // Copy the specified range from byteArrayValue
+        if (byteLength < 0) {
+            throw new IllegalArgumentException("byteLength cannot be negative");
+        }
+        if (byteArrayValue != null) {
             if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
             size += byteLength;
+        } else {
+            ensureCapacity(size + byteLength);
+            for (int i = 0; i < byteLength; i++) {
+                data[size++] = 0; // fill with null bytes
+            }
         }
         return this;
     }

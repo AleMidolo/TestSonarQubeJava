@@ -13,7 +13,7 @@ public class MetricsCache {
         if (data != null) {
             String key = data.getKey(); // Assuming METRICS has a method getKey()
             cache.merge(key, data, (existingValue, newValue) -> {
-                existingValue.merge(newValue); // Assuming METRICS has a method merge()
+                existingValue.merge(newValue); // Assuming METRICS has a merge method
                 return existingValue;
             });
         }

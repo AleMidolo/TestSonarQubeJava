@@ -13,13 +13,13 @@ public class LoggerFormatter {
         String pattern = "[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c] - %m%n";
         
         // Replace placeholders with actual values from the LoggingEvent
-        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
-        String level = event.getLevel();
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(event.getTimestamp()));
+        String level = event.getLevel().toString();
         String loggerName = event.getLoggerName();
         String message = event.getMessage();
         
         // Build the formatted string
-        formattedString.append(pattern.replace("%d{yyyy-MM-dd HH:mm:ss}", date)
+        formattedString.append(pattern.replace("%d{yyyy-MM-dd HH:mm:ss}", timestamp)
                                       .replace("%p", level)
                                       .replace("%c", loggerName)
                                       .replace("%m", message)

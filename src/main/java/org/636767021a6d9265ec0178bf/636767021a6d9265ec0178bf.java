@@ -26,6 +26,6 @@ public class Converter {
                 throw new Exception("Unsupported type for conversion to Character.");
             }
         }
-        throw new Exception("Conversion to the specified type is not supported.");
+        throw new Exception("Unsupported target type: " + type.getName());
     }
 }

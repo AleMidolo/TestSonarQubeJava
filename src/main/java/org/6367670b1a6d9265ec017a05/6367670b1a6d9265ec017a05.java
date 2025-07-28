@@ -2,8 +2,8 @@ public class CharUtils {
     private static final String[] CACHE = new String[128];
 
     static {
-        for (char c = 0; c < CACHE.length; c++) {
-            CACHE[c] = String.valueOf(c);
+        for (char i = 0; i < CACHE.length; i++) {
+            CACHE[i] = String.valueOf(i);
         }
     }
 
@@ -24,7 +24,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(CharUtils.toString(' ')); // Output: " "
         System.out.println(CharUtils.toString('A')); // Output: "A"
-        System.out.println(CharUtils.toString('Z')); // Output: "Z"
         System.out.println(CharUtils.toString('ñ')); // Output: "ñ"
     }
 }

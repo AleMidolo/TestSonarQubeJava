@@ -24,11 +24,11 @@ public class ArrayUtils {
     public static void main(String[] args) {
         // Example usage
         Integer[] originalArray = {1, 2, 3};
-        Object newArray = copyArrayGrow1(originalArray, Integer.class);
+        Integer[] newArray = (Integer[]) copyArrayGrow1(originalArray, Integer.class);
         
         // Print the new array
-        for (int i = 0; i < Array.getLength(newArray); i++) {
-            System.out.println(Array.get(newArray, i));
+        for (Integer value : newArray) {
+            System.out.print(value + " ");
         }
     }
 }

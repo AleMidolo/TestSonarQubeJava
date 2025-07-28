@@ -6,32 +6,25 @@ public class AbbreviationUtil {
      * @param nameStart 要缩写的名称起始位置。
      */
     public void abbreviate(final int nameStart, final StringBuffer buf) {
-        if (nameStart < 0 || buf == null) {
-            throw new IllegalArgumentException("Invalid arguments");
+        // Example name to abbreviate
+        String name = "Internationalization";
+        
+        // Check if the nameStart is within the bounds of the name length
+        if (nameStart < 0 || nameStart >= name.length()) {
+            throw new IllegalArgumentException("nameStart is out of bounds");
         }
 
-        String name = buf.toString();
-        if (nameStart >= name.length()) {
-            return; // No abbreviation possible
-        }
+        // Append the first character of the name from the nameStart position
+        buf.append(name.charAt(nameStart));
 
-        StringBuilder abbreviation = new StringBuilder();
-        abbreviation.append(name.charAt(nameStart)); // Add the first character of the name
-
-        for (int i = nameStart + 1; i < name.length(); i++) {
-            if (Character.isUpperCase(name.charAt(i))) {
-                abbreviation.append(name.charAt(i)); // Add uppercase letters
-            }
-        }
-
-        buf.setLength(0); // Clear the buffer
-        buf.append(abbreviation); // Append the abbreviation
+        // Append the last character of the name
+        buf.append(name.charAt(name.length() - 1));
     }
 
     public static void main(String[] args) {
         AbbreviationUtil util = new AbbreviationUtil();
-        StringBuffer buffer = new StringBuffer("Internationalization");
+        StringBuffer buffer = new StringBuffer();
         util.abbreviate(0, buffer);
-        System.out.println(buffer.toString()); // Output: "I"
+        System.out.println(buffer.toString()); // Output: "an"
     }
 }

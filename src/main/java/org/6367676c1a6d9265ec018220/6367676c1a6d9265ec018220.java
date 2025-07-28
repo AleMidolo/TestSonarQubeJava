@@ -1,5 +1,5 @@
 public class FilePathUtil {
-    
+
     /** 
      * 从给定路径中去除文件名扩展名，例如 "mypath/myfile.txt" -&gt; "mypath/myfile"。
      * @param path 文件路径（可能为 <code>null</code>）
@@ -11,14 +11,13 @@ public class FilePathUtil {
         }
         
         int lastDotIndex = path.lastIndexOf('.');
-        int lastSeparatorIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+        int lastSlashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
         
-        // If there is no dot or the dot is before the last separator, return null
-        if (lastDotIndex == -1 || lastDotIndex < lastSeparatorIndex) {
-            return null;
+        if (lastDotIndex > lastSlashIndex) {
+            return path.substring(0, lastDotIndex);
         }
         
-        return path.substring(0, lastDotIndex);
+        return null;
     }
 
     public static void main(String[] args) {

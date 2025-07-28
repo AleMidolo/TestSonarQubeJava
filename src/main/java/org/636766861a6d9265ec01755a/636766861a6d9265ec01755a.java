@@ -19,9 +19,8 @@ public class UriMatcher {
         
         if (matcher.matches()) {
             return new MatchResult(matcher);
-        } else {
-            return null; // No match found
         }
+        return null;
     }
 
     public static class MatchResult {
@@ -31,35 +30,20 @@ public class UriMatcher {
             this.matcher = matcher;
         }
 
-        public String group(int index) {
-            return matcher.group(index);
+        public String group(int group) {
+            return matcher.group(group);
         }
 
-        public int start(int index) {
-            return matcher.start(index);
+        public int start(int group) {
+            return matcher.start(group);
         }
 
-        public int end(int index) {
-            return matcher.end(index);
+        public int end(int group) {
+            return matcher.end(group);
         }
 
         public int groupCount() {
             return matcher.groupCount();
-        }
-    }
-
-    public static void main(String[] args) {
-        UriMatcher uriMatcher = new UriMatcher("^(http|https)://(www\\.)?example\\.com/(.*)$");
-        MatchResult result = uriMatcher.match("https://www.example.com/path/to/resource");
-
-        if (result != null) {
-            System.out.println("Matched!");
-            System.out.println("Group 0: " + result.group(0)); // Full match
-            System.out.println("Group 1: " + result.group(1)); // Protocol
-            System.out.println("Group 2: " + result.group(2)); // www.
-            System.out.println("Group 3: " + result.group(3)); // Path
-        } else {
-            System.out.println("No match found.");
         }
     }
 }

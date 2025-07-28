@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MetricsHandler implements java.util.function.Consumer<METRICS> {
-    private final Map<String, Integer> metricsCache = new HashMap<>();
+    private final Map<String, Double> metricsCache = new HashMap<>();
 
     /**
      * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
@@ -10,34 +10,22 @@ public class MetricsHandler implements java.util.function.Consumer<METRICS> {
      */
     @Override
     public void accept(final METRICS data) {
-        if (data == null) {
-            return;
+        if (data != null) {
+            for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
+                metricsCache.merge(entry.getKey(), entry.getValue(), Double::sum);
+            }
         }
-        
-        // 假设 METRICS 有一个方法 getName() 和 getValue() 
-        // 用于获取指标名称和对应的值
-        String name = data.getName();
-        int value = data.getValue();
-
-        metricsCache.merge(name, value, Integer::sum);
     }
 }
 
-// 假设 METRICS 类的定义
 class METRICS {
-    private String name;
-    private int value;
+    private final Map<String, Double> metrics;
 
-    public METRICS(String name, int value) {
-        this.name = name;
-        this.value = value;
+    public METRICS(Map<String, Double> metrics) {
+        this.metrics = metrics;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
-        return value;
+    public Map<String, Double> getMetrics() {
+        return metrics;
     }
 }

@@ -28,12 +28,9 @@ class Edge {
         this.to = to;
     }
 
-    public Node getFrom() {
-        return from;
-    }
-
-    public Node getTo() {
-        return to;
+    @Override
+    public String toString() {
+        return "Edge from " + from.getName() + " to " + to.getName();
     }
 }
 
@@ -58,7 +55,7 @@ class Graph {
 
     private Node getRealNode(Node virtualNode) {
         // Logic to get the real node corresponding to the virtual node
-        // For demonstration, we will just return a new Node with the same name but not virtual
-        return new Node(virtualNode.getName(), false);
+        // For demonstration, we will just return a new Node with "Real" prefix
+        return new Node("Real_" + virtualNode.getName(), false);
     }
 }

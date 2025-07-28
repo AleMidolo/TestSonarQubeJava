@@ -13,7 +13,7 @@ public class NonZeroCounter {
      */
     public int nonZeros(int row) {
         if (row < 0 || row >= matrix.length) {
-            throw new IllegalArgumentException("Invalid row index");
+            throw new IllegalArgumentException("Invalid row number");
         }
         
         int count = 0;

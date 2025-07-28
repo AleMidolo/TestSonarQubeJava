@@ -1,6 +1,6 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.util.Triplet;
+import org.jgrapht.alg.util.Triple;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
@@ -51,15 +51,16 @@ public class GraphUtils<V, E> {
 
             @Override
             public double getWeight() {
-                return 0; // Weight calculation can be implemented if needed
+                double weight = 0.0;
+                for (E edge : tour) {
+                    weight += graph.getEdgeWeight(edge);
+                }
+                return weight;
             }
 
             @Override
-            public String toString() {
-                return "GraphPath{" +
-                        "vertices=" + vertexList +
-                        ", edges=" + tour +
-                        '}';
+            public int getLength() {
+                return tour.size();
             }
         };
     }

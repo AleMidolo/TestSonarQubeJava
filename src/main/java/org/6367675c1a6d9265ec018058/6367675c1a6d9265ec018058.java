@@ -8,14 +8,14 @@ public class StringSupplier {
      */
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        final int[] current = {start}; // 使用数组来保持可变性
-        return () -> Integer.toString(current[0]++);
+        final int[] current = {start}; // 使用数组来保持可变状态
+        return () -> String.valueOf(current[0]++); // 返回当前值并递增
     }
 
     public static void main(String[] args) {
-        Supplier<String> supplier = createStringSupplier(5);
-        System.out.println(supplier.get()); // 输出: 5
-        System.out.println(supplier.get()); // 输出: 6
-        System.out.println(supplier.get()); // 输出: 7
+        Supplier<String> supplier = createStringSupplier(1);
+        System.out.println(supplier.get()); // 输出: 1
+        System.out.println(supplier.get()); // 输出: 2
+        System.out.println(supplier.get()); // 输出: 3
     }
 }

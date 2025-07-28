@@ -41,15 +41,14 @@ public class MappingDiff {
     }
 
     public static void main(String[] args) {
+        MappingDiff mappingDiff = new MappingDiff();
         Mappings historicalMappings = new Mappings();
         historicalMappings.addField("id", "integer");
-        historicalMappings.addField("name", "string");
-        historicalMappings.addField("address", "string"); // This field does not exist in current mappings
+        historicalMappings.addField("address", "string");
+        historicalMappings.addField("phone", "string");
 
-        MappingDiff mappingDiff = new MappingDiff();
         Mappings result = mappingDiff.diffStructure("exampleTable", historicalMappings);
-
-        System.out.println("Fields not in current mappings:");
+        System.out.println("Missing fields in current mappings:");
         for (String field : result.getFields().keySet()) {
             System.out.println(field + ": " + result.getFields().get(field));
         }

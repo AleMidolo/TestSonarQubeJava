@@ -7,15 +7,12 @@ public class ColumnName {
      */
     public void overrideName(String oldName, String newName) {
         // Implementation of the name override logic
-        if (oldName == null || newName == null) {
-            throw new IllegalArgumentException("Old name and new name cannot be null");
-        }
+        // This is a placeholder for the actual logic to replace oldName with newName
+        System.out.println("Replacing name: " + oldName + " with new name: " + newName);
         
-        // Here you would typically have logic to replace the old name with the new name
-        // For demonstration purposes, we will just print the action
-        System.out.println("Replacing old name: " + oldName + " with new name: " + newName);
-        
-        // Actual replacement logic would go here, e.g., updating a database or a map
+        // Here you would typically update a data structure or database with the new name
+        // For example, if you have a map of column names:
+        // columnNameMap.put(newName, columnNameMap.remove(oldName));
     }
 
     public static void main(String[] args) {

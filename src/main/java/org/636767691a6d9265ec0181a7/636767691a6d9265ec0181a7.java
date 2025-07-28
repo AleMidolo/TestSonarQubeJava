@@ -1,5 +1,4 @@
 public class StringTrimmer {
-    
     /**
      * 从给定的字符串中修剪所有出现的指定前导字符。
      * @param str 要检查的字符串
@@ -20,7 +19,7 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String result = trimLeadingCharacter("///example/string", '/');
-        System.out.println(result); // Output: example/string
+        String result = trimLeadingCharacter("///Hello World", '/');
+        System.out.println(result); // Output: "Hello World"
     }
 }

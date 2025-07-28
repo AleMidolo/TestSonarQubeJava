@@ -41,7 +41,6 @@ public class CategoryTree {
                 activeChildren.add(child);
             }
         }
-
         node.children = activeChildren;
 
         // If the current node is not active and has no active children, it should be removed

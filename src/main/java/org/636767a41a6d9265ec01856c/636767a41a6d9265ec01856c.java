@@ -19,7 +19,7 @@ public class UTF8SizeCalculator {
 
     public static void main(String[] args) {
         String testString = "Hello, 世界!";
-        int size = computeUTF8Size(testString, 0, testString.length());
+        int size = computeUTF8Size(testString, 0, 13);
         System.out.println("UTF-8 size: " + size);
     }
 }

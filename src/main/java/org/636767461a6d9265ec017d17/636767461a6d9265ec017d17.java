@@ -29,7 +29,7 @@ public class StringUnescaper {
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
         String input = "example\\ identifier";
-        String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example identifier
+        String result = unescaper.unescapeId(input);
+        System.out.println(result); // Output: example identifier
     }
 }

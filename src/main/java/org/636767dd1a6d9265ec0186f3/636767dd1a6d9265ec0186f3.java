@@ -18,11 +18,11 @@ public class ColumnName {
             columnNames.remove(oldName);
             columnNames.put(newName, existingNewName);
         } else {
-            columnNames.put(newName, oldName);
+            columnNames.put(oldName, newName);
         }
     }
 
-    public String getOriginalName(String newName) {
-        return columnNames.get(newName);
+    public String getNewName(String oldName) {
+        return columnNames.getOrDefault(oldName, oldName);
     }
 }

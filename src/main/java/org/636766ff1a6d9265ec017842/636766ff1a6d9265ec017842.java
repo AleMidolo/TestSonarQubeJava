@@ -21,6 +21,7 @@ public class DoubleArrayConverter {
     }
 
     public static void main(String[] args) {
+        // Test case
         Double[] testArray = {1.0, 2.0, 3.0};
         double[] primitiveArray = toPrimitive(testArray);
         for (double d : primitiveArray) {

@@ -1,5 +1,4 @@
 public class NonZeroCounter {
-
     /**
      * Ottiene il numero di voci diverse da zero in una riga.
      * @param row la riga

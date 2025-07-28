@@ -9,6 +9,7 @@ private String parseToken(final char[] terminators) {
 
     StringBuilder token = new StringBuilder();
     int currentChar;
+    
     while (true) {
         currentChar = System.in.read();
         if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
@@ -16,5 +17,6 @@ private String parseToken(final char[] terminators) {
         }
         token.append((char) currentChar);
     }
+
     return token.toString();
 }

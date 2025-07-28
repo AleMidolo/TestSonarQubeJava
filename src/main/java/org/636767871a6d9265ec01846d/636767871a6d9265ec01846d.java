@@ -7,27 +7,26 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String directoryName = "lf5";
-        File configDir;
+        String directoryPath;
 
         // Check if the OS is Windows 2000
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("windows") && osName.contains("2000")) {
-            configDir = new File(userHome + "\\Documenti e Impostazioni\\" + directoryName);
+        if (System.getProperty("os.name").toLowerCase().contains("windows 2000")) {
+            directoryPath = userHome + "\\Documenti e Impostazioni\\lf5";
         } else {
-            configDir = new File(userHome + File.separator + directoryName);
+            directoryPath = userHome + File.separator + "lf5";
         }
 
-        // Create the directory if it doesn't exist
-        if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
+        File directory = new File(directoryPath);
+
+        if (!directory.exists()) {
+            boolean created = directory.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + configDir.getAbsolutePath());
+                System.out.println("Directory created: " + directoryPath);
             } else {
-                System.out.println("Failed to create directory: " + configDir.getAbsolutePath());
+                System.out.println("Failed to create directory: " + directoryPath);
             }
         } else {
-            System.out.println("Directory already exists: " + configDir.getAbsolutePath());
+            System.out.println("Directory already exists: " + directoryPath);
         }
     }
 

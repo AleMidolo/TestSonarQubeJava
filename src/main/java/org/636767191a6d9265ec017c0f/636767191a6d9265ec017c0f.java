@@ -11,9 +11,10 @@ public class ByteVector {
 
     private void enlarge(final int size) {
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
-    // Other methods of the ByteVector class...
+    // Other methods of the ByteVector class can be added here
 }

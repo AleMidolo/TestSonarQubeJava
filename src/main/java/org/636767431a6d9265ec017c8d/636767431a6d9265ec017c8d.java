@@ -1,7 +1,6 @@
-public class BinaryLogCalculator {
+public class BinaryLog {
     /**
      * Calcola floor(log2(n)) + 1
-     * 
      * @param n the input number
      * @return floor(log2(n)) + 1
      */

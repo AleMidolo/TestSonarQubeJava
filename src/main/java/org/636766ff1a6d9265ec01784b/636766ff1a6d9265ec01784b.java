@@ -19,6 +19,7 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+        // Test cases
         System.out.println(isDigits("12345")); // true
         System.out.println(isDigits("123a45")); // false
         System.out.println(isDigits("")); // false

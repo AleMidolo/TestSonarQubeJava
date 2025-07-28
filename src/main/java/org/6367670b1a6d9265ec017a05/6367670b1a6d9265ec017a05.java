@@ -9,12 +9,9 @@ public class CharUtils {
     }
 
     /**
-     * Converte il carattere in una Stringa che contiene il singolo carattere.
-     * Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.
-     * <pre>
-     * CharUtils.toString(' ')  = " "
-     * CharUtils.toString('A')  = "A"
-     * </pre>
+     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p>
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p>
+     * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
      * @param ch  il carattere da convertire
      * @return una Stringa contenente il carattere specificato
      */
@@ -27,7 +24,7 @@ public class CharUtils {
 
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
-        System.out.println(toString('A')); // Output: "A"
-        System.out.println(toString('€')); // Output: "€" (non-ASCII character)
+        System.out.println(toString('A'));  // Output: "A"
+        System.out.println(toString('€'));  // Output: "€" (non-ASCII character)
     }
 }

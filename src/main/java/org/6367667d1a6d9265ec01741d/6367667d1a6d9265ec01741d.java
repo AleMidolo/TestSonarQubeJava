@@ -21,23 +21,7 @@ public class TypeResolver {
 
     public static void main(String[] args) {
         // Esempio di utilizzo
-        TypeVariable<?> typeVar = new TypeVariable<Object>() {
-            @Override
-            public Type[] getBounds() {
-                return new Type[]{Object.class};
-            }
-
-            @Override
-            public String getName() {
-                return "T";
-            }
-
-            @Override
-            public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
-                return TypeResolver.class;
-            }
-        };
-
+        TypeVariable<?> typeVar = String.class.getTypeParameters()[0];
         Type resolvedType = resolveBound(typeVar);
         System.out.println("Resolved Type: " + resolvedType);
     }

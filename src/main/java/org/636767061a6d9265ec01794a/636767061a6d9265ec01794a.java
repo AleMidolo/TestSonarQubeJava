@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class FileUtils {
 
     /**
@@ -39,9 +37,7 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(indexOfExtension("example/file.txt")); // Output: 13
-        System.out.println(indexOfExtension("example.file/file")); // Output: -1
-        System.out.println(indexOfExtension("example.file/file.txt")); // Output: 18
-        System.out.println(indexOfExtension(null)); // Output: -1
+        String filename = "path/to/file.txt";
+        System.out.println(indexOfExtension(filename)); // Output: 13
     }
 }

@@ -41,7 +41,7 @@ class Node {
     }
 }
 
-class Graph {
+public class Graph {
     private Node currentNode;
     private Node nextNode;
 
@@ -58,5 +58,13 @@ class Graph {
         Node fromNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
         Node toNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
         return new Edge(fromNode, toNode);
+    }
+
+    public static void main(String[] args) {
+        Node node1 = new Node("A", false);
+        Node node2 = new Node("B", true);
+        Graph graph = new Graph(node1, node2);
+        Edge edge = graph.edgeToNext();
+        System.out.println("Edge from " + edge.getFrom().getName() + " to " + edge.getTo().getName());
     }
 }

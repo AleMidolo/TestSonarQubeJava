@@ -2,7 +2,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 
-    /**
+    /** 
      * Retrieve an instance of  {@link Meteor} based on the {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
      * @return a {@link Meteor} or null if not found

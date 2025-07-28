@@ -2,50 +2,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Channels {
-    private List<String> targetChannels;
+    private List<IConsumer> consumers;
 
     public Channels() {
-        this.targetChannels = new ArrayList<>();
+        this.consumers = new ArrayList<>();
     }
 
-    public void addChannel(String channel) {
-        targetChannels.add(channel);
+    public void addConsumer(IConsumer consumer) {
+        consumers.add(consumer);
     }
 
-    public List<String> getTargetChannels() {
-        return targetChannels;
+    public List<IConsumer> getConsumers() {
+        return consumers;
     }
 }
 
 interface IConsumer {
-    void consume(String channel);
+    void consume(String message);
 }
 
-public class ChannelManager {
-    private Channels channels;
-    private IConsumer consumer;
-
-    public ChannelManager(Channels channels, IConsumer consumer) {
-        this.channels = channels;
-        this.consumer = consumer;
-    }
-
+public class TargetManager {
     /** 
      * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        // Example of adding a new channel
-        String newChannel = "NewChannel"; // This could be parameterized
-        channels.addChannel(newChannel);
-        consumer.consume(newChannel);
+        channels.addConsumer(consumer);
     }
 
     public static void main(String[] args) {
         Channels channels = new Channels();
-        IConsumer consumer = channel -> System.out.println("Consuming channel: " + channel);
-        ChannelManager manager = new ChannelManager(channels, consumer);
-        
-        manager.addNewTarget(channels, consumer);
-        System.out.println("Current target channels: " + channels.getTargetChannels());
+        TargetManager targetManager = new TargetManager();
+
+        IConsumer consumer = new IConsumer() {
+            @Override
+            public void consume(String message) {
+                System.out.println("Consuming message: " + message);
+            }
+        };
+
+        targetManager.addNewTarget(channels, consumer);
+        System.out.println("New consumer added. Total consumers: " + channels.getConsumers().size());
     }
 }

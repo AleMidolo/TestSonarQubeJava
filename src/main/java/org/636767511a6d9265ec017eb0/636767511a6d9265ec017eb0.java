@@ -28,13 +28,13 @@ public class MatrixUtils {
     public static void main(String[] args) {
         int[][] sampleMatrix = {
             {1, 0, 2, 0},
-            {0, 0, 0, 0},
-            {3, 4, 0, 5}
+            {0, 0, 0, 3},
+            {4, 5, 0, 0}
         };
         
         MatrixUtils matrixUtils = new MatrixUtils(sampleMatrix);
         System.out.println("Non-zero entries in row 0: " + matrixUtils.nonZeros(0)); // Output: 2
-        System.out.println("Non-zero entries in row 1: " + matrixUtils.nonZeros(1)); // Output: 0
-        System.out.println("Non-zero entries in row 2: " + matrixUtils.nonZeros(2)); // Output: 3
+        System.out.println("Non-zero entries in row 1: " + matrixUtils.nonZeros(1)); // Output: 1
+        System.out.println("Non-zero entries in row 2: " + matrixUtils.nonZeros(2)); // Output: 2
     }
 }

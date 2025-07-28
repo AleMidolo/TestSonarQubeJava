@@ -4,7 +4,7 @@ import java.awt.*;
 public class TableRowSelector {
 
     /** 
-     * Selects a the specified row in the specified JTable and scrolls the specified JScrollPane to the newly selected row. More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscreen.
+     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane to the newly selected row. More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscreen.
      * @param row should belong to the specified JTable
      * @param table should belong to the specified JScrollPane
      * @param pane should belong to the specified JScrollPane
@@ -18,7 +18,10 @@ public class TableRowSelector {
             throw new IndexOutOfBoundsException("Row index is out of bounds");
         }
 
+        // Select the specified row
         table.setRowSelectionInterval(row, row);
+        
+        // Scroll to the selected row
         SwingUtilities.invokeLater(() -> {
             Rectangle rect = table.getCellRect(row, 0, true);
             table.scrollRectToVisible(rect);
@@ -27,7 +30,8 @@ public class TableRowSelector {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Table Row Selector Example");
+        // Sample usage
+        JFrame frame = new JFrame("Table Row Selector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
 
@@ -43,11 +47,10 @@ public class TableRowSelector {
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
         frame.add(pane, BorderLayout.CENTER);
-
-        JButton button = new JButton("Select Row 2");
-        button.addActionListener(e -> selectRow(1, table, pane)); // Select the second row (index 1)
-        frame.add(button, BorderLayout.SOUTH);
-
+        
         frame.setVisible(true);
+
+        // Select a row after the frame is visible
+        SwingUtilities.invokeLater(() -> selectRow(2, table, pane));
     }
 }

@@ -6,8 +6,8 @@ public class StringReader {
 
     private BufferedReader reader;
 
-    public StringReader() {
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
+    public StringReader(InputStreamReader inputStreamReader) {
+        this.reader = new BufferedReader(inputStreamReader);
     }
 
     /** 
@@ -19,8 +19,8 @@ public class StringReader {
     }
 
     public static void main(String[] args) {
-        StringReader stringReader = new StringReader();
         try {
+            StringReader stringReader = new StringReader(new InputStreamReader(System.in));
             System.out.println("Please enter a string:");
             String input = stringReader.readString();
             System.out.println("You entered: " + input);

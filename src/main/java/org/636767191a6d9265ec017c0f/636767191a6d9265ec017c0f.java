@@ -17,26 +17,26 @@ public class ByteVector {
         if (size < 0) {
             throw new IllegalArgumentException("Size must be non-negative");
         }
-        int newSize = currentSize + size;
-        if (newSize > data.length) {
-            data = Arrays.copyOf(data, newSize);
-        }
+        int newCapacity = currentSize + size;
+        data = Arrays.copyOf(data, newCapacity);
     }
 
     // Additional methods for demonstration purposes
-    public void addBytes(byte[] bytes) {
-        enlarge(bytes.length);
-        System.arraycopy(bytes, 0, data, currentSize, bytes.length);
-        currentSize += bytes.length;
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
     }
 
-    public byte[] getData() {
-        return Arrays.copyOf(data, currentSize);
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        return data[index];
     }
 
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector(5);
-        byteVector.addBytes(new byte[]{1, 2, 3});
-        System.out.println(Arrays.toString(byteVector.getData())); // Output: [1, 2, 3]
+    public int size() {
+        return currentSize;
     }
 }

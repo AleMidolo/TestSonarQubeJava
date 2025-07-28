@@ -22,11 +22,11 @@ public class GraphUtils {
         for (V v1 : vertices) {
             for (V v2 : vertices) {
                 if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
-                    return false; // If any pair of vertices is not connected, it's not a clique
+                    return false; // Found a pair of vertices that are not connected
                 }
             }
         }
-        return true; // All pairs are connected, so it's a clique
+        return true; // All pairs of vertices are connected
     }
 
     public static void main(String[] args) {

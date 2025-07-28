@@ -31,14 +31,14 @@ public class StringUnescaper {
                     case 'f':
                         unescaped.append('\f');
                         break;
-                    case '\\':
-                        unescaped.append('\\');
+                    case '\"':
+                        unescaped.append('\"');
                         break;
                     case '\'':
                         unescaped.append('\'');
                         break;
-                    case '\"':
-                        unescaped.append('\"');
+                    case '\\':
+                        unescaped.append('\\');
                         break;
                     default:
                         unescaped.append(c);
@@ -62,13 +62,9 @@ public class StringUnescaper {
         return unescaped.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String input = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
-            String output = unescapeJava(input);
-            System.out.println(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
+        String result = unescapeJava(testString);
+        System.out.println(result);
     }
 }

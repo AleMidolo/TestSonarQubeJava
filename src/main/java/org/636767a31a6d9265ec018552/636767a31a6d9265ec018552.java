@@ -21,9 +21,9 @@ public class StringReader {
     public static void main(String[] args) {
         StringReader stringReader = new StringReader();
         try {
-            System.out.println("请输入字符串:");
+            System.out.println("Please enter a string:");
             String input = stringReader.readString();
-            System.out.println("您输入的字符串是: " + input);
+            System.out.println("You entered: " + input);
         } catch (IOException e) {
             e.printStackTrace();
         }

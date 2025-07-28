@@ -9,31 +9,17 @@ class Edge {
         this.to = to;
     }
 
-    public Node getFrom() {
-        return from;
-    }
-
-    public Node getTo() {
-        return to;
-    }
+    // Getters and other methods can be added here
 }
 
 class Node {
     private final String name;
-    private final boolean isVirtual;
 
-    public Node(String name, boolean isVirtual) {
+    public Node(String name) {
         this.name = name;
-        this.isVirtual = isVirtual;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
+    // Getters and other methods can be added here
 }
 
 class Graph {
@@ -50,14 +36,26 @@ class Graph {
      * @return 从当前节点到下一个节点的边
      */
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? getRealNode(currentNode) : currentNode;
-        Node toNode = nextNode.isVirtual() ? getRealNode(nextNode) : nextNode;
-        return new Edge(fromNode, toNode);
+        Node realCurrentNode = getRealNode(currentNode);
+        Node realNextNode = getRealNode(nextNode);
+        return new Edge(realCurrentNode, realNextNode);
     }
 
-    private Node getRealNode(Node virtualNode) {
-        // This method should return the real corresponding node for a virtual node.
-        // For demonstration purposes, we will return a new Node with the same name but not virtual.
-        return new Node(virtualNode.getName(), false);
+    private Node getRealNode(Node node) {
+        // Assuming a method to determine if a node is virtual
+        if (isVirtual(node)) {
+            return getCorrespondingRealNode(node);
+        }
+        return node;
+    }
+
+    private boolean isVirtual(Node node) {
+        // Implement logic to determine if the node is virtual
+        return false; // Placeholder
+    }
+
+    private Node getCorrespondingRealNode(Node node) {
+        // Implement logic to get the real corresponding node
+        return new Node("Real_" + node.name); // Placeholder
     }
 }

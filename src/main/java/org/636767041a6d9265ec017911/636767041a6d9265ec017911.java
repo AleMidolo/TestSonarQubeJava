@@ -9,7 +9,7 @@ public class ObjectRegistry {
      */
     static void register(Object value) {
         if (value == null) {
-            throw new IllegalArgumentException("Cannot register a null object.");
+            throw new IllegalArgumentException("Cannot register null object.");
         }
         if (!registeredObjects.add(value)) {
             System.out.println("Object is already registered: " + value);

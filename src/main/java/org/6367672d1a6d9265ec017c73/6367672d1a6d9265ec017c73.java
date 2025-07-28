@@ -14,15 +14,15 @@ public class MessagePrinter {
         if (!messageTimestamps.containsKey(message)) {
             messageTimestamps.put(message, timestamp);
             return true;
-        } else {
-            int lastTimestamp = messageTimestamps.get(message);
-            if (timestamp - lastTimestamp >= 10) {
-                messageTimestamps.put(message, timestamp);
-                return true;
-            } else {
-                return false;
-            }
         }
+        
+        int lastTimestamp = messageTimestamps.get(message);
+        if (timestamp - lastTimestamp >= 10) {
+            messageTimestamps.put(message, timestamp);
+            return true;
+        }
+        
+        return false;
     }
 
     public static void main(String[] args) {

@@ -34,10 +34,10 @@ public class QueueToString {
     }
 
     public static void main(String[] args) {
-        QueueToString queueToString = new QueueToString();
-        queueToString.enqueue("First");
-        queueToString.enqueue("Second");
-        queueToString.enqueue("Third");
-        System.out.println(queueToString.toString()); // Output: [First, Second, Third]
+        QueueToString q = new QueueToString();
+        q.enqueue("first");
+        q.enqueue("second");
+        q.enqueue("third");
+        System.out.println(q.toString()); // Output: [first, second, third]
     }
 }

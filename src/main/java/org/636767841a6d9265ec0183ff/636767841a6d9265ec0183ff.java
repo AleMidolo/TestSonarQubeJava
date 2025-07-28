@@ -34,23 +34,24 @@ public class TableRowSelector {
         JFrame frame = new JFrame("Table Row Selector");
         String[] columnNames = {"Column 1", "Column 2"};
         Object[][] data = {
-            {"Row 1", "Data 1"},
-            {"Row 2", "Data 2"},
-            {"Row 3", "Data 3"},
-            {"Row 4", "Data 4"},
-            {"Row 5", "Data 5"},
+            {"Data 1", "Data 2"},
+            {"Data 3", "Data 4"},
+            {"Data 5", "Data 6"},
+            {"Data 7", "Data 8"},
+            {"Data 9", "Data 10"}
         };
-
+        
         JTable table = new JTable(data, columnNames);
         JScrollPane pane = new JScrollPane(table);
+        
         frame.add(pane, BorderLayout.CENTER);
-        
-        JButton button = new JButton("Select Row 2");
-        button.addActionListener(e -> selectRow(1, table, pane)); // Select the second row (index 1)
-        frame.add(button, BorderLayout.SOUTH);
-        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        
+        // Select a row after a delay
+        Timer timer = new Timer(1000, e -> selectRow(3, table, pane));
+        timer.setRepeats(false);
+        timer.start();
     }
 }

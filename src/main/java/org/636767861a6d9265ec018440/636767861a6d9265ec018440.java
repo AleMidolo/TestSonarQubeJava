@@ -1,13 +1,13 @@
 public class AbbreviationUtil {
 
-    /**
+    /** 
      * 缩写名称。
      * @param buf 用于追加缩写的缓冲区。
      * @param nameStart 要缩写的名称起始位置。
      */
     public void abbreviate(final int nameStart, final StringBuffer buf) {
         if (nameStart < 0 || buf == null) {
-            throw new IllegalArgumentException("Invalid parameters");
+            throw new IllegalArgumentException("Invalid arguments");
         }
 
         String name = buf.toString();

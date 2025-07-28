@@ -1,5 +1,4 @@
 public class StringUtil {
-    
     /**
      * 查找字符串中的最后一个索引，能够处理 <code>null</code>。此方法使用 {@link String#lastIndexOf(String)}。
      */

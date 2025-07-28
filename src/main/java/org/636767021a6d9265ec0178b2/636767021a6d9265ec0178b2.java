@@ -1,6 +1,5 @@
 public class StackManipulator {
-    
-    private Stack<Object> stack = new Stack<>();
+    private final Stack<Object> stack = new Stack<>();
 
     /** 
      * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
@@ -17,40 +16,59 @@ public class StackManipulator {
 
     private int getTypeCount(String descriptor) {
         // 这里假设 descriptor 是一个有效的类型描述符
-        // 例如 "I" 表示 int, "D" 表示 double, "(II)V" 表示方法描述符
-        // 需要根据实际的描述符解析逻辑来实现
+        // 例如 "I" 表示 int，"D" 表示 double，"Lcom/example/MyClass;" 表示对象类型
+        // 方法描述符的参数类型需要解析
         if (descriptor.startsWith("(")) {
             // 方法描述符，计算参数类型数量
-            int paramCount = 0;
+            int count = 0;
             for (int i = 1; i < descriptor.length(); i++) {
                 char c = descriptor.charAt(i);
                 if (c == ')') {
                     break;
                 }
-                paramCount += getTypeSize(c);
+                if (c == 'L') {
+                    // 对象类型
+                    while (i < descriptor.length() && descriptor.charAt(i) != ';') {
+                        i++;
+                    }
+                    count++;
+                } else if (c == '[') {
+                    // 数组类型
+                    while (i < descriptor.length() && descriptor.charAt(i) == '[') {
+                        i++;
+                    }
+                    if (i < descriptor.length() && descriptor.charAt(i) == 'L') {
+                        while (i < descriptor.length() && descriptor.charAt(i) != ';') {
+                            i++;
+                        }
+                    }
+                    count++;
+                } else {
+                    // 基本类型
+                    count++;
+                }
             }
-            return paramCount;
+            return count;
         } else {
-            // 类型描述符，返回类型大小
-            return getTypeSize(descriptor.charAt(0));
+            // 基本类型或对象类型
+            return getBasicTypeCount(descriptor);
         }
     }
 
-    private int getTypeSize(char type) {
-        switch (type) {
-            case 'Z': // boolean
-            case 'B': // byte
-            case 'C': // char
-            case 'S': // short
-            case 'I': // int
-                return 1;
-            case 'J': // long
-            case 'D': // double
-                return 2;
-            case 'L': // object reference
-                return 1; // 参考类型
+    private int getBasicTypeCount(String descriptor) {
+        switch (descriptor) {
+            case "V": return 0; // void
+            case "Z": return 1; // boolean
+            case "B": return 1; // byte
+            case "C": return 1; // char
+            case "S": return 1; // short
+            case "I": return 1; // int
+            case "J": return 2; // long
+            case "F": return 1; // float
+            case "D": return 2; // double
             default:
-                throw new IllegalArgumentException("Unknown type: " + type);
+                // 对象类型
+                return 1; // 视为一个对象
         }
     }
 }

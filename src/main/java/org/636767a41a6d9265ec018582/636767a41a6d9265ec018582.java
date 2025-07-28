@@ -12,21 +12,18 @@ public class MessageWriter {
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message
         int size = schema.getSerializedSize(message);
-        
         // Write the size of the message
         out.write(intToByteArray(size));
-        
         // Write the message itself
-        schema.writeTo(message, out, buffer);
-        
+        schema.writeTo(out, message, buffer);
         return size;
     }
 
     private static byte[] intToByteArray(int value) {
         return new byte[] {
-            (byte) (value >> 24),
-            (byte) (value >> 16),
-            (byte) (value >> 8),
+            (byte) (value >>> 24),
+            (byte) (value >>> 16),
+            (byte) (value >>> 8),
             (byte) value
         };
     }

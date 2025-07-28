@@ -42,21 +42,10 @@ public class MappingDiff {
     private Mappings getHistoricalMappings(String tableName) {
         // Simulazione di recupero delle mappature storiche
         Mappings historicalMappings = new Mappings();
+        // Aggiunta di campi storici per esempio
         historicalMappings.addField("id", "integer");
         historicalMappings.addField("name", "string");
         historicalMappings.addField("created_at", "date");
         return historicalMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings currentMappings = new Mappings();
-        currentMappings.addField("id", "integer");
-        
-        Mappings diff = mappingDiff.diffStructure("example_table", currentMappings);
-        System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
-            System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
-        }
     }
 }

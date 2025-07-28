@@ -29,7 +29,8 @@ public class SymbolTable {
         SymbolTable symbolTable = new SymbolTable();
         int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
         int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        System.out.println("Index of myMethod: " + index1);
-        System.out.println("Index of myMethod (duplicate): " + index2);
+        
+        System.out.println("Index of first addition: " + index1);
+        System.out.println("Index of second addition (should be the same): " + index2);
     }
 }

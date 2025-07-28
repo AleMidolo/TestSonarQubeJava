@@ -19,4 +19,10 @@ public class FileManager {
         // Implementazione per aggiungere il file
         System.out.println("Aggiunto file: " + file.getName());
     }
+    
+    public static void main(String[] args) {
+        FileManager fileManager = new FileManager();
+        File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
+        fileManager.addReverse(files);
+    }
 }

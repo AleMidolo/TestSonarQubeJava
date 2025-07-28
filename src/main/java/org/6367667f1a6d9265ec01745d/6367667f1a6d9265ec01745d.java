@@ -3,7 +3,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentDecoder {
+public class PathDecoder {
 
     /** 
      * Decodifica il componente di percorso di un URI come segmenti di percorso.
@@ -14,21 +14,21 @@ public class PathSegmentDecoder {
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
-        
+
         // Ignora il primo '/' se presente
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-        
+
         String[] pathSegments = path.split("/");
-        
+
         for (String segment : pathSegments) {
             if (decode) {
                 segment = decodeSegment(segment);
             }
             segments.add(new PathSegmentImpl(segment));
         }
-        
+
         return segments;
     }
 
@@ -36,7 +36,7 @@ public class PathSegmentDecoder {
         try {
             return java.net.URLDecoder.decode(segment, "UTF-8");
         } catch (Exception e) {
-            // In caso di errore nel decoding, restituisce il segmento originale
+            // In caso di errore di decodifica, restituisce il segmento originale
             return segment;
         }
     }

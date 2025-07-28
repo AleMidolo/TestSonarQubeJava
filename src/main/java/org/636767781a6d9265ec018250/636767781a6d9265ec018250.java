@@ -1,5 +1,5 @@
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.Filter;
+import org.apache.log4j.Filter;
 
 public class FilterDecider {
 
@@ -8,8 +8,14 @@ public class FilterDecider {
      */
     public int decide(LoggingEvent event) {
         // Implementazione della logica per decidere il filtro
-        // Se non c'è corrispondenza con la stringa, restituisce Filter.NEUTRAL
-        // Qui si può aggiungere la logica per la corrispondenza della stringa
-        return Filter.NEUTRAL;
+        String message = event.getRenderedMessage();
+        String searchString = "corrispondenza"; // Stringa da cercare
+
+        if (message == null || !message.contains(searchString)) {
+            return Filter.NEUTRAL; // Nessuna corrispondenza
+        }
+
+        // Logica aggiuntiva per altre decisioni può essere aggiunta qui
+        return Filter.ACCEPT; // Esempio di accettazione se c'è corrispondenza
     }
 }

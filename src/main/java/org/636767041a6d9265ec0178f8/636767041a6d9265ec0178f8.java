@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class StringArrayCopy {
 
     /** 
@@ -21,6 +19,9 @@ public class StringArrayCopy {
         String[] original = {"Hello", "World", "JAVA", null, "Programming"};
         String[] copied = copyStrings(original);
         
-        System.out.println(Arrays.toString(copied)); // Output: [hello, world, java, null, programming]
+        // Print the copied array
+        for (String str : copied) {
+            System.out.println(str);
+        }
     }
 }

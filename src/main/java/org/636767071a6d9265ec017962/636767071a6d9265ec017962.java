@@ -1,4 +1,5 @@
 import org.apache.commons.beanutils.BeanMap;
+import java.util.Map;
 
 public class BeanMapUtil {
 

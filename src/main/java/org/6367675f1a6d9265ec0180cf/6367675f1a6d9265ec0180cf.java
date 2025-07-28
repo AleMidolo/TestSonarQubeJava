@@ -26,7 +26,7 @@ public class GraphUtils {
                 }
             }
         }
-        return true; // All pairs are connected, it's a clique
+        return true; // All pairs are connected, so it's a clique
     }
 
     public static void main(String[] args) {

@@ -10,10 +10,12 @@ public class FieldChecker {
      */
     private void checkIfPackedField() throws IOException {
         // Simulazione di controllo se il campo è compresso
-        // In un caso reale, qui ci sarebbe la logica per controllare il campo
-        boolean packedFieldDetected = detectPackedField();
+        // In un caso reale, qui ci sarebbe la logica per verificare il campo
 
-        if (packedFieldDetected) {
+        // Esempio di logica per determinare se il campo è compresso
+        boolean fieldIsPacked = true; // Questa condizione dovrebbe essere basata su logica reale
+
+        if (fieldIsPacked) {
             isPackedField = true;
             // Logica aggiuntiva per gestire il campo compresso
         } else {
@@ -21,9 +23,7 @@ public class FieldChecker {
         }
     }
 
-    private boolean detectPackedField() {
-        // Logica per rilevare se il campo è compresso
-        // Restituisce true se il campo è compresso, false altrimenti
-        return false; // Placeholder per la logica di rilevamento
+    public boolean isPackedField() {
+        return isPackedField;
     }
 }

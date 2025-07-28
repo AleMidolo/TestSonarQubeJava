@@ -2,19 +2,16 @@ import java.util.Set;
 
 public class Graph<V> {
     
-    // Assuming there's a method to get the incoming edges for a vertex
+    // Assuming a method to get incoming edges for a vertex
     private Set<Edge<V>> getIncomingEdges(V vertex) {
         // Implementation to retrieve incoming edges for the vertex
         return null; // Placeholder
     }
 
-    // Assuming Edge class has a method to get the weight
-    private class Edge<V> {
-        private double weight;
-
-        public double getWeight() {
-            return weight;
-        }
+    // Assuming a method to get the weight of an edge
+    private double getEdgeWeight(Edge<V> edge) {
+        // Implementation to retrieve the weight of the edge
+        return 0.0; // Placeholder
     }
 
     /** 
@@ -27,9 +24,14 @@ public class Graph<V> {
         for (V vertex : v) {
             Set<Edge<V>> incomingEdges = getIncomingEdges(vertex);
             for (Edge<V> edge : incomingEdges) {
-                totalWeight += edge.getWeight();
+                totalWeight += getEdgeWeight(edge);
             }
         }
         return totalWeight;
+    }
+    
+    // Placeholder for Edge class
+    private static class Edge<V> {
+        // Edge implementation
     }
 }

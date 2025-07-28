@@ -23,6 +23,6 @@ public class DigitValueInterpreter {
         System.out.println(digitValue('Z')); // 35
         System.out.println(digitValue('a')); // 10
         System.out.println(digitValue('z')); // 35
-        System.out.println(digitValue('@')); // -1
+        System.out.println(digitValue('@')); // -1 (non-ASCII digit)
     }
 }

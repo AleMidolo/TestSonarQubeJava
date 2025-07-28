@@ -62,9 +62,13 @@ public class StringUnescaper {
         return unescaped.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
-        String result = unescapeJava(testString);
-        System.out.println(result);
+    public static void main(String[] args) {
+        try {
+            String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a quote: \\\"";
+            String result = unescapeJava(testString);
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

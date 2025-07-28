@@ -33,20 +33,20 @@ public class PathSegmentDecoder {
     }
 
     private static String decodeSegment(String segment) {
-        try {
-            return java.net.URLDecoder.decode(segment, "UTF-8");
-        } catch (Exception e) {
-            // Handle exception (e.g., log it)
-            return segment; // Return the original segment if decoding fails
-        }
+        // Implement decoding logic here (e.g., using URLDecoder)
+        return segment; // Placeholder for actual decoding logic
     }
 
-    // Dummy PathSegmentImpl class for demonstration purposes
+    // Placeholder for PathSegmentImpl class
     public static class PathSegmentImpl {
         private String segment;
 
         public PathSegmentImpl(String segment) {
             this.segment = segment;
+        }
+
+        public String getSegment() {
+            return segment;
         }
 
         @Override

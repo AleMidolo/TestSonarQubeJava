@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ByteVector {
     private byte[] data;
     private int size;
@@ -20,16 +18,17 @@ public class ByteVector {
         if (byteLength < 0) {
             throw new IllegalArgumentException("byteLength cannot be negative");
         }
-        if (byteArrayValue != null) {
+        if (byteArrayValue == null) {
+            ensureCapacity(size + byteLength);
+            for (int i = 0; i < byteLength; i++) {
+                data[size++] = 0; // fill with null bytes
+            }
+        } else {
             if (byteOffset < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
             ensureCapacity(size + byteLength);
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
-            size += byteLength;
-        } else {
-            ensureCapacity(size + byteLength);
-            Arrays.fill(data, size, size + byteLength, (byte) 0);
             size += byteLength;
         }
         return this;
@@ -38,7 +37,9 @@ public class ByteVector {
     private void ensureCapacity(int requiredCapacity) {
         if (requiredCapacity > data.length) {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+            byte[] newData = new byte[newCapacity];
+            System.arraycopy(data, 0, newData, 0, size);
+            data = newData;
         }
     }
 }

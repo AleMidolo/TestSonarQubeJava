@@ -3,23 +3,18 @@ import java.io.IOException;
 
 public class CustomByteArrayOutputStream extends ByteArrayOutputStream {
 
-    /** 
-     * Writes <code>len</code> bytes from the specified byte array starting at offset <code>off</code> to this byte array output stream.
-     * @param b   the data.
-     * @param off the start offset in the data.
-     * @param len the number of bytes to write.
-     */
-    @Override 
+    @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Byte array is null");
         }
         if (off < 0 || len < 0 || off + len > b.length) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Invalid offset or length");
         }
         if (len == 0) {
-            return;
+            return; // No bytes to write
         }
+        // Ensure there's enough space in the output stream
         ensureCapacity(count + len);
         System.arraycopy(b, off, buf, count, len);
         count += len;

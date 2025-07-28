@@ -23,13 +23,13 @@ public class LinkedList<E> {
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
-            head = node.next; // Node is head
+            head = node.next; // node is head
         }
 
         if (node.next != null) {
             node.next.prev = node.prev;
         } else {
-            tail = node.prev; // Node is tail
+            tail = node.prev; // node is tail
         }
 
         node.next = null;

@@ -14,19 +14,30 @@ public class GraphUtils<V, E> {
      * @return a graph path
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        if (tour == null || graph == null || tour.isEmpty()) {
-            return null;
+        if (tour == null || graph == null) {
+            throw new IllegalArgumentException("Tour and graph cannot be null");
         }
 
-        V startVertex = null;
-        V endVertex = null;
+        // Create a list to hold the vertices in the path
+        List<V> vertices = new ArrayList<>();
+        
+        // Iterate through the edges in the tour
         for (E edge : tour) {
-            if (startVertex == null) {
-                startVertex = graph.getEdgeSource(edge);
+            // Get the source and target vertices of the edge
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            
+            // Add the source vertex if it's not already in the list
+            if (!vertices.contains(source)) {
+                vertices.add(source);
             }
-            endVertex = graph.getEdgeTarget(edge);
+            // Add the target vertex if it's not already in the list
+            if (!vertices.contains(target)) {
+                vertices.add(target);
+            }
         }
 
+        // Create a GraphPath object from the vertices and edges
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -34,18 +45,23 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public V getStartVertex() {
-                return startVertex;
-            }
-
-            @Override
-            public V getEndVertex() {
-                return endVertex;
+            public List<V> getVertexList() {
+                return vertices;
             }
 
             @Override
             public List<E> getEdgeList() {
                 return new ArrayList<>(tour);
+            }
+
+            @Override
+            public V getStartVertex() {
+                return vertices.isEmpty() ? null : vertices.get(0);
+            }
+
+            @Override
+            public V getEndVertex() {
+                return vertices.isEmpty() ? null : vertices.get(vertices.size() - 1);
             }
 
             @Override

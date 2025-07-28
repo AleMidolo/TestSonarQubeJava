@@ -23,7 +23,7 @@ public class ArrayCloner {
                 System.out.print(c + " ");
             }
         } else {
-            System.out.println("Cloned array is null.");
+            System.out.println("Cloned array is null");
         }
     }
 }

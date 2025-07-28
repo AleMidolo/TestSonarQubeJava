@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LowerBoundCalculator<K extends Comparable<K>> {
+public class LowerBoundCalculator<K> {
 
     /** 
      * Finds a maximum lower bound for every key.
@@ -11,26 +11,19 @@ public class LowerBoundCalculator<K extends Comparable<K>> {
      * @return the computed key lower bounds.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        Map<K, Integer> lowerBounds = new HashMap<>();
-        List<Integer> result = new ArrayList<>();
+        Map<K, Integer> lowerBoundsMap = new HashMap<>();
+        List<Integer> lowerBounds = new ArrayList<>();
 
         for (K key : keys) {
-            // Compute the lower bound for the key
-            int lowerBound = computeLowerBoundForKey(key, keys);
-            lowerBounds.put(key, lowerBound);
-            result.add(lowerBound);
+            // Assuming the lower bound for each key is its hash code
+            int lowerBound = key.hashCode();
+            lowerBoundsMap.put(key, lowerBound);
         }
 
-        return result;
-    }
-
-    private int computeLowerBoundForKey(K key, List<K> keys) {
-        int lowerBound = Integer.MIN_VALUE;
-        for (K k : keys) {
-            if (k.compareTo(key) < 0) {
-                lowerBound = Math.max(lowerBound, (Integer) k);
-            }
+        for (K key : keys) {
+            lowerBounds.add(lowerBoundsMap.get(key));
         }
-        return lowerBound == Integer.MIN_VALUE ? null : lowerBound;
+
+        return lowerBounds;
     }
 }

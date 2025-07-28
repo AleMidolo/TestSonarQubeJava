@@ -12,7 +12,7 @@ public class LinkedBufferWriter {
         LinkedBuffer current = node;
 
         while (current != null) {
-            byte[] data = current.getData(); // Assuming LinkedBuffer has a method to get its data
+            byte[] data = current.getData(); // Assuming LinkedBuffer has a method to get data
             out.write(data);
             totalSize += data.length;
             current = current.getNext(); // Assuming LinkedBuffer has a method to get the next node

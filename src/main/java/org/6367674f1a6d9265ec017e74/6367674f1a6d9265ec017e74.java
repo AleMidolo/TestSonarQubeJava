@@ -1,10 +1,10 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class CustomQueue {
+public class QueueRepresentation {
     private Queue<Object> queue;
 
-    public CustomQueue() {
+    public QueueRepresentation() {
         this.queue = new LinkedList<>();
     }
 
@@ -34,10 +34,10 @@ public class CustomQueue {
     }
 
     public static void main(String[] args) {
-        CustomQueue customQueue = new CustomQueue();
-        customQueue.enqueue("First");
-        customQueue.enqueue("Second");
-        customQueue.enqueue("Third");
-        System.out.println(customQueue.toString());
+        QueueRepresentation qr = new QueueRepresentation();
+        qr.enqueue("First");
+        qr.enqueue("Second");
+        qr.enqueue("Third");
+        System.out.println(qr.toString()); // Output: Queue: [First, Second, Third]
     }
 }

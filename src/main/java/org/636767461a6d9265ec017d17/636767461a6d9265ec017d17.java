@@ -1,5 +1,5 @@
 public class StringUnescaper {
-    
+
     /** 
      * Unescape a string DOT identifier.
      * @param input the input
@@ -16,15 +16,13 @@ public class StringUnescaper {
             if (isEscaped) {
                 output.append(c);
                 isEscaped = false;
+            } else if (c == '\\') {
+                isEscaped = true;
             } else {
-                if (c == '\\') {
-                    isEscaped = true;
-                } else {
-                    output.append(c);
-                }
+                output.append(c);
             }
         }
-        
+
         return output.toString();
     }
 

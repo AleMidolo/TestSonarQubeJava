@@ -1,4 +1,4 @@
-public class ArrayComparator {
+public class ByteArrayComparator {
     /**
      * Compara los <code>count</code> primeros bytes en los arreglos <code>a</code> y <code>b</code>.
      * @param a     El primer arreglo a comparar.
@@ -27,6 +27,6 @@ public class ArrayComparator {
         int count = 4;
 
         boolean result = arrayequals(array1, array2, count);
-        System.out.println("Are the first " + count + " bytes equal? " + result);
+        System.out.println("Los primeros " + count + " bytes son iguales: " + result);
     }
 }

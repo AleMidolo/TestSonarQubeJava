@@ -9,7 +9,7 @@ public class ColumnName {
     }
 
     /**
-     * Mantener el mismo reemplazo de nombre que {@link ColumnName#overrideName(String,String)}
+     * Mantener el mismo reemplazo de nombre que {@link ColumnName#overrideName(String, String)}
      * @param oldName el nombre a ser reemplazado.
      * @param newName el nombre a utilizar en el nivel de almacenamiento.
      */

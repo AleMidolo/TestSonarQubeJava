@@ -18,18 +18,20 @@ public class FrameStack {
 
         // Si el descriptor es un método, extraemos los tipos de argumento
         if (descriptor.startsWith("(")) {
-            String[] parts = descriptor.split("\\)");
-            if (parts.length > 1) {
-                String argumentTypes = parts[0].substring(1); // Ignoramos el '(' inicial
-                String[] types = argumentTypes.split(";");
-                for (String type : types) {
-                    if (!type.isEmpty()) {
-                        frameStack.pop(); // Extraemos cada tipo de la pila
-                    }
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
+            String argumentTypes = descriptor.substring(1, endIndex);
+            String[] types = argumentTypes.split(";");
+
+            for (String type : types) {
+                if (!type.isEmpty()) {
+                    frameStack.pop();
                 }
             }
         } else {
-            // Si es un tipo simple, extraemos un solo elemento
+            // Si es un tipo simple, solo extraemos uno
             frameStack.pop();
         }
     }
@@ -42,5 +44,16 @@ public class FrameStack {
     // Método para obtener el tamaño de la pila (solo para propósitos de prueba)
     public int size() {
         return frameStack.size();
+    }
+
+    public static void main(String[] args) {
+        FrameStack stack = new FrameStack();
+        stack.push("int");
+        stack.push("float");
+        stack.push("double");
+
+        System.out.println("Tamaño de la pila antes de pop: " + stack.size());
+        stack.pop("(I;F;D)V");
+        System.out.println("Tamaño de la pila después de pop: " + stack.size());
     }
 }

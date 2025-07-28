@@ -10,7 +10,7 @@ public class CustomComparator implements Comparator<Object> {
         } else if (aObj2 == null) {
             return 1;
         } else {
-            // Assuming the objects are comparable, cast them to Comparable and compare
+            // Assuming the objects are comparable, cast them to Comparable
             if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
                 return ((Comparable) aObj1).compareTo(aObj2);
             } else {

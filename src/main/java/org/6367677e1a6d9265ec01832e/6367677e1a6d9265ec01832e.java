@@ -1,5 +1,4 @@
 import java.util.logging.Logger;
-import java.util.logging.LogManager;
 
 public class LoggerChecker {
 
@@ -9,8 +8,11 @@ public class LoggerChecker {
      * @return El registrador si existe, o <code>null</code> si no existe.
      */
     public Logger exists(String name) {
-        LogManager logManager = LogManager.getLogManager();
-        Logger logger = logManager.getLogger(name);
-        return logger;
+        Logger logger = Logger.getLogger(name);
+        if (logger != null) {
+            return logger;
+        } else {
+            return null;
+        }
     }
 }

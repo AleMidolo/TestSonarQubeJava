@@ -28,9 +28,9 @@ public class StringUtils {
     public static void main(String[] args) {
         String testStr = "Hello, World!";
         System.out.println(sub(testStr, 7, 12)); // Output: "World"
-        System.out.println(sub(testStr, -1, 5)); // Output: "Hello"
-        System.out.println(sub(testStr, 7, 20)); // Output: "World!"
-        System.out.println(sub(testStr, 10, 7)); // Output: ""
-        System.out.println(sub(null, 0, 5)); // Output: ""
+        System.out.println(sub(testStr, -1, 5));  // Output: "Hello"
+        System.out.println(sub(testStr, 7, 20));  // Output: "World!"
+        System.out.println(sub(testStr, 10, 7));  // Output: ""
+        System.out.println(sub(null, 0, 5));      // Output: ""
     }
 }

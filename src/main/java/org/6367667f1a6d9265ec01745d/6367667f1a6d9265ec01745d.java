@@ -2,25 +2,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathSegmentImpl {
-    private final String path;
-    private final boolean decoded;
-
-    public PathSegmentImpl(String path, boolean decoded) {
-        this.path = path;
-        this.decoded = decoded;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public boolean isDecoded() {
-        return decoded;
-    }
-}
-
-public class URIUtils {
+public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
         List<PathSegmentImpl> segments = new ArrayList<>();
@@ -30,17 +12,15 @@ public class URIUtils {
             return segments;
         }
 
-        // Remove the leading '/' if it's an absolute path
+        // Ignore the leading '/' if the path is absolute
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
 
-        String[] parts = path.split("/");
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                String segment = decode ? decodeURIComponent(part) : part;
-                segments.add(new PathSegmentImpl(segment, decode));
-            }
+        String[] rawSegments = path.split("/");
+        for (String rawSegment : rawSegments) {
+            String segment = decode ? decodeURIComponent(rawSegment) : rawSegment;
+            segments.add(new PathSegmentImpl(segment));
         }
 
         return segments;
@@ -51,6 +31,23 @@ public class URIUtils {
             return java.net.URLDecoder.decode(encoded, "UTF-8");
         } catch (java.io.UnsupportedEncodingException e) {
             throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
+    }
+
+    public static class PathSegmentImpl {
+        private final String segment;
+
+        public PathSegmentImpl(String segment) {
+            this.segment = segment;
+        }
+
+        public String getSegment() {
+            return segment;
+        }
+
+        @Override
+        public String toString() {
+            return segment;
         }
     }
 }

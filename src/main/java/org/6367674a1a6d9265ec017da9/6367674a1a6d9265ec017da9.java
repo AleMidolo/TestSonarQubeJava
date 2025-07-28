@@ -2,20 +2,20 @@ import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
-    private static class ListNode<E> {
+    private static class ListNodeImpl<E> {
         E element;
-        ListNode<E> next;
-        ListNode<E> prev;
+        ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
 
-        ListNode(E element, ListNode<E> prev, ListNode<E> next) {
+        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
             this.prev = prev;
             this.next = next;
         }
     }
 
-    private ListNode<E> head;
-    private ListNode<E> tail;
+    private ListNodeImpl<E> head;
+    private ListNodeImpl<E> tail;
     private int size;
 
     public DoublyLinkedList() {
@@ -24,7 +24,7 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    private void removeListNode(ListNode<E> node) {
+    private void removeListNode(ListNodeImpl<E> node) {
         if (node == null) return;
 
         if (node.prev != null) {
@@ -44,7 +44,7 @@ public class DoublyLinkedList<E> {
         size--;
     }
 
-    private void addListNode(ListNode<E> node) {
+    private void addListNode(ListNodeImpl<E> node) {
         if (node == null) return;
 
         if (tail == null) {
@@ -58,14 +58,17 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
+    /**
+     * Mueve atómicamente todos los {@link ListNode ListNodes} de {@code list} a esta lista como si cada nodo se hubiera eliminado con {@link #removeListNode(ListNodeImpl)} de {@code list} y posteriormente agregado a esta lista mediante {@link #addListNode(ListNodeImpl)}.
+     */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list, "La lista no puede ser nula");
 
         if (list.head == null) return;
 
-        ListNode<E> current = list.head;
+        ListNodeImpl<E> current = list.head;
         while (current != null) {
-            ListNode<E> next = current.next;
+            ListNodeImpl<E> next = current.next;
             list.removeListNode(current);
             this.addListNode(current);
             current = next;

@@ -18,8 +18,8 @@ public class LogBuffer {
         }
     }
 
-    // Assuming LoggingEvent is a predefined class
+    // Assuming LoggingEvent is a class that represents a logging event
     public static class LoggingEvent {
-        // LoggingEvent implementation details
+        // Implementation of LoggingEvent class
     }
 }

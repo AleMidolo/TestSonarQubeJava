@@ -8,15 +8,10 @@ public class CustomMap<K, V> implements Map<K, V> {
         this.internalMap = new java.util.HashMap<>();
     }
 
-    /**
-     * Devuelve <code>true</code> si este map contiene un mapeo para la llave especificada.
-     * @param key  la llave que se va a buscar
-     * @return true si el mapa contiene la llave
-     */
     @Override
     public boolean containsKey(final Object key) {
         return internalMap.containsKey(key);
     }
 
-    // Other methods of the Map interface would need to be implemented as well
+    // Other methods of the Map interface would need to be implemented here
 }

@@ -18,12 +18,16 @@ public class PrimeUtil {
         }
         while (!isPrime(prime)) {
             prime += 2;
+            // Si desiredCapacity >= 1000, limitamos la búsqueda dentro del 11%
             if (desiredCapacity >= 1000 && prime > desiredCapacity * 1.11) {
                 prime = desiredCapacity;
-                while (!isPrime(prime)) {
+                if (prime % 2 == 0) {
                     prime++;
                 }
-                break;
+                while (!isPrime(prime)) {
+                    prime += 2;
+                }
+                return prime;
             }
         }
         return prime;
@@ -48,6 +52,9 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Ejemplo de uso
+        // Ejemplo de uso
+        System.out.println(nextPrime(1000));  // Debería imprimir 1009
+        System.out.println(nextPrime(500));  // Debería imprimir 503
+        System.out.println(nextPrime(10));    // Debería imprimir 11
     }
 }

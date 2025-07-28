@@ -1,4 +1,5 @@
 public class ArrayConverter {
+
     /**
      * <p>Convierte un arreglo de primitivos double a objetos.</p> 
      * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
@@ -14,5 +15,13 @@ public class ArrayConverter {
             result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        double[] primitiveArray = {1.0, 2.0, 3.0};
+        Double[] objectArray = toObject(primitiveArray);
+        for (Double d : objectArray) {
+            System.out.println(d);
+        }
     }
 }

@@ -18,9 +18,8 @@ public class ByteOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación de la escritura de un solo byte
-        // Este método debe ser implementado según la lógica específica del flujo de salida.
-        // Por ejemplo, podría escribir el byte en un archivo, en la consola, etc.
+        // Implementación básica para escribir un solo byte.
+        // Este método debe ser sobrescrito en una implementación real.
         System.out.write(b);
     }
 }

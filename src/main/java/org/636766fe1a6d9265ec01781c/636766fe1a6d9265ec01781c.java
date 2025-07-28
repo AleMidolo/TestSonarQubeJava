@@ -1,11 +1,14 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class CharUtils {
 
-    // Cache for ASCII characters (0-127)
-    private static final Character[] CHAR_CACHE = new Character[128];
+    private static final Map<Character, Character> CACHE = new HashMap<>();
 
     static {
-        for (int i = 0; i < CHAR_CACHE.length; i++) {
-            CHAR_CACHE[i] = (char) i;
+        // Pre-cache ASCII characters (0-127)
+        for (int i = 0; i < 128; i++) {
+            CACHE.put((char) i, (char) i);
         }
     }
 
@@ -20,14 +23,14 @@ public class CharUtils {
      * @return un objeto "Character" del carácter especificado
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch < CHAR_CACHE.length) {
-            return CHAR_CACHE[ch];
+        if (ch < 128) {
+            return CACHE.get(ch);
         }
         return ch;
     }
 
     public static void main(String[] args) {
-        System.out.println(toCharacterObject(' ')); // Output: ' '
-        System.out.println(toCharacterObject('A')); // Output: 'A'
+        System.out.println(toCharacterObject(' '));  // Output: ' '
+        System.out.println(toCharacterObject('A'));  // Output: 'A'
     }
 }

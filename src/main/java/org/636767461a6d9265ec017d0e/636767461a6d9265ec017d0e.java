@@ -17,7 +17,7 @@ public class SuffixSumCalculator {
         // Calculate suffix sums
         for (int i = bounds.size() - 1; i >= 0; i--) {
             currentSum += bounds.get(i);
-            suffixSums.add(0, currentSum);
+            suffixSums.add(0, currentSum); // Add to the beginning of the list
             totalSum += bounds.get(i);
         }
 
@@ -28,6 +28,7 @@ public class SuffixSumCalculator {
         SuffixSumCalculator calculator = new SuffixSumCalculator();
         List<Integer> bounds = List.of(1, 2, 3, 4, 5);
         Pair<List<Integer>, Long> result = calculator.computeSuffixSum(bounds);
+
         System.out.println("Suffix Sums: " + result.getKey());
         System.out.println("Total Sum: " + result.getValue());
     }

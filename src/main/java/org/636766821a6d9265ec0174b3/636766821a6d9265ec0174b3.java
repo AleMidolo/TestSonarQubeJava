@@ -3,35 +3,37 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class BroadcastFilter {
+public class BroadcastFilter extends BroadcastReceiver {
 
+    /**
+     * {@link BroadcastFilter} को कॉल करें
+     * @param msg
+     * @return
+     */
     protected Object filter(Object msg) {
-        // Assuming msg is an Intent or can be cast to an Intent
+        // Implement your filtering logic here
+        // For example, you can check if the message is of a certain type
         if (msg instanceof Intent) {
             Intent intent = (Intent) msg;
-            // Create a BroadcastReceiver to handle the intent
-            BroadcastReceiver receiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    // Handle the intent here
-                    // For example, you can extract data from the intent
-                    String action = intent.getAction();
-                    // Perform actions based on the intent
-                }
-            };
+            // Perform some action based on the intent
+            // For example, you can check the action of the intent
+            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+                // Handle boot completed event
+                return "Boot completed event filtered";
+            }
+        }
+        // Return null or the filtered message
+        return null;
+    }
 
-            // Register the receiver with a filter
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(intent.getAction());
-            // Assuming you have a context available, register the receiver
-            Context context = null; // Replace with actual context
-            context.registerReceiver(receiver, filter);
-
-            // Return the receiver or any other object as needed
-            return receiver;
-        } else {
-            // Handle the case where msg is not an Intent
-            return null;
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
+        // You can call the filter method here if needed
+        Object filteredMsg = filter(intent);
+        if (filteredMsg != null) {
+            // Handle the filtered message
+            System.out.println(filteredMsg);
         }
     }
 }

@@ -2,31 +2,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 private String parseToken(final char[] terminators) {
+    // Create a set of termination characters for quick lookup
     Set<Character> terminatorSet = new HashSet<>();
     for (char c : terminators) {
         terminatorSet.add(c);
     }
 
     StringBuilder token = new StringBuilder();
-    char currentChar;
+    int currentChar;
 
+    // Read characters until a terminator is encountered
     while (true) {
-        // Assuming we have a method to get the next character from the input stream
-        currentChar = getNextChar(); // You need to implement getNextChar() based on your input source
-
-        if (currentChar == '\0' || terminatorSet.contains(currentChar)) {
+        currentChar = System.in.read();
+        if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
             break;
         }
-
-        token.append(currentChar);
+        token.append((char) currentChar);
     }
 
     return token.toString();
-}
-
-// Placeholder method for getting the next character from the input stream
-private char getNextChar() {
-    // Implement this method based on your input source (e.g., reading from a file, string, etc.)
-    // For example, if reading from a string, you might use an index to track the current position
-    return '\0'; // Replace with actual implementation
 }

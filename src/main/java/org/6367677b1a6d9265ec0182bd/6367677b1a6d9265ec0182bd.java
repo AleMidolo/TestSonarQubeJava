@@ -11,20 +11,20 @@ public class LogFormatter {
         StringBuilder formattedMessage = new StringBuilder();
         
         // Add timestamp
-        formattedMessage.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        formattedMessage.append("[").append(event.getTimeStamp()).append("] ");
         
         // Add log level
-        formattedMessage.append("Level: ").append(event.getLevel().toString()).append("\n");
+        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
         
         // Add logger name
-        formattedMessage.append("Logger: ").append(event.getLoggerName()).append("\n");
+        formattedMessage.append("[").append(event.getLoggerName()).append("] ");
         
         // Add message
-        formattedMessage.append("Message: ").append(event.getRenderedMessage()).append("\n");
+        formattedMessage.append(event.getRenderedMessage());
         
         // Add throwable information if present
         if (event.getThrowableInformation() != null) {
-            formattedMessage.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append("\n");
+            formattedMessage.append("\n").append(event.getThrowableStrRep());
         }
         
         return formattedMessage.toString();

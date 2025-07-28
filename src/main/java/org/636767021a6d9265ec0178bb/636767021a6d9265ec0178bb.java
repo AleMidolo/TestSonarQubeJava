@@ -19,4 +19,15 @@ public class ArrayUtils {
         }
         return array;
     }
+
+    // Example usage
+    public static void main(String[] args) {
+        Double[] array1 = null;
+        Double[] array2 = new Double[0];
+        Double[] array3 = new Double[]{1.0, 2.0, 3.0};
+
+        System.out.println(Objects.toString(nullToEmpty(array1))); // []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // [1.0, 2.0, 3.0]
+    }
 }

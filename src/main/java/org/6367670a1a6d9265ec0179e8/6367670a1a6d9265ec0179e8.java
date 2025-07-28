@@ -24,7 +24,7 @@ public class ArrayUtils {
     public static void main(String[] args) {
         Boolean[] array1 = null;
         Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = {true, false, true};
+        Boolean[] array3 = new Boolean[]{true, false};
 
         System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BOOLEAN_ARRAY)); // true
         System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BOOLEAN_ARRAY)); // true

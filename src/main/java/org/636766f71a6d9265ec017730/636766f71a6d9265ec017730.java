@@ -1,7 +1,6 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.List;
 
 public class CollectionUtils {
 
@@ -15,23 +14,13 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        ArrayList<String> nonNullStrings = new ArrayList<>();
-        Iterator<?> iterator = collection.iterator();
-
-        while (iterator.hasNext()) {
-            Object element = iterator.next();
-            if (element != null) {
-                nonNullStrings.add(element.toString());
+        List<String> result = new ArrayList<>();
+        for (Object obj : collection) {
+            if (obj != null) {
+                result.add(obj.toString());
             }
         }
 
-        return nonNullStrings.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<Object> collection = Arrays.asList("Hello", null, "World", 123, null);
-        String[] result = toNoNullStringArray(collection);
-        System.out.println(Arrays.toString(result)); // Output: [Hello, World, 123]
+        return result.toArray(new String[0]);
     }
 }

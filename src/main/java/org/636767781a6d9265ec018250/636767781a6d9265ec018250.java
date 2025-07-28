@@ -3,14 +3,19 @@ import org.apache.log4j.spi.LoggingEvent;
 
 public class MyFilter extends Filter {
 
+    /**
+     * यदि कोई स्ट्रिंग मेल नहीं खाता है तो {@link Filter#NEUTRAL} लौटाता है।
+     */
     @Override
     public int decide(LoggingEvent event) {
-        // Implement your logic here to decide whether to accept, deny, or remain neutral
-        // For example, if the message does not match a certain condition, return NEUTRAL
-        if (!event.getMessage().toString().matches("your_regex_pattern")) {
+        // Implement your logic here
+        // For example, check if the message matches a certain condition
+        String message = event.getRenderedMessage();
+        
+        if (message != null && message.contains("specific_string")) {
+            return Filter.ACCEPT; // or Filter.DENY based on your condition
+        } else {
             return Filter.NEUTRAL;
         }
-        // Otherwise, return ACCEPT or DENY based on your criteria
-        return Filter.ACCEPT; // or Filter.DENY
     }
 }

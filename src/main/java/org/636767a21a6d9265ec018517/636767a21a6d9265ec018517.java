@@ -13,17 +13,18 @@ public final class BufferToByteArray {
         buffer.write(data);
     }
 
-    /**
-     * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
-     */
     public final byte[] toByteArray() {
         return buffer.toByteArray();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         BufferToByteArray buffer = new BufferToByteArray();
-        buffer.write("Hello, World!".getBytes());
-        byte[] byteArray = buffer.toByteArray();
-        System.out.println(new String(byteArray)); // Output: Hello, World!
+        try {
+            buffer.write("Hello, World!".getBytes());
+            byte[] byteArray = buffer.toByteArray();
+            System.out.println(new String(byteArray));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

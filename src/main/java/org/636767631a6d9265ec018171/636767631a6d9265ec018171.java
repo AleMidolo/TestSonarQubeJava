@@ -23,13 +23,12 @@ class LinkedList<E> {
             return false;
         }
 
-        // If the node to be removed is the head
+        // If the node to be unlinked is the head
         if (head == node) {
             head = head.next;
             return true;
         }
 
-        // Traverse the list to find the node
         ListNodeImpl<E> current = head;
         while (current.next != null) {
             if (current.next == node) {
@@ -39,7 +38,6 @@ class LinkedList<E> {
             current = current.next;
         }
 
-        // Node not found
-        return false;
+        return false; // Node not found
     }
 }

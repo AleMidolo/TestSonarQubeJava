@@ -14,30 +14,16 @@ public class FileUtils {
             throw new NullPointerException("File must not be null");
         }
 
+        file.deleteOnExit();
+
         if (file.isDirectory()) {
-            deleteDirectoryOnExit(file);
-        } else {
-            file.deleteOnExit();
-        }
-    }
-
-    private static void deleteDirectoryOnExit(File directory) throws IOException {
-        if (!directory.exists()) {
-            return;
-        }
-
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectoryOnExit(file);
-                } else {
-                    file.deleteOnExit();
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File subFile : files) {
+                    forceDeleteOnExit(subFile);
                 }
             }
         }
-
-        directory.deleteOnExit();
     }
 
     public static void main(String[] args) {

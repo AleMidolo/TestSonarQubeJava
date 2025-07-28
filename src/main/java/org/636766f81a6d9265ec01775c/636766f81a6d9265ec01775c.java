@@ -20,6 +20,6 @@ public class ObjectUtils {
         System.out.println(ObjectUtils.toString(null));         // Output: ""
         System.out.println(ObjectUtils.toString(""));           // Output: ""
         System.out.println(ObjectUtils.toString("bat"));        // Output: "bat"
-        System.out.println(ObjectUtils.toString(Boolean.TRUE));  // Output: "true"
+        System.out.println(ObjectUtils.toString(Boolean.TRUE)); // Output: "true"
     }
 }

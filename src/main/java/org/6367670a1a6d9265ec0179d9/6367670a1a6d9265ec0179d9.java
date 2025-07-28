@@ -1,5 +1,4 @@
-public class StringUtils {
-    
+public class StringUtil {
     /** 
      * Ottiene la lunghezza di una Stringa o <code>0</code> se la Stringa è <code>null</code>.
      * @param str una Stringa o <code>null</code>

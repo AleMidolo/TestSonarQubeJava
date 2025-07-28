@@ -1,9 +1,10 @@
 import java.util.Stack;
 
-public class StackManipulator {
+public class DescriptorStack {
+
     private Stack<String> stack;
 
-    public StackManipulator() {
+    public DescriptorStack() {
         this.stack = new Stack<>();
     }
 
@@ -14,38 +15,39 @@ public class StackManipulator {
     private void pop(final String descriptor) {
         // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int start = descriptor.indexOf('(') + 1;
-            int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (int i = 0; i < args.length(); i++) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the top element for each argument type
+            // Extract argument types from the descriptor
+            String args = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
+            String[] argTypes = args.split(",");
+            for (String argType : argTypes) {
+                // Remove the argument type from the stack if it exists
+                if (!argType.isEmpty() && stack.contains(argType)) {
+                    stack.remove(argType);
                 }
             }
         } else {
-            // If it's a single type descriptor, just pop one element
-            if (!stack.isEmpty()) {
-                stack.pop();
-            }
+            // If it's a single type, remove it directly
+            stack.remove(descriptor);
         }
     }
 
+    // Method to push types onto the stack for testing purposes
     public void push(String type) {
         stack.push(type);
     }
 
-    public Stack<String> getStack() {
-        return stack;
+    // Method to display the current stack for testing purposes
+    public void displayStack() {
+        System.out.println(stack);
     }
 
     public static void main(String[] args) {
-        StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
+        DescriptorStack ds = new DescriptorStack();
+        ds.push("I");
+        ds.push("J");
+        ds.push("V");
+        ds.displayStack(); // Output: [I, J, V]
 
-        System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
-        System.out.println("Stack after pop: " + sm.getStack());
+        ds.pop("(I)V");
+        ds.displayStack(); // Output: [J]
     }
 }

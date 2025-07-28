@@ -5,17 +5,17 @@ public class ArrayComparer {
     /** 
      * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
      */
-    private byte[] internalArray;
+    private byte[] internalData;
 
-    public ArrayComparer(byte[] internalArray) {
-        this.internalArray = internalArray;
+    public ArrayComparer(byte[] internalData) {
+        this.internalData = internalData;
     }
 
     public boolean equals(final byte[] data, int offset, final int len) {
-        if (data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+        if (data == null || offset < 0 || len < 0 || offset + len > data.length || len > internalData.length) {
             return false;
         }
-        return Arrays.equals(internalArray, 0, len, data, offset, offset + len);
+        return Arrays.equals(Arrays.copyOfRange(internalData, 0, len), Arrays.copyOfRange(data, offset, offset + len));
     }
 
     public static void main(String[] args) {

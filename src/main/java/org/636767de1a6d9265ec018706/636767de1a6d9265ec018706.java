@@ -1,23 +1,23 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MappingDiff {
+public class Mappings {
+    private Map<String, String> fields;
 
-    public static class Mappings {
-        private Map<String, String> fields;
-
-        public Mappings() {
-            this.fields = new HashMap<>();
-        }
-
-        public void addField(String fieldName, String fieldType) {
-            fields.put(fieldName, fieldType);
-        }
-
-        public Map<String, String> getFields() {
-            return fields;
-        }
+    public Mappings() {
+        this.fields = new HashMap<>();
     }
+
+    public void addField(String fieldName, String fieldType) {
+        fields.put(fieldName, fieldType);
+    }
+
+    public Map<String, String> getFields() {
+        return fields;
+    }
+}
+
+public class MappingDiff {
 
     /**
      * Restituisce le mappature con i campi che non esistono nelle mappature di input. 
@@ -30,10 +30,9 @@ public class MappingDiff {
         
         Mappings diffMappings = new Mappings();
         
-        for (Map.Entry<String, String> entry : historicalMappings.getFields().entrySet()) {
-            String fieldName = entry.getKey();
-            if (!mappings.getFields().containsKey(fieldName)) {
-                diffMappings.addField(fieldName, entry.getValue());
+        for (String field : historicalMappings.getFields().keySet()) {
+            if (!mappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, historicalMappings.getFields().get(field));
             }
         }
         
@@ -43,7 +42,6 @@ public class MappingDiff {
     private Mappings getHistoricalMappings(String tableName) {
         // Simulazione di recupero delle mappature storiche
         Mappings historicalMappings = new Mappings();
-        // Aggiunta di campi storici per esempio
         historicalMappings.addField("id", "integer");
         historicalMappings.addField("name", "string");
         historicalMappings.addField("email", "string");

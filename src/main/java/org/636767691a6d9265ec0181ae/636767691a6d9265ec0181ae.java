@@ -27,7 +27,7 @@ public class EnumerationToArray {
         vector.add("Hello");
         vector.add("World");
         Enumeration<String> enumeration = vector.elements();
-        
+
         String[] result = toStringArray(enumeration);
         for (String str : result) {
             System.out.println(str);

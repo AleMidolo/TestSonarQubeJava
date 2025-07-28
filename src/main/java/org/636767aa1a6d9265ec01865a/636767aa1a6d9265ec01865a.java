@@ -25,19 +25,19 @@ class LinkedBuffer {
 }
 
 public class BufferWriter {
+
     /** 
      * Scrive il contenuto del {@link LinkedBuffer} nel {@link DataOutput}.
      * @return la dimensione totale del contenuto del buffer.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;
-        LinkedBuffer current = node;
 
-        while (current != null) {
-            byte[] bufferData = current.getData();
+        while (node != null) {
+            byte[] bufferData = node.getData();
             out.write(bufferData);
             totalSize += bufferData.length;
-            current = current.getNext();
+            node = node.getNext();
         }
 
         return totalSize;

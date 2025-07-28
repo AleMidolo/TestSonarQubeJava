@@ -15,10 +15,6 @@ public class LoggerFormatter {
         formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
         formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
         
-        if (event.getThrowableInformation() != null) {
-            formattedEvent.append("Exception: ").append(event.getThrowableInformation().getThrowable()).append("\n");
-        }
-        
         return formattedEvent.toString();
     }
 }

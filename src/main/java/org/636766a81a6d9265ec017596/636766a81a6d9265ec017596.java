@@ -9,22 +9,21 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /** 
+    /**
      * Inserisce un intero in questo vettore di byte. Il vettore di byte viene automaticamente ingrandito se necessario.
      * @param intValue un intero.
      * @return questo vettore di byte.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // An int takes 4 bytes
-        data[size++] = (byte) (intValue >> 24);
-        data[size++] = (byte) (intValue >> 16);
-        data[size++] = (byte) (intValue >> 8);
-        data[size++] = (byte) intValue;
+        ensureCapacity(size + Integer.BYTES);
+        for (int i = 0; i < Integer.BYTES; i++) {
+            data[size++] = (byte) (intValue >> (i * 8));
+        }
         return this;
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - data.length > 0) {
+        if (minCapacity > data.length) {
             int newCapacity = Math.max(data.length * 2, minCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }

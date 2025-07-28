@@ -10,10 +10,8 @@ public class ConfigurationInitializer {
             throw new IllegalArgumentException("Il percorso di distribuzione non è stato impostato.");
         }
         
-        // Logica per inizializzare la configurazione
-        System.out.println("Inizializzazione della configurazione con il percorso di distribuzione: " + distributionPath);
-        
-        // Ulteriori operazioni di inizializzazione possono essere aggiunte qui
+        // Ulteriori logiche di inizializzazione possono essere aggiunte qui
+        System.out.println("Configurazione inizializzata con successo. Percorso di distribuzione: " + distributionPath);
     }
 
     public static void main(String[] args) {

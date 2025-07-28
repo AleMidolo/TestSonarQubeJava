@@ -1,5 +1,5 @@
-public class StringCleaner {
-    
+public class StringManipulator {
+
     /** 
      * Elimina qualsiasi carattere in una Stringa data.
      * @param inString la Stringa originale
@@ -7,19 +7,23 @@ public class StringCleaner {
      * @return la Stringa risultante
      */
     public static String deleteAny(String inString, String charsToDelete) {
+        if (inString == null || charsToDelete == null) {
+            return inString; // Return original string if input is null
+        }
+        
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (charsToDelete.indexOf(c) == -1) {
-                result.append(c);
+                result.append(c); // Append character if it's not in charsToDelete
             }
         }
-        return result.toString();
+        return result.toString(); // Return the resulting string
     }
 
     public static void main(String[] args) {
-        String original = "Hello World! This is a test string.";
-        String charsToDelete = "aeiou";
-        String cleanedString = deleteAny(original, charsToDelete);
-        System.out.println(cleanedString); // Hll Wrld! Ths s  tst strng.
+        String original = "Hello World!";
+        String charsToRemove = "lo";
+        String result = deleteAny(original, charsToRemove);
+        System.out.println(result); // Output: "He Wr!"
     }
 }

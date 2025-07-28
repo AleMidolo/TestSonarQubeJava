@@ -7,6 +7,18 @@ public class Queue<T> {
         elements = new LinkedList<>();
     }
 
+    public void enqueue(T element) {
+        elements.addLast(element);
+    }
+
+    public T dequeue() {
+        return elements.removeFirst();
+    }
+
+    public boolean isEmpty() {
+        return elements.isEmpty();
+    }
+
     /**
      * Restituisce una rappresentazione testuale della coda.
      * @return una rappresentazione testuale della coda.
@@ -24,19 +36,11 @@ public class Queue<T> {
         return sb.toString();
     }
 
-    public void enqueue(T element) {
-        elements.addLast(element);
-    }
-
-    public T dequeue() {
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    public int size() {
-        return elements.size();
+    public static void main(String[] args) {
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
     }
 }

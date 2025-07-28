@@ -1,5 +1,5 @@
 public class ArrayUtils {
-    
+
     /** 
      * Inverte l'ordine degli elementi nell'intervallo specificato all'interno dell'array fornito.
      * @param <V> il tipo di elementi nell'array

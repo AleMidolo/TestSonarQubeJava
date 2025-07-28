@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ArrayUtils {
+public class StringArrayUtil {
     /** 
      * Aggiunge la Stringa fornita all'array di Stringhe dato, restituendo un nuovo array che consiste nei contenuti dell'array di input più la Stringa fornita.
      * @param array l'array a cui aggiungere (può essere <code>null</code>)

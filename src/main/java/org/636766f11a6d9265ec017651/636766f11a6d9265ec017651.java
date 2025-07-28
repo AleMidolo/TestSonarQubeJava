@@ -19,11 +19,11 @@ public class ArrayUtil {
 
     public static void main(String[] args) {
         Character[] nullArray = null;
-        Character[] emptyArray = {};
-        Character[] filledArray = { 'a', 'b', 'c' };
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = new Character[]{'a', 'b', 'c'};
 
         System.out.println(nullToEmpty(nullArray).length); // Output: 0
         System.out.println(nullToEmpty(emptyArray).length); // Output: 0
-        System.out.println(nullToEmpty(filledArray).length); // Output: 3
+        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
     }
 }

@@ -22,9 +22,9 @@ public class FileExtensionUtil {
     }
 
     /**
-     * Restituisce l'indice dell'ultimo separatore di directory nel nome del file.
+     * Restituisce l'indice dell'ultimo separatore di percorso nel nome del file.
      * @param filename il nome del file
-     * @return l'indice dell'ultimo separatore di directory, o -1 se non esiste
+     * @return l'indice dell'ultimo separatore di percorso, o -1 se non esiste
      */
     private static int indexOfLastSeparator(String filename) {
         int lastUnixSeparator = filename.lastIndexOf('/');

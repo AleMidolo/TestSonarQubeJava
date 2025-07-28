@@ -56,9 +56,9 @@ public class MappingDiff {
         currentMappings.addField("name", "string");
 
         Mappings diff = mappingDiff.diffStructure("users", currentMappings);
-        System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
-            System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
+        System.out.println("Fields missing in current mappings:");
+        for (String field : diff.getFields().keySet()) {
+            System.out.println(field + ": " + diff.getFields().get(field));
         }
     }
 }

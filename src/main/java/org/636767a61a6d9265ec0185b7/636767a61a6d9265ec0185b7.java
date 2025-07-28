@@ -6,11 +6,11 @@ public class DigitValueInterpreter {
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
-            return c - '0'; // Valori da 0 a 9
+            return c - '0'; // Valore per le cifre da 0 a 9
         } else if (c >= 'A' && c <= 'Z') {
-            return c - 'A' + 10; // Valori da 10 a 35
+            return c - 'A' + 10; // Valore per le lettere da A a Z
         } else if (c >= 'a' && c <= 'z') {
-            return c - 'a' + 10; // Valori da 10 a 35 (minuscolo)
+            return c - 'a' + 10; // Valore per le lettere da a a z
         } else {
             throw new IllegalArgumentException("Carattere non valido: " + c);
         }

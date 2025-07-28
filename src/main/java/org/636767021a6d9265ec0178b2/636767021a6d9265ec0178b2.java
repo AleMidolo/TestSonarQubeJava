@@ -7,38 +7,33 @@ public class StackManipulator {
         this.stack = new Stack<>();
     }
 
-    /**
+    /** 
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
      * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
         // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            // Extract argument types from the descriptor
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
             String args = descriptor.substring(start, end);
-            
-            // Remove argument types from the stack
-            for (char arg : args.toCharArray()) {
+            for (int i = args.length() - 1; i >= 0; i--) {
                 if (!stack.isEmpty()) {
                     stack.pop(); // Remove the top element for each argument type
                 }
             }
         } else {
-            // If it's a single type, just pop it from the stack
+            // If it's a single type, just pop once
             if (!stack.isEmpty()) {
                 stack.pop();
             }
         }
     }
 
-    // Method to push elements onto the stack for testing purposes
-    public void push(String element) {
-        stack.push(element);
+    public void push(String type) {
+        stack.push(type);
     }
 
-    // Method to view the current stack for testing purposes
     public Stack<String> getStack() {
         return stack;
     }

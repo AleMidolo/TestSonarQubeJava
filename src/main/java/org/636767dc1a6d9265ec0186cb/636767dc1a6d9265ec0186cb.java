@@ -4,14 +4,16 @@ public class ConfigurationInitializer {
      * inizializza la configurazione, ad esempio controlla il percorso di distribuzione
      */
     public void init() {
-        String distributionPath = System.getenv("DISTRIBUTION_PATH");
+        String distributionPath = System.getProperty("distribution.path");
         
         if (distributionPath == null || distributionPath.isEmpty()) {
-            throw new IllegalArgumentException("Il percorso di distribuzione non è stato impostato.");
+            throw new IllegalArgumentException("Il percorso di distribuzione non è stato configurato.");
         }
         
-        // Ulteriori logiche di inizializzazione possono essere aggiunte qui
-        System.out.println("Configurazione inizializzata con successo. Percorso di distribuzione: " + distributionPath);
+        // Logica per inizializzare la configurazione
+        System.out.println("Inizializzazione della configurazione con il percorso di distribuzione: " + distributionPath);
+        
+        // Ulteriori operazioni di inizializzazione possono essere aggiunte qui
     }
 
     public static void main(String[] args) {

@@ -54,6 +54,11 @@ public class StringUnescaper {
             }
         }
 
+        // If the string ends with an escape character, we need to append it
+        if (isEscaped) {
+            result.append('\\');
+        }
+
         return result.toString();
     }
 

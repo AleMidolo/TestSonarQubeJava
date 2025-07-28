@@ -1,31 +1,26 @@
-public class TreeNode {
-    TreeNode left;
-    TreeNode right;
-    TreeNode parent;
-    Edge edge; // Assuming Edge is a class that represents an edge in the tree
+public void removeFromTreeEdgeList() {
+    // Assuming there are two doubly linked lists for edges: leftEdgeList and rightEdgeList
+    // and that this method is part of a class that has access to these lists.
 
-    public void removeFromTreeEdgeList() {
-        if (this.edge != null) {
-            // Assuming Edge has a method to remove itself from the linked list
-            this.edge.remove();
-            this.edge = null; // Remove reference to the edge
+    // Remove this edge from the left edge list
+    if (leftEdgeList != null) {
+        if (leftEdgeList.prev != null) {
+            leftEdgeList.prev.next = leftEdgeList.next;
         }
+        if (leftEdgeList.next != null) {
+            leftEdgeList.next.prev = leftEdgeList.prev;
+        }
+        leftEdgeList = null; // Clear the reference
     }
-}
 
-class Edge {
-    Edge next; // Next edge in the doubly linked list
-    Edge prev; // Previous edge in the doubly linked list
-
-    public void remove() {
-        if (prev != null) {
-            prev.next = next; // Bypass this edge in the list
+    // Remove this edge from the right edge list
+    if (rightEdgeList != null) {
+        if (rightEdgeList.prev != null) {
+            rightEdgeList.prev.next = rightEdgeList.next;
         }
-        if (next != null) {
-            next.prev = prev; // Bypass this edge in the list
+        if (rightEdgeList.next != null) {
+            rightEdgeList.next.prev = rightEdgeList.prev;
         }
-        // Clear references
-        this.next = null;
-        this.prev = null;
+        rightEdgeList = null; // Clear the reference
     }
 }

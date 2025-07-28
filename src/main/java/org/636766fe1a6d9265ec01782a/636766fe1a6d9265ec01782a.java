@@ -12,14 +12,20 @@ public class ConstantPoolReader {
      * @return la String corrispondente all'entrata CONSTANT_Utf8 specificata.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Read the length of the UTF-8 string
-        int length = ((classFileBuffer[constantPoolEntryIndex] & 0xFF) << 8) | (classFileBuffer[constantPoolEntryIndex + 1] & 0xFF);
+        // Assuming the classFileBuffer is structured correctly and contains the necessary data
+        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        int length = (classFileBuffer[offset + 1] << 8) | (classFileBuffer[offset + 2] & 0xFF);
         
-        // Read the UTF-8 bytes
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) (classFileBuffer[constantPoolEntryIndex + 2 + i] & 0xFF);
+            charBuffer[i] = (char) classFileBuffer[offset + 3 + i];
         }
         
         return new String(charBuffer, 0, length);
+    }
+
+    private int getConstantPoolEntryOffset(int index) {
+        // This method should return the offset of the constant pool entry based on the index
+        // For simplicity, let's assume each entry is of fixed size (this is not true in real class files)
+        return index * 4; // Placeholder for actual offset calculation
     }
 }

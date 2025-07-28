@@ -1,13 +1,13 @@
 import java.io.IOException;
 
 public class ClassReader {
-    private final byte[] data;
+    private byte[] data;
 
     public ClassReader(byte[] data) {
         this.data = data;
     }
 
-    /**
+    /** 
      * Legge un valore short firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o gli adattatori.</i>
      * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
      * @return il valore letto.

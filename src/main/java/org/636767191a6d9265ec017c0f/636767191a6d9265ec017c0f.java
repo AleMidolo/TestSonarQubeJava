@@ -1,6 +1,5 @@
-import java.util.Arrays;
-
 public class ByteArrayEnlarger {
+    
     private byte[] byteArray;
 
     public ByteArrayEnlarger(int initialSize) {
@@ -12,9 +11,14 @@ public class ByteArrayEnlarger {
      * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("Size must be non-negative");
+        }
         int currentLength = byteArray.length;
         int newLength = currentLength + size;
-        byteArray = Arrays.copyOf(byteArray, newLength);
+        byte[] newByteArray = new byte[newLength];
+        System.arraycopy(byteArray, 0, newByteArray, 0, currentLength);
+        byteArray = newByteArray;
     }
 
     public byte[] getByteArray() {
@@ -23,8 +27,8 @@ public class ByteArrayEnlarger {
 
     public static void main(String[] args) {
         ByteArrayEnlarger enlarger = new ByteArrayEnlarger(10);
-        System.out.println("Original length: " + enlarger.getByteArray().length);
+        System.out.println("Initial length: " + enlarger.getByteArray().length);
         enlarger.enlarge(5);
-        System.out.println("New length: " + enlarger.getByteArray().length);
+        System.out.println("New length after enlargement: " + enlarger.getByteArray().length);
     }
 }

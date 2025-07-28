@@ -1,5 +1,5 @@
 public class HexConverter {
-    
+
     /** 
      * @param b Un carattere codificato in ASCII da 0-9, a-f, A-F
      * @return Il valore byte del carattere da 0 a 16.

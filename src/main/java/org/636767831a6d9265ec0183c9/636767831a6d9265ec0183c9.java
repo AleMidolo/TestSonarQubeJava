@@ -16,13 +16,12 @@ public class DiagnosticContext {
         contextStack.push(context);
     }
 
-    // Method to pop a context from the stack for testing purposes
+    // Method to pop the top context from the stack for testing purposes
     public static String pop() {
         return contextStack.isEmpty() ? "" : contextStack.pop();
     }
 
     public static void main(String[] args) {
-        // Example usage
         push("Context 1");
         push("Context 2");
         System.out.println(peek()); // Should print "Context 2"

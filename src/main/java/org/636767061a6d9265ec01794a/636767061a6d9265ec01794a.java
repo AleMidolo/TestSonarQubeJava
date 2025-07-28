@@ -33,9 +33,8 @@ public class FileExtensionSeparator {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        String filename = "C:\\Users\\example\\document.txt";
+        String filename = "example/directory/file.txt";
         int index = indexOfExtension(filename);
-        System.out.println("El índice del último separador de extensión es: " + index);
+        System.out.println("El índice del último carácter separador de extensión es: " + index);
     }
 }

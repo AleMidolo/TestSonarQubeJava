@@ -1,13 +1,10 @@
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TelnetServer {
-    private List<Socket> clients;
-
-    public TelnetServer(List<Socket> clients) {
-        this.clients = clients;
-    }
+    private final List<Socket> clients = new ArrayList<>();
 
     /** 
      * Envía un mensaje a cada uno de los clientes en un formato compatible con telnet. 
@@ -20,6 +17,18 @@ public class TelnetServer {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void addClient(Socket client) {
+        synchronized (clients) {
+            clients.add(client);
+        }
+    }
+
+    public void removeClient(Socket client) {
+        synchronized (clients) {
+            clients.remove(client);
         }
     }
 }

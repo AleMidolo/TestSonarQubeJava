@@ -52,7 +52,7 @@ public class Main {
         logger.addClient(client1);
         logger.addClient(client2);
 
-        LoggingEvent event = new LoggingEvent("Hello, clients!");
+        LoggingEvent event = new LoggingEvent("This is a log message.");
         logger.append(event);
     }
 }

@@ -12,10 +12,9 @@ public class StackFrameExtractor {
         
         // Simulación de la extracción de tipos a partir del descriptor
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
-            int startIndex = descriptor.indexOf('(') + 1;
-            int endIndex = descriptor.indexOf(')');
-            String args = descriptor.substring(startIndex, endIndex);
-            
+            int start = descriptor.indexOf('(') + 1;
+            int end = descriptor.indexOf(')');
+            String args = descriptor.substring(start, end);
             if (!args.isEmpty()) {
                 String[] types = args.split(",");
                 for (String type : types) {
@@ -23,7 +22,7 @@ public class StackFrameExtractor {
                 }
             }
         } else {
-            // Si no es un descriptor de método, se puede manejar de otra forma
+            // Si el descriptor no es un descriptor de método, se puede manejar de otra manera
             extractedTypes.add(descriptor);
         }
 
@@ -35,6 +34,6 @@ public class StackFrameExtractor {
 
     public static void main(String[] args) {
         StackFrameExtractor extractor = new StackFrameExtractor();
-        extractor.pop("(I,Ljava/lang/String;)V"); // Ejemplo de uso
+        extractor.pop("(I)V"); // Ejemplo de un descriptor de método
     }
 }

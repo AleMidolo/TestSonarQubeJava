@@ -9,9 +9,9 @@ public class LogTable {
             @Override
             public void run() {
                 // Here you would add the log record to your log table
-                // For example, you might append it to a JTextArea or a JTable
-                System.out.println("Log Message: " + lr.getMessage());
-                // Additional code to update the LogTable UI can be added here
+                // For demonstration, we will just print the message
+                System.out.println(lr.getMessage());
+                // You can add code here to update your LogTable UI component
             }
         });
     }

@@ -10,22 +10,19 @@ public class ByteArrayConverter {
         if (array == null) {
             return null;
         }
-        byte[] primitiveArray = new byte[array.length];
+        byte[] result = new byte[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 throw new NullPointerException("El contenido del array no puede ser nulo");
             }
-            primitiveArray[i] = array[i];
+            result[i] = array[i];
         }
-        return primitiveArray;
+        return result;
     }
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        Byte[] byteArray = {1, 2, 3, null}; // Esto lanzará una excepción
+        Byte[] byteArray = {1, 2, 3, null}; // Esto lanzará una NullPointerException
         byte[] primitiveArray = toPrimitive(byteArray);
-        for (byte b : primitiveArray) {
-            System.out.println(b);
-        }
     }
 }

@@ -1,5 +1,5 @@
 import java.beans.Introspector;
-import java.lang.reflect.Method;
+import java.beans.PropertyDescriptor;
 
 public class StringUtil {
 

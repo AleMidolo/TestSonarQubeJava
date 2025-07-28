@@ -11,7 +11,7 @@ public class OutputFrame {
      */
     private void pop(final int elements) {
         if (elements <= 0) {
-            return;
+            return; // No hay nada que eliminar
         }
         int toRemove = Math.min(elements, outputFrame.size());
         for (int i = 0; i < toRemove; i++) {
@@ -19,12 +19,13 @@ public class OutputFrame {
         }
     }
 
-    // Additional methods to manipulate the outputFrame for testing purposes
+    // Método para agregar elementos al output frame (para pruebas)
     public void push(Object element) {
         outputFrame.add(element);
     }
 
-    public List<Object> getOutputFrame() {
-        return outputFrame;
+    // Método para obtener el tamaño del output frame (para pruebas)
+    public int size() {
+        return outputFrame.size();
     }
 }

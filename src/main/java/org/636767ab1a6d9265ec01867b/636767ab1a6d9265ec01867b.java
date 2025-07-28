@@ -2,7 +2,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Utf8Writer {
 
-    /**
+    /** 
      * Escribe los bytes codificados en utf8 de la cadena en el {@link LinkedBuffer}.
      */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {

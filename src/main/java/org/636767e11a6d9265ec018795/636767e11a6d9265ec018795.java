@@ -17,7 +17,7 @@ public class CompatibilityChecker {
         this.bucketName = bucketName;
     }
 
-    /**
+    /** 
      * @return verdadero si el bucket es el mismo.
      */
     public boolean isCompatible(DataTable dataset) {
@@ -28,6 +28,6 @@ public class CompatibilityChecker {
         CompatibilityChecker checker = new CompatibilityChecker("bucket1");
         DataTable dataset = new DataTable("bucket1");
         
-        System.out.println(checker.isCompatible(dataset)); // Output: true
+        System.out.println(checker.isCompatible(dataset)); // Should print true
     }
 }

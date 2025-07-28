@@ -1,7 +1,6 @@
 import java.nio.charset.StandardCharsets;
 
 public class UTF8SizeCalculator {
-
     /** 
      * Calcula el tamaño de la cadena utf8 que comienza en el índice especificado {@code index} con la longitud especificada {@code length}.
      */

@@ -1,8 +1,7 @@
 public class DigitValueInterpreter {
 
     /** 
-     * Interpreta un carattere come una cifra (in qualsiasi base fino a 36) e restituisce il valore numerico. 
-     * Questo è simile a {@code Character.digit()} ma non accettiamo cifre non-ASCII.
+     * Interpreta un carattere come una cifra (in qualsiasi base fino a 36) e restituisce il valore numerico. Questo è simile a {@code Character.digit()} ma non accettiamo cifre non-ASCII.
      */
     private static int digitValue(final char c) {
         if (c >= '0' && c <= '9') {
@@ -12,7 +11,7 @@ public class DigitValueInterpreter {
         } else if (c >= 'a' && c <= 'z') {
             return c - 'a' + 10; // Valore per le lettere da a a z
         } else {
-            throw new IllegalArgumentException("Carattere non valido: " + c);
+            return -1; // Restituisce -1 per caratteri non validi
         }
     }
 
@@ -24,5 +23,6 @@ public class DigitValueInterpreter {
         System.out.println(digitValue('Z')); // Output: 35
         System.out.println(digitValue('a')); // Output: 10
         System.out.println(digitValue('z')); // Output: 35
+        System.out.println(digitValue('@')); // Output: -1
     }
 }

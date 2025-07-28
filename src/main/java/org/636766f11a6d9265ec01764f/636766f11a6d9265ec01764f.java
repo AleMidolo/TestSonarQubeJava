@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BeanMap {
-    private Map<String, Object> map;
+    private final Map<String, Object> map;
 
     public BeanMap() {
         this.map = new HashMap<>();
@@ -18,17 +18,8 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    // Additional methods to add values to the map for demonstration purposes
+    // Metodo per aggiungere valori al BeanMap (opzionale)
     public void put(String key, Object value) {
         map.put(key, value);
-    }
-    
-    public static void main(String[] args) {
-        BeanMap beanMap = new BeanMap();
-        beanMap.put("key1", "value1");
-        beanMap.put("key2", 42);
-        
-        Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, 42]
     }
 }

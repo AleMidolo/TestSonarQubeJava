@@ -7,12 +7,12 @@ public class StackManipulator {
         this.stack = new Stack<>();
     }
 
-    /**
+    /** 
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
      * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method taking an int and returning void)
+        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
@@ -23,7 +23,7 @@ public class StackManipulator {
                 }
             }
         } else {
-            // If it's a single type, just pop once
+            // If it's a single type descriptor, just pop one element
             if (!stack.isEmpty()) {
                 stack.pop();
             }

@@ -1,25 +1,22 @@
-import java.util.LinkedList;
-
 public class Queue<T> {
-    private LinkedList<T> elements;
+    private Node<T> front;
+    private Node<T> rear;
+    private int size;
+
+    private static class Node<T> {
+        T data;
+        Node<T> next;
+
+        Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public Queue() {
-        elements = new LinkedList<>();
-    }
-
-    public void enqueue(T element) {
-        elements.addLast(element);
-    }
-
-    public T dequeue() {
-        if (elements.isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
-        }
-        return elements.removeFirst();
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
+        front = null;
+        rear = null;
+        size = 0;
     }
 
     /**
@@ -28,10 +25,12 @@ public class Queue<T> {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        Node<T> current = front;
         sb.append("Queue: [");
-        for (int i = 0; i < elements.size(); i++) {
-            sb.append(elements.get(i));
-            if (i < elements.size() - 1) {
+        while (current != null) {
+            sb.append(current.data);
+            current = current.next;
+            if (current != null) {
                 sb.append(", ");
             }
         }
@@ -39,11 +38,5 @@ public class Queue<T> {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: Queue: [1, 2, 3]
-    }
+    // Additional methods for the Queue class (enqueue, dequeue, etc.) can be added here
 }

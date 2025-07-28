@@ -19,9 +19,27 @@ public class LoggingBuffer {
         // If the buffer is full, the event is silently discarded
     }
 
-    // Additional methods for the LoggingBuffer can be added here
-}
+    // Additional methods for demonstration purposes
+    public int size() {
+        return buffer.size();
+    }
 
-class LoggingEvent {
-    // Implementation of LoggingEvent class
+    public static class LoggingEvent {
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public static void main(String[] args) {
+        LoggingBuffer loggingBuffer = new LoggingBuffer(5);
+        loggingBuffer.put(new LoggingEvent("Event 1"));
+        loggingBuffer.put(new LoggingEvent("Event 2"));
+        System.out.println("Current buffer size: " + loggingBuffer.size());
+    }
 }

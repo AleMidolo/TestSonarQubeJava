@@ -5,7 +5,7 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // inizializza con una dimensione predefinita
+        this.data = new byte[10]; // Initial capacity
         this.size = 0;
     }
 
@@ -15,7 +15,7 @@ public class ByteVector {
      * @return questo vettore di byte.
      */
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // un intero occupa 4 byte
+        ensureCapacity(size + 4); // An int takes 4 bytes
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);
@@ -30,7 +30,7 @@ public class ByteVector {
         }
     }
 
-    public byte[] getData() {
-        return Arrays.copyOf(data, size); // restituisce solo i byte effettivamente utilizzati
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
     }
 }

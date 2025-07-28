@@ -1,5 +1,5 @@
 public class StringUtils {
-
+    
     /** 
      * <p>Controlla se la <code>String</code> contiene solo caratteri numerici.</p> 
      * <p><code>Null</code> e stringhe vuote restituiranno <code>false</code>.</p>

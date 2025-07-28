@@ -27,6 +27,9 @@ public class BooleanArrayConverter {
         Boolean[] booleanArray = {true, false, null, true};
         try {
             boolean[] result = toPrimitive(booleanArray);
+            for (boolean b : result) {
+                System.out.println(b);
+            }
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }

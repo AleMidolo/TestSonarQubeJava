@@ -13,7 +13,7 @@ public class FileExtensionSeparator {
         int lastDotIndex = filename.lastIndexOf('.');
         int lastSeparatorIndex = indexOfLastSeparator(filename);
 
-        // Verifica que no haya un separador de directorio después del último punto
+        // Verificar que no haya un separador de directorio después del último punto
         if (lastDotIndex > lastSeparatorIndex) {
             return lastDotIndex;
         }
@@ -33,9 +33,9 @@ public class FileExtensionSeparator {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        String filename = "C:\\Users\\example\\file.txt";
-        int index = indexOfExtension(filename);
-        System.out.println("El índice del último separador de extensión es: " + index);
+        System.out.println(indexOfExtension("example.txt")); // Output: 7
+        System.out.println(indexOfExtension("folder/example.txt")); // Output: 7
+        System.out.println(indexOfExtension("folder/example")); // Output: -1
+        System.out.println(indexOfExtension(null)); // Output: -1
     }
 }

@@ -2,9 +2,11 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
+    private int currentSize;
 
     public ByteVector(int initialSize) {
-        data = new byte[initialSize];
+        this.data = new byte[initialSize];
+        this.currentSize = initialSize;
     }
 
     /**
@@ -15,7 +17,8 @@ public class ByteVector {
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than zero.");
         }
-        int newSize = data.length + size;
+        int newSize = currentSize + size;
         data = Arrays.copyOf(data, newSize);
+        currentSize = newSize;
     }
 }

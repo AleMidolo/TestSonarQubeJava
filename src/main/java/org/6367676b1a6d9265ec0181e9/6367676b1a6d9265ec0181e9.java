@@ -1,5 +1,5 @@
 public class SubstringMatcher {
-
+    
     /** 
      * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      * @param str la cadena original (o StringBuilder)
@@ -8,7 +8,10 @@ public class SubstringMatcher {
      * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
-        if (str == null || substring == null || index < 0 || index + substring.length() > str.length()) {
+        if (str == null || substring == null) {
+            return false;
+        }
+        if (index < 0 || index + substring.length() > str.length()) {
             return false;
         }
         

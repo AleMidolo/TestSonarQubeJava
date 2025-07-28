@@ -26,7 +26,7 @@ public class OctetDecoder {
                 sb.append((char) (((b & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F)));
                 i += 3;
             } else {
-                break; // Invalid byte
+                break; // Invalid byte sequence
             }
         }
         return i; // Return the index of the next unprocessed byte

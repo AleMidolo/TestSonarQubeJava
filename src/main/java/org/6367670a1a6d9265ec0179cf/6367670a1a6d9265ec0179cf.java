@@ -1,4 +1,5 @@
 public class CharUtils {
+    
     /** 
      * <p>Convierte el "Character" a un "char" manejando <code>null</code>.</p> 
      * <pre> 

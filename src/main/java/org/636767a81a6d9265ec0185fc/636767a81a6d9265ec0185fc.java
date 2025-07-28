@@ -1,10 +1,10 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProtocolMessageReader {
+public class ProtocolMessageParser {
     private InputStream inputStream;
 
-    public ProtocolMessageReader(InputStream inputStream) {
+    public ProtocolMessageParser(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 

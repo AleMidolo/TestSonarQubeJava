@@ -12,7 +12,7 @@ public class TimeRangeBuilder {
         List<TimeRange> timeRanges = new ArrayList<>();
 
         if (inicio >= fin) {
-            return timeRanges; // Return empty list if the start time is not less than the end time
+            return timeRanges; // Return empty list if the start time is not less than end time
         }
 
         long currentStart = inicio;
@@ -48,6 +48,14 @@ public class TimeRangeBuilder {
                     "start=" + start +
                     ", end=" + end +
                     '}';
+        }
+    }
+
+    public static void main(String[] args) {
+        TimeRangeBuilder builder = new TimeRangeBuilder();
+        List<TimeRange> ranges = builder.construirRangosDeTiempo(0, 10000000); // Example usage
+        for (TimeRange range : ranges) {
+            System.out.println(range);
         }
     }
 }

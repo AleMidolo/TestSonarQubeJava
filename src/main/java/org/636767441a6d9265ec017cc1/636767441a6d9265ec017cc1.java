@@ -19,11 +19,11 @@ public class BinaryTree<T> {
      */
     private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {
-            return node; // No se puede rotar si el nodo es nulo o no tiene hijo izquierdo
+            return node; // No se puede rotar
         }
 
-        TreeNode<T> newRoot = node.left; // El nuevo padre será el hijo izquierdo del nodo
-        node.left = newRoot.right; // El hijo derecho del nuevo padre se convierte en hijo izquierdo del nodo
+        TreeNode<T> newRoot = node.left; // El nuevo padre será el hijo izquierdo
+        node.left = newRoot.right; // El hijo derecho del nuevo padre se convierte en hijo izquierdo del nodo original
         newRoot.right = node; // El nodo original se convierte en el hijo derecho del nuevo padre
 
         return newRoot; // Retorna el nuevo padre

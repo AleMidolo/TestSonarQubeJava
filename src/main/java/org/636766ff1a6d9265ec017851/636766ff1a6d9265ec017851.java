@@ -23,13 +23,13 @@ public class ByteFinder {
             }
         }
         
-        return -1; // Retorna -1 si no se encuentra el byte
+        return -1; // No se encontró el byte
     }
 
     public static void main(String[] args) {
         byte[] data = {1, 2, 3, 4, 5, 2};
         ByteFinder finder = new ByteFinder(data);
         int position = finder.findByte((byte) 2, 0);
-        System.out.println("Position of byte: " + position); // Output: Position of byte: 1
+        System.out.println("Byte encontrado en la posición: " + position);
     }
 }

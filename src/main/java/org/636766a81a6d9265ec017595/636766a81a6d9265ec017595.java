@@ -36,6 +36,7 @@ public class ByteVector {
     public static void main(String[] args) {
         ByteVector byteVector = new ByteVector();
         byteVector.put11(1, 2);
-        System.out.println(Arrays.toString(byteVector.toArray())); // Output: [1, 2]
+        byteVector.put11(3, 4);
+        System.out.println(Arrays.toString(byteVector.toArray())); // Output: [1, 2, 3, 4]
     }
 }

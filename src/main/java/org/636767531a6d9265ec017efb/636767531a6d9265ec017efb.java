@@ -6,12 +6,12 @@ class Bucket {
         this.next = null;
     }
 
-    public void setNext(Bucket next) {
-        this.next = next;
-    }
-
     public Bucket getNext() {
         return next;
+    }
+
+    public void setNext(Bucket next) {
+        this.next = next;
     }
 
     /**
@@ -34,8 +34,8 @@ class Bucket {
         // For example, if we have a static reference to the head
         // head = newBucket; // Uncomment this if you have a head reference
         
-        // If we are maintaining a linked list, we need to find the previous bucket
-        // This part of the code would depend on how the list is structured
+        // If we are inserting in a linked list, we need to find the previous bucket
+        // This part of the code would depend on the structure of the list
         // For now, we will just assume we have a method to find the previous bucket
         // Bucket previous = findPrevious(bucket);
         // previous.setNext(newBucket);

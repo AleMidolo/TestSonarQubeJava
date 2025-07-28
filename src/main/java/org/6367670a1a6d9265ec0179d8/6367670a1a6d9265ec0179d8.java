@@ -16,7 +16,7 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         // Implementation for writing a single byte
-        // This is just a placeholder; actual implementation will depend on the specific output stream behavior
+        // This is just a placeholder; actual implementation would depend on the specific output stream
         System.out.write(b);
     }
 }

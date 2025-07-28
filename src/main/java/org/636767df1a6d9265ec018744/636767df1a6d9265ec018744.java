@@ -6,23 +6,17 @@ public class TimeRangeSplitter {
     private static final long FETCH_DATA_DURATION = 3600000; // Example duration in milliseconds (1 hour)
 
     /**
-     * Split time ranges to ensure the start time and end time is smaller than {@link #FETCH_DATA_DURATION}
+     * Split time ranges to insure the start time and end time is small then  {@link #FETCH_DATA_DURATION}
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-
-        if (end - start <= FETCH_DATA_DURATION) {
-            timeRanges.add(new TimeRange(start, end));
-            return timeRanges;
+        
+        while (start < end) {
+            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, rangeEnd));
+            start = rangeEnd;
         }
-
-        long currentStart = start;
-        while (currentStart < end) {
-            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd;
-        }
-
+        
         return timeRanges;
     }
 

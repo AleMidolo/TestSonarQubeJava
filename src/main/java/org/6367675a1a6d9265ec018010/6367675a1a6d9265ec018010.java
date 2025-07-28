@@ -1,30 +1,20 @@
 public class Bucket {
-    private DataStructure dataStructure;
+    private Bucket next; // Reference to the next bucket in the data structure
 
-    public Bucket(DataStructure dataStructure) {
-        this.dataStructure = dataStructure;
+    // Constructor
+    public Bucket() {
+        this.next = null;
     }
 
     /** 
      * Removes this bucket from the data structure.
      */
     public void removeSelf() {
-        dataStructure.removeBucket(this);
-    }
-}
-
-class DataStructure {
-    private List<Bucket> buckets;
-
-    public DataStructure() {
-        buckets = new ArrayList<>();
-    }
-
-    public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
-    }
-
-    public void removeBucket(Bucket bucket) {
-        buckets.remove(bucket);
+        if (next != null) {
+            // If there is a next bucket, we can skip this bucket
+            next = next.next;
+        }
+        // If this is the last bucket, we simply set next to null
+        // This bucket will be eligible for garbage collection
     }
 }

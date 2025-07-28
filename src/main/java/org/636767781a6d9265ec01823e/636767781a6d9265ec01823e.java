@@ -43,6 +43,6 @@ class Client {
     }
 
     public void sendMessage(String message) {
-        System.out.println("Sending message to " + clientId + ": " + message);
+        System.out.println("Sending to " + clientId + ": " + message);
     }
 }

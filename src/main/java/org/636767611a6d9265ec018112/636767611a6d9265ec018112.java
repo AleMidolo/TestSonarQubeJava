@@ -14,8 +14,7 @@ public class VertexProvider<V> {
     protected V provideNextVertex() {
         if (vertexIterator.hasNext()) {
             return vertexIterator.next();
-        } else {
-            return null; // or throw an exception based on your design
         }
+        return null; // or throw an exception based on your design choice
     }
 }

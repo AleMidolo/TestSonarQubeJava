@@ -24,9 +24,11 @@ public class SubstringMatcher {
 
     public static void main(String[] args) {
         // Example usage
-        String original = "Hello, world!";
-        String sub = "world";
-        boolean result = substringMatch(original, 7, sub);
-        System.out.println(result); // Output: true
+        System.out.println(substringMatch("Hello, World!", 7, "World")); // true
+        System.out.println(substringMatch("Hello, World!", 7, "world")); // false
+        System.out.println(substringMatch("Hello, World!", 0, "Hello")); // true
+        System.out.println(substringMatch("Hello, World!", 5, ", W")); // true
+        System.out.println(substringMatch("Hello, World!", 12, "!")); // true
+        System.out.println(substringMatch("Hello, World!", 13, "!")); // false
     }
 }

@@ -4,7 +4,7 @@ public class StackMapFrameVisitor {
     private int currentNumStack;
 
     /**
-     * Starts the visit of a new stack map frame, stored in  {@link #currentFrame}.
+     * Starts the visit of a new stack map frame, stored in {@link #currentFrame}.
      * @param offset   the bytecode offset of the instruction to which the frame corresponds.
      * @param numLocal the number of local variables in the frame.
      * @param numStack the number of stack elements in the frame.

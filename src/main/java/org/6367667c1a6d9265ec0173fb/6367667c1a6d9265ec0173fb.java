@@ -1,16 +1,20 @@
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
-public class MyAtmosphereResource implements AtmosphereResource {
+public class MyAtmosphereResource extends AtmosphereResource {
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        // Implementation to add the event listener
-        // This is a placeholder for the actual logic
-        // In a real scenario, you would store the listener in a collection
-        System.out.println("Event listener added: " + e);
-        return this; // Returning the current instance for method chaining
+        // Logic to add the event listener
+        // This is a placeholder implementation
+        if (e == null) {
+            throw new IllegalArgumentException("Event listener cannot be null");
+        }
+        // Assuming there's a list to hold listeners
+        eventListeners.add(e);
+        return this;
     }
-
-    // Other methods and properties of AtmosphereResource would be implemented here
+    
+    // Placeholder for the list of event listeners
+    private List<AtmosphereResourceEventListener> eventListeners = new ArrayList<>();
 }

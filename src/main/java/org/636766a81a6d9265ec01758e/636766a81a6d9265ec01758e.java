@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class PrimeCapacity {
 
-    /** 
+    /**
      * Returns a prime number which is <code>&gt;= desiredCapacity</code> and very close to <code>desiredCapacity</code> (within 11% if <code>desiredCapacity &gt;= 1000</code>).
      * @param desiredCapacity the capacity desired by the user.
      * @return the capacity which should be used for a hashtable.

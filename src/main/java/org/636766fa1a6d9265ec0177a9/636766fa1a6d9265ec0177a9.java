@@ -19,11 +19,4 @@ public class TypeManager {
     public Set<Integer> getInitializedTypes() {
         return initializedTypes;
     }
-
-    public static void main(String[] args) {
-        TypeManager manager = new TypeManager();
-        manager.addInitializedType(1);
-        manager.addInitializedType(2);
-        System.out.println(manager.getInitializedTypes());
-    }
 }

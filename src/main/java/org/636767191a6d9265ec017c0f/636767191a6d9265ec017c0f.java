@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ByteVector {
     private byte[] data;
     private int currentSize;
@@ -16,37 +18,25 @@ public class ByteVector {
             throw new IllegalArgumentException("Size must be non-negative");
         }
         int newSize = currentSize + size;
-        byte[] newData = new byte[newSize];
-        System.arraycopy(data, 0, newData, 0, currentSize);
-        data = newData;
+        if (newSize > data.length) {
+            data = Arrays.copyOf(data, newSize);
+        }
     }
 
     // Additional methods for demonstration purposes
-    public void add(byte b) {
-        if (currentSize >= data.length) {
-            enlarge(1);
-        }
-        data[currentSize++] = b;
+    public void addBytes(byte[] bytes) {
+        enlarge(bytes.length);
+        System.arraycopy(bytes, 0, data, currentSize, bytes.length);
+        currentSize += bytes.length;
     }
 
-    public int size() {
-        return currentSize;
-    }
-
-    public byte get(int index) {
-        if (index < 0 || index >= currentSize) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
-        return data[index];
+    public byte[] getData() {
+        return Arrays.copyOf(data, currentSize);
     }
 
     public static void main(String[] args) {
         ByteVector byteVector = new ByteVector(5);
-        for (int i = 0; i < 10; i++) {
-            byteVector.add((byte) i);
-        }
-        for (int i = 0; i < byteVector.size(); i++) {
-            System.out.println(byteVector.get(i));
-        }
+        byteVector.addBytes(new byte[]{1, 2, 3});
+        System.out.println(Arrays.toString(byteVector.getData())); // Output: [1, 2, 3]
     }
 }

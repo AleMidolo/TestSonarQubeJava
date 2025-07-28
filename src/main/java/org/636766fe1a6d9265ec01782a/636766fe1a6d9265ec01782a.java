@@ -14,9 +14,8 @@ public class UtfReader {
      * @return the String corresponding to the specified CONSTANT_Utf8 entry.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the classFileBuffer contains the constant pool entries
-        // and that the entry starts at a specific offset.
-        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+        // Assuming the constant pool starts at a certain offset
+        int offset = getConstantPoolOffset(constantPoolEntryIndex);
         
         // Read the length of the UTF-8 string
         int length = (classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF);
@@ -26,13 +25,19 @@ public class UtfReader {
         System.arraycopy(classFileBuffer, offset + 2, utf8Bytes, 0, length);
         
         // Convert UTF-8 bytes to String
-        return new String(utf8Bytes, StandardCharsets.UTF_8);
+        String result = new String(utf8Bytes, StandardCharsets.UTF_8);
+        
+        // Fill the charBuffer if needed
+        if (charBuffer.length >= result.length()) {
+            result.getChars(0, result.length(), charBuffer, 0);
+        }
+        
+        return result;
     }
 
-    private int getConstantPoolEntryOffset(int index) {
-        // This method should return the correct offset for the given constant pool entry index.
-        // The implementation of this method depends on the structure of the classFileBuffer.
-        // For simplicity, let's assume each entry is of fixed size (this is not true in practice).
-        return index * 10; // Placeholder implementation
+    private int getConstantPoolOffset(int index) {
+        // This method should return the correct offset for the given constant pool index
+        // For simplicity, let's assume each entry is 2 bytes for this example
+        return index * 2; // This is a placeholder; actual implementation may vary
     }
 }

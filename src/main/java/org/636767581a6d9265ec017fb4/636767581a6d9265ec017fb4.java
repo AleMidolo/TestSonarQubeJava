@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UpperBoundCalculator<K extends Comparable<K>> {
@@ -10,11 +11,22 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         List<Integer> upperBounds = new ArrayList<>();
-        for (K key : keys) {
-            // Assuming the upper bound is the ordinal value of the key
-            // This is a placeholder logic; actual logic may vary based on requirements
-            upperBounds.add(key.hashCode()); // Using hashCode as a simple upper bound
+        if (keys == null || keys.isEmpty()) {
+            return upperBounds; // Return empty list if input is null or empty
         }
+
+        // Sort the keys to find upper bounds
+        Collections.sort(keys);
+        
+        for (K key : keys) {
+            // Find the upper bound for each key
+            int upperBound = Collections.binarySearch(keys, key);
+            if (upperBound < 0) {
+                upperBound = -(upperBound + 1); // Convert to insertion point
+            }
+            upperBounds.add(upperBound);
+        }
+        
         return upperBounds;
     }
 }

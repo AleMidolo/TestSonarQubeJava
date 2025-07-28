@@ -23,11 +23,10 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        CharSequence str = "Hello, World!";
-        CharSequence substring = "World";
-        int index = 7;
-
-        boolean result = substringMatch(str, index, substring);
-        System.out.println(result); // Output: true
+        // Ejemplo de uso
+        CharSequence str = "Hola mundo";
+        CharSequence substring = "mundo";
+        int index = 5;
+        System.out.println(substringMatch(str, index, substring)); // Debería imprimir true
     }
 }

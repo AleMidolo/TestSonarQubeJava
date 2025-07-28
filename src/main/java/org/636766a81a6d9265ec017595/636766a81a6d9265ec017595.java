@@ -26,15 +26,16 @@ public class ByteVector {
         }
     }
 
-    // For testing purposes
-    public byte[] getData() {
+    public byte[] toArray() {
         return Arrays.copyOf(data, size);
     }
 
-    public static void main(String[] args) {
-        ByteVector vector = new ByteVector();
-        vector.put11(0x01, 0x02);
-        byte[] result = vector.getData();
-        System.out.println(Arrays.toString(result)); // Output: [1, 2]
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(toArray());
     }
 }

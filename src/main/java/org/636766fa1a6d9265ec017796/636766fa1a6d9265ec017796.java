@@ -1,12 +1,10 @@
-import java.util.Objects;
-
 public class BooleanArrayConverter {
 
     /**
-     * <p>Convierte un arreglo de booleanos primitivos a objetos.</p> 
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>boolean</code>
-     * @return un arreglo de <code>Boolean</code>, <code>null</code> si el arreglo de entrada es nulo
+     * Convierte un arreglo de booleanos primitivos a objetos.
+     * Este método devuelve null para un arreglo de entrada null.
+     * @param array un arreglo de boolean
+     * @return un arreglo de Boolean, null si el arreglo de entrada es nulo
      */
     public static Boolean[] toObject(final boolean[] array) {
         if (array == null) {

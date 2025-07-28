@@ -20,7 +20,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println(reverse(null));  // null
-        System.out.println(reverse(""));    // ""
+        System.out.println(reverse(""));   // ""
         System.out.println(reverse("bat")); // "tab"
     }
 }

@@ -6,8 +6,7 @@ import java.util.List;
 public class TypeResolver {
 
     /**
-     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. 
-     * Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
+     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -19,7 +18,7 @@ public class TypeResolver {
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class) {
+            if (typeArg instanceof Class<?>) {
                 resolvedTypes.add((Class<?>) typeArg);
             } else {
                 // Si el tipo no es una clase, no podemos resolverlo directamente

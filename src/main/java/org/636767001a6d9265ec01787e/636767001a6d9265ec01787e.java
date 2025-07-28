@@ -1,9 +1,12 @@
+/**
+ * <p> Obtiene la cadena construida por este constructor. </p>
+ * @return la cadena construida
+ */
 @Override
 public String toString() {
-    // Aquí se debe implementar la lógica para construir y retornar la cadena.
-    // Por ejemplo, si la clase tiene un atributo 'builder' que es un StringBuilder:
-    // return builder.toString();
-    
-    // Como no se proporciona más contexto, se retorna una cadena vacía como placeholder.
-    return "";
+    // Aquí se debe implementar la lógica para construir y devolver la cadena.
+    // Por ejemplo, si se está construyendo una cadena a partir de un StringBuilder:
+    StringBuilder builder = new StringBuilder();
+    builder.append("Cadena construida");
+    return builder.toString();
 }

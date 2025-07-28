@@ -1,5 +1,4 @@
-public class StringUtils {
-
+public class Main {
     /**
      * Elimina todas las ocurrencias del carácter inicial proporcionado de la cadena dada.
      * @param str la cadena a verificar
@@ -10,19 +9,18 @@ public class StringUtils {
         if (str == null || str.isEmpty()) {
             return str;
         }
-
+        
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-
+        
         return str.substring(index);
     }
 
     public static void main(String[] args) {
-        String testString = "###HelloWorld";
+        String testStr = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(testString, leadingChar);
-        System.out.println(result);  // Output: HelloWorld
+        System.out.println(trimLeadingCharacter(testStr, leadingChar)); // Output: HelloWorld
     }
 }

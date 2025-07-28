@@ -13,9 +13,9 @@ public class ObjectToStringConverter {
     public static void main(String[] args) {
         // Ejemplo de uso
         Object obj1 = null;
-        Object obj2 = "Hola, mundo!";
+        Object obj2 = "Hola, Mundo!";
         
         System.out.println(toString(obj1)); // Imprime: null
-        System.out.println(toString(obj2)); // Imprime: Hola, mundo!
+        System.out.println(toString(obj2)); // Imprime: Hola, Mundo!
     }
 }

@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class ArrayConverter {
 
@@ -12,20 +12,6 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        Integer[] result = new Integer[array.length];
-        for (int i = 0; i < array.length; i++) {
-            result[i] = array[i];
-        }
-        return result;
-    }
-
-    public static void main(String[] args) {
-        int[] primitiveArray = {1, 2, 3, 4, 5};
-        Integer[] objectArray = toObject(primitiveArray);
-        System.out.println(Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
-
-        int[] nullArray = null;
-        Integer[] nullResult = toObject(nullArray);
-        System.out.println(nullResult); // Output: null
+        return IntStream.of(array).boxed().toArray(Integer[]::new);
     }
 }

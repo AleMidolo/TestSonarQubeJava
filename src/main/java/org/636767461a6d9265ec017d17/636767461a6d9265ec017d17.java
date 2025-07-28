@@ -28,8 +28,7 @@ public class DotUnescape {
     }
 
     public static void main(String[] args) {
-        String input = "This\\ is\\ a\\ test\\ string\\ with\\ escaped\\ characters.";
-        String output = unescapeId(input);
-        System.out.println(output);  // Output: This is a test string with escaped characters.
+        String input = "\\\"Hello\\\" \\\\World\\\\";
+        System.out.println(unescapeId(input));  // Output: "Hello" \World\
     }
 }

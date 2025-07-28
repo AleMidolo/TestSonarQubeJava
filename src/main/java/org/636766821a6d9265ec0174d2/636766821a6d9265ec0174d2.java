@@ -4,11 +4,13 @@ import org.atmosphere.cpr.AtmosphereRequest;
 public class RequestWrapper {
 
     /**
-     * Envuelve un {@link HttpServletRequest}.
+     * एक {@link HttpServletRequest} को लपेटें।
      * @param request {@link HttpServletRequest}
-     * @return un {@link AtmosphereRequest}
+     * @return एक {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
-        return AtmosphereRequest.wrap(request);
+        // Create an AtmosphereRequest from the HttpServletRequest
+        AtmosphereRequest atmosphereRequest = AtmosphereRequest.wrap(request);
+        return atmosphereRequest;
     }
 }

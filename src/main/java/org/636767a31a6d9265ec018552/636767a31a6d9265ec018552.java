@@ -1,22 +1,29 @@
 import java.io.IOException;
-import java.io.DataInput;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
-public class DataReader {
-
-    private DataInput input;
-
-    public DataReader(DataInput input) {
-        this.input = input;
-    }
+public class StreamReader {
 
     /**
-     * Lee el valor de un campo de tipo {@code string} del flujo.
-     * 
-     * @return el valor del campo de tipo {@code string} leído del flujo.
-     * @throws IOException si ocurre un error de entrada/salida.
+     * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
      */
     @Override
     public String readString() throws IOException {
-        return input.readUTF();
+        InputStream inputStream = getInputStream(); // Assume this method provides the input stream
+        byte[] lengthBytes = new byte[4];
+        inputStream.read(lengthBytes);
+        int length = (lengthBytes[0] & 0xFF) << 24 |
+                     (lengthBytes[1] & 0xFF) << 16 |
+                     (lengthBytes[2] & 0xFF) << 8 |
+                     (lengthBytes[3] & 0xFF);
+        byte[] stringBytes = new byte[length];
+        inputStream.read(stringBytes);
+        return new String(stringBytes, StandardCharsets.UTF_8);
+    }
+
+    // Dummy method to simulate getting an input stream
+    private InputStream getInputStream() {
+        // This should be replaced with actual logic to get the input stream
+        return null;
     }
 }

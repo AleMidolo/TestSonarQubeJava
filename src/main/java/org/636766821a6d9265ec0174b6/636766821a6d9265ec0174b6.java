@@ -6,7 +6,7 @@ import java.util.List;
 public class TypeResolver {
 
     /**
-     * Resuelve los argumentos para el {@code genericType} utilizando la información de las variables de tipo para el {@code targetType}. Devuelve {@code null} si {@code genericType} no está parametrizado o si no se pueden resolver los argumentos.
+     * {@code genericType} के लिए तर्कों को {@code targetType} के प्रकार चर जानकारी का उपयोग करके हल करता है। यदि {@code genericType} पैरामीटराइज्ड नहीं है या यदि तर्कों को हल नहीं किया जा सकता है, तो {@code null} लौटाता है।
      */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
@@ -21,7 +21,8 @@ public class TypeResolver {
             if (typeArg instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArg);
             } else {
-                // Si el tipo no es una clase, no podemos resolverlo directamente
+                // Handle cases where typeArg is a TypeVariable or other types
+                // For simplicity, we return null if any type argument is not a Class
                 return null;
             }
         }
@@ -30,7 +31,7 @@ public class TypeResolver {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
+        // Example usage
         Type genericType = new ParameterizedType() {
             @Override
             public Type[] getActualTypeArguments() {
@@ -48,13 +49,15 @@ public class TypeResolver {
             }
         };
 
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
+        Class<?> targetType = List.class;
+        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
+
         if (resolvedArgs != null) {
             for (Class<?> arg : resolvedArgs) {
                 System.out.println(arg.getSimpleName());
             }
         } else {
-            System.out.println("No se pudieron resolver los argumentos.");
+            System.out.println("Could not resolve arguments.");
         }
     }
 }

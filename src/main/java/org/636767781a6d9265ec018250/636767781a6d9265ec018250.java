@@ -5,19 +5,12 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Implementación de la lógica de filtrado
-        // Aquí puedes agregar la lógica para decidir si el evento debe ser aceptado, rechazado o neutral
-        // Por ejemplo, si el mensaje del evento contiene una cadena específica, puedes devolver Filter.ACCEPT o Filter.DENY
-        // Si no hay coincidencia, devuelve Filter.NEUTRAL
-
-        // Ejemplo básico:
-        String message = event.getMessage().toString();
-        if (message.contains("specific string")) {
-            return Filter.ACCEPT;
-        } else if (message.contains("another string")) {
-            return Filter.DENY;
-        } else {
+        // Implement your logic here to decide whether to accept, deny, or remain neutral
+        // For example, if the message does not match a certain condition, return NEUTRAL
+        if (!event.getMessage().toString().matches("your_regex_pattern")) {
             return Filter.NEUTRAL;
         }
+        // Otherwise, return ACCEPT or DENY based on your criteria
+        return Filter.ACCEPT; // or Filter.DENY
     }
 }

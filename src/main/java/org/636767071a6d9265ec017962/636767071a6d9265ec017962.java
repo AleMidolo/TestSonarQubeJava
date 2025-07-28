@@ -4,11 +4,11 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BeanMap {
-    private Map<String, Object> properties = new HashMap<>();
+
+    private Map<String, Object> properties;
 
     public void putAllWriteable(BeanMap map) {
         try {
@@ -26,14 +26,4 @@ public class BeanMap {
             e.printStackTrace();
         }
     }
-
-    public void put(String key, Object value) {
-        properties.put(key, value);
-    }
-
-    public Object get(String key) {
-        return properties.get(key);
-    }
-
-    // Other methods for BeanMap implementation...
 }

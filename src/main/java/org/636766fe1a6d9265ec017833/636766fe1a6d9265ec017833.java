@@ -4,14 +4,14 @@ import java.io.IOException;
 public class FileUtils {
 
     /**
-     * Programa un archivo para que se elimine cuando la JVM exista. Si el archivo es un directorio, elimínalo y todos sus subdirectorios.
-     * @param file  archivo o directorio a eliminar, no debe ser {@code null}
-     * @throws NullPointerException si el archivo es {@code null}
-     * @throws IOException en caso de que la eliminación no sea exitosa
+     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
+     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
+     * @throws NullPointerException यदि फ़ाइल {@code null} है
+     * @throws IOException यदि हटाना असफल हो जाता है
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("El archivo no puede ser null");
+            throw new NullPointerException("File must not be null");
         }
 
         if (file.isDirectory()) {

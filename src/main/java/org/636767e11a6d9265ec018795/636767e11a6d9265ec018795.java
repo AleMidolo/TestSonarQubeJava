@@ -1,16 +1,47 @@
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataTable {
-    // Assuming DataTable class has necessary fields and methods
+    private Map<String, Integer> bucketCounts;
 
-    public boolean isCompatible(DataTable dataset) {
-        // Assuming compatibility is determined by comparing the bucket of the current instance with the bucket of the provided dataset
-        return Objects.equals(this.getBucket(), dataset.getBucket());
+    public DataTable() {
+        this.bucketCounts = new HashMap<>();
     }
 
-    // Assuming a method to get the bucket
-    private String getBucket() {
-        // Implementation to return the bucket
-        return "exampleBucket"; // Placeholder, replace with actual logic
+    public void addBucket(String bucketName, int count) {
+        bucketCounts.put(bucketName, count);
+    }
+
+    public Map<String, Integer> getBucketCounts() {
+        return bucketCounts;
+    }
+}
+
+public class Main {
+    /**
+     * @return यदि बकेट समान है तो true लौटाता है।
+     */
+    public static boolean isCompatible(DataTable dataset) {
+        Map<String, Integer> bucketCounts = dataset.getBucketCounts();
+        if (bucketCounts.isEmpty()) {
+            return true;
+        }
+
+        int firstCount = bucketCounts.values().iterator().next();
+        for (int count : bucketCounts.values()) {
+            if (count != firstCount) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        DataTable dataset = new DataTable();
+        dataset.addBucket("Bucket1", 10);
+        dataset.addBucket("Bucket2", 10);
+        dataset.addBucket("Bucket3", 10);
+
+        System.out.println(isCompatible(dataset)); // Output: true
     }
 }

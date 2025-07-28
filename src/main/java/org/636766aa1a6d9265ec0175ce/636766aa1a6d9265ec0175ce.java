@@ -12,10 +12,11 @@ public class FrameVisitor {
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         // Initialize the current frame with the size of local variables and stack
         currentFrame = new int[numLocal + numStack];
-        currentIndex = 0; // Reset the index for writing to the frame
-        
-        // You can add logic here to handle the offset if needed
-        
-        return currentIndex; // Return the index for the next element to write
+        currentIndex = 0;
+
+        // Here you can add logic to handle the offset if needed
+
+        // Return the next index to write to
+        return currentIndex;
     }
 }

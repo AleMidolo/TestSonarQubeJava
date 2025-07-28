@@ -10,27 +10,30 @@ public class MetricsHandler implements java.util.function.Consumer<METRICS> {
      */
     @Override
     public void accept(final METRICS data) {
-        if (data != null) {
-            // 假设 METRICS 有一个方法 getKey() 和 getValue()，用于获取键和值
-            String key = data.getKey();
-            int value = data.getValue();
-            metricsCache.merge(key, value, Integer::sum);
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null");
         }
+        
+        // Assuming METRICS has a method getName() and getValue()
+        String name = data.getName();
+        int value = data.getValue();
+        
+        metricsCache.merge(name, value, Integer::sum);
     }
 }
 
-// 假设 METRICS 类的定义
+// Assuming a METRICS class exists
 class METRICS {
-    private String key;
+    private String name;
     private int value;
 
-    public METRICS(String key, int value) {
-        this.key = key;
+    public METRICS(String name, int value) {
+        this.name = name;
         this.value = value;
     }
 
-    public String getKey() {
-        return key;
+    public String getName() {
+        return name;
     }
 
     public int getValue() {

@@ -3,40 +3,54 @@ public class TimeBucketCompressor {
     /**
      * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，
      * 20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
-     *
-     * @param timeBucket 时间桶的长整型值
-     * @param dayStep    步长
-     * @return 重新格式化后的时间桶
      */
     static long compressTimeBucket(long timeBucket, int dayStep) {
-        // 将时间桶转换为字符串以便处理
-        String timeStr = String.valueOf(timeBucket);
-        int year = Integer.parseInt(timeStr.substring(0, 4));
-        int month = Integer.parseInt(timeStr.substring(4, 6));
-        int day = Integer.parseInt(timeStr.substring(6, 8));
+        // Extract year, month, and day from the timeBucket
+        int year = (int) (timeBucket / 10000);
+        int month = (int) ((timeBucket % 10000) / 100);
+        int day = (int) (timeBucket % 100);
 
-        // 计算当前日期的天数
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        int currentDayOfYear = calendar.get(java.util.Calendar.DAY_OF_YEAR);
+        // Calculate the number of days since the start of the month
+        int daysInMonth = getDaysInMonth(year, month);
+        int newDay = (day - 1) / dayStep * dayStep + 1;
 
-        // 计算新的天数
-        int newDayOfYear = (currentDayOfYear / dayStep) * dayStep;
+        // If the new day exceeds the number of days in the month, adjust the month and year
+        if (newDay > daysInMonth) {
+            newDay = daysInMonth;
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+        }
 
-        // 设置新的日期
-        calendar.set(java.util.Calendar.DAY_OF_YEAR, newDayOfYear);
-        year = calendar.get(java.util.Calendar.YEAR);
-        month = calendar.get(java.util.Calendar.MONTH) + 1; // 月份从0开始
-        day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+        // Format the new time bucket
+        return year * 10000 + month * 100 + newDay;
+    }
 
-        // 重新格式化为长整型值
-        return Long.parseLong(String.format("%04d%02d%02d", year, month, day));
+    // Helper method to get the number of days in a month
+    private static int getDaysInMonth(int year, int month) {
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                return 31;
+            case 4: case 6: case 9: case 11:
+                return 30;
+            case 2:
+                return (isLeapYear(year)) ? 29 : 28;
+            default:
+                return 0; // Invalid month
+        }
+    }
+
+    // Helper method to check if a year is a leap year
+    private static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
     public static void main(String[] args) {
-        // 测试示例
-        System.out.println(compressTimeBucket(20000105L, 11)); // 输出: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // 输出: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // 输出: 20000123
+        // Test the compressTimeBucket method
+        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
     }
 }

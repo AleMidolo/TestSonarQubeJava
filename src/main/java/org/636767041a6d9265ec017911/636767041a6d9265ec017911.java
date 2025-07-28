@@ -9,7 +9,7 @@ public class ObjectRegistry {
      */
     static void register(Object value) {
         if (value == null) {
-            throw new IllegalArgumentException("Cannot register null object.");
+            throw new IllegalArgumentException("Cannot register a null object.");
         }
         if (!registeredObjects.contains(value)) {
             registeredObjects.add(value);
@@ -25,6 +25,6 @@ public class ObjectRegistry {
         register(obj2);
         register(obj1); // This will not add obj1 again
 
-        System.out.println("Registered objects: " + registeredObjects.size()); // Should print 2
+        System.out.println("Registered objects: " + registeredObjects.size());
     }
 }

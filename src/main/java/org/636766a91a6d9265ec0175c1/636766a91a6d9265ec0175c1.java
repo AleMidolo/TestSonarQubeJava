@@ -1,10 +1,10 @@
 public class ByteVector {
     private byte[] data;
-    private int capacity;
+    private int currentSize;
 
     public ByteVector() {
         this.data = new byte[10]; // Initial capacity
-        this.capacity = 10;
+        this.currentSize = 0;
     }
 
     /**
@@ -12,10 +12,24 @@ public class ByteVector {
      * @param size 此字节向量应该能够接收的额外字节数。
      */
     private void enlarge(final int size) {
-        int newCapacity = capacity + size;
-        byte[] newData = new byte[newCapacity];
-        System.arraycopy(data, 0, newData, 0, capacity);
-        data = newData;
-        capacity = newCapacity;
+        int newSize = currentSize + size;
+        if (newSize > data.length) {
+            int newCapacity = Math.max(data.length * 2, newSize);
+            byte[] newData = new byte[newCapacity];
+            System.arraycopy(data, 0, newData, 0, currentSize);
+            data = newData;
+        }
+    }
+
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public int size() {
+        return currentSize;
     }
 }

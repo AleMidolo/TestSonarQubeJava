@@ -26,20 +26,47 @@ public class ThreadSnapshotLoader {
     private static ThreadSnapshot parseLineToThreadSnapshot(String line) {
         // Implement parsing logic here
         // This is a placeholder implementation
-        return new ThreadSnapshot(); // Replace with actual parsing logic
+        return new ThreadSnapshot(line);
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
-        // Implement time range checking logic here
-        // This is a placeholder implementation
-        return true; // Replace with actual checking logic
+        long snapshotTime = snapshot.getTimestamp(); // Assuming ThreadSnapshot has a method to get its timestamp
+        for (ProfileAnalyzeTimeRange range : timeRanges) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
 class ThreadSnapshot {
-    // Define properties and methods for ThreadSnapshot
+    private String data;
+
+    public ThreadSnapshot(String data) {
+        this.data = data;
+    }
+
+    public long getTimestamp() {
+        // Placeholder for actual timestamp extraction logic
+        return System.currentTimeMillis();
+    }
 }
 
 class ProfileAnalyzeTimeRange {
-    // Define properties and methods for ProfileAnalyzeTimeRange
+    private long startTime;
+    private long endTime;
+
+    public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
 }

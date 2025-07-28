@@ -18,8 +18,8 @@ public class ArrayUtil {
         Byte[] result2 = nullToEmpty(new Byte[]{});
         Byte[] result3 = nullToEmpty(new Byte[]{1, 2, 3});
 
-        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
-        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 1: " + (result1.length == 0 ? "Empty" : "Not Empty"));
+        System.out.println("Result 2: " + (result2.length == 0 ? "Empty" : "Not Empty"));
+        System.out.println("Result 3: " + (result3.length == 0 ? "Empty" : "Not Empty"));
     }
 }

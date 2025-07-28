@@ -7,16 +7,15 @@ public class LogManager {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Here you would add the log record to your LogTable
-                // For example, assuming you have a method to update the LogTable
-                updateLogTable(lr);
+                // Assuming there's a method to display the log record in the LogTable
+                displayLogRecord(lr);
             }
         });
     }
 
-    private void updateLogTable(LogRecord lr) {
-        // Implementation to update the LogTable with the log record
-        // This is a placeholder for the actual log table update logic
+    private void displayLogRecord(LogRecord lr) {
+        // Implementation to add the log record to the LogTable
+        // This is a placeholder for the actual log display logic
         System.out.println("Log Message: " + lr.getMessage());
     }
 }

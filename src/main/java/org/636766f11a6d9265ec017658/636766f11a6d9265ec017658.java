@@ -1,4 +1,4 @@
-public class FilePathUtils {
+public class FilePathSeparator {
 
     /** 
      * 返回最后一个目录分隔符字符的索引。<p> 此方法将处理Unix或Windows格式的文件。返回最后一个正斜杠或反斜杠的位置。<p> 无论代码运行在哪台机器上，输出都是相同的。
@@ -9,16 +9,17 @@ public class FilePathUtils {
         if (filename == null) {
             return -1;
         }
-        int lastUnixSeparator = filename.lastIndexOf('/');
-        int lastWindowsSeparator = filename.lastIndexOf('\\');
-        return Math.max(lastUnixSeparator, lastWindowsSeparator);
+        
+        int lastIndex = -1;
+        lastIndex = Math.max(filename.lastIndexOf('/'), filename.lastIndexOf('\\'));
+        
+        return lastIndex;
     }
 
     public static void main(String[] args) {
-        // 测试代码
-        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // 输出: 17
-        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // 输出: 14
-        System.out.println(indexOfLastSeparator("file.txt")); // 输出: -1
-        System.out.println(indexOfLastSeparator(null)); // 输出: -1
+        System.out.println(indexOfLastSeparator("C:\\Users\\User\\Documents\\file.txt")); // Output: 17
+        System.out.println(indexOfLastSeparator("/home/user/documents/file.txt")); // Output: 14
+        System.out.println(indexOfLastSeparator("file.txt")); // Output: -1
+        System.out.println(indexOfLastSeparator(null)); // Output: -1
     }
 }

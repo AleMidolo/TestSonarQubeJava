@@ -1,4 +1,5 @@
 public class SubstringCounter {
+
     /**
      * 返回子字符串 {@code sub} 在字符串 {@code str} 中出现的次数。
      * @param str 要搜索的字符串。如果为空，则返回 0。
@@ -9,15 +10,15 @@ public class SubstringCounter {
         if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
             return 0;
         }
-        
+
         int count = 0;
         int index = 0;
-        
+
         while ((index = str.indexOf(sub, index)) != -1) {
             count++;
             index += sub.length();
         }
-        
+
         return count;
     }
 

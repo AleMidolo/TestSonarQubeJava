@@ -1,4 +1,4 @@
-public class ArrayUtil {
+public class ArrayUtils {
 
     public static final Character[] EMPTY_ARRAY = new Character[0];
 

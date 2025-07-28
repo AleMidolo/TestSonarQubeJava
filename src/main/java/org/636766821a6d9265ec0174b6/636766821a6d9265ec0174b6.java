@@ -18,13 +18,20 @@ public class GenericTypeResolver {
         if (rawType instanceof Class<?>) {
             Class<?> rawClass = (Class<?>) rawType;
             if (targetType.isAssignableFrom(rawClass)) {
-                Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
-                for (int i = 0; i < actualTypeArguments.length; i++) {
-                    resolvedArguments[i] = (Class<?>) actualTypeArguments[i];
-                }
-                return resolvedArguments;
+                return resolveTypeArguments(actualTypeArguments, rawClass, targetType);
             }
         }
         return null;
+    }
+
+    private static Class<?>[] resolveTypeArguments(Type[] actualTypeArguments, Class<?> rawClass, Class<?> targetType) {
+        Class<?>[] typeParameters = targetType.getTypeParameters();
+        Class<?>[] resolvedClasses = new Class<?>[typeParameters.length];
+
+        for (int i = 0; i < typeParameters.length; i++) {
+            Type actualType = actualTypeArguments[i];
+            resolvedClasses[i] = (actualType instanceof Class<?>) ? (Class<?>) actualType : null;
+        }
+        return resolvedClasses;
     }
 }

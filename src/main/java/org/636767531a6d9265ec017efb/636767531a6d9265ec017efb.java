@@ -26,16 +26,19 @@ class Bucket {
         // Create a new bucket to insert
         Bucket newBucket = new Bucket();
         
-        // Set the new bucket's next to the current bucket
+        // Set the next of the new bucket to the current bucket
         newBucket.setNext(bucket);
         
-        // Find the previous bucket to insert before the given bucket
-        Bucket current = this;
-        while (current.getNext() != null && current.getNext() != bucket) {
+        // Find the previous bucket to insert the new bucket before the given bucket
+        // Assuming we have a reference to the head of the list
+        Bucket current = this; // 'this' refers to the current bucket
+        
+        while (current != null) {
+            if (current.getNext() == bucket) {
+                current.setNext(newBucket);
+                break;
+            }
             current = current.getNext();
         }
-        
-        // Insert the new bucket before the given bucket
-        current.setNext(newBucket);
     }
 }

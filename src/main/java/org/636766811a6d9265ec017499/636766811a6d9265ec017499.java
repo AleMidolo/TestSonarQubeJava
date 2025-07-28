@@ -11,14 +11,14 @@ public class InterceptorChecker {
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
-                return false; // Found an instance of the class
+                return false; // 已经存在该类的实例
             }
         }
-        return true; // No instance found
+        return true; // 不存在该类的实例
     }
     
-    // Assuming AtmosphereInterceptor is defined somewhere
+    // 假设 AtmosphereInterceptor 是一个接口或抽象类
     public interface AtmosphereInterceptor {
-        // Interface methods
+        // 方法定义
     }
 }

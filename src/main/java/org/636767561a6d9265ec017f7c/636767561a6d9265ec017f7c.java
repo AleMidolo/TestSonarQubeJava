@@ -55,8 +55,11 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public int getLength() {
-                return tour.size();
+            public String toString() {
+                return "GraphPath{" +
+                        "vertices=" + vertexList +
+                        ", edges=" + tour +
+                        '}';
             }
         };
     }

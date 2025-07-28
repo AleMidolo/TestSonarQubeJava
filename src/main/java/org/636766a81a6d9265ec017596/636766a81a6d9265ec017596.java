@@ -33,10 +33,4 @@ public class ByteVector {
     public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }
-
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.putInt(123456);
-        System.out.println(Arrays.toString(byteVector.toByteArray()));
-    }
 }

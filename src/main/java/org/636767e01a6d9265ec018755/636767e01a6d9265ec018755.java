@@ -2,22 +2,29 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 
-private Map<String, Object> buildContent(JsonObject jsonObject) {
-    Map<String, Object> contentMap = new HashMap<>();
-    
-    // Assuming the JsonObject has a method to get the content as a string
-    String content = jsonObject.get("content").getAsString();
-    
-    // Check if the content contains '@' symbol
-    if (content.contains("@")) {
-        // Extract the mentioned user(s)
-        String[] mentions = content.split("@");
-        for (int i = 1; i < mentions.length; i++) {
-            String mention = mentions[i].split(" ")[0]; // Get the username before the next space
-            contentMap.put("mention" + i, mention);
+public class ContentBuilder {
+
+    /** 
+     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
+     */
+    private Map<String, Object> buildContent(JsonObject jsonObject) {
+        Map<String, Object> contentMap = new HashMap<>();
+        
+        // Assuming the JsonObject has a field "content" that we need to check for '@'
+        String content = jsonObject.get("content").getAsString();
+        
+        if (content.contains("@")) {
+            // Extract the mentioned user(s) from the content
+            String[] parts = content.split(" ");
+            for (String part : parts) {
+                if (part.startsWith("@")) {
+                    String mentionedUser = part.substring(1); // Remove '@'
+                    contentMap.put("mentionedUser", mentionedUser);
+                }
+            }
         }
+        
+        contentMap.put("originalContent", content);
+        return contentMap;
     }
-    
-    contentMap.put("content", content);
-    return contentMap;
 }

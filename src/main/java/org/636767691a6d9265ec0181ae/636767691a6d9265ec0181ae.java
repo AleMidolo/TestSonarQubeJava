@@ -22,11 +22,11 @@ public class EnumToStringArray {
     }
 
     public static void main(String[] args) {
-        // Example usage
+        // 示例用法
         Vector<String> vector = new Vector<>();
-        vector.add("One");
-        vector.add("Two");
-        vector.add("Three");
+        vector.add("one");
+        vector.add("two");
+        vector.add("three");
         
         Enumeration<String> enumeration = vector.elements();
         String[] result = toStringArray(enumeration);

@@ -15,19 +15,11 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
         }
 
         for (K key : keys) {
-            int upperBound = findUpperBound(key, keys);
+            // Assuming the upper bound is the next integer greater than the key's hash code
+            int upperBound = key.hashCode() + 1;
             upperBounds.add(upperBound);
         }
-        return upperBounds;
-    }
 
-    private int findUpperBound(K key, List<K> keys) {
-        int upperBound = Integer.MAX_VALUE;
-        for (K k : keys) {
-            if (k.compareTo(key) > 0) {
-                upperBound = Math.min(upperBound, (Integer) k);
-            }
-        }
-        return upperBound == Integer.MAX_VALUE ? -1 : upperBound; // Return -1 if no upper bound found
+        return upperBounds;
     }
 }

@@ -6,20 +6,26 @@ public class ArrayComparer {
      * 如果内部数组的内容与提供的数组匹配，则返回真。
      */
     public boolean equals(final byte[] data, int offset, final int len) {
+        // Check for null or invalid parameters
         if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
         
-        byte[] internalArray = getInternalArray(); // Assume this method retrieves the internal array
-        if (internalArray.length < len) {
-            return false;
+        // Create an internal array for comparison (for demonstration purposes)
+        byte[] internalArray = new byte[len];
+        // Fill the internal array with some values (for demonstration purposes)
+        for (int i = 0; i < len; i++) {
+            internalArray[i] = (byte) i; // Example values
         }
         
-        return Arrays.equals(internalArray, 0, len, data, offset, offset + len);
+        // Compare the internal array with the provided data array
+        return Arrays.equals(internalArray, Arrays.copyOfRange(data, offset, offset + len));
     }
-    
-    private byte[] getInternalArray() {
-        // This method should return the internal byte array for comparison
-        return new byte[] {1, 2, 3, 4, 5}; // Example internal array
+
+    public static void main(String[] args) {
+        ArrayComparer comparer = new ArrayComparer();
+        byte[] data = {0, 1, 2, 3, 4, 5};
+        boolean result = comparer.equals(data, 0, 3);
+        System.out.println("Arrays are equal: " + result); // Should print true or false based on the internal array
     }
 }

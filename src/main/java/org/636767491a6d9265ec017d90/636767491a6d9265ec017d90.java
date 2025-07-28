@@ -1,5 +1,4 @@
 public class ArrayReverser {
-    
     /** 
      * 反转给定数组中指定范围内元素的顺序。
      * @param <V> 数组中元素的类型
@@ -9,7 +8,7 @@ public class ArrayReverser {
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
         if (arr == null || from < 0 || to >= arr.length || from >= to) {
-            throw new IllegalArgumentException("Invalid indices or array is null");
+            throw new IllegalArgumentException("Invalid indices or null array");
         }
         
         while (from < to) {

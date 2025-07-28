@@ -10,7 +10,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(length(null)); // 输出: 0
-        System.out.println(length("Hello")); // 输出: 5
+        System.out.println(length(null)); // 输出 0
+        System.out.println(length("Hello")); // 输出 5
     }
 }

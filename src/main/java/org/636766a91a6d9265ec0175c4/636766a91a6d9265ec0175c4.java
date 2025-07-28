@@ -16,53 +16,37 @@ public class DescriptorPopper {
         for (int i = 0; i < count; i++) {
             if (!frameStack.isEmpty()) {
                 frameStack.pop();
-            } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
             }
         }
     }
 
     private int getCountFromDescriptor(String descriptor) {
-        // This method should parse the descriptor and return the number of types to pop.
-        // For simplicity, let's assume:
-        // - "I" = 1 (int)
-        // - "D" = 2 (double)
-        // - "L" = 1 (object reference)
-        // - "V" = 0 (void)
-        // - Method descriptors will be handled separately.
-
+        // 这里可以根据描述符解析出需要弹出的数量
+        // 简单示例：假设 descriptor 是一个字符串，表示类型
+        // 例如 "I" 表示 int 类型，"D" 表示 double 类型等
+        // 这里的实现可以根据实际需求进行扩展
         switch (descriptor) {
-            case "I":
+            case "I": // int
                 return 1;
-            case "D":
+            case "D": // double
                 return 2;
-            case "L":
-                return 1;
-            case "V":
+            case "V": // void
                 return 0;
+            // 可以添加更多类型的处理
             default:
-                // Handle method descriptors (e.g., "(II)V" means pop 2 ints)
-                if (descriptor.startsWith("(") && descriptor.contains(")")) {
-                    String params = descriptor.substring(descriptor.indexOf('(') + 1, descriptor.indexOf(')'));
-                    return countParameters(params);
-                }
-                throw new IllegalArgumentException("Unknown descriptor: " + descriptor);
+                throw new IllegalArgumentException("Unsupported descriptor: " + descriptor);
         }
     }
 
-    private int countParameters(String params) {
-        int count = 0;
-        for (char c : params.toCharArray()) {
-            if (c == 'I' || c == 'L') {
-                count += 1;
-            } else if (c == 'D') {
-                count += 2;
-            }
-        }
-        return count;
+    public void push(Object item) {
+        frameStack.push(item);
     }
 
-    public void push(Object obj) {
-        frameStack.push(obj);
+    public static void main(String[] args) {
+        DescriptorPopper popper = new DescriptorPopper();
+        popper.push(1);
+        popper.push(2.0);
+        popper.pop("I"); // 弹出一个 int 类型
+        System.out.println("Pop operation completed.");
     }
 }

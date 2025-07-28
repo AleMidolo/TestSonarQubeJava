@@ -14,22 +14,25 @@ public class StringUnescaper {
         
         for (char c : input.toCharArray()) {
             if (escape) {
+                // If the previous character was a backslash, add the current character
                 output.append(c);
-                escape = false;
+                escape = false; // Reset escape flag
             } else if (c == '\\') {
+                // If we encounter a backslash, set the escape flag
                 escape = true;
             } else {
+                // Otherwise, just add the character to the output
                 output.append(c);
             }
         }
         
         return output.toString();
     }
-
+    
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "example\\ identifier";
+        String input = "example\\:identifier\\:with\\:escapes";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: example identifier
+        System.out.println(output); // Output: example:identifier:with:escapes
     }
 }

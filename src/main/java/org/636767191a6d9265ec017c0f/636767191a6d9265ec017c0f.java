@@ -12,18 +12,31 @@ public class ByteVector {
      * @param size 此字节向量应该能够接收的额外字节数。
      */
     private void enlarge(final int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Size must be non-negative");
-        }
-        
-        int requiredSize = currentSize + size;
-        if (requiredSize > data.length) {
-            int newCapacity = Math.max(data.length * 2, requiredSize);
+        int newSize = currentSize + size;
+        if (newSize > data.length) {
+            int newCapacity = Math.max(data.length * 2, newSize);
             byte[] newData = new byte[newCapacity];
             System.arraycopy(data, 0, newData, 0, currentSize);
             data = newData;
         }
     }
 
-    // Additional methods to manipulate the byte vector can be added here
+    // Additional methods for demonstration purposes
+    public void add(byte b) {
+        if (currentSize >= data.length) {
+            enlarge(1);
+        }
+        data[currentSize++] = b;
+    }
+
+    public int size() {
+        return currentSize;
+    }
+
+    public byte get(int index) {
+        if (index < 0 || index >= currentSize) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + currentSize);
+        }
+        return data[index];
+    }
 }

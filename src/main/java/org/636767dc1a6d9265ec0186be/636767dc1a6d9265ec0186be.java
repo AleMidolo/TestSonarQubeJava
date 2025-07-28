@@ -11,7 +11,6 @@ public class TimeBucketCompressor {
     static long compressTimeBucket(long timeBucket, int dayStep) {
         // 将时间桶转换为字符串以便处理
         String timeStr = String.valueOf(timeBucket);
-        // 获取年、月、日
         int year = Integer.parseInt(timeStr.substring(0, 4));
         int month = Integer.parseInt(timeStr.substring(4, 6));
         int day = Integer.parseInt(timeStr.substring(6, 8));
@@ -26,7 +25,6 @@ public class TimeBucketCompressor {
 
         // 设置新的日期
         calendar.set(java.util.Calendar.DAY_OF_YEAR, newDayOfYear);
-        // 获取新的年、月、日
         year = calendar.get(java.util.Calendar.YEAR);
         month = calendar.get(java.util.Calendar.MONTH) + 1; // 月份从0开始
         day = calendar.get(java.util.Calendar.DAY_OF_MONTH);

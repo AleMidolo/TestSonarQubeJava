@@ -3,39 +3,38 @@ import java.util.Set;
 public class Graph<V> {
     
     // Assuming there's a method to get the edges of the graph
-    // and each edge has a weight associated with it.
+    // and each edge has a method to get its weight and destination vertex.
     
-    private class Edge {
-        V target;
-        double weight;
+    private Set<Edge<V>> edges; // Set of edges in the graph
 
-        Edge(V target, double weight) {
-            this.target = target;
-            this.weight = weight;
-        }
-    }
-
-    private Set<Edge> getEdges(V vertex) {
-        // This method should return the edges for the given vertex
-        // Implementation depends on how the graph is stored
-        return null; // Placeholder
-    }
-
-    /**
-     * 计算进入一个顶点的权重总和
-     * @param v 顶点
-     * @return 进入一个顶点的权重总和
-     */
     public double vertexWeight(Set<V> v) {
         double totalWeight = 0.0;
 
-        for (V vertex : v) {
-            Set<Edge> edges = getEdges(vertex);
-            for (Edge edge : edges) {
-                totalWeight += edge.weight;
+        for (Edge<V> edge : edges) {
+            if (v.contains(edge.getDestination())) {
+                totalWeight += edge.getWeight();
             }
         }
 
         return totalWeight;
+    }
+
+    // Edge class representing an edge in the graph
+    private static class Edge<V> {
+        private V destination;
+        private double weight;
+
+        public Edge(V destination, double weight) {
+            this.destination = destination;
+            this.weight = weight;
+        }
+
+        public V getDestination() {
+            return destination;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
     }
 }

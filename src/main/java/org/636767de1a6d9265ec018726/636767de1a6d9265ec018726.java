@@ -10,7 +10,7 @@ public class SequenceRangeBuilder {
         List<SequenceRange> sequenceRanges = new ArrayList<>();
         
         // Example logic to populate sequenceRanges
-        // This should be replaced with actual logic to build the sequence ranges
+        // This should be replaced with actual logic to build the ranges
         sequenceRanges.add(new SequenceRange(1, 10));
         sequenceRanges.add(new SequenceRange(11, 20));
         sequenceRanges.add(new SequenceRange(21, 30));

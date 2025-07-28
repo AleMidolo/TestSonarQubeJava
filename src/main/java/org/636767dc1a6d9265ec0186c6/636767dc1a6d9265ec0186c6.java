@@ -42,7 +42,6 @@ class Field {
         this.name = name;
     }
 
-    // Override equals and hashCode for proper comparison in Sets
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

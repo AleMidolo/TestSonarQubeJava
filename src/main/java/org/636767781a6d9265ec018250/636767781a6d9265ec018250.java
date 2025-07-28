@@ -8,7 +8,7 @@ public class Filter {
      */
     public int decide(LoggingEvent event) {
         // Implement your logic here
-        // For demonstration, we will return NEUTRAL as a default case
+        // For demonstration, we will return NEUTRAL if no condition is met
         return NEUTRAL;
     }
 }

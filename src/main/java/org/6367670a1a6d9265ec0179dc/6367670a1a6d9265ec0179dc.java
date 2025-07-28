@@ -23,13 +23,13 @@ public class StackMapTable {
         
         for (int i = start; i < end; i++) {
             Object type = currentFrame.get(i);
-            // Assuming some transformation or processing is needed to convert type to verification_type_info format
-            stackMapTableEntries.add(convertToVerificationTypeInfo(type));
+            // Assuming some transformation or processing is needed for the abstract types
+            stackMapTableEntries.add(transformType(type));
         }
     }
 
-    private Object convertToVerificationTypeInfo(Object type) {
-        // Placeholder for actual conversion logic
-        return type; // This should be replaced with actual conversion logic
+    private Object transformType(Object type) {
+        // Placeholder for type transformation logic
+        return type; // In a real implementation, this would convert the type to the desired format
     }
 }

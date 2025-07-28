@@ -11,24 +11,25 @@ public class MessageSerializer {
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message to a byte array
-        int size = schema.getSerializedSize(message);
-        byte[] bytes = new byte[size];
-        schema.writeTo(message, bytes, 0, size);
-
-        // Write the size of the message
-        out.write(intToByteArray(size));
-        // Write the message itself
-        out.write(bytes);
+        byte[] messageBytes = schema.encode(message, buffer);
         
-        return size;
+        // Get the length of the message
+        int length = messageBytes.length;
+        
+        // Write the length of the message as a varint
+        writeVarint(out, length);
+        
+        // Write the message bytes to the output stream
+        out.write(messageBytes);
+        
+        return length;
     }
 
-    private static byte[] intToByteArray(int value) {
-        return new byte[] {
-            (byte) (value & 0xFF),
-            (byte) ((value >> 8) & 0xFF),
-            (byte) ((value >> 16) & 0xFF),
-            (byte) ((value >> 24) & 0xFF)
-        };
+    private static void writeVarint(OutputStream out, int value) throws IOException {
+        while ((value & ~0x7F) != 0) {
+            out.write((value & 0x7F) | 0x80);
+            value >>>= 7;
+        }
+        out.write(value);
     }
 }

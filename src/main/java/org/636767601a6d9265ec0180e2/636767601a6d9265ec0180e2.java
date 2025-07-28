@@ -28,12 +28,12 @@ public class GraphSeparator {
         return separators;
     }
 
-    // Clase de ejemplo para Edge
-    private class Edge {
+    // Clase de ejemplo para representar una arista
+    private static class Edge {
         int start;
         int end;
 
-        Edge(int start, int end) {
+        public Edge(int start, int end) {
             this.start = start;
             this.end = end;
         }

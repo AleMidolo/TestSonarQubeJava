@@ -18,7 +18,7 @@ public class ByteVector {
      */
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
         if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
+            throw new IllegalArgumentException("byteLength cannot be negative");
         }
         
         if (byteArrayValue != null) {
@@ -28,13 +28,13 @@ public class ByteVector {
         }
 
         ensureCapacity(size + byteLength);
-
+        
         if (byteArrayValue != null) {
             System.arraycopy(byteArrayValue, byteOffset, data, size, byteLength);
         } else {
             Arrays.fill(data, size, size + byteLength, (byte) 0);
         }
-
+        
         size += byteLength;
         return this;
     }
@@ -44,13 +44,5 @@ public class ByteVector {
             int newCapacity = Math.max(data.length * 2, requiredCapacity);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
     }
 }

@@ -1,23 +1,23 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Mappings {
-    private Map<String, String> fields;
-
-    public Mappings() {
-        this.fields = new HashMap<>();
-    }
-
-    public void addField(String fieldName, String fieldType) {
-        fields.put(fieldName, fieldType);
-    }
-
-    public Map<String, String> getFields() {
-        return fields;
-    }
-}
-
 public class MappingDiff {
+
+    public static class Mappings {
+        private Map<String, Object> fields;
+
+        public Mappings() {
+            this.fields = new HashMap<>();
+        }
+
+        public void addField(String fieldName, Object fieldValue) {
+            fields.put(fieldName, fieldValue);
+        }
+
+        public Map<String, Object> getFields() {
+            return fields;
+        }
+    }
 
     /**
      * Devuelve los mapeos con campos que no existen en los mapeos de entrada. 
@@ -30,10 +30,9 @@ public class MappingDiff {
         
         Mappings diffMappings = new Mappings();
         
-        for (Map.Entry<String, String> entry : currentMappings.getFields().entrySet()) {
-            String fieldName = entry.getKey();
-            if (!mappings.getFields().containsKey(fieldName)) {
-                diffMappings.addField(fieldName, entry.getValue());
+        for (String field : mappings.getFields().keySet()) {
+            if (!currentMappings.getFields().containsKey(field)) {
+                diffMappings.addField(field, mappings.getFields().get(field));
             }
         }
         
@@ -41,12 +40,22 @@ public class MappingDiff {
     }
 
     private Mappings getCurrentMappings(String tableName) {
-        // Simulación de la obtención de mapeos actuales
+        // Simulación de la obtención de mapeos actuales del índice
         Mappings currentMappings = new Mappings();
-        currentMappings.addField("id", "integer");
-        currentMappings.addField("name", "string");
-        currentMappings.addField("email", "string");
-        // Suponiendo que "email" es un campo que no debería estar en los mapeos de entrada
+        // Aquí se agregarían los campos existentes en el índice actual
+        // Ejemplo:
+        currentMappings.addField("existingField1", "value1");
+        currentMappings.addField("existingField2", "value2");
         return currentMappings;
+    }
+
+    public static void main(String[] args) {
+        MappingDiff mappingDiff = new MappingDiff();
+        Mappings inputMappings = new Mappings();
+        inputMappings.addField("newField1", "value1");
+        inputMappings.addField("existingField1", "value2");
+
+        Mappings result = mappingDiff.diffStructure("exampleTable", inputMappings);
+        System.out.println("Diff Mappings: " + result.getFields());
     }
 }

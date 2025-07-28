@@ -12,20 +12,22 @@ public class UtfReader {
      * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
      */
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
-        int length = (classFileBuffer[offset + 1] << 8) | (classFileBuffer[offset + 2] & 0xFF);
-        
+        int offset = getConstantPoolOffset(constantPoolEntryIndex);
+        int length = (classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF);
+        offset += 2;
+
         for (int i = 0; i < length; i++) {
-            charBuffer[i] = (char) ((classFileBuffer[offset + 3 + i * 2] << 8) | (classFileBuffer[offset + 4 + i * 2] & 0xFF));
+            charBuffer[i] = (char) ((classFileBuffer[offset] << 8) + (classFileBuffer[offset + 1] & 0xFF));
+            offset += 2;
         }
-        
+
         return new String(charBuffer, 0, length);
     }
 
-    private int getConstantPoolEntryOffset(int index) {
+    private int getConstantPoolOffset(int index) {
         // This method should return the offset of the constant pool entry based on the index.
         // The implementation of this method depends on the structure of the class file.
-        // For simplicity, let's assume it returns a fixed offset for demonstration purposes.
-        return 0; // Replace with actual logic to find the offset.
+        // For demonstration purposes, we will return a placeholder value.
+        return index * 2; // Placeholder implementation
     }
 }

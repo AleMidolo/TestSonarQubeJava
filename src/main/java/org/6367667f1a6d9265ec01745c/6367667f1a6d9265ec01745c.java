@@ -1,6 +1,5 @@
 import java.io.File;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.Vector;
 
 public class ClassPathAdder {
@@ -17,7 +16,7 @@ public class ClassPathAdder {
                 for (File file : files) {
                     try {
                         cpV.add(file.toURI().toURL());
-                    } catch (MalformedURLException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -29,8 +28,8 @@ public class ClassPathAdder {
 
     public static void main(String[] args) {
         Vector<URL> classpath = new Vector<>();
-        addToClassPath(classpath, "ruta/al/directorio/de/jars");
-        // Imprimir el classpath para verificar
+        addToClassPath(classpath, "ruta/al/directorio");
+        // Imprimir los URLs añadidos al classpath
         classpath.forEach(System.out::println);
     }
 }

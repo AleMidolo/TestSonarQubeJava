@@ -7,7 +7,7 @@ public class CustomOutputStream extends OutputStream {
         if (b == null) {
             throw new NullPointerException("Byte array cannot be null");
         }
-        // Implement the logic to write the byte array to the output stream
+        // Implementation of writing the byte array to the output stream
         for (byte value : b) {
             write(value); // Call the single byte write method
         }
@@ -15,8 +15,8 @@ public class CustomOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // Implement the logic to write a single byte
-        // This is just a placeholder implementation
+        // Implementation for writing a single byte
+        // This is just a placeholder; actual implementation would depend on the specific output stream behavior
         System.out.write(b);
     }
 }

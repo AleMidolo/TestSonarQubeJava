@@ -16,6 +16,6 @@ public class Request {
 
     public static void main(String[] args) {
         Request request = new Request(1024);
-        System.out.println("La longitud del contenido de la solicitud es: " + request.contentLength());
+        System.out.println("Content Length: " + request.contentLength());
     }
 }

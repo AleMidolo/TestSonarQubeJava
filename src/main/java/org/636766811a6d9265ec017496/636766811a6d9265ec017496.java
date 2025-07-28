@@ -10,11 +10,10 @@ public class FileIterator {
     public FileIterator(File directory) {
         if (directory.isDirectory()) {
             this.files = directory.listFiles();
-            this.currentIndex = 0;
         } else {
             this.files = new File[0];
-            this.currentIndex = 0;
         }
+        this.currentIndex = 0;
     }
 
     /** 

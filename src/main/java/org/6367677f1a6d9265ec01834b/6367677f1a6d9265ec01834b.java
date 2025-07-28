@@ -16,19 +16,10 @@ public class LoggingBuffer {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // Si el búfer está lleno, el evento es descartado silenciosamente.
+        // Si el búfer está lleno, el evento es descartado silenciosamente
     }
+}
 
-    // Clase interna para representar un evento de registro
-    public static class LoggingEvent {
-        private String message;
-
-        public LoggingEvent(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
+class LoggingEvent {
+    // Implementación de LoggingEvent
 }

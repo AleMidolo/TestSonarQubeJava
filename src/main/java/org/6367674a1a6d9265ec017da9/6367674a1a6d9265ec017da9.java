@@ -15,36 +15,48 @@ class DoublyLinkedList<E> {
     private ListNode<E> tail;
 
     public void addListNode(ListNode<E> node) {
-        if (node == null) return;
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         if (head == null) {
             head = node;
             tail = node;
+            node.next = null;
+            node.prev = null;
         } else {
             tail.next = node;
             node.prev = tail;
             tail = node;
+            tail.next = null;
         }
     }
 
     public void removeListNode(ListNode<E> node) {
-        if (node == null) return;
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
+        if (node == null || head == null) {
+            throw new NoSuchElementException("Node or list is empty");
         }
-        if (node.next != null) {
-            node.next.prev = node.prev;
+        if (node == head) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null;
+            }
+        } else if (node == tail) {
+            tail = tail.prev;
+            tail.next = null;
         } else {
-            tail = node.prev;
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
         node.next = null;
         node.prev = null;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.head == null) return;
-
+        if (list == null || list.head == null) {
+            return;
+        }
         ListNode<E> current = list.head;
         while (current != null) {
             ListNode<E> nextNode = current.next;

@@ -40,21 +40,21 @@ public class PathDecoder {
             return segment;
         }
     }
-}
 
-class PathSegmentImpl {
-    private String segment;
+    public static class PathSegmentImpl {
+        private String segment;
 
-    public PathSegmentImpl(String segment) {
-        this.segment = segment;
-    }
+        public PathSegmentImpl(String segment) {
+            this.segment = segment;
+        }
 
-    public String getSegment() {
-        return segment;
-    }
+        public String getSegment() {
+            return segment;
+        }
 
-    @Override
-    public String toString() {
-        return segment;
+        @Override
+        public String toString() {
+            return segment;
+        }
     }
 }

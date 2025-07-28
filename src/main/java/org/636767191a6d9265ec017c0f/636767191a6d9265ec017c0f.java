@@ -1,11 +1,9 @@
-import java.util.Arrays;
-
-public class ByteVector {
-    private byte[] data;
+public class ByteVectorEnlarger {
+    private byte[] byteArray;
     private int currentSize;
 
-    public ByteVector(int initialSize) {
-        this.data = new byte[initialSize];
+    public ByteVectorEnlarger(int initialSize) {
+        this.byteArray = new byte[initialSize];
         this.currentSize = initialSize;
     }
 
@@ -18,7 +16,19 @@ public class ByteVector {
             throw new IllegalArgumentException("Size must be greater than zero.");
         }
         int newSize = currentSize + size;
-        data = Arrays.copyOf(data, newSize);
+        byte[] newByteArray = new byte[newSize];
+        System.arraycopy(byteArray, 0, newByteArray, 0, currentSize);
+        byteArray = newByteArray;
         currentSize = newSize;
+    }
+
+    public byte[] getByteArray() {
+        return byteArray;
+    }
+
+    public static void main(String[] args) {
+        ByteVectorEnlarger vector = new ByteVectorEnlarger(5);
+        vector.enlarge(10);
+        System.out.println("New size of byte array: " + vector.getByteArray().length);
     }
 }

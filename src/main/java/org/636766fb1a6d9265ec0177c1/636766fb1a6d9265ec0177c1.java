@@ -13,7 +13,7 @@ public class CharUtils {
      * @return 如果在 65 到 90 之间（包括 65 和 90），则返回真
      */
     public static boolean isAsciiAlphaUpper(final char ch) {
-        return ch >= 65 && ch <= 90;
+        return ch >= 'A' && ch <= 'Z';
     }
 
     public static void main(String[] args) {
@@ -22,6 +22,6 @@ public class CharUtils {
         System.out.println(isAsciiAlphaUpper('3')); // false
         System.out.println(isAsciiAlphaUpper('-')); // false
         System.out.println(isAsciiAlphaUpper('\n')); // false
-        System.out.println(isAsciiAlphaUpper('&copy;')); // false
+        System.out.println(isAsciiAlphaUpper('&')); // false
     }
 }

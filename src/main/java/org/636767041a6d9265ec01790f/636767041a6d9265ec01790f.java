@@ -9,21 +9,18 @@ public class ArrayConverter {
         if (array == null) {
             return null;
         }
-        
-        Integer[] objectArray = new Integer[array.length];
+        Integer[] result = new Integer[array.length];
         for (int i = 0; i < array.length; i++) {
-            objectArray[i] = Integer.valueOf(array[i]);
+            result[i] = Integer.valueOf(array[i]);
         }
-        return objectArray;
+        return result;
     }
 
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        
-        // Print the result
         for (Integer num : objectArray) {
-            System.out.print(num + " ");
+            System.out.println(num);
         }
     }
 }

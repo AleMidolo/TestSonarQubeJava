@@ -3,39 +3,39 @@ import java.util.Set;
 public class Graph<V> {
     
     // Assuming there's a method to get the edges of the graph
-    // and each edge has a method to get its weight and destination vertex.
+    // and each edge has a weight associated with it.
     
-    public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
-        
-        for (V vertex : v) {
-            // Assuming getIncomingEdges is a method that returns the incoming edges for the vertex
-            for (Edge<V> edge : getIncomingEdges(vertex)) {
-                totalWeight += edge.getWeight();
-            }
-        }
-        
-        return totalWeight;
-    }
-    
-    // Placeholder for Edge class
-    private class Edge<V> {
-        private V destination;
-        private double weight;
+    private class Edge {
+        V target;
+        double weight;
 
-        public Edge(V destination, double weight) {
-            this.destination = destination;
+        Edge(V target, double weight) {
+            this.target = target;
             this.weight = weight;
         }
-
-        public double getWeight() {
-            return weight;
-        }
     }
 
-    // Placeholder for method to get incoming edges
-    private Set<Edge<V>> getIncomingEdges(V vertex) {
-        // Implementation to retrieve incoming edges for the vertex
-        return Set.of(); // Return an empty set for placeholder
+    private Set<Edge> getEdges(V vertex) {
+        // This method should return the edges for the given vertex
+        // Implementation depends on how the graph is stored
+        return null; // Placeholder
+    }
+
+    /**
+     * 计算进入一个顶点的权重总和
+     * @param v 顶点
+     * @return 进入一个顶点的权重总和
+     */
+    public double vertexWeight(Set<V> v) {
+        double totalWeight = 0.0;
+
+        for (V vertex : v) {
+            Set<Edge> edges = getEdges(vertex);
+            for (Edge edge : edges) {
+                totalWeight += edge.weight;
+            }
+        }
+
+        return totalWeight;
     }
 }

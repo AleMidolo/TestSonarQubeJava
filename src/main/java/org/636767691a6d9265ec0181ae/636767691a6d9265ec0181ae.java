@@ -22,15 +22,15 @@ public class EnumToStringArray {
     }
 
     public static void main(String[] args) {
-        // 示例用法
+        // Example usage
         Vector<String> vector = new Vector<>();
-        vector.add("Apple");
-        vector.add("Banana");
-        vector.add("Cherry");
-
+        vector.add("One");
+        vector.add("Two");
+        vector.add("Three");
+        
         Enumeration<String> enumeration = vector.elements();
         String[] result = toStringArray(enumeration);
-
+        
         for (String str : result) {
             System.out.println(str);
         }

@@ -1,10 +1,10 @@
 import java.nio.ByteBuffer;
 
 public class ClassReader {
-    private byte[] data;
+    private byte[] classData;
 
-    public ClassReader(byte[] data) {
-        this.data = data;
+    public ClassReader(byte[] classData) {
+        this.classData = classData;
     }
 
     /**
@@ -13,9 +13,9 @@ public class ClassReader {
      * @return 读取的值。
      */
     public long readLong(final int offset) {
-        if (offset < 0 || offset + 8 > data.length) {
+        if (offset < 0 || offset + 8 > classData.length) {
             throw new IndexOutOfBoundsException("Offset is out of bounds");
         }
-        return ByteBuffer.wrap(data, offset, 8).getLong();
+        return ByteBuffer.wrap(classData, offset, 8).getLong();
     }
 }

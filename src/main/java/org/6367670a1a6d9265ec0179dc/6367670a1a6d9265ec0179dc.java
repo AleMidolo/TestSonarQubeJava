@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StackMapTable {
+
     private List<Object> currentFrame; // Assuming currentFrame holds some abstract types
     private List<Object> stackMapTableEntries;
 
@@ -22,7 +23,7 @@ public class StackMapTable {
         
         for (int i = start; i < end; i++) {
             Object type = currentFrame.get(i);
-            // Assuming some conversion to verification_type_info format
+            // Assuming some transformation or processing is needed to convert type to verification_type_info format
             stackMapTableEntries.add(convertToVerificationTypeInfo(type));
         }
     }

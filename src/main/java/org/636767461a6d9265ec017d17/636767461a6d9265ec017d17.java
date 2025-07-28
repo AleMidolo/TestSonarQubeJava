@@ -6,10 +6,6 @@ public class StringDecompressor {
      * @return l'output decompresso
      */
     private String unescapeId(String input) {
-        if (input == null) {
-            return null;
-        }
-        
         StringBuilder output = new StringBuilder();
         boolean escape = false;
 

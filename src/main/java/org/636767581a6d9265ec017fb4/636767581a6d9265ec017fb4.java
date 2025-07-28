@@ -20,7 +20,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
             // This is a placeholder logic; actual logic may vary based on requirements
             upperBounds.add(key.hashCode()); // Using hashCode as a simple upper bound
         }
-
+        
         return upperBounds;
     }
 }

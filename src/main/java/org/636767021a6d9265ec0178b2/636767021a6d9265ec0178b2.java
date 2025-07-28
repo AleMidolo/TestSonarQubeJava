@@ -16,19 +16,19 @@ public class StackManipulator {
             return;
         }
 
-        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method taking an int and returning void)
+        // Assuming descriptor is in the format of method descriptor (e.g., "(I)V" for a method that takes an int and returns void)
         if (descriptor.startsWith("(") && descriptor.contains(")")) {
             int start = descriptor.indexOf('(') + 1;
             int end = descriptor.indexOf(')');
-            String args = descriptor.substring(start, end);
-            for (int i = 0; i < args.length(); i++) {
-                if (!stack.isEmpty()) {
-                    stack.pop(); // Remove the argument type from the stack
+            String argumentTypes = descriptor.substring(start, end);
+            for (String type : argumentTypes.split("")) {
+                if (!type.isEmpty() && !stack.isEmpty() && stack.peek().equals(type)) {
+                    stack.pop();
                 }
             }
         } else {
-            // If it's a single type, just pop it from the stack
-            if (!stack.isEmpty()) {
+            // If it's a single type descriptor, just pop it if it matches the top of the stack
+            if (!stack.isEmpty() && stack.peek().equals(descriptor)) {
                 stack.pop();
             }
         }
@@ -44,12 +44,13 @@ public class StackManipulator {
 
     public static void main(String[] args) {
         StackManipulator sm = new StackManipulator();
-        sm.push("Integer");
-        sm.push("String");
-        sm.push("Double");
+        sm.push("I");
+        sm.push("J");
+        sm.push("I");
+        sm.push("V");
 
         System.out.println("Stack before pop: " + sm.getStack());
-        sm.pop("(I)V"); // Example descriptor for a method taking an int and returning void
+        sm.pop("(I)V");
         System.out.println("Stack after pop: " + sm.getStack());
     }
 }

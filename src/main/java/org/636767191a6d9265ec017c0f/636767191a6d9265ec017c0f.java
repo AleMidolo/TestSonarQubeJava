@@ -4,7 +4,7 @@ public class ByteArrayEnlarger {
     private byte[] byteArray;
 
     public ByteArrayEnlarger(int initialSize) {
-        byteArray = new byte[initialSize];
+        this.byteArray = new byte[initialSize];
     }
 
     /**

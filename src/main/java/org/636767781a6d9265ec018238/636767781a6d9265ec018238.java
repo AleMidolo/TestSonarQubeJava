@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logger {
+public class AppenderManager {
     private List<Appender> appenders;
 
-    public Logger() {
+    public AppenderManager() {
         this.appenders = new ArrayList<>();
     }
 
@@ -17,7 +17,9 @@ public class Logger {
     }
 
     public void attachAppender(Appender appender) {
-        appenders.add(appender);
+        if (!appenders.contains(appender)) {
+            appenders.add(appender);
+        }
     }
 
     public void detachAppender(Appender appender) {

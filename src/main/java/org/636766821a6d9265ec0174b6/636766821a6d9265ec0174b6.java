@@ -13,23 +13,16 @@ public class GenericTypeResolver {
         }
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
-        Type rawType = parameterizedType.getRawType();
-
-        if (!targetType.isAssignableFrom((Class<?>) rawType)) {
-            return null;
-        }
-
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        Class<?>[] resolvedArguments = new Class[actualTypeArguments.length];
+        Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type arg = actualTypeArguments[i];
-            if (arg instanceof Class) {
-                resolvedArguments[i] = (Class<?>) arg;
-            } else if (arg instanceof ParameterizedType) {
-                resolvedArguments[i] = (Class<?>) ((ParameterizedType) arg).getRawType();
+            Type argType = actualTypeArguments[i];
+            if (argType instanceof Class) {
+                resolvedArguments[i] = (Class<?>) argType;
             } else {
-                return null; // Cannot resolve the type
+                // Handle other types like Wildcards or TypeVariables if necessary
+                return null;
             }
         }
 
@@ -39,12 +32,12 @@ public class GenericTypeResolver {
     public static void main(String[] args) {
         // Example usage
         Type genericType = new ParameterizedTypeImpl(List.class, new Type[]{String.class});
-        Class<?>[] resolved = resolveArguments(genericType, List.class);
-        System.out.println(Arrays.toString(resolved)); // Should print [class java.lang.String]
+        Class<?>[] arguments = resolveArguments(genericType, List.class);
+        System.out.println(Arrays.toString(arguments)); // Should print: [class java.lang.String]
     }
 }
 
-// Helper class to create a ParameterizedType for testing
+// A simple implementation of ParameterizedType for demonstration purposes
 class ParameterizedTypeImpl implements ParameterizedType {
     private final Class<?> raw;
     private final Type[] actualTypeArguments;

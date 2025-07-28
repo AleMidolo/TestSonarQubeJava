@@ -10,7 +10,7 @@ public class FieldChecker {
             return false;
         }
         
-        // Assuming Fields class has a method to get all field values
+        // Assuming Fields has a method to get all field values
         return storedFields.equals(fields);
     }
 
@@ -18,15 +18,14 @@ public class FieldChecker {
     public void setStoredFields(Fields fields) {
         this.storedFields = fields;
     }
-
-    // Fields class for demonstration purposes
+    
+    // Assuming a Fields class exists
     public static class Fields {
-        // Implement fields and methods as necessary
-        // For example, you might have a Map or List to hold field values
-
+        // Fields implementation goes here
+        // Override equals method for comparison
         @Override
         public boolean equals(Object obj) {
-            // Implement equality check based on your fields
+            // Implement equality check based on field values
             return super.equals(obj);
         }
     }

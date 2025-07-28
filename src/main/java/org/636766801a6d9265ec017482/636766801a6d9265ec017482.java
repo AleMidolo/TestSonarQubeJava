@@ -13,7 +13,7 @@ public class ClassFileBuffer {
         if (in == null) {
             throw new IllegalArgumentException("InputStream cannot be null");
         }
-
+        
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] tempBuffer = new byte[1024];
         int bytesRead;

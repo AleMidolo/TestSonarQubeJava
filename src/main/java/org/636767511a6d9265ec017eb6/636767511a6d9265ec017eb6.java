@@ -20,12 +20,14 @@ class OuterFaceCirculator {
     }
 
     public boolean hasNext() {
-        // Logic to determine if there is a next node
+        // Logic to determine if there are more nodes to traverse
         return true; // Placeholder
     }
 }
 
 public class Graph {
+    // Assume Graph class has necessary properties and methods
+
     /**
      * Trova e restituisce un 'circulator' al nodo sul confine del componente, che soddisfa il {@code predicate} oppure restituisce un 'circulator' al nodo {@code stop}.
      * @param predicate la condizione che il nodo desiderato deve soddisfare
@@ -42,8 +44,8 @@ public class Graph {
                 return circulator;
             }
             circulator.advance();
-        } while (circulator.hasNext() && !circulator.getCurrentNode().equals(stop));
+        } while (circulator.hasNext() && circulator.getCurrentNode() != stop);
         
-        return circulator; // Return circulator at stop if predicate not satisfied
+        return circulator; // Return circulator at stop if no node satisfies the predicate
     }
 }

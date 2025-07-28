@@ -25,13 +25,19 @@ public class MappingDiff {
      * Non restituire la configurazione _source per evitare conflitti di aggiornamento dell'indice corrente.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Simulazione delle mappature storiche
-        Mappings historicalMappings = getHistoricalMappings(tableName);
+        // Simulazione di mappature storiche per l'esempio
+        Mappings historicalMappings = new Mappings();
+        historicalMappings.addField("id", "integer");
+        historicalMappings.addField("name", "string");
+        historicalMappings.addField("email", "string");
         
+        // Creazione di un nuovo oggetto Mappings per le differenze
         Mappings diffMappings = new Mappings();
         
+        // Controllo dei campi nelle mappature di input
         for (String field : historicalMappings.getFields().keySet()) {
             if (!mappings.getFields().containsKey(field)) {
+                // Aggiungi il campo mancante alle differenze
                 diffMappings.addField(field, historicalMappings.getFields().get(field));
             }
         }
@@ -39,26 +45,15 @@ public class MappingDiff {
         return diffMappings;
     }
 
-    private Mappings getHistoricalMappings(String tableName) {
-        // Simulazione di recupero delle mappature storiche
-        Mappings historicalMappings = new Mappings();
-        historicalMappings.addField("id", "integer");
-        historicalMappings.addField("name", "string");
-        historicalMappings.addField("email", "string");
-        historicalMappings.addField("created_at", "date");
-        return historicalMappings;
-    }
-
     public static void main(String[] args) {
         MappingDiff mappingDiff = new MappingDiff();
         Mappings currentMappings = new Mappings();
         currentMappings.addField("id", "integer");
-        currentMappings.addField("name", "string");
-
-        Mappings diff = mappingDiff.diffStructure("users", currentMappings);
-        System.out.println("Differenze nelle mappature:");
-        for (Map.Entry<String, String> entry : diff.getFields().entrySet()) {
-            System.out.println("Campo: " + entry.getKey() + ", Tipo: " + entry.getValue());
+        
+        Mappings result = mappingDiff.diffStructure("exampleTable", currentMappings);
+        System.out.println("Missing fields:");
+        for (String field : result.getFields().keySet()) {
+            System.out.println(field + ": " + result.getFields().get(field));
         }
     }
 }

@@ -17,8 +17,9 @@ public class Utility {
         // Test cases
         System.out.println(isAllZeros(null)); // true
         System.out.println(isAllZeros("0000")); // true
-        System.out.println(isAllZeros("  ")); // true
-        System.out.println(isAllZeros("1230")); // false
-        System.out.println(isAllZeros("0 0 0")); // false
+        System.out.println(isAllZeros("0")); // true
+        System.out.println(isAllZeros("")); // true
+        System.out.println(isAllZeros("123")); // false
+        System.out.println(isAllZeros("001")); // false
     }
 }

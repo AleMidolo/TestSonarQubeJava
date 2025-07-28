@@ -1,6 +1,7 @@
 import java.util.Collection;
 
 public class CollectionUtils {
+
     /** 
      * Controlla se la Collection fornita contiene l'istanza dell'elemento dato. <p>Imporre che l'istanza fornita sia presente, piuttosto che restituire <code>true</code> per un elemento uguale.
      * @param collection la Collection da controllare

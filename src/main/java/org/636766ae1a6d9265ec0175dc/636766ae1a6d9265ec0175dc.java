@@ -1,24 +1,21 @@
 public class HttpResponseChecker {
 
-    private int responseCode;
+    private int statusCode;
 
-    public HttpResponseChecker(int responseCode) {
-        this.responseCode = responseCode;
+    public HttpResponseChecker(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     /** 
-     * Check if the actual response is a Partial Content (HTTP 206 code)
-     * @return is partial content or not
+     * 检查实际响应是否为部分内容（HTTP 206 代码）
+     * @return 是否为部分内容
      */
     public Boolean isPartialContentResponse() {
-        return responseCode == 206;
+        return statusCode == 206;
     }
 
     public static void main(String[] args) {
-        HttpResponseChecker checker = new HttpResponseChecker(206);
-        System.out.println("Is Partial Content Response: " + checker.isPartialContentResponse());
-        
-        HttpResponseChecker checker2 = new HttpResponseChecker(200);
-        System.out.println("Is Partial Content Response: " + checker2.isPartialContentResponse());
+        HttpResponseChecker responseChecker = new HttpResponseChecker(206);
+        System.out.println("Is partial content response: " + responseChecker.isPartialContentResponse());
     }
 }

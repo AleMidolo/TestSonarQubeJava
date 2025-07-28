@@ -10,17 +10,26 @@ public class LoggingBuffer {
     }
 
     /** 
-     * Place a  {@link LoggingEvent} in the buffer. If the buffer is full then the event is <b>silently dropped</b>. 
-     * It is the caller's responsibility to make sure that the buffer has free space.  
+     * 将一个 {@link LoggingEvent} 放入缓冲区。如果缓冲区已满，则该事件会被<b>静默丢弃</b>。 
+     * 调用者有责任确保缓冲区有空闲空间。  
      */
     public void put(LoggingEvent o) {
         if (buffer.size() < capacity) {
             buffer.add(o);
         }
-        // If the buffer is full, the event is silently dropped
+        // 如果缓冲区已满，事件将被静默丢弃
     }
-}
 
-class LoggingEvent {
-    // Assume this class has some properties and methods relevant to logging events
+    // 假设 LoggingEvent 是一个简单的类
+    public static class LoggingEvent {
+        private String message;
+
+        public LoggingEvent(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 }

@@ -1,22 +1,31 @@
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class StringReader {
-    private DataInputStream dataInputStream;
 
-    public StringReader(InputStream inputStream) {
-        this.dataInputStream = new DataInputStream(inputStream);
+    private BufferedReader reader;
+
+    public StringReader() {
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     /** 
-     * Read a  {@code string} field value from the stream.
+     * 从流中读取 {@code string} 字段值。
      */
     @Override 
     public String readString() throws IOException {
-        int length = dataInputStream.readInt();
-        byte[] bytes = new byte[length];
-        dataInputStream.readFully(bytes);
-        return new String(bytes, "UTF-8");
+        return reader.readLine();
+    }
+
+    public static void main(String[] args) {
+        StringReader stringReader = new StringReader();
+        try {
+            System.out.println("请输入字符串:");
+            String input = stringReader.readString();
+            System.out.println("您输入的字符串是: " + input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

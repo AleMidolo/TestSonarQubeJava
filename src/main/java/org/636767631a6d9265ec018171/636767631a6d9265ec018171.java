@@ -1,39 +1,46 @@
 class ListNodeImpl<E> {
     E value;
     ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
 
     ListNodeImpl(E value) {
         this.value = value;
+        this.next = null;
     }
 }
 
 public class LinkedList<E> {
     private ListNodeImpl<E> head;
-    private ListNodeImpl<E> tail;
 
-    /** 
-     * Remove the non null  {@code node} from the list. 
+    public LinkedList() {
+        this.head = null;
+    }
+
+    /**
+     * 从列表中移除非空的 {@code node}。
      */
     private boolean unlink(ListNodeImpl<E> node) {
-        if (node == null) {
+        if (node == null || head == null) {
             return false;
         }
 
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next; // Node is head
+        // If the node to unlink is the head
+        if (node == head) {
+            head = head.next;
+            return true;
         }
 
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev; // Node is tail
+        // Find the previous node
+        ListNodeImpl<E> current = head;
+        while (current != null && current.next != node) {
+            current = current.next;
         }
 
-        node.next = null;
-        node.prev = null;
-        return true;
+        // If the node was found
+        if (current != null) {
+            current.next = node.next;
+            return true;
+        }
+
+        return false; // Node not found
     }
 }

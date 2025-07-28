@@ -1,28 +1,29 @@
 import java.io.InputStream;
-import java.io.IOException;
 import java.util.Stack;
 
-private void addReverse(final InputStream[] files) {
-    Stack<InputStream> stack = new Stack<>();
+public class FileAdder {
     
-    // Push all InputStreams onto the stack
-    for (InputStream file : files) {
-        stack.push(file);
-    }
-    
-    // Pop from the stack to process in reverse order
-    while (!stack.isEmpty()) {
-        InputStream file = stack.pop();
-        try {
-            // Process the file (this is a placeholder for actual file processing logic)
+    /** 
+     * 以逆序添加指定的文件。
+     */
+    private void addReverse(final InputStream[] files) {
+        Stack<InputStream> stack = new Stack<>();
+        
+        // 将所有文件压入栈中
+        for (InputStream file : files) {
+            stack.push(file);
+        }
+        
+        // 逆序处理文件
+        while (!stack.isEmpty()) {
+            InputStream file = stack.pop();
+            // 这里可以添加处理文件的逻辑
             processFile(file);
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception as needed
         }
     }
-}
-
-// Placeholder method for processing the InputStream
-private void processFile(InputStream file) throws IOException {
-    // Implement the logic to read from the InputStream and add the file
+    
+    private void processFile(InputStream file) {
+        // 处理文件的逻辑
+        // 例如，读取文件内容或将其添加到某个集合中
+    }
 }

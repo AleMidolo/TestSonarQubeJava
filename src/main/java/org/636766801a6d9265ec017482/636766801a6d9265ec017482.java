@@ -4,34 +4,36 @@ import java.io.InputStream;
 
 public class ClassFileBuffer {
     private byte[] buffer;
-    private int readPointer;
+    private int size;
 
     public ClassFileBuffer() {
         this.buffer = new byte[0];
-        this.readPointer = 0;
+        this.size = 0;
     }
 
-    /** 
-     * Clear and fill the buffer of this {@code ClassFileBuffer} with the supplied byte stream. 
-     * The read pointer is reset to the start of the byte array.
+    /**
+     * 清空并用提供的字节流填充此 {@code ClassFileBuffer} 的缓冲区。读取指针重置为字节数组的起始位置。
      */
     public void readFrom(final InputStream in) throws IOException {
         // Clear the existing buffer
         this.buffer = new byte[0];
-        this.readPointer = 0;
+        this.size = 0;
 
-        // Use ByteArrayOutputStream to read the InputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        // Use ByteArrayOutputStream to read from InputStream
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] tempBuffer = new byte[1024];
         int bytesRead;
 
-        // Read from the InputStream and write to the ByteArrayOutputStream
+        // Read from the InputStream and write to ByteArrayOutputStream
         while ((bytesRead = in.read(tempBuffer)) != -1) {
-            byteArrayOutputStream.write(tempBuffer, 0, bytesRead);
+            baos.write(tempBuffer, 0, bytesRead);
         }
 
-        // Convert the ByteArrayOutputStream to a byte array and set it to the buffer
-        this.buffer = byteArrayOutputStream.toByteArray();
-        this.readPointer = 0; // Reset read pointer to the start
+        // Convert ByteArrayOutputStream to byte array
+        this.buffer = baos.toByteArray();
+        this.size = this.buffer.length;
+
+        // Reset the read pointer (if applicable, depending on usage context)
+        // In this case, we just ensure the buffer is filled with new data.
     }
 }

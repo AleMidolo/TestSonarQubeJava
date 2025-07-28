@@ -1,41 +1,42 @@
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
-public class Utf8Writer {
+public class UTF8Writer {
 
-    /** 
-     * Writes the utf8-encoded bytes from the string into the  {@link LinkedBuffer}.
-     */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
         if (str == null || lb == null) {
-            throw new IllegalArgumentException("String and LinkedBuffer must not be null");
+            throw new IllegalArgumentException("Input string and LinkedBuffer cannot be null");
         }
 
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
+        byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
+        lb.write(bytes);
         return lb;
     }
-}
 
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
+    public static class LinkedBuffer {
+        private final LinkedList<byte[]> buffers = new LinkedList<>();
 
-    public LinkedBuffer(int size) {
-        buffer = new byte[size];
-        position = 0;
-    }
-
-    public void write(byte[] bytes) {
-        if (position + bytes.length > buffer.length) {
-            throw new ArrayIndexOutOfBoundsException("Not enough space in LinkedBuffer");
+        public void write(byte[] bytes) {
+            buffers.add(bytes);
         }
-        System.arraycopy(bytes, 0, buffer, position, bytes.length);
-        position += bytes.length;
+
+        public LinkedList<byte[]> getBuffers() {
+            return buffers;
+        }
     }
 
-    // Additional methods for LinkedBuffer can be added here
-}
+    public static class WriteSession {
+        // Implementation of WriteSession can be added here
+    }
 
-class WriteSession {
-    // Implementation of WriteSession can be added here
+    public static void main(String[] args) {
+        WriteSession session = new WriteSession();
+        LinkedBuffer lb = new LinkedBuffer();
+        writeUTF8("Hello, 世界", session, lb);
+        
+        // Output the buffers for demonstration
+        for (byte[] buffer : lb.getBuffers()) {
+            System.out.println(new String(buffer, StandardCharsets.UTF_8));
+        }
+    }
 }

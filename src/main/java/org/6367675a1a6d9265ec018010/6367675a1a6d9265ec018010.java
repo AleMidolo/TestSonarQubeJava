@@ -1,32 +1,22 @@
 public class Bucket {
-    // Assuming there is a data structure that holds the buckets
-    private DataStructure dataStructure;
+    // Assuming there are some properties for the Bucket class
 
-    public Bucket(DataStructure dataStructure) {
-        this.dataStructure = dataStructure;
+    // Constructor
+    public Bucket() {
+        // Initialization code
     }
 
-    /** 
-     * Removes this bucket from the data structure.
+    /**
+     * 从数据结构中移除此桶。
      */
-    public void removeSelf() {
-        dataStructure.removeBucket(this);
-    }
-}
-
-class DataStructure {
-    // A list to hold the buckets
-    private List<Bucket> buckets;
-
-    public DataStructure() {
-        this.buckets = new ArrayList<>();
+    void removeSelf() {
+        // Logic to remove this bucket from the data structure
+        // This is a placeholder for the actual removal logic
+        System.out.println("Removing this bucket from the data structure.");
     }
 
-    public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
-    }
-
-    public void removeBucket(Bucket bucket) {
-        buckets.remove(bucket);
+    public static void main(String[] args) {
+        Bucket bucket = new Bucket();
+        bucket.removeSelf();
     }
 }

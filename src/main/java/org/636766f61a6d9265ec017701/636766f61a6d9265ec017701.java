@@ -1,7 +1,7 @@
 public class StringUtil {
-
-    /** 
-     * Finds the last index within a String, handling <code>null</code>. This method uses  {@link String#lastIndexOf(String)}. 
+    
+    /**
+     * 查找字符串中的最后一个索引，能够处理 <code>null</code>。此方法使用 {@link String#lastIndexOf(String)}。
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -11,11 +11,10 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(lastIndexOf("Hello World", "o")); // Output: 7
-        System.out.println(lastIndexOf("Hello World", "l")); // Output: 9
-        System.out.println(lastIndexOf("Hello World", "x")); // Output: -1
+        System.out.println(lastIndexOf("hello world", "o")); // Output: 7
+        System.out.println(lastIndexOf("hello world", "l")); // Output: 9
+        System.out.println(lastIndexOf("hello world", "x")); // Output: -1
         System.out.println(lastIndexOf(null, "o")); // Output: -1
-        System.out.println(lastIndexOf("Hello World", null)); // Output: -1
+        System.out.println(lastIndexOf("hello world", null)); // Output: -1
     }
 }

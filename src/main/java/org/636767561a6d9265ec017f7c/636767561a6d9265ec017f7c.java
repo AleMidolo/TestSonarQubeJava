@@ -1,38 +1,33 @@
-import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.util.Triple;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class GraphUtils<V, E> {
 
     /** 
-     * Transform from a Set representation to a graph path.
-     * @param tour a set containing the edges of the tour
-     * @param graph the graph
-     * @return a graph path
+     * 将集合表示转换为图路径。
+     * @param tour 包含可巡回边的集合
+     * @param graph 图
+     * @return 图路径
      */
     protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
-        if (tour == null || graph == null) {
-            throw new IllegalArgumentException("Tour and graph cannot be null");
-        }
-
-        // Create a list to hold the vertices of the path
-        List<V> vertices = new ArrayList<>();
+        List<V> vertexList = new ArrayList<>();
         for (E edge : tour) {
-            // Get the source and target vertices of the edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
-            if (!vertices.contains(source)) {
-                vertices.add(source);
+            if (!vertexList.contains(source)) {
+                vertexList.add(source);
             }
-            if (!vertices.contains(target)) {
-                vertices.add(target);
+            if (!vertexList.contains(target)) {
+                vertexList.add(target);
             }
         }
-
-        // Create a GraphPath object
         return new GraphPath<V, E>() {
             @Override
             public Graph<V, E> getGraph() {
@@ -46,12 +41,12 @@ public class GraphUtils<V, E> {
 
             @Override
             public V getStartVertex() {
-                return vertices.get(0);
+                return vertexList.get(0);
             }
 
             @Override
             public V getEndVertex() {
-                return vertices.get(vertices.size() - 1);
+                return vertexList.get(vertexList.size() - 1);
             }
 
             @Override
@@ -64,8 +59,11 @@ public class GraphUtils<V, E> {
             }
 
             @Override
-            public int getLength() {
-                return tour.size();
+            public String toString() {
+                return "GraphPath{" +
+                        "vertices=" + vertexList +
+                        ", edges=" + tour +
+                        '}';
             }
         };
     }

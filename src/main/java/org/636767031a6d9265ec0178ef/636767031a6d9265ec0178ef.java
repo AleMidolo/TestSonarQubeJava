@@ -2,17 +2,17 @@ import java.lang.reflect.Array;
 
 public class ArrayUtils {
 
-    /** 
-     * Returns a copy of the given array of size 1 greater than the argument. The last value of the array is left to the default value.
-     * @param array The array to copy, must not be <code>null</code>.
-     * @param newArrayComponentType If <code>array</code> is <code>null</code>, create a size 1 array of this type.
-     * @return A new copy of the array of size 1 greater than the input.
+    /**
+     * 返回给定数组的副本，大小比参数大1。数组的最后一个值保留为默认值。
+     * @param array 要复制的数组，不能为 <code>null</code>。
+     * @param newArrayComponentType 如果 <code>array</code> 为 <code>null</code>，则创建一个该类型的大小为1的数组。
+     * @return 一个新复制的数组，大小比输入数组大1。
      */
     private static Object copyArrayGrow1(final Object array, final Class<?> newArrayComponentType) {
         if (array == null) {
             return Array.newInstance(newArrayComponentType, 1);
         }
-        
+
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
         

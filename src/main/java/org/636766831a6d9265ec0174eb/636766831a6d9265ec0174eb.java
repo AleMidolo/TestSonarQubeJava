@@ -1,9 +1,9 @@
 import java.io.File;
 
-public class FileAdder {
+public class FileManager {
 
     /** 
-     * Add the specified files in reverse order.
+     * 以逆序添加指定的文件。
      */
     private void addReverse(final File[] files) {
         if (files == null || files.length == 0) {
@@ -21,8 +21,8 @@ public class FileAdder {
     }
 
     public static void main(String[] args) {
-        FileAdder fileAdder = new FileAdder();
+        FileManager fileManager = new FileManager();
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
-        fileAdder.addReverse(files);
+        fileManager.addReverse(files);
     }
 }

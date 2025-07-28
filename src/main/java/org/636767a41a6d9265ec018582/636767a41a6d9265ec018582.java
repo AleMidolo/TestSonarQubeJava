@@ -3,33 +3,31 @@ import java.io.OutputStream;
 import com.google.protobuf.Schema;
 import com.google.protobuf.LinkedBuffer;
 
-public class MessageSerializer {
+public class MessageWriter {
 
-    /** 
-     * Serializes the  {@code message}, prefixed with its length, into an  {@link OutputStream}.
-     * @return the size of the message
+    /**
+     * 将 {@code message} 序列化，并在前面加上其长度，写入 {@link OutputStream}。
+     * @return 消息的大小
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Serialize the message to a byte array
-        byte[] data = schema.encode(message, buffer);
+        // Serialize the message
+        int size = schema.getSerializedSize(message);
         
-        // Get the length of the serialized data
-        int length = data.length;
+        // Write the size of the message
+        out.write(intToByteArray(size));
         
-        // Write the length as a varint
-        writeVarint32(out, length);
+        // Write the message itself
+        schema.writeTo(message, out, buffer);
         
-        // Write the serialized data to the output stream
-        out.write(data);
-        
-        return length;
+        return size;
     }
 
-    private static void writeVarint32(OutputStream out, int value) throws IOException {
-        while ((value & ~0x7F) != 0) {
-            out.write((value & 0x7F) | 0x80);
-            value >>>= 7;
-        }
-        out.write(value);
+    private static byte[] intToByteArray(int value) {
+        return new byte[] {
+            (byte) (value >> 24),
+            (byte) (value >> 16),
+            (byte) (value >> 8),
+            (byte) value
+        };
     }
 }

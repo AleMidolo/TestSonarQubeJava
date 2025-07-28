@@ -1,37 +1,35 @@
 public class StringUnescaper {
-
+    
     /** 
-     * Unescape a string DOT identifier.
-     * @param input the input
-     * @return the unescaped output
+     * 反转义字符串 DOT 标识符。
+     * @param input 输入字符串
+     * @return 反转义后的输出
      */
     private String unescapeId(String input) {
         if (input == null) {
             return null;
         }
         StringBuilder output = new StringBuilder();
-        boolean escaping = false;
-
+        boolean escape = false;
+        
         for (char c : input.toCharArray()) {
-            if (escaping) {
+            if (escape) {
                 output.append(c);
-                escaping = false;
+                escape = false;
+            } else if (c == '\\') {
+                escape = true;
             } else {
-                if (c == '\\') {
-                    escaping = true;
-                } else {
-                    output.append(c);
-                }
+                output.append(c);
             }
         }
-
+        
         return output.toString();
     }
 
     public static void main(String[] args) {
         StringUnescaper unescaper = new StringUnescaper();
-        String input = "some\\ identifier\\ with\\ escapes";
+        String input = "example\\ identifier";
         String output = unescaper.unescapeId(input);
-        System.out.println(output); // Output: some identifier with escapes
+        System.out.println(output); // Output: example identifier
     }
 }

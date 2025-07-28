@@ -1,29 +1,28 @@
 import java.util.List;
 import java.util.Set;
 
-public class VertexMover {
+public class BucketRelocator {
 
-    /** 
-     * Moves all vertices from the bucket with label  {@code minLabel} to the bucket with label 0.
-     * Clears the bucket with label  {@code minLabel}. Updates the labeling accordingly.
-     * @param bucketsByLabel the buckets vertices are stored in
-     * @param labels the labels of the vertices
-     * @param minLabel the minimum value of the non-empty bucket
+    /**
+     * 将所有标签为 {@code minLabel} 的桶中的顶点移动到标签为 0 的桶中。清空标签为 {@code minLabel} 的桶。相应地更新标签。
+     * @param bucketsByLabel 存储顶点的桶
+     * @param labels 顶点的标签
+     * @param minLabel 非空桶的最小值
      */
     private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Get the bucket with the minLabel
+        // 获取标签为 minLabel 的桶
         Set<Integer> minLabelBucket = bucketsByLabel.get(minLabel);
         
-        // Move all vertices from minLabel bucket to the bucket with label 0
+        // 获取标签为 0 的桶
         Set<Integer> zeroLabelBucket = bucketsByLabel.get(0);
-        zeroLabelBucket.addAll(minLabelBucket);
         
-        // Update the labels of the vertices moved
+        // 将标签为 minLabel 的桶中的顶点移动到标签为 0 的桶中
         for (Integer vertex : minLabelBucket) {
-            labels.set(vertex, 0);
+            zeroLabelBucket.add(vertex);
+            labels.set(vertex, 0); // 更新标签为 0
         }
         
-        // Clear the bucket with label minLabel
+        // 清空标签为 minLabel 的桶
         minLabelBucket.clear();
     }
 }

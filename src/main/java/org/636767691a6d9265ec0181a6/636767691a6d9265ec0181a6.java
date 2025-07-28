@@ -1,10 +1,9 @@
 public class StringSplitter {
-    
-    /** 
-     * Split a String at the first occurrence of the delimiter. Does not include the delimiter in the result.
-     * @param toSplit the string to split
-     * @param delimiter to split the string up with
-     * @return a two element array with index 0 being before the delimiter, and index 1 being after the delimiter (neither element includes the delimiter); or <code>null</code> if the delimiter wasn't found in the given input String
+    /**
+     * 在分隔符第一次出现的位置拆分字符串。结果中不包括分隔符。
+     * @param toSplit 要拆分的字符串
+     * @param delimiter 用于拆分字符串的分隔符
+     * @return 一个包含两个元素的数组，索引0为分隔符之前的部分，索引1为分隔符之后的部分（两个元素均不包括分隔符）；如果在给定的输入字符串中未找到分隔符，则返回<code>null</code>
      */
     public static String[] split(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
@@ -23,7 +22,7 @@ public class StringSplitter {
     }
 
     public static void main(String[] args) {
-        String[] result = split("Hello,World", ",");
+        String[] result = split("hello,world", ",");
         if (result != null) {
             System.out.println("Before delimiter: " + result[0]);
             System.out.println("After delimiter: " + result[1]);

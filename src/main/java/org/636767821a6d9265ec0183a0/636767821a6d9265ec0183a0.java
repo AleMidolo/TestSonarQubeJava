@@ -3,23 +3,23 @@ import java.io.File;
 public class FileUtils {
 
     /** 
-     * Delete's the specified file if it exists 
+     * 如果指定的文件存在，则删除该文件 
      */
     protected static void deleteFile(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("File deleted successfully: " + fileName);
+                System.out.println("文件已删除: " + fileName);
             } else {
-                System.out.println("Failed to delete the file: " + fileName);
+                System.out.println("无法删除文件: " + fileName);
             }
         } else {
-            System.out.println("File does not exist: " + fileName);
+            System.out.println("文件不存在: " + fileName);
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
-        deleteFile("example.txt");
+        // 示例用法
+        deleteFile("test.txt");
     }
 }

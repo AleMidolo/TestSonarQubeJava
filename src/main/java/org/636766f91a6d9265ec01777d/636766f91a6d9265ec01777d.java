@@ -1,8 +1,8 @@
 public class HexConverter {
     
     /** 
-     * @param b An ASCII encoded character 0-9 a-f A-F
-     * @return The byte value of the character 0-16.
+     * @param b 一个 ASCII 编码的字符，范围为 0-9、a-f、A-F
+     * @return 字符的字节值，范围为 0-16。
      */
     public static byte convertHexDigit(byte b) {
         if (b >= '0' && b <= '9') {
@@ -17,12 +17,12 @@ public class HexConverter {
     }
 
     public static void main(String[] args) {
-        // Test the convertHexDigit function
-        System.out.println(convertHexDigit((byte) '0')); // Output: 0
-        System.out.println(convertHexDigit((byte) '9')); // Output: 9
-        System.out.println(convertHexDigit((byte) 'a')); // Output: 10
-        System.out.println(convertHexDigit((byte) 'f')); // Output: 15
-        System.out.println(convertHexDigit((byte) 'A')); // Output: 10
-        System.out.println(convertHexDigit((byte) 'F')); // Output: 15
+        // Test cases
+        System.out.println(convertHexDigit((byte) '0')); // 0
+        System.out.println(convertHexDigit((byte) '9')); // 9
+        System.out.println(convertHexDigit((byte) 'a')); // 10
+        System.out.println(convertHexDigit((byte) 'f')); // 15
+        System.out.println(convertHexDigit((byte) 'A')); // 10
+        System.out.println(convertHexDigit((byte) 'F')); // 15
     }
 }

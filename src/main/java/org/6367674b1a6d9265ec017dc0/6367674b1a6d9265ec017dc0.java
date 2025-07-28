@@ -14,32 +14,32 @@ public class Graph<V> {
         vertices.add(vertex);
     }
 
-    public void addEdge(V from, V to) {
-        edges.add(new Edge<>(from, to));
-        vertices.add(from);
-        vertices.add(to);
+    public void addEdge(V source, V destination) {
+        edges.add(new Edge<>(source, destination));
+        vertices.add(source);
+        vertices.add(destination);
     }
 
     /** 
-     * Compute all vertices that have positive degree by iterating over the edges on purpose. This keeps the complexity to $O(m)$ where $m$ is the number of edges.
-     * @return set of vertices with positive degree
+     * 通过遍历边来计算所有具有正度的顶点。这将复杂度保持在 $O(m)$，其中 $m$ 是边的数量。
+     * @return 具有正度的顶点集合
      */
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         for (Edge<V> edge : edges) {
-            visibleVertices.add(edge.from);
-            visibleVertices.add(edge.to);
+            visibleVertices.add(edge.source);
+            visibleVertices.add(edge.destination);
         }
         return visibleVertices;
     }
 
     private static class Edge<V> {
-        V from;
-        V to;
+        V source;
+        V destination;
 
-        Edge(V from, V to) {
-            this.from = from;
-            this.to = to;
+        Edge(V source, V destination) {
+            this.source = source;
+            this.destination = destination;
         }
     }
 }

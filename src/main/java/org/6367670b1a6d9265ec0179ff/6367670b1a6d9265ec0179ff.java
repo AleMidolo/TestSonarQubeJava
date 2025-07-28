@@ -1,29 +1,25 @@
 public class ArrayUtil {
-
-    private static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
+    public static final Byte[] EMPTY_ARRAY = new Byte[0];
 
     /** 
-     * <p>Defensive programming technique to change a <code>null</code> reference to an empty one.</p> 
-     * <p>This method returns an empty array for a <code>null</code> input array.</p> 
-     * <p>As a memory optimizing technique an empty array passed in will be overridden with the empty <code>public static</code> references in this class.</p>
-     * @param array  the array to check for <code>null</code> or empty
-     * @return the same array, <code>public static</code> empty array if <code>null</code> or empty input
+     * <p>防御性编程技术，将 <code>null</code> 引用转换为一个空引用。</p> 
+     * <p>对于 <code>null</code> 输入数组，该方法返回一个空数组。</p> 
+     * <p>作为一种内存优化技术，传入的空数组将被本类中的空 <code>public static</code> 引用覆盖。</p>
+     * @param array  要检查是否为 <code>null</code> 或空的数组
+     * @return 相同的数组，如果输入为 <code>null</code> 或空，则返回 <code>public static</code> 空数组
      * @since 2.5
      */
     public static Byte[] nullToEmpty(final Byte[] array) {
-        if (array == null || array.length == 0) {
-            return EMPTY_BYTE_ARRAY;
-        }
-        return array;
+        return (array == null || array.length == 0) ? EMPTY_ARRAY : array;
     }
 
     public static void main(String[] args) {
-        Byte[] nullArray = null;
-        Byte[] emptyArray = new Byte[0];
-        Byte[] nonEmptyArray = {1, 2, 3};
+        Byte[] result1 = nullToEmpty(null);
+        Byte[] result2 = nullToEmpty(new Byte[]{});
+        Byte[] result3 = nullToEmpty(new Byte[]{1, 2, 3});
 
-        System.out.println(nullToEmpty(nullArray)); // Should print: []
-        System.out.println(nullToEmpty(emptyArray)); // Should print: []
-        System.out.println(nullToEmpty(nonEmptyArray)); // Should print: [1, 2, 3]
+        System.out.println("Result 1: " + (result1.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 2: " + (result2.length == 0 ? "Empty Array" : "Not Empty"));
+        System.out.println("Result 3: " + (result3.length == 0 ? "Empty Array" : "Not Empty"));
     }
 }

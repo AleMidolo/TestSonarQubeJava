@@ -1,4 +1,5 @@
 public class StringBuilderExample {
+    
     private StringBuilder builder;
 
     public StringBuilderExample() {
@@ -10,8 +11,8 @@ public class StringBuilderExample {
     }
 
     /** 
-     * <p> Gets the String built by this builder. </p>
-     * @return the built string
+     * <p> 获取由此构建器构建的字符串。 </p>
+     * @return 构建的字符串
      */
     public String toString() {
         return builder.toString();

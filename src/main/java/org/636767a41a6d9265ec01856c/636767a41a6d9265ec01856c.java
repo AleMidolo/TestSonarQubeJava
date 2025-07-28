@@ -3,7 +3,7 @@ import java.nio.charset.StandardCharsets;
 public class UTF8SizeCalculator {
 
     /** 
-     * Computes the size of the utf8 string beginning at the specified  {@code index} with the specified {@code length}.
+     * 计算从指定 {@code index} 开始，具有指定 {@code length} 长度的 UTF-8 字符串的大小。
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
         if (str == null) {
@@ -14,8 +14,7 @@ public class UTF8SizeCalculator {
         }
 
         String substring = str.subSequence(index, index + len).toString();
-        byte[] utf8Bytes = substring.getBytes(StandardCharsets.UTF_8);
-        return utf8Bytes.length;
+        return substring.getBytes(StandardCharsets.UTF_8).length;
     }
 
     public static void main(String[] args) {

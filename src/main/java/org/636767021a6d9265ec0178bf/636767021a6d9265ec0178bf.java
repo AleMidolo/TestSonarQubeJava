@@ -1,13 +1,13 @@
-import java.lang.Character;
+import java.lang.reflect.Method;
 
 public class Converter {
 
     /**
-     * <p>Convert the input object into a java.lang.Character.</p>
-     * @param type Data type to which this value should be converted.
-     * @param value The input value to be converted.
-     * @return The converted value.
-     * @throws Exception if conversion cannot be performed successfully
+     * <p>将输入对象转换为 java.lang.Character。</p>
+     * @param type 要转换为的目标数据类型。
+     * @param value 要转换的输入值。
+     * @return 转换后的值。
+     * @throws Exception 如果无法成功执行转换则抛出异常。
      * @since 1.8.0
      */
     @Override

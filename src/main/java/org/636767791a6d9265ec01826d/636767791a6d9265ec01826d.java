@@ -1,42 +1,23 @@
 import java.util.Properties;
 
-public class VariableSubstitution {
+public class VariableSubstitutor {
 
     /** 
-     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
      */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // or throw an exception based on your needs
+            return null;
         }
 
         // Perform variable substitution
-        StringBuilder result = new StringBuilder();
-        int startIndex = 0;
-        while (startIndex < value.length()) {
-            int startVar = value.indexOf("${", startIndex);
-            if (startVar == -1) {
-                result.append(value.substring(startIndex));
-                break;
-            }
-            result.append(value.substring(startIndex, startVar));
-            int endVar = value.indexOf("}", startVar);
-            if (endVar == -1) {
-                result.append(value.substring(startIndex));
-                break;
-            }
-            String varKey = value.substring(startVar + 2, endVar);
-            String varValue = props.getProperty(varKey);
-            if (varValue != null) {
-                result.append(varValue);
-            } else {
-                result.append("${").append(varKey).append("}"); // keep the original if not found
-            }
-            startIndex = endVar + 1;
+        for (String propKey : props.stringPropertyNames()) {
+            String propValue = props.getProperty(propKey);
+            value = value.replace("${" + propKey + "}", propValue);
         }
 
-        return result.toString();
+        return value;
     }
 
     public static void main(String[] args) {

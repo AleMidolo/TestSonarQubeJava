@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONWriter;
 public class JsonSerializer {
 
     /**
-     * Serialize to JSON  {@link String}
-     * @param features features to be enabled in serialization
+     * 序列化为 JSON {@link String}
+     * @param features 在序列化中启用的特性
      * @return JSON {@link String}
      */
     @SuppressWarnings("unchecked")
@@ -13,11 +13,11 @@ public class JsonSerializer {
         // Example object to serialize
         MyObject obj = new MyObject("example", 123);
         
-        // Serialize the object to JSON with the provided features
+        // Serialize the object to JSON string with the provided features
         return JSON.toJSONString(obj, features);
     }
 
-    // Example class to demonstrate serialization
+    // Example class to serialize
     public static class MyObject {
         private String name;
         private int value;
@@ -47,7 +47,7 @@ public class JsonSerializer {
 
     public static void main(String[] args) {
         JsonSerializer serializer = new JsonSerializer();
-        String json = serializer.toString(JSONWriter.Feature.PrettyFormat);
-        System.out.println(json);
+        String jsonString = serializer.toString(JSONWriter.Feature.PrettyFormat);
+        System.out.println(jsonString);
     }
 }

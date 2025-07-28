@@ -1,10 +1,10 @@
 public class StringManipulator {
 
-    /** 
-     * Delete any character in a given String.
-     * @param inString the original String
-     * @param charsToDelete a set of characters to delete.E.g. "az\n" will delete 'a's, 'z's and new lines.
-     * @return the resulting String
+    /**
+     * 删除给定字符串中的所有给定字符。
+     * @param inString 原始字符串
+     * @param charsToDelete 要删除的字符集合。例如 "az\n" 将删除 'a'、'z' 和换行符。
+     * @return 结果字符串
      */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
@@ -21,9 +21,9 @@ public class StringManipulator {
     }
 
     public static void main(String[] args) {
-        String original = "Hello World!";
+        String original = "Hello, World!";
         String charsToDelete = "lo";
-        String modified = deleteAny(original, charsToDelete);
-        System.out.println(modified); // Output: "He Wr!"
+        String result = deleteAny(original, charsToDelete);
+        System.out.println(result); // Output: "He, Wr!"
     }
 }

@@ -1,40 +1,50 @@
 import java.util.function.Predicate;
 
-class Node {
-    // Node implementation
-}
+public class Graph {
+    
+    private class Node {
+        // Node implementation
+    }
+    
+    private class OuterFaceCirculator {
+        private Node current;
 
-class OuterFaceCirculator {
-    // OuterFaceCirculator implementation
-}
-
-public class GraphTraversal {
-
-    /**
-     * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the  {@code predicate} or returns a circulator to the {@code stop} node.
-     * @param predicate the condition the desired node should satisfy
-     * @param start the node to start the search from
-     * @param stop the node to end the search with
-     * @param dir the direction to start the traversal in
-     * @return a circulator to the node satisfying the {@code predicate} or to the {@code stop} node
-     */
-    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-        OuterFaceCirculator circulator = new OuterFaceCirculator();
-        Node currentNode = start;
-
-        // Assuming we have a method to get the next node in the specified direction
-        while (!currentNode.equals(stop)) {
-            if (predicate.test(currentNode)) {
-                return circulator; // Return circulator to the current node if it satisfies the predicate
-            }
-            currentNode = getNextNode(currentNode, dir); // Move to the next node in the specified direction
+        public OuterFaceCirculator(Node start) {
+            this.current = start;
         }
 
-        return circulator; // Return circulator to the stop node if no node satisfies the predicate
+        public Node getCurrent() {
+            return current;
+        }
+
+        public void moveNext() {
+            // Logic to move to the next node in the outer face
+        }
+        
+        public boolean hasNext() {
+            // Logic to determine if there is a next node
+            return true; // Placeholder
+        }
     }
 
-    private Node getNextNode(Node currentNode, int dir) {
-        // Implementation to get the next node based on the direction
-        return new Node(); // Placeholder return
+    /**
+     * 查找并返回一个循环器，指向满足 {@code predicate} 的组件边界上的节点，或者返回指向 {@code stop} 节点的循环器。
+     * @param predicate 期望节点应满足的条件
+     * @param start 开始搜索的节点
+     * @param stop 结束搜索的节点
+     * @param dir 开始遍历的方向
+     * @return 指向满足 {@code predicate} 的节点的循环器，或指向 {@code stop} 节点的循环器
+     */
+    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        
+        do {
+            if (predicate.test(circulator.getCurrent())) {
+                return circulator;
+            }
+            circulator.moveNext();
+        } while (circulator.hasNext() && circulator.getCurrent() != stop);
+        
+        return circulator; // Return circulator pointing to stop if no match found
     }
 }

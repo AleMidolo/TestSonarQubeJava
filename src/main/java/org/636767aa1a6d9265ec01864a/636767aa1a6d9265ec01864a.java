@@ -1,26 +1,28 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.nio.ByteBuffer;
 
-public class ByteArrayExample {
+public class ByteArrayConverter {
     
+    private byte[] data;
+
+    public ByteArrayConverter(byte[] data) {
+        this.data = data;
+    }
+
     /** 
-     * Copies bytes to a  {@code byte[]}.
+     * 将字节复制到 {@code byte[]} 中。
      */
     public byte[] toByteArray() {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            // Example data to write to the byte array
-            String exampleData = "Hello, World!";
-            byteArrayOutputStream.write(exampleData.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return byteArrayOutputStream.toByteArray();
+        return data.clone();
     }
 
     public static void main(String[] args) {
-        ByteArrayExample example = new ByteArrayExample();
-        byte[] byteArray = example.toByteArray();
-        System.out.println(new String(byteArray));
+        byte[] originalData = {1, 2, 3, 4, 5};
+        ByteArrayConverter converter = new ByteArrayConverter(originalData);
+        byte[] copiedData = converter.toByteArray();
+
+        // Print the copied data
+        for (byte b : copiedData) {
+            System.out.print(b + " ");
+        }
     }
 }

@@ -1,69 +1,59 @@
 public class StringUnescaper {
 
     /** 
-     * <p>Unescapes any Java literals found in the <code>String</code>. For example, it will turn a sequence of <code>'\'</code> and <code>'n'</code> into a newline character, unless the <code>'\'</code> is preceded by another <code>'\'</code>.</p>
-     * @param str the <code>String</code> to unescape, may be null
-     * @return a new unescaped <code>String</code>, <code>null</code> if null string input
+     * <p>对<code>String</code>中找到的任何Java字面量进行反转义。例如，它将把一系列<code>'\'</code>和<code>'n'</code>转换为换行符，除非<code>'\'</code>前面有另一个<code>'\'</code>。</p>
+     * @param str 要反转义的<code>String</code>，可以为空
+     * @return 一个新的反转义<code>String</code>，如果输入字符串为空，则返回<code>null</code>
      */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
-        StringBuilder unescaped = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         boolean isEscaped = false;
 
-        for (char currentChar : str.toCharArray()) {
+        for (char c : str.toCharArray()) {
             if (isEscaped) {
-                switch (currentChar) {
+                switch (c) {
                     case 'n':
-                        unescaped.append('\n');
+                        result.append('\n');
                         break;
                     case 't':
-                        unescaped.append('\t');
+                        result.append('\t');
                         break;
                     case 'r':
-                        unescaped.append('\r');
+                        result.append('\r');
                         break;
-                    case 'f':
-                        unescaped.append('\f');
-                        break;
-                    case 'b':
-                        unescaped.append('\b');
-                        break;
-                    case '"':
-                        unescaped.append('"');
+                    case '\"':
+                        result.append('\"');
                         break;
                     case '\'':
-                        unescaped.append('\'');
+                        result.append('\'');
                         break;
                     case '\\':
-                        unescaped.append('\\');
+                        result.append('\\');
                         break;
                     default:
-                        unescaped.append(currentChar);
+                        result.append(c);
                         break;
                 }
                 isEscaped = false;
             } else {
-                if (currentChar == '\\') {
+                if (c == '\\') {
                     isEscaped = true;
                 } else {
-                    unescaped.append(currentChar);
+                    result.append(c);
                 }
             }
         }
 
-        return unescaped.toString();
+        return result.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\.";
-            String result = unescapeJava(testString);
-            System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String testString = "Hello\\nWorld! This is a test string with a tab:\\t and a backslash: \\\\";
+        String unescapedString = unescapeJava(testString);
+        System.out.println(unescapedString);
     }
 }

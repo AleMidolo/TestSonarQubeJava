@@ -1,11 +1,9 @@
-import java.util.Arrays;
-
 public class PrimeCapacity {
 
     /**
-     * Returns a prime number which is <code>&gt;= desiredCapacity</code> and very close to <code>desiredCapacity</code> (within 11% if <code>desiredCapacity &gt;= 1000</code>).
-     * @param desiredCapacity the capacity desired by the user.
-     * @return the capacity which should be used for a hashtable.
+     * 返回一个质数，该质数满足 <code>&gt;= desiredCapacity</code> 且与 <code>desiredCapacity</code> 非常接近（如果 <code>desiredCapacity &gt;= 1000</code>，则误差在 11% 以内）。
+     * @param desiredCapacity 用户所需的容量。
+     * @return 应该用于哈希表的容量。
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 1) {
@@ -14,26 +12,31 @@ public class PrimeCapacity {
         int prime = desiredCapacity;
         boolean found = false;
 
-        // Calculate the upper limit for the search
-        int upperLimit = desiredCapacity >= 1000 ? (int) (desiredCapacity * 1.11) : Integer.MAX_VALUE;
-
         while (!found) {
-            if (isPrime(prime) && prime <= upperLimit) {
+            if (isPrime(prime)) {
                 found = true;
             } else {
                 prime++;
             }
         }
+        
+        // Check for the 11% error margin if desiredCapacity >= 1000
+        if (desiredCapacity >= 1000) {
+            int upperLimit = (int) (desiredCapacity * 1.11);
+            if (prime > upperLimit) {
+                return nextPrime(upperLimit);
+            }
+        }
+        
         return prime;
     }
 
     private static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        if (num <= 3) return true;
-        if (num % 2 == 0 || num % 3 == 0) return false;
-
-        for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
+        if (num <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
                 return false;
             }
         }
@@ -41,7 +44,8 @@ public class PrimeCapacity {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // Example usage
-        System.out.println(nextPrime(15));   // Example usage
+        int desiredCapacity = 1000;
+        int nextPrimeCapacity = nextPrime(desiredCapacity);
+        System.out.println("Next prime capacity for " + desiredCapacity + " is: " + nextPrimeCapacity);
     }
 }

@@ -1,29 +1,55 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-class ThreadSnapshot {
-    private String threadName;
-    private long timestamp;
+public class ThreadSnapshotLoader {
 
-    public ThreadSnapshot(String threadName, long timestamp) {
-        this.threadName = threadName;
-        this.timestamp = timestamp;
+    /** 
+     * 在指定时间范围内加载线程快照
+     */
+    public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
+        List<ThreadSnapshot> snapshots = new ArrayList<>();
+        List<String> lines = Files.readAllLines(file.toPath());
+
+        for (String line : lines) {
+            ThreadSnapshot snapshot = parseLineToThreadSnapshot(line);
+            if (isWithinTimeRange(snapshot, timeRanges)) {
+                snapshots.add(snapshot);
+            }
+        }
+
+        return snapshots;
+    }
+
+    private static ThreadSnapshot parseLineToThreadSnapshot(String line) {
+        // Implement parsing logic here
+        // This is a placeholder implementation
+        return new ThreadSnapshot(line);
+    }
+
+    private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
+        long snapshotTime = snapshot.getTimestamp(); // Assuming ThreadSnapshot has a method to get its timestamp
+        for (ProfileAnalyzeTimeRange range : timeRanges) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class ThreadSnapshot {
+    private String data;
+
+    public ThreadSnapshot(String data) {
+        this.data = data;
     }
 
     public long getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public String toString() {
-        return "ThreadSnapshot{" +
-                "threadName='" + threadName + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+        // Placeholder for actual timestamp extraction logic
+        return System.currentTimeMillis();
     }
 }
 
@@ -42,33 +68,5 @@ class ProfileAnalyzeTimeRange {
 
     public long getEndTime() {
         return endTime;
-    }
-}
-
-public class ThreadSnapshotParser {
-
-    /** 
-     * load thread snapshots in appointing time range
-     */
-    public static List<ThreadSnapshot> parseFromFileWithTimeRange(File file, List<ProfileAnalyzeTimeRange> timeRanges) throws IOException {
-        List<ThreadSnapshot> snapshots = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 2) continue;
-
-                String threadName = parts[0];
-                long timestamp = Long.parseLong(parts[1]);
-
-                for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (timestamp >= range.getStartTime() && timestamp <= range.getEndTime()) {
-                        snapshots.add(new ThreadSnapshot(threadName, timestamp));
-                        break; // No need to check other ranges if already added
-                    }
-                }
-            }
-        }
-        return snapshots;
     }
 }

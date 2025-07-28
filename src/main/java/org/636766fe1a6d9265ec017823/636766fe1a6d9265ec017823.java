@@ -1,36 +1,39 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class SymbolTable {
+public class ConstantPool {
     private final Map<String, Integer> constantPool;
     private int nextIndex;
 
-    public SymbolTable() {
+    public ConstantPool() {
         this.constantPool = new HashMap<>();
         this.nextIndex = 0;
     }
 
     /**
-     * Adds a CONSTANT_NameAndType_info to the constant pool of this symbol table. Does nothing if the constant pool already contains a similar item.
-     * @param name a field or method name.
-     * @param descriptor a field or method descriptor.
-     * @return a new or already existing Symbol with the given value.
+     * 将一个 CONSTANT_NameAndType_info 添加到该符号表的常量池中。如果常量池已经包含类似项，则不执行任何操作。
+     * @param name 字段或方法名称。
+     * @param descriptor 字段或方法描述符。
+     * @return 具有给定值的新符号或已存在的符号。
      */
     public int addConstantNameAndType(final String name, final String descriptor) {
         String key = name + ":" + descriptor;
-        if (!constantPool.containsKey(key)) {
+        if (constantPool.containsKey(key)) {
+            return constantPool.get(key);
+        } else {
             constantPool.put(key, nextIndex);
-            nextIndex++;
+            return nextIndex++;
         }
-        return constantPool.get(key);
     }
 
     public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable();
-        int index1 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        int index2 = symbolTable.addConstantNameAndType("myMethod", "(I)V");
-        
-        System.out.println("Index of first addition: " + index1);
-        System.out.println("Index of second addition (should be the same): " + index2);
+        ConstantPool pool = new ConstantPool();
+        int index1 = pool.addConstantNameAndType("myField", "I");
+        int index2 = pool.addConstantNameAndType("myField", "I");
+        int index3 = pool.addConstantNameAndType("myMethod", "(I)V");
+
+        System.out.println("Index of myField: " + index1); // Should print 0
+        System.out.println("Index of myField (duplicate): " + index2); // Should print 0
+        System.out.println("Index of myMethod: " + index3); // Should print 1
     }
 }

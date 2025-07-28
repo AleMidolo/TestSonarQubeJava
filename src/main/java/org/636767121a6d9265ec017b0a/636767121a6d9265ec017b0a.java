@@ -1,28 +1,30 @@
-public class HeaderParser {
+public class LineParser {
 
-    /** 
-     * Skips bytes until the end of the current line.
-     * @param headerPart The headers, which are being parsed.
-     * @param end Index of the last byte, which has yet been processed.
-     * @return Index of the \r\n sequence, which indicates end of line.
+    /**
+     * 跳过字节直到当前行的末尾。
+     * @param headerPart 正在解析的头部。
+     * @param end 尚未处理的最后一个字节的索引。
+     * @return \r\n 表示行结束的 \r\n 序列的索引。
      */
     private int parseEndOfLine(String headerPart, int end) {
-        int index = end;
-        while (index < headerPart.length()) {
-            if (headerPart.charAt(index) == '\r') {
-                if (index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
-                    return index + 1; // Return the index of the \r\n sequence
+        int length = headerPart.length();
+        for (int i = end; i < length; i++) {
+            if (headerPart.charAt(i) == '\r') {
+                if (i + 1 < length && headerPart.charAt(i + 1) == '\n') {
+                    return i + 1; // Return the index after \r\n
                 }
             }
-            index++;
+            if (headerPart.charAt(i) == '\n') {
+                return i; // Return the index after \n
+            }
         }
-        return headerPart.length(); // Return the length if \r\n is not found
+        return length; // If no end of line found, return the length of the string
     }
 
     public static void main(String[] args) {
-        HeaderParser parser = new HeaderParser();
-        String headers = "Header1: value1\r\nHeader2: value2\r\n";
-        int endIndex = parser.parseEndOfLine(headers, 0);
+        LineParser parser = new LineParser();
+        String header = "This is a test header\r\nThis is the next line";
+        int endIndex = parser.parseEndOfLine(header, 0);
         System.out.println("End of line index: " + endIndex);
     }
 }

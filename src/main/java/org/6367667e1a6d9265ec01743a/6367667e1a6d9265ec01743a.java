@@ -1,22 +1,26 @@
-public class WriteOperationTracker {
+public class Example {
     private long lastWriteTimeStamp;
 
+    public Example() {
+        this.lastWriteTimeStamp = System.currentTimeMillis();
+    }
+
     /** 
-     * The last time, in milliseconds, a write operation occurred.
+     * 上一次写操作发生的时间，单位为毫秒。
      * @return this
      */
     public long lastWriteTimeStampInMilliseconds() {
         return lastWriteTimeStamp;
     }
 
-    public void writeOperation() {
+    public void writeData() {
         // Simulate a write operation
         lastWriteTimeStamp = System.currentTimeMillis();
     }
 
     public static void main(String[] args) {
-        WriteOperationTracker tracker = new WriteOperationTracker();
-        tracker.writeOperation();
-        System.out.println("Last write timestamp: " + tracker.lastWriteTimeStampInMilliseconds() + " ms");
+        Example example = new Example();
+        example.writeData();
+        System.out.println("Last write timestamp: " + example.lastWriteTimeStampInMilliseconds() + " ms");
     }
 }

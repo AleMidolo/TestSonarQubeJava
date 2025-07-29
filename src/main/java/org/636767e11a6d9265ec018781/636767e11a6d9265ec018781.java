@@ -26,17 +26,4 @@ public class MetricsAcceptor {
             existingMetrics.merge(data); // Assuming METRICS has a merge() method
         }
     }
-    
-    // Assuming METRICS class definition
-    public static class METRICS {
-        private String key;
-        
-        public String getKey() {
-            return key;
-        }
-        
-        public void merge(METRICS other) {
-            // Implementation of merge logic
-        }
-    }
 }

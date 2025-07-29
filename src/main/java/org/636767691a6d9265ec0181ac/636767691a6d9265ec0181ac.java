@@ -3,6 +3,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
+
     /**
      * 将给定的相对路径应用于给定路径，假设使用标准的Java文件夹分隔符（即"/"分隔符）。
      * @param path 起始路径（通常是完整的文件路径）

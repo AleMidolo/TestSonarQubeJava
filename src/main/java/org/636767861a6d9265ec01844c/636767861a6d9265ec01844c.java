@@ -2,7 +2,8 @@ import org.apache.logging.log4j.core.Appender;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Logger {
+public class LoggerConfig {
+    
     private Map<String, Appender> appenders = new ConcurrentHashMap<>();
     
     /**

@@ -14,8 +14,9 @@ public class BeanMapUtils {
 
         Iterator<?> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
-            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
-            String propertyName = entry.getKey().toString();
+            @SuppressWarnings("unchecked")
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) entries.next();
+            String propertyName = entry.getKey();
             
             // 检查属性是否可写
             if (map.getWriteMethod(propertyName) != null) {
@@ -25,7 +26,6 @@ public class BeanMapUtils {
                     this.put(propertyName, value);
                 } catch (Exception e) {
                     // 忽略无法写入的属性
-                    continue;
                 }
             }
         }

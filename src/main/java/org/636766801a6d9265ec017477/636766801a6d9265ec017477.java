@@ -40,6 +40,6 @@ public class FileHandler {
     
     // 用于处理单个文件的辅助方法
     private void processFile(InputStream file) {
-        // 在这里实现具体的文件处理逻辑
+        // 在这里添加具体的文件处理逻辑
     }
 }

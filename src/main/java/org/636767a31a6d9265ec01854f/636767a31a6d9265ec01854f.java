@@ -8,47 +8,51 @@ public class WireFormatDecoder {
     
     private final InputStream input;
     private int tag;
-    private int lastTag;
-    private boolean packedFieldMode;
-    private int packedFieldEndPos;
-    private int currentPosition;
+    private int wireType;
+    private boolean isPacked;
+    private int packedLimit;
+    private int currentLimit;
     
     public WireFormatDecoder(InputStream input) {
         this.input = input;
+        this.isPacked = false;
+        this.packedLimit = 0;
+        this.currentLimit = Integer.MAX_VALUE;
     }
 
     private void checkIfPackedField() throws IOException {
-        // Check if current field is length-delimited (packed field)
-        if ((tag & TAG_TYPE_MASK) == WIRETYPE_LENGTH_DELIMITED) {
-            // Read packed field length
-            int length = readVarint32();
+        // Check if this field should be packed based on wire type
+        if (wireType == WIRETYPE_LENGTH_DELIMITED) {
+            // Read the length of the packed data
+            int length = readRawVarint32();
             
-            // Set packed field mode and calculate end position
-            packedFieldMode = true;
-            packedFieldEndPos = currentPosition + length;
-            
-            // Read first tag inside packed field
-            tag = readVarint32();
+            if (length > 0) {
+                // Store current position as packed limit
+                packedLimit = currentLimit;
+                // Update current limit to end of packed data
+                currentLimit = packedLimit + length;
+                isPacked = true;
+            }
         } else {
-            packedFieldMode = false;
+            // Not a packed field
+            isPacked = false;
         }
-        
-        lastTag = tag;
     }
     
-    // Helper method to read variable length 32-bit integer
-    private int readVarint32() throws IOException {
+    private int readRawVarint32() throws IOException {
         int result = 0;
         int shift = 0;
         while (shift < 32) {
             int b = input.read();
-            currentPosition++;
+            if (b == -1) {
+                throw new IOException("Unexpected EOF while reading varint");
+            }
             result |= (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint32");
+        throw new IOException("Malformed varint");
     }
 }

@@ -24,24 +24,18 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
         // Remove the handler
         AtmosphereHandler removed = handlers.remove(normalizedMapping);
         
-        // Clean up any associated resources
         if (removed != null) {
-            // Notify handler of removal
+            // Clean up any resources associated with the handler
             try {
                 removed.destroy();
             } catch (Exception ex) {
                 logger.warn("Failed to destroy AtmosphereHandler: " + removed, ex);
             }
             
-            // Remove from framework's internal mappings
+            // Remove from parent framework mappings if exists
             frameworkMappings.remove(normalizedMapping);
         }
 
         return this;
-    }
-
-    // Helper method to check if mapping exists
-    private boolean hasMapping(String mapping) {
-        return handlers.containsKey(mapping);
     }
 }

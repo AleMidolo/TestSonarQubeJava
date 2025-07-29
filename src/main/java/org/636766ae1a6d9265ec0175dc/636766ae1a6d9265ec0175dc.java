@@ -11,10 +11,8 @@ public class ResponseUtils {
         return response.getStatus() == HttpServletResponse.SC_PARTIAL_CONTENT;
     }
     
-    // Helper method to get current response
+    // Mock method to get response - implementation would depend on context
     private HttpServletResponse getResponse() {
-        // Implementation details would depend on your framework
-        // This is just a placeholder
         return null;
     }
 }

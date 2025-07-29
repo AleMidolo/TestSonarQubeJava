@@ -20,20 +20,15 @@ public class ContentRangeBuilder {
         StringBuilder contentRange = new StringBuilder();
         contentRange.append("bytes ");
         
-        if (Objects.nonNull(start) && Objects.nonNull(end)) {
+        if (Objects.isNull(start) || Objects.isNull(end) || Objects.isNull(total)) {
+            contentRange.append("*/");
+            contentRange.append(Objects.nonNull(total) ? total : "*");
+        } else {
             contentRange.append(start)
                        .append("-")
-                       .append(end);
-        } else {
-            contentRange.append("*");
-        }
-        
-        contentRange.append("/");
-        
-        if (Objects.nonNull(total)) {
-            contentRange.append(total);
-        } else {
-            contentRange.append("*"); 
+                       .append(end)
+                       .append("/")
+                       .append(total);
         }
         
         return contentRange.toString();

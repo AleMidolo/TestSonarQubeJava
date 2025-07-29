@@ -12,14 +12,17 @@ public class TransportInterceptor extends AtmosphereInterceptorAdapter {
         
         switch (transport) {
             case WEBSOCKET:
+                // WebSocket connections are automatically suspended
+                break;
             case SSE:
             case STREAMING:
-                r.suspend();
-                break;
             case LONG_POLLING:
-                r.suspend(r.getAtmosphereConfig().getInitParameter("maxLongPollTimeout", 30000));
+                if (!r.isSuspended()) {
+                    r.suspend();
+                }
                 break;
             default:
+                // For other transports, no suspension needed
                 break;
         }
         

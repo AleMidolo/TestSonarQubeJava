@@ -1,5 +1,8 @@
 import com.google.gson.JsonObject;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,28 +14,28 @@ public class ContentBuilder {
     private Map<String,Object> buildContent(JsonObject jsonObject) {
         Map<String,Object> content = new HashMap<>();
         
-        if(jsonObject == null) {
+        if (jsonObject == null) {
             return content;
         }
 
         // 获取消息内容
-        String text = jsonObject.has("text") ? jsonObject.get("text").getAsString() : "";
-        content.put("text", text);
+        String message = jsonObject.has("content") ? 
+                        jsonObject.get("content").getAsString() : "";
+        
+        content.put("content", message);
 
         // 解析@信息
-        List<Map<String,String>> atList = new ArrayList<>();
+        List<String> atList = new ArrayList<>();
         Pattern pattern = Pattern.compile("@([\\w\\-]+)");
-        Matcher matcher = pattern.matcher(text);
+        Matcher matcher = pattern.matcher(message);
         
-        while(matcher.find()) {
-            Map<String,String> atInfo = new HashMap<>();
-            String username = matcher.group(1);
-            atInfo.put("username", username);
-            atList.add(atInfo);
+        while (matcher.find()) {
+            String atUser = matcher.group(1);
+            atList.add(atUser);
         }
-
-        if(!atList.isEmpty()) {
-            content.put("at", atList);
+        
+        if (!atList.isEmpty()) {
+            content.put("mentions", atList);
         }
 
         return content;

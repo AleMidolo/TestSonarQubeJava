@@ -2,34 +2,27 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 
 public class BeanMap {
     private Object bean;
-    
-    public BeanMap(Object bean) {
-        this.bean = bean;
-    }
+    private PropertyDescriptor[] propertyDescriptors;
 
+    /**
+     * 返回 BeanMap 的值。
+     * @return BeanMap 的值。返回的集合是不可修改的。
+     */
     public Collection<Object> values() {
-        if (bean == null) {
-            return Collections.emptyList();
-        }
-
         ArrayList<Object> values = new ArrayList<>();
         
         try {
-            PropertyDescriptor[] descriptors = java.beans.Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
-            
-            for (PropertyDescriptor descriptor : descriptors) {
-                Method readMethod = descriptor.getReadMethod();
-                if (readMethod != null && !descriptor.getName().equals("class")) {
-                    Object value = readMethod.invoke(bean);
+            for (PropertyDescriptor descriptor : propertyDescriptors) {
+                if (descriptor.getReadMethod() != null) {
+                    Object value = descriptor.getReadMethod().invoke(bean);
                     values.add(value);
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to get bean values", e);
+            throw new RuntimeException("Failed to get property values", e);
         }
 
         return Collections.unmodifiableCollection(values);

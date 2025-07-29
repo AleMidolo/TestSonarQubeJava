@@ -1,12 +1,13 @@
 import org.apache.log4j.spi.LoggingEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LogBuffer {
-    private ArrayList<LoggingEvent> buffer;
+    private List<LoggingEvent> buffer;
     private static final int MAX_BUFFER_SIZE = 1000;
 
     public LogBuffer() {
-        buffer = new ArrayList<LoggingEvent>();
+        buffer = new ArrayList<>();
     }
 
     /**
@@ -17,12 +18,12 @@ public class LogBuffer {
             return;
         }
 
-        // Add event to end of buffer
-        buffer.add(event);
-
-        // If buffer exceeds max size, remove oldest event
-        if (buffer.size() > MAX_BUFFER_SIZE) {
+        // Remove oldest event if buffer is full
+        if (buffer.size() >= MAX_BUFFER_SIZE) {
             buffer.remove(0);
         }
+
+        // Add new event to end of buffer
+        buffer.add(event);
     }
 }

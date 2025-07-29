@@ -17,60 +17,62 @@ public class MappingDiffer {
         Mappings diffMappings = new Mappings(MapperService.SINGLE_MAPPING_NAME);
 
         // Get properties from input mappings
-        Map<String, Object> existingProps = mappings.getSourceAsMap();
-        if (existingProps == null) {
+        Map<String, Object> sourceProps = mappings.getSourceAsMap();
+        if (sourceProps == null || sourceProps.isEmpty()) {
             return diffMappings;
         }
 
-        // Create map for storing differences
+        // Get current index mappings
+        Map<String, Object> currentProps = getCurrentIndexMappings(tableName);
+        
+        // Compare and add fields that don't exist in current mappings
         Map<String, Object> diffProps = new HashMap<>();
+        compareProperties(sourceProps, currentProps, diffProps);
 
-        // Iterate through existing properties
-        for (Map.Entry<String, Object> entry : existingProps.entrySet()) {
-            String fieldName = entry.getKey();
-            
-            // Skip _source field
-            if ("_source".equals(fieldName)) {
-                continue;
-            }
-
-            // Add field to diff if it doesn't exist in current mappings
-            if (!currentMappingsContainField(tableName, fieldName)) {
-                diffProps.put(fieldName, entry.getValue());
-            }
+        // Build new mappings excluding _source
+        if (!diffProps.isEmpty()) {
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("properties", diffProps);
+            diffMappings.sourceAsMap().putAll(properties);
         }
-
-        // Set properties on diff mappings
-        diffMappings.sourceFromMap(diffProps);
 
         return diffMappings;
     }
 
-    // Helper method to check if field exists in current mappings
-    private boolean currentMappingsContainField(String tableName, String fieldName) {
+    private Map<String, Object> getCurrentIndexMappings(String tableName) {
         try {
-            // Get current mappings for table
-            MappingMetadata currentMappings = getCurrentMappings(tableName);
-            if (currentMappings == null) {
-                return false;
+            GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
+            GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+            ImmutableOpenMap<String, MappingMetadata> mappings = response.getMappings();
+            MappingMetadata mapping = mappings.get(tableName);
+            if (mapping != null) {
+                return mapping.getSourceAsMap();
             }
-
-            Map<String, Object> properties = (Map<String, Object>) currentMappings.getSourceAsMap().get("properties");
-            return properties != null && properties.containsKey(fieldName);
-
         } catch (Exception e) {
-            return false;
+            // Handle exception
         }
+        return new HashMap<>();
     }
 
-    // Helper method to get current mappings
-    private MappingMetadata getCurrentMappings(String tableName) {
-        try {
-            // Implementation would depend on your Elasticsearch client
-            // This is just a placeholder
-            return null;
-        } catch (Exception e) {
-            return null;
+    private void compareProperties(Map<String, Object> source, Map<String, Object> current, 
+                                 Map<String, Object> diff) {
+        for (Map.Entry<String, Object> entry : source.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (!current.containsKey(key)) {
+                diff.put(key, value);
+            } else if (value instanceof Map) {
+                Map<String, Object> sourceNested = (Map<String, Object>) value;
+                Map<String, Object> currentNested = (Map<String, Object>) current.get(key);
+                Map<String, Object> diffNested = new HashMap<>();
+                
+                compareProperties(sourceNested, currentNested, diffNested);
+                
+                if (!diffNested.isEmpty()) {
+                    diff.put(key, diffNested); 
+                }
+            }
         }
     }
 }

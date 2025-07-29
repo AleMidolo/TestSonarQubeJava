@@ -23,6 +23,10 @@ public class BoundCalculator<K extends Comparable<K>> {
             for (int j = i + 1; j < keys.size(); j++) {
                 if (currentKey.compareTo(keys.get(j)) <= 0) {
                     upperBound = j;
+                    break;
+                }
+                if (j == keys.size() - 1) {
+                    upperBound = keys.size();
                 }
             }
             

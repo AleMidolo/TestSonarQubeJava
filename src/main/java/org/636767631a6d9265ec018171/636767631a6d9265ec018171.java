@@ -32,31 +32,35 @@ public class LinkedList<E> {
 
         // If the node to be removed is the head
         if (node == head) {
-            head = node.next;
+            head = head.next;
             if (head != null) {
                 head.prev = null;
             } else {
-                // If head is null, the list is empty, so tail should also be null
+                // If the list becomes empty, update the tail as well
                 tail = null;
             }
-        } else if (node == tail) {
-            // If the node to be removed is the tail
-            tail = node.prev;
+            return true;
+        }
+
+        // If the node to be removed is the tail
+        if (node == tail) {
+            tail = tail.prev;
             if (tail != null) {
                 tail.next = null;
             } else {
-                // If tail is null, the list is empty, so head should also be null
+                // If the list becomes empty, update the head as well
                 head = null;
             }
-        } else {
-            // If the node is somewhere in the middle
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
+            return true;
         }
 
-        // Clear the node's references
-        node.next = null;
-        node.prev = null;
+        // If the node is somewhere in the middle
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        }
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        }
 
         return true;
     }

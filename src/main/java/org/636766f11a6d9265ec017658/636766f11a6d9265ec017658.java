@@ -17,10 +17,7 @@ public class FilePathUtils {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 12
-        System.out.println(indexOfLastSeparator("/home/user/file.txt"));       // Output: 10
-        System.out.println(indexOfLastSeparator("file.txt"));                  // Output: -1
-        System.out.println(indexOfLastSeparator(null));                        // Output: -1
+        String filename = "C:\\Users\\Example\\Documents\\file.txt";
+        System.out.println(indexOfLastSeparator(filename)); // Output: 24
     }
 }

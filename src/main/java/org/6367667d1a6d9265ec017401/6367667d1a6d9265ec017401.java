@@ -2,7 +2,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UnescapeJava {
-
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
@@ -55,17 +54,17 @@ public class UnescapeJava {
                                     sb.append((char) unicode);
                                     i += 5;
                                 } catch (NumberFormatException e) {
-                                    throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+                                    throw new Exception("Invalid Unicode escape sequence: " + hex);
                                 }
                             } else {
-                                throw new Exception("Invalid Unicode escape sequence: incomplete sequence");
+                                throw new Exception("Incomplete Unicode escape sequence");
                             }
                             break;
                         default:
                             throw new Exception("Invalid escape sequence: \\" + nextChar);
                     }
                 } else {
-                    throw new Exception("Invalid escape sequence: ends with \\");
+                    throw new Exception("Incomplete escape sequence");
                 }
             } else {
                 sb.append(ch);
@@ -79,7 +78,7 @@ public class UnescapeJava {
             String input = "Hello\\nWorld\\t\\u0041";
             String output = unescapeJava(input);
             System.out.println(output);  // Output: Hello
-                                         // World    A
+                                        // World   A
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,8 +9,8 @@ final class ByteVector {
 
     public ByteVector put11(final int byteValue1, final int byteValue2) {
         // Ensure the values are within byte range
-        if (byteValue1 < -128 || byteValue1 > 127 || byteValue2 < -128 || byteValue2 > 127) {
-            throw new IllegalArgumentException("Byte values must be between -128 and 127");
+        if (byteValue1 < 0 || byteValue1 > 255 || byteValue2 < 0 || byteValue2 > 255) {
+            throw new IllegalArgumentException("Byte values must be between 0 and 255");
         }
 
         // Add the bytes to the vector

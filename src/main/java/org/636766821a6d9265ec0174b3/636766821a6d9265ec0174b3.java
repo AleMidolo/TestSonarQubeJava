@@ -3,34 +3,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class BroadcastFilterExample extends BroadcastReceiver {
-
-    /**
-     * {@link BroadcastFilter} को कॉल करें
-     * @param msg
-     * @return
-     */
-    protected Object filter(Object msg) {
-        // Implement your filtering logic here
-        // For example, you can check if the message is of a certain type
-        if (msg instanceof Intent) {
-            Intent intent = (Intent) msg;
-            // Perform some action based on the intent
-            // For example, you can check the action of the intent
-            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-                // Handle boot completed event
-                return "Boot completed event filtered";
-            }
-        }
-        // Return null or the original message if no filtering is needed
-        return msg;
-    }
+public class BroadcastFilter extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        // You can call the filter method here if needed
-        Object filteredMsg = filter(intent);
-        // Handle the filtered message as needed
+        // Handle the broadcast
+    }
+
+    protected Object filter(Object msg) {
+        // Implement your filtering logic here
+        // For example, you can check the message and decide whether to process it or not
+        if (msg instanceof String) {
+            String message = (String) msg;
+            if (message.contains("important")) {
+                return message; // Return the message if it contains the word "important"
+            }
+        }
+        return null; // Return null if the message does not meet the criteria
     }
 }

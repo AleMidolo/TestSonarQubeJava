@@ -22,6 +22,11 @@ public class FileUtils {
         return extensionIndex;
     }
 
+    /**
+     * अंतिम पथ सेपरेटर का इंडेक्स लौटाता है, जो कि Unix या Windows फॉर्मेट में हो सकता है।
+     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है
+     * @return अंतिम पथ सेपरेटर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
+     */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;

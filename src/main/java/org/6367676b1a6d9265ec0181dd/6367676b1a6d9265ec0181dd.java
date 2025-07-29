@@ -1,4 +1,5 @@
 public class StringUtils {
+
     /**
      * स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या लौटाता है।
      * @param str वह स्ट्रिंग जिसमें खोज करनी है। यदि यह null है तो 0 लौटाएं।
@@ -6,7 +7,7 @@ public class StringUtils {
      * @return स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या।
      */
     public static int countOccurrencesOf(String str, String sub) {
-        if (str == null || sub == null || sub.isEmpty()) {
+        if (str == null || sub == null || str.isEmpty() || sub.isEmpty()) {
             return 0;
         }
 
@@ -23,7 +24,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         String str = "ababababab";
-        String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 5
+        String sub = "aba";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

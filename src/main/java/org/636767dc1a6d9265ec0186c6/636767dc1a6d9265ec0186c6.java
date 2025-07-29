@@ -37,7 +37,6 @@ public class FieldChecker {
         // Example usage
         FieldChecker checker = new FieldChecker();
         Fields inputFields = new Fields(Set.of("field1", "field2"));
-        boolean result = checker.containsAllFields(inputFields);
-        System.out.println("All fields present: " + result);
+        System.out.println(checker.containsAllFields(inputFields)); // Should print true if fields are stored
     }
 }

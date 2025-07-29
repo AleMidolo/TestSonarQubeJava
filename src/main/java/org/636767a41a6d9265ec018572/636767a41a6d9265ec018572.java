@@ -23,6 +23,6 @@ public class VarintReader {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint");
+        throw new IOException("Malformed varint64");
     }
 }

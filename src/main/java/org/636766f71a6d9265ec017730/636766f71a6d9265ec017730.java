@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Arrays;
 
 public class CollectionUtils {
 
@@ -23,5 +23,11 @@ public class CollectionUtils {
         }
 
         return result.toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        Collection<Object> collection = Arrays.asList("Hello", null, 123, null, "World");
+        String[] result = toNoNullStringArray(collection);
+        System.out.println(Arrays.toString(result)); // Output: [Hello, 123, World]
     }
 }

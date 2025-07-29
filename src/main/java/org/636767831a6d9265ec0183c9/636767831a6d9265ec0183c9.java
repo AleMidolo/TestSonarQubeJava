@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class DiagnosticReference {
+public class DiagnosisReference {
     private static Stack<String> referenceStack = new Stack<>();
 
     /**
@@ -15,22 +15,17 @@ public class DiagnosticReference {
         }
     }
 
-    // Optional: Method to push a reference onto the stack
+    // Optional: Method to push a new reference onto the stack
     public static void push(String reference) {
         referenceStack.push(reference);
     }
 
-    // Optional: Method to pop a reference from the stack
+    // Optional: Method to pop the top reference from the stack
     public static String pop() {
         if (!referenceStack.isEmpty()) {
             return referenceStack.pop();
         } else {
             return "";
         }
-    }
-
-    // Optional: Method to check if the stack is empty
-    public static boolean isEmpty() {
-        return referenceStack.isEmpty();
     }
 }

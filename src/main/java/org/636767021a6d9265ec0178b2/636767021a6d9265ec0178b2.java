@@ -1,10 +1,10 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<Object> stack;
+public class FrameStackHandler {
+    private Stack<Object> frameStack;
 
-    public FrameStack() {
-        this.stack = new Stack<>();
+    public FrameStackHandler() {
+        frameStack = new Stack<>();
     }
 
     /**
@@ -15,12 +15,12 @@ public class FrameStack {
         // Parse the descriptor to determine how many types to pop
         int count = countTypesInDescriptor(descriptor);
 
-        // Pop the required number of types from the stack
+        // Pop the specified number of types from the stack
         for (int i = 0; i < count; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
             } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
+                throw new IllegalStateException("Frame stack is empty.");
             }
         }
     }
@@ -32,17 +32,19 @@ public class FrameStack {
      */
     private int countTypesInDescriptor(String descriptor) {
         // This is a simplified example. In a real implementation, you would need to parse
-        // the descriptor string according to the JVM specification to determine the number of types.
-        // For example, a descriptor like "(I)F" would indicate one argument (int) and one return type (float).
+        // the descriptor string according to the specific format of the descriptor.
+        // For example, in Java, method descriptors follow a specific format like "(I)V".
         // Here, we assume the descriptor is a simple string where each character represents a type.
         return descriptor.length();
     }
 
     // Example usage
     public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(1); // Example push
-        frameStack.stack.push(2); // Example push
-        frameStack.pop("II"); // Example pop based on descriptor
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("Type1");
+        handler.frameStack.push("Type2");
+        handler.frameStack.push("Type3");
+
+        handler.pop("Type1Type2"); // Pops two types from the stack
     }
 }

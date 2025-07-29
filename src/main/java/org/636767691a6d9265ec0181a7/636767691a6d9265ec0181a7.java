@@ -1,5 +1,4 @@
 public class StringTrimmer {
-
     /**
      * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
      * @param str वह स्ट्रिंग जिसे जांचना है
@@ -10,12 +9,12 @@ public class StringTrimmer {
         if (str == null || str.isEmpty()) {
             return str;
         }
-
+        
         int index = 0;
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
-
+        
         return str.substring(index);
     }
 

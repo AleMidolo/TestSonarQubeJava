@@ -1,8 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MetricsCache {
-    private final Map<String, METRICS> cache = new HashMap<>();
+public class Cache {
+    private Map<String, METRICS> cacheMap = new HashMap<>();
 
     /**
      * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
@@ -10,12 +10,12 @@ public class MetricsCache {
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
-        if (cache.containsKey(key)) {
-            METRICS existingData = cache.get(key);
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
+        if (cacheMap.containsKey(key)) {
+            METRICS existingData = cacheMap.get(key);
             existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
         } else {
-            cache.put(key, data);
+            cacheMap.put(key, data);
         }
     }
 }
@@ -23,11 +23,11 @@ public class MetricsCache {
 // Assuming METRICS class has the following structure
 class METRICS {
     private String key;
-    private int value;
+    private Map<String, Object> metricsData;
 
-    public METRICS(String key, int value) {
+    public METRICS(String key, Map<String, Object> metricsData) {
         this.key = key;
-        this.value = value;
+        this.metricsData = metricsData;
     }
 
     public String getKey() {
@@ -35,8 +35,10 @@ class METRICS {
     }
 
     public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
+        this.metricsData.putAll(other.metricsData);
     }
 
-    // Other methods and fields as needed
+    public Map<String, Object> getMetricsData() {
+        return metricsData;
+    }
 }

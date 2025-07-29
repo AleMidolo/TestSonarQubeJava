@@ -1,57 +1,31 @@
 import java.util.*;
 
-class Pair<K, V> {
-    private K key;
-    private V value;
+class Graph {
+    private int V; // Number of vertices
+    private List<List<Integer>> adj; // Adjacency list
 
-    public Pair(K key, V value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pair<?, ?> pair = (Pair<?, ?>) o;
-        return Objects.equals(key, pair.key) && Objects.equals(value, pair.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(key, value);
-    }
-}
-
-public class Graph {
-    private Map<Integer, List<Integer>> adjacencyList;
-
-    public Graph() {
-        this.adjacencyList = new HashMap<>();
+    public Graph(int V) {
+        this.V = V;
+        adj = new ArrayList<>(V);
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
     }
 
     public void addEdge(int u, int v) {
-        adjacencyList.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
-        adjacencyList.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+        adj.get(u).add(v);
+        adj.get(v).add(u);
     }
 
     private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = new ArrayList<>();
 
-        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
-            int u = entry.getKey();
-            for (int v : entry.getValue()) {
-                if (u < v) { // To avoid processing the same edge twice
+        // Iterate over all edges
+        for (int u = 0; u < V; u++) {
+            for (int v : adj.get(u)) {
+                if (u < v) { // Ensure each edge is processed only once
                     List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                    globalSeparators.add(new Pair<>(separators, u));
+                    globalSeparators.add(new Pair<>(separators, new Pair<>(u, v)));
                 }
             }
         }
@@ -60,26 +34,38 @@ public class Graph {
     }
 
     private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
-        // Placeholder for the actual implementation of finding minimal separators
-        // This is a complex problem and typically involves advanced graph algorithms
-        // such as BFS, DFS, or flow-based methods.
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-        // Example: Adding a dummy separator
-        separators.add(new Pair<>(u, v));
+
+        // Temporarily remove the edge (u, v)
+        adj.get(u).remove((Integer) v);
+        adj.get(v).remove((Integer) u);
+
+        // Find all minimal separators between u and v
+        // This is a placeholder for a more complex algorithm
+        // For simplicity, we assume that the minimal separators are the common neighbors of u and v
+        Set<Integer> commonNeighbors = new HashSet<>(adj.get(u));
+        commonNeighbors.retainAll(adj.get(v));
+
+        for (int neighbor : commonNeighbors) {
+            separators.add(new Pair<>(u, neighbor));
+            separators.add(new Pair<>(v, neighbor));
+        }
+
+        // Restore the edge (u, v)
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+
         return separators;
     }
 
-    public static void main(String[] args) {
-        Graph graph = new Graph();
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 4);
-        graph.addEdge(4, 1);
+    // Helper class to represent a pair of values
+    class Pair<A, B> {
+        A first;
+        B second;
 
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = graph.computeGlobalSeparatorList();
-        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : globalSeparators) {
-            System.out.println("Edge: " + pair.getValue());
-            System.out.println("Separators: " + pair.getKey());
+        Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
         }
     }
 }

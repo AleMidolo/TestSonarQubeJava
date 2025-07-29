@@ -8,17 +8,10 @@ public class LoggerChecker {
      * @param name उस लॉगर का नाम जिसे खोजा जाना है।
      */
     public Logger exists(String name) {
-        try {
-            // LogManager.getLogger() will return the logger if it exists, otherwise it will create a new one.
-            // To check if the logger exists, we can compare the logger's name.
-            Logger logger = LogManager.getLogger(name);
-            if (logger.getName().equals(name)) {
-                return logger;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            // In case of any exception, return null
+        Logger logger = LogManager.getLogger(name);
+        if (logger != null) {
+            return logger;
+        } else {
             return null;
         }
     }

@@ -10,12 +10,18 @@ public class ObjectRegistry {
      */
     static void register(Object value) {
         if (value == null) {
-            throw new IllegalArgumentException("Null objects cannot be registered.");
+            throw new IllegalArgumentException("Value cannot be null");
         }
         if (!registeredObjects.contains(value)) {
             registeredObjects.add(value);
         } else {
-            throw new IllegalStateException("Object is already registered.");
+            throw new IllegalStateException("Object already registered");
         }
+    }
+
+    public static void main(String[] args) {
+        Object obj = new Object();
+        register(obj);
+        System.out.println("Object registered successfully.");
     }
 }

@@ -15,10 +15,9 @@ public class CharUtils {
         return ch != null ? ch : defaultValue;
     }
 
-    // Example usage
     public static void main(String[] args) {
-        System.out.println(toChar(null, 'X'));  // Output: X
-        System.out.println(toChar(' ', 'X'));   // Output:  
-        System.out.println(toChar('A', 'X'));   // Output: A
+        System.out.println(CharUtils.toChar(null, 'X')); // Output: X
+        System.out.println(CharUtils.toChar(' ', 'X'));  // Output:  
+        System.out.println(CharUtils.toChar('A', 'X'));  // Output: A
     }
 }

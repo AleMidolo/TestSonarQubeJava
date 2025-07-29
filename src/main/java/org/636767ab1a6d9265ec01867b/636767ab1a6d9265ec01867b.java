@@ -1,5 +1,5 @@
-import java.nio.charset.StandardCharsets;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class UTF8Writer {
 
@@ -8,52 +8,50 @@ public class UTF8Writer {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
 
+        // Convert the CharSequence to a byte array using UTF-8 encoding
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
 
-        while (buffer.hasRemaining()) {
-            if (lb.remaining() == 0) {
-                lb = session.next(lb);
+        // Write the bytes to the LinkedBuffer
+        for (byte b : utf8Bytes) {
+            if (lb.isFull()) {
+                lb = session.allocateNewBuffer();
             }
-            lb.put(buffer.get());
+            lb.put(b);
         }
 
         return lb;
     }
 
+    // Assuming LinkedBuffer and WriteSession are defined as follows:
     public static class LinkedBuffer {
-        private byte[] buffer;
+        private final ByteBuffer buffer;
         private int position;
 
         public LinkedBuffer(int capacity) {
-            this.buffer = new byte[capacity];
+            this.buffer = ByteBuffer.allocate(capacity);
             this.position = 0;
         }
 
-        public void put(byte b) {
-            if (position >= buffer.length) {
-                throw new IndexOutOfBoundsException("Buffer overflow");
-            }
-            buffer[position++] = b;
+        public boolean isFull() {
+            return position >= buffer.capacity();
         }
 
-        public int remaining() {
-            return buffer.length - position;
+        public void put(byte b) {
+            if (isFull()) {
+                throw new IllegalStateException("Buffer is full");
+            }
+            buffer.put(position++, b);
+        }
+
+        public ByteBuffer getBuffer() {
+            return buffer;
         }
     }
 
     public static class WriteSession {
-        private LinkedBuffer currentBuffer;
-
-        public WriteSession(LinkedBuffer initialBuffer) {
-            this.currentBuffer = initialBuffer;
-        }
-
-        public LinkedBuffer next(LinkedBuffer currentBuffer) {
-            // Allocate a new buffer and link it to the current one
-            LinkedBuffer newBuffer = new LinkedBuffer(currentBuffer.buffer.length);
-            currentBuffer = newBuffer;
-            return currentBuffer;
+        public LinkedBuffer allocateNewBuffer() {
+            // Allocate a new buffer with a default capacity
+            return new LinkedBuffer(1024);
         }
     }
 }

@@ -27,11 +27,23 @@ public class BeanMap {
         }
     }
 
-    public Object getProperty(String key) {
+    public void put(String key, Object value) {
+        properties.put(key, value);
+    }
+
+    public Object get(String key) {
         return properties.get(key);
     }
 
-    public void setProperty(String key, Object value) {
-        properties.put(key, value);
+    public static void main(String[] args) {
+        BeanMap source = new BeanMap();
+        source.put("name", "John");
+        source.put("age", 30);
+
+        BeanMap target = new BeanMap();
+        target.putAllWriteable(source);
+
+        System.out.println(target.get("name")); // Output: John
+        System.out.println(target.get("age"));  // Output: 30
     }
 }

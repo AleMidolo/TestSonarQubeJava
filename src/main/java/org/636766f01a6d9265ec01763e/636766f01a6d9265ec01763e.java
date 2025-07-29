@@ -10,25 +10,20 @@ public class CharsetTranslator {
      * @return El equivalente en Java para este nombre.
      */
     private static String javaCharset(String charset) {
-        if (charset == null) {
-            throw new IllegalArgumentException("El nombre del charset no puede ser nulo.");
-        }
-
         try {
             // Intenta obtener el Charset correspondiente al nombre MIME
             Charset javaCharset = Charset.forName(charset);
             return javaCharset.name();
-        } catch (IllegalCharsetNameException e) {
-            throw new IllegalArgumentException("Nombre de charset no válido: " + charset, e);
-        } catch (UnsupportedCharsetException e) {
-            throw new IllegalArgumentException("Charset no soportado: " + charset, e);
+        } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
+            // Si el nombre no es válido o no es soportado, devuelve el nombre por defecto "UTF-8"
+            return "UTF-8";
         }
     }
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        String mimeCharset = "UTF-8";
+        String mimeCharset = "ISO-8859-1";
         String javaCharset = javaCharset(mimeCharset);
-        System.out.println("El charset Java equivalente para " + mimeCharset + " es: " + javaCharset);
+        System.out.println("El equivalente en Java para " + mimeCharset + " es: " + javaCharset);
     }
 }

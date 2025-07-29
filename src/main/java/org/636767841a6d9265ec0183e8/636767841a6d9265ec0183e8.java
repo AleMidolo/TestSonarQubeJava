@@ -20,26 +20,21 @@ public class EventBuffer {
             size++;
         } else {
             // Si el búfer está lleno, se puede manejar de diferentes maneras, como:
-            // 1. Ignorar el nuevo evento.
-            // 2. Sobrescribir el evento más antiguo.
-            // 3. Expandir el búfer dinámicamente.
-            // Aquí se implementa la opción 2: sobrescribir el evento más antiguo.
-            System.arraycopy(buffer, 1, buffer, 0, size - 1);
-            buffer[size - 1] = event;
+            // 1. Ignorar el nuevo evento
+            // 2. Sobrescribir el evento más antiguo (implementación de un búfer circular)
+            // 3. Lanzar una excepción
+            // Aquí se implementa la opción 1: ignorar el nuevo evento
+            System.out.println("Buffer lleno, evento ignorado.");
         }
     }
 
     // Método para obtener el tamaño actual del búfer
-    public int size() {
+    public int getSize() {
         return size;
     }
 
-    // Método para obtener el evento en una posición específica
-    public LoggingEvent get(int index) {
-        if (index >= 0 && index < size) {
-            return buffer[index];
-        } else {
-            throw new IndexOutOfBoundsException("Índice fuera de los límites del búfer");
-        }
+    // Método para obtener el búfer completo
+    public LoggingEvent[] getBuffer() {
+        return buffer;
     }
 }

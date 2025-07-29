@@ -10,7 +10,7 @@ public class ByteVector {
     }
 
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // Ensure space for 4 bytes
+        ensureCapacity(size + 4); // Ensure there's space for 4 bytes
 
         // Insert the integer in big-endian order
         data[size++] = (byte) (intValue >> 24);
@@ -28,13 +28,11 @@ public class ByteVector {
         }
     }
 
-    // Optional: Add a method to get the current size of the vector
-    public int size() {
-        return size;
-    }
-
-    // Optional: Add a method to get the underlying byte array
     public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

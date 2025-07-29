@@ -2,11 +2,27 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-    // Assuming this class has a method to remove an AtmosphereHandler
-    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        // Implementation to remove the AtmosphereHandler associated with the given mapping
-        // This is a placeholder implementation, actual implementation may vary
-        // based on the internal structure of AtmosphereFramework
-        return this; // Return the current instance for method chaining
+    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
+
+    /**
+     * Elimina un {@link AtmosphereHandler}.
+     * @param mapping el mapeo utilizado al invocar {@link #addAtmosphereHandler(String, AtmosphereHandler)};
+     * @return true si se eliminó
+     */
+    public boolean removeAtmosphereHandler(String mapping) {
+        if (handlers.containsKey(mapping)) {
+            handlers.remove(mapping);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Añade un {@link AtmosphereHandler} al framework.
+     * @param mapping el mapeo utilizado para identificar el handler.
+     * @param handler el {@link AtmosphereHandler} a añadir.
+     */
+    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
+        handlers.put(mapping, handler);
     }
 }

@@ -15,8 +15,8 @@ public class BooleanUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toBoolean(Boolean.TRUE));  // true
-        System.out.println(toBoolean(Boolean.FALSE)); // false
-        System.out.println(toBoolean(null));         // false
+        System.out.println(toBoolean(Boolean.TRUE));   // true
+        System.out.println(toBoolean(Boolean.FALSE));  // false
+        System.out.println(toBoolean(null));          // false
     }
 }

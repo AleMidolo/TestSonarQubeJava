@@ -23,10 +23,9 @@ public class ByteVector {
         ensureCapacity(size + byteLength);
 
         if (byteArrayValue == null) {
-            // Fill with null bytes
+            // Fill with null bytes (0)
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
-            // Copy bytes from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 

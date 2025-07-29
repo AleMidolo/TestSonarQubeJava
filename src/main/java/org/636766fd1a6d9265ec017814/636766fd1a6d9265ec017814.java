@@ -1,20 +1,14 @@
 public static boolean arrayequals(byte[] a, byte[] b, int count) {
-    // Verificar si alguno de los arreglos es nulo
     if (a == null || b == null) {
-        return false;
+        return a == b; // Si ambos son null, son iguales; si uno es null y el otro no, son diferentes.
     }
-
-    // Verificar si el count es mayor que la longitud de alguno de los arreglos
-    if (count > a.length || count > b.length) {
-        return false;
+    if (a.length < count || b.length < count) {
+        return false; // Si alguno de los arreglos es más corto que count, no pueden ser iguales.
     }
-
-    // Comparar los primeros 'count' bytes de ambos arreglos
     for (int i = 0; i < count; i++) {
         if (a[i] != b[i]) {
-            return false;
+            return false; // Si algún byte no coincide, retornar false.
         }
     }
-
-    return true;
+    return true; // Si todos los bytes coinciden, retornar true.
 }

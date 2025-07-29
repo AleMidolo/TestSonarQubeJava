@@ -1,60 +1,65 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Pair;
 
 public class GraphSeparator {
 
-    // Assuming Pair is a custom class for holding pairs of elements
-    public static class Pair<A, B> {
-        public final A first;
-        public final B second;
+    private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
+        // Assuming E is the type of edges in the graph
+        // Assuming Pair is a custom class or from a library like Apache Commons or JavaFX
+        // Assuming the graph is represented as a list of edges or adjacency list
 
-        public Pair(A first, B second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
+        List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
-    // Assuming E is the type representing edges in the graph
-    // For simplicity, let's assume E is a Pair<Integer, Integer> representing an edge between two vertices
-    private List<Pair<List<Pair<Integer, Integer>>, Pair<Integer, Integer>>> computeGlobalSeparatorList() {
-        // Placeholder for the graph's edges
-        List<Pair<Integer, Integer>> edges = new ArrayList<>();
-        // Add edges to the graph (this is just a placeholder)
-        edges.add(new Pair<>(1, 2));
-        edges.add(new Pair<>(2, 3));
-        edges.add(new Pair<>(3, 4));
-
-        // Placeholder for the result
-        List<Pair<List<Pair<Integer, Integer>>, Pair<Integer, Integer>>> globalSeparators = new ArrayList<>();
-
-        // For each edge in the graph
-        for (Pair<Integer, Integer> edge : edges) {
-            // Compute the neighborhood of the edge
-            Set<Integer> neighborhood = new HashSet<>();
-            neighborhood.add(edge.first);
-            neighborhood.add(edge.second);
+        // Iterate over each edge in the graph
+        for (E edge : getEdges()) {
+            // Get the neighborhood of the edge
+            List<Pair<Integer, Integer>> neighborhood = getNeighborhood(edge);
 
             // Compute the minimal separators in the neighborhood
-            List<Pair<Integer, Integer>> separators = new ArrayList<>();
-            // This is a placeholder for the actual separator computation
-            separators.add(new Pair<>(edge.first, edge.second));
+            List<Pair<Integer, Integer>> minimalSeparators = computeMinimalSeparators(neighborhood);
 
-            // Add the separators for this edge to the global list
-            globalSeparators.add(new Pair<>(separators, edge));
+            // Add the pair of minimal separators and the edge to the global list
+            globalSeparatorList.add(new Pair<>(minimalSeparators, edge));
         }
 
-        return globalSeparators;
+        return globalSeparatorList;
     }
 
-    public static void main(String[] args) {
-        GraphSeparator graphSeparator = new GraphSeparator();
-        List<Pair<List<Pair<Integer, Integer>>, Pair<Integer, Integer>>> result = graphSeparator.computeGlobalSeparatorList();
-        // Print the result (for demonstration purposes)
-        for (Pair<List<Pair<Integer, Integer>>, Pair<Integer, Integer>> pair : result) {
-            System.out.println("Edge: " + pair.second.first + " - " + pair.second.second);
-            System.out.println("Separators: " + pair.first);
+    // Placeholder method to get the edges of the graph
+    private List<E> getEdges() {
+        // Implementation depends on how the graph is represented
+        return new ArrayList<>();
+    }
+
+    // Placeholder method to get the neighborhood of an edge
+    private List<Pair<Integer, Integer>> getNeighborhood(E edge) {
+        // Implementation depends on how the graph is represented
+        return new ArrayList<>();
+    }
+
+    // Placeholder method to compute minimal separators in a neighborhood
+    private List<Pair<Integer, Integer>> computeMinimalSeparators(List<Pair<Integer, Integer>> neighborhood) {
+        // Implementation depends on the specific algorithm used to find minimal separators
+        return new ArrayList<>();
+    }
+
+    // Assuming Pair is a custom class or from a library
+    private static class Pair<K, V> {
+        private final K key;
+        private final V value;
+
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
         }
     }
 }

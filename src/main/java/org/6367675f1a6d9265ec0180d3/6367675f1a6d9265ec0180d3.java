@@ -30,11 +30,6 @@ public class GraphUtils {
             edgeMap.put(edge, edge);
         }
         
-        return new IsomorphicGraphMapping<>(
-            graph, // source graph
-            graph, // target graph (same as source for automorphism)
-            vertexMap,
-            edgeMap
-        );
+        return new IsomorphicGraphMapping<>(graph, graph, vertexMap, edgeMap);
     }
 }

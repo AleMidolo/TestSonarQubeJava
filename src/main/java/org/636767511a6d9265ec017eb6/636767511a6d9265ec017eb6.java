@@ -2,10 +2,12 @@ import java.util.function.Predicate;
 
 public class Graph {
     
+    // Node class representing vertices in the graph
     private class Node {
         // Node implementation details
     }
     
+    // Circulator class for traversing outer face
     private class OuterFaceCirculator {
         private Node current;
         
@@ -20,8 +22,6 @@ public class Graph {
         public void setCurrent(Node node) {
             this.current = node;
         }
-        
-        // Other circulator methods
     }
     
     /**
@@ -35,15 +35,18 @@ public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we reach the stop node
+        // Continue traversing until we reach stop node
         while (!circulator.getCurrent().equals(stop)) {
+            
             // Check if current node satisfies predicate
             if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
             
             // Move to next node based on direction
-            Node next = (dir == 1) ? getNextNode(circulator.getCurrent()) : getPrevNode(circulator.getCurrent());
+            Node next = (dir == 1) ? getNextClockwise(circulator.getCurrent()) 
+                                  : getNextCounterClockwise(circulator.getCurrent());
+            
             circulator.setCurrent(next);
         }
         
@@ -51,14 +54,14 @@ public class Graph {
         return circulator;
     }
     
-    // Helper methods to get next/previous nodes
-    private Node getNextNode(Node current) {
-        // Implementation to get next node
+    // Helper methods to get next nodes
+    private Node getNextClockwise(Node current) {
+        // Implementation to get next clockwise node
         return null;
     }
     
-    private Node getPrevNode(Node current) {
-        // Implementation to get previous node
+    private Node getNextCounterClockwise(Node current) {
+        // Implementation to get next counter-clockwise node
         return null;
     }
 }

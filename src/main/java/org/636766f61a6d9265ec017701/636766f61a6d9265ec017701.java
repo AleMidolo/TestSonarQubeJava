@@ -6,8 +6,7 @@ public class StringUtils {
      *
      * @param str the String to check, may be null
      * @param searchStr the String to find, may be null
-     * @return the last index of the search String,
-     *         -1 if no match or <code>null</code> string input
+     * @return the last index of the search String, -1 if no match or null string input
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

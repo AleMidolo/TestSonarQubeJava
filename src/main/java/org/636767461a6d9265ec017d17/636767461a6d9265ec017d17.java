@@ -2,7 +2,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class DotUtils {
-
     /**
      * Unescape a string DOT identifier.
      * @param input the input
@@ -13,12 +12,12 @@ public class DotUtils {
             return input;
         }
 
-        // Check if input is quoted
+        // Check if the string starts and ends with quotes
         if (input.startsWith("\"") && input.endsWith("\"")) {
-            // Remove quotes
+            // Remove the surrounding quotes
             String unquoted = input.substring(1, input.length() - 1);
             
-            // Replace escaped quotes
+            // Replace escaped quotes with regular quotes
             unquoted = unquoted.replace("\\\"", "\"");
             
             // Replace escaped newlines
@@ -33,6 +32,7 @@ public class DotUtils {
             return unquoted;
         }
 
+        // If not quoted, return as is
         return input;
     }
 }

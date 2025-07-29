@@ -1,7 +1,7 @@
 package org.example;
 
 public class StringUtils {
-    /**
+    /** 
      * Trim trailing whitespace from the given String.
      * @param str the String to check
      * @return the trimmed String

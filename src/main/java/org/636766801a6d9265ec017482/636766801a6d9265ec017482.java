@@ -21,7 +21,7 @@ public class ClassFileBuffer {
         // Clear existing buffer
         buffer = null;
         
-        // Fill with new bytes
+        // Fill buffer with new bytes
         buffer = baos.toByteArray();
         
         // Reset read pointer to start

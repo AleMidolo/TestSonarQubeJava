@@ -1,52 +1,56 @@
-import org.objectweb.asm.Label;
 import org.objectweb.asm.Frame;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodWriter;
-import org.objectweb.asm.ByteVector;
-import org.objectweb.asm.Type;
+import org.objectweb.asm.Opcodes;
 
 public class StackMapTableWriter {
-    private ByteVector stackMapTableEntries;
-    private Object[] currentFrame;
-    private static final int ITEM_TOP = 0;
-    private static final int ITEM_INTEGER = 1;
-    private static final int ITEM_FLOAT = 2;
-    private static final int ITEM_DOUBLE = 3;
-    private static final int ITEM_LONG = 4;
-    private static final int ITEM_NULL = 5;
-    private static final int ITEM_UNINITIALIZED_THIS = 6;
-    private static final int ITEM_OBJECT = 7;
-    private static final int ITEM_UNINITIALIZED = 8;
-
+    private byte[] stackMapTableEntries;
+    private Frame currentFrame;
+    private int currentIndex;
+    
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
-            Object type = currentFrame[i];
-            if (type instanceof Integer) {
-                int itemType = ((Integer) type).intValue();
-                stackMapTableEntries.putByte(itemType);
-            } else if (type instanceof String) {
-                stackMapTableEntries.putByte(ITEM_OBJECT)
-                    .putShort(((String) type).hashCode());
-            } else if (type instanceof Label) {
-                stackMapTableEntries.putByte(ITEM_UNINITIALIZED)
-                    .putShort(((Label) type).getOffset());
-            } else {
-                // Handle other types like Long, Double, Float etc
-                if (type == Opcodes.LONG) {
-                    stackMapTableEntries.putByte(ITEM_LONG);
-                } else if (type == Opcodes.DOUBLE) {
-                    stackMapTableEntries.putByte(ITEM_DOUBLE);
-                } else if (type == Opcodes.FLOAT) {
-                    stackMapTableEntries.putByte(ITEM_FLOAT);
-                } else if (type == Opcodes.INTEGER) {
-                    stackMapTableEntries.putByte(ITEM_INTEGER);
-                } else if (type == Opcodes.NULL) {
-                    stackMapTableEntries.putByte(ITEM_NULL);
-                } else if (type == Opcodes.UNINITIALIZED_THIS) {
-                    stackMapTableEntries.putByte(ITEM_UNINITIALIZED_THIS);
-                } else {
-                    stackMapTableEntries.putByte(ITEM_TOP);
-                }
+            int abstractType = currentFrame.getAbstractType(i);
+            switch (abstractType) {
+                case Frame.TOP:
+                    stackMapTableEntries[currentIndex++] = Opcodes.TOP;
+                    break;
+                case Frame.INTEGER:
+                    stackMapTableEntries[currentIndex++] = Opcodes.INTEGER;
+                    break;
+                case Frame.FLOAT:
+                    stackMapTableEntries[currentIndex++] = Opcodes.FLOAT; 
+                    break;
+                case Frame.DOUBLE:
+                    stackMapTableEntries[currentIndex++] = Opcodes.DOUBLE;
+                    break;
+                case Frame.LONG:
+                    stackMapTableEntries[currentIndex++] = Opcodes.LONG;
+                    break;
+                case Frame.NULL:
+                    stackMapTableEntries[currentIndex++] = Opcodes.NULL;
+                    break;
+                case Frame.UNINITIALIZED_THIS:
+                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED_THIS;
+                    break;
+                case Frame.OBJECT:
+                    stackMapTableEntries[currentIndex++] = Opcodes.OBJECT;
+                    putClass(currentFrame.getObjectType(i));
+                    break;
+                default:
+                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED;
+                    putUnsignedShort(currentFrame.getInitializationLabel(i).getOffset());
+                    break;
             }
         }
+    }
+    
+    private void putClass(String className) {
+        // Implementation for writing class name
+    }
+    
+    private void putUnsignedShort(int value) {
+        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
+        stackMapTableEntries[currentIndex++] = (byte)value;
     }
 }

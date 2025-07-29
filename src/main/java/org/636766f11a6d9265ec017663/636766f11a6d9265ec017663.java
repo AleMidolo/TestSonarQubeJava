@@ -1,10 +1,10 @@
 public class ArrayUtils {
 
     /**
-     * <p>जांचता है कि क्या दो ऐरे एक ही लंबाई के हैं, <code>null</code> ऐरे को लंबाई <code>0</code> के रूप में मानते हुए।</p>
-     * @param array1 पहला ऐरे, <code>null</code> हो सकता है
-     * @param array2 दूसरा ऐरे, <code>null</code> हो सकता है
-     * @return <code>true</code> यदि ऐरे की लंबाई मेल खाती है, <code>null</code> को एक खाली ऐरे के रूप में मानते हुए
+     * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
+     * @param array1 il primo array, può essere <code>null</code>
+     * @param array2 il secondo array, può essere <code>null</code>
+     * @return <code>true</code> se la lunghezza degli array corrisponde, trattando <code>null</code> come un array vuoto
      */
     public static boolean isSameLength(final double[] array1, final double[] array2) {
         int length1 = (array1 == null) ? 0 : array1.length;
@@ -16,10 +16,10 @@ public class ArrayUtils {
         double[] array1 = {1.0, 2.0, 3.0};
         double[] array2 = {4.0, 5.0, 6.0};
         double[] array3 = null;
-        double[] array4 = {};
+        double[] array4 = {7.0};
 
         System.out.println(isSameLength(array1, array2)); // true
         System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array4)); // true
+        System.out.println(isSameLength(array3, array4)); // false
     }
 }

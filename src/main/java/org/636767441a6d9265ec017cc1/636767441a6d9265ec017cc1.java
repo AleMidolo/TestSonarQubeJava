@@ -1,10 +1,10 @@
 class TreeNode<T> {
-    T data;
+    T value;
     TreeNode<T> left;
     TreeNode<T> right;
 
-    TreeNode(T data) {
-        this.data = data;
+    TreeNode(T value) {
+        this.value = value;
         this.left = null;
         this.right = null;
     }
@@ -13,9 +13,9 @@ class TreeNode<T> {
 public class TreeRotation<T> {
 
     /**
-     * दाहिनी नोड घुमाने का कार्य करता है।
-     * @param node वह नोड जिसे घुमाना है
-     * @return {@code node} का नया पैरेंट
+     * Esegue una rotazione a destra del nodo.
+     * @param node un nodo da ruotare
+     * @return un nuovo genitore del {@code node}
      */
     private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {

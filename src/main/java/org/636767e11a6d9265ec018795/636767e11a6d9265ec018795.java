@@ -1,49 +1,52 @@
 import java.util.Objects;
 
-public class BucketCompatibilityChecker {
+public class DataTable {
+    // Assuming DataTable has some fields and methods
+    // For the purpose of this example, let's assume it has a field 'bucket'
+    private String bucket;
 
+    public DataTable(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataTable dataTable = (DataTable) o;
+        return Objects.equals(bucket, dataTable.bucket);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bucket);
+    }
+}
+
+public class BucketChecker {
     /**
-     * @param dataset the dataset to check for bucket compatibility
-     * @return true if the buckets are compatible, false otherwise
+     * @return true se il bucket è lo stesso.
      */
     public boolean isCompatible(DataTable dataset) {
-        if (dataset == null) {
-            return false;
-        }
-
-        // Assuming DataTable has a method getBuckets() that returns a list of buckets
-        List<Bucket> buckets = dataset.getBuckets();
-
-        if (buckets == null || buckets.isEmpty()) {
-            return false;
-        }
-
-        // Get the first bucket to compare with the rest
-        Bucket firstBucket = buckets.get(0);
-
-        for (Bucket bucket : buckets) {
-            if (!Objects.equals(firstBucket, bucket)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-
-// Assuming Bucket and DataTable classes are defined as follows:
-class Bucket {
-    // Bucket properties and methods
-}
-
-class DataTable {
-    private List<Bucket> buckets;
-
-    public List<Bucket> getBuckets() {
-        return buckets;
+        // Assuming 'this' refers to another DataTable instance
+        // For the purpose of this example, let's assume 'this' has a field 'bucket'
+        String thisBucket = this.getBucket();
+        String otherBucket = dataset.getBucket();
+        return Objects.equals(thisBucket, otherBucket);
     }
 
-    public void setBuckets(List<Bucket> buckets) {
-        this.buckets = buckets;
+    // Assuming this class has a field 'bucket'
+    private String bucket;
+
+    public BucketChecker(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getBucket() {
+        return bucket;
     }
 }

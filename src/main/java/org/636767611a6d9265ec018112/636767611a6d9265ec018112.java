@@ -5,8 +5,13 @@ import java.util.NoSuchElementException;
  */
 @Override
 protected V provideNextVertex() {
-    if (vertices.isEmpty()) {
-        throw new NoSuchElementException("No more vertices available.");
+    // Assuming V is a generic type representing a vertex in a graph
+    // This method should return the next vertex to be processed
+    // For example, in a BFS or DFS traversal, this would be the next vertex in the queue or stack
+
+    // Example implementation for a queue-based traversal (BFS)
+    if (queue.isEmpty()) {
+        throw new NoSuchElementException("No more vertices to process");
     }
-    return vertices.poll();
+    return queue.poll();
 }

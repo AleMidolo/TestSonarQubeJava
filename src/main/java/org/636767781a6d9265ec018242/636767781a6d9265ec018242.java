@@ -8,9 +8,6 @@ public class Logger {
         this.appenders = appenders;
     }
 
-    /**
-     * सभी जुड़े हुए अपेंडर्स पर <code>doAppend</code> विधि को कॉल करें।
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int count = 0;
         if (appenders != null) {

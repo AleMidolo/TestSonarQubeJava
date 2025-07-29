@@ -2,13 +2,12 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-
     private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
-     * एक {@link AtmosphereHandler} को हटाएं।
-     * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String, AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
-     * @return यदि हटाया गया है तो true
+     * Rimuove un {@link AtmosphereHandler}.
+     * @param mapping il mapping utilizzato quando si invoca {@link #addAtmosphereHandler(String, AtmosphereHandler)};
+     * @return true se rimosso
      */
     public boolean removeAtmosphereHandler(String mapping) {
         if (handlers.containsKey(mapping)) {
@@ -19,9 +18,9 @@ public class AtmosphereFramework {
     }
 
     /**
-     * एक {@link AtmosphereHandler} को जोड़ें।
-     * @param mapping मैपिंग जो {@link AtmosphereHandler} को पहचानती है।
-     * @param handler जोड़ा जाने वाला {@link AtmosphereHandler}।
+     * Aggiunge un {@link AtmosphereHandler}.
+     * @param mapping il mapping da associare all'handler
+     * @param handler l'handler da aggiungere
      */
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);

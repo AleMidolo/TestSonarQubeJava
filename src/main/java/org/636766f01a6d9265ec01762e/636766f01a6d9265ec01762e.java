@@ -1,7 +1,7 @@
 /**
- * <p>जांचता है कि क्या प्राइमिटिव डबल्स का एक एरे खाली है या <code>null</code> है।</p>
- * @param array  परीक्षण के लिए एरे
- * @return <code>true</code> यदि एरे खाली है या <code>null</code> है
+ * <p>Controlla se un array di double primitivi è vuoto o <code>null</code>.</p>
+ * @param array  l'array da testare
+ * @return <code>true</code> se l'array è vuoto o <code>null</code>
  * @since 2.1
  */
 public static boolean isEmpty(final double[] array) {

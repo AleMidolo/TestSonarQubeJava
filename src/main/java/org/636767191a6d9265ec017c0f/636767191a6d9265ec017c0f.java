@@ -10,14 +10,19 @@ public class ByteVector {
     }
 
     /**
-     * इस बाइट वेक्टर को बड़ा करता है ताकि यह 'size' और बाइट्स प्राप्त कर सके।
-     * @param size अतिरिक्त बाइट्स की संख्या जो इस बाइट वेक्टर को प्राप्त करनी चाहिए।
+     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
      */
     private void enlarge(final int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        data = newData;
         capacity = newCapacity;
     }
 
-    // Other methods of the ByteVector class can be added here
+    // Other methods of the ByteVector class...
 }

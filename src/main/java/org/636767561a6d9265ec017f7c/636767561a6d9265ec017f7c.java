@@ -4,46 +4,47 @@ import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
- * एक सेट प्रतिनिधित्व से एक ग्राफ पथ में परिवर्तन करें।
- * @param tour एक सेट जो यात्रा के किनारों को शामिल करता है
- * @param graph ग्राफ
- * @return एक ग्राफ पथ
+ * Trasforma una rappresentazione di un insieme in un percorso di grafo.
+ * @param tour un insieme contenente i bordi del tour
+ * @param graph il grafo
+ * @return un percorso di grafo
  */
 protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour cannot be empty.");
+        throw new IllegalArgumentException("Il tour non può essere vuoto.");
     }
 
-    // Create a map to store the adjacency of vertices
-    Map<V, V> adjacencyMap = new HashMap<>();
+    // Trova il vertice iniziale
+    V startVertex = null;
     for (E edge : tour) {
+        startVertex = graph.getEdgeSource(edge);
+        break;
+    }
+
+    // Costruisci il percorso
+    List<E> edgeList = new ArrayList<>(tour);
+    List<V> vertexList = new ArrayList<>();
+    vertexList.add(startVertex);
+
+    V currentVertex = startVertex;
+    for (E edge : edgeList) {
         V source = graph.getEdgeSource(edge);
         V target = graph.getEdgeTarget(edge);
-        adjacencyMap.put(source, target);
+
+        if (source.equals(currentVertex)) {
+            vertexList.add(target);
+            currentVertex = target;
+        } else if (target.equals(currentVertex)) {
+            vertexList.add(source);
+            currentVertex = source;
+        } else {
+            throw new IllegalArgumentException("Il tour non è un percorso valido nel grafo.");
+        }
     }
 
-    // Find the starting vertex
-    V startVertex = adjacencyMap.keySet().iterator().next();
-    V currentVertex = startVertex;
-    List<V> vertexList = new ArrayList<>();
-    List<E> edgeList = new ArrayList<>();
-
-    // Traverse the tour
-    do {
-        vertexList.add(currentVertex);
-        V nextVertex = adjacencyMap.get(currentVertex);
-        E edge = graph.getEdge(currentVertex, nextVertex);
-        edgeList.add(edge);
-        currentVertex = nextVertex;
-    } while (!currentVertex.equals(startVertex));
-
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, startVertex, startVertex, vertexList, edgeList);
+    // Crea e restituisce il GraphPath
+    return new DefaultGraphPath<>(graph, startVertex, currentVertex, edgeList, vertexList);
 }

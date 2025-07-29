@@ -1,8 +1,8 @@
 /**
- * निर्दिष्ट {@code long} मानों की तुलना करता है। लौटाए गए मान का संकेत {@code ((Long) a).compareTo(b)} के समान है। <p> <b>Java 7 और बाद के लिए नोट:</b> इस विधि को अप्रचलित माना जाना चाहिए; इसके बजाय समकक्ष {@link Long#compare} विधि का उपयोग करें।
- * @param a तुलना के लिए पहला {@code long}
- * @param b तुलना के लिए दूसरा {@code long}
- * @return यदि {@code a} {@code b} से कम है तो नकारात्मक मान; यदि {@code a} {@code b} से अधिक है तो सकारात्मक मान; या यदि वे समान हैं तो शून्य
+ * Confronta i due valori {@code long} specificati. Il segno del valore restituito è lo stesso di {@code ((Long) a).compareTo(b)}. <p> <b>Nota per Java 7 e versioni successive:</b> questo metodo dovrebbe essere considerato deprecato; utilizzare invece il metodo equivalente {@link Long#compare}.
+ * @param a il primo {@code long} da confrontare
+ * @param b il secondo {@code long} da confrontare
+ * @return un valore negativo se {@code a} è minore di {@code b}; un valore positivo se {@code a} è maggiore di {@code b}; o zero se sono uguali
  */
 private static int compareSigned(long a, long b) {
     return Long.compare(a, b);

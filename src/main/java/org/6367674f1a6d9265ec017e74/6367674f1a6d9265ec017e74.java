@@ -23,20 +23,17 @@ public class Queue<T> {
         return elements.size();
     }
 
-    /**
-     * कतार का पाठ्य प्रतिनिधित्व लौटाता है।
-     * @return कतार का पाठ्य प्रतिनिधित्व।
-     */
     @Override
     public String toString() {
-        return elements.toString();
-    }
-
-    public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        System.out.println(queue.toString()); // Output: [1, 2, 3]
+        StringBuilder sb = new StringBuilder();
+        sb.append("Queue: [");
+        for (T element : elements) {
+            sb.append(element);
+            if (elements.indexOf(element) != elements.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

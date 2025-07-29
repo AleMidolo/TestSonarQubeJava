@@ -1,7 +1,7 @@
-public class HexDigitConverter {
+public class HexConverter {
     /**
-     * @param b एक ASCII एन्कोडेड कैरेक्टर 0-9 a-f A-F
-     * @return कैरेक्टर का बाइट मान 0-16।
+     * @param b Un carattere codificato in ASCII da 0-9, a-f, A-F
+     * @return Il valore byte del carattere da 0 a 16.
      */
     public static byte convertHexDigit(byte b) {
         if (b >= '0' && b <= '9') {
@@ -11,14 +11,17 @@ public class HexDigitConverter {
         } else if (b >= 'A' && b <= 'F') {
             return (byte) (b - 'A' + 10);
         } else {
-            throw new IllegalArgumentException("Invalid hex digit: " + (char) b);
+            throw new IllegalArgumentException("Il carattere non è un valore esadecimale valido.");
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
-        byte hexDigit = 'A';
-        byte result = convertHexDigit(hexDigit);
-        System.out.println("The byte value of " + (char) hexDigit + " is " + result);
+        byte testChar1 = 'A';
+        byte testChar2 = '7';
+        byte testChar3 = 'f';
+
+        System.out.println(convertHexDigit(testChar1)); // Output: 10
+        System.out.println(convertHexDigit(testChar2)); // Output: 7
+        System.out.println(convertHexDigit(testChar3)); // Output: 15
     }
 }

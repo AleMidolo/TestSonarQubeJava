@@ -1,10 +1,10 @@
 /**
- * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग से शुरू होता है (वैकल्पिक रूप से केस-इंसेंसिटिव)।</p>
+ * <p>Controlla se una Stringa inizia con un prefisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
  * @see String#startsWith(String)
- * @param str  वह String जिसे जांचना है, यह null हो सकता है
- * @param prefix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
- * @param ignoreCase यह दर्शाता है कि तुलना में केस को नजरअंदाज करना चाहिए या नहीं (केस-इंसेंसिटिव)।
- * @return <code>true</code> यदि String उपसर्ग से शुरू होता है या दोनों <code>null</code> हैं
+ * @param str  la Stringa da controllare, può essere null
+ * @param prefix il prefisso da trovare, può essere null
+ * @param ignoreCase indica se il confronto deve ignorare le maiuscole e minuscole (senza distinzione tra maiuscole e minuscole) o meno.
+ * @return <code>true</code> se la Stringa inizia con il prefisso o entrambi <code>null</code>
  */
 private static boolean startsWith(final String str, final String prefix, final boolean ignoreCase) {
     if (str == null && prefix == null) {

@@ -7,30 +7,21 @@ public class ByteReader {
     private int bufferPosition;
     private int bufferLength;
 
-    public ByteReader(InputStream inputStream) {
+    public ByteReader(InputStream inputStream, int bufferSize) {
         this.inputStream = inputStream;
-        this.buffer = new byte[8192]; // 8KB buffer
+        this.buffer = new byte[bufferSize];
         this.bufferPosition = 0;
         this.bufferLength = 0;
     }
 
-    /**
-     * <code>buffer</code> से एक बाइट पढ़ता है, और आवश्यकतानुसार इसे फिर से भरता है।
-     * @return इनपुट स्ट्रीम से अगली बाइट।
-     * @throws IOException यदि कोई और डेटा उपलब्ध नहीं है।
-     */
     public byte readByte() throws IOException {
         if (bufferPosition >= bufferLength) {
-            refillBuffer();
+            bufferLength = inputStream.read(buffer);
+            if (bufferLength == -1) {
+                throw new IOException("No more data available");
+            }
+            bufferPosition = 0;
         }
         return buffer[bufferPosition++];
-    }
-
-    private void refillBuffer() throws IOException {
-        bufferLength = inputStream.read(buffer);
-        if (bufferLength == -1) {
-            throw new IOException("No more data available");
-        }
-        bufferPosition = 0;
     }
 }

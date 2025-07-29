@@ -45,6 +45,14 @@ public class ThreadSnapshotParser {
             return timestamp;
         }
 
+        public String getThreadName() {
+            return threadName;
+        }
+
+        public String getState() {
+            return state;
+        }
+
         public static ThreadSnapshot fromString(String line) {
             String[] parts = line.split(",");
             if (parts.length == 3) {

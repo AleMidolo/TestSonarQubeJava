@@ -3,9 +3,9 @@ import java.util.Arrays;
 public class HashCodeUtil {
 
     /**
-     * निर्दिष्ट एरे की सामग्री के आधार पर एक हैश कोड लौटाता है। यदि <code>array</code> <code>null</code> है, तो यह विधि 0 लौटाती है।
-     * @param array वह लॉन्ग एरे जिससे हैशकोड प्राप्त करना है
-     * @return लॉन्ग एरे का हैशकोड, जो कि 0 हो सकता है यदि एरे null है।
+     * Restituisce un codice hash basato sul contenuto dell'array specificato. Se <code>array</code> è <code>null</code>, questo metodo restituisce 0.
+     * @param array l'array di long per ottenere un codice hash
+     * @return il codice hash dell'array di long, che potrebbe essere 0 se l'array è null.
      */
     public static int nullSafeHashCode(long[] array) {
         if (array == null) {
@@ -17,8 +17,6 @@ public class HashCodeUtil {
     public static void main(String[] args) {
         long[] array = {1L, 2L, 3L};
         System.out.println(nullSafeHashCode(array)); // Output: 30817
-
-        long[] nullArray = null;
-        System.out.println(nullSafeHashCode(nullArray)); // Output: 0
+        System.out.println(nullSafeHashCode(null)); // Output: 0
     }
 }

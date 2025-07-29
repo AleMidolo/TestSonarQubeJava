@@ -1,21 +1,16 @@
 import java.util.Map;
 
-public class CustomMap<K, V> implements Map<K, V> {
-    // Assuming this class has a private field `map` of type Map<K, V>
-    private final Map<K, V> map;
+public class MyMap<K, V> implements Map<K, V> {
+    // Assuming this class has a private field `entries` that stores the key-value pairs
+    private final Map<K, V> entries;
 
-    public CustomMap(Map<K, V> map) {
-        this.map = map;
+    public MyMap(Map<K, V> entries) {
+        this.entries = entries;
     }
 
-    /**
-     * यदि इस मानचित्र में निर्दिष्ट कुंजी के लिए एक मैपिंग है, तो <code>true</code> लौटाएं।
-     * @param key  वह कुंजी जिसे खोजा जाना है
-     * @return यदि मानचित्र में कुंजी है तो true
-     */
     @Override
     public boolean containsKey(final Object key) {
-        return map.containsKey(key);
+        return entries.containsKey(key);
     }
 
     // Other methods of the Map interface would need to be implemented here

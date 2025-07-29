@@ -5,17 +5,20 @@ public class ObjectRegistry {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**
-     * <p> दिए गए ऑब्जेक्ट को रजिस्टर करता है। अनंत लूप से बचने के लिए रिफ्लेक्शन विधियों द्वारा उपयोग किया जाता है। </p>
-     * @param value रजिस्टर करने के लिए ऑब्जेक्ट।
+     * <p> Registra l'oggetto fornito. Utilizzato dai metodi di riflessione per evitare loop infiniti. </p>
+     * @param value L'oggetto da registrare.
      */
-    static void register(Object value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Value cannot be null");
-        }
-        if (!registeredObjects.contains(value)) {
+    public static void register(Object value) {
+        if (value != null) {
             registeredObjects.add(value);
-        } else {
-            throw new IllegalStateException("Object already registered");
         }
+    }
+
+    public static boolean isRegistered(Object value) {
+        return registeredObjects.contains(value);
+    }
+
+    public static void clearRegistry() {
+        registeredObjects.clear();
     }
 }

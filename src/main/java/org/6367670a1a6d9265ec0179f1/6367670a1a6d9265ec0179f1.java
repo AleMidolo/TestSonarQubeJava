@@ -1,12 +1,9 @@
-import java.util.Objects;
-
 public class ShortArrayConverter {
 
     /**
-     * <p>प्राथमिक शॉर्ट्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> 
-     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>short</code> एरे
-     * @return एक <code>Short</code> एरे, <code>null</code> यदि इनपुट एरे null है
+     * <p>Converte un array di short primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>short</code>
+     * @return un array di <code>Short</code>, <code>null</code> se l'array di input è nullo
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

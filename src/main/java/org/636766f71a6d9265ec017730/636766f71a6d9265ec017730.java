@@ -1,27 +1,37 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CollectionUtils {
 
     /**
-     * दिए गए संग्रह को स्ट्रिंग्स के एक ऐरे में परिवर्तित करता है। लौटाया गया ऐरे <code>null</code> प्रविष्टियाँ नहीं रखता है। ध्यान दें कि {@link Arrays#sort(Object[])} एक {@link NullPointerException} फेंकेगा यदि ऐरे का कोई तत्व <code>null</code> है।
-     * @param collection परिवर्तित करने के लिए संग्रह
-     * @return स्ट्रिंग्स का एक नया ऐरे।
+     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>.
+     * Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
+     * @param collection La collezione da convertire
+     * @return Un nuovo array di Stringhe.
      */
     static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
 
-        List<String> result = new ArrayList<>();
+        // Filtra gli elementi non nulli e li converte in String
+        ArrayList<String> nonNullStrings = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                result.add(obj.toString());
+                nonNullStrings.add(obj.toString());
             }
         }
 
-        return result.toArray(new String[0]);
+        // Converti l'ArrayList in un array di String
+        return nonNullStrings.toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        Collection<Object> collection = Arrays.asList("Hello", null, 123, null, "World");
+        String[] result = toNoNullStringArray(collection);
+        System.out.println(Arrays.toString(result));  // Output: [Hello, 123, World]
     }
 }

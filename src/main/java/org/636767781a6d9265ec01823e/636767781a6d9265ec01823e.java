@@ -1,38 +1,56 @@
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAppender extends AppenderSkeleton {
-    private List<Client> clients = new ArrayList<>();
+    private List<PrintWriter> clients = new ArrayList<>();
+    private ServerSocket serverSocket;
 
-    public void addClient(Client client) {
-        clients.add(client);
+    public CustomAppender(int port) throws IOException {
+        serverSocket = new ServerSocket(port);
+        new Thread(this::acceptClients).start();
+    }
+
+    private void acceptClients() {
+        try {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+                synchronized (clients) {
+                    clients.add(writer);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
-        for (Client client : clients) {
-            client.write(message);
+        String message = layout.format(event);
+        synchronized (clients) {
+            for (PrintWriter writer : clients) {
+                writer.println(message);
+            }
         }
     }
 
     @Override
     public void close() {
-        // Cleanup resources if needed
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean requiresLayout() {
-        return false;
-    }
-
-    // Assuming a Client class with a write method
-    public static class Client {
-        public void write(String message) {
-            // Implement the logic to write the message to the client
-            System.out.println("Writing to client: " + message);
-        }
+        return true;
     }
 }

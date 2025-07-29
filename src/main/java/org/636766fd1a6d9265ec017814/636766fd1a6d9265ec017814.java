@@ -1,16 +1,14 @@
-import java.util.Arrays;
-
-public class ArrayComparator {
+public class ByteArrayComparator {
     /**
-     * <code>a</code> और <code>b</code> ऐरे में पहले <code>count</code> बाइट्स की तुलना करता है।
-     * @param a     तुलना के लिए पहला ऐरे।
-     * @param b     तुलना के लिए दूसरा ऐरे।
-     * @param count कितनी बाइट्स की तुलना की जानी चाहिए।
-     * @return <code>true</code> यदि <code>a</code> और <code>b</code> ऐरे में पहले <code>count</code> बाइट्स समान हैं।
+     * Confronta i <code>count</code> primi byte negli array <code>a</code> e <code>b</code>.
+     * @param a     Il primo array da confrontare.
+     * @param b     Il secondo array da confrontare.
+     * @param count Quanti byte devono essere confrontati.
+     * @return <code>true</code> se i <code>count</code> primi byte negli array <code>a</code> e <code>b</code> sono uguali.
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
         if (a == null || b == null) {
-            return a == b;
+            return false;
         }
         if (a.length < count || b.length < count) {
             return false;
@@ -30,5 +28,7 @@ public class ArrayComparator {
 
         System.out.println(arrayequals(array1, array2, 5)); // true
         System.out.println(arrayequals(array1, array3, 5)); // false
+        System.out.println(arrayequals(array1, array2, 3)); // true
+        System.out.println(arrayequals(array1, array3, 3)); // true
     }
 }

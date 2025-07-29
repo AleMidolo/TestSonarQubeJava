@@ -1,12 +1,19 @@
 /**
- * <p> इस बिल्डर द्वारा निर्मित स्ट्रिंग प्राप्त करता है। </p>
- * @return निर्मित स्ट्रिंग
+ * <p> Ottiene la String costruita da questo builder. </p>
+ * @return la stringa costruita
  */
-@Override
 public String toString() {
-    StringBuilder builder = new StringBuilder();
-    // Add your logic here to build the string
-    // Example:
-    // builder.append("Some content");
-    return builder.toString();
+    // Assuming this is part of a StringBuilder-like class
+    // and the internal representation is stored in a char array or similar.
+    // For simplicity, let's assume the internal representation is a StringBuilder.
+    StringBuilder sb = new StringBuilder();
+    // Append the internal content to the StringBuilder
+    // For example, if the internal content is stored in a char array:
+    // sb.append(internalCharArray);
+    // Or if it's stored in a List<String>:
+    // for (String part : internalList) {
+    //     sb.append(part);
+    // }
+    // Return the constructed string
+    return sb.toString();
 }

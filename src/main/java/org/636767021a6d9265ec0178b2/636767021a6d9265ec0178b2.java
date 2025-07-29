@@ -1,50 +1,59 @@
 import java.util.Stack;
 
-public class FrameStackHandler {
-    private Stack<Object> frameStack;
-
-    public FrameStackHandler() {
-        this.frameStack = new Stack<>();
-    }
+public class FrameStack {
+    private Stack<String> outputFrameStack = new Stack<>();
 
     /**
-     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
-     * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        // Parse the descriptor to determine how many types to pop
-        int count = countTypesInDescriptor(descriptor);
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
+        }
 
-        // Pop the required number of types from the stack
-        for (int i = 0; i < count; i++) {
-            if (!frameStack.isEmpty()) {
-                frameStack.pop();
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, rimuovi i tipi di argomento
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            removeTypesFromStack(argsDescriptor);
+        } else {
+            // È un tipo singolo, rimuovi il tipo dallo stack
+            removeTypeFromStack(descriptor);
+        }
+    }
+
+    private void removeTypesFromStack(String argsDescriptor) {
+        int index = 0;
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
+            if (currentChar == 'L') {
+                // Tipo oggetto, trova il punto e virgola
+                int semicolonIndex = argsDescriptor.indexOf(';', index);
+                if (semicolonIndex == -1) {
+                    break;
+                }
+                String type = argsDescriptor.substring(index, semicolonIndex + 1);
+                removeTypeFromStack(type);
+                index = semicolonIndex + 1;
+            } else if (currentChar == '[') {
+                // Tipo array, rimuovi il tipo base
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
             } else {
-                throw new IllegalStateException("Frame stack is empty.");
+                // Tipo primitivo
+                removeTypeFromStack(argsDescriptor.substring(index, index + 1));
+                index++;
             }
         }
     }
 
-    /**
-     * Helper method to count the number of types in the descriptor.
-     * @param descriptor The descriptor string.
-     * @return The number of types in the descriptor.
-     */
-    private int countTypesInDescriptor(String descriptor) {
-        // This is a simplified example. In a real implementation, you would need to parse
-        // the descriptor string according to the JVM specification to count the types.
-        // For example, a descriptor like "(Ljava/lang/String;I)V" would have 2 types.
-        // Here, we assume the descriptor is a simple string where each character represents a type.
-        return descriptor.length();
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push("Type1");
-        handler.frameStack.push("Type2");
-        handler.frameStack.push("Type3");
-
-        handler.pop("Type1Type2"); // Pops 2 types from the stack
+    private void removeTypeFromStack(String type) {
+        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+            outputFrameStack.pop();
+        }
     }
 }

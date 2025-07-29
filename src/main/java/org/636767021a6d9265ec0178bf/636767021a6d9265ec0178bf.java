@@ -14,7 +14,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
             if (strValue.length() == 1) {
                 return strValue.charAt(0);
             } else {
-                throw new Exception("String value must be exactly one character long to convert to Character.");
+                throw new Exception("Stringa di lunghezza diversa da 1 non può essere convertita in Character.");
             }
         }
         if (value instanceof Number) {
@@ -22,10 +22,10 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
             if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
                 return (char) intValue;
             } else {
-                throw new Exception("Numeric value is out of range for Character.");
+                throw new Exception("Valore numerico fuori dal range di un Character.");
             }
         }
-        throw new Exception("Cannot convert " + value.getClass().getName() + " to Character.");
+        throw new Exception("Tipo di dato non supportato per la conversione in Character.");
     }
-    throw new Exception("Conversion to " + type.getName() + " is not supported by this method.");
+    throw new Exception("Tipo di destinazione non supportato: " + type.getName());
 }

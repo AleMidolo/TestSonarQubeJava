@@ -3,11 +3,11 @@ import java.util.Objects;
 public class DoubleArrayConverter {
 
     /**
-     * <p>ऑब्जेक्ट डबल्स के एक एरे को प्रिमिटिव्स में परिवर्तित करता है।</p>
-     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>Double</code> एरे, यह <code>null</code> हो सकता है
-     * @return एक <code>double</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
-     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
+     * <p>Converte un array di oggetti Double in primitivi.</p>
+     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>Double</code>, può essere <code>null</code>
+     * @return un array di <code>double</code>, <code>null</code> se l'array di input è nullo
+     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
      */
     public static double[] toPrimitive(final Double[] array) {
         if (array == null) {
@@ -15,9 +15,17 @@ public class DoubleArrayConverter {
         }
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            Objects.requireNonNull(array[i], "Array element cannot be null");
-            result[i] = array[i];
+            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        // Test case
+        Double[] testArray = {1.0, 2.0, 3.0};
+        double[] primitiveArray = toPrimitive(testArray);
+        for (double d : primitiveArray) {
+            System.out.println(d);
+        }
     }
 }

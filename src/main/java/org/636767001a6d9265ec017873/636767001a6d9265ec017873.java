@@ -1,15 +1,15 @@
 public class StringUtils {
 
     /**
-     * <p>एक स्ट्रिंग को {@link StringBuilder#reverse()} के अनुसार उलटता है।</p> 
-     * <p>एक <code>null</code> स्ट्रिंग <code>null</code> लौटाता है।</p> 
-     * <pre> 
-     * StringUtils.reverse(null)  = null 
-     * StringUtils.reverse("")    = "" 
-     * StringUtils.reverse("bat") = "tab" 
+     * Inverte una Stringa come per {@link StringBuilder#reverse()}.
+     * Una Stringa <code>null</code> restituisce <code>null</code>.
+     * <pre>
+     * StringUtils.reverse(null)  = null
+     * StringUtils.reverse("")    = ""
+     * StringUtils.reverse("bat") = "tab"
      * </pre>
-     * @param str  वह स्ट्रिंग जिसे उलटना है, यह null हो सकता है
-     * @return उलटी हुई स्ट्रिंग, यदि इनपुट स्ट्रिंग null है तो <code>null</code>
+     * @param str  la Stringa da invertire, può essere null
+     * @return la Stringa invertita, <code>null</code> se l'input è una Stringa null
      */
     public static String reverse(final String str) {
         if (str == null) {
@@ -20,7 +20,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println(reverse(null));  // null
-        System.out.println(reverse(""));   // ""
+        System.out.println(reverse(""));    // ""
         System.out.println(reverse("bat")); // "tab"
     }
 }

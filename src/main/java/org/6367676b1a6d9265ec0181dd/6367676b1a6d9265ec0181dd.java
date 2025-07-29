@@ -1,10 +1,10 @@
 public class StringUtils {
 
     /**
-     * स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या लौटाता है।
-     * @param str वह स्ट्रिंग जिसमें खोज करनी है। यदि यह null है तो 0 लौटाएं।
-     * @param sub वह स्ट्रिंग जिसे खोजा जाना है। यदि यह null है तो 0 लौटाएं।
-     * @return स्ट्रिंग {@code str} में उपस्ट्रिंग {@code sub} की उपस्थिति की संख्या।
+     * Restituisce il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
+     * @param str stringa in cui cercare. Restituisce 0 se è null.
+     * @param sub stringa da cercare. Restituisce 0 se è null.
+     * @return il numero di occorrenze della sottostringa {@code sub} nella stringa {@code str}.
      */
     public static int countOccurrencesOf(String str, String sub) {
         if (str == null || sub == null || sub.isEmpty()) {
@@ -24,7 +24,7 @@ public class StringUtils {
 
     public static void main(String[] args) {
         String str = "ababababab";
-        String sub = "ab";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 5
+        String sub = "aba";
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

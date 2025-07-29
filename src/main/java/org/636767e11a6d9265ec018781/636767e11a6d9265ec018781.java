@@ -1,48 +1,50 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cache {
-    private Map<String, METRICS> cacheMap;
-
-    public Cache() {
-        this.cacheMap = new HashMap<>();
-    }
+public class MetricsCache {
+    private Map<String, METRICS> cache = new HashMap<>();
 
     /**
-     * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
-     * @param data जिसे संभावित रूप से जोड़ा जाना है।
+     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
+     * @param data da aggiungere potenzialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
-        if (cacheMap.containsKey(key)) {
-            METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
+        if (data == null) {
+            return;
+        }
+
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve a unique identifier
+        METRICS existingData = cache.get(key);
+
+        if (existingData == null) {
+            cache.put(key, data);
         } else {
-            cacheMap.put(key, data);
+            // Merge the existing data with the new data
+            existingData.merge(data); // Assuming METRICS has a method merge(METRICS) to combine data
         }
     }
-}
 
-// Assuming METRICS class has the following structure
-class METRICS {
-    private String key;
-    private int value;
+    // Assuming METRICS is a class with necessary methods
+    public static class METRICS {
+        private String key;
+        private Map<String, Object> metricsData;
 
-    public METRICS(String key, int value) {
-        this.key = key;
-        this.value = value;
-    }
+        public METRICS(String key, Map<String, Object> metricsData) {
+            this.key = key;
+            this.metricsData = metricsData;
+        }
 
-    public String getKey() {
-        return key;
-    }
+        public String getKey() {
+            return key;
+        }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void merge(METRICS other) {
-        this.value += other.getValue();
+        public void merge(METRICS other) {
+            if (other != null && other.metricsData != null) {
+                for (Map.Entry<String, Object> entry : other.metricsData.entrySet()) {
+                    this.metricsData.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
     }
 }

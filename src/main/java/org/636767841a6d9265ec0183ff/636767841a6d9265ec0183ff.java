@@ -1,28 +1,34 @@
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-import java.awt.Rectangle;
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
 
-public class TableRowSelector {
+public class TableUtils {
 
     /**
-     * निर्दिष्ट JTable में निर्दिष्ट पंक्ति का चयन करता है और निर्दिष्ट JScrollPane को नए चयनित पंक्ति की ओर स्क्रॉल करता है। सबसे महत्वपूर्ण बात यह है कि repaint() कॉल को इतना देर से किया जाता है कि तालिका नए चयनित पंक्ति को सही तरीके से पेंट कर सके, जो कि स्क्रीन से बाहर हो सकती है।
-     * @param row चयन करने के लिए पंक्ति का सूचकांक
-     * @param table को निर्दिष्ट JScrollPane से संबंधित होना चाहिए
-     * @param pane JScrollPane जिसमें JTable समाहित है
+     * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. 
+     * Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente 
+     * la riga appena selezionata, che potrebbe essere fuori dallo schermo.
+     * @param row l'indice della riga da selezionare
+     * @param table deve appartenere allo JScrollPane specificato
+     * @param pane lo JScrollPane che contiene la JTable
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        // पंक्ति का चयन करें
+        if (table == null || pane == null) {
+            throw new IllegalArgumentException("Table and pane must not be null.");
+        }
+
+        // Seleziona la riga specificata
         table.setRowSelectionInterval(row, row);
 
-        // चयनित पंक्ति की स्थिति प्राप्त करें
+        // Ottieni il rettangolo che rappresenta la cella della riga selezionata
         Rectangle cellRect = table.getCellRect(row, 0, true);
 
-        // JViewport को स्क्रॉल करें ताकि चयनित पंक्ति दिखाई दे
-        JViewport viewport = pane.getViewport();
-        viewport.scrollRectToVisible(cellRect);
+        // Scorri lo JScrollPane fino alla riga selezionata
+        pane.getViewport().scrollRectToVisible(cellRect);
 
-        // तालिका को पुनः पेंट करें
-        table.repaint();
+        // Ritarda la chiamata a repaint() per permettere alla tabella di dipingere correttamente la riga selezionata
+        SwingUtilities.invokeLater(() -> {
+            table.repaint();
+        });
     }
 }

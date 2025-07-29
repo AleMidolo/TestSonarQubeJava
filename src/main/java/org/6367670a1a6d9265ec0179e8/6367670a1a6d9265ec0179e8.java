@@ -1,16 +1,14 @@
-import java.util.Objects;
+public class DefensiveProgramming {
 
-public class ArrayUtils {
-
-    // Public static empty array reference
+    // Array vuoto pubblico e statico per ottimizzazione della memoria
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**
-     * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p>
-     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए एक खाली ऐरे लौटाती है।</p>
-     * <p>एक मेमोरी ऑप्टिमाइजेशन तकनीक के रूप में, एक खाली ऐरे जो पास किया गया है, इसे इस वर्ग में मौजूद खाली <code>public static</code> संदर्भों से ओवरराइड किया जाएगा।</p>
-     * @param array  वह ऐरे जिसे <code>null</code> या खाली के लिए जांचना है
-     * @return वही ऐरे, <code>public static</code> खाली ऐरे यदि <code>null</code> या खाली इनपुट हो
+     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
+     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>
+     * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
+     * @param array  l'array da controllare per <code>null</code> o vuoto
+     * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
      * @since 2.5
      */
     public static Boolean[] nullToEmpty(final Boolean[] array) {
@@ -20,14 +18,14 @@ public class ArrayUtils {
         return array;
     }
 
-    // Example usage
+    // Esempio di utilizzo
     public static void main(String[] args) {
         Boolean[] array1 = null;
         Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = new Boolean[]{true, false};
+        Boolean[] array3 = {true, false, true};
 
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_BOOLEAN_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
+        System.out.println(nullToEmpty(array1) == EMPTY_BOOLEAN_ARRAY); // true
+        System.out.println(nullToEmpty(array2) == EMPTY_BOOLEAN_ARRAY); // true
+        System.out.println(nullToEmpty(array3) == array3); // true
     }
 }

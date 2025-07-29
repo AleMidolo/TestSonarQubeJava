@@ -1,16 +1,14 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
 
-public class RequestWrapper {
+public class AtmosphereRequestWrapper {
 
     /**
-     * एक {@link HttpServletRequest} को लपेटें।
+     * Fornisce un {@link HttpServletRequest}.
      * @param request {@link HttpServletRequest}
-     * @return एक {@link AtmosphereRequest}
+     * @return un {@link AtmosphereRequest}
      */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
-        // Create an AtmosphereRequest from the HttpServletRequest
-        AtmosphereRequest atmosphereRequest = AtmosphereRequest.wrap(request);
-        return atmosphereRequest;
+        return AtmosphereRequest.wrap(request);
     }
 }

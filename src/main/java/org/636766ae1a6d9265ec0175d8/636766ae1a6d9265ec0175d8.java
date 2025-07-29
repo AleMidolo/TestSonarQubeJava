@@ -1,13 +1,19 @@
 /**
- * 'Content-Range' HTTP हेडर मान बनाएं।
- * @return 'Content-Range' मान
+ * Costruisce il valore dell'intestazione HTTP 'Content-Range'.
+ * @return valore 'Content-Range'
  */
 private String buildContentRange() {
-    // Assuming the content length is known and the range is from start to end
-    long start = 0; // Starting byte position
-    long end = 1023; // Ending byte position
-    long totalLength = 2048; // Total length of the content
+    // Assuming you have the following variables defined in your class:
+    // long start: the start byte of the range
+    // long end: the end byte of the range
+    // long totalSize: the total size of the resource
 
-    // Format: "bytes start-end/totalLength"
-    return String.format("bytes %d-%d/%d", start, end, totalLength);
+    // Example values (you should replace these with actual values)
+    long start = 0;
+    long end = 1023;
+    long totalSize = 2048;
+
+    // Construct the Content-Range header value
+    String contentRange = String.format("bytes %d-%d/%d", start, end, totalSize);
+    return contentRange;
 }

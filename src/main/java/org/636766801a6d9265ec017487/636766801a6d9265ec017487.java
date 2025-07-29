@@ -4,11 +4,11 @@ import java.util.Map;
 public class TemplateEncoder {
 
     public static String encodeTemplateNames(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+        if (s == null) {
+            return null;
         }
 
-        // Create a map to store the special characters and their encoded values
+        // Create a map to hold the characters to be encoded and their corresponding encoded values
         Map<Character, String> encodingMap = new HashMap<>();
         encodingMap.put('{', "%7B");
         encodingMap.put('}', "%7D");

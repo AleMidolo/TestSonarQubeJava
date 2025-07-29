@@ -1,40 +1,33 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ShardingKeyChecker {
 
-    private Map<String, Integer> shardingKeyMap;
-
-    public ShardingKeyChecker() {
-        shardingKeyMap = new HashMap<>();
-        // Initialize with some example data
-        shardingKeyMap.put("model1", 1);
-        shardingKeyMap.put("model2", 2);
-        shardingKeyMap.put("model3", 3);
-    }
-
     /**
-     * @param modelName एंटिटी का मॉडल नाम
-     * @throws IllegalStateException यदि शार्डिंग कुंजी अनुक्रमांक निरंतर नहीं हैं
+     * Verifica che gli indici della chiave di sharding siano continui per un dato modello.
+     * 
+     * @param modelName nome del modello dell'entità
+     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
      */
     private void check(String modelName) throws IllegalStateException {
-        if (!shardingKeyMap.containsKey(modelName)) {
-            throw new IllegalStateException("Model name not found in sharding key map.");
-        }
+        // Estrai gli indici di sharding dal nome del modello
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(modelName);
 
-        int currentKey = shardingKeyMap.get(modelName);
-        int previousKey = currentKey - 1;
-
-        if (!shardingKeyMap.containsValue(previousKey)) {
-            throw new IllegalStateException("Sharding key sequence is not continuous.");
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group());
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
+                throw new IllegalStateException("Gli indici della chiave di sharding non sono continui.");
+            }
+            previousIndex = currentIndex;
         }
     }
 
     public static void main(String[] args) {
         ShardingKeyChecker checker = new ShardingKeyChecker();
         try {
-            checker.check("model2");
-            System.out.println("Sharding key sequence is continuous.");
+            checker.check("model_1_2_3"); // Esempio di chiamata
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

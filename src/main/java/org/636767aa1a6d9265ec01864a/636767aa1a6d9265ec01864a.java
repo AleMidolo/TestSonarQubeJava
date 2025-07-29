@@ -1,15 +1,28 @@
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-/**
- * बाइट्स को {@code byte[]} में कॉपी करता है।
- */
-public byte[] toByteArray() {
-    // Assuming you want to return a copy of the byte array
-    // For demonstration, let's assume we have a source byte array
-    byte[] source = {1, 2, 3, 4, 5}; // Example source array
-    
-    // Create a new array and copy the contents
-    byte[] copy = Arrays.copyOf(source, source.length);
-    
-    return copy;
+public class ByteArrayCopier {
+
+    /**
+     * Copia i byte in un {@code byte[]}.
+     *
+     * @return un array di byte contenente una copia dei byte
+     */
+    public byte[] toByteArray() {
+        // Esempio di implementazione: copia i byte da un ByteArrayOutputStream
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            // Scrivi i byte che vuoi copiare nell'outputStream
+            outputStream.write("Esempio di byte".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
+    }
+
+    public static void main(String[] args) {
+        ByteArrayCopier copier = new ByteArrayCopier();
+        byte[] byteArray = copier.toByteArray();
+        System.out.println(new String(byteArray)); // Stampa i byte come stringa
+    }
 }

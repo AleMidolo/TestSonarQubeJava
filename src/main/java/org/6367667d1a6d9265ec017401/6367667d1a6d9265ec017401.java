@@ -7,70 +7,62 @@ public class UnescapeJava {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder(str.length());
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            if (ch == '\\') {
-                if (i + 1 < str.length()) {
-                    char nextChar = str.charAt(i + 1);
-                    switch (nextChar) {
-                        case '\\':
-                            sb.append('\\');
-                            i++;
-                            break;
-                        case 'n':
-                            sb.append('\n');
-                            i++;
-                            break;
-                        case 't':
-                            sb.append('\t');
-                            i++;
-                            break;
-                        case 'r':
-                            sb.append('\r');
-                            i++;
-                            break;
-                        case 'b':
-                            sb.append('\b');
-                            i++;
-                            break;
-                        case 'f':
-                            sb.append('\f');
-                            i++;
-                            break;
-                        case '\'':
-                            sb.append('\'');
-                            i++;
-                            break;
-                        case '\"':
-                            sb.append('\"');
-                            i++;
-                            break;
-                        case 'u':
-                            if (i + 5 < str.length()) {
-                                String hex = str.substring(i + 2, i + 6);
-                                try {
-                                    int unicode = Integer.parseInt(hex, 16);
-                                    sb.append((char) unicode);
-                                    i += 5;
-                                } catch (NumberFormatException e) {
-                                    throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
-                                }
-                            } else {
-                                throw new Exception("Incomplete Unicode escape sequence");
-                            }
-                            break;
-                        default:
-                            sb.append(ch);
-                            break;
-                    }
-                } else {
-                    sb.append(ch);
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (i < str.length()) {
+            char c = str.charAt(i);
+            if (c == '\\' && i + 1 < str.length()) {
+                char nextChar = str.charAt(i + 1);
+                switch (nextChar) {
+                    case 'n':
+                        sb.append('\n');
+                        i += 2;
+                        break;
+                    case 't':
+                        sb.append('\t');
+                        i += 2;
+                        break;
+                    case 'r':
+                        sb.append('\r');
+                        i += 2;
+                        break;
+                    case 'b':
+                        sb.append('\b');
+                        i += 2;
+                        break;
+                    case 'f':
+                        sb.append('\f');
+                        i += 2;
+                        break;
+                    case '\'':
+                        sb.append('\'');
+                        i += 2;
+                        break;
+                    case '\"':
+                        sb.append('\"');
+                        i += 2;
+                        break;
+                    case '\\':
+                        sb.append('\\');
+                        i += 2;
+                        break;
+                    default:
+                        sb.append(c);
+                        i++;
+                        break;
                 }
             } else {
-                sb.append(ch);
+                sb.append(c);
+                i++;
             }
         }
         return sb.toString();
+    }
+
+    public static void main(String[] args) throws Exception {
+        String input = "Ciao\\nMondo\\t!";
+        String output = unescapeJava(input);
+        System.out.println(output);  // Output: Ciao
+                                    //         Mondo    !
     }
 }

@@ -1,10 +1,7 @@
 /**
- * यह निर्धारित करें कि क्या एक पैरामीटर नाम वर्तमान स्थिति पर समाप्त होता है, अर्थात्, क्या दिया गया वर्ण एक विभाजक के रूप में योग्य है।
+ * Determina se un nome di parametro termina nella posizione attuale, cioè se il carattere fornito può essere considerato un separatore.
  */
 private static boolean isParameterSeparator(final char c) {
-    // विभाजक वर्णों की सूची
-    final String separators = " ,;(){}[]<>+-*/%=&|^~!?:.\t\n\r";
-
-    // जाँचें कि दिया गया वर्ण विभाजक सूची में है या नहीं
-    return separators.indexOf(c) != -1;
+    // Consideriamo come separatori i caratteri che non sono lettere, numeri o underscore
+    return !Character.isLetterOrDigit(c) && c != '_';
 }

@@ -1,27 +1,30 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class CharUtils {
 
-    private static final Map<Character, String> CHAR_CACHE = new HashMap<>();
+    private static final String[] CHAR_STRING_CACHE = new String[128];
+
+    static {
+        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
+            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        }
+    }
 
     /**
-     * <p>एक वर्ण को एक स्ट्रिंग में परिवर्तित करता है जिसमें केवल वही वर्ण होता है।</p>
-     * <p>ASCII 7 बिट वर्णों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही स्ट्रिंग ऑब्जेक्ट लौटाता है।</p>
+     * <p>Converte il carattere in una Stringa che contiene il singolo carattere.</p>
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto String ogni volta.</p>
      * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
-     * @param ch  वह वर्ण जिसे परिवर्तित करना है
-     * @return एक स्ट्रिंग जो निर्दिष्ट वर्ण को समाहित करती है
+     * @param ch  il carattere da convertire
+     * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {
-        if (ch <= 127) { // Check if the character is within ASCII 7-bit range
-            return CHAR_CACHE.computeIfAbsent(ch, k -> String.valueOf(k));
+        if (ch < CHAR_STRING_CACHE.length) {
+            return CHAR_STRING_CACHE[ch];
         }
         return String.valueOf(ch);
     }
 
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
-        System.out.println(toString('A'));  // Output: "A"
-        System.out.println(toString('€'));  // Output: "€"
+        System.out.println(toString('A')); // Output: "A"
+        System.out.println(toString('€')); // Output: "€"
     }
 }

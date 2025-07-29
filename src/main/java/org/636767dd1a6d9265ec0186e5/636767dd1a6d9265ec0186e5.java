@@ -1,10 +1,11 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new java.util.ArrayList<>();
+        this.consumers = new ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
@@ -20,16 +21,14 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetChannelAdder {
+public class TargetManager {
 
     /**
-     * नए लक्ष्य चैनल जोड़ें।
+     * Aggiungi un nuovo canale di destinazione.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
             channels.addConsumer(consumer);
-        } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
     }
 }

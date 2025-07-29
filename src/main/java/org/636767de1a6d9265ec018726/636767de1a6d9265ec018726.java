@@ -28,12 +28,26 @@ public class SequenceRange {
 }
 
 public class ProfileSnapshot {
+
+    /**
+     * costruisce l'intervallo di sequenze per lo snapshot dei profili correnti
+     */
     public List<SequenceRange> buildSequenceRanges() {
-        List<SequenceRange> ranges = new ArrayList<>();
-        // Example logic to create sequence ranges
-        ranges.add(new SequenceRange(1, 10));
-        ranges.add(new SequenceRange(11, 20));
-        ranges.add(new SequenceRange(21, 30));
-        return ranges;
+        List<SequenceRange> sequenceRanges = new ArrayList<>();
+        
+        // Example logic to build sequence ranges
+        sequenceRanges.add(new SequenceRange(1, 100));
+        sequenceRanges.add(new SequenceRange(101, 200));
+        sequenceRanges.add(new SequenceRange(201, 300));
+        
+        return sequenceRanges;
+    }
+
+    public static void main(String[] args) {
+        ProfileSnapshot snapshot = new ProfileSnapshot();
+        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
+        for (SequenceRange range : ranges) {
+            System.out.println(range);
+        }
     }
 }

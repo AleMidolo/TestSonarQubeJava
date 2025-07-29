@@ -12,7 +12,7 @@ public class URIDecoder {
             return pathSegments;
         }
 
-        // Remove leading '/' if present
+        // Ignore the leading '/' if it's an absolute path
         if (path.startsWith("/")) {
             path = path.substring(1);
         }

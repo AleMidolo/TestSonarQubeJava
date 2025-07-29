@@ -1,18 +1,36 @@
-/**
- * निर्दिष्ट स्ट्रिंग से उपस्ट्रिंग प्राप्त करता है, अपवादों से बचते हुए।
- * 
- * @param str   मूल स्ट्रिंग
- * @param start उपस्ट्रिंग का प्रारंभिक सूचकांक (सम्मिलित)
- * @param end   उपस्ट्रिंग का अंतिम सूचकांक (असम्मिलित)
- * @return उपस्ट्रिंग, या खाली स्ट्रिंग यदि कोई अपवाद होता है
- */
-public static String sub(String str, int start, int end) {
-    if (str == null) {
-        return "";
-    }
-    try {
+public class StringUtils {
+
+    /**
+     * Ottiene una sottostringa dalla Stringa specificata evitando eccezioni.
+     * 
+     * @param str   La stringa da cui estrarre la sottostringa.
+     * @param start L'indice di inizio della sottostringa.
+     * @param end   L'indice di fine della sottostringa.
+     * @return La sottostringa estratta, o una stringa vuota se gli indici sono fuori dai limiti.
+     */
+    public static String sub(String str, int start, int end) {
+        if (str == null) {
+            return "";
+        }
+        int length = str.length();
+        if (start < 0) {
+            start = 0;
+        }
+        if (end > length) {
+            end = length;
+        }
+        if (start >= end) {
+            return "";
+        }
         return str.substring(start, end);
-    } catch (IndexOutOfBoundsException e) {
-        return "";
+    }
+
+    public static void main(String[] args) {
+        String testStr = "Hello, World!";
+        System.out.println(sub(testStr, 7, 12)); // Output: "World"
+        System.out.println(sub(testStr, -1, 5)); // Output: "Hello"
+        System.out.println(sub(testStr, 7, 20)); // Output: "World!"
+        System.out.println(sub(null, 0, 5));     // Output: ""
+        System.out.println(sub(testStr, 10, 5)); // Output: ""
     }
 }

@@ -1,16 +1,12 @@
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Vector;
 
 public class ClassPathUtil {
 
     /**
-     * किसी निर्देशिका में सभी जार फ़ाइलों को क्लासपाथ में जोड़ें, जिसे URL के एक वेक्टर के रूप में दर्शाया गया है।
-     * 
-     * @param cpV  क्लासपाथ URL का वेक्टर
-     * @param dir  निर्देशिका जिसमें जार फ़ाइलें हैं
+     * Aggiunge tutti i file jar in una directory al classpath, rappresentato come un Vector di URL.
      */
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
@@ -19,14 +15,13 @@ public class ClassPathUtil {
             throw new IllegalArgumentException("Provided path is not a directory: " + dir);
         }
 
-        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {
-                    URL url = file.toURI().toURL();
-                    cpV.add(url);
+                    cpV.add(file.toURI().toURL());
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException("Failed to convert file to URL: " + file.getAbsolutePath(), e);
                 }
             }
         }
@@ -34,11 +29,12 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        String directoryPath = "path/to/your/directory";
+        String directoryPath = "path/to/your/jar/directory";
         addToClassPath(classPath, directoryPath);
 
-        // Example of using the class loader with the updated classpath
-        URLClassLoader classLoader = new URLClassLoader(classPath.toArray(new URL[0]), ClassLoader.getSystemClassLoader());
-        Thread.currentThread().setContextClassLoader(classLoader);
+        // Print the URLs added to the classpath
+        for (URL url : classPath) {
+            System.out.println(url);
+        }
     }
 }

@@ -3,30 +3,33 @@ import org.apache.log4j.spi.LoggingEvent;
 public class LogFormatter {
 
     /**
-     * एक लॉगिंग इवेंट को एक लेखक के लिए प्रारूपित करता है।
-     * @param event प्रारूपित करने के लिए लॉगिंग इवेंट।
-     * @return प्रारूपित स्ट्रिंग।
+     * Formatta un evento di logging per un writer.
+     * @param event evento di logging da formattare.
+     * @return la stringa formattata rappresentante l'evento di logging.
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedMessage = new StringBuilder();
+        StringBuilder formattedEvent = new StringBuilder();
         
-        // Add timestamp
-        formattedMessage.append("[").append(event.getTimeStamp()).append("] ");
+        // Aggiungi il timestamp
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append(" ");
         
-        // Add log level
-        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
+        // Aggiungi il livello di log
+        formattedEvent.append("Level: ").append(event.getLevel().toString()).append(" ");
         
-        // Add logger name
-        formattedMessage.append("[").append(event.getLoggerName()).append("] ");
+        // Aggiungi il messaggio di log
+        formattedEvent.append("Message: ").append(event.getMessage()).append(" ");
         
-        // Add message
-        formattedMessage.append(event.getRenderedMessage());
+        // Aggiungi il nome del logger
+        formattedEvent.append("Logger: ").append(event.getLoggerName()).append(" ");
         
-        // Add throwable information if present
+        // Aggiungi il thread name
+        formattedEvent.append("Thread: ").append(event.getThreadName()).append(" ");
+        
+        // Aggiungi l'eccezione se presente
         if (event.getThrowableInformation() != null) {
-            formattedMessage.append("\n").append(event.getThrowableInformation().getThrowable().toString());
+            formattedEvent.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append(" ");
         }
         
-        return formattedMessage.toString();
+        return formattedEvent.toString();
     }
 }

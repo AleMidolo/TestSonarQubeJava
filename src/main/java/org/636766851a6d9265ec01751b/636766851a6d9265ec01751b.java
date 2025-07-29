@@ -1,7 +1,7 @@
 /**
- * एक सहायक जो एक स्ट्रिंग से हेक्साडेसिमल संख्या के आधे को डिकोड करता है।
- * @param c वह ASCII वर्ण है जिसे डिकोड करना है। इसे {@code [0-9a-fA-F]} के रेंज में होना चाहिए।
- * @return ASCII वर्ण में प्रदर्शित हेक्साडेसिमल मान, या {@link Character#MAX_VALUE} यदि वर्ण अमान्य है।
+ * Funzione di supporto per decodificare metà di un numero esadecimale da una stringa.
+ * @param c Il carattere ASCII del numero esadecimale da decodificare. Deve essere compreso nell'intervallo {@code [0-9a-fA-F}.
+ * @return Il valore esadecimale rappresentato dal carattere ASCII fornito, oppure {@link Character#MAX_VALUE} se il carattere non è valido.
  */
 private static char decodeHexNibble(final char c) {
     if (c >= '0' && c <= '9') {

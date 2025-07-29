@@ -16,7 +16,6 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         // Implement the logic to write a single byte to the output stream
-        // For example, writing to standard output:
         System.out.write(b);
     }
 

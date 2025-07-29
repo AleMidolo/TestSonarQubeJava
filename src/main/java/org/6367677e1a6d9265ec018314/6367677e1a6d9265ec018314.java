@@ -1,37 +1,66 @@
 import java.util.*;
 
 class CategoryTree {
-    private Map<Integer, List<Integer>> tree;
-    private Set<Integer> activeNodes;
+    private static class Node {
+        int id;
+        boolean active;
+        List<Node> children;
 
-    public CategoryTree() {
-        tree = new HashMap<>();
-        activeNodes = new HashSet<>();
+        Node(int id, boolean active) {
+            this.id = id;
+            this.active = active;
+            this.children = new ArrayList<>();
+        }
     }
 
-    public void addNode(int parent, int node) {
-        tree.computeIfAbsent(parent, k -> new ArrayList<>()).add(node);
-    }
+    private Node root;
 
-    public void markActive(int node) {
-        activeNodes.add(node);
+    public CategoryTree(Node root) {
+        this.root = root;
     }
 
     /**
-     * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
+     * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
+     * @return il numero di nodi rimossi
      */
     protected int removeUnusedNodes() {
-        Set<Integer> nodesToRemove = new HashSet<>();
-        for (Integer node : tree.keySet()) {
-            if (!activeNodes.contains(node)) {
-                nodesToRemove.add(node);
+        if (root == null) {
+            return 0;
+        }
+        return removeUnusedNodesHelper(root);
+    }
+
+    private int removeUnusedNodesHelper(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int removedCount = 0;
+        Iterator<Node> iterator = node.children.iterator();
+        while (iterator.hasNext()) {
+            Node child = iterator.next();
+            if (!child.active) {
+                iterator.remove();
+                removedCount++;
+            } else {
+                removedCount += removeUnusedNodesHelper(child);
             }
         }
 
-        for (Integer node : nodesToRemove) {
-            tree.remove(node);
-        }
+        return removedCount;
+    }
 
-        return nodesToRemove.size();
+    public static void main(String[] args) {
+        Node root = new Node(1, true);
+        Node child1 = new Node(2, false);
+        Node child2 = new Node(3, true);
+        Node child3 = new Node(4, false);
+        root.children.add(child1);
+        root.children.add(child2);
+        child2.children.add(child3);
+
+        CategoryTree tree = new CategoryTree(root);
+        int removedNodes = tree.removeUnusedNodes();
+        System.out.println("Nodi rimossi: " + removedNodes);
     }
 }

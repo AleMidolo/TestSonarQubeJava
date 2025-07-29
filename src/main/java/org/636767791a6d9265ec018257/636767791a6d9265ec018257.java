@@ -1,19 +1,19 @@
-import java.util.logging.LogRecord;
 import javax.swing.SwingUtilities;
+import java.util.logging.LogRecord;
 
 public class LogTable {
 
     /**
-     * लॉगटेबल में प्रदर्शित करने के लिए एक लॉग रिकॉर्ड संदेश जोड़ें। यह विधि थ्रेड-सेफ है क्योंकि यह सीधे प्रोसेस करने के बजाय स्विंग थ्रेड पर अनुरोध भेजती है।
+     * Aggiunge un messaggio di registrazione da visualizzare nella LogTable. Questo metodo è thread-safe in quanto invia le richieste al SwingThread anziché elaborarle direttamente.
      */
     public void addMessage(final LogRecord lr) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // यहां लॉग रिकॉर्ड को टेबल में जोड़ने का कोड होगा
-                // उदाहरण के लिए:
-                // logTableModel.addLogRecord(lr);
-                System.out.println("LogRecord added: " + lr.getMessage());
+                // Qui puoi aggiungere il codice per aggiornare la LogTable con il nuovo LogRecord
+                // Ad esempio, potresti aggiungere il LogRecord a un modello di tabella
+                // tableModel.addRow(new Object[]{lr.getMessage(), lr.getLevel(), lr.getMillis()});
+                System.out.println("LogRecord aggiunto: " + lr.getMessage());
             }
         });
     }

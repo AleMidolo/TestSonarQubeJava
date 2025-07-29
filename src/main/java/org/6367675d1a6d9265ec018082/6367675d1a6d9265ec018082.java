@@ -1,7 +1,6 @@
 import java.util.Objects;
 
 class Node {
-    // Node class implementation
     private int id;
     private boolean isVirtual;
 
@@ -33,7 +32,6 @@ class Node {
 }
 
 class Edge {
-    // Edge class implementation
     private Node from;
     private Node to;
 
@@ -51,16 +49,11 @@ class Edge {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Edge edge = (Edge) o;
-        return Objects.equals(from, edge.from) && Objects.equals(to, edge.to);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to);
+    public String toString() {
+        return "Edge{" +
+                "from=" + from.getId() +
+                ", to=" + to.getId() +
+                '}';
     }
 }
 
@@ -80,8 +73,17 @@ class Graph {
     }
 
     private Node getRealNode(Node node) {
-        // Assuming there is a method to get the real node from a virtual node
-        // This is a placeholder implementation
+        // Assuming that the real node has the same ID but is not virtual
         return new Node(node.getId(), false);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Node currentNode = new Node(1, false);
+        Node nextNode = new Node(2, true);
+        Graph graph = new Graph(currentNode, nextNode);
+        Edge edge = graph.edgeToNext();
+        System.out.println(edge);
     }
 }

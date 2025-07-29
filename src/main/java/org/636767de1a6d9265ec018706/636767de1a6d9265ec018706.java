@@ -19,46 +19,28 @@ public class Mappings {
 
 public class MappingDiff {
 
-    /**
-     * उन मैपिंग्स को लौटाता है जिनमें ऐसे फ़ील्ड हैं जो इनपुट मैपिंग्स में मौजूद नहीं हैं। इनपुट मैपिंग्स को वर्तमान इंडेक्स से इतिहास मैपिंग होना चाहिए। वर्तमान इंडेक्स अपडेट संघर्ष से बचने के लिए _source कॉन्फ़िगरेशन को न लौटाएँ।
-     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assuming we have a method to get the current mappings for the table
-        Mappings currentMappings = getCurrentMappings(tableName);
+        // Assuming we have a method to get historical mappings for the given table
+        Mappings historicalMappings = getHistoricalMappings(tableName);
 
         Mappings diffMappings = new Mappings();
-        Map<String, Object> currentFields = currentMappings.getFields();
-        Map<String, Object> inputFields = mappings.getFields();
+        Map<String, Object> diffFields = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : currentFields.entrySet()) {
+        // Iterate through the input mappings and find fields that are not in historical mappings
+        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!inputFields.containsKey(fieldName)) {
-                diffMappings.getFields().put(fieldName, entry.getValue());
+            if (!historicalMappings.getFields().containsKey(fieldName)) {
+                diffFields.put(fieldName, entry.getValue());
             }
         }
 
+        diffMappings.setFields(diffFields);
         return diffMappings;
     }
 
-    // Dummy method to simulate getting current mappings for a table
-    private Mappings getCurrentMappings(String tableName) {
-        Mappings currentMappings = new Mappings();
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("field1", "type1");
-        fields.put("field2", "type2");
-        fields.put("field3", "type3");
-        currentMappings.setFields(fields);
-        return currentMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff mappingDiff = new MappingDiff();
-        Mappings inputMappings = new Mappings();
-        Map<String, Object> inputFields = new HashMap<>();
-        inputFields.put("field1", "type1");
-        inputMappings.setFields(inputFields);
-
-        Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
-        System.out.println(diff.getFields()); // Output: {field2=type2, field3=type3}
+    private Mappings getHistoricalMappings(String tableName) {
+        // This method should retrieve the historical mappings for the given table
+        // For the sake of this example, we return an empty Mappings object
+        return new Mappings();
     }
 }

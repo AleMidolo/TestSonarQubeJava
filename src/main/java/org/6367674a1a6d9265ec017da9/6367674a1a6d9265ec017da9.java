@@ -1,4 +1,4 @@
-import java.util.Iterator;
+import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
@@ -55,10 +55,13 @@ public class DoublyLinkedList<E> {
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null || list.head == null) {
-            return;
+        Objects.requireNonNull(list, "The input list cannot be null");
+
+        if (list.head == null) {
+            return; // Nothing to move
         }
 
+        // Remove all nodes from the input list
         ListNodeImpl<E> current = list.head;
         while (current != null) {
             ListNodeImpl<E> next = current.next;
@@ -67,6 +70,4 @@ public class DoublyLinkedList<E> {
             current = next;
         }
     }
-
-    // Other methods of DoublyLinkedList...
 }

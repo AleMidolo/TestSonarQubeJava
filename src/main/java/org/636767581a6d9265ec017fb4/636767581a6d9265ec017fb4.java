@@ -5,21 +5,35 @@ import java.util.Collections;
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
     /**
-     * प्रत्येक कुंजी के लिए एक न्यूनतम ऊपरी सीमा खोजता है।
-     * @param keys कुंजियों की एक सूची।
-     * @return गणना की गई कुंजी की ऊपरी सीमा।
+     * Trova un limite superiore minimo per ogni chiave.
+     * @param keys una lista di chiavi.
+     * @return il limite superiore delle chiavi calcolato.
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
-        List<Integer> upperBounds = new ArrayList<>();
+        if (keys == null || keys.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Ordina la lista di chiavi
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
+        List<Integer> upperBounds = new ArrayList<>();
         for (K key : keys) {
+            // Trova l'indice del primo elemento maggiore di key
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                index = -(index + 1);
+                index = -index - 1;
+            } else {
+                index = index + 1;
             }
-            upperBounds.add(index);
+
+            // Se l'indice è fuori dai limiti, non c'è un limite superiore
+            if (index >= sortedKeys.size()) {
+                upperBounds.add(null);
+            } else {
+                upperBounds.add(index);
+            }
         }
 
         return upperBounds;

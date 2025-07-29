@@ -1,27 +1,26 @@
-import java.util.Arrays;
-
 public class ArrayUtils {
 
     /**
-     * <p>एक ऐरे को क्लोन करता है और टाइपकास्ट परिणाम लौटाता है और <code>null</code> को संभालता है।</p>
-     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  क्लोन करने के लिए ऐरे, यह <code>null</code> हो सकता है
-     * @return क्लोन किया गया ऐरे, <code>null</code> यदि <code>null</code> इनपुट हो
+     * <p>Clona un array restituendo un risultato di tipo cast e gestendo <code>null</code>.</p> 
+     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  l'array da clonare, può essere <code>null</code>
+     * @return l'array clonato, <code>null</code> se l'input è <code>null</code>
      */
     public static char[] clone(final char[] array) {
         if (array == null) {
             return null;
         }
-        return Arrays.copyOf(array, array.length);
+        return array.clone();
     }
 
     public static void main(String[] args) {
-        char[] originalArray = {'a', 'b', 'c'};
-        char[] clonedArray = clone(originalArray);
-        System.out.println("Cloned Array: " + Arrays.toString(clonedArray));
+        char[] original = {'a', 'b', 'c'};
+        char[] cloned = clone(original);
+        System.out.println("Original: " + java.util.Arrays.toString(original));
+        System.out.println("Cloned: " + java.util.Arrays.toString(cloned));
 
         char[] nullArray = null;
-        char[] clonedNullArray = clone(nullArray);
-        System.out.println("Cloned Null Array: " + (clonedNullArray == null ? "null" : Arrays.toString(clonedNullArray)));
+        char[] clonedNull = clone(nullArray);
+        System.out.println("Cloned null array: " + clonedNull);
     }
 }

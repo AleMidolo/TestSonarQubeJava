@@ -1,7 +1,7 @@
 @Override
 public int hashCode() {
-    // A simple implementation of hashCode that returns a constant value.
-    // This is a basic example and may not be suitable for all use cases.
-    // In a real-world scenario, you would want to generate a hash code based on the object's fields.
-    return 42;
+    // Implementazione di base di hashCode che restituisce un valore fisso.
+    // Questo è un esempio semplice e potrebbe non essere adatto per tutti i casi d'uso.
+    // In un'implementazione reale, dovresti considerare i campi rilevanti dell'oggetto.
+    return 31;
 }

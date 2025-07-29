@@ -4,10 +4,10 @@ import java.io.IOException;
 public class FileUtils {
 
     /**
-     * जब JVM समाप्त होता है, तो एक फ़ाइल को हटाने के लिए शेड्यूल करता है। यदि फ़ाइल एक निर्देशिका है, तो इसे और सभी उप-निर्देशिकाओं को हटा दें।
-     * @param file  हटाने के लिए फ़ाइल या निर्देशिका, {@code null} नहीं होनी चाहिए
-     * @throws NullPointerException यदि फ़ाइल {@code null} है
-     * @throws IOException यदि हटाना असफल हो जाता है
+     * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
+     * @param file  file o directory da cancellare, non deve essere {@code null}
+     * @throws NullPointerException se il file è {@code null}
+     * @throws IOException in caso di cancellazione non riuscita
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
@@ -40,5 +40,14 @@ public class FileUtils {
         }
 
         directory.deleteOnExit();
+    }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File("path/to/fileOrDirectory");
+            forceDeleteOnExit(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

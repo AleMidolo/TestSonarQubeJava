@@ -3,22 +3,18 @@ import java.util.Set;
 
 public class StringUtils {
 
-    /**
-     * दिए गए String में से किसी भी चरित्र को हटाएं।
-     * @param inString मूल String
-     * @param charsToDelete हटाने के लिए चरित्रों का सेट। उदाहरण के लिए, "az\n" 'a', 'z' और नए लाइनों को हटा देगा।
-     * @return परिणामस्वरूप String
-     */
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
             return inString;
         }
 
+        // Convert the characters to delete into a set for quick lookup
         Set<Character> charsToRemove = new HashSet<>();
         for (char c : charsToDelete.toCharArray()) {
             charsToRemove.add(c);
         }
 
+        // Build the resulting string by skipping characters in the set
         StringBuilder result = new StringBuilder();
         for (char c : inString.toCharArray()) {
             if (!charsToRemove.contains(c)) {
@@ -30,8 +26,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String input = "Hello World!";
+        String input = "Hello, World!";
         String charsToDelete = "lo";
-        System.out.println(deleteAny(input, charsToDelete)); // Output: He Wrd!
+        String result = deleteAny(input, charsToDelete);
+        System.out.println(result);  // Output: He, Wrd!
     }
 }

@@ -1,11 +1,9 @@
-import java.util.Objects;
-
 public class ArrayConverter {
 
     /**
-     * <p>प्राथमिक int के एक ऐरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>int</code> ऐरे
-     * @return एक <code>Integer</code> ऐरे, <code>null</code> यदि null ऐरे इनपुट है
+     * <p>Converte un array di int primitivi in oggetti.</p> <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
+     * @param array  un array di <code>int</code>
+     * @return un array di <code>Integer</code>, <code>null</code> se l'array di input è nullo
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {

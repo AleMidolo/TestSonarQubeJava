@@ -4,18 +4,23 @@ public class LastWriteTimeStamp {
     private final AtomicLong lastWriteTimeStamp = new AtomicLong();
 
     /**
-     * अंतिम बार, मिलीसेकंड में, एक लिखने की प्रक्रिया हुई थी।
-     * @return यह
+     * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
+     * @return questo
      */
     public long lastWriteTimeStampInMilliseconds() {
         return lastWriteTimeStamp.get();
     }
 
     /**
-     * लिखने की प्रक्रिया के समय को अपडेट करें।
-     * @param timeStamp मिलीसेकंड में समय
+     * Aggiorna l'ultimo timestamp di scrittura con il tempo corrente in millisecondi.
      */
-    public void updateWriteTimeStamp(long timeStamp) {
-        lastWriteTimeStamp.set(timeStamp);
+    public void updateLastWriteTimeStamp() {
+        lastWriteTimeStamp.set(System.currentTimeMillis());
+    }
+
+    public static void main(String[] args) {
+        LastWriteTimeStamp timestamp = new LastWriteTimeStamp();
+        timestamp.updateLastWriteTimeStamp();
+        System.out.println("Last write timestamp: " + timestamp.lastWriteTimeStampInMilliseconds());
     }
 }

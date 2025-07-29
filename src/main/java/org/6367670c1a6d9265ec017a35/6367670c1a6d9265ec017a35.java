@@ -1,10 +1,10 @@
 /**
- * <p>जांचें कि एक String एक निर्दिष्ट उपसर्ग के साथ समाप्त होता है (वैकल्पिक रूप से केस संवेदनशीलता को अनदेखा करते हुए)।</p>
+ * <p>Controlla se una Stringa termina con un suffisso specificato (opzionalmente senza distinzione tra maiuscole e minuscole).</p>
  * @see String#endsWith(String)
- * @param str  वह String जिसे जांचना है, यह null हो सकता है
- * @param suffix वह उपसर्ग जिसे खोजना है, यह null हो सकता है
- * @param ignoreCase यह दर्शाता है कि तुलना में केस को अनदेखा करना चाहिए या नहीं (केस संवेदनशीलता को अनदेखा करना)।
- * @return <code>true</code> यदि String उपसर्ग के साथ शुरू होता है या दोनों <code>null</code> हैं
+ * @param str  la Stringa da controllare, può essere null
+ * @param suffix il suffisso da trovare, può essere null
+ * @param ignoreCase indica se il confronto deve ignorare le maiuscole e minuscole (senza distinzione) o meno.
+ * @return <code>true</code> se la Stringa termina con il suffisso o entrambi sono <code>null</code>
  */
 private static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
     if (str == null && suffix == null) {

@@ -1,17 +1,18 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class DefensiveProgramming {
 
-    /**
-     * <p>एक रक्षात्मक प्रोग्रामिंग तकनीक जो <code>null</code> संदर्भ को एक खाली संदर्भ में बदलती है।</p>
-     * <p>यह विधि <code>null</code> इनपुट ऐरे के लिए एक खाली ऐरे लौटाती है।</p>
-     * <p>एक मेमोरी ऑप्टिमाइजिंग तकनीक के रूप में, एक खाली ऐरे जो पास किया गया है, इसे इस वर्ग में खाली <code>public static</code> संदर्भों के साथ ओवरराइड किया जाएगा।</p>
-     * @param array  वह ऐरे जिसे <code>null</code> या खाली के लिए जांचना है
-     * @return वही ऐरे, <code>public static</code> खाली ऐरे यदि <code>null</code> या खाली इनपुट हो
-     * @since 2.5
-     */
+    // Array vuoto pubblico e statico per ottimizzazione della memoria
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
+    /**
+     * <p>Tecnica di programmazione difensiva per cambiare un riferimento <code>null</code> in uno vuoto.</p>
+     * <p>Questo metodo restituisce un array vuoto per un array di input <code>null</code>.</p>
+     * <p>Come tecnica di ottimizzazione della memoria, un array vuoto passato verrà sovrascritto con i riferimenti vuoti <code>public static</code> in questa classe.</p>
+     * @param array  l'array da controllare per <code>null</code> o vuoto
+     * @return lo stesso array, array vuoto <code>public static</code> se l'input è <code>null</code> o vuoto
+     * @since 2.5
+     */
     public static Character[] nullToEmpty(final Character[] array) {
         if (array == null || array.length == 0) {
             return EMPTY_CHARACTER_ARRAY;
@@ -19,6 +20,7 @@ public class ArrayUtils {
         return array;
     }
 
+    // Esempio di utilizzo
     public static void main(String[] args) {
         Character[] array1 = null;
         Character[] array2 = new Character[0];

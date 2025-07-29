@@ -1,30 +1,34 @@
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TelnetClient {
-    private Socket socket;
-    private PrintWriter out;
+public class TelnetServer {
+    private List<Socket> clients = new ArrayList<>();
 
-    public TelnetClient(Socket socket) throws Exception {
-        this.socket = socket;
-        this.out = new PrintWriter(socket.getOutputStream(), true);
+    public synchronized void addClient(Socket client) {
+        clients.add(client);
+    }
+
+    public synchronized void removeClient(Socket client) {
+        clients.remove(client);
     }
 
     /**
-     * प्रत्येक क्लाइंट को टेलनेट-फ्रेंडली आउटपुट में एक संदेश भेजता है।
+     * Invia un messaggio a ciascuno dei client in un formato compatibile con telnet.
      */
     public synchronized void send(final String message) {
-        if (out != null) {
-            out.println(message);
-        }
-    }
-
-    public void close() throws Exception {
-        if (out != null) {
-            out.close();
-        }
-        if (socket != null) {
-            socket.close();
+        for (Socket client : clients) {
+            try {
+                OutputStream outputStream = client.getOutputStream();
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // In case of an error, remove the client from the list
+                removeClient(client);
+            }
         }
     }
 }

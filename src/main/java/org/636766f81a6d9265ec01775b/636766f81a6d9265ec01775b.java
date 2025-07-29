@@ -8,15 +8,14 @@ public class ClassReader {
     }
 
     /**
-     * इस {@link ClassReader} में एक साइन किया हुआ लॉन्ग मान पढ़ता है। <i>यह विधि {@link Attribute} उप श्रेणियों के लिए अभिप्रेत है, और सामान्यतः क्लास जनरेटर या एडाप्टर द्वारा आवश्यक नहीं होती।</i>
-     * @param offset इस {@link ClassReader} में पढ़े जाने वाले मान का प्रारंभिक ऑफसेट।
-     * @return पढ़ा गया मान।
+     * Legge un valore long firmato in questo {@link ClassReader}. <i>Questo metodo è destinato alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori di classi o adattatori.</i>
+     * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
+     * @return il valore letto.
      */
     public long readLong(final int offset) {
         if (offset < 0 || offset + 8 > data.length) {
-            throw new IllegalArgumentException("Invalid offset or insufficient data to read a long value.");
+            throw new IndexOutOfBoundsException("Offset out of bounds");
         }
-
         ByteBuffer buffer = ByteBuffer.wrap(data, offset, 8);
         return buffer.getLong();
     }

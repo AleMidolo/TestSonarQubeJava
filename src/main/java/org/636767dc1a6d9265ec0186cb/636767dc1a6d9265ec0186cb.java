@@ -2,26 +2,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ConfigurationInitializer {
+public class ConfigInitializer {
 
     /**
-     * कॉन्फ़िगरेशन को प्रारंभ करें, जैसे कि वितरण पथ की जांच करें
+     * Inizializza la configurazione, ad esempio controlla il percorso di distribuzione.
      */
     public void init() {
-        // Define the distribution path
-        String distributionPath = "/path/to/distribution";
-        Path path = Paths.get(distributionPath);
-
-        // Check if the path exists
-        if (Files.exists(path)) {
-            System.out.println("Distribution path exists: " + distributionPath);
+        // Controlla se il percorso di distribuzione esiste
+        Path distributionPath = Paths.get("path/to/distribution");
+        if (Files.exists(distributionPath)) {
+            System.out.println("Il percorso di distribuzione esiste.");
         } else {
-            System.out.println("Distribution path does not exist: " + distributionPath);
+            System.out.println("Il percorso di distribuzione non esiste.");
         }
     }
 
     public static void main(String[] args) {
-        ConfigurationInitializer initializer = new ConfigurationInitializer();
+        ConfigInitializer initializer = new ConfigInitializer();
         initializer.init();
     }
 }

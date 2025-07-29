@@ -1,34 +1,53 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import javafx.util.Pair;
 
 public class SuffixSumCalculator {
 
-    /**
-     * {@code bounds} का एक सुफिक्स सम की गणना करता है। गणना की गई सुफिक्स सम और {@code bounds list} में सभी तत्वों का योग लौटाता है।
-     * @param bounds पूर्णांकों की सूची।
-     * @return गणना की गई सुफिक्स सम सूची और सभी तत्वों का योग।
-     */
-    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
+    public static class Pair<A, B> {
+        private final A first;
+        private final B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
+    }
+
+    private static Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         if (bounds == null || bounds.isEmpty()) {
             return new Pair<>(Collections.emptyList(), 0L);
         }
 
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int currentSum = 0;
+        int currentSuffixSum = 0;
 
-        // Calculate suffix sums and total sum
+        // Calcola la somma totale e la somma dei suffissi
         for (int i = bounds.size() - 1; i >= 0; i--) {
-            currentSum += bounds.get(i);
-            suffixSums.add(currentSum);
+            currentSuffixSum += bounds.get(i);
+            suffixSums.add(currentSuffixSum);
             totalSum += bounds.get(i);
         }
 
-        // Reverse the suffixSums list to get the correct order
+        // Inverti la lista delle somme dei suffissi per avere l'ordine corretto
         Collections.reverse(suffixSums);
 
         return new Pair<>(suffixSums, totalSum);
+    }
+
+    public static void main(String[] args) {
+        List<Integer> bounds = List.of(1, 2, 3, 4);
+        Pair<List<Integer>, Long> result = computeSuffixSum(bounds);
+        System.out.println("Suffix Sums: " + result.getFirst());
+        System.out.println("Total Sum: " + result.getSecond());
     }
 }

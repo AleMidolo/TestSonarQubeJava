@@ -3,9 +3,9 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * एक प्रमुख संख्या लौटाता है जो <code>&gt;= desiredCapacity</code> है और <code>desiredCapacity</code> के बहुत करीब है (यदि <code>desiredCapacity &gt;= 1000</code> है तो 11% के भीतर)।
-     * @param desiredCapacity उपयोगकर्ता द्वारा इच्छित क्षमता।
-     * @return वह क्षमता जो हैशटेबल के लिए उपयोग की जानी चाहिए।
+     * Restituisce un numero primo che è <code>&gt;= desiredCapacity</code> e molto vicino a <code>desiredCapacity</code> (entro l'11% se <code>desiredCapacity &gt;= 1000</code>).
+     * @param desiredCapacity la capacità desiderata dall'utente.
+     * @return la capacità che dovrebbe essere utilizzata per una tabella hash.
      */
     public static int nextPrime(int desiredCapacity) {
         if (desiredCapacity <= 1) {
@@ -13,19 +13,22 @@ public class PrimeUtil {
         }
 
         int candidate = desiredCapacity;
-        while (true) {
-            if (isPrime(candidate)) {
-                if (desiredCapacity >= 1000) {
-                    int upperBound = (int) (desiredCapacity * 1.11);
-                    if (candidate <= upperBound) {
-                        return candidate;
-                    }
-                } else {
-                    return candidate;
-                }
-            }
+        while (!isPrime(candidate)) {
             candidate++;
         }
+
+        // Se desiredCapacity >= 1000, verifica che il numero primo trovato sia entro l'11% di desiredCapacity
+        if (desiredCapacity >= 1000) {
+            int upperBound = (int) (desiredCapacity * 1.11);
+            if (candidate > upperBound) {
+                candidate = desiredCapacity;
+                while (!isPrime(candidate)) {
+                    candidate--;
+                }
+            }
+        }
+
+        return candidate;
     }
 
     private static boolean isPrime(int n) {
@@ -47,6 +50,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Example usage
+        System.out.println(nextPrime(1000));  // Esempio di utilizzo
     }
 }

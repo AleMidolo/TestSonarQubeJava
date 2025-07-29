@@ -1,27 +1,27 @@
 import java.util.Arrays;
 
-public class ArrayComparator {
+public class ByteArrayComparator {
 
     /**
-     * यदि आंतरिक ऐरे की सामग्री और प्रदान किए गए ऐरे में मेल खाते हैं, तो सत्य लौटाता है।
-     * 
-     * @param data प्रदान किया गया ऐरे
-     * @param offset प्रदान किए गए ऐरे में शुरुआती इंडेक्स
-     * @param len तुलना करने के लिए लंबाई
-     * @return सत्य यदि आंतरिक ऐरे और प्रदान किए गए ऐरे की सामग्री मेल खाती है, अन्यथा असत्य
+     * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
+     *
+     * @param data   L'array di byte da confrontare.
+     * @param offset L'indice iniziale nell'array interno da cui iniziare il confronto.
+     * @param len    La lunghezza del segmento da confrontare.
+     * @return true se i contenuti corrispondono, false altrimenti.
      */
     public boolean equals(final byte[] data, int offset, final int len) {
-        // आंतरिक ऐरे को परिभाषित करें (उदाहरण के लिए)
-        byte[] internalArray = {1, 2, 3, 4, 5};
+        // Supponiamo che l'array interno sia 'internalData'
+        byte[] internalData = getInternalData(); // Metodo fittizio per ottenere l'array interno
 
-        // यदि प्रदान किए गए ऐरे की लंबाई या ऑफसेट अमान्य है, तो असत्य लौटाएं
-        if (offset < 0 || len < 0 || offset + len > data.length || len > internalArray.length) {
+        // Controllo dei limiti
+        if (offset < 0 || len < 0 || offset + len > internalData.length || len > data.length) {
             return false;
         }
 
-        // आंतरिक ऐरे और प्रदान किए गए ऐरे की सामग्री की तुलना करें
+        // Confronto i segmenti degli array
         for (int i = 0; i < len; i++) {
-            if (internalArray[i] != data[offset + i]) {
+            if (internalData[offset + i] != data[i]) {
                 return false;
             }
         }
@@ -29,10 +29,15 @@ public class ArrayComparator {
         return true;
     }
 
+    // Metodo fittizio per ottenere l'array interno
+    private byte[] getInternalData() {
+        return new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 }; // Esempio di array interno
+    }
+
     public static void main(String[] args) {
-        ArrayComparator comparator = new ArrayComparator();
-        byte[] data = {1, 2, 3, 4, 5};
-        boolean result = comparator.equals(data, 0, 5);
-        System.out.println(result); // true
+        ByteArrayComparator comparator = new ByteArrayComparator();
+        byte[] data = { 0x02, 0x03, 0x04 };
+        boolean result = comparator.equals(data, 1, 3);
+        System.out.println(result); // Output: true
     }
 }

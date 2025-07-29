@@ -1,31 +1,45 @@
-import java.util.HashMap;
-import java.util.Map;
-
-public class StackMapFrame {
-    private Map<Integer, Frame> frames = new HashMap<>();
+public class FrameVisitor {
     private Frame currentFrame;
 
-    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        currentFrame = new Frame(offset, numLocal, numStack);
-        frames.put(offset, currentFrame);
-        return currentFrame.getNextElementIndex();
+    public FrameVisitor(Frame currentFrame) {
+        this.currentFrame = currentFrame;
     }
 
+    /**
+     * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
+     * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
+     * @param numLocal il numero di variabili locali nel frame.
+     * @param numStack il numero di elementi nello stack nel frame.
+     * @return l'indice del prossimo elemento da scrivere in questo frame.
+     */
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+        // Inizializza il nuovo frame con i parametri forniti
+        currentFrame = new Frame(offset, numLocal, numStack);
+
+        // Restituisce l'indice del prossimo elemento da scrivere nel frame
+        return currentFrame.getNextWriteIndex();
+    }
+
+    // Classe interna per rappresentare un frame
     private static class Frame {
-        private int offset;
-        private int numLocal;
-        private int numStack;
-        private int nextElementIndex;
+        private final int offset;
+        private final int numLocal;
+        private final int numStack;
+        private int nextWriteIndex;
 
         public Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextElementIndex = 0; // Initialize the next element index
+            this.nextWriteIndex = 0; // Inizialmente, il prossimo elemento da scrivere è il primo
         }
 
-        public int getNextElementIndex() {
-            return nextElementIndex++;
+        public int getNextWriteIndex() {
+            return nextWriteIndex;
+        }
+
+        public void incrementWriteIndex() {
+            nextWriteIndex++;
         }
     }
 }

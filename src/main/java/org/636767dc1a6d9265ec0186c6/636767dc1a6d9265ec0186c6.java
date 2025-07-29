@@ -1,43 +1,51 @@
-import java.util.Set;
+import java.util.Objects;
 
 public class FieldChecker {
 
-    /**
-     * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
-     */
+    private Fields storedFields;
+
+    public FieldChecker(Fields storedFields) {
+        this.storedFields = storedFields;
+    }
+
     private boolean containsAllFields(Fields fields) {
-        // Assuming Fields is a class that contains a Set<String> of field names
-        Set<String> storedFields = getStoredFields(); // Method to retrieve stored fields
-        Set<String> inputFields = fields.getFieldNames(); // Method to get input field names
-
-        // Check if all input fields are present in the stored fields
-        return storedFields.containsAll(inputFields);
-    }
-
-    // Dummy method to simulate retrieval of stored fields
-    private Set<String> getStoredFields() {
-        // This would typically be replaced with actual logic to retrieve stored fields
-        return Set.of("field1", "field2", "field3");
-    }
-
-    // Dummy Fields class for demonstration
-    public static class Fields {
-        private Set<String> fieldNames;
-
-        public Fields(Set<String> fieldNames) {
-            this.fieldNames = fieldNames;
+        if (fields == null || storedFields == null) {
+            return false;
         }
-
-        public Set<String> getFieldNames() {
-            return fieldNames;
-        }
+        return Objects.equals(fields.getField1(), storedFields.getField1()) &&
+               Objects.equals(fields.getField2(), storedFields.getField2()) &&
+               Objects.equals(fields.getField3(), storedFields.getField3());
     }
 
     public static void main(String[] args) {
-        // Example usage
-        FieldChecker checker = new FieldChecker();
-        Fields inputFields = new Fields(Set.of("field1", "field2"));
-        boolean result = checker.containsAllFields(inputFields);
-        System.out.println("All fields present: " + result);
+        Fields storedFields = new Fields("value1", "value2", "value3");
+        Fields inputFields = new Fields("value1", "value2", "value3");
+
+        FieldChecker checker = new FieldChecker(storedFields);
+        System.out.println(checker.containsAllFields(inputFields)); // Output: true
+    }
+}
+
+class Fields {
+    private String field1;
+    private String field2;
+    private String field3;
+
+    public Fields(String field1, String field2, String field3) {
+        this.field1 = field1;
+        this.field2 = field2;
+        this.field3 = field3;
+    }
+
+    public String getField1() {
+        return field1;
+    }
+
+    public String getField2() {
+        return field2;
+    }
+
+    public String getField3() {
+        return field3;
     }
 }

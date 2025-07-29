@@ -1,49 +1,68 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack;
-
-    public FrameStack() {
-        stack = new Stack<>();
-    }
+    private Stack<String> outputFrameStack = new Stack<>();
 
     /**
-     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
-     * @param descriptor एक प्रकार या विधि वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        // Parse the descriptor to determine how many types to pop
-        int numTypesToPop = countTypesInDescriptor(descriptor);
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
+        }
 
-        // Pop the required number of types from the stack
-        for (int i = 0; i < numTypesToPop; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
+        if (descriptor.startsWith("(")) {
+            // È un descrittore di metodo, rimuovi i tipi di argomento
+            int endIndex = descriptor.indexOf(')');
+            if (endIndex == -1) {
+                return;
+            }
+            String argsDescriptor = descriptor.substring(1, endIndex);
+            removeTypesFromStack(argsDescriptor);
+        } else {
+            // È un singolo tipo, rimuovi solo quel tipo
+            removeTypeFromStack(descriptor);
+        }
+    }
+
+    private void removeTypesFromStack(String argsDescriptor) {
+        int index = 0;
+        while (index < argsDescriptor.length()) {
+            char currentChar = argsDescriptor.charAt(index);
+            if (currentChar == 'L') {
+                // Tipo oggetto, trova il ';'
+                int endIndex = argsDescriptor.indexOf(';', index);
+                if (endIndex == -1) {
+                    break;
+                }
+                String type = argsDescriptor.substring(index, endIndex + 1);
+                removeTypeFromStack(type);
+                index = endIndex + 1;
+            } else if (currentChar == '[') {
+                // Tipo array, trova il tipo base
+                index++;
             } else {
-                throw new IllegalStateException("Stack is empty, cannot pop more elements.");
+                // Tipo primitivo
+                removeTypeFromStack(String.valueOf(currentChar));
+                index++;
             }
         }
     }
 
-    /**
-     * Helper method to count the number of types in the descriptor.
-     * @param descriptor The descriptor string.
-     * @return The number of types to pop.
-     */
-    private int countTypesInDescriptor(String descriptor) {
-        // This is a simplified example. In a real implementation, you would need to parse
-        // the descriptor string according to the JVM specification to determine the number of types.
-        // For example, a method descriptor like "(I)D" has one argument (int) and returns a double.
-        // Here, we assume the descriptor is a simple type name like "I" for int, "D" for double, etc.
-        return descriptor.length();
+    private void removeTypeFromStack(String type) {
+        if (!outputFrameStack.isEmpty() && outputFrameStack.peek().equals(type)) {
+            outputFrameStack.pop();
+        }
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(1); // Example: pushing an int
-        frameStack.stack.push(2.0); // Example: pushing a double
+    // Metodo di esempio per aggiungere tipi allo stack (per testing)
+    public void push(String type) {
+        outputFrameStack.push(type);
+    }
 
-        frameStack.pop("ID"); // Pop two elements corresponding to int and double
+    // Metodo di esempio per ottenere lo stack (per testing)
+    public Stack<String> getOutputFrameStack() {
+        return outputFrameStack;
     }
 }

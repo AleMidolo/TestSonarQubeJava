@@ -11,14 +11,14 @@ public class StringUtils {
      */
     public static boolean endsWith(final String str, final String suffix, final boolean ignoreCase) {
         if (str == null || suffix == null) {
-            return str == suffix;
+            return str == null && suffix == null;
         }
         if (suffix.length() > str.length()) {
             return false;
         }
         final int strOffset = str.length() - suffix.length();
         
-        return ignoreCase 
+        return ignoreCase
             ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
             : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
     }

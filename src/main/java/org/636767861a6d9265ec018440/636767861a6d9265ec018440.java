@@ -20,7 +20,7 @@ public class NameAbbreviator {
         for (int i = 1; i < length; i++) {
             char c = Character.toLowerCase(nameStart.charAt(i));
             if (isVowel(c)) {
-                // Add consonants up to first vowel
+                // Add consonants up to and including first vowel
                 buf.append(c);
                 break;
             } else {

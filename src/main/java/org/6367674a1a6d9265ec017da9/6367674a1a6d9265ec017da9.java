@@ -5,35 +5,40 @@ public class LinkedList<T> {
     private final Object lock = new Object();
 
     public void moveAllNodes(LinkedList<T> list) {
+        if (list == null || list == this) {
+            return;
+        }
+
         synchronized (lock) {
             synchronized (list.lock) {
-                if (list.head == null) {
+                // Store the current head of source list
+                ListNode<T> sourceHead = list.head;
+                
+                if (sourceHead == null) {
                     return;
                 }
 
-                // Get the last node of current list
-                ListNode<T> lastNode = null;
-                if (head != null) {
-                    lastNode = head;
-                    while (lastNode.next != null) {
-                        lastNode = lastNode.next;
-                    }
+                // Find the last node of source list
+                ListNode<T> sourceTail = sourceHead;
+                while (sourceTail.next != null) {
+                    sourceTail = sourceTail.next;
                 }
 
-                // Move nodes from source list
+                // Connect source list to destination
                 if (head == null) {
-                    head = list.head;
+                    head = sourceHead;
                 } else {
-                    lastNode.next = list.head;
+                    sourceTail.next = head;
+                    head = sourceHead;
                 }
 
-                // Clear source list
+                // Clear the source list
                 list.head = null;
             }
         }
     }
 
-    // Supporting classes
+    // Inner class for ListNode
     private static class ListNode<T> {
         T data;
         ListNode<T> next;
@@ -44,24 +49,21 @@ public class LinkedList<T> {
         }
     }
 
+    // Helper methods
     public void addListNode(ListNode<T> node) {
         synchronized (lock) {
             if (head == null) {
                 head = node;
             } else {
-                ListNode<T> current = head;
-                while (current.next != null) {
-                    current = current.next;
-                }
-                current.next = node;
+                node.next = head;
+                head = node;
             }
-            node.next = null;
         }
     }
 
     public ListNode<T> removeListNode(ListNode<T> node) {
         synchronized (lock) {
-            if (head == null) {
+            if (head == null || node == null) {
                 return null;
             }
 

@@ -4,31 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeRangeSplitter {
-    
-    // Maximum duration between start and end time (e.g. 24 hours)
+    // Maximum duration between start and end time
     private static final Duration FETCH_DATA_DURATION = Duration.ofHours(24);
 
     /**
-     * Split time ranges to insure the start time and end time is smaller than FETCH_DATA_DURATION
-     * @param startTime Start time as Instant
-     * @param endTime End time as Instant
+     * Split time ranges to ensure the start time and end time is smaller than FETCH_DATA_DURATION
+     * @param startTime The start time instant
+     * @param endTime The end time instant
      * @return List of TimeRange objects containing split time ranges
      */
     public List<TimeRange> splitTimeRanges(Instant startTime, Instant endTime) {
         List<TimeRange> timeRanges = new ArrayList<>();
         
-        // If duration is less than max, return single range
-        if (Duration.between(startTime, endTime).compareTo(FETCH_DATA_DURATION) <= 0) {
-            timeRanges.add(new TimeRange(startTime, endTime));
+        if (startTime == null || endTime == null || startTime.isAfter(endTime)) {
             return timeRanges;
         }
 
-        // Split into multiple ranges
         Instant currentStart = startTime;
         while (currentStart.isBefore(endTime)) {
             Instant currentEnd = currentStart.plus(FETCH_DATA_DURATION);
             
-            // If current end would exceed total end time, use total end time
+            // If calculated end is after the actual end time, use the actual end time
             if (currentEnd.isAfter(endTime)) {
                 currentEnd = endTime;
             }
@@ -36,7 +32,7 @@ public class TimeRangeSplitter {
             timeRanges.add(new TimeRange(currentStart, currentEnd));
             currentStart = currentEnd;
         }
-
+        
         return timeRanges;
     }
 

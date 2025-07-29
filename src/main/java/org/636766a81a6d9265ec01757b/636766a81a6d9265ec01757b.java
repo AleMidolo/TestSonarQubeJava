@@ -13,18 +13,18 @@ public class JsonSerializer {
         try {
             ObjectMapper mapper = new ObjectMapper();
             
-            // Enable all specified serialization features
+            // Enable all requested serialization features
             if (features != null) {
                 for (SerializationFeature feature : features) {
                     mapper.enable(feature);
                 }
             }
-            
+
             // Convert this object to JSON string
             return mapper.writeValueAsString(this);
-            
+
         } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize to JSON", e);
+            throw new RuntimeException("Error serializing object to JSON", e);
         }
     }
 }

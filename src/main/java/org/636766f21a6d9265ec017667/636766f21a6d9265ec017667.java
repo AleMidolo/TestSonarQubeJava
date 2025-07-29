@@ -1,22 +1,22 @@
-import java.nio.ByteBuffer;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.Attribute;
 
-public class ClassReader {
-    private byte[] data;
-
-    public ClassReader(byte[] data) {
-        this.data = data;
+public class CustomClassReader extends ClassReader {
+    
+    public CustomClassReader(byte[] classFile) {
+        super(classFile);
     }
 
     /**
-     * 在此 {@link ClassReader} 中读取一个有符号短整型值。<i>此方法旨在供 {@link Attribute} 子类使用，通常不用于类生成器或适配器。</i>
-     * @param offset 此 {@link ClassReader} 中要读取的值的起始偏移量。
-     * @return 读取的值。
+     * Legge un valore short firmato in questo {@link ClassReader}. <i>Questo metodo è destinato 
+     * alle sottoclassi di {@link Attribute} e normalmente non è necessario per i generatori 
+     * di classi o gli adattatori.</i>
+     * @param offset l'offset di partenza del valore da leggere in questo {@link ClassReader}.
+     * @return il valore letto.
      */
     public short readShort(final int offset) {
-        if (offset < 0 || offset + 2 > data.length) {
-            throw new IndexOutOfBoundsException("Offset out of bounds");
-        }
-        ByteBuffer buffer = ByteBuffer.wrap(data, offset, 2);
-        return buffer.getShort();
+        byte[] classFileBuffer = this.b;
+        return (short)((classFileBuffer[offset] & 0xFF) << 8 | 
+                      (classFileBuffer[offset + 1] & 0xFF));
     }
 }

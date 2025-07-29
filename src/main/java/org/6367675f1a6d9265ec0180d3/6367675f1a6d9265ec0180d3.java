@@ -1,25 +1,39 @@
 import org.jgrapht.Graph;
+import org.jgrapht.GraphMapping;
+import org.jgrapht.graph.AsGraphUnion;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphUtils {
 
     /**
-     * 计算一个恒等自同构（即图的自映射，其中每个顶点也映射到自身）。
-     * @param graph 输入图
-     * @param <V> 图的顶点类型
-     * @param <E> 图的边类型
-     * @return 从图到图的映射
+     * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
+     * @param graph il grafo di input
+     * @param <V> il tipo di vertice del grafo 
+     * @param <E> il tipo di arco del grafo
+     * @return una mappatura da grafo a grafo
      */
-    public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
-        for (V vertex : graph.vertexSet()) {
-            mapping.addVertexMapping(vertex, vertex);
+    public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
+        // Create identity mappings for vertices and edges
+        Map<V,V> vertexCorrespondence = new HashMap<>();
+        Map<E,E> edgeCorrespondence = new HashMap<>();
+        
+        // Map each vertex to itself
+        for(V vertex : graph.vertexSet()) {
+            vertexCorrespondence.put(vertex, vertex);
         }
-        for (E edge : graph.edgeSet()) {
-            V source = graph.getEdgeSource(edge);
-            V target = graph.getEdgeTarget(edge);
-            mapping.addEdgeMapping(edge, edge, source, target);
+        
+        // Map each edge to itself 
+        for(E edge : graph.edgeSet()) {
+            edgeCorrespondence.put(edge, edge);
         }
-        return mapping;
+
+        return new IsomorphicGraphMapping<>(
+            graph, // Graph 1 is the input graph
+            graph, // Graph 2 is the same graph
+            vertexCorrespondence,
+            edgeCorrespondence
+        );
     }
 }

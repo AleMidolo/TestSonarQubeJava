@@ -1,26 +1,21 @@
 import java.util.Collection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class CollectionUtils {
-
     /**
-     * 将给定的集合转换为字符串数组。返回的数组不包含 <code>null</code> 条目。请注意，{@link Arrays#sort(Object[])} 如果数组元素为 <code>null</code> 将抛出 {@link NullPointerException}。
-     * @param collection 要转换的集合
-     * @return 一个新的字符串数组。
+     * Converte la Collection fornita in un array di Stringhe. L'array restituito non contiene elementi <code>null</code>. 
+     * Si noti che {@link Arrays#sort(Object[])} genererà un {@link NullPointerException} se un elemento dell'array è <code>null</code>.
+     * @param collection La collezione da convertire
+     * @return Un nuovo array di Stringhe.
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
-
-        List<String> nonNullList = new ArrayList<>();
-        for (Object obj : collection) {
-            if (obj != null) {
-                nonNullList.add(obj.toString());
-            }
-        }
-
-        return nonNullList.toArray(new String[0]);
+        
+        return collection.stream()
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .toArray(String[]::new);
     }
 }

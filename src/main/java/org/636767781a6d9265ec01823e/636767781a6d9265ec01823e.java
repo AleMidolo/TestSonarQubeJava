@@ -1,42 +1,72 @@
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientAppender extends AppenderSkeleton {
-    private List<Client> clients = new ArrayList<>();
+public class SocketAppender extends AppenderSkeleton {
+    
+    private List<Socket> connectedClients;
+    private List<PrintWriter> clientWriters;
 
-    public void addClient(Client client) {
-        clients.add(client);
-    }
-
-    public void removeClient(Client client) {
-        clients.remove(client);
+    public SocketAppender() {
+        connectedClients = new ArrayList<>();
+        clientWriters = new ArrayList<>();
     }
 
     @Override
     protected void append(LoggingEvent event) {
-        String message = layout.format(event);
-        for (Client client : clients) {
-            client.sendMessage(message);
+        if (event == null) return;
+
+        String formattedMessage = this.layout.format(event);
+
+        // Iterate through all connected clients and send the log message
+        for (int i = 0; i < clientWriters.size(); i++) {
+            try {
+                PrintWriter writer = clientWriters.get(i);
+                writer.println(formattedMessage);
+                writer.flush();
+            } catch (Exception e) {
+                // If there's an error writing to a client, remove it
+                removeClient(i);
+                i--; // Adjust index since we removed an element
+            }
         }
+    }
+
+    public void addClient(Socket clientSocket) throws IOException {
+        connectedClients.add(clientSocket);
+        clientWriters.add(new PrintWriter(clientSocket.getOutputStream(), true));
+    }
+
+    private void removeClient(int index) {
+        try {
+            connectedClients.get(index).close();
+        } catch (IOException e) {
+            // Ignore close errors
+        }
+        connectedClients.remove(index);
+        clientWriters.remove(index);
     }
 
     @Override
     public void close() {
-        // Clean up resources if necessary
+        for (Socket socket : connectedClients) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                // Ignore close errors
+            }
+        }
+        connectedClients.clear();
+        clientWriters.clear();
     }
 
     @Override
     public boolean requiresLayout() {
         return true;
-    }
-
-    // Dummy Client class for demonstration
-    public static class Client {
-        public void sendMessage(String message) {
-            // Simulate sending message to client
-            System.out.println("Sending to client: " + message);
-        }
     }
 }

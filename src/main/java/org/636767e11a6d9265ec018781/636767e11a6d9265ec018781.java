@@ -1,32 +1,40 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class MetricsCache {
-    private Map<String, Double> cache = new HashMap<>();
+public class MetricsCache<METRICS> {
+    
+    private final AtomicReference<METRICS> cache = new AtomicReference<>();
 
     /**
-     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
-     * @param data 需要添加的数据。
+     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
+     * @param data da aggiungere potenzialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        for (Map.Entry<String, Double> entry : data.getMetrics().entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            cache.merge(key, value, Double::sum);
+        Objects.requireNonNull(data, "Input data cannot be null");
+        
+        METRICS currentValue = cache.get();
+        if (currentValue == null) {
+            cache.set(data);
+        } else {
+            // Since we don't know the exact type of METRICS, we assume it has a merge method
+            // In a real implementation, you would need to implement the specific merge logic
+            try {
+                if (currentValue instanceof Mergeable) {
+                    ((Mergeable)currentValue).merge(data);
+                } else {
+                    // Default behavior is to replace the old value
+                    cache.set(data);
+                }
+            } catch (Exception e) {
+                // Fallback to simple replacement if merge fails
+                cache.set(data);
+            }
         }
     }
 
-    // Assuming METRICS is a class that contains a map of metrics
-    public static class METRICS {
-        private Map<String, Double> metrics;
-
-        public METRICS(Map<String, Double> metrics) {
-            this.metrics = metrics;
-        }
-
-        public Map<String, Double> getMetrics() {
-            return metrics;
-        }
+    // Interface for mergeable objects
+    public interface Mergeable<T> {
+        void merge(T other);
     }
 }

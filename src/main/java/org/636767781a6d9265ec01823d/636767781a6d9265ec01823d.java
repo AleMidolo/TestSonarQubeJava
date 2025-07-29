@@ -1,16 +1,61 @@
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
+import java.io.IOException;
+import java.io.Writer;
 
-protected void subAppend(LoggingEvent event) {
-    // Assuming this method is part of a class that has access to a writer or output stream
-    // For example, a FileAppender or ConsoleAppender in Log4j
+public class CustomAppender extends AppenderSkeleton {
+    
+    private Writer writer;
+    
+    public CustomAppender(Writer writer) {
+        this.writer = writer;
+    }
 
-    // Convert the LoggingEvent to a string representation
-    String logMessage = event.getMessage().toString();
+    /**
+     * Questo metodo esegue la scrittura effettiva
+     */
+    @Override
+    protected void subAppend(LoggingEvent event) {
+        if(layout == null) {
+            errorHandler.error("No layout set for the appender named [" + name + "].");
+            return;
+        }
 
-    // Example: Writing to the console
-    System.out.println(logMessage);
+        try {
+            String formattedMessage = layout.format(event);
+            writer.write(formattedMessage);
+            
+            if(layout.ignoresThrowable()) {
+                String[] throwableStrRep = event.getThrowableStrRep();
+                if(throwableStrRep != null) {
+                    for(String line : throwableStrRep) {
+                        writer.write(line);
+                        writer.write(Layout.LINE_SEP);
+                    }
+                }
+            }
+            
+            writer.flush();
+        } catch(IOException e) {
+            errorHandler.error("Failed to write log event", e, 1);
+        }
+    }
 
-    // If you have a specific writer or output stream, you can use it like this:
-    // writer.write(logMessage);
-    // writer.flush();
+    @Override
+    public void close() {
+        if(writer != null) {
+            try {
+                writer.close();
+            } catch(IOException e) {
+                errorHandler.error("Failed to close writer", e, 1);
+            }
+            writer = null;
+        }
+    }
+
+    @Override
+    public boolean requiresLayout() {
+        return true;
+    }
 }

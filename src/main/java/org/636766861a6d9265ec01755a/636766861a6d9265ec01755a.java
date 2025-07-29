@@ -1,35 +1,30 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.MatchResult;
 
-public final class UriMatcher {
-
-    /**
-     * 将URI与模式进行匹配。
-     * @param uri 要与模板匹配的URI。
-     * @return 匹配结果，如果没有匹配则返回空。
-     */
-    public final MatchResult match(CharSequence uri) {
-        // 假设我们有一个预定义的模式，例如匹配以 "http://" 开头的URI
-        Pattern pattern = Pattern.compile("^http://.*");
-        Matcher matcher = pattern.matcher(uri);
-
-        if (matcher.find()) {
-            return matcher.toMatchResult();
-        } else {
-            return null;
-        }
+public class UriMatcher {
+    private final Pattern pattern;
+    
+    public UriMatcher(String template) {
+        // Convert template to regex pattern
+        String regex = template.replaceAll("\\{[^}]+\\}", "([^/]+)");
+        this.pattern = Pattern.compile(regex);
     }
 
-    public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher();
-        CharSequence uri = "http://example.com";
-        MatchResult result = matcher.match(uri);
-
-        if (result != null) {
-            System.out.println("Match found: " + result.group());
-        } else {
-            System.out.println("No match found.");
+    /**
+     * Confronta un URI con il modello.
+     * @param uri l'uri da confrontare con il template.
+     * @return il risultato della corrispondenza, altrimenti null se non si verifica alcuna corrispondenza.
+     */
+    public final MatchResult match(CharSequence uri) {
+        if (uri == null) {
+            return null;
         }
+
+        Matcher matcher = pattern.matcher(uri);
+        if (!matcher.matches()) {
+            return null;
+        }
+
+        return matcher.toMatchResult();
     }
 }

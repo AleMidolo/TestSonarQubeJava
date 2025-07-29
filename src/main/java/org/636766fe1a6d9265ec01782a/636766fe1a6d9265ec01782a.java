@@ -1,25 +1,40 @@
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 
-final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-    // Assuming classFileBuffer is a ByteBuffer containing the class file data
-    ByteBuffer classFileBuffer = ByteBuffer.wrap(new byte[0]); // Replace with actual class file data
-
-    // Move to the constant pool entry index
-    classFileBuffer.position(constantPoolEntryIndex);
-
-    // Read the length of the UTF-8 string
-    int length = classFileBuffer.getShort() & 0xFFFF;
-
-    // Read the UTF-8 bytes into a byte array
-    byte[] utf8Bytes = new byte[length];
-    classFileBuffer.get(utf8Bytes);
-
-    // Decode the UTF-8 bytes into the provided char buffer
-    CharBuffer decodedBuffer = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(utf8Bytes));
-    decodedBuffer.get(charBuffer, 0, decodedBuffer.length());
-
-    // Return the string representation
-    return new String(charBuffer, 0, decodedBuffer.length());
+public class ClassFileReader {
+    private byte[] classFileBuffer;
+    private int[] cpInfoOffsets;
+    
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        int offset = cpInfoOffsets[constantPoolEntryIndex];
+        int utfLength = readUnsignedShort(offset);
+        offset += 2;
+        
+        int charLength = 0;
+        int currentOffset = offset;
+        int endOffset = offset + utfLength;
+        
+        while (currentOffset < endOffset) {
+            int currentByte = classFileBuffer[currentOffset++] & 0xFF;
+            if ((currentByte & 0x80) == 0) {
+                charBuffer[charLength++] = (char) currentByte;
+            } else if ((currentByte & 0xE0) == 0xC0) {
+                charBuffer[charLength++] = (char) (((currentByte & 0x1F) << 6) 
+                    + (classFileBuffer[currentOffset++] & 0x3F));
+            } else {
+                charBuffer[charLength++] = (char) (((currentByte & 0xF) << 12)
+                    + ((classFileBuffer[currentOffset++] & 0x3F) << 6) 
+                    + (classFileBuffer[currentOffset++] & 0x3F));
+            }
+        }
+        
+        return new String(charBuffer, 0, charLength);
+    }
+    
+    private int readUnsignedShort(final int offset) {
+        byte[] classFileBuffer = this.classFileBuffer;
+        return ((classFileBuffer[offset] & 0xFF) << 8) 
+            | (classFileBuffer[offset + 1] & 0xFF);
+    }
 }

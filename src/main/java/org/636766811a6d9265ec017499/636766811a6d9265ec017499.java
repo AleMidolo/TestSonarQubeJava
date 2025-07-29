@@ -1,14 +1,19 @@
+import org.atmosphere.cpr.AtmosphereInterceptor;
 import java.util.List;
 
 public class InterceptorChecker {
-
-    /**
-     * <p>检查指定列表中是否至少存在一个给定的 {@link AtmosphereInterceptor 拦截器} 实现类的实例。</p>
-     * @param interceptorList 拦截器列表
-     * @param c               拦截器类
-     * @return 如果列表中已经存在该类的实例，则返回 {@code false}，否则返回 {@code true}
+    
+    /** 
+     * <p> Controlla nella lista specificata se esiste almeno un'istanza della data classe di implementazione {@link AtmosphereInterceptor interceptor}. </p>
+     * @param interceptorList gli interceptor
+     * @param c               la classe dell'interceptor
+     * @return {@code false} se un'istanza della classe esiste già nella lista, {@code true} altrimenti
      */
     private boolean checkDuplicate(final List<AtmosphereInterceptor> interceptorList, Class<? extends AtmosphereInterceptor> c) {
+        if (interceptorList == null || c == null) {
+            return false;
+        }
+        
         for (AtmosphereInterceptor interceptor : interceptorList) {
             if (c.isInstance(interceptor)) {
                 return false;

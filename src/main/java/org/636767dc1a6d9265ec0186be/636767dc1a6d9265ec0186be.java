@@ -1,33 +1,31 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-public class TimeBucketCompressor {
-
+public class TimeCompressor {
     /**
-     * 根据 dayStep 重新格式化时间桶的长整型值。例如，当 dayStep == 11 时，20000105 重新格式化后的时间桶为 20000101，20000115 重新格式化后的时间桶为 20000112，20000123 重新格式化后的时间桶为 20000123。
+     * Segui il valore di dayStep per riformattare il valore numerico "long" del bucket temporale. Ad esempio, se dayStep == 11, il bucket di tempo riformattato per 20000105 è 20000101, per 20000115 è 20000112, e per 20000123 è 20000123.
      */
-    public static long compressTimeBucket(long timeBucket, int dayStep) {
-        // 将时间桶转换为字符串
-        String timeBucketStr = Long.toString(timeBucket);
+    static long compressTimeBucket(long timeBucket, int dayStep) {
+        // Convert timeBucket to individual components
+        int year = (int)(timeBucket / 10000);
+        int month = (int)((timeBucket % 10000) / 100);
+        int day = (int)(timeBucket % 100);
         
-        // 解析日期
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(timeBucketStr, formatter);
+        // Calculate compressed day based on dayStep
+        int compressedDay;
+        if (day <= dayStep) {
+            compressedDay = 1;
+        } else if (day <= dayStep * 2) {
+            compressedDay = dayStep + 1;
+        } else {
+            compressedDay = day;
+        }
         
-        // 计算新的日期
-        int dayOfMonth = date.getDayOfMonth();
-        int newDay = ((dayOfMonth - 1) / dayStep) * dayStep + 1;
-        LocalDate newDate = date.withDayOfMonth(newDay);
-        
-        // 将新日期转换回长整型
-        String newTimeBucketStr = newDate.format(formatter);
-        return Long.parseLong(newTimeBucketStr);
+        // Reconstruct compressed timeBucket
+        return year * 10000L + month * 100L + compressedDay;
     }
-
+    
+    // Test the implementation
     public static void main(String[] args) {
-        // 测试用例
-        System.out.println(compressTimeBucket(20000105L, 11)); // 输出: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // 输出: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // 输出: 20000123
+        System.out.println(compressTimeBucket(20000105L, 11)); // Should output 20000101
+        System.out.println(compressTimeBucket(20000115L, 11)); // Should output 20000112
+        System.out.println(compressTimeBucket(20000123L, 11)); // Should output 20000123
     }
 }

@@ -1,15 +1,20 @@
-public class ObjectToStringUtil {
+package utils;
+
+/**
+ * Utility class for object conversions
+ */
+public class ObjectUtils {
+
     /**
-     * 对象转字符串，当对象为空时返回空字符串，否则返回toString();
+     * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString()
+     * @param object The object to convert to string
+     * @return String representation of the object, or null if object is null
      */
     public static String toString(Object object) {
-        return object == null ? "" : object.toString();
+        if (object == null) {
+            return null;
+        }
+        return object.toString();
     }
 
-    public static void main(String[] args) {
-        // 测试用例
-        System.out.println(toString(null)); // 输出: ""
-        System.out.println(toString("Hello, World!")); // 输出: Hello, World!
-        System.out.println(toString(123)); // 输出: 123
-    }
 }

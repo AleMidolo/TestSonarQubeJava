@@ -3,13 +3,13 @@ import org.atmosphere.cpr.AtmosphereResourceEventListener;
 
 public class AtmosphereResourceImpl implements AtmosphereResource {
 
-    private AtmosphereResourceEventListener eventListener;
+    private List<AtmosphereResourceEventListener> listeners = new ArrayList<>();
 
     @Override
     public AtmosphereResource addEventListener(AtmosphereResourceEventListener e) {
-        this.eventListener = e;
+        if (e != null) {
+            listeners.add(e);
+        }
         return this;
     }
-
-    // Other methods of AtmosphereResource interface would be implemented here
 }

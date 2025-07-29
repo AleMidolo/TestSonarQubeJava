@@ -1,26 +1,55 @@
 import java.util.Set;
+import java.util.HashSet;
 
-public class Graph<V> {
-
+public class Graph<V,E> {
+    
+    private Set<Edge<V,E>> edges;
+    
     /**
-     * 计算进入一个顶点的权重总和
-     * @param v 顶点
-     * @return 进入一个顶点的权重总和
+     * Calcola la somma dei pesi che entrano in un vertice
+     * @param v il vertice 
+     * @return la somma dei pesi che entrano in un vertice
      */
     public double vertexWeight(Set<V> v) {
-        double totalWeight = 0.0;
-        // 假设我们有一个方法来获取进入顶点的边的权重
-        for (V vertex : v) {
-            totalWeight += getIncomingEdgeWeight(vertex);
+        double sum = 0.0;
+        
+        for(Edge<V,E> edge : edges) {
+            if(v.contains(edge.getDestination())) {
+                sum += edge.getWeight();
+            }
         }
-        return totalWeight;
+        
+        return sum;
     }
-
-    // 假设这个方法返回进入某个顶点的边的权重
-    private double getIncomingEdgeWeight(V vertex) {
-        // 这里应该实现获取进入顶点的边的权重的逻辑
-        // 例如，从图的邻接表中获取边的权重
-        // 这里只是一个示例，返回一个默认值
-        return 1.0; // 假设每条边的权重为1.0
+    
+    // Edge class to represent weighted edges
+    private class Edge<V,E> {
+        private V source;
+        private V destination;
+        private double weight;
+        private E data;
+        
+        public Edge(V source, V destination, double weight, E data) {
+            this.source = source;
+            this.destination = destination;
+            this.weight = weight;
+            this.data = data;
+        }
+        
+        public V getSource() {
+            return source;
+        }
+        
+        public V getDestination() {
+            return destination;
+        }
+        
+        public double getWeight() {
+            return weight;
+        }
+        
+        public E getData() {
+            return data;
+        }
     }
 }

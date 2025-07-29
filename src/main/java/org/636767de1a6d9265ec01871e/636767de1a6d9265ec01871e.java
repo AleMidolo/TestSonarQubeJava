@@ -1,47 +1,30 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.util.Objects;
 
-public class ShardKeyChecker {
-
+public class ShardingValidator {
     /**
-     * @param modelName 实体的模型名称
-     * @throws IllegalStateException 如果分片键索引不连续
+     * @param modelName nome del modello dell'entità
+     * @throws IllegalStateException se gli indici della chiave di sharding non sono continui
      */
     private void check(String modelName) throws IllegalStateException {
-        // 假设分片键的格式为 "modelName_shardIndex"
-        Pattern pattern = Pattern.compile("(.+)_(\\d+)");
-        Matcher matcher = pattern.matcher(modelName);
-
-        if (!matcher.matches()) {
-            throw new IllegalStateException("Invalid model name format: " + modelName);
+        if (Objects.isNull(modelName) || modelName.trim().isEmpty()) {
+            throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        String baseName = matcher.group(1);
-        int shardIndex = Integer.parseInt(matcher.group(2));
-
-        // 检查分片键索引是否连续
-        // 这里假设有一个方法来获取下一个分片键的索引
-        int nextShardIndex = getNextShardIndex(baseName);
-
-        if (nextShardIndex != shardIndex + 1) {
-            throw new IllegalStateException("Shard key index is not continuous: " + modelName);
+        // Verify sharding key indices are continuous
+        int[] indices = getShardingKeyIndices(modelName);
+        if (indices != null && indices.length > 0) {
+            for (int i = 0; i < indices.length - 1; i++) {
+                if (indices[i + 1] - indices[i] != 1) {
+                    throw new IllegalStateException("Sharding key indices must be continuous for model: " + modelName);
+                }
+            }
         }
     }
 
-    // 假设这个方法用于获取下一个分片键的索引
-    private int getNextShardIndex(String baseName) {
-        // 这里应该实现获取下一个分片键索引的逻辑
-        // 例如从数据库或缓存中获取
-        // 这里返回一个假设值
-        return 1; // 假设下一个分片键的索引是1
-    }
-
-    public static void main(String[] args) {
-        ShardKeyChecker checker = new ShardKeyChecker();
-        try {
-            checker.check("model_0");
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
+    // Helper method to get sharding key indices
+    private int[] getShardingKeyIndices(String modelName) {
+        // Implementation would depend on how sharding keys are stored/retrieved
+        // This is just a placeholder
+        return new int[]{0, 1, 2};
     }
 }

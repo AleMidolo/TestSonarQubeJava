@@ -1,86 +1,60 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
-public class UnescapeJava {
+public class StringUtils {
+
+    private static final Map<String, String> JAVA_ESCAPES = new HashMap<>();
+    static {
+        JAVA_ESCAPES.put("\\t", "\t");
+        JAVA_ESCAPES.put("\\b", "\b"); 
+        JAVA_ESCAPES.put("\\n", "\n");
+        JAVA_ESCAPES.put("\\r", "\r");
+        JAVA_ESCAPES.put("\\f", "\f");
+        JAVA_ESCAPES.put("\\'", "'");
+        JAVA_ESCAPES.put("\\\"", "\"");
+        JAVA_ESCAPES.put("\\\\", "\\");
+    }
+
+    /** 
+     * <p>Rimuove l'escape da qualsiasi letterale Java trovato nella <code>String</code>. Ad esempio, trasformerà una sequenza di <code>'\'</code> e <code>'n'</code> in un carattere di nuova linea, a meno che il <code>'\'</code> non sia preceduto da un altro <code>'\'</code>.</p>
+     * @param str la <code>String</code> da desescapare, può essere null
+     * @return una nuova <code>String</code> desescapata, <code>null</code> se l'input è una stringa null
+     */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
-
-        StringBuilder sb = new StringBuilder(str.length());
-        int i = 0;
-        while (i < str.length()) {
-            char c = str.charAt(i);
-            if (c == '\\' && i + 1 < str.length()) {
-                char nextChar = str.charAt(i + 1);
-                switch (nextChar) {
-                    case '\\':
-                        sb.append('\\');
-                        i += 2;
-                        break;
-                    case 'n':
-                        sb.append('\n');
-                        i += 2;
-                        break;
-                    case 't':
-                        sb.append('\t');
-                        i += 2;
-                        break;
-                    case 'r':
-                        sb.append('\r');
-                        i += 2;
-                        break;
-                    case 'b':
-                        sb.append('\b');
-                        i += 2;
-                        break;
-                    case 'f':
-                        sb.append('\f');
-                        i += 2;
-                        break;
-                    case '\'':
-                        sb.append('\'');
-                        i += 2;
-                        break;
-                    case '\"':
-                        sb.append('\"');
-                        i += 2;
-                        break;
-                    case 'u':
-                        if (i + 5 < str.length()) {
-                            String hex = str.substring(i + 2, i + 6);
-                            try {
-                                int unicode = Integer.parseInt(hex, 16);
-                                sb.append((char) unicode);
-                                i += 6;
-                            } catch (NumberFormatException e) {
-                                throw new Exception("Invalid Unicode escape sequence: " + hex);
-                            }
-                        } else {
-                            throw new Exception("Incomplete Unicode escape sequence");
-                        }
-                        break;
-                    default:
-                        sb.append(c);
-                        i++;
-                        break;
+        
+        StringBuilder result = new StringBuilder(str.length());
+        
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            
+            if (ch == '\\' && i + 1 < str.length()) {
+                // Check for escaped sequences
+                String escape = str.substring(i, Math.min(i + 2, str.length()));
+                
+                if (JAVA_ESCAPES.containsKey(escape)) {
+                    result.append(JAVA_ESCAPES.get(escape));
+                    i++; // Skip next character as it's part of escape sequence
+                } else if (escape.charAt(1) == 'u' && i + 5 < str.length()) {
+                    // Handle Unicode escape sequences
+                    String hex = str.substring(i + 2, i + 6);
+                    try {
+                        result.append((char) Integer.parseInt(hex, 16));
+                        i += 5; // Skip the unicode sequence
+                    } catch (NumberFormatException e) {
+                        throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+                    }
+                } else {
+                    // Not a recognized escape sequence, keep the backslash
+                    result.append(ch);
                 }
             } else {
-                sb.append(c);
-                i++;
+                result.append(ch);
             }
         }
-        return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        try {
-            String input = "Hello\\nWorld\\t\\u0041";
-            String output = unescapeJava(input);
-            System.out.println(output);  // Output: Hello
-                                          // World   A
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
+        return result.toString();
     }
 }

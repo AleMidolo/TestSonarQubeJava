@@ -1,41 +1,42 @@
-import java.util.Queue;
+import java.util.NoSuchElementException;
 
-public class QueueToString {
-    private Queue<?> queue;
+public class Queue<E> {
+    private Node<E> front;
+    private Node<E> rear;
+    private int size;
 
-    public QueueToString(Queue<?> queue) {
-        this.queue = queue;
+    private static class Node<E> {
+        E element;
+        Node<E> next;
+
+        Node(E element) {
+            this.element = element;
+            this.next = null;
+        }
     }
 
     /**
-     * 返回队列的文本表示。
-     * @return 队列的文本表示。
+     * Restituisce una rappresentazione testuale della coda.
+     * @return una rappresentazione testuale della coda.
      */
-    @Override
     public String toString() {
-        if (queue == null) {
-            return "null";
+        if (size == 0) {
+            return "[]";
         }
+
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (Object element : queue) {
-            sb.append(element);
-            sb.append(", ");
+        
+        Node<E> current = front;
+        while (current != null) {
+            sb.append(current.element);
+            if (current.next != null) {
+                sb.append(", ");
+            }
+            current = current.next;
         }
-        if (!queue.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Remove the trailing ", "
-        }
+        
         sb.append("]");
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        Queue<String> queue = new java.util.LinkedList<>();
-        queue.add("A");
-        queue.add("B");
-        queue.add("C");
-
-        QueueToString queueToString = new QueueToString(queue);
-        System.out.println(queueToString.toString());
     }
 }

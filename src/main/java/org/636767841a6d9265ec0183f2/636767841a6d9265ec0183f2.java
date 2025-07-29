@@ -1,13 +1,22 @@
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<Object> {
-    @Override
+public class ObjectComparator implements Comparator<Object> {
+    
+    /** 
+     * @see Comparator 
+     */
     public int compare(Object aObj1, Object aObj2) {
-        // Assuming the objects are comparable, cast them to Comparable and compare
-        if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
-            return ((Comparable) aObj1).compareTo(aObj2);
-        } else {
-            throw new IllegalArgumentException("Objects must implement Comparable");
+        if (aObj1 == null && aObj2 == null) {
+            return 0;
         }
+        if (aObj1 == null) {
+            return -1; 
+        }
+        if (aObj2 == null) {
+            return 1;
+        }
+        
+        // Compare using toString() representation if objects are not null
+        return aObj1.toString().compareTo(aObj2.toString());
     }
 }

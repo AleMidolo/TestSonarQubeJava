@@ -2,35 +2,27 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ByteReader {
-    private InputStream inputStream;
     private byte[] buffer;
-    private int bufferPosition;
-    private int bufferLength;
+    private int position;
+    private int count;
+    private InputStream input;
+    private static final int BUFFER_SIZE = 8192;
 
-    public ByteReader(InputStream inputStream, int bufferSize) {
-        this.inputStream = inputStream;
-        this.buffer = new byte[bufferSize];
-        this.bufferPosition = 0;
-        this.bufferLength = 0;
+    public ByteReader(InputStream input) {
+        this.input = input;
+        this.buffer = new byte[BUFFER_SIZE];
+        this.position = 0;
+        this.count = 0;
     }
 
-    /**
-     * 从<code>buffer</code>中读取一个字节，并在必要时进行填充。
-     * @return 输入流中的下一个字节。
-     * @throws IOException 如果没有更多数据可用。
-     */
     public byte readByte() throws IOException {
-        if (bufferPosition >= bufferLength) {
-            fillBuffer();
+        if (position >= count) {
+            count = input.read(buffer);
+            if (count == -1) {
+                throw new IOException("End of stream reached");
+            }
+            position = 0;
         }
-        if (bufferLength == -1) {
-            throw new IOException("No more data available");
-        }
-        return buffer[bufferPosition++];
-    }
-
-    private void fillBuffer() throws IOException {
-        bufferLength = inputStream.read(buffer);
-        bufferPosition = 0;
+        return buffer[position++];
     }
 }

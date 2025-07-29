@@ -1,29 +1,22 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Template {
-    private Set<String> templateVariables;
+    private List<String> templateVariables;
 
     public Template() {
-        this.templateVariables = new HashSet<>();
-        // 假设模板变量已经初始化
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+        templateVariables = new ArrayList<>();
     }
 
     /**
-     * 确定模板变量是否是该模板的成员。
-     * @param name 模板变量的名称。
-     * @return 如果模板变量是模板的成员，则返回真；否则返回假。
+     * Verifica se una variabile di template è un membro di questo template.
+     * @param name nome La variabile di template.
+     * @return true se la variabile di template è un membro del template, altrimenti false.
      */
     public final boolean isTemplateVariablePresent(String name) {
-        return templateVariables.contains(name);
-    }
-
-    public static void main(String[] args) {
-        Template template = new Template();
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var4")); // false
+        if (name == null || name.trim().isEmpty()) {
+            return false;
+        }
+        return templateVariables.contains(name.trim());
     }
 }

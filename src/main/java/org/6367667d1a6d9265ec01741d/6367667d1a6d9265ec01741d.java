@@ -1,32 +1,42 @@
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.lang.reflect.ParameterizedType;
 
 public class TypeResolver {
 
     /**
-     * 解析 {@code typeVariable} 的第一个边界，如果无法解析则返回 {@code Unknown.class}。
+     * Risolve il primo vincolo per il {@code typeVariable}, restituendo {@code Unknown.class} se non può essere risolto.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
-        if (bounds.length > 0) {
-            return bounds[0];
-        } else {
+        
+        if (bounds == null || bounds.length == 0) {
             return Unknown.class;
         }
+        
+        Type bound = bounds[0];
+        
+        if (bound instanceof TypeVariable) {
+            return resolveBound((TypeVariable<?>) bound);
+        }
+        
+        if (bound instanceof WildcardType) {
+            Type[] upperBounds = ((WildcardType) bound).getUpperBounds();
+            if (upperBounds != null && upperBounds.length > 0) {
+                return upperBounds[0];
+            }
+            return Unknown.class;
+        }
+        
+        if (bound instanceof ParameterizedType) {
+            return ((ParameterizedType) bound).getRawType();
+        }
+        
+        return bound;
     }
-
-    public static class Unknown {
-        // Placeholder class for unknown type
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVariable);
-        System.out.println("Resolved bound: " + bound);
-    }
-
-    public static class ExampleClass<T extends String> {
-        // Example class with a type parameter
+    
+    private static class Unknown {
+        // Marker class for unresolvable bounds
     }
 }

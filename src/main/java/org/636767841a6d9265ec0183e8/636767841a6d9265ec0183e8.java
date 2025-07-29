@@ -2,24 +2,28 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventBuffer {
+public class LogBuffer {
     private List<LoggingEvent> buffer;
+    private static final int MAX_BUFFER_SIZE = 1000;
 
-    public EventBuffer() {
-        this.buffer = new ArrayList<>();
+    public LogBuffer() {
+        buffer = new ArrayList<>();
     }
 
-    /** 
-     * 将一个<code>event</code>添加为缓冲区中的最后一个事件。
+    /**
+     * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
      */
     public void add(LoggingEvent event) {
-        if (event != null) {
-            buffer.add(event);
+        if (event == null) {
+            return;
         }
-    }
 
-    // Optional: Method to get the buffer for testing or other purposes
-    public List<LoggingEvent> getBuffer() {
-        return buffer;
+        // Remove oldest event if buffer is full
+        if (buffer.size() >= MAX_BUFFER_SIZE) {
+            buffer.remove(0);
+        }
+
+        // Add new event to end of buffer
+        buffer.add(event);
     }
 }

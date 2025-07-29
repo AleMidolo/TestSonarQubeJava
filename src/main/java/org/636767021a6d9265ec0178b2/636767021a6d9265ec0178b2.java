@@ -1,75 +1,73 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack;
+    private Stack<String> stack;
 
     public FrameStack() {
-        this.stack = new Stack<>();
+        stack = new Stack<>();
     }
 
     /**
-     * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
-     * @param descriptor 类型或方法描述符（如果是方法描述符，则弹出其参数类型）。
+     * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
+     * @param descriptor un tipo o un descrittore di metodo (nel qual caso vengono rimossi i suoi tipi di argomento).
      */
     private void pop(final String descriptor) {
-        int count = getTypeCount(descriptor);
-        for (int i = 0; i < count; i++) {
-            if (!stack.isEmpty()) {
-                stack.pop();
-            } else {
-                throw new IllegalStateException("Stack is empty");
-            }
-        }
-    }
-
-    /**
-     * 根据描述符计算需要弹出的类型数量。
-     * @param descriptor 类型或方法描述符。
-     * @return 需要弹出的类型数量。
-     */
-    private int getTypeCount(String descriptor) {
-        int count = 0;
         int index = 0;
         while (index < descriptor.length()) {
             char c = descriptor.charAt(index);
-            if (c == 'L') {
-                // 对象类型，跳过直到分号
-                while (index < descriptor.length() && descriptor.charAt(index) != ';') {
+            
+            switch (c) {
+                case '(':
+                    // Skip opening parenthesis for method descriptor
                     index++;
-                }
-                count++;
-            } else if (c == '[') {
-                // 数组类型，跳过所有数组维度
-                while (index < descriptor.length() && descriptor.charAt(index) == '[') {
-                    index++;
-                }
-                // 处理数组元素类型
-                if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
-                    while (index < descriptor.length() && descriptor.charAt(index) != ';') {
-                        index++;
+                    break;
+                    
+                case ')':
+                    // End of arguments for method descriptor
+                    return;
+                    
+                case 'B':
+                case 'C': 
+                case 'I':
+                case 'S':
+                case 'Z':
+                case 'F':
+                    // Pop single slot types
+                    if (!stack.isEmpty()) {
+                        stack.pop();
                     }
-                }
-                count++;
-            } else if (c == 'D' || c == 'J') {
-                // double 或 long 类型，占用两个槽位
-                count += 2;
-            } else {
-                // 其他基本类型，占用一个槽位
-                count++;
+                    index++;
+                    break;
+                    
+                case 'D':
+                case 'J':
+                    // Pop double slot types
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                        if (!stack.isEmpty()) {
+                            stack.pop();
+                        }
+                    }
+                    index++;
+                    break;
+                    
+                case 'L':
+                    // Skip class descriptor until semicolon
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    }
+                    index = descriptor.indexOf(';', index) + 1;
+                    break;
+                    
+                case '[':
+                    // Skip array dimension
+                    index++;
+                    break;
+                    
+                default:
+                    // Invalid descriptor character
+                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
             }
-            index++;
         }
-        return count;
-    }
-
-    // 示例用法
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.stack.push(1);
-        frameStack.stack.push(2.0);
-        frameStack.stack.push("Hello");
-
-        frameStack.pop("Ljava/lang/String;D"); // 弹出两个元素
-        System.out.println(frameStack.stack); // 输出剩余栈内容
     }
 }

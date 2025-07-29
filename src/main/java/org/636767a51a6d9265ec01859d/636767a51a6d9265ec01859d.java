@@ -1,24 +1,34 @@
-/**
- * 如果内部数组的内容与提供的数组匹配，则返回真。
- */
-public boolean equals(final byte[] data, int offset, final int len) {
-    if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
-        return false;
+import java.util.Arrays;
+
+public class ByteArrayComparator {
+    
+    private byte[] internalArray;
+    
+    /**
+     * Constructor to initialize internal array
+     */
+    public ByteArrayComparator(byte[] array) {
+        this.internalArray = array;
     }
     
-    // Assuming 'internalArray' is the internal array to compare against
-    if (len != internalArray.length) {
-        return false;
-    }
-    
-    for (int i = 0; i < len; i++) {
-        if (data[offset + i] != internalArray[i]) {
+    /**
+     * Restituisce true se i contenuti dell'array interno e dell'array fornito corrispondono.
+     */
+    public boolean equals(final byte[] data, int offset, final int len) {
+        if (data == null || offset < 0 || len < 0 || offset + len > data.length) {
             return false;
         }
+        
+        if (internalArray.length != len) {
+            return false;
+        }
+        
+        for (int i = 0; i < len; i++) {
+            if (internalArray[i] != data[offset + i]) {
+                return false;
+            }
+        }
+        
+        return true;
     }
-    
-    return true;
 }
-
-// Assuming 'internalArray' is defined somewhere in the class
-private byte[] internalArray;

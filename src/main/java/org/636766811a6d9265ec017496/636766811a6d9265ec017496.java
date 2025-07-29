@@ -1,32 +1,42 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class FileIterator implements Iterator<InputStream> {
-    private File[] files;
-    private int currentIndex;
-
-    public FileIterator(File directory) {
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided file is not a directory");
-        }
-        this.files = directory.listFiles();
-        this.currentIndex = 0;
+    private Queue<File> files;
+    
+    public FileIterator() {
+        this.files = new LinkedList<>();
     }
-
-    @Override
-    public boolean hasNext() {
-        return currentIndex < files.length;
-    }
-
-    @Override
+    
+    /** 
+     * Restituisce il prossimo oggetto {@link java.io.File} oppure {@code null} se non ci sono più file disponibili.
+     */
     public InputStream next() throws IOException {
-        if (!hasNext()) {
+        if (files.isEmpty()) {
             return null;
         }
-        File nextFile = files[currentIndex++];
-        return new FileInputStream(nextFile);
+        
+        File nextFile = files.poll();
+        if (nextFile != null && nextFile.exists() && nextFile.isFile()) {
+            return new FileInputStream(nextFile);
+        }
+        
+        return null;
+    }
+    
+    public void addFile(File file) {
+        if (file != null) {
+            files.offer(file);
+        }
+    }
+    
+    @Override
+    public boolean hasNext() {
+        return !files.isEmpty();
     }
 }

@@ -1,36 +1,28 @@
-import java.nio.charset.StandardCharsets;
-import java.net.URLEncoder;
-
 public class TemplateEncoder {
     /**
-     * 对包含模板参数名称的字符串进行编，特别是字符 '{' 和 '}' 将被百分比编码。
-     * @param s 包含零个或多个模板参数名称的字符串
-     * @return 编码后的模板参数名称字符串。
+     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
+     * @param s la stringa con zero o più nomi di parametri di template
+     * @return la stringa con i nomi di parametri di template codificati.
      */
     public static String encodeTemplateNames(String s) {
-        if (s == null) {
-            return null;
+        if (s == null || s.isEmpty()) {
+            return s;
         }
         
-        StringBuilder encodedString = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '{' || c == '}') {
-                try {
-                    encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
-                } catch (Exception e) {
-                    // Handle encoding exception
-                    encodedString.append(c);
-                }
+        StringBuilder result = new StringBuilder();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            
+            if (c == '{') {
+                result.append("%7B");
+            } else if (c == '}') {
+                result.append("%7D");
             } else {
-                encodedString.append(c);
+                result.append(c);
             }
         }
-        return encodedString.toString();
-    }
-
-    public static void main(String[] args) {
-        String input = "This is a {template} string with {parameters}.";
-        String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);
+        
+        return result.toString();
     }
 }

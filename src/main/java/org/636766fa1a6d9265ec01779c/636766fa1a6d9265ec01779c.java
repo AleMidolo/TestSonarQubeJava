@@ -1,21 +1,29 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
-private String parseToken(final char[] terminators) {
-    Set<Character> terminatorSet = new HashSet<>();
-    for (char c : terminators) {
-        terminatorSet.add(c);
-    }
-
-    StringBuilder token = new StringBuilder();
-    int ch;
-    while ((ch = System.in.read()) != -1) {
-        char currentChar = (char) ch;
-        if (terminatorSet.contains(currentChar)) {
-            break;
+public class Parser {
+    private String input;
+    private int currentPosition;
+    
+    /**
+     * Analizza un token fino a quando non viene incontrato uno dei caratteri terminatori forniti.
+     * @param terminators l'array di caratteri terminatori. Qualsiasi di questi caratteri, quando incontrato, segna la fine del token
+     * @return il token
+     */
+    private String parseToken(final char[] terminators) {
+        StringBuilder token = new StringBuilder();
+        
+        while (currentPosition < input.length()) {
+            char currentChar = input.charAt(currentPosition);
+            
+            // Check if current character is a terminator
+            if (Arrays.binarySearch(terminators, currentChar) >= 0) {
+                break;
+            }
+            
+            token.append(currentChar);
+            currentPosition++;
         }
-        token.append(currentChar);
+        
+        return token.toString();
     }
-
-    return token.toString();
 }

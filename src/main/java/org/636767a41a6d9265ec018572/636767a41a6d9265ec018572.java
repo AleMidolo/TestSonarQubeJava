@@ -2,27 +2,31 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VarintReader {
-
-    private final InputStream inputStream;
-
-    public VarintReader(InputStream inputStream) {
-        this.inputStream = inputStream;
+    private final InputStream input;
+    private int position = 0;
+    
+    public VarintReader(InputStream input) {
+        this.input = input;
     }
 
-    /**
-     * 从流中读取原始 Varint。
+    /** 
+     * Leggi un Varint "raw" dallo stream.
      */
     public long readRawVarint64() throws IOException {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            final byte b = (byte) inputStream.read();
-            result |= (long) (b & 0x7F) << shift;
+            final int b = input.read();
+            if (b == -1) {
+                throw new IOException("Malformed varint - EOF");
+            }
+            position++;
+            result |= (long)(b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint64");
+        throw new IOException("Malformed varint - too long");
     }
 }

@@ -1,30 +1,35 @@
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.List;
+import javafx.util.Pair;
 
-private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-    if (bounds == null || bounds.isEmpty()) {
-        return Pair.of(Collections.emptyList(), 0L);
+public class SuffixSumCalculator {
+
+    /**
+     * Calcola la somma dei suffissi di {@code bounds}. Restituisce la somma dei suffissi calcolata e la somma totale di tutti gli elementi nella lista {@code bounds}.
+     * @param bounds lista di interi.
+     * @return coppia calcolata di lista di somma suffisso e somma di tutti gli elementi.
+     */
+    private Pair<List<Integer>,Long> computeSuffixSum(List<Integer> bounds) {
+        List<Integer> suffixSums = new ArrayList<>();
+        long totalSum = 0;
+        
+        // Handle empty list case
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(suffixSums, totalSum);
+        }
+
+        // Calculate total sum first
+        for (int num : bounds) {
+            totalSum += num;
+        }
+
+        // Calculate suffix sums
+        int currentSum = 0;
+        for (int i = bounds.size() - 1; i >= 0; i--) {
+            currentSum += bounds.get(i);
+            suffixSums.add(0, currentSum); // Add at beginning to maintain order
+        }
+
+        return new Pair<>(suffixSums, totalSum);
     }
-
-    List<Integer> suffixSums = new ArrayList<>(bounds.size());
-    long totalSum = 0;
-    int currentSuffixSum = 0;
-
-    // 计算后缀和
-    for (int i = bounds.size() - 1; i >= 0; i--) {
-        currentSuffixSum += bounds.get(i);
-        suffixSums.add(currentSuffixSum);
-    }
-
-    // 反转后缀和列表以保持原始顺序
-    Collections.reverse(suffixSums);
-
-    // 计算总和
-    for (int num : bounds) {
-        totalSum += num;
-    }
-
-    return Pair.of(suffixSums, totalSum);
 }

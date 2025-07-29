@@ -1,23 +1,40 @@
-import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereResourceImpl;
+import org.atmosphere.cpr.AtmosphereHandler;
+import org.atmosphere.cpr.AtmosphereInterceptor;
 
-public class AtmosphereInspector {
+public class AutoSuspendInterceptor implements AtmosphereInterceptor {
 
-    /**
-     * 根据 {@link AtmosphereResource.TRANSPORT} 的值自动挂起 {@link AtmosphereResource}。
-     * @param r 一个 {@link AtmosphereResource}
-     * @return {@link Action#CONTINUE}
-     */
-    @Override
+    @Override 
     public Action inspect(AtmosphereResource r) {
-        if (r.transport().equals(TRANSPORT.WEBSOCKET)) {
-            r.suspend();
-        } else if (r.transport().equals(TRANSPORT.LONG_POLLING)) {
-            r.suspend(-1); // 挂起直到超时
-        } else if (r.transport().equals(TRANSPORT.STREAMING)) {
-            r.suspend(-1); // 挂起直到超时
+        if (r != null && r.transport() != null) {
+            switch (r.transport()) {
+                case WEBSOCKET:
+                case STREAMING:
+                case SSE:
+                case LONG_POLLING:
+                    r.suspend();
+                    break;
+                default:
+                    break;
+            }
         }
         return Action.CONTINUE;
+    }
+
+    @Override
+    public void postInspect(AtmosphereResource r) {
+        // No implementation needed
+    }
+
+    @Override
+    public void destroy() {
+        // No implementation needed
+    }
+
+    @Override
+    public void configure(AtmosphereConfig config) {
+        // No implementation needed
     }
 }

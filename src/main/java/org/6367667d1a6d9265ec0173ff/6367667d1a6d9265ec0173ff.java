@@ -1,22 +1,36 @@
 import javax.servlet.http.HttpServletRequest;
+import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.Meteor;
 
 public class MeteorLookup {
 
     /**
-     * 根据 {@link HttpServletRequest} 获取 {@link Meteor} 的实例。
+     * Recupera un'istanza di {@link Meteor} basata su {@link HttpServletRequest}.
      * @param r {@link HttpServletRequest}
-     * @return 一个 {@link Meteor} 实例，如果未找到则返回空
+     * @return un {@link Meteor} o null se non trovato
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // 假设 Meteor 实例存储在请求属性中
-        Object meteorObj = r.getAttribute("meteor");
-        if (meteorObj instanceof Meteor) {
-            return (Meteor) meteorObj;
+        if (r == null) {
+            return null;
         }
+        
+        try {
+            // Try to get existing Meteor instance
+            Meteor meteor = Meteor.build(r);
+            if (meteor != null) {
+                return meteor;
+            }
+
+            // Try to get from AtmosphereResource
+            AtmosphereResource resource = (AtmosphereResource) r.getAttribute(AtmosphereResource.class.getName());
+            if (resource != null) {
+                return Meteor.build(resource);
+            }
+        } catch (Exception e) {
+            // Return null if any errors occur during lookup
+            return null;
+        }
+        
         return null;
     }
-}
-
-class Meteor {
-    // Meteor 类的定义
 }

@@ -1,66 +1,45 @@
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+import org.jgrapht.*;
 
-public class BipartiteGraphGenerator<V, E> {
+public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
+    
+    private int n1; // size of first partition
+    private int n2; // size of second partition
+    
+    public BipartiteGraphGenerator(int n1, int n2) {
+        this.n1 = n1;
+        this.n2 = n2;
+    }
 
-    /**
-     * 构建一个完整的二分图
-     * @param target 目标图对象
-     * @param resultMap 存储生成的顶点
-     */
     @Override
-    public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // 假设图有两个部分，分别称为左部和右部
-        List<V> leftPart = new ArrayList<>();
-        List<V> rightPart = new ArrayList<>();
-
-        // 生成左部的顶点
-        for (int i = 0; i < 5; i++) {
-            V vertex = target.addVertex();
-            leftPart.add(vertex);
-            resultMap.put("left_" + i, vertex);
-        }
-
-        // 生成右部的顶点
-        for (int i = 0; i < 5; i++) {
-            V vertex = target.addVertex();
-            rightPart.add(vertex);
-            resultMap.put("right_" + i, vertex);
-        }
-
-        // 连接左部和右部的所有顶点
-        for (V leftVertex : leftPart) {
-            for (V rightVertex : rightPart) {
-                target.addEdge(leftVertex, rightVertex);
+    public void generateGraph(Graph<V,E> target, Map<String,V> resultMap) {
+        // Create vertices for first partition
+        List<V> partition1 = new ArrayList<>();
+        for(int i = 0; i < n1; i++) {
+            V vertex = target.vertexSupplier().get();
+            target.addVertex(vertex);
+            partition1.add(vertex);
+            if(resultMap != null) {
+                resultMap.put("P1_" + i, vertex);
             }
         }
-    }
-}
 
-// 假设Graph接口如下
-interface Graph<V, E> {
-    V addVertex();
-    E addEdge(V source, V target);
-}
+        // Create vertices for second partition  
+        List<V> partition2 = new ArrayList<>();
+        for(int i = 0; i < n2; i++) {
+            V vertex = target.vertexSupplier().get();
+            target.addVertex(vertex);
+            partition2.add(vertex);
+            if(resultMap != null) {
+                resultMap.put("P2_" + i, vertex);
+            }
+        }
 
-// 假设顶点和边的类型为String
-class SimpleGraph implements Graph<String, String> {
-    private List<String> vertices = new ArrayList<>();
-    private List<String> edges = new ArrayList<>();
-
-    @Override
-    public String addVertex() {
-        String vertex = "v" + vertices.size();
-        vertices.add(vertex);
-        return vertex;
-    }
-
-    @Override
-    public String addEdge(String source, String target) {
-        String edge = source + "-" + target;
-        edges.add(edge);
-        return edge;
+        // Add edges between all vertices in partition1 and partition2
+        for(V v1 : partition1) {
+            for(V v2 : partition2) {
+                target.addEdge(v1, v2);
+            }
+        }
     }
 }

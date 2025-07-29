@@ -1,23 +1,49 @@
 import org.apache.log4j.spi.LoggingEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+    
     /**
-     * 将日志事件格式化为写入器。
-     * @param event 要格式化的日志事件。
-     * @return 格式化后的日志字符串。
+     * Formatta un evento di logging per un writer.
+     * @param event evento di logging da formattare.
      */
     public String format(final LoggingEvent event) {
         if (event == null) {
             return "";
         }
 
-        StringBuilder formattedMessage = new StringBuilder();
-        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
-        formattedMessage.append(event.getTimeStamp()).append(" - ");
-        formattedMessage.append(event.getLoggerName()).append(" - ");
-        formattedMessage.append(event.getRenderedMessage());
-
-        return formattedMessage.toString();
+        StringBuilder sb = new StringBuilder();
+        
+        // Add timestamp
+        Date timestamp = new Date(event.getTimeStamp());
+        sb.append(DATE_FORMAT.format(timestamp));
+        sb.append(" ");
+        
+        // Add log level
+        sb.append("[").append(event.getLevel().toString()).append("] ");
+        
+        // Add logger name
+        sb.append(event.getLoggerName());
+        sb.append(" - ");
+        
+        // Add message
+        sb.append(event.getRenderedMessage());
+        
+        // Add throwable if exists
+        String[] throwableStrRep = event.getThrowableStrRep();
+        if (throwableStrRep != null) {
+            sb.append("\n");
+            for (String line : throwableStrRep) {
+                sb.append(line).append("\n");
+            }
+        }
+        
+        // Add new line
+        sb.append("\n");
+        
+        return sb.toString();
     }
 }

@@ -1,36 +1,36 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Channels {
-    private List<IConsumer> consumers;
+public class ChannelManager {
+    
+    private List<Channels> channelsList;
+    private List<IConsumer> consumersList;
 
-    public Channels() {
-        this.consumers = new ArrayList<>();
+    public ChannelManager() {
+        this.channelsList = new ArrayList<>();
+        this.consumersList = new ArrayList<>();
     }
-
-    public void addConsumer(IConsumer consumer) {
-        this.consumers.add(consumer);
-    }
-
-    public List<IConsumer> getConsumers() {
-        return consumers;
-    }
-}
-
-public interface IConsumer {
-    void consume(String message);
-}
-
-public class TargetChannelManager {
 
     /**
-     * 添加新的目标通道。
+     * Aggiungi un nuovo canale di destinazione.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
-            channels.addConsumer(consumer);
-        } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
+            channelsList.add(channels);
+            consumersList.add(consumer);
         }
     }
+}
+
+// Assumed supporting interfaces/classes:
+
+interface IConsumer {
+    void consume();
+}
+
+enum Channels {
+    EMAIL,
+    SMS,
+    PUSH_NOTIFICATION,
+    WEBHOOK
 }

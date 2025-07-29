@@ -1,28 +1,43 @@
 import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.charset.UnsupportedCharsetException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CharsetConverter {
-
-    /**
-     * 将MIME标准字符集名称转换为Java等效名称。
-     * @param charset MIME标准名称。
-     * @return 此名称的Java等效名称。
-     */
-    private static String javaCharset(String charset) {
-        try {
-            // 尝试将MIME字符集名称转换为Java字符集名称
-            return Charset.forName(charset).name();
-        } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // 如果字符集名称不合法或不支持，返回默认字符集名称
-            return Charset.defaultCharset().name();
-        }
+    
+    private static final Map<String, String> MIME_TO_JAVA_CHARSET = new HashMap<>();
+    
+    static {
+        MIME_TO_JAVA_CHARSET.put("ISO-8859-1", "ISO-8859-1");
+        MIME_TO_JAVA_CHARSET.put("ISO8859_1", "ISO-8859-1");
+        MIME_TO_JAVA_CHARSET.put("ISO-8859-2", "ISO-8859-2"); 
+        MIME_TO_JAVA_CHARSET.put("ISO8859_2", "ISO-8859-2");
+        MIME_TO_JAVA_CHARSET.put("UTF-8", "UTF-8");
+        MIME_TO_JAVA_CHARSET.put("UTF8", "UTF-8");
+        MIME_TO_JAVA_CHARSET.put("US-ASCII", "US-ASCII");
+        MIME_TO_JAVA_CHARSET.put("ASCII", "US-ASCII");
+        MIME_TO_JAVA_CHARSET.put("windows-1252", "windows-1252");
+        MIME_TO_JAVA_CHARSET.put("CP1252", "windows-1252");
     }
 
-    public static void main(String[] args) {
-        // 测试示例
-        System.out.println(javaCharset("UTF-8"));  // 输出: UTF-8
-        System.out.println(javaCharset("ISO-8859-1"));  // 输出: ISO-8859-1
-        System.out.println(javaCharset("invalid-charset"));  // 输出: 默认字符集名称
+    private static String javaCharset(String charset) {
+        if (charset == null || charset.trim().isEmpty()) {
+            return Charset.defaultCharset().name();
+        }
+        
+        String normalized = charset.trim().toUpperCase();
+        String javaCharset = MIME_TO_JAVA_CHARSET.get(normalized);
+        
+        if (javaCharset != null) {
+            return javaCharset;
+        }
+        
+        try {
+            // Verify if the charset is valid by attempting to get an instance
+            Charset.forName(charset);
+            return charset;
+        } catch (Exception e) {
+            // If charset is not recognized, return default charset
+            return Charset.defaultCharset().name();
+        }
     }
 }

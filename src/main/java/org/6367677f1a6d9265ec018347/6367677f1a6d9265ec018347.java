@@ -1,42 +1,38 @@
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.Socket;
 
-public class TelnetServer {
-    private List<Socket> clients = new ArrayList<>();
+public class ChatServer {
+    private List<PrintWriter> clientWriters;
+
+    public ChatServer() {
+        clientWriters = new ArrayList<>();
+    }
 
     /**
-     * 以适用于 Telnet 的格式向每个客户端发送消息。
-     * @param message 要发送的消息
+     * Invia un messaggio a ciascuno dei client in un formato compatibile con telnet.
      */
     public synchronized void send(final String message) {
-        for (Socket client : clients) {
+        // Aggiungi newline per compatibilità telnet
+        String telnetMessage = message + "\r\n";
+        
+        // Itera su tutti i writer dei client
+        for (PrintWriter writer : clientWriters) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
-            } catch (IOException e) {
-                // 处理客户端连接异常
-                e.printStackTrace();
+                writer.print(telnetMessage);
+                writer.flush();
+            } catch (Exception e) {
+                // Rimuovi il writer se c'è un errore di invio
+                clientWriters.remove(writer);
             }
         }
     }
 
-    /**
-     * 添加一个新的客户端连接。
-     * @param client 客户端Socket
-     */
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
-    }
-
-    /**
-     * 移除一个客户端连接。
-     * @param client 客户端Socket
-     */
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
+    // Metodo per aggiungere un nuovo client
+    public synchronized void addClient(Socket clientSocket) throws IOException {
+        PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+        clientWriters.add(writer);
     }
 }

@@ -1,40 +1,23 @@
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.servlet.http.HttpServletRequest;
 
-public class HttpRequest {
-
-    private URL url;
-
-    public HttpRequest(URL url) {
-        this.url = url;
-    }
+public class RequestWrapper {
+    private HttpServletRequest request;
 
     /**
-     * 获取请求的内容长度。
-     * @return 请求的内容长度。
+     * Recupera la lunghezza del contenuto della richiesta.
+     * @return La lunghezza del contenuto della richiesta.
      * @since 1.3
      */
     public long contentLength() {
-        try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("HEAD");
-            connection.connect();
-            return connection.getContentLengthLong();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // 返回-1表示获取失败
+        long length = request.getContentLengthLong();
+        if (length < 0) {
+            // If content length header not set, try to get actual content length
+            try {
+                length = request.getInputStream().available();
+            } catch (Exception e) {
+                length = -1L;
+            }
         }
-    }
-
-    public static void main(String[] args) {
-        try {
-            URL url = new URL("https://example.com");
-            HttpRequest request = new HttpRequest(url);
-            long length = request.contentLength();
-            System.out.println("Content Length: " + length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return length;
     }
 }

@@ -1,6 +1,6 @@
 public class BooleanConverter {
     /**
-     * Si <code>value</code> es "true", se devuelve <code>true</code>. Si <code>value</code> es "false", se devuelve <code>false</code>. De lo contrario, se devuelve <code>default</code>. <p>El caso de <code>value</code> no es importante.  
+     * यदि <code>value</code> "true" है, तो <code>true</code> लौटाया जाता है। यदि <code>value</code> "false" है, तो <code>false</code> लौटाया जाता है। अन्यथा, <code>default</code> लौटाया जाता है। <p>value का केस महत्वपूर्ण नहीं है।  
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
@@ -17,9 +17,10 @@ public class BooleanConverter {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(toBoolean("True", false));  // true
+        // Test cases
+        System.out.println(toBoolean("True", false)); // true
         System.out.println(toBoolean("FALSE", true)); // false
         System.out.println(toBoolean("random", true)); // true
+        System.out.println(toBoolean(null, false)); // false
     }
 }

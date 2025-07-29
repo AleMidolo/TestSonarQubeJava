@@ -1,12 +1,12 @@
 /**
- * Agrega un número de línea de origen correspondiente a esta etiqueta.
- * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
+ * इस लेबल के लिए एक स्रोत पंक्ति संख्या जोड़ता है।
+ * @param lineNumber एक स्रोत पंक्ति संख्या (जो कि सख्ती से सकारात्मक होनी चाहिए)।
  */
 final void addLineNumber(final int lineNumber) {
     if (lineNumber <= 0) {
-        throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
+        throw new IllegalArgumentException("Line number must be strictly positive.");
     }
-    // Aquí se podría agregar la lógica para almacenar o procesar el número de línea.
-    // Por ejemplo, si se tiene una lista de números de línea:
-    // this.lineNumbers.add(lineNumber);
+    // Assuming there is a list or some data structure to store the line numbers
+    // For example, if we have a List<Integer> lineNumbers:
+    // lineNumbers.add(lineNumber);
 }

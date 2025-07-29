@@ -3,29 +3,27 @@ import java.util.*;
 public class PrimeUtil {
 
     /**
-     * Devuelve un número primo que es >= desiredCapacity y muy cercano a desiredCapacity
-     * (dentro del 11% si desiredCapacity >= 1000).
-     * @param desiredCapacity la capacidad deseada por el usuario.
-     * @return la capacidad que se debe utilizar para una tabla hash.
+     * एक प्रमुख संख्या लौटाता है जो <code>&gt;= desiredCapacity</code> है और <code>desiredCapacity</code> के बहुत करीब है (यदि <code>desiredCapacity &gt;= 1000</code> है तो 11% के भीतर)।
+     * @param desiredCapacity उपयोगकर्ता द्वारा इच्छित क्षमता।
+     * @return वह क्षमता जो हैशटेबल के लिए उपयोग की जानी चाहिए।
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
+        if (desiredCapacity <= 1) {
             return 2;
         }
+
         int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
+        while (!isPrime(candidate)) {
             candidate++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
-            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
-                candidate = desiredCapacity;
-                while (!isPrime(candidate)) {
-                    candidate++;
-                }
-                return candidate;
+
+        if (desiredCapacity >= 1000) {
+            int upperBound = (int) (desiredCapacity * 1.11);
+            while (candidate > upperBound) {
+                candidate = nextPrime(candidate + 1);
             }
         }
+
         return candidate;
     }
 
@@ -48,6 +46,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Ejemplo de uso
+        System.out.println(nextPrime(1000));  // Example usage
     }
 }

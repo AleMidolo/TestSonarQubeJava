@@ -1,36 +1,32 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Acumulador {
-    private Map<String, Long> mapa;
+public class Accumulator {
+    private Map<String, Long> map;
 
-    public Acumulador() {
-        this.mapa = new HashMap<>();
+    public Accumulator() {
+        this.map = new HashMap<>();
     }
 
     /**
-     * Acumula el valor con el valor existente en la misma clave dada.
-     * @param clave La clave en la que se acumulará el valor.
-     * @param valor El valor a acumular.
+     * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
      */
-    public void acumulacionDeValor(String clave, Long valor) {
-        if (mapa.containsKey(clave)) {
-            Long valorExistente = mapa.get(clave);
-            mapa.put(clave, valorExistente + valor);
+    public void valueAccumulation(String key, Long value) {
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + value);
         } else {
-            mapa.put(clave, valor);
+            map.put(key, value);
         }
     }
 
-    // Método para obtener el valor acumulado de una clave específica
-    public Long obtenerValor(String clave) {
-        return mapa.getOrDefault(clave, 0L);
+    public Long getValue(String key) {
+        return map.getOrDefault(key, 0L);
     }
 
     public static void main(String[] args) {
-        Acumulador acumulador = new Acumulador();
-        acumulador.acumulacionDeValor("clave1", 10L);
-        acumulador.acumulacionDeValor("clave1", 20L);
-        System.out.println(acumulador.obtenerValor("clave1")); // Debería imprimir 30
+        Accumulator accumulator = new Accumulator();
+        accumulator.valueAccumulation("key1", 10L);
+        accumulator.valueAccumulation("key1", 20L);
+        System.out.println(accumulator.getValue("key1")); // Output: 30
     }
 }

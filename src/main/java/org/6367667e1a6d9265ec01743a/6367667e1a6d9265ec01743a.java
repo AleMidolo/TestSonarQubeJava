@@ -1,20 +1,21 @@
 import java.util.concurrent.atomic.AtomicLong;
 
-public class WriteOperationTracker {
-    private final AtomicLong lastWriteTimeStamp = new AtomicLong();
+public class LastWriteTimestamp {
+    private final AtomicLong lastWriteTimestamp = new AtomicLong();
 
     /**
-     * La última vez, en milisegundos, que ocurrió una operación de escritura.
-     * @return el último timestamp de escritura en milisegundos.
+     * अंतिम बार, मिलीसेकंड में, एक लिखने की प्रक्रिया हुई थी।
+     * @return यह
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return lastWriteTimeStamp.get();
+        return lastWriteTimestamp.get();
     }
 
     /**
-     * Actualiza el último timestamp de escritura al tiempo actual en milisegundos.
+     * अंतिम लिखने की प्रक्रिया का समय अपडेट करें।
+     * @param timestamp मिलीसेकंड में समय
      */
-    public void updateWriteTimeStamp() {
-        lastWriteTimeStamp.set(System.currentTimeMillis());
+    public void updateLastWriteTimestamp(long timestamp) {
+        lastWriteTimestamp.set(timestamp);
     }
 }

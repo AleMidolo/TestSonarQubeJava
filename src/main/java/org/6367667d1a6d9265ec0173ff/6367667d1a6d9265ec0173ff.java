@@ -1,24 +1,40 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class MeteorLookup {
+public class Meteor {
+    // Assuming Meteor class has some properties and methods
+    // For example:
+    private String name;
+    private int id;
 
-    /**
-     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
-     * @param r {@link HttpServletRequest}
-     * @return un {@link Meteor} o null si no se encuentra
-     */
-    public static Meteor lookup(HttpServletRequest r) {
-        // Aquí se implementaría la lógica para buscar y retornar una instancia de Meteor
-        // basada en el HttpServletRequest. Por ejemplo, se podría buscar en los atributos
-        // de la solicitud o en algún otro lugar dependiendo de la implementación.
-
-        // Ejemplo de implementación:
-        Meteor meteor = (Meteor) r.getAttribute("meteor");
-        return meteor;
+    public Meteor(String name, int id) {
+        this.name = name;
+        this.id = id;
     }
-}
 
-// Clase Meteor de ejemplo
-class Meteor {
-    // Atributos y métodos de la clase Meteor
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public static Meteor lookup(HttpServletRequest r) {
+        // Example logic to retrieve a Meteor instance based on HttpServletRequest
+        // This is a placeholder implementation and should be adjusted based on actual requirements
+        String meteorName = r.getParameter("meteorName");
+        String meteorIdStr = r.getParameter("meteorId");
+
+        if (meteorName != null && meteorIdStr != null) {
+            try {
+                int meteorId = Integer.parseInt(meteorIdStr);
+                return new Meteor(meteorName, meteorId);
+            } catch (NumberFormatException e) {
+                // Handle the case where meteorId is not a valid integer
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 }

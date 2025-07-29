@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * Elimina los espacios en blanco al final del String dado.
-     * @param str el String a verificar
-     * @return el String sin espacios en blanco al final
+     * दिए गए String से अंतिमWhitespace को हटाएं।
+     * @param str वह String जिसे जांचना है
+     * @return ट्रिम किया हुआ String
      * @see java.lang.Character#isWhitespace
      */
     public static String trimTrailingWhitespace(String str) {
@@ -20,8 +20,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "Hello World   ";
-        System.out.println("Original: '" + testString + "'");
-        System.out.println("Trimmed: '" + trimTrailingWhitespace(testString) + "'");
+        String input = "Hello World   ";
+        String result = trimTrailingWhitespace(input);
+        System.out.println("'" + result + "'");  // Output: 'Hello World'
     }
 }

@@ -1,38 +1,34 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-/**
- * Calcula todos los vértices que tienen un grado positivo iterando sobre las aristas intencionadamente. 
- * Esto mantiene la complejidad en $O(m)$ donde $m$ es el número de aristas.
- * @return conjunto de vértices con grado positivo
- */
-private Set<V> initVisibleVertices() {
-    Set<V> visibleVertices = new HashSet<>();
-    
-    // Suponiendo que 'edges' es una lista de aristas donde cada arista es un par de vértices (V, V)
-    for (Edge<V> edge : edges) {
-        visibleVertices.add(edge.getSource());
-        visibleVertices.add(edge.getTarget());
-    }
-    
-    return visibleVertices;
-}
+class Graph<V> {
+    private Map<V, Set<V>> adjacencyList;
 
-// Clase Edge de ejemplo para representar una arista
-class Edge<V> {
-    private V source;
-    private V target;
-
-    public Edge(V source, V target) {
-        this.source = source;
-        this.target = target;
+    public Graph() {
+        this.adjacencyList = new HashMap<>();
     }
 
-    public V getSource() {
-        return source;
+    public void addVertex(V vertex) {
+        adjacencyList.putIfAbsent(vertex, new HashSet<>());
     }
 
-    public V getTarget() {
-        return target;
+    public void addEdge(V source, V destination) {
+        addVertex(source);
+        addVertex(destination);
+        adjacencyList.get(source).add(destination);
+        adjacencyList.get(destination).add(source);
+    }
+
+    /**
+     * सभी वर्टिस को गणना करें जिनका डिग्री सकारात्मक है, जानबूझकर किनारों पर इटरेट करके। यह जटिलता को $O(m)$ पर रखता है जहाँ $m$ किनारों की संख्या है।
+     * @return सकारात्मक डिग्री वाले वर्टिस का सेट
+     */
+    private Set<V> initVisibleVertices() {
+        Set<V> visibleVertices = new HashSet<>();
+        for (Map.Entry<V, Set<V>> entry : adjacencyList.entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                visibleVertices.add(entry.getKey());
+            }
+        }
+        return visibleVertices;
     }
 }

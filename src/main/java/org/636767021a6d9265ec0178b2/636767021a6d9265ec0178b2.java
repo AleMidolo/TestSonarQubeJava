@@ -1,60 +1,69 @@
 import java.util.Stack;
 
-public class FrameStack {
+public class FrameStackHandler {
     private Stack<String> frameStack;
 
-    public FrameStack() {
+    public FrameStackHandler() {
         frameStack = new Stack<>();
     }
 
+    /**
+     * आउटपुट फ्रेम स्टैक से जितने भी अमूर्त प्रकार हैं, उन्हें दिए गए वर्णनकर्ता के अनुसार पॉप करता है।
+     * @param descriptor एक प्रकार या विधि का वर्णनकर्ता (जिसमें इसके तर्क प्रकार पॉप होते हैं)।
+     */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
-            return;
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
         }
 
-        // Assuming descriptor is in the format "(Ljava/lang/String;I)V" or similar
-        // We need to extract the argument types from the descriptor
-        if (descriptor.startsWith("(")) {
-            int endIndex = descriptor.indexOf(')');
-            if (endIndex == -1) {
-                return;
-            }
+        // Assuming the descriptor contains the number of types to pop
+        // For example, "(Ljava/lang/String;I)V" would indicate two types to pop
+        int numTypesToPop = countTypesInDescriptor(descriptor);
 
-            String argsDescriptor = descriptor.substring(1, endIndex);
-            int index = 0;
-            while (index < argsDescriptor.length()) {
-                char ch = argsDescriptor.charAt(index);
-                if (ch == 'L') {
-                    // Object type, e.g., Ljava/lang/String;
-                    int semicolonIndex = argsDescriptor.indexOf(';', index);
-                    if (semicolonIndex == -1) {
-                        break;
-                    }
-                    String type = argsDescriptor.substring(index, semicolonIndex + 1);
-                    frameStack.pop(); // Pop the corresponding type from the stack
-                    index = semicolonIndex + 1;
-                } else if (ch == '[') {
-                    // Array type, e.g., [I
-                    frameStack.pop(); // Pop the corresponding type from the stack
-                    index++;
-                } else {
-                    // Primitive type, e.g., I, J, F, D, etc.
-                    frameStack.pop(); // Pop the corresponding type from the stack
-                    index++;
-                }
+        for (int i = 0; i < numTypesToPop; i++) {
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
+            } else {
+                throw new IllegalStateException("Frame stack is empty");
             }
-        } else {
-            // Single type descriptor, e.g., Ljava/lang/String;
-            frameStack.pop(); // Pop the corresponding type from the stack
         }
     }
 
+    /**
+     * Counts the number of types in the descriptor.
+     * @param descriptor The descriptor string.
+     * @return The number of types in the descriptor.
+     */
+    private int countTypesInDescriptor(String descriptor) {
+        int count = 0;
+        int index = 0;
+        while (index < descriptor.length()) {
+            char c = descriptor.charAt(index);
+            if (c == 'L') {
+                // Skip until ';' for object types
+                index = descriptor.indexOf(';', index) + 1;
+                count++;
+            } else if (c == '[') {
+                // Skip array type
+                index++;
+            } else if (c == 'V' || c == 'I' || c == 'J' || c == 'F' || c == 'D' || c == 'Z' || c == 'B' || c == 'C' || c == 'S') {
+                // Primitive types
+                index++;
+                count++;
+            } else {
+                // Unknown type, skip
+                index++;
+            }
+        }
+        return count;
+    }
+
+    // Example usage
     public static void main(String[] args) {
-        FrameStack stack = new FrameStack();
-        stack.frameStack.push("Ljava/lang/String;");
-        stack.frameStack.push("I");
-        stack.pop("(Ljava/lang/String;I)V");
-        // After popping, the stack should be empty
-        System.out.println(stack.frameStack.isEmpty()); // Should print true
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("Ljava/lang/String;");
+        handler.frameStack.push("I");
+        handler.pop("(Ljava/lang/String;I)V");
+        System.out.println(handler.frameStack); // Should print an empty stack
     }
 }

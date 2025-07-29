@@ -3,33 +3,30 @@ import org.apache.log4j.spi.LoggingEvent;
 public class LogFormatter {
 
     /**
-     * Formatea un evento de "logging" para un "writer".
-     * @param event evento de "logging" que se va a formatear.
-     * @return una cadena que representa el evento formateado.
+     * एक लॉगिंग इवेंट को एक लेखक के लिए प्रारूपित करता है।
+     * @param event प्रारूपित करने के लिए लॉगिंग इवेंट।
+     * @return प्रारूपित स्ट्रिंग।
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedEvent = new StringBuilder();
+        StringBuilder formattedMessage = new StringBuilder();
         
-        // Agregar la marca de tiempo
-        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
+        // Add timestamp
+        formattedMessage.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
         
-        // Agregar el nivel de log
-        formattedEvent.append("Level: ").append(event.getLevel().toString()).append("\n");
+        // Add log level
+        formattedMessage.append("Level: ").append(event.getLevel().toString()).append("\n");
         
-        // Agregar el mensaje de log
-        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
+        // Add logger name
+        formattedMessage.append("Logger: ").append(event.getLoggerName()).append("\n");
         
-        // Agregar el nombre del logger
-        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
+        // Add message
+        formattedMessage.append("Message: ").append(event.getRenderedMessage()).append("\n");
         
-        // Agregar el hilo que generó el log
-        formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
-        
-        // Agregar la traza de la excepción si existe
+        // Add throwable information if present
         if (event.getThrowableInformation() != null) {
-            formattedEvent.append("Exception: ").append(event.getThrowableStrRep()).append("\n");
+            formattedMessage.append("Exception: ").append(event.getThrowableInformation().getThrowable().toString()).append("\n");
         }
         
-        return formattedEvent.toString();
+        return formattedMessage.toString();
     }
 }

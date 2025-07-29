@@ -18,7 +18,7 @@ public class ContentLengthChecker {
             return connection.getContentLengthLong();
         } catch (IOException e) {
             e.printStackTrace();
-            return -1; // Return -1 if there's an error
+            return -1; // Return -1 in case of an error
         }
     }
 

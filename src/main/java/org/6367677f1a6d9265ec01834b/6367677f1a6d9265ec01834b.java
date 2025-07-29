@@ -13,14 +13,13 @@ public class LogBuffer {
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
-            // बफर भरा हुआ है, घटना को चुपचाप हटा दें
-            System.out.println("Buffer is full, event discarded: " + o);
+            // If the buffer is full, the event is silently dropped
+            System.out.println("Buffer is full, dropping event: " + o);
         }
     }
 
-    // LoggingEvent class (assuming it exists)
+    // Example LoggingEvent class
     public static class LoggingEvent {
-        // Example implementation of LoggingEvent
         private final String message;
 
         public LoggingEvent(String message) {
@@ -38,7 +37,6 @@ public class LogBuffer {
     public static void main(String[] args) {
         LogBuffer logBuffer = new LogBuffer(10);
 
-        // Example usage
         for (int i = 0; i < 15; i++) {
             logBuffer.put(new LoggingEvent("Event " + i));
         }

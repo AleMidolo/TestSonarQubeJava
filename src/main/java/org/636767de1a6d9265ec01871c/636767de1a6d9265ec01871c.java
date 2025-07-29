@@ -5,10 +5,10 @@ public class Accumulator {
     private Map<String, Long> map;
 
     public Accumulator() {
-        map = new HashMap<>();
+        this.map = new HashMap<>();
     }
 
-    /**
+    /** 
      * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
      */
     public void valueAccumulation(String key, Long value) {

@@ -1,38 +1,46 @@
-// Assuming the class has a reference to the tree edge lists and the edge to be removed
+// Assuming the class has a reference to the tree edge lists and the node to be removed
 public class Tree {
-    private Node head; // Assuming Node is a class representing a node in the doubly linked list
+    private Node head; // Head of the first doubly linked list
+    private Node tail; // Tail of the second doubly linked list
 
-    public static class Node {
+    private static class Node {
         int data;
         Node prev;
         Node next;
 
         Node(int data) {
             this.data = data;
-            this.prev = null;
-            this.next = null;
         }
     }
 
-    public void removeFromTreeEdgeList(Node edgeToRemove) {
-        if (edgeToRemove == null) {
+    /**
+     * इस किनारे को पेड़ के किनारों की दोनों डबल लिंक्ड सूचियों से हटा देता है।
+     */
+    public void removeFromTreeEdgeList(Node nodeToRemove) {
+        if (nodeToRemove == null) {
             return;
         }
 
-        // If the edge to remove is the head of the list
-        if (edgeToRemove.prev == null) {
-            head = edgeToRemove.next;
+        // Remove from the first doubly linked list
+        if (nodeToRemove.prev != null) {
+            nodeToRemove.prev.next = nodeToRemove.next;
         } else {
-            edgeToRemove.prev.next = edgeToRemove.next;
+            head = nodeToRemove.next; // If the node to remove is the head
         }
 
-        // If the edge to remove is not the last node
-        if (edgeToRemove.next != null) {
-            edgeToRemove.next.prev = edgeToRemove.prev;
+        if (nodeToRemove.next != null) {
+            nodeToRemove.next.prev = nodeToRemove.prev;
         }
 
-        // Clear the references to ensure the node is removed
-        edgeToRemove.prev = null;
-        edgeToRemove.next = null;
+        // Remove from the second doubly linked list
+        if (nodeToRemove.prev != null) {
+            nodeToRemove.prev.next = nodeToRemove.next;
+        } else {
+            tail = nodeToRemove.next; // If the node to remove is the tail
+        }
+
+        if (nodeToRemove.next != null) {
+            nodeToRemove.next.prev = nodeToRemove.prev;
+        }
     }
 }

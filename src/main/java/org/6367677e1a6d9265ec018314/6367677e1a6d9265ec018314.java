@@ -1,41 +1,51 @@
 import java.util.*;
 
-class CategoryTree {
-    private Map<Integer, List<Integer>> tree;
-    private Set<Integer> activeNodes;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
 
-    public CategoryTree() {
-        tree = new HashMap<>();
-        activeNodes = new HashSet<>();
-    }
-
+public class TreeUtil {
     /**
      * श्रेणी वृक्ष से किसी भी निष्क्रिय नोड्स को हटा देता है।
+     * निष्क्रिय नोड्स वे नोड्स होते हैं जिनके कोई बच्चे नहीं होते और उनका मान 0 होता है।
+     * @return हटाए गए नोड्स की संख्या
      */
-    protected int removeUnusedNodes() {
-        Set<Integer> nodesToRemove = new HashSet<>();
-        for (Integer node : tree.keySet()) {
-            if (!activeNodes.contains(node)) {
-                nodesToRemove.add(node);
-            }
+    protected int removeUnusedNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
-
-        for (Integer node : nodesToRemove) {
-            tree.remove(node);
+        
+        int count = 0;
+        
+        // Post-order traversal to ensure children are processed before parents
+        root.left = removeUnusedNodesHelper(root.left, count);
+        root.right = removeUnusedNodesHelper(root.right, count);
+        
+        // Check if the current node is a leaf and has a value of 0
+        if (root.left == null && root.right == null && root.val == 0) {
+            return count + 1;
         }
-
-        return nodesToRemove.size();
+        
+        return count;
     }
-
-    // Example usage and testing
-    public static void main(String[] args) {
-        CategoryTree ct = new CategoryTree();
-        ct.tree.put(1, Arrays.asList(2, 3));
-        ct.tree.put(2, Arrays.asList(4));
-        ct.activeNodes.add(1);
-        ct.activeNodes.add(2);
-
-        int removedNodes = ct.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+    
+    private TreeNode removeUnusedNodesHelper(TreeNode node, int count) {
+        if (node == null) {
+            return null;
+        }
+        
+        node.left = removeUnusedNodesHelper(node.left, count);
+        node.right = removeUnusedNodesHelper(node.right, count);
+        
+        // If the node is a leaf and has a value of 0, remove it
+        if (node.left == null && node.right == null && node.val == 0) {
+            count++;
+            return null;
+        }
+        
+        return node;
     }
 }

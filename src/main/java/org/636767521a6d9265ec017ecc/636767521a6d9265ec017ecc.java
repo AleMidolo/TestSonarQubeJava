@@ -22,7 +22,7 @@ public class BoxSplitter {
     }
 
     public static void main(String[] args) {
-        Box2D box = new Box2D(0, 0, 10, 5);
+        Box2D box = new Box2D(0, 0, 10, 10);
         Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(box);
         System.out.println("Left Box: " + splitBoxes.getKey());
         System.out.println("Right Box: " + splitBoxes.getValue());

@@ -1,7 +1,6 @@
 import java.util.Base64;
 
 public class Base64Decoder {
-
     /**
      * एक स्ट्रिंग को Base64 नियम के अनुसार एक स्ट्रिंग में डिकोड करना।
      * 
@@ -14,7 +13,7 @@ public class Base64Decoder {
     }
 
     public static void main(String[] args) {
-        String encodedString = "SGVsbG8gV29ybGQh"; // "Hello World!" in Base64
+        String encodedString = "SGVsbG8gV29ybGQh"; // Example Base64 encoded string
         String decodedString = base64Decode(encodedString);
         System.out.println(decodedString); // Output: Hello World!
     }

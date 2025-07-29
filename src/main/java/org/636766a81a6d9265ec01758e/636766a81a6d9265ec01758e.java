@@ -16,7 +16,7 @@ public class PrimeUtil {
         while (true) {
             if (isPrime(candidate)) {
                 if (desiredCapacity >= 1000) {
-                    double upperBound = desiredCapacity * 1.11;
+                    int upperBound = (int) (desiredCapacity * 1.11);
                     if (candidate <= upperBound) {
                         return candidate;
                     }
@@ -47,6 +47,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000));  // Example usage
+        System.out.println(nextPrime(1000)); // Example usage
     }
 }

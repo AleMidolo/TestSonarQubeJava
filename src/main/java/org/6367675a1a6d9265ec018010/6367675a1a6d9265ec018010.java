@@ -1,6 +1,7 @@
 import java.util.*;
 
 class Bucket {
+    // Assuming the Bucket class has some data structure to hold its data
     private List<Object> data;
 
     public Bucket() {
@@ -11,18 +12,17 @@ class Bucket {
      * इस बकेट को डेटा संरचना से हटा देता है।
      */
     public void removeSelf() {
-        // Assuming the bucket is part of a larger data structure, 
-        // we need to remove it from that structure.
-        // For simplicity, let's assume the bucket is part of a list.
-        // You would need to replace this with the actual logic to remove the bucket.
-        if (this.data != null) {
-            this.data.clear();
-            this.data = null;
-        }
+        // Assuming the Bucket is part of a larger data structure, like a list or map
+        // Here, we simulate removing the bucket from a list
+        // In a real scenario, you would need to access the parent data structure
+        // and remove this bucket from it.
+        
+        // For example, if the bucket is part of a list:
+        // parentList.remove(this);
+        
+        // Clear the data inside the bucket
+        data.clear();
     }
 
-    public static void main(String[] args) {
-        Bucket bucket = new Bucket();
-        bucket.removeSelf();
-    }
+    // Other methods of the Bucket class...
 }

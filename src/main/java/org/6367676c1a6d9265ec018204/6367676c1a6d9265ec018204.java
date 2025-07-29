@@ -26,11 +26,8 @@ public class ArrayConcatenator {
             resultList.add(element);
         }
 
-        // Convert the list back to an array
-        String[] resultArray = new String[resultList.size()];
-        resultArray = resultList.toArray(resultArray);
-
-        return resultArray;
+        // Convert the list to an array and return
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
@@ -39,9 +36,8 @@ public class ArrayConcatenator {
         String[] array2 = {"c", "d", "e"};
 
         String[] result = concatenateStringArrays(array1, array2);
-
-        for (String element : result) {
-            System.out.print(element + " ");
+        for (String s : result) {
+            System.out.print(s + " ");
         }
     }
 }

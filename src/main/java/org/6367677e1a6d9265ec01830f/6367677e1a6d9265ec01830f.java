@@ -1,47 +1,50 @@
+import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomFormatter {
-    
-    /**
-     * Produce una stringa formattata come specificato dal modello di conversione.
-     */
-    public String format(LoggingEvent event) {
-        if (event == null) {
-            return "";
-        }
+public class CustomLayout extends Layout {
 
-        StringBuilder formattedMessage = new StringBuilder();
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    @Override
+    public String format(LoggingEvent event) {
+        StringBuilder sb = new StringBuilder();
         
         // Add timestamp
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        formattedMessage.append(timestamp);
-        formattedMessage.append(" ");
+        sb.append(dateFormat.format(new Date(event.getTimeStamp())));
+        sb.append(" ");
         
         // Add log level
-        formattedMessage.append("[");
-        formattedMessage.append(event.getLevel().toString());
-        formattedMessage.append("] ");
+        sb.append("[").append(event.getLevel().toString()).append("] ");
         
         // Add logger name
-        formattedMessage.append(event.getLoggerName());
-        formattedMessage.append(" - ");
+        sb.append(event.getLoggerName());
+        sb.append(" - ");
         
         // Add message
-        formattedMessage.append(event.getRenderedMessage());
+        sb.append(event.getRenderedMessage());
         
-        // Add throwable info if exists
+        // Add throwable if exists
         String[] throwableInfo = event.getThrowableStrRep();
         if (throwableInfo != null) {
-            formattedMessage.append("\n");
+            sb.append("\n");
             for (String line : throwableInfo) {
-                formattedMessage.append(line);
-                formattedMessage.append("\n");
+                sb.append(line).append("\n");
             }
         }
         
-        return formattedMessage.toString();
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean ignoresThrowable() {
+        return false;
+    }
+
+    @Override
+    public void activateOptions() {
+        // No options to activate
     }
 }

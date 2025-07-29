@@ -13,9 +13,9 @@ public class Graph<V,E> {
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         
-        for(Edge<V,E> edge : edges) {
-            if(v.contains(edge.getDestination())) {
-                sum += edge.getWeight();
+        for(Edge<V,E> e : edges) {
+            if(v.contains(e.getDestination())) {
+                sum += e.getWeight();
             }
         }
         

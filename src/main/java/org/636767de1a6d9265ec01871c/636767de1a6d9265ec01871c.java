@@ -10,23 +10,25 @@ public class Accumulator {
 
     /**
      * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
+     * @param key कुंजी जिसके लिए मान जोड़ा जाना है
+     * @param value जोड़ा जाने वाला मान
      */
     public void valueAccumulation(String key, Long value) {
         if (map.containsKey(key)) {
-            Long currentValue = map.get(key);
-            map.put(key, currentValue + value);
+            map.put(key, map.get(key) + value);
         } else {
             map.put(key, value);
         }
     }
 
-    // Optional: Method to get the accumulated value for a key
-    public Long getAccumulatedValue(String key) {
+    public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }
 
-    // Optional: Method to clear the accumulated values
-    public void clear() {
-        map.clear();
+    public static void main(String[] args) {
+        Accumulator accumulator = new Accumulator();
+        accumulator.valueAccumulation("key1", 10L);
+        accumulator.valueAccumulation("key1", 20L);
+        System.out.println(accumulator.getValue("key1")); // Output: 30
     }
 }

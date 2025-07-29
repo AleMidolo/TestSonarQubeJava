@@ -1,28 +1,30 @@
-import java.util.Iterator;
+import java.util.Objects;
 
 public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
-        E data;
+        E element;
         ListNodeImpl<E> next;
         ListNodeImpl<E> prev;
 
-        ListNodeImpl(E data) {
-            this.data = data;
-            this.next = null;
-            this.prev = null;
+        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
+            this.element = element;
+            this.prev = prev;
+            this.next = next;
         }
     }
 
     private ListNodeImpl<E> head;
     private ListNodeImpl<E> tail;
+    private int size;
 
     public DoublyLinkedList() {
-        this.head = null;
-        this.tail = null;
+        head = null;
+        tail = null;
+        size = 0;
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
+    private void addListNode(ListNodeImpl<E> node) {
         if (head == null) {
             head = node;
             tail = node;
@@ -31,9 +33,10 @@ public class DoublyLinkedList<E> {
             node.prev = tail;
             tail = node;
         }
+        size++;
     }
 
-    public void removeListNode(ListNodeImpl<E> node) {
+    private void removeListNode(ListNodeImpl<E> node) {
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -45,32 +48,21 @@ public class DoublyLinkedList<E> {
         } else {
             tail = node.prev;
         }
+
+        node.next = null;
+        node.prev = null;
+        size--;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Iterator<ListNodeImpl<E>> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            ListNodeImpl<E> node = iterator.next();
-            list.removeListNode(node);
-            this.addListNode(node);
+        Objects.requireNonNull(list, "The input list cannot be null");
+
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> nextNode = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = nextNode;
         }
-    }
-
-    private Iterator<ListNodeImpl<E>> iterator() {
-        return new Iterator<ListNodeImpl<E>>() {
-            private ListNodeImpl<E> current = head;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public ListNodeImpl<E> next() {
-                ListNodeImpl<E> node = current;
-                current = current.next;
-                return node;
-            }
-        };
     }
 }

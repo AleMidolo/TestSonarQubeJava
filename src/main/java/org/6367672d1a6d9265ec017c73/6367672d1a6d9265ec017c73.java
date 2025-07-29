@@ -5,7 +5,7 @@ public class Logger {
     private Map<String, Integer> messageTimestamps;
 
     public Logger() {
-        this.messageTimestamps = new HashMap<>();
+        messageTimestamps = new HashMap<>();
     }
 
     /**

@@ -10,17 +10,17 @@ public class LogFormatter {
      * @return स्वरूपित स्ट्रिंग
      */
     public String format(LoggingEvent event) {
+        // Example pattern: [timestamp] [level] [message]
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        
-        return String.format("[%s] [%s] %s", 
-                             timestamp, 
-                             event.getLevel(), 
-                             event.getMessage());
+        String level = event.getLevel().toString();
+        String message = event.getMessage();
+
+        return String.format("[%s] [%s] %s", timestamp, level, message);
     }
 }
 
-// Assuming LoggingEvent class is defined as follows:
+// Assuming LoggingEvent class exists with the following structure:
 class LoggingEvent {
     private long timeStamp;
     private String level;

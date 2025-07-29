@@ -1,32 +1,28 @@
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 
-public class ClassFileReader {
-    private byte[] classFileBuffer;
+final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+    try {
+        // Assuming classFileBuffer is a byte array containing the class file data
+        ByteArrayInputStream bais = new ByteArrayInputStream(classFileBuffer);
+        DataInputStream dis = new DataInputStream(bais);
 
-    public ClassFileReader(byte[] classFileBuffer) {
-        this.classFileBuffer = classFileBuffer;
-    }
+        // Skip to the constant pool entry
+        dis.skipBytes(constantPoolEntryIndex);
 
-    /**
-     * {@link #classFileBuffer} में एक CONSTANT_Utf8 स्थायी पूल प्रविष्टि को पढ़ता है।
-     * @param constantPoolEntryIndex कक्षा के स्थायी पूल तालिका में एक CONSTANT_Utf8 प्रविष्टि का अनुक्रमांक।
-     * @param charBuffer वह बफर है जिसका उपयोग स्ट्रिंग पढ़ने के लिए किया जाएगा। यह बफर पर्याप्त बड़ा होना चाहिए। इसे स्वचालित रूप से आकार नहीं दिया जाता है।
-     * @return निर्दिष्ट CONSTANT_Utf8 प्रविष्टि के लिए संबंधित String।
-     */
-    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Assuming the constant pool entry index points to the start of the UTF-8 entry
-        int offset = constantPoolEntryIndex;
+        // Read the length of the UTF-8 string
+        int length = dis.readUnsignedShort();
 
-        // Read the length of the UTF-8 string (2 bytes)
-        int length = ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
-        offset += 2;
+        // Read the UTF-8 bytes into the charBuffer
+        for (int i = 0; i < length; i++) {
+            charBuffer[i] = dis.readChar();
+        }
 
-        // Decode the UTF-8 bytes into the char buffer
-        ByteBuffer byteBuffer = ByteBuffer.wrap(classFileBuffer, offset, length);
-        int charCount = StandardCharsets.UTF_8.decode(byteBuffer, charBuffer, 0, charBuffer.length).position();
-
-        // Convert the char buffer to a String
-        return new String(charBuffer, 0, charCount);
+        // Convert the charBuffer to a String
+        return new String(charBuffer, 0, length);
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
     }
 }

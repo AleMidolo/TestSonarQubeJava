@@ -1,5 +1,4 @@
-import java.lang.Class;
-import java.lang.ClassNotFoundException;
+import java.util.Objects;
 
 /**
  * दिए गए क्लास नाम के अनुसार क्लास खोजें।
@@ -8,8 +7,6 @@ import java.lang.ClassNotFoundException;
  * @throws ClassNotFoundException यदि क्लास नहीं मिलती है तो यह फेंका जाएगा।
  */
 private Class<?> findClass(final String className) throws ClassNotFoundException {
-    if (className == null) {
-        throw new IllegalArgumentException("Class name cannot be null");
-    }
+    Objects.requireNonNull(className, "क्लास नाम null नहीं हो सकता");
     return Class.forName(className);
 }

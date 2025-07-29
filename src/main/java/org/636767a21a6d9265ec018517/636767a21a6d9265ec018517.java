@@ -9,18 +9,25 @@ public final class BufferToByteArray {
         this.buffer = new ByteArrayOutputStream();
     }
 
-    public void write(byte[] data) throws IOException {
-        buffer.write(data);
-    }
-
-    public byte[] toByteArray() {
+    /**
+     * एकल बाइट एरे लौटाता है जिसमें बफर(ों) में लिखी गई सभी सामग्री शामिल होती है।
+     */
+    public final byte[] toByteArray() {
         return buffer.toByteArray();
     }
 
+    // Example method to write data to the buffer
+    public void writeToBuffer(byte[] data) throws IOException {
+        buffer.write(data);
+    }
+
+    // Example usage
     public static void main(String[] args) throws IOException {
         BufferToByteArray buffer = new BufferToByteArray();
-        buffer.write("Hello, World!".getBytes());
+        buffer.writeToBuffer(new byte[]{1, 2, 3, 4, 5});
         byte[] result = buffer.toByteArray();
-        System.out.println(new String(result));
+        for (byte b : result) {
+            System.out.print(b + " ");
+        }
     }
 }

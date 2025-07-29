@@ -58,14 +58,14 @@ public class UnescapeJava {
                                     throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
                                 }
                             } else {
-                                throw new Exception("Incomplete Unicode escape sequence");
+                                throw new Exception("Invalid Unicode escape sequence: incomplete sequence");
                             }
                             break;
                         default:
                             throw new Exception("Invalid escape sequence: \\" + nextChar);
                     }
                 } else {
-                    throw new Exception("Incomplete escape sequence");
+                    throw new Exception("Invalid escape sequence: ends with \\");
                 }
             } else {
                 sb.append(ch);

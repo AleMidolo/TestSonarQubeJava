@@ -40,6 +40,6 @@ public class FileUtils {
 
     public static void main(String[] args) {
         String filename = "path/to/file.txt";
-        System.out.println(indexOfExtension(filename)); // Output: 12
+        System.out.println(indexOfExtension(filename)); // Output: 13
     }
 }

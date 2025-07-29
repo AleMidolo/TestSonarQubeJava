@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterLookup {
-
     private final Map<Class<?>, Converter> converterMap;
 
     public ConverterLookup() {
@@ -27,22 +26,8 @@ public class ConverterLookup {
         converterMap.put(clazz, converter);
     }
 
-    public static void main(String[] args) {
-        ConverterLookup lookup = new ConverterLookup();
-        lookup.registerConverter(String.class, new StringConverter());
-        Converter converter = lookup.lookup(String.class);
-        if (converter != null) {
-            System.out.println("Converter found for String class.");
-        } else {
-            System.out.println("No converter found for String class.");
-        }
+    // Example Converter interface
+    public interface Converter {
+        Object convert(Object input);
     }
-}
-
-interface Converter {
-    // Converter methods can be defined here
-}
-
-class StringConverter implements Converter {
-    // Implementation of StringConverter
 }

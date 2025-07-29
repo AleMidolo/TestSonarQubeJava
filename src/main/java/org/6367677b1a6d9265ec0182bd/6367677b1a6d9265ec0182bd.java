@@ -24,7 +24,7 @@ public class LogFormatter {
         
         // Add throwable information if present
         if (event.getThrowableInformation() != null) {
-            formattedMessage.append("\n").append(event.getThrowableStrRep());
+            formattedMessage.append("\n").append(event.getThrowableInformation().getThrowable().toString());
         }
         
         return formattedMessage.toString();

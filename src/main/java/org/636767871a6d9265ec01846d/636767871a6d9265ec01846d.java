@@ -6,14 +6,15 @@ public class ConfigurationDirectoryCreator {
      * वह निर्देशिका बनाता है जहाँ MRU फ़ाइल सूची लिखी जाएगी। "lf5" निर्देशिका Windows 2000 मशीनों पर Documents और Settings निर्देशिका में बनाई जाती है और सभी अन्य प्लेटफार्मों पर जहाँ भी user.home वेरिएबल इंगित करता है।
      */
     public static void createConfigurationDirectory() {
-        String userHome = System.getProperty("user.home");
         String osName = System.getProperty("os.name").toLowerCase();
         String configDirPath;
 
         if (osName.contains("windows 2000")) {
-            configDirPath = userHome + File.separator + "Documents and Settings" + File.separator + "lf5";
+            // Windows 2000 specific path
+            configDirPath = System.getenv("USERPROFILE") + "\\Documents and Settings\\lf5";
         } else {
-            configDirPath = userHome + File.separator + "lf5";
+            // For all other platforms, use the user.home directory
+            configDirPath = System.getProperty("user.home") + File.separator + "lf5";
         }
 
         File configDir = new File(configDirPath);

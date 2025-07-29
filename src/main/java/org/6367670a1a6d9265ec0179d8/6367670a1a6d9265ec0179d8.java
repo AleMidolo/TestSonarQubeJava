@@ -6,7 +6,7 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(final byte[] b) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Byte array cannot be null");
+            throw new NullPointerException("Byte array is null");
         }
         write(b, 0, b.length);
     }
@@ -14,7 +14,7 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(final byte[] b, final int off, final int len) throws IOException {
         if (b == null) {
-            throw new NullPointerException("Byte array cannot be null");
+            throw new NullPointerException("Byte array is null");
         }
         if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException("Invalid offset or length");
@@ -27,7 +27,7 @@ public class CustomOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         // Implement the logic to write a single byte
-        // For example, writing to a file or another output stream
+        // For example, write to a file, network stream, etc.
         // This is a placeholder implementation
         System.out.write(b);
     }

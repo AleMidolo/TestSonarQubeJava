@@ -2,7 +2,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class LinkedBuffer {
-
     private byte[] data;
     private LinkedBuffer next;
 

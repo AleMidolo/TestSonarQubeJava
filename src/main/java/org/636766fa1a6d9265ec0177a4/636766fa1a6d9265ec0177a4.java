@@ -3,8 +3,7 @@ import java.util.Objects;
 public class ArrayConverter {
 
     /**
-     * <p>प्राथमिक डबल्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> 
-     * <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
+     * <p>प्राथमिक डबल्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
      * @param array  एक <code>double</code> एरे
      * @return एक <code>Double</code> एरे, <code>null</code> यदि इनपुट एरे null है
      */

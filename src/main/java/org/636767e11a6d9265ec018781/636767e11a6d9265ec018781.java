@@ -20,14 +20,14 @@ public class Cache {
     }
 }
 
-// Assuming METRICS class has the following methods
+// Assuming METRICS class has the following structure
 class METRICS {
     private String key;
-    private int value;
+    private Map<String, Object> metricsData;
 
-    public METRICS(String key, int value) {
+    public METRICS(String key, Map<String, Object> metricsData) {
         this.key = key;
-        this.value = value;
+        this.metricsData = metricsData;
     }
 
     public String getKey() {
@@ -35,10 +35,10 @@ class METRICS {
     }
 
     public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
+        this.metricsData.putAll(other.metricsData);
     }
 
-    public int getValue() {
-        return value;
+    public Map<String, Object> getMetricsData() {
+        return metricsData;
     }
 }

@@ -6,15 +6,13 @@ public boolean equals(final byte[] data, int offset, final int len) {
         return false;
     }
     
-    // 假设内部数组为 internalData
-    byte[] internalData = getInternalData(); // 假设有一个方法可以获取内部数组
-    
-    if (internalData == null || internalData.length != len) {
+    // Assuming 'internalArray' is the internal array to compare against
+    if (len != internalArray.length) {
         return false;
     }
     
     for (int i = 0; i < len; i++) {
-        if (internalData[i] != data[offset + i]) {
+        if (data[offset + i] != internalArray[i]) {
             return false;
         }
     }
@@ -22,8 +20,5 @@ public boolean equals(final byte[] data, int offset, final int len) {
     return true;
 }
 
-// 假设的获取内部数组的方法
-private byte[] getInternalData() {
-    // 这里返回实际的内部数组
-    return new byte[0]; // 示例返回一个空数组
-}
+// Assuming 'internalArray' is defined somewhere in the class
+private byte[] internalArray;

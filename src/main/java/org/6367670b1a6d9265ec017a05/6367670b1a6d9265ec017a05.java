@@ -25,6 +25,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // 输出: " "
         System.out.println(toString('A'));  // 输出: "A"
-        System.out.println(toString('€'));  // 输出: "€"
+        System.out.println(toString('€'));  // 输出: "€" (非ASCII字符)
     }
 }

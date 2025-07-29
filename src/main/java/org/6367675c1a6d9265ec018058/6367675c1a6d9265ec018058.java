@@ -1,21 +1,25 @@
 import java.util.function.Supplier;
 
 public class StringSupplier {
-    public static Supplier<String> createStringSupplier(int start) {
-        return new Supplier<String>() {
-            private int current = start;
+    private int current;
 
-            @Override
-            public String get() {
-                return String.valueOf(current++);
-            }
-        };
+    public StringSupplier(int start) {
+        this.current = start;
+    }
+
+    public String get() {
+        return String.valueOf(current++);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Supplier<String> createStringSupplier(int start) {
+        return new StringSupplier(start)::get;
     }
 
     public static void main(String[] args) {
-        Supplier<String> supplier = createStringSupplier(5);
-        System.out.println(supplier.get()); // 输出: 5
-        System.out.println(supplier.get()); // 输出: 6
-        System.out.println(supplier.get()); // 输出: 7
+        Supplier<String> supplier = createStringSupplier(10);
+        System.out.println(supplier.get()); // 输出 "10"
+        System.out.println(supplier.get()); // 输出 "11"
+        System.out.println(supplier.get()); // 输出 "12"
     }
 }

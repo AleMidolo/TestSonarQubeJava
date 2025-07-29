@@ -26,7 +26,7 @@ public class TableUtils {
         // 获取行的矩形区域
         Rectangle cellRect = table.getCellRect(row, 0, true);
 
-        // 将 JScrollPane 滚动到该行的位置
+        // 将视口滚动到该行的位置
         pane.getViewport().scrollRectToVisible(cellRect);
 
         // 延迟调用 repaint() 以确保表格正确绘制新选择的行

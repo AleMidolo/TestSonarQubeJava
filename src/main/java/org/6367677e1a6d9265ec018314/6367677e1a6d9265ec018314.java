@@ -45,6 +45,12 @@ class CategoryTree {
     // Example usage
     public static void main(String[] args) {
         CategoryTree tree = new CategoryTree();
-        // Build the tree and test the method
+        // Populate the tree with nodes
+        // tree.root = new Node("Root", true);
+        // tree.root.children.add(new Node("Child1", false));
+        // tree.root.children.add(new Node("Child2", true));
+
+        int removedNodes = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

@@ -8,50 +8,52 @@ public class Mappings {
         this.fields = new HashMap<>();
     }
 
-    public Map<String, Object> getFields() {
-        return fields;
+    public void addField(String fieldName, Object fieldValue) {
+        this.fields.put(fieldName, fieldValue);
     }
 
-    public void setFields(Map<String, Object> fields) {
-        this.fields = fields;
+    public Map<String, Object> getFields() {
+        return fields;
     }
 }
 
 public class MappingDiff {
 
-    /**
-     * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
-     *
-     * @param tableName 表名
-     * @param mappings  当前索引的历史映射
-     * @return 不存在的字段的映射
-     */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // 假设我们有一个方法来获取当前表的映射
+        // Assuming we have a method to get the current mappings for the table
         Mappings currentMappings = getCurrentMappings(tableName);
 
         Mappings diffMappings = new Mappings();
-        Map<String, Object> currentFields = currentMappings.getFields();
-        Map<String, Object> inputFields = mappings.getFields();
 
-        for (Map.Entry<String, Object> entry : inputFields.entrySet()) {
+        // Iterate through the input mappings and find fields not present in current mappings
+        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!currentFields.containsKey(fieldName)) {
-                diffMappings.getFields().put(fieldName, entry.getValue());
+            if (!currentMappings.getFields().containsKey(fieldName)) {
+                diffMappings.addField(fieldName, entry.getValue());
             }
         }
 
         return diffMappings;
     }
 
-    // 假设的方法，用于获取当前表的映射
     private Mappings getCurrentMappings(String tableName) {
-        // 这里应该实现获取当前表映射的逻辑
-        // 例如，从数据库或配置文件中读取
-        Mappings currentMappings = new Mappings();
-        // 假设当前映射中有一些字段
-        currentMappings.getFields().put("field1", "type1");
-        currentMappings.getFields().put("field2", "type2");
-        return currentMappings;
+        // This method should retrieve the current mappings for the given table
+        // For the sake of this example, we return an empty Mappings object
+        return new Mappings();
+    }
+
+    public static void main(String[] args) {
+        MappingDiff mappingDiff = new MappingDiff();
+
+        Mappings inputMappings = new Mappings();
+        inputMappings.addField("field1", "value1");
+        inputMappings.addField("field2", "value2");
+
+        Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
+
+        // Print the fields that are not in the current mappings
+        for (Map.Entry<String, Object> entry : diff.getFields().entrySet()) {
+            System.out.println("Field: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
     }
 }

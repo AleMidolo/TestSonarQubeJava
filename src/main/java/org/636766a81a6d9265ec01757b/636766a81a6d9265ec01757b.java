@@ -10,6 +10,8 @@ public class MyClass {
      */
     @SuppressWarnings("unchecked")
     public String toString(JSONWriter.Feature... features) {
+        // Assuming this class has fields that need to be serialized
+        // Using Fastjson2 to serialize the object to JSON with the specified features
         return JSON.toJSONString(this, features);
     }
 }

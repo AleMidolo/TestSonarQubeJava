@@ -11,7 +11,7 @@ public class BeanMapUtils {
             throw new IllegalArgumentException("The input BeanMap cannot be null.");
         }
 
-        // 获取当前 BeanMap 的所有可写属性
+        // 获取目标 BeanMap 的所有可写属性
         for (Object key : map.keySet()) {
             if (this.isWriteable(key)) {
                 this.put(key, map.get(key));
@@ -19,20 +19,37 @@ public class BeanMapUtils {
         }
     }
 
+    /**
+     * 检查给定的属性是否可写
+     * @param key 属性名
+     * @return 如果属性可写则返回 true，否则返回 false
+     */
     private boolean isWriteable(Object key) {
-        // 假设 BeanMap 有一个方法可以检查属性是否可写
-        return this.getWriteableProperties().contains(key);
+        try {
+            this.getType(key); // 如果属性不存在会抛出异常
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
-    // 假设 BeanMap 有一个方法可以获取所有可写属性
-    private java.util.Set<Object> getWriteableProperties() {
-        // 这里应该返回当前 BeanMap 的所有可写属性
-        // 由于 BeanMap 的具体实现可能不同，这里只是一个示例
-        return new java.util.HashSet<>();
+    // 以下方法为 BeanMap 的默认方法，假设它们已经存在
+    public Object get(Object key) {
+        // 实现获取属性值的逻辑
+        return null;
     }
 
-    // 假设 BeanMap 有一个 put 方法
     public void put(Object key, Object value) {
-        // 这里应该实现将属性放入 BeanMap 的逻辑
+        // 实现设置属性值的逻辑
+    }
+
+    public Class<?> getType(Object key) {
+        // 实现获取属性类型的逻辑
+        return null;
+    }
+
+    public Iterable<Object> keySet() {
+        // 实现获取所有键的逻辑
+        return null;
     }
 }

@@ -8,7 +8,7 @@ public class ObjectToStringUtil {
     }
 
     public static void main(String[] args) {
-        // 测试示例
+        // 测试用例
         Object obj1 = null;
         Object obj2 = "Hello, World!";
         Object obj3 = 12345;

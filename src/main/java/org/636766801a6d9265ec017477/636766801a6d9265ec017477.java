@@ -5,40 +5,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FileReverser {
+public class FileHandler {
+
+    private List<byte[]> fileDataList = new ArrayList<>();
 
     /**
      * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
+        if (files == null) {
             return;
         }
 
-        List<byte[]> fileContents = new ArrayList<>();
-
-        // 读取所有文件内容
+        // 读取每个文件的内容并存储到列表中
         for (InputStream file : files) {
-            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = file.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
+            if (file != null) {
+                try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+                    int nRead;
+                    byte[] data = new byte[1024];
+                    while ((nRead = file.read(data, 0, data.length)) != -1) {
+                        buffer.write(data, 0, nRead);
+                    }
+                    buffer.flush();
+                    fileDataList.add(buffer.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                buffer.flush();
-                fileContents.add(buffer.toByteArray());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 
-        // 逆序文件内容
-        Collections.reverse(fileContents);
-
-        // 处理逆序后的文件内容（例如写入到某个地方）
-        for (byte[] content : fileContents) {
-            // 这里可以根据需要处理逆序后的文件内容
-            // 例如写入到输出流或进行其他操作
-        }
+        // 将列表逆序
+        Collections.reverse(fileDataList);
     }
+
+    // 其他方法...
 }

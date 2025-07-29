@@ -34,6 +34,7 @@ public class StreamReader {
             throw new IOException("Failed to read string content");
         }
 
+        // 将字节数组转换为字符串
         return new String(stringBytes, StandardCharsets.UTF_8);
     }
 }

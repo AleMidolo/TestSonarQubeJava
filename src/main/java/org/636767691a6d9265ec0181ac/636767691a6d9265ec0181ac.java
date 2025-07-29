@@ -18,6 +18,7 @@ public class PathUtils {
     public static void main(String[] args) {
         String path = "/usr/local/bin";
         String relativePath = "../lib/java";
-        System.out.println(applyRelativePath(path, relativePath)); // 输出: /usr/local/lib/java
+        String result = applyRelativePath(path, relativePath);
+        System.out.println(result);  // 输出: /usr/local/lib/java
     }
 }

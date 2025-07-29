@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // 定义一个公共静态的空数组引用
+    // 空数组的静态引用
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**

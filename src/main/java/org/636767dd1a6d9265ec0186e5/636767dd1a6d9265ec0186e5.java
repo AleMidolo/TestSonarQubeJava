@@ -18,7 +18,7 @@ public class Channels {
 }
 
 public interface IConsumer {
-    void consume();
+    void consume(String message);
 }
 
 public class TargetChannelManager {

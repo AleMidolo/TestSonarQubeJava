@@ -1,15 +1,18 @@
 import java.util.*;
 
 class Bucket {
-    private List<Bucket> buckets;
+    private List<Bucket> bucketList;
 
-    public Bucket(List<Bucket> buckets) {
-        this.buckets = buckets;
+    public Bucket(List<Bucket> bucketList) {
+        this.bucketList = bucketList;
     }
 
-    public void removeSelf() {
-        if (buckets != null) {
-            buckets.remove(this);
+    /**
+     * 从数据结构中移除此桶。
+     */
+    void removeSelf() {
+        if (bucketList != null) {
+            bucketList.remove(this);
         }
     }
 }

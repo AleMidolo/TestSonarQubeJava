@@ -1,99 +1,60 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
-public class StringUnescape {
+public class UnescapeJava {
+
+    private static final Map<Character, Character> ESCAPE_SEQUENCES = new HashMap<>();
+
+    static {
+        ESCAPE_SEQUENCES.put('b', '\b');
+        ESCAPE_SEQUENCES.put('t', '\t');
+        ESCAPE_SEQUENCES.put('n', '\n');
+        ESCAPE_SEQUENCES.put('f', '\f');
+        ESCAPE_SEQUENCES.put('r', '\r');
+        ESCAPE_SEQUENCES.put('"', '\"');
+        ESCAPE_SEQUENCES.put('\'', '\'');
+        ESCAPE_SEQUENCES.put('\\', '\\');
+    }
 
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-        while (i < str.length()) {
-            char c = str.charAt(i);
-            if (c == '\\' && i + 1 < str.length()) {
-                char nextChar = str.charAt(i + 1);
-                switch (nextChar) {
-                    case 'n':
-                        sb.append('\n');
-                        i += 2;
-                        break;
-                    case 't':
-                        sb.append('\t');
-                        i += 2;
-                        break;
-                    case 'r':
-                        sb.append('\r');
-                        i += 2;
-                        break;
-                    case 'b':
-                        sb.append('\b');
-                        i += 2;
-                        break;
-                    case 'f':
-                        sb.append('\f');
-                        i += 2;
-                        break;
-                    case '\'':
-                        sb.append('\'');
-                        i += 2;
-                        break;
-                    case '\"':
-                        sb.append('\"');
-                        i += 2;
-                        break;
-                    case '\\':
-                        sb.append('\\');
-                        i += 2;
-                        break;
-                    default:
-                        // Handle octal and unicode escapes
-                        if (nextChar >= '0' && nextChar <= '7') {
-                            // Octal escape
-                            int code = 0;
-                            int j = i + 1;
-                            while (j < str.length() && str.charAt(j) >= '0' && str.charAt(j) <= '7' && j - i - 1 < 3) {
-                                code = code * 8 + (str.charAt(j) - '0');
-                                j++;
-                            }
-                            sb.append((char) code);
-                            i = j;
-                        } else if (nextChar == 'u') {
-                            // Unicode escape
-                            if (i + 5 < str.length()) {
-                                String hex = str.substring(i + 2, i + 6);
-                                try {
-                                    int code = Integer.parseInt(hex, 16);
-                                    sb.append((char) code);
-                                    i += 6;
-                                } catch (NumberFormatException e) {
-                                    throw new Exception("Invalid unicode escape sequence: " + hex);
-                                }
-                            } else {
-                                throw new Exception("Incomplete unicode escape sequence");
-                            }
-                        } else {
-                            // Unknown escape sequence, treat as literal
-                            sb.append(c);
-                            i++;
-                        }
-                        break;
+        StringBuilder result = new StringBuilder();
+        int length = str.length();
+        boolean escape = false;
+
+        for (int i = 0; i < length; i++) {
+            char currentChar = str.charAt(i);
+
+            if (escape) {
+                if (ESCAPE_SEQUENCES.containsKey(currentChar)) {
+                    result.append(ESCAPE_SEQUENCES.get(currentChar));
+                } else {
+                    throw new Exception("Invalid escape sequence: \\" + currentChar);
                 }
+                escape = false;
             } else {
-                sb.append(c);
-                i++;
+                if (currentChar == '\\') {
+                    escape = true;
+                } else {
+                    result.append(currentChar);
+                }
             }
         }
-        return sb.toString();
+
+        if (escape) {
+            throw new Exception("Incomplete escape sequence at the end of the string");
+        }
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
         try {
-            String input = "Hello\\nWorld\\t\\u0041";
-            String output = unescapeJava(input);
-            System.out.println(output);  // Output: Hello
-                                        // World   A
+            System.out.println(unescapeJava("Hello\\nWorld!")); // Should print "Hello\nWorld!"
+            System.out.println(unescapeJava("C:\\\\Program Files\\\\Java")); // Should print "C:\Program Files\Java"
         } catch (Exception e) {
             e.printStackTrace();
         }

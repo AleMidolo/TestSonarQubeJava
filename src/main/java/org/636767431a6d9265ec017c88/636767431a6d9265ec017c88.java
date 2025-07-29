@@ -11,21 +11,16 @@ public class LowerBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         List<Integer> lowerBounds = new ArrayList<>();
-        if (keys == null || keys.isEmpty()) {
-            return lowerBounds;
-        }
-
-        // 对键进行排序
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);
 
-        // 计算每个键的下界
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // 如果键不在列表中，返回插入点的索引（即下界）
+                // If the key is not found, binarySearch returns (-(insertion point) - 1)
                 index = -index - 1;
             }
+            // The lower bound is the index of the key in the sorted list
             lowerBounds.add(index);
         }
 

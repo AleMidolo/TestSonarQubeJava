@@ -16,24 +16,11 @@ public class ByteVector {
      * @param size 此字节向量应该能够接收的额外字节数。
      */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be positive");
-        }
-
-        int newCapacity = capacity + size;
-        byte[] newData = Arrays.copyOf(data, newCapacity);
-        data = newData;
-        capacity = newCapacity;
+        int newCapacity = this.capacity + size;
+        byte[] newData = Arrays.copyOf(this.data, newCapacity);
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
-    public void add(byte b) {
-        if (size == capacity) {
-            enlarge(1); // Enlarge by 1 if the vector is full
-        }
-        data[size++] = b;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
-    }
+    // Other methods for adding, removing, and accessing bytes can be added here.
 }

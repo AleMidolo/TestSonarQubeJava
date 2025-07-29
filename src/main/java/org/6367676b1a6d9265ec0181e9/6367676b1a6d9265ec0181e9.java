@@ -1,4 +1,4 @@
-public class SubstringMatcher {
+public class SubstringMatch {
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
             return false;

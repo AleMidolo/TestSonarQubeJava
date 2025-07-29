@@ -15,39 +15,33 @@ public class FrameStack {
         int index = 0;
         while (index < descriptor.length()) {
             char c = descriptor.charAt(index);
+            
             switch (c) {
                 case '(':
                     // Skip opening parenthesis for method descriptor
                     index++;
                     break;
+                    
                 case ')':
-                    // Stop at closing parenthesis
+                    // End of arguments for method descriptor
                     return;
-                case '[':
-                    // Skip array dimensions
-                    while (descriptor.charAt(index) == '[') {
-                        index++;
-                    }
-                    // Pop array reference
+                    
+                case 'B':
+                case 'C': 
+                case 'I':
+                case 'S':
+                case 'Z':
+                case 'F':
+                    // Pop single slot types
                     if (!stack.isEmpty()) {
                         stack.pop();
                     }
                     index++;
                     break;
-                case 'L':
-                    // Skip to end of object type
-                    while (descriptor.charAt(index) != ';') {
-                        index++;
-                    }
-                    // Pop object reference
-                    if (!stack.isEmpty()) {
-                        stack.pop();
-                    }
-                    index++;
-                    break;
+                    
                 case 'D':
                 case 'J':
-                    // Pop double/long (takes 2 slots)
+                    // Pop double slot types
                     if (!stack.isEmpty()) {
                         stack.pop();
                         if (!stack.isEmpty()) {
@@ -56,13 +50,23 @@ public class FrameStack {
                     }
                     index++;
                     break;
-                default:
-                    // Pop single-slot primitive
+                    
+                case 'L':
+                    // Skip class descriptor until semicolon
                     if (!stack.isEmpty()) {
                         stack.pop();
                     }
+                    index = descriptor.indexOf(';', index) + 1;
+                    break;
+                    
+                case '[':
+                    // Skip array dimension
                     index++;
                     break;
+                    
+                default:
+                    // Invalid descriptor character
+                    throw new IllegalArgumentException("Invalid descriptor: " + descriptor);
             }
         }
     }

@@ -1,5 +1,4 @@
 import java.util.Enumeration;
-import java.util.ArrayList;
 
 public class EnumerationUtils {
 
@@ -13,11 +12,21 @@ public class EnumerationUtils {
             return null;
         }
 
-        ArrayList<String> list = new ArrayList<>();
-        while (enumeration.hasMoreElements()) {
-            list.add(enumeration.nextElement());
+        // Count elements in enumeration
+        int size = 0;
+        Enumeration<String> counter = enumeration;
+        while (counter.hasMoreElements()) {
+            counter.nextElement();
+            size++;
         }
 
-        return list.toArray(new String[0]);
+        // Create array and copy elements
+        String[] array = new String[size];
+        int index = 0;
+        while (enumeration.hasMoreElements()) {
+            array[index++] = enumeration.nextElement();
+        }
+
+        return array;
     }
 }

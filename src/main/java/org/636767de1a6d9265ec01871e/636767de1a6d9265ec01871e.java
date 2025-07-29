@@ -10,7 +10,7 @@ public class ShardingValidator {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
 
-        // Verify that sharding key indices are continuous
+        // Verify sharding key indices are continuous
         int[] indices = getShardingKeyIndices(modelName);
         if (indices != null && indices.length > 0) {
             for (int i = 0; i < indices.length - 1; i++) {

@@ -16,7 +16,7 @@ public class ConverterRegistry {
             return null;
         }
         
-        // Look for direct match
+        // Look up converter directly
         Converter converter = converters.get(clazz);
         if (converter != null) {
             return converter;
@@ -29,14 +29,15 @@ public class ConverterRegistry {
             if (converter != null) {
                 return converter;
             }
-            // Check interfaces
-            for (Class<?> iface : currentClass.getInterfaces()) {
-                converter = converters.get(iface);
-                if (converter != null) {
-                    return converter;
-                }
-            }
             currentClass = currentClass.getSuperclass();
+        }
+        
+        // Look through interfaces
+        for (Class<?> iface : clazz.getInterfaces()) {
+            converter = converters.get(iface);
+            if (converter != null) {
+                return converter;
+            }
         }
         
         return null;
@@ -44,6 +45,6 @@ public class ConverterRegistry {
 }
 
 // Interface for type conversion
-interface Converter {
+public interface Converter {
     Object convert(Object value);
 }

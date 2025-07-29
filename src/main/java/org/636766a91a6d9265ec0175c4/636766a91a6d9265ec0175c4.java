@@ -1,6 +1,6 @@
 import org.objectweb.asm.Type;
 
-public class StackOperations {
+public class StackFrameAnalyzer {
     private Frame currentFrame;
     
     /**
@@ -12,7 +12,7 @@ public class StackOperations {
         
         if (firstChar == '(') {
             // Method descriptor - pop parameter types
-            Type methodType = Type.getType(descriptor);
+            Type methodType = Type.getMethodType(descriptor);
             Type[] argumentTypes = methodType.getArgumentTypes();
             
             // Pop arguments in reverse order
@@ -31,18 +31,11 @@ public class StackOperations {
             Type type = Type.getType(descriptor);
             int size = type.getSize();
             
-            // Pop 1 or 2 slots depending on type size
+            // Pop 1 or 2 slots depending on type size  
             while (size > 0) {
                 currentFrame.pop();
                 size--;
             }
-        }
-    }
-    
-    // Frame class to represent the operand stack
-    private class Frame {
-        public void pop() {
-            // Implementation to pop value from operand stack
         }
     }
 }

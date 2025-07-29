@@ -12,20 +12,22 @@ public class BeanMapUtils {
             return;
         }
 
-        Iterator<?> it = map.keyIterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
-            if (map.getWriteMethod(key) != null) {
-                Object value = map.get(key);
-                if (value != null) {
-                    this.put(key, value);
+        Iterator<?> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            @SuppressWarnings("unchecked")
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) entries.next();
+            String propertyName = entry.getKey();
+            
+            // 检查属性是否可写
+            if (map.getWriteMethod(propertyName) != null) {
+                Object value = entry.getValue();
+                try {
+                    // 只复制可写属性
+                    this.put(propertyName, value);
+                } catch (Exception e) {
+                    // 忽略无法写入的属性
                 }
             }
         }
-    }
-
-    private void put(String key, Object value) {
-        // Implementation of put method
-        // This would depend on the specific BeanMap implementation
     }
 }

@@ -23,11 +23,11 @@ public class ByteVector {
             data = Arrays.copyOf(data, newCapacity);
         }
         
-        // Copy bytes
         if (byteArrayValue != null) {
+            // Copy the specified portion of byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, data, length, byteLength);
         } else {
-            // Fill with zeros if input array is null
+            // Fill with zeros if byteArrayValue is null
             Arrays.fill(data, length, length + byteLength, (byte) 0);
         }
         

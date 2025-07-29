@@ -7,17 +7,22 @@ public class ArrayUtils {
      * @return <code>true</code> si los <code>count</code> primeros bytes en los arreglos <code>a</code> y <code>b</code> son iguales.
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
-        // Check for null arrays
+        // Verificar si alguno de los arreglos es null
         if (a == null || b == null) {
             return false;
         }
         
-        // Check if count is valid
-        if (count < 0 || count > a.length || count > b.length) {
+        // Verificar si count es válido
+        if (count < 0) {
             return false;
         }
         
-        // Compare the first count bytes
+        // Verificar si hay suficientes elementos para comparar
+        if (a.length < count || b.length < count) {
+            return false;
+        }
+        
+        // Comparar los primeros count bytes
         for (int i = 0; i < count; i++) {
             if (a[i] != b[i]) {
                 return false;

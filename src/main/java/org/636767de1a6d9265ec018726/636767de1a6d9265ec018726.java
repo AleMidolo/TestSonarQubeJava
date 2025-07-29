@@ -32,25 +32,25 @@ public class SequenceRangeBuilder {
         }
 
         // Sort sequences
-        profileSequences.sort(null);
+        Collections.sort(profileSequences);
         
-        int start = profileSequences.get(0);
-        int prev = start;
+        int rangeStart = profileSequences.get(0);
+        int prev = rangeStart;
         
         for (int i = 1; i < profileSequences.size(); i++) {
             int current = profileSequences.get(i);
             
             // If there's a gap in sequence, create new range
             if (current > prev + 1) {
-                ranges.add(new SequenceRange(start, prev));
-                start = current;
+                ranges.add(new SequenceRange(rangeStart, prev));
+                rangeStart = current;
             }
             
             prev = current;
         }
         
         // Add final range
-        ranges.add(new SequenceRange(start, prev));
+        ranges.add(new SequenceRange(rangeStart, prev));
         
         return ranges;
     }

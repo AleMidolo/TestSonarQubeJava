@@ -10,7 +10,7 @@ public class Logger {
     }
 
     public boolean shouldPrintMessage(int timestamp, String message) {
-        // If message has never been printed before or 10 seconds have elapsed
+        // If message has never been printed before or the throttle window has passed
         if (!messageTimestamps.containsKey(message) || 
             timestamp - messageTimestamps.get(message) >= THROTTLE_WINDOW) {
             

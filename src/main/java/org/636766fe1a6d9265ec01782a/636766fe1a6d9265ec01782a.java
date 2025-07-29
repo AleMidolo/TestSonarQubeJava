@@ -4,34 +4,49 @@ public class ClassReader {
     private ByteBuffer classFileBuffer;
     
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        // Get the UTF8 string length from the constant pool entry
-        int utfLength = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF;
+        // Get the start position of the UTF8 constant pool entry
+        int position = classFileBuffer.position();
         
-        // Position buffer at start of UTF8 bytes
-        int currentPosition = constantPoolEntryIndex + 2;
-        int endPosition = currentPosition + utfLength;
-        int charBufferIndex = 0;
+        // Read the length of UTF8 bytes
+        int utfLen = classFileBuffer.getShort() & 0xFFFF;
         
-        // Read and decode UTF8 bytes
-        while (currentPosition < endPosition) {
-            int currentByte = classFileBuffer.get(currentPosition++) & 0xFF;
-            
-            if ((currentByte & 0x80) == 0) {
-                // Single byte character
-                charBuffer[charBufferIndex++] = (char) currentByte;
-            } else if ((currentByte & 0xE0) == 0xC0) {
-                // Two byte character
-                charBuffer[charBufferIndex++] = (char) (((currentByte & 0x1F) << 6) | 
-                    (classFileBuffer.get(currentPosition++) & 0x3F));
-            } else {
-                // Three byte character
-                charBuffer[charBufferIndex++] = (char) (((currentByte & 0xF) << 12) | 
-                    ((classFileBuffer.get(currentPosition++) & 0x3F) << 6) |
-                    (classFileBuffer.get(currentPosition++) & 0x3F));
+        // Read the UTF8 bytes into the char buffer
+        int charLen = 0;
+        int c, c2, c3;
+        while (charLen < utfLen) {
+            c = classFileBuffer.get() & 0xFF;
+            if (c > 127) {
+                classFileBuffer.position(classFileBuffer.position() - 1);
+                break;
+            }
+            charBuffer[charLen++] = (char) c;
+        }
+        
+        while (classFileBuffer.position() < position + 2 + utfLen) {
+            c = classFileBuffer.get() & 0xFF;
+            switch (c >> 4) {
+                case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+                    charBuffer[charLen++] = (char) c;
+                    break;
+                    
+                case 12: case 13:
+                    c2 = classFileBuffer.get() & 0xFF;
+                    charBuffer[charLen++] = (char) (((c & 0x1F) << 6) | (c2 & 0x3F));
+                    break;
+                    
+                case 14:
+                    c2 = classFileBuffer.get() & 0xFF;
+                    c3 = classFileBuffer.get() & 0xFF;
+                    charBuffer[charLen++] = (char) (((c & 0x0F) << 12) | 
+                                                   ((c2 & 0x3F) << 6) | 
+                                                   (c3 & 0x3F));
+                    break;
+                    
+                default:
+                    throw new IllegalArgumentException("Invalid UTF8 encoding in class file");
             }
         }
         
-        // Convert char buffer to String
-        return new String(charBuffer, 0, charBufferIndex);
+        return new String(charBuffer, 0, charLen);
     }
 }

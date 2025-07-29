@@ -25,7 +25,7 @@ public class Graph<V,E> {
     private Set<V> initVisibleVertices() {
         Set<V> visibleVertices = new HashSet<>();
         
-        // Iterate through all adjacency lists
+        // Iterate through all vertices and their edges
         for (Map.Entry<V, List<Edge<V,E>>> entry : adjacencyMap.entrySet()) {
             V vertex = entry.getKey();
             List<Edge<V,E>> edges = entry.getValue();

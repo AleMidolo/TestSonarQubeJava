@@ -1,59 +1,53 @@
 import java.util.*;
 
 public class Graph {
-    private List<Node> nodes;
-    private List<Edge> edges;
-    private int currentNodeIndex;
-    
-    // Node class to represent graph vertices
     private class Node {
-        private int id;
-        private boolean isVirtual;
-        private Node realCounterpart;
+        int id;
+        boolean isVirtual;
+        Node realNode; // 对应的真实节点
+        List<Edge> edges;
         
-        public Node(int id) {
+        Node(int id) {
             this.id = id;
             this.isVirtual = false;
-            this.realCounterpart = null;
+            this.edges = new ArrayList<>();
         }
     }
-    
-    // Edge class to represent graph edges
+
     private class Edge {
-        private Node source;
-        private Node destination;
+        Node source;
+        Node target;
+        int weight;
         
-        public Edge(Node source, Node destination) {
+        Edge(Node source, Node target) {
             this.source = source;
-            this.destination = destination;
+            this.target = target;
+            this.weight = 1;
         }
     }
-    
-    /**
-     * Returns an edge connecting previously returned node with node, which will be returned next. 
-     * If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
-     * @return an edge from the current node to the next node
-     */
+
+    private Node currentNode;
+    private Node nextNode;
+
     public Edge edgeToNext() {
-        if (currentNodeIndex >= nodes.size() - 1) {
+        if (currentNode == null || nextNode == null) {
             return null;
         }
-        
-        Node currentNode = nodes.get(currentNodeIndex);
-        Node nextNode = nodes.get(currentNodeIndex + 1);
-        
-        // If nodes are virtual, use their real counterparts
-        Node sourceNode = currentNode.isVirtual ? currentNode.realCounterpart : currentNode;
-        Node destNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
-        
-        // Find the edge connecting these nodes
-        for (Edge edge : edges) {
-            if ((edge.source == sourceNode && edge.destination == destNode) ||
-                (edge.source == destNode && edge.destination == sourceNode)) {
+
+        // 获取实际的源节点和目标节点
+        Node actualSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
+        Node actualTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
+
+        // 在源节点的边列表中查找连接到目标节点的边
+        for (Edge edge : actualSource.edges) {
+            if (edge.target == actualTarget) {
                 return edge;
             }
         }
-        
-        return null;
+
+        // 如果没有找到边，创建一个新的边
+        Edge newEdge = new Edge(actualSource, actualTarget);
+        actualSource.edges.add(newEdge);
+        return newEdge;
     }
 }

@@ -1,35 +1,22 @@
 import org.apache.log4j.Appender;
 import java.util.Enumeration;
 
-public class Logger {
-    private AppenderList appenderList;
-
+public class AppenderManager {
+    
+    private Vector<Appender> appenders;
+    
     public boolean isAttached(Appender appender) {
-        if (appender == null) {
+        if (appender == null || appenders == null) {
             return false;
         }
-
-        // Get enumeration of all attached appenders
-        Enumeration<Appender> appenders = getAllAppenders();
         
-        // If no appenders attached, return false
-        if (appenders == null) {
-            return false;
-        }
-
-        // Iterate through appenders to find a match
-        while (appenders.hasMoreElements()) {
-            Appender currentAppender = appenders.nextElement();
-            if (currentAppender == appender) {
+        Enumeration<Appender> existingAppenders = appenders.elements();
+        while (existingAppenders.hasMoreElements()) {
+            Appender current = existingAppenders.nextElement();
+            if (current == appender) {
                 return true;
             }
         }
-
         return false;
-    }
-
-    // Helper method to get appenders
-    private Enumeration<Appender> getAllAppenders() {
-        return appenderList != null ? appenderList.getAllAppenders() : null;
     }
 }

@@ -5,23 +5,25 @@ public class ByteVector {
     private int length;
     
     public ByteVector() {
-        data = new byte[64]; // Initial capacity
+        data = new byte[64]; // Default initial capacity
     }
     
     /**
-     * Puts two bytes into this byte vector. The byte vector is automatically enlarged if necessary.
-     * @param byteValue1 a byte.
-     * @param byteValue2 another byte.
-     * @return this byte vector.
+     * 将两个字节放入此字节向量。如有必要，字节向量会自动扩展。
+     * @param byteValue1 一个字节。
+     * @param byteValue2 另一个字节。
+     * @return 此字节向量。
      */
     final ByteVector put11(final int byteValue1, final int byteValue2) {
         if (length + 2 > data.length) {
-            // Double array size if more space needed
+            // Double array size if needed
             int newCapacity = Math.max(2 * data.length, length + 2);
             data = Arrays.copyOf(data, newCapacity);
         }
+        
         data[length++] = (byte) byteValue1;
         data[length++] = (byte) byteValue2;
+        
         return this;
     }
 }

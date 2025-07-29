@@ -1,36 +1,42 @@
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MetricsCache<METRICS> {
+public class MetricsAcceptor {
     
-    private ConcurrentHashMap<String, METRICS> cache;
+    private final ConcurrentHashMap<String, METRICS> metricsCache;
     
-    public MetricsCache() {
-        this.cache = new ConcurrentHashMap<>();
+    public MetricsAcceptor() {
+        this.metricsCache = new ConcurrentHashMap<>();
     }
-
-    /** 
-     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
-     * @param data to be added potentially.
+    
+    /**
+     * 将数据读入缓存并与现有值合并。此方法不是线程安全的，应避免并发调用。
+     * @param data 需要添加的数据。
      */
     @Override
     public void accept(final METRICS data) {
-        if (Objects.isNull(data)) {
-            return;
-        }
-
-        String key = data.toString();
-        METRICS existingValue = cache.get(key);
+        Objects.requireNonNull(data, "Input metrics data cannot be null");
         
-        if (existingValue == null) {
-            cache.put(key, data);
+        String key = data.getKey(); // Assuming METRICS has a getKey() method
+        
+        METRICS existingMetrics = metricsCache.get(key);
+        if (existingMetrics == null) {
+            metricsCache.put(key, data);
         } else {
-            // Merge logic would depend on METRICS type
-            // For example if METRICS is a numeric type:
-            // cache.put(key, existingValue + data);
-            // Or if it's a collection:
-            // existingValue.addAll(data);
-            // cache.put(key, existingValue);
+            existingMetrics.merge(data); // Assuming METRICS has a merge() method
         }
+    }
+}
+
+// Placeholder class for METRICS - actual implementation would depend on requirements
+class METRICS {
+    private String key;
+    
+    public String getKey() {
+        return key;
+    }
+    
+    public void merge(METRICS other) {
+        // Implementation of merge logic
     }
 }

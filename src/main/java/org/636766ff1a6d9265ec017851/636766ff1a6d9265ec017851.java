@@ -1,30 +1,37 @@
-import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 
 public class ByteSearcher {
-
-    private byte[] buffer;
-
-    public ByteSearcher(byte[] buffer) {
-        this.buffer = buffer;
-    }
-
+    private ByteBuffer buffer;
+    
     /**
-     * Searches for a byte of specified value in the <code>buffer</code>, starting at the specified <code>position</code>.
-     * @param value The value to find.
-     * @param pos   The starting position for searching.
-     * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
+     * 从指定的 <code>position</code> 开始，搜索 <code>buffer</code> 中指定值的字节。
+     * @param value 要查找的值。
+     * @param pos   搜索的起始位置。
+     * @return 找到的字节位置，从 <code>buffer</code> 开始计数，如果未找到则返回 <code>-1</code>。
      */
     protected int findByte(byte value, int pos) {
-        if (buffer == null || pos < 0 || pos >= buffer.length) {
+        if (buffer == null || pos >= buffer.limit()) {
             return -1;
         }
-
-        for (int i = pos; i < buffer.length; i++) {
-            if (buffer[i] == value) {
-                return i;
-            }
-        }
         
-        return -1;
+        // Save the original position
+        int originalPosition = buffer.position();
+        
+        try {
+            // Set position to start searching from
+            buffer.position(pos);
+            
+            // Search for the byte
+            while (buffer.hasRemaining()) {
+                if (buffer.get() == value) {
+                    return buffer.position() - 1;
+                }
+            }
+            
+            return -1;
+        } finally {
+            // Restore original position
+            buffer.position(originalPosition);
+        }
     }
 }

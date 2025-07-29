@@ -1,44 +1,45 @@
 import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class FileProcessor {
-
+public class FileHandler {
+    
     /**
-     * Add the specified files in reverse order.
+     * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
         if (files == null || files.length == 0) {
             return;
         }
         
-        Deque<InputStream> stack = new ArrayDeque<>();
+        // 创建一个列表来存储文件
+        List<InputStream> fileList = new ArrayList<>();
         
-        // Add files to stack in original order
+        // 将文件数组添加到列表中
         for (InputStream file : files) {
             if (file != null) {
-                stack.push(file);
+                fileList.add(file);
             }
         }
         
-        // Process files in reverse order
-        while (!stack.isEmpty()) {
-            InputStream file = stack.pop();
+        // 反转列表顺序
+        Collections.reverse(fileList);
+        
+        // 处理反转后的文件
+        for (InputStream file : fileList) {
             try {
+                // 这里可以添加具体的文件处理逻辑
                 processFile(file);
-            } finally {
-                try {
-                    file.close();
-                } catch (Exception e) {
-                    // Handle or log exception
-                }
+            } catch (Exception e) {
+                // 处理异常
+                e.printStackTrace();
             }
         }
     }
     
-    // Helper method to process individual file
+    // 用于处理单个文件的辅助方法
     private void processFile(InputStream file) {
-        // Implementation for processing individual file
-        // would go here
+        // 在这里添加具体的文件处理逻辑
     }
 }

@@ -1,19 +1,14 @@
-import java.time.Instant;
-
-public class MetricsCache {
-    private long lastUpdateTime;
-
+public class CacheExpiryChecker {
     /**
-     * @param timestamp        of current time
-     * @param expiredThreshold represents the duration between last update time and the time point removing from cache.
-     * @return true means this metrics should be removed from cache.
+     * @param timestamp        当前时间的时间戳
+     * @param expiredThreshold 表示最后更新时间与从缓存中移除的时间点之间的持续时间。
+     * @return 真值表示该指标应该从缓存中移除。
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        if (timestamp < 0 || expiredThreshold < 0) {
-            throw new IllegalArgumentException("Timestamp and threshold must be non-negative");
-        }
+        // Get current system timestamp in milliseconds
+        long currentTime = System.currentTimeMillis();
         
-        long timeDifference = timestamp - lastUpdateTime;
-        return timeDifference >= expiredThreshold;
+        // Check if the time elapsed since timestamp exceeds the threshold
+        return (currentTime - timestamp) > expiredThreshold;
     }
 }

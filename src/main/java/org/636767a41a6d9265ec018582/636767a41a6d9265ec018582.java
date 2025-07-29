@@ -1,31 +1,27 @@
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.ProtobufOutput;
+import com.dyuproject.protostuff.ProtobufIOUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class MessageSerializer {
-
+public class MessageWriter {
+    
+    /**
+     * 将 {@code message} 序列化，并在前面加上其长度，写入 {@link OutputStream}。
+     * @return 消息的大小
+     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        // Create ProtobufOutput with the provided buffer
-        ProtobufOutput output = new ProtobufOutput(buffer);
+        // 序列化消息到字节数组
+        byte[] bytes = ProtobufIOUtil.toByteArray(message, schema, buffer);
         
-        // Write message to buffer using schema
-        schema.writeTo(output, message);
+        // 写入消息长度
+        writeRawVarint32(out, bytes.length);
         
-        // Get the size of the serialized message
-        int size = output.getSize();
+        // 写入消息内容
+        out.write(bytes);
         
-        // Write the size as a varint prefix
-        writeRawVarint32(out, size);
-        
-        // Write the actual message bytes
-        LinkedBuffer.writeTo(out, buffer);
-        
-        // Clear the buffer
-        buffer.clear();
-        
-        return size;
+        // 返回总字节数
+        return bytes.length + computeRawVarint32Size(bytes.length);
     }
     
     private static void writeRawVarint32(OutputStream out, int value) throws IOException {
@@ -38,5 +34,13 @@ public class MessageSerializer {
                 value >>>= 7;
             }
         }
+    }
+    
+    private static int computeRawVarint32Size(int value) {
+        if ((value & (0xffffffff << 7)) == 0) return 1;
+        if ((value & (0xffffffff << 14)) == 0) return 2;
+        if ((value & (0xffffffff << 21)) == 0) return 3;
+        if ((value & (0xffffffff << 28)) == 0) return 4;
+        return 5;
     }
 }

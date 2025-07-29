@@ -3,28 +3,32 @@ import java.util.List;
 import javafx.util.Pair;
 
 public class SuffixSumCalculator {
-
     /**
-     * Computes a suffix sum of the {@code bounds}. Returns computed suffix sum and the sum of all elements in the {@code bounds list}.
-     * @param bounds list of integers.
-     * @return computed pair of suffix sum list and a sum of all elements.
+     * 计算 {@code bounds} 的后缀和。返回计算出的后缀和和 {@code bounds list} 中所有元素的总和。
+     * @param bounds 整数列表。
+     * @return 计算出的后缀和列表和所有元素的总和的配对。
      */
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         List<Integer> suffixSum = new ArrayList<>();
-        long totalSum = 0;
+        long total = 0;
         
-        // Calculate total sum first
-        for (int num : bounds) {
-            totalSum += num;
+        // 如果输入列表为空，返回空列表和0
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(suffixSum, 0L);
         }
         
-        // Calculate suffix sums
+        // 计算总和
+        for (int num : bounds) {
+            total += num;
+        }
+        
+        // 计算后缀和
         long currentSum = 0;
         for (int i = bounds.size() - 1; i >= 0; i--) {
             currentSum += bounds.get(i);
             suffixSum.add(0, (int)currentSum);
         }
         
-        return new Pair<>(suffixSum, totalSum);
+        return new Pair<>(suffixSum, total);
     }
 }

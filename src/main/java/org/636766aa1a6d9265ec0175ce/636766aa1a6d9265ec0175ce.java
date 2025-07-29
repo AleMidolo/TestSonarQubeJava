@@ -1,42 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
+import org.objectweb.asm.Label;
 
 public class StackMapFrameVisitor {
-    private Frame currentFrame;
-    private List<Frame> frames;
+    private int[] currentFrame;
+    private int currentFrameIndex;
     
-    // Inner class to represent a frame
-    private static class Frame {
-        int offset;
-        int numLocal;
-        int numStack;
-        Object[] locals;
-        Object[] stack;
-        int index;
-        
-        Frame(int offset, int numLocal, int numStack) {
-            this.offset = offset;
-            this.numLocal = numLocal;
-            this.numStack = numStack;
-            this.locals = new Object[numLocal];
-            this.stack = new Object[numStack];
-            this.index = 0;
-        }
-    }
-    
-    public StackMapFrameVisitor() {
-        frames = new ArrayList<>();
-    }
-    
+    /**
+     * 开始访问一个新的栈映射帧，该帧存储在 {@link #currentFrame} 中。
+     * @param offset   与该帧对应的指令的字节码偏移量。
+     * @param numLocal 当前帧中的局部变量数量。
+     * @param numStack 当前帧中的栈元素数量。
+     * @return 下一个要写入该帧的元素的索引。
+     */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Create new frame and store it as current frame
-        currentFrame = new Frame(offset, numLocal, numStack);
-        frames.add(currentFrame);
+        // 计算帧大小 = 偏移量(1) + 局部变量数量(1) + 栈元素数量(1) + 实际元素数量
+        int frameSize = 3 + numLocal + numStack;
         
-        // Start writing to local variables section
-        currentFrame.index = 0;
+        // 初始化或扩展currentFrame数组
+        if (currentFrame == null || currentFrame.length < frameSize) {
+            currentFrame = new int[frameSize];
+        }
         
-        // Return current index where next element should be written
-        return currentFrame.index;
+        // 存储帧信息
+        currentFrame[0] = offset;
+        currentFrame[1] = numLocal;
+        currentFrame[2] = numStack;
+        
+        // 重置当前索引到局部变量区域开始处
+        currentFrameIndex = 3;
+        
+        return currentFrameIndex;
     }
 }

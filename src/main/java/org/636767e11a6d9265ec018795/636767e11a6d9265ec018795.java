@@ -1,24 +1,30 @@
 import java.util.Objects;
 
 public class DataTable {
-    private String bucket;
-    
-    public DataTable(String bucket) {
-        this.bucket = bucket;
-    }
+    private List<String> buckets;
 
     /**
-     * @return true if the bucket is same.
+     * Checks if two DataTable objects have the same buckets
+     * @param dataset The DataTable to compare with
+     * @return true if the buckets are the same, false otherwise
      */
     public boolean isCompatible(DataTable dataset) {
         if (dataset == null) {
             return false;
         }
-        return Objects.equals(this.bucket, dataset.bucket);
-    }
+        
+        if (this == dataset) {
+            return true;
+        }
 
-    // Getter for bucket
-    public String getBucket() {
-        return bucket;
+        if (this.buckets == null && dataset.buckets == null) {
+            return true;
+        }
+
+        if (this.buckets == null || dataset.buckets == null) {
+            return false;
+        }
+
+        return Objects.equals(this.buckets, dataset.buckets);
     }
 }

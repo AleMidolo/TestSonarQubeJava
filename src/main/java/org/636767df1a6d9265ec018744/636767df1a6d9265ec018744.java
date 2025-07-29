@@ -3,22 +3,22 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    // Constant for maximum duration between start and end time (e.g. 24 hours in milliseconds)
-    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000;
+    // Maximum duration between start and end time in milliseconds (24 hours)
+    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000L;
 
     /**
-     * Split time ranges to insure the start time and end time is small then FETCH_DATA_DURATION
+     * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> ranges = new ArrayList<>();
         
-        // If time range is smaller than max duration, return single range
+        // If duration is less than FETCH_DATA_DURATION, return single range
         if (end - start <= FETCH_DATA_DURATION) {
             ranges.add(new TimeRange(start, end));
             return ranges;
         }
 
-        // Split into multiple ranges of max duration
+        // Split into multiple ranges
         long currentStart = start;
         while (currentStart < end) {
             long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);

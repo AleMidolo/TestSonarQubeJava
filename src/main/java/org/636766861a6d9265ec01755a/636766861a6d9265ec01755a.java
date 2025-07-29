@@ -1,46 +1,28 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class UriMatcher {
     private final Pattern pattern;
     
-    public UriMatcher(String template) {
-        // Convert template to regex pattern
-        String regex = template.replaceAll("\\{[^/]+\\}", "([^/]+)");
-        this.pattern = Pattern.compile(regex);
+    public UriMatcher(String pattern) {
+        this.pattern = Pattern.compile(pattern);
     }
-
+    
     /**
-     * Match a URI against the pattern.
-     * @param uri the uri to match against the template.
-     * @return the match result, otherwise null if no match occurs.
+     * 将URI与模式进行匹配。
+     * @param uri 要与模板匹配的URI。
+     * @return 匹配结果，如果没有匹配则返回空。
      */
     public final MatchResult match(CharSequence uri) {
         if (uri == null) {
             return null;
         }
-
+        
         Matcher matcher = pattern.matcher(uri);
         if (!matcher.matches()) {
             return null;
         }
-
+        
         return matcher.toMatchResult();
-    }
-
-    public static class MatchResult {
-        private final String[] groups;
-        
-        public MatchResult(String[] groups) {
-            this.groups = groups;
-        }
-        
-        public String group(int index) {
-            return groups[index];
-        }
-        
-        public int groupCount() {
-            return groups.length;
-        }
     }
 }

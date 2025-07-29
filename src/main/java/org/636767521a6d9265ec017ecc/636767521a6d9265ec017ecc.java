@@ -1,67 +1,51 @@
-import java.util.Objects;
+import javafx.util.Pair;
 
 public class BoxSplitter {
-
+    
     public static class Box2D {
-        private final double x;
-        private final double y;
-        private final double width;
-        private final double height;
-
+        private double x;
+        private double y;
+        private double width; 
+        private double height;
+        
         public Box2D(double x, double y, double width, double height) {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
         }
-
+        
         public double getX() { return x; }
         public double getY() { return y; }
         public double getWidth() { return width; }
         public double getHeight() { return height; }
     }
 
-    public static class Pair<T,U> {
-        private final T first;
-        private final U second;
-
-        public Pair(T first, U second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        public T getFirst() { return first; }
-        public U getSecond() { return second; }
-    }
-
     /** 
-     * Split a box along the x axis into two equal boxes.
-     * @param box the box to split
-     * @return a pair with the two resulting boxes
+     * 沿 x 轴将一个矩形框拆分为两个相等的矩形框。
+     * @param box 要拆分的矩形框
+     * @return 包含两个拆分后矩形框的对
      */
-    public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
-        if (box == null) {
-            throw new IllegalArgumentException("Box cannot be null");
-        }
-
-        double halfHeight = box.getHeight() / 2.0;
+    public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
+        // 计算每个新矩形框的高度
+        double newHeight = box.getHeight() / 2;
         
-        // Create first box - top half
-        Box2D box1 = new Box2D(
-            box.getX(),
-            box.getY() + halfHeight,
-            box.getWidth(),
-            halfHeight
-        );
-
-        // Create second box - bottom half
-        Box2D box2 = new Box2D(
+        // 创建上半部分的矩形框
+        Box2D topBox = new Box2D(
             box.getX(),
             box.getY(),
             box.getWidth(),
-            halfHeight
+            newHeight
         );
-
-        return new Pair<>(box1, box2);
+        
+        // 创建下半部分的矩形框
+        Box2D bottomBox = new Box2D(
+            box.getX(),
+            box.getY() + newHeight,
+            box.getWidth(),
+            newHeight
+        );
+        
+        return new Pair<>(topBox, bottomBox);
     }
 }

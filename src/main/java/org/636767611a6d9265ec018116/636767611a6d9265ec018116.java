@@ -28,6 +28,6 @@ public class SetIntersection {
         set2.add(4);
 
         Set<Integer> intersectionResult = intersection(set1, set2);
-        System.out.println("Intersection: " + intersectionResult); // Output: Intersection: [2, 3]
+        System.out.println("Intersection: " + intersectionResult); // Output: [2, 3]
     }
 }

@@ -5,13 +5,16 @@ import java.util.NoSuchElementException;
  */
 @Override
 protected V provideNextVertex() {
-    // Assuming V is a generic type representing a vertex in a graph
-    // This method should return the next vertex to be processed
-    // For example, in a BFS or DFS traversal, this would be the next vertex in the queue or stack
-
-    // Example implementation for a queue-based traversal (BFS)
-    if (queue.isEmpty()) {
-        throw new NoSuchElementException("No more vertices to process");
-    }
-    return queue.poll();
+    // Assuming V is a generic type representing a vertex
+    // This method should return the next vertex in the sequence or throw an exception if no more vertices are available.
+    
+    // Example implementation for a simple case where vertices are stored in a list:
+    // if (vertices.hasNext()) {
+    //     return vertices.next();
+    // } else {
+    //     throw new NoSuchElementException("No more vertices available.");
+    // }
+    
+    // Placeholder return statement (replace with actual logic)
+    throw new UnsupportedOperationException("Method not implemented.");
 }

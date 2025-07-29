@@ -17,14 +17,14 @@ public class TimeBucketCompressor {
         // Calcola il giorno compresso
         int compressedDay = ((day - 1) / dayStep) * dayStep + 1;
 
-        // Ricostruisci il timeBucket compresso
+        // Ricostruisci il bucket temporale compresso
         return yearMonth + compressedDay;
     }
 
     public static void main(String[] args) {
         // Esempi di utilizzo
-        System.out.println(compressTimeBucket(20000105L, 11)); // Output: 20000101
-        System.out.println(compressTimeBucket(20000115L, 11)); // Output: 20000112
-        System.out.println(compressTimeBucket(20000123L, 11)); // Output: 20000123
+        System.out.println(compressTimeBucket(20000105, 11)); // Output: 20000101
+        System.out.println(compressTimeBucket(20000115, 11)); // Output: 20000112
+        System.out.println(compressTimeBucket(20000123, 11)); // Output: 20000123
     }
 }

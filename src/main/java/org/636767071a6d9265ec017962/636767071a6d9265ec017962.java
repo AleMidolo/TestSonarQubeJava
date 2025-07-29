@@ -2,43 +2,39 @@ import org.apache.commons.beanutils.BeanMap;
 
 public class MyBeanMap {
 
-    private Object bean;
+    private BeanMap beanMap;
 
     public MyBeanMap(Object bean) {
-        this.bean = bean;
+        this.beanMap = new BeanMap(bean);
     }
 
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
-            throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
+            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
         }
 
-        BeanMap thisBeanMap = new BeanMap(this.bean);
         for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key)) {
-                thisBeanMap.put(key, map.get(key));
+            if (beanMap.isWriteable((String) key)) {
+                beanMap.put(key, map.get(key));
             }
         }
     }
 
+    // Example usage
     public static void main(String[] args) {
-        // Esempio di utilizzo
         MyBean myBean = new MyBean();
         MyBean anotherBean = new MyBean();
 
-        BeanMap beanMap = new BeanMap(myBean);
+        MyBeanMap myBeanMap = new MyBeanMap(myBean);
         BeanMap anotherBeanMap = new BeanMap(anotherBean);
 
-        // Imposta alcune proprietà scrivibili
+        // Assuming MyBean has some properties
         anotherBeanMap.put("property1", "value1");
         anotherBeanMap.put("property2", "value2");
 
-        MyBeanMap myBeanMap = new MyBeanMap(myBean);
         myBeanMap.putAllWriteable(anotherBeanMap);
 
-        // Verifica che le proprietà siano state copiate correttamente
-        System.out.println(beanMap.get("property1")); // Output: value1
-        System.out.println(beanMap.get("property2")); // Output: value2
+        // Now myBean should have the properties from anotherBean
     }
 }
 

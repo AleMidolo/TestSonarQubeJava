@@ -19,9 +19,4 @@ public class CustomSet {
     public void add(int val) {
         set.add(val);
     }
-
-    // Optional: Method to check if the set contains a specific value
-    public boolean contains(int val) {
-        return set.contains(val);
-    }
 }

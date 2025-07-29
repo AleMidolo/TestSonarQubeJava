@@ -1,28 +1,19 @@
+import java.io.DataInput;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class StreamReader {
+public class DataReader {
 
-    private InputStream inputStream;
+    private DataInput input;
 
-    public StreamReader(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public DataReader(DataInput input) {
+        this.input = input;
     }
 
-    /**
+    /** 
      * Leggi un valore di campo {@code string} dallo stream.
      */
     @Override
     public String readString() throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        int data;
-        while ((data = inputStream.read()) != -1) {
-            char character = (char) data;
-            if (character == '\n' || character == '\r') {
-                break; // Stop reading at newline or carriage return
-            }
-            stringBuilder.append(character);
-        }
-        return stringBuilder.toString();
+        return input.readUTF();
     }
 }

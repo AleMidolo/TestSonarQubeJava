@@ -10,16 +10,23 @@ class Bucket {
     }
 
     public void addBucket(Bucket bucket) {
-        buckets.add(bucket);
+        this.buckets.add(bucket);
     }
 
     public void removeSelf() {
         // Remove this bucket from all parent buckets
-        for (Bucket parent : buckets) {
+        for (Bucket parent : this.buckets) {
             parent.buckets.remove(this);
         }
-        // Clear the list of buckets this bucket is associated with
-        buckets.clear();
+        // Clear the list of parent buckets
+        this.buckets.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Bucket{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     public static void main(String[] args) {
@@ -27,16 +34,8 @@ class Bucket {
         Bucket bucket2 = new Bucket("Bucket2");
 
         bucket1.addBucket(bucket2);
-        bucket2.addBucket(bucket1);
-
-        System.out.println("Before removal:");
-        System.out.println("Bucket1 has " + bucket1.buckets.size() + " buckets.");
-        System.out.println("Bucket2 has " + bucket2.buckets.size() + " buckets.");
-
-        bucket1.removeSelf();
-
-        System.out.println("After removal:");
-        System.out.println("Bucket1 has " + bucket1.buckets.size() + " buckets.");
-        System.out.println("Bucket2 has " + bucket2.buckets.size() + " buckets.");
+        System.out.println("Before removal: " + bucket2.buckets);
+        bucket2.removeSelf();
+        System.out.println("After removal: " + bucket2.buckets);
     }
 }

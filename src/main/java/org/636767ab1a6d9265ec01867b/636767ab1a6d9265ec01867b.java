@@ -1,5 +1,4 @@
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 public class LinkedBuffer {
     private byte[] buffer;
@@ -29,19 +28,18 @@ public class LinkedBuffer {
 }
 
 public class WriteSession {
-    // Placeholder for WriteSession class
+    // Placeholder for any session-related data or methods
 }
 
 public class UTF8Writer {
-    /**
-     * Scrive i byte codificati in utf8 dalla stringa nel {@link LinkedBuffer}.
-     */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        Objects.requireNonNull(str, "CharSequence must not be null");
-        Objects.requireNonNull(lb, "LinkedBuffer must not be null");
+        if (str == null || lb == null) {
+            throw new IllegalArgumentException("Input parameters cannot be null.");
+        }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         lb.write(utf8Bytes);
+
         return lb;
     }
 
@@ -49,7 +47,9 @@ public class UTF8Writer {
         LinkedBuffer lb = new LinkedBuffer(1024);
         WriteSession session = new WriteSession();
         CharSequence str = "Hello, UTF-8!";
+
         writeUTF8(str, session, lb);
+
         byte[] result = lb.toByteArray();
         System.out.println(new String(result, StandardCharsets.UTF_8));
     }

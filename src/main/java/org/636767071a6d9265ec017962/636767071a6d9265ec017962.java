@@ -20,7 +20,7 @@ public class BeanMapUtils {
             if (map.isWriteable(propertyName)) {
                 Object value = map.get(propertyName);
                 try {
-                    // Only put if property exists and is writable in this map
+                    // Only put if property exists and is writable
                     if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
                         this.put(propertyName, value);
                     }

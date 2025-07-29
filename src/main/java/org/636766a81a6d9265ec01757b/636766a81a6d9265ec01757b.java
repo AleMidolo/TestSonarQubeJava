@@ -13,7 +13,7 @@ public class JsonSerializer {
         try {
             ObjectMapper mapper = new ObjectMapper();
             
-            // Enable all requested serialization features
+            // Enable all specified serialization features
             if (features != null) {
                 for (SerializationFeature feature : features) {
                     mapper.enable(feature);

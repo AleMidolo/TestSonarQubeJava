@@ -8,14 +8,14 @@ public class SymbolTable {
     private static class Entry {
         final int type;
         final String name;
-        final String value;
-        final int index;
+        final String descriptor;
         Entry next;
+        int index;
 
-        Entry(int type, String name, String value, int index) {
+        Entry(int type, String name, String descriptor, int index) {
             this.type = type;
             this.name = name;
-            this.value = value;
+            this.descriptor = descriptor;
             this.index = index;
         }
     }
@@ -27,7 +27,7 @@ public class SymbolTable {
         while (entry != null) {
             if (entry.type == CONSTANT_NAMEANDTYPE 
                 && entry.name.equals(name)
-                && entry.value.equals(descriptor)) {
+                && entry.descriptor.equals(descriptor)) {
                 return new Symbol(entry.index);
             }
             entry = entry.next;
@@ -37,10 +37,11 @@ public class SymbolTable {
         Entry newEntry = new Entry(CONSTANT_NAMEANDTYPE, name, descriptor, size++);
         newEntry.next = entries[hashCode % entries.length];
         entries[hashCode % entries.length] = newEntry;
+        
         return new Symbol(newEntry.index);
     }
 
-    private static int hash(int type, String name, String value) {
-        return 0x7FFFFFFF & (type + name.hashCode() * value.hashCode());
+    private static int hash(int type, String name, String descriptor) {
+        return 0x7FFFFFFF & (type + name.hashCode() * descriptor.hashCode());
     }
 }

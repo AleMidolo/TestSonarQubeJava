@@ -12,17 +12,15 @@ public class FrameStack {
             Type[] argumentTypes = type.getArgumentTypes();
             for (int i = argumentTypes.length - 1; i >= 0; i--) {
                 int size = argumentTypes[i].getSize();
-                while (size > 0) {
+                for (int j = 0; j < size; j++) {
                     outputStack.pop();
-                    size--;
                 }
             }
         } else {
             // For regular type descriptors, pop based on type size
             int size = type.getSize();
-            while (size > 0) {
+            for (int i = 0; i < size; i++) {
                 outputStack.pop();
-                size--;
             }
         }
     }

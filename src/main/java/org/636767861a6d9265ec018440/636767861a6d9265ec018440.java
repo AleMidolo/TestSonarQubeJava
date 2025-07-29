@@ -15,21 +15,13 @@ public class NameAbbreviator {
         // Add first character
         buf.append(Character.toUpperCase(nameStart.charAt(0)));
 
-        // Find first vowel after first char
-        int length = nameStart.length();
-        for (int i = 1; i < length; i++) {
-            char c = Character.toLowerCase(nameStart.charAt(i));
-            if (isVowel(c)) {
-                // Add consonants up to and including first vowel
+        // Find next capital letter if it exists
+        for (int i = 1; i < nameStart.length(); i++) {
+            char c = nameStart.charAt(i);
+            if (Character.isUpperCase(c)) {
                 buf.append(c);
                 break;
-            } else {
-                buf.append(c);
             }
         }
-    }
-
-    private static boolean isVowel(char c) {
-        return "aeiou".indexOf(Character.toLowerCase(c)) != -1;
     }
 }

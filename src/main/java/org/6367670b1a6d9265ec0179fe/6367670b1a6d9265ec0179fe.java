@@ -1,27 +1,47 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
+public class ByteOutputStream extends OutputStream {
     
-    /**
-     * Writes <code>b.length</code> bytes from the specified byte array to this output stream.
-     * @param b The array of bytes to be written.
-     * @exception IOException if an error occurs.
-     */
-    @Override
+    private byte[] buffer;
+    private int pos;
+    
+    public ByteOutputStream() {
+        buffer = new byte[32];
+        pos = 0;
+    }
+    
     public void write(byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         }
         
-        for (int i = 0; i < b.length; i++) {
-            write(b[i]);
-        }
+        // Ensure buffer has enough capacity
+        ensureCapacity(pos + b.length);
+        
+        // Copy bytes to buffer
+        System.arraycopy(b, 0, buffer, pos, b.length);
+        pos += b.length;
     }
-
+    
     @Override
     public void write(int b) throws IOException {
-        // Implementation of single byte write would go here
-        // This is required as OutputStream is abstract
+        ensureCapacity(pos + 1);
+        buffer[pos++] = (byte)b;
+    }
+    
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+            byte[] newBuffer = new byte[newCapacity];
+            System.arraycopy(buffer, 0, newBuffer, 0, pos);
+            buffer = newBuffer;
+        }
+    }
+    
+    public byte[] toByteArray() {
+        byte[] result = new byte[pos];
+        System.arraycopy(buffer, 0, result, 0, pos);
+        return result;
     }
 }

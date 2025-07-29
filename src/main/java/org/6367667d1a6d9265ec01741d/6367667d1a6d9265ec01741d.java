@@ -14,15 +14,15 @@ public class TypeResolver {
             return Unknown.class;
         }
 
-        if (bounds[0] instanceof Class) {
-            return (Class<?>) bounds[0];
+        Type firstBound = bounds[0];
+        if (firstBound instanceof Class) {
+            return (Class<?>) firstBound;
         }
-
+        
         return Unknown.class;
     }
-}
-
-// Helper class representing unknown type
-class Unknown {
-    private Unknown() {} // Prevent instantiation
+    
+    // Unknown class used as default return value
+    private static class Unknown {
+    }
 }

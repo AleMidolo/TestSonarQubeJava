@@ -37,15 +37,12 @@ public class CharsetTranslator {
             return javaCharset;
         }
         
+        // If no mapping found, try to see if Java supports it directly
         try {
-            // Try to see if the charset is already valid in Java
-            if (Charset.isSupported(charset)) {
-                return Charset.forName(charset).name();
-            }
+            return Charset.forName(charset).name();
         } catch (Exception e) {
-            // If charset is not supported, return default
+            // If charset is not recognized, return default charset
+            return Charset.defaultCharset().name();
         }
-        
-        return Charset.defaultCharset().name();
     }
 }

@@ -11,24 +11,24 @@ public class ClassFileReader {
         int utfLen = ((classFileBuffer[offset + 1] & 0xFF) << 8) | (classFileBuffer[offset + 2] & 0xFF);
         offset += 3;
         
-        int charLength = 0;
-        int currentOffset = offset;
-        int endOffset = offset + utfLen;
-        
-        while (currentOffset < endOffset) {
-            int currentByte = classFileBuffer[currentOffset++] & 0xFF;
-            if ((currentByte & 0x80) == 0) {
-                charBuffer[charLength++] = (char) currentByte;
+        int charLen = 0;
+        int max = offset + utfLen;
+        while (offset < max) {
+            int currentByte = classFileBuffer[offset++] & 0xFF;
+            if (currentByte < 0x80) {
+                // 1 byte UTF-8 encoding
+                charBuffer[charLen++] = (char) currentByte;
             } else if ((currentByte & 0xE0) == 0xC0) {
-                charBuffer[charLength++] = (char) (((currentByte & 0x1F) << 6) | 
-                    (classFileBuffer[currentOffset++] & 0x3F));
+                // 2 byte UTF-8 encoding
+                charBuffer[charLen++] = (char) (((currentByte & 0x1F) << 6) | 
+                    (classFileBuffer[offset++] & 0x3F));
             } else {
-                charBuffer[charLength++] = (char) (((currentByte & 0xF) << 12) | 
-                    ((classFileBuffer[currentOffset++] & 0x3F) << 6) |
-                    (classFileBuffer[currentOffset++] & 0x3F));
+                // 3 byte UTF-8 encoding
+                charBuffer[charLen++] = (char) (((currentByte & 0xF) << 12) | 
+                    ((classFileBuffer[offset++] & 0x3F) << 6) | 
+                    (classFileBuffer[offset++] & 0x3F));
             }
         }
-        
-        return new String(charBuffer, 0, charLength);
+        return new String(charBuffer, 0, charLen);
     }
 }

@@ -1,6 +1,6 @@
 import java.util.logging.Logger;
 
-public class LoggerManager {
+public class LoggerUtils {
     
     /**
      * Controlla se il logger con il nome specificato esiste nella gerarchia. 
@@ -12,7 +12,18 @@ public class LoggerManager {
             return null;
         }
         
-        // Get the logger if it exists, without creating a new one
-        return Logger.getLogger(name).getParent().getLogger(name);
+        // Get the logger manager's logger list
+        LogManager logManager = LogManager.getLogManager();
+        Enumeration<String> loggerNames = logManager.getLoggerNames();
+        
+        // Search through existing loggers
+        while (loggerNames.hasMoreElements()) {
+            String loggerName = loggerNames.nextElement();
+            if (loggerName.equals(name)) {
+                return logManager.getLogger(name);
+            }
+        }
+        
+        return null;
     }
 }

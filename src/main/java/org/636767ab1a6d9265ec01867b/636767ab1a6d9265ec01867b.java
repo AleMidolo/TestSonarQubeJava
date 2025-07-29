@@ -11,24 +11,29 @@ public class UTF8Writer {
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         LinkedBuffer currentBuffer = lb;
-        
-        int offset = 0;
-        while (offset < utf8Bytes.length) {
-            int remaining = currentBuffer.buffer.length - currentBuffer.offset;
-            int bytesToCopy = Math.min(remaining, utf8Bytes.length - offset);
+
+        int remaining = utf8Bytes.length;
+        int position = 0;
+
+        while (remaining > 0) {
+            int available = currentBuffer.buffer.length - currentBuffer.offset;
+            int copyLength = Math.min(available, remaining);
+
+            System.arraycopy(utf8Bytes, position, currentBuffer.buffer, currentBuffer.offset, copyLength);
             
-            System.arraycopy(utf8Bytes, offset, currentBuffer.buffer, currentBuffer.offset, bytesToCopy);
-            currentBuffer.offset += bytesToCopy;
-            offset += bytesToCopy;
-            
-            if (offset < utf8Bytes.length) {
+            currentBuffer.offset += copyLength;
+            position += copyLength;
+            remaining -= copyLength;
+
+            if (remaining > 0) {
                 currentBuffer = new LinkedBuffer(session.nextBufferSize, currentBuffer);
             }
         }
-        
+
+        session.size += utf8Bytes.length;
         return currentBuffer;
     }
-    
+
     // Supporting classes needed for compilation
     public static class LinkedBuffer {
         byte[] buffer;
@@ -41,12 +46,14 @@ public class UTF8Writer {
             this.next = next;
         }
     }
-    
+
     public static class WriteSession {
+        int size;
         int nextBufferSize;
         
-        public WriteSession(int bufferSize) {
-            this.nextBufferSize = bufferSize;
+        public WriteSession(int nextBufferSize) {
+            this.size = 0;
+            this.nextBufferSize = nextBufferSize;
         }
     }
 }

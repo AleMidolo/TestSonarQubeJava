@@ -15,7 +15,7 @@ public class FieldReader {
         if (currentPosition < buffer.length - 4) {
             // Check for compression marker bytes
             if (buffer[currentPosition] == 0x1F && buffer[currentPosition + 1] == 0x8B) {
-                // Found GZIP compression marker
+                // Found GZIP compression header
                 isCompressed = true;
                 
                 // Read compressed length from next 4 bytes
@@ -31,7 +31,7 @@ public class FieldReader {
                 compressedLength = 0;
             }
         } else {
-            throw new IOException("Buffer underflow while checking for packed field");
+            throw new IOException("Buffer overflow while checking for packed field");
         }
     }
 }

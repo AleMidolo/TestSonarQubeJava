@@ -10,10 +10,10 @@ public class LogBuffer {
         this.buffer = new ArrayBlockingQueue<>(capacity);
     }
 
-    /** 
+    /**
      * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene 
      * <b>silenziosamente scartato</b>. È responsabilità del chiamante assicurarsi che 
-     * il buffer abbia spazio libero.  
+     * il buffer abbia spazio libero.
      */
     public void put(LoggingEvent o) {
         if (o != null) {

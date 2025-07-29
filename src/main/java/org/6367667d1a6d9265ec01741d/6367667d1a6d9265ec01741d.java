@@ -26,6 +26,7 @@ public class TypeResolver {
             if (upperBounds != null && upperBounds.length > 0) {
                 return upperBounds[0];
             }
+            return Unknown.class;
         }
         
         if (bound instanceof ParameterizedType) {
@@ -36,6 +37,6 @@ public class TypeResolver {
     }
     
     private static class Unknown {
-        // Marker class for unknown type
+        // Marker class for unresolvable bounds
     }
 }

@@ -1,6 +1,7 @@
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 public class StringUtils {
+
     /**
      * <p>Controlla se la <code>String</code> contiene solo caratteri numerici.</p>
      * <p><code>Null</code> e stringhe vuote restituiranno <code>false</code>.</p>
@@ -8,7 +9,7 @@ public class StringUtils {
      * @return <code>true</code> se str contiene solo numeri unicode
      */
     public static boolean isDigits(String str) {
-        if (str == null || str.isEmpty()) {
+        if (Objects.isNull(str) || str.isEmpty()) {
             return false;
         }
         
@@ -17,6 +18,7 @@ public class StringUtils {
                 return false;
             }
         }
+        
         return true;
     }
 }

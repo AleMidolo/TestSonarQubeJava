@@ -1,26 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Label {
-    private List<Integer> lineNumbers;
-
-    public Label() {
-        this.lineNumbers = new ArrayList<>();
+/**
+ * Agrega un número de línea de origen correspondiente a esta etiqueta.
+ * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
+ */
+final void addLineNumber(final int lineNumber) {
+    if (lineNumber <= 0) {
+        throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo.");
     }
-
-    /**
-     * Aggiunge un numero di riga sorgente corrispondente a questa etichetta.
-     * @param lineNumber un numero di riga sorgente (che dovrebbe essere strettamente positivo).
-     */
-    final void addLineNumber(final int lineNumber) {
-        if (lineNumber <= 0) {
-            throw new IllegalArgumentException("Line number must be strictly positive.");
-        }
-        this.lineNumbers.add(lineNumber);
-    }
-
-    // Optional: Getter method to retrieve the line numbers
-    public List<Integer> getLineNumbers() {
-        return new ArrayList<>(this.lineNumbers);
-    }
+    // Aquí iría la lógica para agregar el número de línea a la etiqueta.
+    // Por ejemplo, podrías tener un campo en la clase para almacenar el número de línea.
+    this.lineNumber = lineNumber;
 }

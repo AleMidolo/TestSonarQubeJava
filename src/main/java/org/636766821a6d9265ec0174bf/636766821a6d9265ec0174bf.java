@@ -1,9 +1,8 @@
-import java.beans.Introspector;
+import java.util.*;
 
 public class StringUtils {
-
     /**
-     * Inverso di Introspector.decapitalize
+     * Inverso de Introspector.decapitalize
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {
@@ -13,7 +12,9 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testName = "helloWorld";
-        System.out.println(capitalize(testName));  // Output: HelloWorld
+        System.out.println(capitalize("hello")); // Output: Hello
+        System.out.println(capitalize("world")); // Output: World
+        System.out.println(capitalize(""));      // Output: 
+        System.out.println(capitalize(null));    // Output: null
     }
 }

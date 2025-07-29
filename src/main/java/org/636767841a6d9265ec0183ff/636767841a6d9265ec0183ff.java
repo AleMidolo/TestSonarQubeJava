@@ -1,32 +1,28 @@
-import javax.swing.*;
-import javax.swing.table.TableModel;
-import java.awt.*;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 
 public class TableUtils {
 
     /**
-     * Seleziona la riga specificata nella JTable specificata e scorre lo JScrollPane specificato fino alla riga appena selezionata. Più importante, la chiamata a repaint() è ritardata abbastanza a lungo da permettere alla tabella di dipingere correttamente la riga appena selezionata, che potrebbe essere fuori dallo schermo.
-     * @param row la riga da selezionare
-     * @param table deve appartenere allo JScrollPane specificato
-     * @param pane lo JScrollPane che contiene la JTable
+     * Selecciona la fila especificada en el JTable indicado y desplaza el JScrollPane especificado hacia la fila recién seleccionada. Más importante aún, la llamada a repaint() se retrasa lo suficiente para que la tabla pinte correctamente la fila recién seleccionada, que puede estar fuera de la pantalla.
+     * @param row la fila a seleccionar
+     * @param table debe pertenecer al JScrollPane especificado
+     * @param pane el JScrollPane que contiene la tabla
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (table == null || pane == null) {
-            throw new IllegalArgumentException("Table and pane must not be null");
+        if (row >= 0 && row < table.getRowCount()) {
+            table.setRowSelectionInterval(row, row);
+            table.scrollRectToVisible(table.getCellRect(row, 0, true));
+
+            // Retrasar la llamada a repaint para asegurar que la tabla se actualice correctamente
+            SwingUtilities.invokeLater(() -> {
+                JViewport viewport = pane.getViewport();
+                if (viewport != null) {
+                    viewport.repaint();
+                }
+            });
         }
-
-        // Seleziona la riga specificata
-        table.setRowSelectionInterval(row, row);
-
-        // Ottieni il rettangolo che rappresenta la cella della riga selezionata
-        Rectangle cellRect = table.getCellRect(row, 0, true);
-
-        // Scorri lo JScrollPane fino alla riga selezionata
-        pane.getViewport().scrollRectToVisible(cellRect);
-
-        // Ritarda la chiamata a repaint() per permettere alla tabella di dipingere correttamente
-        SwingUtilities.invokeLater(() -> {
-            table.repaint();
-        });
     }
 }

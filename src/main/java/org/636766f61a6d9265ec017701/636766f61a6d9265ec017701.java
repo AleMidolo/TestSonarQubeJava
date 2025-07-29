@@ -1,11 +1,11 @@
 public class StringUtils {
 
     /**
-     * Trova l'ultimo indice all'interno di una Stringa, gestendo <code>null</code>. Questo metodo utilizza {@link String#lastIndexOf(String)}.
+     * Encuentra el último índice dentro de una cadena, manejando <code>null</code>. Este método utiliza {@link String#lastIndexOf(String)}.
      * 
-     * @param str La stringa in cui cercare, può essere <code>null</code>.
-     * @param searchStr La stringa da cercare, può essere <code>null</code>.
-     * @return L'ultimo indice della stringa cercata, o -1 se non trovata o se una delle stringhe è <code>null</code>.
+     * @param str La cadena en la que se buscará, puede ser <code>null</code>.
+     * @param searchStr La cadena que se buscará, puede ser <code>null</code>.
+     * @return El índice de la última ocurrencia de <code>searchStr</code> en <code>str</code>, o -1 si no se encuentra o si alguna de las cadenas es <code>null</code>.
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -15,10 +15,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        // Esempi di utilizzo
-        System.out.println(lastIndexOf("hello world", "o")); // Output: 7
-        System.out.println(lastIndexOf("hello world", "x")); // Output: -1
-        System.out.println(lastIndexOf(null, "o"));         // Output: -1
-        System.out.println(lastIndexOf("hello world", null)); // Output: -1
+        // Ejemplo de uso
+        String str = "Hello, world! Hello, everyone!";
+        String searchStr = "Hello";
+        int index = lastIndexOf(str, searchStr);
+        System.out.println("Último índice de '" + searchStr + "' en '" + str + "': " + index);
     }
 }

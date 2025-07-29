@@ -1,20 +1,25 @@
 public class Example {
-    /**
-     * @return true se getThrown().toString() è una stringa non vuota.
-     */
-    public boolean hasThrown() {
-        String thrownString = getThrown().toString();
-        return !thrownString.isEmpty();
+    private Throwable thrown;
+
+    public Example(Throwable thrown) {
+        this.thrown = thrown;
     }
 
-    // Dummy implementation of getThrown() for demonstration purposes
-    private Object getThrown() {
-        // This is a placeholder. Replace with actual logic to get the thrown object.
-        return new Object(); // Example: return an object with a non-empty toString()
+    public boolean hasThrown() {
+        if (thrown == null) {
+            return false;
+        }
+        String thrownString = thrown.toString();
+        return thrownString != null && !thrownString.isEmpty();
+    }
+
+    public Throwable getThrown() {
+        return thrown;
     }
 
     public static void main(String[] args) {
-        Example example = new Example();
-        System.out.println(example.hasThrown());
+        // Example usage
+        Example example = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example.hasThrown()); // Should print true
     }
 }

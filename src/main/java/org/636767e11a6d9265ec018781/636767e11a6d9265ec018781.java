@@ -1,42 +1,45 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
-public class MetricsCache {
-    private Map<String, METRICS> cache = new HashMap<>();
+public class Cache {
+
+    private METRICS existingData;
 
     /**
-     * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
-     * @param data da aggiungere potenzialmente.
+     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
+     * @param data que se va a agregar potencialmente.
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve a unique identifier
-        if (cache.containsKey(key)) {
-            METRICS existingData = cache.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to combine data
+        Objects.requireNonNull(data, "Data cannot be null");
+
+        if (existingData == null) {
+            existingData = data;
         } else {
-            cache.put(key, data);
+            // Aquí se combinan los datos existentes con los nuevos datos.
+            // Asumiendo que METRICS tiene un método para combinar datos.
+            existingData.combine(data);
         }
+    }
+
+    // Método para obtener los datos existentes (opcional)
+    public METRICS getExistingData() {
+        return existingData;
     }
 }
 
-// Assuming METRICS class has the following structure:
+// Asumiendo que METRICS es una clase con un método combine
 class METRICS {
-    private String key;
-    private Map<String, Object> metricsData;
+    private int value;
 
-    public METRICS(String key, Map<String, Object> metricsData) {
-        this.key = key;
-        this.metricsData = metricsData;
+    public METRICS(int value) {
+        this.value = value;
     }
 
-    public String getKey() {
-        return key;
+    public void combine(METRICS other) {
+        this.value += other.value;
     }
 
-    public void merge(METRICS other) {
-        this.metricsData.putAll(other.metricsData);
+    public int getValue() {
+        return value;
     }
-
-    // Other methods and fields as needed
 }

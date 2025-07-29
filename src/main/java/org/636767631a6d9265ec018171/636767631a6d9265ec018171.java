@@ -1,7 +1,7 @@
 // Assuming ListNodeImpl is a class that represents a node in a linked list
 // and it has the following structure:
 // class ListNodeImpl<E> {
-//     E data;
+//     E element;
 //     ListNodeImpl<E> next;
 //     ListNodeImpl<E> prev;
 // }
@@ -11,14 +11,23 @@ private boolean unlink(ListNodeImpl<E> node) {
         return false;
     }
 
-    // If the node has a previous node, update its next reference
-    if (node.prev != null) {
-        node.prev.next = node.next;
+    ListNodeImpl<E> prev = node.prev;
+    ListNodeImpl<E> next = node.next;
+
+    if (prev != null) {
+        prev.next = next;
+    } else {
+        // If prev is null, it means node is the head of the list
+        // You might need to update the head reference in the list class
+        // For example: list.head = next;
     }
 
-    // If the node has a next node, update its previous reference
-    if (node.next != null) {
-        node.next.prev = node.prev;
+    if (next != null) {
+        next.prev = prev;
+    } else {
+        // If next is null, it means node is the tail of the list
+        // You might need to update the tail reference in the list class
+        // For example: list.tail = prev;
     }
 
     // Clear the node's references to help with garbage collection

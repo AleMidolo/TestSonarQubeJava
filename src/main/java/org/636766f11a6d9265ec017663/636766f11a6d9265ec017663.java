@@ -1,10 +1,10 @@
 public class ArrayUtils {
 
     /**
-     * <p>Controlla se due array hanno la stessa lunghezza, trattando gli array <code>null</code> come lunghezza <code>0</code>.</p>
-     * @param array1 il primo array, può essere <code>null</code>
-     * @param array2 il secondo array, può essere <code>null</code>
-     * @return <code>true</code> se la lunghezza degli array corrisponde, trattando <code>null</code> come un array vuoto
+     * <p>Verifica si dos arreglos tienen la misma longitud, tratando los arreglos <code>null</code> como longitud <code>0</code>.</p>
+     * @param array1 el primer arreglo, puede ser <code>null</code>
+     * @param array2 el segundo arreglo, puede ser <code>null</code>
+     * @return <code>true</code> si la longitud de los arreglos coincide, tratando <code>null</code> como un arreglo vacío
      */
     public static boolean isSameLength(final double[] array1, final double[] array2) {
         int length1 = (array1 == null) ? 0 : array1.length;
@@ -13,13 +13,13 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        double[] array1 = {1.0, 2.0, 3.0};
-        double[] array2 = {4.0, 5.0, 6.0};
-        double[] array3 = null;
-        double[] array4 = {};
+        double[] arr1 = {1.0, 2.0, 3.0};
+        double[] arr2 = {4.0, 5.0, 6.0};
+        double[] arr3 = null;
+        double[] arr4 = {};
 
-        System.out.println(isSameLength(array1, array2)); // true
-        System.out.println(isSameLength(array1, array3)); // false
-        System.out.println(isSameLength(array3, array4)); // true
+        System.out.println(isSameLength(arr1, arr2)); // true
+        System.out.println(isSameLength(arr1, arr3)); // false
+        System.out.println(isSameLength(arr3, arr4)); // true
     }
 }

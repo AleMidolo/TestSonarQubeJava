@@ -9,19 +9,17 @@ public class CustomSet {
     }
 
     /**
-     * Rimuove un valore dal set. Restituisce true se il set conteneva l'elemento specificato.
+     * Elimina un valor del conjunto. Devuelve verdadero si el conjunto contenía el elemento especificado.
+     * 
+     * @param val El valor a eliminar del conjunto.
+     * @return Verdadero si el conjunto contenía el elemento, falso en caso contrario.
      */
     public boolean remove(int val) {
         return set.remove(val);
     }
 
-    // Optional: Method to add elements to the set for testing
+    // Método adicional para agregar elementos al conjunto (opcional)
     public void add(int val) {
         set.add(val);
-    }
-
-    // Optional: Method to check if the set contains an element
-    public boolean contains(int val) {
-        return set.contains(val);
     }
 }

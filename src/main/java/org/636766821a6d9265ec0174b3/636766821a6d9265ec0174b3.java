@@ -1,23 +1,25 @@
 import java.util.function.Function;
 
 /**
- * Invoca il {@link BroadcastFilter}
- * @param msg Il messaggio da filtrare.
- * @return Il messaggio filtrato.
+ * Invoca el {@link BroadcastFilter}
+ * @param msg El mensaje que se desea filtrar.
+ * @return El resultado de aplicar el filtro al mensaje.
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is a functional interface or a class with a filter method
-    // For example, let's assume BroadcastFilter is a Function<Object, Object>
-    BroadcastFilter filter = new BroadcastFilter();
+    // Asumiendo que BroadcastFilter es una interfaz funcional que toma un Object y devuelve un Object
+    BroadcastFilter filter = new BroadcastFilter() {
+        @Override
+        public Object apply(Object input) {
+            // Implementación del filtro
+            // Aquí puedes agregar la lógica de filtrado
+            return input; // Por defecto, devuelve el mismo mensaje
+        }
+    };
+
     return filter.apply(msg);
 }
 
-// Example implementation of BroadcastFilter
-class BroadcastFilter implements Function<Object, Object> {
-    @Override
-    public Object apply(Object msg) {
-        // Implement the filtering logic here
-        // For example, just return the message as is (no filtering)
-        return msg;
-    }
+// Definición de la interfaz BroadcastFilter
+interface BroadcastFilter extends Function<Object, Object> {
+    // La interfaz puede tener métodos adicionales si es necesario
 }

@@ -1,11 +1,11 @@
 public class SubstringMatcher {
 
     /**
-     * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
-     * @param str la stringa originale (o StringBuilder)
-     * @param index l'indice nella stringa originale da cui iniziare a confrontare
-     * @param substring la sottostringa da confrontare all'indice specificato
-     * @return {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
+     * Devuelve {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
+     * @param str la cadena original (o StringBuilder)
+     * @param index el índice en la cadena original para comenzar a comparar
+     * @param substring la subcadena para comparar en el índice dado
+     * @return {@code true} si la cadena dada coincide con la subcadena dada en el índice especificado, {@code false} en caso contrario.
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
@@ -23,16 +23,12 @@ public class SubstringMatcher {
     }
 
     public static void main(String[] args) {
-        // Test cases
-        CharSequence str = "Hello, World!";
-        CharSequence substring1 = "World";
-        CharSequence substring2 = "Hello";
-        CharSequence substring3 = "ld!";
+        // Ejemplo de uso
+        CharSequence str = "Hola, mundo!";
+        CharSequence substring = "mundo";
+        int index = 6;
 
-        System.out.println(substringMatch(str, 7, substring1)); // true
-        System.out.println(substringMatch(str, 0, substring2)); // true
-        System.out.println(substringMatch(str, 10, substring3)); // true
-        System.out.println(substringMatch(str, 5, substring1)); // false
-        System.out.println(substringMatch(str, 7, substring2)); // false
+        boolean result = substringMatch(str, index, substring);
+        System.out.println(result); // Debería imprimir true
     }
 }

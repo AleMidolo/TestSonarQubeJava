@@ -2,7 +2,6 @@ import java.nio.charset.StandardCharsets;
 import java.net.URLEncoder;
 
 public class TemplateEncoder {
-
     /**
      * 对包含模板参数名称的字符串进行编，特别是字符 '{' 和 '}' 将被百分比编码。
      * @param s 包含零个或多个模板参数名称的字符串
@@ -19,7 +18,7 @@ public class TemplateEncoder {
                 try {
                     encodedString.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8.toString()));
                 } catch (Exception e) {
-                    // This should not happen as UTF-8 is always supported
+                    // Handle encoding exception
                     encodedString.append(c);
                 }
             } else {
@@ -30,7 +29,7 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
+        String input = "This is a {template} string with {parameters}.";
         String encoded = encodeTemplateNames(input);
         System.out.println(encoded);
     }

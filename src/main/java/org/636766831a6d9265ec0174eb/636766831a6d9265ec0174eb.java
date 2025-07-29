@@ -9,15 +9,13 @@ public class FileHandler {
      * 以逆序添加指定的文件。
      */
     private void addReverse(final File[] files) {
-        if (files == null) {
+        if (files == null || files.length == 0) {
             return;
         }
 
         List<File> fileList = new ArrayList<>();
         for (File file : files) {
-            if (file != null) {
-                fileList.add(file);
-            }
+            fileList.add(file);
         }
 
         Collections.reverse(fileList);
@@ -34,6 +32,7 @@ public class FileHandler {
     }
 
     public static void main(String[] args) {
+        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
         FileHandler handler = new FileHandler();
         handler.addReverse(files);

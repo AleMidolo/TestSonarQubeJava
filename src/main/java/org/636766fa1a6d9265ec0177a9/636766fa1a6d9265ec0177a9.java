@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicBlock {
+public class Block {
     private List<Integer> initializedTypes;
 
-    public BasicBlock() {
-        this.initializedTypes = new ArrayList<>();
+    public Block() {
+        initializedTypes = new ArrayList<>();
     }
 
     /**
@@ -13,9 +13,7 @@ public class BasicBlock {
      * @param abstractType 一个调用了构造函数的抽象类型。
      */
     private void addInitializedType(final int abstractType) {
-        if (!initializedTypes.contains(abstractType)) {
-            initializedTypes.add(abstractType);
-        }
+        initializedTypes.add(abstractType);
     }
 
     // 其他方法...

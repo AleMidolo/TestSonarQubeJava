@@ -23,10 +23,4 @@ public class StringUtils {
 
         return false;
     }
-
-    public static void main(String[] args) {
-        List<String> searchStrArray = List.of("hello", "world", "java");
-        String str = "Hello, this is a test string.";
-        System.out.println(containsAnyIgnoreCase(str, searchStrArray)); // 输出: true
-    }
 }

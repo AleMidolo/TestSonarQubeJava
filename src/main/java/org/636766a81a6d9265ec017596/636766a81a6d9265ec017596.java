@@ -5,20 +5,19 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this(16); // 默认初始容量
-    }
-
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
+        this.data = new byte[10]; // 初始容量
         this.size = 0;
     }
 
     public ByteVector putInt(final int intValue) {
         ensureCapacity(size + 4); // 确保有足够的空间存放4个字节的整数
+
+        // 将整数按大端序写入字节数组
         data[size++] = (byte) (intValue >> 24);
         data[size++] = (byte) (intValue >> 16);
         data[size++] = (byte) (intValue >> 8);
         data[size++] = (byte) intValue;
+
         return this;
     }
 

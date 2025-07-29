@@ -21,20 +21,19 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index >= 0) {
-                // 如果键存在，上界是下一个元素
+                // If the key is found, the upper bound is the next element
                 if (index < sortedKeys.size() - 1) {
                     upperBounds.add(index + 1);
                 } else {
-                    // 如果键是最后一个元素，没有上界
+                    // If it's the last element, there is no upper bound
                     upperBounds.add(-1);
                 }
             } else {
-                // 如果键不存在，上界是插入点
+                // If the key is not found, the insertion point is the upper bound
                 int insertionPoint = -index - 1;
                 if (insertionPoint < sortedKeys.size()) {
                     upperBounds.add(insertionPoint);
                 } else {
-                    // 如果插入点在末尾，没有上界
                     upperBounds.add(-1);
                 }
             }

@@ -8,8 +8,8 @@ public class DigitChecker {
         if (str == null || str.isEmpty()) {
             return false;
         }
-        for (int i = 0; i < str.length(); i++) {
-            if (!Character.isDigit(str.charAt(i))) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
                 return false;
             }
         }

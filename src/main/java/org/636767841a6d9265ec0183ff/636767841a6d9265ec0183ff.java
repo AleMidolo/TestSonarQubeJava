@@ -23,15 +23,39 @@ public class TableUtils {
         // 选择指定的行
         table.setRowSelectionInterval(row, row);
 
-        // 获取行的矩形区域
+        // 确保表格滚动到选中的行
         Rectangle cellRect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(cellRect);
 
-        // 将 JScrollPane 滚动到该行的位置
-        pane.getViewport().scrollRectToVisible(cellRect);
-
-        // 延迟调用 repaint() 以确保表格正确绘制新选择的行
+        // 延迟调用 repaint() 以确保表格正确绘制
         SwingUtilities.invokeLater(() -> {
             table.repaint();
+            pane.repaint();
         });
+    }
+
+    public static void main(String[] args) {
+        // 示例用法
+        JFrame frame = new JFrame("Table Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+
+        String[] columnNames = {"Column 1", "Column 2", "Column 3"};
+        Object[][] data = {
+                {"1", "A", "X"},
+                {"2", "B", "Y"},
+                {"3", "C", "Z"},
+                {"4", "D", "W"},
+                {"5", "E", "V"}
+        };
+
+        JTable table = new JTable(data, columnNames);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        frame.add(scrollPane);
+        frame.setVisible(true);
+
+        // 选择第3行并滚动到该行
+        selectRow(2, table, scrollPane);
     }
 }

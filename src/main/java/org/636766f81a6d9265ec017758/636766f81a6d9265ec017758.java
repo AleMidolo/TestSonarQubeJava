@@ -1,6 +1,10 @@
 @Override
 public int hashCode() {
-    // 这里假设类的字段为 field1, field2, field3
-    // 使用 Objects.hash() 方法来生成哈希码
-    return Objects.hash(field1, field2, field3);
+    // 假设这是一个简单的哈希码实现，根据对象的某些字段计算哈希码
+    // 这里假设对象有两个字段：field1 和 field2
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((field1 == null) ? 0 : field1.hashCode());
+    result = prime * result + ((field2 == null) ? 0 : field2.hashCode());
+    return result;
 }

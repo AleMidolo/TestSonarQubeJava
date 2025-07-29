@@ -21,8 +21,8 @@ interface BroadcastFilter {
 class BroadcastFilterImpl implements BroadcastFilter {
     @Override
     public Object filter(Object msg) {
-        // 这里可以实现具体的过滤逻辑
-        // 例如，返回消息本身，或者根据某些条件进行过滤
-        return msg;
+        // 这里实现具体的过滤逻辑
+        // 例如，返回消息本身，或者进行一些处理
+        return Objects.requireNonNull(msg, "Message cannot be null");
     }
 }

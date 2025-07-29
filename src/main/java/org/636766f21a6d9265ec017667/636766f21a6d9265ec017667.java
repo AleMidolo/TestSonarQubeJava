@@ -13,6 +13,9 @@ public class ClassReader {
      * @return 读取的值。
      */
     public short readShort(final int offset) {
+        if (offset < 0 || offset + 2 > data.length) {
+            throw new IndexOutOfBoundsException("Offset out of bounds");
+        }
         ByteBuffer buffer = ByteBuffer.wrap(data, offset, 2);
         return buffer.getShort();
     }

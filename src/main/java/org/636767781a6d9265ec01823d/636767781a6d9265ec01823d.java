@@ -1,11 +1,16 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-/**
- * 此方法执行实际的写入操作
- */
 protected void subAppend(LoggingEvent event) {
-    // 这里可以添加具体的日志写入逻辑
-    // 例如：将日志事件写入文件、控制台或其他输出目标
-    // 以下是一个简单的示例，将日志事件输出到控制台
-    System.out.println(event.getMessage());
+    // Assuming this method is part of a class that has access to a writer or output stream
+    // For example, a FileAppender or ConsoleAppender in Log4j
+
+    // Convert the LoggingEvent to a string representation
+    String logMessage = event.getMessage().toString();
+
+    // Example: Writing to the console
+    System.out.println(logMessage);
+
+    // If you have a specific writer or output stream, you can use it like this:
+    // writer.write(logMessage);
+    // writer.flush();
 }

@@ -16,17 +16,26 @@ public class QueueToString {
         if (queue == null) {
             return "null";
         }
-        if (queue.isEmpty()) {
-            return "[]";
-        }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (Object element : queue) {
-            sb.append(element).append(", ");
+            sb.append(element);
+            sb.append(", ");
         }
-        // 删除最后一个逗号和空格
-        sb.delete(sb.length() - 2, sb.length());
+        if (!queue.isEmpty()) {
+            sb.setLength(sb.length() - 2); // Remove the trailing ", "
+        }
         sb.append("]");
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Queue<String> queue = new java.util.LinkedList<>();
+        queue.add("A");
+        queue.add("B");
+        queue.add("C");
+
+        QueueToString queueToString = new QueueToString(queue);
+        System.out.println(queueToString.toString());
     }
 }

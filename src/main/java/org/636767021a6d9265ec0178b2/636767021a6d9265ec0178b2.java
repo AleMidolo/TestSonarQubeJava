@@ -1,7 +1,11 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> stack = new Stack<>();
+    private Stack<Object> stack;
+
+    public FrameStack() {
+        this.stack = new Stack<>();
+    }
 
     /**
      * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
@@ -13,7 +17,7 @@ public class FrameStack {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                throw new IllegalStateException("Stack underflow");
+                throw new IllegalStateException("Stack is empty");
             }
         }
     }
@@ -58,5 +62,14 @@ public class FrameStack {
         return count;
     }
 
-    // 其他方法...
+    // 示例用法
+    public static void main(String[] args) {
+        FrameStack frameStack = new FrameStack();
+        frameStack.stack.push(1);
+        frameStack.stack.push(2.0);
+        frameStack.stack.push("Hello");
+
+        frameStack.pop("Ljava/lang/String;D"); // 弹出两个元素
+        System.out.println(frameStack.stack); // 输出剩余栈内容
+    }
 }

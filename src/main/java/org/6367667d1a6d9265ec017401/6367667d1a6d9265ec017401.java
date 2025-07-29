@@ -7,13 +7,17 @@ public class UnescapeJava {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(str.length());
         int i = 0;
         while (i < str.length()) {
             char c = str.charAt(i);
             if (c == '\\' && i + 1 < str.length()) {
                 char nextChar = str.charAt(i + 1);
                 switch (nextChar) {
+                    case '\\':
+                        sb.append('\\');
+                        i += 2;
+                        break;
                     case 'n':
                         sb.append('\n');
                         i += 2;
@@ -42,27 +46,23 @@ public class UnescapeJava {
                         sb.append('\"');
                         i += 2;
                         break;
-                    case '\\':
-                        sb.append('\\');
-                        i += 2;
-                        break;
-                    default:
-                        // Handle Unicode escape sequences like \uXXXX
-                        if (nextChar == 'u' && i + 5 < str.length()) {
-                            String unicodeSequence = str.substring(i + 2, i + 6);
+                    case 'u':
+                        if (i + 5 < str.length()) {
+                            String hex = str.substring(i + 2, i + 6);
                             try {
-                                int unicodeValue = Integer.parseInt(unicodeSequence, 16);
-                                sb.append((char) unicodeValue);
+                                int unicode = Integer.parseInt(hex, 16);
+                                sb.append((char) unicode);
                                 i += 6;
                             } catch (NumberFormatException e) {
-                                throw new Exception("Invalid Unicode escape sequence: " + unicodeSequence);
+                                throw new Exception("Invalid Unicode escape sequence: " + hex);
                             }
                         } else {
-                            // If it's not a recognized escape sequence, just append the backslash and the next character
-                            sb.append(c);
-                            sb.append(nextChar);
-                            i += 2;
+                            throw new Exception("Incomplete Unicode escape sequence");
                         }
+                        break;
+                    default:
+                        sb.append(c);
+                        i++;
                         break;
                 }
             } else {
@@ -78,7 +78,7 @@ public class UnescapeJava {
             String input = "Hello\\nWorld\\t\\u0041";
             String output = unescapeJava(input);
             System.out.println(output);  // Output: Hello
-                                        // World    A
+                                          // World   A
         } catch (Exception e) {
             e.printStackTrace();
         }

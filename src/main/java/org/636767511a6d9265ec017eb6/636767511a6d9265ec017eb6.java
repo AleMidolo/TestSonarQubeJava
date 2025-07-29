@@ -46,6 +46,14 @@ public class Node {
     public void setPrevious(Node previous) {
         this.previous = previous;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Node node = (Node) obj;
+        return this == node; // Assuming identity equality for simplicity
+    }
 }
 
 public class Graph {
@@ -53,13 +61,13 @@ public class Graph {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
         while (!circulator.isAt(stop)) {
-            if (predicate.test(circulator.getCurrent())) {
+            Node currentNode = circulator.getCurrent();
+            if (predicate.test(currentNode)) {
                 return circulator;
             }
             circulator.next(dir);
         }
 
-        // If we reach the stop node without finding a matching node, return the circulator pointing to stop
         return circulator;
     }
 }

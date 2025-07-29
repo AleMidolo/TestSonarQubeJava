@@ -9,36 +9,34 @@ public class LogFormatter {
      * @return 格式化后的日志字符串
      */
     public String format(LoggingEvent event) {
-        // 假设LoggingEvent类有以下方法：
-        // getMessage() - 获取日志消息
-        // getLevel() - 获取日志级别
-        // getTimestamp() - 获取时间戳
-        // getLoggerName() - 获取日志记录器名称
+        // 假设 LoggingEvent 类有以下字段：
+        // String message, Date timestamp, String level, String loggerName
 
-        // 格式化时间戳
+        // 创建一个日期格式化器
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = dateFormat.format(new Date(event.getTimestamp()));
 
-        // 构建格式化字符串
-        return String.format("[%s] %s %s - %s",
+        // 格式化日志信息
+        String formattedLog = String.format("[%s] %s %s - %s",
+                dateFormat.format(event.getTimestamp()),
                 event.getLevel(),
-                formattedDate,
                 event.getLoggerName(),
                 event.getMessage());
+
+        return formattedLog;
     }
 }
 
-// 假设的LoggingEvent类
+// 假设的 LoggingEvent 类
 class LoggingEvent {
     private String message;
+    private Date timestamp;
     private String level;
-    private long timestamp;
     private String loggerName;
 
-    public LoggingEvent(String message, String level, long timestamp, String loggerName) {
+    public LoggingEvent(String message, Date timestamp, String level, String loggerName) {
         this.message = message;
-        this.level = level;
         this.timestamp = timestamp;
+        this.level = level;
         this.loggerName = loggerName;
     }
 
@@ -46,12 +44,12 @@ class LoggingEvent {
         return message;
     }
 
-    public String getLevel() {
-        return level;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getLevel() {
+        return level;
     }
 
     public String getLoggerName() {

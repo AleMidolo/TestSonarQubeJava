@@ -26,17 +26,8 @@ public class Logger {
             }
         }
     }
-    
-    // Inner class representing an Appender
-    private class Appender {
-        private String name;
-        
-        public Appender(String name) {
-            this.name = name;
-        }
-        
-        public String getName() {
-            return name;
-        }
-    }
+}
+
+interface Appender {
+    String getName();
 }

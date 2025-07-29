@@ -14,25 +14,24 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
      * @return true se rimosso
      */
     public AtmosphereFramework removeAtmosphereHandler(String mapping) {
-        if (mapping == null || mapping.isEmpty()) {
+        if (mapping == null) {
             return this;
         }
 
         // Normalize mapping
-        String normalizedMapping = mapping.startsWith("/") ? mapping : "/" + mapping;
+        if (!mapping.startsWith("/")) {
+            mapping = "/" + mapping;
+        }
+
+        // Remove the handler
+        AtmosphereHandler handler = handlers.remove(mapping);
         
-        // Remove handler if exists
-        AtmosphereHandler removed = handlers.remove(normalizedMapping);
-        
-        if (removed != null) {
+        if (handler != null) {
             // Clean up any associated resources
-            removed.destroy();
+            handler.destroy();
             
-            // Update framework configuration
-            AtmosphereConfig config = getAtmosphereConfig();
-            if (config != null) {
-                config.properties().remove(normalizedMapping);
-            }
+            // Remove from framework's internal mappings
+            frameworkConfig().properties().remove(mapping);
         }
 
         return this;

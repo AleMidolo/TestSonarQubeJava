@@ -13,7 +13,7 @@ public class ByteBuffer {
         if (buffer == null || pos < 0 || pos >= buffer.length) {
             return -1;
         }
-        
+
         for (int i = pos; i < buffer.length; i++) {
             if (buffer[i] == value) {
                 return i;

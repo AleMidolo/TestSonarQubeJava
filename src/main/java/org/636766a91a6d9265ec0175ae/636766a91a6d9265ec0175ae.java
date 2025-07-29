@@ -11,7 +11,7 @@ public class ByteVector {
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        // Check if we need to resize the array
+        // Check if we need to expand the array
         ensureCapacity(size + byteLength);
         
         if (byteArrayValue != null) {

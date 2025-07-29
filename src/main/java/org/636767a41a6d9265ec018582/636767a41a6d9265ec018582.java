@@ -17,7 +17,7 @@ public class MessageSerializer {
         // Serialize the message using schema
         schema.writeTo(output, message);
         
-        // Get the size of the serialized message
+        // Get the size of serialized message
         int size = output.getSize();
         
         // Write the size as a varint to the output stream

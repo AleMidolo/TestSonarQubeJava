@@ -17,8 +17,7 @@ public class CustomAppender extends AppenderSkeleton {
      */
     @Override
     protected void subAppend(LoggingEvent event) {
-        if (layout == null) {
-            errorHandler.error("No layout set for the appender named [" + name + "].");
+        if (layout == null || writer == null) {
             return;
         }
 

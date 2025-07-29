@@ -1,4 +1,4 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
 public class StringUtils {
     /**
@@ -7,7 +7,7 @@ public class StringUtils {
      *
      * @param str the String to check, may be null
      * @param searchStr the String to find, may be null
-     * @return the first index of searchStr in str, -1 if no match or null string input
+     * @return the first index of the search String, -1 if no match or null string input
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

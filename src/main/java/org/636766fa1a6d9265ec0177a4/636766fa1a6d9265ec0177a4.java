@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class ArrayConverter {
+public class ArrayUtils {
     /**
      * <p>Converts an array of primitive doubles to objects.</p>
      * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>

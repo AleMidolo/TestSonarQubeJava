@@ -24,7 +24,7 @@ public class CharsetConverter {
      * @return The Java equivalent for this name.
      */
     private static String javaCharset(String charset) {
-        if (charset == null || charset.trim().isEmpty()) {
+        if (charset == null) {
             return Charset.defaultCharset().name();
         }
         
@@ -41,10 +41,10 @@ public class CharsetConverter {
                 return Charset.forName(charset).name();
             }
         } catch (IllegalArgumentException e) {
-            // Invalid charset, return default
-            return Charset.defaultCharset().name();
+            // Invalid charset
         }
         
+        // Return default charset if not found
         return Charset.defaultCharset().name();
     }
 }

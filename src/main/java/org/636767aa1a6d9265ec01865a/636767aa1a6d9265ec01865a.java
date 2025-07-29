@@ -23,7 +23,7 @@ public class BufferWriter {
                 out.write(buffer, offset, length);
                 size += length;
             }
-
+            
             current = current.getNext();
         }
 

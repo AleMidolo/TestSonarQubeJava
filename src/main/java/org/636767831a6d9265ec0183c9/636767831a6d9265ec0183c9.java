@@ -1,19 +1,20 @@
+import org.slf4j.MDC;
 import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class NDC {
     private static final ThreadLocal<Deque<String>> contextStack = new ThreadLocal<Deque<String>>() {
-        @Override 
+        @Override
         protected Deque<String> initialValue() {
-            return new ArrayDeque<String>();
+            return new ConcurrentLinkedDeque<>();
         }
     };
 
     public static String peek() {
         Deque<String> stack = contextStack.get();
-        if (stack.isEmpty()) {
-            return "";
+        if (stack != null && !stack.isEmpty()) {
+            return stack.peek();
         }
-        return stack.peek();
+        return "";
     }
 }

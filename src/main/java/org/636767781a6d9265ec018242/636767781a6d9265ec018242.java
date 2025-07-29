@@ -6,18 +6,15 @@ import java.util.Enumeration;
 public class AppenderManager implements AppenderAttachable {
     
     private Vector<Appender> appenders;
-
+    
     public AppenderManager() {
         appenders = new Vector<Appender>();
     }
 
-    /** 
-     * Call the <code>doAppend</code> method on all attached appenders.  
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         
-        if(appenders != null) {
+        if(appenders != null && !appenders.isEmpty()) {
             size = appenders.size();
             for(Enumeration<Appender> enumeration = appenders.elements(); 
                 enumeration.hasMoreElements();) {
@@ -28,4 +25,6 @@ public class AppenderManager implements AppenderAttachable {
         
         return size;
     }
+    
+    // Other required AppenderAttachable interface methods would go here
 }

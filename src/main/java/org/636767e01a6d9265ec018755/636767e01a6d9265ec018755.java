@@ -3,7 +3,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ContentBuilder {
@@ -27,7 +26,7 @@ public class ContentBuilder {
         if (jsonObject.has("ats") && !jsonObject.get("ats").isJsonNull()) {
             JsonArray atsArray = jsonObject.getAsJsonArray("ats");
             if (atsArray != null && atsArray.size() > 0) {
-                List<String> atsList = new ArrayList<>();
+                ArrayList<String> atsList = new ArrayList<>();
                 for (JsonElement element : atsArray) {
                     if (!element.isJsonNull()) {
                         atsList.add(element.getAsString());
@@ -36,14 +35,6 @@ public class ContentBuilder {
                 if (!atsList.isEmpty()) {
                     content.put("ats", atsList);
                 }
-            }
-        }
-
-        // Add any other content fields that might exist
-        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            String key = entry.getKey();
-            if (!key.equals("text") && !key.equals("ats") && !entry.getValue().isJsonNull()) {
-                content.put(key, entry.getValue().getAsString());
             }
         }
 

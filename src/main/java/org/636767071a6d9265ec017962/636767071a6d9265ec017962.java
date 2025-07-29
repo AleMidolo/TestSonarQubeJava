@@ -21,7 +21,7 @@ public class BeanMapUtils {
             // Check if property is writable in source map
             if (map.isWriteable(propertyName)) {
                 Object value = entry.getValue();
-                // Only set if property exists and is writable in target
+                // Only put if property exists and is writable in target map
                 if (this.containsKey(propertyName) && this.isWriteable(propertyName)) {
                     this.put(propertyName, value);
                 }

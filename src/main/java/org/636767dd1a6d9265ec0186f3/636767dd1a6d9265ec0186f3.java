@@ -5,7 +5,7 @@ public class ColumnName {
     private Map<String, String> nameMap;
 
     public ColumnName() {
-        this.nameMap = new HashMap<>();
+        nameMap = new HashMap<>();
     }
 
     /**
@@ -21,12 +21,6 @@ public class ColumnName {
     }
 
     public String getNewName(String oldName) {
-        return nameMap.get(oldName);
-    }
-
-    public static void main(String[] args) {
-        ColumnName columnName = new ColumnName();
-        columnName.overrideName("oldColumn", "newColumn");
-        System.out.println(columnName.getNewName("oldColumn")); // Output: newColumn
+        return nameMap.getOrDefault(oldName, oldName);
     }
 }

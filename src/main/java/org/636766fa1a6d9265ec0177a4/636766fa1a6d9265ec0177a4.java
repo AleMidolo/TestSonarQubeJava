@@ -1,8 +1,9 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class DoubleArrayConverter {
 
     /**
-     * <p>Converts an array of primitive doubles to objects.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Converts an array of primitive doubles to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>double</code> array
      * @return a <code>Double</code> array, <code>null</code> if null array input
      */
@@ -20,8 +21,10 @@ public class ArrayUtils {
     public static void main(String[] args) {
         double[] primitiveArray = {1.0, 2.0, 3.0};
         Double[] objectArray = toObject(primitiveArray);
-        for (Double d : objectArray) {
-            System.out.println(d);
-        }
+        System.out.println(java.util.Arrays.toString(objectArray)); // Output: [1.0, 2.0, 3.0]
+
+        double[] nullArray = null;
+        Double[] nullResult = toObject(nullArray);
+        System.out.println(nullResult); // Output: null
     }
 }

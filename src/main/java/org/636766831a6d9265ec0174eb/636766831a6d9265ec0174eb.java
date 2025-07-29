@@ -13,16 +13,16 @@ public class FileAdder {
             return;
         }
 
-        // Convert the array to a list for easier manipulation
         List<File> fileList = new ArrayList<>();
-        Collections.addAll(fileList, files);
+        for (File file : files) {
+            fileList.add(file);
+        }
 
-        // Reverse the list
         Collections.reverse(fileList);
 
-        // Process the files in reverse order
+        // Assuming you want to process the files in reverse order
         for (File file : fileList) {
-            // Add your logic here to process each file
+            // Add your logic to process the file here
             System.out.println("Processing file: " + file.getName());
         }
     }

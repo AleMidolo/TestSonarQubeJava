@@ -11,7 +11,7 @@ import java.util.Objects;
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Conversion to " + type.getName() + " is not supported.");
+        throw new Exception("Conversion to Character is not supported for type: " + type.getName());
     }
 
     if (value == null) {
@@ -27,7 +27,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Value " + intValue + " is out of range for a Character.");
+            throw new Exception("Value out of range for Character: " + intValue);
         }
     }
 
@@ -36,9 +36,9 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (strValue.length() == 1) {
             return strValue.charAt(0);
         } else {
-            throw new Exception("String \"" + strValue + "\" cannot be converted to a single Character.");
+            throw new Exception("String must be exactly one character long: " + strValue);
         }
     }
 
-    throw new Exception("Cannot convert " + value.getClass().getName() + " to Character.");
+    throw new Exception("Cannot convert value to Character: " + value);
 }

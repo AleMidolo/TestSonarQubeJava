@@ -1,6 +1,6 @@
 import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +12,13 @@ public class LogAppender {
      * Handles a log event. For this appender, that means writing the message to each connected client.
      */
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
+        String message = event.getMessage().toString();
         for (Socket client : clients) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                out.println(message);
             } catch (IOException e) {
-                // Handle the exception, e.g., remove the disconnected client
+                // Handle the exception, e.g., remove the client from the list
                 clients.remove(client);
                 e.printStackTrace();
             }

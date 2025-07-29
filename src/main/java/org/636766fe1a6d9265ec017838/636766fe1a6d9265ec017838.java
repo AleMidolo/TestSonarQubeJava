@@ -1,8 +1,7 @@
 public class CharacterUtils {
 
     /**
-     * <p>Converts an array of object Characters to primitives.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Converts an array of object Characters to primitives.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>Character</code> array, may be <code>null</code>
      * @return a <code>char</code> array, <code>null</code> if null array input
      * @throws NullPointerException if array content is <code>null</code>
@@ -19,11 +18,5 @@ public class CharacterUtils {
             result[i] = array[i];
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Character[] testArray = {'a', 'b', 'c'};
-        char[] primitiveArray = toPrimitive(testArray);
-        System.out.println(java.util.Arrays.toString(primitiveArray)); // Output: [a, b, c]
     }
 }

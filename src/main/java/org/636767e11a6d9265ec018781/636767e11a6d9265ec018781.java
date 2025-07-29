@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cache {
-    private Map<String, METRICS> cacheMap = new HashMap<>();
+    private Map<String, METRICS> cache = new HashMap<>();
 
     /**
      * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
@@ -10,12 +10,12 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
-        if (cacheMap.containsKey(key)) {
-            METRICS existingData = cacheMap.get(key);
-            existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique identifier
+        if (cache.containsKey(key)) {
+            METRICS existingData = cache.get(key);
+            existingData.merge(data); // Assuming METRICS has a method merge() to combine data
         } else {
-            cacheMap.put(key, data);
+            cache.put(key, data);
         }
     }
 }
@@ -34,11 +34,9 @@ class METRICS {
         return key;
     }
 
-    public int getValue() {
-        return value;
+    public void merge(METRICS other) {
+        this.value += other.value; // Example merge logic
     }
 
-    public void merge(METRICS other) {
-        this.value += other.getValue();
-    }
+    // Other methods and fields as needed
 }

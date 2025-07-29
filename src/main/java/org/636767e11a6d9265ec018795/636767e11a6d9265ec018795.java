@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public class DataTable {
-    // Assuming DataTable class has necessary fields and methods
-    // For example, let's assume it has a field 'bucket'
+    // Assuming DataTable has some fields and methods
+    // For simplicity, let's assume it has a field 'bucket'
     private String bucket;
 
     public DataTable(String bucket) {
@@ -27,29 +27,18 @@ public class DataTable {
     }
 }
 
-public class Main {
+public class BucketChecker {
     /**
-     * @return true if the bucket is same.
+     * @param dataset The dataset to check.
+     * @return true if the bucket is the same.
      */
     public boolean isCompatible(DataTable dataset) {
-        // Assuming 'this' refers to another DataTable object
-        // For simplicity, let's assume 'this' is another DataTable object
-        // with a 'bucket' field
-        return this.getBucket().equals(dataset.getBucket());
-    }
-
-    public static void main(String[] args) {
-        DataTable dataset1 = new DataTable("bucket1");
-        DataTable dataset2 = new DataTable("bucket1");
-        DataTable dataset3 = new DataTable("bucket2");
-
-        Main main = new Main();
-        System.out.println(main.isCompatible(dataset1, dataset2)); // true
-        System.out.println(main.isCompatible(dataset1, dataset3)); // false
-    }
-
-    // Overloaded method to compare two DataTable objects
-    public boolean isCompatible(DataTable dataset1, DataTable dataset2) {
-        return dataset1.getBucket().equals(dataset2.getBucket());
+        if (dataset == null) {
+            return false;
+        }
+        // Assuming the current instance has a bucket to compare with
+        // For simplicity, let's assume the current instance has a field 'currentBucket'
+        String currentBucket = "exampleBucket"; // Replace with actual logic to get current bucket
+        return currentBucket.equals(dataset.getBucket());
     }
 }

@@ -1,4 +1,5 @@
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TokenParser {
 
@@ -8,45 +9,28 @@ public class TokenParser {
      * @return the token
      */
     private String parseToken(final char[] terminators) {
+        Set<Character> terminatorSet = new HashSet<>();
+        for (char c : terminators) {
+            terminatorSet.add(c);
+        }
+
         StringBuilder token = new StringBuilder();
         int currentChar;
-        
         while (true) {
             currentChar = System.in.read();
-            if (currentChar == -1) {
-                break; // End of input
+            if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
+                break;
             }
-            
-            char ch = (char) currentChar;
-            if (containsTerminator(terminators, ch)) {
-                break; // Terminator encountered
-            }
-            
-            token.append(ch);
+            token.append((char) currentChar);
         }
-        
-        return token.toString();
-    }
 
-    /**
-     * Helper method to check if a character is in the terminators array.
-     * @param terminators the array of terminating characters
-     * @param ch the character to check
-     * @return true if the character is a terminator, false otherwise
-     */
-    private boolean containsTerminator(final char[] terminators, final char ch) {
-        for (char terminator : terminators) {
-            if (terminator == ch) {
-                return true;
-            }
-        }
-        return false;
+        return token.toString();
     }
 
     public static void main(String[] args) {
         TokenParser parser = new TokenParser();
-        char[] terminators = {' ', '\n', '\t', '\r'}; // Example terminators
-        System.out.println("Enter input:");
+        char[] terminators = {' ', '\n', '\t', '\r'};
+        System.out.println("Enter a string to parse:");
         String token = parser.parseToken(terminators);
         System.out.println("Parsed token: " + token);
     }

@@ -3,7 +3,7 @@ import java.util.Objects;
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Unsupported conversion to type: " + type.getName());
+        throw new Exception("目标类型必须是Character或char");
     }
 
     if (value == null) {
@@ -19,7 +19,7 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Value out of range for Character: " + intValue);
+            throw new Exception("数值超出Character范围");
         }
     }
 
@@ -28,9 +28,9 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (strValue.length() == 1) {
             return strValue.charAt(0);
         } else {
-            throw new Exception("String must be exactly one character long: " + strValue);
+            throw new Exception("字符串长度必须为1才能转换为Character");
         }
     }
 
-    throw new Exception("Cannot convert value to Character: " + value);
+    throw new Exception("无法将" + value.getClass().getName() + "转换为Character");
 }

@@ -14,6 +14,7 @@ public class Logger {
     }
 }
 
-class Appender {
-    // Appender implementation details
+// Assuming Appender is a class or interface that is already defined
+interface Appender {
+    // Appender methods
 }

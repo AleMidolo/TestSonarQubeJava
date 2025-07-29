@@ -25,7 +25,6 @@ public class ClassPathUtil {
                     URL url = file.toURI().toURL();
                     cpV.add(url);
                 } catch (MalformedURLException e) {
-                    System.err.println("无法将文件转换为URL: " + file.getAbsolutePath());
                     e.printStackTrace();
                 }
             }

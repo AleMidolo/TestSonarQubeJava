@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Logger {
-    private List<Appender> appenders;
+public class AppenderManager {
+    private List<String> appenders;
 
-    public Logger() {
+    public AppenderManager() {
         this.appenders = new ArrayList<>();
     }
 
@@ -13,26 +13,25 @@ public class Logger {
      * 从附加器列表中移除指定名称的附加器。
      */
     public void removeAppender(String name) {
-        Iterator<Appender> iterator = appenders.iterator();
+        Iterator<String> iterator = appenders.iterator();
         while (iterator.hasNext()) {
-            Appender appender = iterator.next();
-            if (appender.getName().equals(name)) {
+            String appender = iterator.next();
+            if (appender.equals(name)) {
                 iterator.remove();
                 break;
             }
         }
     }
 
-    // 假设 Appender 是一个包含 getName() 方法的类
-    private static class Appender {
-        private String name;
+    // 示例用法
+    public static void main(String[] args) {
+        AppenderManager manager = new AppenderManager();
+        manager.appenders.add("Appender1");
+        manager.appenders.add("Appender2");
+        manager.appenders.add("Appender3");
 
-        public Appender(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
+        System.out.println("Before removal: " + manager.appenders);
+        manager.removeAppender("Appender2");
+        System.out.println("After removal: " + manager.appenders);
     }
 }

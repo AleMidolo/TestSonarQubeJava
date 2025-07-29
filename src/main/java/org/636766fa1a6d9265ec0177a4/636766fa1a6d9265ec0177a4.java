@@ -1,4 +1,7 @@
-public class ArrayConverter {
+import java.util.Objects;
+
+public class DoubleArrayConverter {
+
     /**
      * <p>将基本数据类型的 double 数组转换为对象类型。</p> <p>对于输入数组 <code>null</code>，此方法返回 <code>null</code>。</p>
      * @param array  一个 <code>double</code> 数组
@@ -13,5 +16,13 @@ public class ArrayConverter {
             result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        double[] primitiveArray = {1.0, 2.0, 3.0};
+        Double[] objectArray = toObject(primitiveArray);
+        for (Double d : objectArray) {
+            System.out.println(d);
+        }
     }
 }

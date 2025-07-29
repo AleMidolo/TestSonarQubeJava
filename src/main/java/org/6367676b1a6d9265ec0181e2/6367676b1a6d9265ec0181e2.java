@@ -2,6 +2,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class CollectionUtils {
+
     /**
      * 返回在 '<code>source</code>' 中包含的 '<code>candidates</code>' 的第一个元素。如果 '<code>candidates</code>' 中没有任何元素出现在 '<code>source</code>' 中，则返回 <code>null</code>。迭代顺序取决于 {@link Collection} 的具体实现。
      * @param source 源集合
@@ -13,14 +14,21 @@ public class CollectionUtils {
             return null;
         }
 
-        Iterator candidateIterator = candidates.iterator();
-        while (candidateIterator.hasNext()) {
-            Object candidate = candidateIterator.next();
+        for (Object candidate : candidates) {
             if (source.contains(candidate)) {
                 return candidate;
             }
         }
 
         return null;
+    }
+
+    public static void main(String[] args) {
+        // 示例用法
+        Collection<String> source = java.util.Arrays.asList("apple", "banana", "cherry");
+        Collection<String> candidates = java.util.Arrays.asList("banana", "grape", "cherry");
+
+        Object result = findFirstMatch(source, candidates);
+        System.out.println("First match: " + result); // 输出: First match: banana
     }
 }

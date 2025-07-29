@@ -23,8 +23,8 @@ public class CharUtils {
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(toCharacterObject(' '));  // Output: ' '
-        System.out.println(toCharacterObject('A'));  // Output: 'A'
-        System.out.println(toCharacterObject('€'));  // Output: '€' (non-ASCII character)
+        System.out.println(CharUtils.toCharacterObject(' ') == ' ');  // true
+        System.out.println(CharUtils.toCharacterObject('A') == 'A');  // true
+        System.out.println(CharUtils.toCharacterObject('€') == '€');  // true (non-ASCII character)
     }
 }

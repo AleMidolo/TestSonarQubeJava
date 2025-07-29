@@ -1,4 +1,6 @@
-public class NonZeroCounter {
+import java.util.*;
+
+public class MatrixUtils {
     /**
      * 获取一行中非零条目的数量。
      * @param row 行号
@@ -28,8 +30,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        NonZeroCounter counter = new NonZeroCounter();
-        int row = 2; // 示例行号
-        System.out.println("Non-zero entries in row " + row + ": " + counter.nonZeros(row));
+        MatrixUtils utils = new MatrixUtils();
+        System.out.println(utils.nonZeros(2)); // 输出: 3
     }
 }

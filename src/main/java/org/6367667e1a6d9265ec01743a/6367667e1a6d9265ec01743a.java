@@ -14,4 +14,10 @@ public class LastWriteTimeStamp {
     public void updateLastWriteTimeStamp() {
         lastWriteTimeStamp.set(System.currentTimeMillis());
     }
+
+    public static void main(String[] args) {
+        LastWriteTimeStamp timeStamp = new LastWriteTimeStamp();
+        timeStamp.updateLastWriteTimeStamp();
+        System.out.println("Last write timestamp: " + timeStamp.lastWriteTimeStampInMilliseconds());
+    }
 }

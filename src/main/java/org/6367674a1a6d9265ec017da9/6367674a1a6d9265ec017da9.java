@@ -61,10 +61,12 @@ public class DoublyLinkedList<E> {
     private void moveAllListNodes(DoublyLinkedList<E> list) {
         Objects.requireNonNull(list, "List cannot be null");
 
-        while (list.head != null) {
-            ListNodeImpl<E> node = list.head;
-            list.removeListNode(node);
-            this.addListNode(node);
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> next = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = next;
         }
     }
 }

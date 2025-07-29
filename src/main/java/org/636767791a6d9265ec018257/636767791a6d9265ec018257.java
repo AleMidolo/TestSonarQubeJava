@@ -21,7 +21,7 @@ public class LogTable {
     public static void main(String[] args) {
         // Example usage
         LogTable logTable = new LogTable();
-        LogRecord logRecord = new LogRecord(java.util.logging.Level.INFO, "This is a log message");
+        LogRecord logRecord = new LogRecord(java.util.logging.Level.INFO, "Test log message");
         logTable.addMessage(logRecord);
     }
 }

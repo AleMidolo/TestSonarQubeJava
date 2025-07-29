@@ -32,8 +32,10 @@ public class Main {
      * @return 如果桶相同则返回真。
      */
     public boolean isCompatible(DataTable dataset) {
-        // Assuming 'this' refers to another DataTable instance
-        // For the purpose of this example, let's assume 'this' is a DataTable instance
+        if (dataset == null) {
+            return false;
+        }
+        // Assuming 'this' is an instance of DataTable
         return this.equals(dataset);
     }
 

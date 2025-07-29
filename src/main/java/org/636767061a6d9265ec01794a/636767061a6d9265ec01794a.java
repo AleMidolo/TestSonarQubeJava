@@ -13,12 +13,11 @@ public class FileUtils {
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
-        // 如果最后一个点号在最后一个分隔符之前，或者没有点号，则返回-1
-        if (extensionIndex <= lastSeparatorIndex) {
+        if (extensionIndex > lastSeparatorIndex) {
+            return extensionIndex;
+        } else {
             return -1;
         }
-
-        return extensionIndex;
     }
 
     /**
@@ -27,7 +26,7 @@ public class FileUtils {
      * @return 最后一个路径分隔符的索引，如果没有这样的字符则返回-1
      */
     private static int indexOfLastSeparator(String filename) {
-        if (filename == null || filename.isEmpty()) {
+        if (filename == null) {
             return -1;
         }
 
@@ -38,14 +37,12 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        String filename1 = "path/to/file.txt";
-        String filename2 = "path\\to\\file.txt";
-        String filename3 = "path/to/file";
-        String filename4 = "";
-
-        System.out.println(indexOfExtension(filename1)); // 输出: 12
-        System.out.println(indexOfExtension(filename2)); // 输出: 12
-        System.out.println(indexOfExtension(filename3)); // 输出: -1
-        System.out.println(indexOfExtension(filename4)); // 输出: -1
+        System.out.println(indexOfExtension("example.txt")); // 7
+        System.out.println(indexOfExtension("path/to/file.example.txt")); // 18
+        System.out.println(indexOfExtension("path/to/file")); // -1
+        System.out.println(indexOfExtension("path/to/file.")); // 12
+        System.out.println(indexOfExtension("path/to/.file")); // -1
+        System.out.println(indexOfExtension("")); // -1
+        System.out.println(indexOfExtension(null)); // -1
     }
 }

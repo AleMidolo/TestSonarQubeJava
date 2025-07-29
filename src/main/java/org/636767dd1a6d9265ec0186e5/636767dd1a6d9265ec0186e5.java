@@ -13,12 +13,12 @@ public class Channels {
     }
 
     public List<IConsumer> getConsumers() {
-        return consumers;
+        return this.consumers;
     }
 }
 
 public interface IConsumer {
-    void consume(String message);
+    void consume();
 }
 
 public class TargetChannelManager {
@@ -29,6 +29,8 @@ public class TargetChannelManager {
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
             channels.addConsumer(consumer);
+        } else {
+            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
     }
 }

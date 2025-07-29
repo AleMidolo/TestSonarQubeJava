@@ -20,10 +20,10 @@ public class CharacterArrayConverter {
     }
 
     public static void main(String[] args) {
-        Character[] charArray = {'a', 'b', 'c'};
-        char[] primitiveArray = toPrimitive(charArray);
+        Character[] testArray = {'a', 'b', 'c'};
+        char[] primitiveArray = toPrimitive(testArray);
         for (char c : primitiveArray) {
-            System.out.print(c + " ");
+            System.out.println(c);
         }
     }
 }

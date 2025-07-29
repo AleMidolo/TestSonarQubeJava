@@ -1,10 +1,33 @@
 public class Bucket {
     private Bucket next;
+    private Bucket prev;
 
-    public Bucket(Bucket next) {
-        this.next = next;
+    public Bucket() {
+        this.next = null;
+        this.prev = null;
     }
 
+    public void insertBefore(Bucket bucket) {
+        if (bucket == null) {
+            throw new IllegalArgumentException("Bucket cannot be null");
+        }
+
+        // Set the previous of the new bucket to the previous of the current bucket
+        bucket.prev = this.prev;
+
+        // If the current bucket has a previous, set its next to the new bucket
+        if (this.prev != null) {
+            this.prev.next = bucket;
+        }
+
+        // Set the next of the new bucket to the current bucket
+        bucket.next = this;
+
+        // Set the previous of the current bucket to the new bucket
+        this.prev = bucket;
+    }
+
+    // Getters and setters for next and prev (if needed)
     public Bucket getNext() {
         return next;
     }
@@ -12,46 +35,12 @@ public class Bucket {
     public void setNext(Bucket next) {
         this.next = next;
     }
-}
 
-public class BucketList {
-    private Bucket head;
-
-    public BucketList(Bucket head) {
-        this.head = head;
+    public Bucket getPrev() {
+        return prev;
     }
 
-    public Bucket getHead() {
-        return head;
-    }
-
-    public void setHead(Bucket head) {
-        this.head = head;
-    }
-
-    /**
-     * 在数据结构中将此桶插入到 {@code bucket} 之前。
-     * @param bucket 作为当前桶下一个的桶。
-     */
-    public void insertBefore(Bucket bucket) {
-        if (bucket == null || head == null) {
-            return;
-        }
-
-        if (head == bucket) {
-            Bucket newBucket = new Bucket(head);
-            head = newBucket;
-            return;
-        }
-
-        Bucket current = head;
-        while (current.getNext() != null && current.getNext() != bucket) {
-            current = current.getNext();
-        }
-
-        if (current.getNext() == bucket) {
-            Bucket newBucket = new Bucket(bucket);
-            current.setNext(newBucket);
-        }
+    public void setPrev(Bucket prev) {
+        this.prev = prev;
     }
 }

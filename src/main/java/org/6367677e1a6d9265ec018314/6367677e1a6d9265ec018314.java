@@ -15,11 +15,10 @@ class CategoryTree {
         }
     }
 
-    public CategoryTree() {
-        this.root = new Node("Root", true);
-    }
-
     protected int removeUnusedNodes() {
+        if (root == null) {
+            return 0;
+        }
         return removeUnusedNodesHelper(root);
     }
 
@@ -46,12 +45,6 @@ class CategoryTree {
     // Example usage
     public static void main(String[] args) {
         CategoryTree tree = new CategoryTree();
-        Node root = tree.root;
-        root.children.add(new Node("Child1", false));
-        root.children.add(new Node("Child2", true));
-        root.children.get(1).children.add(new Node("Grandchild1", false));
-
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+        // Build the tree and test the method
     }
 }

@@ -3,11 +3,11 @@
  * @return 'Content-Range' 值
  */
 private String buildContentRange() {
-    // 假设我们有一个文件的起始字节和结束字节
-    long startByte = 0;
-    long endByte = 1023;
-    long totalBytes = 2048;
+    // 假设我们有一个文件的总大小和当前的范围
+    long totalSize = 1024; // 文件总大小
+    long start = 0; // 范围的起始位置
+    long end = 511; // 范围的结束位置
 
     // 构建 Content-Range 头部值
-    return String.format("bytes %d-%d/%d", startByte, endByte, totalBytes);
+    return String.format("bytes %d-%d/%d", start, end, totalSize);
 }

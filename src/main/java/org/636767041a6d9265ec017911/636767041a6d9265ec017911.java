@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Registry {
+public class Registration {
     private static final Set<Object> registeredObjects = new HashSet<>();
 
     /**
@@ -9,10 +9,9 @@ public class Registry {
      * @param value 要注册的对象。
      */
     public static void register(Object value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Value cannot be null");
+        if (value != null) {
+            registeredObjects.add(value);
         }
-        registeredObjects.add(value);
     }
 
     public static boolean isRegistered(Object value) {

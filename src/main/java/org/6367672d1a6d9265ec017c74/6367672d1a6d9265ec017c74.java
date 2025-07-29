@@ -8,8 +8,8 @@ public class CustomSet {
         this.set = new HashSet<>();
     }
 
-    /**
-     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है।
+    /** 
+     * सेट से एक मान को हटाता है। यदि सेट में निर्दिष्ट तत्व था, तो true लौटाता है। 
      */
     public boolean remove(int val) {
         return set.remove(val);

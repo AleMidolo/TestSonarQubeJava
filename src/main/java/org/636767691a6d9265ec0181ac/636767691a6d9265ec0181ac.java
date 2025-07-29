@@ -24,9 +24,9 @@ public class PathResolver {
 
     public static void main(String[] args) {
         // Example usage
-        String basePath = "/usr/local/bin";
-        String relativePath = "../lib/java";
+        String basePath = "/home/user/documents";
+        String relativePath = "../images/photo.jpg";
         String result = applyRelativePath(basePath, relativePath);
-        System.out.println(result);  // Output: /usr/local/lib/java
+        System.out.println(result);  // Output: /home/user/images/photo.jpg
     }
 }

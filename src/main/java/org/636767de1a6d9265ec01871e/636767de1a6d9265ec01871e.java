@@ -11,14 +11,14 @@ public class ShardingKeyChecker {
      */
     private void check(String modelName) throws IllegalStateException {
         if (!shardingKeyMap.containsKey(modelName)) {
-            throw new IllegalStateException("Sharding key for model " + modelName + " does not exist.");
+            throw new IllegalStateException("Sharding key not found for model: " + modelName);
         }
 
         int currentKey = shardingKeyMap.get(modelName);
         int expectedKey = shardingKeyMap.size() + 1;
 
         if (currentKey != expectedKey) {
-            throw new IllegalStateException("Sharding keys are not sequential for model " + modelName);
+            throw new IllegalStateException("Sharding keys are not sequential for model: " + modelName);
         }
     }
 
@@ -31,7 +31,7 @@ public class ShardingKeyChecker {
         try {
             checker.check("Model1");
             checker.check("Model2");
-            System.out.println("Sharding keys are sequential.");
+            System.out.println("All sharding keys are sequential.");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

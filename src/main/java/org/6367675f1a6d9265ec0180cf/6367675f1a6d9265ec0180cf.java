@@ -1,7 +1,7 @@
-import java.util.Set;
 import org.jgrapht.Graph;
+import java.util.Set;
 
-public class CliqueChecker {
+public class GraphUtils {
 
     /**
      * जांचें कि <code>graph</code> द्वारा दिए गए <code>vertices</code> से प्रेरित उपग्राफ पूर्ण है, अर्थात् एक क्लिक है।

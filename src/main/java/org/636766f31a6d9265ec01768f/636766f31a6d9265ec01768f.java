@@ -16,13 +16,13 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        char[] original = {'a', 'b', 'c'};
-        char[] cloned = clone(original);
-        System.out.println("Original: " + Arrays.toString(original));
-        System.out.println("Cloned: " + Arrays.toString(cloned));
+        char[] originalArray = {'a', 'b', 'c'};
+        char[] clonedArray = clone(originalArray);
+        System.out.println("Original Array: " + Arrays.toString(originalArray));
+        System.out.println("Cloned Array: " + Arrays.toString(clonedArray));
 
         char[] nullArray = null;
-        char[] clonedNull = clone(nullArray);
-        System.out.println("Cloned Null: " + clonedNull);
+        char[] clonedNullArray = clone(nullArray);
+        System.out.println("Cloned Null Array: " + clonedNullArray);
     }
 }

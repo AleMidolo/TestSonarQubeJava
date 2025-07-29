@@ -4,7 +4,7 @@ public class Graph<V> {
     private Map<V, Set<V>> adjacencyList;
 
     public Graph() {
-        this.adjacencyList = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
     public void addVertex(V vertex) {

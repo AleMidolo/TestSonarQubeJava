@@ -18,11 +18,10 @@ public class TypeResolver {
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class<?>) {
+            if (typeArg instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArg);
             } else {
                 // Handle cases where typeArg is a TypeVariable or other types
-                // For simplicity, we return null if any type argument is not a Class
                 return null;
             }
         }

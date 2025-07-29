@@ -8,7 +8,7 @@ class ListNodeImpl<E> {
     }
 }
 
-public class LinkedList<E> {
+class LinkedList<E> {
     private ListNodeImpl<E> head;
 
     public LinkedList() {

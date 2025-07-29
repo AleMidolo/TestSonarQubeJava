@@ -7,25 +7,19 @@ public class BoxSplitter {
     public static Pair<Box2D, Box2D> splitAlongXAxis(Box2D box) {
         double minX = box.getMinX();
         double minY = box.getMinY();
-        double maxX = box.getMaxX();
-        double maxY = box.getMaxY();
-        double width = maxX - minX;
-        double height = maxY - minY;
+        double width = box.getWidth();
+        double height = box.getHeight();
 
         // Split the box along the X-axis
-        double midX = minX + width / 2;
+        double halfWidth = width / 2;
 
-        // Create the left box
-        Box2D leftBox = new Box2D(minX, minY, midX, maxY);
-
-        // Create the right box
-        Box2D rightBox = new Box2D(midX, minY, maxX, maxY);
+        Box2D leftBox = new Box2D(minX, minY, halfWidth, height);
+        Box2D rightBox = new Box2D(minX + halfWidth, minY, halfWidth, height);
 
         return new Pair<>(leftBox, rightBox);
     }
 
     public static void main(String[] args) {
-        // Example usage
         Box2D originalBox = new Box2D(0, 0, 10, 5);
         Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
 
@@ -37,14 +31,14 @@ public class BoxSplitter {
 class Box2D {
     private double minX;
     private double minY;
-    private double maxX;
-    private double maxY;
+    private double width;
+    private double height;
 
-    public Box2D(double minX, double minY, double maxX, double maxY) {
+    public Box2D(double minX, double minY, double width, double height) {
         this.minX = minX;
         this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
+        this.width = width;
+        this.height = height;
     }
 
     public double getMinX() {
@@ -55,12 +49,12 @@ class Box2D {
         return minY;
     }
 
-    public double getMaxX() {
-        return maxX;
+    public double getWidth() {
+        return width;
     }
 
-    public double getMaxY() {
-        return maxY;
+    public double getHeight() {
+        return height;
     }
 
     @Override
@@ -68,8 +62,8 @@ class Box2D {
         return "Box2D{" +
                 "minX=" + minX +
                 ", minY=" + minY +
-                ", maxX=" + maxX +
-                ", maxY=" + maxY +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

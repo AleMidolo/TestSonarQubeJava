@@ -15,11 +15,11 @@ public class DoubleComparator implements Comparator<Double> {
         double diff = o1 - o2;
 
         if (Math.abs(diff) < epsilon) {
-            return 0; // o1 and o2 are considered equal
+            return 0;
         } else if (diff < 0) {
-            return -1; // o1 is less than o2
+            return -1;
         } else {
-            return 1; // o1 is greater than o2
+            return 1;
         }
     }
 }

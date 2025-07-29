@@ -11,7 +11,7 @@ import java.lang.Character;
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Invalid target type. Expected Character or char.");
+        throw new Exception("Target type must be Character or char.");
     }
 
     if (value == null) {
@@ -36,9 +36,9 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Numeric value is out of range for a character.");
+            throw new Exception("Numeric value is out of range for a char.");
         }
     }
 
-    throw new Exception("Unsupported conversion from " + value.getClass().getName() + " to Character.");
+    throw new Exception("Cannot convert value to Character: " + value.getClass().getName());
 }

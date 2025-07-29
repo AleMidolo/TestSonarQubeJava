@@ -8,7 +8,10 @@ public class CharUtils {
     /**
      * <p>एक वर्ण को एक स्ट्रिंग में परिवर्तित करता है जिसमें केवल वही वर्ण होता है।</p>
      * <p>ASCII 7 बिट वर्णों के लिए, यह एक कैश का उपयोग करता है जो हर बार वही स्ट्रिंग ऑब्जेक्ट लौटाता है।</p>
-     * <pre> CharUtils.toString(' ')  = " " CharUtils.toString('A')  = "A" </pre>
+     * <pre>
+     * CharUtils.toString(' ')  = " "
+     * CharUtils.toString('A')  = "A"
+     * </pre>
      * @param ch  वह वर्ण जिसे परिवर्तित करना है
      * @return एक स्ट्रिंग जो निर्दिष्ट वर्ण को समाहित करती है
      */
@@ -22,6 +25,5 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
         System.out.println(toString('A'));  // Output: "A"
-        System.out.println(toString('€'));  // Output: "€"
     }
 }

@@ -14,7 +14,7 @@ public class TagReader {
     public int readTag() throws IOException {
         int tag = inputStream.read();
         if (tag == -1) {
-            return 0; // EOF reached, return 0
+            return 0; // EOF पर पहुँच गए हैं, शून्य लौटाएँ
         }
         return tag;
     }

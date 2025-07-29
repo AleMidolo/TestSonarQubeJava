@@ -11,23 +11,22 @@ public class GraphGenerator<V, E> {
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Assuming the graph is bipartite with two partitions: A and B
-        // Create vertices for partition A
-        V a1 = target.addVertex();
-        V a2 = target.addVertex();
-        resultMap.put("A1", a1);
-        resultMap.put("A2", a2);
+        // Create two sets of vertices for the bipartition
+        V v1 = target.addVertex();
+        V v2 = target.addVertex();
+        V v3 = target.addVertex();
+        V v4 = target.addVertex();
 
-        // Create vertices for partition B
-        V b1 = target.addVertex();
-        V b2 = target.addVertex();
-        resultMap.put("B1", b1);
-        resultMap.put("B2", b2);
+        // Store the vertices in the result map
+        resultMap.put("v1", v1);
+        resultMap.put("v2", v2);
+        resultMap.put("v3", v3);
+        resultMap.put("v4", v4);
 
-        // Add edges between all vertices in partition A and partition B
-        target.addEdge(a1, b1);
-        target.addEdge(a1, b2);
-        target.addEdge(a2, b1);
-        target.addEdge(a2, b2);
+        // Add edges between the two partitions to make it a complete bipartite graph
+        target.addEdge(v1, v3);
+        target.addEdge(v1, v4);
+        target.addEdge(v2, v3);
+        target.addEdge(v2, v4);
     }
 }

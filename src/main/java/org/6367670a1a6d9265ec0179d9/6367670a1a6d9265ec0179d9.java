@@ -13,7 +13,7 @@ public class StringUtils {
     public static void main(String[] args) {
         // Test cases
         System.out.println(length(null));      // Output: 0
-        System.out.println(length(""));        // Output: 0
-        System.out.println(length("Hello"));   // Output: 5
+        System.out.println(length(""));       // Output: 0
+        System.out.println(length("Hello"));  // Output: 5
     }
 }

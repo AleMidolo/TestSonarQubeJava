@@ -14,11 +14,11 @@ public class LogBuffer {
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
             // If the buffer is full, the event is silently dropped
-            System.out.println("Buffer is full. Event dropped.");
+            System.out.println("Buffer is full. Event dropped: " + o);
         }
     }
 
-    // Example LoggingEvent class
+    // Example LoggingEvent class (assuming it exists)
     public static class LoggingEvent {
         private final String message;
 
@@ -26,8 +26,11 @@ public class LogBuffer {
             this.message = message;
         }
 
-        public String getMessage() {
-            return message;
+        @Override
+        public String toString() {
+            return "LoggingEvent{" +
+                    "message='" + message + '\'' +
+                    '}';
         }
     }
 

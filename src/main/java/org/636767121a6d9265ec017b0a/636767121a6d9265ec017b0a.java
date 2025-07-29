@@ -7,15 +7,16 @@
 private int parseEndOfLine(String headerPart, int end) {
     int index = end;
     while (index < headerPart.length()) {
-        char currentChar = headerPart.charAt(index);
-        if (currentChar == '\r') {
-            if (index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
-                return index;
+        char c = headerPart.charAt(index);
+        if (c == '\r' || c == '\n') {
+            // Check if the next character is part of the line ending sequence
+            if (c == '\r' && index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
+                return index + 2; // Return the index after \r\n
+            } else {
+                return index + 1; // Return the index after \r or \n
             }
-        } else if (currentChar == '\n') {
-            return index;
         }
         index++;
     }
-    return -1; // यदि \r\n या \n नहीं मिला तो -1 लौटाएं
+    return -1; // No line ending found
 }

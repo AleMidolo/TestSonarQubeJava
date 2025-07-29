@@ -1,4 +1,4 @@
-public class StringTrimmer {
+public class Main {
     /**
      * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
      * @param str वह स्ट्रिंग जिसे जांचना है

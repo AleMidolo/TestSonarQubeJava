@@ -10,22 +10,27 @@ public class ByteVector {
     }
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
-        if (byteArrayValue == null) {
-            // Add byteLength null bytes
-            ensureCapacity(size + byteLength);
-            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
-            size += byteLength;
-        } else {
-            // Check bounds
-            if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
-                throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
-            }
-            // Ensure capacity
-            ensureCapacity(size + byteLength);
-            // Copy bytes
-            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
-            size += byteLength;
+        if (byteLength < 0) {
+            throw new IllegalArgumentException("byteLength must be non-negative");
         }
+        if (byteOffset < 0) {
+            throw new IllegalArgumentException("byteOffset must be non-negative");
+        }
+        if (byteArrayValue != null && (byteOffset + byteLength > byteArrayValue.length)) {
+            throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
+        }
+
+        ensureCapacity(size + byteLength);
+
+        if (byteArrayValue == null) {
+            // Fill with null bytes
+            Arrays.fill(buffer, size, size + byteLength, (byte) 0);
+        } else {
+            // Copy the specified range from byteArrayValue
+            System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
+        }
+
+        size += byteLength;
         return this;
     }
 
@@ -41,5 +46,9 @@ public class ByteVector {
 
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

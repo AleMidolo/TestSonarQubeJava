@@ -13,7 +13,7 @@ import java.util.Set;
  * @param graph 图
  * @return 图路径
  */
-protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
         throw new IllegalArgumentException("Tour cannot be empty");
     }
@@ -44,6 +44,5 @@ protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         }
     }
 
-    // Create and return the GraphPath
     return new DefaultGraphPath<>(graph, vertexList, edgeList);
 }

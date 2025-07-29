@@ -53,7 +53,7 @@ public class UnescapeJava {
 
     public static void main(String[] args) {
         try {
-            System.out.println(unescapeJava("Hello\\nWorld\\t!")); // Should print "Hello\nWorld\t!"
+            System.out.println(unescapeJava("Hello\\nWorld\\t!"));
         } catch (Exception e) {
             e.printStackTrace();
         }

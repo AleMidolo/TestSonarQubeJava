@@ -10,5 +10,6 @@ protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array)
     if (array == null) {
         throw new IllegalArgumentException("The byte array must not be null");
     }
+    
     buffer.append(Arrays.toString(array));
 }

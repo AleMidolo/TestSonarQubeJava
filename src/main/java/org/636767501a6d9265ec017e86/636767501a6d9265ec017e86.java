@@ -1,4 +1,4 @@
-import java.util.NoSuchElementException;
+import java.util.List;
 
 public class ListNode<E> {
     private E data;
@@ -16,9 +16,6 @@ public class ListNode<E> {
      */
     @Override
     public ListNode<E> previousNode() {
-        if (prev == null) {
-            throw new NoSuchElementException("No previous node available.");
-        }
-        return prev;
+        return this.prev;
     }
 }

@@ -31,5 +31,7 @@ public class ByteVector {
         }
     }
 
-    // 其他方法...
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
+    }
 }

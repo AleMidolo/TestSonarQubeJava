@@ -12,9 +12,9 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(capitalize("helloWorld")); // 输出: HelloWorld
-        System.out.println(capitalize("HelloWorld")); // 输出: HelloWorld
-        System.out.println(capitalize(""));           // 输出: 
-        System.out.println(capitalize(null));         // 输出: null
+        System.out.println(capitalize("hello")); // Output: Hello
+        System.out.println(capitalize("world")); // Output: World
+        System.out.println(capitalize(""));      // Output: 
+        System.out.println(capitalize(null));    // Output: null
     }
 }

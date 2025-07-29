@@ -11,7 +11,7 @@ public class Graph<V> {
         double totalWeight = 0.0;
         // 假设我们有一个方法来获取进入顶点的边的权重
         // 这里假设 getIncomingEdges 返回一个包含所有进入顶点的边的集合
-        // 并且每个边都有一个 getWeight 方法返回边的权重
+        // 并且每条边有一个 getWeight 方法返回边的权重
         for (Edge<V> edge : getIncomingEdges(v)) {
             totalWeight += edge.getWeight();
         }
@@ -19,7 +19,7 @@ public class Graph<V> {
     }
 
     // 假设的辅助方法，用于获取进入顶点的边
-    private Set<Edge<V>> getIncomingEdges(V vertex) {
+    private Set<Edge<V>> getIncomingEdges(Set<V> v) {
         // 这里应该实现获取进入顶点的边的逻辑
         // 由于没有具体的图结构，这里返回一个空集合
         return Set.of();

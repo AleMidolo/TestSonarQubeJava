@@ -11,17 +11,17 @@ public class PropertySubstitutor {
         }
 
         // 正则表达式匹配 ${...} 形式的变量
-        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String varName = matcher.group(1);
-            String varValue = props.getProperty(varName);
-            if (varValue != null) {
-                matcher.appendReplacement(result, varValue);
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable);
+            if (replacement != null) {
+                matcher.appendReplacement(result, replacement);
             } else {
-                // 如果找不到对应的变量，保留原样
+                // 如果没有找到对应的值，保留原样
                 matcher.appendReplacement(result, matcher.group(0));
             }
         }
@@ -32,10 +32,10 @@ public class PropertySubstitutor {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "John");
+        props.setProperty("name", "Alice");
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // 输出: Hello, John!
+        System.out.println(result);  // 输出: Hello, Alice!
     }
 }

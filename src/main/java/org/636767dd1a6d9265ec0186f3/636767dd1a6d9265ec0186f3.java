@@ -19,4 +19,10 @@ public class ColumnName {
     public String getOverrideName(String oldName) {
         return nameMap.getOrDefault(oldName, oldName);
     }
+
+    public static void main(String[] args) {
+        ColumnName columnName = new ColumnName();
+        columnName.overrideName("oldColumn", "newColumn");
+        System.out.println(columnName.getOverrideName("oldColumn")); // Output: newColumn
+    }
 }

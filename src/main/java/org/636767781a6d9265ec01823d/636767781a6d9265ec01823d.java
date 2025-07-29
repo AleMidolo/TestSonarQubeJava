@@ -1,8 +1,10 @@
 import org.apache.log4j.spi.LoggingEvent;
 
+/**
+ * 此方法执行实际的写入操作
+ */
 protected void subAppend(LoggingEvent event) {
-    // Assuming this method is part of a custom appender class
-    // Here we simply print the log message to the console
-    // You can replace this with actual logging logic as needed
+    // 这里假设我们有一个输出流或日志记录器来执行实际的写入操作
+    // 例如，使用System.out.println来模拟写入操作
     System.out.println(event.getMessage());
 }

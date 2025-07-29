@@ -10,7 +10,7 @@ public class ArrayUtils {
      * @param to 要反转的范围内最后一个元素的索引（包含）
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "数组不能为null");
+        Objects.requireNonNull(arr, "数组不能为空");
         if (from < 0 || to >= arr.length || from > to) {
             throw new IllegalArgumentException("无效的索引范围");
         }

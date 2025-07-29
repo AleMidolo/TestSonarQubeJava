@@ -1,6 +1,5 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.io.IOException;
 
 public class PartialContentChecker {
 
@@ -17,7 +16,7 @@ public class PartialContentChecker {
 
             int responseCode = connection.getResponseCode();
             return responseCode == HttpURLConnection.HTTP_PARTIAL;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -25,6 +24,6 @@ public class PartialContentChecker {
 
     public static void main(String[] args) {
         PartialContentChecker checker = new PartialContentChecker();
-        System.out.println("Is partial content response: " + checker.isPartialContentResponse());
+        System.out.println("Is partial content response? " + checker.isPartialContentResponse());
     }
 }

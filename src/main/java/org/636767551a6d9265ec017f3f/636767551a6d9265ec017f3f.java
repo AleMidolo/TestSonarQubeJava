@@ -16,9 +16,9 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {1, 2, 3, 4, 5};
-        System.out.println("Before swap: " + java.util.Arrays.toString(arr));
-        swap(arr, 1, 3);
-        System.out.println("After swap: " + java.util.Arrays.toString(arr));
+        Integer[] array = {1, 2, 3, 4, 5};
+        System.out.println("Before swap: " + java.util.Arrays.toString(array));
+        swap(array, 1, 3);
+        System.out.println("After swap: " + java.util.Arrays.toString(array));
     }
 }

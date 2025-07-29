@@ -1,12 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cache {
-    private Map<String, METRICS> cacheMap;
-
-    public Cache() {
-        this.cacheMap = new HashMap<>();
-    }
+public class MetricsCache {
+    private final Map<String, METRICS> cache = new HashMap<>();
 
     /**
      * कैश में डेटा स्वीकार करें और मौजूदा मान के साथ विलय करें। यह विधि थ्रेड-सुरक्षित नहीं है, इसे समवर्ती कॉलिंग से बचना चाहिए।
@@ -14,12 +10,12 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the key
-        if (cacheMap.containsKey(key)) {
-            METRICS existingData = cacheMap.get(key);
+        String key = data.getKey(); // Assuming METRICS has a method getKey() to retrieve the unique key
+        if (cache.containsKey(key)) {
+            METRICS existingData = cache.get(key);
             existingData.merge(data); // Assuming METRICS has a method merge() to merge with another METRICS object
         } else {
-            cacheMap.put(key, data);
+            cache.put(key, data);
         }
     }
 }
@@ -38,11 +34,9 @@ class METRICS {
         return key;
     }
 
-    public int getValue() {
-        return value;
+    public void merge(METRICS other) {
+        this.value += other.value; // Example merge logic
     }
 
-    public void merge(METRICS other) {
-        this.value += other.getValue();
-    }
+    // Other methods and fields as needed
 }

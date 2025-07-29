@@ -10,16 +10,16 @@ public class UTF8Writer {
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         for (byte b : utf8Bytes) {
             if (lb.isFull()) {
-                lb = session.nextBuffer(lb);
+                lb = session.continueBuffers(lb);
             }
-            lb.put(b);
+            lb.append(b);
         }
 
         return lb;
     }
 
     public static class LinkedBuffer {
-        private final byte[] buffer;
+        private byte[] buffer;
         private int position;
 
         public LinkedBuffer(int capacity) {
@@ -31,7 +31,7 @@ public class UTF8Writer {
             return position >= buffer.length;
         }
 
-        public void put(byte b) {
+        public void append(byte b) {
             if (isFull()) {
                 throw new IllegalStateException("Buffer is full.");
             }
@@ -48,20 +48,11 @@ public class UTF8Writer {
     }
 
     public static class WriteSession {
-        private LinkedBuffer currentBuffer;
-
-        public WriteSession(LinkedBuffer initialBuffer) {
-            this.currentBuffer = initialBuffer;
-        }
-
-        public LinkedBuffer nextBuffer(LinkedBuffer current) {
-            LinkedBuffer newBuffer = new LinkedBuffer(current.getBuffer().length);
-            currentBuffer = newBuffer;
+        public LinkedBuffer continueBuffers(LinkedBuffer currentBuffer) {
+            // Create a new buffer and link it to the current buffer
+            LinkedBuffer newBuffer = new LinkedBuffer(currentBuffer.getBuffer().length);
+            // Logic to link buffers (if needed) can be added here
             return newBuffer;
-        }
-
-        public LinkedBuffer getCurrentBuffer() {
-            return currentBuffer;
         }
     }
 }

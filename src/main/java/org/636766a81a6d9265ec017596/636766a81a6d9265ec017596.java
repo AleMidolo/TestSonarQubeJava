@@ -28,8 +28,11 @@ public class ByteVector {
         }
     }
 
-    // Optional: Add a method to get the current buffer
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
+    }
+
+    public int size() {
+        return size;
     }
 }

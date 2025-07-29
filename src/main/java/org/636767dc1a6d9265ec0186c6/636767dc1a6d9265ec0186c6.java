@@ -6,7 +6,7 @@ public class FieldChecker {
      * जब इनपुट फ़ील्ड पहले से ही प्रॉपर्टीज़ में संग्रहीत होते हैं, तो यह सत्य (true) लौटाता है।
      */
     private boolean containsAllFields(Fields fields) {
-        // Assuming Fields is a class that contains a Set<String> of field names
+        // Assuming Fields is a class that contains a Set of field names
         Set<String> storedFields = getStoredFields(); // Method to retrieve stored fields
         Set<String> inputFields = fields.getFieldNames(); // Method to get input field names
 
@@ -16,7 +16,7 @@ public class FieldChecker {
 
     // Dummy method to simulate retrieval of stored fields
     private Set<String> getStoredFields() {
-        // This would typically be replaced with actual logic to retrieve stored fields
+        // This should return the actual set of stored fields
         return Set.of("field1", "field2", "field3");
     }
 

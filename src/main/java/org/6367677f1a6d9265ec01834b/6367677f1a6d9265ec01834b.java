@@ -17,29 +17,8 @@ public class LogBuffer {
             System.out.println("Buffer is full. Event dropped.");
         }
     }
-
-    // Optional: Method to retrieve events from the buffer
-    public LoggingEvent take() throws InterruptedException {
-        return buffer.take();
-    }
 }
 
-// Assuming LoggingEvent is a simple class for demonstration purposes
 class LoggingEvent {
-    private final String message;
-
-    public LoggingEvent(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public String toString() {
-        return "LoggingEvent{" +
-                "message='" + message + '\'' +
-                '}';
-    }
+    // Placeholder for LoggingEvent class
 }

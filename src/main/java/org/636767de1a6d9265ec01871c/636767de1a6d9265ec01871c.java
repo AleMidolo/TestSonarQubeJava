@@ -10,6 +10,8 @@ public class Accumulator {
 
     /**
      * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
+     * @param key कुंजी जिसके लिए मान जोड़ा जाना है
+     * @param value जोड़ा जाने वाला मान
      */
     public void valueAccumulation(String key, Long value) {
         if (map.containsKey(key)) {

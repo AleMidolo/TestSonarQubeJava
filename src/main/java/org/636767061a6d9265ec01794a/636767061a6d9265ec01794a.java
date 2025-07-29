@@ -13,13 +13,13 @@ public class FileUtils {
         }
 
         int lastSeparatorIndex = indexOfLastSeparator(filename);
-        int lastDotIndex = filename.lastIndexOf('.');
+        int extensionIndex = filename.lastIndexOf('.');
 
-        if (lastDotIndex > lastSeparatorIndex) {
-            return lastDotIndex;
-        } else {
+        if (lastSeparatorIndex > extensionIndex) {
             return -1;
         }
+
+        return extensionIndex;
     }
 
     private static int indexOfLastSeparator(String filename) {
@@ -29,6 +29,7 @@ public class FileUtils {
 
         int lastUnixPos = filename.lastIndexOf('/');
         int lastWindowsPos = filename.lastIndexOf('\\');
+
         return Math.max(lastUnixPos, lastWindowsPos);
     }
 

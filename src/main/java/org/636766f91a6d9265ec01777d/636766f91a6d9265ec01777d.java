@@ -16,9 +16,9 @@ public class HexDigitConverter {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        byte hexDigit = 'A';
-        byte result = convertHexDigit(hexDigit);
-        System.out.println("The byte value of " + (char) hexDigit + " is " + result);
+        // Test cases
+        System.out.println(convertHexDigit((byte) '5')); // Should print 5
+        System.out.println(convertHexDigit((byte) 'a')); // Should print 10
+        System.out.println(convertHexDigit((byte) 'F')); // Should print 15
     }
 }

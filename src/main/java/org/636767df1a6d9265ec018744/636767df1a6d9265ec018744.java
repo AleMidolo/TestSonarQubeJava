@@ -11,17 +11,18 @@ public class TimeRangeBuilder {
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
+        long currentStart = start;
 
-        while (start < end) {
-            long rangeEnd = Math.min(start + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(start, rangeEnd));
-            start = rangeEnd;
+        while (currentStart < end) {
+            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(currentStart, currentEnd));
+            currentStart = currentEnd;
         }
 
         return timeRanges;
     }
 
-    // Assuming TimeRange is a class that represents a time range with start and end times
+    // Assuming TimeRange is a class that holds start and end times
     public static class TimeRange {
         private final long start;
         private final long end;

@@ -1,9 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class FileReverser {
 
@@ -15,14 +13,14 @@ public class FileReverser {
             return;
         }
 
-        List<String> allLines = new ArrayList<>();
+        Stack<String> stack = new Stack<>();
 
-        // Read all lines from all files
+        // Read all files and push their content to the stack
         for (File file : files) {
             if (file.exists() && file.isFile()) {
                 try (java.util.Scanner scanner = new java.util.Scanner(file)) {
                     while (scanner.hasNextLine()) {
-                        allLines.add(scanner.nextLine());
+                        stack.push(scanner.nextLine());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -30,14 +28,11 @@ public class FileReverser {
             }
         }
 
-        // Reverse the order of lines
-        Collections.reverse(allLines);
-
-        // Write the reversed lines back to the first file
-        if (files[0].exists() && files[0].isFile()) {
-            try (FileWriter writer = new FileWriter(files[0])) {
-                for (String line : allLines) {
-                    writer.write(line + System.lineSeparator());
+        // Write the content in reverse order to the first file
+        if (!stack.isEmpty()) {
+            try (FileWriter writer = new FileWriter(files[0], true)) {
+                while (!stack.isEmpty()) {
+                    writer.write(stack.pop() + System.lineSeparator());
                 }
             } catch (IOException e) {
                 e.printStackTrace();

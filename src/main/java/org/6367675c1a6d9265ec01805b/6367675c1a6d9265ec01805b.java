@@ -1,17 +1,26 @@
-// Assuming the class has the following structure for the tree edge list:
+// Assuming the class has the following structure for the tree edges:
 // class TreeNode {
 //     TreeNode prev;
 //     TreeNode next;
 //     // Other fields and methods
 // }
 
-public void removeFromTreeEdgeList() {
-    if (this.prev != null) {
-        this.prev.next = this.next;
+public void removeFromTreeEdgeList(TreeNode node) {
+    if (node == null) {
+        return;
     }
-    if (this.next != null) {
-        this.next.prev = this.prev;
+
+    // If the node has a previous node, update its next pointer
+    if (node.prev != null) {
+        node.prev.next = node.next;
     }
-    this.prev = null;
-    this.next = null;
+
+    // If the node has a next node, update its previous pointer
+    if (node.next != null) {
+        node.next.prev = node.prev;
+    }
+
+    // Clear the node's pointers to remove it from the list
+    node.prev = null;
+    node.next = null;
 }

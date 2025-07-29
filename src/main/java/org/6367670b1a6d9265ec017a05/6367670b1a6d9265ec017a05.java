@@ -28,6 +28,5 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
         System.out.println(toString('A'));  // Output: "A"
-        System.out.println(toString('€'));  // Output: "€"
     }
 }

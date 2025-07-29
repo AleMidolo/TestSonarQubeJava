@@ -20,7 +20,12 @@ public class ByteVector {
         return this;
     }
 
-    public List<Byte> getBytes() {
-        return bytes;
+    // Optional: Method to get the byte vector as a byte array
+    public byte[] toByteArray() {
+        byte[] result = new byte[bytes.size()];
+        for (int i = 0; i < bytes.size(); i++) {
+            result[i] = bytes.get(i);
+        }
+        return result;
     }
 }

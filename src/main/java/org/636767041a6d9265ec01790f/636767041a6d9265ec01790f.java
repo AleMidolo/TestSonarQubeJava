@@ -3,8 +3,7 @@ import java.util.Objects;
 public class IntArrayConverter {
 
     /**
-     * <p>Converts an array of primitive ints to objects.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Converts an array of primitive ints to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  an <code>int</code> array
      * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
@@ -20,10 +19,12 @@ public class IntArrayConverter {
     }
 
     public static void main(String[] args) {
-        int[] testArray = {1, 2, 3, 4, 5};
-        Integer[] result = toObject(testArray);
-        for (Integer num : result) {
-            System.out.println(num);
-        }
+        int[] primitiveArray = {1, 2, 3, 4, 5};
+        Integer[] objectArray = toObject(primitiveArray);
+        System.out.println(java.util.Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
+
+        int[] nullArray = null;
+        Integer[] nullResult = toObject(nullArray);
+        System.out.println(nullResult); // Output: null
     }
 }

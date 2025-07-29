@@ -11,14 +11,14 @@ public class PrimeUtil {
         if (desiredCapacity <= 2) {
             return 2;
         }
-        int candidate = desiredCapacity;
-        if (candidate % 2 == 0) {
-            candidate++;
+        int prime = desiredCapacity;
+        if (prime % 2 == 0) {
+            prime++;
         }
-        while (!isPrime(candidate)) {
-            candidate += 2;
+        while (!isPrime(prime)) {
+            prime += 2;
         }
-        return candidate;
+        return prime;
     }
 
     private static boolean isPrime(int n) {

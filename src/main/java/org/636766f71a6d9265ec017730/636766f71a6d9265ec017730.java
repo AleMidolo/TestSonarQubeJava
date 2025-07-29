@@ -1,6 +1,5 @@
 import java.util.Collection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class CollectionUtils {
@@ -15,24 +14,16 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        // Filter out null values and convert to String
-        ArrayList<String> resultList = new ArrayList<>();
+        ArrayList<String> nonNullStrings = new ArrayList<>();
         Iterator<?> iterator = collection.iterator();
+
         while (iterator.hasNext()) {
             Object element = iterator.next();
             if (element != null) {
-                resultList.add(element.toString());
+                nonNullStrings.add(element.toString());
             }
         }
 
-        // Convert the list to an array of Strings
-        return resultList.toArray(new String[0]);
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        Collection<Object> collection = Arrays.asList("Hello", null, 123, "World", null);
-        String[] result = toNoNullStringArray(collection);
-        System.out.println(Arrays.toString(result)); // Output: [Hello, 123, World]
+        return nonNullStrings.toArray(new String[0]);
     }
 }

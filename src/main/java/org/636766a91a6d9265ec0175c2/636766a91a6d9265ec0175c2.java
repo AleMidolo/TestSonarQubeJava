@@ -7,7 +7,7 @@ public class FrameStack {
         this.outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Pops an abstract type from the output frame stack and returns its value.
      * @return the abstract type that has been popped from the output frame stack.
      */

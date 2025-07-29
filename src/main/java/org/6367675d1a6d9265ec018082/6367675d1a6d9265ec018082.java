@@ -33,9 +33,11 @@ class Edge {
 
 class Node {
     private boolean isVirtual;
+    private Node realCounterpart;
 
-    public Node(boolean isVirtual) {
+    public Node(boolean isVirtual, Node realCounterpart) {
         this.isVirtual = isVirtual;
+        this.realCounterpart = realCounterpart;
     }
 
     public boolean isVirtual() {
@@ -43,8 +45,7 @@ class Node {
     }
 
     public Node getRealCounterpart() {
-        // Assuming that the real counterpart is a non-virtual node
-        return new Node(false);
+        return realCounterpart;
     }
 
     @Override
@@ -52,12 +53,12 @@ class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return isVirtual == node.isVirtual;
+        return isVirtual == node.isVirtual && Objects.equals(realCounterpart, node.realCounterpart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isVirtual);
+        return Objects.hash(isVirtual, realCounterpart);
     }
 }
 

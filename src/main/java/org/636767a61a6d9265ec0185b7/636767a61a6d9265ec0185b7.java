@@ -9,6 +9,6 @@ private static int digitValue(final char c) {
     } else if (c >= 'a' && c <= 'z') {
         return 10 + (c - 'a');
     } else {
-        return -1; // Not a valid ASCII digit or letter
+        return -1; // Not a valid ASCII digit
     }
 }

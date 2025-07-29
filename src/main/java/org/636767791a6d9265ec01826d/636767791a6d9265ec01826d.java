@@ -20,8 +20,13 @@ public class PropertySubstitutor {
 
         while (matcher.find()) {
             String placeholder = matcher.group(1);
-            String replacement = props.getProperty(placeholder, "");
-            matcher.appendReplacement(result, replacement);
+            String replacement = props.getProperty(placeholder);
+            if (replacement != null) {
+                matcher.appendReplacement(result, replacement);
+            } else {
+                // If no replacement is found, keep the original placeholder
+                matcher.appendReplacement(result, matcher.group(0));
+            }
         }
         matcher.appendTail(result);
 

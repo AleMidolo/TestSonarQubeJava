@@ -13,28 +13,42 @@ private void pop(final String descriptor) {
     for (Type type : types) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
-            case Type.CHAR:
             case Type.BYTE:
+            case Type.CHAR:
             case Type.SHORT:
             case Type.INT:
+                // Pop 1 slot for int, boolean, byte, char, short
+                pop(1);
+                break;
             case Type.FLOAT:
-            case Type.ARRAY:
-            case Type.OBJECT:
-                // Pop one slot from the stack
-                // Assuming a stack-like structure is managed elsewhere
-                // stack.pop();
+                // Pop 1 slot for float
+                pop(1);
                 break;
             case Type.LONG:
+                // Pop 2 slots for long
+                pop(2);
+                break;
             case Type.DOUBLE:
-                // Pop two slots from the stack
-                // stack.pop();
-                // stack.pop();
+                // Pop 2 slots for double
+                pop(2);
+                break;
+            case Type.ARRAY:
+            case Type.OBJECT:
+                // Pop 1 slot for array or object reference
+                pop(1);
                 break;
             case Type.VOID:
-                // No action needed for void
+                // No action for void
                 break;
             default:
-                throw new IllegalArgumentException("Unknown type: " + type);
+                throw new IllegalArgumentException("Unsupported type: " + type);
         }
     }
+}
+
+private void pop(int slots) {
+    // Implementation of popping 'slots' number of slots from the output frame stack
+    // This is a placeholder for the actual logic to manipulate the stack
+    // For example, you might have a stack data structure that you manipulate here
+    // stack.pop(slots);
 }

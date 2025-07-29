@@ -23,12 +23,20 @@ public class ByteVector {
 
     private void ensureCapacity(int minCapacity) {
         if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+            int newCapacity = buffer.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }
 
-    // Optional: Add a method to get the current buffer as a byte array
+    // Optional: Method to get the current size of the byte vector
+    public int size() {
+        return size;
+    }
+
+    // Optional: Method to get the underlying byte array
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
     }

@@ -34,7 +34,7 @@ public class TypeResolver {
 
             @Override
             public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
-                return Object.class;
+                return TypeResolver.class;
             }
         };
 

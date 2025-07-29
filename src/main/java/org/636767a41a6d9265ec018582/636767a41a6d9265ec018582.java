@@ -7,7 +7,7 @@ import org.msgpack.core.buffer.LinkedBuffer;
 import org.msgpack.core.buffer.MessageBuffer;
 import org.msgpack.core.buffer.MessageBufferOutput;
 import org.msgpack.core.buffer.OutputStreamBufferOutput;
-import org.msgpack.schema.Schema;
+import org.msgpack.core.schema.Schema;
 
 public class MessageSerializer {
 
@@ -16,14 +16,24 @@ public class MessageSerializer {
      * @return संदेश का आकार
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
+        MessageBufferOutput output = new OutputStreamBufferOutput(out);
+        MessagePacker packer = MessagePack.newDefaultPacker(output);
+
+        // Write the size of the message first
+        byte[] serializedMessage = serializeMessage(message, schema, buffer);
+        packer.packInt(serializedMessage.length);
+
+        // Write the serialized message
+        packer.writePayload(serializedMessage);
+        packer.flush();
+
+        return serializedMessage.length;
+    }
+
+    private static <T> byte[] serializeMessage(T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
         schema.write(packer, message);
-        int size = packer.getBufferSize();
-        MessageBufferOutput output = new OutputStreamBufferOutput(out);
-        MessagePacker messagePacker = MessagePack.newDefaultPacker(output);
-        messagePacker.packInt(size);
-        messagePacker.addPayload(packer.toByteArray());
-        messagePacker.close();
-        return size;
+        packer.flush();
+        return packer.toByteArray();
     }
 }

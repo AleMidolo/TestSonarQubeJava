@@ -16,7 +16,7 @@ public class FieldChecker {
 
     // Dummy method to simulate retrieval of stored fields
     private Set<String> getStoredFields() {
-        // This would typically be replaced with actual logic to retrieve stored fields
+        // This should return the actual stored fields in a real implementation
         return Set.of("field1", "field2", "field3");
     }
 

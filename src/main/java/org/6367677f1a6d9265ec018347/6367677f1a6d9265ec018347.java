@@ -2,8 +2,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class TelnetClient {
-    private final Socket socket;
-    private final PrintWriter out;
+    private Socket socket;
+    private PrintWriter out;
 
     public TelnetClient(Socket socket) throws Exception {
         this.socket = socket;

@@ -19,14 +19,4 @@ public class ArrayUtils {
         }
         return array;
     }
-
-    public static void main(String[] args) {
-        Character[] array1 = null;
-        Character[] array2 = new Character[0];
-        Character[] array3 = new Character[]{'a', 'b', 'c'};
-
-        System.out.println(Objects.toString(nullToEmpty(array1))); // []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // [a, b, c]
-    }
 }

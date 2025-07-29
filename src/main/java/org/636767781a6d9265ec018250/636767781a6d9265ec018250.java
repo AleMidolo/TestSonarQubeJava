@@ -5,15 +5,12 @@ public class MyFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Assuming the logic to decide is based on some string comparison
-        // For example, checking if the message contains a specific string
-        String message = event.getRenderedMessage();
-        
-        // Replace "specificString" with the actual string to match
-        if (message != null && message.contains("specificString")) {
-            return Filter.ACCEPT; // or Filter.DENY based on your logic
-        } else {
+        // Implement your logic here to decide whether to accept, deny, or remain neutral
+        // For example, if the message does not match a certain condition, return NEUTRAL
+        if (!event.getMessage().toString().matches("some pattern")) {
             return Filter.NEUTRAL;
         }
+        // Otherwise, you can return Filter.ACCEPT or Filter.DENY based on your logic
+        return Filter.ACCEPT;
     }
 }

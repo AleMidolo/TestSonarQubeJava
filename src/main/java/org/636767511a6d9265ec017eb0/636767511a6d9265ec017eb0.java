@@ -17,6 +17,6 @@ public class NonZeroCounter {
     public static void main(String[] args) {
         NonZeroCounter counter = new NonZeroCounter();
         int[] row = {0, 5, 0, 3, 0, 8};
-        System.out.println("गैर-शून्य प्रविष्टियों की संख्या: " + counter.nonZeros(row));
+        System.out.println("Non-zero entries: " + counter.nonZeros(row));
     }
 }

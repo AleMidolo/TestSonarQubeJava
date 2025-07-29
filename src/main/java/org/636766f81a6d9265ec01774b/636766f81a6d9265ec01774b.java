@@ -23,14 +23,14 @@ public class ByteReader {
         if (bufferPosition >= bufferLength) {
             refillBuffer();
         }
+        if (bufferLength == -1) {
+            throw new IOException("No more data available");
+        }
         return buffer[bufferPosition++];
     }
 
     private void refillBuffer() throws IOException {
         bufferLength = inputStream.read(buffer);
-        if (bufferLength == -1) {
-            throw new IOException("No more data available");
-        }
         bufferPosition = 0;
     }
 }

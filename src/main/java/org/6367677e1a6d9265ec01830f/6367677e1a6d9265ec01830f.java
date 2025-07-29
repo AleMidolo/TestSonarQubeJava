@@ -10,13 +10,13 @@ public class LogFormatter {
      * @return स्वरूपित स्ट्रिंग
      */
     public String format(LoggingEvent event) {
-        // Example pattern: [timestamp] [level] message
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-        String level = event.getLevel().toString();
-        String message = event.getMessage();
-
-        return String.format("[%s] [%s] %s", timestamp, level, message);
+        
+        return String.format("[%s] [%s] %s", 
+                             timestamp, 
+                             event.getLevel(), 
+                             event.getMessage());
     }
 }
 

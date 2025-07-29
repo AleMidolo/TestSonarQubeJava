@@ -11,7 +11,7 @@ import java.lang.Character;
 @Override
 protected Object convertToType(final Class<?> type, final Object value) throws Exception {
     if (type != Character.class && type != char.class) {
-        throw new Exception("Target type must be Character or char.");
+        throw new Exception("Target type is not Character or char");
     }
 
     if (value == null) {
@@ -22,23 +22,23 @@ protected Object convertToType(final Class<?> type, final Object value) throws E
         return value;
     }
 
-    if (value instanceof String) {
-        String strValue = (String) value;
-        if (strValue.length() == 1) {
-            return strValue.charAt(0);
-        } else {
-            throw new Exception("String value must be exactly one character long.");
-        }
-    }
-
     if (value instanceof Number) {
         int intValue = ((Number) value).intValue();
         if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
             return (char) intValue;
         } else {
-            throw new Exception("Numeric value is out of range for a char.");
+            throw new Exception("Value out of range for Character: " + intValue);
         }
     }
 
-    throw new Exception("Cannot convert value to Character: " + value.getClass().getName());
+    if (value instanceof String) {
+        String strValue = (String) value;
+        if (strValue.length() == 1) {
+            return strValue.charAt(0);
+        } else {
+            throw new Exception("String length must be 1 to convert to Character: " + strValue);
+        }
+    }
+
+    throw new Exception("Cannot convert value to Character: " + value);
 }

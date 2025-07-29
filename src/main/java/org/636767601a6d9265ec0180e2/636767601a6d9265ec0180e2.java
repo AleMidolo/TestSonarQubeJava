@@ -1,10 +1,33 @@
 import java.util.*;
 
-class Graph {
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" + "key=" + key + ", value=" + value + '}';
+    }
+}
+
+public class Graph {
     private Map<Integer, List<Integer>> adjacencyList;
 
     public Graph() {
-        adjacencyList = new HashMap<>();
+        this.adjacencyList = new HashMap<>();
     }
 
     public void addEdge(int u, int v) {
@@ -13,71 +36,68 @@ class Graph {
     }
 
     private List<Pair<List<Pair<Integer, Integer>>, Integer>> computeGlobalSeparatorList() {
-        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparators = new ArrayList<>();
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = new ArrayList<>();
 
-        // Iterate over all edges in the graph
         for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
             int u = entry.getKey();
             for (int v : entry.getValue()) {
-                if (u < v) { // Ensure each edge is processed only once
+                if (u < v) { // To avoid processing the same edge twice
                     List<Pair<Integer, Integer>> separators = findMinimalSeparators(u, v);
-                    globalSeparators.add(new Pair<>(separators, u));
-                    globalSeparators.add(new Pair<>(separators, v));
+                    globalSeparatorList.add(new Pair<>(separators, u));
                 }
             }
         }
 
-        return globalSeparators;
+        return globalSeparatorList;
     }
 
     private List<Pair<Integer, Integer>> findMinimalSeparators(int u, int v) {
         List<Pair<Integer, Integer>> separators = new ArrayList<>();
-
-        // Find all common neighbors of u and v
-        Set<Integer> commonNeighbors = new HashSet<>(adjacencyList.get(u));
-        commonNeighbors.retainAll(adjacencyList.get(v));
-
-        // For each common neighbor, check if it is a separator
-        for (int w : commonNeighbors) {
-            if (isSeparator(u, v, w)) {
-                separators.add(new Pair<>(u, w));
-                separators.add(new Pair<>(v, w));
-            }
-        }
-
-        return separators;
-    }
-
-    private boolean isSeparator(int u, int v, int w) {
-        // Remove w from the graph and check if u and v are still connected
         Set<Integer> visited = new HashSet<>();
         Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Integer> parent = new HashMap<>();
+
         queue.add(u);
         visited.add(u);
+        parent.put(u, null);
 
         while (!queue.isEmpty()) {
             int current = queue.poll();
-            for (int neighbor : adjacencyList.get(current)) {
-                if (neighbor == w) continue;
-                if (neighbor == v) return false;
+            if (current == v) {
+                break;
+            }
+            for (int neighbor : adjacencyList.getOrDefault(current, Collections.emptyList())) {
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
+                    parent.put(neighbor, current);
                     queue.add(neighbor);
                 }
             }
         }
 
-        return true;
+        if (!visited.contains(v)) {
+            return separators;
+        }
+
+        int current = v;
+        while (parent.get(current) != null) {
+            separators.add(new Pair<>(parent.get(current), current));
+            current = parent.get(current);
+        }
+
+        return separators;
     }
 
-    // Utility Pair class
-    class Pair<A, B> {
-        A first;
-        B second;
+    public static void main(String[] args) {
+        Graph graph = new Graph();
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 1);
 
-        Pair(A first, B second) {
-            this.first = first;
-            this.second = second;
+        List<Pair<List<Pair<Integer, Integer>>, Integer>> globalSeparatorList = graph.computeGlobalSeparatorList();
+        for (Pair<List<Pair<Integer, Integer>>, Integer> pair : globalSeparatorList) {
+            System.out.println("Edge: " + pair.getValue() + " -> " + pair.getKey());
         }
     }
 }

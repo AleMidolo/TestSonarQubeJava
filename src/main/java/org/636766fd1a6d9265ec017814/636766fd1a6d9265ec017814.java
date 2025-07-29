@@ -8,7 +8,7 @@ public class ArrayComparator {
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
         if (a == null || b == null) {
-            return a == b;
+            return false;
         }
         if (a.length < count || b.length < count) {
             return false;
@@ -29,5 +29,6 @@ public class ArrayComparator {
         System.out.println(arrayequals(array1, array2, 5)); // true
         System.out.println(arrayequals(array1, array3, 5)); // false
         System.out.println(arrayequals(array1, array2, 3)); // true
+        System.out.println(arrayequals(array1, array3, 3)); // true
     }
 }

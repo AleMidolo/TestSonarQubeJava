@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class ShortArrayConverter {
+public class ArrayConverter {
 
     /**
      * <p>प्राथमिक शॉर्ट्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>

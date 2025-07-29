@@ -5,8 +5,8 @@ public class TemplateChecker {
     private Set<String> templateVariables;
 
     public TemplateChecker() {
-        // Initialize with some template variables for demonstration
         templateVariables = new HashSet<>();
+        // Initialize with some template variables for demonstration
         templateVariables.add("var1");
         templateVariables.add("var2");
         templateVariables.add("var3");

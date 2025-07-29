@@ -12,15 +12,19 @@ public class SuffixSumCalculator {
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
         List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int currentSum = 0;
-
-        // Calculate suffix sums
+        
+        // Calculate the suffix sum
+        int suffixSum = 0;
         for (int i = bounds.size() - 1; i >= 0; i--) {
-            currentSum += bounds.get(i);
-            suffixSums.add(0, currentSum); // Add to the beginning to maintain order
-            totalSum += bounds.get(i);
+            suffixSum += bounds.get(i);
+            suffixSums.add(0, suffixSum); // Add to the beginning to maintain order
         }
-
+        
+        // Calculate the total sum of all elements
+        for (int num : bounds) {
+            totalSum += num;
+        }
+        
         return new Pair<>(suffixSums, totalSum);
     }
 }

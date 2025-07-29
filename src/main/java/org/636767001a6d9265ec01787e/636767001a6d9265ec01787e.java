@@ -5,9 +5,6 @@
 @Override
 public String toString() {
     // Assuming this is part of a class that has a StringBuilder or similar
-    // For example, if the class has a StringBuilder named 'builder':
-    // return builder.toString();
-    
-    // Placeholder implementation:
-    return "निर्मित स्ट्रिंग";
+    // Here, we assume the class has a StringBuilder named 'builder'
+    return builder.toString();
 }

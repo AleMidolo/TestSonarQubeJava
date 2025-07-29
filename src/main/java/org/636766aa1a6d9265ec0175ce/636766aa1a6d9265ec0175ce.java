@@ -21,7 +21,7 @@ public class StackMapFrame {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextElementIndex = 0; // Initialize to 0, assuming the first element is at index 0
+            this.nextElementIndex = 0; // Initialize to 0, assuming the first element index is 0
         }
 
         public int getNextElementIndex() {

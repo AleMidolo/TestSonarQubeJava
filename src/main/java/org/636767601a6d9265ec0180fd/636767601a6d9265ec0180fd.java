@@ -15,6 +15,16 @@ public class Graph<V, E> {
      * @param e किनारा
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        adjacencyMap.computeIfAbsent(sourceVertex, k -> new HashMap<>()).put(targetVertex, e);
+        if (!adjacencyMap.containsKey(sourceVertex)) {
+            adjacencyMap.put(sourceVertex, new HashMap<>());
+        }
+        adjacencyMap.get(sourceVertex).put(targetVertex, e);
+    }
+
+    public static void main(String[] args) {
+        Graph<String, Integer> graph = new Graph<>();
+        graph.addToIndex("A", "B", 1);
+        graph.addToIndex("A", "C", 2);
+        graph.addToIndex("B", "C", 3);
     }
 }

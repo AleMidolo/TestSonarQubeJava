@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 public class CollectionUtils {
@@ -13,15 +14,15 @@ public class CollectionUtils {
         if (collection == null) {
             return new String[0];
         }
-        
-        ArrayList<String> nonNullStrings = new ArrayList<>();
+
+        List<String> result = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                nonNullStrings.add(obj.toString());
+                result.add(obj.toString());
             }
         }
-        
-        return nonNullStrings.toArray(new String[0]);
+
+        return result.toArray(new String[0]);
     }
 
     public static void main(String[] args) {

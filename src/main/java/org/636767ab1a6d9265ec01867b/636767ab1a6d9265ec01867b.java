@@ -9,10 +9,10 @@ public class UTF8Writer {
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
         for (byte b : utf8Bytes) {
-            if (lb.remaining() == 0) {
+            if (lb.isFull()) {
                 lb = session.nextBuffer(lb);
             }
-            lb.put(b);
+            lb.append(b);
         }
 
         return lb;
@@ -27,22 +27,50 @@ public class UTF8Writer {
             this.position = 0;
         }
 
-        public void put(byte b) {
-            if (position >= buffer.length) {
-                throw new IllegalStateException("Buffer overflow");
+        public boolean isFull() {
+            return position >= buffer.length;
+        }
+
+        public void append(byte b) {
+            if (isFull()) {
+                throw new IllegalStateException("Buffer is full");
             }
             buffer[position++] = b;
         }
 
-        public int remaining() {
-            return buffer.length - position;
+        public byte[] getBuffer() {
+            return buffer;
+        }
+
+        public int getPosition() {
+            return position;
         }
     }
 
     public static class WriteSession {
-        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
-            // Implement logic to get the next buffer in the chain
-            return new LinkedBuffer(currentBuffer.buffer.length); // Example: return a new buffer of the same size
+        private LinkedBuffer currentBuffer;
+
+        public WriteSession(LinkedBuffer initialBuffer) {
+            this.currentBuffer = initialBuffer;
         }
+
+        public LinkedBuffer nextBuffer(LinkedBuffer currentBuffer) {
+            LinkedBuffer newBuffer = new LinkedBuffer(currentBuffer.getBuffer().length);
+            this.currentBuffer = newBuffer;
+            return newBuffer;
+        }
+
+        public LinkedBuffer getCurrentBuffer() {
+            return currentBuffer;
+        }
+    }
+
+    public static void main(String[] args) {
+        LinkedBuffer initialBuffer = new LinkedBuffer(10);
+        WriteSession session = new WriteSession(initialBuffer);
+        CharSequence str = "Hello, UTF-8!";
+        LinkedBuffer resultBuffer = writeUTF8(str, session, initialBuffer);
+
+        System.out.println("Bytes written: " + resultBuffer.getPosition());
     }
 }

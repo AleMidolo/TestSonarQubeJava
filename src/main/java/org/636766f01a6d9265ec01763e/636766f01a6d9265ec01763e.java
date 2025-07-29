@@ -1,6 +1,5 @@
 import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.charset.UnsupportedCharsetException;
+import java.nio.charset.StandardCharsets;
 
 public class CharsetTranslator {
 
@@ -10,24 +9,32 @@ public class CharsetTranslator {
      * @return इस नाम के लिए जावा समकक्ष।
      */
     private static String javaCharset(String charset) {
-        if (charset == null) {
-            throw new IllegalArgumentException("Charset name cannot be null");
-        }
-
-        try {
-            // Try to get the Java equivalent charset
-            Charset javaCharset = Charset.forName(charset);
-            return javaCharset.name();
-        } catch (IllegalCharsetNameException | UnsupportedCharsetException e) {
-            // If the charset is not supported, return the default charset
-            return Charset.defaultCharset().name();
+        switch (charset.toLowerCase()) {
+            case "us-ascii":
+                return StandardCharsets.US_ASCII.name();
+            case "iso-8859-1":
+                return StandardCharsets.ISO_8859_1.name();
+            case "utf-8":
+                return StandardCharsets.UTF_8.name();
+            case "utf-16":
+                return StandardCharsets.UTF_16.name();
+            case "utf-16be":
+                return StandardCharsets.UTF_16BE.name();
+            case "utf-16le":
+                return StandardCharsets.UTF_16LE.name();
+            default:
+                // If the charset is not directly mapped, try to find it in the available charsets
+                if (Charset.isSupported(charset)) {
+                    return Charset.forName(charset).name();
+                } else {
+                    throw new IllegalArgumentException("Unsupported charset: " + charset);
+                }
         }
     }
 
     public static void main(String[] args) {
         // Example usage
-        String mimeCharset = "UTF-8";
-        String javaEquivalent = javaCharset(mimeCharset);
-        System.out.println("Java equivalent for " + mimeCharset + " is " + javaEquivalent);
+        System.out.println(javaCharset("utf-8")); // Output: UTF-8
+        System.out.println(javaCharset("iso-8859-1")); // Output: ISO-8859-1
     }
 }

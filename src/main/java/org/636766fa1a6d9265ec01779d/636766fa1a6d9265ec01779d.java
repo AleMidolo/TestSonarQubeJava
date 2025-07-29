@@ -14,7 +14,7 @@ public class CharUtils {
      * @param ch  the character to check
      * @return true if less than 32 or equals 127
      */
-    public static boolean isAsciiControl(char ch) {
+    public static boolean isAsciiControl(final char ch) {
         return ch < 32 || ch == 127;
     }
 }

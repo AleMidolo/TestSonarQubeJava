@@ -27,8 +27,9 @@ public class GraphPathTransformer {
             // Find unused edge
             Edge nextEdge = null;
             for (Edge edge : edges) {
-                if (isEdgeAvailable(edge, path)) {
+                if (tour.contains(edge)) {
                     nextEdge = edge;
+                    tour.remove(edge);
                     break;
                 }
             }
@@ -45,60 +46,39 @@ public class GraphPathTransformer {
 
         return path;
     }
+}
 
-    private boolean isEdgeAvailable(Edge edge, List<Integer> path) {
-        // Check if this edge creates a cycle before we're done
-        if (path.size() < path.size() - 1) {
-            int source = edge.getSource();
-            int dest = edge.getDestination();
-            
-            // Edge is available if one vertex is in path and other isn't
-            boolean sourceInPath = path.contains(source);
-            boolean destInPath = path.contains(dest);
-            return sourceInPath ^ destInPath;
-        }
-        // For last edge, both vertices should be in path
-        return true;
+// Supporting classes needed for compilation
+class Edge {
+    private int source;
+    private int destination;
+    
+    public Edge(int source, int destination) {
+        this.source = source;
+        this.destination = destination;
     }
-
-    // Helper classes
-    public static class Edge {
-        private int source;
-        private int destination;
-
-        public Edge(int source, int destination) {
-            this.source = source;
-            this.destination = destination;
-        }
-
-        public int getSource() {
-            return source;
-        }
-
-        public int getDestination() {
-            return destination;
-        }
+    
+    public int getSource() {
+        return source;
     }
+    
+    public int getDestination() {
+        return destination;
+    }
+}
 
-    public static class Graph {
-        private List<Edge> edges;
-        private int vertices;
-
-        public Graph(int vertices) {
-            this.vertices = vertices;
-            this.edges = new ArrayList<>();
-        }
-
-        public void addEdge(Edge edge) {
-            edges.add(edge);
-        }
-
-        public List<Edge> getEdges() {
-            return edges;
-        }
-
-        public int getVertices() {
-            return vertices;
-        }
+class Graph {
+    private List<Edge> edges;
+    
+    public Graph() {
+        edges = new ArrayList<>();
+    }
+    
+    public void addEdge(Edge edge) {
+        edges.add(edge);
+    }
+    
+    public List<Edge> getEdges() {
+        return edges;
     }
 }

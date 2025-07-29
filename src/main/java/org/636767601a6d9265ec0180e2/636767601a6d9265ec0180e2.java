@@ -31,7 +31,7 @@ public class MinimalSeparators {
                 Set<Integer> potentialSeparator = new HashSet<>();
                 potentialSeparator.add(w);
                 
-                // Check if removing the potential separator disconnects u and v
+                // Check if removing potentialSeparator disconnects u and v
                 if (isMinimalSeparator(u, v, potentialSeparator)) {
                     globalSeparators.add(potentialSeparator);
                 }
@@ -56,8 +56,10 @@ public class MinimalSeparators {
     }
     
     private boolean isMinimalSeparator(int source, int target, Set<Integer> separator) {
-        // Create a copy of the graph without the separator vertices
-        Graph tempGraph = graph.copy();
+        // Create a copy of the graph
+        Graph tempGraph = graph.clone();
+        
+        // Remove separator vertices
         for (Integer v : separator) {
             tempGraph.removeVertex(v);
         }
@@ -133,7 +135,6 @@ public class MinimalSeparators {
         }
         
         public void removeVertex(int vertex) {
-            // Remove the vertex and all its edges
             Set<Integer> neighbors = adjacencyList.remove(vertex);
             if (neighbors != null) {
                 for (int neighbor : neighbors) {
@@ -142,12 +143,12 @@ public class MinimalSeparators {
             }
         }
         
-        public Graph copy() {
-            Graph newGraph = new Graph();
+        public Graph clone() {
+            Graph cloned = new Graph();
             for (Map.Entry<Integer, Set<Integer>> entry : adjacencyList.entrySet()) {
-                newGraph.adjacencyList.put(entry.getKey(), new HashSet<>(entry.getValue()));
+                cloned.adjacencyList.put(entry.getKey(), new HashSet<>(entry.getValue()));
             }
-            return newGraph;
+            return cloned;
         }
     }
 }

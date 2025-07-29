@@ -1,20 +1,20 @@
 class Logger {
-    private Map<String, Integer> messageTimestamps;
-    private static final int RATE_LIMIT_SECONDS = 10;
-    
+    private Map<String, Integer> messageMap;
+    private static final int RATE_LIMIT = 10; // 10 seconds
+
     public Logger() {
-        messageTimestamps = new HashMap<>();
+        messageMap = new HashMap<>();
     }
     
     public boolean shouldPrintMessage(int timestamp, String message) {
-        if (!messageTimestamps.containsKey(message)) {
-            messageTimestamps.put(message, timestamp);
+        if (!messageMap.containsKey(message)) {
+            messageMap.put(message, timestamp);
             return true;
         }
         
-        int lastPrintTime = messageTimestamps.get(message);
-        if (timestamp - lastPrintTime >= RATE_LIMIT_SECONDS) {
-            messageTimestamps.put(message, timestamp);
+        int lastPrinted = messageMap.get(message);
+        if (timestamp - lastPrinted >= RATE_LIMIT) {
+            messageMap.put(message, timestamp);
             return true;
         }
         

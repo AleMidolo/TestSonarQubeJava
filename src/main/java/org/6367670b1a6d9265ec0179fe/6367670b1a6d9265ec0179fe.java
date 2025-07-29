@@ -7,10 +7,11 @@ public class ByteOutputStream extends OutputStream {
     private int pos;
     
     public ByteOutputStream() {
-        buffer = new byte[32];
+        buffer = new byte[32]; // Initial buffer size
         pos = 0;
     }
     
+    @Override
     public void write(byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException();

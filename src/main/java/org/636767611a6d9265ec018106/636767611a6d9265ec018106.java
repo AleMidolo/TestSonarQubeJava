@@ -9,23 +9,18 @@ public class GraphUtils<V> {
      */
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        // Assuming that the graph is represented as a Map<V, Map<V, Double>> where the outer map
-        // represents the source vertex and the inner map represents the destination vertex and the weight.
-        // This is just a placeholder implementation, you would need to replace it with your actual graph representation.
-        for (V source : v) {
-            for (V destination : v) {
-                // Assuming getWeight(source, destination) is a method that returns the weight of the edge
-                // from source to destination. Replace this with your actual method or logic.
-                double weight = getWeight(source, destination);
-                sum += weight;
-            }
+        for (V vertex : v) {
+            // Assuming each vertex has a weight associated with it
+            // Replace getWeight() with the actual method to get the weight of the vertex
+            sum += getWeight(vertex);
         }
         return sum;
     }
 
-    // Placeholder method for getting the weight between two vertices
-    private double getWeight(V source, V destination) {
-        // Replace this with your actual logic to get the weight
-        return 0.0;
+    // Placeholder method to get the weight of a vertex
+    // Replace this with the actual implementation to get the weight
+    private double getWeight(V vertex) {
+        // Example implementation, replace with actual logic
+        return 1.0; // Default weight
     }
 }

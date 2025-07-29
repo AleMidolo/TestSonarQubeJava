@@ -1,4 +1,5 @@
 import org.atmosphere.cpr.AtmosphereResource;
+import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
 
 public class AtmosphereResourceInspector {
@@ -10,16 +11,13 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        // Check the transport type of the AtmosphereResource
-        AtmosphereResource.TRANSPORT transport = r.transport();
-
-        // Suspend the resource if the transport is not supported
-        if (transport != AtmosphereResource.TRANSPORT.WEBSOCKET && 
-            transport != AtmosphereResource.TRANSPORT.SSE) {
+        if (r.transport() == TRANSPORT.WEBSOCKET) {
             r.suspend();
+        } else if (r.transport() == TRANSPORT.LONG_POLLING) {
+            r.suspend(-1); // Sospende indefinitamente
+        } else {
+            // Altri trasporti non gestiti
         }
-
-        // Return CONTINUE to allow further processing
         return Action.CONTINUE;
     }
 }

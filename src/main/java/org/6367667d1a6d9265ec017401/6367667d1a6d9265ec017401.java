@@ -1,63 +1,62 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtils {
 
-    private static final Map<Character, Character> ESCAPE_SEQUENCES = new HashMap<>();
-
-    static {
-        ESCAPE_SEQUENCES.put('n', '\n');
-        ESCAPE_SEQUENCES.put('t', '\t');
-        ESCAPE_SEQUENCES.put('r', '\r');
-        ESCAPE_SEQUENCES.put('b', '\b');
-        ESCAPE_SEQUENCES.put('f', '\f');
-        ESCAPE_SEQUENCES.put('"', '\"');
-        ESCAPE_SEQUENCES.put('\'', '\'');
-        ESCAPE_SEQUENCES.put('\\', '\\');
-    }
-
+    /**
+     * <p>Rimuove l'escape da qualsiasi letterale Java trovato nella <code>String</code>. Ad esempio, trasformerà una sequenza di <code>'\'</code> e <code>'n'</code> in un carattere di nuova linea, a meno che il <code>'\'</code> non sia preceduto da un altro <code>'\'</code>.</p>
+     * @param str la <code>String</code> da desescapare, può essere null
+     * @return una nuova <code>String</code> desescapata, <code>null</code> se l'input è una stringa null
+     */
     public static String unescapeJava(String str) throws Exception {
         if (str == null) {
             return null;
         }
 
-        StringBuilder result = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int length = str.length();
-        boolean escape = false;
-
         for (int i = 0; i < length; i++) {
-            char currentChar = str.charAt(i);
-
-            if (escape) {
-                if (ESCAPE_SEQUENCES.containsKey(currentChar)) {
-                    result.append(ESCAPE_SEQUENCES.get(currentChar));
+            char c = str.charAt(i);
+            if (c == '\\' && i + 1 < length) {
+                char nextChar = str.charAt(i + 1);
+                if (nextChar == '\\') {
+                    sb.append('\\');
+                    i++; // Skip the next backslash
+                } else if (nextChar == 'n') {
+                    sb.append('\n');
+                    i++; // Skip the 'n'
+                } else if (nextChar == 't') {
+                    sb.append('\t');
+                    i++; // Skip the 't'
+                } else if (nextChar == 'r') {
+                    sb.append('\r');
+                    i++; // Skip the 'r'
+                } else if (nextChar == 'b') {
+                    sb.append('\b');
+                    i++; // Skip the 'b'
+                } else if (nextChar == 'f') {
+                    sb.append('\f');
+                    i++; // Skip the 'f'
+                } else if (nextChar == '\'') {
+                    sb.append('\'');
+                    i++; // Skip the single quote
+                } else if (nextChar == '\"') {
+                    sb.append('\"');
+                    i++; // Skip the double quote
                 } else {
-                    throw new Exception("Invalid escape sequence: \\" + currentChar);
+                    sb.append(c); // Append the backslash as is
                 }
-                escape = false;
             } else {
-                if (currentChar == '\\') {
-                    escape = true;
-                } else {
-                    result.append(currentChar);
-                }
+                sb.append(c);
             }
         }
-
-        if (escape) {
-            throw new Exception("Incomplete escape sequence at the end of the string");
-        }
-
-        return result.toString();
+        return sb.toString();
     }
 
-    public static void main(String[] args) {
-        try {
-            System.out.println(unescapeJava("Hello\\nWorld!"));  // Output: Hello
-                                                                 // World!
-            System.out.println(unescapeJava("C:\\\\path\\to\\file"));  // Output: C:\path\to\file
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        String input = "Ciao\\nMondo\\t!";
+        String output = unescapeJava(input);
+        System.out.println(output); // Output: Ciao
+                                   //         Mondo    !
     }
 }

@@ -10,10 +10,6 @@ public class BeanMap {
         this.map = new HashMap<>();
     }
 
-    public void put(String key, Object value) {
-        map.put(key, value);
-    }
-
     /**
      * Restituisce i valori per il BeanMap.
      * @return valori per il BeanMap. La collezione restituita non è modificabile.
@@ -22,12 +18,18 @@ public class BeanMap {
         return Collections.unmodifiableCollection(map.values());
     }
 
-    public static void main(String[] args) {
-        BeanMap beanMap = new BeanMap();
-        beanMap.put("key1", "value1");
-        beanMap.put("key2", "value2");
+    // Example method to add values to the map
+    public void put(String key, Object value) {
+        map.put(key, value);
+    }
 
-        Collection<Object> values = beanMap.values();
-        System.out.println(values); // Output: [value1, value2]
+    // Example method to get a value from the map
+    public Object get(String key) {
+        return map.get(key);
+    }
+
+    // Example method to remove a value from the map
+    public Object remove(String key) {
+        return map.remove(key);
     }
 }

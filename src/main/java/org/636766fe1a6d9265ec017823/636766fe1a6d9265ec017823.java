@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConstantPool {
-    private Map<String, Integer> nameAndTypeMap = new HashMap<>();
+    private final Map<String, Integer> nameAndTypeMap = new HashMap<>();
     private int nextIndex = 1;
 
     public int addConstantNameAndType(final String name, final String descriptor) {

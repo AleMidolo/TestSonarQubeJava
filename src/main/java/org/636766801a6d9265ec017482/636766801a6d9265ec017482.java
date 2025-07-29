@@ -19,14 +19,12 @@ public class ClassFileBuffer {
         this.buffer = new byte[this.buffer.length];
         this.readPointer = 0;
 
-        // Legge i byte dall'InputStream e li inserisce nel buffer
+        // Legge i byte dall'InputStream e li scrive nel buffer
         int bytesRead;
         while ((bytesRead = in.read(this.buffer)) != -1) {
-            // Se necessario, espande il buffer per contenere tutti i byte letti
-            if (bytesRead == this.buffer.length) {
-                byte[] newBuffer = new byte[this.buffer.length * 2];
-                System.arraycopy(this.buffer, 0, newBuffer, 0, this.buffer.length);
-                this.buffer = newBuffer;
+            // Se il buffer è pieno, esce dal ciclo
+            if (bytesRead < this.buffer.length) {
+                break;
             }
         }
 

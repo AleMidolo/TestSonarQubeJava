@@ -30,8 +30,7 @@ public class CharUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(toCharacterObject(' '));  // Output: ' '
-        System.out.println(toCharacterObject('A'));  // Output: 'A'
-        System.out.println(toCharacterObject('€'));  // Output: '€' (non in cache)
+        System.out.println(toCharacterObject(' '));  // Output:  
+        System.out.println(toCharacterObject('A'));  // Output: A
     }
 }

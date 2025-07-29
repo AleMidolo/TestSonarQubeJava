@@ -4,8 +4,8 @@ public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> next;
         ListNodeImpl<E> prev;
+        ListNodeImpl<E> next;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -53,8 +53,8 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
@@ -65,13 +65,22 @@ public class DoublyLinkedList<E> {
             return; // Nothing to move
         }
 
-        // Remove all nodes from the source list
-        ListNodeImpl<E> current = list.head;
-        while (current != null) {
-            ListNodeImpl<E> next = current.next;
-            list.removeListNode(current);
-            this.addListNode(current);
-            current = next;
+        // Move all nodes from the source list to this list
+        if (this.head == null) {
+            this.head = list.head;
+            this.tail = list.tail;
+        } else {
+            this.tail.next = list.head;
+            list.head.prev = this.tail;
+            this.tail = list.tail;
         }
+
+        // Update size
+        this.size += list.size;
+
+        // Clear the source list
+        list.head = null;
+        list.tail = null;
+        list.size = 0;
     }
 }

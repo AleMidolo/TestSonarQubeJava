@@ -1,5 +1,4 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.apache.log4j.spi.LoggingEvent;
 
 public class LogFormatter {
 
@@ -10,42 +9,11 @@ public class LogFormatter {
      * @return La stringa formattata.
      */
     public String format(LoggingEvent event) {
-        // Esempio di formattazione: [timestamp] [livello] messaggio
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        // Esempio di formattazione: [Livello] Messaggio (Timestamp)
         String level = event.getLevel().toString();
-        String message = event.getMessage().toString();
+        String message = event.getRenderedMessage();
+        long timestamp = event.getTimeStamp();
 
-        return String.format("[%s] [%s] %s", timestamp, level, message);
+        return String.format("[%s] %s (%d)", level, message, timestamp);
     }
-}
-
-// Classe di esempio per LoggingEvent
-class LoggingEvent {
-    private long timeStamp;
-    private Level level;
-    private Object message;
-
-    public LoggingEvent(long timeStamp, Level level, Object message) {
-        this.timeStamp = timeStamp;
-        this.level = level;
-        this.message = message;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public Object getMessage() {
-        return message;
-    }
-}
-
-// Enumerazione di esempio per i livelli di log
-enum Level {
-    INFO, WARN, ERROR, DEBUG
 }

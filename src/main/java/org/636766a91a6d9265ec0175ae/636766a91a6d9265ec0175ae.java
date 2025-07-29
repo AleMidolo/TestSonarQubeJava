@@ -26,7 +26,6 @@ public class ByteVector {
             // Fill with null bytes (0)
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
-            // Copy the specified range from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 

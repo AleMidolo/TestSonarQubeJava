@@ -10,15 +10,4 @@ public class DiagnosticContext {
         String context = NDC.peek();
         return context != null ? context : "";
     }
-
-    public static void main(String[] args) {
-        // Esempio di utilizzo
-        NDC.push("Contesto 1");
-        NDC.push("Contesto 2");
-        System.out.println(peek()); // Output: Contesto 2
-        NDC.pop();
-        System.out.println(peek()); // Output: Contesto 1
-        NDC.pop();
-        System.out.println(peek()); // Output: ""
-    }
 }

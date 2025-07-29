@@ -1,11 +1,11 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class MySet {
+public class CustomSet {
     private Set<Integer> set;
 
-    public MySet() {
-        set = new HashSet<>();
+    public CustomSet() {
+        this.set = new HashSet<>();
     }
 
     /**

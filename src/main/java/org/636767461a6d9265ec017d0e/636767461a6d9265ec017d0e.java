@@ -9,26 +9,26 @@ public class SuffixSumCalculator {
      * @return 计算出的后缀和列表和所有元素的总和的配对。
      */
     private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-        List<Integer> suffixSums = new ArrayList<>();
-        long totalSum = 0;
+        List<Integer> suffixSum = new ArrayList<>();
+        long total = 0;
         
-        // Handle empty list case
+        // 如果输入列表为空，返回空列表和0
         if (bounds == null || bounds.isEmpty()) {
-            return new Pair<>(suffixSums, totalSum);
+            return new Pair<>(suffixSum, 0L);
         }
-
-        // Calculate total sum first
+        
+        // 计算总和
         for (int num : bounds) {
-            totalSum += num;
+            total += num;
         }
-
-        // Calculate suffix sums
-        int currentSum = 0;
+        
+        // 计算后缀和
+        long currentSum = 0;
         for (int i = bounds.size() - 1; i >= 0; i--) {
             currentSum += bounds.get(i);
-            suffixSums.add(0, currentSum); // Add at beginning to maintain order
+            suffixSum.add(0, (int)currentSum);
         }
-
-        return new Pair<>(suffixSums, totalSum);
+        
+        return new Pair<>(suffixSum, total);
     }
 }

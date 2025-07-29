@@ -12,22 +12,29 @@ public class BeanMapUtils {
             return;
         }
 
-        Iterator<?> entries = map.entrySet().iterator();
-        while (entries.hasNext()) {
-            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
-            String propertyName = entry.getKey().toString();
-            
-            // 检查属性是否可写
-            if (map.getWriteMethod(propertyName) != null) {
-                Object value = entry.getValue();
-                try {
-                    // 只复制可写属性
-                    this.put(propertyName, value);
-                } catch (Exception e) {
-                    // 忽略无法写入的属性
-                    continue;
+        Iterator<?> it = map.keyIterator();
+        while (it.hasNext()) {
+            String key = (String) it.next();
+            if (map.isWriteable(key)) {
+                Object value = map.get(key);
+                if (this.isWriteable(key)) {
+                    this.put(key, value);
                 }
             }
         }
+    }
+
+    /**
+     * Helper method to check if a property is writeable
+     */
+    private boolean isWriteable(String propertyName) {
+        return ((BeanMap)this).isWriteable(propertyName);
+    }
+
+    /**
+     * Helper method to put a key-value pair
+     */
+    private void put(String key, Object value) {
+        ((BeanMap)this).put(key, value);
     }
 }

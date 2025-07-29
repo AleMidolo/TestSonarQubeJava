@@ -1,14 +1,14 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utility methods.
+ * Character utility class that provides operations on char values.
  */
 public class CharUtils {
 
     // ASCII 7 bit characters cache
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
-    // Initialize cache for ASCII characters
+    // Initialize cache for ASCII 7 bit characters
     static {
         for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
             CHAR_STRING_CACHE[c] = String.valueOf(c);

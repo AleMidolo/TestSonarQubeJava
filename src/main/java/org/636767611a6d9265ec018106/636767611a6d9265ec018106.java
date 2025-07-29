@@ -22,7 +22,7 @@ public class Graph<V> {
             
             // 遍历当前顶点的所有边
             for (V destination : edges.keySet()) {
-                // 如果目标顶点在给定集合v中,累加权重
+                // 如果目标顶点在传入的集合中,累加权重
                 if (v.contains(destination)) {
                     totalWeight += edges.get(destination);
                 }

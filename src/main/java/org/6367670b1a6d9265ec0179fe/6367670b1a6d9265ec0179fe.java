@@ -1,11 +1,14 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ByteArrayOutputStream extends OutputStream {
-    
-    protected byte[] buf;
-    protected int count;
-    
+public class CustomOutputStream extends OutputStream {
+
+    private OutputStream out;
+
+    public CustomOutputStream(OutputStream out) {
+        this.out = out;
+    }
+
     /**
      * 将指定字节数组中的 <code>b.length</code> 字节写入此输出流。
      * @param b 要写入的字节数组。
@@ -17,24 +20,20 @@ public class ByteArrayOutputStream extends OutputStream {
             throw new NullPointerException();
         }
         
-        // 确保缓冲区容量足够
-        ensureCapacity(count + b.length);
+        // 将整个字节数组写入输出流
+        out.write(b, 0, b.length);
         
-        // 将字节数组复制到缓冲区
-        System.arraycopy(b, 0, buf, count, b.length);
-        count += b.length;
+        // 刷新缓冲区确保写入
+        out.flush();
     }
-    
-    private void ensureCapacity(int minCapacity) {
-        // 如果需要的容量大于当前缓冲区大小
-        if (minCapacity > buf.length) {
-            // 计算新的缓冲区大小(当前大小的2倍)
-            int newCapacity = Math.max(buf.length << 1, minCapacity);
-            // 创建新的缓冲区
-            byte[] newBuf = new byte[newCapacity];
-            // 复制原有数据到新缓冲区
-            System.arraycopy(buf, 0, newBuf, 0, count);
-            buf = newBuf;
-        }
+
+    @Override
+    public void write(int b) throws IOException {
+        out.write(b);
+    }
+
+    @Override
+    public void close() throws IOException {
+        out.close();
     }
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 public class ClassFileBuffer {
     private byte[] buffer;
     private int position;
-    private int size;
+    private int length;
     
     /**
      * 清空并用提供的字节流填充此 {@code ClassFileBuffer} 的缓冲区。读取指针重置为字节数组的起始位置。
@@ -17,17 +17,17 @@ public class ClassFileBuffer {
         
         // 重置位置指针
         position = 0;
-        size = 0;
+        length = 0;
         
         // 读取输入流到缓冲区
-        int read;
-        while ((read = in.read(buffer, size, buffer.length - size)) != -1) {
-            size += read;
+        int bytesRead;
+        while ((bytesRead = in.read(buffer, length, buffer.length - length)) != -1) {
+            length += bytesRead;
             
             // 如果缓冲区已满,扩容为原来的2倍
-            if (size == buffer.length) {
+            if (length == buffer.length) {
                 byte[] newBuffer = new byte[buffer.length * 2];
-                System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+                System.arraycopy(buffer, 0, newBuffer, 0, length);
                 buffer = newBuffer;
             }
         }

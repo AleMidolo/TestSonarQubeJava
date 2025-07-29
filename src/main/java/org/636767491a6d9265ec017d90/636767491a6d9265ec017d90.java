@@ -15,7 +15,7 @@ public class ArrayUtils {
             throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
         }
         
-        // 从两端向中间遍历,交换元素
+        // 从两端向中间交换元素
         while (from < to) {
             V temp = arr[from];
             arr[from] = arr[to];

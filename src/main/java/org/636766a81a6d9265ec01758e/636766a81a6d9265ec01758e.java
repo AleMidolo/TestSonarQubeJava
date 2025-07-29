@@ -11,19 +11,22 @@ public class PrimeCalculator {
         
         int num = desiredCapacity;
         if (num % 2 == 0) {
-            num++; // 确保从奇数开始检查
+            num++;
         }
         
         while (!isPrime(num)) {
             num += 2;
-            // 检查是否超出误差范围
-            if (desiredCapacity >= 1000 && 
-                (double)(num - desiredCapacity) / desiredCapacity > 0.11) {
-                // 回退到最后一个符合条件的质数
-                while (!isPrime(num - 2)) {
-                    num -= 2;
+            
+            // Check if error exceeds 11% for large numbers
+            if (desiredCapacity >= 1000) {
+                double error = ((double)(num - desiredCapacity) / desiredCapacity) * 100;
+                if (error > 11.0) {
+                    // Return the last checked prime number less than 11% error
+                    while (!isPrime(num - 2)) {
+                        num -= 2;
+                    }
+                    return num - 2;
                 }
-                return num - 2;
             }
         }
         
@@ -31,9 +34,15 @@ public class PrimeCalculator {
     }
     
     private static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        if (num == 2) return true;
-        if (num % 2 == 0) return false;
+        if (num <= 1) {
+            return false;
+        }
+        if (num == 2) {
+            return true;
+        }
+        if (num % 2 == 0) {
+            return false;
+        }
         
         int sqrt = (int) Math.sqrt(num);
         for (int i = 3; i <= sqrt; i += 2) {

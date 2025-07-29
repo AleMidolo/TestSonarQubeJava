@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utilities.
+ * Character工具类
  */
 public class CharUtils {
 

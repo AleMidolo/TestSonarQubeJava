@@ -16,12 +16,21 @@ public class ColumnNameOverride {
         if (oldName.trim().isEmpty() || newName.trim().isEmpty()) {
             throw new IllegalArgumentException("Column names cannot be empty");
         }
-        
-        // Store the mapping of old name to new name
-        // This implementation assumes there is a map field in the class to store the mappings
-        columnNameMappings.put(oldName.trim(), newName.trim());
+
+        // Remove any leading/trailing whitespace
+        oldName = oldName.trim();
+        newName = newName.trim();
+
+        // Store the name mapping
+        // Note: Implementation details would depend on where/how the mapping needs to be stored
+        // This could be in a Map, database, or other data structure
+        storeNameMapping(oldName, newName);
     }
-    
-    // Map to store column name mappings
-    private Map<String, String> columnNameMappings = new HashMap<>();
+
+    // Helper method to store the name mapping
+    private void storeNameMapping(String oldName, String newName) {
+        // Implementation would depend on specific requirements
+        // This is just a placeholder
+        throw new UnsupportedOperationException("Storage implementation required");
+    }
 }

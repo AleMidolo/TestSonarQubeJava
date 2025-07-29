@@ -29,21 +29,22 @@ public class ConverterRegistry {
             if (converter != null) {
                 return converter;
             }
-            // Check interfaces
-            for (Class<?> iface : currentClass.getInterfaces()) {
-                converter = converters.get(iface);
-                if (converter != null) {
-                    return converter;
-                }
-            }
             currentClass = currentClass.getSuperclass();
+        }
+        
+        // Look through interfaces
+        for (Class<?> iface : clazz.getInterfaces()) {
+            converter = converters.get(iface);
+            if (converter != null) {
+                return converter;
+            }
         }
         
         return null;
     }
 }
 
-// Interface for type conversion
-interface Converter {
+// Interface for converter implementations
+public interface Converter {
     Object convert(Object value);
 }

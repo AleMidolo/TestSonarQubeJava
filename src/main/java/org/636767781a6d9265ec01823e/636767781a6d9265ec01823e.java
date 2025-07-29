@@ -20,12 +20,12 @@ public class SocketAppender extends AppenderSkeleton {
         for (int i = 0; i < writers.size(); i++) {
             try {
                 PrintWriter writer = writers.get(i);
-                // 检查连接是否还活着
-                if (clients.get(i).isConnected()) {
+                // 检查连接是否仍然有效
+                if (clients.get(i).isConnected() && !clients.get(i).isClosed()) {
                     writer.println(message);
                     writer.flush();
                 } else {
-                    // 移除断开的连接
+                    // 移除断开连接的客户端
                     writer.close();
                     clients.get(i).close();
                     writers.remove(i);
@@ -33,12 +33,11 @@ public class SocketAppender extends AppenderSkeleton {
                     i--;
                 }
             } catch (IOException e) {
-                // 发生错误时移除连接
+                // 处理写入错误
                 try {
-                    writers.get(i).close();
                     clients.get(i).close();
                 } catch (IOException ex) {
-                    // 忽略关闭时的错误
+                    // 忽略关闭错误
                 }
                 writers.remove(i);
                 clients.remove(i);
@@ -61,7 +60,7 @@ public class SocketAppender extends AppenderSkeleton {
                 writers.get(i).close();
                 clients.get(i).close();
             } catch (IOException e) {
-                // 忽略关闭时的错误
+                // 忽略关闭错误
             }
         }
         clients.clear();

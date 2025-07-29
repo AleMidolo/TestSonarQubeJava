@@ -21,13 +21,19 @@ public class ChannelManager {
     }
 }
 
-// Required interfaces/classes
+// Required interfaces/classes for compilation
 interface IConsumer {
     void consume();
 }
 
-enum Channels {
-    CHANNEL1,
-    CHANNEL2,
-    CHANNEL3
+class Channels {
+    private String channelName;
+    
+    public Channels(String name) {
+        this.channelName = name;
+    }
+    
+    public String getChannelName() {
+        return channelName;
+    }
 }

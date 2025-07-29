@@ -17,23 +17,28 @@ public class GraphUtils {
     public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
         // 创建顶点映射
         Map<V,V> vertexMap = new HashMap<>();
+        
+        // 将每个顶点映射到自身
         for(V vertex : graph.vertexSet()) {
             vertexMap.put(vertex, vertex);
         }
         
         // 创建边映射
         Map<E,E> edgeMap = new HashMap<>();
+        
+        // 将每条边映射到自身
         for(E edge : graph.edgeSet()) {
             edgeMap.put(edge, edge);
         }
-
+        
+        // 返回恒等映射
         return new IsomorphicGraphMapping<>(
             graph,  // 源图
             graph,  // 目标图
-            vertexMap,  // 顶点映射
-            vertexMap,  // 反向顶点映射
-            edgeMap,    // 边映射
-            edgeMap     // 反向边映射
+            vertexMap, // 顶点映射
+            vertexMap, // 顶点反向映射
+            edgeMap,   // 边映射
+            edgeMap    // 边反向映射
         );
     }
 }

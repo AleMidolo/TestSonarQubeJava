@@ -15,39 +15,28 @@ public class UTF8Decoder {
             // Mark current position
             bb.mark();
             
-            // Create temporary buffer for decoding
-            ByteBuffer temp = ByteBuffer.allocate(4);
+            // Create a new byte buffer for the current character
+            ByteBuffer slice = bb.slice();
             
-            // Read up to 4 bytes for UTF-8 character
-            int count = 0;
-            while (count < 4 && bb.hasRemaining()) {
-                byte b = bb.get();
-                temp.put(b);
-                count++;
-                
-                // Check if we have a complete UTF-8 character
-                if ((b & 0xC0) != 0x80) {
-                    break;
-                }
-            }
+            // Try to decode one character
+            char[] chars = new char[1];
+            decoder.decode(slice).get(chars);
             
-            temp.flip();
+            // Append decoded character
+            sb.append(chars[0]);
             
-            // Decode bytes to characters
-            CharBuffer charBuffer = decoder.decode(temp);
-            sb.append(charBuffer);
+            // Calculate how many bytes were consumed
+            int bytesConsumed = slice.position();
             
-            // Reset position to marked position
+            // Reset to marked position and skip consumed bytes
             bb.reset();
+            bb.position(bb.position() + bytesConsumed);
             
-            // Advance position by number of bytes read
-            bb.position(bb.position() + count);
-            
-            return i + count;
+            return i + bytesConsumed;
             
         } catch (CharacterCodingException e) {
             // On error, skip one byte and append replacement character
-            bb.position(bb.position() + 1);
+            bb.get();
             sb.append('\uFFFD');
             return i + 1;
         }

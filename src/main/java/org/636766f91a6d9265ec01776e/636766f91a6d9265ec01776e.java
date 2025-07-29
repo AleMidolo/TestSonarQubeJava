@@ -25,9 +25,8 @@ public class ByteArrayOutputStream extends OutputStream {
     }
     
     private void ensureCapacity(int minCapacity) {
-        // If the capacity is not enough
+        // If the capacity is not enough, grow the buffer
         if (minCapacity > buf.length) {
-            // Grow buffer
             int newCapacity = Math.max(buf.length << 1, minCapacity);
             byte[] newBuf = new byte[newCapacity];
             System.arraycopy(buf, 0, newBuf, 0, count);

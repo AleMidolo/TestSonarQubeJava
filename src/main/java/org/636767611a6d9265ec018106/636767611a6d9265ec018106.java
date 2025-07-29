@@ -20,7 +20,7 @@ public class Graph<V> {
         for (V vertex : adjacencyMap.keySet()) {
             Map<V, Double> edges = adjacencyMap.get(vertex);
             
-            // 遍历该顶点的所有出边
+            // 遍历当前顶点的所有边
             for (V destination : edges.keySet()) {
                 // 如果目标顶点在给定集合v中,累加权重
                 if (v.contains(destination)) {

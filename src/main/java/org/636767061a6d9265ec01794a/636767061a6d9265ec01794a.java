@@ -19,25 +19,19 @@ public class FilenameUtils {
             return -1;
         }
         
-        // Get the last directory separator position
-        int lastDirSeparator = indexOfLastSeparator(filename);
+        int extensionPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
+        int lastSeparator = indexOfLastSeparator(filename);
         
-        // Find the last dot
-        int lastDotPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
-        
-        // If no dot is found or dot is before the last directory separator
-        if (lastDotPos == -1 || (lastDirSeparator > -1 && lastDotPos < lastDirSeparator)) {
-            return -1;
-        }
-        
-        return lastDotPos;
+        // 如果没找到点号，或者点号在最后一个路径分隔符之前，返回-1
+        return (extensionPos > lastSeparator) ? extensionPos : -1;
     }
     
     /**
-     * Returns the index of the last directory separator in the given filename.
-     * This method can handle both Unix and Windows separators.
+     * Returns the index of the last directory separator character.
+     * @param filename The filename to find the last path separator in
+     * @return The index of the last separator character, or -1 if there is no such character
      */
-    private static int indexOfLastSeparator(String filename) {
+    public static int indexOfLastSeparator(String filename) {
         if (filename == null) {
             return -1;
         }

@@ -13,27 +13,28 @@ public class PathUtils {
         if (path == null || relativePath == null) {
             return null;
         }
-        
+
         // 标准化路径分隔符
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
-        
+
         // 如果relativePath是绝对路径，直接返回
         if (relativePath.startsWith("/")) {
             return relativePath;
         }
-        
+
         // 使用Path API处理路径
         Path basePath = Paths.get(path);
+        
         // 如果path是文件，获取其父目录
         if (!path.endsWith("/")) {
             basePath = basePath.getParent();
         }
-        
+
         if (basePath == null) {
-            return relativePath;
+            basePath = Paths.get("");
         }
-        
+
         // 解析并规范化路径
         Path resolvedPath = basePath.resolve(relativePath).normalize();
         

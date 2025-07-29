@@ -5,7 +5,7 @@ public class CustomSet {
     private Set<Integer> set;
 
     public CustomSet() {
-        set = new HashSet<>();
+        this.set = new HashSet<>();
     }
 
     /**

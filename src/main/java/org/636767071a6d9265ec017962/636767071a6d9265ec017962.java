@@ -27,7 +27,8 @@ public class BeanMap {
                     writeMethod.invoke(this, value);
                 }
             } catch (Exception e) {
-                // Ignore properties that are read-only or write-only
+                // Handle exceptions (e.g., IntrospectionException, IllegalAccessException, InvocationTargetException)
+                e.printStackTrace();
             }
         }
     }

@@ -12,10 +12,13 @@ public class StreamReader {
 
     /**
      * Read a {@code string} field value from the stream.
+     *
+     * @return the string read from the stream
+     * @throws IOException if an I/O error occurs
      */
     @Override
     public String readString() throws IOException {
-        // Read the length of the string (assuming it's prefixed with its length as an integer)
+        // Read the length of the string (assuming it's prefixed by its length as an integer)
         int length = readInt();
         if (length < 0) {
             throw new IOException("Invalid string length: " + length);
@@ -25,19 +28,22 @@ public class StreamReader {
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Failed to read the expected number of bytes for the string");
+            throw new IOException("Failed to read the expected number of bytes");
         }
 
-        // Convert bytes to a string using UTF-8 encoding
+        // Convert bytes to string using UTF-8 encoding
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
     private int readInt() throws IOException {
-        byte[] bytes = new byte[4];
-        int bytesRead = inputStream.read(bytes);
+        byte[] buffer = new byte[4];
+        int bytesRead = inputStream.read(buffer);
         if (bytesRead != 4) {
             throw new IOException("Failed to read an integer from the stream");
         }
-        return (bytes[0] << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8) | (bytes[3] & 0xFF);
+        return (buffer[0] & 0xFF) << 24 |
+               (buffer[1] & 0xFF) << 16 |
+               (buffer[2] & 0xFF) << 8  |
+               (buffer[3] & 0xFF);
     }
 }

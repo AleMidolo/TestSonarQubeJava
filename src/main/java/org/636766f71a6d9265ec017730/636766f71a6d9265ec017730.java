@@ -9,7 +9,7 @@ public class CollectionUtils {
      * @param collection The collection to convert
      * @return A new array of Strings.
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }

@@ -19,4 +19,15 @@ public class ArrayUtils {
         }
         return array;
     }
+
+    // Example usage
+    public static void main(String[] args) {
+        Boolean[] array1 = null;
+        Boolean[] array2 = new Boolean[0];
+        Boolean[] array3 = {true, false};
+
+        System.out.println(Objects.toString(nullToEmpty(array1))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array2))); // Output: []
+        System.out.println(Objects.toString(nullToEmpty(array3))); // Output: [true, false]
+    }
 }

@@ -1,21 +1,28 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-/**
- * Copies bytes to a {@code byte[]}.
- */
-public byte[] toByteArray() {
-    // Assuming this method is part of a class that has some data to convert to a byte array.
-    // For example, let's assume the class has a ByteArrayOutputStream to hold the data.
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    
-    // Example: Writing some data to the output stream
-    try {
-        outputStream.write("Hello, World!".getBytes());
-    } catch (IOException e) {
-        e.printStackTrace();
+public class ByteArrayConverter {
+
+    /**
+     * Copies bytes to a {@code byte[]}.
+     *
+     * @return a byte array containing the copied bytes
+     */
+    public byte[] toByteArray() {
+        // Example implementation: Convert a string to a byte array
+        String exampleData = "Hello, World!";
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            outputStream.write(exampleData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
-    
-    // Convert the output stream to a byte array
-    return outputStream.toByteArray();
+
+    public static void main(String[] args) {
+        ByteArrayConverter converter = new ByteArrayConverter();
+        byte[] byteArray = converter.toByteArray();
+        System.out.println(new String(byteArray)); // Output: Hello, World!
+    }
 }

@@ -3,9 +3,9 @@ import java.util.Collections;
 import java.util.Map;
 
 public class BeanMap {
-    private Map<Object, Object> map;
+    private Map<String, Object> map;
 
-    public BeanMap(Map<Object, Object> map) {
+    public BeanMap(Map<String, Object> map) {
         this.map = map;
     }
 

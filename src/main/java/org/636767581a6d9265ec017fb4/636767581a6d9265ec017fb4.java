@@ -26,7 +26,7 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
                 }
             }
 
-            upperBounds.add(upperBound);
+            upperBounds.add(upperBound == Integer.MAX_VALUE ? -1 : upperBound);
         }
 
         return upperBounds;

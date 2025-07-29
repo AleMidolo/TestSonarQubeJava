@@ -19,8 +19,13 @@ public class CustomComparator implements Comparator<Object> {
         } else if (aObj2 == null) {
             return 1;
         } else {
-            // Assuming the objects are Comparable, otherwise, this will throw a ClassCastException
-            return ((Comparable<Object>) aObj1).compareTo(aObj2);
+            // Assuming the objects are comparable, cast them to Comparable and compare
+            if (aObj1 instanceof Comparable && aObj2 instanceof Comparable) {
+                return ((Comparable) aObj1).compareTo(aObj2);
+            } else {
+                // If objects are not comparable, compare their hash codes as a fallback
+                return Integer.compare(aObj1.hashCode(), aObj2.hashCode());
+            }
         }
     }
 }

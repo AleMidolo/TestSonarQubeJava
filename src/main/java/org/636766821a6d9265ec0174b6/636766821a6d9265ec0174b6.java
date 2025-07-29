@@ -18,7 +18,7 @@ public class TypeResolver {
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class) {
+            if (typeArg instanceof Class<?>) {
                 resolvedTypes.add((Class<?>) typeArg);
             } else {
                 // Handle cases where typeArg is a TypeVariable or other types

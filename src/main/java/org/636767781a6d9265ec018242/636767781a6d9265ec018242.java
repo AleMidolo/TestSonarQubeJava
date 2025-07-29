@@ -8,6 +8,12 @@ public class Logger {
         this.appenders = appenders;
     }
 
+    /**
+     * सभी जुड़े हुए अपेंडर्स पर <code>doAppend</code> विधि को कॉल करें।
+     * 
+     * @param event लॉगिंग इवेंट
+     * @return कॉल किए गए अपेंडर्स की संख्या
+     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int count = 0;
         if (appenders != null) {

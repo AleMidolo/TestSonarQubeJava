@@ -14,8 +14,9 @@ public class TemplateEncoder {
         }
 
         // Replace '{' with '%7B' and '}' with '%7D'
-        String encoded = s.replace("{", "%7B").replace("}", "%7D");
-        return encoded;
+        String encodedString = s.replace("{", "%7B").replace("}", "%7D");
+
+        return encodedString;
     }
 
     public static void main(String[] args) {

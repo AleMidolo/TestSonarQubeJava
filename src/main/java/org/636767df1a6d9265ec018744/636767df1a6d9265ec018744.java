@@ -3,7 +3,7 @@ import java.util.List;
 
 public class TimeRangeBuilder {
 
-    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration for a single fetch
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration allowed
     private static final long FETCH_DATA_DURATION = 3600000; // 1 hour in milliseconds
 
     /**

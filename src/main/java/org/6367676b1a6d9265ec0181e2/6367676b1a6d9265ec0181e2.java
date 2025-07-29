@@ -28,7 +28,7 @@ public class CollectionUtils {
     public static void main(String[] args) {
         // Example usage
         Collection<String> source = java.util.List.of("apple", "banana", "cherry");
-        Collection<String> candidates = java.util.List.of("grape", "banana", "kiwi");
+        Collection<String> candidates = java.util.List.of("banana", "grape", "cherry");
 
         Object result = findFirstMatch(source, candidates);
         System.out.println("First match: " + result); // Output: First match: banana

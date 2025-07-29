@@ -17,6 +17,7 @@ public class StringUtils {
         while (index < str.length() && str.charAt(index) == leadingCharacter) {
             index++;
         }
+        
         return str.substring(index);
     }
 }

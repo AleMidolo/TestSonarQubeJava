@@ -3,7 +3,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 public class MessageSerializer {
-    
+
     /**
      * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
      * @param message The byte array message to serialize

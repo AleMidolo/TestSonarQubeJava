@@ -7,29 +7,34 @@ public class ClassReader {
     public String readUTF8(final int constantPoolEntryIndex, final char[] charBuffer) {
         int currentIndex = classFileBuffer.position();
         int utfLength = classFileBuffer.getShort(currentIndex) & 0xFFFF;
-        currentIndex += 2;
         
-        int charLength = 0;
-        int endIndex = currentIndex + utfLength;
+        if (utfLength == 0) {
+            return "";
+        }
         
-        while (currentIndex < endIndex) {
-            int currentByte = classFileBuffer.get(currentIndex++) & 0xFF;
+        int endIndex = currentIndex + 2 + utfLength;
+        int strLength = 0;
+        int index = currentIndex + 2;
+        byte[] classBuffer = classFileBuffer.array();
+        
+        while (index < endIndex) {
+            int currentByte = classBuffer[index++] & 0xFF;
             if ((currentByte & 0x80) == 0) {
                 // Single byte character
-                charBuffer[charLength++] = (char) currentByte;
+                charBuffer[strLength++] = (char) currentByte;
             } else if ((currentByte & 0xE0) == 0xC0) {
-                // Two byte character
-                charBuffer[charLength++] = (char) (((currentByte & 0x1F) << 6) 
-                    | (classFileBuffer.get(currentIndex++) & 0x3F));
+                // 2-byte character
+                charBuffer[strLength++] = (char) (((currentByte & 0x1F) << 6) 
+                    | (classBuffer[index++] & 0x3F));
             } else {
-                // Three byte character
-                charBuffer[charLength++] = (char) (((currentByte & 0xF) << 12)
-                    | ((classFileBuffer.get(currentIndex++) & 0x3F) << 6)
-                    | (classFileBuffer.get(currentIndex++) & 0x3F));
+                // 3-byte character
+                charBuffer[strLength++] = (char) (((currentByte & 0xF) << 12)
+                    | ((classBuffer[index++] & 0x3F) << 6) 
+                    | (classBuffer[index++] & 0x3F));
             }
         }
         
         classFileBuffer.position(endIndex);
-        return new String(charBuffer, 0, charLength);
+        return new String(charBuffer, 0, strLength);
     }
 }

@@ -17,21 +17,27 @@ public class TableUtils {
         // Select the row
         table.setRowSelectionInterval(row, row);
 
-        // Make the row visible by scrolling to it
+        // Calculate rectangle of the row to scroll to
         Rectangle cellRect = table.getCellRect(row, 0, true);
-        if (cellRect != null) {
-            table.scrollRectToVisible(cellRect);
-        }
+        
+        // Convert table coordinates to scrollpane coordinates
+        Point p = SwingUtilities.convertPoint(table, cellRect.x, cellRect.y, 
+                                            scrollPane.getViewport());
+        cellRect.setLocation(p);
 
-        // Delay the repaint to ensure proper rendering
+        // Scroll to make the rectangle visible
+        scrollPane.getViewport().scrollRectToVisible(cellRect);
+        
+        // Schedule a repaint with slight delay to ensure proper rendering
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                // Force scroll pane to update
-                scrollPane.getViewport().scrollRectToVisible(cellRect);
-                
-                // Repaint the table
-                table.repaint();
+                try {
+                    // Small delay to ensure proper rendering
+                    Thread.sleep(50);
+                    table.repaint();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         });
     }

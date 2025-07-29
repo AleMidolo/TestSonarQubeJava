@@ -6,20 +6,20 @@ import java.util.List;
 public class FileHandler {
     /**
      * Add the specified files in reverse order.
-     * @param files Array of files to add in reverse order
+     * @param files Array of files to add
      * @return List of files in reverse order
      */
-    public List<File> addFilesInReverse(File[] files) {
-        List<File> reversedFiles = new ArrayList<>();
+    public List<File> addFilesInReverseOrder(File[] files) {
+        List<File> fileList = new ArrayList<>();
         
         // Add files to list
         for (File file : files) {
-            reversedFiles.add(file);
+            fileList.add(file);
         }
         
         // Reverse the list
-        Collections.reverse(reversedFiles);
+        Collections.reverse(fileList);
         
-        return reversedFiles;
+        return fileList;
     }
 }

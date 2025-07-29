@@ -16,27 +16,19 @@ public class LogManager {
      */
     public void addLogRecord(final String message) {
         if (message == null || message.isEmpty()) {
-            LOGGER.log(Level.WARNING, "Attempted to log empty or null message");
             return;
         }
 
-        // Ensure thread safety by running on EDT
+        // Post to Event Dispatch Thread to ensure thread safety
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
                     logTable.addRow(message);
                 } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "Error adding log message to table", e);
+                    LOGGER.log(Level.SEVERE, "Error adding log record: " + message, e);
                 }
             }
         });
-    }
-}
-
-// Supporting class for compilation
-class LogTable extends JTable {
-    public void addRow(String message) {
-        // Implementation details for adding row to table
     }
 }

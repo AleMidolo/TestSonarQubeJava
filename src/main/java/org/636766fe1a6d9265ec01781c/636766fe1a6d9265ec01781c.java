@@ -16,7 +16,7 @@ public class CharUtils {
      * @return निर्दिष्ट चरित्र का एक Character
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch <= 127) { // ASCII 7-bit characters
+        if (ch <= 127) { // Check if the character is within the ASCII 7-bit range
             return CHAR_CACHE.computeIfAbsent(ch, k -> ch);
         }
         return ch;

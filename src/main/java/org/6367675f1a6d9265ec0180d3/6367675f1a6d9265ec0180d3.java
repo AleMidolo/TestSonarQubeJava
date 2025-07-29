@@ -1,9 +1,6 @@
 import org.jgrapht.Graph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GraphIdentity {
 
     /**
@@ -14,19 +11,11 @@ public class GraphIdentity {
      * @return ग्राफ से ग्राफ तक का एक मैपिंग
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        Map<V, V> vertexMap = new HashMap<>();
-        Map<E, E> edgeMap = new HashMap<>();
-
-        // Map each vertex to itself
+        // Create a mapping where each vertex maps to itself
+        IsomorphicGraphMapping<V, E> mapping = new IsomorphicGraphMapping<>(graph, graph);
         for (V vertex : graph.vertexSet()) {
-            vertexMap.put(vertex, vertex);
+            mapping.addVertexMapping(vertex, vertex);
         }
-
-        // Map each edge to itself
-        for (E edge : graph.edgeSet()) {
-            edgeMap.put(edge, edge);
-        }
-
-        return new IsomorphicGraphMapping<>(vertexMap, edgeMap, graph, graph);
+        return mapping;
     }
 }

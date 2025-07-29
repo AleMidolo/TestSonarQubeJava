@@ -1,6 +1,10 @@
 import java.util.List;
 
-public class Channels {
+interface IConsumer {
+    void consume(String message);
+}
+
+class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
@@ -8,16 +12,14 @@ public class Channels {
     }
 
     public void addConsumer(IConsumer consumer) {
-        this.consumers.add(consumer);
+        consumers.add(consumer);
     }
 
-    public List<IConsumer> getConsumers() {
-        return this.consumers;
+    public void notifyConsumers(String message) {
+        for (IConsumer consumer : consumers) {
+            consumer.consume(message);
+        }
     }
-}
-
-public interface IConsumer {
-    void consume(String message);
 }
 
 public class TargetChannelAdder {
@@ -28,8 +30,22 @@ public class TargetChannelAdder {
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
             channels.addConsumer(consumer);
+            channels.notifyConsumers("New target channel added: " + consumer.getClass().getSimpleName());
         } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
+            System.out.println("Invalid channels or consumer provided.");
         }
+    }
+
+    public static void main(String[] args) {
+        Channels channels = new Channels();
+        IConsumer consumer = new IConsumer() {
+            @Override
+            public void consume(String message) {
+                System.out.println("Consumer received: " + message);
+            }
+        };
+
+        TargetChannelAdder adder = new TargetChannelAdder();
+        adder.addNewTarget(channels, consumer);
     }
 }

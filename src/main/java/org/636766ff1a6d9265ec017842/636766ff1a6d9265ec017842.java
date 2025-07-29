@@ -15,8 +15,17 @@ public class DoubleArrayConverter {
         }
         double[] result = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "Array element cannot be null");
+            Objects.requireNonNull(array[i], "Array element cannot be null");
+            result[i] = array[i];
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        Double[] array = {1.0, 2.0, 3.0};
+        double[] primitiveArray = toPrimitive(array);
+        for (double d : primitiveArray) {
+            System.out.println(d);
+        }
     }
 }

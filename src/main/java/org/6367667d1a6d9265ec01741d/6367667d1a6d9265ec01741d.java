@@ -1,7 +1,7 @@
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
-public class BoundResolver {
+public class TypeResolver {
 
     /**
      * {@code typeVariable} के लिए पहला बाउंड हल करता है, यदि कोई हल नहीं किया जा सकता है तो {@code Unknown.class} लौटाता है।
@@ -34,7 +34,7 @@ public class BoundResolver {
 
             @Override
             public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
-                return BoundResolver.class;
+                return null;
             }
 
             @Override
@@ -48,7 +48,7 @@ public class BoundResolver {
             }
         };
 
-        Type bound = resolveBound(typeVar);
-        System.out.println("Resolved bound: " + bound);
+        Type resolvedType = resolveBound(typeVar);
+        System.out.println("Resolved Type: " + resolvedType);
     }
 }

@@ -14,12 +14,13 @@ public class ColumnName {
      * @param newName जिसे संग्रहण स्तर में उपयोग करना है।
      */
     public void overrideName(String oldName, String newName) {
-        if (oldName != null && newName != null) {
-            nameMap.put(oldName, newName);
+        if (oldName == null || newName == null) {
+            throw new IllegalArgumentException("Old name and new name cannot be null.");
         }
+        nameMap.put(oldName, newName);
     }
 
-    public String getOverrideName(String oldName) {
+    public String getNewName(String oldName) {
         return nameMap.getOrDefault(oldName, oldName);
     }
 }

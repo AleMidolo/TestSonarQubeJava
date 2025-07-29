@@ -3,10 +3,10 @@ import java.io.InputStream;
 
 public class VarintReader {
 
-    private final InputStream input;
+    private final InputStream inputStream;
 
-    public VarintReader(InputStream input) {
-        this.input = input;
+    public VarintReader(InputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
     /**
@@ -16,7 +16,7 @@ public class VarintReader {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            final byte b = (byte) input.read();
+            final byte b = (byte) inputStream.read();
             result |= (long) (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
                 return result;

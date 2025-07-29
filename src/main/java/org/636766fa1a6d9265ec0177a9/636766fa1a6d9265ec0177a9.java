@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructorInitializer {
+public class ConstructorInitialization {
 
     private List<Integer> initializedTypes;
 
-    public ConstructorInitializer() {
+    public ConstructorInitialization() {
         this.initializedTypes = new ArrayList<>();
     }
 
-    /**
+    /** 
      * एक अमूर्त प्रकार को उन प्रकारों की सूची में जोड़ता है जिन पर एक कंस्ट्रक्टर मूलभूत ब्लॉक में लागू होता है।
      * @param abstractType एक अमूर्त प्रकार जिस पर एक कंस्ट्रक्टर लागू होता है।
      */
@@ -19,16 +19,8 @@ public class ConstructorInitializer {
         }
     }
 
+    // Optional: Getter method to access the list of initialized types
     public List<Integer> getInitializedTypes() {
         return initializedTypes;
-    }
-
-    public static void main(String[] args) {
-        ConstructorInitializer initializer = new ConstructorInitializer();
-        initializer.addInitializedType(1);
-        initializer.addInitializedType(2);
-        initializer.addInitializedType(1); // Duplicate, should not be added
-
-        System.out.println(initializer.getInitializedTypes()); // Output: [1, 2]
     }
 }

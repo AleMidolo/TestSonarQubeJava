@@ -1,21 +1,37 @@
 import java.util.*;
 
 class Bucket {
-    // Assuming this is part of a larger data structure class
-    private List<Bucket> buckets;
+    private List<Object> data;
 
     public Bucket() {
-        this.buckets = new ArrayList<>();
+        this.data = new ArrayList<>();
     }
 
-    /**
-     * इस बकेट को डेटा संरचना से हटा देता है।
-     */
+    public void add(Object item) {
+        data.add(item);
+    }
+
     public void removeSelf() {
-        if (buckets != null) {
-            buckets.remove(this);
-        }
+        // Clear the data in the bucket
+        data.clear();
+        // Optionally, you can also set the reference to null if needed
+        // data = null;
     }
 
-    // Other methods and fields can be added here
+    public List<Object> getData() {
+        return data;
+    }
+}
+
+// Example usage
+public class Main {
+    public static void main(String[] args) {
+        Bucket bucket = new Bucket();
+        bucket.add("Item1");
+        bucket.add("Item2");
+
+        System.out.println("Before removal: " + bucket.getData());
+        bucket.removeSelf();
+        System.out.println("After removal: " + bucket.getData());
+    }
 }

@@ -6,7 +6,7 @@
  */
 protected int findByte(byte value, int pos) {
     if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("Invalid position: " + pos);
+        throw new IndexOutOfBoundsException("Position is out of bounds");
     }
     
     for (int i = pos; i < buffer.length; i++) {

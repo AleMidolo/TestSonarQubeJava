@@ -6,7 +6,7 @@ public class ByteArrayOutputStream extends OutputStream {
     private int count;
 
     public ByteArrayOutputStream() {
-        this(32); // Default buffer size
+        this(32);
     }
 
     public ByteArrayOutputStream(int size) {

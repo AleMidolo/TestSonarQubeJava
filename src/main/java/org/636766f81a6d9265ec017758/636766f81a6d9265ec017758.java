@@ -1,7 +1,7 @@
 @Override
 public int hashCode() {
     // A simple implementation of hashCode that returns a constant value.
-    // This is a basic example and may not be suitable for all use cases.
-    // For more complex objects, consider using a more sophisticated hashing algorithm.
-    return 31;
+    // This is a placeholder and should be replaced with a more meaningful implementation
+    // based on the actual fields of the class.
+    return 42; // Example constant hash code
 }

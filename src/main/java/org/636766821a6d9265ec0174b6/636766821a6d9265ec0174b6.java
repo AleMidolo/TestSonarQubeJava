@@ -5,6 +5,9 @@ import java.util.List;
 
 public class TypeResolver {
 
+    /**
+     * {@code genericType} के लिए तर्कों को {@code targetType} के प्रकार चर जानकारी का उपयोग करके हल करता है। यदि {@code genericType} पैरामीटराइज्ड नहीं है या यदि तर्कों को हल नहीं किया जा सकता है, तो {@code null} लौटाता है।
+     */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
             return null;
@@ -15,16 +18,11 @@ public class TypeResolver {
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class) {
+            if (typeArg instanceof Class<?>) {
                 resolvedTypes.add((Class<?>) typeArg);
-            } else if (typeArg instanceof ParameterizedType) {
-                Type rawType = ((ParameterizedType) typeArg).getRawType();
-                if (rawType instanceof Class) {
-                    resolvedTypes.add((Class<?>) rawType);
-                } else {
-                    return null;
-                }
             } else {
+                // Handle cases where typeArg is a TypeVariable or other types
+                // For simplicity, we return null if any type argument is not a Class
                 return null;
             }
         }
@@ -51,10 +49,12 @@ public class TypeResolver {
             }
         };
 
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
+        Class<?> targetType = List.class;
+        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
+
         if (resolvedArgs != null) {
-            for (Class<?> clazz : resolvedArgs) {
-                System.out.println(clazz.getSimpleName());
+            for (Class<?> arg : resolvedArgs) {
+                System.out.println(arg.getSimpleName());
             }
         } else {
             System.out.println("Could not resolve arguments.");

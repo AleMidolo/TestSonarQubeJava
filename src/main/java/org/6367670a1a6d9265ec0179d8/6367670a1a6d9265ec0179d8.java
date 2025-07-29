@@ -22,4 +22,14 @@ public class CustomOutputStream extends OutputStream {
         // This is a placeholder implementation
         System.out.write(b);
     }
+
+    public static void main(String[] args) {
+        try {
+            CustomOutputStream outputStream = new CustomOutputStream();
+            byte[] data = "Hello, World!".getBytes();
+            outputStream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

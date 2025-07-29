@@ -4,15 +4,15 @@
  */
 private String buildContentRange() {
     // Assuming you have the following variables defined in your class:
-    // long start: the start byte of the range
-    // long end: the end byte of the range
-    // long totalSize: the total size of the resource
-
-    // Example values (you should replace these with actual values):
-    long start = 0;
-    long end = 1023;
-    long totalSize = 2048;
+    // long startRange, endRange, totalSize;
+    
+    // Example values for startRange, endRange, and totalSize
+    long startRange = 0; // Example start range
+    long endRange = 1023; // Example end range
+    long totalSize = 2048; // Example total size
 
     // Construct the Content-Range header value
-    return String.format("bytes %d-%d/%d", start, end, totalSize);
+    String contentRange = String.format("bytes %d-%d/%d", startRange, endRange, totalSize);
+    
+    return contentRange;
 }

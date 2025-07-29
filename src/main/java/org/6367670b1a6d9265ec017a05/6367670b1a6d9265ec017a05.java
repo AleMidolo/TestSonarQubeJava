@@ -1,10 +1,14 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class CharUtils {
 
-    private static final String[] CHAR_STRING_CACHE = new String[128];
+    private static final Map<Character, String> CHAR_CACHE = new HashMap<>();
 
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        // Pre-cache ASCII characters (0-127)
+        for (int i = 0; i < 128; i++) {
+            CHAR_CACHE.put((char) i, String.valueOf((char) i));
         }
     }
 
@@ -16,8 +20,8 @@ public class CharUtils {
      * @return una Stringa contenente il carattere specificato
      */
     public static String toString(final char ch) {
-        if (ch < CHAR_STRING_CACHE.length) {
-            return CHAR_STRING_CACHE[ch];
+        if (ch < 128) {
+            return CHAR_CACHE.get(ch);
         }
         return String.valueOf(ch);
     }
@@ -25,6 +29,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
         System.out.println(toString('A'));  // Output: "A"
-        System.out.println(toString('€'));  // Output: "€"
+        System.out.println(toString('€'));  // Output: "€" (non-ASCII character)
     }
 }

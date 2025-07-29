@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class FileUtils {
 
     /**
@@ -13,15 +15,15 @@ public class FileUtils {
         int lastSeparatorIndex = indexOfLastSeparator(filename);
         int extensionIndex = filename.lastIndexOf('.');
 
-        if (extensionIndex > lastSeparatorIndex) {
-            return extensionIndex;
+        if (lastSeparatorIndex > extensionIndex) {
+            return -1;
         }
 
-        return -1;
+        return extensionIndex;
     }
 
     /**
-     * Restituisce l'indice dell'ultimo separatore di directory nel nome del file.
+     * Restituisce l'indice dell'ultimo separatore di directory nel percorso del file.
      * @param filename il nome del file in cui trovare l'ultimo separatore di directory
      * @return l'indice dell'ultimo separatore di directory, o -1 se non esiste tale carattere
      */
@@ -38,6 +40,6 @@ public class FileUtils {
 
     public static void main(String[] args) {
         String filename = "path/to/file.txt";
-        System.out.println(indexOfExtension(filename)); // Output: 13
+        System.out.println(indexOfExtension(filename)); // Output: 12
     }
 }

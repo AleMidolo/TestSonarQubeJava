@@ -1,4 +1,4 @@
-public class FileSeparatorUtil {
+public class FileUtils {
 
     /**
      * Restituisce l'indice dell'ultimo carattere separatore di directory. <p> Questo metodo gestirà un file sia in formato Unix che Windows. Viene restituita la posizione dell'ultimo slash o backslash. <p> L'output sarà lo stesso indipendentemente dalla macchina su cui il codice viene eseguito.
@@ -10,17 +10,17 @@ public class FileSeparatorUtil {
             return -1;
         }
         
-        int lastSlashIndex = filename.lastIndexOf('/');
-        int lastBackslashIndex = filename.lastIndexOf('\\');
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
         
-        return Math.max(lastSlashIndex, lastBackslashIndex);
+        return Math.max(lastUnixPos, lastWindowsPos);
     }
 
     public static void main(String[] args) {
         // Test cases
-        System.out.println(indexOfLastSeparator("C:/Users/John/Documents/file.txt")); // Output: 20
-        System.out.println(indexOfLastSeparator("C:\\Users\\John\\Documents\\file.txt")); // Output: 20
-        System.out.println(indexOfLastSeparator("file.txt")); // Output: -1
-        System.out.println(indexOfLastSeparator(null)); // Output: -1
+        System.out.println(indexOfLastSeparator("C:\\Users\\John\\file.txt")); // Output: 14
+        System.out.println(indexOfLastSeparator("/home/user/file.txt"));      // Output: 10
+        System.out.println(indexOfLastSeparator("file.txt"));                 // Output: -1
+        System.out.println(indexOfLastSeparator(null));                      // Output: -1
     }
 }

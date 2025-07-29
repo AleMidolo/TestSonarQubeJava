@@ -15,9 +15,7 @@ public class ArrayUtils {
 
         int length = Array.getLength(array);
         Object newArray = Array.newInstance(array.getClass().getComponentType(), length + 1);
-
         System.arraycopy(array, 0, newArray, 0, length);
-
         return newArray;
     }
 

@@ -1,47 +1,35 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-private String unescapeId(String input) {
-    if (input == null) {
-        return null;
-    }
+public class DotUnescape {
 
-    // Replace escaped sequences with their corresponding characters
-    StringBuilder output = new StringBuilder();
-    int length = input.length();
-    for (int i = 0; i < length; i++) {
-        char currentChar = input.charAt(i);
-        if (currentChar == '\\' && i + 1 < length) {
-            char nextChar = input.charAt(i + 1);
-            switch (nextChar) {
-                case '\\':
-                    output.append('\\');
-                    i++;
-                    break;
-                case '"':
-                    output.append('"');
-                    i++;
-                    break;
-                case 'n':
-                    output.append('\n');
-                    i++;
-                    break;
-                case 't':
-                    output.append('\t');
-                    i++;
-                    break;
-                case 'r':
-                    output.append('\r');
-                    i++;
-                    break;
-                default:
-                    output.append(currentChar);
-                    break;
-            }
-        } else {
-            output.append(currentChar);
+    /**
+     * Decomprime un identificatore di stringa DOT.
+     * @param input l'input
+     * @return l'output decompresso
+     */
+    private static String unescapeId(String input) {
+        if (input == null) {
+            return null;
         }
+
+        // Pattern per identificare sequenze di escape
+        Pattern pattern = Pattern.compile("\\\\([\\\\\"])");
+        Matcher matcher = pattern.matcher(input);
+
+        // Sostituisce le sequenze di escape con i caratteri corrispondenti
+        StringBuffer result = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(result, matcher.group(1));
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 
-    return output.toString();
+    public static void main(String[] args) {
+        String input = "\\\\escaped\\\"string\\\"";
+        String output = unescapeId(input);
+        System.out.println(output);  // Output: \escaped"string"
+    }
 }

@@ -11,25 +11,25 @@ public class LogFormatter {
         StringBuilder formattedEvent = new StringBuilder();
         
         // Aggiungi il timestamp
-        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append(" ");
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append("\n");
         
         // Aggiungi il livello di log
-        formattedEvent.append("Level: ").append(event.getLevel().toString()).append(" ");
+        formattedEvent.append("Level: ").append(event.getLevel().toString()).append("\n");
         
         // Aggiungi il messaggio di log
-        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append(" ");
+        formattedEvent.append("Message: ").append(event.getRenderedMessage()).append("\n");
         
-        // Aggiungi il nome del logger
-        formattedEvent.append("Logger: ").append(event.getLoggerName()).append(" ");
+        // Aggiungi il logger name
+        formattedEvent.append("Logger: ").append(event.getLoggerName()).append("\n");
         
         // Aggiungi il thread name
-        formattedEvent.append("Thread: ").append(event.getThreadName()).append(" ");
+        formattedEvent.append("Thread: ").append(event.getThreadName()).append("\n");
         
         // Aggiungi l'eccezione, se presente
         if (event.getThrowableStrRep() != null) {
             formattedEvent.append("Exception: ");
             for (String line : event.getThrowableStrRep()) {
-                formattedEvent.append(line).append(" ");
+                formattedEvent.append(line).append("\n");
             }
         }
         

@@ -14,17 +14,21 @@ public class ColumnName {
             throw new IllegalArgumentException("I nomi non possono essere nulli.");
         }
         if (columnNames.containsKey(oldName)) {
-            columnNames.put(oldName, newName);
+            String existingNewName = columnNames.get(oldName);
+            columnNames.remove(oldName);
+            columnNames.put(newName, existingNewName);
         } else {
-            throw new IllegalArgumentException("Il nome da sostituire non esiste.");
+            columnNames.put(newName, oldName);
         }
     }
 
-    public String getColumnName(String key) {
-        return columnNames.get(key);
+    public String getOriginalName(String newName) {
+        return columnNames.get(newName);
     }
 
-    public void addColumnName(String key, String value) {
-        columnNames.put(key, value);
+    public static void main(String[] args) {
+        ColumnName columnName = new ColumnName();
+        columnName.overrideName("oldColumn", "newColumn");
+        System.out.println(columnName.getOriginalName("newColumn")); // Output: oldColumn
     }
 }

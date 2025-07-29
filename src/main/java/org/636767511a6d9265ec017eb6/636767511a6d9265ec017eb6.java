@@ -39,16 +39,17 @@ public class Node {
 public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = circulator.getCurrent();
 
-        while (true) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
-                return circulator;
-            }
-            if (currentNode == stop) {
+        while (current != stop) {
+            if (predicate.test(current)) {
                 return circulator;
             }
             circulator.next(dir);
+            current = circulator.getCurrent();
         }
+
+        // If the loop ends, return the circulator pointing to the stop node
+        return circulator;
     }
 }

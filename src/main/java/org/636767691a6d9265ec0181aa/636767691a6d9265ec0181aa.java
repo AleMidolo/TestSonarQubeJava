@@ -17,6 +17,8 @@ public class HashCodeUtil {
     public static void main(String[] args) {
         long[] array = {1L, 2L, 3L};
         System.out.println(nullSafeHashCode(array)); // Output: 30817
-        System.out.println(nullSafeHashCode(null));  // Output: 0
+
+        long[] nullArray = null;
+        System.out.println(nullSafeHashCode(nullArray)); // Output: 0
     }
 }

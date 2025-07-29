@@ -3,17 +3,17 @@ import java.util.Map;
 
 public class StringUtils {
 
-    private static final Map<Character, Character> ESCAPE_MAP = new HashMap<>();
+    private static final Map<Character, Character> ESCAPE_SEQUENCES = new HashMap<>();
 
     static {
-        ESCAPE_MAP.put('n', '\n');
-        ESCAPE_MAP.put('t', '\t');
-        ESCAPE_MAP.put('r', '\r');
-        ESCAPE_MAP.put('b', '\b');
-        ESCAPE_MAP.put('f', '\f');
-        ESCAPE_MAP.put('"', '\"');
-        ESCAPE_MAP.put('\'', '\'');
-        ESCAPE_MAP.put('\\', '\\');
+        ESCAPE_SEQUENCES.put('n', '\n');
+        ESCAPE_SEQUENCES.put('t', '\t');
+        ESCAPE_SEQUENCES.put('r', '\r');
+        ESCAPE_SEQUENCES.put('b', '\b');
+        ESCAPE_SEQUENCES.put('f', '\f');
+        ESCAPE_SEQUENCES.put('"', '\"');
+        ESCAPE_SEQUENCES.put('\'', '\'');
+        ESCAPE_SEQUENCES.put('\\', '\\');
     }
 
     public static String unescapeJava(String str) throws Exception {
@@ -29,8 +29,8 @@ public class StringUtils {
             char currentChar = str.charAt(i);
 
             if (escape) {
-                if (ESCAPE_MAP.containsKey(currentChar)) {
-                    result.append(ESCAPE_MAP.get(currentChar));
+                if (ESCAPE_SEQUENCES.containsKey(currentChar)) {
+                    result.append(ESCAPE_SEQUENCES.get(currentChar));
                 } else {
                     throw new Exception("Invalid escape sequence: \\" + currentChar);
                 }
@@ -53,10 +53,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         try {
-            String input = "Hello\\nWorld\\t!";
-            String output = unescapeJava(input);
-            System.out.println(output);  // Output: Hello
-                                         //         World    !
+            System.out.println(unescapeJava("Hello\\nWorld!"));  // Output: Hello
+                                                                 // World!
+            System.out.println(unescapeJava("C:\\\\path\\to\\file"));  // Output: C:\path\to\file
         } catch (Exception e) {
             e.printStackTrace();
         }

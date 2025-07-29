@@ -9,9 +9,11 @@ public class ByteVector {
         this.size = 0;
     }
 
-    public ByteVector(int initialCapacity) {
-        this.data = new byte[initialCapacity];
-        this.size = 0;
+    public ByteVector put11(final int byteValue1, final int byteValue2) {
+        ensureCapacity(size + 2);
+        data[size++] = (byte) byteValue1;
+        data[size++] = (byte) byteValue2;
+        return this;
     }
 
     private void ensureCapacity(int minCapacity) {
@@ -24,18 +26,13 @@ public class ByteVector {
         }
     }
 
-    public ByteVector put11(final int byteValue1, final int byteValue2) {
-        ensureCapacity(size + 2);
-        data[size++] = (byte) byteValue1;
-        data[size++] = (byte) byteValue2;
-        return this;
-    }
-
-    public byte[] toArray() {
-        return Arrays.copyOf(data, size);
-    }
-
+    // Optional: Method to get the current size of the vector
     public int size() {
         return size;
+    }
+
+    // Optional: Method to get the byte array
+    public byte[] toByteArray() {
+        return Arrays.copyOf(data, size);
     }
 }

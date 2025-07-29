@@ -22,9 +22,15 @@ public class ThreadSnapshotParser {
     }
 
     private static ThreadSnapshot parseLineToSnapshot(String line) {
-        // Implement the logic to parse a line into a ThreadSnapshot object
-        // This is a placeholder implementation
-        return new ThreadSnapshot();
+        // Assuming the line is in a specific format, e.g., "timestamp,threadId,state"
+        String[] parts = line.split(",");
+        if (parts.length == 3) {
+            long timestamp = Long.parseLong(parts[0]);
+            long threadId = Long.parseLong(parts[1]);
+            String state = parts[2];
+            return new ThreadSnapshot(timestamp, threadId, state);
+        }
+        return null;
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
@@ -35,57 +41,46 @@ public class ThreadSnapshotParser {
         }
         return false;
     }
-}
 
-class ThreadSnapshot {
-    private long timestamp;
-    private String threadName;
-    private String state;
+    public static class ThreadSnapshot {
+        private long timestamp;
+        private long threadId;
+        private String state;
 
-    // Getters and setters
-    public long getTimestamp() {
-        return timestamp;
+        public ThreadSnapshot(long timestamp, long threadId, String state) {
+            this.timestamp = timestamp;
+            this.threadId = threadId;
+            this.state = state;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public long getThreadId() {
+            return threadId;
+        }
+
+        public String getState() {
+            return state;
+        }
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+    public static class ProfileAnalyzeTimeRange {
+        private long startTime;
+        private long endTime;
 
-    public String getThreadName() {
-        return threadName;
-    }
+        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
 
-    public void setThreadName(String threadName) {
-        this.threadName = threadName;
-    }
+        public long getStartTime() {
+            return startTime;
+        }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-}
-
-class ProfileAnalyzeTimeRange {
-    private long startTime;
-    private long endTime;
-
-    // Getters and setters
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
+        public long getEndTime() {
+            return endTime;
+        }
     }
 }

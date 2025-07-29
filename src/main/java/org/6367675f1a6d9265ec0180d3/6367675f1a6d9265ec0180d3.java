@@ -1,7 +1,10 @@
 import org.jgrapht.Graph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
-public class GraphUtils {
+import java.util.HashMap;
+import java.util.Map;
+
+public class GraphIdentity {
 
     /**
      * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
@@ -11,19 +14,19 @@ public class GraphUtils {
      * @return a mapping from graph to graph
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        // Create a mapping where each vertex maps to itself
-        java.util.Map<V, V> vertexMap = new java.util.HashMap<>();
+        Map<V, V> vertexMap = new HashMap<>();
+        Map<E, E> edgeMap = new HashMap<>();
+
+        // Map each vertex to itself
         for (V vertex : graph.vertexSet()) {
             vertexMap.put(vertex, vertex);
         }
 
-        // Create a mapping where each edge maps to itself
-        java.util.Map<E, E> edgeMap = new java.util.HashMap<>();
+        // Map each edge to itself
         for (E edge : graph.edgeSet()) {
             edgeMap.put(edge, edge);
         }
 
-        // Return the identity mapping
         return new IsomorphicGraphMapping<>(vertexMap, edgeMap, graph, graph);
     }
 }

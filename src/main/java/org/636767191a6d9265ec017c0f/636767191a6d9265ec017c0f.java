@@ -4,18 +4,28 @@
  */
 private void enlarge(final int size) {
     // Assuming the byte vector is represented by a byte array named 'data'
+    // and 'length' is the current length of the byte vector.
+    
+    // Calculate the new capacity needed
+    int newCapacity = length + size;
+    
+    // If the current capacity is sufficient, do nothing
+    if (newCapacity <= data.length) {
+        return;
+    }
+    
+    // Calculate the new capacity, doubling the current capacity if necessary
     int currentCapacity = data.length;
-    int requiredCapacity = currentCapacity + size;
-
-    // Calculate the new capacity, typically doubling the size or adding the required size
-    int newCapacity = Math.max(currentCapacity * 2, requiredCapacity);
-
+    while (currentCapacity < newCapacity) {
+        currentCapacity *= 2;
+    }
+    
     // Create a new array with the new capacity
-    byte[] newData = new byte[newCapacity];
-
+    byte[] newData = new byte[currentCapacity];
+    
     // Copy the existing data to the new array
-    System.arraycopy(data, 0, newData, 0, currentCapacity);
-
+    System.arraycopy(data, 0, newData, 0, length);
+    
     // Update the reference to the new array
     data = newData;
 }

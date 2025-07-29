@@ -3,7 +3,7 @@ import java.util.Objects;
 public class BooleanArrayConverter {
 
     /**
-     * <p>Converts an array of primitive booleans to objects.</p>
+     * <p>Converts an array of primitive booleans to objects.</p> 
      * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>boolean</code> array
      * @return a <code>Boolean</code> array, <code>null</code> if null array input
@@ -22,8 +22,6 @@ public class BooleanArrayConverter {
     public static void main(String[] args) {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
-        for (Boolean b : objectArray) {
-            System.out.println(b);
-        }
+        System.out.println(java.util.Arrays.toString(objectArray)); // Output: [true, false, true]
     }
 }

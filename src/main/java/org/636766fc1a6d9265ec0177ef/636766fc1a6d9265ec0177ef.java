@@ -25,8 +25,9 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Object[] testArray = { "Hello", null, "World", null, "Java" };
-        String[] result = toNoNullStringArray(testArray);
+        // Example usage
+        Object[] inputArray = {"Hello", null, "World", null, "Java"};
+        String[] result = toNoNullStringArray(inputArray);
 
         for (String str : result) {
             System.out.println(str);

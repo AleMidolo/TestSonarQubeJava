@@ -1,39 +1,34 @@
-import java.util.Map;
-import java.util.HashMap;
 import java.beans.PropertyDescriptor;
-import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 public class BeanMap {
-    private Map<String, Object> properties = new HashMap<>();
+    private Object bean;
+
+    public BeanMap(Object bean) {
+        this.bean = bean;
+    }
 
     public void putAllWriteable(BeanMap map) {
-        if (map == null) {
-            throw new IllegalArgumentException("The provided BeanMap cannot be null.");
+        if (map == null || map.bean == null) {
+            return;
         }
 
-        for (Map.Entry<String, Object> entry : map.properties.entrySet()) {
-            String propertyName = entry.getKey();
-            Object value = entry.getValue();
+        try {
+            PropertyDescriptor[] descriptors = java.beans.Introspector.getBeanInfo(map.bean.getClass()).getPropertyDescriptors();
+            for (PropertyDescriptor descriptor : descriptors) {
+                Method readMethod = descriptor.getReadMethod();
+                Method writeMethod = descriptor.getWriteMethod();
 
-            try {
-                PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
-                if (pd.getWriteMethod() != null) {
-                    pd.getWriteMethod().invoke(this, value);
+                // Check if the property is writable and readable
+                if (readMethod != null && writeMethod != null) {
+                    Object value = readMethod.invoke(map.bean);
+                    writeMethod.invoke(this.bean, value);
                 }
-            } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
-                // Ignore properties that cannot be written or do not exist
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to copy properties", e);
         }
-    }
-
-    // Example of a property setter
-    public void setProperty(String propertyName, Object value) {
-        properties.put(propertyName, value);
-    }
-
-    // Example of a property getter
-    public Object getProperty(String propertyName) {
-        return properties.get(propertyName);
     }
 }

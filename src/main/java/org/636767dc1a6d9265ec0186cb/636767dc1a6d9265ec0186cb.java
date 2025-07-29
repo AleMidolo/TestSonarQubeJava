@@ -10,24 +10,18 @@ public class ConfigInitializer {
         this.distPath = distPath;
     }
 
-    /**
-     * Initialize config, such as check dist path
-     */
     public void init() {
-        if (distPath == null || distPath.isEmpty()) {
-            throw new IllegalArgumentException("Distribution path cannot be null or empty.");
+        try {
+            Path path = Paths.get(distPath);
+            if (!Files.exists(path)) {
+                System.out.println("Dist path does not exist. Creating directory...");
+                Files.createDirectories(path);
+            } else {
+                System.out.println("Dist path already exists.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error initializing config: " + e.getMessage());
         }
-
-        Path path = Paths.get(distPath);
-        if (!Files.exists(path)) {
-            throw new IllegalStateException("Distribution path does not exist: " + distPath);
-        }
-
-        if (!Files.isDirectory(path)) {
-            throw new IllegalStateException("Distribution path is not a directory: " + distPath);
-        }
-
-        System.out.println("Config initialized successfully. Distribution path: " + distPath);
     }
 
     public static void main(String[] args) {

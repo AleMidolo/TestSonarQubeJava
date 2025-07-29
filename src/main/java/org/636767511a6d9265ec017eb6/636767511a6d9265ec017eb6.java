@@ -3,8 +3,8 @@ import java.util.function.Predicate;
 public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node node) {
-        this.current = node;
+    public OuterFaceCirculator(Node start) {
+        this.current = start;
     }
 
     public Node getCurrent() {
@@ -33,8 +33,6 @@ public class OuterFaceCirculator {
 public class Node {
     private Node nextClockwise;
     private Node nextCounterClockwise;
-    private Node previousClockwise;
-    private Node previousCounterClockwise;
 
     public Node getNextClockwise() {
         return nextClockwise;
@@ -45,27 +43,30 @@ public class Node {
     }
 
     public Node getPreviousClockwise() {
-        return previousClockwise;
+        // Assuming previous clockwise is the next counter-clockwise of the next clockwise
+        return nextClockwise.getNextCounterClockwise();
     }
 
     public Node getPreviousCounterClockwise() {
-        return previousCounterClockwise;
+        // Assuming previous counter-clockwise is the next clockwise of the next counter-clockwise
+        return nextCounterClockwise.getNextClockwise();
     }
-
-    // Other methods and fields...
 }
 
-private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
-    OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+public class Graph {
+    private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
+        OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = circulator.getCurrent();
 
-    while (true) {
-        Node currentNode = circulator.getCurrent();
-        if (predicate.test(currentNode)) {
-            return circulator;
+        while (current != stop) {
+            if (predicate.test(current)) {
+                return circulator;
+            }
+            circulator.next(dir);
+            current = circulator.getCurrent();
         }
-        if (currentNode == stop) {
-            return circulator;
-        }
-        circulator.next(dir);
+
+        // If the loop ends, it means we reached the stop node without finding a node that satisfies the predicate
+        return circulator;
     }
 }

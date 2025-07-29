@@ -1,9 +1,9 @@
-import java.util.Objects;
+import java.util.Arrays;
 
-public class Example {
+public class BodyChecker {
     private Object body;
 
-    public Example(Object body) {
+    public BodyChecker(Object body) {
         this.body = body;
     }
 
@@ -16,10 +16,10 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        Example example1 = new Example(new byte[]{1, 2, 3});
-        System.out.println(example1.hasBytes()); // Output: true
+        BodyChecker checker1 = new BodyChecker(new byte[]{1, 2, 3});
+        System.out.println(checker1.hasBytes()); // Output: true
 
-        Example example2 = new Example("Not a byte array");
-        System.out.println(example2.hasBytes()); // Output: false
+        BodyChecker checker2 = new BodyChecker("Not a byte array");
+        System.out.println(checker2.hasBytes()); // Output: false
     }
 }

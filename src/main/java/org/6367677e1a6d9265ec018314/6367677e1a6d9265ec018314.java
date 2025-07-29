@@ -47,3 +47,21 @@ class CategoryTree {
         return removedCount;
     }
 }
+
+// Example usage:
+public class Main {
+    public static void main(String[] args) {
+        CategoryNode root = new CategoryNode("Root", true);
+        CategoryNode child1 = new CategoryNode("Child1", false);
+        CategoryNode child2 = new CategoryNode("Child2", true);
+        CategoryNode grandChild1 = new CategoryNode("GrandChild1", false);
+
+        root.addChild(child1);
+        root.addChild(child2);
+        child2.addChild(grandChild1);
+
+        CategoryTree tree = new CategoryTree(root);
+        int removedCount = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedCount + " inactive nodes.");
+    }
+}

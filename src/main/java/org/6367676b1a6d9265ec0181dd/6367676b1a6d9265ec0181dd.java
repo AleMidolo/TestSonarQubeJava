@@ -1,5 +1,4 @@
 public class StringUtils {
-
     /**
      * Returns the number of occurrences the substring  {@code sub} appears in string {@code str}.
      * @param str string to search in. Return 0 if this is null.
@@ -10,22 +9,20 @@ public class StringUtils {
         if (str == null || sub == null || sub.isEmpty()) {
             return 0;
         }
-
+        
         int count = 0;
         int index = 0;
-
         while ((index = str.indexOf(sub, index)) != -1) {
             count++;
             index += sub.length();
         }
-
         return count;
     }
 
     public static void main(String[] args) {
         // Example usage
-        String str = "hello world, hello universe, hello";
+        String str = "hello world, hello universe";
         String sub = "hello";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 3
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

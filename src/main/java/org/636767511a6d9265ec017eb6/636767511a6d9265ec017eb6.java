@@ -3,72 +3,54 @@ import java.util.function.Predicate;
 public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node start) {
-        this.current = start;
+    public OuterFaceCirculator(Node node) {
+        this.current = node;
     }
 
     public Node getCurrent() {
         return current;
     }
 
-    public void next(int dir) {
-        // Assuming dir is either 1 (clockwise) or -1 (counter-clockwise)
-        if (dir == 1) {
-            current = current.getNextClockwise();
-        } else if (dir == -1) {
-            current = current.getNextCounterClockwise();
-        } else {
-            throw new IllegalArgumentException("Invalid direction: " + dir);
-        }
+    public void next() {
+        // Implement the logic to move to the next node in the outer face
+        // This is a placeholder and should be replaced with actual traversal logic
+        current = current.getNext(dir);
     }
 
-    public boolean hasNext(int dir) {
-        if (dir == 1) {
-            return current.getNextClockwise() != null;
-        } else if (dir == -1) {
-            return current.getNextCounterClockwise() != null;
-        } else {
-            throw new IllegalArgumentException("Invalid direction: " + dir);
-        }
+    public void previous() {
+        // Implement the logic to move to the previous node in the outer face
+        // This is a placeholder and should be replaced with actual traversal logic
+        current = current.getPrevious(dir);
     }
 }
 
 public class Node {
-    private Node nextClockwise;
-    private Node nextCounterClockwise;
+    private Node next;
+    private Node previous;
 
-    public Node getNextClockwise() {
-        return nextClockwise;
+    public Node getNext(int dir) {
+        // Implement the logic to get the next node based on direction
+        return next;
     }
 
-    public void setNextClockwise(Node nextClockwise) {
-        this.nextClockwise = nextClockwise;
-    }
-
-    public Node getNextCounterClockwise() {
-        return nextCounterClockwise;
-    }
-
-    public void setNextCounterClockwise(Node nextCounterClockwise) {
-        this.nextCounterClockwise = nextCounterClockwise;
+    public Node getPrevious(int dir) {
+        // Implement the logic to get the previous node based on direction
+        return previous;
     }
 }
 
-public class Graph {
+public class GraphTraversal {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
 
-        while (circulator.hasNext(dir)) {
-            Node currentNode = circulator.getCurrent();
-            if (predicate.test(currentNode)) {
+        while (circulator.getCurrent() != stop) {
+            if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
-            if (currentNode == stop) {
-                return circulator;
-            }
-            circulator.next(dir);
+            circulator.next();
         }
 
-        return circulator;
+        // If the predicate is not satisfied, return a circulator to the stop node
+        return new OuterFaceCirculator(stop);
     }
 }

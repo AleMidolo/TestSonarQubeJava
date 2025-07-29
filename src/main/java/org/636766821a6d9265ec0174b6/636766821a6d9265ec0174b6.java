@@ -18,7 +18,7 @@ public class TypeResolver {
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class<?>) {
+            if (typeArg instanceof Class) {
                 resolvedTypes.add((Class<?>) typeArg);
             } else {
                 // Si el tipo no es una clase, no podemos resolverlo directamente
@@ -48,7 +48,9 @@ public class TypeResolver {
             }
         };
 
-        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
+        Class<?> targetType = List.class;
+        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
+
         if (resolvedArgs != null) {
             for (Class<?> arg : resolvedArgs) {
                 System.out.println(arg.getSimpleName());

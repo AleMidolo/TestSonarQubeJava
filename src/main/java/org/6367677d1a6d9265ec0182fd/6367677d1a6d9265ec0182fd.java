@@ -1,5 +1,4 @@
 public class BooleanConverter {
-
     /**
      * Si <code>value</code> es "true", se devuelve <code>true</code>. Si <code>value</code> es "false", se devuelve <code>false</code>. De lo contrario, se devuelve <code>default</code>. <p>El caso de <code>value</code> no es importante.
      */

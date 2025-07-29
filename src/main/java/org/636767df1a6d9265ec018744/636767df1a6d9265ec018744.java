@@ -3,6 +3,7 @@ import java.util.List;
 
 public class TimeRangeDivider {
 
+    // Supongamos que FETCH_DATA_DURATION es una constante definida en la clase
     private static final long FETCH_DATA_DURATION = 3600000; // 1 hora en milisegundos
 
     /**
@@ -14,40 +15,39 @@ public class TimeRangeDivider {
      */
     protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> rangos = new ArrayList<>();
-        long tiempoRestante = fin - inicio;
 
-        while (tiempoRestante > 0) {
-            long duracion = Math.min(tiempoRestante, FETCH_DATA_DURATION);
-            rangos.add(new TimeRange(inicio, inicio + duracion));
-            inicio += duracion;
-            tiempoRestante -= duracion;
+        while (inicio < fin) {
+            long endTime = Math.min(inicio + FETCH_DATA_DURATION, fin);
+            rangos.add(new TimeRange(inicio, endTime));
+            inicio = endTime;
         }
 
         return rangos;
     }
 
+    // Clase interna para representar un rango de tiempo
     public static class TimeRange {
-        private final long inicio;
-        private final long fin;
+        private final long startTime;
+        private final long endTime;
 
-        public TimeRange(long inicio, long fin) {
-            this.inicio = inicio;
-            this.fin = fin;
+        public TimeRange(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
         }
 
-        public long getInicio() {
-            return inicio;
+        public long getStartTime() {
+            return startTime;
         }
 
-        public long getFin() {
-            return fin;
+        public long getEndTime() {
+            return endTime;
         }
 
         @Override
         public String toString() {
             return "TimeRange{" +
-                    "inicio=" + inicio +
-                    ", fin=" + fin +
+                    "startTime=" + startTime +
+                    ", endTime=" + endTime +
                     '}';
         }
     }

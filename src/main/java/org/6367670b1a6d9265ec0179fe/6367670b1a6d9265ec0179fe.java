@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class CustomOutputStream extends OutputStream {
-    
+
     @Override
     public void write(byte b[]) throws IOException {
         if (b == null) {
@@ -19,14 +19,14 @@ public class CustomOutputStream extends OutputStream {
         if (off < 0 || len < 0 || off + len > b.length) {
             throw new IndexOutOfBoundsException("Índice fuera de los límites del arreglo.");
         }
-        for (int i = 0; i < len; i++) {
-            write(b[off + i]);
+        for (int i = off; i < off + len; i++) {
+            write(b[i]);
         }
     }
 
     @Override
     public void write(int b) throws IOException {
-        // Implementación específica para escribir un solo byte.
+        // Implementación específica para escribir un byte.
         // Este método debe ser implementado por la clase que extienda CustomOutputStream.
         throw new UnsupportedOperationException("Método no implementado.");
     }

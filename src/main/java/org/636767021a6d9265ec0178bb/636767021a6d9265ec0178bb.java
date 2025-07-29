@@ -26,8 +26,8 @@ public class ArrayUtils {
         Double[] emptyArray = new Double[0];
         Double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
-        System.out.println(Objects.toString(nullToEmpty(nullArray)));    // Should print []
-        System.out.println(Objects.toString(nullToEmpty(emptyArray)));   // Should print []
-        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Should print [1.0, 2.0, 3.0]
+        System.out.println(Objects.deepEquals(nullToEmpty(nullArray), EMPTY_DOUBLE_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(emptyArray), EMPTY_DOUBLE_ARRAY); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(nonEmptyArray), nonEmptyArray)); // true
     }
 }

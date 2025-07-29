@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class IntersectionExample<V> {
+public class SetIntersection {
 
     /**
      * Método eficiente para calcular la intersección entre dos conjuntos
@@ -9,27 +9,9 @@ public class IntersectionExample<V> {
      * @param set2 conjunto $2$
      * @return intersección del conjunto $1$ y $2$
      */
-    private Set<V> interseccion(Set<V> set1, Set<V> set2) {
+    private <V> Set<V> interseccion(Set<V> set1, Set<V> set2) {
         Set<V> intersection = new HashSet<>(set1);
         intersection.retainAll(set2);
         return intersection;
-    }
-
-    public static void main(String[] args) {
-        // Ejemplo de uso
-        Set<Integer> set1 = new HashSet<>();
-        set1.add(1);
-        set1.add(2);
-        set1.add(3);
-
-        Set<Integer> set2 = new HashSet<>();
-        set2.add(2);
-        set2.add(3);
-        set2.add(4);
-
-        IntersectionExample<Integer> example = new IntersectionExample<>();
-        Set<Integer> result = example.interseccion(set1, set2);
-
-        System.out.println("Intersección: " + result); // Output: Intersección: [2, 3]
     }
 }

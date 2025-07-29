@@ -1,9 +1,9 @@
 import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
 
 public class Graph<V,E> {
-
-    private Set<Edge<V,E>> edges;
+    
+    private Map<V, Map<V,E>> graph;
     
     /**
      * Calcula la suma de los pesos que entran a un vértice
@@ -13,43 +13,24 @@ public class Graph<V,E> {
     public double vertexWeight(Set<V> v) {
         double sum = 0.0;
         
-        for(Edge<V,E> edge : edges) {
-            if(v.contains(edge.getDestination())) {
-                sum += edge.getWeight();
+        // Para cada vértice en el conjunto v
+        for(V vertex : v) {
+            // Para cada vértice origen en el grafo
+            for(Map.Entry<V, Map<V,E>> entry : graph.entrySet()) {
+                V source = entry.getKey();
+                Map<V,E> edges = entry.getValue();
+                
+                // Si existe una arista hacia el vértice actual
+                if(edges.containsKey(vertex)) {
+                    // Suma el peso de la arista
+                    E edge = edges.get(vertex);
+                    if(edge instanceof Number) {
+                        sum += ((Number)edge).doubleValue();
+                    }
+                }
             }
         }
         
         return sum;
-    }
-    
-    // Edge class to represent weighted edges
-    private class Edge<V,E> {
-        private V source;
-        private V destination;
-        private double weight;
-        private E data;
-        
-        public Edge(V source, V destination, double weight, E data) {
-            this.source = source;
-            this.destination = destination;
-            this.weight = weight;
-            this.data = data;
-        }
-        
-        public V getSource() {
-            return source;
-        }
-        
-        public V getDestination() {
-            return destination;
-        }
-        
-        public double getWeight() {
-            return weight;
-        }
-        
-        public E getData() {
-            return data;
-        }
     }
 }

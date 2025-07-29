@@ -16,15 +16,11 @@ public class ByteVector {
      */
     private void enlarge(final int size) {
         int length = buffer.length;
-        int newLength = length;
+        int requiredLength = position + size;
         
-        // Calculate new buffer size needed
-        int minLength = position + size;
-        while (newLength < minLength) {
-            newLength = newLength * 2;
+        if (requiredLength > length) {
+            int newLength = Math.max(2 * length, requiredLength);
+            buffer = Arrays.copyOf(buffer, newLength);
         }
-        
-        // Create new buffer with expanded size
-        buffer = Arrays.copyOf(buffer, newLength);
     }
 }

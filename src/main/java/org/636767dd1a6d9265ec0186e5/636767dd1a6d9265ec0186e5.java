@@ -31,5 +31,5 @@ enum Channels {
     EMAIL,
     SMS,
     PUSH_NOTIFICATION,
-    WEBHOOK
+    WHATSAPP
 }

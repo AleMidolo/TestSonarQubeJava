@@ -25,6 +25,7 @@ public class ClassPathUtils {
                             cpV.add(jarUrl);
                         }
                     } catch (Exception e) {
+                        System.err.println("Error adding jar to classpath: " + file.getName());
                         e.printStackTrace();
                     }
                 }

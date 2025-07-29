@@ -25,7 +25,7 @@ public class MeteorLookup {
                 }
             }
             
-            // Si no se encuentra o está cancelado, retorna null
+            // Si no se encuentra un Meteor válido, retorna null
             return null;
             
         } catch (Exception e) {

@@ -1,31 +1,22 @@
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class VertexIterator<V> implements Iterator<V> {
+public class IteradorVertices<V> implements Iterator<V> {
     
+    private int posicionActual;
     private V[] vertices;
-    private int currentIndex;
     
-    public VertexIterator(V[] vertices) {
-        this.vertices = vertices;
-        this.currentIndex = 0;
-    }
-
     @Override
     protected V proporcionarSiguienteVertice() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
+        if (!hayMasVertices()) {
+            throw new NoSuchElementException("No hay más vértices para iterar");
         }
-        return vertices[currentIndex++];
+        
+        V vertice = vertices[posicionActual];
+        posicionActual++;
+        return vertice;
     }
-
-    @Override
-    public boolean hasNext() {
-        return currentIndex < vertices.length;
-    }
-
-    @Override
-    public V next() {
-        return proporcionarSiguienteVertice();
+    
+    private boolean hayMasVertices() {
+        return posicionActual < vertices.length && vertices[posicionActual] != null;
     }
 }

@@ -1,7 +1,7 @@
 import java.util.*;
 
-public class LabelManager {
-
+public class LabelPropagation {
+    
     /**
      * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. 
      * Limpia el cubo con etiqueta {@code minLabel}. Actualiza el etiquetado en consecuencia.
@@ -18,7 +18,7 @@ public class LabelManager {
             // Actualizar la etiqueta del vértice a 0
             labels.set(vertex, 0);
             
-            // Añadir el vértice al cubo 0
+            // Agregar el vértice al cubo 0
             bucketsByLabel.get(0).add(vertex);
         }
         

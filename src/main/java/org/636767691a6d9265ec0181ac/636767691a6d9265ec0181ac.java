@@ -31,16 +31,14 @@ public class PathUtils {
         // Convertir la ruta base a Path
         Path basePath = Paths.get(path);
         
-        // Para cada componente de la ruta relativa
+        // Procesar cada componente de la ruta relativa
         for (String component : components) {
             if (component.equals("..")) {
-                // Subir un nivel
                 basePath = basePath.getParent();
                 if (basePath == null) {
                     return "/";
                 }
             } else if (!component.equals(".") && !component.isEmpty()) {
-                // Agregar el componente a la ruta (ignorar "." y componentes vacíos)
                 basePath = basePath.resolve(component);
             }
         }

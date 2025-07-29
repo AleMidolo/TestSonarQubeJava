@@ -15,7 +15,7 @@ public class ByteArrayOutputStream extends OutputStream {
         // Ensure capacity
         int newcount = count + b.length;
         if (newcount > buf.length) {
-            byte newbuf[] = new byte[Math.max(buf.length << 1, newcount)];
+            byte[] newbuf = new byte[Math.max(buf.length << 1, newcount)];
             System.arraycopy(buf, 0, newbuf, 0, count);
             buf = newbuf;
         }

@@ -1,7 +1,6 @@
 import java.lang.reflect.Array;
 
 public class ArrayUtils {
-
     /**
      * Returns a copy of the given array of size 1 greater than the argument. The last value of the array is left to the default value.
      * @param array The array to copy, must not be <code>null</code>.

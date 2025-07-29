@@ -22,10 +22,12 @@ public class Graph<V,E> {
             for (Map.Entry<V, E> edge : edges.entrySet()) {
                 // If the destination vertex is in set v
                 if (v.contains(edge.getKey())) {
-                    // Add weight to sum
+                    // Add weight to sum if graph is weighted
                     if (isWeighted) {
                         sum += (Double) edge.getValue();
-                    } else {
+                    }
+                    // Add 1 if unweighted
+                    else {
                         sum += 1.0;
                     }
                 }

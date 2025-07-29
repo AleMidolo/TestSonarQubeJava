@@ -6,26 +6,26 @@ public class BroadcastFilterHandler {
     private BroadcastFilter filter;
     private ServletContext context;
 
-    public BroadcastFilterHandler(ServletContext context) {
+    public BroadcastFilterHandler(BroadcastFilter filter, ServletContext context) {
+        this.filter = filter;
         this.context = context;
-        this.filter = new BroadcastFilter();
     }
 
-    /**
+    /** 
      * Invoke the {@link BroadcastFilter}
-     * @param msg Message to be filtered
-     * @return Filtered message object
+     * @param msg The message to be filtered
+     * @return The filtered message object
      */
     protected Object filter(Object msg) {
         if (filter == null || msg == null) {
             return msg;
         }
-
+        
         try {
             return filter.filter(msg);
         } catch (Exception e) {
-            // Log error and return original message if filter fails
-            context.log("Error filtering broadcast message", e);
+            // Log error but don't throw to avoid breaking broadcast chain
+            context.log("Error in broadcast filter", e);
             return msg;
         }
     }

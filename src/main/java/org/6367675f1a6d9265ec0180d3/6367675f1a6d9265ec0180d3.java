@@ -1,7 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
 import org.jgrapht.graph.DefaultGraphMapping;
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 
 import java.util.HashMap;

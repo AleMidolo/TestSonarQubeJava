@@ -5,52 +5,41 @@ import org.objectweb.asm.Opcodes;
 
 public class StackMapTableWriter {
     private byte[] stackMapTableEntries;
-    private Frame currentFrame;
+    private Frame[] currentFrame;
     private int currentIndex;
     
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; i++) {
-            int abstractType = currentFrame.getAbstractType(i);
-            switch (abstractType) {
-                case Frame.TOP:
-                    stackMapTableEntries[currentIndex++] = Opcodes.TOP;
-                    break;
-                case Frame.INTEGER:
-                    stackMapTableEntries[currentIndex++] = Opcodes.INTEGER;
-                    break;
-                case Frame.FLOAT:
-                    stackMapTableEntries[currentIndex++] = Opcodes.FLOAT; 
-                    break;
-                case Frame.DOUBLE:
-                    stackMapTableEntries[currentIndex++] = Opcodes.DOUBLE;
-                    break;
-                case Frame.LONG:
-                    stackMapTableEntries[currentIndex++] = Opcodes.LONG;
-                    break;
-                case Frame.NULL:
-                    stackMapTableEntries[currentIndex++] = Opcodes.NULL;
-                    break;
-                case Frame.UNINITIALIZED_THIS:
-                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED_THIS;
-                    break;
-                case Frame.OBJECT:
-                    stackMapTableEntries[currentIndex++] = Opcodes.OBJECT;
-                    putClass(currentFrame.getObjectType(i));
-                    break;
-                default:
-                    stackMapTableEntries[currentIndex++] = Opcodes.UNINITIALIZED;
-                    putUnsignedShort(currentFrame.getInitializationLabel(i).getOffset());
-                    break;
+            int abstractType = currentFrame[i].getType();
+            if (abstractType == Opcodes.TOP) {
+                stackMapTableEntries[currentIndex++] = 0;
+            } else if (abstractType == Opcodes.INTEGER) {
+                stackMapTableEntries[currentIndex++] = 1;
+            } else if (abstractType == Opcodes.FLOAT) {
+                stackMapTableEntries[currentIndex++] = 2;
+            } else if (abstractType == Opcodes.DOUBLE) {
+                stackMapTableEntries[currentIndex++] = 3;
+            } else if (abstractType == Opcodes.LONG) {
+                stackMapTableEntries[currentIndex++] = 4;
+            } else if (abstractType == Opcodes.NULL) {
+                stackMapTableEntries[currentIndex++] = 5;
+            } else if (abstractType == Opcodes.UNINITIALIZED_THIS) {
+                stackMapTableEntries[currentIndex++] = 6;
+            } else if (abstractType == Opcodes.OBJECT) {
+                stackMapTableEntries[currentIndex++] = 7;
+                // Write class info index
+                putShort(currentFrame[i].getObjectType());
+            } else {
+                // UNINITIALIZED
+                stackMapTableEntries[currentIndex++] = 8;
+                // Write offset
+                putShort(((Label) currentFrame[i].getObjectType()).getOffset());
             }
         }
     }
     
-    private void putClass(String className) {
-        // Implementation for writing class name
-    }
-    
-    private void putUnsignedShort(int value) {
-        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
-        stackMapTableEntries[currentIndex++] = (byte)value;
+    private void putShort(final int value) {
+        stackMapTableEntries[currentIndex++] = (byte) (value >>> 8);
+        stackMapTableEntries[currentIndex++] = (byte) value;
     }
 }

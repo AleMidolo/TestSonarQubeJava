@@ -40,9 +40,7 @@ public class BoxSplitter {
      * @return a pair with the two resulting boxes
      */
     public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
-        if (box == null) {
-            throw new IllegalArgumentException("Box cannot be null");
-        }
+        Objects.requireNonNull(box, "Box cannot be null");
 
         double halfHeight = box.getHeight() / 2.0;
         

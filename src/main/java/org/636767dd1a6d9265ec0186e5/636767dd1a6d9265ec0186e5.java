@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ChannelManager {
-    
     private List<Channels> targetChannels;
     private List<IConsumer> consumers;
 

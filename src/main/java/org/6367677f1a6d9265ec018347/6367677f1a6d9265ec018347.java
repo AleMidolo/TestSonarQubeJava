@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.net.Socket;
 
 public class ChatServer {
     private List<PrintWriter> clientWriters;
@@ -18,13 +18,13 @@ public class ChatServer {
         // Aggiungi newline per compatibilità telnet
         String telnetMessage = message + "\r\n";
         
-        // Itera su tutti i writer dei client
+        // Itera su tutti i client writer
         for (PrintWriter writer : clientWriters) {
             try {
                 writer.print(telnetMessage);
                 writer.flush();
             } catch (Exception e) {
-                // Rimuovi il writer se c'è un errore di invio
+                // Rimuovi client disconnessi
                 clientWriters.remove(writer);
             }
         }

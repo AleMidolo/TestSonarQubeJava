@@ -8,22 +8,23 @@ public class ConfigurationManager {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String configDirPath;
-        
+        File configDir;
+
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            configDirPath = userHome + File.separator + "Documenti e Impostazioni" + 
-                           File.separator + "lf5";
+            // Per Windows, crea la directory in "Documents and Settings"
+            configDir = new File(userHome + File.separator + "Documents and Settings" + 
+                               File.separator + "lf5");
         } else {
-            configDirPath = userHome + File.separator + "lf5";
+            // Per altri sistemi operativi, crea la directory direttamente in user.home
+            configDir = new File(userHome + File.separator + "lf5");
         }
 
-        File configDir = new File(configDirPath);
-        
+        // Crea la directory se non esiste
         if (!configDir.exists()) {
             boolean created = configDir.mkdirs();
             if (!created) {
                 throw new RuntimeException("Impossibile creare la directory di configurazione: " + 
-                                         configDirPath);
+                                         configDir.getAbsolutePath());
             }
         }
     }

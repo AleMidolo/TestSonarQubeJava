@@ -38,6 +38,7 @@ public class UTF8Decoder {
             int b3 = bb.get(i + 2) & 0xFF;
             int b4 = bb.get(i + 3) & 0xFF;
             int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            
             // Convert to surrogate pair for characters above U+FFFF
             sb.append(Character.highSurrogate(cp));
             sb.append(Character.lowSurrogate(cp));

@@ -1,5 +1,3 @@
-package org.apache.commons.lang3;
-
 public class StringUtils {
     /**
      * <p>Inverte una Stringa come per {@link StringBuilder#reverse()}.</p>
@@ -9,8 +7,7 @@ public class StringUtils {
      * StringUtils.reverse("")    = ""
      * StringUtils.reverse("bat") = "tab"
      * </pre>
-     * 
-     * @param str la Stringa da invertire, può essere null
+     * @param str  la Stringa da invertire, può essere null
      * @return la Stringa invertita, <code>null</code> se l'input è una Stringa null
      */
     public static String reverse(final String str) {

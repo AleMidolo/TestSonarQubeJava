@@ -10,13 +10,13 @@ public class BooleanUtils {
             return dEfault;
         }
         
-        String lowercaseValue = value.toLowerCase();
+        String trimmedValue = value.trim().toLowerCase();
         
-        if (lowercaseValue.equals("true")) {
+        if (trimmedValue.equals("true")) {
             return true;
         }
         
-        if (lowercaseValue.equals("false")) {
+        if (trimmedValue.equals("false")) {
             return false;
         }
         

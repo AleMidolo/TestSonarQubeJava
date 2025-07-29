@@ -25,7 +25,7 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
         AtmosphereHandler removed = handlers.remove(normalizedMapping);
         
         if (removed != null) {
-            // Clean up any resources associated with the handler
+            // Clean up any associated resources
             removed.destroy();
             
             // Update framework configuration

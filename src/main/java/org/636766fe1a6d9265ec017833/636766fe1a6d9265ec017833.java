@@ -7,7 +7,7 @@ public class FileUtils {
 
     /**
      * Pianifica la cancellazione di un file quando la JVM termina. Se il file è una directory, cancella lei e tutte le sottodirectory.
-     * @param file file o directory da cancellare, non deve essere {@code null}
+     * @param file  file o directory da cancellare, non deve essere {@code null}
      * @throws NullPointerException se il file è {@code null}
      * @throws IOException in caso di cancellazione non riuscita
      */

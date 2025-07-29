@@ -4,7 +4,7 @@ public class ArrayUtils {
      * en el nuevo array contengan solo letras minúsculas.
      * Utilizar este método para copiar arrays de cadenas significa que los cambios en el 
      * array src no modifican el array dst.
-     * @param src Array origen que se quiere copiar
+     * @param src Array origen que se desea copiar
      * @return Nuevo array con las cadenas en minúsculas
      */
     private static String[] copiarCadenas(final String[] src) {

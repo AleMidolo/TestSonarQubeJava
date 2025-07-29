@@ -6,7 +6,7 @@ package org.apache.commons.lang3;
 public class CharUtils {
 
     /**
-     * The cache of characters. We cache ASCII 7 bit characters (0-127) since they are commonly used.
+     * The cache of characters. Size of 128 covers all ASCII 7-bit characters.
      */
     private static final Character[] CHAR_CACHE = new Character[128];
 

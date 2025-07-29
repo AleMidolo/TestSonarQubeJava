@@ -18,7 +18,7 @@ public class FaceTraversal {
         }
         
         public void next(int direction) {
-            // Implementation to move to next node based on direction
+            // Implementation to move to next node
         }
     }
 

@@ -19,16 +19,14 @@ public class Graph {
 
         Node nextNode = nodeIterator.next();
         
-        // If current node is virtual, get its real counterpart
-        Node realCurrentNode = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        
-        // If next node is virtual, get its real counterpart
-        Node realNextNode = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        // Get real nodes if virtual
+        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
+        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
 
-        // Find edge connecting the real nodes
+        // Find edge connecting the nodes
         for (Edge edge : edges) {
-            if ((edge.getSource() == realCurrentNode && edge.getTarget() == realNextNode) ||
-                (edge.getSource() == realNextNode && edge.getTarget() == realCurrentNode)) {
+            if ((edge.getSource() == realCurrent && edge.getTarget() == realNext) ||
+                (edge.getSource() == realNext && edge.getTarget() == realCurrent)) {
                 currentNode = nextNode;
                 return edge;
             }
@@ -37,31 +35,30 @@ public class Graph {
         currentNode = nextNode;
         return null;
     }
+}
 
-    // Supporting classes
-    private class Node {
-        private boolean isVirtual;
-        private Node realNode;
+class Node {
+    private boolean isVirtual;
+    private Node realNode;
 
-        public boolean isVirtual() {
-            return isVirtual;
-        }
-
-        public Node getRealNode() {
-            return realNode;
-        }
+    public boolean isVirtual() {
+        return isVirtual;
     }
 
-    private class Edge {
-        private Node source;
-        private Node target;
+    public Node getRealNode() {
+        return realNode;
+    }
+}
 
-        public Node getSource() {
-            return source;
-        }
+class Edge {
+    private Node source;
+    private Node target;
 
-        public Node getTarget() {
-            return target;
-        }
+    public Node getSource() {
+        return source;
+    }
+
+    public Node getTarget() {
+        return target;
     }
 }

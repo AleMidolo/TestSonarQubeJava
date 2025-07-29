@@ -1,14 +1,15 @@
 import org.apache.log4j.spi.LoggingEvent;
 
-public class LogBuffer {
+public class CircularBuffer {
     private LoggingEvent[] buffer;
-    private int size;
-    private int currentIndex;
-    
-    public LogBuffer(int bufferSize) {
-        this.buffer = new LoggingEvent[bufferSize];
-        this.size = bufferSize;
-        this.currentIndex = 0;
+    private int head = 0;
+    private int tail = 0;
+    private int size = 0;
+    private int maxSize;
+
+    public CircularBuffer(int maxSize) {
+        this.maxSize = maxSize;
+        buffer = new LoggingEvent[maxSize];
     }
 
     /**
@@ -17,9 +18,10 @@ public class LogBuffer {
      * que el búfer tenga espacio libre.
      */
     public void put(LoggingEvent o) {
-        if (currentIndex < size) {
-            buffer[currentIndex] = o;
-            currentIndex++;
+        if (size < maxSize) {
+            buffer[tail] = o;
+            tail = (tail + 1) % maxSize;
+            size++;
         }
         // Si el buffer está lleno, el evento se descarta silenciosamente
     }

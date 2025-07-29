@@ -13,29 +13,26 @@ public class StringUtils {
             return null;
         }
         
-        // Mapa de caracteres escapados comunes en Java
-        Map<String, String> unescapeMap = new HashMap<>();
-        unescapeMap.put("\\n", "\n"); // nueva línea
-        unescapeMap.put("\\t", "\t"); // tab
-        unescapeMap.put("\\r", "\r"); // retorno de carro
-        unescapeMap.put("\\b", "\b"); // backspace
-        unescapeMap.put("\\f", "\f"); // form feed
-        unescapeMap.put("\\\"", "\""); // comilla doble
-        unescapeMap.put("\\'", "'");   // comilla simple
-        unescapeMap.put("\\\\", "\\"); // backslash
+        // Mapa de caracteres escapados de Java
+        Map<String, String> escapeChars = new HashMap<>();
+        escapeChars.put("\\n", "\n"); // nueva línea
+        escapeChars.put("\\t", "\t"); // tab
+        escapeChars.put("\\r", "\r"); // retorno de carro
+        escapeChars.put("\\b", "\b"); // backspace
+        escapeChars.put("\\f", "\f"); // form feed
+        escapeChars.put("\\\"", "\""); // comilla doble
+        escapeChars.put("\\'", "'");   // comilla simple
+        escapeChars.put("\\\\", "\\"); // backslash
         
         StringBuilder result = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
-            if (i < str.length() - 1 && str.charAt(i) == '\\') {
-                // Obtener la secuencia de escape (backslash + siguiente caracter)
-                String escape = str.substring(i, i + 2);
-                
-                // Si la secuencia está en el mapa, reemplazarla
-                if (unescapeMap.containsKey(escape)) {
-                    result.append(unescapeMap.get(escape));
-                    i++; // Saltar el siguiente caracter ya que fue procesado
+            if (str.charAt(i) == '\\' && i + 1 < str.length()) {
+                String escaped = str.substring(i, i + 2);
+                if (escapeChars.containsKey(escaped)) {
+                    result.append(escapeChars.get(escaped));
+                    i++; // saltar el siguiente carácter ya que fue procesado
                 } else {
-                    // Si no es una secuencia de escape válida, mantener el backslash
+                    // Si no es un carácter de escape válido, mantener el backslash
                     result.append(str.charAt(i));
                 }
             } else {

@@ -32,9 +32,15 @@ public class FileUtils {
 
         // Programar eliminación del archivo/directorio
         try {
-            file.deleteOnExit();
+            Path path = file.toPath();
+            if (Files.isSymbolicLink(path)) {
+                // Para enlaces simbólicos, solo eliminar el enlace
+                Files.deleteIfExists(path);
+            } else {
+                file.deleteOnExit();
+            }
         } catch (SecurityException e) {
-            throw new IOException("No se pudo programar la eliminación del archivo: " + file.getAbsolutePath(), e);
+            throw new IOException("No se pudo programar la eliminación del archivo: " + file, e);
         }
     }
 }

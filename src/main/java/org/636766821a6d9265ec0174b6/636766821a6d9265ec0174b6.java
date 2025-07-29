@@ -31,11 +31,11 @@ public class TypeResolver {
                 if (resolvedType instanceof Class) {
                     resolvedTypes[i] = (Class<?>) resolvedType;
                 } else {
-                    // Cannot resolve type variable
+                    // If we can't resolve the type variable, return null
                     return null;
                 }
             } else {
-                // Cannot resolve type argument
+                // If we encounter other type of Type, return null
                 return null;
             }
         }

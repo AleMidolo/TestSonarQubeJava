@@ -11,18 +11,15 @@ public class AppenderManager implements AppenderAttachable {
         appenders = new Vector<Appender>();
     }
 
-    /**
-     * Llama al método <code>doAppend</code> en todos los "appenders" adjuntos.
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         
-        if(appenders != null) {
+        if(appenders != null && !appenders.isEmpty()) {
             size = appenders.size();
-            for(Enumeration<Appender> enumeration = appenders.elements(); 
-                enumeration.hasMoreElements();) {
-                    Appender appender = enumeration.nextElement();
-                    appender.doAppend(event);
+            Enumeration<Appender> enumeration = appenders.elements();
+            while(enumeration.hasMoreElements()) {
+                Appender appender = enumeration.nextElement();
+                appender.doAppend(event);
             }
         }
         

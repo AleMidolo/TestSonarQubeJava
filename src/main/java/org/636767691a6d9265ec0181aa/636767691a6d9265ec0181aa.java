@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package org.utils;
 
 public class ArrayUtils {
     /**
@@ -10,6 +10,11 @@ public class ArrayUtils {
         if (array == null) {
             return 0;
         }
-        return Arrays.hashCode(array);
+        
+        int hash = 1;
+        for (long element : array) {
+            hash = 31 * hash + (int)(element ^ (element >>> 32));
+        }
+        return hash;
     }
 }

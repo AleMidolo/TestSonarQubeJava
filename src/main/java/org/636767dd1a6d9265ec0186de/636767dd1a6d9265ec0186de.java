@@ -9,7 +9,6 @@ public class CacheMetric {
      * @return true significa que esta métrica debe ser eliminada de la caché.
      */
     public boolean isExpired(long timestamp, long expiredThreshold) {
-        long timeDifference = timestamp - lastUpdateTime;
-        return timeDifference >= expiredThreshold;
+        return (timestamp - lastUpdateTime) >= expiredThreshold;
     }
 }

@@ -13,11 +13,13 @@ public class ArrayUtils {
         }
         
         String[] dst = new String[src.length];
+        
         for (int i = 0; i < src.length; i++) {
             if (src[i] != null) {
                 dst[i] = src[i].toLowerCase();
             }
         }
+        
         return dst;
     }
 }

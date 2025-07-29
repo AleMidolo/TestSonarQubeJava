@@ -1,5 +1,6 @@
 public class StringUtils {
-    /**
+    
+    /** 
      * Devuelve el número de ocurrencias de la subcadena {@code sub} en la cadena {@code str}.
      * @param str cadena en la que buscar. Devuelve 0 si es nula.
      * @param sub cadena a buscar. Devuelve 0 si es nula.

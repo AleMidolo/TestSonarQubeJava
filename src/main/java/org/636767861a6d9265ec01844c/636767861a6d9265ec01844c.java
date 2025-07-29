@@ -27,7 +27,7 @@ public class Logger {
         }
     }
     
-    // Inner class for Appender
+    // Inner class to represent an Appender
     private class Appender {
         private String name;
         

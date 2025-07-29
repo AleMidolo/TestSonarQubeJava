@@ -46,7 +46,7 @@ public class GraphUtils {
             }
             
             if (nextEdge == null) {
-                throw new IllegalArgumentException("Invalid tour: edges are not connected");
+                throw new IllegalArgumentException("Invalid tour: edges do not form a continuous path");
             }
             
             edgeList.add(nextEdge);
@@ -62,6 +62,6 @@ public class GraphUtils {
             weight += graph.getEdgeWeight(edge);
         }
         
-        return new GraphWalk<>(graph, vertexList, edgeList, weight);
+        return new GraphWalk<>(graph, vertexList, weight);
     }
 }

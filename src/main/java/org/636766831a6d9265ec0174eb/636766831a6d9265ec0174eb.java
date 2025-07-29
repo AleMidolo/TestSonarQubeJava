@@ -32,7 +32,9 @@ public class FileHandler {
 
     // Helper method for processing individual files
     private void processFile(File file) {
-        // Implementation for processing each file would go here
-        // Left empty as it wasn't specified in the requirements
+        // Implementation of file processing
+        if (file != null && file.exists()) {
+            // Add file processing logic here
+        }
     }
 }

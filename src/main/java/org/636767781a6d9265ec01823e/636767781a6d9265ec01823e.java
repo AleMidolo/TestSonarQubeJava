@@ -27,7 +27,7 @@ public class SocketAppender extends AppenderSkeleton {
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // If there's an error writing to client, remove them from lists
+                // If there's an error writing to client, remove them from the list
                 try {
                     clientWriters.get(i).close();
                     connectedClients.get(i).close();

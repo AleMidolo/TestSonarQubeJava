@@ -11,19 +11,17 @@ public class ClassPathUtil {
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided path is not a directory: " + dir);
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new IllegalArgumentException("La directory specificata non esiste o non è una directory valida.");
         }
 
-        File[] files = directory.listFiles((d, name) -> name.endsWith(".jar"));
+        File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
         if (files != null) {
             for (File file : files) {
                 try {
-                    URL url = file.toURI().toURL();
-                    cpV.add(url);
+                    cpV.add(file.toURI().toURL());
                 } catch (MalformedURLException e) {
-                    System.err.println("Error converting file to URL: " + file.getAbsolutePath());
-                    e.printStackTrace();
+                    throw new RuntimeException("Errore durante la conversione del file in URL: " + file.getAbsolutePath(), e);
                 }
             }
         }
@@ -34,7 +32,7 @@ public class ClassPathUtil {
         String directoryPath = "path/to/your/jar/directory";
         addToClassPath(classPath, directoryPath);
 
-        // Print the URLs added to the classpath
+        // Stampa gli URL aggiunti al classpath
         for (URL url : classPath) {
             System.out.println(url);
         }

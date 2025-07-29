@@ -9,37 +9,32 @@ public class PackedFieldChecker {
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Simuliamo la logica per determinare se il campo è compresso
-        // Ad esempio, potremmo leggere un byte o un flag da un input stream
+        // Simula la logica per determinare se il campo è compresso
+        // Ad esempio, potrebbe leggere un byte o un flag da un input stream
         // Qui assumiamo che se il byte letto è 1, il campo è compresso
         int packedFlag = readPackedFlag(); // Metodo fittizio per leggere un flag
 
         if (packedFlag == 1) {
             isPackedField = true;
             // Aggiorna lo stato interno per riflettere che i campi compressi stanno per essere letti
-            // Ad esempio, potremmo impostare un flag o inizializzare una struttura dati
+            System.out.println("Campo compresso rilevato. Stato interno aggiornato.");
         } else {
             isPackedField = false;
+            System.out.println("Nessun campo compresso rilevato.");
         }
     }
 
-    // Metodo fittizio per leggere un flag (simula la lettura da un input stream)
+    // Metodo fittizio per simulare la lettura di un flag
     private int readPackedFlag() throws IOException {
         // Simula la lettura di un byte da un input stream
-        // In un'implementazione reale, questo potrebbe essere un InputStream.read()
-        return 1; // Ritorna 1 per simulare un campo compresso
-    }
-
-    // Metodo per verificare se il campo è compresso
-    public boolean isPackedField() {
-        return isPackedField;
+        // In un'implementazione reale, questo potrebbe essere sostituito con una lettura effettiva
+        return 1; // Ritorna 1 per indicare che il campo è compresso
     }
 
     public static void main(String[] args) {
+        PackedFieldChecker checker = new PackedFieldChecker();
         try {
-            PackedFieldChecker checker = new PackedFieldChecker();
             checker.checkIfPackedField();
-            System.out.println("Is packed field: " + checker.isPackedField());
         } catch (IOException e) {
             e.printStackTrace();
         }

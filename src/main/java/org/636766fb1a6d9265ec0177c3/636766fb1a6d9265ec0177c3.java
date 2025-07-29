@@ -21,8 +21,8 @@ public class CharUtils {
         System.out.println(isAscii('a'));   // true
         System.out.println(isAscii('A'));   // true
         System.out.println(isAscii('3'));   // true
-        System.out.println(isAscii('-'));   // true
-        System.out.println(isAscii('\n'));  // true
-        System.out.println(isAscii('©'));   // false
+        System.out.println(isAscii('-'));    // true
+        System.out.println(isAscii('\n'));   // true
+        System.out.println(isAscii('©'));    // false
     }
 }

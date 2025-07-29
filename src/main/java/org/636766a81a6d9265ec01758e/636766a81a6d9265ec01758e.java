@@ -19,10 +19,9 @@ public class PrimeUtil {
             candidate += 2;
             if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
                 candidate = desiredCapacity;
-                while (!isPrime(candidate)) {
+                if (candidate % 2 == 0) {
                     candidate++;
                 }
-                return candidate;
             }
         }
         return candidate;

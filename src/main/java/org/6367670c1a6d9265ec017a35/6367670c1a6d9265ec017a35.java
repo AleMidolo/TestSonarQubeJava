@@ -26,8 +26,8 @@ public class StringUtils {
         // Test cases
         System.out.println(endsWith("HelloWorld", "world", true));  // true
         System.out.println(endsWith("HelloWorld", "world", false)); // false
-        System.out.println(endsWith(null, null, true));            // true
+        System.out.println(endsWith(null, null, true));             // true
         System.out.println(endsWith("HelloWorld", null, true));     // false
-        System.out.println(endsWith(null, "world", true));         // false
+        System.out.println(endsWith(null, "world", true));          // false
     }
 }

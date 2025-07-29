@@ -12,9 +12,10 @@ public class LastWriteTimeStamp {
     }
 
     /**
-     * Aggiorna l'ultimo timestamp di scrittura con il tempo corrente in millisecondi.
+     * Aggiorna il timestamp dell'ultima operazione di scrittura.
+     * @param timestamp il nuovo timestamp in millisecondi
      */
-    public void updateLastWriteTimeStamp() {
-        lastWriteTimeStamp.set(System.currentTimeMillis());
+    public void updateLastWriteTimeStamp(long timestamp) {
+        lastWriteTimeStamp.set(timestamp);
     }
 }

@@ -9,7 +9,7 @@ public class FileAdder {
      * Aggiungi i file specificati in ordine inverso.
      */
     private void addReverse(final File[] files) {
-        if (files == null) {
+        if (files == null || files.length == 0) {
             return;
         }
 
@@ -17,15 +17,13 @@ public class FileAdder {
         Collections.addAll(fileList, files);
         Collections.reverse(fileList);
 
-        // Example of processing the files in reverse order
+        // Example of processing the reversed list
         for (File file : fileList) {
-            // Add your logic here to process each file
-            System.out.println("Processing file: " + file.getName());
+            System.out.println(file.getName());
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
         FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);

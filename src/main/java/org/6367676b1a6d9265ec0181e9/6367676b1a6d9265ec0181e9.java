@@ -11,7 +11,7 @@ public class SubstringMatcher {
         if (str == null || substring == null) {
             return false;
         }
-        if (index < 0 || index + substring.length() > str.length()) {
+        if (index < 0 || index > str.length() - substring.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {

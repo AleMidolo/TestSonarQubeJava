@@ -11,12 +11,12 @@ public class ByteVector {
 
     public ByteVector putByteArray(final byte[] byteArrayValue, final int byteOffset, final int byteLength) {
         if (byteLength < 0) {
-            throw new IllegalArgumentException("byteLength must be non-negative");
+            throw new IllegalArgumentException("byteLength cannot be negative");
         }
         if (byteOffset < 0) {
-            throw new IllegalArgumentException("byteOffset must be non-negative");
+            throw new IllegalArgumentException("byteOffset cannot be negative");
         }
-        if (byteArrayValue != null && byteOffset + byteLength > byteArrayValue.length) {
+        if (byteArrayValue != null && (byteOffset + byteLength) > byteArrayValue.length) {
             throw new IllegalArgumentException("byteOffset + byteLength exceeds byteArrayValue length");
         }
 
@@ -26,7 +26,6 @@ public class ByteVector {
             // Fill with null bytes (0)
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
         } else {
-            // Copy the specified range from byteArrayValue
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
         }
 
@@ -41,7 +40,7 @@ public class ByteVector {
         }
     }
 
-    // Optional: Method to get the current buffer (for testing or debugging)
+    // Optional: Add a method to get the current buffer
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
     }

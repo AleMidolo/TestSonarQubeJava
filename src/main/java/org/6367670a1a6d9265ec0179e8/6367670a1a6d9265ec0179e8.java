@@ -18,14 +18,14 @@ public class DefensiveProgramming {
         return array;
     }
 
-    // Esempio di utilizzo
     public static void main(String[] args) {
-        Boolean[] array1 = null;
-        Boolean[] array2 = new Boolean[0];
-        Boolean[] array3 = {true, false, true};
+        // Test cases
+        Boolean[] nullArray = null;
+        Boolean[] emptyArray = new Boolean[0];
+        Boolean[] nonEmptyArray = {true, false, true};
 
-        System.out.println(nullToEmpty(array1) == EMPTY_BOOLEAN_ARRAY); // true
-        System.out.println(nullToEmpty(array2) == EMPTY_BOOLEAN_ARRAY); // true
-        System.out.println(nullToEmpty(array3) == array3); // true
+        System.out.println(nullToEmpty(nullArray) == EMPTY_BOOLEAN_ARRAY); // true
+        System.out.println(nullToEmpty(emptyArray) == EMPTY_BOOLEAN_ARRAY); // true
+        System.out.println(nullToEmpty(nonEmptyArray) == nonEmptyArray); // true
     }
 }

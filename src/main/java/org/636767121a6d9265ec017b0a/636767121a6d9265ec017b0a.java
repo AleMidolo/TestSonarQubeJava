@@ -7,5 +7,5 @@ private int parseEndOfLine(String headerPart, int end) {
         }
         index++;
     }
-    return -1; // Se non viene trovata la sequenza \r\n
+    return -1; // Return -1 if no end of line sequence is found
 }

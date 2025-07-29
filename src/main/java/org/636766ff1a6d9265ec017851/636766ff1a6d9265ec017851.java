@@ -16,7 +16,7 @@ public class ByteSearcher {
      */
     protected int findByte(byte value, int pos) {
         if (pos < 0 || pos >= buffer.limit()) {
-            throw new IllegalArgumentException("Posizione non valida");
+            throw new IndexOutOfBoundsException("Posizione di partenza non valida.");
         }
 
         for (int i = pos; i < buffer.limit(); i++) {
@@ -29,8 +29,7 @@ public class ByteSearcher {
     }
 
     public static void main(String[] args) {
-        byte[] data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        ByteBuffer buffer = ByteBuffer.wrap(data);
+        ByteBuffer buffer = ByteBuffer.wrap(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
         ByteSearcher searcher = new ByteSearcher(buffer);
 
         int position = searcher.findByte((byte) 5, 2);

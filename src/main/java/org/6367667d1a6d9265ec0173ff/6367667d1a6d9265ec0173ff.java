@@ -17,7 +17,7 @@ public class MeteorLookup {
         
         // Check if the meteorId is valid
         if (meteorId != null && !meteorId.isEmpty()) {
-            // Create and return a new Meteor instance
+            // Assuming Meteor has a constructor that takes a String ID
             return new Meteor(meteorId);
         } else {
             // Return null if no valid meteorId is found

@@ -20,14 +20,7 @@ public class StringUtils {
                 return true;
             }
         }
-        return false;
-    }
 
-    public static void main(String[] args) {
-        // Esempio di utilizzo
-        List<String> searchStrings = List.of("abc", "def", "ghi");
-        String input = "This is a test string with ABC in it.";
-        boolean result = containsAnyIgnoreCase(input, searchStrings);
-        System.out.println(result); // Output: true
+        return false;
     }
 }

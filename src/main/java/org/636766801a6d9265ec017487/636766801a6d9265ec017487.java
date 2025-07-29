@@ -3,25 +3,27 @@ import java.util.Map;
 
 public class TemplateEncoder {
 
+    /**
+     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
+     * @param s la stringa con zero o più nomi di parametri di template
+     * @return la stringa con i nomi di parametri di template codificati.
+     */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
 
-        // Create a map to store the characters to be encoded and their corresponding encoded values
+        // Mappa per la codifica dei caratteri speciali
         Map<Character, String> encodingMap = new HashMap<>();
         encodingMap.put('{', "%7B");
         encodingMap.put('}', "%7D");
 
         StringBuilder encodedString = new StringBuilder();
 
-        // Iterate through each character in the input string
         for (char c : s.toCharArray()) {
-            // If the character is in the encoding map, append its encoded value
             if (encodingMap.containsKey(c)) {
                 encodedString.append(encodingMap.get(c));
             } else {
-                // Otherwise, append the character as is
                 encodedString.append(c);
             }
         }
@@ -30,8 +32,8 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
+        String input = "This is a {template} string with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D string with %7Bparameters%7D.
     }
 }

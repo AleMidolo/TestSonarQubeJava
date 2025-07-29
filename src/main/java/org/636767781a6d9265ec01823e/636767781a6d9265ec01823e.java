@@ -17,26 +17,22 @@ public class LogAppender extends AppenderSkeleton {
     }
 
     private void acceptClients() {
-        while (true) {
-            try {
+        try {
+            while (true) {
                 Socket clientSocket = serverSocket.accept();
                 PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-                synchronized (clients) {
-                    clients.add(writer);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                clients.add(writer);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     protected void append(LoggingEvent event) {
         String message = layout.format(event);
-        synchronized (clients) {
-            for (PrintWriter writer : clients) {
-                writer.println(message);
-            }
+        for (PrintWriter client : clients) {
+            client.println(message);
         }
     }
 
@@ -46,6 +42,9 @@ public class LogAppender extends AppenderSkeleton {
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        for (PrintWriter client : clients) {
+            client.close();
         }
     }
 

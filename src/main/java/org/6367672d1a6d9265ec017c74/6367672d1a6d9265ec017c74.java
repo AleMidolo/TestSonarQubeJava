@@ -15,7 +15,7 @@ public class Solution {
         // Convert primitive int to Integer object since List stores objects
         Integer element = Integer.valueOf(val);
         
-        // Try to remove the element and return whether removal was successful
+        // Try to remove the element and return whether it was present
         return list.remove(element);
     }
 }

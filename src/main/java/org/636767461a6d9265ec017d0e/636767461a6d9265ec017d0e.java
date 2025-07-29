@@ -12,6 +12,11 @@ public class SuffixSumCalculator {
         List<Integer> suffixSum = new ArrayList<>();
         long total = 0;
         
+        // 如果输入列表为空，返回空列表和0
+        if (bounds == null || bounds.isEmpty()) {
+            return new Pair<>(suffixSum, 0L);
+        }
+        
         // 计算总和
         for (int num : bounds) {
             total += num;

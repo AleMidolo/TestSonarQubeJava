@@ -26,12 +26,12 @@ public class PropertyUtils {
             String varName = matcher.group(1);
             String replacement = props.getProperty(varName);
             
-            // If no replacement found, leave the original ${var} intact
+            // If no replacement found, keep original ${var}
             if (replacement == null) {
                 replacement = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid problems with $ and \ in the replacement
+            // Quote replacement string to avoid problems with $ and \
             matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);

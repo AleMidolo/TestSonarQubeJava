@@ -6,23 +6,31 @@ import org.atmosphere.cpr.AtmosphereInterceptorAdapter;
 
 public class TransportInterceptor extends AtmosphereInterceptorAdapter {
     
-    @Override
+    @Override 
     public Action inspect(AtmosphereResource r) {
+        // Get the transport type
         AtmosphereResource.TRANSPORT transport = r.transport();
         
+        // Suspend the resource based on transport type
         switch (transport) {
             case WEBSOCKET:
-                // WebSocket connections are automatically suspended
+                // For WebSocket, suspend indefinitely
+                r.suspend();
                 break;
+                
             case SSE:
             case STREAMING:
-            case LONG_POLLING:
-                if (!r.isSuspended()) {
-                    r.suspend();
-                }
+                // For Server-Sent Events and Streaming, suspend with a long timeout
+                r.suspend(-1L);
                 break;
+                
+            case LONG_POLLING:
+                // For Long-Polling, suspend with a timeout
+                r.suspend(30000); // 30 seconds timeout
+                break;
+                
             default:
-                // For other transports, no suspension needed
+                // For other transports, don't suspend
                 break;
         }
         

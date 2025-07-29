@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
+    
     /**
      * 以逆序添加指定的文件。
      */
@@ -12,26 +13,28 @@ public class FileHandler {
             return;
         }
         
-        // Convert array to list for easier reversal
+        // 创建一个列表来存储文件
         List<File> fileList = new ArrayList<>();
+        
+        // 将文件数组添加到列表中
         for (File file : files) {
-            fileList.add(file);
+            if (file != null) {
+                fileList.add(file);
+            }
         }
         
-        // Reverse the list
+        // 反转列表顺序
         Collections.reverse(fileList);
         
-        // Add files in reverse order
+        // 处理反转后的文件
         for (File file : fileList) {
-            if (file != null) {
-                add(file);
-            }
+            addFile(file);
         }
     }
     
-    // Helper method for adding individual files
-    private void add(File file) {
-        // Implementation of add method would go here
-        // This is just a stub
+    // 用于添加单个文件的辅助方法
+    private void addFile(File file) {
+        // 具体的文件添加实现
+        // 这里可以根据实际需求添加文件处理逻辑
     }
 }

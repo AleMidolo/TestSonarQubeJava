@@ -2,10 +2,10 @@ import java.io.IOException;
 import java.io.DataInputStream;
 
 public class DataReader {
-    private DataInputStream input;
+    private DataInputStream in;
     
-    public DataReader(DataInputStream input) {
-        this.input = input;
+    public DataReader(DataInputStream in) {
+        this.in = in;
     }
 
     /**
@@ -14,7 +14,7 @@ public class DataReader {
     @Override
     public String readString() throws IOException {
         // 首先读取字符串长度
-        int length = input.readInt();
+        int length = in.readInt();
         
         // 如果长度为-1,表示null值
         if (length == -1) {
@@ -25,7 +25,7 @@ public class DataReader {
         byte[] bytes = new byte[length];
         
         // 从流中读取字符串数据
-        input.readFully(bytes);
+        in.readFully(bytes);
         
         // 将byte数组转换为字符串并返回
         return new String(bytes, "UTF-8");

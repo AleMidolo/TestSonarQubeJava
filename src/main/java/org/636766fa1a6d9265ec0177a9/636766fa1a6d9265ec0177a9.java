@@ -1,12 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TypeInitializer {
-    // List to store initialized abstract types
-    private List<Integer> initializedTypes;
+    // Set to store initialized abstract types
+    private Set<Integer> initializedTypes;
     
     public TypeInitializer() {
-        initializedTypes = new ArrayList<>();
+        initializedTypes = new HashSet<>();
     }
 
     /**
@@ -14,13 +14,9 @@ public class TypeInitializer {
      * @param abstractType 一个调用了构造函数的抽象类型。
      */
     private void addInitializedType(final int abstractType) {
-        if (!initializedTypes.contains(abstractType)) {
-            initializedTypes.add(abstractType);
+        if (abstractType < 0) {
+            throw new IllegalArgumentException("Abstract type must be non-negative");
         }
-    }
-    
-    // Getter for initialized types
-    public List<Integer> getInitializedTypes() {
-        return new ArrayList<>(initializedTypes);
+        initializedTypes.add(abstractType);
     }
 }

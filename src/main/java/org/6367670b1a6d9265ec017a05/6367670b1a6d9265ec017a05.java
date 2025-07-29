@@ -1,17 +1,20 @@
 package org.apache.commons.lang3;
 
 /**
- * Character utility class that provides operations for working with characters.
+ * Character utility class that provides operations on char values.
  */
 public class CharUtils {
 
-    // ASCII 7 bit characters cache
-    private static final String[] CHAR_STRING_CACHE = new String[128];
+    // ASCII cache size
+    private static final int ASCII_CACHE_SIZE = 128;
+    
+    // Cache for ASCII characters
+    private static final String[] ASCII_CACHE = new String[ASCII_CACHE_SIZE];
 
-    // Initialize cache with commonly used characters
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        // Initialize cache for ASCII characters
+        for (int i = 0; i < ASCII_CACHE_SIZE; i++) {
+            ASCII_CACHE[i] = String.valueOf((char) i);
         }
     }
 
@@ -26,8 +29,8 @@ public class CharUtils {
      * @return 包含指定字符的字符串
      */
     public static String toString(final char ch) {
-        if (ch < 128) {
-            return CHAR_STRING_CACHE[ch];
+        if (ch < ASCII_CACHE_SIZE) {
+            return ASCII_CACHE[ch];
         }
         return String.valueOf(ch);
     }

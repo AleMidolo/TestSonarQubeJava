@@ -17,11 +17,11 @@ public class PrimeCalculator {
         while (!isPrime(num)) {
             num += 2;
             
-            // Check if error exceeds 11% for large numbers
+            // Check if error margin exceeds 11% for large numbers
             if (desiredCapacity >= 1000) {
-                double error = ((double)(num - desiredCapacity) / desiredCapacity) * 100;
-                if (error > 11.0) {
-                    // Return the last checked prime number less than 11% error
+                double errorMargin = ((double)(num - desiredCapacity) / desiredCapacity) * 100;
+                if (errorMargin > 11.0) {
+                    // Return the last prime number within acceptable range
                     while (!isPrime(num - 2)) {
                         num -= 2;
                     }

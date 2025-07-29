@@ -21,7 +21,7 @@ public class ChannelManager {
     }
 }
 
-// Required interfaces/classes for compilation
+// Required interfaces/classes
 interface IConsumer {
     void consume();
 }

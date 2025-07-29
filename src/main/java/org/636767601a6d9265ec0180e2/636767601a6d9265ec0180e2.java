@@ -1,12 +1,8 @@
+import java.util.*;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.alg.interfaces.MinimumSTCutAlgorithm;
-import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.Pair;
-
-import java.util.*;
 
 public class SeparatorFinder<V,E> {
 
@@ -28,40 +24,34 @@ public class SeparatorFinder<V,E> {
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // 创建一个新图，不包含当前边
-            Graph<V,E> subgraph = new SimpleGraph<>(graph.getEdgeFactory());
-            for (V vertex : graph.vertexSet()) {
-                subgraph.addVertex(vertex);
-            }
-            for (E e : graph.edgeSet()) {
-                if (!e.equals(edge)) {
-                    subgraph.addEdge(graph.getEdgeSource(e), graph.getEdgeTarget(e));
-                }
-            }
+            // 创建临时图用于查找分隔符
+            Graph<V,E> tempGraph = (Graph<V,E>)graph.clone();
+            tempGraph.removeEdge(edge);
             
-            // 计算最小割
-            MinimumSTCutAlgorithm<V,E> minCutAlg = new EdmondsKarpMFImpl<>(subgraph);
-            double minCut = minCutAlg.calculateMinCut(source, target);
+            // 获取源点和目标点的邻接点
+            Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
+            Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
             
-            // 如果存在分隔符
-            if (minCut < Double.POSITIVE_INFINITY) {
-                Set<V> sourcePartition = minCutAlg.getSourcePartition();
-                Set<V> targetPartition = minCutAlg.getSinkPartition();
-                
-                // 构建分隔符对列表
-                List<Pair<Integer,Integer>> separatorPairs = new ArrayList<>();
-                for (V v1 : sourcePartition) {
-                    for (V v2 : targetPartition) {
-                        if (graph.containsEdge(v1, v2)) {
-                            separatorPairs.add(new Pair<>(
-                                graph.vertexSet().stream().toList().indexOf(v1),
-                                graph.vertexSet().stream().toList().indexOf(v2)
-                            ));
-                        }
+            // 计算最小分隔符
+            List<Pair<Integer,Integer>> separators = new ArrayList<>();
+            ConnectivityInspector<V,E> inspector = new ConnectivityInspector<>(tempGraph);
+            
+            // 检查每对顶点之间的连通性
+            for (V s : sourceNeighbors) {
+                for (V t : targetNeighbors) {
+                    if (!inspector.pathExists(s, t)) {
+                        // 找到一个分隔符
+                        separators.add(new Pair<>(
+                            graph.vertexSet().indexOf(s),
+                            graph.vertexSet().indexOf(t)
+                        ));
                     }
                 }
-                
-                globalSeparators.add(new Pair<>(separatorPairs, edge));
+            }
+            
+            // 将该边的分隔符列表添加到全局列表中
+            if (!separators.isEmpty()) {
+                globalSeparators.add(new Pair<>(separators, edge));
             }
         }
         

@@ -19,12 +19,13 @@ public class BoundCalculator<K extends Comparable<K>> {
         // For each key, find its upper bound
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int upperBound = keys.size();
+            int upperBound = i;
             
-            // Compare with all other keys to find minimum upper bound
-            for (int j = 0; j < keys.size(); j++) {
-                if (i != j && currentKey.compareTo(keys.get(j)) <= 0) {
-                    upperBound = Math.min(upperBound, j);
+            // Compare with remaining keys to find minimum upper bound
+            for (int j = i + 1; j < keys.size(); j++) {
+                if (currentKey.compareTo(keys.get(j)) <= 0) {
+                    upperBound = j;
+                    break;
                 }
             }
             

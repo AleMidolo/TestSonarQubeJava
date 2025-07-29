@@ -11,44 +11,40 @@ public class BeanMapExample {
             throw new IllegalArgumentException("Il BeanMap fornito non può essere nullo.");
         }
 
-        BeanMap thisBeanMap = new BeanMap(this);
-
+        // Ottieni tutte le chiavi (nomi delle proprietà) dal BeanMap fornito
         for (Object key : map.keySet()) {
-            if (thisBeanMap.isWriteable((String) key) && map.isReadable((String) key)) {
+            // Verifica se la proprietà è scrivibile
+            if (map.isWriteable((String) key)) {
+                // Ottieni il valore della proprietà dal BeanMap fornito
                 Object value = map.get(key);
-                thisBeanMap.put(key, value);
+                // Imposta il valore della proprietà in questo BeanMap
+                this.put((String) key, value);
             }
         }
     }
 
-    // Esempio di utilizzo
-    public static void main(String[] args) {
-        // Creazione di un BeanMap per un oggetto di esempio
-        BeanMapExample example = new BeanMapExample();
-        BeanMap sourceMap = new BeanMap(new ExampleBean());
-
-        // Inserimento delle proprietà scrivibili
-        example.putAllWriteable(sourceMap);
-    }
-}
-
-class ExampleBean {
-    private String name;
-    private int age;
-
-    public String getName() {
-        return name;
+    // Metodo put per impostare il valore di una proprietà
+    private void put(String key, Object value) {
+        // Implementazione del metodo put per impostare il valore di una proprietà
+        // Questo metodo dovrebbe essere definito nella classe che contiene il BeanMap
+        // Esempio:
+        // this.beanMap.put(key, value);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    // Metodo per ottenere il BeanMap corrente
+    private BeanMap getBeanMap() {
+        // Implementazione del metodo per ottenere il BeanMap corrente
+        // Questo metodo dovrebbe essere definito nella classe che contiene il BeanMap
+        // Esempio:
+        // return this.beanMap;
+        return null; // Placeholder, sostituire con l'implementazione reale
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    // Metodo per impostare il BeanMap corrente
+    private void setBeanMap(BeanMap beanMap) {
+        // Implementazione del metodo per impostare il BeanMap corrente
+        // Questo metodo dovrebbe essere definito nella classe che contiene il BeanMap
+        // Esempio:
+        // this.beanMap = beanMap;
     }
 }

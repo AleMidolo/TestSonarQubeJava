@@ -1,24 +1,28 @@
 import java.util.*;
 
 class CategoryTree {
-    private Node root;
-
-    private class Node {
-        String name;
-        boolean active;
+    private static class Node {
+        int id;
         List<Node> children;
 
-        Node(String name, boolean active) {
-            this.name = name;
-            this.active = active;
+        Node(int id) {
+            this.id = id;
             this.children = new ArrayList<>();
         }
     }
 
+    private Node root;
+
+    public CategoryTree(int rootId) {
+        this.root = new Node(rootId);
+    }
+
+    /**
+     * Rimuove eventuali nodi inattivi dall'albero delle Categorie.
+     * Un nodo è considerato inattivo se non ha figli.
+     * @return il numero di nodi rimossi.
+     */
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
         return removeUnusedNodesHelper(root);
     }
 
@@ -27,31 +31,51 @@ class CategoryTree {
             return 0;
         }
 
-        int removedCount = 0;
+        int count = 0;
         Iterator<Node> iterator = node.children.iterator();
         while (iterator.hasNext()) {
             Node child = iterator.next();
-            if (!child.active) {
+            count += removeUnusedNodesHelper(child);
+            if (child.children.isEmpty()) {
                 iterator.remove();
-                removedCount++;
-            } else {
-                removedCount += removeUnusedNodesHelper(child);
+                count++;
             }
         }
 
-        return removedCount;
+        return count;
     }
 
-    // Example usage
-    public static void main(String[] args) {
-        CategoryTree tree = new CategoryTree();
-        // Populate the tree with nodes
-        // tree.root = new Node("Root", true);
-        // tree.root.children.add(new Node("Child1", false));
-        // tree.root.children.add(new Node("Child2", true));
-        // etc.
+    // Metodi di utilità per testare l'implementazione
+    public void addChild(int parentId, int childId) {
+        Node parent = findNode(root, parentId);
+        if (parent != null) {
+            parent.children.add(new Node(childId));
+        }
+    }
 
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedNodes + " unused nodes.");
+    private Node findNode(Node node, int id) {
+        if (node == null) {
+            return null;
+        }
+        if (node.id == id) {
+            return node;
+        }
+        for (Node child : node.children) {
+            Node found = findNode(child, id);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        CategoryTree tree = new CategoryTree(1);
+        tree.addChild(1, 2);
+        tree.addChild(1, 3);
+        tree.addChild(2, 4);
+        tree.addChild(3, 5);
+
+        System.out.println("Nodi rimossi: " + tree.removeUnusedNodes());
     }
 }

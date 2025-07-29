@@ -1,10 +1,6 @@
 public class FrameVisitor {
     private Frame currentFrame;
 
-    public FrameVisitor(Frame currentFrame) {
-        this.currentFrame = currentFrame;
-    }
-
     /**
      * Inizia la visita di un nuovo frame della mappa dello stack, memorizzato in {@link #currentFrame}.
      * @param offset   l'offset del bytecode dell'istruzione a cui corrisponde il frame.
@@ -13,31 +9,25 @@ public class FrameVisitor {
      * @return l'indice del prossimo elemento da scrivere in questo frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Inizializza il nuovo frame con i parametri forniti
         currentFrame = new Frame(offset, numLocal, numStack);
-
-        // Restituisce l'indice del prossimo elemento da scrivere nel frame
-        return currentFrame.getNextElementIndex();
+        return currentFrame.getNextIndex();
     }
 
-    // Classe interna per rappresentare un frame
     private static class Frame {
         private final int offset;
         private final int numLocal;
         private final int numStack;
-        private int nextElementIndex;
+        private int nextIndex;
 
         public Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
             this.numLocal = numLocal;
             this.numStack = numStack;
-            this.nextElementIndex = 0; // Inizialmente, il prossimo elemento è il primo
+            this.nextIndex = 0; // Inizializza l'indice del prossimo elemento da scrivere
         }
 
-        public int getNextElementIndex() {
-            return nextElementIndex;
+        public int getNextIndex() {
+            return nextIndex++;
         }
-
-        // Metodi per gestire il frame (aggiungere elementi, ecc.)
     }
 }

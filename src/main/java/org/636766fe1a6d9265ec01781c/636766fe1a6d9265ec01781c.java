@@ -13,24 +13,26 @@ public class CharUtils {
     }
 
     /**
-     * <p>Converte il carattere in un oggetto Character.</p>
-     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto Character ogni volta.</p>
-     * <pre>
-     * CharUtils.toCharacterObject(' ')  = ' '
-     * CharUtils.toCharacterObject('A')  = 'A'
+     * <p>Converte il carattere in un oggetto Character.</p> 
+     * <p>Per i caratteri ASCII a 7 bit, utilizza una cache che restituirà lo stesso oggetto Character ogni volta.</p> 
+     * <pre> 
+     * CharUtils.toCharacterObject(' ')  = ' ' 
+     * CharUtils.toCharacterObject('A')  = 'A' 
      * </pre>
      * @param ch  il carattere da convertire
      * @return un oggetto Character del carattere specificato
      */
     public static Character toCharacterObject(final char ch) {
-        if (ch < 128) {
+        // Se il carattere è nella cache, restituisci l'oggetto dalla cache
+        if (CHAR_CACHE.containsKey(ch)) {
             return CHAR_CACHE.get(ch);
         }
+        // Altrimenti, crea un nuovo oggetto Character
         return ch;
     }
 
     public static void main(String[] args) {
-        System.out.println(toCharacterObject(' '));  // Output:  
-        System.out.println(toCharacterObject('A'));  // Output: A
+        System.out.println(toCharacterObject(' '));  // Output: ' '
+        System.out.println(toCharacterObject('A'));  // Output: 'A'
     }
 }

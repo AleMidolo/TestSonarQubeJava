@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Aggiunge al <code>toString</code> i dettagli di un array di <code>byte</code>.
  * @param buffer  il <code>StringBuffer</code> da popolare
@@ -10,5 +8,13 @@ protected void appendDetail(StringBuffer buffer, String fieldName, byte[] array)
     if (array == null) {
         throw new IllegalArgumentException("L'array non può essere null");
     }
-    buffer.append(Arrays.toString(array));
+    
+    buffer.append('[');
+    for (int i = 0; i < array.length; i++) {
+        if (i > 0) {
+            buffer.append(", ");
+        }
+        buffer.append(array[i]);
+    }
+    buffer.append(']');
 }

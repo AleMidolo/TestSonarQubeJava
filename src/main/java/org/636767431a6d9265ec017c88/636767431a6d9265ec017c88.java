@@ -21,7 +21,7 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, compute the insertion point
+                // If the key is not found, binarySearch returns (-(insertion point) - 1)
                 index = -index - 1;
             }
             lowerBounds.add(index);

@@ -1,8 +1,6 @@
-import java.util.Objects;
+public class ArrayUtils {
 
-public class DefensiveProgramming {
-
-    // Public static empty array reference
+    // Array vuoto pubblico e statico per ottimizzazione della memoria
     public static final Double[] EMPTY_DOUBLE_ARRAY = new Double[0];
 
     /**
@@ -18,16 +16,5 @@ public class DefensiveProgramming {
             return EMPTY_DOUBLE_ARRAY;
         }
         return array;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        Double[] array1 = null;
-        Double[] array2 = new Double[0];
-        Double[] array3 = new Double[]{1.0, 2.0, 3.0};
-
-        System.out.println(Objects.toString(nullToEmpty(array1))); // Output: []
-        System.out.println(Objects.toString(nullToEmpty(array2))); // Output: []
-        System.out.println(Objects.toString(nullToEmpty(array3))); // Output: [1.0, 2.0, 3.0]
     }
 }

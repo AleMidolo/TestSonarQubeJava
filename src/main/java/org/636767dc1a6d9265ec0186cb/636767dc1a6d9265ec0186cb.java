@@ -5,15 +5,15 @@ import java.nio.file.Paths;
 public class ConfigInitializer {
 
     /**
-     * Inizializza la configurazione, ad esempio controlla il percorso di distribuzione
+     * Inizializza la configurazione, ad esempio controlla il percorso di distribuzione.
      */
     public void init() {
         // Controlla se il percorso di distribuzione esiste
         Path distributionPath = Paths.get("path/to/distribution");
         if (Files.exists(distributionPath)) {
-            System.out.println("Il percorso di distribuzione esiste: " + distributionPath.toAbsolutePath());
+            System.out.println("Il percorso di distribuzione esiste: " + distributionPath);
         } else {
-            System.out.println("Il percorso di distribuzione non esiste: " + distributionPath.toAbsolutePath());
+            System.out.println("Il percorso di distribuzione non esiste: " + distributionPath);
         }
     }
 

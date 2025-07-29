@@ -7,21 +7,18 @@ public class ByteOutputStream extends OutputStream {
     private int pos;
     
     public ByteOutputStream() {
-        buffer = new byte[32];
+        buffer = new byte[32]; // Initial buffer size
         pos = 0;
     }
     
+    @Override
     public void write(byte[] b) throws IOException {
         if (b == null) {
             throw new NullPointerException();
         }
         
         // Ensure buffer has enough capacity
-        if (pos + b.length > buffer.length) {
-            byte[] newBuffer = new byte[Math.max(buffer.length * 2, pos + b.length)];
-            System.arraycopy(buffer, 0, newBuffer, 0, pos);
-            buffer = newBuffer;
-        }
+        ensureCapacity(pos + b.length);
         
         // Copy bytes to buffer
         System.arraycopy(b, 0, buffer, pos, b.length);
@@ -30,12 +27,17 @@ public class ByteOutputStream extends OutputStream {
     
     @Override
     public void write(int b) throws IOException {
-        if (pos >= buffer.length) {
-            byte[] newBuffer = new byte[buffer.length * 2];
-            System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+        ensureCapacity(pos + 1);
+        buffer[pos++] = (byte)b;
+    }
+    
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+            byte[] newBuffer = new byte[newCapacity];
+            System.arraycopy(buffer, 0, newBuffer, 0, pos);
             buffer = newBuffer;
         }
-        buffer[pos++] = (byte)b;
     }
     
     public byte[] toByteArray() {

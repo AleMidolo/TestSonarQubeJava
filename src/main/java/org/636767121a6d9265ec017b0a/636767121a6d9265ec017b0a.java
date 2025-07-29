@@ -1,4 +1,4 @@
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 
 public class HeaderParser {
     /**
@@ -7,19 +7,18 @@ public class HeaderParser {
      * @param end Index of the last byte, which has yet been processed.
      * @return Index of the \r\n sequence, which indicates end of line.
      */
-    public int skipLine(byte[] headerPart, int end) {
+    public static int skipLine(byte[] headerPart, int end) {
         int pos = end;
         
         // Search for \r\n sequence
         while (pos + 1 < headerPart.length) {
-            // Check for CRLF (\r\n) sequence
             if (headerPart[pos] == '\r' && headerPart[pos + 1] == '\n') {
                 return pos;
             }
             pos++;
         }
         
-        // If we reach here, no CRLF was found
-        return -1;
+        // If we reach the end without finding \r\n, return length
+        return headerPart.length;
     }
 }

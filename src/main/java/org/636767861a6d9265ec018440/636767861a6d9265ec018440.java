@@ -15,21 +15,9 @@ public class NameAbbreviator {
         // Add first character
         buf.append(Character.toUpperCase(nameStart.charAt(0)));
 
-        // Find first vowel after first char
-        int length = nameStart.length();
-        for (int i = 1; i < length; i++) {
-            char c = Character.toLowerCase(nameStart.charAt(i));
-            if (isVowel(c)) {
-                // Add consonants up to first vowel
-                buf.append(c);
-                break;
-            } else {
-                buf.append(c);
-            }
+        // Add period if more than one character
+        if (nameStart.length() > 1) {
+            buf.append('.');
         }
-    }
-
-    private static boolean isVowel(char c) {
-        return "aeiou".indexOf(Character.toLowerCase(c)) != -1;
     }
 }

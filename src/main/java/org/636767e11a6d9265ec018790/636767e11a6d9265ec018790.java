@@ -10,7 +10,7 @@ public class ThreadSnapshotLoader {
     /**
      * load thread snapshots in appointing time range
      * @param startTime start time in milliseconds
-     * @param endTime end time in milliseconds 
+     * @param endTime end time in milliseconds  
      * @return List of ThreadInfo objects containing thread snapshots
      */
     public List<ThreadInfo> loadThreadSnapshots(long startTime, long endTime) {
@@ -35,11 +35,10 @@ public class ThreadSnapshotLoader {
             ThreadInfo threadInfo = threadMXBean.getThreadInfo(threadId);
             
             if (threadInfo != null) {
-                // Get thread start time (approximate)
                 long threadStartTime = threadInfo.getThreadState() == Thread.State.NEW ? 
-                    currentTime : threadInfo.getThreadCpuTime();
+                    System.currentTimeMillis() : threadInfo.getThreadCpuTime();
                 
-                // Only add threads that were active in the specified time range
+                // Only add threads that fall within the time range
                 if (threadStartTime >= startTime && threadStartTime <= endTime) {
                     snapshots.add(threadInfo);
                 }

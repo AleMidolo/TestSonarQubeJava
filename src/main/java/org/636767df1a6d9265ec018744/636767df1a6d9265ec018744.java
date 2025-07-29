@@ -16,10 +16,16 @@ public class TimeRangeDivider {
     protected List<TimeRange> construirRangosDeTiempo(long inicio, long fin) {
         List<TimeRange> rangos = new ArrayList<>();
 
-        while (inicio < fin) {
-            long endTime = Math.min(inicio + FETCH_DATA_DURATION, fin);
-            rangos.add(new TimeRange(inicio, endTime));
-            inicio = endTime;
+        long tiempoActual = inicio;
+
+        while (tiempoActual < fin) {
+            long tiempoSiguiente = tiempoActual + FETCH_DATA_DURATION;
+            if (tiempoSiguiente > fin) {
+                tiempoSiguiente = fin;
+            }
+
+            rangos.add(new TimeRange(tiempoActual, tiempoSiguiente));
+            tiempoActual = tiempoSiguiente;
         }
 
         return rangos;
@@ -27,27 +33,27 @@ public class TimeRangeDivider {
 
     // Clase interna para representar un rango de tiempo
     public static class TimeRange {
-        private final long startTime;
-        private final long endTime;
+        private final long inicio;
+        private final long fin;
 
-        public TimeRange(long startTime, long endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
+        public TimeRange(long inicio, long fin) {
+            this.inicio = inicio;
+            this.fin = fin;
         }
 
-        public long getStartTime() {
-            return startTime;
+        public long getInicio() {
+            return inicio;
         }
 
-        public long getEndTime() {
-            return endTime;
+        public long getFin() {
+            return fin;
         }
 
         @Override
         public String toString() {
             return "TimeRange{" +
-                    "startTime=" + startTime +
-                    ", endTime=" + endTime +
+                    "inicio=" + inicio +
+                    ", fin=" + fin +
                     '}';
         }
     }

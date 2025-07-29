@@ -24,4 +24,13 @@ public class CollectionUtils {
 
         return null;
     }
+
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Collection<String> source = java.util.List.of("apple", "banana", "cherry");
+        Collection<String> candidates = java.util.List.of("banana", "grape", "cherry");
+
+        Object result = findFirstMatch(source, candidates);
+        System.out.println("Primer elemento encontrado: " + result); // Debería imprimir "banana"
+    }
 }

@@ -3,8 +3,8 @@ import java.util.function.Predicate;
 public class OuterFaceCirculator {
     private Node current;
 
-    public OuterFaceCirculator(Node node) {
-        this.current = node;
+    public OuterFaceCirculator(Node start) {
+        this.current = start;
     }
 
     public Node getCurrent() {
@@ -12,14 +12,12 @@ public class OuterFaceCirculator {
     }
 
     public void next() {
-        // Implement the logic to move to the next node in the outer face
-        // This is a placeholder and should be replaced with actual traversal logic
+        // Assuming Node has a method getNext(int dir) to get the next node in the given direction
         current = current.getNext(dir);
     }
 
     public void previous() {
-        // Implement the logic to move to the previous node in the outer face
-        // This is a placeholder and should be replaced with actual traversal logic
+        // Assuming Node has a method getPrevious(int dir) to get the previous node in the given direction
         current = current.getPrevious(dir);
     }
 }
@@ -29,12 +27,12 @@ public class Node {
     private Node previous;
 
     public Node getNext(int dir) {
-        // Implement the logic to get the next node based on direction
+        // Implementation to get the next node based on direction
         return next;
     }
 
     public Node getPrevious(int dir) {
-        // Implement the logic to get the previous node based on direction
+        // Implementation to get the previous node based on direction
         return previous;
     }
 }

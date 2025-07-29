@@ -16,78 +16,83 @@ class Category {
 
 class TreeNode {
     Category category;
-    List<TreeNode> children;
+    TreeNode left;
+    TreeNode right;
 
-    public TreeNode(Category category) {
+    TreeNode(Category category) {
         this.category = category;
-        this.children = new ArrayList<>();
-    }
-
-    public void addChild(TreeNode child) {
-        children.add(child);
-    }
-
-    public List<TreeNode> getChildren() {
-        return children;
-    }
-
-    public Category getCategory() {
-        return category;
+        this.left = null;
+        this.right = null;
     }
 }
 
-public class Tree {
+public class CategoryTree {
     private TreeNode root;
 
-    public Tree(TreeNode root) {
+    public CategoryTree(TreeNode root) {
         this.root = root;
     }
 
     protected int removeUnusedNodes() {
-        if (root == null) {
-            return 0;
-        }
-        return removeUnusedNodesHelper(root);
+        int[] count = new int[1]; // To keep track of the number of nodes removed
+        root = removeUnusedNodesHelper(root, count);
+        return count[0];
     }
 
-    private int removeUnusedNodesHelper(TreeNode node) {
-        int count = 0;
-        List<TreeNode> children = node.getChildren();
-        Iterator<TreeNode> iterator = children.iterator();
+    private TreeNode removeUnusedNodesHelper(TreeNode node, int[] count) {
+        if (node == null) {
+            return null;
+        }
 
-        while (iterator.hasNext()) {
-            TreeNode child = iterator.next();
-            if (!child.getCategory().isActive()) {
-                iterator.remove();
-                count++;
-            } else {
-                count += removeUnusedNodesHelper(child);
+        // Recursively process the left and right subtrees
+        node.left = removeUnusedNodesHelper(node.left, count);
+        node.right = removeUnusedNodesHelper(node.right, count);
+
+        // If the current node is inactive, remove it
+        if (!node.category.isActive()) {
+            count[0]++;
+            // If the node has no children, return null
+            if (node.left == null && node.right == null) {
+                return null;
             }
+            // If the node has only one child, return that child
+            if (node.left == null) {
+                return node.right;
+            }
+            if (node.right == null) {
+                return node.left;
+            }
+            // If the node has two children, find the in-order successor (smallest in the right subtree)
+            TreeNode successor = findMin(node.right);
+            node.category = successor.category;
+            node.right = removeUnusedNodesHelper(node.right, count);
         }
 
-        return count;
+        return node;
     }
 
+    private TreeNode findMin(TreeNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    // Example usage
     public static void main(String[] args) {
-        // Example usage
-        Category rootCategory = new Category();
-        rootCategory.setActive(true);
+        // Create a sample tree
+        TreeNode root = new TreeNode(new Category());
+        root.left = new TreeNode(new Category());
+        root.right = new TreeNode(new Category());
+        root.left.left = new TreeNode(new Category());
+        root.left.right = new TreeNode(new Category());
 
-        TreeNode rootNode = new TreeNode(rootCategory);
+        // Set some nodes as inactive
+        root.left.category.setActive(false);
+        root.left.right.category.setActive(false);
 
-        Category childCategory1 = new Category();
-        childCategory1.setActive(false);
-        TreeNode childNode1 = new TreeNode(childCategory1);
-
-        Category childCategory2 = new Category();
-        childCategory2.setActive(true);
-        TreeNode childNode2 = new TreeNode(childCategory2);
-
-        rootNode.addChild(childNode1);
-        rootNode.addChild(childNode2);
-
-        Tree tree = new Tree(rootNode);
+        CategoryTree tree = new CategoryTree(root);
         int removedCount = tree.removeUnusedNodes();
-        System.out.println("Removed " + removedCount + " unused nodes.");
+        System.out.println("Number of nodes removed: " + removedCount);
     }
 }

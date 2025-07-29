@@ -16,4 +16,9 @@ public class CustomSet {
     public boolean remove(int val) {
         return set.remove(val);
     }
+
+    // Método adicional para agregar elementos al conjunto (opcional)
+    public void add(int val) {
+        set.add(val);
+    }
 }

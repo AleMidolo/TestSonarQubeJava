@@ -1,8 +1,8 @@
 import java.util.Objects;
 
-public class ArrayUtils {
+public class DefensiveProgramming {
 
-    // Public static empty array reference
+    // Public static empty array reference for optimization
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 
     /**
@@ -18,5 +18,16 @@ public class ArrayUtils {
             return EMPTY_CHARACTER_ARRAY;
         }
         return array;
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        Character[] nullArray = null;
+        Character[] emptyArray = new Character[0];
+        Character[] nonEmptyArray = {'a', 'b', 'c'};
+
+        System.out.println(nullToEmpty(nullArray).length);      // Output: 0
+        System.out.println(nullToEmpty(emptyArray).length);    // Output: 0
+        System.out.println(nullToEmpty(nonEmptyArray).length); // Output: 3
     }
 }

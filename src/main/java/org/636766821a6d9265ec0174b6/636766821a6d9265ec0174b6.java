@@ -48,9 +48,7 @@ public class TypeResolver {
             }
         };
 
-        Class<?> targetType = List.class;
-        Class<?>[] resolvedArgs = resolveArguments(genericType, targetType);
-
+        Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
         if (resolvedArgs != null) {
             for (Class<?> arg : resolvedArgs) {
                 System.out.println(arg.getSimpleName());

@@ -13,11 +13,9 @@ public class ObjectToStringConverter {
     public static void main(String[] args) {
         // Ejemplo de uso
         Object obj1 = null;
-        Object obj2 = "Hola, mundo!";
-        Object obj3 = 12345;
+        Object obj2 = new Integer(42);
 
         System.out.println(toString(obj1)); // Debería imprimir "null"
-        System.out.println(toString(obj2)); // Debería imprimir "Hola, mundo!"
-        System.out.println(toString(obj3)); // Debería imprimir "12345"
+        System.out.println(toString(obj2)); // Debería imprimir "42"
     }
 }

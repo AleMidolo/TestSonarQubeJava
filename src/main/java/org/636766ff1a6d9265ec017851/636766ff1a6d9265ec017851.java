@@ -6,7 +6,7 @@
  */
 protected int findByte(byte value, int pos) {
     if (pos < 0 || pos >= buffer.length) {
-        throw new IllegalArgumentException("La posición inicial debe estar dentro del rango del buffer.");
+        throw new IllegalArgumentException("Posición inicial fuera de los límites del buffer.");
     }
 
     for (int i = pos; i < buffer.length; i++) {

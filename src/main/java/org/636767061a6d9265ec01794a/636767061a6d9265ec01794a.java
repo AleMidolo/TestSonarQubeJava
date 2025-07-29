@@ -13,18 +13,18 @@ public class FileUtils {
         }
 
         int lastSeparatorIndex = indexOfLastSeparator(filename);
-        int lastDotIndex = filename.lastIndexOf('.');
+        int extensionIndex = filename.lastIndexOf('.');
 
-        if (lastDotIndex > lastSeparatorIndex) {
-            return lastDotIndex;
+        if (lastSeparatorIndex > extensionIndex) {
+            return -1;
         }
 
-        return -1;
+        return extensionIndex;
     }
 
     /**
      * Devuelve el índice del último separador de directorio en el nombre del archivo.
-     * @param filename  el nombre del archivo en el que encontrar el último separador de ruta, null devuelve -1
+     * @param filename el nombre del archivo, null devuelve -1
      * @return el índice del último separador de directorio, o -1 si no existe tal carácter
      */
     private static int indexOfLastSeparator(String filename) {
@@ -39,8 +39,9 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        String filename = "path/to/file.txt";
-        System.out.println(indexOfExtension(filename)); // Debería imprimir 13
+        System.out.println(indexOfExtension("example/file.txt")); // 12
+        System.out.println(indexOfExtension("example\\file.txt")); // 12
+        System.out.println(indexOfExtension("example/file")); // -1
+        System.out.println(indexOfExtension(null)); // -1
     }
 }

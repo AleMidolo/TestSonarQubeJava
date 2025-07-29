@@ -2,11 +2,11 @@ public class CharacterArrayConverter {
 
     /**
      * Convierte un array de objetos "Character" a primitivos.
-     * Este método devuelve null para un arreglo de entrada null.
+     * Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.
      *
-     * @param array un arreglo de Character, puede ser null
-     * @return un arreglo de char, null si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es null
+     * @param array un arreglo de <code>Character</code>, puede ser <code>null</code>
+     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
+     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
      */
     public static char[] toPrimitive(final Character[] array) {
         if (array == null) {
@@ -15,7 +15,7 @@ public class CharacterArrayConverter {
         char[] result = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                throw new NullPointerException("El contenido del arreglo no puede ser null.");
+                throw new NullPointerException("El contenido del arreglo no puede ser nulo.");
             }
             result[i] = array[i];
         }

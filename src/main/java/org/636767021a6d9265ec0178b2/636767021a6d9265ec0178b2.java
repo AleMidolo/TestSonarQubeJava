@@ -1,10 +1,11 @@
 import java.util.Stack;
 
-public class FrameStack {
-    private Stack<String> frameStack;
+public class FrameStackHandler {
 
-    public FrameStack() {
-        frameStack = new Stack<>();
+    private Stack<Object> frameStack;
+
+    public FrameStackHandler() {
+        this.frameStack = new Stack<>();
     }
 
     /**
@@ -13,47 +14,70 @@ public class FrameStack {
      */
     private void pop(final String descriptor) {
         if (descriptor == null || descriptor.isEmpty()) {
-            return;
+            throw new IllegalArgumentException("Descriptor cannot be null or empty");
         }
 
-        // Si el descriptor es un método, extraemos los tipos de argumento
+        // Determine the number of arguments based on the descriptor
+        int argumentCount = 0;
         if (descriptor.startsWith("(")) {
+            // Method descriptor: count the number of arguments
             int endIndex = descriptor.indexOf(')');
             if (endIndex == -1) {
-                return;
+                throw new IllegalArgumentException("Invalid method descriptor");
             }
-            String argumentTypes = descriptor.substring(1, endIndex);
-            String[] types = argumentTypes.split(";");
-
-            for (String type : types) {
-                if (!type.isEmpty()) {
-                    frameStack.pop();
-                }
-            }
+            String args = descriptor.substring(1, endIndex);
+            argumentCount = countArguments(args);
         } else {
-            // Si es un tipo simple, solo extraemos uno
+            // Single type descriptor: treat as one argument
+            argumentCount = 1;
+        }
+
+        // Pop the required number of elements from the stack
+        for (int i = 0; i < argumentCount; i++) {
+            if (frameStack.isEmpty()) {
+                throw new IllegalStateException("Frame stack is empty");
+            }
             frameStack.pop();
         }
     }
 
-    // Método para agregar elementos a la pila (solo para propósitos de prueba)
-    public void push(String type) {
-        frameStack.push(type);
+    /**
+     * Counts the number of arguments in a method descriptor's argument list.
+     * @param args the argument part of the method descriptor
+     * @return the number of arguments
+     */
+    private int countArguments(String args) {
+        int count = 0;
+        int i = 0;
+        while (i < args.length()) {
+            char c = args.charAt(i);
+            if (c == 'L') {
+                // Object type: skip until ';'
+                int end = args.indexOf(';', i);
+                if (end == -1) {
+                    throw new IllegalArgumentException("Invalid object type in descriptor");
+                }
+                i = end + 1;
+            } else if (c == '[') {
+                // Array type: skip the array brackets
+                i++;
+            } else {
+                // Primitive type: move to the next character
+                i++;
+            }
+            count++;
+        }
+        return count;
     }
 
-    // Método para obtener el tamaño de la pila (solo para propósitos de prueba)
-    public int size() {
-        return frameStack.size();
-    }
-
+    // Example usage
     public static void main(String[] args) {
-        FrameStack stack = new FrameStack();
-        stack.push("int");
-        stack.push("float");
-        stack.push("double");
+        FrameStackHandler handler = new FrameStackHandler();
+        handler.frameStack.push("arg1");
+        handler.frameStack.push("arg2");
+        handler.frameStack.push("arg3");
 
-        System.out.println("Tamaño de la pila antes de pop: " + stack.size());
-        stack.pop("(I;F;D)V");
-        System.out.println("Tamaño de la pila después de pop: " + stack.size());
+        handler.pop("(Ljava/lang/String;I)V"); // Pops 2 arguments
+        System.out.println(handler.frameStack); // Should print [arg1]
     }
 }

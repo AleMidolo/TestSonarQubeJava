@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConverterRegistry {
-
     private final Map<Class<?>, Converter> registry = new HashMap<>();
 
     /**

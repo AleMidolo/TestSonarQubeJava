@@ -14,25 +14,18 @@ public class MeteorRetriever {
             return null;
         }
         
-        try {
-            // Try to get existing Meteor instance
-            Meteor meteor = Meteor.build(r);
-            if (meteor != null) {
-                return meteor;
-            }
-            
-            // Create new Meteor instance if none exists
-            AtmosphereResource resource = (AtmosphereResource) 
-                r.getAttribute(AtmosphereResource.ATMOSPHERE_RESOURCE);
-                
-            if (resource != null) {
-                return Meteor.build(resource);
-            }
-            
-            return null;
-            
-        } catch (Exception e) {
+        // Try to get existing Meteor instance
+        Meteor meteor = Meteor.build(r);
+        
+        if (meteor == null || meteor.getAtmosphereResource() == null) {
             return null;
         }
+        
+        AtmosphereResource resource = meteor.getAtmosphereResource();
+        if (!resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
+            return null;
+        }
+        
+        return meteor;
     }
 }

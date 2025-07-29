@@ -27,18 +27,18 @@ public class LogFormatter {
         // Add message
         sb.append(event.getMessage());
         
-        // Add exception stack trace if present
+        // Add throwable if exists
         Throwable throwable = event.getThrowable();
         if (throwable != null) {
-            sb.append(System.lineSeparator());
+            sb.append("\n");
+            sb.append(throwable.toString());
             for (StackTraceElement element : throwable.getStackTrace()) {
-                sb.append("\tat ").append(element.toString());
-                sb.append(System.lineSeparator());
+                sb.append("\n\tat ").append(element.toString());
             }
         }
         
-        // Add line separator
-        sb.append(System.lineSeparator());
+        // Add new line
+        sb.append("\n");
         
         try {
             Writer writer = event.getWriter();

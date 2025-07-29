@@ -6,39 +6,32 @@ import java.util.Map;
 
 public class TypeResolver {
 
-    public static Type[] resolveTypeArguments(Type genericType, Class<?> targetType) {
+    public static Type[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
             return null;
         }
 
-        Map<TypeVariable<?>, Type> typeVarMap = new HashMap<>();
-        ParameterizedType paramType = (ParameterizedType) genericType;
+        ParameterizedType parameterizedType = (ParameterizedType) genericType;
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
 
-        // Get the raw type
-        Class<?> rawType = (Class<?>) paramType.getRawType();
-        
-        // Get type parameters and arguments
-        TypeVariable<?>[] typeParams = rawType.getTypeParameters();
-        Type[] typeArgs = paramType.getActualTypeArguments();
-
-        // Map type variables to actual type arguments
-        for (int i = 0; i < typeParams.length; i++) {
-            typeVarMap.put(typeParams[i], typeArgs[i]);
-        }
-
-        // Find target type parameters
-        TypeVariable<?>[] targetParams = targetType.getTypeParameters();
-        if (targetParams.length == 0) {
+        if (actualTypeArguments.length == 0 || typeParameters.length == 0) {
             return null;
         }
 
-        // Resolve arguments for target type
-        Type[] resolvedArgs = new Type[targetParams.length];
-        for (int i = 0; i < targetParams.length; i++) {
-            Type resolvedType = typeVarMap.get(targetParams[i]);
-            resolvedArgs[i] = resolvedType != null ? resolvedType : targetParams[i];
+        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+        for (int i = 0; i < typeParameters.length; i++) {
+            if (i < actualTypeArguments.length) {
+                typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
+            }
         }
 
-        return resolvedArgs;
+        Type[] resolvedArguments = new Type[typeParameters.length];
+        for (int i = 0; i < typeParameters.length; i++) {
+            Type resolvedType = typeVariableMap.get(typeParameters[i]);
+            resolvedArguments[i] = resolvedType != null ? resolvedType : typeParameters[i];
+        }
+
+        return resolvedArguments;
     }
 }

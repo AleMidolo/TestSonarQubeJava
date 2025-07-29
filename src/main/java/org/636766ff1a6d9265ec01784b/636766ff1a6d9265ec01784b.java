@@ -7,7 +7,7 @@ public class StringUtils {
      * @param str  the <code>String</code> to check
      * @return <code>true</code> if str contains only unicode numeric
      */
-    public static boolean isNumeric(String str) {
+    public static boolean isNumeric(final String str) {
         if (Objects.isNull(str) || str.isEmpty()) {
             return false;
         }

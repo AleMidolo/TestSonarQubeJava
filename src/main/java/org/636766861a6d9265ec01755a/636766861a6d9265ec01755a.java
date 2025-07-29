@@ -2,12 +2,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UriMatcher {
+
     private final Pattern pattern;
     
-    public UriMatcher(String template) {
-        // Convert template to regex pattern
-        String regex = template.replaceAll("\\{[^/]+\\}", "([^/]+)");
-        this.pattern = Pattern.compile(regex);
+    public UriMatcher(String pattern) {
+        this.pattern = Pattern.compile(pattern);
     }
 
     /**
@@ -19,28 +18,30 @@ public class UriMatcher {
         if (uri == null) {
             return null;
         }
-
+        
         Matcher matcher = pattern.matcher(uri);
         if (!matcher.matches()) {
             return null;
         }
-
+        
         return matcher.toMatchResult();
     }
-
+    
     public static class MatchResult {
+        private final String matchedUri;
         private final String[] groups;
         
-        public MatchResult(String[] groups) {
+        public MatchResult(String matchedUri, String[] groups) {
+            this.matchedUri = matchedUri;
             this.groups = groups;
         }
         
-        public String group(int index) {
-            return groups[index];
+        public String getMatchedUri() {
+            return matchedUri;
         }
         
-        public int groupCount() {
-            return groups.length;
+        public String[] getGroups() {
+            return groups.clone();
         }
     }
 }

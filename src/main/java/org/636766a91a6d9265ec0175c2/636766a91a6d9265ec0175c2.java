@@ -12,9 +12,9 @@ public class FrameStack {
      * @return the abstract type that has been popped from the output frame stack.
      */
     private int pop() {
-        if (!outputFrameStack.isEmpty()) {
-            return outputFrameStack.pop();
+        if (outputFrameStack.isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
         }
-        throw new IllegalStateException("Stack is empty");
+        return outputFrameStack.pop();
     }
 }

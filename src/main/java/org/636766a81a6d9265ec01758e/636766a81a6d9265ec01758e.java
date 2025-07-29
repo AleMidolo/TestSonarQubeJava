@@ -1,19 +1,16 @@
-public class PrimeCalculator {
-    /**
-     * Returns a prime number which is >= desiredCapacity and very close to desiredCapacity 
-     * (within 11% if desiredCapacity >= 1000).
-     * @param desiredCapacity the capacity desired by the user.
-     * @return the capacity which should be used for a hashtable.
-     */
+public class HashTableUtils {
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
+        if (desiredCapacity < 0) {
+            throw new IllegalArgumentException("Capacity must be non-negative");
+        }
+        
+        if (desiredCapacity < 2) {
             return 2;
         }
         
-        // Start with odd number >= desiredCapacity
         int num = desiredCapacity;
         if (num % 2 == 0) {
-            num++;
+            num++; // Start with odd number
         }
         
         while (!isPrime(num)) {
@@ -23,27 +20,17 @@ public class PrimeCalculator {
         return num;
     }
     
-    /**
-     * Helper method to check if a number is prime
-     */
-    private static boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        }
-        if (num <= 3) {
-            return true;
-        }
-        if (num % 2 == 0 || num % 3 == 0) {
-            return false;
-        }
+    private static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
         
-        // Check up to square root of num
-        for (int i = 5; i * i <= num; i += 6) {
-            if (num % i == 0 || num % (i + 2) == 0) {
+        int sqrt = (int) Math.sqrt(n);
+        for (int i = 3; i <= sqrt; i += 2) {
+            if (n % i == 0) {
                 return false;
             }
         }
-        
         return true;
     }
 }

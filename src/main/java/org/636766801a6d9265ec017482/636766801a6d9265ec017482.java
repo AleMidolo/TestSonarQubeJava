@@ -13,15 +13,11 @@ public class ClassFileBuffer {
         // Read bytes from input stream in chunks
         byte[] chunk = new byte[4096];
         int bytesRead;
-        
         while ((bytesRead = in.read(chunk)) != -1) {
             baos.write(chunk, 0, bytesRead);
         }
         
-        // Clear existing buffer
-        buffer = null;
-        
-        // Fill with new bytes
+        // Clear existing buffer and store new bytes
         buffer = baos.toByteArray();
         
         // Reset read pointer to start

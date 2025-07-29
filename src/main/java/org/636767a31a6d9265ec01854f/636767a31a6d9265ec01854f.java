@@ -3,36 +3,28 @@ import java.io.InputStream;
 
 public class ProtobufReader {
     private InputStream input;
-    private boolean isPacked = false;
-    private int packedLimit = 0;
-    private int currentPosition = 0;
+    private int currentTag;
+    private boolean isPacked;
+    private int packedLimit;
+    private int currentPosition;
     
-    /**
-     * Check if this field have been packed into a length-delimited field. 
-     * If so, update internal state to reflect that packed fields are being read.
-     * @throws IOException
-     */
     private void checkIfPackedField() throws IOException {
-        // Get the next byte to check wire type
-        int firstByte = input.read();
-        if (firstByte == -1) {
-            return; // End of stream
-        }
+        // Check if current field has packed encoding by examining the wire type
+        int wireType = currentTag & 0x7;
         
-        // Wire type is in the last 3 bits
-        int wireType = firstByte & 0x7;
-        
-        // Length-delimited fields have wire type 2
-        if (wireType == 2) {
-            // Read the length of the packed field
+        if (wireType == 2) { // Length-delimited wire type
+            // Read packed field length
             int length = readVarint32();
             
-            // Update state for packed field reading
-            isPacked = true;
-            packedLimit = currentPosition + length;
+            if (length > 0) {
+                // Set packed field state
+                isPacked = true;
+                packedLimit = currentPosition + length;
+            }
         } else {
-            // Not a packed field, reset position
-            input.reset();
+            // Not a packed field
+            isPacked = false;
+            packedLimit = 0;
         }
     }
     
@@ -43,12 +35,17 @@ public class ProtobufReader {
         
         while (shift < 32) {
             int b = input.read();
+            if (b == -1) {
+                throw new IOException("Unexpected EOF while reading varint");
+            }
+            
             result |= (b & 0x7F) << shift;
             if ((b & 0x80) == 0) {
-                break;
+                return result;
             }
             shift += 7;
         }
-        return result;
+        
+        throw new IOException("Malformed varint");
     }
 }

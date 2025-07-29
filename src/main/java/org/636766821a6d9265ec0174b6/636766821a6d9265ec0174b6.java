@@ -26,24 +26,24 @@ public class TypeResolver {
 
         // Resolve each type argument
         for (int i = 0; i < actualTypeArguments.length; i++) {
-            Type actualType = actualTypeArguments[i];
+            Type type = actualTypeArguments[i];
             
-            if (actualType instanceof Class) {
-                resolvedTypes[i] = (Class<?>) actualType;
-            } else if (actualType instanceof TypeVariable) {
-                String variableName = ((TypeVariable<?>) actualType).getName();
-                Type resolvedType = typeVariableMap.get(variableName);
-                
+            if (type instanceof Class) {
+                resolvedTypes[i] = (Class<?>) type;
+            } 
+            else if (type instanceof TypeVariable) {
+                Type resolvedType = typeVariableMap.get(((TypeVariable<?>) type).getName());
                 if (resolvedType instanceof Class) {
                     resolvedTypes[i] = (Class<?>) resolvedType;
                 } else {
                     return null; // Cannot resolve type variable
                 }
-            } else {
+            } 
+            else {
                 return null; // Cannot handle other type arguments
             }
         }
 
-        return resolvedTypes.length > 0 ? resolvedTypes : null;
+        return resolvedTypes;
     }
 }

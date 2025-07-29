@@ -6,30 +6,28 @@ public final class UriMatcher {
 
     private final Pattern pattern;
 
-    public UriMatcher(String template) {
-        // Convert the template to a regex pattern
-        String regex = template.replaceAll("\\{.*?\\}", "([^/]+)");
+    public UriMatcher(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 
+    /**
+     * Match a URI against the pattern.
+     * @param uri the uri to match against the template.
+     * @return the match result, otherwise null if no match occurs.
+     */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
-        } else {
-            return null;
         }
+        return null;
     }
 
     public static void main(String[] args) {
-        UriMatcher matcher = new UriMatcher("/users/{userId}/posts/{postId}");
-        MatchResult result = matcher.match("/users/123/posts/456");
-
+        UriMatcher matcher = new UriMatcher("https://example.com/.*");
+        MatchResult result = matcher.match("https://example.com/resource");
         if (result != null) {
-            System.out.println("Match found!");
-            for (int i = 1; i <= result.groupCount(); i++) {
-                System.out.println("Group " + i + ": " + result.group(i));
-            }
+            System.out.println("Match found: " + result.group());
         } else {
             System.out.println("No match found.");
         }

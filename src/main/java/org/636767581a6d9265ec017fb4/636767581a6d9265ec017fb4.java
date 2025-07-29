@@ -1,6 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class UpperBoundCalculator<K extends Comparable<K>> {
 
@@ -11,19 +11,18 @@ public class UpperBoundCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeUpperBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         List<Integer> upperBounds = new ArrayList<>();
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
-
-        for (K key : keys) {
-            int index = Collections.binarySearch(sortedKeys, key);
-            if (index < 0) {
-                index = -(index + 1);
+        for (int i = 0; i < keys.size(); i++) {
+            int upperBound = 0;
+            for (int j = 0; j < keys.size(); j++) {
+                if (i != j && keys.get(j).compareTo(keys.get(i)) < 0) {
+                    upperBound++;
+                }
             }
-            upperBounds.add(index);
+            upperBounds.add(upperBound);
         }
 
         return upperBounds;

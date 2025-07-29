@@ -1,8 +1,12 @@
-public class ExceptionChecker {
+public class Example {
     private Throwable thrown;
 
-    public ExceptionChecker(Throwable thrown) {
+    public Example(Throwable thrown) {
         this.thrown = thrown;
+    }
+
+    public Throwable getThrown() {
+        return thrown;
     }
 
     /**
@@ -16,13 +20,12 @@ public class ExceptionChecker {
         return thrownString != null && !thrownString.isEmpty();
     }
 
-    public Throwable getThrown() {
-        return thrown;
-    }
-
     public static void main(String[] args) {
         // Example usage
-        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
-        System.out.println(checker.hasThrown()); // Should print true
+        Example example = new Example(new RuntimeException("Error occurred"));
+        System.out.println(example.hasThrown()); // Output: true
+
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Output: false
     }
 }

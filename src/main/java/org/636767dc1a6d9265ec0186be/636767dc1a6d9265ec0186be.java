@@ -16,7 +16,7 @@ public class TimeBucketCompressor {
         int newDay = ((day - 1) / dayStep) * dayStep + 1;
 
         // Create a new LocalDate with the adjusted day
-        LocalDate newDate = date.withDayOfMonth(newDay);
+        LocalDate newDate = LocalDate.of(date.getYear(), date.getMonth(), newDay);
 
         // Convert the new date back to a long value
         return Long.parseLong(newDate.format(formatter));

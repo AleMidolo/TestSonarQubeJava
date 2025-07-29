@@ -1,4 +1,5 @@
 public class StringUtils {
+
     /**
      * Returns the number of occurrences the substring {@code sub} appears in string {@code str}.
      * @param str string to search in. Return 0 if this is null.
@@ -12,6 +13,7 @@ public class StringUtils {
 
         int count = 0;
         int index = 0;
+
         while ((index = str.indexOf(sub, index)) != -1) {
             count++;
             index += sub.length();

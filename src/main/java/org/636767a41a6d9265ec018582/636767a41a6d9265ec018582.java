@@ -6,7 +6,7 @@ import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
 
-public class DelimitedMessageWriter {
+public class SerializationUtil {
 
     /**
      * Serializes the {@code message}, prefixed with its length, into an {@link OutputStream}.
@@ -44,15 +44,10 @@ public class DelimitedMessageWriter {
     }
 
     private static int computeVarintSize(int value) {
-        int size = 0;
-        while (true) {
-            if ((value & ~0x7F) == 0) {
-                size++;
-                return size;
-            } else {
-                size++;
-                value >>>= 7;
-            }
-        }
+        if ((value & (0xffffffff <<  7)) == 0) return 1;
+        if ((value & (0xffffffff << 14)) == 0) return 2;
+        if ((value & (0xffffffff << 21)) == 0) return 3;
+        if ((value & (0xffffffff << 28)) == 0) return 4;
+        return 5;
     }
 }

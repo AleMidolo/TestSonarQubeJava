@@ -20,10 +20,8 @@ public class Accumulator {
         return map.getOrDefault(key, 0L);
     }
 
-    public static void main(String[] args) {
-        Accumulator accumulator = new Accumulator();
-        accumulator.valueAccumulation("key1", 10L);
-        accumulator.valueAccumulation("key1", 20L);
-        System.out.println(accumulator.getAccumulatedValue("key1")); // Output: 30
+    // Optional: Method to clear the accumulated values
+    public void clear() {
+        map.clear();
     }
 }

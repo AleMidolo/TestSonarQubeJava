@@ -22,6 +22,8 @@ public class BooleanArrayConverter {
     public static void main(String[] args) {
         boolean[] primitiveArray = {true, false, true};
         Boolean[] objectArray = toObject(primitiveArray);
-        System.out.println(java.util.Arrays.toString(objectArray));
+        for (Boolean b : objectArray) {
+            System.out.println(b);
+        }
     }
 }

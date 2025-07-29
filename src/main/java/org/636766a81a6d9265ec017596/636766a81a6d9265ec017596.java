@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] data;
+    private byte[] buffer;
     private int size;
 
     public ByteVector() {
-        this.data = new byte[10]; // Initial capacity
+        this.buffer = new byte[16]; // Initial capacity
         this.size = 0;
     }
 
@@ -13,28 +13,23 @@ public class ByteVector {
         ensureCapacity(size + 4); // Ensure space for 4 bytes
 
         // Write the int value in big-endian order
-        data[size++] = (byte) (intValue >> 24);
-        data[size++] = (byte) (intValue >> 16);
-        data[size++] = (byte) (intValue >> 8);
-        data[size++] = (byte) intValue;
+        buffer[size++] = (byte) (intValue >> 24);
+        buffer[size++] = (byte) (intValue >> 16);
+        buffer[size++] = (byte) (intValue >> 8);
+        buffer[size++] = (byte) intValue;
 
         return this;
     }
 
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
-            data = Arrays.copyOf(data, newCapacity);
+    private void ensureCapacity(int requiredCapacity) {
+        if (requiredCapacity > buffer.length) {
+            int newCapacity = Math.max(buffer.length * 2, requiredCapacity);
+            buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }
 
-    // Optional: Add a method to get the current size of the byte vector
-    public int size() {
-        return size;
-    }
-
-    // Optional: Add a method to get the underlying byte array
+    // Optional: Add a method to get the current buffer as a byte array
     public byte[] toByteArray() {
-        return Arrays.copyOf(data, size);
+        return Arrays.copyOf(buffer, size);
     }
 }

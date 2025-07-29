@@ -1,5 +1,4 @@
-public class StringArrayUtils {
-
+public class ArrayUtils {
     /**
      * Trim the elements of the given String array, calling <code>String.trim()</code> on each of them.
      * @param array the original String array
@@ -18,13 +17,5 @@ public class StringArrayUtils {
             }
         }
         return trimmedArray;
-    }
-
-    public static void main(String[] args) {
-        String[] array = {"  hello ", "  world  ", null, "  java  "};
-        String[] trimmedArray = trimArrayElements(array);
-        for (String str : trimmedArray) {
-            System.out.println("'" + str + "'");
-        }
     }
 }

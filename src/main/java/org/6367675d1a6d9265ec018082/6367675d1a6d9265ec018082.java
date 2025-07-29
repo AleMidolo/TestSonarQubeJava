@@ -72,8 +72,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node fromNode = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
-        Node toNode = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
-        return new Edge(fromNode, toNode);
+        Node from = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
+        Node to = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
+        return new Edge(from, to);
     }
 }

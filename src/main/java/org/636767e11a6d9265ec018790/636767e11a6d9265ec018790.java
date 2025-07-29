@@ -11,7 +11,7 @@ public class ThreadSnapshotParser {
         List<String> lines = Files.readAllLines(file.toPath());
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.parseFromLine(line);
+            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
@@ -21,62 +21,60 @@ public class ThreadSnapshotParser {
     }
 
     private static boolean isWithinTimeRange(ThreadSnapshot snapshot, List<ProfileAnalyzeTimeRange> timeRanges) {
+        long snapshotTime = snapshot.getTimestamp();
         for (ProfileAnalyzeTimeRange range : timeRanges) {
-            if (snapshot.getTimestamp() >= range.getStartTime() && snapshot.getTimestamp() <= range.getEndTime()) {
+            if (snapshotTime >= range.getStartTime() && snapshotTime <= range.getEndTime()) {
                 return true;
             }
         }
         return false;
     }
-}
 
-class ThreadSnapshot {
-    private long timestamp;
-    private String threadName;
-    private String state;
+    // Assuming ThreadSnapshot and ProfileAnalyzeTimeRange classes are defined elsewhere
+    public static class ThreadSnapshot {
+        private long timestamp;
+        private String threadName;
+        private String state;
 
-    public ThreadSnapshot(long timestamp, String threadName, String state) {
-        this.timestamp = timestamp;
-        this.threadName = threadName;
-        this.state = state;
-    }
+        public ThreadSnapshot(long timestamp, String threadName, String state) {
+            this.timestamp = timestamp;
+            this.threadName = threadName;
+            this.state = state;
+        }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+        public long getTimestamp() {
+            return timestamp;
+        }
 
-    public static ThreadSnapshot parseFromLine(String line) {
-        // Assuming the line is in the format: "timestamp,threadName,state"
-        String[] parts = line.split(",");
-        if (parts.length == 3) {
-            try {
+        public static ThreadSnapshot fromString(String line) {
+            // Parse the line and return a ThreadSnapshot object
+            // Example parsing logic (adjust as needed):
+            String[] parts = line.split(",");
+            if (parts.length == 3) {
                 long timestamp = Long.parseLong(parts[0]);
                 String threadName = parts[1];
                 String state = parts[2];
                 return new ThreadSnapshot(timestamp, threadName, state);
-            } catch (NumberFormatException e) {
-                // Handle invalid timestamp format
-                return null;
             }
+            return null;
         }
-        return null;
-    }
-}
-
-class ProfileAnalyzeTimeRange {
-    private long startTime;
-    private long endTime;
-
-    public ProfileAnalyzeTimeRange(long startTime, long endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
     }
 
-    public long getStartTime() {
-        return startTime;
-    }
+    public static class ProfileAnalyzeTimeRange {
+        private long startTime;
+        private long endTime;
 
-    public long getEndTime() {
-        return endTime;
+        public ProfileAnalyzeTimeRange(long startTime, long endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
+        public long getStartTime() {
+            return startTime;
+        }
+
+        public long getEndTime() {
+            return endTime;
+        }
     }
 }

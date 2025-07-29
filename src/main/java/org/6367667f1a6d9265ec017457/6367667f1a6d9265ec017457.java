@@ -2,48 +2,51 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-    int length = bb.remaining();
-    if (i >= length) {
+    // Ensure the buffer has enough remaining bytes
+    if (bb.remaining() < 1) {
         return i;
     }
 
-    byte firstByte = bb.get(i);
+    // Get the first byte
+    byte b1 = bb.get();
     int codePoint;
-    int bytesToRead;
 
-    if ((firstByte & 0x80) == 0) {
+    // Determine the number of bytes in the UTF-8 sequence
+    if ((b1 & 0x80) == 0) {
         // 1-byte sequence (0xxxxxxx)
-        codePoint = firstByte & 0x7F;
-        bytesToRead = 1;
-    } else if ((firstByte & 0xE0) == 0xC0) {
+        codePoint = b1 & 0x7F;
+    } else if ((b1 & 0xE0) == 0xC0) {
         // 2-byte sequence (110xxxxx 10xxxxxx)
-        codePoint = firstByte & 0x1F;
-        bytesToRead = 2;
-    } else if ((firstByte & 0xF0) == 0xE0) {
+        if (bb.remaining() < 1) {
+            return i;
+        }
+        byte b2 = bb.get();
+        codePoint = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+    } else if ((b1 & 0xF0) == 0xE0) {
         // 3-byte sequence (1110xxxx 10xxxxxx 10xxxxxx)
-        codePoint = firstByte & 0x0F;
-        bytesToRead = 3;
-    } else if ((firstByte & 0xF8) == 0xF0) {
+        if (bb.remaining() < 2) {
+            return i;
+        }
+        byte b2 = bb.get();
+        byte b3 = bb.get();
+        codePoint = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+    } else if ((b1 & 0xF8) == 0xF0) {
         // 4-byte sequence (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
-        codePoint = firstByte & 0x07;
-        bytesToRead = 4;
+        if (bb.remaining() < 3) {
+            return i;
+        }
+        byte b2 = bb.get();
+        byte b3 = bb.get();
+        byte b4 = bb.get();
+        codePoint = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
     } else {
         // Invalid UTF-8 sequence
-        throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        return i;
     }
 
-    if (i + bytesToRead > length) {
-        throw new IllegalArgumentException("Incomplete UTF-8 sequence");
-    }
+    // Append the decoded character to the StringBuilder
+    sb.appendCodePoint(codePoint);
 
-    for (int j = 1; j < bytesToRead; j++) {
-        byte nextByte = bb.get(i + j);
-        if ((nextByte & 0xC0) != 0x80) {
-            throw new IllegalArgumentException("Invalid UTF-8 sequence");
-        }
-        codePoint = (codePoint << 6) | (nextByte & 0x3F);
-    }
-
-    sb.append(Character.toChars(codePoint));
-    return i + bytesToRead;
+    // Return the next index to check
+    return i + 1;
 }

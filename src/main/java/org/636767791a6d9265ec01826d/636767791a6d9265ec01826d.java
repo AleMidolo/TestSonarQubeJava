@@ -34,6 +34,6 @@ public class PropertySubstitution {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result); // Output: Hello, John!
+        System.out.println(result);  // Output: Hello, John!
     }
 }

@@ -1,6 +1,6 @@
 import org.apache.log4j.spi.LoggingEvent;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,8 @@ public class LogAppender {
         String message = event.getRenderedMessage();
         for (Socket client : clients) {
             try {
-                OutputStream outputStream = client.getOutputStream();
-                outputStream.write(message.getBytes());
-                outputStream.flush();
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                out.println(message);
             } catch (IOException e) {
                 // Handle the exception, e.g., remove the client if the connection is lost
                 clients.remove(client);

@@ -55,14 +55,14 @@ public class CategoryTree {
         CategoryNode root = new CategoryNode(1, true);
         CategoryNode child1 = new CategoryNode(2, false);
         CategoryNode child2 = new CategoryNode(3, true);
-        CategoryNode child3 = new CategoryNode(4, false);
+        CategoryNode grandChild1 = new CategoryNode(4, false);
 
         root.children.add(child1);
         root.children.add(child2);
-        child2.children.add(child3);
+        child2.children.add(grandChild1);
 
         CategoryTree tree = new CategoryTree(root);
-        int removedNodes = tree.removeUnusedNodes();
-        System.out.println("Number of nodes removed: " + removedNodes);
+        int removedCount = tree.removeUnusedNodes();
+        System.out.println("Number of nodes removed: " + removedCount);
     }
 }

@@ -9,33 +9,25 @@ public class SymbolTable {
         if (constantPool.containsKey(key)) {
             return constantPool.get(key).getIndex();
         } else {
-            Symbol symbol = new Symbol(constantPool.size() + 1, name, descriptor);
+            Symbol symbol = new Symbol(name, descriptor, constantPool.size() + 1);
             constantPool.put(key, symbol);
             return symbol.getIndex();
         }
     }
 
     private static class Symbol {
-        private final int index;
         private final String name;
         private final String descriptor;
+        private final int index;
 
-        public Symbol(int index, String name, String descriptor) {
-            this.index = index;
+        public Symbol(String name, String descriptor, int index) {
             this.name = name;
             this.descriptor = descriptor;
+            this.index = index;
         }
 
         public int getIndex() {
             return index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescriptor() {
-            return descriptor;
         }
     }
 }

@@ -1,4 +1,4 @@
-public class StringTrimmer {
+public class StringUtils {
 
     /**
      * Trim all occurrences of the supplied leading character from the given String.
@@ -20,9 +20,8 @@ public class StringTrimmer {
     }
 
     public static void main(String[] args) {
-        String input = "###HelloWorld";
+        String testString = "###HelloWorld";
         char leadingChar = '#';
-        String result = trimLeadingCharacter(input, leadingChar);
-        System.out.println(result);  // Output: HelloWorld
+        System.out.println(trimLeadingCharacter(testString, leadingChar)); // Output: "HelloWorld"
     }
 }

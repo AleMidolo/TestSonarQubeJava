@@ -26,15 +26,4 @@ public class ClassPathUtil {
             }
         }
     }
-
-    public static void main(String[] args) {
-        Vector<URL> classpath = new Vector<>();
-        String directoryPath = "path/to/your/jar/directory";
-        addToClassPath(classpath, directoryPath);
-
-        // Print the URLs to verify
-        for (URL url : classpath) {
-            System.out.println(url);
-        }
-    }
 }

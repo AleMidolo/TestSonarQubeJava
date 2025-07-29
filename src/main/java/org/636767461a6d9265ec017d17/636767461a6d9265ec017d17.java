@@ -6,22 +6,16 @@ private String unescapeId(String input) {
         return null;
     }
 
-    // Replace escaped quotes and backslashes
-    StringBuilder unescaped = new StringBuilder();
-    for (int i = 0; i < input.length(); i++) {
-        char currentChar = input.charAt(i);
-        if (currentChar == '\\' && i + 1 < input.length()) {
-            char nextChar = input.charAt(i + 1);
-            if (nextChar == '"' || nextChar == '\\') {
-                unescaped.append(nextChar);
-                i++; // Skip the next character
-            } else {
-                unescaped.append(currentChar);
-            }
-        } else {
-            unescaped.append(currentChar);
-        }
-    }
+    // Pattern to match escaped characters in DOT identifiers
+    Pattern pattern = Pattern.compile("\\\\([\\\\\"])");
+    Matcher matcher = pattern.matcher(input);
 
-    return unescaped.toString();
+    // Replace escaped characters with their unescaped counterparts
+    StringBuffer unescapedString = new StringBuffer();
+    while (matcher.find()) {
+        matcher.appendReplacement(unescapedString, matcher.group(1));
+    }
+    matcher.appendTail(unescapedString);
+
+    return unescapedString.toString();
 }

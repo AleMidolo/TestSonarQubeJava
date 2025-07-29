@@ -22,7 +22,7 @@ public class ClassPathUtils {
             return;
         }
 
-        // Loop through files and add jar files to classpath vector
+        // Iterate through files and add jar files to classpath
         for (File file : files) {
             if (file.getName().toLowerCase().endsWith(".jar")) {
                 try {

@@ -17,7 +17,7 @@ public class EnumerationUtils {
         while (enumeration.hasMoreElements()) {
             list.add(enumeration.nextElement());
         }
-
+        
         return list.toArray(new String[0]);
     }
 }

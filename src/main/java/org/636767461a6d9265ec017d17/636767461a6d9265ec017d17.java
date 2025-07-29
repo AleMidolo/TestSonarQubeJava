@@ -13,7 +13,7 @@ public class DotUtils {
             return input;
         }
 
-        // Handle quoted strings
+        // Check if input is quoted
         if (input.startsWith("\"") && input.endsWith("\"")) {
             // Remove quotes
             String unquoted = input.substring(1, input.length() - 1);
@@ -27,23 +27,12 @@ public class DotUtils {
             // Replace escaped tabs
             unquoted = unquoted.replace("\\t", "\t");
             
-            // Replace double backslashes
+            // Replace escaped backslashes
             unquoted = unquoted.replace("\\\\", "\\");
             
             return unquoted;
         }
 
-        // Handle HTML-like escapes
-        Pattern pattern = Pattern.compile("&#([0-9]+);");
-        Matcher matcher = pattern.matcher(input);
-        StringBuffer result = new StringBuffer();
-        
-        while (matcher.find()) {
-            String replacement = String.valueOf((char)Integer.parseInt(matcher.group(1)));
-            matcher.appendReplacement(result, replacement);
-        }
-        matcher.appendTail(result);
-
-        return result.toString();
+        return input;
     }
 }

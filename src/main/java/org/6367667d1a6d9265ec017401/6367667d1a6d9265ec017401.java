@@ -1,19 +1,19 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringUnescape {
+public class UnescapeJava {
 
-    private static final Map<Character, Character> ESCAPE_MAP = new HashMap<>();
+    private static final Map<Character, Character> ESCAPE_SEQUENCES = new HashMap<>();
 
     static {
-        ESCAPE_MAP.put('n', '\n');
-        ESCAPE_MAP.put('t', '\t');
-        ESCAPE_MAP.put('r', '\r');
-        ESCAPE_MAP.put('b', '\b');
-        ESCAPE_MAP.put('f', '\f');
-        ESCAPE_MAP.put('"', '\"');
-        ESCAPE_MAP.put('\'', '\'');
-        ESCAPE_MAP.put('\\', '\\');
+        ESCAPE_SEQUENCES.put('b', '\b');
+        ESCAPE_SEQUENCES.put('t', '\t');
+        ESCAPE_SEQUENCES.put('n', '\n');
+        ESCAPE_SEQUENCES.put('f', '\f');
+        ESCAPE_SEQUENCES.put('r', '\r');
+        ESCAPE_SEQUENCES.put('"', '\"');
+        ESCAPE_SEQUENCES.put('\'', '\'');
+        ESCAPE_SEQUENCES.put('\\', '\\');
     }
 
     public static String unescapeJava(String str) throws Exception {
@@ -23,29 +23,36 @@ public class StringUnescape {
 
         StringBuilder result = new StringBuilder();
         int length = str.length();
-        boolean escape = false;
+        int i = 0;
 
-        for (int i = 0; i < length; i++) {
+        while (i < length) {
             char currentChar = str.charAt(i);
 
-            if (escape) {
-                if (ESCAPE_MAP.containsKey(currentChar)) {
-                    result.append(ESCAPE_MAP.get(currentChar));
-                } else {
-                    throw new Exception("Invalid escape sequence: \\" + currentChar);
-                }
-                escape = false;
-            } else {
-                if (currentChar == '\\') {
-                    escape = true;
-                } else {
-                    result.append(currentChar);
-                }
-            }
-        }
+            if (currentChar == '\\' && i + 1 < length) {
+                char nextChar = str.charAt(i + 1);
 
-        if (escape) {
-            throw new Exception("Incomplete escape sequence at the end of the string");
+                if (ESCAPE_SEQUENCES.containsKey(nextChar)) {
+                    result.append(ESCAPE_SEQUENCES.get(nextChar));
+                    i += 2;
+                } else if (nextChar == 'u' && i + 5 < length) {
+                    // Handle Unicode escape sequences
+                    String hex = str.substring(i + 2, i + 6);
+                    try {
+                        int unicodeValue = Integer.parseInt(hex, 16);
+                        result.append((char) unicodeValue);
+                        i += 6;
+                    } catch (NumberFormatException e) {
+                        throw new Exception("Invalid Unicode escape sequence: \\u" + hex);
+                    }
+                } else {
+                    // Handle invalid escape sequences
+                    result.append(currentChar);
+                    i++;
+                }
+            } else {
+                result.append(currentChar);
+                i++;
+            }
         }
 
         return result.toString();
@@ -53,9 +60,9 @@ public class StringUnescape {
 
     public static void main(String[] args) {
         try {
-            System.out.println(unescapeJava("Hello\\nWorld!"));  // Output: Hello
-                                                                 // World!
-            System.out.println(unescapeJava("C:\\\\path\\\\to\\\\file"));  // Output: C:\path\to\file
+            System.out.println(unescapeJava("Hello\\nWorld\\t!")); // Output: Hello\nWorld\t!
+            System.out.println(unescapeJava("\\u0041")); // Output: A
+            System.out.println(unescapeJava("\\\\")); // Output: \
         } catch (Exception e) {
             e.printStackTrace();
         }

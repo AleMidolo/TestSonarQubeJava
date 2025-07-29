@@ -14,8 +14,8 @@ public class ClassPathUtil {
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
         File directory = new File(dir);
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Provided path is not a directory: " + dir);
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new IllegalArgumentException("提供的路径不是一个有效的目录: " + dir);
         }
 
         File[] files = directory.listFiles((dir1, name) -> name.endsWith(".jar"));
@@ -33,10 +33,9 @@ public class ClassPathUtil {
 
     public static void main(String[] args) {
         Vector<URL> classPath = new Vector<>();
-        String directoryPath = "path/to/your/directory";
-        addToClassPath(classPath, directoryPath);
+        addToClassPath(classPath, "path/to/your/directory");
 
-        // Print the URLs to verify
+        // 打印添加的URL
         for (URL url : classPath) {
             System.out.println(url);
         }

@@ -1,11 +1,7 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> stack;
-
-    public FrameStack() {
-        stack = new Stack<>();
-    }
+    private Stack<String> stack = new Stack<>();
 
     /**
      * 根据给定的描述符，从输出帧堆栈中弹出相应数量的抽象类型。
@@ -25,22 +21,22 @@ public class FrameStack {
             }
 
             String paramsDescriptor = descriptor.substring(1, endIndex);
-            int paramCount = getParamCount(paramsDescriptor);
+            int paramCount = getParameterCount(paramsDescriptor);
 
-            // 弹出相应数量的抽象类型
+            // 弹出相应数量的类型
             for (int i = 0; i < paramCount; i++) {
                 if (!stack.isEmpty()) {
                     stack.pop();
                 } else {
-                    throw new IllegalStateException("Stack underflow");
+                    throw new IllegalStateException("Stack underflow: not enough elements to pop.");
                 }
             }
         } else {
-            // 单个类型描述符，弹出一个抽象类型
+            // 单个类型描述符，弹出一个类型
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                throw new IllegalStateException("Stack underflow");
+                throw new IllegalStateException("Stack underflow: not enough elements to pop.");
             }
         }
     }
@@ -50,7 +46,7 @@ public class FrameStack {
      * @param paramsDescriptor 参数描述符
      * @return 参数数量
      */
-    private int getParamCount(String paramsDescriptor) {
+    private int getParameterCount(String paramsDescriptor) {
         int count = 0;
         int index = 0;
         while (index < paramsDescriptor.length()) {
@@ -59,7 +55,7 @@ public class FrameStack {
                 // 对象类型，跳过直到分号
                 int endIndex = paramsDescriptor.indexOf(';', index);
                 if (endIndex == -1) {
-                    throw new IllegalArgumentException("Invalid descriptor: " + paramsDescriptor);
+                    throw new IllegalArgumentException("Invalid object type descriptor: " + paramsDescriptor);
                 }
                 index = endIndex + 1;
             } else if (c == '[') {
@@ -71,7 +67,7 @@ public class FrameStack {
                     // 对象数组类型，跳过直到分号
                     int endIndex = paramsDescriptor.indexOf(';', index);
                     if (endIndex == -1) {
-                        throw new IllegalArgumentException("Invalid descriptor: " + paramsDescriptor);
+                        throw new IllegalArgumentException("Invalid object type descriptor: " + paramsDescriptor);
                     }
                     index = endIndex + 1;
                 } else {
@@ -79,7 +75,7 @@ public class FrameStack {
                     index++;
                 }
             } else {
-                // 基本类型，跳过基本类型字符
+                // 基本类型，直接跳过
                 index++;
             }
             count++;

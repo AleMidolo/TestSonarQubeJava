@@ -17,12 +17,12 @@ public class FileReverser {
      * 以逆序添加指定的文件。
      */
     private void addReverse(final InputStream[] files) {
-        for (InputStream file : files) {
-            try {
+        for (int i = files.length - 1; i >= 0; i--) {
+            try (InputStream inputStream = files[i]) {
                 ByteArrayOutputStream buffer = new ByteArrayOutputStream();
                 int nRead;
                 byte[] data = new byte[1024];
-                while ((nRead = file.read(data, 0, data.length)) != -1) {
+                while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
                     buffer.write(data, 0, nRead);
                 }
                 buffer.flush();
@@ -31,10 +31,9 @@ public class FileReverser {
                 e.printStackTrace();
             }
         }
-        Collections.reverse(fileContents);
     }
 
     public List<byte[]> getFileContents() {
-        return fileContents;
+        return Collections.unmodifiableList(fileContents);
     }
 }

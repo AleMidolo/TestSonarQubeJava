@@ -13,12 +13,21 @@ public class ByteVector {
 
     private void enlarge(final int size) {
         int newCapacity = capacity + size;
-        if (newCapacity < 0) { // 处理溢出
+        if (newCapacity < 0) { // Handle overflow
             throw new OutOfMemoryError("Required array size too large");
         }
         data = Arrays.copyOf(data, newCapacity);
         capacity = newCapacity;
     }
 
-    // 其他方法...
+    public void add(byte b) {
+        if (size == capacity) {
+            enlarge(1); // Enlarge by 1 if full
+        }
+        data[size++] = b;
+    }
+
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
+    }
 }

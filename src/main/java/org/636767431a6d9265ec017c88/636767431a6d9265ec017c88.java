@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LowerBoundsCalculator<K extends Comparable<K>> {
+public class LowerBoundCalculator<K extends Comparable<K>> {
 
     /**
      * 为每个键找到一个最大下界。
@@ -10,10 +10,6 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
      * @return 计算出的键的下界。
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
-        }
-
         List<Integer> lowerBounds = new ArrayList<>();
         List<K> sortedKeys = new ArrayList<>(keys);
         Collections.sort(sortedKeys);

@@ -8,20 +8,16 @@ public class LogFormatter {
      * @return 格式化后的日志字符串。
      */
     public String format(final LoggingEvent event) {
+        if (event == null) {
+            return "";
+        }
+
         StringBuilder formattedMessage = new StringBuilder();
-        
-        // 添加时间戳
-        formattedMessage.append(event.getTimeStamp()).append(" ");
-        
-        // 添加日志级别
-        formattedMessage.append(event.getLevel().toString()).append(" ");
-        
-        // 添加日志消息
+        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
+        formattedMessage.append(event.getTimeStamp()).append(" - ");
+        formattedMessage.append(event.getLoggerName()).append(" - ");
         formattedMessage.append(event.getRenderedMessage());
-        
-        // 添加换行符
-        formattedMessage.append("\n");
-        
+
         return formattedMessage.toString();
     }
 }

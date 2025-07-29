@@ -22,7 +22,7 @@ public class ExceptionChecker {
 
     public static void main(String[] args) {
         // Example usage
-        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test exception"));
+        ExceptionChecker checker = new ExceptionChecker(new RuntimeException("Test Exception"));
         System.out.println(checker.hasThrown()); // Should print true
     }
 }

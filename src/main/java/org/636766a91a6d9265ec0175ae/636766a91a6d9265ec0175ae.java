@@ -16,13 +16,10 @@ public class ByteVector {
             Arrays.fill(buffer, size, size + byteLength, (byte) 0);
             size += byteLength;
         } else {
-            // Check bounds
             if (byteOffset < 0 || byteLength < 0 || byteOffset + byteLength > byteArrayValue.length) {
                 throw new IndexOutOfBoundsException("Invalid byteOffset or byteLength");
             }
-            // Ensure capacity
             ensureCapacity(size + byteLength);
-            // Copy bytes
             System.arraycopy(byteArrayValue, byteOffset, buffer, size, byteLength);
             size += byteLength;
         }

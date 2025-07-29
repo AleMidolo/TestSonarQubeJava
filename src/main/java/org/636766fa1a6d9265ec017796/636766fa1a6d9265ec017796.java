@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class BooleanArrayConverter {
 
     /**
@@ -19,9 +17,9 @@ public class BooleanArrayConverter {
     }
 
     public static void main(String[] args) {
-        boolean[] testArray = {true, false, true};
-        Boolean[] result = toObject(testArray);
-        for (Boolean b : result) {
+        boolean[] primitiveArray = {true, false, true};
+        Boolean[] objectArray = toObject(primitiveArray);
+        for (Boolean b : objectArray) {
             System.out.println(b);
         }
     }

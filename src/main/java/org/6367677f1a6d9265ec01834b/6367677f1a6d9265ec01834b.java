@@ -16,6 +16,8 @@ public class LogBuffer {
             // 如果缓冲区已满，事件被静默丢弃
         }
     }
+}
 
-    // 其他方法，如从缓冲区取出事件等
+class LoggingEvent {
+    // LoggingEvent 类的实现
 }

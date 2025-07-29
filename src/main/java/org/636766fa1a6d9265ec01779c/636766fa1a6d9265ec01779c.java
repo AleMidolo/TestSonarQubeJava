@@ -2,20 +2,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 private String parseToken(final char[] terminators) {
-    // 将终止符数组转换为集合，方便快速查找
+    // 将终止符数组转换为集合以便快速查找
     Set<Character> terminatorSet = new HashSet<>();
     for (char c : terminators) {
         terminatorSet.add(c);
     }
 
     StringBuilder token = new StringBuilder();
-    int ch;
-    while ((ch = System.in.read()) != -1) {  // 从标准输入读取字符
-        char currentChar = (char) ch;
-        if (terminatorSet.contains(currentChar)) {
-            break;  // 遇到终止符，停止解析
+    char currentChar;
+
+    // 假设有一个输入流或某种方式获取字符
+    // 这里使用 System.in 作为示例
+    try {
+        while (true) {
+            currentChar = (char) System.in.read();
+            if (terminatorSet.contains(currentChar) || currentChar == '\n' || currentChar == '\r') {
+                break; // 遇到终止符或换行符时停止
+            }
+            token.append(currentChar);
         }
-        token.append(currentChar);  // 将字符添加到令牌中
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
     return token.toString();

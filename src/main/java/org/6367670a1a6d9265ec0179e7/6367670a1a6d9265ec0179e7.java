@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConverterRegistry {
+public class ConverterLookup {
 
     private final Map<Class<?>, Converter> converterMap;
 
-    public ConverterRegistry() {
+    public ConverterLookup() {
         this.converterMap = new HashMap<>();
     }
 
@@ -23,28 +23,12 @@ public class ConverterRegistry {
      * @param clazz 要注册 Converter 的类
      * @param converter 要注册的 Converter
      */
-    public void register(final Class<?> clazz, final Converter converter) {
+    public void registerConverter(final Class<?> clazz, final Converter converter) {
         converterMap.put(clazz, converter);
     }
 
-    public static void main(String[] args) {
-        ConverterRegistry registry = new ConverterRegistry();
-        Converter stringConverter = new StringConverter();
-        registry.register(String.class, stringConverter);
-
-        Converter foundConverter = registry.lookup(String.class);
-        if (foundConverter != null) {
-            System.out.println("Converter found for String class.");
-        } else {
-            System.out.println("No converter found for String class.");
-        }
+    // Example Converter interface
+    public interface Converter {
+        Object convert(Object input);
     }
-}
-
-interface Converter {
-    // Converter interface methods
-}
-
-class StringConverter implements Converter {
-    // Implementation of StringConverter
 }

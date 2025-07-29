@@ -17,13 +17,18 @@ public class CollectionRemover {
         return set.remove(val);
     }
 
-    // 可选：添加一个方法来向集合中添加元素
+    // Optional: Method to add elements to the set for testing
     public void add(int val) {
         set.add(val);
     }
 
-    // 可选：添加一个方法来检查集合是否包含某个元素
-    public boolean contains(int val) {
-        return set.contains(val);
+    public static void main(String[] args) {
+        CollectionRemover remover = new CollectionRemover();
+        remover.add(10);
+        remover.add(20);
+        remover.add(30);
+
+        System.out.println(remover.remove(20)); // true
+        System.out.println(remover.remove(40)); // false
     }
 }

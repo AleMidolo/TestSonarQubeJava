@@ -16,7 +16,7 @@ public class FactorialCalculator {
     }
 
     public static void main(String[] args) {
-        int n = 5; // 示例输入
-        System.out.println("阶乘为: " + factorial(n));
+        int n = 5;
+        System.out.println("Factorial of " + n + " is: " + factorial(n));
     }
 }

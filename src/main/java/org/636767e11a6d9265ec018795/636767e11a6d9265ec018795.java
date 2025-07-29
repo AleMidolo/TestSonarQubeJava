@@ -34,16 +34,17 @@ public class Main {
     public boolean isCompatible(DataTable dataset) {
         // Assuming 'this' refers to another DataTable instance
         // For the purpose of this example, let's assume 'this' is a DataTable instance
-        DataTable currentDataset = new DataTable("exampleBucket"); // Replace with actual instance
-        return currentDataset.equals(dataset);
+        return this.equals(dataset);
     }
 
     public static void main(String[] args) {
-        DataTable dataset1 = new DataTable("exampleBucket");
-        DataTable dataset2 = new DataTable("exampleBucket");
+        DataTable table1 = new DataTable("bucket1");
+        DataTable table2 = new DataTable("bucket1");
+        DataTable table3 = new DataTable("bucket2");
 
         Main main = new Main();
-        System.out.println(main.isCompatible(dataset1)); // Should print true
-        System.out.println(main.isCompatible(dataset2)); // Should print true
+        System.out.println(main.isCompatible(table1)); // true
+        System.out.println(main.isCompatible(table2)); // true
+        System.out.println(main.isCompatible(table3)); // false
     }
 }

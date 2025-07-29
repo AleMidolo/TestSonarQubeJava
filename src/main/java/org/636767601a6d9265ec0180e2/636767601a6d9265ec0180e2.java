@@ -39,7 +39,7 @@ public class GraphSeparator {
                 // Compute the minimal separator for the neighborhood
                 List<Pair<Integer, Integer>> separator = computeMinimalSeparator(neighborhood);
 
-                // Add the separator and the edge to the global separator list
+                // Add the separator and the edge to the global list
                 globalSeparatorList.add(new Pair<>(separator, edge));
             }
         }
@@ -53,6 +53,8 @@ public class GraphSeparator {
         Set<Integer> neighborhood = new HashSet<>();
         neighborhood.add(vertex);
         // Add other vertices connected by the edge
+        // Assuming edge has a method to get the connected vertices
+        // neighborhood.addAll(edge.getConnectedVertices());
         return neighborhood;
     }
 
@@ -81,14 +83,8 @@ public class GraphSeparator {
         // Example usage
         Map<Integer, List<E>> graph = new HashMap<>();
         // Populate the graph with vertices and edges
-
         GraphSeparator separator = new GraphSeparator(graph);
         List<Pair<List<Pair<Integer, Integer>>, E>> result = separator.computeGlobalSeparatorList();
-
-        // Print the result
-        for (Pair<List<Pair<Integer, Integer>>, E> pair : result) {
-            System.out.println("Edge: " + pair.getValue());
-            System.out.println("Separator: " + pair.getKey());
-        }
+        // Process the result as needed
     }
 }

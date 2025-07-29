@@ -11,6 +11,19 @@ public class GraphUtils {
      * @return 从图到图的映射
      */
     public static <V, E> IsomorphicGraphMapping<V, E> identity(Graph<V, E> graph) {
-        return new IsomorphicGraphMapping<>(graph, graph, v -> v, e -> e);
+        // 创建一个映射，将每个顶点映射到自身
+        java.util.Map<V, V> vertexMapping = new java.util.HashMap<>();
+        for (V vertex : graph.vertexSet()) {
+            vertexMapping.put(vertex, vertex);
+        }
+
+        // 创建一个映射，将每条边映射到自身
+        java.util.Map<E, E> edgeMapping = new java.util.HashMap<>();
+        for (E edge : graph.edgeSet()) {
+            edgeMapping.put(edge, edge);
+        }
+
+        // 返回恒等自同构映射
+        return new IsomorphicGraphMapping<>(vertexMapping, edgeMapping, graph, graph);
     }
 }

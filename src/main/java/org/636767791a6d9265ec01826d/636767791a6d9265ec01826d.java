@@ -4,9 +4,6 @@ import java.util.regex.Pattern;
 
 public class PropertySubstitutor {
 
-    /**
-     * 在 <code>props</code> 中查找与 <code>key</code> 对应的值。然后对找到的值进行变量替换。
-     */
     public static String findAndSubst(String key, Properties props) {
         String value = props.getProperty(key);
         if (value == null) {
@@ -19,8 +16,8 @@ public class PropertySubstitutor {
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String varKey = matcher.group(1);
-            String varValue = props.getProperty(varKey);
+            String varName = matcher.group(1);
+            String varValue = props.getProperty(varName);
             if (varValue != null) {
                 matcher.appendReplacement(result, varValue);
             } else {
@@ -35,10 +32,10 @@ public class PropertySubstitutor {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("name", "John");
+        props.setProperty("name", "Alice");
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // 输出: Hello, John!
+        System.out.println(result);  // 输出: Hello, Alice!
     }
 }

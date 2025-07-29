@@ -15,13 +15,13 @@ public class BoxSplitter {
         // 计算拆分点的x坐标
         double splitX = lowerLeft.getX() + width / 2.0;
 
-        // 创建第一个矩形框（左半部分）
-        Box2D leftBox = new Box2D(lowerLeft, new Vector2D(splitX, upperRight.getY()));
+        // 创建第一个矩形框
+        Box2D firstBox = new Box2D(lowerLeft, new Vector2D(splitX, upperRight.getY()));
 
-        // 创建第二个矩形框（右半部分）
-        Box2D rightBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
+        // 创建第二个矩形框
+        Box2D secondBox = new Box2D(new Vector2D(splitX, lowerLeft.getY()), upperRight);
 
-        // 返回两个矩形框的对
-        return new Pair<>(leftBox, rightBox);
+        // 返回包含两个矩形框的对
+        return new Pair<>(firstBox, secondBox);
     }
 }

@@ -11,7 +11,7 @@ public class BeanMapUtils {
             throw new IllegalArgumentException("The input BeanMap cannot be null.");
         }
 
-        // 获取目标 BeanMap 的所有可写属性
+        // 获取当前 BeanMap 的所有可写属性
         for (Object key : map.keySet()) {
             if (map.isWriteable(key.toString())) {
                 Object value = map.get(key);
@@ -20,10 +20,41 @@ public class BeanMapUtils {
         }
     }
 
-    // 假设 BeanMap 类有一个 put 方法
+    // 假设 BeanMap 的 put 方法已经存在
     public void put(Object key, Object value) {
-        // 这里假设 BeanMap 有一个 put 方法
+        // 这里假设 BeanMap 的 put 方法已经实现
         // 实际实现可能依赖于具体的 BeanMap 实现
-        // 例如：this.beanMap.put(key, value);
+    }
+
+    public static void main(String[] args) {
+        // 示例用法
+        BeanMap sourceMap = new BeanMap(new MyBean());
+        BeanMap targetMap = new BeanMap(new MyBean());
+
+        // 假设 sourceMap 已经被填充了一些数据
+        BeanMapUtils utils = new BeanMapUtils();
+        utils.putAllWriteable(sourceMap);
+    }
+}
+
+class MyBean {
+    private String name;
+    private int age;
+
+    // Getters and Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

@@ -7,17 +7,17 @@ public class Tree {
         edgeList = new HashMap<>();
     }
 
-    public void addEdge(int u, int v) {
-        edgeList.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
-        edgeList.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+    public void addEdge(int from, int to) {
+        edgeList.computeIfAbsent(from, k -> new ArrayList<>()).add(to);
+        edgeList.computeIfAbsent(to, k -> new ArrayList<>()).add(from);
     }
 
-    public void removeFromTreeEdgeList(int u, int v) {
-        if (edgeList.containsKey(u)) {
-            edgeList.get(u).removeIf(node -> node == v);
+    public void removeFromTreeEdgeList(int from, int to) {
+        if (edgeList.containsKey(from)) {
+            edgeList.get(from).removeIf(node -> node == to);
         }
-        if (edgeList.containsKey(v)) {
-            edgeList.get(v).removeIf(node -> node == u);
+        if (edgeList.containsKey(to)) {
+            edgeList.get(to).removeIf(node -> node == from);
         }
     }
 

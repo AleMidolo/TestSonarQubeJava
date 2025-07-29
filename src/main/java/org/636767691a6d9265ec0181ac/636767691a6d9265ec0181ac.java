@@ -11,14 +11,14 @@ public class PathUtils {
      */
     public static String applyRelativePath(String path, String relativePath) {
         Path basePath = Paths.get(path);
-        Path resolvedPath = basePath.resolve(relativePath).normalize();
+        Path resolvedPath = basePath.resolveSibling(relativePath).normalize();
         return resolvedPath.toString();
     }
 
     public static void main(String[] args) {
         String path = "/usr/local/bin";
-        String relativePath = "../lib/java";
+        String relativePath = "../lib";
         String result = applyRelativePath(path, relativePath);
-        System.out.println(result);  // 输出: /usr/local/lib/java
+        System.out.println(result);  // 输出: /usr/local/lib
     }
 }

@@ -1,25 +1,24 @@
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-/**
- * 调用 {@link BroadcastFilter}
- * @param msg 要过滤的消息
- * @return 过滤后的消息
- */
-protected Object filter(Object msg) {
-    // 假设msg是一个Intent对象
-    if (msg instanceof Intent) {
-        Intent intent = (Intent) msg;
-        Bundle extras = intent.getExtras();
-        
-        // 这里可以添加自定义的过滤逻辑
-        if (extras != null && extras.containsKey("key_to_filter")) {
-            // 如果包含特定的key，则返回过滤后的消息
-            return "Filtered Message";
-        }
+public class BroadcastFilter extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // Handle the broadcast here
     }
-    
-    // 如果没有过滤条件，则返回原始消息
-    return msg;
+
+    protected Object filter(Object msg) {
+        // Implement your filtering logic here
+        // For example, you can check the content of the message and decide whether to process it or not
+        if (msg instanceof String) {
+            String message = (String) msg;
+            if (message.contains("important")) {
+                return message; // Return the message if it contains the word "important"
+            }
+        }
+        return null; // Return null if the message does not meet the criteria
+    }
 }

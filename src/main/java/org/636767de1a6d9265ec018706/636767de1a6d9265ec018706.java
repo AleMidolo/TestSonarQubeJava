@@ -8,12 +8,12 @@ public class Mappings {
         this.fields = new HashMap<>();
     }
 
-    public Map<String, Object> getFields() {
-        return fields;
+    public void addField(String fieldName, Object fieldConfig) {
+        fields.put(fieldName, fieldConfig);
     }
 
-    public void setFields(Map<String, Object> fields) {
-        this.fields = fields;
+    public Map<String, Object> getFields() {
+        return fields;
     }
 }
 
@@ -21,33 +21,37 @@ public class MappingDiff {
 
     /**
      * 返回输入映射中不存在的字段的映射。输入映射应为当前索引的历史映射。为了避免当前索引更新冲突，请不要返回 _source 配置。
-     *
-     * @param tableName 表名
-     * @param mappings  当前索引的历史映射
-     * @return 不存在的字段的映射
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // 假设我们有一个方法来获取当前表的映射
+        // Assuming we have a method to get the current mappings for the table
         Mappings currentMappings = getCurrentMappings(tableName);
 
         Mappings diffMappings = new Mappings();
-        Map<String, Object> currentFields = currentMappings.getFields();
-        Map<String, Object> inputFields = mappings.getFields();
 
-        for (Map.Entry<String, Object> entry : inputFields.entrySet()) {
+        for (Map.Entry<String, Object> entry : mappings.getFields().entrySet()) {
             String fieldName = entry.getKey();
-            if (!currentFields.containsKey(fieldName)) {
-                diffMappings.getFields().put(fieldName, entry.getValue());
+            Object fieldConfig = entry.getValue();
+
+            // Skip _source configuration
+            if ("_source".equals(fieldName)) {
+                continue;
+            }
+
+            // Check if the field exists in the current mappings
+            if (!currentMappings.getFields().containsKey(fieldName)) {
+                diffMappings.addField(fieldName, fieldConfig);
             }
         }
 
         return diffMappings;
     }
 
-    // 假设的方法，用于获取当前表的映射
+    // Dummy method to simulate getting current mappings for a table
     private Mappings getCurrentMappings(String tableName) {
-        // 这里应该是从数据库或其他存储中获取当前表的映射
-        // 为了示例，我们返回一个空的Mappings对象
-        return new Mappings();
+        // In a real implementation, this would fetch the current mappings from the index
+        Mappings currentMappings = new Mappings();
+        currentMappings.addField("existingField1", "config1");
+        currentMappings.addField("existingField2", "config2");
+        return currentMappings;
     }
 }

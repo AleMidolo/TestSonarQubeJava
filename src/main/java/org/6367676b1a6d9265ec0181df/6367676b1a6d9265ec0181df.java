@@ -20,7 +20,6 @@ public class StringUtils {
         System.out.println(startsWithIgnoreCase("HelloWorld", "hello")); // true
         System.out.println(startsWithIgnoreCase("HelloWorld", "world")); // false
         System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO")); // true
-        System.out.println(startsWithIgnoreCase("HelloWorld", null)); // false
-        System.out.println(startsWithIgnoreCase(null, "hello")); // false
+        System.out.println(startsWithIgnoreCase("HelloWorld", "HELLO WORLD")); // false
     }
 }

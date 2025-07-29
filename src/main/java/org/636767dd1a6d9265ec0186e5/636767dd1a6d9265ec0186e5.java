@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Channels {
     private List<IConsumer> consumers;
@@ -8,7 +9,7 @@ public class Channels {
     }
 
     public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+        this.consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
@@ -28,8 +29,6 @@ public class TargetChannelManager {
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {
             channels.addConsumer(consumer);
-        } else {
-            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
     }
 }

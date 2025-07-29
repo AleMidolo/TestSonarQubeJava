@@ -1,6 +1,6 @@
 import java.util.UUID;
 
-public class SessionIdGenerator {
+public class SessionUtil {
     /**
      * 生成一个唯一的会话 ID。
      * 
@@ -8,9 +8,5 @@ public class SessionIdGenerator {
      */
     public static String sessionId() {
         return UUID.randomUUID().toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(sessionId());
     }
 }

@@ -1,30 +1,30 @@
-import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 
-public class ContentBuilder {
-
-    /**
-     * 构建内容，如果包含 @ 某人，则设置 @ 信息。
-     */
-    private Map<String, Object> buildContent(JsonObject jsonObject) {
-        Map<String, Object> contentMap = new HashMap<>();
+private Map<String, Object> buildContent(JsonObject jsonObject) {
+    Map<String, Object> contentMap = new HashMap<>();
+    
+    // Assuming the JsonObject contains a field "content" which is a string
+    if (jsonObject.has("content")) {
         String content = jsonObject.get("content").getAsString();
-
-        // 检查内容中是否包含 @ 某人
-        Pattern pattern = Pattern.compile("@(\\w+)");
-        Matcher matcher = pattern.matcher(content);
-
-        if (matcher.find()) {
-            String mentionedUser = matcher.group(1);
-            contentMap.put("mentionedUser", mentionedUser);
-        }
-
-        // 将内容放入Map
         contentMap.put("content", content);
-
-        return contentMap;
+        
+        // Check if the content contains '@' mentions
+        if (content.contains("@")) {
+            // Extract mentions and add to the map
+            String[] words = content.split(" ");
+            for (String word : words) {
+                if (word.startsWith("@")) {
+                    String mention = word.substring(1); // Remove the '@' symbol
+                    contentMap.put("mention", mention);
+                    break; // Assuming only one mention is processed
+                }
+            }
+        }
     }
+    
+    return contentMap;
 }

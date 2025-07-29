@@ -16,7 +16,7 @@ public class HashCodeUtil {
 
     public static void main(String[] args) {
         long[] array = {1L, 2L, 3L};
-        System.out.println(nullSafeHashCode(array)); // 输出哈希码
-        System.out.println(nullSafeHashCode(null));  // 输出 0
+        System.out.println(nullSafeHashCode(array)); // 输出数组的哈希码
+        System.out.println(nullSafeHashCode(null)); // 输出 0
     }
 }

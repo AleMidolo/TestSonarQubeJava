@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Graph<V, E> {
-    private Map<V, Map<V, E>> adjacencyMap;
+public class GraphIndex<V, E> {
+    private Map<V, Map<V, E>> index;
 
-    public Graph() {
-        adjacencyMap = new HashMap<>();
+    public GraphIndex() {
+        index = new HashMap<>();
     }
 
     /**
@@ -15,9 +15,17 @@ public class Graph<V, E> {
      * @param e la arista
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        if (!adjacencyMap.containsKey(sourceVertex)) {
-            adjacencyMap.put(sourceVertex, new HashMap<>());
+        if (!index.containsKey(sourceVertex)) {
+            index.put(sourceVertex, new HashMap<>());
         }
-        adjacencyMap.get(sourceVertex).put(targetVertex, e);
+        index.get(sourceVertex).put(targetVertex, e);
+    }
+
+    // Método adicional para obtener la arista entre dos vértices
+    public E getEdge(V sourceVertex, V targetVertex) {
+        if (index.containsKey(sourceVertex)) {
+            return index.get(sourceVertex).get(targetVertex);
+        }
+        return null;
     }
 }

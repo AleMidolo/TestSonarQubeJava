@@ -26,7 +26,7 @@ public class DoublyLinkedList<E> {
 
     public void addListNode(ListNodeImpl<E> node) {
         if (node == null) {
-            throw new NullPointerException("Node cannot be null");
+            throw new IllegalArgumentException("Node cannot be null");
         }
         if (head == null) {
             head = node;
@@ -41,7 +41,7 @@ public class DoublyLinkedList<E> {
 
     public void removeListNode(ListNodeImpl<E> node) {
         if (node == null) {
-            throw new NullPointerException("Node cannot be null");
+            throw new IllegalArgumentException("Node cannot be null");
         }
         if (node.prev != null) {
             node.prev.next = node.next;
@@ -53,18 +53,13 @@ public class DoublyLinkedList<E> {
         } else {
             tail = node.prev;
         }
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        if (list == null) {
-            throw new NullPointerException("List cannot be null");
-        }
-        if (list.head == null) {
-            return;
-        }
+        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
 
         ListNodeImpl<E> current = list.head;
         while (current != null) {
@@ -74,6 +69,4 @@ public class DoublyLinkedList<E> {
             current = nextNode;
         }
     }
-
-    // Other methods of DoublyLinkedList...
 }

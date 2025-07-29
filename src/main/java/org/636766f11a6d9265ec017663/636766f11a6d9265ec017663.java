@@ -13,7 +13,6 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
         double[] arr1 = {1.0, 2.0, 3.0};
         double[] arr2 = {4.0, 5.0, 6.0};
         double[] arr3 = null;

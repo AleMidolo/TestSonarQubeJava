@@ -17,8 +17,22 @@ public class LogBuffer {
             // Silently discard the event if the buffer is full
         }
     }
+
+    // Optional: Method to retrieve events from the buffer
+    public LoggingEvent take() throws InterruptedException {
+        return buffer.take();
+    }
 }
 
+// Assuming LoggingEvent is a simple class for demonstration purposes
 class LoggingEvent {
-    // Assume LoggingEvent is a class with relevant fields and methods
+    private final String message;
+
+    public LoggingEvent(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

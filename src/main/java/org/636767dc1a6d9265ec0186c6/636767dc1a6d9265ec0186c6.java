@@ -1,23 +1,30 @@
 import java.util.Set;
-import java.util.HashSet;
 
 public class Fields {
     private Set<String> storedFields;
 
-    public Fields() {
-        this.storedFields = new HashSet<>();
+    public Fields(Set<String> storedFields) {
+        this.storedFields = storedFields;
     }
 
-    public void addField(String field) {
-        storedFields.add(field);
+    public Set<String> getStoredFields() {
+        return storedFields;
+    }
+}
+
+public class Example {
+    /**
+     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
+     */
+    private boolean containsAllFields(Fields fields) {
+        // Suponiendo que tenemos un conjunto de campos almacenados en la clase
+        Set<String> storedFields = getStoredFields(); // Método hipotético para obtener los campos almacenados
+        return storedFields.containsAll(fields.getStoredFields());
     }
 
-    public boolean containsAllFields(Fields fields) {
-        for (String field : fields.storedFields) {
-            if (!this.storedFields.contains(field)) {
-                return false;
-            }
-        }
-        return true;
+    // Método hipotético para obtener los campos almacenados
+    private Set<String> getStoredFields() {
+        // Implementación de ejemplo
+        return Set.of("field1", "field2", "field3");
     }
 }

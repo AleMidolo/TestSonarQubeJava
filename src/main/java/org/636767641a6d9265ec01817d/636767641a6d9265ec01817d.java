@@ -1,7 +1,7 @@
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class BipartiteGraphGenerator<V, E> {
 
@@ -9,26 +9,26 @@ public class BipartiteGraphGenerator<V, E> {
      * Construir un grafo bipartito completo
      * 
      * @param target El grafo en el que se construirá el grafo bipartito completo.
-     * @param resultMap Un mapa para almacenar los vértices generados, donde la clave es un identificador único.
+     * @param resultMap Un mapa para almacenar los vértices generados.
      */
     @Override
     public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-        // Supongamos que tenemos dos conjuntos de vértices: U y V
-        List<V> setU = new ArrayList<>();
-        List<V> setV = new ArrayList<>();
+        // Supongamos que los vértices están divididos en dos conjuntos: U y V
+        Set<V> setU = new HashSet<>();
+        Set<V> setV = new HashSet<>();
 
-        // Crear vértices para el conjunto U
-        for (int i = 0; i < 5; i++) { // Ejemplo: 5 vértices en U
-            V vertex = target.addVertex();
-            setU.add(vertex);
-            resultMap.put("U" + i, vertex);
+        // Generar vértices para el conjunto U
+        for (int i = 0; i < 5; i++) {
+            V vertexU = target.addVertex();
+            setU.add(vertexU);
+            resultMap.put("U" + i, vertexU);
         }
 
-        // Crear vértices para el conjunto V
-        for (int i = 0; i < 5; i++) { // Ejemplo: 5 vértices en V
-            V vertex = target.addVertex();
-            setV.add(vertex);
-            resultMap.put("V" + i, vertex);
+        // Generar vértices para el conjunto V
+        for (int i = 0; i < 5; i++) {
+            V vertexV = target.addVertex();
+            setV.add(vertexV);
+            resultMap.put("V" + i, vertexV);
         }
 
         // Conectar cada vértice de U con cada vértice de V

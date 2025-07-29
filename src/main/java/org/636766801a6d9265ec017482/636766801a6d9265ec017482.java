@@ -15,15 +15,19 @@ public class ClassFileBuffer {
      * El puntero de lectura se restablece al inicio del arreglo de bytes.
      */
     public void readFrom(final InputStream in) throws IOException {
+        if (in == null) {
+            throw new IllegalArgumentException("InputStream no puede ser nulo");
+        }
+
         // Limpiar el buffer
         for (int i = 0; i < buffer.length; i++) {
             buffer[i] = 0;
         }
 
-        // Leer los bytes del InputStream y llenar el buffer
+        // Leer los datos del InputStream al buffer
         int bytesRead = in.read(buffer);
         if (bytesRead == -1) {
-            throw new IOException("No se pudo leer ningún byte del InputStream.");
+            throw new IOException("No se pudieron leer datos del InputStream");
         }
 
         // Restablecer el puntero de lectura al inicio del buffer

@@ -3,7 +3,7 @@ public class NonZeroCounter {
     /**
      * Obtiene el número de entradas diferentes de cero en una fila.
      * @param row la fila representada como un arreglo de enteros
-     * @return el número de entradas diferentes de cero en una fila
+     * @return el número de entradas diferentes de cero en la fila
      */
     public static int nonZeros(int[] row) {
         int count = 0;

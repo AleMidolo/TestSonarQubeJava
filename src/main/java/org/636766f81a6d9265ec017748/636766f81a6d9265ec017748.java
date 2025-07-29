@@ -1,7 +1,6 @@
 import java.util.Base64;
 
 public class Base64Decoder {
-
     /**
      * Decodificación de una cadena a una cadena siguiendo la norma Base64.
      * 
@@ -14,8 +13,8 @@ public class Base64Decoder {
     }
 
     public static void main(String[] args) {
-        String encodedString = "SGVsbG8gV29ybGQh"; // "Hello World!" en Base64
+        String encodedString = "SGVsbG8gV29ybGQh"; // Ejemplo de cadena codificada en Base64
         String decodedString = base64Decode(encodedString);
-        System.out.println(decodedString); // Debería imprimir "Hello World!"
+        System.out.println(decodedString); // Salida: "Hello World!"
     }
 }

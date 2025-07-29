@@ -20,7 +20,6 @@ public class FileUtils {
             return path;
         }
 
-        // Restituisci il percorso senza l'estensione
         return path.substring(0, lastDotIndex);
     }
 

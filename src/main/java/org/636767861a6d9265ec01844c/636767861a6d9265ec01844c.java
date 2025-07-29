@@ -16,7 +16,7 @@ public class Logger {
         appenders.removeIf(appender -> appender.getName().equals(name));
     }
 
-    // Classe interna per rappresentare un Appender
+    // Classe Appender di esempio
     private static class Appender {
         private String name;
 

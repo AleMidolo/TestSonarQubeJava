@@ -5,26 +5,18 @@ public class GraphSeparator {
 
     // Assuming Pair is a custom class for holding pairs of elements
     public static class Pair<A, B> {
-        private A first;
-        private B second;
+        public final A first;
+        public final B second;
 
         public Pair(A first, B second) {
             this.first = first;
             this.second = second;
         }
-
-        public A getFirst() {
-            return first;
-        }
-
-        public B getSecond() {
-            return second;
-        }
     }
 
     // Assuming E is the type of edges in the graph
     private List<Pair<List<Pair<Integer, Integer>>, E>> computeGlobalSeparatorList() {
-        // Placeholder for the graph's edges and their respective separators
+        // Placeholder for the graph's edges and their separators
         List<Pair<List<Pair<Integer, Integer>>, E>> globalSeparatorList = new ArrayList<>();
 
         // Assuming we have a method to get all edges in the graph
@@ -34,7 +26,7 @@ public class GraphSeparator {
             // Compute the minimal separators for the neighborhood of the edge
             List<Pair<Integer, Integer>> separators = computeMinimalSeparators(edge);
 
-            // Add the pair of separators and the edge to the global list
+            // Add the separators and the edge to the global list
             globalSeparatorList.add(new Pair<>(separators, edge));
         }
 

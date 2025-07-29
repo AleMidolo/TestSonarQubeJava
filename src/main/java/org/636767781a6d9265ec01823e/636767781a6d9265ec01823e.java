@@ -7,17 +7,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientLogAppender extends AppenderSkeleton {
-    private ServerSocket serverSocket;
+public class LogAppender extends AppenderSkeleton {
     private List<PrintWriter> clients = new ArrayList<>();
+    private ServerSocket serverSocket;
 
-    public ClientLogAppender() {
-        try {
-            serverSocket = new ServerSocket(8080); // Porta su cui il server ascolta
-            new Thread(this::acceptClients).start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public LogAppender(int port) throws IOException {
+        serverSocket = new ServerSocket(port);
+        new Thread(this::acceptClients).start();
     }
 
     private void acceptClients() {
@@ -38,14 +34,19 @@ public class ClientLogAppender extends AppenderSkeleton {
     protected void append(LoggingEvent event) {
         String message = layout.format(event);
         synchronized (clients) {
-            for (PrintWriter writer : clients) {
-                writer.println(message);
+            for (PrintWriter client : clients) {
+                client.println(message);
             }
         }
     }
 
     @Override
     public void close() {
+        synchronized (clients) {
+            for (PrintWriter client : clients) {
+                client.close();
+            }
+        }
         try {
             serverSocket.close();
         } catch (IOException e) {

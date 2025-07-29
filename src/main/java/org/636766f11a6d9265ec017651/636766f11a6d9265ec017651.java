@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class DefensiveProgramming {
 
     // Array vuoto pubblico e statico per ottimizzazione della memoria
@@ -21,7 +19,7 @@ public class DefensiveProgramming {
     }
 
     public static void main(String[] args) {
-        // Test cases
+        // Test del metodo
         Character[] nullArray = null;
         Character[] emptyArray = new Character[0];
         Character[] nonEmptyArray = {'a', 'b', 'c'};

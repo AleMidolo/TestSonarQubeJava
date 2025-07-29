@@ -27,8 +27,8 @@ public class TemplateEncoder {
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
+        String input = "This is a {template} string with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D string with %7Bparameters%7D.
     }
 }

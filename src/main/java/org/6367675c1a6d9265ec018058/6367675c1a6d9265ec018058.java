@@ -11,7 +11,6 @@ public class StringSupplier {
         return String.valueOf(current++);
     }
 
-    @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
         StringSupplier supplier = new StringSupplier(start);
         return supplier::get;

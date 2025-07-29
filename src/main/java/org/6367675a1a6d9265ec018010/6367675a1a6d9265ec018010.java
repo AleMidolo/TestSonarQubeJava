@@ -10,28 +10,32 @@ class Bucket {
     }
 
     public void addBucket(Bucket bucket) {
-        this.buckets.add(bucket);
+        buckets.add(bucket);
     }
 
     public void removeSelf() {
-        // Assuming that the bucket is part of a larger structure, we need to remove it from its parent.
-        // This is a simplified example where we assume the bucket is part of a list in a parent bucket.
-        // In a real-world scenario, you would need to handle the parent-child relationship more carefully.
-        for (Bucket bucket : buckets) {
-            if (bucket.buckets.contains(this)) {
-                bucket.buckets.remove(this);
-                break;
-            }
+        // Remove this bucket from all parent buckets
+        for (Bucket parent : buckets) {
+            parent.buckets.remove(this);
         }
+        // Clear the list of buckets this bucket is associated with
+        buckets.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Bucket{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     public static void main(String[] args) {
-        Bucket parentBucket = new Bucket("Parent");
-        Bucket childBucket = new Bucket("Child");
-        parentBucket.addBucket(childBucket);
+        Bucket bucket1 = new Bucket("Bucket1");
+        Bucket bucket2 = new Bucket("Bucket2");
 
-        System.out.println("Before removal: " + parentBucket.buckets.contains(childBucket));
-        childBucket.removeSelf();
-        System.out.println("After removal: " + parentBucket.buckets.contains(childBucket));
+        bucket1.addBucket(bucket2);
+        System.out.println("Before removal: " + bucket2.buckets);
+        bucket2.removeSelf();
+        System.out.println("After removal: " + bucket2.buckets);
     }
 }

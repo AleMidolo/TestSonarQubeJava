@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class CollectionUtils {
 
@@ -11,7 +11,7 @@ public class CollectionUtils {
      * @param collection La collezione da convertire
      * @return Un nuovo array di Stringhe.
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
@@ -24,5 +24,11 @@ public class CollectionUtils {
         }
 
         return nonNullStrings.toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        Collection<Object> collection = Arrays.asList("Hello", null, "World", 123, null);
+        String[] result = toNoNullStringArray(collection);
+        System.out.println(Arrays.toString(result)); // Output: [Hello, World, 123]
     }
 }

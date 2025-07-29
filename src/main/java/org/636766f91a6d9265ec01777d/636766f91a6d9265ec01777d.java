@@ -11,14 +11,17 @@ public class HexConverter {
         } else if (b >= 'A' && b <= 'F') {
             return (byte) (b - 'A' + 10);
         } else {
-            throw new IllegalArgumentException("Invalid hex digit: " + (char) b);
+            throw new IllegalArgumentException("Il carattere non è un valore esadecimale valido.");
         }
     }
 
     public static void main(String[] args) {
-        // Test cases
-        System.out.println(convertHexDigit((byte) '5')); // Should print 5
-        System.out.println(convertHexDigit((byte) 'a')); // Should print 10
-        System.out.println(convertHexDigit((byte) 'F')); // Should print 15
+        byte testChar1 = 'A';
+        byte testChar2 = '7';
+        byte testChar3 = 'f';
+
+        System.out.println(convertHexDigit(testChar1)); // Output: 10
+        System.out.println(convertHexDigit(testChar2)); // Output: 7
+        System.out.println(convertHexDigit(testChar3)); // Output: 15
     }
 }

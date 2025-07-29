@@ -1,18 +1,22 @@
 import java.util.*;
 
 class CategoryTree {
+    private static class Node {
+        int id;
+        boolean active;
+        List<Node> children;
+
+        Node(int id, boolean active) {
+            this.id = id;
+            this.active = active;
+            this.children = new ArrayList<>();
+        }
+    }
+
     private Node root;
 
-    private class Node {
-        String name;
-        List<Node> children;
-        boolean active;
-
-        Node(String name) {
-            this.name = name;
-            this.children = new ArrayList<>();
-            this.active = true;
-        }
+    public CategoryTree(Node root) {
+        this.root = root;
     }
 
     protected int removeUnusedNodes() {
@@ -42,10 +46,17 @@ class CategoryTree {
         return removedCount;
     }
 
-    // Example usage
     public static void main(String[] args) {
-        CategoryTree tree = new CategoryTree();
-        // Populate the tree with nodes and set some as inactive
-        // tree.removeUnusedNodes(); // Call to remove unused nodes
+        Node root = new Node(1, true);
+        Node child1 = new Node(2, false);
+        Node child2 = new Node(3, true);
+        Node child3 = new Node(4, false);
+        root.children.add(child1);
+        root.children.add(child2);
+        child2.children.add(child3);
+
+        CategoryTree tree = new CategoryTree(root);
+        int removedNodes = tree.removeUnusedNodes();
+        System.out.println("Removed " + removedNodes + " unused nodes.");
     }
 }

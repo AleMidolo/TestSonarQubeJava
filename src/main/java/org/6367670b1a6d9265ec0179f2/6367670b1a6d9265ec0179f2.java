@@ -2,8 +2,12 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class MapContains {
-    private Map<Object, Object> map = new HashMap<>();
-    
+    private Map<Object, Object> map;
+
+    public MapContains() {
+        map = new HashMap<>();
+    }
+
     /**
      * Return <code>true</code> if this map contains a mapping for the specified key.
      * @param key the key to be searched for
@@ -11,19 +15,8 @@ public class MapContains {
      */
     public boolean containsKey(Object key) {
         if (key == null) {
-            for (Map.Entry<Object, Object> entry : map.entrySet()) {
-                if (entry.getKey() == null) {
-                    return true;
-                }
-            }
             return false;
         }
-        
-        for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            if (key.equals(entry.getKey())) {
-                return true;
-            }
-        }
-        return false;
+        return map.containsKey(key);
     }
 }

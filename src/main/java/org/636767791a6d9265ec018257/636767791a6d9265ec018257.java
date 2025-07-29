@@ -25,10 +25,18 @@ public class LogManager {
             public void run() {
                 try {
                     logTable.addRow(message);
+                    LOGGER.log(Level.INFO, "Log message added: {0}", message);
                 } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "Error adding log record: " + e.getMessage(), e);
+                    LOGGER.log(Level.SEVERE, "Error adding log message: " + message, e);
                 }
             }
         });
+    }
+}
+
+// Supporting class for compilation
+class LogTable extends JTable {
+    public void addRow(String message) {
+        // Implementation details for adding row to table
     }
 }

@@ -7,10 +7,11 @@ public class CodedInputStream {
     private int pos = 0;
     private byte[] buffer;
     private int bufferSize;
-    
+    private static final int BUFFER_SIZE = 4096;
+
     public CodedInputStream(InputStream input) {
         this.input = input;
-        this.buffer = new byte[4096];
+        this.buffer = new byte[BUFFER_SIZE];
         this.bufferSize = 0;
     }
 
@@ -43,37 +44,18 @@ public class CodedInputStream {
     }
 
     private int readRawVarint32() throws IOException {
-        byte tmp = readRawByte();
-        if (tmp >= 0) {
-            return tmp;
-        }
-        int result = tmp & 0x7f;
-        if ((tmp = readRawByte()) >= 0) {
-            result |= tmp << 7;
-        } else {
-            result |= (tmp & 0x7f) << 7;
-            if ((tmp = readRawByte()) >= 0) {
-                result |= tmp << 14;
-            } else {
-                result |= (tmp & 0x7f) << 14;
-                if ((tmp = readRawByte()) >= 0) {
-                    result |= tmp << 21;
-                } else {
-                    result |= (tmp & 0x7f) << 21;
-                    result |= (tmp = readRawByte()) << 28;
-                    if (tmp < 0) {
-                        // Discard upper 32 bits.
-                        for (int i = 0; i < 5; i++) {
-                            if (readRawByte() >= 0) {
-                                return result;
-                            }
-                        }
-                        throw new IOException("Malformed varint");
-                    }
-                }
+        int result = 0;
+        int shift = 0;
+        
+        while (shift < 32) {
+            byte b = readRawByte();
+            result |= (b & 0x7F) << shift;
+            if ((b & 0x80) == 0) {
+                return result;
             }
+            shift += 7;
         }
-        return result;
+        throw new IOException("Malformed varint");
     }
 
     private byte readRawByte() throws IOException {

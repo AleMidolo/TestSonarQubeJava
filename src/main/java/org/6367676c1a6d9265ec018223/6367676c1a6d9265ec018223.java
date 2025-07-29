@@ -9,11 +9,13 @@ public class CollectionUtils {
      * @return 如果找到则返回 <code>true</code>，否则返回 <code>false</code>
      */
     public static boolean containsInstance(Collection collection, Object element) {
-        if (collection != null && element != null) {
-            for (Object obj : collection) {
-                if (obj == element) {
-                    return true;
-                }
+        if (collection == null || element == null) {
+            return false;
+        }
+        
+        for (Object obj : collection) {
+            if (obj == element) {
+                return true;
             }
         }
         return false;

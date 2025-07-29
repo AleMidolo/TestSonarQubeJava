@@ -1,32 +1,50 @@
 import org.objectweb.asm.Type;
 
 public class StackFrameAnalyzer {
-    private int[] outputStack;
-    private int outputStackTop;
+    private int currentStackSize;
     
+    /**
+     * 从输出帧栈中弹出与给定描述符所描述的抽象类型数量。
+     * @param descriptor 类型或方法描述符（如果是方法描述符，则弹出其参数类型）。
+     */
     private void pop(final String descriptor) {
-        char firstChar = descriptor.charAt(0);
-        
-        if (firstChar == '(') {
-            // Method descriptor - pop parameter types
-            Type[] types = Type.getArgumentTypes(descriptor);
-            for (int i = types.length - 1; i >= 0; i--) {
-                outputStackTop -= types[i].getSize();
+        String desc = descriptor;
+        if (desc.charAt(0) == '(') {
+            // 如果是方法描述符,只处理参数部分
+            int i = desc.indexOf(')');
+            if (i != -1) {
+                desc = desc.substring(1, i);
             }
-        } else {
-            // Type descriptor - pop single type
-            if (firstChar == 'J' || firstChar == 'D') {
-                // Long or Double takes 2 slots
-                outputStackTop -= 2;
+        }
+        
+        // 计算描述符中的类型数量
+        int typeCount = 0;
+        for (int i = 0; i < desc.length(); i++) {
+            char c = desc.charAt(i);
+            if (c == 'D' || c == 'J') {
+                // double和long占用2个栈单元
+                typeCount += 2;
+            } else if (c == '[') {
+                // 数组类型,跳过'['字符
+                while (desc.charAt(i) == '[') {
+                    i++;
+                }
+                if (desc.charAt(i) == 'L') {
+                    // 对象数组,跳到';'
+                    i = desc.indexOf(';', i);
+                }
+                typeCount++;
+            } else if (c == 'L') {
+                // 对象类型,跳到';'
+                i = desc.indexOf(';', i);
+                typeCount++;
             } else {
-                // All other types take 1 slot
-                outputStackTop--;
+                // 基本类型
+                typeCount++;
             }
         }
         
-        // Ensure stack doesn't go negative
-        if (outputStackTop < 0) {
-            throw new IllegalStateException("Stack underflow");
-        }
+        // 从栈中弹出计算出的类型数量
+        currentStackSize -= typeCount;
     }
 }

@@ -24,13 +24,13 @@ public class SymbolTable {
         }
 
         symbol = new Symbol(
-            size++, 
+            size++,
             Symbol.CONSTANT_NAME_AND_TYPE_TAG,
             name,
             descriptor,
             hashCode,
             getSymbol(hashCode));
-            
+        
         symbols[symbol.index] = symbol;
         return symbol.index;
     }

@@ -21,11 +21,11 @@ public class JSONSerializer {
         }
 
         try {
-            // Use FastJSON to serialize the object with specified features
+            // Use FastJSON to serialize object to JSON string with specified features
             return JSON.toJSONString(value, features);
         } catch (Exception e) {
-            // Return empty string if serialization fails
-            return "";
+            // Return empty JSON object if serialization fails
+            return "{}";
         }
     }
 }

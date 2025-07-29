@@ -9,19 +9,25 @@ public class ColumnNameOverride {
      */
     public void overrideName(String oldName, String newName) {
         // Validate input parameters
-        Objects.requireNonNull(oldName, "oldName cannot be null");
-        Objects.requireNonNull(newName, "newName cannot be null");
-        
-        if (oldName.isEmpty()) {
-            throw new IllegalArgumentException("oldName cannot be empty");
-        }
-        
-        if (newName.isEmpty()) {
-            throw new IllegalArgumentException("newName cannot be empty"); 
+        if (Objects.isNull(oldName) || Objects.isNull(newName)) {
+            throw new IllegalArgumentException("Column names cannot be null");
         }
 
-        // Here we would typically update the name mapping in some storage
-        // For example, if using a Map to store the override mappings:
-        // nameOverrides.put(oldName, newName);
+        if (oldName.trim().isEmpty() || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Column names cannot be empty");
+        }
+
+        // Trim whitespace from names
+        String trimmedOldName = oldName.trim();
+        String trimmedNewName = newName.trim();
+
+        // Store the name mapping (implementation depends on storage mechanism)
+        storeNameMapping(trimmedOldName, trimmedNewName);
+    }
+
+    // Helper method to store the name mapping
+    private void storeNameMapping(String oldName, String newName) {
+        // Implementation would depend on storage requirements
+        // Could store in a Map, database, etc.
     }
 }

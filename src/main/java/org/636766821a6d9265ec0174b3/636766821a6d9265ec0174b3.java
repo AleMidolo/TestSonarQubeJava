@@ -33,11 +33,4 @@ public class BroadcastHandler {
     public interface BroadcastFilter {
         Object doFilter(Object msg);
     }
-
-    // Method to add filters
-    public void addFilter(BroadcastFilter filter) {
-        if (filter != null) {
-            filters.add(filter);
-        }
-    }
 }

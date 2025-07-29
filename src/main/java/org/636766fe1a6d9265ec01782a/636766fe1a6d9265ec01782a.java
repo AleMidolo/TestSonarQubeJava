@@ -18,42 +18,32 @@ public class ClassReader {
         offset += 2;
         
         // Read and decode UTF8 bytes into characters
-        int charLen = 0;
-        int max = offset + utfLen;
-        while (offset < max) {
-            int b1 = classFileBuffer[offset++] & 0xFF;
-            switch (b1 >> 4) {
-                case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-                    // 1 byte, 7 bits: 0xxxxxxx
-                    charBuffer[charLen++] = (char) b1;
-                    break;
-                    
-                case 12: case 13:
-                    // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
-                    int b2 = classFileBuffer[offset++] & 0xFF;
-                    charBuffer[charLen++] = (char) (((b1 & 0x1F) << 6) | (b2 & 0x3F));
-                    break;
-                    
-                case 14:
-                    // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
-                    b2 = classFileBuffer[offset++] & 0xFF;
-                    int b3 = classFileBuffer[offset++] & 0xFF;
-                    charBuffer[charLen++] = (char) (((b1 & 0x0F) << 12) | 
-                                                   ((b2 & 0x3F) << 6) | 
-                                                   (b3 & 0x3F));
-                    break;
-                    
-                default:
-                    // 2 bytes, 11 bits: 10xxxxxx 10xxxxxx
-                    b2 = classFileBuffer[offset++] & 0xFF;
-                    charBuffer[charLen++] = (char) (((b1 & 0x3F) << 6) | (b2 & 0x3F));
+        int strLen = 0;
+        int charIndex = 0;
+        int endOffset = offset + utfLen;
+        
+        while (offset < endOffset) {
+            int byte1 = classFileBuffer[offset++] & 0xFF;
+            
+            if ((byte1 & 0x80) == 0) { // 1 byte UTF8
+                charBuffer[charIndex++] = (char) byte1;
+            } else if ((byte1 & 0xE0) == 0xC0) { // 2 byte UTF8
+                int byte2 = classFileBuffer[offset++] & 0xFF;
+                charBuffer[charIndex++] = (char) (((byte1 & 0x1F) << 6) | (byte2 & 0x3F));
+            } else { // 3 byte UTF8
+                int byte2 = classFileBuffer[offset++] & 0xFF;
+                int byte3 = classFileBuffer[offset++] & 0xFF;
+                charBuffer[charIndex++] = (char) (((byte1 & 0x0F) << 12) 
+                    | ((byte2 & 0x3F) << 6) 
+                    | (byte3 & 0x3F));
             }
+            strLen++;
         }
-        return new String(charBuffer, 0, charLen);
+        
+        return new String(charBuffer, 0, strLen);
     }
     
     private int readUnsignedShort(final int offset) {
-        byte[] classFileBuffer = this.classFileBuffer;
         return ((classFileBuffer[offset] & 0xFF) << 8) | (classFileBuffer[offset + 1] & 0xFF);
     }
 }

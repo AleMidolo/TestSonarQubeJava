@@ -11,19 +11,22 @@ public class PrimeCalculator {
         
         int num = desiredCapacity;
         if (num % 2 == 0) {
-            num++; // Make it odd
+            num++;
         }
         
         while (!isPrime(num)) {
             num += 2;
-            // Check if we exceed the 11% error margin for large numbers
-            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
-                // Go back to previous prime number
-                num -= 2;
-                while (!isPrime(num)) {
-                    num -= 2;
+            
+            // Check if error exceeds 11% for large numbers
+            if (desiredCapacity >= 1000) {
+                double error = ((double)(num - desiredCapacity) / desiredCapacity) * 100;
+                if (error > 11.0) {
+                    // Return the last checked prime number less than current num
+                    while (!isPrime(num - 2)) {
+                        num -= 2;
+                    }
+                    return num - 2;
                 }
-                break;
             }
         }
         

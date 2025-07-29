@@ -24,7 +24,6 @@ public class LinkedList<E> {
         ListNodeImpl<E> next = node.next;
 
         if (prev == null) {
-            // Node is the head
             head = next;
         } else {
             prev.next = next;
@@ -32,7 +31,6 @@ public class LinkedList<E> {
         }
 
         if (next == null) {
-            // Node is the tail
             tail = prev;
         } else {
             next.prev = prev;

@@ -19,9 +19,9 @@ public class BooleanConverter {
     public static void main(String[] args) {
         System.out.println(toBoolean("真", false)); // true
         System.out.println(toBoolean("假", true));  // false
-        System.out.println(toBoolean("TRUE", false)); // true
-        System.out.println(toBoolean("FALSE", true)); // false
-        System.out.println(toBoolean("unknown", true)); // true
-        System.out.println(toBoolean("unknown", false)); // false
+        System.out.println(toBoolean("True", false)); // true
+        System.out.println(toBoolean("False", true)); // false
+        System.out.println(toBoolean("其他", true));  // true
+        System.out.println(toBoolean(null, false));  // false
     }
 }

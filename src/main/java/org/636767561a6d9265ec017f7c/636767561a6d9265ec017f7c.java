@@ -2,13 +2,20 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+/**
+ * 将集合表示转换为图路径。
+ * @param tour 包含可巡回边的集合
+ * @param graph 图
+ * @return 图路径
+ */
+protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour cannot be empty.");
+        throw new IllegalArgumentException("Tour cannot be empty");
     }
 
     List<E> edgeList = new ArrayList<>(tour);
@@ -33,7 +40,7 @@ protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
         } else if (target.equals(vertexList.get(vertexList.size() - 1))) {
             vertexList.add(source);
         } else {
-            throw new IllegalArgumentException("Edges do not form a continuous path.");
+            throw new IllegalArgumentException("Edges do not form a continuous path");
         }
     }
 

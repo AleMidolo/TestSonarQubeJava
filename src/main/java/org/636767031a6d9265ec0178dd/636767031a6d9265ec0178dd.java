@@ -16,19 +16,14 @@ public class HttpRequest {
      * @since 1.3
      */
     public long contentLength() {
-        HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
             connection.connect();
             return connection.getContentLengthLong();
         } catch (IOException e) {
             e.printStackTrace();
             return -1; // 返回-1表示获取失败
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
         }
     }
 

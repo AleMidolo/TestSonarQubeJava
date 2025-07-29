@@ -15,10 +15,7 @@ public class PartialContentChecker {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-            // 发送请求并获取响应代码
             int responseCode = connection.getResponseCode();
-
-            // 检查是否为部分内容（HTTP 206）
             return responseCode == HttpURLConnection.HTTP_PARTIAL;
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,6 +25,6 @@ public class PartialContentChecker {
 
     public static void main(String[] args) {
         PartialContentChecker checker = new PartialContentChecker();
-        System.out.println("Is partial content response? " + checker.isPartialContentResponse());
+        System.out.println("Is partial content response: " + checker.isPartialContentResponse());
     }
 }

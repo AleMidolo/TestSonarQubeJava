@@ -9,22 +9,22 @@ public class StringUtils {
         if (array == null) {
             return null;
         }
-        String[] result = new String[array.length];
+        String[] trimmedArray = new String[array.length];
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                result[i] = array[i].trim();
+                trimmedArray[i] = array[i].trim();
             } else {
-                result[i] = null;
+                trimmedArray[i] = null;
             }
         }
-        return result;
+        return trimmedArray;
     }
 
     public static void main(String[] args) {
         String[] array = {"  hello ", "  world  ", null, "  java  "};
         String[] trimmedArray = trimArrayElements(array);
         for (String str : trimmedArray) {
-            System.out.println(str);
+            System.out.println("'" + str + "'");
         }
     }
 }

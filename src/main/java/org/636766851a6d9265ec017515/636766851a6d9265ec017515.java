@@ -2,7 +2,7 @@ import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
 
-public class AtmosphereInspector {
+public class AtmosphereResourceInspector {
 
     /**
      * 根据 {@link AtmosphereResource.TRANSPORT} 的值自动挂起 {@link AtmosphereResource}。
@@ -11,8 +11,7 @@ public class AtmosphereInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        TRANSPORT transport = r.transport();
-        if (transport == TRANSPORT.WEBSOCKET || transport == TRANSPORT.STREAMING) {
+        if (r.transport() == TRANSPORT.LONG_POLLING || r.transport() == TRANSPORT.WEBSOCKET) {
             r.suspend();
         }
         return Action.CONTINUE;

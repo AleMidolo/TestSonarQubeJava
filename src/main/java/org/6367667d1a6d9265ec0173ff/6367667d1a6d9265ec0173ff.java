@@ -10,12 +10,10 @@ public class MeteorLookup {
     public static Meteor lookup(HttpServletRequest r) {
         // 假设 Meteor 实例存储在请求属性中
         Object meteorObj = r.getAttribute("meteor");
-        
         if (meteorObj instanceof Meteor) {
             return (Meteor) meteorObj;
-        } else {
-            return null;
         }
+        return null;
     }
 }
 

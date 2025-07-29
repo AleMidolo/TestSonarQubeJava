@@ -6,10 +6,10 @@ public class Template {
 
     public Template() {
         this.templateVariables = new HashSet<>();
-        // Initialize with some default template variables
-        this.templateVariables.add("var1");
-        this.templateVariables.add("var2");
-        this.templateVariables.add("var3");
+        // 假设模板变量已经初始化
+        templateVariables.add("var1");
+        templateVariables.add("var2");
+        templateVariables.add("var3");
     }
 
     /**
@@ -23,7 +23,7 @@ public class Template {
 
     public static void main(String[] args) {
         Template template = new Template();
-        System.out.println(template.isTemplateVariablePresent("var1")); // true
-        System.out.println(template.isTemplateVariablePresent("var4")); // false
+        System.out.println(template.isTemplateVariablePresent("var1")); // 输出: true
+        System.out.println(template.isTemplateVariablePresent("var4")); // 输出: false
     }
 }

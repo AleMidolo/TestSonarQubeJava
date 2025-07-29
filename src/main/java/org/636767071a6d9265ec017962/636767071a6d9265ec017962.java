@@ -13,16 +13,21 @@ public class BeanMapUtils {
 
         // 获取当前 BeanMap 的所有可写属性
         for (Object key : map.keySet()) {
-            if (map.isWriteable(key.toString())) {
-                Object value = map.get(key);
-                this.put(key, value);
+            if (this.isWriteable(key.toString())) {
+                this.put(key, map.get(key));
             }
         }
     }
 
-    // 假设 BeanMap 类中已经有一个 put 方法
-    public void put(Object key, Object value) {
-        // 这里假设 BeanMap 的 put 方法已经实现
-        // 实际实现可能依赖于具体的 BeanMap 实现
+    // 假设 BeanMap 类中有 isWriteable 和 put 方法
+    private boolean isWriteable(String propertyName) {
+        // 这里假设 BeanMap 有一个方法可以检查属性是否可写
+        // 实际实现可能需要根据 BeanMap 的具体实现进行调整
+        return true; // 示例实现，实际应根据属性是否可写返回 true 或 false
+    }
+
+    private void put(Object key, Object value) {
+        // 这里假设 BeanMap 有一个 put 方法用于设置属性值
+        // 实际实现可能需要根据 BeanMap 的具体实现进行调整
     }
 }

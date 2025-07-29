@@ -1,9 +1,9 @@
 public class BinaryLogCalculator {
 
     /**
-     * 计算 $\log_2 (n)$ 的下限值 + 1
+     * 计算 log2(n) 的下限值 + 1
      * @param n 输入的正整数
-     * @return $\log_2 (n)$ 的下限值 + 1
+     * @return log2(n) 的下限值 + 1
      */
     private static int computeBinaryLog(int n) {
         if (n <= 0) {

@@ -12,7 +12,7 @@ public class ThreadSnapshotParser {
         List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()));
 
         for (String line : lines) {
-            ThreadSnapshot snapshot = ThreadSnapshot.parseFromLine(line);
+            ThreadSnapshot snapshot = ThreadSnapshot.fromString(line);
             if (snapshot != null && isWithinTimeRange(snapshot, timeRanges)) {
                 snapshots.add(snapshot);
             }
@@ -34,12 +34,12 @@ public class ThreadSnapshotParser {
     public static class ThreadSnapshot {
         private long timestamp;
         private String threadName;
-        private String state;
+        private String threadState;
 
-        public ThreadSnapshot(long timestamp, String threadName, String state) {
+        public ThreadSnapshot(long timestamp, String threadName, String threadState) {
             this.timestamp = timestamp;
             this.threadName = threadName;
-            this.state = state;
+            this.threadState = threadState;
         }
 
         public long getTimestamp() {
@@ -50,21 +50,19 @@ public class ThreadSnapshotParser {
             return threadName;
         }
 
-        public String getState() {
-            return state;
+        public String getThreadState() {
+            return threadState;
         }
 
-        public static ThreadSnapshot parseFromLine(String line) {
-            // Assuming the line format is: timestamp,threadName,state
+        public static ThreadSnapshot fromString(String line) {
             String[] parts = line.split(",");
             if (parts.length == 3) {
                 try {
                     long timestamp = Long.parseLong(parts[0]);
                     String threadName = parts[1];
-                    String state = parts[2];
-                    return new ThreadSnapshot(timestamp, threadName, state);
+                    String threadState = parts[2];
+                    return new ThreadSnapshot(timestamp, threadName, threadState);
                 } catch (NumberFormatException e) {
-                    // Handle invalid timestamp format
                     return null;
                 }
             }

@@ -13,18 +13,19 @@ public class MessageSerializer {
         // Write message to buffer using schema
         schema.writeTo(output, message);
         
-        // Get the size of the serialized message
+        // Get size of serialized message
         int size = output.getSize();
         
         // Write the size as a varint prefix
         writeRawVarint32(out, size);
         
-        // Write the actual message bytes
+        // Write the message bytes to output stream
         LinkedBuffer.writeTo(out, buffer);
         
         // Clear the buffer
         buffer.clear();
         
+        // Return total size (varint + message)
         return size;
     }
     

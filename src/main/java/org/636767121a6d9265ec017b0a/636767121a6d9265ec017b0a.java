@@ -13,7 +13,7 @@ public class HeaderParser {
         
         // Search for \r\n sequence
         while (index < headerPart.length()) {
-            // Check for \r\n sequence
+            // Found \r\n sequence
             if (index + 1 < headerPart.length() && 
                 headerPart.charAt(index) == '\r' && 
                 headerPart.charAt(index + 1) == '\n') {
@@ -22,7 +22,7 @@ public class HeaderParser {
             index++;
         }
         
-        // Return original end if no line ending found
+        // No end of line found, return original end position
         return end;
     }
 }

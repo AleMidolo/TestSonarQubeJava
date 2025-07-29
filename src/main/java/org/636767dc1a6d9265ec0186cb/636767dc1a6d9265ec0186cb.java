@@ -9,11 +9,15 @@ public class ConfigInitializer {
     private static final Logger logger = Logger.getLogger(ConfigInitializer.class.getName());
     private static final String DIST_PATH = "dist";
     
+    /**
+     * initialize config, such as check dist path
+     */
     public void init() {
         try {
-            // Check if dist directory exists, create if not
+            // Check if dist directory exists
             Path distPath = Paths.get(DIST_PATH);
             if (!Files.exists(distPath)) {
+                // Create dist directory if it doesn't exist
                 Files.createDirectory(distPath);
                 logger.info("Created dist directory at: " + distPath.toAbsolutePath());
             }
@@ -23,7 +27,8 @@ public class ConfigInitializer {
                 throw new IOException("Dist directory is not writable: " + distPath.toAbsolutePath());
             }
 
-            // Initialize other config settings as needed
+            // Additional initialization can be added here
+            
             logger.info("Configuration initialized successfully");
             
         } catch (IOException e) {

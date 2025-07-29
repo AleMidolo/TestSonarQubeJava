@@ -6,15 +6,16 @@ package org.apache.commons.lang3;
 public class CharUtils {
 
     /**
-     * Array of String values for characters with ASCII values 0-127.
-     * Used as a cache to avoid creating new String objects for common characters.
+     * Array of String values for characters 0-127 to enable caching of commonly used characters
      */
-    private static final String[] CHAR_STRING_CACHE = new String[128];
+    private static final String[] CHAR_STRING_ARRAY = new String[128];
 
-    // Initialize the cache with String values for ASCII characters
+    /**
+     * Initialize the character string cache
+     */
     static {
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
-            CHAR_STRING_CACHE[c] = String.valueOf(c);
+        for (int i = 0; i < CHAR_STRING_ARRAY.length; i++) {
+            CHAR_STRING_ARRAY[i] = String.valueOf((char) i);
         }
     }
 
@@ -33,7 +34,7 @@ public class CharUtils {
      */
     public static String toString(final char ch) {
         if (ch < 128) {
-            return CHAR_STRING_CACHE[ch];
+            return CHAR_STRING_ARRAY[ch];
         }
         return String.valueOf(ch);
     }

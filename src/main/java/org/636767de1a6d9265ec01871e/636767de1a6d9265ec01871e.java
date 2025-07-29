@@ -7,30 +7,30 @@ public class ShardingKeyValidator {
      * @throws IllegalStateException if sharding key indices are not continuous
      */
     private void check(String modelName) throws IllegalStateException {
-        if (Objects.isNull(modelName) || modelName.trim().isEmpty()) {
-            throw new IllegalStateException("Model name cannot be null or empty");
+        if (Objects.isNull(modelName)) {
+            throw new IllegalStateException("Model name cannot be null");
         }
         
-        // Validate that model name follows expected format
-        if (!modelName.matches("^[a-zA-Z0-9_]+$")) {
-            throw new IllegalStateException("Model name contains invalid characters");
+        if (modelName.trim().isEmpty()) {
+            throw new IllegalStateException("Model name cannot be empty");
         }
         
-        // Check if sharding key indices are continuous
-        // This is a placeholder implementation - actual logic would depend on how indices are stored/retrieved
-        int[] indices = getShardingKeyIndices(modelName);
-        if (indices != null && indices.length > 0) {
-            for (int i = 0; i < indices.length - 1; i++) {
-                if (indices[i + 1] - indices[i] != 1) {
-                    throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
+        // Validate that sharding key indices are continuous
+        // This is a basic implementation - extend based on specific requirements
+        String[] parts = modelName.split("_");
+        if (parts.length > 1) {
+            try {
+                for (int i = 1; i < parts.length; i++) {
+                    int currentIndex = Integer.parseInt(parts[i]);
+                    int previousIndex = Integer.parseInt(parts[i-1]);
+                    if (currentIndex != previousIndex + 1) {
+                        throw new IllegalStateException("Sharding key indices must be continuous. Found gap between " + 
+                            previousIndex + " and " + currentIndex);
+                    }
                 }
+            } catch (NumberFormatException e) {
+                throw new IllegalStateException("Invalid sharding key format in model name: " + modelName);
             }
         }
-    }
-    
-    // Helper method to get sharding indices - implementation would depend on actual data source
-    private int[] getShardingKeyIndices(String modelName) {
-        // Placeholder implementation
-        return new int[]{0, 1, 2, 3};
     }
 }

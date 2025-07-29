@@ -1,79 +1,62 @@
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CodedInputStream {
+public class CodecInputStream {
     private final InputStream input;
     private int lastTag = 0;
-    private int pos = 0;
-    private byte[] buffer;
-    private int bufferSize;
-    private static final int BUFFER_SIZE = 4096;
-
-    public CodedInputStream(InputStream input) {
+    private int position = 0;
+    
+    public CodecInputStream(InputStream input) {
         this.input = input;
-        this.buffer = new byte[BUFFER_SIZE];
-        this.bufferSize = 0;
     }
 
     public int readTag() throws IOException {
-        if (isAtEnd()) {
+        if (input.available() == 0) {
             lastTag = 0;
             return 0;
         }
 
-        // Read the tag value using variable-length encoding
-        lastTag = readVarint32();
-        
+        lastTag = readRawVarint32();
         if (lastTag == 0) {
-            // If we read zero, that means either:
-            // 1) We hit EOF, or
-            // 2) We read a zero byte (invalid tag)
+            // If we actually read zero, that's not a valid tag.
             throw new IOException("Invalid tag: zero");
         }
-
         return lastTag;
     }
 
-    private boolean isAtEnd() throws IOException {
-        if (pos < bufferSize) {
-            return false;
+    private int readRawVarint32() throws IOException {
+        byte tmp = (byte) input.read();
+        if (tmp >= 0) {
+            return tmp;
         }
-        
-        int n = input.read(buffer);
-        if (n <= 0) {
-            return true;
-        }
-        
-        pos = 0;
-        bufferSize = n;
-        return false;
-    }
-
-    private int readVarint32() throws IOException {
-        int result = 0;
-        int shift = 0;
-        
-        while (shift < 32) {
-            byte b = readRawByte();
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
+        int result = tmp & 0x7f;
+        if ((tmp = (byte) input.read()) >= 0) {
+            result |= tmp << 7;
+        } else {
+            result |= (tmp & 0x7f) << 7;
+            if ((tmp = (byte) input.read()) >= 0) {
+                result |= tmp << 14;
+            } else {
+                result |= (tmp & 0x7f) << 14;
+                if ((tmp = (byte) input.read()) >= 0) {
+                    result |= tmp << 21;
+                } else {
+                    result |= (tmp & 0x7f) << 21;
+                    result |= (tmp = (byte) input.read()) << 28;
+                    if (tmp < 0) {
+                        // Discard upper 32 bits.
+                        for (int i = 0; i < 5; i++) {
+                            if (input.read() >= 0) {
+                                position++;
+                                return result;
+                            }
+                        }
+                        throw new IOException("Malformed varint");
+                    }
+                }
             }
-            shift += 7;
         }
-        
-        throw new IOException("Malformed varint32");
-    }
-
-    private byte readRawByte() throws IOException {
-        if (pos == bufferSize) {
-            int n = input.read(buffer);
-            if (n <= 0) {
-                throw new IOException("EOF");
-            }
-            pos = 0;
-            bufferSize = n;
-        }
-        return buffer[pos++];
+        position++;
+        return result;
     }
 }

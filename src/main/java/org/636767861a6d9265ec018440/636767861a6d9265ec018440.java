@@ -12,25 +12,19 @@ public class NameAbbreviator {
             return;
         }
 
-        int length = buf.length();
-        boolean lastWasWhitespace = true;
-        
-        for (int i = nameStart; i < length; i++) {
-            char ch = buf.charAt(i);
+        // Find first letter after nameStart
+        int pos = nameStart;
+        while (pos < buf.length() && !Character.isLetter(buf.charAt(pos))) {
+            pos++;
+        }
+
+        if (pos < buf.length()) {
+            // Keep first letter
+            char firstLetter = buf.charAt(pos);
             
-            if (Character.isWhitespace(ch)) {
-                lastWasWhitespace = true;
-            } else {
-                if (lastWasWhitespace) {
-                    // Keep first letter after whitespace
-                    lastWasWhitespace = false;
-                } else {
-                    // Delete non-first letters
-                    buf.deleteCharAt(i);
-                    i--;
-                    length--;
-                }
-            }
+            // Delete rest of name and add period
+            buf.delete(pos + 1, buf.length());
+            buf.append('.');
         }
     }
 }

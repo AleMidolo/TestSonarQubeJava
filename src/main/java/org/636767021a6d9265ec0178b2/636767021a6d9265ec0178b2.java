@@ -1,50 +1,23 @@
 import org.objectweb.asm.Type;
 
 private void pop(final String descriptor) {
-    Type[] types;
-    if (descriptor.charAt(0) == '(') {
-        // Method descriptor: extract argument types
-        types = Type.getArgumentTypes(descriptor);
-    } else {
-        // Type descriptor: single type
-        types = new Type[] { Type.getType(descriptor) };
-    }
-
-    for (Type type : types) {
-        switch (type.getSort()) {
-            case Type.BOOLEAN:
-            case Type.CHAR:
-            case Type.BYTE:
-            case Type.SHORT:
-            case Type.INT:
-                // Pop int
-                // Assuming outputFrameStack is a stack-like structure
-                outputFrameStack.pop();
-                break;
-            case Type.FLOAT:
-                // Pop float
-                outputFrameStack.pop();
-                break;
-            case Type.LONG:
-                // Pop long (takes two slots)
-                outputFrameStack.pop();
-                outputFrameStack.pop();
-                break;
-            case Type.DOUBLE:
-                // Pop double (takes two slots)
-                outputFrameStack.pop();
-                outputFrameStack.pop();
-                break;
-            case Type.ARRAY:
-            case Type.OBJECT:
-                // Pop reference
-                outputFrameStack.pop();
-                break;
-            case Type.VOID:
-                // No pop for void
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported type: " + type);
+    Type type = Type.getType(descriptor);
+    if (type.getSort() == Type.METHOD) {
+        Type[] argumentTypes = type.getArgumentTypes();
+        for (Type argType : argumentTypes) {
+            // Pop the argument types from the output frame stack
+            // Assuming a method popFrame() exists to pop a single type
+            popFrame(argType);
         }
+    } else {
+        // Pop a single type from the output frame stack
+        popFrame(type);
     }
+}
+
+// Assuming this method exists to pop a single type from the frame stack
+private void popFrame(Type type) {
+    // Implementation of popping a single type from the frame stack
+    // This is a placeholder and should be implemented based on the actual frame stack structure
+    System.out.println("Popping type: " + type.getClassName());
 }

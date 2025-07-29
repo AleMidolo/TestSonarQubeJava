@@ -1,3 +1,9 @@
+/**
+ * Skips bytes until the end of the current line.
+ * @param headerPart The headers, which are being parsed.
+ * @param end Index of the last byte, which has yet been processed.
+ * @return Index of the \r\n sequence, which indicates end of line.
+ */
 private int parseEndOfLine(String headerPart, int end) {
     int index = end;
     while (index < headerPart.length()) {

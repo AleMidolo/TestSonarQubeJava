@@ -18,7 +18,7 @@ public class TimeBucketCompressor {
         // Create a new LocalDate with the adjusted day
         LocalDate newDate = date.withDayOfMonth(newDay);
 
-        // Convert the new date back to a long in the format yyyyMMdd
+        // Convert the new date back to a long value
         return Long.parseLong(newDate.format(formatter));
     }
 

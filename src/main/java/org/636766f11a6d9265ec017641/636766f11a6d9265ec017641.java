@@ -26,8 +26,5 @@ public class CustomInputStream extends InputStream {
         return inputStream.read();
     }
 
-    @Override
-    public void close() throws IOException {
-        inputStream.close();
-    }
+    // Other overridden methods from InputStream can be added here if needed
 }

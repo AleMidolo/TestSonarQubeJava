@@ -1,5 +1,4 @@
-import java.io.StringWriter;
-import java.io.PrintWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,98 +10,43 @@ public class LogFormatter {
      * @return formatted string representation of the logging event.
      */
     public String format(final LoggingEvent event) {
-        StringWriter writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
-
-        // Format the timestamp
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
-
-        // Format the log level
         String level = event.getLevel().toString();
-
-        // Format the logger name
+        String message = event.getMessage();
         String loggerName = event.getLoggerName();
 
-        // Format the message
-        String message = event.getMessage().toString();
-
-        // Format the throwable (if any)
-        String throwableStr = "";
-        if (event.getThrowableInformation() != null) {
-            Throwable throwable = event.getThrowableInformation().getThrowable();
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            throwable.printStackTrace(pw);
-            throwableStr = sw.toString();
-        }
-
-        // Combine all parts into a single formatted string
-        printWriter.printf("[%s] %s %s - %s%n%s", timestamp, level, loggerName, message, throwableStr);
-
-        return writer.toString();
+        return String.format("[%s] %s %s: %s", timestamp, level, loggerName, message);
     }
 }
 
-// Assuming LoggingEvent class has the following methods:
-// long getTimeStamp()
-// Level getLevel()
-// String getLoggerName()
-// Object getMessage()
-// ThrowableInformation getThrowableInformation()
-
-// Example LoggingEvent class (for reference):
+// Assuming LoggingEvent class has the following structure:
 class LoggingEvent {
     private long timeStamp;
-    private Level level;
+    private String level;
+    private String message;
     private String loggerName;
-    private Object message;
-    private ThrowableInformation throwableInformation;
+
+    public LoggingEvent(long timeStamp, String level, String message, String loggerName) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.message = message;
+        this.loggerName = loggerName;
+    }
 
     public long getTimeStamp() {
         return timeStamp;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public String getLoggerName() {
         return loggerName;
-    }
-
-    public Object getMessage() {
-        return message;
-    }
-
-    public ThrowableInformation getThrowableInformation() {
-        return throwableInformation;
-    }
-}
-
-// Example Level class (for reference):
-class Level {
-    private String level;
-
-    public Level(String level) {
-        this.level = level;
-    }
-
-    @Override
-    public String toString() {
-        return level;
-    }
-}
-
-// Example ThrowableInformation class (for reference):
-class ThrowableInformation {
-    private Throwable throwable;
-
-    public ThrowableInformation(Throwable throwable) {
-        this.throwable = throwable;
-    }
-
-    public Throwable getThrowable() {
-        return throwable;
     }
 }

@@ -3,7 +3,7 @@ import java.util.Objects;
 public class ArrayUtils {
 
     /**
-     * An empty array of type Character.
+     * Empty array constant to optimize memory usage.
      */
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
 

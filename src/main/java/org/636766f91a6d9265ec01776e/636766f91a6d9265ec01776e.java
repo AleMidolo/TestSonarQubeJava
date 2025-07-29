@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ByteArrayOutputStream extends OutputStream {
-    protected byte[] buf;
+    protected byte buf[];
     protected int count;
 
     public ByteArrayOutputStream() {
@@ -58,15 +58,14 @@ public class ByteArrayOutputStream extends OutputStream {
     }
 
     public byte[] toByteArray() {
-        return java.util.Arrays.copyOf(buf, count);
+        return buf.clone();
     }
 
     public int size() {
         return count;
     }
 
-    @Override
-    public String toString() {
-        return new String(buf, 0, count);
+    public void reset() {
+        count = 0;
     }
 }

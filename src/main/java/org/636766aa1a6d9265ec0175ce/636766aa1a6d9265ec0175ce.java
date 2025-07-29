@@ -1,10 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class StackMapFrameVisitor {
-    private int[] currentFrame;
-    private int nextElementIndex;
+    private List<Object> currentFrame;
 
     public StackMapFrameVisitor() {
-        this.currentFrame = new int[0];
-        this.nextElementIndex = 0;
+        this.currentFrame = new ArrayList<>();
     }
 
     /**
@@ -15,16 +16,15 @@ public class StackMapFrameVisitor {
      * @return the index of the next element to be written in this frame.
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Calculate the total size of the frame: offset + numLocal + numStack
-        int frameSize = 1 + numLocal + numStack;
-        currentFrame = new int[frameSize];
+        // Clear the current frame to start a new one
+        currentFrame.clear();
 
-        // Store the offset in the first position of the frame
-        currentFrame[0] = offset;
+        // Add the offset, numLocal, and numStack to the frame
+        currentFrame.add(offset);
+        currentFrame.add(numLocal);
+        currentFrame.add(numStack);
 
-        // Initialize the next element index to 1 (after the offset)
-        nextElementIndex = 1;
-
-        return nextElementIndex;
+        // Return the index of the next element to be written (after offset, numLocal, and numStack)
+        return currentFrame.size();
     }
 }

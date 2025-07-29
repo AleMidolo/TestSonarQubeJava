@@ -3,7 +3,7 @@
  * @return 'Content-Range' value
  */
 private String buildContentRange() {
-    // Assuming the range and total size are known or calculated elsewhere in the class
+    // Assuming the range and total size are known or calculated elsewhere
     long start = 0; // Example start byte
     long end = 1023; // Example end byte
     long total = 2048; // Example total size

@@ -20,12 +20,7 @@ public class ByteVector {
         return this;
     }
 
-    // Optional: Method to get the byte array representation
-    public byte[] toByteArray() {
-        byte[] result = new byte[bytes.size()];
-        for (int i = 0; i < bytes.size(); i++) {
-            result[i] = bytes.get(i);
-        }
-        return result;
+    public List<Byte> getBytes() {
+        return bytes;
     }
 }

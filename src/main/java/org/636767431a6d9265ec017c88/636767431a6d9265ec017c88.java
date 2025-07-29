@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LowerBoundsCalculator<K extends Comparable<K>> {
 
@@ -9,25 +11,31 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
         if (keys == null || keys.isEmpty()) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         List<Integer> lowerBounds = new ArrayList<>();
-        TreeSet<K> sortedKeys = new TreeSet<>(keys);
+        List<K> sortedKeys = new ArrayList<>(keys);
+        Collections.sort(sortedKeys);
 
         for (K key : keys) {
-            K lowerBound = sortedKeys.lower(key);
-            lowerBounds.add(lowerBound != null ? lowerBound.hashCode() : -1);
+            int index = Collections.binarySearch(sortedKeys, key);
+            if (index < 0) {
+                // If the key is not found, binarySearch returns (-(insertion point) - 1)
+                index = -index - 2;
+            } else {
+                // If the key is found, we want the previous element
+                index--;
+            }
+
+            if (index >= 0) {
+                lowerBounds.add(index);
+            } else {
+                // No lower bound found
+                lowerBounds.add(-1);
+            }
         }
 
         return lowerBounds;
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
-        List<Integer> keys = Arrays.asList(5, 3, 8, 1, 7);
-        List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds); // Output: [3, 1, 7, -1, 5]
     }
 }

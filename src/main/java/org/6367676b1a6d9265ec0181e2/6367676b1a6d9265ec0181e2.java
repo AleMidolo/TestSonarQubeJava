@@ -13,9 +13,7 @@ public class CollectionUtils {
             return null;
         }
 
-        Iterator candidateIterator = candidates.iterator();
-        while (candidateIterator.hasNext()) {
-            Object candidate = candidateIterator.next();
+        for (Object candidate : candidates) {
             if (source.contains(candidate)) {
                 return candidate;
             }

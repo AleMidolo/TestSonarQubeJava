@@ -18,28 +18,29 @@ final class ClassFileReader {
         // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
         // La entrada CONSTANT_Utf8 tiene un formato específico en el class file.
         // El primer byte es el tag (1 para CONSTANT_Utf8), seguido de 2 bytes que indican la longitud de la cadena.
-        // Luego, los bytes de la cadena en formato UTF-8.
+        // Luego sigue la cadena en formato UTF-8.
 
-        // Posicionamos el buffer en la entrada correspondiente.
-        classFileBuffer.position(constantPoolEntryIndex);
+        // Posición inicial de la entrada en el búfer.
+        int entryPosition = constantPoolEntryIndex;
 
-        // Leemos el tag (debería ser 1 para CONSTANT_Utf8).
-        byte tag = classFileBuffer.get();
+        // Leer el tag (debería ser 1 para CONSTANT_Utf8).
+        byte tag = classFileBuffer.get(entryPosition);
         if (tag != 1) {
-            throw new IllegalArgumentException("El índice no corresponde a una entrada CONSTANT_Utf8.");
+            throw new IllegalArgumentException("La entrada no es de tipo CONSTANT_Utf8.");
         }
 
-        // Leemos la longitud de la cadena.
-        int length = classFileBuffer.getShort() & 0xFFFF;
+        // Leer la longitud de la cadena (2 bytes).
+        int length = classFileBuffer.getShort(entryPosition + 1) & 0xFFFF;
 
-        // Leemos los bytes de la cadena.
+        // Leer la cadena UTF-8.
         byte[] utf8Bytes = new byte[length];
+        classFileBuffer.position(entryPosition + 3);
         classFileBuffer.get(utf8Bytes);
 
-        // Convertimos los bytes UTF-8 a una cadena Java.
+        // Convertir los bytes UTF-8 a una cadena Java.
         String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
 
-        // Copiamos la cadena al charBuffer proporcionado.
+        // Copiar la cadena al búfer de caracteres.
         utf8String.getChars(0, utf8String.length(), charBuffer, 0);
 
         return utf8String;

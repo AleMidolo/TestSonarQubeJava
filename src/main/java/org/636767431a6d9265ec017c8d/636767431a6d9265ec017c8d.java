@@ -17,7 +17,7 @@ public class Log2FloorPlusOne {
     }
 
     public static void main(String[] args) {
-        int n = 10; // Ejemplo de uso
+        int n = 10;
         System.out.println("El piso(log2(" + n + ")) + 1 es: " + calculateLog2FloorPlusOne(n));
     }
 }

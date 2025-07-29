@@ -7,6 +7,9 @@ public class ClassPathUtil {
 
     /**
      * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
+     * 
+     * @param cpV Vector de URLs que representa el classpath.
+     * @param dir Directorio que contiene los archivos jar a agregar.
      */
     @SuppressWarnings("unchecked")
     public static void addToClassPath(Vector<URL> cpV, String dir) {
@@ -33,7 +36,7 @@ public class ClassPathUtil {
         String directoryPath = "path/to/your/jar/directory";
         addToClassPath(classPath, directoryPath);
 
-        // Imprimir los URLs agregados al classpath
+        // Imprimir las URLs agregadas al classpath
         for (URL url : classPath) {
             System.out.println(url);
         }

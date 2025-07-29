@@ -1,8 +1,8 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class LowerBoundCalculator<K extends Comparable<K>> {
+public class LowerBoundsCalculator<K extends Comparable<K>> {
 
     /**
      * Encuentra un límite inferior máximo para cada llave.

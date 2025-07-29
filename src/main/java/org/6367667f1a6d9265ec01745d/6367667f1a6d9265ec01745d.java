@@ -4,20 +4,19 @@ import java.util.List;
 
 public class PathSegmentImpl {
     private final String path;
+    private final boolean decoded;
 
-    public PathSegmentImpl(String path) {
+    public PathSegmentImpl(String path, boolean decoded) {
         this.path = path;
+        this.decoded = decoded;
     }
 
     public String getPath() {
         return path;
     }
 
-    @Override
-    public String toString() {
-        return "PathSegmentImpl{" +
-                "path='" + path + '\'' +
-                '}';
+    public boolean isDecoded() {
+        return decoded;
     }
 }
 
@@ -41,7 +40,7 @@ public class URIUtils {
             if (decode) {
                 part = java.net.URLDecoder.decode(part, java.nio.charset.StandardCharsets.UTF_8);
             }
-            segments.add(new PathSegmentImpl(part));
+            segments.add(new PathSegmentImpl(part, decode));
         }
 
         return segments;

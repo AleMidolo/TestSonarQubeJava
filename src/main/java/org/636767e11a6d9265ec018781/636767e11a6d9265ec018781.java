@@ -10,13 +10,13 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Data no puede ser nulo");
+        Objects.requireNonNull(data, "Data cannot be null");
 
         if (existingData == null) {
             existingData = data;
         } else {
-            // Aquí se combinan los datos existentes con los nuevos datos.
-            // Asumiendo que METRICS tiene un método para combinar datos.
+            // Aquí se combinan los datos existentes con los nuevos
+            // Asumiendo que METRICS tiene un método para combinar datos
             existingData.combine(data);
         }
     }

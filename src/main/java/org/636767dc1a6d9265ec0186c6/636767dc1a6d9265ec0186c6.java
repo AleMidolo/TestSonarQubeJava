@@ -1,82 +1,23 @@
-import java.util.Objects;
+import java.util.Set;
+import java.util.HashSet;
 
-public class FieldChecker {
+public class Fields {
+    private Set<String> storedFields;
 
-    private Properties properties;
-
-    public FieldChecker(Properties properties) {
-        this.properties = properties;
+    public Fields() {
+        this.storedFields = new HashSet<>();
     }
 
-    /**
-     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
-     */
-    private boolean containsAllFields(Fields fields) {
-        for (Field field : fields) {
-            if (!properties.containsKey(field.getName())) {
+    public void addField(String field) {
+        storedFields.add(field);
+    }
+
+    public boolean containsAllFields(Fields fields) {
+        for (String field : fields.storedFields) {
+            if (!this.storedFields.contains(field)) {
                 return false;
             }
         }
         return true;
-    }
-
-    // Assuming Fields and Field classes are defined as follows:
-    public static class Fields implements Iterable<Field> {
-        private final java.util.List<Field> fields;
-
-        public Fields(java.util.List<Field> fields) {
-            this.fields = fields;
-        }
-
-        @Override
-        public java.util.Iterator<Field> iterator() {
-            return fields.iterator();
-        }
-    }
-
-    public static class Field {
-        private final String name;
-
-        public Field(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Field field = (Field) o;
-            return Objects.equals(name, field.name);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(name);
-        }
-    }
-
-    // Assuming Properties is a standard java.util.Properties or similar
-    public static class Properties {
-        private final java.util.Map<String, String> properties;
-
-        public Properties() {
-            this.properties = new java.util.HashMap<>();
-        }
-
-        public void setProperty(String key, String value) {
-            properties.put(key, value);
-        }
-
-        public String getProperty(String key) {
-            return properties.get(key);
-        }
-
-        public boolean containsKey(String key) {
-            return properties.containsKey(key);
-        }
     }
 }

@@ -10,6 +10,6 @@ private static int valorDígito(final char c) {
     } else if (c >= 'a' && c <= 'z') {
         return 10 + (c - 'a');
     } else {
-        throw new IllegalArgumentException("El carácter no es un dígito válido en ninguna base hasta 36.");
+        throw new IllegalArgumentException("Carácter no válido: " + c);
     }
 }

@@ -1,11 +1,13 @@
+import java.util.Objects;
+
 public class ArrayUtils {
 
-    // Referencia estática para un array vacío de Boolean
+    // Public static empty array reference
     public static final Boolean[] EMPTY_BOOLEAN_ARRAY = new Boolean[0];
 
     /**
-     * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p> 
-     * <p>Este método devuelve un array vacío para un array de entrada <code>null</code>.</p> 
+     * <p>Técnica de programación defensiva para cambiar una referencia <code>null</code> por una vacía.</p>
+     * <p>Este método devuelve un array vacío para un array de entrada <code>null</code>.</p>
      * <p>Como técnica de optimización de memoria, un array vacío pasado será reemplazado por las referencias vacías <code>public static</code> en esta clase.</p>
      * @param array  el array a verificar si es <code>null</code> o vacío
      * @return el mismo array, un array vacío <code>public static</code> si la entrada es <code>null</code> o vacía
@@ -16,5 +18,16 @@ public class ArrayUtils {
             return EMPTY_BOOLEAN_ARRAY;
         }
         return array;
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        Boolean[] nullArray = null;
+        Boolean[] emptyArray = new Boolean[0];
+        Boolean[] nonEmptyArray = { true, false };
+
+        System.out.println(Objects.deepEquals(nullToEmpty(nullArray), EMPTY_BOOLEAN_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(emptyArray), EMPTY_BOOLEAN_ARRAY)); // true
+        System.out.println(Objects.deepEquals(nullToEmpty(nonEmptyArray), nonEmptyArray)); // true
     }
 }

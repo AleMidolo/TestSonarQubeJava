@@ -2,82 +2,51 @@ import java.util.Stack;
 
 public class FrameStackHandler {
 
-    private Stack<Object> frameStack;
-
-    public FrameStackHandler() {
-        this.frameStack = new Stack<>();
-    }
-
     /**
      * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
      * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
      */
     private void pop(final String descriptor) {
-        if (descriptor == null || descriptor.isEmpty()) {
-            throw new IllegalArgumentException("Descriptor cannot be null or empty");
-        }
+        Stack<String> frameStack = new Stack<>(); // Pila de marcos de salida
 
-        // Determine the number of arguments based on the descriptor
-        int argumentCount = 0;
+        // Verificar si el descriptor es un descriptor de método
         if (descriptor.startsWith("(")) {
-            // Method descriptor: count the number of arguments
-            int endIndex = descriptor.indexOf(')');
-            if (endIndex == -1) {
-                throw new IllegalArgumentException("Invalid method descriptor");
-            }
-            String args = descriptor.substring(1, endIndex);
-            argumentCount = countArguments(args);
-        } else {
-            // Single type descriptor: treat as one argument
-            argumentCount = 1;
-        }
+            // Extraer los tipos de argumento del descriptor de método
+            String[] argumentTypes = extractArgumentTypes(descriptor);
 
-        // Pop the required number of elements from the stack
-        for (int i = 0; i < argumentCount; i++) {
-            if (frameStack.isEmpty()) {
-                throw new IllegalStateException("Frame stack is empty");
+            // Extraer los tipos de la pila de marcos de salida
+            for (String type : argumentTypes) {
+                if (!frameStack.isEmpty()) {
+                    frameStack.pop();
+                } else {
+                    throw new IllegalStateException("No hay suficientes marcos en la pila para extraer.");
+                }
             }
-            frameStack.pop();
+        } else {
+            // Si no es un descriptor de método, extraer un solo tipo
+            if (!frameStack.isEmpty()) {
+                frameStack.pop();
+            } else {
+                throw new IllegalStateException("No hay suficientes marcos en la pila para extraer.");
+            }
         }
     }
 
     /**
-     * Counts the number of arguments in a method descriptor's argument list.
-     * @param args the argument part of the method descriptor
-     * @return the number of arguments
+     * Extrae los tipos de argumento de un descriptor de método.
+     * @param descriptor el descriptor de método.
+     * @return un arreglo de tipos de argumento.
      */
-    private int countArguments(String args) {
-        int count = 0;
-        int i = 0;
-        while (i < args.length()) {
-            char c = args.charAt(i);
-            if (c == 'L') {
-                // Object type: skip until ';'
-                int end = args.indexOf(';', i);
-                if (end == -1) {
-                    throw new IllegalArgumentException("Invalid object type in descriptor");
-                }
-                i = end + 1;
-            } else if (c == '[') {
-                // Array type: skip the array brackets
-                i++;
-            } else {
-                // Primitive type: move to the next character
-                i++;
-            }
-            count++;
-        }
-        return count;
+    private String[] extractArgumentTypes(String descriptor) {
+        // Eliminar el paréntesis inicial y final
+        String args = descriptor.substring(1, descriptor.indexOf(')'));
+
+        // Dividir los tipos de argumento
+        return args.split(";");
     }
 
-    // Example usage
     public static void main(String[] args) {
         FrameStackHandler handler = new FrameStackHandler();
-        handler.frameStack.push("arg1");
-        handler.frameStack.push("arg2");
-        handler.frameStack.push("arg3");
-
-        handler.pop("(Ljava/lang/String;I)V"); // Pops 2 arguments
-        System.out.println(handler.frameStack); // Should print [arg1]
+        handler.pop("(Ljava/lang/String;I)V"); // Ejemplo de uso
     }
 }

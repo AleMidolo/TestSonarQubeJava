@@ -20,8 +20,8 @@ public class ByteVector {
 
         int newCapacity = capacity + size;
         byte[] newData = Arrays.copyOf(data, newCapacity);
-        this.data = newData;
-        this.capacity = newCapacity;
+        data = newData;
+        capacity = newCapacity;
     }
 
     // Other methods for the ByteVector class can be added here

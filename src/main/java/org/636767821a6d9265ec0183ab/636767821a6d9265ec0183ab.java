@@ -5,6 +5,13 @@ public class Example {
         this.thrown = thrown;
     }
 
+    public Throwable getThrown() {
+        return thrown;
+    }
+
+    /**
+     * @return verdadero si getThrown().toString() es una cadena no vacía.
+     */
     public boolean hasThrown() {
         if (thrown == null) {
             return false;
@@ -16,6 +23,9 @@ public class Example {
     public static void main(String[] args) {
         // Example usage
         Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Output: true
+        System.out.println(example.hasThrown()); // Should print true
+
+        Example example2 = new Example(null);
+        System.out.println(example2.hasThrown()); // Should print false
     }
 }

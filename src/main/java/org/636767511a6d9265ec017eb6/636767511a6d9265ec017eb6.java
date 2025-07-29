@@ -12,43 +12,54 @@ public class OuterFaceCirculator {
     }
 
     public void next() {
-        // Assuming Node has a method getNext(int dir) to get the next node in the given direction
+        // Implementación de la lógica para moverse al siguiente nodo en la dirección dada
+        // Esto es un placeholder, la implementación real dependerá de la estructura del grafo
         current = current.getNext(dir);
     }
 
     public void previous() {
-        // Assuming Node has a method getPrevious(int dir) to get the previous node in the given direction
+        // Implementación de la lógica para moverse al nodo anterior en la dirección dada
+        // Esto es un placeholder, la implementación real dependerá de la estructura del grafo
         current = current.getPrevious(dir);
     }
 }
 
 public class Node {
-    private Node next;
-    private Node previous;
+    private Node[] neighbors;
+    private int id;
+
+    public Node(int id) {
+        this.id = id;
+        this.neighbors = new Node[2]; // Asumiendo que cada nodo tiene dos vecinos (uno en cada dirección)
+    }
 
     public Node getNext(int dir) {
-        // Implementation to get the next node based on direction
-        return next;
+        return neighbors[dir];
     }
 
     public Node getPrevious(int dir) {
-        // Implementation to get the previous node based on direction
-        return previous;
+        return neighbors[1 - dir];
+    }
+
+    public int getId() {
+        return id;
     }
 }
 
-public class GraphTraversal {
+public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
+        Node current = start;
 
-        while (circulator.getCurrent() != stop) {
-            if (predicate.test(circulator.getCurrent())) {
+        while (current != stop) {
+            if (predicate.test(current)) {
                 return circulator;
             }
             circulator.next();
+            current = circulator.getCurrent();
         }
 
-        // If the predicate is not satisfied, return a circulator to the stop node
-        return new OuterFaceCirculator(stop);
+        // Si no se encuentra un nodo que satisfaga el predicado, devolver el circulator al nodo stop
+        return circulator;
     }
 }

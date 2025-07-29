@@ -1,15 +1,10 @@
-// Assuming ListNodeImpl is a class defined as follows:
-class ListNodeImpl<E> {
-    E element;
-    ListNodeImpl<E> next;
-    ListNodeImpl<E> prev;
-
-    ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
-        this.element = element;
-        this.prev = prev;
-        this.next = next;
-    }
-}
+// Assuming ListNodeImpl is a class that represents a node in a linked list
+// and it has the following structure:
+// class ListNodeImpl<E> {
+//     E element;
+//     ListNodeImpl<E> next;
+//     ListNodeImpl<E> prev;
+// }
 
 private boolean unlink(ListNodeImpl<E> node) {
     if (node == null) {
@@ -19,24 +14,29 @@ private boolean unlink(ListNodeImpl<E> node) {
     ListNodeImpl<E> prev = node.prev;
     ListNodeImpl<E> next = node.next;
 
-    if (prev != null) {
-        prev.next = next;
+    // If the node is the head of the list
+    if (prev == null) {
+        // Update the head to the next node
+        // Assuming 'head' is a class-level variable representing the head of the list
+        head = next;
     } else {
-        // If prev is null, it means node is the head of the list
-        // You might need to update the head reference in your list class
+        // Otherwise, update the previous node's next pointer
+        prev.next = next;
     }
 
-    if (next != null) {
-        next.prev = prev;
+    // If the node is the tail of the list
+    if (next == null) {
+        // Update the tail to the previous node
+        // Assuming 'tail' is a class-level variable representing the tail of the list
+        tail = prev;
     } else {
-        // If next is null, it means node is the tail of the list
-        // You might need to update the tail reference in your list class
+        // Otherwise, update the next node's previous pointer
+        next.prev = prev;
     }
 
     // Clear the node's references to help with garbage collection
-    node.element = null;
-    node.next = null;
     node.prev = null;
+    node.next = null;
 
     return true;
 }

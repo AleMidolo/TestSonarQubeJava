@@ -31,6 +31,6 @@ public class ArrayUtils {
         for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // Salida esperada: 1 2 6 5 4 3 7
+        // Output: 1 2 6 5 4 3 7
     }
 }

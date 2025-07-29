@@ -2,8 +2,8 @@
 public int hashCode() {
     final int prime = 31;
     int result = 1;
-    // Assuming this class has fields that need to be included in the hash code calculation
-    // For example, if the class has a field 'id' of type int:
-    // result = prime * result + id;
+    // Asumiendo que esta clase tiene algunos campos, por ejemplo:
+    // result = prime * result + (field1 == null ? 0 : field1.hashCode());
+    // result = prime * result + (field2 == null ? 0 : field2.hashCode());
     return result;
 }

@@ -21,7 +21,7 @@ public class FrameStackHandler {
                     index++;
                     continue;
                 case ')':
-                    // End of method parameters
+                    // End of method arguments
                     return;
                 case 'B':
                 case 'C':
@@ -33,8 +33,8 @@ public class FrameStackHandler {
                     frameStack.pop();
                     index++;
                     break;
-                case 'D':
                 case 'J':
+                case 'D':
                     // Pop double-slot types
                     frameStack.pop();
                     frameStack.pop();

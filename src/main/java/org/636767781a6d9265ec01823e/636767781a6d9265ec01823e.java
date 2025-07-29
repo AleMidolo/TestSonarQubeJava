@@ -15,31 +15,30 @@ public class SocketAppender extends AppenderSkeleton {
         connectedClients = new ArrayList<>();
     }
     
-    public void addClient(Socket client) {
-        connectedClients.add(client);
+    public void addClient(Socket clientSocket) {
+        connectedClients.add(clientSocket);
     }
     
-    public void removeClient(Socket client) {
-        connectedClients.remove(client);
+    public void removeClient(Socket clientSocket) {
+        connectedClients.remove(clientSocket);
     }
-    
+
     @Override
     protected void append(LoggingEvent event) {
         if (layout == null) {
-            errorHandler.error("No layout set for appender " + name);
             return;
         }
 
-        String formattedMessage = layout.format(event);
+        String message = layout.format(event);
         
         List<Socket> disconnectedClients = new ArrayList<>();
         
         for (Socket client : connectedClients) {
             try {
                 PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
-                writer.println(formattedMessage);
+                writer.println(message);
             } catch (IOException e) {
-                // If we can't write to the socket, assume client disconnected
+                // If we can't write to the socket, mark it for removal
                 disconnectedClients.add(client);
             }
         }
@@ -54,7 +53,7 @@ public class SocketAppender extends AppenderSkeleton {
             try {
                 client.close();
             } catch (IOException e) {
-                // Ignore errors on close
+                // Ignore exceptions during cleanup
             }
         }
         connectedClients.clear();

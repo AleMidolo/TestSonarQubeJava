@@ -23,8 +23,8 @@ public class FrameStack {
                 case 'B': // byte
                 case 'C': // char 
                 case 'I': // int
-                case 'S': // short
                 case 'Z': // boolean
+                case 'S': // short
                 case 'F': // float
                     operandStack.pop();
                     index++;

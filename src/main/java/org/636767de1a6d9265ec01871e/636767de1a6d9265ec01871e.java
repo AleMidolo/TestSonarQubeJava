@@ -18,30 +18,26 @@ public class ShardingValidator {
 
         if (matcher.find()) {
             String shardIndexStr = matcher.group(1);
-            int shardIndex = Integer.parseInt(shardIndexStr);
-
-            // Check if shard index is negative
-            if (shardIndex < 0) {
-                throw new IllegalStateException("Shard index cannot be negative: " + modelName);
-            }
-
-            // Check if shard index skips numbers
-            // This assumes shard indices should start from 0 and be continuous
-            String baseModelName = modelName.substring(0, modelName.lastIndexOf('_'));
-            for (int i = 0; i < shardIndex; i++) {
-                String expectedModelName = baseModelName + "_" + i;
-                // Here you would typically check if expectedModelName exists in your system
-                // For demonstration, we'll just throw an exception if there's a gap
-                if (!modelExists(expectedModelName)) {
-                    throw new IllegalStateException("Non-continuous shard index detected. Missing shard: " + expectedModelName);
+            try {
+                int shardIndex = Integer.parseInt(shardIndexStr);
+                
+                // Check if shard index is negative
+                if (shardIndex < 0) {
+                    throw new IllegalStateException("Shard index cannot be negative: " + modelName);
                 }
+
+                // Check if shard index is continuous (should start from 0)
+                if (shardIndex > 0) {
+                    String previousShardName = modelName.substring(0, modelName.lastIndexOf('_')) + "_" + (shardIndex - 1);
+                    // Here you would typically check if previous shard exists in your system
+                    // For demonstration, we'll assume if previous shard doesn't follow naming convention, it's invalid
+                    if (!previousShardName.matches(".*_[0-9]+$")) {
+                        throw new IllegalStateException("Non-continuous shard index detected in: " + modelName);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                throw new IllegalStateException("Invalid shard index format in: " + modelName);
             }
         }
-    }
-
-    // Helper method to check if a model exists - implementation would depend on your system
-    private boolean modelExists(String modelName) {
-        // Implement according to your system's model checking logic
-        return true; // Placeholder implementation
     }
 }

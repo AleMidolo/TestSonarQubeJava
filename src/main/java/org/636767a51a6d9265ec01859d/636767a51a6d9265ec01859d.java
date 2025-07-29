@@ -28,4 +28,9 @@ public class ByteArrayMatcher {
 
         return true;
     }
+
+    // Constructor to initialize the internal pattern
+    public ByteArrayMatcher(byte[] pattern) {
+        this.pattern = pattern;
+    }
 }

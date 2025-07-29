@@ -6,7 +6,7 @@ package org.apache.commons.lang3;
 public class ArrayUtils {
 
     /**
-     * Empty array constant used for optimization
+     * Empty boolean array constant.
      */
     public static final Boolean[] EMPTY_BOOLEAN_OBJECT_ARRAY = new Boolean[0];
 

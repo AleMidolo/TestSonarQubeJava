@@ -1,9 +1,7 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
+import org.jgrapht.graph.AsGraphUnion;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class GraphUtils {
 
@@ -15,23 +13,11 @@ public class GraphUtils {
      * @return a mapping from graph to graph
      */
     public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-        // Create vertex mapping where each vertex maps to itself
-        Map<V,V> vertexCorrespondence = new HashMap<>();
-        for (V vertex : graph.vertexSet()) {
-            vertexCorrespondence.put(vertex, vertex);
-        }
-
-        // Create edge mapping where each edge maps to itself
-        Map<E,E> edgeCorrespondence = new HashMap<>();
-        for (E edge : graph.edgeSet()) {
-            edgeCorrespondence.put(edge, edge);
-        }
-
-        return new IsomorphicGraphMapping<>(
-            graph, // Graph 1 (source)
-            graph, // Graph 2 (target) - same as source for identity mapping
-            vertexCorrespondence,
-            edgeCorrespondence
+        return new IsomorphicGraphMapping<V,E>(
+            graph, // graph1 
+            graph, // graph2 (same as graph1 for identity mapping)
+            v -> v, // vertex correspondence function (identity)
+            e -> e  // edge correspondence function (identity)
         );
     }
 }

@@ -19,9 +19,13 @@ public class FilenameUtils {
         
         // Return -1 if:
         // - No dot found
-        // - Dot is before last directory separator
-        // - Dot is the last character
-        if (lastDotPos == -1 || lastDotPos < lastDirSeparator || lastDotPos == filename.length() - 1) {
+        // - Dot is first char
+        // - Dot comes before last directory separator
+        // - Dot is last char
+        if (lastDotPos == -1 || 
+            lastDotPos == 0 ||
+            lastDotPos < lastDirSeparator ||
+            lastDotPos == filename.length() - 1) {
             return -1;
         }
         

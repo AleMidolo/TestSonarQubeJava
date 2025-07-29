@@ -16,16 +16,13 @@ public class NameAbbreviator {
         boolean lastWasWhitespace = true;
         
         for (int i = nameStart; i < length; i++) {
-            char currentChar = buf.charAt(i);
+            char ch = buf.charAt(i);
             
-            if (Character.isWhitespace(currentChar)) {
+            if (Character.isWhitespace(ch)) {
                 lastWasWhitespace = true;
             } else {
                 if (lastWasWhitespace) {
                     // Keep first letter after whitespace
-                    if (i != nameStart) {
-                        buf.setCharAt(i, Character.toUpperCase(currentChar));
-                    }
                     lastWasWhitespace = false;
                 } else {
                     // Delete non-first letters

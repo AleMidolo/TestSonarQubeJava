@@ -7,10 +7,11 @@ import java.util.List;
 
 public class FileIterator implements Iterator<InputStream> {
     private List<File> files;
-    private int currentIndex = 0;
+    private int currentIndex;
 
     public FileIterator(List<File> files) {
         this.files = files;
+        this.currentIndex = 0;
     }
 
     /** 
@@ -34,5 +35,10 @@ public class FileIterator implements Iterator<InputStream> {
     @Override
     public boolean hasNext() {
         return currentIndex < files.size();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

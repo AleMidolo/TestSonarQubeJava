@@ -9,46 +9,51 @@ public class CustomLayout extends Layout {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
 
     public String format(LoggingEvent event) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         
         // Add timestamp
         Date timestamp = new Date(event.getTimeStamp());
-        sb.append(dateFormat.format(timestamp)).append(" ");
+        builder.append(dateFormat.format(timestamp));
+        builder.append(" ");
         
         // Add thread name
-        sb.append("[").append(event.getThreadName()).append("] ");
+        builder.append("[");
+        builder.append(event.getThreadName());
+        builder.append("] ");
         
-        // Add log level with padding
-        String level = event.getLevel().toString();
-        sb.append(String.format("%-5s", level)).append(" ");
+        // Add log level
+        builder.append(String.format("%-5s", event.getLevel().toString()));
+        builder.append(" ");
         
         // Add logger name
-        sb.append(event.getLoggerName()).append(" - ");
+        builder.append(event.getLoggerName());
+        builder.append(" - ");
         
         // Add message
-        sb.append(event.getRenderedMessage());
+        builder.append(event.getRenderedMessage());
         
         // Add new line
-        sb.append(System.lineSeparator());
+        builder.append(System.lineSeparator());
         
-        // Add throwable info if exists
+        // Add throwable if exists
         String[] throwableInfo = event.getThrowableStrRep();
         if (throwableInfo != null) {
             for (String line : throwableInfo) {
-                sb.append(line).append(System.lineSeparator());
+                builder.append(line);
+                builder.append(System.lineSeparator());
             }
         }
         
-        return sb.toString();
-    }
-
-    @Override
-    public boolean ignoresThrowable() {
-        return false;
+        return builder.toString();
     }
 
     @Override
     public void activateOptions() {
         // No options to activate
+    }
+
+    @Override
+    public boolean ignoresThrowable() {
+        return false;
     }
 }

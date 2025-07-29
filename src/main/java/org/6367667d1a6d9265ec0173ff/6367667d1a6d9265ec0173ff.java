@@ -1,6 +1,6 @@
-import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
+import javax.servlet.http.HttpServletRequest;
 
 public class MeteorLookup {
 

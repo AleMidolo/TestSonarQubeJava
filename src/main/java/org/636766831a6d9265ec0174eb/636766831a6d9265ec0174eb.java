@@ -20,13 +20,14 @@ public class FileHandler {
         Collections.reverse(fileList);
         
         for (File file : fileList) {
-            // Add file processing logic here
+            // Add files in reverse order
+            // Implementation specific add logic would go here
             processFile(file);
         }
     }
     
-    // Helper method for file processing
+    // Helper method for processing files
     private void processFile(File file) {
-        // Implementation details for processing individual files would go here
+        // Implementation specific file processing
     }
 }

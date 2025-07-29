@@ -11,7 +11,7 @@ public class StackFrameAnalyzer {
                 outputStack.pop();
             }
         } else {
-            // Single type descriptor
+            // Type descriptor - pop single type
             Type type = Type.getType(descriptor);
             if (type.getSize() == 2) {
                 // Double or long take up 2 slots

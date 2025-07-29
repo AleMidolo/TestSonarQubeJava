@@ -9,8 +9,8 @@ public class Logger {
         appenders = new ArrayList<>();
     }
     
-    /**
-     * Remove the appender with the name passed as parameter form the list of appenders.
+    /** 
+     * Remove the appender with the name passed as parameter form the list of appenders.  
      */
     public void removeAppender(String name) {
         if (name == null) {

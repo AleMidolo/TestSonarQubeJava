@@ -4,8 +4,7 @@ import java.util.List;
 public class ArrayUtils {
 
     /**
-     * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists (arrays and collections). 
-     * Note that {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element is <code>null</code>.
+     * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists (arrays and collections). Note that  {@link Arrays#sort(Object[])} will throw an {@link NullPointerException}if an array element is <code>null</code>.
      * @param array The array to check
      * @return The given array or a new array without null.
      */
@@ -25,8 +24,10 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        Object[] testArray = { "Hello", null, "World", null, "Java" };
-        String[] result = toNoNullStringArray(testArray);
+        // Example usage
+        Object[] inputArray = {"Hello", null, "World", null, "Java"};
+        String[] result = toNoNullStringArray(inputArray);
+
         for (String str : result) {
             System.out.println(str);
         }

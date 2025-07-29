@@ -20,44 +20,49 @@ public class Mappings {
 public class MappingDiff {
 
     /**
-     * Returns mappings with fields that do not exist in the input mappings. The input mappings should be history mapping from current index. 
-     * Do not return _source config to avoid current index update conflict.
+     * Returns mappings with fields that do not exist in the input mappings. The input mappings should be history mapping from current index. Do not return _source config to avoid current index update conflict.
      *
      * @param tableName The name of the table.
      * @param mappings The current mappings to compare against.
      * @return A new Mappings object containing only the fields that are not present in the input mappings.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        // Assume we have a method to get the historical mappings for the table
-        Mappings historicalMappings = getHistoricalMappings(tableName);
+        // Assuming we have a method to get the current mappings for the table
+        Mappings currentMappings = getCurrentMappings(tableName);
 
-        Mappings result = new Mappings();
-        Map<String, Object> resultProperties = new HashMap<>();
+        Mappings diffMappings = new Mappings();
+        Map<String, Object> currentProperties = currentMappings.getProperties();
+        Map<String, Object> inputProperties = mappings.getProperties();
 
-        // Iterate through the current mappings properties
-        for (Map.Entry<String, Object> entry : mappings.getProperties().entrySet()) {
+        for (Map.Entry<String, Object> entry : currentProperties.entrySet()) {
             String fieldName = entry.getKey();
-            Object fieldConfig = entry.getValue();
-
-            // Check if the field exists in the historical mappings
-            if (!historicalMappings.getProperties().containsKey(fieldName)) {
-                resultProperties.put(fieldName, fieldConfig);
+            if (!inputProperties.containsKey(fieldName)) {
+                diffMappings.getProperties().put(fieldName, entry.getValue());
             }
         }
 
-        result.setProperties(resultProperties);
-        return result;
+        return diffMappings;
     }
 
-    // Dummy method to simulate fetching historical mappings
-    private Mappings getHistoricalMappings(String tableName) {
-        // In a real implementation, this would fetch the historical mappings from a data source
-        Mappings historicalMappings = new Mappings();
-        Map<String, Object> historicalProperties = new HashMap<>();
-        // Example historical mappings
-        historicalProperties.put("oldField1", new HashMap<>());
-        historicalProperties.put("oldField2", new HashMap<>());
-        historicalMappings.setProperties(historicalProperties);
-        return historicalMappings;
+    // Dummy method to simulate fetching current mappings
+    private Mappings getCurrentMappings(String tableName) {
+        Mappings currentMappings = new Mappings();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("field1", "type1");
+        properties.put("field2", "type2");
+        properties.put("field3", "type3");
+        currentMappings.setProperties(properties);
+        return currentMappings;
+    }
+
+    public static void main(String[] args) {
+        MappingDiff mappingDiff = new MappingDiff();
+        Mappings inputMappings = new Mappings();
+        Map<String, Object> inputProperties = new HashMap<>();
+        inputProperties.put("field1", "type1");
+        inputMappings.setProperties(inputProperties);
+
+        Mappings diff = mappingDiff.diffStructure("exampleTable", inputMappings);
+        System.out.println(diff.getProperties()); // Output: {field2=type2, field3=type3}
     }
 }

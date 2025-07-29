@@ -21,6 +21,6 @@ public class ColumnName {
     }
 
     public String getNewName(String oldName) {
-        return nameMap.getOrDefault(oldName, oldName);
+        return nameMap.get(oldName);
     }
 }

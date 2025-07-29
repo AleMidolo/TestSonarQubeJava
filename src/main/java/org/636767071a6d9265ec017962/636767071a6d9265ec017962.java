@@ -8,6 +8,7 @@ public class BeanMap {
 
     public BeanMap() {
         // Initialize the properties map
+        properties = new java.util.HashMap<>();
     }
 
     public void putAllWriteable(BeanMap map) {
@@ -27,12 +28,19 @@ public class BeanMap {
                     writeMethod.invoke(this, value);
                 }
             } catch (Exception e) {
-                // Handle exceptions such as IntrospectionException, IllegalAccessException, InvocationTargetException
-                // Log or handle the exception as needed
-                e.printStackTrace();
+                // Ignore properties that are read-only or write-only
+                continue;
             }
         }
     }
 
-    // Other methods and properties of BeanMap
+    // Example of a property setter
+    public void setProperty(String name, Object value) {
+        properties.put(name, value);
+    }
+
+    // Example of a property getter
+    public Object getProperty(String name) {
+        return properties.get(name);
+    }
 }

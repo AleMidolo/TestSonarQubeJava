@@ -4,7 +4,7 @@ public class RequestUtils {
 
     /**
      * Retrieve the content length of the request.
-     * @param request The HTTP servlet request.
+     * @param request The HttpServletRequest object.
      * @return The content length of the request.
      * @since 1.3
      */

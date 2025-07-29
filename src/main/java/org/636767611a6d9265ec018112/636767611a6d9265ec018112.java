@@ -5,8 +5,9 @@ import java.util.NoSuchElementException;
  */
 @Override
 protected V provideNextVertex() {
-    if (vertices.isEmpty()) {
+    if (hasNext()) {
+        return vertices.get(currentIndex++);
+    } else {
         throw new NoSuchElementException("No more vertices available.");
     }
-    return vertices.poll();
 }

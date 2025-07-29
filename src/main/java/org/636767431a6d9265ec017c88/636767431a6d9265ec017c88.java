@@ -21,12 +21,16 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
         for (K key : keys) {
             int index = Collections.binarySearch(sortedKeys, key);
             if (index < 0) {
-                // If the key is not found, the insertion point is (-(insertion point) - 1)
+                // If the key is not found, the insertion point is (-index - 1)
                 index = -index - 1;
             }
-            // The maximum lower bound is the element just before the insertion point
-            int lowerBound = (index > 0) ? index - 1 : 0;
-            lowerBounds.add(lowerBound);
+            // The maximum lower bound is the key at (index - 1)
+            if (index > 0) {
+                lowerBounds.add((Integer) sortedKeys.get(index - 1));
+            } else {
+                // If no lower bound exists, add null or a default value
+                lowerBounds.add(null);
+            }
         }
 
         return lowerBounds;

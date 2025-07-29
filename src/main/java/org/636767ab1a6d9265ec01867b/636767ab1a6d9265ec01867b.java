@@ -1,55 +1,31 @@
 import java.nio.charset.StandardCharsets;
+import org.msgpack.core.buffer.LinkedBuffer;
+import org.msgpack.core.buffer.MessageBuffer;
 
-public class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
+public class UTF8Writer {
 
-    public LinkedBuffer(byte[] buffer, int position) {
-        this.buffer = buffer;
-        this.position = position;
-    }
-
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-}
-
-public class WriteSession {
-    // Placeholder for WriteSession class
-}
-
-public class Utf8Writer {
     /**
      * Writes the utf8-encoded bytes from the string into the {@link LinkedBuffer}.
      */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || lb == null) {
-            return lb;
+        if (str == null) {
+            throw new IllegalArgumentException("Input string cannot be null");
         }
 
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        byte[] buffer = lb.getBuffer();
-        int position = lb.getPosition();
+        int length = utf8Bytes.length;
 
-        // Ensure there is enough space in the buffer
-        if (position + utf8Bytes.length > buffer.length) {
-            // Handle buffer overflow (e.g., by resizing or chaining buffers)
-            // For simplicity, we assume the buffer is large enough
-            throw new IllegalStateException("Buffer overflow");
+        // Ensure the LinkedBuffer has enough space
+        LinkedBuffer currentBuffer = lb;
+        if (currentBuffer.remaining() < length) {
+            currentBuffer = LinkedBuffer.allocate(Math.max(length, currentBuffer.size()));
         }
 
-        // Copy the UTF-8 bytes into the buffer
-        System.arraycopy(utf8Bytes, 0, buffer, position, utf8Bytes.length);
-        lb.setPosition(position + utf8Bytes.length);
+        // Write the bytes into the LinkedBuffer
+        MessageBuffer messageBuffer = currentBuffer.currentMessageBuffer();
+        messageBuffer.putBytes(currentBuffer.getOffset(), utf8Bytes, 0, length);
+        currentBuffer.addOffset(length);
 
-        return lb;
+        return currentBuffer;
     }
 }

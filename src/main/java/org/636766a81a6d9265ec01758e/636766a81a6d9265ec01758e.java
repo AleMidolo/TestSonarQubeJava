@@ -8,33 +8,23 @@ public class PrimeUtil {
      * @return the capacity which should be used for a hashtable.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 2) {
-            return 2;
+        if (desiredCapacity <= 2) return 2;
+        int candidate = desiredCapacity;
+        if (candidate % 2 == 0) candidate++; // Ensure candidate is odd
+
+        while (!isPrime(candidate)) {
+            candidate += 2; // Check only odd numbers
         }
-        int prime = desiredCapacity;
-        if (prime % 2 == 0) {
-            prime++;
-        }
-        while (!isPrime(prime)) {
-            prime += 2;
-        }
-        return prime;
+        return candidate;
     }
 
     private static boolean isPrime(int n) {
-        if (n <= 1) {
-            return false;
-        }
-        if (n <= 3) {
-            return true;
-        }
-        if (n % 2 == 0 || n % 3 == 0) {
-            return false;
-        }
+        if (n <= 1) return false;
+        if (n <= 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+
         for (int i = 5; i * i <= n; i += 6) {
-            if (n % i == 0 || n % (i + 2) == 0) {
-                return false;
-            }
+            if (n % i == 0 || n % (i + 2) == 0) return false;
         }
         return true;
     }

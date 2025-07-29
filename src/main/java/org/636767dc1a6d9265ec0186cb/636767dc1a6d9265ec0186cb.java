@@ -15,19 +15,19 @@ public class ConfigInitializer {
      */
     public void init() {
         if (distPath == null || distPath.isEmpty()) {
-            throw new IllegalArgumentException("Dist path cannot be null or empty");
+            throw new IllegalArgumentException("Distribution path cannot be null or empty.");
         }
 
         Path path = Paths.get(distPath);
         if (!Files.exists(path)) {
-            throw new RuntimeException("Dist path does not exist: " + distPath);
+            throw new IllegalStateException("Distribution path does not exist: " + distPath);
         }
 
         if (!Files.isDirectory(path)) {
-            throw new RuntimeException("Dist path is not a directory: " + distPath);
+            throw new IllegalStateException("Distribution path is not a directory: " + distPath);
         }
 
-        System.out.println("Config initialized successfully with dist path: " + distPath);
+        System.out.println("Config initialized successfully. Distribution path: " + distPath);
     }
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ public class FrameStack {
         this.outputFrameStack = new Stack<>();
     }
 
-    /** 
+    /**
      * Pops the given number of abstract types from the output frame stack.
      * @param elements the number of abstract types that must be popped.
      */
@@ -21,16 +21,5 @@ public class FrameStack {
         for (int i = 0; i < elements; i++) {
             outputFrameStack.pop();
         }
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        FrameStack frameStack = new FrameStack();
-        frameStack.outputFrameStack.push("Type1");
-        frameStack.outputFrameStack.push("Type2");
-        frameStack.outputFrameStack.push("Type3");
-
-        frameStack.pop(2); // Pops the last two elements
-        System.out.println(frameStack.outputFrameStack); // Output: [Type1]
     }
 }

@@ -5,11 +5,11 @@ import java.util.List;
 public class URIDecoder {
 
     public static List<PathSegmentImpl> decodePath(URI u, boolean decode) {
-        List<PathSegmentImpl> pathSegments = new ArrayList<>();
+        List<PathSegmentImpl> segments = new ArrayList<>();
         String path = u.getPath();
 
         if (path == null || path.isEmpty()) {
-            return pathSegments;
+            return segments;
         }
 
         // Remove the leading '/' if it exists and the path is absolute
@@ -17,15 +17,23 @@ public class URIDecoder {
             path = path.substring(1);
         }
 
-        String[] segments = path.split("/");
-        for (String segment : segments) {
-            if (decode) {
-                segment = java.net.URLDecoder.decode(segment, java.nio.charset.StandardCharsets.UTF_8);
+        String[] parts = path.split("/");
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                String decodedPart = decode ? decodeURIComponent(part) : part;
+                segments.add(new PathSegmentImpl(decodedPart));
             }
-            pathSegments.add(new PathSegmentImpl(segment));
         }
 
-        return pathSegments;
+        return segments;
+    }
+
+    private static String decodeURIComponent(String encoded) {
+        try {
+            return java.net.URLDecoder.decode(encoded, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 encoding not supported", e);
+        }
     }
 
     public static class PathSegmentImpl {
@@ -44,14 +52,6 @@ public class URIDecoder {
             return "PathSegmentImpl{" +
                     "path='" + path + '\'' +
                     '}';
-        }
-    }
-
-    public static void main(String[] args) {
-        URI uri = URI.create("http://example.com/path/to/resource");
-        List<PathSegmentImpl> segments = decodePath(uri, true);
-        for (PathSegmentImpl segment : segments) {
-            System.out.println(segment);
         }
     }
 }

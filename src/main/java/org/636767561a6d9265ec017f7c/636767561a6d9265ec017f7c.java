@@ -21,29 +21,34 @@ protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
 
     // Create a list to store the vertices in the order of the tour
     List<V> vertexList = new ArrayList<>();
-    E firstEdge = tour.iterator().next();
-    V startVertex = graph.getEdgeSource(firstEdge);
-    V currentVertex = startVertex;
+    List<E> edgeList = new ArrayList<>(tour);
 
-    // Traverse the tour edges to build the vertex list
-    while (!tour.isEmpty()) {
-        vertexList.add(currentVertex);
-        for (E edge : tour) {
+    // Start with the first edge in the set
+    E firstEdge = edgeList.get(0);
+    V startVertex = graph.getEdgeSource(firstEdge);
+    V endVertex = graph.getEdgeTarget(firstEdge);
+
+    // Add the start vertex
+    vertexList.add(startVertex);
+
+    // Traverse the edges to build the vertex list
+    V currentVertex = startVertex;
+    while (!edgeList.isEmpty()) {
+        for (E edge : edgeList) {
             if (graph.getEdgeSource(edge).equals(currentVertex)) {
+                vertexList.add(graph.getEdgeTarget(edge));
                 currentVertex = graph.getEdgeTarget(edge);
-                tour.remove(edge);
+                edgeList.remove(edge);
                 break;
             } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
+                vertexList.add(graph.getEdgeSource(edge));
                 currentVertex = graph.getEdgeSource(edge);
-                tour.remove(edge);
+                edgeList.remove(edge);
                 break;
             }
         }
     }
 
-    // Ensure the path is closed by returning to the start vertex
-    vertexList.add(startVertex);
-
     // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, 0.0);
+    return new DefaultGraphPath<>(graph, vertexList, new ArrayList<>(tour));
 }

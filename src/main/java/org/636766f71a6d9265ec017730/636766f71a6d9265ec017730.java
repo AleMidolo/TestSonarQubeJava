@@ -9,22 +9,21 @@ public class CollectionUtils {
      * @param collection The collection to convert
      * @return A new array of Strings.
      */
-    public static String[] toNoNullStringArray(Collection<?> collection) {
+    static String[] toNoNullStringArray(Collection<?> collection) {
         if (collection == null) {
             return new String[0];
         }
 
-        // Filter out null values and convert to String
-        ArrayList<String> filteredList = new ArrayList<>();
+        ArrayList<String> nonNullStrings = new ArrayList<>();
         Iterator<?> iterator = collection.iterator();
+
         while (iterator.hasNext()) {
             Object element = iterator.next();
             if (element != null) {
-                filteredList.add(element.toString());
+                nonNullStrings.add(element.toString());
             }
         }
 
-        // Convert the filtered list to an array
-        return filteredList.toArray(new String[0]);
+        return nonNullStrings.toArray(new String[0]);
     }
 }

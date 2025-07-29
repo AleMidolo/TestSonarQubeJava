@@ -12,11 +12,9 @@ public class MeteorLookup {
      * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example implementation: retrieve a Meteor instance from the request attributes
-        // This is just a placeholder implementation; adjust according to your actual logic
-        Object meteorObj = r.getAttribute("meteor");
-        if (meteorObj instanceof Meteor) {
-            return (Meteor) meteorObj;
+        // Example implementation: retrieve Meteor from session attribute
+        if (r != null) {
+            return (Meteor) r.getSession().getAttribute("meteor");
         }
         return null;
     }

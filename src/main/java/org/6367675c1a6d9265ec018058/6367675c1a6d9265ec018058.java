@@ -13,8 +13,7 @@ public class UniqueStringSupplier {
 
     @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
-        UniqueStringSupplier supplier = new UniqueStringSupplier(start);
-        return supplier::get;
+        return new UniqueStringSupplier(start)::get;
     }
 
     public static void main(String[] args) {

@@ -2,26 +2,35 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertySubstitution {
+public class PropertySubstitutor {
 
     /**
      * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
      */
     public static String findAndSubst(String key, Properties props) {
+        if (key == null || props == null) {
+            throw new IllegalArgumentException("Key and Properties must not be null");
+        }
+
         String value = props.getProperty(key);
         if (value == null) {
             return null;
         }
 
-        // Pattern to match ${variable} in the value
-        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        // Pattern to match ${...} placeholders
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String variable = matcher.group(1);
-            String replacement = props.getProperty(variable, "");
-            matcher.appendReplacement(result, replacement);
+            String placeholder = matcher.group(1);
+            String replacement = props.getProperty(placeholder);
+            if (replacement != null) {
+                matcher.appendReplacement(result, replacement);
+            } else {
+                // If no replacement found, leave the placeholder as is
+                matcher.appendReplacement(result, matcher.group(0));
+            }
         }
         matcher.appendTail(result);
 
@@ -34,6 +43,6 @@ public class PropertySubstitution {
         props.setProperty("greeting", "Hello, ${name}!");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // Output: Hello, John!
+        System.out.println(result); // Output: Hello, John!
     }
 }

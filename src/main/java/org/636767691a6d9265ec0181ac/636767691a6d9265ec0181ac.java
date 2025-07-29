@@ -13,16 +13,13 @@ public class PathUtils {
         // Convert the base path to a Path object
         Path basePath = Paths.get(path);
         
-        // Convert the relative path to a Path object
-        Path relative = Paths.get(relativePath);
-        
         // Resolve the relative path against the base path
-        Path resolvedPath = basePath.resolve(relative);
+        Path resolvedPath = basePath.resolve(relativePath);
         
         // Normalize the path to remove any redundant elements like ".." or "."
         Path normalizedPath = resolvedPath.normalize();
         
-        // Return the normalized path as a string
+        // Convert the normalized path back to a string
         return normalizedPath.toString();
     }
 

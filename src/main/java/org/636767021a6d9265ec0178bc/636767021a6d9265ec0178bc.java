@@ -5,7 +5,7 @@ public class StringUtils {
      *
      * @param str       the String to check, may be null
      * @param searchStr the String to search for, may be null
-     * @return the first index of the search String within the original String, or -1 if not found or if either String is null
+     * @return the first index of the search String, or -1 if no match or null input
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

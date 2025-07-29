@@ -55,8 +55,7 @@ public class StringUtils {
         try {
             System.out.println(unescapeJava("Hello\\nWorld!")); // Output: Hello
                                                               // World!
-            System.out.println(unescapeJava("This is a \\t tab.")); // Output: This is a 	 tab.
-            System.out.println(unescapeJava("Escaped \\\\ backslash.")); // Output: Escaped \ backslash.
+            System.out.println(unescapeJava("C:\\\\Program Files\\\\Java")); // Output: C:\Program Files\Java
         } catch (Exception e) {
             e.printStackTrace();
         }

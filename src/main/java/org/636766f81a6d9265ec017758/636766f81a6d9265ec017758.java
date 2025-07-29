@@ -5,6 +5,6 @@ public int hashCode() {
     int result = 1;
     // Combine the hash code of the fields of this type
     // Example: result = prime * result + (field1 == null ? 0 : field1.hashCode());
-    // Replace with actual fields of the type
+    // Replace field1 with actual fields of the type
     return result;
 }

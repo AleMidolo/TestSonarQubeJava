@@ -6,7 +6,7 @@ public class CharUtils {
     private static final Map<Character, Character> CHAR_CACHE = new HashMap<>();
 
     static {
-        // Pre-cache ASCII 7-bit characters
+        // Cache ASCII 7-bit characters (0-127)
         for (int i = 0; i < 128; i++) {
             CHAR_CACHE.put((char) i, (char) i);
         }

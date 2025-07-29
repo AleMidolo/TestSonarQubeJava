@@ -3,10 +3,10 @@
  * @return 'Content-Range' value
  */
 private String buildContentRange() {
-    // Assuming the range is from 0 to 100 and the total size is 500
-    int start = 0;
-    int end = 100;
-    int totalSize = 500;
-    
-    return String.format("bytes %d-%d/%d", start, end, totalSize);
+    // Assuming the content range is for a file of size 1000 bytes, starting from byte 0 to 999
+    long fileSize = 1000; // Example file size
+    long startByte = 0;   // Starting byte
+    long endByte = fileSize - 1; // Ending byte
+
+    return String.format("bytes %d-%d/%d", startByte, endByte, fileSize);
 }

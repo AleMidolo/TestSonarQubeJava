@@ -11,7 +11,7 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r.transport() == TRANSPORT.LONG_POLLING || r.transport() == TRANSPORT.WEBSOCKET) {
+        if (r.transport() == TRANSPORT.WEBSOCKET || r.transport() == TRANSPORT.STREAMING) {
             r.suspend();
         }
         return Action.CONTINUE;

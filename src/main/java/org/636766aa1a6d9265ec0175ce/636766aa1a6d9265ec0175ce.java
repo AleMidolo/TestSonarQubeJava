@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameVisitor {
+public class StackMapFrameVisitor {
     private List<Object> currentFrame;
 
-    public FrameVisitor() {
+    public StackMapFrameVisitor() {
         this.currentFrame = new ArrayList<>();
     }
 
@@ -30,7 +30,7 @@ public class FrameVisitor {
 
     // Example usage
     public static void main(String[] args) {
-        FrameVisitor visitor = new FrameVisitor();
+        StackMapFrameVisitor visitor = new StackMapFrameVisitor();
         int nextIndex = visitor.visitFrameStart(10, 3, 2);
         System.out.println("Next index to write: " + nextIndex);
     }

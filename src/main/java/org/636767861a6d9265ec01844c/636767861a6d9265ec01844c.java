@@ -11,6 +11,7 @@ public class Logger {
 
     /**
      * Remove the appender with the name passed as parameter from the list of appenders.
+     * @param name The name of the appender to remove.
      */
     public void removeAppender(String name) {
         Iterator<Appender> iterator = appenders.iterator();
@@ -18,7 +19,7 @@ public class Logger {
             Appender appender = iterator.next();
             if (appender.getName().equals(name)) {
                 iterator.remove();
-                break; // Assuming names are unique, we can break after removal
+                break; // Assuming appender names are unique, we can break after removal
             }
         }
     }

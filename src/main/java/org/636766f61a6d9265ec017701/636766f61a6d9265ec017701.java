@@ -19,6 +19,6 @@ public class StringUtils {
         String str = "Hello, world! Hello again!";
         String searchStr = "Hello";
         int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of '" + searchStr + "' is: " + index);
+        System.out.println("Last index of \"" + searchStr + "\" in \"" + str + "\" is: " + index);
     }
 }

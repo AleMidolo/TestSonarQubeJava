@@ -9,7 +9,7 @@ public class Template {
     }
 
     public void addTemplateVariable(String name) {
-        this.templateVariables.add(name);
+        templateVariables.add(name);
     }
 
     /**
@@ -18,7 +18,7 @@ public class Template {
      * @return true if the template variable is a member of the template, otherwise false.
      */
     public final boolean isTemplateVariablePresent(String name) {
-        return this.templateVariables.contains(name);
+        return templateVariables.contains(name);
     }
 
     public static void main(String[] args) {

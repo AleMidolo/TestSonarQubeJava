@@ -1,15 +1,14 @@
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-import java.awt.Rectangle;
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
 
 public class TableUtils {
 
     /**
      * Selects the specified row in the specified JTable and scrolls the specified JScrollPane to the newly selected row.
-     * The call to repaint() is delayed long enough to have the table properly paint the newly selected row which may be offscreen.
+     * More importantly, the call to repaint() is delayed long enough to have the table properly paint the newly selected row which may be offscreen.
      * @param row The row index to select.
-     * @param table The JTable to select the row in. It should belong to the specified JScrollPane.
+     * @param table The JTable to select the row in. Should belong to the specified JScrollPane.
      * @param pane The JScrollPane containing the JTable.
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
@@ -17,21 +16,22 @@ public class TableUtils {
             throw new IllegalArgumentException("Table and ScrollPane must not be null.");
         }
 
-        // Select the specified row
+        TableModel model = table.getModel();
+        if (row < 0 || row >= model.getRowCount()) {
+            throw new IllegalArgumentException("Row index out of bounds.");
+        }
+
+        // Select the row
         table.setRowSelectionInterval(row, row);
 
         // Scroll to the selected row
         Rectangle cellRect = table.getCellRect(row, 0, true);
-        JViewport viewport = pane.getViewport();
-        Rectangle viewRect = viewport.getViewRect();
+        table.scrollRectToVisible(cellRect);
 
-        // Calculate the new position to scroll to
-        int y = cellRect.y;
-        if (y < viewRect.y || y + cellRect.height > viewRect.y + viewRect.height) {
-            viewport.setViewPosition(cellRect.getLocation());
-        }
-
-        // Delay the repaint to ensure the table properly paints the newly selected row
-        table.repaint();
+        // Delay repaint to ensure proper rendering
+        SwingUtilities.invokeLater(() -> {
+            table.repaint();
+            pane.repaint();
+        });
     }
 }

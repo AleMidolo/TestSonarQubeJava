@@ -3,8 +3,7 @@ import java.util.Objects;
 public class ShortArrayConverter {
 
     /**
-     * <p>Converts an array of primitive shorts to objects.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * <p>Converts an array of primitive shorts to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * @param array  a <code>short</code> array
      * @return a <code>Short</code> array, <code>null</code> if null array input
      */

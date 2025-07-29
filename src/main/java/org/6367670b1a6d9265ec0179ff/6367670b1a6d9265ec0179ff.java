@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ArrayUtils {
 
-    // Public static empty array reference
+    // Public static empty array reference for optimization
     public static final Byte[] EMPTY_BYTE_ARRAY = new Byte[0];
 
     /**

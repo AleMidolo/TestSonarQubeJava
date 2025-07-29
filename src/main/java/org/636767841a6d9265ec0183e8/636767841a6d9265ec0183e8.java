@@ -9,7 +9,7 @@ public class EventBuffer {
         this.buffer = new ArrayList<>();
     }
 
-    /** 
+    /**
      * Add an <code>event</code> as the last event in the buffer.
      */
     public void add(LoggingEvent event) {
@@ -18,7 +18,7 @@ public class EventBuffer {
         }
     }
 
-    // Optional: Method to get the buffer for testing or other purposes
+    // Optional: Method to retrieve the buffer for testing or other purposes
     public List<LoggingEvent> getBuffer() {
         return buffer;
     }

@@ -1,7 +1,6 @@
 import java.util.UUID;
 
-public class EntityIdGenerator {
-
+public class Example {
     /**
      * Generates a unique row ID based on the provided entity ID.
      * 

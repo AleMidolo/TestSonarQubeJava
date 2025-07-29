@@ -6,15 +6,8 @@ public class ArrayUtils {
      * @return <code>true</code> si la longitud de los arreglos coincide, tratando <code>null</code> como un arreglo vacío
      */
     public static boolean isSameLength(final double[] array1, final double[] array2) {
-        if (array1 == null && array2 == null) {
-            return true;
-        }
-        if (array1 == null) {
-            return array2.length == 0;
-        }
-        if (array2 == null) {
-            return array1.length == 0;
-        }
-        return array1.length == array2.length;
+        int length1 = array1 == null ? 0 : array1.length;
+        int length2 = array2 == null ? 0 : array2.length;
+        return length1 == length2;
     }
 }

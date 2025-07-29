@@ -8,7 +8,7 @@ public class Bucket {
      * Inserta este "bucket" en la estructura de datos antes del {@code bucket}.
      * @param bucket el "bucket", que será el siguiente a este "bucket".
      */
-    public void insertBefore(Bucket bucket) {
+    void insertBefore(Bucket bucket) {
         Objects.requireNonNull(bucket, "bucket cannot be null");
         
         // Set this bucket's next reference to the given bucket

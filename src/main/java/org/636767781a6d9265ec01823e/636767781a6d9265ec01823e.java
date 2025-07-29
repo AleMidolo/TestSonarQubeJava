@@ -18,45 +18,48 @@ public class SocketAppender extends AppenderSkeleton {
 
     @Override
     protected void append(LoggingEvent event) {
-        String message = layout.format(event);
-        
-        // Iterate through all connected clients and send the message
+        if (event == null) {
+            return;
+        }
+
+        String logMessage = layout.format(event);
+
+        // Iterate through all connected clients and send the log message
         for (int i = clientWriters.size() - 1; i >= 0; i--) {
             try {
                 PrintWriter writer = clientWriters.get(i);
-                writer.println(message);
+                writer.println(logMessage);
                 writer.flush();
             } catch (Exception e) {
-                // If there's an error writing to client, remove them from the list
-                try {
-                    clientWriters.get(i).close();
-                    connectedClients.get(i).close();
-                } catch (IOException ex) {
-                    // Ignore close errors
-                }
-                clientWriters.remove(i);
-                connectedClients.remove(i);
+                // If there's an error writing to client, remove it from the list
+                removeClient(i);
             }
         }
     }
 
     public void addClient(Socket client) throws IOException {
-        connectedClients.add(client);
-        clientWriters.add(new PrintWriter(client.getOutputStream(), true));
+        if (client != null) {
+            connectedClients.add(client);
+            clientWriters.add(new PrintWriter(client.getOutputStream(), true));
+        }
+    }
+
+    private void removeClient(int index) {
+        try {
+            clientWriters.get(index).close();
+            connectedClients.get(index).close();
+        } catch (IOException e) {
+            // Ignore close exceptions
+        }
+        clientWriters.remove(index);
+        connectedClients.remove(index);
     }
 
     @Override
     public void close() {
         for (int i = 0; i < connectedClients.size(); i++) {
-            try {
-                clientWriters.get(i).close();
-                connectedClients.get(i).close();
-            } catch (IOException e) {
-                // Ignore close errors
-            }
+            removeClient(i);
         }
-        connectedClients.clear();
-        clientWriters.clear();
     }
 
     @Override

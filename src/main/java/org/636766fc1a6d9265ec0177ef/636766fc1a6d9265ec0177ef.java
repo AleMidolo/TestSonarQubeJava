@@ -13,14 +13,14 @@ public class ArrayUtils {
             return new String[0];
         }
 
-        List<String> result = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         
         for (Object obj : array) {
             if (obj != null) {
-                result.add(obj.toString());
+                list.add(obj.toString());
             }
         }
 
-        return result.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 }

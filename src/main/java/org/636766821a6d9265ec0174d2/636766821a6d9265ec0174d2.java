@@ -1,11 +1,11 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereConfig;
+import org.atmosphere.cpr.AtmosphereResourceImpl;
 
 public class RequestWrapper {
 
-    /**
+    /** 
      * Envuelve un {@link HttpServletRequest}.
      * @param request {@link HttpServletRequest}
      * @return un {@link AtmosphereRequest}

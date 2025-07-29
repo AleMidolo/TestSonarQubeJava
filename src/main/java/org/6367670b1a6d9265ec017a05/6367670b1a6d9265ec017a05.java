@@ -6,13 +6,14 @@ package org.apache.commons.lang3;
 public class CharUtils {
 
     /**
-     * The cache of commonly used single character Strings
+     * The cache of commonly used single character strings.
+     * We cache ASCII characters from 32 to 127 (inclusive).
      */
     private static final String[] CHAR_STRING_CACHE = new String[128];
 
     static {
-        // Initialize cache for ASCII characters
-        for (char c = 0; c < CHAR_STRING_CACHE.length; c++) {
+        // Initialize cache for ASCII characters 32-127
+        for (char c = 32; c < 128; c++) {
             CHAR_STRING_CACHE[c] = String.valueOf(c);
         }
     }

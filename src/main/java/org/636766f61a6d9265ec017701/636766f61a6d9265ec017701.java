@@ -6,8 +6,8 @@ public class StringUtils {
      * Este método utiliza {@link String#lastIndexOf(String)}.
      *
      * @param str la cadena a verificar, puede ser null
-     * @param searchStr la cadena a buscar, puede ser null
-     * @return el último índice de la búsqueda en str, -1 si no se encuentra o si str es null
+     * @param searchStr la cadena a encontrar, puede ser null
+     * @return el último índice de la cadena de búsqueda, -1 si no se encuentra o si str es null
      */
     public static int lastIndexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

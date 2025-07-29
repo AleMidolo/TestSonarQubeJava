@@ -10,22 +10,13 @@ public class Logger {
     }
 
     public boolean shouldPrintMessage(int timestamp, String message) {
-        // If message has never been printed before, allow it
-        if (!messageTimestamps.containsKey(message)) {
+        // If message has never been printed before or 10 seconds have elapsed
+        if (!messageTimestamps.containsKey(message) || 
+            timestamp - messageTimestamps.get(message) >= THROTTLE_WINDOW) {
+            
             messageTimestamps.put(message, timestamp);
             return true;
         }
-        
-        // Get last timestamp this message was printed
-        int lastPrinted = messageTimestamps.get(message);
-        
-        // If enough time has elapsed since last print, allow it
-        if (timestamp - lastPrinted >= THROTTLE_WINDOW) {
-            messageTimestamps.put(message, timestamp);
-            return true;
-        }
-        
-        // Otherwise throttle the message
         return false;
     }
 }

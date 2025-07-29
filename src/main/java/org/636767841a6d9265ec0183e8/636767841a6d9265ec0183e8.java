@@ -23,7 +23,6 @@ public class LogBuffer {
             buffer.remove(0);
         }
 
-        // Add new event to end of buffer
         buffer.add(event);
     }
 }

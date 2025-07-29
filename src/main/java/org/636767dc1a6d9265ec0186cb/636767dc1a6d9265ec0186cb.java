@@ -25,7 +25,7 @@ public class ConfigurationManager {
 
             // Verificar permisos de escritura
             if (!distributionDir.canWrite()) {
-                LOGGER.warning("No hay permisos de escritura en el directorio de distribución");
+                LOGGER.warning("El directorio de distribución no tiene permisos de escritura");
             }
 
             // Inicializar otras configuraciones básicas
@@ -34,7 +34,7 @@ public class ConfigurationManager {
         } catch (SecurityException e) {
             LOGGER.log(Level.SEVERE, "Error de seguridad al inicializar la configuración", e);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error general al inicializar la configuración", e);
+            LOGGER.log(Level.SEVERE, "Error al inicializar la configuración", e);
         }
     }
 

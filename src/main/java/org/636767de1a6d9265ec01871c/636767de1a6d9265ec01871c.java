@@ -9,18 +9,13 @@ public class Accumulator {
     }
 
     /**
-     * दिए गए कुंजी में मौजूदा मान के साथ मान को जोड़ें।
-     * @param key कुंजी जिसके लिए मान जोड़ा जाना है
-     * @param value जोड़ा जाने वाला मान
+     * Accumulate the value with existing value in the same given key.
      */
     public void valueAccumulation(String key, Long value) {
-        if (map.containsKey(key)) {
-            map.put(key, map.get(key) + value);
-        } else {
-            map.put(key, value);
-        }
+        map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
+    // Optional: Method to get the accumulated value for a key
     public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }

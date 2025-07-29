@@ -3,9 +3,10 @@ import java.util.Objects;
 public class ShortArrayConverter {
 
     /**
-     * <p>प्राथमिक शॉर्ट्स के एक एरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>short</code> एरे
-     * @return एक <code>Short</code> एरे, <code>null</code> यदि इनपुट एरे null है
+     * <p>Converts an array of primitive shorts to objects.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>short</code> array
+     * @return a <code>Short</code> array, <code>null</code> if null array input
      */
     public static Short[] toObject(final short[] array) {
         if (array == null) {

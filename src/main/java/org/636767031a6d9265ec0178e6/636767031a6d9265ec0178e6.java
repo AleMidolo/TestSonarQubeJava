@@ -1,12 +1,12 @@
 import java.util.Objects;
 
-public class ByteArrayConverter {
+public class ByteUtils {
 
     /**
-     * <p>एक ऑब्जेक्ट बाइट्स के एरे को प्रिमिटिव में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट एरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>Byte</code> एरे, यह <code>null</code> हो सकता है
-     * @return एक <code>byte</code> एरे, यदि इनपुट एरे <code>null</code> है तो <code>null</code>
-     * @throws NullPointerException यदि एरे की सामग्री <code>null</code> है
+     * <p>Converts an array of object Bytes to primitives.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  a <code>Byte</code> array, may be <code>null</code>
+     * @return a <code>byte</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
     public static byte[] toPrimitive(final Byte[] array) {
         if (array == null) {

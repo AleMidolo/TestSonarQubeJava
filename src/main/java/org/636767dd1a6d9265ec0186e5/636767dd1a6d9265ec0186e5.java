@@ -4,15 +4,15 @@ public class Channels {
     private List<IConsumer> consumers;
 
     public Channels() {
-        this.consumers = new ArrayList<>();
+        this.consumers = new java.util.ArrayList<>();
     }
 
     public void addConsumer(IConsumer consumer) {
-        consumers.add(consumer);
+        this.consumers.add(consumer);
     }
 
     public List<IConsumer> getConsumers() {
-        return consumers;
+        return this.consumers;
     }
 }
 
@@ -20,10 +20,10 @@ public interface IConsumer {
     void consume(String message);
 }
 
-public class TargetChannelAdder {
+public class TargetChannelManager {
 
     /**
-     * नए लक्ष्य चैनल जोड़ें।
+     * Add a new target channels.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
         if (channels != null && consumer != null) {

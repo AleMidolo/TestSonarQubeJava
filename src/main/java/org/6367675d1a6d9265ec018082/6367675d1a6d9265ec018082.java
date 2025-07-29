@@ -29,26 +29,18 @@ class Edge {
     public int hashCode() {
         return Objects.hash(from, to);
     }
-
-    @Override
-    public String toString() {
-        return "Edge{" +
-                "from=" + from +
-                ", to=" + to +
-                '}';
-    }
 }
 
 class Node {
-    private int id;
+    private String id;
     private boolean isVirtual;
 
-    public Node(int id, boolean isVirtual) {
+    public Node(String id, boolean isVirtual) {
         this.id = id;
         this.isVirtual = isVirtual;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -56,10 +48,9 @@ class Node {
         return isVirtual;
     }
 
-    public Node getRealNode() {
+    public Node getRealCounterpart() {
         if (isVirtual) {
-            // Assuming the real node has an ID that is derived from the virtual node's ID
-            return new Node(id / 2, false);
+            return new Node(id, false); // Return the real counterpart
         }
         return this;
     }
@@ -69,20 +60,12 @@ class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return id == node.id && isVirtual == node.isVirtual;
+        return isVirtual == node.isVirtual && Objects.equals(id, node.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, isVirtual);
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "id=" + id +
-                ", isVirtual=" + isVirtual +
-                '}';
     }
 }
 
@@ -96,8 +79,8 @@ class Graph {
     }
 
     public Edge edgeToNext() {
-        Node realFrom = currentNode.getRealNode();
-        Node realTo = nextNode.getRealNode();
-        return new Edge(realFrom, realTo);
+        Node fromNode = currentNode.isVirtual() ? currentNode.getRealCounterpart() : currentNode;
+        Node toNode = nextNode.isVirtual() ? nextNode.getRealCounterpart() : nextNode;
+        return new Edge(fromNode, toNode);
     }
 }

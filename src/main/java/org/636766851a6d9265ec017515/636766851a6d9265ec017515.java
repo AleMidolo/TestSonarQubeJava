@@ -1,17 +1,16 @@
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
 
 public class AtmosphereResourceInspector {
 
     /**
-     * {@link AtmosphereResource} को {@link AtmosphereResource.TRANSPORT} मान के आधार पर स्वचालित रूप से निलंबित करें।
-     * @param r एक {@link AtmosphereResource}
+     * Automatically suspend the {@link AtmosphereResource} based on {@link AtmosphereResource.TRANSPORT} value.
+     * @param r a {@link AtmosphereResource}
      * @return {@link Action#CONTINUE}
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r.transport() == TRANSPORT.WEBSOCKET) {
+        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
         }
         return Action.CONTINUE;

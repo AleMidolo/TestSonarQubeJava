@@ -9,33 +9,22 @@ public class LogBuffer {
     }
 
     /**
-     * एक {@link LoggingEvent} को बफर में रखें। यदि बफर भर गया है तो घटना <b>चुपचाप हटा दी जाती है</b>। यह कॉलर की जिम्मेदारी है कि वह सुनिश्चित करे कि बफर में खाली स्थान है।
+     * Place a {@link LoggingEvent} in the buffer. If the buffer is full then the event is <b>silently dropped</b>.
+     * It is the caller's responsibility to make sure that the buffer has free space.
      */
     public void put(LoggingEvent o) {
         if (!buffer.offer(o)) {
-            // If the buffer is full, the event is silently dropped
-            System.out.println("Buffer is full. Event dropped.");
+            // Silently drop the event if the buffer is full
         }
     }
 
-    // Example LoggingEvent class
-    public static class LoggingEvent {
-        private final String message;
-
-        public LoggingEvent(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
+    // Optional: Method to retrieve events from the buffer
+    public LoggingEvent take() throws InterruptedException {
+        return buffer.take();
     }
+}
 
-    public static void main(String[] args) {
-        LogBuffer logBuffer = new LogBuffer(10);
-
-        for (int i = 0; i < 15; i++) {
-            logBuffer.put(new LoggingEvent("Event " + i));
-        }
-    }
+class LoggingEvent {
+    // Placeholder for LoggingEvent class
+    // You can add fields and methods as needed
 }

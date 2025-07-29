@@ -1,9 +1,9 @@
 public class FactorialCalculator {
 
     /**
-     * $n$ का फैक्टरियल निकालें।
-     * @param n इनपुट संख्या
-     * @return फैक्टरियल
+     * Calculate the factorial of $n$.
+     * @param n the input number
+     * @return the factorial
      */
     public static long factorial(int n) {
         if (n < 0) {

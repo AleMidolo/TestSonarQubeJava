@@ -6,31 +6,29 @@ import org.msgpack.core.MessagePacker;
 import org.msgpack.core.buffer.LinkedBuffer;
 import org.msgpack.core.buffer.MessageBuffer;
 import org.msgpack.core.buffer.MessageBufferOutput;
-import org.msgpack.core.buffer.OutputStreamBufferOutput;
-import org.msgpack.core.schema.Schema;
+import org.msgpack.schema.Schema;
 
-public class MessageSerializer {
+public class DelimitedMessageWriter {
 
-    /**
-     * {@code message} को इसके आकार के साथ प्रारंभ करते हुए {@link OutputStream} में सीरियलाइज़ करता है।
-     * @return संदेश का आकार
-     */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        MessageBufferOutput output = new OutputStreamBufferOutput(out);
-        MessagePacker packer = MessagePack.newDefaultPacker(output);
+        // Create a MessageBufferPacker with the provided buffer
+        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker(buffer);
 
         // Serialize the message using the schema
         schema.write(packer, message);
 
-        // Flush the packer to ensure all data is written to the output stream
-        packer.flush();
+        // Get the serialized message as a byte array
+        byte[] serializedMessage = packer.toByteArray();
 
-        // Calculate the size of the serialized message
-        int size = packer.getTotalWrittenBytes();
+        // Write the length of the serialized message as a prefix
+        MessagePacker lengthPacker = MessagePack.newDefaultPacker(out);
+        lengthPacker.packInt(serializedMessage.length);
+        lengthPacker.flush();
 
-        // Close the packer to release resources
-        packer.close();
+        // Write the serialized message to the output stream
+        out.write(serializedMessage);
 
-        return size;
+        // Return the total size of the message (length prefix + serialized message)
+        return Integer.BYTES + serializedMessage.length;
     }
 }

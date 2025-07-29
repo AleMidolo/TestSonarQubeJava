@@ -1,45 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayConcatenator {
+public class StringArrayConcatenator {
 
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
-        // Handle null cases
         if (array1 == null && array2 == null) {
             return null;
-        } else if (array1 == null) {
-            return array2.clone();
-        } else if (array2 == null) {
-            return array1.clone();
         }
 
-        // Create a list to store the result
-        List<String> result = new ArrayList<>();
+        List<String> resultList = new ArrayList<>();
 
-        // Add elements from array1
-        for (String element : array1) {
-            result.add(element);
-        }
-
-        // Add elements from array2, checking for overlaps
-        for (String element : array2) {
-            if (result.contains(element)) {
-                result.add(element); // Add overlapping element twice
-            } else {
-                result.add(element);
+        if (array1 != null) {
+            for (String element : array1) {
+                resultList.add(element);
             }
         }
 
-        // Convert the list to an array and return
-        return result.toArray(new String[0]);
+        if (array2 != null) {
+            for (String element : array2) {
+                resultList.add(element);
+            }
+        }
+
+        return resultList.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
-        // Example usage
         String[] array1 = {"a", "b", "c"};
-        String[] array2 = {"b", "c", "d"};
-
+        String[] array2 = {"c", "d", "e"};
         String[] result = concatenateStringArrays(array1, array2);
+
         for (String element : result) {
             System.out.print(element + " ");
         }

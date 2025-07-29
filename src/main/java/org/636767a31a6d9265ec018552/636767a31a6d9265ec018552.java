@@ -11,11 +11,14 @@ public class StreamReader {
     }
 
     /**
-     * स्ट्रीम से {@code string} फ़ील्ड मान पढ़ें।
+     * Read a {@code string} field value from the stream.
+     *
+     * @return the string read from the stream
+     * @throws IOException if an I/O error occurs
      */
     @Override
     public String readString() throws IOException {
-        int length = readInt();
+        int length = readVarInt();
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
@@ -24,15 +27,18 @@ public class StreamReader {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    private int readInt() throws IOException {
-        byte[] bytes = new byte[4];
-        int bytesRead = inputStream.read(bytes);
-        if (bytesRead != 4) {
-            throw new IOException("Unexpected end of stream");
-        }
-        return (bytes[0] & 0xFF) << 24 |
-               (bytes[1] & 0xFF) << 16 |
-               (bytes[2] & 0xFF) << 8  |
-               (bytes[3] & 0xFF);
+    private int readVarInt() throws IOException {
+        int value = 0;
+        int shift = 0;
+        int b;
+        do {
+            b = inputStream.read();
+            if (b == -1) {
+                throw new IOException("Unexpected end of stream");
+            }
+            value |= (b & 0x7F) << shift;
+            shift += 7;
+        } while ((b & 0x80) != 0);
+        return value;
     }
 }

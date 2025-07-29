@@ -9,7 +9,8 @@ public class Logger {
     }
 
     /**
-     * यदि संदेश को दिए गए टाइमस्टैम्प में प्रिंट किया जाना चाहिए, तो true लौटाता है, अन्यथा false लौटाता है। यदि यह विधि false लौटाती है, तो संदेश प्रिंट नहीं किया जाएगा। टाइमस्टैम्प सेकंड की ग्रैन्युलैरिटी में है।
+     * Returns true if the message should be printed in the given timestamp, otherwise returns false.
+     * If this method returns false, the message will not be printed. The timestamp is in seconds granularity.
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {

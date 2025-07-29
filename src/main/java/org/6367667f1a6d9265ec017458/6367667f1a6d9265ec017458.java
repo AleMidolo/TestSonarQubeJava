@@ -2,30 +2,24 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-
+    // Assuming a map to store the handlers with their mappings
     private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
-     * एक {@link AtmosphereHandler} को हटाएं।
-     * @param mapping वह मैपिंग है जो {@link #addAtmosphereHandler(String, AtmosphereHandler)} को कॉल करते समय उपयोग की जाती है;
-     * @return यदि हटाया गया है तो true
+     * Remove an {@link AtmosphereHandler}.
+     * @param mapping the mapping used when invoking {@link #addAtmosphereHandler(String, AtmosphereHandler)};
+     * @return true if removed
      */
-    public AtmosphereFramework removeAtmosphereHandler(String mapping) {
+    public boolean removeAtmosphereHandler(String mapping) {
         if (handlers.containsKey(mapping)) {
             handlers.remove(mapping);
-            return this;
+            return true;
         }
-        return this;
+        return false;
     }
 
-    /**
-     * एक {@link AtmosphereHandler} को जोड़ें।
-     * @param mapping मैपिंग जिसके लिए हैण्डलर जोड़ा जाएगा।
-     * @param handler जोड़ा जाने वाला हैण्डलर।
-     * @return यह {@link AtmosphereFramework} ऑब्जेक्ट।
-     */
-    public AtmosphereFramework addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
+    // Assuming this method exists to add handlers
+    public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
-        return this;
     }
 }

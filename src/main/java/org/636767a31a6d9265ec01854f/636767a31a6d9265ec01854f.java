@@ -1,20 +1,14 @@
 import java.io.IOException;
 
 private void checkIfPackedField() throws IOException {
-    // Assuming 'field' is a byte array representing the packed field
-    // and 'isPacked' is a boolean indicating whether the field is packed.
-    if (isPacked) {
-        // Update internal state to indicate that packed fields are being read
-        isReadingPackedFields = true;
-        
-        // Example logic to check if the field is length-limited
-        if (field.length > MAX_FIELD_LENGTH) {
-            throw new IOException("Field length exceeds the maximum allowed length.");
-        }
-        
-        // Additional logic to process the packed field can be added here
+    // Assuming 'packed' is a boolean flag indicating if the field is packed
+    if (packed) {
+        // Update internal state to reflect that packed fields are being read
+        // For example, set a flag or update a counter
+        readingPackedFields = true;
+        packedFieldCounter = 0; // Reset counter if needed
     } else {
-        // Reset the state if the field is not packed
-        isReadingPackedFields = false;
+        // If not packed, ensure the state reflects that
+        readingPackedFields = false;
     }
 }

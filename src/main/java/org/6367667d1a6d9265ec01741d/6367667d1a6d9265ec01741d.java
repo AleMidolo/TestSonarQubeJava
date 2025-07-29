@@ -4,7 +4,7 @@ import java.lang.reflect.TypeVariable;
 public class TypeResolver {
 
     /**
-     * {@code typeVariable} के लिए पहला बाउंड हल करता है, यदि कोई हल नहीं किया जा सकता है तो {@code Unknown.class} लौटाता है।
+     * Resolves the first bound for the {@code typeVariable}, returning {@code Unknown.class} if none can be resolved.
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
@@ -15,40 +15,18 @@ public class TypeResolver {
         }
     }
 
+    // Placeholder for Unknown.class
     public static class Unknown {
-        // Placeholder class to represent an unknown type
     }
 
     public static void main(String[] args) {
         // Example usage
-        TypeVariable<?> typeVar = new TypeVariable<Object>() {
-            @Override
-            public Type[] getBounds() {
-                return new Type[]{String.class};
-            }
+        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
+        Type bound = resolveBound(typeVariable);
+        System.out.println("Resolved bound: " + bound);
+    }
 
-            @Override
-            public String getName() {
-                return "T";
-            }
-
-            @Override
-            public java.lang.reflect.GenericDeclaration getGenericDeclaration() {
-                return TypeResolver.class;
-            }
-
-            @Override
-            public java.lang.annotation.Annotation[] getAnnotations() {
-                return new java.lang.annotation.Annotation[0];
-            }
-
-            @Override
-            public java.lang.annotation.Annotation[] getDeclaredAnnotations() {
-                return new java.lang.annotation.Annotation[0];
-            }
-        };
-
-        Type resolvedType = resolveBound(typeVar);
-        System.out.println("Resolved Type: " + resolvedType);
+    // Example class with a type parameter
+    public static class ExampleClass<T> {
     }
 }

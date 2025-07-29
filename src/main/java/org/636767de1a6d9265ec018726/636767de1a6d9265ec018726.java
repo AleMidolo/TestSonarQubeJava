@@ -27,19 +27,26 @@ public class SequenceRange {
     }
 }
 
-public class ProfileSnapshot {
+public class ProfileBuilder {
+
+    /**
+     * build current profiles segment snapshot search sequence ranges
+     */
     public List<SequenceRange> buildSequenceRanges() {
         List<SequenceRange> ranges = new ArrayList<>();
-        // Example logic to create sequence ranges
-        ranges.add(new SequenceRange(1, 10));
-        ranges.add(new SequenceRange(11, 20));
-        ranges.add(new SequenceRange(21, 30));
+        
+        // Example logic to build sequence ranges
+        // This is a placeholder and should be replaced with actual logic
+        ranges.add(new SequenceRange(1, 100));
+        ranges.add(new SequenceRange(101, 200));
+        ranges.add(new SequenceRange(201, 300));
+
         return ranges;
     }
 
     public static void main(String[] args) {
-        ProfileSnapshot snapshot = new ProfileSnapshot();
-        List<SequenceRange> ranges = snapshot.buildSequenceRanges();
+        ProfileBuilder builder = new ProfileBuilder();
+        List<SequenceRange> ranges = builder.buildSequenceRanges();
         for (SequenceRange range : ranges) {
             System.out.println(range);
         }

@@ -1,9 +1,9 @@
 /**
- * एक स्ट्रिंग के भीतर पहला इंडेक्स खोजता है, <code>null</code> को संभालते हुए। यह विधि {@link String#indexOf(String)} का उपयोग करती है।
+ * Finds the first index within a String, handling <code>null</code>. This method uses  {@link String#indexOf(String)}.
  * 
- * @param str वह स्ट्रिंग जिसमें खोज करनी है।
- * @param searchStr वह स्ट्रिंग जिसे खोजना है।
- * @return खोजी गई स्ट्रिंग का पहला इंडेक्स, या -1 यदि स्ट्रिंग नहीं मिली या <code>null</code> है।
+ * @param str The string to search in, may be null.
+ * @param searchStr The string to search for, may be null.
+ * @return The index of the first occurrence of the search string within the string, or -1 if either string is null or the search string is not found.
  */
 public static int indexOf(String str, String searchStr) {
     if (str == null || searchStr == null) {

@@ -1,11 +1,11 @@
-import java.io.File;
+import java.util.Objects;
 
 public class FileUtils {
 
     /**
-     * अंतिम एक्सटेंशन सेपरेटर कैरेक्टर का इंडेक्स लौटाता है, जो कि एक डॉट है। <p> यह मेथड यह भी जांचता है कि अंतिम डॉट के बाद कोई डायरेक्टरी सेपरेटर नहीं है। ऐसा करने के लिए यह {@link #indexOfLastSeparator(String)} का उपयोग करता है, जो कि Unix या Windows फॉर्मेट में फाइल को संभालेगा। <p> आउटपुट उस मशीन के अनुसार समान होगा जिस पर कोड चल रहा है।
-     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है, null पर -1 लौटाता है
-     * @return अंतिम सेपरेटर कैरेक्टर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
+     * Returns the index of the last extension separator character, which is a dot. <p> This method also checks that there is no directory separator after the last dot. To do this it uses  {@link #indexOfLastSeparator(String)} which willhandle a file in either Unix or Windows format. <p> The output will be the same irrespective of the machine that the code is running on.
+     * @param filename  the filename to find the last path separator in, null returns -1
+     * @return the index of the last separator character, or -1 if thereis no such character
      */
     public static int indexOfExtension(String filename) {
         if (filename == null) {
@@ -23,9 +23,9 @@ public class FileUtils {
     }
 
     /**
-     * फाइल नाम में अंतिम डायरेक्टरी सेपरेटर का इंडेक्स लौटाता है।
-     * @param filename  वह फाइल का नाम जिसमें अंतिम पथ सेपरेटर को खोजना है
-     * @return अंतिम सेपरेटर कैरेक्टर का इंडेक्स, या -1 यदि ऐसा कोई कैरेक्टर नहीं है
+     * Returns the index of the last directory separator character.
+     * @param filename  the filename to find the last path separator in, null returns -1
+     * @return the index of the last separator character, or -1 if there is no such character
      */
     private static int indexOfLastSeparator(String filename) {
         if (filename == null) {
@@ -39,7 +39,9 @@ public class FileUtils {
     }
 
     public static void main(String[] args) {
-        String filename = "path/to/file.txt";
-        System.out.println(indexOfExtension(filename)); // Output: 13
+        System.out.println(indexOfExtension("example/file.txt")); // Output: 13
+        System.out.println(indexOfExtension("example/file"));    // Output: -1
+        System.out.println(indexOfExtension("example/file.tar.gz")); // Output: 17
+        System.out.println(indexOfExtension(null));              // Output: -1
     }
 }

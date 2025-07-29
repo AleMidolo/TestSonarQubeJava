@@ -2,18 +2,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 
-public final class URIMatcher {
+public final class UriMatcher {
 
     private final Pattern pattern;
 
-    public URIMatcher(String regex) {
+    public UriMatcher(String template) {
+        // Convert the template to a regex pattern
+        String regex = template.replaceAll("\\{([^}]+)\\}", "([^/]+)");
         this.pattern = Pattern.compile(regex);
     }
 
     /**
-     * एक URI को पैटर्न के खिलाफ मिलाएं।
-     * @param uri वह URI जिसे टेम्पलेट के खिलाफ मिलाना है।
-     * @return मिलान का परिणाम, अन्यथा यदि कोई मिलान नहीं होता है तो null।
+     * Match a URI against the pattern.
+     * @param uri the uri to match against the template.
+     * @return the match result, otherwise null if no match occurs.
      */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
@@ -24,10 +26,14 @@ public final class URIMatcher {
     }
 
     public static void main(String[] args) {
-        URIMatcher matcher = new URIMatcher("https://example.com/.*");
-        MatchResult result = matcher.match("https://example.com/resource");
+        UriMatcher matcher = new UriMatcher("/users/{userId}/posts/{postId}");
+        MatchResult result = matcher.match("/users/123/posts/456");
+
         if (result != null) {
-            System.out.println("Match found: " + result.group());
+            System.out.println("Match found!");
+            for (int i = 1; i <= result.groupCount(); i++) {
+                System.out.println("Group " + i + ": " + result.group(i));
+            }
         } else {
             System.out.println("No match found.");
         }

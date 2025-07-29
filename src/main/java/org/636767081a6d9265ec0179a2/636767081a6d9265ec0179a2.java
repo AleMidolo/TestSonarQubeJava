@@ -1,7 +1,8 @@
 /**
- * <p>{@link #createNumber(String)} के लिए उपयोगिता विधि।</p> <p>यदि s <code>null</code> है तो <code>true</code> लौटाता है।</p>
- * @param s वह String जिसे जांचना है
- * @return यदि यह सभी शून्य हैं या <code>null</code> है
+ * Utility method for {@link #createNumber(String)}.
+ * Returns <code>true</code> if s is <code>null</code> or if it consists only of zeros.
+ * @param s the String to check
+ * @return true if it is all zeros or <code>null</code>
  */
 private static boolean isAllZeros(String s) {
     if (s == null) {

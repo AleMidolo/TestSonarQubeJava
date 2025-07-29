@@ -1,11 +1,12 @@
 import java.util.Objects;
 
-public class ArrayConverter {
+public class IntArrayConverter {
 
     /**
-     * <p>प्राथमिक int के एक ऐरे को ऑब्जेक्ट्स में परिवर्तित करता है।</p> <p>यह विधि <code>null</code> इनपुट ऐरे के लिए <code>null</code> लौटाती है।</p>
-     * @param array  एक <code>int</code> ऐरे
-     * @return एक <code>Integer</code> ऐरे, <code>null</code> यदि null ऐरे इनपुट है
+     * <p>Converts an array of primitive ints to objects.</p> 
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * @param array  an <code>int</code> array
+     * @return an <code>Integer</code> array, <code>null</code> if null array input
      */
     public static Integer[] toObject(final int[] array) {
         if (array == null) {
@@ -21,8 +22,6 @@ public class ArrayConverter {
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        for (Integer num : objectArray) {
-            System.out.println(num);
-        }
+        System.out.println(java.util.Arrays.toString(objectArray));
     }
 }

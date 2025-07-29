@@ -1,7 +1,9 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
-import org.jgrapht.graph.AsGraphUnion;
+import org.jgrapht.graph.DefaultGraphMapping;
+import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,12 +35,10 @@ public class GraphUtils {
         
         // 返回恒等映射
         return new IsomorphicGraphMapping<>(
-            graph, // 源图
-            graph, // 目标图
-            vertexMap, // 顶点映射
-            vertexMap, // 顶点反向映射
-            edgeMap, // 边映射
-            edgeMap  // 边反向映射
+            vertexMap,
+            edgeMap,
+            graph,
+            graph
         );
     }
 }

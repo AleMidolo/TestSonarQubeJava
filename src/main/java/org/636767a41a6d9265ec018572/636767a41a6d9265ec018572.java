@@ -14,9 +14,9 @@ public class VarintReader {
         long result = 0;
         int shift = 0;
         while (shift < 64) {
-            int b = input.read();
+            final int b = input.read();
             if (b == -1) {
-                throw new IOException("Truncated message");
+                throw new IOException("Malformed varint - EOF");
             }
             position++;
             result |= (long)(b & 0x7F) << shift;
@@ -25,6 +25,6 @@ public class VarintReader {
             }
             shift += 7;
         }
-        throw new IOException("Malformed varint");
+        throw new IOException("Malformed varint - too long");
     }
 }

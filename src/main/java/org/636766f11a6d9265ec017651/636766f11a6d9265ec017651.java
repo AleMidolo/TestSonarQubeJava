@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class ArrayUtils {
     
-    // Empty array constant to avoid recreating empty arrays
+    // Empty array constant to avoid creating new empty arrays
     public static final Character[] EMPTY_CHARACTER_ARRAY = new Character[0];
     
     /**

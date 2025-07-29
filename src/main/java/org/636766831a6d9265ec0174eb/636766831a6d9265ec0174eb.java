@@ -24,14 +24,14 @@ public class FileHandler {
         // Add files in reverse order
         for (File file : fileList) {
             if (file != null) {
-                addFile(file);
+                add(file);
             }
         }
     }
     
-    // Helper method to add individual file
-    private void addFile(File file) {
-        // Implementation for adding single file would go here
-        // Left empty as not part of original requirements
+    // Helper method for adding individual files
+    private void add(File file) {
+        // Implementation of add method would go here
+        // This is just a stub
     }
 }

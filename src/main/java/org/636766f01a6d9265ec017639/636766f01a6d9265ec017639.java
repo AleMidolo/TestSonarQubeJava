@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ArrayUtils {
-    /**
+    /** 
      * 数组转列表。<p> 其工作方式类似于 {@link Arrays#asList(Object)}，但可以处理空数组。
      * @return 一个由数组支持的列表。
      */

@@ -3,7 +3,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ThreadAnalyzer {
+public class ThreadSnapshotAnalyzer {
 
     public static class ThreadSnapshot {
         private LocalDateTime timestamp;
@@ -52,15 +52,10 @@ public class ThreadAnalyzer {
             
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Time:")) {
-                    // If we have a complete snapshot, check if it's in range and add it
+                    // If we were processing a thread, save it if it's in range
                     if (currentTimestamp != null && currentThreadName != null) {
-                        boolean inRange = false;
-                        for (ProfileAnalyzeTimeRange range : timeRanges) {
-                            if (range.isInRange(currentTimestamp)) {
-                                inRange = true;
-                                break;
-                            }
-                        }
+                        boolean inRange = timeRanges.stream()
+                            .anyMatch(range -> range.isInRange(currentTimestamp));
                         
                         if (inRange) {
                             snapshots.add(new ThreadSnapshot(
@@ -72,29 +67,25 @@ public class ThreadAnalyzer {
                         }
                     }
                     
-                    // Start new snapshot
+                    // Start new thread snapshot
                     String timeStr = line.substring(6).trim();
                     currentTimestamp = LocalDateTime.parse(timeStr, formatter);
                     currentStackTrace.clear();
-                } else if (line.startsWith("Thread:")) {
-                    currentThreadName = line.substring(8).trim();
-                } else if (line.startsWith("State:")) {
-                    currentThreadState = line.substring(7).trim();
+                } else if (line.startsWith("Thread")) {
+                    currentThreadName = line.trim();
+                    // Assume next line contains thread state
+                    line = reader.readLine();
+                    currentThreadState = line.trim();
                 } else if (!line.trim().isEmpty()) {
                     currentStackTrace.add(line.trim());
                 }
             }
             
-            // Add final snapshot if in range
+            // Handle last thread if exists
             if (currentTimestamp != null && currentThreadName != null) {
-                boolean inRange = false;
-                for (ProfileAnalyzeTimeRange range : timeRanges) {
-                    if (range.isInRange(currentTimestamp)) {
-                        inRange = true;
-                        break;
-                    }
-                }
-                
+                boolean inRange = timeRanges.stream()
+                    .anyMatch(range -> range.isInRange(currentTimestamp));
+                    
                 if (inRange) {
                     snapshots.add(new ThreadSnapshot(
                         currentTimestamp,

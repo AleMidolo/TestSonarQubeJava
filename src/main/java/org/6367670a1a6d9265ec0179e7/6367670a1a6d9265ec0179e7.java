@@ -16,20 +16,20 @@ public class ConverterRegistry {
             return null;
         }
         
-        // Look for exact match
+        // Look for direct match
         Converter converter = converters.get(clazz);
         if (converter != null) {
             return converter;
         }
         
-        // Look through parent classes
-        Class<?> currentClass = clazz;
-        while (currentClass != null && currentClass != Object.class) {
-            converter = converters.get(currentClass);
+        // Look through superclasses
+        Class<?> superClass = clazz.getSuperclass();
+        while (superClass != null) {
+            converter = converters.get(superClass);
             if (converter != null) {
                 return converter;
             }
-            currentClass = currentClass.getSuperclass();
+            superClass = superClass.getSuperclass();
         }
         
         // Look through interfaces
@@ -44,7 +44,7 @@ public class ConverterRegistry {
     }
 }
 
-// Interface for converter implementations
-public interface Converter {
+// Interface for type conversion
+interface Converter {
     Object convert(Object value);
 }

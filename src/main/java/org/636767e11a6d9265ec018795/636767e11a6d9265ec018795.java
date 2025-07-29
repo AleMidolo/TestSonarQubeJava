@@ -17,6 +17,14 @@ public class DataTable {
             return true;
         }
 
+        if (this.buckets == null && dataset.buckets == null) {
+            return true;
+        }
+
+        if (this.buckets == null || dataset.buckets == null) {
+            return false;
+        }
+
         return Objects.equals(this.buckets, dataset.buckets);
     }
 }

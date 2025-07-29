@@ -9,22 +9,23 @@ public class ColumnNameOverride {
      */
     public void overrideName(String oldName, String newName) {
         // Validate input parameters
-        if (Objects.isNull(oldName) || Objects.isNull(newName)) {
-            throw new IllegalArgumentException("Column names cannot be null");
+        Objects.requireNonNull(oldName, "oldName cannot be null");
+        Objects.requireNonNull(newName, "newName cannot be null");
+        
+        if (oldName.trim().isEmpty()) {
+            throw new IllegalArgumentException("oldName cannot be empty");
+        }
+        
+        if (newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("newName cannot be empty"); 
         }
 
-        if (oldName.trim().isEmpty() || newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Column names cannot be empty");
-        }
-
-        // Here you would typically have a map or other data structure to store the mapping
-        // For example:
-        // columnNameMappings.put(oldName.trim(), newName.trim());
+        // Here you would typically have logic to:
+        // 1. Look up the old name in your data structure
+        // 2. Replace it with the new name
+        // 3. Update any related references/mappings
         
-        // Or if working with a database:
-        // executeQuery("ALTER TABLE tablename RENAME COLUMN " + oldName + " TO " + newName);
-        
-        // This is a placeholder implementation
-        // Add actual implementation based on your specific requirements
+        // For example, if using a Map to store name mappings:
+        // nameMap.put(oldName, newName);
     }
 }

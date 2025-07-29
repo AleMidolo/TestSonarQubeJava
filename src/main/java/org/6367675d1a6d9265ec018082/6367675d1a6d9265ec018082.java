@@ -16,22 +16,16 @@ public class Graph {
             this.isVirtual = false;
             this.realCounterpart = null;
         }
-        
-        public Node(int id, Node realNode) {
-            this.id = id;
-            this.isVirtual = true;
-            this.realCounterpart = realNode;
-        }
     }
     
     // Edge class to represent graph edges
     private class Edge {
         private Node source;
-        private Node target;
+        private Node destination;
         
-        public Edge(Node source, Node target) {
+        public Edge(Node source, Node destination) {
             this.source = source;
-            this.target = target;
+            this.destination = destination;
         }
     }
     
@@ -41,7 +35,7 @@ public class Graph {
      * @return an edge from the current node to the next node
      */
     public Edge edgeToNext() {
-        if (nodes == null || nodes.isEmpty() || currentNodeIndex >= nodes.size() - 1) {
+        if (currentNodeIndex >= nodes.size() - 1) {
             return null;
         }
         
@@ -50,12 +44,12 @@ public class Graph {
         
         // If nodes are virtual, use their real counterparts
         Node sourceNode = currentNode.isVirtual ? currentNode.realCounterpart : currentNode;
-        Node targetNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
+        Node destNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
         
-        // Find edge connecting source to target
+        // Find the edge connecting these nodes
         for (Edge edge : edges) {
-            if ((edge.source == sourceNode && edge.target == targetNode) ||
-                (edge.source == targetNode && edge.target == sourceNode)) {
+            if ((edge.source == sourceNode && edge.destination == destNode) ||
+                (edge.source == destNode && edge.destination == sourceNode)) {
                 return edge;
             }
         }

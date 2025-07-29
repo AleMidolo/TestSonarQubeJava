@@ -22,13 +22,13 @@ public class TimeBucketCompressor {
         // Calculate which step period this date falls into
         int stepPeriod = (dayOfMonth - 1) / dayStep;
         
-        // Calculate the first day of that period
+        // Calculate the first day of that step period
         int newDay = (stepPeriod * dayStep) + 1;
         
         // Create new date with adjusted day
         LocalDate compressedDate = date.withDayOfMonth(newDay);
         
-        // Convert back to long
+        // Convert back to long format
         return Long.parseLong(compressedDate.format(formatter));
     }
 }

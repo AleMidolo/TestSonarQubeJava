@@ -20,9 +20,9 @@ public class ShardingKeyValidator {
         for (int i = 0; i < modelName.length() - 1; i++) {
             if (Character.isDigit(modelName.charAt(i)) && 
                 Character.isDigit(modelName.charAt(i + 1))) {
-                int current = Character.getNumericValue(modelName.charAt(i));
+                int curr = Character.getNumericValue(modelName.charAt(i));
                 int next = Character.getNumericValue(modelName.charAt(i + 1));
-                if (next - current != 1) {
+                if (next - curr != 1) {
                     throw new IllegalStateException(
                         "Sharding key indices must be continuous in model: " + modelName);
                 }

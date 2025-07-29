@@ -25,7 +25,7 @@ public class URIPathDecoder {
             return segments;
         }
 
-        // Get path and remove leading slash if present
+        // Get the path and remove leading slash if present
         String path = u.getPath();
         if (path.startsWith("/")) {
             path = path.substring(1);
@@ -39,11 +39,11 @@ public class URIPathDecoder {
             if (segment.isEmpty()) {
                 continue;
             }
-            
+
             if (decode) {
                 try {
                     // Decode the segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.toString());
+                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
                 } catch (Exception e) {
                     // If decoding fails, use the raw segment
                 }

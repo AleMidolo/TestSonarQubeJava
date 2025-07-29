@@ -2,9 +2,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MetricsCache<METRICS> {
-
-    private final ConcurrentHashMap<String, METRICS> cache;
-
+    
+    private ConcurrentHashMap<String, METRICS> cache;
+    
     public MetricsCache() {
         this.cache = new ConcurrentHashMap<>();
     }
@@ -21,16 +21,15 @@ public class MetricsCache<METRICS> {
 
         String key = data.toString();
         METRICS existingValue = cache.get(key);
-
+        
         if (existingValue == null) {
             cache.put(key, data);
         } else {
             // Merge logic would depend on METRICS type
             // For example if METRICS is a numeric type:
             // cache.put(key, existingValue + data);
-            
-            // Or if METRICS has a merge method:
-            // existingValue.merge(data);
+            // Or if it's a collection:
+            // existingValue.addAll(data);
             // cache.put(key, existingValue);
         }
     }

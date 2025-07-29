@@ -13,8 +13,9 @@ public class ConfigurationManager {
         
         if (System.getProperty("os.name").startsWith("Windows")) {
             // For Windows systems
-            configDir = new File(userHome + File.separator + "Documents and Settings" + 
-                               File.separator + "lf5");
+            configDir = new File(userHome + File.separator + 
+                               "Documents and Settings" + File.separator + 
+                               "lf5");
         } else {
             // For all other operating systems
             configDir = new File(userHome + File.separator + "lf5");
@@ -22,11 +23,7 @@ public class ConfigurationManager {
 
         // Create directory if it doesn't exist
         if (!configDir.exists()) {
-            boolean created = configDir.mkdirs();
-            if (!created) {
-                throw new RuntimeException("Failed to create configuration directory at: " + 
-                                        configDir.getAbsolutePath());
-            }
+            configDir.mkdirs();
         }
     }
 }

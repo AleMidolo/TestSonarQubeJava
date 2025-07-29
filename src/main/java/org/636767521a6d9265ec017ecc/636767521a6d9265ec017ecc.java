@@ -40,12 +40,14 @@ public class BoxSplitter {
      * @return a pair with the two resulting boxes
      */
     public static Pair<Box2D,Box2D> splitAlongXAxis(Box2D box) {
-        Objects.requireNonNull(box, "Box cannot be null");
+        if (box == null) {
+            throw new IllegalArgumentException("Box cannot be null");
+        }
 
         double halfHeight = box.getHeight() / 2.0;
         
         // Create first box - top half
-        Box2D topBox = new Box2D(
+        Box2D box1 = new Box2D(
             box.getX(),
             box.getY() + halfHeight,
             box.getWidth(),
@@ -53,13 +55,13 @@ public class BoxSplitter {
         );
 
         // Create second box - bottom half
-        Box2D bottomBox = new Box2D(
+        Box2D box2 = new Box2D(
             box.getX(),
             box.getY(),
             box.getWidth(),
             halfHeight
         );
 
-        return new Pair<>(topBox, bottomBox);
+        return new Pair<>(box1, box2);
     }
 }

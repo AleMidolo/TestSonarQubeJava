@@ -18,7 +18,7 @@ public class Logger {
             return;
         }
         
-        // Ensure thread safety by running on EDT
+        // Ensure UI updates happen on Event Dispatch Thread
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -31,7 +31,7 @@ public class Logger {
                     lr.getSourceMethodName()
                 });
                 
-                // Auto scroll to latest entry
+                // Auto-scroll to the latest entry
                 int lastRow = logTable.getModel().getRowCount() - 1;
                 if (lastRow >= 0) {
                     logTable.scrollRectToVisible(

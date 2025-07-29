@@ -13,21 +13,19 @@ public class Graph {
             this.current = node;
         }
         
-        public Node getNode() {
+        public Node getCurrent() {
             return current;
         }
         
-        public void next(int direction) {
-            // Implementation to move to next node in given direction
+        public void setCurrent(Node node) {
+            this.current = node;
         }
         
-        public boolean equals(Node other) {
-            return current.equals(other);
-        }
+        // Other circulator methods
     }
-
-    /**
-     * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the {@code predicate} or returns a circulator to the {@code stop} node.
+    
+    /** 
+     * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the  {@code predicate} or returns a circulator to the {@code stop} node.
      * @param predicate the condition the desired node should satisfy
      * @param start the node to start the search from
      * @param stop the node to end the search with
@@ -37,16 +35,35 @@ public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we either find a node satisfying the predicate
-        // or reach the stop node
-        while (!circulator.equals(stop)) {
-            if (predicate.test(circulator.getNode())) {
+        // Continue traversing until we reach the stop node
+        while (!circulator.getCurrent().equals(stop)) {
+            // Check if current node satisfies predicate
+            if (predicate.test(circulator.getCurrent())) {
                 return circulator;
             }
-            circulator.next(dir);
+            
+            // Move to next node based on direction
+            if (dir > 0) {
+                // Move clockwise
+                circulator.setCurrent(getNextClockwise(circulator.getCurrent()));
+            } else {
+                // Move counter-clockwise  
+                circulator.setCurrent(getNextCounterClockwise(circulator.getCurrent()));
+            }
         }
         
-        // If no node satisfies predicate, return circulator at stop node
+        // Return circulator pointing to stop node if no match found
         return circulator;
+    }
+    
+    // Helper methods to get next nodes
+    private Node getNextClockwise(Node current) {
+        // Implementation to get next clockwise node
+        return null;
+    }
+    
+    private Node getNextCounterClockwise(Node current) {
+        // Implementation to get next counter-clockwise node
+        return null;
     }
 }

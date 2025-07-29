@@ -12,7 +12,7 @@ public class RequestWrapper {
         long length = request.getContentLengthLong();
         if (length < 0) {
             // If content length header not set, return 0
-            return 0L; 
+            return 0L;
         }
         return length;
     }

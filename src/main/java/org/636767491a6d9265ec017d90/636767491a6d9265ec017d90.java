@@ -17,7 +17,7 @@ public class ArrayUtils {
 
         // Reverse elements in the range
         while (from < to) {
-            // Swap elements at from and to indices
+            // Swap elements
             V temp = arr[from];
             arr[from] = arr[to];
             arr[to] = temp;

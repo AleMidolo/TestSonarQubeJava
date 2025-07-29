@@ -24,7 +24,7 @@ public class ClassPathUtils {
 
         // Loop through files and add jar files to classpath vector
         for (File file : files) {
-            if (file.getName().toLowerCase().endsWith(".jar")) {
+            if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
                 try {
                     URL jarUrl = file.toURI().toURL();
                     if (!cpV.contains(jarUrl)) {

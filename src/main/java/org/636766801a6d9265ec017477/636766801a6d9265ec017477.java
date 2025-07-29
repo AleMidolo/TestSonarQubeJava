@@ -5,12 +5,6 @@ import java.util.List;
 
 public class FileAdder {
 
-    private List<InputStream> fileList;
-
-    public FileAdder() {
-        fileList = new ArrayList<>();
-    }
-
     /**
      * Aggiungi i file specificati in ordine inverso.
      */
@@ -19,23 +13,19 @@ public class FileAdder {
             throw new IllegalArgumentException("Input array cannot be null");
         }
 
-        // Convert the array to a list for easier manipulation
-        List<InputStream> tempList = new ArrayList<>();
+        List<InputStream> fileList = new ArrayList<>();
         for (InputStream file : files) {
             if (file != null) {
-                tempList.add(file);
+                fileList.add(file);
             }
         }
 
-        // Reverse the list
-        Collections.reverse(tempList);
+        Collections.reverse(fileList);
 
-        // Add the reversed list to the main file list
-        fileList.addAll(tempList);
-    }
-
-    // Optional: Method to get the file list for verification
-    public List<InputStream> getFileList() {
-        return fileList;
+        // Process the reversed list as needed
+        for (InputStream file : fileList) {
+            // Add your logic to handle the InputStream here
+            // For example, you could read from the InputStream or add it to a collection
+        }
     }
 }

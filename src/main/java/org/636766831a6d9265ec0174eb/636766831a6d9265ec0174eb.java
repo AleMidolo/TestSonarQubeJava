@@ -17,15 +17,13 @@ public class FileAdder {
         Collections.addAll(fileList, files);
         Collections.reverse(fileList);
 
-        // Assuming you want to process the files in reverse order
+        // Example of processing the reversed list
         for (File file : fileList) {
-            // Process each file here
-            System.out.println("Processing file: " + file.getName());
+            System.out.println(file.getName());
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
         File[] files = { new File("file1.txt"), new File("file2.txt"), new File("file3.txt") };
         FileAdder fileAdder = new FileAdder();
         fileAdder.addReverse(files);

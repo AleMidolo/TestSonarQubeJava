@@ -1,15 +1,14 @@
 import java.io.DataInput;
 import java.io.IOException;
 
-public class DataReader {
-
+public class MyReader {
     private DataInput input;
 
-    public DataReader(DataInput input) {
+    public MyReader(DataInput input) {
         this.input = input;
     }
 
-    /** 
+    /**
      * Leggi un valore di campo {@code string} dallo stream.
      */
     @Override

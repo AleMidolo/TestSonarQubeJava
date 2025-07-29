@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<String> outputFrameStack = new Stack<>();
+    private Stack<String> outputStack = new Stack<>();
 
     /**
      * Rimuove quanti più tipi astratti possibile dallo stack del frame di output come descritto dal descrittore fornito.
@@ -13,51 +13,32 @@ public class FrameStack {
         }
 
         if (descriptor.startsWith("(")) {
-            // È un descrittore di metodo, rimuovi i tipi degli argomenti
-            int endOfArgs = descriptor.indexOf(')');
-            if (endOfArgs == -1) {
-                return; // Descrittore non valido
-            }
-
-            String argsDescriptor = descriptor.substring(1, endOfArgs);
-            int index = 0;
-            while (index < argsDescriptor.length()) {
-                char c = argsDescriptor.charAt(index);
-                if (c == 'L') {
-                    // Tipo oggetto, trova il ';'
-                    int end = argsDescriptor.indexOf(';', index);
-                    if (end == -1) {
-                        return; // Descrittore non valido
+            // Se il descrittore è un metodo, rimuove i tipi degli argomenti
+            String[] parts = descriptor.split("\\)");
+            if (parts.length > 1) {
+                String argumentTypes = parts[0].substring(1);
+                String[] types = argumentTypes.split(";");
+                for (String type : types) {
+                    if (!type.isEmpty()) {
+                        outputStack.pop();
                     }
-                    index = end + 1;
-                } else if (c == '[') {
-                    // Tipo array, salta al prossimo carattere
-                    index++;
-                } else {
-                    // Tipo primitivo
-                    index++;
-                }
-                if (!outputFrameStack.isEmpty()) {
-                    outputFrameStack.pop();
                 }
             }
         } else {
-            // È un tipo singolo, rimuovi un elemento dallo stack
-            if (!outputFrameStack.isEmpty()) {
-                outputFrameStack.pop();
-            }
+            // Se il descrittore è un singolo tipo, rimuove solo quel tipo
+            outputStack.pop();
         }
     }
 
-    // Metodo di esempio per testare la funzione pop
+    // Metodo di esempio per testare la funzione
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
-        frameStack.outputFrameStack.push("int");
-        frameStack.outputFrameStack.push("java.lang.String");
-        frameStack.outputFrameStack.push("double");
+        frameStack.outputStack.push("int");
+        frameStack.outputStack.push("float");
+        frameStack.outputStack.push("java/lang/String");
 
-        System.out.println("Stack prima di pop: " + frameStack.outputFrameStack);
-        frameStack.pop("(ILjava/lang/String;D)V");
-        System.out.println("Stack dopo pop: " + frameStack.outputFrameStack);
+        frameStack.pop("(I;F;Ljava/lang/String;)V");
+
+        System.out.println(frameStack.outputStack); // Output: []
     }
 }

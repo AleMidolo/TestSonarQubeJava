@@ -18,7 +18,7 @@ public class Template {
      * @return true se la variabile di template è un membro del template, altrimenti false.
      */
     public final boolean isTemplateVariablePresent(String name) {
-        return templateVariables.contains(name);
+        return this.templateVariables.contains(name);
     }
 
     public static void main(String[] args) {

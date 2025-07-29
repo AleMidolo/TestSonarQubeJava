@@ -20,8 +20,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        String testString = "###HelloWorld";
-        char leadingChar = '#';
+        String testString = "aaaaHelloWorld";
+        char leadingChar = 'a';
         String result = trimLeadingCharacter(testString, leadingChar);
         System.out.println(result);  // Output: "HelloWorld"
     }

@@ -4,59 +4,55 @@ import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultGraphPath;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-protected GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
+/**
+ * Trasforma una rappresentazione di un insieme in un percorso di grafo.
+ * @param <V> il tipo di vertice del grafo
+ * @param <E> il tipo di bordo del grafo
+ * @param tour un insieme contenente i bordi del tour
+ * @param graph il grafo
+ * @return un percorso di grafo
+ */
+protected <V, E> GraphPath<V, E> edgeSetToTour(Set<E> tour, Graph<V, E> graph) {
     if (tour.isEmpty()) {
-        throw new IllegalArgumentException("Tour set cannot be empty.");
+        throw new IllegalArgumentException("Il tour non può essere vuoto.");
     }
 
-    // Create a map to store the adjacency of vertices
-    Map<V, V> adjacencyMap = new HashMap<>();
-    for (E edge : tour) {
-        V source = graph.getEdgeSource(edge);
-        V target = graph.getEdgeTarget(edge);
-        adjacencyMap.put(source, target);
-    }
-
-    // Find the starting vertex (a vertex with only one occurrence in the adjacency map)
+    // Trova il vertice iniziale
     V startVertex = null;
-    for (V vertex : adjacencyMap.keySet()) {
-        if (!adjacencyMap.containsValue(vertex)) {
-            startVertex = vertex;
-            break;
-        }
+    for (E edge : tour) {
+        startVertex = graph.getEdgeSource(edge);
+        break;
     }
 
-    if (startVertex == null) {
-        throw new IllegalArgumentException("The tour does not form a valid path.");
-    }
-
-    // Build the vertex list for the path
-    List<V> vertexList = new ArrayList<>();
-    vertexList.add(startVertex);
-    V currentVertex = startVertex;
-    while (adjacencyMap.containsKey(currentVertex)) {
-        currentVertex = adjacencyMap.get(currentVertex);
-        vertexList.add(currentVertex);
-    }
-
-    // Build the edge list for the path
+    // Costruisci il percorso
     List<E> edgeList = new ArrayList<>();
-    for (int i = 0; i < vertexList.size() - 1; i++) {
-        V source = vertexList.get(i);
-        V target = vertexList.get(i + 1);
-        E edge = graph.getEdge(source, target);
-        if (edge == null) {
-            throw new IllegalArgumentException("The tour contains edges not present in the graph.");
+    V currentVertex = startVertex;
+    Set<E> remainingEdges = new HashSet<>(tour);
+
+    while (!remainingEdges.isEmpty()) {
+        boolean edgeFound = false;
+        for (E edge : remainingEdges) {
+            if (graph.getEdgeSource(edge).equals(currentVertex)) {
+                edgeList.add(edge);
+                currentVertex = graph.getEdgeTarget(edge);
+                remainingEdges.remove(edge);
+                edgeFound = true;
+                break;
+            } else if (graph.getEdgeTarget(edge).equals(currentVertex)) {
+                edgeList.add(edge);
+                currentVertex = graph.getEdgeSource(edge);
+                remainingEdges.remove(edge);
+                edgeFound = true;
+                break;
+            }
         }
-        edgeList.add(edge);
+        if (!edgeFound) {
+            throw new IllegalArgumentException("Il tour non è valido o il grafo non è connesso.");
+        }
     }
 
-    // Create and return the GraphPath
-    return new DefaultGraphPath<>(graph, vertexList, edgeList, 0.0);
+    // Costruisci il GraphPath
+    return new DefaultGraphPath<>(graph, startVertex, currentVertex, edgeList, 0.0);
 }

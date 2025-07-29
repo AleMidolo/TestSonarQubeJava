@@ -1,18 +1,19 @@
-// Assuming ListNodeImpl is a class that represents a node in a linked list
+// Assuming ListNodeImpl is a class defined as follows:
 class ListNodeImpl<E> {
-    E data;
+    E value;
     ListNodeImpl<E> next;
 
-    ListNodeImpl(E data) {
-        this.data = data;
+    ListNodeImpl(E value) {
+        this.value = value;
         this.next = null;
     }
 }
 
-public class LinkedList<E> {
+// Assuming the class containing the unlink method has a reference to the head of the list
+class LinkedList<E> {
     private ListNodeImpl<E> head;
 
-    // Constructor and other methods of the LinkedList class would go here
+    // Other methods of the LinkedList class...
 
     /**
      * Rimuove il nodo non nullo {@code node} dalla lista.
@@ -40,7 +41,7 @@ public class LinkedList<E> {
             return true;
         }
 
-        // If the node was not found in the list
+        // Node not found in the list
         return false;
     }
 }

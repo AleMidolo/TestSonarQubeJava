@@ -2,45 +2,39 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
-    // Ottieni il byte corrente
-    byte b = bb.get(i);
-    
-    // Determina il numero di byte necessari per il carattere UTF-8
-    int numBytes;
-    if ((b & 0x80) == 0) {
-        // 1 byte: 0xxxxxxx
-        numBytes = 1;
-    } else if ((b & 0xE0) == 0xC0) {
-        // 2 byte: 110xxxxx
-        numBytes = 2;
-    } else if ((b & 0xF0) == 0xE0) {
-        // 3 byte: 1110xxxx
-        numBytes = 3;
-    } else if ((b & 0xF8) == 0xF0) {
-        // 4 byte: 11110xxx
-        numBytes = 4;
+    byte firstByte = bb.get(i);
+    int codePoint;
+    int bytesToRead;
+
+    if ((firstByte & 0x80) == 0) {
+        // 1-byte sequence (0xxxxxxx)
+        codePoint = firstByte & 0x7F;
+        bytesToRead = 0;
+    } else if ((firstByte & 0xE0) == 0xC0) {
+        // 2-byte sequence (110xxxxx 10xxxxxx)
+        codePoint = firstByte & 0x1F;
+        bytesToRead = 1;
+    } else if ((firstByte & 0xF0) == 0xE0) {
+        // 3-byte sequence (1110xxxx 10xxxxxx 10xxxxxx)
+        codePoint = firstByte & 0x0F;
+        bytesToRead = 2;
+    } else if ((firstByte & 0xF8) == 0xF0) {
+        // 4-byte sequence (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
+        codePoint = firstByte & 0x07;
+        bytesToRead = 3;
     } else {
-        // Byte non valido per UTF-8
+        // Invalid UTF-8 sequence
         throw new IllegalArgumentException("Invalid UTF-8 sequence");
     }
 
-    // Verifica che ci siano abbastanza byte nel buffer
-    if (i + numBytes > bb.limit()) {
-        throw new IllegalArgumentException("Incomplete UTF-8 sequence");
+    for (int j = 1; j <= bytesToRead; j++) {
+        byte nextByte = bb.get(i + j);
+        if ((nextByte & 0xC0) != 0x80) {
+            throw new IllegalArgumentException("Invalid UTF-8 sequence");
+        }
+        codePoint = (codePoint << 6) | (nextByte & 0x3F);
     }
 
-    // Decodifica i byte in un carattere UTF-8
-    byte[] utf8Bytes = new byte[numBytes];
-    for (int j = 0; j < numBytes; j++) {
-        utf8Bytes[j] = bb.get(i + j);
-    }
-
-    // Converti i byte in una stringa UTF-8
-    String decodedChar = new String(utf8Bytes, StandardCharsets.UTF_8);
-
-    // Aggiungi il carattere decodificato al StringBuilder
-    sb.append(decodedChar);
-
-    // Restituisci l'indice del prossimo carattere non controllato
-    return i + numBytes;
+    sb.append(Character.toChars(codePoint));
+    return i + bytesToRead + 1;
 }

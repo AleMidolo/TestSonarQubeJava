@@ -8,11 +8,15 @@ public class Accumulator {
         this.map = new HashMap<>();
     }
 
-    /** 
+    /**
      * Accumula il valore con il valore esistente nella stessa chiave fornita.
      */
     public void valueAccumulation(String key, Long value) {
-        map.put(key, map.getOrDefault(key, 0L) + value);
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + value);
+        } else {
+            map.put(key, value);
+        }
     }
 
     public Long getValue(String key) {

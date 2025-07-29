@@ -1,34 +1,38 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TemplateEncoder {
 
+    /**
+     * Codifica una stringa con nomi di parametri di template presenti, in particolare i caratteri '{' e '}' verranno codificati in percentuale.
+     * @param s la stringa con zero o più nomi di parametri di template
+     * @return la stringa con i nomi di parametri di template codificati.
+     */
     public static String encodeTemplateNames(String s) {
         if (s == null) {
             return null;
         }
 
-        // Mappa per la codifica dei caratteri speciali
-        Map<Character, String> encodingMap = new HashMap<>();
-        encodingMap.put('{', "%7B");
-        encodingMap.put('}', "%7D");
+        // Pattern per trovare i caratteri '{' e '}'
+        Pattern pattern = Pattern.compile("[{}]");
+        Matcher matcher = pattern.matcher(s);
 
-        StringBuilder encodedString = new StringBuilder();
+        // StringBuffer per costruire la stringa risultante
+        StringBuffer result = new StringBuffer();
 
-        for (char c : s.toCharArray()) {
-            if (encodingMap.containsKey(c)) {
-                encodedString.append(encodingMap.get(c));
-            } else {
-                encodedString.append(c);
-            }
+        while (matcher.find()) {
+            // Sostituisci '{' con '%7B' e '}' con '%7D'
+            String replacement = matcher.group().equals("{") ? "%7B" : "%7D";
+            matcher.appendReplacement(result, replacement);
         }
+        matcher.appendTail(result);
 
-        return encodedString.toString();
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String input = "This is a {template} with {parameters}.";
+        String input = "This is a {template} string with {parameters}.";
         String encoded = encodeTemplateNames(input);
-        System.out.println(encoded);  // Output: This is a %7Btemplate%7D with %7Bparameters%7D.
+        System.out.println(encoded);  // Output: This is a %7Btemplate%7D string with %7Bparameters%7D.
     }
 }

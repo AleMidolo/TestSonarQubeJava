@@ -15,16 +15,18 @@ public class ConverterRegistry {
     }
 
     /**
-     * Registra un {@link Converter} per una specifica classe.
-     * @param clazz Classe per la quale registrare il Converter
-     * @param converter Converter da registrare
+     * Registra un Converter per una specifica classe.
+     * @param clazz La classe per cui registrare il Converter
+     * @param converter Il Converter da registrare
      */
     public void register(final Class<?> clazz, final Converter converter) {
         registry.put(clazz, converter);
     }
 
-    // Example Converter interface
+    /**
+     * Interfaccia Converter.
+     */
     public interface Converter {
-        Object convert(Object input);
+        // Metodi del Converter
     }
 }

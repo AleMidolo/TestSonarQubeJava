@@ -1,12 +1,7 @@
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CustomOutputStream extends OutputStream {
-
-    @Override
-    public void write(int b) throws IOException {
-        // Implementación de la escritura de un solo byte
-    }
+public class ByteOutputStream extends OutputStream {
 
     @Override
     public void write(final byte b[], final int off, final int len) throws IOException {
@@ -19,5 +14,13 @@ public class CustomOutputStream extends OutputStream {
         for (int i = off; i < off + len; i++) {
             write(b[i]);
         }
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        // Implementación para escribir un solo byte.
+        // Este método debe ser implementado según la lógica específica del flujo de salida.
+        // Por ejemplo, podría escribir el byte en un archivo, en la consola, etc.
+        System.out.write(b);
     }
 }

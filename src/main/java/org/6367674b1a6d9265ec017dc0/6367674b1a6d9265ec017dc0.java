@@ -9,7 +9,7 @@ import java.util.Set;
 private Set<V> initVisibleVertices() {
     Set<V> visibleVertices = new HashSet<>();
     
-    // Suponiendo que 'edges' es una lista de aristas disponibles en el contexto
+    // Suponiendo que 'edges' es una lista de aristas donde cada arista es un par de vértices (V, V)
     for (Edge<V> edge : edges) {
         visibleVertices.add(edge.getSource());
         visibleVertices.add(edge.getTarget());

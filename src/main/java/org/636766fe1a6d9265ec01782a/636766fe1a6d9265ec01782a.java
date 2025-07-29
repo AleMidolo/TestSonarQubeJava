@@ -1,37 +1,47 @@
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-    // Asumimos que classFileBuffer es un ByteBuffer que contiene el archivo de clase.
-    // Este método es un ejemplo y no incluye la lógica completa para leer el archivo de clase.
-    // Debes implementar la lógica para obtener el ByteBuffer correcto.
+final class ClassFileReader {
+    private final ByteBuffer classFileBuffer;
 
-    // Obtener el offset de la entrada en la tabla de constantes
-    int offset = getConstantPoolEntryOffset(constantPoolEntryIndex);
+    public ClassFileReader(ByteBuffer classFileBuffer) {
+        this.classFileBuffer = classFileBuffer;
+    }
 
-    // Leer la longitud de la cadena UTF-8
-    int length = classFileBuffer.getShort(offset) & 0xFFFF;
+    /**
+     * Lee una entrada CONSTANT_Utf8 de un grupo de constantes en {@link #classFileBuffer}.
+     * @param constantPoolEntryIndex el índice de una entrada CONSTANT_Utf8 en la tabla de constantes de la clase.
+     * @param charBuffer el búfer que se utilizará para leer la cadena. Este búfer debe ser lo suficientemente grande. No se redimensiona automáticamente.
+     * @return la cadena correspondiente a la entrada CONSTANT_Utf8 especificada.
+     */
+    final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
+        // Asumimos que el índice es válido y que el búfer es lo suficientemente grande.
+        // La entrada CONSTANT_Utf8 tiene un formato específico en el class file.
+        // El primer byte es el tag (1 para CONSTANT_Utf8), seguido de 2 bytes que indican la longitud de la cadena.
+        // Luego sigue la cadena en formato UTF-8.
 
-    // Leer los bytes de la cadena UTF-8
-    byte[] utf8Bytes = new byte[length];
-    classFileBuffer.position(offset + 2);
-    classFileBuffer.get(utf8Bytes);
+        // Posicionamos el buffer en la entrada correspondiente.
+        classFileBuffer.position(constantPoolEntryIndex);
 
-    // Convertir los bytes UTF-8 a una cadena Java
-    String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+        // Leemos el tag (debería ser 1 para CONSTANT_Utf8).
+        byte tag = classFileBuffer.get();
+        if (tag != 1) {
+            throw new IllegalArgumentException("Invalid CONSTANT_Utf8 tag: " + tag);
+        }
 
-    // Copiar la cadena al búfer de caracteres
-    utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+        // Leemos la longitud de la cadena (2 bytes).
+        int length = classFileBuffer.getShort() & 0xFFFF;
 
-    return utf8String;
+        // Leemos los bytes de la cadena UTF-8.
+        byte[] utf8Bytes = new byte[length];
+        classFileBuffer.get(utf8Bytes);
+
+        // Convertimos los bytes UTF-8 a una cadena Java.
+        String utf8String = new String(utf8Bytes, StandardCharsets.UTF_8);
+
+        // Copiamos la cadena al charBuffer proporcionado.
+        utf8String.getChars(0, utf8String.length(), charBuffer, 0);
+
+        return utf8String;
+    }
 }
-
-// Método de ejemplo para obtener el offset de una entrada en la tabla de constantes
-private int getConstantPoolEntryOffset(int constantPoolEntryIndex) {
-    // Implementa la lógica para obtener el offset de la entrada en la tabla de constantes
-    // Esto es un ejemplo y debe ser adaptado a tu implementación específica.
-    return constantPoolEntryIndex * 8; // Ejemplo simplificado
-}
-
-// Ejemplo de ByteBuffer que contiene el archivo de clase
-private ByteBuffer classFileBuffer = ByteBuffer.allocate(1024); // Ejemplo simplificado

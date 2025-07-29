@@ -1,7 +1,8 @@
 public class NonZeroCounter {
+
     /**
      * Obtiene el número de entradas diferentes de cero en una fila.
-     * @param row la fila
+     * @param row la fila representada como un arreglo de enteros
      * @return el número de entradas diferentes de cero en una fila
      */
     public static int nonZeros(int[] row) {
@@ -15,7 +16,7 @@ public class NonZeroCounter {
     }
 
     public static void main(String[] args) {
-        int[] row = {0, 5, 0, 3, 0, 8};
+        int[] row = {0, 5, 0, 3, 0, 0, 7};
         System.out.println("Número de entradas diferentes de cero: " + nonZeros(row));
     }
 }

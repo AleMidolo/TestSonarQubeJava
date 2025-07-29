@@ -10,26 +10,35 @@ public class ClassFileBuffer {
         this.readPointer = 0;
     }
 
+    /**
+     * Limpia y llena el búfer de este {@code ClassFileBuffer} con el flujo de bytes proporcionado. 
+     * El puntero de lectura se restablece al inicio del arreglo de bytes.
+     */
     public void readFrom(final InputStream in) throws IOException {
         if (in == null) {
-            throw new IllegalArgumentException("InputStream cannot be null");
+            throw new IllegalArgumentException("InputStream no puede ser nulo");
         }
 
-        // Reset the read pointer to the start of the buffer
-        readPointer = 0;
+        // Limpiar el buffer
+        for (int i = 0; i < buffer.length; i++) {
+            buffer[i] = 0;
+        }
 
-        // Read bytes from the InputStream into the buffer
+        // Leer los datos del InputStream al buffer
         int bytesRead = in.read(buffer);
         if (bytesRead == -1) {
-            // If no bytes were read, clear the buffer
-            buffer = new byte[buffer.length];
-        } else if (bytesRead < buffer.length) {
-            // If fewer bytes were read than the buffer size, clear the remaining part
-            for (int i = bytesRead; i < buffer.length; i++) {
-                buffer[i] = 0;
-            }
+            throw new IOException("No se pudo leer ningún byte del InputStream");
         }
+
+        // Restablecer el puntero de lectura al inicio del buffer
+        readPointer = 0;
     }
 
-    // Additional methods to access the buffer and readPointer can be added here
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    public int getReadPointer() {
+        return readPointer;
+    }
 }

@@ -9,18 +9,12 @@ public class ByteVector {
         this.capacity = initialCapacity;
     }
 
-    /**
-     * Aumenta este vector de bytes para que pueda recibir una cantidad adicional de bytes definida por el argumento 'size'.
-     * @param size número de bytes adicionales que este vector de bytes debería poder recibir.
-     */
     private void enlarge(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than 0");
-        }
         int newCapacity = capacity + size;
-        data = Arrays.copyOf(data, newCapacity);
-        capacity = newCapacity;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
+        this.data = newData;
+        this.capacity = newCapacity;
     }
 
-    // Other methods of the ByteVector class...
+    // Other methods of the ByteVector class can be added here
 }

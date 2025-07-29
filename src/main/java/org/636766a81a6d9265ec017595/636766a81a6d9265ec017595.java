@@ -8,32 +8,24 @@ public class ByteVector {
         this.byteList = new ArrayList<>();
     }
 
-    public ByteVector put11(final int byteValue1, final int byteValue2) {
-        // Ensure the values are within byte range
-        byte b1 = (byte) byteValue1;
-        byte b2 = (byte) byteValue2;
-
-        // Add the bytes to the list
-        byteList.add(b1);
-        byteList.add(b2);
-
+    /**
+     * Coloca dos bytes en este vector de bytes. El vector de bytes se amplía automáticamente si es necesario.
+     * @param byteValue1 un byte.
+     * @param byteValue2 otro byte.
+     * @return este vector de bytes.
+     */
+    public final ByteVector put11(final int byteValue1, final int byteValue2) {
+        byteList.add((byte) byteValue1);
+        byteList.add((byte) byteValue2);
         return this;
     }
 
+    // Optional: Method to get the byte array representation of the ByteVector
     public byte[] toByteArray() {
-        byte[] result = new byte[byteList.size()];
+        byte[] array = new byte[byteList.size()];
         for (int i = 0; i < byteList.size(); i++) {
-            result[i] = byteList.get(i);
+            array[i] = byteList.get(i);
         }
-        return result;
-    }
-
-    public static void main(String[] args) {
-        ByteVector byteVector = new ByteVector();
-        byteVector.put11(0x12, 0x34);
-        byte[] bytes = byteVector.toByteArray();
-        for (byte b : bytes) {
-            System.out.printf("%02X ", b);
-        }
+        return array;
     }
 }

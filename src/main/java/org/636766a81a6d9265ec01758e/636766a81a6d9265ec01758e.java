@@ -9,23 +9,23 @@ public class PrimeUtil {
      * @return la capacidad que se debe utilizar para una tabla hash.
      */
     public static int nextPrime(int desiredCapacity) {
-        if (desiredCapacity <= 1) {
+        if (desiredCapacity <= 2) {
             return 2;
         }
-
         int candidate = desiredCapacity;
-        while (!isPrime(candidate)) {
+        if (candidate % 2 == 0) {
             candidate++;
         }
-
-        // Si desiredCapacity >= 1000, asegurarse de que el número primo esté dentro del 11%
-        if (desiredCapacity >= 1000) {
-            int upperBound = (int) (desiredCapacity * 1.11);
-            while (candidate > upperBound) {
-                candidate = nextPrime(candidate + 1);
+        while (!isPrime(candidate)) {
+            candidate += 2;
+            if (desiredCapacity >= 1000 && candidate > desiredCapacity * 1.11) {
+                candidate = desiredCapacity;
+                while (!isPrime(candidate)) {
+                    candidate++;
+                }
+                return candidate;
             }
         }
-
         return candidate;
     }
 
@@ -48,9 +48,6 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        // Ejemplo de uso
-        System.out.println(nextPrime(1000));  // Debería imprimir 1009
-        System.out.println(nextPrime(5000));  // Debería imprimir 5003
-        System.out.println(nextPrime(10000)); // Debería imprimir 10007
+        System.out.println(nextPrime(1000));  // Ejemplo de uso
     }
 }

@@ -15,10 +15,7 @@ public class Example {
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Test Exception"));
+        Example example = new Example(new RuntimeException("Test exception"));
         System.out.println(example.hasThrown()); // Should print true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Should print false
     }
 }

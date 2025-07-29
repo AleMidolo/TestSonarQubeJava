@@ -1,12 +1,9 @@
-import java.util.*;
+import java.util.Objects;
 
 public class StringUtils {
+
     /**
      * Inverso de Introspector.decapitalize
-     * Capitalizes the first letter of the given string.
-     *
-     * @param name the string to capitalize
-     * @return the capitalized string
      */
     public static String capitalize(String name) {
         if (name == null || name.isEmpty()) {

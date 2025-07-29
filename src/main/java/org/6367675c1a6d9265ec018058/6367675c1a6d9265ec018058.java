@@ -1,13 +1,7 @@
 import java.util.function.Supplier;
 
-public class StringSupplier {
+public class StringSupplierExample {
 
-    /**
-     * Crea un proveedor de cadenas que devuelve cadenas únicas. Las cadenas devueltas son simplemente enteros que comienzan desde el inicio.
-     * @param start desde dónde comenzar la secuencia
-     * @return un proveedor de cadenas
-     */
-    @SuppressWarnings("unchecked")
     public static Supplier<String> createStringSupplier(int start) {
         return new Supplier<String>() {
             private int current = start;

@@ -4,14 +4,11 @@ import java.util.regex.Pattern;
 
 public class PropertySubstitutor {
 
-    /**
-     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. 
-     * Luego realiza la sustitución de variables en el valor encontrado.
-     */
     public static String findAndSubst(String key, Properties props) {
+        // Obtener el valor asociado a la clave
         String value = props.getProperty(key);
         if (value == null) {
-            return null;
+            return null; // Si la clave no existe, retornar null
         }
 
         // Expresión regular para encontrar variables en el formato ${variable}
@@ -19,6 +16,7 @@ public class PropertySubstitutor {
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
+        // Realizar la sustitución de variables
         while (matcher.find()) {
             String variable = matcher.group(1);
             String replacement = props.getProperty(variable, "");
@@ -35,6 +33,6 @@ public class PropertySubstitutor {
         props.setProperty("name", "World");
 
         String result = findAndSubst("greeting", props);
-        System.out.println(result);  // Output: Hello, World!
+        System.out.println(result); // Output: Hello, World!
     }
 }

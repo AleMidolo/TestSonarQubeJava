@@ -7,7 +7,7 @@ public class UTF8SizeCalculator {
      *
      * @param str   La cadena de caracteres.
      * @param index El índice inicial en la cadena.
-     * @param len   La longitud de la subcadena.
+     * @param len   La longitud de la subcadena a considerar.
      * @return El tamaño en bytes de la subcadena en UTF-8.
      */
     public static int computeUTF8Size(final CharSequence str, final int index, final int len) {
@@ -21,10 +21,10 @@ public class UTF8SizeCalculator {
     }
 
     public static void main(String[] args) {
-        CharSequence str = "Hello, 世界";
+        CharSequence str = "Hello, 世界!";
         int index = 7;
         int len = 2;
         int size = computeUTF8Size(str, index, len);
-        System.out.println("UTF-8 size: " + size);
+        System.out.println("UTF-8 size: " + size);  // Output: UTF-8 size: 6
     }
 }

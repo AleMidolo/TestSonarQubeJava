@@ -1,23 +1,23 @@
 import java.util.List;
 
 public class Channels {
-    private List<String> channels;
+    private List<IConsumer> consumers;
 
-    public Channels(List<String> channels) {
-        this.channels = channels;
+    public Channels() {
+        this.consumers = new java.util.ArrayList<>();
     }
 
-    public List<String> getChannels() {
-        return channels;
+    public void addConsumer(IConsumer consumer) {
+        this.consumers.add(consumer);
     }
 
-    public void setChannels(List<String> channels) {
-        this.channels = channels;
+    public List<IConsumer> getConsumers() {
+        return this.consumers;
     }
 }
 
 public interface IConsumer {
-    void consume(String channel);
+    void consume(String message);
 }
 
 public class TargetManager {
@@ -26,9 +26,10 @@ public class TargetManager {
      * Agregar nuevos canales de destino.
      */
     public void addNewTarget(Channels channels, IConsumer consumer) {
-        List<String> channelList = channels.getChannels();
-        for (String channel : channelList) {
-            consumer.consume(channel);
+        if (channels != null && consumer != null) {
+            channels.addConsumer(consumer);
+        } else {
+            throw new IllegalArgumentException("Channels and consumer must not be null");
         }
     }
 }

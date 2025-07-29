@@ -10,10 +10,10 @@ public class PackedFieldChecker {
      */
     private void checkIfPackedField() throws IOException {
         // Aquí se implementaría la lógica para verificar si el campo está empaquetado.
-        // Por ejemplo, se podría leer un byte adicional para verificar si es un campo empaquetado.
-        // Si se detecta que es un campo empaquetado, se actualiza el estado interno.
-        
-        // Ejemplo de lógica (esto es solo un ejemplo, la lógica real dependerá del contexto):
+        // Por ejemplo, se podría leer un byte o un conjunto de bytes para determinar si el campo está empaquetado.
+        // Si se detecta que el campo está empaquetado, se actualiza el estado interno.
+
+        // Ejemplo de lógica (esto es solo un ejemplo, la lógica real dependerá del formato de los datos):
         int nextByte = System.in.read();
         if (nextByte == 0x01) { // Supongamos que 0x01 indica un campo empaquetado
             isPackedField = true;
@@ -24,5 +24,15 @@ public class PackedFieldChecker {
 
     public boolean isPackedField() {
         return isPackedField;
+    }
+
+    public static void main(String[] args) {
+        try {
+            PackedFieldChecker checker = new PackedFieldChecker();
+            checker.checkIfPackedField();
+            System.out.println("Is packed field: " + checker.isPackedField());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

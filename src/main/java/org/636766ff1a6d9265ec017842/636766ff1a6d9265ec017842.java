@@ -14,10 +14,12 @@ public class DoubleArrayConverter {
             return null;
         }
         
-        double[] result = new double[array.length];
+        double[] primitiveArray = new double[array.length];
         for (int i = 0; i < array.length; i++) {
-            result[i] = Objects.requireNonNull(array[i], "El contenido del arreglo no puede ser nulo");
+            Objects.requireNonNull(array[i], "El contenido del arreglo no puede ser nulo");
+            primitiveArray[i] = array[i];
         }
-        return result;
+        
+        return primitiveArray;
     }
 }

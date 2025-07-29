@@ -4,8 +4,8 @@ public class DoublyLinkedList<E> {
 
     private static class ListNodeImpl<E> {
         E element;
-        ListNodeImpl<E> next;
         ListNodeImpl<E> prev;
+        ListNodeImpl<E> next;
 
         ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
@@ -24,11 +24,30 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    public void addListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new NullPointerException("Node cannot be null");
+    private void removeListNode(ListNodeImpl<E> node) {
+        if (node == null) return;
+
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            head = node.next;
         }
-        if (head == null) {
+
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev;
+        }
+
+        node.prev = null;
+        node.next = null;
+        size--;
+    }
+
+    private void addListNode(ListNodeImpl<E> node) {
+        if (node == null) return;
+
+        if (tail == null) {
             head = node;
             tail = node;
         } else {
@@ -39,37 +58,20 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    public void removeListNode(ListNodeImpl<E> node) {
-        if (node == null) {
-            throw new NullPointerException("Node cannot be null");
-        }
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        } else {
-            head = node.next;
-        }
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        } else {
-            tail = node.prev;
-        }
-        node.next = null;
-        node.prev = null;
-        size--;
-    }
-
+    /**
+     * Mueve atómicamente todos los {@link ListNode ListNodes} de {@code list} a esta lista como si cada nodo se hubiera eliminado con {@link #removeListNode(ListNodeImpl)} de {@code list} y posteriormente agregado a esta lista mediante {@link #addListNode(ListNodeImpl)}.
+     */
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Objects.requireNonNull(list, "The list to move nodes from cannot be null");
+        Objects.requireNonNull(list, "La lista no puede ser nula");
 
-        if (list.head == null) {
-            return; // No nodes to move
-        }
+        if (list.head == null) return;
 
-        // Move all nodes from the source list to this list
-        while (list.head != null) {
-            ListNodeImpl<E> node = list.head;
-            list.removeListNode(node);
-            this.addListNode(node);
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> next = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = next;
         }
     }
 }

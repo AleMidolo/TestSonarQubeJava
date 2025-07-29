@@ -15,31 +15,51 @@ public class MappingDiffer {
         }
 
         // Get the properties from input mappings
-        Map<String, Object> sourceMap = mappings.getSourceAsMap();
-        if (sourceMap == null || !sourceMap.containsKey("properties")) {
-            return null;
-        }
-
-        // Create new mapping without _source
-        Map<String, Object> newMappings = new HashMap<>();
-        Map<String, Object> properties = new HashMap<>();
+        Map<String, Object> inputProperties = mappings.getSourceAsMap();
         
-        // Copy properties excluding _source
-        Map<String, Object> inputProperties = (Map<String, Object>) sourceMap.get("properties");
-        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
-            String fieldName = entry.getKey();
-            if (!fieldName.equals("_source")) {
-                properties.put(fieldName, entry.getValue());
+        // Create new map for storing diff
+        Map<String, Object> diffMap = new HashMap<>();
+        
+        // Get current index mappings
+        Map<String, Object> currentMappings = getCurrentIndexMappings(tableName);
+        
+        if (currentMappings != null) {
+            // Compare and get fields that don't exist in current mappings
+            for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
+                String field = entry.getKey();
+                if (!currentMappings.containsKey(field)) {
+                    diffMap.put(field, entry.getValue());
+                }
             }
+        } else {
+            // If no current mappings exist, return all input mappings
+            diffMap.putAll(inputProperties);
         }
-
-        // Build new mapping structure
-        newMappings.put("properties", properties);
         
-        // Create new Mappings object
-        return new Mappings(
-            MapperService.SINGLE_MAPPING_NAME,
-            newMappings
-        );
+        // Remove _source from diff to avoid conflicts
+        diffMap.remove("_source");
+        
+        // Create new Mappings object with diff
+        return new Mappings.Builder()
+                .putAll(diffMap)
+                .build();
+    }
+    
+    // Helper method to get current index mappings
+    private Map<String, Object> getCurrentIndexMappings(String tableName) {
+        try {
+            // This would need to be implemented based on your specific ES client setup
+            // Example implementation:
+            GetMappingsRequest request = new GetMappingsRequest().indices(tableName);
+            GetMappingsResponse response = client.indices().getMapping(request, RequestOptions.DEFAULT);
+            MappingMetadata mappingMetadata = response.mappings().get(tableName);
+            
+            if (mappingMetadata != null) {
+                return mappingMetadata.sourceAsMap();
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get current index mappings", e);
+        }
     }
 }

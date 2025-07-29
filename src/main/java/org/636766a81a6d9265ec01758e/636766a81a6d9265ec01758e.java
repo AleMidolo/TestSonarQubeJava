@@ -27,16 +27,19 @@ public class PrimeCalculator {
      * Helper method to check if a number is prime
      */
     private static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        if (num == 2) return true;
-        if (num % 2 == 0) return false;
+        if (num <= 1) {
+            return false;
+        }
+        if (num <= 3) {
+            return true;
+        }
+        if (num % 2 == 0 || num % 3 == 0) {
+            return false;
+        }
         
-        // Only need to check up to square root
-        int sqrt = (int) Math.sqrt(num);
-        
-        // Check odd divisors up to sqrt
-        for (int i = 3; i <= sqrt; i += 2) {
-            if (num % i == 0) {
+        // Check up to square root of num
+        for (int i = 5; i * i <= num; i += 6) {
+            if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }

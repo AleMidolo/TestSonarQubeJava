@@ -16,46 +16,61 @@ public class TourTransformer<V,E> {
             return null;
         }
 
-        List<E> edges = new ArrayList<>(tour);
+        // Get first edge and its vertices
+        E firstEdge = tour.iterator().next();
+        V startVertex = graph.getEdgeSource(firstEdge);
+        V currentVertex = graph.getEdgeTarget(firstEdge);
+
+        // Initialize path components
+        List<E> edges = new ArrayList<>();
         List<V> vertices = new ArrayList<>();
-        
-        // Get first vertex
-        V start = graph.getEdgeSource(edges.get(0));
-        vertices.add(start);
-        
-        V current = graph.getEdgeTarget(edges.get(0));
-        vertices.add(current);
-        
-        // Remove first edge since it's processed
-        edges.remove(0);
-        
-        // Build path by following edges
-        while (!edges.isEmpty()) {
-            for (Iterator<E> it = edges.iterator(); it.hasNext();) {
-                E edge = it.next();
+        edges.add(firstEdge);
+        vertices.add(startVertex);
+        vertices.add(currentVertex);
+
+        // Remove first edge from remaining edges to process
+        Set<E> remainingEdges = new HashSet<>(tour);
+        remainingEdges.remove(firstEdge);
+
+        // Build path by connecting edges
+        while (!remainingEdges.isEmpty()) {
+            boolean found = false;
+            for (E edge : remainingEdges) {
                 V source = graph.getEdgeSource(edge);
                 V target = graph.getEdgeTarget(edge);
-                
-                if (source.equals(current)) {
-                    current = target;
-                    vertices.add(current);
-                    it.remove();
+
+                if (source.equals(currentVertex)) {
+                    edges.add(edge);
+                    vertices.add(target);
+                    currentVertex = target;
+                    remainingEdges.remove(edge);
+                    found = true;
                     break;
-                } else if (target.equals(current)) {
-                    current = source;
-                    vertices.add(current);
-                    it.remove();
+                } else if (target.equals(currentVertex)) {
+                    edges.add(edge);
+                    vertices.add(source);
+                    currentVertex = source;
+                    remainingEdges.remove(edge);
+                    found = true;
                     break;
                 }
             }
+
+            if (!found) {
+                throw new IllegalArgumentException("Edge set does not form a valid tour");
+            }
         }
-        
-        // Calculate total weight of path
-        double weight = 0.0;
-        for (E edge : tour) {
-            weight += graph.getEdgeWeight(edge);
+
+        // Verify tour is complete (ends at start vertex)
+        if (!currentVertex.equals(startVertex)) {
+            throw new IllegalArgumentException("Edge set does not form a complete tour");
         }
-        
+
+        // Calculate total weight of tour
+        double weight = edges.stream()
+            .mapToDouble(graph::getEdgeWeight)
+            .sum();
+
         return new GraphWalk<>(graph, vertices, weight);
     }
 }

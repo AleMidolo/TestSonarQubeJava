@@ -14,15 +14,18 @@ public class BoundComputer<K extends Comparable<K>> {
 
         List<Integer> upperBounds = new ArrayList<>(keys.size());
         
-        // For each key, find its upper bound
+        // For each key, find the smallest value larger than it
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int upperBound = i;
+            int upperBound = Integer.MAX_VALUE;
             
-            // Compare with all subsequent keys
-            for (int j = i + 1; j < keys.size(); j++) {
-                if (currentKey.compareTo(keys.get(j)) > 0) {
-                    upperBound = j;
+            // Compare with all other keys
+            for (int j = 0; j < keys.size(); j++) {
+                if (i != j) {
+                    K otherKey = keys.get(j);
+                    if (currentKey.compareTo(otherKey) < 0) {
+                        upperBound = Math.min(upperBound, j);
+                    }
                 }
             }
             

@@ -20,11 +20,11 @@ public class CharacterConverter {
             if (str.length() == 1) {
                 return Character.valueOf(str.charAt(0));
             } else if (str.length() > 1) {
-                // Try to convert string to number and then to char
+                // Try to convert string to single character
                 try {
-                    int num = Integer.parseInt(str);
-                    return Character.valueOf((char)num);
-                } catch (NumberFormatException ex) {
+                    int codePoint = Integer.parseInt(str);
+                    return Character.valueOf((char)codePoint);
+                } catch (NumberFormatException e) {
                     throw new Exception("Cannot convert value '" + value + "' to Character");
                 }
             }

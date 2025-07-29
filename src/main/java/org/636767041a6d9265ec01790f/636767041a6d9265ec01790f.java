@@ -1,4 +1,6 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class IntArrayConverter {
 
     /**
      * <p>Converts an array of primitive ints to objects.</p> <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
@@ -19,8 +21,10 @@ public class ArrayUtils {
     public static void main(String[] args) {
         int[] primitiveArray = {1, 2, 3, 4, 5};
         Integer[] objectArray = toObject(primitiveArray);
-        for (Integer num : objectArray) {
-            System.out.println(num);
-        }
+        System.out.println(java.util.Arrays.toString(objectArray)); // Output: [1, 2, 3, 4, 5]
+
+        int[] nullArray = null;
+        Integer[] nullResult = toObject(nullArray);
+        System.out.println(nullResult); // Output: null
     }
 }

@@ -1,10 +1,11 @@
 public class ArrayUtils {
 
     /**
-     * <p>Clones an array returning a typecast result and handling <code>null</code>.</p> 
-     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
-     * @param array  the array to clone, may be <code>null</code>
-     * @return the cloned array, <code>null</code> if <code>null</code> input
+     * Clones an array returning a typecast result and handling null.
+     * This method returns null for a null input array.
+     *
+     * @param array the array to clone, may be null
+     * @return the cloned array, null if null input
      */
     public static char[] clone(final char[] array) {
         if (array == null) {

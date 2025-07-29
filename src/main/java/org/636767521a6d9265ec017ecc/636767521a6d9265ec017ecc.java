@@ -24,51 +24,41 @@ public class BoxSplitter {
         return new Pair<>(leftBox, rightBox);
     }
 
+    public static class Box2D {
+        private double minX;
+        private double minY;
+        private double maxX;
+        private double maxY;
+
+        public Box2D(double minX, double minY, double maxX, double maxY) {
+            this.minX = minX;
+            this.minY = minY;
+            this.maxX = maxX;
+            this.maxY = maxY;
+        }
+
+        public double getMinX() {
+            return minX;
+        }
+
+        public double getMinY() {
+            return minY;
+        }
+
+        public double getMaxX() {
+            return maxX;
+        }
+
+        public double getMaxY() {
+            return maxY;
+        }
+    }
+
     public static void main(String[] args) {
-        // Example usage
-        Box2D originalBox = new Box2D(0, 0, 10, 5);
-        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(originalBox);
-        System.out.println("Left Box: " + splitBoxes.getKey());
-        System.out.println("Right Box: " + splitBoxes.getValue());
-    }
-}
+        Box2D box = new Box2D(0, 0, 10, 5);
+        Pair<Box2D, Box2D> splitBoxes = splitAlongXAxis(box);
 
-class Box2D {
-    private double minX;
-    private double minY;
-    private double maxX;
-    private double maxY;
-
-    public Box2D(double minX, double minY, double maxX, double maxY) {
-        this.minX = minX;
-        this.minY = minY;
-        this.maxX = maxX;
-        this.maxY = maxY;
-    }
-
-    public double getMinX() {
-        return minX;
-    }
-
-    public double getMinY() {
-        return minY;
-    }
-
-    public double getMaxX() {
-        return maxX;
-    }
-
-    public double getMaxY() {
-        return maxY;
-    }
-
-    @Override
-    public String toString() {
-        return "Box2D{" +
-                "minX=" + minX +
-                ", minY=" + minY +
-                ", maxX=" + maxX +
-                ", maxY=" + maxY +
-                '}';
+        System.out.println("Left Box: (" + splitBoxes.getKey().getMinX() + ", " + splitBoxes.getKey().getMinY() + ") to (" + splitBoxes.getKey().getMaxX() + ", " + splitBoxes.getKey().getMaxY() + ")");
+        System.out.println("Right Box: (" + splitBoxes.getValue().getMinX() + ", " + splitBoxes.getValue().getMinY() + ") to (" + splitBoxes.getValue().getMaxX() + ", " + splitBoxes.getValue().getMaxY() + ")");
     }
 }

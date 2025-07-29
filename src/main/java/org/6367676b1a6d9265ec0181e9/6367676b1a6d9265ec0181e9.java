@@ -1,7 +1,7 @@
 public class SubstringMatcher {
 
     /**
-     * Returns {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
+     * Returns  {@code true} if the given string matches the given substring at the given index, {@code false} otherwise.
      * @param str the original string (or StringBuilder)
      * @param index the index in the original string to start matching against
      * @param substring the substring to match at the given index

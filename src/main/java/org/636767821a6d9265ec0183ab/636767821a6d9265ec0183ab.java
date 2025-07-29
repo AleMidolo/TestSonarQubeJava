@@ -1,24 +1,30 @@
-public class Example {
-    private Throwable thrown;
+import java.util.Optional;
 
-    public Example(Throwable thrown) {
+public class Example {
+
+    private Optional<Throwable> thrown;
+
+    public Example(Optional<Throwable> thrown) {
         this.thrown = thrown;
     }
 
+    /**
+     * @return true if getThrown().toString() is a non-empty string.
+     */
     public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+        return thrown.isPresent() && !thrown.get().toString().isEmpty();
+    }
+
+    public Optional<Throwable> getThrown() {
+        return thrown;
     }
 
     public static void main(String[] args) {
         // Example usage
-        Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Should print true
+        Example example1 = new Example(Optional.of(new RuntimeException("Error occurred")));
+        System.out.println(example1.hasThrown()); // true
 
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Should print false
+        Example example2 = new Example(Optional.empty());
+        System.out.println(example2.hasThrown()); // false
     }
 }

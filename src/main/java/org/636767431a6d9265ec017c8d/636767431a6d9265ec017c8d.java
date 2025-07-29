@@ -1,6 +1,7 @@
 public class BinaryLog {
     /**
      * Computes floor(log2(n)) + 1
+     * 
      * @param n the input number
      * @return floor(log2(n)) + 1
      */
@@ -18,6 +19,6 @@ public class BinaryLog {
 
     public static void main(String[] args) {
         int n = 16; // Example input
-        System.out.println(computeBinaryLog(n)); // Output: 5
+        System.out.println("Result: " + computeBinaryLog(n)); // Output should be 5
     }
 }

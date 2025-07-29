@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class TableUtils {
@@ -12,38 +12,26 @@ public class TableUtils {
      * @param pane The JScrollPane containing the JTable.
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (row >= 0 && row < table.getRowCount()) {
-            table.setRowSelectionInterval(row, row);
-            table.scrollRectToVisible(table.getCellRect(row, 0, true));
-
-            // Delay the repaint to ensure the table properly paints the newly selected row
-            SwingUtilities.invokeLater(() -> {
-                table.repaint();
-                pane.repaint();
-            });
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example usage
-        JFrame frame = new JFrame("Table Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Column 1", "Column 2"}, 0);
-        for (int i = 0; i < 50; i++) {
-            model.addRow(new Object[]{"Row " + i, "Data " + i});
+        if (table == null || pane == null) {
+            throw new IllegalArgumentException("Table and pane must not be null.");
         }
 
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
+        TableModel model = table.getModel();
+        if (row < 0 || row >= model.getRowCount()) {
+            throw new IllegalArgumentException("Row index out of bounds.");
+        }
 
-        frame.add(scrollPane, BorderLayout.CENTER);
-        frame.setVisible(true);
+        // Select the row
+        table.setRowSelectionInterval(row, row);
 
-        // Select row 25 after a delay to demonstrate the method
-        Timer timer = new Timer(2000, e -> selectRow(25, table, scrollPane));
-        timer.setRepeats(false);
-        timer.start();
+        // Scroll to the selected row
+        Rectangle cellRect = table.getCellRect(row, 0, true);
+        table.scrollRectToVisible(cellRect);
+
+        // Delay repaint to ensure proper rendering
+        SwingUtilities.invokeLater(() -> {
+            table.repaint();
+            pane.repaint();
+        });
     }
 }

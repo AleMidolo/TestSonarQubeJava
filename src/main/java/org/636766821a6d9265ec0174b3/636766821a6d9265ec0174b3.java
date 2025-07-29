@@ -1,28 +1,38 @@
-import java.util.function.Predicate;
+import java.util.Objects;
 
 /**
  * Invoke the {@link BroadcastFilter}
  * @param msg The message to be filtered
- * @return The filtered message or null if the message does not pass the filter
+ * @return The filtered message or null if the message is filtered out
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is a functional interface or a class with a test method
-    // For example, BroadcastFilter could be a Predicate<Object>
-    Predicate<Object> broadcastFilter = new BroadcastFilter();
+    // Assuming BroadcastFilter is an interface or class that defines a filter method
+    // For the sake of this example, let's assume it has a method called filterMessage
+    BroadcastFilter filter = new BroadcastFilter() {
+        @Override
+        public Object filterMessage(Object message) {
+            // Example filtering logic: filter out null messages
+            if (message == null) {
+                return null;
+            }
+            // Example: filter out messages that are not instances of String
+            if (!(message instanceof String)) {
+                return null;
+            }
+            // Example: filter out empty strings
+            if (((String) message).trim().isEmpty()) {
+                return null;
+            }
+            // Otherwise, return the message as is
+            return message;
+        }
+    };
 
-    if (broadcastFilter.test(msg)) {
-        return msg; // Return the message if it passes the filter
-    } else {
-        return null; // Return null if the message does not pass the filter
-    }
+    // Invoke the filter
+    return filter.filterMessage(msg);
 }
 
-// Example implementation of BroadcastFilter as a Predicate
-class BroadcastFilter implements Predicate<Object> {
-    @Override
-    public boolean test(Object msg) {
-        // Implement your filtering logic here
-        // For example, return true if the message is not null
-        return msg != null;
-    }
+// Assuming BroadcastFilter is an interface
+interface BroadcastFilter {
+    Object filterMessage(Object message);
 }

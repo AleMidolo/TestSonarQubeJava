@@ -1,18 +1,21 @@
-public class EntityIdHandler {
+import java.util.UUID;
 
+public class Main {
     /**
-     * @param entityId the entity id to process
-     * @return the row id
+     * Generates a unique row ID based on the provided entity ID.
+     * 
+     * @param entityId the entity ID to be used in generating the row ID
+     * @return the row ID as a String
      */
-    public String id(String entityId) {
-        // Assuming the row id is derived from the entity id by adding a prefix
-        return "row_" + entityId;
+    public static String id(String entityId) {
+        // Concatenate the entity ID with a UUID to ensure uniqueness
+        return entityId + "-" + UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {
-        EntityIdHandler handler = new EntityIdHandler();
-        String entityId = "12345";
-        String rowId = handler.id(entityId);
-        System.out.println("Row ID: " + rowId);
+        // Example usage
+        String entityId = "user123";
+        String rowId = id(entityId);
+        System.out.println("Generated Row ID: " + rowId);
     }
 }

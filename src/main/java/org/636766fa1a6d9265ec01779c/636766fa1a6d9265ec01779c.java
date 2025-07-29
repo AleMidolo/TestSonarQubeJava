@@ -11,16 +11,18 @@ private String parseToken(final char[] terminators) {
     StringBuilder token = new StringBuilder();
     int currentChar;
 
-    try {
-        while ((currentChar = System.in.read()) != -1) {
-            char ch = (char) currentChar;
-            if (terminatorSet.contains(ch)) {
+    // Read characters until a terminator is encountered
+    while (true) {
+        try {
+            currentChar = System.in.read();
+            if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
                 break;
             }
-            token.append(ch);
+            token.append((char) currentChar);
+        } catch (Exception e) {
+            e.printStackTrace();
+            break;
         }
-    } catch (Exception e) {
-        e.printStackTrace();
     }
 
     return token.toString();

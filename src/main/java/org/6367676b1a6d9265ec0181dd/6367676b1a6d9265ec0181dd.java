@@ -24,8 +24,8 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        String str = "hello world, hello universe, hello everyone";
+        String str = "hello world, hello universe";
         String sub = "hello";
-        System.out.println(countOccurrencesOf(str, sub)); // Output: 3
+        System.out.println(countOccurrencesOf(str, sub)); // Output: 2
     }
 }

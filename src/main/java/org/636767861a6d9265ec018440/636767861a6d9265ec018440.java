@@ -3,14 +3,14 @@ public void abbreviate(final int nameStart, final StringBuffer buf) {
         return; // Handle invalid input
     }
 
-    // Split the buffer content into parts
-    String content = buf.toString();
-    String[] parts = content.substring(nameStart).split("\\s+");
+    // Split the name into parts based on spaces
+    String name = buf.substring(nameStart);
+    String[] parts = name.split(" ");
 
     // Abbreviate each part except the last one
     for (int i = 0; i < parts.length - 1; i++) {
         if (!parts[i].isEmpty()) {
-            parts[i] = parts[i].charAt(0) + ".";
+            parts[i] = parts[i].substring(0, 1) + ".";
         }
     }
 

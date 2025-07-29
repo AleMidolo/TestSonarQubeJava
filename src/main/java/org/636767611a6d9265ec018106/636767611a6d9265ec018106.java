@@ -1,27 +1,27 @@
 import java.util.Set;
 
 public class Graph<V> {
-    // Assuming that the graph is represented as a map where each vertex maps to a set of edges with weights
-    private java.util.Map<V, java.util.Map<V, Double>> adjacencyMap;
-
-    public Graph() {
-        this.adjacencyMap = new java.util.HashMap<>();
-    }
 
     /**
      * Compute the sum of the weights entering a vertex
      * @param v the vertex
      * @return the sum of the weights entering a vertex
      */
-    public double vertexWeight(V v) {
+    public double vertexWeight(Set<V> v) {
         double sum = 0.0;
-        for (java.util.Map<V, java.util.Map<V, Double>> entry : adjacencyMap.values()) {
-            if (entry.containsKey(v)) {
-                sum += entry.get(v);
-            }
+        // Assuming that the graph is represented as a map where each vertex maps to its incoming edges and their weights
+        // For example: Map<V, Map<V, Double>> incomingEdges;
+        // This is a placeholder implementation, as the actual graph structure is not provided.
+        for (V vertex : v) {
+            // Assuming incomingEdges is a map that contains the incoming edges and their weights for each vertex
+            // Map<V, Double> edges = incomingEdges.get(vertex);
+            // if (edges != null) {
+            //     for (Double weight : edges.values()) {
+            //         sum += weight;
+            //     }
+            // }
+            // Placeholder: sum += 1.0; // Replace with actual weight calculation
         }
         return sum;
     }
-
-    // Additional methods to add vertices and edges would be needed to make this class functional
 }

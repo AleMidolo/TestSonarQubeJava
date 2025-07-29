@@ -10,15 +10,15 @@ public class Bucket {
         // Set the previous of the new bucket to the previous of the current bucket
         this.prev = bucket.prev;
 
-        // Set the next of the new bucket to the current bucket
-        this.next = bucket;
-
-        // If the current bucket has a previous, set its next to the new bucket
+        // If the previous of the current bucket is not null, set its next to this bucket
         if (bucket.prev != null) {
             bucket.prev.next = this;
         }
 
-        // Set the previous of the current bucket to the new bucket
+        // Set the next of this bucket to the current bucket
+        this.next = bucket;
+
+        // Set the previous of the current bucket to this bucket
         bucket.prev = this;
     }
 }

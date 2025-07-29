@@ -5,15 +5,19 @@ public class ByteVector {
     private int capacity;
     private int size;
     
+    /**
+     * Aumenta la taglia di questo vettore di byte in modo che possa ricevere 'size' byte aggiuntivi.
+     * @param size numero di byte aggiuntivi che questo vettore di byte dovrebbe essere in grado di ricevere.
+     */
     private void enlarge(final int size) {
-        // Calculate new capacity needed
-        int newCapacity = this.capacity + size;
+        if (size <= 0) {
+            return;
+        }
         
-        // Create new array with increased size
-        byte[] newData = Arrays.copyOf(this.data, newCapacity);
+        int newCapacity = capacity + size;
+        byte[] newData = Arrays.copyOf(data, newCapacity);
         
-        // Update instance variables
-        this.data = newData;
-        this.capacity = newCapacity;
+        data = newData;
+        capacity = newCapacity;
     }
 }

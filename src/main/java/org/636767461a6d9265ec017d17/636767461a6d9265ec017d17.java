@@ -2,7 +2,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class DotUtils {
-
     /**
      * Decomprime un identificatore di stringa DOT.
      * @param input l'input
@@ -13,7 +12,7 @@ public class DotUtils {
             return input;
         }
 
-        // Remove quotes if present
+        // Remove quotes if present at start and end
         if (input.startsWith("\"") && input.endsWith("\"")) {
             input = input.substring(1, input.length() - 1);
         }

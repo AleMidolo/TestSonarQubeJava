@@ -11,12 +11,12 @@ public class LogBuffer {
     }
 
     /** 
-     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>.
+     * Inserisce un {@link LoggingEvent} nel buffer. Se il buffer è pieno, l'evento viene <b>silenziosamente scartato</b>. 
      * È responsabilità del chiamante assicurarsi che il buffer abbia spazio libero.  
      */
     public void put(LoggingEvent o) {
         if (o != null) {
-            buffer.offer(o); // offer() silently fails if buffer is full
+            buffer.offer(o); // Uses offer() instead of add() to silently discard when full
         }
     }
 }

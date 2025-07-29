@@ -18,10 +18,10 @@ public class ByteVector {
         }
 
         // Store int value in big-endian format
-        data[size++] = (byte) ((intValue >> 24) & 0xFF);
-        data[size++] = (byte) ((intValue >> 16) & 0xFF); 
-        data[size++] = (byte) ((intValue >> 8) & 0xFF);
-        data[size++] = (byte) (intValue & 0xFF);
+        data[size++] = (byte) (intValue >> 24);
+        data[size++] = (byte) (intValue >> 16);
+        data[size++] = (byte) (intValue >> 8);
+        data[size++] = (byte) intValue;
 
         return this;
     }

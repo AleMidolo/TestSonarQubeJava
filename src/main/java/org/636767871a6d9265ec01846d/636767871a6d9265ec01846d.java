@@ -19,7 +19,7 @@ public class ConfigurationDirectoryCreator {
             if (dirCreated) {
                 System.out.println("Directorio 'lf5' creado exitosamente en: " + configDir.getAbsolutePath());
             } else {
-                System.err.println("No se pudo crear el directorio 'lf5' en: " + configDir.getAbsolutePath());
+                System.out.println("No se pudo crear el directorio 'lf5' en: " + configDir.getAbsolutePath());
             }
         } else {
             System.out.println("El directorio 'lf5' ya existe en: " + configDir.getAbsolutePath());

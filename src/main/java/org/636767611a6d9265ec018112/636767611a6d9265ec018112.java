@@ -9,5 +9,7 @@ protected V proporcionarSiguienteVertice() {
         throw new NoSuchElementException("No more vertices available.");
     }
     // Assuming 'vertices' is a collection of vertices and 'currentIndex' tracks the current position
-    return vertices.get(currentIndex++);
+    V nextVertex = vertices.get(currentIndex);
+    currentIndex++;
+    return nextVertex;
 }

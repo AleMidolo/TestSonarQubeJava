@@ -1,48 +1,49 @@
 import java.util.Stack;
 
-public class FrameStackHandler {
+public class FrameStack {
+    private Stack<String> frameStack;
 
-    /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
-     */
+    public FrameStack() {
+        frameStack = new Stack<>();
+    }
+
     private void pop(final String descriptor) {
-        Stack<String> frameStack = new Stack<>();
-
-        // Simulación de una pila de marcos de salida
-        frameStack.push("Frame1");
-        frameStack.push("Frame2");
-        frameStack.push("Frame3");
-
-        // Determinar cuántos elementos extraer basado en el descriptor
-        int elementsToPop = 0;
-        if (descriptor.startsWith("(")) {
-            // Si el descriptor es un descriptor de método, extraer los tipos de argumento
-            String[] parts = descriptor.split("\\)");
-            if (parts.length > 0) {
-                String argumentTypes = parts[0].substring(1);
-                elementsToPop = argumentTypes.length();
-            }
-        } else {
-            // Si es un tipo simple, extraer un solo elemento
-            elementsToPop = 1;
+        if (descriptor == null || descriptor.isEmpty()) {
+            return;
         }
 
-        // Extraer los elementos de la pila
-        for (int i = 0; i < elementsToPop; i++) {
+        // Assuming descriptor is a method descriptor like "(Ljava/lang/String;I)V"
+        // We need to extract the argument types from the descriptor
+        String[] argumentTypes = extractArgumentTypes(descriptor);
+
+        // Pop the types from the stack
+        for (String type : argumentTypes) {
             if (!frameStack.isEmpty()) {
                 frameStack.pop();
-            } else {
-                break;
             }
         }
+    }
 
-        // Imprimir el estado de la pila después de la extracción
-        System.out.println("Estado de la pila después de extraer " + elementsToPop + " elementos: " + frameStack);
+    private String[] extractArgumentTypes(String descriptor) {
+        // This is a simplified version of extracting argument types from a method descriptor
+        // For a full implementation, you would need to parse the descriptor properly
+        // Here we assume the descriptor is in the format "(<arg1><arg2>...)"
+
+        if (descriptor.charAt(0) != '(') {
+            return new String[0];
+        }
+
+        int endIndex = descriptor.indexOf(')');
+        if (endIndex == -1) {
+            return new String[0];
+        }
+
+        String args = descriptor.substring(1, endIndex);
+        return args.split(";");
     }
 
     public static void main(String[] args) {
-        FrameStackHandler handler = new FrameStackHandler();
-        handler.pop("(Ljava/lang/String;I)V"); // Ejemplo de descriptor de método
+        FrameStack stack = new FrameStack();
+        stack.pop("(Ljava/lang/String;I)V");
     }
 }

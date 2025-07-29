@@ -1,4 +1,4 @@
-public class LastIndexOfExample {
+public class StringUtils {
 
     /**
      * Encuentra el último índice dentro de una cadena, manejando <code>null</code>. Este método utiliza {@link String#lastIndexOf(String)}.
@@ -15,9 +15,10 @@ public class LastIndexOfExample {
     }
 
     public static void main(String[] args) {
-        String str = "Hello, world! Hello, everyone!";
-        String searchStr = "Hello";
+        // Ejemplo de uso
+        String str = "Hola mundo, mundo";
+        String searchStr = "mundo";
         int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of '" + searchStr + "' is: " + index);
+        System.out.println("Último índice de '" + searchStr + "' en '" + str + "': " + index);
     }
 }

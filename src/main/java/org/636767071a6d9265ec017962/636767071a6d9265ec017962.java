@@ -1,3 +1,6 @@
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,28 +15,26 @@ public class BeanMap {
 
     public void putAllWriteable(BeanMap map) {
         try {
-            for (PropertyDescriptor pd : map.getPropertyDescriptors()) {
+            BeanInfo beanInfo = Introspector.getBeanInfo(map.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+            for (PropertyDescriptor pd : propertyDescriptors) {
                 if (pd.getWriteMethod() != null && pd.getReadMethod() != null) {
-                    Object value = pd.getReadMethod().invoke(map);
+                    Method readMethod = pd.getReadMethod();
+                    Object value = readMethod.invoke(map);
                     this.properties.put(pd.getName(), value);
                 }
             }
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
-    private PropertyDescriptor[] getPropertyDescriptors() {
-        // This method should return the PropertyDescriptor array for the BeanMap.
-        // For simplicity, we assume it's implemented elsewhere.
-        return new PropertyDescriptor[0];
+    public Object getProperty(String key) {
+        return properties.get(key);
     }
 
-    public Object get(String propertyName) {
-        return properties.get(propertyName);
-    }
-
-    public void put(String propertyName, Object value) {
-        properties.put(propertyName, value);
+    public void setProperty(String key, Object value) {
+        properties.put(key, value);
     }
 }

@@ -1,28 +1,34 @@
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-private void check(String modelName) throws IllegalStateException {
-    // Define a regex pattern to match the sharding indices
-    Pattern pattern = Pattern.compile(".*_\\d+$");
-    Matcher matcher = pattern.matcher(modelName);
+public class ShardingKeyChecker {
 
-    if (!matcher.find()) {
-        throw new IllegalStateException("Model name does not contain sharding indices.");
-    }
+    /**
+     * @param modelName nombre del modelo de la entidad
+     * @throws IllegalStateException si los índices de la clave de "sharding" no son continuos
+     */
+    private void check(String modelName) throws IllegalStateException {
+        // Assuming the modelName contains sharding indices in the format "modelName_shardX"
+        Pattern pattern = Pattern.compile("_shard(\\d+)");
+        Matcher matcher = pattern.matcher(modelName);
 
-    // Extract the sharding index from the model name
-    String[] parts = modelName.split("_");
-    int lastIndex = Integer.parseInt(parts[parts.length - 1]);
-
-    // Check if the sharding indices are continuous
-    for (int i = 0; i < parts.length - 1; i++) {
-        try {
-            int currentIndex = Integer.parseInt(parts[i]);
-            if (currentIndex != lastIndex - (parts.length - 1 - i)) {
+        int previousIndex = -1;
+        while (matcher.find()) {
+            int currentIndex = Integer.parseInt(matcher.group(1));
+            if (previousIndex != -1 && currentIndex != previousIndex + 1) {
                 throw new IllegalStateException("Sharding indices are not continuous.");
             }
-        } catch (NumberFormatException e) {
-            // Ignore non-numeric parts
+            previousIndex = currentIndex;
+        }
+    }
+
+    public static void main(String[] args) {
+        ShardingKeyChecker checker = new ShardingKeyChecker();
+        try {
+            checker.check("model_shard0_shard1_shard2"); // This should pass
+            checker.check("model_shard0_shard2_shard3"); // This should throw an exception
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

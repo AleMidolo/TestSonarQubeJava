@@ -16,18 +16,18 @@ public class TypeResolver {
 
         ParameterizedType parameterizedType = (ParameterizedType) genericType;
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        List<Class<?>> resolvedArguments = new ArrayList<>();
+        List<Class<?>> resolvedTypes = new ArrayList<>();
 
         for (Type typeArg : actualTypeArguments) {
             if (typeArg instanceof Class) {
-                resolvedArguments.add((Class<?>) typeArg);
+                resolvedTypes.add((Class<?>) typeArg);
             } else {
                 // Si el tipo no es una clase, no podemos resolverlo directamente
                 return null;
             }
         }
 
-        return resolvedArguments.toArray(new Class<?>[0]);
+        return resolvedTypes.toArray(new Class<?>[0]);
     }
 
     public static void main(String[] args) {

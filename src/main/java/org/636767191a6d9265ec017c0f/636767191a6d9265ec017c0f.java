@@ -11,16 +11,23 @@ public class ByteVector {
         this.size = 0;
     }
 
-    /**
-     * 扩展此字节向量，以便能够接收 'size' 个额外的字节。
-     * @param size 此字节向量应该能够接收的额外字节数。
-     */
     private void enlarge(final int size) {
-        int newCapacity = this.capacity + size;
-        byte[] newData = Arrays.copyOf(this.data, newCapacity);
-        this.data = newData;
-        this.capacity = newCapacity;
+        int newCapacity = capacity + size;
+        if (newCapacity < 0) { // 处理溢出
+            throw new OutOfMemoryError("Required array size too large");
+        }
+        data = Arrays.copyOf(data, newCapacity);
+        capacity = newCapacity;
     }
 
-    // Other methods for adding, removing, and accessing bytes can be added here.
+    public void add(byte b) {
+        if (size == capacity) {
+            enlarge(1); // 每次增加1个字节
+        }
+        data[size++] = b;
+    }
+
+    public byte[] toArray() {
+        return Arrays.copyOf(data, size);
+    }
 }

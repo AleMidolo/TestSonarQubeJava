@@ -1,9 +1,9 @@
-public class SubstringMatch {
+public class SubstringMatcher {
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
-            return false;
+            throw new IllegalArgumentException("Input strings cannot be null");
         }
-        if (index < 0 || index + substring.length() > str.length()) {
+        if (index < 0 || index > str.length() - substring.length()) {
             return false;
         }
         for (int i = 0; i < substring.length(); i++) {

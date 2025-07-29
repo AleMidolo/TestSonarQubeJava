@@ -17,9 +17,9 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         List<Class<?>> resolvedTypes = new ArrayList<>();
 
-        for (Type typeArg : actualTypeArguments) {
-            if (typeArg instanceof Class) {
-                resolvedTypes.add((Class<?>) typeArg);
+        for (Type typeArgument : actualTypeArguments) {
+            if (typeArgument instanceof Class) {
+                resolvedTypes.add((Class<?>) typeArgument);
             } else {
                 // Handle other cases like TypeVariable, WildcardType, etc.
                 // For simplicity, we return null if any type argument is not a Class.
@@ -51,11 +51,11 @@ public class TypeResolver {
 
         Class<?>[] resolvedArgs = resolveArguments(genericType, List.class);
         if (resolvedArgs != null) {
-            for (Class<?> arg : resolvedArgs) {
-                System.out.println(arg.getSimpleName());
+            for (Class<?> clazz : resolvedArgs) {
+                System.out.println(clazz.getSimpleName());
             }
         } else {
-            System.out.println("Could not resolve arguments.");
+            System.out.println("Unable to resolve arguments.");
         }
     }
 }

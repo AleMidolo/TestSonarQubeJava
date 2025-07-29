@@ -4,12 +4,14 @@
  */
 public boolean hasBytes() {
     // 假设主体是一个字节数组
-    byte[] body = getBody(); // 假设getBody()方法返回主体
+    byte[] body = getBody(); // 假设有一个方法 getBody() 返回主体
+
+    // 检查主体是否为字节数组
     return body != null && body instanceof byte[];
 }
 
-// 假设的getBody方法
+// 假设的 getBody() 方法
 private byte[] getBody() {
-    // 这里返回一个字节数组，实际实现可能不同
-    return new byte[0];
+    // 返回一个字节数组或 null
+    return new byte[0]; // 示例返回一个空的字节数组
 }

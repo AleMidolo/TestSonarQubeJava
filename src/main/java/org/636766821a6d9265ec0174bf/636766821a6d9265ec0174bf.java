@@ -1,7 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
 
 public class StringUtil {
-
     /**
      * Introspector.decapitalize 的反向操作
      */
@@ -13,9 +12,9 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(capitalize("helloWorld")); // Output: HelloWorld
-        System.out.println(capitalize("HelloWorld")); // Output: HelloWorld
-        System.out.println(capitalize(""));          // Output: 
-        System.out.println(capitalize(null));        // Output: null
+        System.out.println(capitalize("hello")); // Output: Hello
+        System.out.println(capitalize("world")); // Output: World
+        System.out.println(capitalize(""));      // Output: 
+        System.out.println(capitalize(null));    // Output: null
     }
 }

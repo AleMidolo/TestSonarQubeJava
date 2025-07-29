@@ -5,7 +5,7 @@ public class StackMapTableHandler {
     private List<VerificationTypeInfo> stackMapTableEntries;
 
     private void putAbstractTypes(final int start, final int end) {
-        if (start < 0 || end > currentFrame.size() || start >= end) {
+        if (start < 0 || end > currentFrame.size() || start > end) {
             throw new IllegalArgumentException("Invalid start or end index");
         }
 

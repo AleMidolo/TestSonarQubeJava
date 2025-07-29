@@ -7,10 +7,7 @@ class Bucket {
         this.bucketList = bucketList;
     }
 
-    /**
-     * 从数据结构中移除此桶。
-     */
-    void removeSelf() {
+    public void removeSelf() {
         if (bucketList != null) {
             bucketList.remove(this);
         }

@@ -16,7 +16,7 @@ public class TypeResolver {
     }
 
     public static class Unknown {
-        // Placeholder class for unknown types
+        // Placeholder class for unknown type
     }
 
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class TypeResolver {
         System.out.println("Resolved bound: " + bound);
     }
 
-    class ExampleClass<T extends String> {
+    public static class ExampleClass<T extends String> {
         // Example class with a type parameter
     }
 }

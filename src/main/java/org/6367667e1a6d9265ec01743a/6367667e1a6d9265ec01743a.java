@@ -11,7 +11,13 @@ public class LastWriteTimeStamp {
         return lastWriteTimeStamp.get();
     }
 
-    public void updateLastWriteTimeStamp() {
-        lastWriteTimeStamp.set(System.currentTimeMillis());
+    public void updateLastWriteTimeStamp(long timeStamp) {
+        lastWriteTimeStamp.set(timeStamp);
+    }
+
+    public static void main(String[] args) {
+        LastWriteTimeStamp timeStamp = new LastWriteTimeStamp();
+        timeStamp.updateLastWriteTimeStamp(System.currentTimeMillis());
+        System.out.println("Last write time stamp: " + timeStamp.lastWriteTimeStampInMilliseconds());
     }
 }

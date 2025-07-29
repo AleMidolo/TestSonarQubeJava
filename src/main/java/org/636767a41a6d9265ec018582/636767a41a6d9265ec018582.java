@@ -4,26 +4,25 @@ import org.apache.avro.Schema;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 
-public class SerializationUtil {
+public class DelimitedMessageWriter {
 
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
         // Serialize the message using Protostuff
         byte[] serializedMessage = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
-        // Write the length of the serialized message as a varint
-        int length = serializedMessage.length;
-        writeVarint(out, length);
+        // Write the length of the message as a varint
+        int messageSize = serializedMessage.length;
+        writeVarint(out, messageSize);
 
         // Write the serialized message to the output stream
         out.write(serializedMessage);
 
-        // Return the total size of the message (length + serialized message)
-        return length + computeVarintSize(length);
+        // Return the total size of the message (including the length prefix)
+        return messageSize + computeVarintSize(messageSize);
     }
 
     private static void writeVarint(OutputStream out, int value) throws IOException {

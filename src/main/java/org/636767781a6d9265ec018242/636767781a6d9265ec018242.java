@@ -6,10 +6,7 @@ import java.util.List;
 public class AppenderManager {
     private List<AppenderControl> appenders;
     
-    /**
-     * Call the doAppend method on all attached appenders.
-     */
-    public void callAppenders(final LogEvent event) {
+    public void callAppendersDoAppend(final LogEvent event) {
         if (appenders != null) {
             for (AppenderControl appender : appenders) {
                 appender.callAppender(event);

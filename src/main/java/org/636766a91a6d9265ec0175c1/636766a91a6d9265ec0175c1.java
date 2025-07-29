@@ -10,14 +10,22 @@ public class ByteVector {
         size = 0;
     }
 
-    public void enlarge(int size) {
+    public void enlarge(final int size) {
         if (size <= 0) {
             return;
         }
         
-        int minCapacity = this.size + size;
-        if (minCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, minCapacity);
+        int newCapacity = buffer.length;
+        int minCapacity = size + this.size;
+
+        // If current capacity is not enough
+        if (minCapacity > newCapacity) {
+            // Double the capacity until it's large enough
+            while (newCapacity < minCapacity) {
+                newCapacity = newCapacity * 2;
+            }
+            
+            // Create new array and copy contents
             buffer = Arrays.copyOf(buffer, newCapacity);
         }
     }

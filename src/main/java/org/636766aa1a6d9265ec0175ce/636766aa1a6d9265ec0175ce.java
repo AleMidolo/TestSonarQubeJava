@@ -1,22 +1,30 @@
-import org.objectweb.asm.Label;
-import org.objectweb.asm.Frame;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StackMapFrameVisitor {
     private Frame currentFrame;
-    private int[] locals;
-    private int[] stack;
+    private List<Frame> frames;
     
-    public int visitFrame(final int offset, final int numLocal, final int numStack) {
-        // Create new arrays to store local variables and stack elements
-        locals = new int[numLocal];
-        stack = new int[numStack];
-        
-        // Initialize the current frame with the given parameters
-        currentFrame = new Frame(offset);
-        currentFrame.initInputFrame(numLocal, numStack);
-        
-        // The next element to be written will be the first local variable
-        // So return 0 as the starting index
+    public StackMapFrameVisitor() {
+        frames = new ArrayList<>();
+    }
+    
+    protected int startFrame(final int offset, final int numLocal, final int numStack) {
+        currentFrame = new Frame(offset, numLocal, numStack);
+        frames.add(currentFrame);
         return 0;
+    }
+    
+    // Helper Frame class to store frame data
+    private static class Frame {
+        private int offset;
+        private int numLocal;
+        private int numStack;
+        
+        public Frame(int offset, int numLocal, int numStack) {
+            this.offset = offset;
+            this.numLocal = numLocal; 
+            this.numStack = numStack;
+        }
     }
 }

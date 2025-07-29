@@ -30,7 +30,7 @@ public class SuffixSum {
     }
 }
 
-// Helper class to return two values
+// Helper class to return pair of values
 class Pair<T, U> {
     private final T first;
     private final U second;

@@ -20,14 +20,13 @@ public class HashCapacity {
         while (!isPrime(num)) {
             num += 2;
             
-            // Check if we've exceeded the 11% threshold for large capacities
-            if (desiredCapacity >= 1000 && num > desiredCapacity * 1.11) {
-                // Go back to desired capacity and find previous prime
-                num = desiredCapacity;
-                while (!isPrime(num)) {
-                    num--;
+            // Check if we're within 11% for large capacities
+            if (desiredCapacity >= 1000) {
+                double ratio = (double)num / desiredCapacity;
+                if (ratio > 1.11) {
+                    // If we've exceeded 11%, return the last prime we found
+                    return findPrevPrime(num);
                 }
-                break;
             }
         }
         
@@ -39,12 +38,19 @@ public class HashCapacity {
         if (num <= 3) return true;
         if (num % 2 == 0 || num % 3 == 0) return false;
         
-        // Check up to square root of num
         for (int i = 5; i * i <= num; i += 6) {
             if (num % i == 0 || num % (i + 2) == 0) {
                 return false;
             }
         }
         return true;
+    }
+    
+    private static int findPrevPrime(int num) {
+        num -= 2;
+        while (!isPrime(num)) {
+            num -= 2;
+        }
+        return num;
     }
 }

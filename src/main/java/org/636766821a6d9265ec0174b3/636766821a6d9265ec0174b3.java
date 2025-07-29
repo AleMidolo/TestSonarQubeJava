@@ -1,26 +1,25 @@
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Invoca il {@link BroadcastFilter}
- * @param msg Il messaggio da filtrare.
- * @return Il messaggio filtrato.
+ * @param msg Il messaggio da filtrare
+ * @return Il messaggio filtrato
  */
 protected Object filter(Object msg) {
-    // Assuming BroadcastFilter is a functional interface or a class with a filter method
-    // Here, we use a simple Function as a placeholder for the actual BroadcastFilter
-    Function<Object, Object> broadcastFilter = this::broadcastFilterLogic;
+    // Supponiamo che BroadcastFilter sia un'interfaccia funzionale con un metodo `test`
+    // che accetta un Object e restituisce un boolean.
+    // Se il messaggio passa il filtro, viene restituito; altrimenti, viene restituito null.
     
-    // Apply the filter logic to the message
-    return broadcastFilter.apply(msg);
-}
+    // Esempio di implementazione di un BroadcastFilter
+    Predicate<Object> broadcastFilter = (message) -> {
+        // Logica di filtro: ad esempio, filtrare messaggi null o vuoti
+        return message != null && !message.toString().isEmpty();
+    };
 
-/**
- * Placeholder method for the actual broadcast filter logic.
- * @param msg The message to be filtered.
- * @return The filtered message.
- */
-private Object broadcastFilterLogic(Object msg) {
-    // Implement the actual filtering logic here
-    // For example, you might modify the message or return a new object
-    return msg; // Placeholder return
+    // Applica il filtro al messaggio
+    if (broadcastFilter.test(msg)) {
+        return msg;
+    } else {
+        return null;
+    }
 }

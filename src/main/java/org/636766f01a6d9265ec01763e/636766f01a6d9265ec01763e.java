@@ -23,17 +23,20 @@ public class CharsetConverter {
             case "utf-16le":
                 return StandardCharsets.UTF_16LE.name();
             default:
-                // Se il charset non è uno di quelli standard, prova a creare un Charset
+                // Se il charset non è uno di quelli standard, prova a ottenere il charset Java corrispondente
                 try {
                     return Charset.forName(charset).name();
                 } catch (Exception e) {
-                    throw new IllegalArgumentException("Charset non supportato: " + charset);
+                    // Se il charset non è supportato, restituisci UTF-8 come fallback
+                    return StandardCharsets.UTF_8.name();
                 }
         }
     }
 
     public static void main(String[] args) {
+        // Esempio di utilizzo
         System.out.println(javaCharset("utf-8"));  // Output: UTF-8
         System.out.println(javaCharset("iso-8859-1"));  // Output: ISO-8859-1
+        System.out.println(javaCharset("unknown-charset"));  // Output: UTF-8 (fallback)
     }
 }

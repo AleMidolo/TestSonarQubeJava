@@ -1,7 +1,9 @@
 @Override
 public int hashCode() {
-    // Implementazione di base di hashCode che restituisce un valore fisso.
-    // Questo è un esempio semplice e potrebbe non essere adatto per tutti i casi d'uso.
-    // In un'implementazione reale, dovresti considerare i campi rilevanti dell'oggetto.
-    return 42;
+    final int prime = 31;
+    int result = 1;
+    // Assuming this class has fields that need to be included in the hash calculation
+    // Example: result = prime * result + (field1 == null ? 0 : field1.hashCode());
+    // Example: result = prime * result + (field2 == null ? 0 : field2.hashCode());
+    return result;
 }

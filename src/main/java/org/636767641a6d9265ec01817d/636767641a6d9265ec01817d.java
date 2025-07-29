@@ -5,34 +5,33 @@ import java.util.ArrayList;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
+/**
+ * Costruisce un grafo bipartito completo
+ */
 @Override
 public void generateGraph(Graph<V, E> target, Map<String, V> resultMap) {
-    // Clear the target graph and result map to start fresh
-    target.removeAllVertices();
-    resultMap.clear();
+    // Creare due partizioni di vertici
+    List<V> partition1 = new ArrayList<>();
+    List<V> partition2 = new ArrayList<>();
 
-    // Create two partitions of vertices
-    List<V> partitionA = new ArrayList<>();
-    List<V> partitionB = new ArrayList<>();
-
-    // Add vertices to partition A
-    for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition A
+    // Aggiungere vertici alla prima partizione
+    for (int i = 0; i < 5; i++) {
         V vertex = target.addVertex();
-        partitionA.add(vertex);
-        resultMap.put("A" + i, vertex);
+        partition1.add(vertex);
+        resultMap.put("partition1_vertex" + i, vertex);
     }
 
-    // Add vertices to partition B
-    for (int i = 0; i < 5; i++) { // Example: 5 vertices in partition B
+    // Aggiungere vertici alla seconda partizione
+    for (int i = 0; i < 5; i++) {
         V vertex = target.addVertex();
-        partitionB.add(vertex);
-        resultMap.put("B" + i, vertex);
+        partition2.add(vertex);
+        resultMap.put("partition2_vertex" + i, vertex);
     }
 
-    // Create edges between all vertices in partition A and partition B
-    for (V a : partitionA) {
-        for (V b : partitionB) {
-            target.addEdge(a, b);
+    // Creare archi tra tutte le coppie di vertici delle due partizioni
+    for (V v1 : partition1) {
+        for (V v2 : partition2) {
+            target.addEdge(v1, v2);
         }
     }
 }

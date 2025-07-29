@@ -11,7 +11,7 @@ public class FileUtils {
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
-            throw new NullPointerException("Il file non può essere null");
+            throw new NullPointerException("File must not be null");
         }
 
         if (file.isDirectory()) {
@@ -22,6 +22,10 @@ public class FileUtils {
     }
 
     private static void deleteDirectoryOnExit(File directory) throws IOException {
+        if (!directory.exists()) {
+            return;
+        }
+
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
@@ -32,6 +36,7 @@ public class FileUtils {
                 }
             }
         }
+
         directory.deleteOnExit();
     }
 }

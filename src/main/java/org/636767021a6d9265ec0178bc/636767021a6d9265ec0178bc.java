@@ -5,7 +5,7 @@ public class StringUtils {
      * 
      * @param str La stringa in cui cercare, può essere <code>null</code>.
      * @param searchStr La stringa da cercare, può essere <code>null</code>.
-     * @return L'indice della prima occorrenza di <code>searchStr</code> in <code>str</code>, o -1 se non trovato o se una delle stringhe è <code>null</code>.
+     * @return L'indice della prima occorrenza di <code>searchStr</code> in <code>str</code>, oppure -1 se non trovato o se una delle stringhe è <code>null</code>.
      */
     public static int indexOf(String str, String searchStr) {
         if (str == null || searchStr == null) {

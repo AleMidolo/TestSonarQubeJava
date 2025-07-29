@@ -1,5 +1,5 @@
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
 public class MyFilter extends Filter {
 
@@ -9,8 +9,8 @@ public class MyFilter extends Filter {
         String message = event.getMessage().toString();
         if (!message.contains("specific string")) {
             return Filter.NEUTRAL;
-        } else {
-            return Filter.ACCEPT; // o Filter.DENY, a seconda della logica
         }
+        // Altrimenti, restituisce ACCEPT o DENY in base alla logica specifica
+        return Filter.ACCEPT; // o Filter.DENY
     }
 }

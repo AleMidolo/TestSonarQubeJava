@@ -2,11 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColumnName {
-    private Map<String, String> columnNames;
-
-    public ColumnName() {
-        this.columnNames = new HashMap<>();
-    }
+    private Map<String, String> columnNames = new HashMap<>();
 
     /**
      * Mantieni lo stesso nome da sostituire come {@link ColumnName#overrideName(String,String)}
@@ -14,21 +10,19 @@ public class ColumnName {
      * @param newName da utilizzare a livello di archiviazione.
      */
     public void overrideName(String oldName, String newName) {
+        if (oldName == null || newName == null) {
+            throw new IllegalArgumentException("I nomi non possono essere nulli.");
+        }
         if (columnNames.containsKey(oldName)) {
-            columnNames.put(newName, columnNames.get(oldName));
+            String existingNewName = columnNames.get(oldName);
             columnNames.remove(oldName);
+            columnNames.put(newName, existingNewName);
         } else {
             columnNames.put(newName, oldName);
         }
     }
 
-    public String getColumnName(String key) {
-        return columnNames.get(key);
-    }
-
-    public static void main(String[] args) {
-        ColumnName columnName = new ColumnName();
-        columnName.overrideName("oldColumn", "newColumn");
-        System.out.println(columnName.getColumnName("newColumn")); // Output: oldColumn
+    public String getOriginalName(String newName) {
+        return columnNames.get(newName);
     }
 }

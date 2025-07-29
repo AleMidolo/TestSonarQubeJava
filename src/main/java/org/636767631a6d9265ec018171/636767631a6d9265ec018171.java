@@ -2,12 +2,12 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<E> {
     
-    private class ListNodeImpl<T> {
-        T element;
-        ListNodeImpl<T> next;
-        ListNodeImpl<T> prev;
+    private class ListNodeImpl<E> {
+        E element;
+        ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
         
-        ListNodeImpl(T element, ListNodeImpl<T> prev, ListNodeImpl<T> next) {
+        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
             this.prev = prev;
             this.next = next;

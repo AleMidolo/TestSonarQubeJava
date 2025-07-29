@@ -12,18 +12,18 @@ public class StackMapFrameVisitor {
     private static class Frame {
         int offset;
         int numLocal;
-        int numStack;
+        int numStack; 
         int currentIndex;
         
         Frame(int offset, int numLocal, int numStack) {
             this.offset = offset;
-            this.numLocal = numLocal; 
+            this.numLocal = numLocal;
             this.numStack = numStack;
             this.currentIndex = 0;
         }
     }
     
-    int visitFrameStart(final int offset, final int numLocal, final int numStack) {
+    public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
         currentFrame = new Frame(offset, numLocal, numStack);
         frames.add(currentFrame);
         return currentFrame.currentIndex;

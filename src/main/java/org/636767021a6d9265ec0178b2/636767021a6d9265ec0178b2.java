@@ -1,30 +1,30 @@
 import java.util.Stack;
 
-public class MethodFrameHandler {
+public class FrameStack {
     private Stack<Object> operandStack;
 
-    /**
-     * Extrae tantos tipos abstractos de la pila de marcos de salida como lo describe el descriptor dado.
-     * @param descriptor un tipo o descriptor de método (en cuyo caso se extraen sus tipos de argumento).
-     */
     private void pop(final String descriptor) {
-        String desc = descriptor;
-        
-        // Si es un descriptor de método, extraer solo los argumentos
-        if (descriptor.charAt(0) == '(') {
-            desc = descriptor.substring(1, descriptor.indexOf(')'));
-        }
-
         int index = 0;
-        while (index < desc.length()) {
-            char c = desc.charAt(index);
+        
+        // Process array types
+        while (index < descriptor.length()) {
+            char c = descriptor.charAt(index);
             
             switch (c) {
+                case '(':
+                    // Skip opening parenthesis for method descriptors
+                    index++;
+                    continue;
+                    
+                case ')':
+                    // End of method arguments
+                    return;
+                    
                 case 'B': // byte
-                case 'C': // char
+                case 'C': // char 
                 case 'I': // int
-                case 'S': // short
                 case 'Z': // boolean
+                case 'S': // short
                 case 'F': // float
                     operandStack.pop();
                     index++;
@@ -33,26 +33,31 @@ public class MethodFrameHandler {
                 case 'J': // long
                 case 'D': // double
                     operandStack.pop();
+                    operandStack.pop(); // Pop twice for long/double
                     index++;
                     break;
                     
-                case 'L': // Object reference
+                case 'L':
+                    // Skip until semicolon for object types
+                    while (descriptor.charAt(index) != ';') {
+                        index++;
+                    }
                     operandStack.pop();
-                    index = desc.indexOf(';', index) + 1;
+                    index++;
                     break;
                     
-                case '[': // Array
-                    int dimensions = 0;
-                    while (desc.charAt(index) == '[') {
-                        dimensions++;
+                case '[':
+                    // Array type - continue to element type
+                    while (descriptor.charAt(index) == '[') {
                         index++;
                     }
-                    if (desc.charAt(index) == 'L') {
-                        index = desc.indexOf(';', index) + 1;
-                    } else {
-                        index++;
+                    if (descriptor.charAt(index) == 'L') {
+                        while (descriptor.charAt(index) != ';') {
+                            index++;
+                        }
                     }
                     operandStack.pop();
+                    index++;
                     break;
                     
                 default:

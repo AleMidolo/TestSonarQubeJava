@@ -15,12 +15,12 @@ public class ClassFileBuffer {
         position = 0;
         length = 0;
         
-        // If buffer hasn't been initialized yet, create initial buffer
+        // If buffer hasn't been initialized, create initial buffer
         if (buffer == null) {
-            buffer = new byte[4096]; // Initial size of 4KB
+            buffer = new byte[4096];
         }
         
-        // Read bytes from input stream
+        // Read bytes into buffer
         int bytesRead;
         int totalBytesRead = 0;
         
@@ -35,7 +35,6 @@ public class ClassFileBuffer {
             }
         }
         
-        // Set the actual length of data read
         length = totalBytesRead;
     }
 }

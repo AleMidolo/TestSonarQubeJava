@@ -3,43 +3,40 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CustomLogFormatter {
-    
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     
-    /**
-     * Formatea un evento de "logging" para un "writer".
-     * @param event evento de "logging" que se va a formatear.
-     */
     public String format(final LoggingEvent event) {
-        StringBuilder sb = new StringBuilder();
+        if (event == null) {
+            return "";
+        }
+
+        StringBuilder formattedLog = new StringBuilder();
         
         // Add timestamp
-        Date timestamp = new Date(event.getTimeStamp());
-        sb.append(DATE_FORMAT.format(timestamp));
-        sb.append(" ");
+        formattedLog.append(DATE_FORMAT.format(new Date(event.getTimeStamp())));
+        formattedLog.append(" ");
         
         // Add log level
-        sb.append("[").append(event.getLevel().toString()).append("] ");
+        formattedLog.append("[").append(event.getLevel().toString()).append("]");
+        formattedLog.append(" ");
         
         // Add logger name
-        sb.append(event.getLoggerName());
-        sb.append(" - ");
+        formattedLog.append(event.getLoggerName());
+        formattedLog.append(" - ");
         
         // Add message
-        sb.append(event.getRenderedMessage());
+        formattedLog.append(event.getRenderedMessage());
         
-        // Add throwable if exists
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
-            sb.append("\n");
-            for (String line : throwableStrRep) {
-                sb.append(line).append("\n");
+        // Add throwable info if exists
+        String[] throwableInfo = event.getThrowableStrRep();
+        if (throwableInfo != null) {
+            formattedLog.append("\n");
+            for (String throwableLine : throwableInfo) {
+                formattedLog.append(throwableLine).append("\n");
             }
         }
         
-        // Add new line
-        sb.append("\n");
-        
-        return sb.toString();
+        return formattedLog.toString();
     }
 }

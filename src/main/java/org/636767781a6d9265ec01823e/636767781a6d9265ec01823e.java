@@ -33,32 +33,27 @@ public class SocketAppender extends AppenderSkeleton {
         }
     }
 
+    private void removeClient(int index) {
+        try {
+            clientWriters.get(index).close();
+            connectedClients.get(index).close();
+        } catch (IOException e) {
+            // Ignore close errors
+        }
+        clientWriters.remove(index);
+        connectedClients.remove(index);
+    }
+
     public void addClient(Socket client) throws IOException {
         connectedClients.add(client);
         clientWriters.add(new PrintWriter(client.getOutputStream(), true));
     }
 
-    private void removeClient(int index) {
-        try {
-            connectedClients.get(index).close();
-        } catch (IOException e) {
-            // Ignore close errors
-        }
-        connectedClients.remove(index);
-        clientWriters.remove(index);
-    }
-
     @Override
     public void close() {
-        for (Socket client : connectedClients) {
-            try {
-                client.close();
-            } catch (IOException e) {
-                // Ignore close errors
-            }
+        for (int i = 0; i < connectedClients.size(); i++) {
+            removeClient(i);
         }
-        connectedClients.clear();
-        clientWriters.clear();
     }
 
     @Override

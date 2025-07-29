@@ -19,18 +19,18 @@ public class BoundCalculator<K extends Comparable<K>> {
         // Para cada llave, encontrar su límite inferior
         for (int i = 0; i < keys.size(); i++) {
             K currentKey = keys.get(i);
-            int lowerBound = -1;
+            int lowerBound = 0;
             
-            // Buscar el elemento más grande que sea menor que la llave actual
+            // Comparar con todas las llaves anteriores
             for (int j = 0; j < i; j++) {
-                if (keys.get(j).compareTo(currentKey) < 0) {
-                    lowerBound = Math.max(lowerBound, j);
+                if (keys.get(j).compareTo(currentKey) <= 0) {
+                    lowerBound = Math.max(lowerBound, j + 1);
                 }
             }
             
             lowerBounds.add(lowerBound);
         }
-        
+
         return lowerBounds;
     }
 }

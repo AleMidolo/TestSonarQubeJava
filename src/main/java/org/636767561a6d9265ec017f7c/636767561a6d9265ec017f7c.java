@@ -10,7 +10,7 @@ public class GraphUtils {
             return null;
         }
 
-        // Create lists to store vertices and edges of the path
+        // Create lists to store vertices and edges in order
         List<V> vertexList = new ArrayList<>();
         List<E> edgeList = new ArrayList<>();
         

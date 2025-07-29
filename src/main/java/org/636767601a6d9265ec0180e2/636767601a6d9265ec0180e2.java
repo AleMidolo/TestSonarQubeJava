@@ -40,7 +40,7 @@ public class SeparatorComputer {
         // Use max flow / min cut to find minimal separators
         EdmondsKarpMFImpl<V,E> maxFlow = new EdmondsKarpMFImpl<>(graph);
         
-        // Convert vertices to integers for pair representation
+        // Convert vertices to integers for result
         int s = graph.vertexSet().indexOf(source);
         int t = graph.vertexSet().indexOf(target);
         

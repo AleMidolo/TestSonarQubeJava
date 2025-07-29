@@ -20,7 +20,7 @@ public interface IConsumer {
     void consume(String channel);
 }
 
-public class TargetManager {
+public class ChannelManager {
 
     /**
      * Agregar nuevos canales de destino.

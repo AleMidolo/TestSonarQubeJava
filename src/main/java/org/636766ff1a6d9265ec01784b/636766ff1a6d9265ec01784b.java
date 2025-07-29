@@ -1,4 +1,4 @@
-public class StringUtils {
+public class NumericChecker {
 
     /**
      * <p>Verifica si el <code>String</code> contiene solo caracteres numéricos.</p> 
@@ -10,8 +10,8 @@ public class StringUtils {
         if (str == null || str.isEmpty()) {
             return false;
         }
-        for (int i = 0; i < str.length(); i++) {
-            if (!Character.isDigit(str.charAt(i))) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
                 return false;
             }
         }
@@ -19,9 +19,10 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+        // Ejemplos de uso
         System.out.println(isDigits("12345")); // true
-        System.out.println(isDigits("123a5")); // false
-        System.out.println(isDigits(""));     // false
-        System.out.println(isDigits(null));    // false
+        System.out.println(isDigits("123a45")); // false
+        System.out.println(isDigits("")); // false
+        System.out.println(isDigits(null)); // false
     }
 }

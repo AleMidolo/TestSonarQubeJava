@@ -1,10 +1,10 @@
 import java.util.Stack;
 
-public class FrameStackHandler {
+public class FrameStackProcessor {
 
     private Stack<String> frameStack;
 
-    public FrameStackHandler() {
+    public FrameStackProcessor() {
         this.frameStack = new Stack<>();
     }
 
@@ -39,28 +39,20 @@ public class FrameStackHandler {
     }
 
     private String[] extractArgumentTypes(String methodDescriptor) {
-        // Remove the leading '(' and trailing ')'
+        // Simplified extraction of argument types from method descriptor
+        // This is a basic implementation and may not cover all cases
         String argsPart = methodDescriptor.substring(1, methodDescriptor.indexOf(')'));
         return argsPart.split(";");
     }
 
-    // For testing purposes
-    public void pushToStack(String type) {
-        frameStack.push(type);
-    }
-
-    public Stack<String> getFrameStack() {
-        return frameStack;
-    }
-
+    // Example usage
     public static void main(String[] args) {
-        FrameStackHandler handler = new FrameStackHandler();
-        handler.pushToStack("Ljava/lang/String;");
-        handler.pushToStack("I");
-        handler.pushToStack("D");
+        FrameStackProcessor processor = new FrameStackProcessor();
+        processor.frameStack.push("Type1");
+        processor.frameStack.push("Type2");
+        processor.frameStack.push("Type3");
 
-        handler.pop("(Ljava/lang/String;ID)V");
-
-        System.out.println(handler.getFrameStack()); // Should print: []
+        processor.pop("(Type1;Type2)V"); // Pops Type3 and Type2
+        System.out.println(processor.frameStack); // Should print [Type1]
     }
 }

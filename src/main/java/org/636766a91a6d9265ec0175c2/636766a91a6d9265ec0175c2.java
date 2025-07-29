@@ -13,13 +13,18 @@ public class FrameStack {
      */
     private int pop() {
         if (stack.isEmpty()) {
-            throw new IllegalStateException("La pila de marcos de salida está vacía.");
+            throw new IllegalStateException("La pila está vacía.");
         }
         return stack.pop();
     }
 
-    // Método adicional para agregar elementos a la pila (solo para propósitos de prueba)
+    // Método adicional para agregar elementos a la pila (push)
     public void push(int value) {
         stack.push(value);
+    }
+
+    // Método adicional para verificar si la pila está vacía
+    public boolean isEmpty() {
+        return stack.isEmpty();
     }
 }

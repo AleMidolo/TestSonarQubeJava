@@ -14,19 +14,18 @@ public class ByteReader {
         this.bufferLength = 0;
     }
 
-    /**
-     * Lee un byte del <code>buffer</code> y lo vuelve a llenar según sea necesario.
-     * @return El siguiente byte del flujo de entrada.
-     * @throws IOException si no hay más datos disponibles.
-     */
     public byte readByte() throws IOException {
         if (bufferPosition >= bufferLength) {
-            bufferLength = inputStream.read(buffer);
-            if (bufferLength == -1) {
-                throw new IOException("No more data available");
-            }
-            bufferPosition = 0;
+            refillBuffer();
         }
         return buffer[bufferPosition++];
+    }
+
+    private void refillBuffer() throws IOException {
+        bufferLength = inputStream.read(buffer);
+        if (bufferLength == -1) {
+            throw new IOException("No more data available");
+        }
+        bufferPosition = 0;
     }
 }

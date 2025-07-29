@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
         // Ejemplo de uso
-        String result = trimLeadingCharacter("aaaaHello", 'a');
-        System.out.println(result);  // Output: "Hello"
+        String result = trimLeadingCharacter("###Hello World!", '#');
+        System.out.println(result);  // Output: "Hello World!"
     }
 
     /**

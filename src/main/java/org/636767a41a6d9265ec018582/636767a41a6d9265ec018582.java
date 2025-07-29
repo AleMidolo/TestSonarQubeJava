@@ -1,10 +1,12 @@
 import java.io.IOException;
 import java.io.OutputStream;
-import org.objenesis.strategy.StdInstantiatorStrategy;
+import org.apache.avro.Schema;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.io.BinaryEncoder;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
-import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.runtime.RuntimeSchema;
 
 public class SerializationUtil {
 
@@ -13,11 +15,7 @@ public class SerializationUtil {
      * @return el tamaño del mensaje
      */
     public static <T> int writeDelimitedTo(OutputStream out, T message, Schema<T> schema, LinkedBuffer buffer) throws IOException {
-        if (out == null || message == null || schema == null || buffer == null) {
-            throw new IllegalArgumentException("Arguments cannot be null.");
-        }
-
-        // Serialize the message to a byte array
+        // Serialize the message using Protostuff
         byte[] data = ProtostuffIOUtil.toByteArray(message, schema, buffer);
 
         // Write the length of the message as a varint
@@ -44,10 +42,15 @@ public class SerializationUtil {
     }
 
     private static int computeVarintSize(int value) {
-        if ((value & (0xffffffff <<  7)) == 0) return 1;
-        if ((value & (0xffffffff << 14)) == 0) return 2;
-        if ((value & (0xffffffff << 21)) == 0) return 3;
-        if ((value & (0xffffffff << 28)) == 0) return 4;
-        return 5;
+        int size = 0;
+        while (true) {
+            if ((value & ~0x7F) == 0) {
+                size++;
+                return size;
+            } else {
+                size++;
+                value >>>= 7;
+            }
+        }
     }
 }

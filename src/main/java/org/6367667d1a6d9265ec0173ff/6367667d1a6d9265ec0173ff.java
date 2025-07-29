@@ -3,14 +3,14 @@ import javax.servlet.http.HttpServletRequest;
 public class Meteor {
     // Assuming Meteor class has some properties and methods
     // For example purposes, let's assume it has a constructor and a method
-    private String data;
+    private String name;
 
-    public Meteor(String data) {
-        this.data = data;
+    public Meteor(String name) {
+        this.name = name;
     }
 
-    public String getData() {
-        return data;
+    public String getName() {
+        return name;
     }
 }
 
@@ -22,11 +22,11 @@ public class MeteorLookup {
      * @return एक {@link Meteor} या यदि नहीं मिला तो null
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Example logic to create a Meteor instance based on HttpServletRequest
-        // You can modify this logic based on your actual requirements
-        String data = r.getParameter("data");
-        if (data != null && !data.isEmpty()) {
-            return new Meteor(data);
+        // Example logic to retrieve a Meteor instance based on HttpServletRequest
+        // This is a placeholder implementation, replace with actual logic
+        String meteorName = r.getParameter("meteorName");
+        if (meteorName != null && !meteorName.isEmpty()) {
+            return new Meteor(meteorName);
         } else {
             return null;
         }
@@ -34,32 +34,12 @@ public class MeteorLookup {
 
     public static void main(String[] args) {
         // Example usage
-        // Assuming you have a mock HttpServletRequest for testing
-        HttpServletRequest mockRequest = new MockHttpServletRequest();
-        ((MockHttpServletRequest) mockRequest).addParameter("data", "Sample Data");
-
-        Meteor meteor = lookup(mockRequest);
-        if (meteor != null) {
-            System.out.println("Meteor data: " + meteor.getData());
-        } else {
-            System.out.println("No Meteor found.");
-        }
+        // HttpServletRequest request = ...; // Assume this is obtained from a servlet context
+        // Meteor meteor = lookup(request);
+        // if (meteor != null) {
+        //     System.out.println("Meteor found: " + meteor.getName());
+        // } else {
+        //     System.out.println("Meteor not found.");
+        // }
     }
-}
-
-// MockHttpServletRequest class for testing purposes
-class MockHttpServletRequest implements HttpServletRequest {
-    private java.util.Map<String, String> parameters = new java.util.HashMap<>();
-
-    public void addParameter(String name, String value) {
-        parameters.put(name, value);
-    }
-
-    @Override
-    public String getParameter(String name) {
-        return parameters.get(name);
-    }
-
-    // Other methods of HttpServletRequest can be implemented as needed
-    // For simplicity, only getParameter is implemented here
 }

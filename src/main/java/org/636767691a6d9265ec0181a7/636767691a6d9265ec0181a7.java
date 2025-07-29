@@ -1,9 +1,4 @@
-public class Main {
-    public static void main(String[] args) {
-        // Example usage
-        String result = trimLeadingCharacter("###Hello World!", '#');
-        System.out.println(result);  // Output: "Hello World!"
-    }
+public class StringTrimmer {
 
     /**
      * दिए गए स्ट्रिंग से प्रदान किए गए अग्रणी वर्ण के सभी उदाहरणों को हटाएं।
@@ -22,5 +17,12 @@ public class Main {
         }
 
         return str.substring(index);
+    }
+
+    public static void main(String[] args) {
+        String input = "###HelloWorld";
+        char leadingChar = '#';
+        String result = trimLeadingCharacter(input, leadingChar);
+        System.out.println(result); // Output: HelloWorld
     }
 }

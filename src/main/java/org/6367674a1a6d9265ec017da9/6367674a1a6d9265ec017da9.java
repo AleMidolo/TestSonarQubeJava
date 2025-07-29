@@ -2,20 +2,20 @@ import java.util.Iterator;
 
 public class DoublyLinkedList<E> {
 
-    private static class ListNode<E> {
+    private static class ListNodeImpl<E> {
         E element;
-        ListNode<E> next;
-        ListNode<E> prev;
+        ListNodeImpl<E> prev;
+        ListNodeImpl<E> next;
 
-        ListNode(E element, ListNode<E> prev, ListNode<E> next) {
+        ListNodeImpl(E element, ListNodeImpl<E> prev, ListNodeImpl<E> next) {
             this.element = element;
             this.prev = prev;
             this.next = next;
         }
     }
 
-    private ListNode<E> head;
-    private ListNode<E> tail;
+    private ListNodeImpl<E> head;
+    private ListNodeImpl<E> tail;
     private int size;
 
     public DoublyLinkedList() {
@@ -24,7 +24,7 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    public void addListNode(ListNode<E> node) {
+    private void addListNode(ListNodeImpl<E> node) {
         if (head == null) {
             head = node;
             tail = node;
@@ -36,7 +36,7 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    public void removeListNode(ListNode<E> node) {
+    private void removeListNode(ListNodeImpl<E> node) {
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
@@ -49,35 +49,24 @@ public class DoublyLinkedList<E> {
             tail = node.prev;
         }
 
-        node.next = null;
         node.prev = null;
+        node.next = null;
         size--;
     }
 
     private void moveAllListNodes(DoublyLinkedList<E> list) {
-        Iterator<ListNode<E>> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            ListNode<E> node = iterator.next();
-            list.removeListNode(node);
-            this.addListNode(node);
+        if (list == null || list.head == null) {
+            return;
+        }
+
+        ListNodeImpl<E> current = list.head;
+        while (current != null) {
+            ListNodeImpl<E> next = current.next;
+            list.removeListNode(current);
+            this.addListNode(current);
+            current = next;
         }
     }
 
-    private Iterator<ListNode<E>> iterator() {
-        return new Iterator<ListNode<E>>() {
-            private ListNode<E> current = head;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public ListNode<E> next() {
-                ListNode<E> node = current;
-                current = current.next;
-                return node;
-            }
-        };
-    }
+    // Other methods of DoublyLinkedList...
 }

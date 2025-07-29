@@ -31,4 +31,14 @@ public class Graph<V> {
         }
         return visibleVertices;
     }
+
+    public static void main(String[] args) {
+        Graph<String> graph = new Graph<>();
+        graph.addEdge("A", "B");
+        graph.addEdge("B", "C");
+        graph.addEdge("C", "A");
+
+        Set<String> visibleVertices = graph.initVisibleVertices();
+        System.out.println("Visible Vertices: " + visibleVertices);
+    }
 }

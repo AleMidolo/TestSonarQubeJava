@@ -15,13 +15,13 @@ public class CollectionUtils {
             return new String[0];
         }
 
-        List<String> nonNullStrings = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (Object obj : collection) {
             if (obj != null) {
-                nonNullStrings.add(obj.toString());
+                result.add(obj.toString());
             }
         }
 
-        return nonNullStrings.toArray(new String[0]);
+        return result.toArray(new String[0]);
     }
 }

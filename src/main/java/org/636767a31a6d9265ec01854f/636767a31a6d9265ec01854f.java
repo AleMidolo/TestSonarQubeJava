@@ -9,12 +9,12 @@ public class PackedFieldChecker {
      * @throws IOException
      */
     private void checkIfPackedField() throws IOException {
-        // Assuming some logic to determine if the field is packed
+        // Assume some logic to determine if the field is packed
         boolean isPacked = determineIfFieldIsPacked();
 
         if (isPacked) {
             isPackedFieldReading = true;
-            // Additional logic to handle the packed field
+            // Additional logic to handle the packed field reading
         } else {
             isPackedFieldReading = false;
         }
@@ -26,12 +26,8 @@ public class PackedFieldChecker {
         return true; // or false based on actual conditions
     }
 
-    public static void main(String[] args) {
-        PackedFieldChecker checker = new PackedFieldChecker();
-        try {
-            checker.checkIfPackedField();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // Getter for isPackedFieldReading
+    public boolean isPackedFieldReading() {
+        return isPackedFieldReading;
     }
 }

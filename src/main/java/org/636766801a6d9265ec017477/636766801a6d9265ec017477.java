@@ -13,17 +13,17 @@ public class FileReverser {
             
             // Iterate over the files in reverse order
             for (int i = files.length - 1; i >= 0; i--) {
-                InputStream inputStream = files[i];
+                InputStream file = files[i];
                 byte[] buffer = new byte[1024];
                 int bytesRead;
                 
-                // Read the content of the file and write it to the output stream
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                // Read the file content and write to the output stream
+                while ((bytesRead = file.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                 }
                 
-                // Close the input stream
-                inputStream.close();
+                // Close the current file input stream
+                file.close();
             }
             
             // Convert the output stream to a byte array
@@ -32,7 +32,7 @@ public class FileReverser {
             // Close the output stream
             outputStream.close();
             
-            // Print the result (or use it as needed)
+            // Print the result (or handle it as needed)
             System.out.println(new String(result));
             
         } catch (IOException e) {

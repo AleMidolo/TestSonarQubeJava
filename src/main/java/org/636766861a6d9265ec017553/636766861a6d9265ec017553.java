@@ -1,15 +1,15 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class TemplateChecker {
+public class Template {
     private Set<String> templateVariables;
 
-    public TemplateChecker() {
-        templateVariables = new HashSet<>();
+    public Template() {
+        this.templateVariables = new HashSet<>();
         // Initialize with some template variables for demonstration
-        templateVariables.add("var1");
-        templateVariables.add("var2");
-        templateVariables.add("var3");
+        this.templateVariables.add("var1");
+        this.templateVariables.add("var2");
+        this.templateVariables.add("var3");
     }
 
     /**
@@ -22,8 +22,8 @@ public class TemplateChecker {
     }
 
     public static void main(String[] args) {
-        TemplateChecker checker = new TemplateChecker();
-        System.out.println(checker.isTemplateVariablePresent("var1")); // true
-        System.out.println(checker.isTemplateVariablePresent("var4")); // false
+        Template template = new Template();
+        System.out.println(template.isTemplateVariablePresent("var1")); // true
+        System.out.println(template.isTemplateVariablePresent("var4")); // false
     }
 }

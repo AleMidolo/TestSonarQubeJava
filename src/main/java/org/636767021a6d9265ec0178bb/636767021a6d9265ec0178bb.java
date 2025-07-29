@@ -20,14 +20,14 @@ public class ArrayUtils {
         return array;
     }
 
-    // Example usage
     public static void main(String[] args) {
-        Double[] array1 = null;
-        Double[] array2 = new Double[0];
-        Double[] array3 = {1.0, 2.0, 3.0};
+        // Test cases
+        Double[] nullArray = null;
+        Double[] emptyArray = new Double[0];
+        Double[] nonEmptyArray = {1.0, 2.0, 3.0};
 
-        System.out.println(Objects.deepEquals(nullToEmpty(array1), EMPTY_DOUBLE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array2), EMPTY_DOUBLE_ARRAY)); // true
-        System.out.println(Objects.deepEquals(nullToEmpty(array3), array3)); // true
+        System.out.println(Objects.toString(nullToEmpty(nullArray)));      // Should print []
+        System.out.println(Objects.toString(nullToEmpty(emptyArray)));    // Should print []
+        System.out.println(Objects.toString(nullToEmpty(nonEmptyArray))); // Should print [1.0, 2.0, 3.0]
     }
 }

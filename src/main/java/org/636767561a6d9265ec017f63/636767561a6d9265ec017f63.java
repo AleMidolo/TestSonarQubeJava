@@ -6,7 +6,7 @@ public class GraphTraversal implements Iterator<Vertex> {
     
     @Override
     public boolean hasNext() {
-        // Iterate through visited array to check if any vertices are unvisited
+        // Iterate through visited array to check for unvisited vertices
         for (int i = 0; i < numVertices; i++) {
             if (!visited[i]) {
                 return true;

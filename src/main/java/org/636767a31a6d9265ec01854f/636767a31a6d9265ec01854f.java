@@ -15,16 +15,20 @@ public class FieldReader {
         if (currentPosition < buffer.length - 4) {
             // Check for compression marker bytes
             if (buffer[currentPosition] == 0x1F && buffer[currentPosition + 1] == 0x8B) {
-                // Get compressed length from next 4 bytes
+                // Found GZIP magic number, this is a compressed field
+                isCompressed = true;
+                
+                // Read compressed length (4 bytes)
                 compressedLength = ((buffer[currentPosition + 2] & 0xFF) << 24) |
                                  ((buffer[currentPosition + 3] & 0xFF) << 16) |
                                  ((buffer[currentPosition + 4] & 0xFF) << 8) |
                                  (buffer[currentPosition + 5] & 0xFF);
                 
-                isCompressed = true;
-                currentPosition += 6; // Skip marker and length bytes
+                // Update position to start of compressed data
+                currentPosition += 6;
             } else {
                 isCompressed = false;
+                compressedLength = 0;
             }
         } else {
             throw new IOException("Buffer overflow while checking for packed field");

@@ -19,7 +19,7 @@ public class ByteArrayComparator {
             return false;
         }
         
-        if (internalArray.length != len) {
+        if (len != internalArray.length) {
             return false;
         }
         

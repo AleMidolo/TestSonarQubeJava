@@ -16,23 +16,17 @@ public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
         // Create vertices for first partition
         List<V> partition1 = new ArrayList<>();
         for(int i = 0; i < n1; i++) {
-            V vertex = target.vertexSupplier().get();
+            V vertex = resultMap.get("v1_" + i);
             target.addVertex(vertex);
             partition1.add(vertex);
-            if(resultMap != null) {
-                resultMap.put("P1_" + i, vertex);
-            }
         }
 
         // Create vertices for second partition  
         List<V> partition2 = new ArrayList<>();
         for(int i = 0; i < n2; i++) {
-            V vertex = target.vertexSupplier().get();
+            V vertex = resultMap.get("v2_" + i);
             target.addVertex(vertex);
             partition2.add(vertex);
-            if(resultMap != null) {
-                resultMap.put("P2_" + i, vertex);
-            }
         }
 
         // Add edges between all vertices in partition1 and partition2

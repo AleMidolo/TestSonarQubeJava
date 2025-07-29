@@ -1,33 +1,34 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-public class BucketTiempoUtil {
-    /**
-     * Sigue el "dayStep" para reformatear el valor literal largo del bucket de tiempo. Por ejemplo, en dayStep == 11, el "bucket" de tiempo reformateado 20000105 es 20000101, el "bucket" de tiempo reformateado 20000115 es 20000112, y el "bucket" de tiempo reformateado 20000123 es 20000123.
-     */
-    static long comprimirBucketDeTiempo(long bucketDeTiempo, int pasoDiario) {
-        // Convertir el bucket de tiempo a string con formato YYYYMMDD
-        String fechaStr = String.valueOf(bucketDeTiempo);
+public class TimeBucketFormatter {
+
+    public static long formatTimeBucket(long timeBucket, int dayStep) {
+        // Convert timeBucket to LocalDate
+        String dateStr = String.valueOf(timeBucket);
+        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyyMMdd"));
         
-        // Parsear la fecha usando LocalDate
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+        // Get first day of month
+        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
         
-        // Obtener el día del mes
-        int dia = fecha.getDayOfMonth();
+        // Calculate days between first day of month and given date
+        long daysBetween = ChronoUnit.DAYS.between(firstDayOfMonth, date);
         
-        // Calcular el nuevo día basado en el paso diario
-        int nuevoDia;
-        if (dia % pasoDiario == 0) {
-            nuevoDia = dia;
-        } else {
-            nuevoDia = ((dia - 1) / pasoDiario) * pasoDiario + 1;
-        }
+        // Calculate which step bucket the date falls into
+        int stepBucket = (int)(daysBetween / dayStep);
         
-        // Crear nueva fecha con el día ajustado
-        LocalDate nuevaFecha = fecha.withDayOfMonth(nuevoDia);
+        // Get the formatted date by adding (stepBucket * dayStep) days to first day of month
+        LocalDate formattedDate = firstDayOfMonth.plusDays(stepBucket * dayStep);
         
-        // Convertir la nueva fecha de vuelta a long
-        return Long.parseLong(nuevaFecha.format(formatter));
+        // Convert back to long format
+        return Long.parseLong(formattedDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+    }
+    
+    // Example usage
+    public static void main(String[] args) {
+        System.out.println(formatTimeBucket(20000105, 11)); // Prints 20000101
+        System.out.println(formatTimeBucket(20000115, 11)); // Prints 20000112
+        System.out.println(formatTimeBucket(20000123, 11)); // Prints 20000123
     }
 }

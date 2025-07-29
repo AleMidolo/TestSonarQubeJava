@@ -1,26 +1,25 @@
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 
 public class HeaderParser {
-
     /**
-     * Omite bytes hasta el final de la línea actual.
-     * @param headerPart Las cabeceras que se están analizando.
-     * @param end Índice del último byte que aún no ha sido procesado.
-     * @return Índice de la secuencia \r\n, que indica el final de la línea.
+     * Skips bytes until the end of the current line.
+     * @param headerPart The headers, which are being parsed.
+     * @param end Index of the last byte, which has yet been processed.
+     * @return Index of the \r\n sequence, which indicates end of line.
      */
-    private int parseEndOfLine(String headerPart, int end) {
-        int index = end;
+    public int skipLine(byte[] headerPart, int end) {
+        int pos = end;
         
-        // Buscar hasta encontrar \r\n o llegar al final
-        while (index < headerPart.length() - 1) {
-            if (headerPart.charAt(index) == '\r' && 
-                headerPart.charAt(index + 1) == '\n') {
-                return index;
+        // Search for \r\n sequence
+        while (pos + 1 < headerPart.length) {
+            // Check for CRLF (\r\n) sequence
+            if (headerPart[pos] == '\r' && headerPart[pos + 1] == '\n') {
+                return pos;
             }
-            index++;
+            pos++;
         }
         
-        // Si no se encuentra \r\n, devolver el final del string
-        return headerPart.length() - 1;
+        // If we reach here, no CRLF was found
+        return -1;
     }
 }

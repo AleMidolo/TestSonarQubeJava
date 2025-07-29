@@ -6,10 +6,10 @@ public class ObjectRegistry {
     private static final Set<Object> registeredObjects = new HashSet<>();
     
     /**
-     * <p> Registra el objeto dado. Utilizado por los métodos de reflexión para evitar bucles infinitos. </p>
-     * @param value El objeto a registrar.
+     * <p> Registers the given object. Used by the reflection methods to avoid infinite loops. </p>
+     * @param value The object to register.
      */
-    static void register(Object value) {
+    public void registerObject(Object value) {
         if (value != null) {
             registeredObjects.add(value);
         }

@@ -1,17 +1,25 @@
-public class MyClass {
-    private String value;
-    private int number;
-    
-    /** 
-     * Devuelve un valor de código hash para este tipo.
-     * @return un valor de código hash para este tipo.
+public class Type {
+    private String name;
+    private int id;
+    private boolean isPrimitive;
+
+    public Type(String name, int id, boolean isPrimitive) {
+        this.name = name;
+        this.id = id;
+        this.isPrimitive = isPrimitive;
+    }
+
+    /**
+     * Returns a hash code value for this type.
+     * @return a hash code value for this type.
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        result = prime * result + number;
+        result = prime * result + id;
+        result = prime * result + (isPrimitive ? 1231 : 1237);
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 }

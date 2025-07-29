@@ -1,65 +1,30 @@
-import java.util.Stack;
+import org.objectweb.asm.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FrameStackHandler {
-    private Stack<Object> frameStack;
-
-    public FrameStackHandler() {
-        this.frameStack = new Stack<>();
+public class FrameStack {
+    private List<Type> stack;
+    
+    public FrameStack() {
+        stack = new ArrayList<>();
     }
 
-    /**
-     * Extrae tantos tipos abstractos de la "frame stack" de salida como lo describe el descriptor dado.
-     * @param descriptor un descriptor de tipo o método (en cuyo caso se extraen sus tipos de argumento).
-     */
-    private void pop(final String descriptor) {
-        int index = 0;
-        while (index < descriptor.length()) {
-            char c = descriptor.charAt(index);
-            switch (c) {
-                case '(':
-                    // Skip opening parenthesis for method descriptors
-                    index++;
-                    continue;
-                case ')':
-                    // End of method arguments
-                    return;
-                case 'B':
-                case 'C':
-                case 'I':
-                case 'S':
-                case 'Z':
-                case 'F':
-                    // Pop single-slot types
-                    frameStack.pop();
-                    index++;
-                    break;
-                case 'J':
-                case 'D':
-                    // Pop double-slot types
-                    frameStack.pop();
-                    frameStack.pop();
-                    index++;
-                    break;
-                case 'L':
-                    // Pop reference type
-                    frameStack.pop();
-                    // Skip to semicolon
-                    index = descriptor.indexOf(';', index) + 1;
-                    break;
-                case '[':
-                    // Array type - skip dimensions and handle base type
-                    while (descriptor.charAt(index) == '[') {
-                        index++;
-                    }
-                    if (descriptor.charAt(index) == 'L') {
-                        index = descriptor.indexOf(';', index) + 1;
-                    } else {
-                        index++;
-                    }
-                    frameStack.pop();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid descriptor character: " + c);
+    public void pop(String descriptor) {
+        if (descriptor.startsWith("(")) {
+            // Method descriptor - parse argument types
+            Type[] argumentTypes = Type.getArgumentTypes(descriptor);
+            for (int i = argumentTypes.length - 1; i >= 0; i--) {
+                int size = argumentTypes[i].getSize();
+                for (int j = 0; j < size; j++) {
+                    stack.remove(stack.size() - 1);
+                }
+            }
+        } else {
+            // Single type descriptor
+            Type type = Type.getType(descriptor);
+            int size = type.getSize();
+            for (int i = 0; i < size; i++) {
+                stack.remove(stack.size() - 1);
             }
         }
     }

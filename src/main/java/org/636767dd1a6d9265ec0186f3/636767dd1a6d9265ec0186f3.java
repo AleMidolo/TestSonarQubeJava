@@ -1,23 +1,25 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class ColumnName {
-    private Map<String, String> nameOverrides;
-
-    public ColumnName() {
-        this.nameOverrides = new HashMap<>();
-    }
 
     /**
-     * Mantener el mismo reemplazo de nombre que {@link ColumnName#overrideName(String,String)}
-     * @param oldName el nombre a ser reemplazado.
-     * @param newName el nombre a utilizar en el nivel de almacenamiento.
+     * Keep the same name replacement as {@link ColumnName#overrideName(String,String)}
+     * @param oldName to be replaced.
+     * @param newName to use in the storage level.
      */
     public void overrideName(String oldName, String newName) {
-        if (oldName == null || newName == null) {
-            throw new IllegalArgumentException("Neither oldName nor newName can be null");
+        if (Objects.isNull(oldName) || Objects.isNull(newName)) {
+            throw new IllegalArgumentException("Column names cannot be null");
         }
         
-        nameOverrides.put(oldName.trim(), newName.trim());
+        if (oldName.isEmpty() || newName.isEmpty()) {
+            throw new IllegalArgumentException("Column names cannot be empty");
+        }
+        
+        // Store the name mapping
+        columnNameMap.put(oldName.toLowerCase(), newName.toLowerCase());
     }
+    
+    // Map to store column name mappings
+    private Map<String, String> columnNameMap = new HashMap<>();
 }

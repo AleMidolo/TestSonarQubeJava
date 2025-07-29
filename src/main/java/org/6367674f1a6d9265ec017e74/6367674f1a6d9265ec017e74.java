@@ -1,26 +1,31 @@
 import java.util.LinkedList;
+import java.util.Queue;
 
-public class Queue<T> {
-    private LinkedList<T> elements;
-    
-    public Queue() {
-        elements = new LinkedList<>();
+public class QueuePrinter {
+    private Queue<Object> queue;
+
+    public QueuePrinter() {
+        this.queue = new LinkedList<>();
     }
 
+    /**
+     * Returns a textual representation of the queue.
+     * @return a textual representation of the queue.
+     */
     public String toString() {
-        if (elements.isEmpty()) {
+        if (queue.isEmpty()) {
             return "[]";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
-        for (T element : elements) {
+        for (Object element : queue) {
             sb.append(element);
             sb.append(", ");
         }
         
-        // Remove last comma and space
+        // Remove trailing comma and space
         sb.setLength(sb.length() - 2);
         sb.append("]");
         

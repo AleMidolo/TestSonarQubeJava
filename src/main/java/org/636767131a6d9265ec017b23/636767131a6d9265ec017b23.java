@@ -1,16 +1,16 @@
 import java.util.Objects;
 
-public class Tag {
-    private int lineNumber;
-
+public class Label {
+    private int sourceLineNumber;
+    
     /**
-     * Agrega un número de línea de origen correspondiente a esta etiqueta.
-     * @param lineNumber un número de línea de origen (que debe ser estrictamente positivo).
+     * Adds a source line number corresponding to this label.
+     * @param lineNumber a source line number (which should be strictly positive).
      */
-    final void addLineNumber(final int lineNumber) {
+    public void addLineNumber(int lineNumber) {
         if (lineNumber <= 0) {
-            throw new IllegalArgumentException("El número de línea debe ser estrictamente positivo");
+            throw new IllegalArgumentException("Line number must be strictly positive");
         }
-        this.lineNumber = lineNumber;
+        this.sourceLineNumber = lineNumber;
     }
 }

@@ -1,22 +1,25 @@
+import java.util.HashSet;
+import java.util.Set;
+
 public class StringUtils {
-    /**
-     * Elimina cualquier carácter en una cadena dada.
-     * @param inString la cadena original
-     * @param charsToDelete un conjunto de caracteres a eliminar. Por ejemplo, "az\n" eliminará las 'a', 'z' y los saltos de línea.
-     * @return la cadena resultante
-     */
+    
     public static String deleteAny(String inString, String charsToDelete) {
         if (inString == null || charsToDelete == null) {
             return inString;
         }
         
+        Set<Character> deleteChars = new HashSet<>();
+        for (char c : charsToDelete.toCharArray()) {
+            deleteChars.add(c);
+        }
+        
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < inString.length(); i++) {
-            char ch = inString.charAt(i);
-            if (charsToDelete.indexOf(ch) == -1) {
-                result.append(ch);
+        for (char c : inString.toCharArray()) {
+            if (!deleteChars.contains(c)) {
+                result.append(c);
             }
         }
+        
         return result.toString();
     }
 }

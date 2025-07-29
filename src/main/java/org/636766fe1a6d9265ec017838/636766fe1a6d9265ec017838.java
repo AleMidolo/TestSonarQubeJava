@@ -1,18 +1,15 @@
 package org.apache.commons.lang3;
 
-/**
- * Utility class for Character operations
- */
-public class CharacterUtils {
-
+public class ArrayUtils {
     /**
-     * <p>Convierte un array de objetos "Character" a primitivos.</p>
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
-     * @param array  un arreglo de <code>Character</code>, puede ser <code>null</code>
-     * @return un arreglo de <code>char</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
+     * <p>Converts an array of object Characters to primitives.</p>
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
+     * 
+     * @param array  a <code>Character</code> array, may be <code>null</code>
+     * @return a <code>char</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
-    public static char[] toPrimitive(final Character[] array) {
+    public static char[] toPrimitive(Character[] array) {
         if (array == null) {
             return null;
         }

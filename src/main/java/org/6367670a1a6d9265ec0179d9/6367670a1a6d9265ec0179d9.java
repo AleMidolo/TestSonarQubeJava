@@ -1,11 +1,11 @@
 public class StringUtils {
     /**
-     * Obtiene la longitud de una cadena o <code>0</code> si la cadena es <code>null</code>.
-     * @param str una cadena o <code>null</code>
-     * @return longitud de la cadena o <code>0</code> si la cadena es <code>null</code>.
+     * Gets a String's length or <code>0</code> if the String is <code>null</code>.
+     * @param str a String or <code>null</code>
+     * @return String length or <code>0</code> if the String is <code>null</code>.
      * @since 2.4
      */
-    public static int length(final String str) {
+    public static int length(String str) {
         return str == null ? 0 : str.length();
     }
 }

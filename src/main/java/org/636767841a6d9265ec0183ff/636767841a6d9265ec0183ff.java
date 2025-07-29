@@ -1,33 +1,43 @@
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.table.TableModel;
 
 public class TableUtils {
     /**
-     * Selecciona la fila especificada en el JTable indicado y desplaza el JScrollPane especificado hacia la fila recién seleccionada. 
-     * Más importante aún, la llamada a repaint() se retrasa lo suficiente para que la tabla pinte correctamente la fila recién seleccionada, 
-     * que puede estar fuera de la pantalla.
-     * @param table debe pertenecer al JScrollPane especificado
+     * Selects a the specified row in the specified JTable and scrolls the specified JScrollpane to the newly selected row. 
+     * More importantly, the call to repaint() delayed long enough to have the table properly paint the newly selected row which may be offscre
+     * @param table should belong to the specified JScrollPane
+     * @param scrollPane the scroll pane containing the table
+     * @param row the row index to select and scroll to
      */
-    public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (row < 0 || row >= table.getRowCount()) {
+    public static void selectAndScrollToRow(JTable table, JScrollPane scrollPane, int row) {
+        if (table == null || scrollPane == null || row < 0 || row >= table.getRowCount()) {
             return;
         }
 
-        // Seleccionar la fila
+        // Select the row
         table.setRowSelectionInterval(row, row);
 
-        // Calcular el rectángulo de la fila seleccionada
-        Rectangle rect = table.getCellRect(row, 0, true);
+        // Calculate rectangle of the row to scroll to
+        Rectangle cellRect = table.getCellRect(row, 0, true);
         
-        // Hacer scroll hasta la fila seleccionada
-        pane.getViewport().setViewPosition(new Point(0, rect.y));
+        // Convert table coordinates to scrollpane coordinates
+        Point p = SwingUtilities.convertPoint(table, cellRect.x, cellRect.y, 
+                                            scrollPane.getViewport());
+        cellRect.setLocation(p);
 
-        // Retrasar el repaint para asegurar que la tabla se actualice correctamente
+        // Scroll to make the rectangle visible
+        scrollPane.getViewport().scrollRectToVisible(cellRect);
+        
+        // Schedule a repaint with slight delay to ensure proper rendering
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                table.repaint();
+                try {
+                    // Small delay to ensure proper rendering
+                    Thread.sleep(50);
+                    table.repaint();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         });
     }

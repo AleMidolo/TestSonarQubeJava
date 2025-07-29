@@ -1,15 +1,11 @@
-import java.util.UUID;
+public class Row {
+    private int rowId;
 
-public class EntityIdentifier {
-
-    /**
-     * @return el id de la fila
-     */
-    public String id(String entityId) {
-        if (entityId == null || entityId.trim().isEmpty()) {
-            return UUID.randomUUID().toString();
-        }
-        return entityId.trim();
+    public Row(int rowId) {
+        this.rowId = rowId;
     }
 
+    public int getRowId() {
+        return rowId;
+    }
 }

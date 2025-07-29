@@ -2,30 +2,26 @@ import java.io.File;
 import java.net.URL;
 import java.util.Vector;
 
-public class ClassPathUtils {
-
-    /** 
-     * Agrega todos los archivos jar de un directorio al classpath, representado como un Vector de URLs.
+public class ClasspathUtils {
+    /**
+     * Add all the jar files in a dir to the classpath, represented as a Vector of URLs.
+     * @param dir The directory containing jar files to add
+     * @param classpath The Vector of URLs representing the classpath
      */
-    @SuppressWarnings("unchecked")
-    public static void addToClassPath(Vector<URL> cpV, String dir) {
-        File directory = new File(dir);
-        
-        if (!directory.exists() || !directory.isDirectory()) {
+    public static void addJarsFromDirectory(File dir, Vector<URL> classpath) {
+        if (dir == null || !dir.isDirectory() || classpath == null) {
             return;
         }
 
-        File[] files = directory.listFiles();
+        File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".jar")) {
                     try {
-                        URL jarUrl = file.toURI().toURL();
-                        if (!cpV.contains(jarUrl)) {
-                            cpV.add(jarUrl);
-                        }
+                        classpath.add(file.toURI().toURL());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        // Skip files that can't be converted to URLs
+                        continue;
                     }
                 }
             }

@@ -1,18 +1,17 @@
 public class StringSplitter {
-    
     /**
-     * Divide una cadena en la primera ocurrencia del delimitador. No incluye el delimitador en el resultado.
-     * @param toSplit la cadena a dividir
-     * @param delimiter el delimitador para dividir la cadena 
-     * @return un array de dos elementos donde el índice 0 es antes del delimitador, y el índice 1 es después del delimitador (ninguno de los elementos incluye el delimitador); o <code>null</code> si no se encontró el delimitador en la cadena de entrada dada
+     * Split a String at the first occurrence of the delimiter. Does not include the delimiter in the result.
+     * @param toSplit the string to split
+     * @param delimiter to split the string up with
+     * @return a two element array with index 0 being before the delimiter, and index 1 being after the delimiter 
+     *         (neither element includes the delimiter); or <code>null</code> if the delimiter wasn't found in the given input String
      */
-    public static String[] split(String toSplit, String delimiter) {
+    public static String[] splitOnFirst(String toSplit, String delimiter) {
         if (toSplit == null || delimiter == null) {
             return null;
         }
         
         int index = toSplit.indexOf(delimiter);
-        
         if (index == -1) {
             return null;
         }

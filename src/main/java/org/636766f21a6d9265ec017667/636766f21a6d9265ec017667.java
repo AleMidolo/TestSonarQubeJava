@@ -1,19 +1,13 @@
 import org.objectweb.asm.ClassReader;
 
-public class CustomClassReader extends ClassReader {
-    
-    public CustomClassReader(byte[] classFile) {
-        super(classFile);
-    }
-
+public class ClassReaderUtils {
     /**
-     * Lee un valor corto con signo en este {@link ClassReader}. <i>Este método está destinado a subclases de {@link Attribute},
-     * y normalmente no es necesario para generadores de clases o adaptadores.</i>
-     * @param offset el desplazamiento inicial del valor a leer en este {@link ClassReader}.
-     * @return el valor leído.
+     * Reads a signed short value in this {@link ClassReader}. <i>This method is intended for {@link Attribute} sub classes, and is normally not needed by class generators or adapters.</i>
+     * @param offset the start offset of the value to be read in this {@link ClassReader}.
+     * @return the read value.
      */
-    public short readShort(final int offset) {
-        byte[] classFileBuffer = this.b;
+    public short readShort(int offset) {
+        byte[] classFileBuffer = new byte[offset + 2];
         return (short) ((classFileBuffer[offset] << 8) | (classFileBuffer[offset + 1] & 0xFF));
     }
 }

@@ -1,21 +1,23 @@
 import java.util.Stack;
 
 public class FrameStack {
-    private Stack<Object> outputFrame;
+    private Stack<Object> outputFrameStack;
 
     public FrameStack() {
-        outputFrame = new Stack<>();
+        outputFrameStack = new Stack<>();
     }
 
-    /**
-     * Elimina el número dado de tipos abstractos del "output frame" de salida.
-     * @param elements el número de tipos abstractos que deben ser eliminados.
-     */
-    private void pop(final int elements) {
+    public void popElements(int elements) {
+        if (elements < 0) {
+            throw new IllegalArgumentException("Number of elements to pop must be non-negative");
+        }
+
+        if (elements > outputFrameStack.size()) {
+            throw new IllegalStateException("Cannot pop more elements than exist in stack");
+        }
+
         for (int i = 0; i < elements; i++) {
-            if (!outputFrame.isEmpty()) {
-                outputFrame.pop();
-            }
+            outputFrameStack.pop();
         }
     }
 }

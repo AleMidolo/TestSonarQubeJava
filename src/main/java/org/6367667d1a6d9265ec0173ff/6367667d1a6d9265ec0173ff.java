@@ -1,36 +1,31 @@
-import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
+import javax.servlet.http.HttpServletRequest;
 
-public class MeteorLookup {
+public class MeteorRetriever {
 
     /**
-     * Recupera una instancia de {@link Meteor} basada en el {@link HttpServletRequest}.
-     * @param r {@link HttpServletRequest}
-     * @return un {@link Meteor} o null si no se encuentra
+     * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
+     * @param r {@link HttpServletRequest} 
+     * @return a {@link Meteor} or null if not found
      */
-    public static Meteor lookup(HttpServletRequest r) {
+    public static Meteor retrieve(HttpServletRequest r) {
         if (r == null) {
             return null;
         }
         
-        try {
-            // Intenta obtener el Meteor desde el request
-            Meteor meteor = Meteor.build(r);
-            
-            if (meteor != null) {
-                AtmosphereResource resource = meteor.getAtmosphereResource();
-                if (resource != null && !resource.isCancelled()) {
-                    return meteor;
-                }
-            }
-            
-            // Si no se encuentra o está cancelado, retorna null
-            return null;
-            
-        } catch (Exception e) {
-            // En caso de error retorna null
+        // Try to get existing Meteor instance
+        Meteor meteor = Meteor.build(r);
+        
+        if (meteor == null || meteor.getAtmosphereResource() == null) {
             return null;
         }
+        
+        AtmosphereResource resource = meteor.getAtmosphereResource();
+        if (resource.getRequest() == null) {
+            return null;
+        }
+        
+        return meteor;
     }
 }

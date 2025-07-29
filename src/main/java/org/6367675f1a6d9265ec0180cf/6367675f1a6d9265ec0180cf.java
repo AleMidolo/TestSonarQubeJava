@@ -1,31 +1,35 @@
-import org.jgrapht.Graph;
-import java.util.Set;
+import java.util.*;
 
 public class GraphUtils {
-
     /**
-     * Verifica si el subgrafo de <code>graph</code> inducido por los <code>vertices</code> dados es completo, es decir, un clique.
-     * @param graph el grafo.
-     * @param vertices los vértices de los que se inducirá el subgrafo.
-     * @return true si el subgrafo inducido es un clique.
+     * Check whether the subgraph of <code>graph</code> induced by the given <code>vertices</code> is complete, i.e. a clique.
+     * @param graph the graph.
+     * @param vertices the vertices to induce the subgraph from.
+     * @return true if the induced subgraph is a clique.
      */
-    private static <V,E> boolean isClique(Graph<V,E> graph, Set<V> vertices) {
-        // Para cada par de vértices distintos en el conjunto
-        for (V v1 : vertices) {
-            for (V v2 : vertices) {
-                // Si son el mismo vértice, continuamos
+    public static boolean isClique(Graph graph, Set<Integer> vertices) {
+        // For each pair of vertices in the set
+        for (Integer v1 : vertices) {
+            for (Integer v2 : vertices) {
+                // Skip comparing vertex to itself
                 if (v1.equals(v2)) {
                     continue;
                 }
                 
-                // Si no existe una arista entre ellos, no es un clique
-                if (!graph.containsEdge(v1, v2)) {
+                // If any pair of vertices is not connected by an edge,
+                // then this is not a clique
+                if (!graph.hasEdge(v1, v2)) {
                     return false;
                 }
             }
         }
         
-        // Si llegamos aquí, todos los vértices están conectados entre sí
+        // If we get here, all vertices are connected to each other
         return true;
     }
+}
+
+// Simple graph interface for reference
+interface Graph {
+    boolean hasEdge(Integer source, Integer target);
 }

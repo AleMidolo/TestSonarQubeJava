@@ -1,27 +1,29 @@
 import java.util.Map;
+import java.util.HashMap;
 
-public class CustomMap<K,V> implements Map<K,V> {
-
-    private Entry<K,V>[] entries;
-    private int size;
-
-    @Override 
-    public boolean containsKey(final Object key) {
+public class MapContains {
+    private Map<Object, Object> map = new HashMap<>();
+    
+    /**
+     * Return <code>true</code> if this map contains a mapping for the specified key.
+     * @param key the key to be searched for
+     * @return true if the map contains the key
+     */
+    public boolean containsKey(Object key) {
         if (key == null) {
-            for (int i = 0; i < size; i++) {
-                if (entries[i] != null && entries[i].getKey() == null) {
+            for (Map.Entry<Object, Object> entry : map.entrySet()) {
+                if (entry.getKey() == null) {
                     return true;
                 }
             }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (entries[i] != null && key.equals(entries[i].getKey())) {
-                    return true;
-                }
+            return false;
+        }
+        
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            if (key.equals(entry.getKey())) {
+                return true;
             }
         }
         return false;
     }
-
-    // Other Map interface methods would be implemented here
 }

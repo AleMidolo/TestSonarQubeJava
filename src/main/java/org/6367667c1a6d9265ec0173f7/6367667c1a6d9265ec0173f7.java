@@ -1,13 +1,20 @@
 import java.util.Arrays;
 
-public class MessageBody {
-    private byte[] bodyBytes;
+public class BodyValidator {
+    private byte[] body;
     
+    public BodyValidator(byte[] body) {
+        this.body = body;
+    }
+
     /**
-     * Verdadero si el cuerpo es un arreglo de bytes
-     * @return Verdadero si el cuerpo es un arreglo de bytes
+     * True is the body is a byte array
+     * @return True is the body is a byte array
      */
-    public boolean hasBytes() {
-        return bodyBytes != null && bodyBytes.length > 0;
+    public boolean isByteArray() {
+        if (body == null) {
+            return false;
+        }
+        return body.getClass().isArray() && body.getClass().getComponentType() == byte.class;
     }
 }

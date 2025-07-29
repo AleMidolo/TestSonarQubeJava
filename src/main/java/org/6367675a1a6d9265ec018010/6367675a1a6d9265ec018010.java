@@ -1,36 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bucket<T> {
-    private List<T> elements;
-    private BucketCollection<T> collection;
+public class Bucket {
+    private List<Object> items;
+    private boolean isRemoved;
 
-    public Bucket(BucketCollection<T> collection) {
-        this.elements = new ArrayList<>();
-        this.collection = collection;
+    public Bucket() {
+        items = new ArrayList<>();
+        isRemoved = false;
     }
 
     /**
-     * Elimina este bucket de la estructura de datos.
+     * Removes this bucket from the data structure.
      */
-    public void removeSelf() {
-        if (collection != null) {
-            collection.removeBucket(this);
-            elements.clear();
-            collection = null;
-        }
-    }
-}
-
-// Helper class to demonstrate context
-class BucketCollection<T> {
-    private List<Bucket<T>> buckets;
-    
-    public BucketCollection() {
-        buckets = new ArrayList<>();
-    }
-    
-    public void removeBucket(Bucket<T> bucket) {
-        buckets.remove(bucket);
+    public void remove() {
+        items.clear();
+        isRemoved = true;
     }
 }

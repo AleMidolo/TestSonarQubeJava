@@ -1,28 +1,31 @@
 import java.util.*;
 
-public class LabelPropagation {
+public class BucketLabeler {
     
-    /**
-     * Mueve todos los vértices del cubo con etiqueta {@code minLabel} al cubo con etiqueta 0. 
-     * Limpia el cubo con etiqueta {@code minLabel}. Actualiza el etiquetado en consecuencia.
-     * @param bucketsByLabel los cubos donde se almacenan los vértices
-     * @param labels las etiquetas de los vértices
-     * @param minLabel el valor mínimo del cubo no vacío
-     */
-    private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
-        // Obtener el conjunto de vértices del cubo minLabel
-        Set<Integer> vertices = bucketsByLabel.get(minLabel);
+    public void moveVerticesFromMinLabelBucketToZero(
+        Map<Integer, Set<Integer>> bucketsByLabel,
+        Map<Integer, Integer> labels,
+        int minLabel
+    ) {
+        // Get vertices from min label bucket
+        Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
         
-        // Mover cada vértice al cubo 0
-        for (Integer vertex : vertices) {
-            // Actualizar la etiqueta del vértice a 0
-            labels.set(vertex, 0);
-            
-            // Agregar el vértice al cubo 0
-            bucketsByLabel.get(0).add(vertex);
+        if (verticesToMove == null || verticesToMove.isEmpty()) {
+            return;
         }
-        
-        // Limpiar el cubo minLabel
-        bucketsByLabel.get(minLabel).clear();
+
+        // Create bucket 0 if it doesn't exist
+        bucketsByLabel.putIfAbsent(0, new HashSet<>());
+        Set<Integer> zeroBucket = bucketsByLabel.get(0);
+
+        // Move vertices to bucket 0 and update labels
+        for (Integer vertex : verticesToMove) {
+            zeroBucket.add(vertex);
+            labels.put(vertex, 0);
+        }
+
+        // Clear min label bucket
+        verticesToMove.clear();
+        bucketsByLabel.remove(minLabel);
     }
 }

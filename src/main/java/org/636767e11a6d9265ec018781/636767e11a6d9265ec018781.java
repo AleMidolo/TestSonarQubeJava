@@ -1,44 +1,40 @@
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class MetricsCache<METRICS> {
+public class Cache {
+    private Map<String, Object> cacheMap;
 
-    private AtomicReference<METRICS> cache;
-
-    public MetricsCache() {
-        this.cache = new AtomicReference<>();
+    public Cache() {
+        this.cacheMap = new ConcurrentHashMap<>();
     }
 
     /**
-     * Acepta los datos en la caché y los combina con el valor existente. Este método no es seguro para hilos, se debe evitar la llamada concurrente.
-     * @param data que se va a agregar potencialmente.
+     * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
+     * @param data to be added potentially.
      */
-    @Override 
-    public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Data cannot be null");
-        
-        METRICS currentValue = cache.get();
-        if (currentValue == null) {
-            cache.set(data);
-        } else {
-            // Si hay un valor existente, combinar los datos
-            try {
-                if (currentValue instanceof Mergeable) {
-                    ((Mergeable)currentValue).merge(data);
+    public void acceptData(Map<String, Object> data) {
+        if (data == null || data.isEmpty()) {
+            return;
+        }
+
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (cacheMap.containsKey(key)) {
+                // If value exists, merge with existing value
+                Object existingValue = cacheMap.get(key);
+                if (existingValue instanceof Map && value instanceof Map) {
+                    // If both are maps, merge them
+                    ((Map) existingValue).putAll((Map) value);
                 } else {
-                    // Si no es mergeable, simplemente reemplazar
-                    cache.set(data);
+                    // Otherwise replace with new value
+                    cacheMap.put(key, value);
                 }
-            } catch (Exception e) {
-                // En caso de error al combinar, mantener el valor existente
-                // y registrar el error
-                System.err.println("Error merging metrics data: " + e.getMessage());
+            } else {
+                // If key doesn't exist, add new entry
+                cacheMap.put(key, value);
             }
         }
     }
-}
-
-// Interfaz opcional para objetos que pueden combinarse
-interface Mergeable<T> {
-    void merge(T other);
 }

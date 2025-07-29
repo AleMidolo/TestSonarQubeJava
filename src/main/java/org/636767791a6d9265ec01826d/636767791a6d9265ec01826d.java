@@ -1,14 +1,17 @@
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertyUtils {
+public class PropertyResolver {
 
     /**
-     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. 
-     * Luego realiza la sustitución de variables en el valor encontrado.
+     * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
+     * @param key The property key to look up
+     * @param props The Properties object containing key-value pairs
+     * @return The resolved property value with variables substituted
      */
-    public static String findAndSubst(String key, Properties props) {
+    public String resolveProperty(String key, Properties props) {
         if (key == null || props == null) {
             return null;
         }
@@ -18,22 +21,21 @@ public class PropertyUtils {
             return null;
         }
 
-        // Pattern to find ${variable} references
+        // Pattern to match ${variable} syntax
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
-        // Replace each ${variable} with its value from props
         while (matcher.find()) {
             String varName = matcher.group(1);
             String replacement = props.getProperty(varName);
             
-            // If variable not found, leave the original ${variable} text
+            // If no replacement found, leave original ${var} text
             if (replacement == null) {
                 replacement = "${" + varName + "}";
             }
             
-            // Quote replacement string to avoid issues with $ and backslashes
+            // Quote replacement string to handle special regex chars
             matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);

@@ -1,19 +1,15 @@
 package org.apache.commons.lang3;
 
-/**
- * Utility class for converting Integer arrays to primitive int arrays.
- */
 public class ArrayUtils {
-
     /**
-     * <p>Convierte un arreglo de objetos "Integer" a primitivos.</p>
-     * <p>Este método devuelve <code>null</code> para un arreglo de entrada <code>null</code>.</p>
+     * <p>Converts an array of object Integers to primitives.</p>
+     * <p>This method returns <code>null</code> for a <code>null</code> input array.</p>
      * 
-     * @param array  un arreglo de <code>Integer</code>, puede ser <code>null</code>
-     * @return un arreglo de <code>int</code>, <code>null</code> si el arreglo de entrada es nulo
-     * @throws NullPointerException si el contenido del arreglo es <code>null</code>
+     * @param array  a <code>Integer</code> array, may be <code>null</code>
+     * @return an <code>int</code> array, <code>null</code> if null array input
+     * @throws NullPointerException if array content is <code>null</code>
      */
-    public static int[] toPrimitive(final Integer[] array) {
+    public static int[] toPrimitive(Integer[] array) {
         if (array == null) {
             return null;
         }

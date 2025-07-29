@@ -4,13 +4,15 @@ import java.util.List;
 
 public class ArrayUtils {
     /**
-     * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)},pero maneja arreglos nulos.
-     * @return una lista respaldada por el arreglo.
+     * Array to List. <p> Works like {@link Arrays#asList(Object)}, but handles null arrays.
+     * @param <T> the array element type
+     * @param array the array to convert to a List
+     * @return a list backed by the array
      */
-    public static <T> List<T> asList(T[] a) {
-        if (a == null) {
+    public static <T> List<T> arrayToList(final T[] array) {
+        if (array == null) {
             return Collections.emptyList();
         }
-        return Arrays.asList(a);
+        return Arrays.asList(array);
     }
 }

@@ -1,20 +1,12 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResourceImpl;
+import org.atmosphere.cpr.AtmosphereHandler;
 
 public class RequestWrapper {
 
-    /** 
-     * Envuelve un {@link HttpServletRequest}.
-     * @param request {@link HttpServletRequest}
-     * @return un {@link AtmosphereRequest}
-     */
-    public static AtmosphereRequest wrap(HttpServletRequest request) {
-        if (request instanceof AtmosphereRequest) {
-            return (AtmosphereRequest) request;
-        }
-
+    public AtmosphereRequest wrapRequest(HttpServletRequest request) {
         return AtmosphereRequest.wrap(request);
     }
+
 }

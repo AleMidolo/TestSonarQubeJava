@@ -1,48 +1,46 @@
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelnetServer {
-    private List<PrintWriter> clients = new ArrayList<>();
+    private List<Socket> clients = new ArrayList<>();
 
     /**
      * Sends a message to each of the clients in telnet-friendly output.
      * 
-     * @param message The message to be sent to all connected clients.
+     * @param message The message to send to all connected clients.
      */
     public synchronized void send(final String message) {
-        for (PrintWriter client : clients) {
-            client.println(message);
-            client.flush();
+        for (Socket client : clients) {
+            try {
+                OutputStream outputStream = client.getOutputStream();
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+            } catch (IOException e) {
+                // Handle the exception, e.g., remove the client from the list
+                clients.remove(client);
+                System.err.println("Error sending message to client: " + e.getMessage());
+            }
         }
     }
 
     /**
      * Adds a new client to the list of connected clients.
      * 
-     * @param socket The socket of the connected client.
+     * @param client The client socket to add.
      */
-    public synchronized void addClient(Socket socket) {
-        try {
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            clients.add(writer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public synchronized void addClient(Socket client) {
+        clients.add(client);
     }
 
     /**
      * Removes a client from the list of connected clients.
      * 
-     * @param socket The socket of the disconnected client.
+     * @param client The client socket to remove.
      */
-    public synchronized void removeClient(Socket socket) {
-        try {
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            clients.remove(writer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public synchronized void removeClient(Socket client) {
+        clients.remove(client);
     }
 }

@@ -22,6 +22,8 @@ public class ShortArrayConverter {
     public static void main(String[] args) {
         short[] primitiveArray = {1, 2, 3, 4, 5};
         Short[] objectArray = toObject(primitiveArray);
-        System.out.println(Objects.toString(objectArray));
+        for (Short s : objectArray) {
+            System.out.println(s);
+        }
     }
 }

@@ -1,28 +1,14 @@
 import java.io.IOException;
 
 private void checkIfPackedField() throws IOException {
-    // Assuming the field is represented by a byte array or similar structure
-    // and that there is a method to check if it is packed.
-    // This is a placeholder implementation.
-
-    // Example: Check if the current field is packed
-    if (isPacked()) {
+    // Assuming 'packed' is a boolean flag indicating if the field is packed
+    if (packed) {
         // Update internal state to reflect that packed fields are being read
-        setReadingPackedFields(true);
+        // For example, set a flag or update a counter
+        readingPackedFields = true;
+        packedFieldCounter = 0; // Reset counter if needed
     } else {
-        // Reset the state if the field is not packed
-        setReadingPackedFields(false);
+        // If not packed, ensure the state reflects that
+        readingPackedFields = false;
     }
-}
-
-// Placeholder methods for the implementation
-private boolean isPacked() {
-    // Logic to determine if the field is packed
-    // This could involve checking a flag or examining the field's metadata
-    return false; // Replace with actual logic
-}
-
-private void setReadingPackedFields(boolean isReadingPackedFields) {
-    // Logic to update the internal state
-    // This could involve setting a boolean flag or updating a state variable
 }

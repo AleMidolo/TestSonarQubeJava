@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class FileIterator implements Iterator<InputStream> {
+public class FileIterator implements Iterator<File> {
     private File[] files;
     private int currentIndex;
 
@@ -22,11 +22,18 @@ public class FileIterator implements Iterator<InputStream> {
     }
 
     @Override
-    public InputStream next() throws IOException {
+    public File next() {
         if (!hasNext()) {
             return null;
         }
-        File nextFile = files[currentIndex++];
+        return files[currentIndex++];
+    }
+
+    public InputStream nextInputStream() throws IOException {
+        File nextFile = next();
+        if (nextFile == null) {
+            return null;
+        }
         return new FileInputStream(nextFile);
     }
 }

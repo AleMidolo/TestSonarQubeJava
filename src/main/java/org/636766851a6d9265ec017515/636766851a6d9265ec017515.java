@@ -1,5 +1,4 @@
 import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
 import org.atmosphere.cpr.Action;
 
 public class AtmosphereResourceInspector {
@@ -11,7 +10,7 @@ public class AtmosphereResourceInspector {
      */
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r.transport() == TRANSPORT.WEBSOCKET || r.transport() == TRANSPORT.STREAMING) {
+        if (r.transport() == AtmosphereResource.TRANSPORT.WEBSOCKET) {
             r.suspend();
         }
         return Action.CONTINUE;

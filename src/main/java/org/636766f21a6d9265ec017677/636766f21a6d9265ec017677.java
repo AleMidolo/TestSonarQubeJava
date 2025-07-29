@@ -1,14 +1,10 @@
 public class BooleanUtils {
 
     /**
-     * Checks if a {@code Boolean} value is <i>not</i> {@code true}, handling {@code null} by returning {@code true}.
-     * <pre>
-     * BooleanUtils.isNotTrue(Boolean.TRUE)  = false
-     * BooleanUtils.isNotTrue(Boolean.FALSE) = true
-     * BooleanUtils.isNotTrue(null)          = true
-     * </pre>
-     * @param bool  the boolean to check, null returns {@code true}
-     * @return {@code true} if the input is null or false
+     * Checks if a Boolean value is not true, handling null by returning true.
+     * 
+     * @param bool the boolean to check, null returns true
+     * @return true if the input is null or false
      * @since 2.3
      */
     public static boolean isNotTrue(Boolean bool) {

@@ -1,19 +1,14 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestContentLength {
-
-    private HttpServletRequest request;
-
-    public RequestContentLength(HttpServletRequest request) {
-        this.request = request;
-    }
+public class RequestUtils {
 
     /**
      * Retrieve the content length of the request.
+     * @param request The HTTP request object.
      * @return The content length of the request.
      * @since 1.3
      */
-    public long contentLength() {
+    public static long contentLength(HttpServletRequest request) {
         return request.getContentLength();
     }
 }

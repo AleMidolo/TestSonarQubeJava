@@ -1,4 +1,6 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class DoubleArrayConverter {
 
     /**
      * <p>Converts an array of primitive doubles to objects.</p> 
@@ -18,7 +20,7 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        double[] primitiveArray = {1.0, 2.0, 3.0};
+        double[] primitiveArray = {1.0, 2.5, 3.7};
         Double[] objectArray = toObject(primitiveArray);
         for (Double d : objectArray) {
             System.out.println(d);

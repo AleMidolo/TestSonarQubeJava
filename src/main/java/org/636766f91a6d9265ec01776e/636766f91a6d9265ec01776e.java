@@ -58,7 +58,7 @@ public class ByteArrayOutputStream extends OutputStream {
     public void write(int b) throws IOException {
         ensureCapacity(count + 1);
         buf[count] = (byte) b;
-        count += 1;
+        count++;
     }
 
     public byte[] toByteArray() {

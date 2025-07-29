@@ -23,6 +23,6 @@ public class CharUtils {
         System.out.println(isAsciiControl('3'));   // false
         System.out.println(isAsciiControl('-'));   // false
         System.out.println(isAsciiControl('\n')); // true
-        System.out.println(isAsciiControl('©'));  // false
+        System.out.println(isAsciiControl('©'));   // false
     }
 }

@@ -4,23 +4,22 @@ public class StringSplitter {
             return null;
         }
         
-        int index = toSplit.indexOf(delimiter);
-        if (index == -1) {
+        int delimiterIndex = toSplit.indexOf(delimiter);
+        if (delimiterIndex == -1) {
             return null;
         }
         
-        String[] result = new String[2];
-        result[0] = toSplit.substring(0, index);
-        result[1] = toSplit.substring(index + delimiter.length());
+        String beforeDelimiter = toSplit.substring(0, delimiterIndex);
+        String afterDelimiter = toSplit.substring(delimiterIndex + delimiter.length());
         
-        return result;
+        return new String[] { beforeDelimiter, afterDelimiter };
     }
 
     public static void main(String[] args) {
         String[] result = split("Hello,World", ",");
         if (result != null) {
-            System.out.println("Before delimiter: " + result[0]);
-            System.out.println("After delimiter: " + result[1]);
+            System.out.println("Before: " + result[0]);
+            System.out.println("After: " + result[1]);
         } else {
             System.out.println("Delimiter not found.");
         }

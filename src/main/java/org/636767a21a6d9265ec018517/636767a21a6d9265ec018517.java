@@ -17,15 +17,10 @@ public final class Buffer {
         }
     }
 
+    /**
+     * Returns a single byte array containing all the contents written to the buffer(s).
+     */
     public final byte[] toByteArray() {
         return buffer.toByteArray();
-    }
-
-    public static void main(String[] args) {
-        Buffer buffer = new Buffer();
-        buffer.write("Hello".getBytes());
-        buffer.write("World".getBytes());
-        byte[] result = buffer.toByteArray();
-        System.out.println(new String(result)); // Outputs: HelloWorld
     }
 }

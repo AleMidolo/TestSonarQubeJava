@@ -21,8 +21,8 @@ public class TypeResolver {
 
     public static void main(String[] args) {
         // Example usage
-        TypeVariable<?> typeVar = ExampleClass.class.getTypeParameters()[0];
-        Type bound = resolveBound(typeVar);
+        TypeVariable<?> typeVariable = ExampleClass.class.getTypeParameters()[0];
+        Type bound = resolveBound(typeVariable);
         System.out.println("Resolved bound: " + bound);
     }
 

@@ -1,11 +1,11 @@
-public class RowUtils {
+public class NonZeroCounter {
 
     /**
      * Get the number of non-zero entries of a row.
-     * @param row the row represented as an array of integers
+     * @param row the row
      * @return the number of non-zero entries of a row
      */
-    public static int nonZeros(int[] row) {
+    public int nonZeros(int[] row) {
         int count = 0;
         for (int value : row) {
             if (value != 0) {
@@ -16,7 +16,8 @@ public class RowUtils {
     }
 
     public static void main(String[] args) {
-        int[] row = {0, 5, 0, 3, 0, 1};
-        System.out.println("Number of non-zero entries: " + nonZeros(row));
+        NonZeroCounter counter = new NonZeroCounter();
+        int[] row = {0, 5, 0, 3, 0, 8};
+        System.out.println("Number of non-zero entries: " + counter.nonZeros(row));
     }
 }

@@ -9,7 +9,7 @@ public class SubstringMatcher {
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         if (str == null || substring == null) {
-            throw new IllegalArgumentException("Input strings cannot be null");
+            throw new IllegalArgumentException("Input strings cannot be null.");
         }
         if (index < 0 || index > str.length() - substring.length()) {
             return false;
@@ -27,6 +27,8 @@ public class SubstringMatcher {
         CharSequence str = "Hello, World!";
         CharSequence substring = "World";
         int index = 7;
-        System.out.println(substringMatch(str, index, substring)); // Output: true
+
+        boolean result = substringMatch(str, index, substring);
+        System.out.println(result); // Output: true
     }
 }

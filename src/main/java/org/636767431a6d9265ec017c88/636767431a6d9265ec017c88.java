@@ -8,28 +8,19 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
      * @return the computed key lower bounds.
      */
     private List<Integer> computeLowerBounds(List<K> keys) {
-        List<Integer> lowerBounds = new ArrayList<>();
         if (keys == null || keys.isEmpty()) {
-            return lowerBounds;
+            return new ArrayList<>();
         }
 
-        // Sort the keys to facilitate finding lower bounds
-        List<K> sortedKeys = new ArrayList<>(keys);
-        Collections.sort(sortedKeys);
+        List<Integer> lowerBounds = new ArrayList<>();
+        TreeSet<K> sortedKeys = new TreeSet<>(keys);
 
-        // Use a TreeMap to store the sorted keys and their indices
-        TreeMap<K, Integer> treeMap = new TreeMap<>();
-        for (int i = 0; i < sortedKeys.size(); i++) {
-            treeMap.put(sortedKeys.get(i), i);
-        }
-
-        // For each key, find the maximum lower bound
         for (K key : keys) {
-            K lowerKey = treeMap.lowerKey(key);
-            if (lowerKey != null) {
-                lowerBounds.add(treeMap.get(lowerKey));
+            K lowerBound = sortedKeys.lower(key);
+            if (lowerBound != null) {
+                lowerBounds.add(lowerBound.hashCode());
             } else {
-                lowerBounds.add(-1); // No lower bound found
+                lowerBounds.add(Integer.MIN_VALUE); // No lower bound found
             }
         }
 
@@ -37,10 +28,9 @@ public class LowerBoundsCalculator<K extends Comparable<K>> {
     }
 
     public static void main(String[] args) {
-        // Example usage
         LowerBoundsCalculator<Integer> calculator = new LowerBoundsCalculator<>();
         List<Integer> keys = Arrays.asList(5, 3, 8, 1, 4);
         List<Integer> lowerBounds = calculator.computeLowerBounds(keys);
-        System.out.println(lowerBounds); // Output: [3, 1, 5, -1, 2]
+        System.out.println(lowerBounds); // Example output: [4, 1, 5, -2147483648, 3]
     }
 }

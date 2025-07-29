@@ -44,7 +44,7 @@ private void pop(final String descriptor) {
                 // No action needed for void
                 break;
             default:
-                throw new IllegalArgumentException("Unknown type: " + type);
+                throw new IllegalArgumentException("Unsupported type: " + type);
         }
     }
 }

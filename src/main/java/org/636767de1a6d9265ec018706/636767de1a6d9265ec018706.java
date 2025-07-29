@@ -27,35 +27,35 @@ public class MappingDiff {
      * @return A new Mappings object containing only the fields that are not present in the input mappings.
      */
     public Mappings diffStructure(String tableName, Mappings mappings) {
-        Mappings currentMappings = getCurrentMappings(tableName);
-        Mappings diffMappings = new Mappings();
+        Mappings result = new Mappings();
+        Map<String, Object> currentProperties = mappings.getProperties();
+        Map<String, Object> newProperties = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : currentMappings.getProperties().entrySet()) {
-            String fieldName = entry.getKey();
-            if (!mappings.getProperties().containsKey(fieldName)) {
-                diffMappings.getProperties().put(fieldName, entry.getValue());
+        // Assuming the tableName is used to fetch the latest mappings from some source
+        // For simplicity, let's assume we have a method to get the latest mappings
+        Mappings latestMappings = getLatestMappings(tableName);
+
+        if (latestMappings != null) {
+            Map<String, Object> latestProperties = latestMappings.getProperties();
+
+            for (Map.Entry<String, Object> entry : latestProperties.entrySet()) {
+                if (!currentProperties.containsKey(entry.getKey())) {
+                    newProperties.put(entry.getKey(), entry.getValue());
+                }
             }
         }
 
-        return diffMappings;
+        result.setProperties(newProperties);
+        return result;
     }
 
-    // Dummy method to simulate fetching current mappings for a table
-    private Mappings getCurrentMappings(String tableName) {
-        Mappings currentMappings = new Mappings();
-        // Simulate some mappings
-        currentMappings.getProperties().put("field1", "type1");
-        currentMappings.getProperties().put("field2", "type2");
-        currentMappings.getProperties().put("field3", "type3");
-        return currentMappings;
-    }
-
-    public static void main(String[] args) {
-        MappingDiff diff = new MappingDiff();
-        Mappings historyMappings = new Mappings();
-        historyMappings.getProperties().put("field1", "type1");
-
-        Mappings diffMappings = diff.diffStructure("exampleTable", historyMappings);
-        System.out.println("Diff Mappings: " + diffMappings.getProperties());
+    // Dummy method to simulate fetching the latest mappings
+    private Mappings getLatestMappings(String tableName) {
+        Mappings latestMappings = new Mappings();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("field1", "type1");
+        properties.put("field2", "type2");
+        latestMappings.setProperties(properties);
+        return latestMappings;
     }
 }

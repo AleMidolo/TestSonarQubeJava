@@ -5,20 +5,20 @@ public class Example {
         this.thrown = thrown;
     }
 
+    public Throwable getThrown() {
+        return thrown;
+    }
+
+    /**
+     * @return true if getThrown().toString() is a non-empty string.
+     */
     public boolean hasThrown() {
-        if (thrown == null) {
-            return false;
-        }
-        String thrownString = thrown.toString();
-        return thrownString != null && !thrownString.isEmpty();
+        Throwable thrown = getThrown();
+        return thrown != null && !thrown.toString().isEmpty();
     }
 
     public static void main(String[] args) {
-        // Example usage
         Example example = new Example(new RuntimeException("Error occurred"));
-        System.out.println(example.hasThrown()); // Should print true
-
-        Example example2 = new Example(null);
-        System.out.println(example2.hasThrown()); // Should print false
+        System.out.println(example.hasThrown()); // Output: true
     }
 }

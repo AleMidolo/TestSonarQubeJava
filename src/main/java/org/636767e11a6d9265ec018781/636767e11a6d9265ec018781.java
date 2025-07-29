@@ -34,9 +34,11 @@ class METRICS {
         return key;
     }
 
-    public void merge(METRICS other) {
-        this.value += other.value; // Example merge logic
+    public int getValue() {
+        return value;
     }
 
-    // Other methods and fields as needed
+    public void merge(METRICS other) {
+        this.value += other.getValue();
+    }
 }

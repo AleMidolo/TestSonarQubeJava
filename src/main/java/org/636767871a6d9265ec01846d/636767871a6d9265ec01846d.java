@@ -7,14 +7,14 @@ public class MRUConfig {
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
         String osName = System.getProperty("os.name").toLowerCase();
+        
         String configDirPath;
-
         if (osName.contains("windows 2000")) {
             configDirPath = System.getenv("USERPROFILE") + File.separator + "Documents and Settings" + File.separator + "lf5";
         } else {
             configDirPath = userHome + File.separator + "lf5";
         }
-
+        
         File configDir = new File(configDirPath);
         if (!configDir.exists()) {
             boolean created = configDir.mkdirs();

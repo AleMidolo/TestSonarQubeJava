@@ -22,8 +22,8 @@ private boolean unlink(ListNodeImpl<E> node) {
     }
 
     // Clear the node's references to help with garbage collection
-    node.prev = null;
     node.next = null;
+    node.prev = null;
 
     return true;
 }

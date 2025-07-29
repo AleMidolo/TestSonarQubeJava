@@ -5,7 +5,7 @@ public class ByteVector {
     private int size;
 
     public ByteVector() {
-        this.data = new byte[16]; // Initial capacity
+        this.data = new byte[10]; // Initial capacity
         this.size = 0;
     }
 
@@ -28,12 +28,12 @@ public class ByteVector {
         }
     }
 
-    // Optional: Add a method to get the current size of the byte vector
+    // Optional: Method to get the current size of the byte vector
     public int size() {
         return size;
     }
 
-    // Optional: Add a method to get the underlying byte array
+    // Optional: Method to get the underlying byte array
     public byte[] toByteArray() {
         return Arrays.copyOf(data, size);
     }

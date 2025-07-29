@@ -1,17 +1,50 @@
 import org.objectweb.asm.Type;
 
 private void pop(final String descriptor) {
-    Type type = Type.getType(descriptor);
-    if (type.getSort() == Type.METHOD) {
-        Type[] argumentTypes = type.getArgumentTypes();
-        for (Type argType : argumentTypes) {
-            // Pop the argument types from the output frame stack
-            // Assuming a stack-like structure is used to represent the output frame stack
-            // This is a placeholder for the actual stack manipulation logic
-            // stack.pop();
-        }
+    Type[] types;
+    if (descriptor.charAt(0) == '(') {
+        // It's a method descriptor, get argument types
+        types = Type.getArgumentTypes(descriptor);
     } else {
-        // Pop the single type from the output frame stack
-        // stack.pop();
+        // It's a single type descriptor
+        types = new Type[] { Type.getType(descriptor) };
+    }
+
+    for (Type type : types) {
+        switch (type.getSort()) {
+            case Type.BOOLEAN:
+            case Type.BYTE:
+            case Type.CHAR:
+            case Type.SHORT:
+            case Type.INT:
+                // Pop int
+                // Assuming outputFrameStack is a stack-like structure
+                outputFrameStack.pop();
+                break;
+            case Type.FLOAT:
+                // Pop float
+                outputFrameStack.pop();
+                break;
+            case Type.LONG:
+                // Pop long (takes two slots)
+                outputFrameStack.pop();
+                outputFrameStack.pop();
+                break;
+            case Type.DOUBLE:
+                // Pop double (takes two slots)
+                outputFrameStack.pop();
+                outputFrameStack.pop();
+                break;
+            case Type.ARRAY:
+            case Type.OBJECT:
+                // Pop reference
+                outputFrameStack.pop();
+                break;
+            case Type.VOID:
+                // No pop needed for void
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown type: " + type);
+        }
     }
 }

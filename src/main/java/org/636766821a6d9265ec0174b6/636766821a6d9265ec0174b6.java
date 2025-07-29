@@ -20,20 +20,20 @@ public class TypeResolver {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         Class<?>[] resolvedArguments = new Class<?>[actualTypeArguments.length];
 
-        Map<String, Type> typeVariableMap = createTypeVariableMap(targetType);
+        Map<TypeVariable<?>, Type> typeVariableMap = new HashMap<>();
+        buildTypeVariableMap(targetType, typeVariableMap);
 
         for (int i = 0; i < actualTypeArguments.length; i++) {
             Type typeArgument = actualTypeArguments[i];
-            if (typeArgument instanceof Class) {
-                resolvedArguments[i] = (Class<?>) typeArgument;
-            } else if (typeArgument instanceof TypeVariable) {
-                TypeVariable<?> typeVariable = (TypeVariable<?>) typeArgument;
-                Type resolvedType = typeVariableMap.get(typeVariable.getName());
+            if (typeArgument instanceof TypeVariable) {
+                Type resolvedType = typeVariableMap.get(typeArgument);
                 if (resolvedType instanceof Class) {
                     resolvedArguments[i] = (Class<?>) resolvedType;
                 } else {
                     return null;
                 }
+            } else if (typeArgument instanceof Class) {
+                resolvedArguments[i] = (Class<?>) typeArgument;
             } else {
                 return null;
             }
@@ -42,12 +42,28 @@ public class TypeResolver {
         return resolvedArguments;
     }
 
-    private static Map<String, Type> createTypeVariableMap(Class<?> targetType) {
-        Map<String, Type> typeVariableMap = new HashMap<>();
-        TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
-        for (TypeVariable<?> typeParameter : typeParameters) {
-            typeVariableMap.put(typeParameter.getName(), typeParameter);
+    private static void buildTypeVariableMap(Class<?> targetType, Map<TypeVariable<?>, Type> typeVariableMap) {
+        Type genericSuperclass = targetType.getGenericSuperclass();
+        if (genericSuperclass instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
+            Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            TypeVariable<?>[] typeParameters = targetType.getSuperclass().getTypeParameters();
+
+            for (int i = 0; i < actualTypeArguments.length; i++) {
+                typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
+            }
         }
-        return typeVariableMap;
+
+        for (Type genericInterface : targetType.getGenericInterfaces()) {
+            if (genericInterface instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericInterface;
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+                TypeVariable<?>[] typeParameters = ((Class<?>) parameterizedType.getRawType()).getTypeParameters();
+
+                for (int i = 0; i < actualTypeArguments.length; i++) {
+                    typeVariableMap.put(typeParameters[i], actualTypeArguments[i]);
+                }
+            }
+        }
     }
 }

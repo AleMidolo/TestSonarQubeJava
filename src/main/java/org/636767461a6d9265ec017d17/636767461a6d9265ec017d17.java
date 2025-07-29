@@ -7,21 +7,23 @@ private String unescapeId(String input) {
     }
 
     // Replace escaped quotes and backslashes
-    StringBuilder unescaped = new StringBuilder();
-    for (int i = 0; i < input.length(); i++) {
-        char currentChar = input.charAt(i);
-        if (currentChar == '\\' && i + 1 < input.length()) {
-            char nextChar = input.charAt(i + 1);
-            if (nextChar == '"' || nextChar == '\\') {
-                unescaped.append(nextChar);
-                i++; // Skip the next character
-            } else {
-                unescaped.append(currentChar);
-            }
-        } else {
-            unescaped.append(currentChar);
-        }
-    }
+    input = input.replace("\\\"", "\"");
+    input = input.replace("\\\\", "\\");
 
-    return unescaped.toString();
+    // Replace escaped newlines, tabs, etc.
+    input = input.replace("\\n", "\n");
+    input = input.replace("\\r", "\r");
+    input = input.replace("\\t", "\t");
+
+    // Replace other escaped characters
+    Pattern pattern = Pattern.compile("\\\\(.)");
+    Matcher matcher = pattern.matcher(input);
+    StringBuffer sb = new StringBuffer();
+
+    while (matcher.find()) {
+        matcher.appendReplacement(sb, matcher.group(1));
+    }
+    matcher.appendTail(sb);
+
+    return sb.toString();
 }

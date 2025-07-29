@@ -2,25 +2,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 private String parseToken(final char[] terminators) {
-    // Convert the array of terminators to a Set for O(1) lookups
+    StringBuilder token = new StringBuilder();
     Set<Character> terminatorSet = new HashSet<>();
     for (char c : terminators) {
         terminatorSet.add(c);
     }
 
-    StringBuilder token = new StringBuilder();
     int currentChar;
-
-    try {
-        while ((currentChar = System.in.read()) != -1) {
-            char ch = (char) currentChar;
-            if (terminatorSet.contains(ch)) {
+    while (true) {
+        try {
+            currentChar = System.in.read();
+            if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
                 break;
             }
-            token.append(ch);
+            token.append((char) currentChar);
+        } catch (Exception e) {
+            e.printStackTrace();
+            break;
         }
-    } catch (Exception e) {
-        e.printStackTrace();
     }
 
     return token.toString();

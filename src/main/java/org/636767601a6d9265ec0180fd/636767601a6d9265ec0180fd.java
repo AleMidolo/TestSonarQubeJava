@@ -15,15 +15,10 @@ public class Graph<V, E> {
      * @param e the edge
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        // Ensure the source vertex is in the adjacency map
+        // Ensure the source vertex exists in the adjacency map
         adjacencyMap.putIfAbsent(sourceVertex, new HashMap<>());
         
-        // Add the edge to the adjacency map
+        // Add the edge from sourceVertex to targetVertex
         adjacencyMap.get(sourceVertex).put(targetVertex, e);
-    }
-
-    // Optional: Method to get the adjacency map for testing or debugging
-    public Map<V, Map<V, E>> getAdjacencyMap() {
-        return adjacencyMap;
     }
 }

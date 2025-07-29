@@ -5,8 +5,8 @@ public class UTF8SizeCalculator {
     /**
      * Computes the size of the utf8 string beginning at the specified {@code index} with the specified {@code length}.
      *
-     * @param str   the character sequence
-     * @param index the starting index
+     * @param str   the input character sequence
+     * @param index the starting index of the substring
      * @param len   the length of the substring
      * @return the size in bytes of the UTF-8 encoded substring
      */
@@ -21,7 +21,7 @@ public class UTF8SizeCalculator {
     }
 
     public static void main(String[] args) {
-        CharSequence str = "Hello, 世界!";
+        CharSequence str = "Hello, 世界";
         int index = 7;
         int len = 2;
         int size = computeUTF8Size(str, index, len);

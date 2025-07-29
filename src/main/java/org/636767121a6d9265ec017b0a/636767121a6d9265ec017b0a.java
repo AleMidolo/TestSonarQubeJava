@@ -9,9 +9,9 @@ private int parseEndOfLine(String headerPart, int end) {
     while (index < headerPart.length()) {
         char currentChar = headerPart.charAt(index);
         if (currentChar == '\r' && index + 1 < headerPart.length() && headerPart.charAt(index + 1) == '\n') {
-            return index;
+            return index; // Return the index of the '\r' character
         }
         index++;
     }
-    return -1; // Return -1 if no end of line is found
+    return -1; // Return -1 if no end of line sequence is found
 }

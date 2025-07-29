@@ -1,33 +1,65 @@
-import java.io.StringWriter;
-import java.io.PrintWriter;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogFormatter {
 
     /**
      * Formats a logging event to a writer.
      * @param event logging event to be formatted.
-     * @return formatted string representation of the logging event.
+     * @return formatted log message as a String.
      */
     public String format(final LoggingEvent event) {
-        StringWriter writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        String level = event.getLevel().toString();
+        String message = event.getMessage();
+        String loggerName = event.getLoggerName();
 
-        printWriter.println("Logging Event:");
-        printWriter.println("Timestamp: " + event.getTimestamp());
-        printWriter.println("Level: " + event.getLevel());
-        printWriter.println("Message: " + event.getMessage());
-        printWriter.println("Logger Name: " + event.getLoggerName());
-        printWriter.println("Thread Name: " + event.getThreadName());
-
-        if (event.getThrowableInfo() != null) {
-            printWriter.println("Throwable: ");
-            event.getThrowableInfo().printStackTrace(printWriter);
-        }
-
-        printWriter.flush();
-        return writer.toString();
+        return String.format("[%s] %s %s - %s", timestamp, level, loggerName, message);
     }
 }
 
 // Assuming LoggingEvent class has the following methods:
-// getTimestamp(), getLevel(), getMessage(), getLoggerName(), getThreadName(), getThrowableInfo()
+// long getTimeStamp()
+// Level getLevel()
+// String getMessage()
+// String getLoggerName()
+
+// Example LoggingEvent class (for reference):
+/*
+class LoggingEvent {
+    private long timeStamp;
+    private Level level;
+    private String message;
+    private String loggerName;
+
+    public LoggingEvent(long timeStamp, Level level, String message, String loggerName) {
+        this.timeStamp = timeStamp;
+        this.level = level;
+        this.message = message;
+        this.loggerName = loggerName;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getLoggerName() {
+        return loggerName;
+    }
+}
+
+// Example Level enum (for reference):
+enum Level {
+    INFO, WARN, ERROR, DEBUG
+}
+*/

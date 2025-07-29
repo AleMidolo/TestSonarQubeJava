@@ -1,5 +1,19 @@
 import javax.servlet.http.HttpServletRequest;
 
+public class Meteor {
+    // Assuming Meteor class has some properties and methods
+    // For example purposes, let's assume it has a constructor and a method
+    private String id;
+
+    public Meteor(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+}
+
 public class MeteorLookup {
 
     /**
@@ -8,22 +22,27 @@ public class MeteorLookup {
      * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming Meteor is a class with a constructor or factory method
-        // that can be initialized with HttpServletRequest data.
-        // This is a placeholder implementation.
-        
-        // Example: Check if a specific attribute is present in the request
-        Object meteorAttribute = r.getAttribute("meteor");
-        if (meteorAttribute instanceof Meteor) {
-            return (Meteor) meteorAttribute;
-        }
-        
-        // If no Meteor instance is found, return null
-        return null;
-    }
-}
+        // Example logic to retrieve a Meteor instance based on the request
+        // This is a placeholder implementation and should be adapted to your actual use case
+        String meteorId = r.getParameter("meteorId");
 
-// Assuming the Meteor class is defined elsewhere
-class Meteor {
-    // Placeholder class for Meteor
+        if (meteorId != null && !meteorId.isEmpty()) {
+            // Assuming the Meteor instance is created based on the meteorId
+            return new Meteor(meteorId);
+        } else {
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        // This is just for demonstration purposes and won't run without a proper HttpServletRequest
+        HttpServletRequest request = null; // Replace with actual HttpServletRequest
+        Meteor meteor = lookup(request);
+        if (meteor != null) {
+            System.out.println("Meteor found with ID: " + meteor.getId());
+        } else {
+            System.out.println("Meteor not found.");
+        }
+    }
 }

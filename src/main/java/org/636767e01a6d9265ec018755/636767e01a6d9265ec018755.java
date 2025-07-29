@@ -13,17 +13,19 @@ private Map<String, Object> buildContent(JsonObject jsonObject) {
 
         // Check if the key is "ats" and handle it accordingly
         if (key.equals("ats")) {
-            // Assuming ats is a special field that needs to be set differently
-            content.put(key, value.getAsString()); // or getAsInt(), getAsBoolean(), etc., depending on the type
+            // Assuming "ats" is a special field that needs to be set
+            content.put(key, value.getAsString()); // or getAsInt(), getAsBoolean(), etc., depending on the expected type
         } else {
-            // Handle other fields normally
+            // Handle other fields
             if (value.isJsonPrimitive()) {
+                // Handle primitive types (String, Number, Boolean)
                 content.put(key, value.getAsString());
             } else if (value.isJsonObject()) {
+                // Recursively handle nested JsonObject
                 content.put(key, buildContent(value.getAsJsonObject()));
             } else if (value.isJsonArray()) {
-                // Handle arrays if needed
-                // content.put(key, value.getAsJsonArray());
+                // Handle JsonArray if needed
+                // You can add logic to handle arrays here
             }
         }
     }

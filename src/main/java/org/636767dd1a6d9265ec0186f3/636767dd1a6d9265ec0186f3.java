@@ -5,7 +5,7 @@ public class ColumnName {
     private Map<String, String> nameMap;
 
     public ColumnName() {
-        this.nameMap = new HashMap<>();
+        nameMap = new HashMap<>();
     }
 
     /**

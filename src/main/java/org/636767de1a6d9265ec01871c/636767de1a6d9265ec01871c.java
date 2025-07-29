@@ -10,22 +10,20 @@ public class Accumulator {
 
     /**
      * Accumulate the value with existing value in the same given key.
-     * If the key does not exist, it will be initialized with the given value.
-     *
-     * @param key   The key to accumulate the value for.
-     * @param value The value to accumulate.
      */
     public void valueAccumulation(String key, Long value) {
         map.put(key, map.getOrDefault(key, 0L) + value);
     }
 
     // Optional: Method to get the accumulated value for a key
-    public Long getAccumulatedValue(String key) {
+    public Long getValue(String key) {
         return map.getOrDefault(key, 0L);
     }
 
-    // Optional: Method to clear the accumulator
-    public void clear() {
-        map.clear();
+    public static void main(String[] args) {
+        Accumulator accumulator = new Accumulator();
+        accumulator.valueAccumulation("key1", 10L);
+        accumulator.valueAccumulation("key1", 20L);
+        System.out.println(accumulator.getValue("key1")); // Output: 30
     }
 }

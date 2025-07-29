@@ -1,14 +1,11 @@
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.HashMap;
+import java.beans.PropertyDescriptor;
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 
 public class BeanMap {
-    private Map<String, Object> properties;
-
-    public BeanMap() {
-        // Initialize properties map
-    }
+    private Map<String, Object> properties = new HashMap<>();
 
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
@@ -21,17 +18,22 @@ public class BeanMap {
 
             try {
                 PropertyDescriptor pd = new PropertyDescriptor(propertyName, this.getClass());
-                Method writeMethod = pd.getWriteMethod();
-
-                if (writeMethod != null) {
-                    writeMethod.invoke(this, value);
+                if (pd.getWriteMethod() != null) {
+                    pd.getWriteMethod().invoke(this, value);
                 }
-            } catch (Exception e) {
-                // Handle exceptions (e.g., IntrospectionException, IllegalAccessException, InvocationTargetException)
-                e.printStackTrace();
+            } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
+                // Ignore properties that cannot be written or do not exist
             }
         }
     }
 
-    // Other methods and properties of BeanMap
+    // Example of a property setter
+    public void setProperty(String propertyName, Object value) {
+        properties.put(propertyName, value);
+    }
+
+    // Example of a property getter
+    public Object getProperty(String propertyName) {
+        return properties.get(propertyName);
+    }
 }

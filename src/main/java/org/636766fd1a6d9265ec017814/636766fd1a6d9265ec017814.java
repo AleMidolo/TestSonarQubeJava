@@ -8,10 +8,10 @@ public class ByteArrayComparator {
      */
     public static boolean arrayequals(byte[] a, byte[] b, int count) {
         if (a == null || b == null) {
-            return false;
+            return a == b; // Both null or one null
         }
         if (a.length < count || b.length < count) {
-            return false;
+            return false; // Not enough elements to compare
         }
         for (int i = 0; i < count; i++) {
             if (a[i] != b[i]) {

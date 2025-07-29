@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Bucket {
-    // Assuming the bucket is part of a data structure like a list or set
+    // Assuming the bucket is part of a larger data structure like a list or set
     private List<Bucket> dataStructure;
 
     public Bucket(List<Bucket> dataStructure) {

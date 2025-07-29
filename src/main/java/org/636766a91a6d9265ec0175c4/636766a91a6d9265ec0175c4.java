@@ -3,10 +3,10 @@ import org.objectweb.asm.Type;
 private void pop(final String descriptor) {
     Type[] types;
     if (descriptor.charAt(0) == '(') {
-        // It's a method descriptor, get argument types
+        // Method descriptor: extract argument types
         types = Type.getArgumentTypes(descriptor);
     } else {
-        // It's a type descriptor, get the single type
+        // Single type descriptor
         types = new Type[] { Type.getType(descriptor) };
     }
 
@@ -21,14 +21,14 @@ private void pop(final String descriptor) {
             case Type.ARRAY:
             case Type.OBJECT:
                 // Pop one slot from the stack
-                // Assuming a method `pop()` exists to pop one slot
-                pop();
+                // Assuming a stack-like structure is managed elsewhere
+                // stack.pop();
                 break;
             case Type.LONG:
             case Type.DOUBLE:
                 // Pop two slots from the stack
-                pop();
-                pop();
+                // stack.pop();
+                // stack.pop();
                 break;
             case Type.VOID:
                 // No action needed for void
@@ -37,10 +37,4 @@ private void pop(final String descriptor) {
                 throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
-}
-
-// Assuming a method `pop()` exists to pop one slot from the stack
-private void pop() {
-    // Implementation of popping one slot from the stack
-    // This is a placeholder and should be implemented based on the actual stack structure
 }

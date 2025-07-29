@@ -44,13 +44,4 @@ public class TimeRangeSplitter {
                     '}';
         }
     }
-
-    // Example usage
-    public static void main(String[] args) {
-        TimeRangeSplitter splitter = new TimeRangeSplitter();
-        List<TimeRange> ranges = splitter.buildTimeRanges(1609459200000L, 1609462800000L); // Example timestamps
-        for (TimeRange range : ranges) {
-            System.out.println(range);
-        }
-    }
 }

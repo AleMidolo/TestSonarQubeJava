@@ -1,7 +1,7 @@
 import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.JSON;
 
-public class MyClass {
+public class Example {
 
     /**
      * Serialize to JSON {@link String}

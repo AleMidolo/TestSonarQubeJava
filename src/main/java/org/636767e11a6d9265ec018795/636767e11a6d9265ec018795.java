@@ -29,24 +29,27 @@ public class DataTable {
 
 public class Main {
     /**
-     * @param dataset The DataTable object to compare with.
-     * @return true if the bucket is the same.
+     * @return true if the bucket is same.
      */
     public boolean isCompatible(DataTable dataset) {
         // Assuming 'this' refers to another DataTable object
-        // For simplicity, let's assume 'this' is a DataTable object
+        // For simplicity, let's assume 'this' is another DataTable object
         // with a 'bucket' field
         return this.getBucket().equals(dataset.getBucket());
     }
 
     public static void main(String[] args) {
-        DataTable table1 = new DataTable("bucket1");
-        DataTable table2 = new DataTable("bucket1");
-        DataTable table3 = new DataTable("bucket2");
+        DataTable dataset1 = new DataTable("bucket1");
+        DataTable dataset2 = new DataTable("bucket1");
+        DataTable dataset3 = new DataTable("bucket2");
 
         Main main = new Main();
-        System.out.println(main.isCompatible(table1)); // true
-        System.out.println(main.isCompatible(table2)); // true
-        System.out.println(main.isCompatible(table3)); // false
+        System.out.println(main.isCompatible(dataset1, dataset2)); // true
+        System.out.println(main.isCompatible(dataset1, dataset3)); // false
+    }
+
+    // Overloaded method to compare two DataTable objects
+    public boolean isCompatible(DataTable dataset1, DataTable dataset2) {
+        return dataset1.getBucket().equals(dataset2.getBucket());
     }
 }

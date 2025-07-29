@@ -1,19 +1,19 @@
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ByteArrayConverter {
-    private byte[] data;
-    
-    public ByteArrayConverter(byte[] input) {
-        this.data = input;
+
+    private ByteArrayOutputStream outputStream;
+
+    public ByteArrayConverter() {
+        this.outputStream = new ByteArrayOutputStream();
     }
-    
+
     /**
-     * Copia i byte in un {@code byte[]}.
+     * Copia bytes a un {@code byte[]}.
+     * @return array de bytes con el contenido del stream
      */
     public byte[] toByteArray() {
-        if (data == null) {
-            return new byte[0];
-        }
-        return Arrays.copyOf(data, data.length);
+        return outputStream.toByteArray();
     }
 }

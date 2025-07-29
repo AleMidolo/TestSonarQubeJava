@@ -1,42 +1,28 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Graph<V,E> {
-    
-    // Index maps to store edges
-    private Map<V, Map<V, Set<E>>> outgoingEdges;
-    private Map<V, Map<V, Set<E>>> incomingEdges;
+
+    // Map to store edges indexed by source and target vertices
+    protected Map<V, Map<V, List<E>>> index;
 
     public Graph() {
-        outgoingEdges = new HashMap<>();
-        incomingEdges = new HashMap<>();
+        index = new HashMap<>();
     }
 
     /**
-     * Aggiunge un arco all'indice.
-     * @param sourceVertex il vertice sorgente 
-     * @param targetVertex il vertice di destinazione
-     * @param e l'arco
+     * Agrega una arista al índice.
+     * @param sourceVertex el vértice fuente 
+     * @param targetVertex el vértice objetivo
+     * @param e la arista
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        // Add to outgoing edges
-        if (!outgoingEdges.containsKey(sourceVertex)) {
-            outgoingEdges.put(sourceVertex, new HashMap<>());
-        }
-        if (!outgoingEdges.get(sourceVertex).containsKey(targetVertex)) {
-            outgoingEdges.get(sourceVertex).put(targetVertex, new HashSet<>());
-        }
-        outgoingEdges.get(sourceVertex).get(targetVertex).add(e);
-
-        // Add to incoming edges
-        if (!incomingEdges.containsKey(targetVertex)) {
-            incomingEdges.put(targetVertex, new HashMap<>());
-        }
-        if (!incomingEdges.get(targetVertex).containsKey(sourceVertex)) {
-            incomingEdges.get(targetVertex).put(sourceVertex, new HashSet<>());
-        }
-        incomingEdges.get(targetVertex).get(sourceVertex).add(e);
+        // Get or create map for source vertex
+        Map<V, List<E>> sourceMap = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
+        
+        // Get or create list of edges for target vertex
+        List<E> edgeList = sourceMap.computeIfAbsent(targetVertex, k -> new ArrayList<>());
+        
+        // Add edge to list
+        edgeList.add(e);
     }
 }

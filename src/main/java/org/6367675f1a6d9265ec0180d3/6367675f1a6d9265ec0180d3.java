@@ -1,6 +1,5 @@
 import org.jgrapht.Graph;
 import org.jgrapht.GraphMapping;
-import org.jgrapht.graph.AsGraphUnion;
 import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,35 +7,33 @@ import java.util.Map;
 public class GraphUtils {
 
     /**
-     * Calcola un automorfismo identitario (cioè una mappatura di un grafo in cui ogni vertice si mappa su se stesso).
-     * @param graph il grafo di input
-     * @param <V> il tipo di vertice del grafo
-     * @param <E> il tipo di arco del grafo
-     * @return una mappatura da grafo a grafo
+     * Calcula un automorfismo de identidad (es decir, un mapeo propio de un grafo en el que cada vértice también se mapea a sí mismo).
+     * @param grafo el grafo de entrada
+     * @param <V> el tipo de vértice del grafo
+     * @param <E> el tipo de arista del grafo
+     * @return un mapeo de grafo a grafo
      */
-    public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
-        // Create identity mappings for vertices and edges
-        Map<V,V> vertexCorr = new HashMap<>();
-        Map<E,E> edgeCorr = new HashMap<>();
+    public static <V,E> IsomorphicGraphMapping<V,E> identidad(Graph<V,E> grafo) {
+        // Crear mapeos de vértices y aristas
+        Map<V,V> vertexMap = new HashMap<>();
+        Map<E,E> edgeMap = new HashMap<>();
         
-        // Map each vertex to itself
-        for(V vertex : graph.vertexSet()) {
-            vertexCorr.put(vertex, vertex);
+        // Mapear cada vértice a sí mismo
+        for(V vertex : grafo.vertexSet()) {
+            vertexMap.put(vertex, vertex);
         }
         
-        // Map each edge to itself
-        for(E edge : graph.edgeSet()) {
-            edgeCorr.put(edge, edge);
+        // Mapear cada arista a sí misma
+        for(E edge : grafo.edgeSet()) {
+            edgeMap.put(edge, edge);
         }
         
-        // Create and return the isomorphic mapping
+        // Crear y retornar el mapeo isomórfico
         return new IsomorphicGraphMapping<>(
-            graph, // source graph
-            graph, // target graph (same as source for identity mapping)
-            vertexCorr,
-            vertexCorr, // inverse vertex correspondence is the same for identity
-            edgeCorr,
-            edgeCorr  // inverse edge correspondence is the same for identity
+            grafo,    // grafo origen
+            grafo,    // grafo destino
+            vertexMap,// mapeo de vértices
+            edgeMap   // mapeo de aristas
         );
     }
 }

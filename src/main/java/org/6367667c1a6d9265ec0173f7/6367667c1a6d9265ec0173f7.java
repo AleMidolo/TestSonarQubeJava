@@ -1,13 +1,13 @@
 import java.util.Arrays;
 
-public class Message {
-    private byte[] body;
+public class MessageBody {
+    private byte[] bodyBytes;
     
     /**
-     * Restituisce true se il corpo è un array di byte
-     * @return true se il corpo è un array di byte
+     * Verdadero si el cuerpo es un arreglo de bytes
+     * @return Verdadero si el cuerpo es un arreglo de bytes
      */
     public boolean hasBytes() {
-        return body != null && body.length > 0;
+        return bodyBytes != null && bodyBytes.length > 0;
     }
 }

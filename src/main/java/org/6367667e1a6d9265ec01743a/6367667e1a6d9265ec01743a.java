@@ -1,17 +1,17 @@
 import java.time.Instant;
 
-public class TimeStampTracker {
-    private long lastWriteTimeStamp;
+public class FileOperations {
+    private long lastWriteTimestamp;
 
-    public TimeStampTracker() {
-        this.lastWriteTimeStamp = Instant.now().toEpochMilli();
+    public FileOperations() {
+        this.lastWriteTimestamp = Instant.now().toEpochMilli();
     }
 
     /** 
-     * L'ultima volta, in millisecondi, in cui è avvenuta un'operazione di scrittura.
-     * @return questo
+     * La última vez, en milisegundos, que ocurrió una operación de escritura.
+     * @return esto
      */
     public long lastWriteTimeStampInMilliseconds() {
-        return this.lastWriteTimeStamp;
+        return this.lastWriteTimestamp;
     }
 }

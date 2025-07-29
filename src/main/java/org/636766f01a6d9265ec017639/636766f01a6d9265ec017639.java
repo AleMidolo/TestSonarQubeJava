@@ -4,9 +4,8 @@ import java.util.List;
 
 public class ArrayUtils {
     /**
-     * Array in Lista. <p> Funziona come {@link Arrays#asList(Object)}, ma gestisce gli array nulli.
-     * @param a array da convertire in lista
-     * @return una lista supportata dall'array.
+     * Array a Lista. <p> Funciona como {@link Arrays#asList(Object)},pero maneja arreglos nulos.
+     * @return una lista respaldada por el arreglo.
      */
     public static <T> List<T> asList(T[] a) {
         if (a == null) {

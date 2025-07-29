@@ -2,19 +2,15 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LogFormatter {
-
+public class CustomLogFormatter {
+    
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     
     /**
-     * Formatta un evento di logging per un writer.
-     * @param event evento di logging da formattare.
+     * Formatea un evento de "logging" para un "writer".
+     * @param event evento de "logging" que se va a formatear.
      */
     public String format(final LoggingEvent event) {
-        if (event == null) {
-            return "";
-        }
-
         StringBuilder sb = new StringBuilder();
         
         // Add timestamp

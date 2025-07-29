@@ -1,33 +1,30 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.util.Pair;
 
 public class SuffixSumCalculator {
 
-    private static class Pair<T1, T2> {
-        private T1 first;
-        private T2 second;
-
-        public Pair(T1 first, T2 second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
-    private Pair<List<Integer>, Long> computeSuffixSum(List<Integer> bounds) {
-        if (bounds == null || bounds.isEmpty()) {
-            return new Pair<>(new ArrayList<>(), 0L);
-        }
-
-        List<Integer> suffixSums = new ArrayList<>(bounds.size());
+    /**
+     * Calcula una suma de sufijos de los {@code bounds}. Devuelve la suma de sufijos calculada y la suma de todos los elementos en la {@code lista de bounds}.
+     * @param bounds lista de enteros.
+     * @return par calculado de la lista de suma de sufijos y la suma de todos los elementos.
+     */
+    private Pair<List<Integer>,Long> computeSuffixSum(List<Integer> bounds) {
+        List<Integer> suffixSums = new ArrayList<>();
         long totalSum = 0;
-        int currentSuffixSum = 0;
-
-        // Calculate suffix sums from right to left
-        for (int i = bounds.size() - 1; i >= 0; i--) {
-            currentSuffixSum += bounds.get(i);
-            suffixSums.add(0, currentSuffixSum);
-            totalSum += bounds.get(i);
+        
+        // Calculate total sum first
+        for (int num : bounds) {
+            totalSum += num;
         }
-
+        
+        // Calculate suffix sums
+        long currentSum = 0;
+        for (int i = bounds.size() - 1; i >= 0; i--) {
+            currentSum += bounds.get(i);
+            suffixSums.add(0, (int)currentSum);
+        }
+        
         return new Pair<>(suffixSums, totalSum);
     }
 }

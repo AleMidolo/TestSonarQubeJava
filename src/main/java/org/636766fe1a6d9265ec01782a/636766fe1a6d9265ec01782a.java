@@ -1,34 +1,37 @@
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.nio.ByteBuffer;
 
-public class ClassFileReader {
-    private byte[] classFileBuffer;
-    private int[] cpInfoOffsets;
+public class ClassReader {
+    private ByteBuffer classFileBuffer;
     
     final String readUtf(final int constantPoolEntryIndex, final char[] charBuffer) {
-        int offset = cpInfoOffsets[constantPoolEntryIndex];
-        int utfLen = ((classFileBuffer[offset + 1] & 0xFF) << 8) | (classFileBuffer[offset + 2] & 0xFF);
-        offset += 3;
+        // Get the UTF8 string length
+        int utfLen = classFileBuffer.getShort(constantPoolEntryIndex) & 0xFFFF;
         
-        int charLen = 0;
-        int max = offset + utfLen;
-        while (offset < max) {
-            int currentByte = classFileBuffer[offset++] & 0xFF;
-            if (currentByte < 0x80) {
-                // 1 byte UTF-8 encoding
-                charBuffer[charLen++] = (char) currentByte;
-            } else if ((currentByte & 0xE0) == 0xC0) {
-                // 2 byte UTF-8 encoding
-                charBuffer[charLen++] = (char) (((currentByte & 0x1F) << 6) | 
-                    (classFileBuffer[offset++] & 0x3F));
+        int strLen = 0;
+        int c;
+        int st = constantPoolEntryIndex + 2;
+        int cc = 0;
+        
+        while (cc < utfLen) {
+            c = classFileBuffer.get(st + cc) & 0xFF;
+            if ((c & 0x80) == 0) {
+                // 0xxxxxxx
+                charBuffer[strLen++] = (char) c;
+            } else if ((c & 0xE0) == 0xC0) {
+                // 110xxxxx 10xxxxxx
+                charBuffer[strLen++] = (char) (((c & 0x1F) << 6) + 
+                    (classFileBuffer.get(st + cc + 1) & 0x3F));
+                cc++;
             } else {
-                // 3 byte UTF-8 encoding
-                charBuffer[charLen++] = (char) (((currentByte & 0xF) << 12) | 
-                    ((classFileBuffer[offset++] & 0x3F) << 6) | 
-                    (classFileBuffer[offset++] & 0x3F));
+                // 1110xxxx 10xxxxxx 10xxxxxx
+                charBuffer[strLen++] = (char) (((c & 0xF) << 12) + 
+                    ((classFileBuffer.get(st + cc + 1) & 0x3F) << 6) +
+                    (classFileBuffer.get(st + cc + 2) & 0x3F));
+                cc += 2;
             }
+            cc++;
         }
-        return new String(charBuffer, 0, charLen);
+        
+        return new String(charBuffer, 0, strLen);
     }
 }

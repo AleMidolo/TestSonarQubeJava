@@ -5,11 +5,11 @@ public class Bucket {
     private Bucket next;
     
     /**
-     * Inserisce questo bucket nella struttura dati prima del {@code bucket}.
-     * @param bucket il bucket, che sarà il successivo a questo bucket.
+     * Inserta este "bucket" en la estructura de datos antes del {@code bucket}.
+     * @param bucket el "bucket", que será el siguiente a este "bucket".
      */
-    void insertBefore(Bucket bucket) {
-        Objects.requireNonNull(bucket);
+    public void insertBefore(Bucket bucket) {
+        Objects.requireNonNull(bucket, "bucket cannot be null");
         
         // Set this bucket's next reference to the given bucket
         this.next = bucket;

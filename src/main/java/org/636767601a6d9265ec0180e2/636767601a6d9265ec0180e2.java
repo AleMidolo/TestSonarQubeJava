@@ -1,53 +1,62 @@
 import java.util.*;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class SeparatorComputer {
-    private Graph<V,E> graph; // Assuming a graph class with vertices V and edges E
+
+    private Graph<V,E> graph; // Graph instance variable
     
-    /**
-     * Calcola la lista globale dei separatori del {@code grafo}. Più precisamente, per ogni arco $e$ in $G = (V, E)$ calcola la lista dei separatori minimi $S_e$ nel vicinato di $e$ e poi concatena queste liste. Nota: il risultato può contenere duplicati.
-     * @return la lista dei separatori minimi di ogni arco $e$ nel grafo ispezionato
-     */
     private List<Pair<List<Pair<Integer,Integer>>,E>> computeGlobalSeparatorList() {
         List<Pair<List<Pair<Integer,Integer>>,E>> globalSeparators = new ArrayList<>();
         
         // Iterate through all edges in the graph
-        for (E edge : graph.edges()) {
-            List<Pair<Integer,Integer>> separators = new ArrayList<>();
-            
-            // Get vertices incident to the edge
+        for (E edge : graph.edgeSet()) {
+            // Get vertices incident to edge
             V source = graph.getEdgeSource(edge);
             V target = graph.getEdgeTarget(edge);
             
-            // Get neighborhood of both vertices
-            Set<V> sourceNeighbors = new HashSet<>(graph.neighborsOf(source));
-            Set<V> targetNeighbors = new HashSet<>(graph.neighborsOf(target));
+            // Get neighborhood subgraph around edge
+            Set<V> neighborhood = new HashSet<>();
+            neighborhood.add(source);
+            neighborhood.add(target);
+            neighborhood.addAll(Graphs.neighborListOf(graph, source));
+            neighborhood.addAll(Graphs.neighborListOf(graph, target));
             
-            // Find common neighbors that form minimal separators
-            Set<V> commonNeighbors = new HashSet<>(sourceNeighbors);
-            commonNeighbors.retainAll(targetNeighbors);
+            Graph<V,E> subgraph = new AsSubgraph<>(graph, neighborhood);
             
-            // Create pairs of vertices that form minimal separators
-            for (V v1 : commonNeighbors) {
-                for (V v2 : commonNeighbors) {
-                    if (!v1.equals(v2)) {
-                        // Assuming vertices have integer IDs
-                        int id1 = v1.getId();
-                        int id2 = v2.getId();
-                        // Add separator pair in sorted order
-                        if (id1 < id2) {
-                            separators.add(new Pair<>(id1, id2));
-                        } else {
-                            separators.add(new Pair<>(id2, id1));
-                        }
-                    }
-                }
-            }
+            // Find minimal separators in neighborhood
+            List<Pair<Integer,Integer>> separators = findMinimalSeparators(subgraph, source, target);
             
-            // Add the separators list along with the edge to global list
-            globalSeparators.add(new Pair<>(separators, edge));
+            // Add separators with associated edge to global list
+            globalSeparators.add(Pair.of(separators, edge));
         }
         
         return globalSeparators;
+    }
+    
+    // Helper method to find minimal separators between two vertices
+    private List<Pair<Integer,Integer>> findMinimalSeparators(Graph<V,E> graph, V source, V target) {
+        List<Pair<Integer,Integer>> separators = new ArrayList<>();
+        
+        // Use max flow / min cut to find minimal separators
+        EdmondsKarpMFImpl<V,E> maxFlow = new EdmondsKarpMFImpl<>(graph);
+        
+        // Convert vertices to integers for pair representation
+        int s = graph.vertexSet().indexOf(source);
+        int t = graph.vertexSet().indexOf(target);
+        
+        // Find minimal separator
+        Set<E> minCut = maxFlow.getMinCut(source, target);
+        
+        // Convert cut edges to vertex pairs
+        for (E edge : minCut) {
+            V v1 = graph.getEdgeSource(edge);
+            V v2 = graph.getEdgeTarget(edge);
+            separators.add(Pair.of(
+                graph.vertexSet().indexOf(v1),
+                graph.vertexSet().indexOf(v2)
+            ));
+        }
+        
+        return separators;
     }
 }

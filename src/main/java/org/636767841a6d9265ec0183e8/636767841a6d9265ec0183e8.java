@@ -11,7 +11,7 @@ public class LogBuffer {
     }
 
     /**
-     * Aggiunge un <code>evento</code> come ultimo evento nel buffer.
+     * Agrega un <code>evento</code> como el último evento en el búfer.
      */
     public void add(LoggingEvent event) {
         if (event == null) {

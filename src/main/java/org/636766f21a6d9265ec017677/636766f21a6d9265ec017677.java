@@ -1,7 +1,7 @@
 public class BooleanUtils {
     /**
-     * <p>Controlla se un valore <code>Boolean</code> è <i>non</i> <code>true</code>, 
-     * gestendo <code>null</code> restituendo <code>true</code>.</p>
+     * <p>Verifica si un valor <code>Boolean</code> <i>no</i> es <code>true</code>, 
+     * manejando <code>null</code> al devolver <code>true</code>.</p>
      *
      * <pre>
      * BooleanUtils.isNotTrue(Boolean.TRUE)  = false
@@ -9,8 +9,8 @@ public class BooleanUtils {
      * BooleanUtils.isNotTrue(null)          = true
      * </pre>
      *
-     * @param bool  il booleano da controllare, null restituisce <code>true</code>
-     * @return <code>true</code> se l'input è null o false
+     * @param bool  el booleano a verificar, null devuelve <code>true</code>
+     * @return <code>true</code> si la entrada es null o false
      * @since 2.3
      */
     public static boolean isNotTrue(Boolean bool) {

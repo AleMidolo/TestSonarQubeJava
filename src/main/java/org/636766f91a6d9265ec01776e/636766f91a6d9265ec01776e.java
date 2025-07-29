@@ -39,11 +39,10 @@ public class ByteOutputStream extends OutputStream {
         }
     }
 
-    // Other required methods for OutputStream...
     @Override
     public void write(int b) throws IOException {
         ensureCapacity(count + 1);
         buffer[count] = (byte) b;
-        count += 1;
+        count++;
     }
 }

@@ -1,17 +1,17 @@
-package org.apache.commons.lang3;
+import java.lang.StringBuilder;
 
 public class StringUtils {
+
     /**
-     * <p>Inverte una Stringa come per {@link StringBuilder#reverse()}.</p>
-     * <p>Una Stringa <code>null</code> restituisce <code>null</code>.</p>
+     * <p>Invierte una cadena de acuerdo con {@link StringBuilder#reverse()}.</p>
+     * <p>Una cadena <code>null</code> devuelve <code>null</code>.</p>
      * <pre>
      * StringUtils.reverse(null)  = null
      * StringUtils.reverse("")    = ""
      * StringUtils.reverse("bat") = "tab"
      * </pre>
-     * 
-     * @param str la Stringa da invertire, può essere null
-     * @return la Stringa invertita, <code>null</code> se l'input è una Stringa null
+     * @param str  la cadena a invertir, puede ser null
+     * @return la cadena invertida, <code>null</code> si la entrada es una cadena null
      */
     public static String reverse(final String str) {
         if (str == null) {

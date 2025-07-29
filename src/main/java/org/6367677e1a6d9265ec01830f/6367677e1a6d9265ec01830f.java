@@ -2,25 +2,18 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomFormatter {
-    
-    /**
-     * Produce una stringa formattata come specificato dal modello di conversione.
-     */
-    public String format(LoggingEvent event) {
-        if (event == null) {
-            return "";
-        }
+public class CustomLogFormatter {
 
+    public String format(LoggingEvent event) {
         StringBuilder formattedMessage = new StringBuilder();
         
         // Add timestamp
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-        formattedMessage.append(dateFormat.format(new Date(event.getTimeStamp())));
-        formattedMessage.append(" ");
+        String timestamp = dateFormat.format(new Date(event.getTimeStamp()));
+        formattedMessage.append(timestamp);
         
         // Add log level
-        formattedMessage.append("[");
+        formattedMessage.append(" [");
         formattedMessage.append(event.getLevel().toString());
         formattedMessage.append("] ");
         
@@ -40,6 +33,9 @@ public class CustomFormatter {
                 formattedMessage.append("\n");
             }
         }
+        
+        // Add new line
+        formattedMessage.append("\n");
         
         return formattedMessage.toString();
     }

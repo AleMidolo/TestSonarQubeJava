@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 public class PropertyUtils {
 
     /**
-     * Trova il valore corrispondente a <code>key</code> in <code>props</code>. 
-     * Quindi esegui la sostituzione delle variabili sul valore trovato.
+     * Encuentra el valor correspondiente a <code>key</code> en <code>props</code>. 
+     * Luego realiza la sustitución de variables en el valor encontrado.
      */
     public static String findAndSubst(String key, Properties props) {
         if (key == null || props == null) {
@@ -18,7 +18,6 @@ public class PropertyUtils {
             return null;
         }
 
-        // Pattern per trovare variabili del tipo ${var}
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
@@ -27,17 +26,14 @@ public class PropertyUtils {
             String varName = matcher.group(1);
             String replacement = props.getProperty(varName);
             
-            // Se la variabile non è definita, lascia il placeholder originale
             if (replacement == null) {
-                replacement = "${" + varName + "}";
+                replacement = "";
             }
             
-            // Escape dei caratteri speciali nel replacement
-            replacement = Matcher.quoteReplacement(replacement);
-            matcher.appendReplacement(result, replacement);
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
+        
         matcher.appendTail(result);
-
         return result.toString();
     }
 }

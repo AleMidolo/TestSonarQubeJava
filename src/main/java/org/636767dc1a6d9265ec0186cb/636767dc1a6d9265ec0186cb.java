@@ -5,33 +5,36 @@ import java.util.logging.Level;
 
 public class ConfigurationManager {
     private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class.getName());
-    private static final String DEFAULT_DEPLOY_PATH = "/opt/application/";
-    private File deploymentPath;
-
+    private static final String DISTRIBUTION_PATH = "dist/";
+    
+    /**
+     * inicializa la configuración, como verificar la ruta de distribución
+     */
     public void init() {
         try {
-            // Check if deployment path exists
-            deploymentPath = new File(DEFAULT_DEPLOY_PATH);
-            if (!deploymentPath.exists()) {
-                deploymentPath.mkdirs();
-                LOGGER.info("Created deployment directory at: " + DEFAULT_DEPLOY_PATH);
+            // Verificar si existe el directorio de distribución
+            File distributionDir = new File(DISTRIBUTION_PATH);
+            
+            if (!distributionDir.exists()) {
+                // Crear el directorio si no existe
+                if (distributionDir.mkdirs()) {
+                    LOGGER.info("Directorio de distribución creado exitosamente");
+                } else {
+                    LOGGER.severe("No se pudo crear el directorio de distribución");
+                }
             }
-
-            // Verify write permissions
-            if (!deploymentPath.canWrite()) {
-                LOGGER.severe("No write permissions for deployment path: " + DEFAULT_DEPLOY_PATH);
-                throw new SecurityException("No write permissions for deployment path");
+            
+            // Verificar permisos de escritura
+            if (!distributionDir.canWrite()) {
+                LOGGER.warning("El directorio de distribución no tiene permisos de escritura");
             }
-
-            // Additional initialization steps can be added here
-            LOGGER.info("Configuration initialized successfully");
-
+            
+            // Otras inicializaciones de configuración pueden ir aquí
+            
         } catch (SecurityException e) {
-            LOGGER.log(Level.SEVERE, "Security error during initialization", e);
-            throw e;
+            LOGGER.log(Level.SEVERE, "Error de seguridad al inicializar la configuración", e);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error during initialization", e);
-            throw new RuntimeException("Failed to initialize configuration", e);
+            LOGGER.log(Level.SEVERE, "Error al inicializar la configuración", e);
         }
     }
 }

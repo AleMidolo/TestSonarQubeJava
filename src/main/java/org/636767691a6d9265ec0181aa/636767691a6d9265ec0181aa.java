@@ -2,9 +2,9 @@ import java.util.Arrays;
 
 public class ArrayUtils {
     /**
-     * Restituisce un codice hash basato sul contenuto dell'array specificato. Se <code>array</code> è <code>null</code>, questo metodo restituisce 0.
-     * @param array l'array di long per ottenere un codice hash
-     * @return il codice hash dell'array di long, che potrebbe essere 0 se l'array è null.
+     * Devuelve un código hash basado en el contenido del array especificado. Si el <code>array</code> es <code>null</code>, este método devuelve 0.
+     * @param array el array de tipo long para obtener un código hash
+     * @return el código hash del array de tipo long, que podría ser 0 si el array es null.
      */
     public static int nullSafeHashCode(long[] array) {
         if (array == null) {

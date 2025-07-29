@@ -1,14 +1,14 @@
+import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryTree {
-    private CategoryNode root;
+    private Category root;
     
-    protected class CategoryNode {
+    protected class Category {
         private boolean active;
-        private List<CategoryNode> children;
+        private ArrayList<Category> children;
         
-        public CategoryNode() {
+        public Category() {
             this.active = false;
             this.children = new ArrayList<>();
         }
@@ -17,7 +17,7 @@ public class CategoryTree {
             return active;
         }
         
-        public List<CategoryNode> getChildren() {
+        public ArrayList<Category> getChildren() {
             return children;
         }
     }
@@ -29,26 +29,27 @@ public class CategoryTree {
         return removeUnusedNodesRecursive(root);
     }
     
-    private int removeUnusedNodesRecursive(CategoryNode node) {
-        int removedCount = 0;
+    private int removeUnusedNodesRecursive(Category node) {
+        int count = 0;
         
-        // Create a list to store children that need to be removed
-        List<CategoryNode> nodesToRemove = new ArrayList<>();
+        if (node.getChildren().isEmpty()) {
+            return node.isActive() ? 0 : 1;
+        }
         
-        // Recursively process all children
-        for (CategoryNode child : node.getChildren()) {
-            removedCount += removeUnusedNodesRecursive(child);
+        Iterator<Category> iterator = node.getChildren().iterator();
+        while (iterator.hasNext()) {
+            Category child = iterator.next();
+            count += removeUnusedNodesRecursive(child);
             
-            // If child is inactive and has no children, mark it for removal
             if (!child.isActive() && child.getChildren().isEmpty()) {
-                nodesToRemove.add(child);
-                removedCount++;
+                iterator.remove();
             }
         }
         
-        // Remove marked nodes from children list
-        node.getChildren().removeAll(nodesToRemove);
+        if (!node.isActive() && node.getChildren().isEmpty()) {
+            count++;
+        }
         
-        return removedCount;
+        return count;
     }
 }

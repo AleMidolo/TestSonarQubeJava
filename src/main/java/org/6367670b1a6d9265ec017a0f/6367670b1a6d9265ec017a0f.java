@@ -3,13 +3,13 @@ import java.util.List;
 public class StringUtils {
 
     /**
-     * Controllo non sensibile al maiuscolo/minuscolo se la Stringa contiene uno qualsiasi dei caratteri nel set di stringhe fornito.
+     * Verificación sin distinción entre mayúsculas y minúsculas: Comprueba si la cadena contiene algún carácter en el conjunto de cadenas dado.
      */
     public static boolean containsAnyIgnoreCase(String str, List<String> searchStrArray) {
         if (str == null || searchStrArray == null) {
             return false;
         }
-        
+
         String lowerStr = str.toLowerCase();
         
         for (String searchStr : searchStrArray) {

@@ -3,30 +3,31 @@ import java.util.Iterator;
 
 public class BeanMapUtils {
     
-    /**
-     * Inserisce tutte le proprietà scrivibili dal BeanMap fornito in questo BeanMap. 
-     * Le proprietà di sola lettura e di sola scrittura verranno ignorate.
-     * @param map il BeanMap le cui proprietà devono essere inserite
+    /** 
+     * Coloca todas las propiedades escribibles del BeanMap dado en este BeanMap. 
+     * Las propiedades de solo lectura y de solo escritura serán ignoradas.
+     * @param map el BeanMap cuyas propiedades se van a colocar
      */
     public void putAllWriteable(BeanMap map) {
         if (map == null) {
             return;
         }
 
-        Iterator<?> it = map.keyIterator();
-        while (it.hasNext()) {
-            String propertyName = (String) it.next();
+        Iterator<?> entries = map.entryIterator();
+        while (entries.hasNext()) {
+            BeanMap.Entry entry = (BeanMap.Entry) entries.next();
+            String propertyName = entry.getKey().toString();
             
-            // Verifica se la proprietà è scrivibile
+            // Verifica si la propiedad es escribible
             if (map.getWriteMethod(propertyName) != null) {
-                Object value = map.get(propertyName);
+                Object value = entry.getValue();
                 try {
-                    // Inserisce solo se esiste un metodo setter
+                    // Solo coloca la propiedad si tiene un método setter
                     if (this.getWriteMethod(propertyName) != null) {
                         this.put(propertyName, value);
                     }
                 } catch (Exception e) {
-                    // Ignora le proprietà che non possono essere scritte
+                    // Ignora errores al establecer propiedades individuales
                     continue;
                 }
             }

@@ -6,11 +6,12 @@ package org.apache.commons.lang3;
 public class BooleanUtils {
 
     /**
-     * <p>Converte un array di oggetti Boolean in primitivi.</p>
-     * <p>Questo metodo restituisce <code>null</code> per un array di input <code>null</code>.</p>
-     * @param array  un array di <code>Boolean</code>, può essere <code>null</code>
-     * @return un array di <code>boolean</code>, <code>null</code> se l'array di input è nullo
-     * @throws NullPointerException se il contenuto dell'array è <code>null</code>
+     * <p>Convierte un array de objetos Boolean a primitivos.</p>
+     * <p>Este método devuelve <code>null</code> para un array de entrada <code>null</code>.</p>
+     * 
+     * @param array  un array de <code>Boolean</code>, puede ser <code>null</code>
+     * @return un array de <code>boolean</code>, <code>null</code> si el array de entrada es nulo
+     * @throws NullPointerException si el contenido del array es <code>null</code>
      */
     public static boolean[] toPrimitive(final Boolean[] array) {
         if (array == null) {

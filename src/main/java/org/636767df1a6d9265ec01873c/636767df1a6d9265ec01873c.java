@@ -1,8 +1,9 @@
 import java.util.UUID;
 
 public class EntityIdentifier {
+
     /**
-     * @return l'id della riga
+     * @return el id de la fila
      */
     public String id(String entityId) {
         if (entityId == null || entityId.trim().isEmpty()) {
@@ -10,4 +11,5 @@ public class EntityIdentifier {
         }
         return entityId.trim();
     }
+
 }

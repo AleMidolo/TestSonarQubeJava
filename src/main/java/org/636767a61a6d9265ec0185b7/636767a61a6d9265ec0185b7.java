@@ -1,9 +1,9 @@
-public class CharacterUtils {
+public class DigitConverter {
     /**
-     * Interpreta un carattere come una cifra (in qualsiasi base fino a 36) e restituisce il valore numerico. 
-     * Questo è simile a {@code Character.digit()} ma non accettiamo cifre non-ASCII.
+     * Interpreta un carácter como un dígito (en cualquier base hasta 36) y devuelve el valor numérico. 
+     * Esto es similar a {@code Character.digit()} pero no aceptamos dígitos no ASCII.
      */
-    private static int digitValue(final char c) {
+    private static int valorDígito(final char c) {
         if (c >= '0' && c <= '9') {
             return c - '0';
         }

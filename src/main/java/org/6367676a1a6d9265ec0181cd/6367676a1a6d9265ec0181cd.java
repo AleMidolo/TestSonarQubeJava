@@ -1,8 +1,8 @@
 public class StringUtils {
     /**
-     * Rimuove gli spazi bianchi iniziali dalla Stringa fornita.
-     * @param str la Stringa da controllare
-     * @return la Stringa senza spazi bianchi iniziali
+     * Elimina los espacios en blanco al inicio de la cadena dada.
+     * @param str la cadena a verificar
+     * @return la cadena sin espacios en blanco al inicio
      * @see java.lang.Character#isWhitespace
      */
     public static String trimLeadingWhitespace(String str) {

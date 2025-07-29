@@ -3,29 +3,27 @@ import java.io.IOException;
 
 public class BufferWriter {
     /**
-     * Scrive il contenuto del {@link LinkedBuffer} nel {@link DataOutput}.
-     * @return la dimensione totale del contenuto del buffer.
+     * Escribe el contenido del {@link LinkedBuffer} en el {@link DataOutput}.
+     * @return el tamaño total del contenido del búfer.
      */
     public static int writeTo(final DataOutput out, LinkedBuffer node) throws IOException {
         int totalSize = 0;
         
         while (node != null && node.buffer != null) {
-            int size = node.offset - node.start;
-            if (size > 0) {
-                out.write(node.buffer, node.start, size);
-                totalSize += size;
+            if (node.offset > 0) {
+                out.write(node.buffer, 0, node.offset);
+                totalSize += node.offset;
             }
             node = node.next;
         }
         
         return totalSize;
     }
-}
-
-// Helper class needed for compilation
-class LinkedBuffer {
-    byte[] buffer;
-    int start;
-    int offset;
-    LinkedBuffer next;
+    
+    // LinkedBuffer class for compilation
+    private static class LinkedBuffer {
+        byte[] buffer;
+        int offset;
+        LinkedBuffer next;
+    }
 }

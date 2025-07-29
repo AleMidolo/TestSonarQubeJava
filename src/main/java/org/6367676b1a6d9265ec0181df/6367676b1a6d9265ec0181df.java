@@ -1,9 +1,9 @@
 public class StringUtils {
     /**
-     * Restituisce {@code true} se la stringa fornita inizia con il prefisso specificato, ignorando le maiuscole, {@code false} altrimenti.
-     * @param str la String da controllare
-     * @param prefix il prefisso da cercare
-     * @return {@code true} se la stringa fornita inizia con il prefisso specificato, ignorando le maiuscole, {@code false} altrimenti.
+     * Devuelve {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
+     * @param str la cadena a verificar
+     * @param prefix el prefijo a buscar
+     * @return {@code true} si la cadena dada comienza con el prefijo especificado sin distinguir entre mayúsculas y minúsculas, {@code false} en caso contrario.
      * @see java.lang.String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {

@@ -1,20 +1,12 @@
 package utils;
 
-/**
- * Utility class for object conversions
- */
-public class ObjectUtils {
-
+public class StringUtils {
     /**
-     * Conversione da 'Object' a stringa, se l'oggetto è nullo allora restituisce null, altrimenti restituisce toString()
-     * @param object The object to convert to string
-     * @return String representation of the object, or null if object is null
+     * Convierte un objeto a String; si el objeto es nulo, devuelve nulo, de lo contrario, devuelve toString();
+     * @param object Objeto a convertir a String
+     * @return String representación del objeto o null si el objeto es nulo
      */
     public static String toString(Object object) {
-        if (object == null) {
-            return null;
-        }
-        return object.toString();
+        return object == null ? null : object.toString();
     }
-
 }

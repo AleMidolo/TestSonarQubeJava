@@ -5,9 +5,9 @@ public class Parser {
     private int currentPosition;
     
     /**
-     * Analizza un token fino a quando non viene incontrato uno dei caratteri terminatori forniti.
-     * @param terminators l'array di caratteri terminatori. Qualsiasi di questi caratteri, quando incontrato, segna la fine del token
-     * @return il token
+     * Analiza un token hasta que se encuentra con cualquiera de los terminadores dados.
+     * @param terminators el arreglo de caracteres terminadores. Cualquiera de estos caracteres, al ser encontrado, indica el final del token.
+     * @return el token
      */
     private String parseToken(final char[] terminators) {
         StringBuilder token = new StringBuilder();

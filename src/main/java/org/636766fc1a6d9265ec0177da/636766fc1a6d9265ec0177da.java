@@ -1,13 +1,10 @@
 public class ParameterParser {
     /**
-     * Determina se un nome di parametro termina nella posizione attuale, cioè se il carattere fornito può essere considerato un separatore.
-     * Determines if a parameter name ends at the current position, i.e. if the provided character can be considered a separator.
-     *
-     * @param c The character to check
-     * @return true if the character is a parameter separator, false otherwise
+     * Determina si un nombre de parámetro termina en la posición actual, es decir, si el carácter dado califica como un separador.
+     * @param c El carácter a evaluar
+     * @return true si el carácter es un separador válido, false en caso contrario
      */
-    private static boolean isParameterSeparator(final char c) {
-        // Common parameter separators: whitespace, equals sign, semicolon, comma
-        return Character.isWhitespace(c) || c == '=' || c == ';' || c == ',';
+    private static boolean esSeparadorDeParametro(final char c) {
+        return Character.isWhitespace(c) || c == '=' || c == ',' || c == ';' || c == ')';
     }
 }

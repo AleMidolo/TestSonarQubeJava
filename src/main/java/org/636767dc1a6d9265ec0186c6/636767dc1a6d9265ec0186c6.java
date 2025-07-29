@@ -1,20 +1,21 @@
 import java.util.Objects;
 
 public class FieldValidator {
-    
-    private Set<Fields> storedFields;
 
-    public FieldValidator() {
-        this.storedFields = new HashSet<>();
-    }
+    private Fields storedFields;
 
     /**
-     * Restituisce true quando i campi di input sono già stati memorizzati nelle proprietà.
+     * Devuelve verdadero cuando los campos de entrada ya han sido almacenados en las propiedades.
      */
     private boolean containsAllFields(Fields fields) {
         if (fields == null) {
             return false;
         }
-        return storedFields.contains(fields);
+
+        if (storedFields == null) {
+            return false;
+        }
+
+        return Objects.equals(storedFields, fields);
     }
 }

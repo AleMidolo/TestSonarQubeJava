@@ -1,12 +1,17 @@
 import java.util.*;
 
-public class GraphTraversal implements Iterator<Vertex> {
+public class GraphIterator implements Iterator<Vertex> {
     private boolean[] visited;
     private int numVertices;
     
+    public GraphIterator(int n) {
+        numVertices = n;
+        visited = new boolean[numVertices];
+    }
+
     @Override
     public boolean hasNext() {
-        // Iterate through visited array to check for unvisited vertices
+        // Iterate through visited array to find any unvisited vertices
         for (int i = 0; i < numVertices; i++) {
             if (!visited[i]) {
                 return true;

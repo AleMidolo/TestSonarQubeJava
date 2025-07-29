@@ -17,7 +17,7 @@ public class FrameStack {
             if (!stack.isEmpty()) {
                 stack.pop();
             } else {
-                throw new IllegalStateException("Stack underflow: attempted to pop from an empty stack.");
+                throw new IllegalStateException("Stack underflow");
             }
         }
     }
@@ -33,24 +33,31 @@ public class FrameStack {
         while (index < descriptor.length()) {
             char c = descriptor.charAt(index);
             if (c == 'L') {
-                // 对象类型，例如 Ljava/lang/Object;
-                index = descriptor.indexOf(';', index) + 1;
+                // 对象类型，跳过直到分号
+                while (index < descriptor.length() && descriptor.charAt(index) != ';') {
+                    index++;
+                }
                 count++;
             } else if (c == '[') {
-                // 数组类型，例如 [I
-                index++;
+                // 数组类型，跳过所有数组维度
+                while (index < descriptor.length() && descriptor.charAt(index) == '[') {
+                    index++;
+                }
+                if (index < descriptor.length() && descriptor.charAt(index) == 'L') {
+                    // 对象数组类型，跳过直到分号
+                    while (index < descriptor.length() && descriptor.charAt(index) != ';') {
+                        index++;
+                    }
+                }
                 count++;
-            } else if (c == '(') {
-                // 方法描述符的开始，跳过
-                index++;
-            } else if (c == ')') {
-                // 方法描述符的结束，跳过
-                index++;
+            } else if (c == 'D' || c == 'J') {
+                // double 或 long 类型，占用两个槽位
+                count += 2;
             } else {
-                // 基本类型，例如 I, J, D, F
-                index++;
+                // 其他基本类型，占用一个槽位
                 count++;
             }
+            index++;
         }
         return count;
     }
@@ -59,13 +66,11 @@ public class FrameStack {
     public static void main(String[] args) {
         FrameStack frameStack = new FrameStack();
         frameStack.stack.push(1);
-        frameStack.stack.push(2);
-        frameStack.stack.push(3);
+        frameStack.stack.push(2.0);
+        frameStack.stack.push("Hello");
 
-        frameStack.pop("I"); // 弹出1个int类型
-        System.out.println(frameStack.stack); // 输出 [1, 2]
-
-        frameStack.pop("(II)V"); // 弹出2个int类型
-        System.out.println(frameStack.stack); // 输出 []
+        frameStack.pop("I"); // 弹出 int 类型
+        frameStack.pop("D"); // 弹出 double 类型
+        frameStack.pop("Ljava/lang/String;"); // 弹出 String 类型
     }
 }

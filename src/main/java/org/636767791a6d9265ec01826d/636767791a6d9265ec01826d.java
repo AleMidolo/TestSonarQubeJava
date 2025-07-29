@@ -16,12 +16,12 @@ public class PropertySubstitutor {
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String variable = matcher.group(1);
-            String replacement = props.getProperty(variable);
-            if (replacement != null) {
-                matcher.appendReplacement(result, replacement);
+            String varName = matcher.group(1);
+            String varValue = props.getProperty(varName);
+            if (varValue != null) {
+                matcher.appendReplacement(result, varValue);
             } else {
-                // 如果没有找到对应的值，保留原样
+                // 如果找不到对应的变量，保留原样
                 matcher.appendReplacement(result, matcher.group(0));
             }
         }

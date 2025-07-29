@@ -56,7 +56,7 @@ public class TypeResolver {
                 System.out.println(clazz.getSimpleName());
             }
         } else {
-            System.out.println("Could not resolve arguments.");
+            System.out.println("Unable to resolve arguments.");
         }
     }
 }

@@ -1,23 +1,17 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ByteArrayConverter {
-
-    /**
-     * 将字节复制到 {@code byte[]} 中。
-     * 
-     * @return 包含复制字节的字节数组
-     */
-    public byte[] toByteArray() {
-        // 假设我们有一些数据需要复制到字节数组中
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            // 这里可以添加需要复制的字节数据
-            // 例如：outputStream.write(someData);
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return outputStream.toByteArray();
+/**
+ * 将字节复制到 {@code byte[]} 中。
+ */
+public byte[] toByteArray() {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
+        // 假设有一些字节数据需要写入到 outputStream 中
+        // 例如：outputStream.write(someByteData);
+        outputStream.flush();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    return outputStream.toByteArray();
 }

@@ -9,49 +9,53 @@ public class LogFormatter {
      * @return 格式化后的日志字符串
      */
     public String format(LoggingEvent event) {
-        // 假设LoggingEvent类有以下方法：
-        // getMessage() - 获取日志消息
-        // getLevel() - 获取日志级别
-        // getTimestamp() - 获取时间戳
-        // getLoggerName() - 获取日志记录器名称
+        // 假设 LoggingEvent 类有以下字段：
+        // Date timestamp: 日志时间戳
+        // String level: 日志级别
+        // String message: 日志消息
+        // String loggerName: 日志记录器名称
 
-        // 格式化时间戳
+        // 创建一个日期格式化器
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = dateFormat.format(new Date(event.getTimestamp()));
 
-        // 构建格式化字符串
-        return String.format("[%s] %s %s - %s",
-                formattedDate,
+        // 格式化日志时间戳
+        String formattedTimestamp = dateFormat.format(event.getTimestamp());
+
+        // 构建格式化后的日志字符串
+        String formattedLog = String.format("[%s] %s %s - %s",
+                formattedTimestamp,
                 event.getLevel(),
                 event.getLoggerName(),
                 event.getMessage());
+
+        return formattedLog;
     }
 }
 
-// 假设LoggingEvent类的定义如下：
+// 假设的 LoggingEvent 类
 class LoggingEvent {
-    private String message;
+    private Date timestamp;
     private String level;
-    private long timestamp;
+    private String message;
     private String loggerName;
 
-    public LoggingEvent(String message, String level, long timestamp, String loggerName) {
-        this.message = message;
-        this.level = level;
+    public LoggingEvent(Date timestamp, String level, String message, String loggerName) {
         this.timestamp = timestamp;
+        this.level = level;
+        this.message = message;
         this.loggerName = loggerName;
     }
 
-    public String getMessage() {
-        return message;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
     public String getLevel() {
         return level;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getMessage() {
+        return message;
     }
 
     public String getLoggerName() {

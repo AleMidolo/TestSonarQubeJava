@@ -40,6 +40,7 @@ public class PrimeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(nextPrime(1000)); // 示例调用
+        int desiredCapacity = 1000;
+        System.out.println("Next prime after " + desiredCapacity + " is: " + nextPrime(desiredCapacity));
     }
 }

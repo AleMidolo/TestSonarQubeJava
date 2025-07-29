@@ -2,22 +2,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CollectionRemover {
-    private Set<Integer> set;
+    private Set<Integer> collection;
 
     public CollectionRemover() {
-        this.set = new HashSet<>();
+        this.collection = new HashSet<>();
     }
 
     /**
      * 从集合中移除一个值。如果集合中包含指定的元素，则返回真。
      */
     public boolean remove(int val) {
-        return set.remove(val);
+        return collection.remove(val);
     }
 
-    // Optional: Method to add elements to the set for testing
+    // Optional: Method to add elements to the collection for testing
     public void add(int val) {
-        set.add(val);
+        collection.add(val);
     }
 
     public static void main(String[] args) {

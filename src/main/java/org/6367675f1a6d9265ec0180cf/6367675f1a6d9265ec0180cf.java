@@ -11,14 +11,15 @@ public class GraphUtils {
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
         // 遍历所有顶点对
-        for (V u : vertices) {
-            for (V v : vertices) {
-                // 如果两个顶点不相同且之间没有边，则不是团
-                if (!u.equals(v) && !graph.containsEdge(u, v)) {
+        for (V v1 : vertices) {
+            for (V v2 : vertices) {
+                if (!v1.equals(v2) && !graph.containsEdge(v1, v2)) {
+                    // 如果存在一对顶点之间没有边，则不是团
                     return false;
                 }
             }
         }
+        // 所有顶点对之间都有边，是团
         return true;
     }
 }

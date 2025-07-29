@@ -1,6 +1,4 @@
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
+import java.util.Objects;
 
 /**
  * 调用 {@link BroadcastFilter}
@@ -8,32 +6,23 @@ import android.os.Bundle;
  * @return 过滤后的消息
  */
 protected Object filter(Object msg) {
-    // 假设我们有一个BroadcastFilter的实现类
-    BroadcastFilter broadcastFilter = new BroadcastFilter() {
-        @Override
-        public boolean onReceive(Context context, Intent intent) {
-            // 在这里处理接收到的广播
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                // 假设我们对消息进行某种处理
-                Object processedMsg = extras.get("msg");
-                return true; // 返回true表示消息已被处理
-            }
-            return false; // 返回false表示消息未被处理
-        }
-    };
+    // 假设 BroadcastFilter 是一个接口或类，这里我们假设它是一个接口
+    // 并且有一个 filter 方法
+    BroadcastFilter filter = new BroadcastFilterImpl(); // 假设有一个实现类
+    return filter.filter(msg);
+}
 
-    // 模拟一个Intent对象
-    Intent intent = new Intent();
-    intent.putExtra("msg", msg);
+// 假设的 BroadcastFilter 接口
+interface BroadcastFilter {
+    Object filter(Object msg);
+}
 
-    // 调用BroadcastFilter的onReceive方法
-    boolean isProcessed = broadcastFilter.onReceive(null, intent);
-
-    // 根据处理结果返回相应的消息
-    if (isProcessed) {
-        return intent.getExtras().get("msg");
-    } else {
-        return msg; // 如果未被处理，返回原始消息
+// 假设的 BroadcastFilter 实现类
+class BroadcastFilterImpl implements BroadcastFilter {
+    @Override
+    public Object filter(Object msg) {
+        // 这里实现具体的过滤逻辑
+        // 例如，返回消息本身，或者进行一些处理
+        return Objects.requireNonNull(msg, "Message cannot be null");
     }
 }

@@ -1,14 +1,13 @@
 import javax.servlet.http.HttpServletRequest;
 import org.atmosphere.cpr.AtmosphereRequest;
 
-public class RequestWrapper {
+public class AtmosphereRequestWrapper {
 
-    /**
-     * 包装一个 {@link HttpServletRequest}。
-     * @param request {@link HttpServletRequest}
-     * @return 一个 {@link AtmosphereRequest}
-     */
     public static AtmosphereRequest wrap(HttpServletRequest request) {
-        return AtmosphereRequest.wrap(request);
+        // Create a new AtmosphereRequest.Builder using the provided HttpServletRequest
+        AtmosphereRequest.Builder builder = AtmosphereRequest.wrap(request);
+
+        // Build and return the AtmosphereRequest
+        return builder.build();
     }
 }

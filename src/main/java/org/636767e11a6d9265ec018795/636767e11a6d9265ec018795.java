@@ -1,10 +1,18 @@
 import java.util.Objects;
 
 public class DataTable {
-    // Assuming DataTable has some fields and methods
-    // For the purpose of this example, let's assume it has a field 'bucket'
+    // Assuming DataTable class has necessary fields and methods
+
+    public boolean isCompatible(DataTable dataset) {
+        // Assuming compatibility is determined by comparing the buckets of the datasets
+        // For simplicity, let's assume the bucket is represented by a String field called 'bucket'
+        return Objects.equals(this.bucket, dataset.bucket);
+    }
+
+    // Example field for bucket
     private String bucket;
 
+    // Constructor and other methods for DataTable class
     public DataTable(String bucket) {
         this.bucket = bucket;
     }
@@ -13,27 +21,7 @@ public class DataTable {
         return bucket;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DataTable dataTable = (DataTable) o;
-        return Objects.equals(bucket, dataTable.bucket);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(bucket);
-    }
-}
-
-public class CompatibilityChecker {
-    /**
-     * @param dataset The dataset to check for compatibility.
-     * @return true if the buckets are the same.
-     */
-    public boolean isCompatible(DataTable dataset) {
-        // Assuming 'this' refers to another DataTable instance
-        return this.equals(dataset);
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
     }
 }

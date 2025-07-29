@@ -10,13 +10,12 @@ public class TypeResolver {
         Type[] bounds = typeVariable.getBounds();
         if (bounds.length > 0) {
             return bounds[0];
-        } else {
-            return Unknown.class;
         }
+        return Unknown.class;
     }
 
     public static class Unknown {
-        // Placeholder class for unknown types
+        // Placeholder class for unknown type
     }
 
     public static void main(String[] args) {
@@ -26,7 +25,7 @@ public class TypeResolver {
         System.out.println("Resolved bound: " + bound);
     }
 
-    public static class ExampleClass<T extends Number> {
+    class ExampleClass<T extends String> {
         // Example class with a type parameter
     }
 }

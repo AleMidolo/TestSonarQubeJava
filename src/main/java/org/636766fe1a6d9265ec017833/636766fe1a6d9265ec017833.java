@@ -26,12 +26,23 @@ public class FileUtils {
     }
 
     private static void deleteDirectoryOnExit(File directory) throws IOException {
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("Not a directory: " + directory);
+        }
+
         File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                forceDeleteOnExit(file);
+        if (files == null) {
+            throw new IOException("Failed to list contents of " + directory);
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                deleteDirectoryOnExit(file);
+            } else {
+                file.deleteOnExit();
             }
         }
+
         directory.deleteOnExit();
     }
 }

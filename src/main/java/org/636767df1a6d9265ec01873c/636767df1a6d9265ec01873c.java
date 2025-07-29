@@ -7,15 +7,15 @@ public class Main {
      * @param entityId The entity ID to be used in generating the row ID.
      * @return A unique row ID as a String.
      */
-    public String id(String entityId) {
+    public static String id(String entityId) {
         // Concatenate the entity ID with a UUID to ensure uniqueness
         return entityId + "-" + UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        // Example usage
         String entityId = "exampleEntity";
-        String rowId = main.id(entityId);
+        String rowId = id(entityId);
         System.out.println("Generated Row ID: " + rowId);
     }
 }

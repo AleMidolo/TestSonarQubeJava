@@ -1,8 +1,10 @@
 public class FrameVisitor {
-    private Frame currentFrame;
+    private int[] currentFrame;
+    private int currentIndex;
 
-    public FrameVisitor(Frame currentFrame) {
-        this.currentFrame = currentFrame;
+    public FrameVisitor() {
+        this.currentFrame = new int[0];
+        this.currentIndex = 0;
     }
 
     /**
@@ -13,40 +15,14 @@ public class FrameVisitor {
      * @return 下一个要写入该帧的元素的索引。
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // 初始化当前帧的偏移量、局部变量数量和栈元素数量
-        currentFrame.setOffset(offset);
-        currentFrame.setNumLocal(numLocal);
-        currentFrame.setNumStack(numStack);
+        // 计算新帧的大小
+        int frameSize = numLocal + numStack;
+        currentFrame = new int[frameSize];
+        currentIndex = 0;
 
-        // 返回下一个要写入该帧的元素的索引
-        return currentFrame.getNextIndex();
+        // 返回下一个要写入的索引
+        return currentIndex;
     }
 
-    // Frame类定义
-    public static class Frame {
-        private int offset;
-        private int numLocal;
-        private int numStack;
-        private int nextIndex;
-
-        public Frame() {
-            this.nextIndex = 0;
-        }
-
-        public void setOffset(int offset) {
-            this.offset = offset;
-        }
-
-        public void setNumLocal(int numLocal) {
-            this.numLocal = numLocal;
-        }
-
-        public void setNumStack(int numStack) {
-            this.numStack = numStack;
-        }
-
-        public int getNextIndex() {
-            return nextIndex++;
-        }
-    }
+    // 其他方法可以继续访问和操作 currentFrame
 }

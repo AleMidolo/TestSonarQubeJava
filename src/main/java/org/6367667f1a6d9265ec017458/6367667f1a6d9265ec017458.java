@@ -2,8 +2,8 @@ import org.atmosphere.cpr.AtmosphereFramework;
 import org.atmosphere.cpr.AtmosphereHandler;
 
 public class AtmosphereFramework {
-    // Assuming this class has a method to add and remove AtmosphereHandlers
-    private Map<String, AtmosphereHandler> handlers = new HashMap<>();
+    // Assuming a map to store the handlers
+    private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
      * Elimina un {@link AtmosphereHandler}.
@@ -18,10 +18,8 @@ public class AtmosphereFramework {
         return false;
     }
 
-    // Example method to add an AtmosphereHandler
+    // Assuming this method exists to add handlers
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
     }
-
-    // Other methods and fields of the AtmosphereFramework class
 }

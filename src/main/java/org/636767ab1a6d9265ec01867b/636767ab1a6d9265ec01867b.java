@@ -1,5 +1,5 @@
-import java.nio.charset.StandardCharsets;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class UTF8Writer {
 
@@ -8,43 +8,27 @@ public class UTF8Writer {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
 
+        // Convert the CharSequence to a byte array using UTF-8 encoding
         byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        ByteBuffer buffer = ByteBuffer.wrap(utf8Bytes);
 
-        while (buffer.hasRemaining()) {
-            if (lb.remaining() == 0) {
-                lb = session.allocateNewBuffer();
-            }
-            lb.put(buffer.get());
+        // Write the bytes to the LinkedBuffer
+        for (byte b : utf8Bytes) {
+            lb = session.write(b, lb);
         }
 
         return lb;
     }
-}
 
-class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
-
-    public LinkedBuffer(int capacity) {
-        this.buffer = new byte[capacity];
-        this.position = 0;
+    // Assuming LinkedBuffer and WriteSession are defined elsewhere
+    public static class LinkedBuffer {
+        // Placeholder for LinkedBuffer implementation
     }
 
-    public void put(byte b) {
-        if (position >= buffer.length) {
-            throw new IndexOutOfBoundsException("Buffer overflow");
+    public static class WriteSession {
+        // Placeholder for WriteSession implementation
+        public LinkedBuffer write(byte b, LinkedBuffer lb) {
+            // Placeholder for write implementation
+            return lb;
         }
-        buffer[position++] = b;
-    }
-
-    public int remaining() {
-        return buffer.length - position;
-    }
-}
-
-class WriteSession {
-    public LinkedBuffer allocateNewBuffer() {
-        return new LinkedBuffer(1024); // Default buffer size
     }
 }

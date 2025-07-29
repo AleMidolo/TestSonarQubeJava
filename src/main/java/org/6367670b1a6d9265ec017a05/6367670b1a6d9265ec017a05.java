@@ -6,7 +6,7 @@ public class CharUtils {
     private static final Map<Character, String> CACHE = new HashMap<>();
 
     static {
-        // Pre-cache ASCII characters
+        // Pre-cache ASCII characters (0-127)
         for (int i = 0; i < 128; i++) {
             CACHE.put((char) i, String.valueOf((char) i));
         }
@@ -32,6 +32,6 @@ public class CharUtils {
     public static void main(String[] args) {
         System.out.println(toString(' '));  // Output: " "
         System.out.println(toString('A'));  // Output: "A"
-        System.out.println(toString('€'));  // Output: "€"
+        System.out.println(toString('ñ'));  // Output: "ñ"
     }
 }

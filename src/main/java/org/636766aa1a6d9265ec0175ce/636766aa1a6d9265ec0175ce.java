@@ -1,10 +1,8 @@
 public class FrameVisitor {
-    private int[] currentFrame;
-    private int nextIndex;
+    private Frame currentFrame;
 
-    public FrameVisitor() {
-        this.currentFrame = new int[0];
-        this.nextIndex = 0;
+    public FrameVisitor(Frame currentFrame) {
+        this.currentFrame = currentFrame;
     }
 
     /**
@@ -15,16 +13,25 @@ public class FrameVisitor {
      * @return el índice del siguiente elemento que se escribirá en este "frame".
      */
     public int visitFrameStart(final int offset, final int numLocal, final int numStack) {
-        // Calcular el tamaño total del frame
-        int frameSize = numLocal + numStack;
-        
-        // Inicializar el frame con el tamaño calculado
-        currentFrame = new int[frameSize];
-        
-        // Reiniciar el índice del siguiente elemento
-        nextIndex = 0;
-        
-        // Devolver el índice del siguiente elemento que se escribirá
-        return nextIndex;
+        currentFrame = new Frame(offset, numLocal, numStack);
+        return currentFrame.getNextIndex();
+    }
+
+    private static class Frame {
+        private final int offset;
+        private final int numLocal;
+        private final int numStack;
+        private int nextIndex;
+
+        public Frame(int offset, int numLocal, int numStack) {
+            this.offset = offset;
+            this.numLocal = numLocal;
+            this.numStack = numStack;
+            this.nextIndex = 0; // Inicializa el índice en 0
+        }
+
+        public int getNextIndex() {
+            return nextIndex++;
+        }
     }
 }

@@ -1,5 +1,6 @@
 public class CharUtils {
 
+    // Cache for ASCII characters (0-127)
     private static final Character[] CHAR_CACHE = new Character[128];
 
     static {

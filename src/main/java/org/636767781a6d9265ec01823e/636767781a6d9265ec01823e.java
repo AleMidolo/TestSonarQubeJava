@@ -12,12 +12,10 @@ public class LogAppender {
      * Maneja un evento de registro. Para este "appender", eso significa escribir el mensaje a cada cliente conectado.
      */
     protected void append(LoggingEvent event) {
-        String message = event.getRenderedMessage();
-        synchronized (clients) {
-            for (PrintWriter client : clients) {
-                client.println(message);
-                client.flush();
-            }
+        String message = event.getMessage().toString();
+        for (PrintWriter client : clients) {
+            client.println(message);
+            client.flush();
         }
     }
 
@@ -28,9 +26,7 @@ public class LogAppender {
     public void addClient(Socket clientSocket) {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.add(writer);
-            }
+            clients.add(writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,9 +39,7 @@ public class LogAppender {
     public void removeClient(Socket clientSocket) {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            synchronized (clients) {
-                clients.remove(writer);
-            }
+            clients.remove(writer);
         } catch (IOException e) {
             e.printStackTrace();
         }

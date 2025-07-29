@@ -1,4 +1,4 @@
-public class PathUtils {
+public class FileUtils {
 
     /**
      * Devuelve el índice del último carácter separador de directorio. <p> Este método manejará un archivo en formato Unix o Windows. Se devuelve la posición de la última barra inclinada o barra invertida. <p> La salida será la misma independientemente de la máquina en la que se ejecute el código.
@@ -16,8 +16,8 @@ public class PathUtils {
 
     public static void main(String[] args) {
         // Ejemplo de uso
-        String path = "C:\\Users\\JohnDoe\\Documents\\file.txt";
-        int lastSeparatorIndex = indexOfLastSeparator(path);
+        String filePath = "C:\\Users\\Example\\Documents\\file.txt";
+        int lastSeparatorIndex = indexOfLastSeparator(filePath);
         System.out.println("Índice del último separador: " + lastSeparatorIndex);
     }
 }

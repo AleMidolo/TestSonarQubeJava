@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 public class PropertySubstitutor {
 
     public static String findAndSubst(String key, Properties props) {
-        // Obtener el valor asociado con la clave
+        // Obtener el valor asociado a la clave
         String value = props.getProperty(key);
         if (value == null) {
-            return null; // Si no se encuentra la clave, retornar null
+            return null; // Si la clave no existe, retornar null
         }
 
         // Expresión regular para encontrar variables en el formato ${variable}

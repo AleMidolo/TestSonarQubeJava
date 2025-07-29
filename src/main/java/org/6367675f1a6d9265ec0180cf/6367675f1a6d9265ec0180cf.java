@@ -10,9 +10,15 @@ public class CliqueChecker {
      * @return true if the induced subgraph is a clique.
      */
     private static <V, E> boolean isClique(Graph<V, E> graph, Set<V> vertices) {
+        // Iterate over all pairs of vertices
         for (V u : vertices) {
             for (V v : vertices) {
-                if (!u.equals(v) && !graph.containsEdge(u, v)) {
+                // Skip if u and v are the same vertex
+                if (u.equals(v)) {
+                    continue;
+                }
+                // Check if there is an edge between u and v
+                if (!graph.containsEdge(u, v)) {
                     return false;
                 }
             }

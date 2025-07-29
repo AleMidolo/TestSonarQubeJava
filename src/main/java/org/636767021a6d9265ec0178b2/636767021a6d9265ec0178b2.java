@@ -6,15 +6,15 @@ private void pop(final String descriptor) {
         // Method descriptor: extract argument types
         types = Type.getArgumentTypes(descriptor);
     } else {
-        // Single type descriptor
+        // Type descriptor: single type
         types = new Type[] { Type.getType(descriptor) };
     }
 
     for (Type type : types) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
-            case Type.BYTE:
             case Type.CHAR:
+            case Type.BYTE:
             case Type.SHORT:
             case Type.INT:
                 // Pop int
@@ -41,7 +41,7 @@ private void pop(final String descriptor) {
                 outputFrameStack.pop();
                 break;
             case Type.VOID:
-                // No action needed for void
+                // No pop for void
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported type: " + type);

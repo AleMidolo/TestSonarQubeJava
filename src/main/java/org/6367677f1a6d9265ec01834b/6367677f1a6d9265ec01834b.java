@@ -24,7 +24,7 @@ public class LogBuffer {
     }
 }
 
+// Assuming LoggingEvent is a class defined elsewhere
 class LoggingEvent {
-    // Placeholder for LoggingEvent class
-    // You can add fields and methods as needed
+    // Implementation of LoggingEvent
 }

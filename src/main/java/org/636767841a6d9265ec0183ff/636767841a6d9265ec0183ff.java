@@ -12,11 +12,16 @@ public class TableUtils {
      * @param pane The JScrollPane containing the JTable.
      */
     public static void selectRow(int row, JTable table, JScrollPane pane) {
-        if (row < 0 || row >= table.getRowCount()) {
-            throw new IllegalArgumentException("Row index out of bounds");
+        if (table == null || pane == null) {
+            throw new IllegalArgumentException("Table and ScrollPane must not be null.");
         }
 
-        // Select the specified row
+        TableModel model = table.getModel();
+        if (row < 0 || row >= model.getRowCount()) {
+            throw new IllegalArgumentException("Row index out of bounds.");
+        }
+
+        // Select the row
         table.setRowSelectionInterval(row, row);
 
         // Scroll to the selected row

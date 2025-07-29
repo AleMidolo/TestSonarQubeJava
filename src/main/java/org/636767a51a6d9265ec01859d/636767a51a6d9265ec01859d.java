@@ -4,7 +4,7 @@ public boolean equals(final byte[] data, int offset, final int len) {
     }
 
     // Assuming 'internalArray' is the internal array to compare against
-    if (len != internalArray.length) {
+    if (internalArray == null || internalArray.length < len) {
         return false;
     }
 
@@ -16,6 +16,3 @@ public boolean equals(final byte[] data, int offset, final int len) {
 
     return true;
 }
-
-// Assuming 'internalArray' is a class-level variable
-private byte[] internalArray;

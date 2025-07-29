@@ -1,9 +1,9 @@
 public class StringUtils {
 
     /**
-     * Finds the last index within a String, handling <code>null</code>. This method uses  {@link String#lastIndexOf(String)}.
-     * 
-     * @param str the String to check, may be null
+     * Finds the last index within a String, handling <code>null</code>. This method uses {@link String#lastIndexOf(String)}.
+     *
+     * @param str       the String to check, may be null
      * @param searchStr the String to search for, may be null
      * @return the last index of the search String, or -1 if no match or null input
      */
@@ -16,9 +16,9 @@ public class StringUtils {
 
     public static void main(String[] args) {
         // Example usage
-        String str = "Hello, world! Hello again!";
-        String searchStr = "Hello";
+        String str = "Hello, world!";
+        String searchStr = "o";
         int index = lastIndexOf(str, searchStr);
-        System.out.println("Last index of \"" + searchStr + "\" in \"" + str + "\" is: " + index);
+        System.out.println("Last index of '" + searchStr + "' in '" + str + "' is: " + index);
     }
 }

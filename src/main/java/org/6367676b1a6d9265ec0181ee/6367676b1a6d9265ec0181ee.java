@@ -11,7 +11,6 @@ public class StringUtils {
         }
         
         int len = str.length();
-        
         while (len > 0 && Character.isWhitespace(str.charAt(len - 1))) {
             len--;
         }

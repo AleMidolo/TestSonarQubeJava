@@ -1,12 +1,19 @@
-import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.Filter;
 
-public class CustomLoggingFilter extends Filter {
+public class LoggingFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {
-        // Return NEUTRAL if there is no string match
+        if (event == null) {
+            return Filter.NEUTRAL;
+        }
+        
+        String message = event.getRenderedMessage();
+        if (message == null || message.isEmpty()) {
+            return Filter.NEUTRAL;
+        }
+        
         return Filter.NEUTRAL;
     }
-
 }

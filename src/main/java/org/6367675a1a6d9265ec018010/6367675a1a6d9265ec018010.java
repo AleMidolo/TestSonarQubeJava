@@ -22,14 +22,14 @@ public class Bucket<T> {
     }
 }
 
-// Helper class to demonstrate bucket collection
+// Helper class to demonstrate context
 class BucketCollection<T> {
     private List<Bucket<T>> buckets;
-
+    
     public BucketCollection() {
         buckets = new ArrayList<>();
     }
-
+    
     public void removeBucket(Bucket<T> bucket) {
         buckets.remove(bucket);
     }

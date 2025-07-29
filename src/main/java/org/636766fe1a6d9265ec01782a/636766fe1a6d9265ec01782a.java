@@ -10,10 +10,10 @@ public class ClassReader {
         // Read the length of UTF8 bytes
         int utfLen = classFileBuffer.getShort() & 0xFFFF;
         
-        // Read the UTF8 bytes into the char buffer
+        // Read and convert UTF8 bytes to chars
         int charLen = 0;
         int c, c2, c3;
-        while (charLen < utfLen) {
+        while (classFileBuffer.position() < position + 2 + utfLen) {
             c = classFileBuffer.get() & 0xFF;
             if (c > 127) {
                 classFileBuffer.position(classFileBuffer.position() - 1);
@@ -37,13 +37,13 @@ public class ClassReader {
                 case 14:
                     c2 = classFileBuffer.get() & 0xFF;
                     c3 = classFileBuffer.get() & 0xFF;
-                    charBuffer[charLen++] = (char) (((c & 0x0F) << 12) | 
-                                                   ((c2 & 0x3F) << 6) | 
-                                                   (c3 & 0x3F));
+                    charBuffer[charLen++] = 
+                        (char) (((c & 0x0F) << 12) | ((c2 & 0x3F) << 6) | (c3 & 0x3F));
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("Invalid UTF8 encoding in class file");
+                    throw new IllegalArgumentException(
+                        "Invalid UTF8 encoding at constant pool entry " + constantPoolEntryIndex);
             }
         }
         

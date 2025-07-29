@@ -13,4 +13,12 @@ public class ReflectionUtils {
             registeredObjects.add(value);
         }
     }
+
+    public static boolean isRegistered(Object value) {
+        return registeredObjects.contains(value);
+    }
+
+    public static void clearRegistry() {
+        registeredObjects.clear();
+    }
 }

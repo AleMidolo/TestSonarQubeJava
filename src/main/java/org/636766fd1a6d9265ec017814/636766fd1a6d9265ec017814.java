@@ -22,9 +22,12 @@ public class ByteArrayComparator {
     }
 
     public static void main(String[] args) {
-        byte[] a = {1, 2, 3, 4, 5};
-        byte[] b = {1, 2, 3, 4, 6};
-        int count = 4;
-        System.out.println(arrayequals(a, b, count)); // Output: true
+        byte[] array1 = {1, 2, 3, 4, 5};
+        byte[] array2 = {1, 2, 3, 4, 6};
+        byte[] array3 = {1, 2, 3, 4, 5};
+
+        System.out.println(arrayequals(array1, array2, 4)); // true
+        System.out.println(arrayequals(array1, array2, 5)); // false
+        System.out.println(arrayequals(array1, array3, 5)); // true
     }
 }

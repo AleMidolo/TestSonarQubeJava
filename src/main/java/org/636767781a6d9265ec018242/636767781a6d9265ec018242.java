@@ -17,12 +17,14 @@ public class Logger {
         int count = 0;
         if (appenders != null) {
             for (Appender appender : appenders) {
-                try {
-                    appender.doAppend(event);
-                    count++;
-                } catch (Exception e) {
-                    // Log the exception or handle it as needed
-                    System.err.println("Failed to append event to appender: " + e.getMessage());
+                if (appender != null) {
+                    try {
+                        appender.doAppend(event);
+                        count++;
+                    } catch (Exception e) {
+                        // Handle or log the exception if necessary
+                        System.err.println("Error appending event: " + e.getMessage());
+                    }
                 }
             }
         }

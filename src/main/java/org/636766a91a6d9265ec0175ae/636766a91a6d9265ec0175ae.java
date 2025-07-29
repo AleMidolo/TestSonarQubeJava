@@ -44,8 +44,4 @@ public class ByteVector {
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, size);
     }
-
-    public int size() {
-        return size;
-    }
 }

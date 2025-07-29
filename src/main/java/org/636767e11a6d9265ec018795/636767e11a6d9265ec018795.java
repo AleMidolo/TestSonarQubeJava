@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class DataTable {
     // Assuming DataTable has some fields and methods
-    // For simplicity, let's assume it has a field 'bucket'
+    // For the purpose of this example, let's assume it has a field 'bucket'
     private String bucket;
 
     public DataTable(String bucket) {
@@ -36,9 +36,8 @@ public class BucketChecker {
         if (dataset == null) {
             return false;
         }
-        // Assuming the current instance has a bucket to compare with
-        // For simplicity, let's assume the current instance has a field 'currentBucket'
-        String currentBucket = "exampleBucket"; // Replace with actual logic to get current bucket
-        return currentBucket.equals(dataset.getBucket());
+        // Assuming we have a reference bucket to compare against
+        DataTable referenceDataset = new DataTable("referenceBucket");
+        return referenceDataset.equals(dataset);
     }
 }

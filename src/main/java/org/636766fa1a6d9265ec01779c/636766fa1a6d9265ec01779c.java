@@ -1,37 +1,27 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class TokenParser {
+private String parseToken(final char[] terminators) {
+    // Convert the array of terminators to a Set for O(1) lookups
+    Set<Character> terminatorSet = new HashSet<>();
+    for (char c : terminators) {
+        terminatorSet.add(c);
+    }
 
-    /**
-     * Parses out a token until any of the given terminators is encountered.
-     * @param terminators the array of terminating characters. Any of these characters when encountered signify the end of the token
-     * @return the token
-     */
-    private String parseToken(final char[] terminators) {
-        Set<Character> terminatorSet = new HashSet<>();
-        for (char c : terminators) {
-            terminatorSet.add(c);
-        }
+    StringBuilder token = new StringBuilder();
+    int currentChar;
 
-        StringBuilder token = new StringBuilder();
-        int currentChar;
-        while (true) {
-            currentChar = System.in.read();
-            if (currentChar == -1 || terminatorSet.contains((char) currentChar)) {
+    try {
+        while ((currentChar = System.in.read()) != -1) {
+            char ch = (char) currentChar;
+            if (terminatorSet.contains(ch)) {
                 break;
             }
-            token.append((char) currentChar);
+            token.append(ch);
         }
-
-        return token.toString();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
-    public static void main(String[] args) {
-        TokenParser parser = new TokenParser();
-        char[] terminators = {' ', '\n', '\t', '\r'};
-        System.out.println("Enter a string to parse:");
-        String token = parser.parseToken(terminators);
-        System.out.println("Parsed token: " + token);
-    }
+    return token.toString();
 }

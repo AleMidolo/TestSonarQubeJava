@@ -55,7 +55,7 @@ public class StringUtils {
         try {
             System.out.println(unescapeJava("Hello\\nWorld!"));  // Output: Hello
                                                                  // World!
-            System.out.println(unescapeJava("C:\\\\path\\to\\file"));  // Output: C:\path\to\file
+            System.out.println(unescapeJava("C:\\\\path\\\\to\\\\file"));  // Output: C:\path\to\file
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,28 +1,25 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Graph<V,E> {
-    // Maps vertices to their adjacent edges
-    private Map<V, Set<E>> vertexMap;
+
+    // Internal map to store vertex-edge relationships
+    private Map<V, Map<V, E>> index;
 
     public Graph() {
-        vertexMap = new HashMap<>();
+        index = new HashMap<>();
     }
 
     /**
      * Add an edge to the index.
-     * @param sourceVertex the source vertex  
-     * @param targetVertex the target vertex
+     * @param sourceVertex the source vertex
+     * @param targetVertex the target vertex  
      * @param e the edge
      */
-    public void addEdge(V sourceVertex, V targetVertex, E e) {
-        // Create sets for vertices if they don't exist
-        vertexMap.putIfAbsent(sourceVertex, new HashSet<>());
-        vertexMap.putIfAbsent(targetVertex, new HashSet<>());
-
-        // Add edge to source vertex's edge set
-        vertexMap.get(sourceVertex).add(e);
+    protected void addToIndex(V sourceVertex, V targetVertex, E e) {
+        // Get or create map for source vertex
+        Map<V, E> connections = index.computeIfAbsent(sourceVertex, k -> new HashMap<>());
+        
+        // Add edge between source and target
+        connections.put(targetVertex, e);
     }
 }

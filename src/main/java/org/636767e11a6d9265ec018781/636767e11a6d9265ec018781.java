@@ -1,40 +1,45 @@
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
-public class Cache {
-    private Map<String, Object> cacheMap;
+public class MetricsCache<METRICS> {
+    
+    private Map<String, METRICS> cache;
+    private METRICS currentMetrics;
 
-    public Cache() {
-        this.cacheMap = new ConcurrentHashMap<>();
+    public MetricsCache() {
+        this.cache = new ConcurrentHashMap<>();
+        this.currentMetrics = null;
     }
 
     /**
      * Accept the data into the cache and merge with the existing value. This method is not thread safe, should avoid concurrency calling.
      * @param data to be added potentially.
      */
-    public void acceptData(Map<String, Object> data) {
-        if (data == null || data.isEmpty()) {
+    @Override
+    public void accept(final METRICS data) {
+        if (data == null) {
             return;
         }
 
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            if (cacheMap.containsKey(key)) {
-                // If value exists, merge with existing value
-                Object existingValue = cacheMap.get(key);
-                if (existingValue instanceof Map && value instanceof Map) {
-                    // If both are maps, merge them
-                    ((Map) existingValue).putAll((Map) value);
+        if (currentMetrics == null) {
+            currentMetrics = data;
+        } else {
+            try {
+                // Merge the new data with existing metrics
+                if (data instanceof Map) {
+                    ((Map)currentMetrics).putAll((Map)data);
                 } else {
-                    // Otherwise replace with new value
-                    cacheMap.put(key, value);
+                    // For non-map objects, just replace with new data
+                    currentMetrics = data;
                 }
-            } else {
-                // If key doesn't exist, add new entry
-                cacheMap.put(key, value);
+            } catch (Exception e) {
+                // Fallback to simple replacement if merge fails
+                currentMetrics = data;
             }
         }
+
+        // Store in cache using timestamp or unique key
+        String key = String.valueOf(System.currentTimeMillis());
+        cache.put(key, data);
     }
 }

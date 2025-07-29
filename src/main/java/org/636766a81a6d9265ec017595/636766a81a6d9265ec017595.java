@@ -2,38 +2,27 @@ import java.util.Arrays;
 
 public class ByteVector {
     private byte[] data;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 10;
+    private int length;
     
     public ByteVector() {
-        data = new byte[DEFAULT_CAPACITY];
-        size = 0;
-    }
-
-    public ByteVector putTwoBytes(byte byteValue1, byte byteValue2) {
-        // Ensure capacity for 2 more bytes
-        ensureCapacity(size + 2);
-        
-        // Add the bytes
-        data[size++] = byteValue1;
-        data[size++] = byteValue2;
-        
-        return this;
+        data = new byte[64]; // Initial capacity
     }
     
-    private void ensureCapacity(int minCapacity) {
-        if (minCapacity > data.length) {
-            int newCapacity = Math.max(data.length * 2, minCapacity);
+    /**
+     * Puts two bytes into this byte vector. The byte vector is automatically enlarged if necessary.
+     * @param byteValue1 a byte.
+     * @param byteValue2 another byte.
+     * @return this byte vector.
+     */
+    final ByteVector put11(final int byteValue1, final int byteValue2) {
+        int newLength = length + 2;
+        if (newLength > data.length) {
+            // Double array size if more space needed
+            int newCapacity = Math.max(2 * data.length, newLength);
             data = Arrays.copyOf(data, newCapacity);
         }
-    }
-    
-    // Helper methods for testing/validation
-    public byte[] getData() {
-        return Arrays.copyOf(data, size);
-    }
-    
-    public int getSize() {
-        return size;
+        data[length++] = (byte) byteValue1;
+        data[length++] = (byte) byteValue2;
+        return this;
     }
 }

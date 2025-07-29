@@ -1,42 +1,44 @@
-import javax.swing.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+import java.util.logging.LogRecord;
 
-public class LogManager {
-    private static final Logger LOGGER = Logger.getLogger(LogManager.class.getName());
-    private LogTable logTable;
-
-    public LogManager(LogTable logTable) {
-        this.logTable = logTable;
+public class Logger {
+    
+    private LogTable logTable; // Assume LogTable is a custom JTable component
+    
+    public Logger(LogTable table) {
+        this.logTable = table;
     }
 
     /**
-     * Add a log record message to be displayed in the LogTable. This method is thread-safe as it posts requests to the SwingThread rather than processing directly.
-     * @param message The message to log
+     * Add a log record message to be displayed in the LogTable. This method is thread-safe 
+     * as it posts requests to the SwingThread rather than processing directly.
      */
-    public void addLogRecord(final String message) {
-        if (message == null || message.isEmpty()) {
+    public void addMessage(final LogRecord lr) {
+        if (lr == null) {
             return;
         }
-
-        // Post to Event Dispatch Thread to ensure thread safety
+        
+        // Ensure thread safety by running on EDT
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    logTable.addRow(message);
-                    LOGGER.log(Level.INFO, "Log message added: {0}", message);
-                } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "Error adding log message: " + message, e);
+                // Add the log record to the table model
+                logTable.getModel().addRow(new Object[]{
+                    lr.getMillis(),
+                    lr.getLevel(),
+                    lr.getMessage(),
+                    lr.getSourceClassName(),
+                    lr.getSourceMethodName()
+                });
+                
+                // Auto scroll to latest entry
+                int lastRow = logTable.getModel().getRowCount() - 1;
+                if (lastRow >= 0) {
+                    logTable.scrollRectToVisible(
+                        logTable.getCellRect(lastRow, 0, true)
+                    );
                 }
             }
         });
-    }
-}
-
-// Supporting class for compilation
-class LogTable extends JTable {
-    public void addRow(String message) {
-        // Implementation details for adding row to table
     }
 }

@@ -1,41 +1,52 @@
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
-public class LinkedList<T> {
+public class LinkedList<E> {
     
-    private class Node<T> {
-        T data;
-        Node<T> next;
+    private class ListNodeImpl<E> {
+        E item;
+        ListNodeImpl<E> next;
+        ListNodeImpl<E> prev;
         
-        Node(T data) {
-            this.data = data;
-            this.next = null;
+        ListNodeImpl(ListNodeImpl<E> prev, E element, ListNodeImpl<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
         }
     }
     
-    private Node<T> head;
+    private ListNodeImpl<E> first;
+    private ListNodeImpl<E> last;
+    private int size = 0;
     
-    /**
+    /** 
      * Remove the non null {@code node} from the list.
-     * @param node The node to remove
      */
-    public void remove(Node<T> node) {
-        Objects.requireNonNull(node);
-        
-        // If node is head
-        if (head == node) {
-            head = head.next;
-            return;
+    private boolean unlink(ListNodeImpl<E> node) {
+        if (node == null) {
+            return false;
         }
         
-        // Find the node before the one to remove
-        Node<T> current = head;
-        while (current != null && current.next != node) {
-            current = current.next;
+        final ListNodeImpl<E> prev = node.prev;
+        final ListNodeImpl<E> next = node.next;
+        
+        if (prev == null) {
+            // Node is the first element
+            first = next;
+        } else {
+            prev.next = next;
+            node.prev = null;
         }
         
-        // If node was found in list
-        if (current != null) {
-            current.next = node.next;
+        if (next == null) {
+            // Node is the last element
+            last = prev; 
+        } else {
+            next.prev = prev;
+            node.next = null;
         }
+        
+        node.item = null;
+        size--;
+        return true;
     }
 }

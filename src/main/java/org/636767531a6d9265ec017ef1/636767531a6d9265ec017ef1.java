@@ -7,9 +7,15 @@ public class PointComparator {
      * @param p2 the second point
      * @return whether the two points are equal or not
      */
-    public boolean arePointsEqual(Point2D p1, Point2D p2) {
-        final double EPSILON = 1e-9;
-        return Math.abs(p1.getX() - p2.getX()) < EPSILON && 
-               Math.abs(p1.getY() - p2.getY()) < EPSILON;
+    public static boolean equals(Point2D p1, Point2D p2) {
+        if (p1 == null || p2 == null) {
+            return false;
+        }
+        
+        double tolerance = 1e-9;
+        double dx = Math.abs(p1.getX() - p2.getX());
+        double dy = Math.abs(p1.getY() - p2.getY());
+        
+        return dx <= tolerance && dy <= tolerance;
     }
 }

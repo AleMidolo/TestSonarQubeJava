@@ -1,34 +1,36 @@
 import java.util.*;
+import org.jgrapht.*;
 
-public class BipartiteGraph {
-    private int V; // Number of vertices
-    private List<List<Integer>> adj; // Adjacency list representation
+public class BipartiteGraphGenerator<V,E> implements GraphGenerator<V,E,V> {
 
-    /**
-     * Construct a complete bipartite graph
-     * @param m Number of vertices in first partition
-     * @param n Number of vertices in second partition
-     * @return Adjacency list representation of complete bipartite graph
-     */
-    public List<List<Integer>> constructBipartiteGraph(int m, int n) {
-        // Total vertices is sum of both partitions
-        V = m + n;
-        
-        // Initialize adjacency list
-        adj = new ArrayList<>(V);
-        for(int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>());
+    @Override
+    public void generateGraph(Graph<V,E> target, Map<String,V> resultMap) {
+        if (target == null) {
+            throw new IllegalArgumentException("Target graph cannot be null");
         }
-        
-        // Add edges between every vertex in first partition
-        // to every vertex in second partition
-        for(int i = 0; i < m; i++) {
-            for(int j = m; j < V; j++) {
-                adj.get(i).add(j);
-                adj.get(j).add(i);
+
+        // Create two sets of vertices for bipartite graph
+        List<V> partition1 = new ArrayList<>();
+        List<V> partition2 = new ArrayList<>();
+
+        // Add vertices to the graph and store in partitions
+        for (Map.Entry<String,V> entry : resultMap.entrySet()) {
+            V vertex = entry.getValue();
+            target.addVertex(vertex);
+            
+            // Add to partition1 if key starts with "A", otherwise partition2
+            if (entry.getKey().startsWith("A")) {
+                partition1.add(vertex);
+            } else {
+                partition2.add(vertex);
             }
         }
-        
-        return adj;
+
+        // Connect every vertex in partition1 to every vertex in partition2
+        for (V v1 : partition1) {
+            for (V v2 : partition2) {
+                target.addEdge(v1, v2);
+            }
+        }
     }
 }

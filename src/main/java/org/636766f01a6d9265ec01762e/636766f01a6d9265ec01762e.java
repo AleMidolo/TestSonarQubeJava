@@ -1,7 +1,7 @@
 package org.apache.commons.lang3;
 
 /**
- * Utility class for array operations
+ * Utility class for array operations.
  */
 public class ArrayUtils {
 
@@ -11,8 +11,7 @@ public class ArrayUtils {
      * @return <code>true</code> if the array is empty or <code>null</code>
      * @since 2.1
      */
-    public static boolean isEmpty(double[] array) {
+    public static boolean isEmpty(final double[] array) {
         return array == null || array.length == 0;
     }
-
 }

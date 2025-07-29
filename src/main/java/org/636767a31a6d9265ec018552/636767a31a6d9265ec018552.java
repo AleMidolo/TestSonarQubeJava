@@ -1,16 +1,20 @@
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.DataInputStream;
 
-public class StringReader {
+public class BinaryReader {
+    private DataInputStream input;
+
+    public BinaryReader(DataInputStream input) {
+        this.input = input;
+    }
+
     /**
-     * Read a string field value from the stream.
-     * @param in The DataInputStream to read from
-     * @return The string value read from the stream
-     * @throws IOException If an I/O error occurs
+     * Read a {@code string} field value from the stream.
      */
-    public String readString(DataInputStream in) throws IOException {
-        // Read string length
-        int length = in.readInt();
+    @Override
+    public String readString() throws IOException {
+        // Read string length first
+        int length = input.readInt();
         
         if (length < 0) {
             return null;
@@ -19,8 +23,8 @@ public class StringReader {
         // Create byte array to hold string data
         byte[] bytes = new byte[length];
         
-        // Read bytes into array
-        in.readFully(bytes);
+        // Read bytes from stream
+        input.readFully(bytes);
         
         // Convert bytes to string using UTF-8 encoding
         return new String(bytes, "UTF-8");

@@ -1,31 +1,27 @@
 import java.util.*;
 
 public class BucketLabeler {
-    
-    public void moveVerticesFromMinLabelBucketToZero(
-        Map<Integer, Set<Integer>> bucketsByLabel,
-        Map<Integer, Integer> labels,
-        int minLabel
-    ) {
-        // Get vertices from min label bucket
-        Set<Integer> verticesToMove = bucketsByLabel.get(minLabel);
+
+    /**
+     * Moves all vertices from the bucket with label {@code minLabel} to the bucket with label 0.
+     * Clears the bucket with label {@code minLabel}. Updates the labeling accordingly.
+     * @param bucketsByLabel the buckets vertices are stored in
+     * @param labels the labels of the vertices
+     * @param minLabel the minimum value of the non-empty bucket
+     */
+    private void reload(List<Set<Integer>> bucketsByLabel, List<Integer> labels, int minLabel) {
+        // Get vertices from minLabel bucket
+        Set<Integer> vertices = bucketsByLabel.get(minLabel);
         
-        if (verticesToMove == null || verticesToMove.isEmpty()) {
-            return;
+        // Move vertices to bucket 0
+        bucketsByLabel.get(0).addAll(vertices);
+        
+        // Update labels for moved vertices
+        for (Integer vertex : vertices) {
+            labels.set(vertex, 0);
         }
-
-        // Create bucket 0 if it doesn't exist
-        bucketsByLabel.putIfAbsent(0, new HashSet<>());
-        Set<Integer> zeroBucket = bucketsByLabel.get(0);
-
-        // Move vertices to bucket 0 and update labels
-        for (Integer vertex : verticesToMove) {
-            zeroBucket.add(vertex);
-            labels.put(vertex, 0);
-        }
-
-        // Clear min label bucket
-        verticesToMove.clear();
-        bucketsByLabel.remove(minLabel);
+        
+        // Clear minLabel bucket
+        vertices.clear();
     }
 }

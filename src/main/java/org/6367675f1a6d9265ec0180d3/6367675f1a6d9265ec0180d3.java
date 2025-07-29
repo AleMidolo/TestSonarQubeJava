@@ -1,8 +1,13 @@
 import org.jgrapht.Graph;
+import org.jgrapht.GraphMapping;
+import org.jgrapht.graph.DefaultGraphMapping;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class GraphAutomorphism {
+public class GraphUtils {
 
     /**
      * Computes an identity automorphism (i.e. a self-mapping of a graph in which each vertex also maps to itself).
@@ -11,14 +16,20 @@ public class GraphAutomorphism {
      * @param <E> the graph edge type
      * @return a mapping from graph to graph
      */
-    public static <V,E> Map<V,V> getIdentityAutomorphism(Graph<V,E> graph) {
-        Map<V,V> mapping = new HashMap<>();
+    public static <V,E> IsomorphicGraphMapping<V,E> identity(Graph<V,E> graph) {
+        Map<V,V> vertexMap = new HashMap<>();
+        Map<E,E> edgeMap = new HashMap<>();
         
         // Map each vertex to itself
         for (V vertex : graph.vertexSet()) {
-            mapping.put(vertex, vertex);
+            vertexMap.put(vertex, vertex);
         }
         
-        return mapping;
+        // Map each edge to itself
+        for (E edge : graph.edgeSet()) {
+            edgeMap.put(edge, edge);
+        }
+        
+        return new IsomorphicGraphMapping<>(graph, graph, vertexMap, edgeMap);
     }
 }

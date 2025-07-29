@@ -1,30 +1,42 @@
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Appender;
+import java.util.Iterator;
 
-public class AppenderManager {
+public class Logger {
     private List<Appender> appenders;
-
-    public AppenderManager() {
-        this.appenders = new ArrayList<>();
+    
+    public Logger() {
+        appenders = new ArrayList<>();
     }
-
+    
     /**
      * Remove the appender with the name passed as parameter form the list of appenders.
-     * @param name The name of the appender to remove
-     * @return The removed appender, or null if not found
      */
-    public Appender removeAppender(String name) {
-        if (name == null || appenders == null) {
-            return null;
+    public void removeAppender(String name) {
+        if (name == null) {
+            return;
         }
-
-        for (int i = 0; i < appenders.size(); i++) {
-            Appender appender = appenders.get(i);
-            if (appender != null && name.equals(appender.getName())) {
-                return appenders.remove(i);
+        
+        Iterator<Appender> iterator = appenders.iterator();
+        while (iterator.hasNext()) {
+            Appender appender = iterator.next();
+            if (name.equals(appender.getName())) {
+                iterator.remove();
+                break;
             }
         }
-        return null;
+    }
+    
+    // Inner class representing an Appender
+    private class Appender {
+        private String name;
+        
+        public Appender(String name) {
+            this.name = name;
+        }
+        
+        public String getName() {
+            return name;
+        }
     }
 }

@@ -3,63 +3,38 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class PathUtils {
-    
+    /**
+     * Apply the given relative path to the given path, assuming standard Java folder separation (i.e. "/" separators).
+     * @param path the path to start from (usually a full file path)
+     * @param relativePath the relative path to apply(relative to the full file path above)
+     * @return the full file path that results from applying the relative path
+     */
     public static String applyRelativePath(String path, String relativePath) {
-        if (path == null || relativePath == null) {
-            return null;
-        }
-
-        // Convert backslashes to forward slashes
+        // Normalize path separators
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
-
-        // Remove trailing slashes
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
+        
+        // Handle empty cases
+        if (path == null || path.isEmpty()) {
+            return relativePath;
         }
-
-        // Handle empty relative path
-        if (relativePath.isEmpty()) {
+        if (relativePath == null || relativePath.isEmpty()) {
             return path;
         }
 
-        // Split the paths into components
-        String[] pathParts = path.split("/");
-        String[] relativeParts = relativePath.split("/");
-
-        // Count number of "../" at start of relative path
-        int upCount = 0;
-        for (String part : relativeParts) {
-            if (part.equals("..")) {
-                upCount++;
-            } else {
-                break;
-            }
+        // Convert to Path objects for proper resolution
+        Path basePath = Paths.get(path);
+        Path relPath = Paths.get(relativePath);
+        
+        // If relativePath is absolute, return it directly
+        if (relPath.isAbsolute()) {
+            return relativePath;
         }
-
-        // Build new path
-        StringBuilder result = new StringBuilder();
-
-        // Add path components minus the number of "../"
-        for (int i = 0; i < pathParts.length - upCount; i++) {
-            result.append(pathParts[i]).append("/");
-        }
-
-        // Add remaining relative path components
-        for (int i = upCount; i < relativeParts.length; i++) {
-            if (!relativeParts[i].equals(".") && !relativeParts[i].isEmpty()) {
-                result.append(relativeParts[i]);
-                if (i < relativeParts.length - 1) {
-                    result.append("/");
-                }
-            }
-        }
-
-        // Remove trailing slash if present
-        if (result.length() > 0 && result.charAt(result.length() - 1) == '/') {
-            result.setLength(result.length() - 1);
-        }
-
-        return result.toString();
+        
+        // Resolve the paths and normalize
+        Path resolvedPath = basePath.resolveSibling(relPath).normalize();
+        
+        // Convert back to string with forward slashes
+        return resolvedPath.toString().replace(File.separatorChar, '/');
     }
 }

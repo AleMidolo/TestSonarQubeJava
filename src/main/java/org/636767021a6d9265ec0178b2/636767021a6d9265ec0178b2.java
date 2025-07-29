@@ -1,28 +1,24 @@
 import org.objectweb.asm.Type;
-import java.util.Stack;
 
-public class FrameStack {
+public class StackFrameAnalyzer {
     private Stack<Type> outputStack;
 
-    public void pop(String descriptor) {
-        Type type = Type.getType(descriptor);
-        
-        if (type.getSort() == Type.METHOD) {
-            // For method descriptors, pop argument types
-            Type[] argumentTypes = type.getArgumentTypes();
+    private void pop(final String descriptor) {
+        if (descriptor.charAt(0) == '(') {
+            // Method descriptor - pop argument types
+            Type[] argumentTypes = Type.getArgumentTypes(descriptor);
             for (int i = argumentTypes.length - 1; i >= 0; i--) {
-                int size = argumentTypes[i].getSize();
-                while (size > 0) {
-                    outputStack.pop();
-                    size--;
-                }
+                outputStack.pop();
             }
         } else {
-            // For regular type descriptors, pop based on type size
-            int size = type.getSize();
-            while (size > 0) {
+            // Type descriptor - pop single type
+            Type type = Type.getType(descriptor);
+            if (type.getSize() == 2) {
+                // Double or long take up 2 slots
                 outputStack.pop();
-                size--;
+                outputStack.pop();
+            } else {
+                outputStack.pop();
             }
         }
     }

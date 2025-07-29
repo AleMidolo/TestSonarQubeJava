@@ -5,22 +5,20 @@ public class StringUtils {
      * @param sub string to search for. Return 0 if this is null.
      * @return the number of occurrences the substring {@code sub} appears in string {@code str}.
      */
-    public static int countOccurrences(String str, String sub) {
-        if (str == null || sub == null || sub.isEmpty()) {
+    public static int countOccurrencesOf(String str, String sub) {
+        if (str == null || sub == null || sub.length() == 0) {
             return 0;
         }
 
         int count = 0;
-        int lastIndex = 0;
-
-        while (lastIndex != -1) {
-            lastIndex = str.indexOf(sub, lastIndex);
-            if (lastIndex != -1) {
-                count++;
-                lastIndex += 1;
-            }
+        int pos = 0;
+        int idx;
+        
+        while ((idx = str.indexOf(sub, pos)) != -1) {
+            count++;
+            pos = idx + sub.length();
         }
-
+        
         return count;
     }
 }

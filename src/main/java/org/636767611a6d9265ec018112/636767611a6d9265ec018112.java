@@ -1,24 +1,18 @@
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class NextVertexProvider<V> {
+public class VertexIterator<V> implements Iterator<V> {
+    private Queue<V> vertexQueue;
+    
     /**
-     * Provides the next vertex in a sequence or iteration.
-     * 
-     * @return the next vertex in the sequence
-     * @throws NoSuchElementException if no more vertices are available
+     * Provides the next vertex in the iteration sequence.
+     * @return The next vertex in the iteration.
+     * @throws NoSuchElementException if there are no more vertices.
      */
     @Override
     protected V provideNextVertex() {
-        // If no iterator is available or no more elements exist
-        if (this.vertexIterator == null || !this.vertexIterator.hasNext()) {
-            throw new NoSuchElementException("No more vertices available");
+        if (vertexQueue.isEmpty()) {
+            throw new NoSuchElementException("No more vertices to iterate");
         }
-        
-        // Return the next vertex from the iterator
-        return this.vertexIterator.next();
+        return vertexQueue.poll();
     }
-    
-    // Supporting instance variables (these would typically be set up in the constructor)
-    private Iterator<V> vertexIterator;
 }

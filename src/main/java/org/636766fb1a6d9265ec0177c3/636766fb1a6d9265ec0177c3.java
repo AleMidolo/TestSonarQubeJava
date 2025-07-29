@@ -1,4 +1,10 @@
+package org.apache.commons.lang3;
+
+/**
+ * Utility class for working with characters.
+ */
 public class CharUtils {
+
     /**
      * <p>Checks whether the character is ASCII 7 bit.</p>
      * <pre>
@@ -12,7 +18,7 @@ public class CharUtils {
      * @param ch  the character to check
      * @return true if less than 128
      */
-    public static boolean isAscii(char ch) {
+    public static boolean isAscii(final char ch) {
         return ch < 128;
     }
 }

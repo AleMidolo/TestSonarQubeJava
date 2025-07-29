@@ -1,30 +1,30 @@
 import java.util.Objects;
 
-public class BinaryTree {
-    
-    private static class Node {
-        int value;
-        Node left;
-        Node right;
+public class BinarySearchTree<T extends Comparable<T>> {
+
+    private class TreeNode<T> {
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
         
-        Node(int value) {
-            this.value = value;
+        TreeNode(T data) {
+            this.data = data;
             this.left = null;
             this.right = null;
         }
     }
-    
-    /**
+
+    /** 
      * Performs a right node rotation.
      * @param node a node to rotate
      * @return a new parent of the {@code node}
      */
-    private Node rotateRight(Node node) {
+    private TreeNode<T> rotateRight(TreeNode<T> node) {
         if (node == null || node.left == null) {
             return node;
         }
         
-        Node newParent = node.left;
+        TreeNode<T> newParent = node.left;
         node.left = newParent.right;
         newParent.right = node;
         

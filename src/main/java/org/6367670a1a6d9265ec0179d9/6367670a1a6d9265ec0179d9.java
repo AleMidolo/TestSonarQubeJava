@@ -5,7 +5,7 @@ public class StringUtils {
      * @return String length or <code>0</code> if the String is <code>null</code>.
      * @since 2.4
      */
-    public static int length(String str) {
+    public static int length(final String str) {
         return str == null ? 0 : str.length();
     }
 }

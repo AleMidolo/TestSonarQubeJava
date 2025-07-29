@@ -1,3 +1,5 @@
+package org.example;
+
 public class StringUtils {
     /**
      * Trim trailing whitespace from the given String.

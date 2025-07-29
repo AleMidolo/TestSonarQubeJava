@@ -2,31 +2,29 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VarintReader {
-    /**
-     * Read a raw Varint from the stream.
-     * @param input The input stream to read from
-     * @return The decoded varint value
-     * @throws IOException If there is an error reading from the stream
-     */
-    public static long readRawVarint(InputStream input) throws IOException {
-        long value = 0;
+    private final InputStream input;
+    private int position;
+    
+    public VarintReader(InputStream input) {
+        this.input = input;
+        this.position = 0;
+    }
+
+    public long readRawVarint64() throws IOException {
+        long result = 0;
         int shift = 0;
-        int b;
-        
-        do {
-            // Read one byte from stream
-            b = input.read();
+        while (shift < 64) {
+            int b = input.read();
             if (b == -1) {
-                throw new IOException("Reached end of stream while reading varint");
+                throw new IOException("Malformed varint - unexpected end of stream");
             }
-            
-            // Add the lower 7 bits to the result
-            value |= ((long)(b & 0x7F)) << shift;
+            position++;
+            result |= (long)(b & 0x7F) << shift;
+            if ((b & 0x80) == 0) {
+                return result;
+            }
             shift += 7;
-            
-            // Continue if the high bit is set
-        } while ((b & 0x80) != 0);
-        
-        return value;
+        }
+        throw new IOException("Malformed varint - too many bytes");
     }
 }

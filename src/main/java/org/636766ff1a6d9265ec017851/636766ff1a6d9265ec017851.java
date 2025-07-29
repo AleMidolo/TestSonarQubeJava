@@ -1,9 +1,10 @@
-import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
 
-public class ByteSearch {
-    private ByteBuffer buffer;
-    
-    public ByteSearch(ByteBuffer buffer) {
+public class ByteSearcher {
+
+    private byte[] buffer;
+
+    public ByteSearcher(byte[] buffer) {
         this.buffer = buffer;
     }
 
@@ -13,29 +14,17 @@ public class ByteSearch {
      * @param pos   The starting position for searching.
      * @return The position of byte found, counting from beginning of the<code>buffer</code>, or <code>-1</code> if not found.
      */
-    public int findByte(byte value, int pos) {
-        if (pos < 0 || pos >= buffer.limit()) {
+    protected int findByte(byte value, int pos) {
+        if (buffer == null || pos < 0 || pos >= buffer.length) {
             return -1;
         }
 
-        // Save the current position
-        int originalPosition = buffer.position();
-        
-        try {
-            // Set position to start searching from
-            buffer.position(pos);
-            
-            // Search through remaining bytes
-            while (buffer.hasRemaining()) {
-                if (buffer.get() == value) {
-                    return buffer.position() - 1;
-                }
+        for (int i = pos; i < buffer.length; i++) {
+            if (buffer[i] == value) {
+                return i;
             }
-            
-            return -1;
-        } finally {
-            // Restore original position
-            buffer.position(originalPosition);
         }
+        
+        return -1;
     }
 }

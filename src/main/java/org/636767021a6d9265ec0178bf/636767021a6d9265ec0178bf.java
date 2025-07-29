@@ -1,37 +1,35 @@
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.lang.Character;
+import java.lang.Class;
+import java.lang.Object;
+import java.lang.String;
 
-public class TypeConverter {
+public class CharacterConverter {
 
-    public Character convertToCharacter(Class<?> type, Object value) throws Exception {
+    @Override
+    protected Object convertToType(final Class<?> type, final Object value) throws Exception {
         if (value == null) {
-            return null;
+            throw new Exception("Value cannot be null");
         }
 
-        if (value instanceof Character) {
-            return (Character) value;
-        }
-
-        if (value instanceof String) {
-            String str = (String) value;
+        if (Character.class.equals(type)) {
+            if (value instanceof Character) {
+                return value;
+            }
+            
+            String str = value.toString(); 
             if (str.length() == 1) {
-                return str.charAt(0);
+                return Character.valueOf(str.charAt(0));
+            } else if (str.length() > 1) {
+                // Try to convert string to number and then to char
+                try {
+                    int num = Integer.parseInt(str);
+                    return Character.valueOf((char)num);
+                } catch (NumberFormatException ex) {
+                    throw new Exception("Cannot convert value '" + value + "' to Character");
+                }
             }
-            throw new Exception("Cannot convert String with length > 1 to Character");
         }
-
-        if (value instanceof Number) {
-            int intValue = ((Number) value).intValue();
-            if (intValue >= Character.MIN_VALUE && intValue <= Character.MAX_VALUE) {
-                return (char) intValue;
-            }
-            throw new Exception("Number out of range for Character conversion");
-        }
-
-        if (value instanceof Boolean) {
-            return ((Boolean) value) ? '1' : '0';
-        }
-
-        throw new Exception("Cannot convert " + value.getClass().getName() + " to Character");
+        
+        throw new Exception("Unsupported conversion from " + value.getClass().getName() + " to " + type.getName());
     }
 }

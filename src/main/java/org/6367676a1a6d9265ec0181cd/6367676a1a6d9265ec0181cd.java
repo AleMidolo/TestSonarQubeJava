@@ -1,3 +1,5 @@
+package org.utils;
+
 public class StringUtils {
     /**
      * Trim leading whitespace from the given String.
@@ -11,12 +13,12 @@ public class StringUtils {
         }
         
         int len = str.length();
-        int start = 0;
+        int st = 0;
         
-        while ((start < len) && Character.isWhitespace(str.charAt(start))) {
-            start++;
+        while ((st < len) && Character.isWhitespace(str.charAt(st))) {
+            st++;
         }
         
-        return (start > 0) ? str.substring(start) : str;
+        return (st > 0) ? str.substring(st) : str;
     }
 }

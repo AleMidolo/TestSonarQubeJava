@@ -2,28 +2,29 @@ import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
 import javax.servlet.http.HttpServletRequest;
 
-public class MeteorRetriever {
+public class MeteorLookup {
 
     /**
      * Retrieve an instance of {@link Meteor} based on the {@link HttpServletRequest}.
-     * @param r {@link HttpServletRequest} 
+     * @param r {@link HttpServletRequest}
      * @return a {@link Meteor} or null if not found
      */
-    public static Meteor retrieve(HttpServletRequest r) {
+    public static Meteor lookup(HttpServletRequest r) {
         if (r == null) {
             return null;
         }
         
         // Try to get existing Meteor instance
-        Meteor meteor = Meteor.build(r);
+        Meteor meteor = (Meteor) r.getAttribute(Meteor.class.getName());
         
-        if (meteor == null || meteor.getAtmosphereResource() == null) {
-            return null;
-        }
-        
-        AtmosphereResource resource = meteor.getAtmosphereResource();
-        if (!resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
-            return null;
+        if (meteor == null) {
+            // Try to get from AtmosphereResource
+            AtmosphereResource resource = (AtmosphereResource) 
+                r.getAttribute(AtmosphereResource.class.getName());
+                
+            if (resource != null) {
+                meteor = Meteor.build(resource);
+            }
         }
         
         return meteor;

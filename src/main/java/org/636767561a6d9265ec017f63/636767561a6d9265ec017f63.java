@@ -2,14 +2,20 @@ import java.util.*;
 
 public class Graph {
     private boolean[] visited;
+    private int currentVertex;
+    private int numVertices;
+    
+    public Graph(int v) {
+        numVertices = v;
+        visited = new boolean[v];
+        currentVertex = 0;
+    }
 
-    /**
-     * Checks whether there exist unvisited vertices.
-     * @return true if there exist unvisited vertices.
-     */
-    public boolean hasUnvisitedVertices() {
-        for (boolean v : visited) {
-            if (!v) {
+    @Override
+    public boolean hasNext() {
+        // Check if there are any unvisited vertices remaining
+        for (int i = 0; i < numVertices; i++) {
+            if (!visited[i]) {
                 return true;
             }
         }

@@ -1,68 +1,58 @@
-import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
 
 public class UTF8Decoder {
-    
+
     /**
      * Decodes octets to characters using the UTF-8 decoding and appends the characters to a StringBuffer.
-     * @param bytes The byte array containing UTF-8 encoded data
-     * @param offset The starting offset in the byte array
-     * @param length The number of bytes to decode
-     * @param buffer The StringBuffer to append decoded characters to
      * @return the index to the next unchecked character in the string to decode
      */
-    public static int decodeUTF8(byte[] bytes, int offset, int length, StringBuffer buffer) {
-        int end = offset + length;
-        int i = offset;
+    private static int decodeOctets(int i, ByteBuffer bb, StringBuilder sb) {
+        int b1 = bb.get(i) & 0xFF;
         
-        while (i < end) {
-            int byte1 = bytes[i] & 0xFF;
-            
-            if (byte1 <= 0x7F) {
-                // Single byte character
-                buffer.append((char)byte1);
-                i++;
-            }
-            else if ((byte1 & 0xE0) == 0xC0) {
-                // Two byte character
-                if (i + 1 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80) break;
-                
-                int codePoint = ((byte1 & 0x1F) << 6) | (byte2 & 0x3F);
-                buffer.append((char)codePoint);
-                i += 2;
-            }
-            else if ((byte1 & 0xF0) == 0xE0) {
-                // Three byte character
-                if (i + 2 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                int byte3 = bytes[i + 2] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80 || (byte3 & 0xC0) != 0x80) break;
-                
-                int codePoint = ((byte1 & 0x0F) << 12) | ((byte2 & 0x3F) << 6) | (byte3 & 0x3F);
-                buffer.append((char)codePoint);
-                i += 3;
-            }
-            else if ((byte1 & 0xF8) == 0xF0) {
-                // Four byte character
-                if (i + 3 >= end) break;
-                int byte2 = bytes[i + 1] & 0xFF;
-                int byte3 = bytes[i + 2] & 0xFF;
-                int byte4 = bytes[i + 3] & 0xFF;
-                if ((byte2 & 0xC0) != 0x80 || (byte3 & 0xC0) != 0x80 || (byte4 & 0xC0) != 0x80) break;
-                
-                int codePoint = ((byte1 & 0x07) << 18) | ((byte2 & 0x3F) << 12) | 
-                               ((byte3 & 0x3F) << 6) | (byte4 & 0x3F);
-                buffer.append(Character.highSurrogate(codePoint));
-                buffer.append(Character.lowSurrogate(codePoint));
-                i += 4;
-            }
-            else {
-                // Invalid UTF-8 byte
-                break;
-            }
+        // Single byte character
+        if ((b1 >> 7) == 0) {
+            sb.append((char)b1);
+            return i + 1;
         }
         
-        return i;
+        // Two byte character
+        if ((b1 >> 5) == 0b110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            if ((b2 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x1F) << 6) | (b2 & 0x3F);
+            sb.append((char)cp);
+            return i + 2;
+        }
+        
+        // Three byte character
+        if ((b1 >> 4) == 0b1110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            int b3 = bb.get(i + 2) & 0xFF;
+            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x0F) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F);
+            sb.append((char)cp);
+            return i + 3;
+        }
+        
+        // Four byte character
+        if ((b1 >> 3) == 0b11110) {
+            int b2 = bb.get(i + 1) & 0xFF;
+            int b3 = bb.get(i + 2) & 0xFF;
+            int b4 = bb.get(i + 3) & 0xFF;
+            if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10 || (b4 >> 6) != 0b10) {
+                throw new IllegalArgumentException("Invalid UTF-8 encoding");
+            }
+            int cp = ((b1 & 0x07) << 18) | ((b2 & 0x3F) << 12) | ((b3 & 0x3F) << 6) | (b4 & 0x3F);
+            // Convert to surrogate pair for characters outside BMP
+            sb.append(Character.highSurrogate(cp));
+            sb.append(Character.lowSurrogate(cp));
+            return i + 4;
+        }
+        
+        throw new IllegalArgumentException("Invalid UTF-8 encoding");
     }
 }

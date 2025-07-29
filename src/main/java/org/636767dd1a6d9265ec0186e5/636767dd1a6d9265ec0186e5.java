@@ -1,32 +1,22 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ChannelManager {
-    private List<String> targetChannels;
+    private List<Channels> targetChannels;
+    private List<IConsumer> consumers;
 
     public ChannelManager() {
-        this.targetChannels = new ArrayList<>();
+        targetChannels = new ArrayList<>();
+        consumers = new ArrayList<>();
     }
 
     /**
      * Add a new target channels.
-     * @param channel The channel to add
      */
-    public void addTargetChannel(String channel) {
-        if (channel != null && !channel.isEmpty()) {
-            targetChannels.add(channel);
-        }
-    }
-
-    /**
-     * Add multiple new target channels.
-     * @param channels List of channels to add
-     */
-    public void addTargetChannels(List<String> channels) {
-        if (channels != null) {
-            for (String channel : channels) {
-                addTargetChannel(channel);
-            }
+    public void addNewTarget(Channels channels, IConsumer consumer) {
+        if (channels != null && consumer != null) {
+            targetChannels.add(channels);
+            consumers.add(consumer);
         }
     }
 }

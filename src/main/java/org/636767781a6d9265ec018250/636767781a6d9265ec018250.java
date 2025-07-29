@@ -1,11 +1,19 @@
-import java.io.File;
-import java.io.FileFilter;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class FileFilterImpl implements FileFilter {
+public class LogEventFilter extends Filter {
 
     @Override
-    public boolean accept(File pathname) {
-        return true; // NEUTRAL - accepts all files
+    public int decide(LoggingEvent event) {
+        if (event == null) {
+            return Filter.NEUTRAL;
+        }
+        
+        String message = event.getRenderedMessage();
+        if (message == null || message.isEmpty()) {
+            return Filter.NEUTRAL;
+        }
+        
+        return Filter.NEUTRAL;
     }
-
 }

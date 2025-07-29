@@ -1,4 +1,4 @@
-public class Factorial {
+public class MathUtils {
     /**
      * Calculate the factorial of n.
      * @param n the input number

@@ -1,54 +1,59 @@
 import java.util.*;
 
 public class Graph {
-    private Map<Node, List<Edge>> adjacencyList;
-    private Iterator<Node> nodeIterator;
-    private Node currentNode;
+    private List<Node> nodes;
+    private List<Edge> edges;
+    private int currentNodeIndex;
     
-    public Edge nextEdge() {
-        if (currentNode == null || !nodeIterator.hasNext()) {
+    // Node class to represent graph vertices
+    private class Node {
+        private int id;
+        private boolean isVirtual;
+        private Node realCounterpart;
+        
+        public Node(int id) {
+            this.id = id;
+            this.isVirtual = false;
+            this.realCounterpart = null;
+        }
+    }
+    
+    // Edge class to represent graph edges
+    private class Edge {
+        private Node source;
+        private Node destination;
+        
+        public Edge(Node source, Node destination) {
+            this.source = source;
+            this.destination = destination;
+        }
+    }
+    
+    /**
+     * Returns an edge connecting previously returned node with node, which will be returned next. 
+     * If either of the mentioned nodes is virtual, the edge will be incident to its real counterpart.
+     * @return an edge from the current node to the next node
+     */
+    public Edge edgeToNext() {
+        if (currentNodeIndex >= nodes.size() - 1) {
             return null;
         }
         
-        Node nextNode = nodeIterator.next();
+        Node currentNode = nodes.get(currentNodeIndex);
+        Node nextNode = nodes.get(currentNodeIndex + 1);
         
-        // Get real nodes if virtual
-        Node realCurrent = currentNode.isVirtual() ? currentNode.getRealNode() : currentNode;
-        Node realNext = nextNode.isVirtual() ? nextNode.getRealNode() : nextNode;
+        // If nodes are virtual, use their real counterparts
+        Node sourceNode = currentNode.isVirtual ? currentNode.realCounterpart : currentNode;
+        Node destNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
         
-        // Find edge between current and next nodes
-        List<Edge> edges = adjacencyList.get(realCurrent);
+        // Find the edge connecting these nodes
         for (Edge edge : edges) {
-            if (edge.connects(realCurrent, realNext)) {
-                currentNode = nextNode;
+            if ((edge.source == sourceNode && edge.destination == destNode) ||
+                (edge.source == destNode && edge.destination == sourceNode)) {
                 return edge;
             }
         }
         
-        currentNode = nextNode;
         return null;
-    }
-    
-    // Supporting classes
-    private class Node {
-        private boolean virtual;
-        private Node realNode;
-        
-        public boolean isVirtual() {
-            return virtual;
-        }
-        
-        public Node getRealNode() {
-            return realNode;
-        }
-    }
-    
-    private class Edge {
-        private Node source;
-        private Node target;
-        
-        public boolean connects(Node n1, Node n2) {
-            return (source == n1 && target == n2) || (source == n2 && target == n1);
-        }
     }
 }

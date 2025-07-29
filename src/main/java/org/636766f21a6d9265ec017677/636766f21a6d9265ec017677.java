@@ -1,6 +1,10 @@
 package org.apache.commons.lang3;
 
+/**
+ * Utility class for working with boolean values
+ */
 public class BooleanUtils {
+
     /**
      * <p>Checks if a <code>Boolean</code> value is <i>not</i> <code>true</code>,
      * handling <code>null</code> by returning <code>true</code>.</p>
@@ -11,7 +15,7 @@ public class BooleanUtils {
      * BooleanUtils.isNotTrue(null)          = true
      * </pre>
      *
-     * @param bool  the boolean to check, null returns <code>true</code>
+     * @param bool the boolean to check, null returns <code>true</code>
      * @return <code>true</code> if the input is null or false
      * @since 2.3
      */

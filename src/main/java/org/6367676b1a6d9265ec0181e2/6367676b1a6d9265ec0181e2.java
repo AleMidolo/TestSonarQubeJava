@@ -1,13 +1,21 @@
 import java.util.Collection;
 
 public class CollectionUtils {
-    
-    public static <E> E findFirstMatch(Collection<E> source, Collection<E> candidates) {
+
+    /**
+     * Return the first element in '<code>candidates</code>' that is contained in '<code>source</code>'. 
+     * If no element in '<code>candidates</code>' is present in '<code>source</code>' returns <code>null</code>. 
+     * Iteration order is {@link Collection} implementation specific.
+     * @param source the source Collection
+     * @param candidates the candidates to search for
+     * @return the first present object, or <code>null</code> if not found
+     */
+    public static Object findFirstMatch(Collection source, Collection candidates) {
         if (source == null || candidates == null) {
             return null;
         }
         
-        for (E candidate : candidates) {
+        for (Object candidate : candidates) {
             if (source.contains(candidate)) {
                 return candidate;
             }

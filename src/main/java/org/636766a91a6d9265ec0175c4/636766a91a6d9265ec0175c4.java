@@ -1,31 +1,25 @@
 import org.objectweb.asm.Type;
-import java.util.ArrayList;
-import java.util.List;
 
-public class FrameStack {
-    private List<Type> stack;
-    
-    public FrameStack() {
-        stack = new ArrayList<>();
-    }
+public class StackFrameAnalyzer {
+    private Stack<AbstractType> outputStack;
 
-    public void pop(String descriptor) {
-        Type type = Type.getType(descriptor);
-        
-        if (type.getSort() == Type.METHOD) {
-            // For method descriptors, pop argument types
-            Type[] argumentTypes = type.getArgumentTypes();
+    private void pop(final String descriptor) {
+        if (descriptor.charAt(0) == '(') {
+            // Method descriptor - pop argument types
+            Type[] argumentTypes = Type.getArgumentTypes(descriptor);
             for (int i = argumentTypes.length - 1; i >= 0; i--) {
-                int size = argumentTypes[i].getSize();
-                for (int j = 0; j < size; j++) {
-                    stack.remove(stack.size() - 1);
-                }
+                pop(argumentTypes[i].getDescriptor());
             }
         } else {
-            // For regular type descriptors, pop the type size
-            int size = type.getSize();
-            for (int i = 0; i < size; i++) {
-                stack.remove(stack.size() - 1);
+            // Type descriptor - pop single type
+            char firstChar = descriptor.charAt(0);
+            if (firstChar == 'J' || firstChar == 'D') {
+                // Long and Double take up 2 slots
+                outputStack.pop();
+                outputStack.pop();
+            } else if (firstChar != 'V') {
+                // Void doesn't need pop
+                outputStack.pop();
             }
         }
     }

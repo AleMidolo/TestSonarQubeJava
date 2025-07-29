@@ -1,46 +1,37 @@
-import java.util.List;
+import java.util.LinkedList;
 
 public class TreeEdge {
-    private TreeEdge prev;
-    private TreeEdge next;
-    private TreeNode source;
-    private TreeNode target;
-
+    private TreeEdge prevTreeEdge;
+    private TreeEdge nextTreeEdge;
+    private LinkedList<TreeEdge> sourceEdges;
+    private LinkedList<TreeEdge> targetEdges;
+    
     /**
      * Removes this edge from both doubly linked lists of tree edges.
      */
-    public void remove() {
-        // Handle previous edge's next pointer
-        if (prev != null) {
-            prev.next = next;
+    public void removeFromTreeEdgeList() {
+        // Remove from source edges list
+        if (sourceEdges != null) {
+            sourceEdges.remove(this);
         }
         
-        // Handle next edge's previous pointer
-        if (next != null) {
-            next.prev = prev;
+        // Remove from target edges list
+        if (targetEdges != null) {
+            targetEdges.remove(this);
         }
         
-        // Remove references from source node
-        if (source != null) {
-            source.removeEdge(this);
+        // Update previous edge's next pointer
+        if (prevTreeEdge != null) {
+            prevTreeEdge.nextTreeEdge = nextTreeEdge;
         }
         
-        // Remove references from target node
-        if (target != null) {
-            target.removeEdge(this);
+        // Update next edge's previous pointer
+        if (nextTreeEdge != null) {
+            nextTreeEdge.prevTreeEdge = prevTreeEdge;
         }
         
         // Clear this edge's pointers
-        prev = null;
-        next = null;
-        source = null;
-        target = null;
-    }
-}
-
-// Supporting class
-class TreeNode {
-    public void removeEdge(TreeEdge edge) {
-        // Implementation for removing edge from node
+        prevTreeEdge = null;
+        nextTreeEdge = null;
     }
 }

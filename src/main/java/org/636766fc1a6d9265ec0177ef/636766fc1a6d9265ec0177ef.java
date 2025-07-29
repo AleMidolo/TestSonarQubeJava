@@ -1,5 +1,5 @@
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayUtils {
     /**
@@ -7,33 +7,18 @@ public class ArrayUtils {
      * @param array The array to check
      * @return The given array or a new array without null.
      */
-    public static String[] getNonNullArray(String[] array) {
+    static String[] toNoNullStringArray(Object[] array) {
         if (array == null) {
             return new String[0];
         }
         
-        // Count non-null elements
-        int nonNullCount = 0;
-        for (String element : array) {
-            if (element != null) {
-                nonNullCount++;
+        List<String> list = new ArrayList<>();
+        for (Object obj : array) {
+            if (obj != null) {
+                list.add(obj.toString());
             }
         }
         
-        // If no null elements, return original array
-        if (nonNullCount == array.length) {
-            return array;
-        }
-        
-        // Create new array with only non-null elements
-        String[] result = new String[nonNullCount];
-        int index = 0;
-        for (String element : array) {
-            if (element != null) {
-                result[index++] = element;
-            }
-        }
-        
-        return result;
+        return list.toArray(new String[0]);
     }
 }

@@ -1,18 +1,19 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestHandler {
+public class RequestWrapper {
     private HttpServletRequest request;
-
-    public RequestHandler(HttpServletRequest request) {
-        this.request = request;
-    }
 
     /**
      * Retrieve the content length of the request.
      * @return The content length of the request.
      * @since 1.3
      */
-    public int getContentLength() {
-        return request.getContentLength();
+    public long contentLength() {
+        long length = request.getContentLengthLong();
+        if (length < 0) {
+            // If content length header not set, return 0
+            return 0L; 
+        }
+        return length;
     }
 }

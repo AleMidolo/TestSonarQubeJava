@@ -1,11 +1,10 @@
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class QueuePrinter {
-    private Queue<Object> queue;
-
-    public QueuePrinter() {
-        this.queue = new LinkedList<>();
+public class Queue<T> {
+    private LinkedList<T> queue;
+    
+    public Queue() {
+        queue = new LinkedList<>();
     }
 
     /**
@@ -16,11 +15,11 @@ public class QueuePrinter {
         if (queue.isEmpty()) {
             return "[]";
         }
-
+        
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         
-        for (Object element : queue) {
+        for (T element : queue) {
             sb.append(element);
             sb.append(", ");
         }

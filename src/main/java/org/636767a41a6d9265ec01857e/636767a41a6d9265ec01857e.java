@@ -11,7 +11,7 @@ public class LongComparator {
      * @return a negative value if {@code a} is less than {@code b}; a positive value if {@code a} is greater than
      *         {@code b}; or zero if they are equal
      */
-    public static int compare(long a, long b) {
+    private static int compareSigned(long a, long b) {
         if (a < b) {
             return -1;
         }

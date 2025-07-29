@@ -6,12 +6,32 @@ import java.util.List;
 public class FileHandler {
     /**
      * Add the specified files in reverse order.
-     * @param files List of files to add in reverse order
-     * @return List of files in reverse order
      */
-    public List<File> addFilesInReverseOrder(List<File> files) {
-        List<File> reversedFiles = new ArrayList<>(files);
-        Collections.reverse(reversedFiles);
-        return reversedFiles;
+    private void addReverse(final File[] files) {
+        if (files == null || files.length == 0) {
+            return;
+        }
+        
+        // Convert array to list for easier reversal
+        List<File> fileList = new ArrayList<>();
+        for (File file : files) {
+            fileList.add(file);
+        }
+        
+        // Reverse the list
+        Collections.reverse(fileList);
+        
+        // Process files in reverse order
+        for (File file : fileList) {
+            if (file != null) {
+                processFile(file);
+            }
+        }
+    }
+    
+    // Helper method to process individual files
+    private void processFile(File file) {
+        // Implementation for processing individual files would go here
+        // Left empty as it wasn't part of the original requirements
     }
 }

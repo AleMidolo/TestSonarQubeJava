@@ -21,30 +21,29 @@ public class SocketAppender extends AppenderSkeleton {
         
         // Remove any disconnected clients
         List<Integer> disconnectedIndexes = new ArrayList<>();
-        for (int i = 0; i < connectedClients.size(); i++) {
-            Socket client = connectedClients.get(i);
-            if (client.isClosed() || !client.isConnected()) {
-                disconnectedIndexes.add(i);
-            }
-        }
         
-        // Remove from end to avoid index shifting
-        for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
-            int index = disconnectedIndexes.get(i);
-            connectedClients.remove(index);
-            clientWriters.remove(index);
-        }
-
-        // Write message to all connected clients
-        for (PrintWriter writer : clientWriters) {
+        // Write message to each connected client
+        for (int i = 0; i < clientWriters.size(); i++) {
+            PrintWriter writer = clientWriters.get(i);
             try {
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // Handle failed write
-                errorHandler.error("Failed to write to client", e, 
-                    ErrorCode.WRITE_FAILURE);
+                // Client likely disconnected, mark for removal
+                disconnectedIndexes.add(i);
             }
+        }
+        
+        // Remove disconnected clients
+        for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
+            int index = disconnectedIndexes.get(i);
+            try {
+                connectedClients.get(index).close();
+            } catch (IOException e) {
+                // Ignore close errors
+            }
+            connectedClients.remove(index);
+            clientWriters.remove(index);
         }
     }
 
@@ -55,9 +54,9 @@ public class SocketAppender extends AppenderSkeleton {
 
     @Override
     public void close() {
-        for (Socket client : connectedClients) {
+        for (Socket socket : connectedClients) {
             try {
-                client.close();
+                socket.close();
             } catch (IOException e) {
                 // Ignore close errors
             }

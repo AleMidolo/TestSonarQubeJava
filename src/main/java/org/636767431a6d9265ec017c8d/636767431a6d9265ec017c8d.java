@@ -11,9 +11,10 @@ public class BinaryLogCalculator {
         
         int count = 0;
         while (n > 0) {
-            n = n >> 1; // Divide by 2 using right shift
+            n = n >> 1; // Divide by 2 using bit shift
             count++;
         }
+        
         return count;
     }
 }

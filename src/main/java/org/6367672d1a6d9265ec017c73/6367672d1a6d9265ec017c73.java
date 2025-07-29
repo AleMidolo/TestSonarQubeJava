@@ -9,7 +9,7 @@ class Logger {
     }
     
     public boolean shouldPrintMessage(int timestamp, String message) {
-        // If message not seen before or 10 seconds have elapsed since last print
+        // If message not seen before or 10 seconds have elapsed
         if (!messageTimestamps.containsKey(message) || 
             timestamp - messageTimestamps.get(message) >= 10) {
             

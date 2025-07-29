@@ -5,7 +5,7 @@ public class TreeEdge {
     private TreeEdge nextTreeEdge;
     private LinkedList<TreeEdge> sourceEdges;
     private LinkedList<TreeEdge> targetEdges;
-    
+
     /**
      * Removes this edge from both doubly linked lists of tree edges.
      */
@@ -14,23 +14,21 @@ public class TreeEdge {
         if (sourceEdges != null) {
             sourceEdges.remove(this);
         }
-        
-        // Remove from target edges list
+
+        // Remove from target edges list 
         if (targetEdges != null) {
             targetEdges.remove(this);
         }
-        
-        // Update previous edge's next pointer
+
+        // Update prev/next pointers
         if (prevTreeEdge != null) {
             prevTreeEdge.nextTreeEdge = nextTreeEdge;
         }
-        
-        // Update next edge's previous pointer
         if (nextTreeEdge != null) {
             nextTreeEdge.prevTreeEdge = prevTreeEdge;
         }
-        
-        // Clear this edge's pointers
+
+        // Clear references
         prevTreeEdge = null;
         nextTreeEdge = null;
     }

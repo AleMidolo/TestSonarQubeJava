@@ -39,6 +39,14 @@ public class ContentBuilder {
             }
         }
 
+        // Add any other content fields that might exist
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+            String key = entry.getKey();
+            if (!key.equals("text") && !key.equals("ats") && !entry.getValue().isJsonNull()) {
+                content.put(key, entry.getValue().getAsString());
+            }
+        }
+
         return content;
     }
 }

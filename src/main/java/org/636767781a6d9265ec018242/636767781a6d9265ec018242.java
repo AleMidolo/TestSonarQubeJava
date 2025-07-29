@@ -5,24 +5,21 @@ import java.util.Enumeration;
 
 public class AppenderManager implements AppenderAttachable {
     
-    private Vector<Appender> appenders;
+    private Vector appenderList;
 
     public AppenderManager() {
-        appenders = new Vector<Appender>();
+        appenderList = new Vector();
     }
 
-    /** 
-     * Call the <code>doAppend</code> method on all attached appenders.  
-     */
     public int appendLoopOnAppenders(LoggingEvent event) {
         int size = 0;
         
-        if(appenders != null) {
-            size = appenders.size();
-            for(Enumeration<Appender> enumeration = appenders.elements(); 
-                enumeration.hasMoreElements();) {
-                    Appender appender = enumeration.nextElement();
-                    appender.doAppend(event);
+        if(appenderList != null && !appenderList.isEmpty()) {
+            size = appenderList.size();
+            Enumeration enumeration = appenderList.elements();
+            while(enumeration.hasMoreElements()) {
+                Appender appender = (Appender) enumeration.nextElement();
+                appender.doAppend(event);
             }
         }
         

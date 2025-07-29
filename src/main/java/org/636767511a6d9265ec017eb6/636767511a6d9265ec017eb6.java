@@ -19,12 +19,12 @@ public class Graph {
             return current;
         }
         
-        public void setCurrent(Node node) {
-            this.current = node;
+        public void setNode(Node node) {
+            this.current = node; 
         }
     }
     
-    /**
+    /** 
      * Either finds and returns a circulator to the node on the boundary of the component, which satisfies the {@code predicate} or returns a circulator to the {@code stop} node.
      * @param predicate the condition the desired node should satisfy
      * @param start the node to start the search from  
@@ -35,33 +35,34 @@ public class Graph {
     private OuterFaceCirculator selectOnOuterFace(Predicate<Node> predicate, Node start, Node stop, int dir) {
         OuterFaceCirculator circulator = new OuterFaceCirculator(start);
         
-        // Continue traversing until we reach stop node
-        while (!circulator.getCurrent().equals(stop)) {
+        // Continue traversing until we find matching node or reach stop node
+        while (!predicate.test(circulator.getCurrent())) {
             
-            // Check if current node satisfies predicate
-            if (predicate.test(circulator.getCurrent())) {
+            // If we've reached the stop node without finding a match
+            if (circulator.getCurrent().equals(stop)) {
                 return circulator;
             }
             
             // Move to next node based on direction
-            Node next = (dir == 1) ? getNextClockwise(circulator.getCurrent()) 
-                                 : getNextCounterClockwise(circulator.getCurrent());
-            
-            circulator.setCurrent(next);
+            if (dir > 0) {
+                circulator.setNode(getNextNode(circulator.getCurrent())); 
+            } else {
+                circulator.setNode(getPrevNode(circulator.getCurrent()));
+            }
         }
         
-        // Return circulator pointing to stop node if no match found
         return circulator;
     }
     
-    // Helper methods to get next nodes
-    private Node getNextClockwise(Node current) {
-        // Implementation to get next clockwise node
+    // Helper method to get next node in clockwise direction
+    private Node getNextNode(Node current) {
+        // Implementation to get next node
         return null;
     }
     
-    private Node getNextCounterClockwise(Node current) {
-        // Implementation to get next counter-clockwise node
+    // Helper method to get previous node in counter-clockwise direction  
+    private Node getPrevNode(Node current) {
+        // Implementation to get previous node
         return null;
     }
 }

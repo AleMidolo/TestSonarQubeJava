@@ -44,22 +44,22 @@ public class BoxSplitter {
 
         double halfHeight = box.getHeight() / 2.0;
         
-        // Create bottom box
-        Box2D bottomBox = new Box2D(
-            box.getX(),
-            box.getY(),
-            box.getWidth(),
-            halfHeight
-        );
-
-        // Create top box
-        Box2D topBox = new Box2D(
+        // Create first box - top half
+        Box2D box1 = new Box2D(
             box.getX(),
             box.getY() + halfHeight,
             box.getWidth(),
             halfHeight
         );
 
-        return new Pair<>(bottomBox, topBox);
+        // Create second box - bottom half
+        Box2D box2 = new Box2D(
+            box.getX(),
+            box.getY(),
+            box.getWidth(),
+            halfHeight
+        );
+
+        return new Pair<>(box1, box2);
     }
 }

@@ -20,7 +20,7 @@ public class SocketAppender extends AppenderSkeleton {
         String message = layout.format(event);
         
         // Remove any disconnected clients
-        List<Integer> disconnectedIndices = new ArrayList<>();
+        List<Integer> disconnectedIndexes = new ArrayList<>();
         
         // Write message to each connected client
         for (int i = 0; i < clientWriters.size(); i++) {
@@ -29,14 +29,14 @@ public class SocketAppender extends AppenderSkeleton {
                 writer.println(message);
                 writer.flush();
             } catch (Exception e) {
-                // Client likely disconnected, mark for removal
-                disconnectedIndices.add(i);
+                // Client likely disconnected
+                disconnectedIndexes.add(i);
             }
         }
         
-        // Remove disconnected clients in reverse order
-        for (int i = disconnectedIndices.size() - 1; i >= 0; i--) {
-            int index = disconnectedIndices.get(i);
+        // Clean up disconnected clients
+        for (int i = disconnectedIndexes.size() - 1; i >= 0; i--) {
+            int index = disconnectedIndexes.get(i);
             try {
                 connectedClients.get(index).close();
             } catch (IOException e) {

@@ -15,16 +15,17 @@ public class Graph<V,E> {
         
         // For each vertex in the graph
         for (V vertex : graph.keySet()) {
-            // Get edges going to vertices in set v
+            // Get edges from this vertex
             Map<V, E> edges = graph.get(vertex);
             
-            // For each edge
-            for (Map.Entry<V, E> edge : edges.entrySet()) {
-                // If the destination vertex is in set v
-                if (v.contains(edge.getKey())) {
-                    // Add weight to sum if graph is weighted
-                    if (isWeighted) {
-                        sum += (Double) edge.getValue();
+            // For each destination vertex in v
+            for (V dest : v) {
+                // If there is an edge to this destination
+                if (edges.containsKey(dest)) {
+                    E edge = edges.get(dest);
+                    // Add weight if graph is weighted
+                    if (isWeighted && edge instanceof Number) {
+                        sum += ((Number) edge).doubleValue();
                     }
                     // Add 1 if unweighted
                     else {

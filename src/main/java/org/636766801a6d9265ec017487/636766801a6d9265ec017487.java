@@ -13,18 +13,11 @@ public class TemplateEncoder {
             return null;
         }
 
-        StringBuilder encodedString = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (c == '{') {
-                encodedString.append("%7B");
-            } else if (c == '}') {
-                encodedString.append("%7D");
-            } else {
-                encodedString.append(c);
-            }
-        }
+        // Replace '{' with '%7B' and '}' with '%7D'
+        s = s.replace("{", "%7B");
+        s = s.replace("}", "%7D");
 
-        return encodedString.toString();
+        return s;
     }
 
     public static void main(String[] args) {

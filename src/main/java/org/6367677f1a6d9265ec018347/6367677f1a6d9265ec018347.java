@@ -1,11 +1,11 @@
-import java.io.OutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelnetServer {
-    private List<Socket> clients = new ArrayList<>();
+    private List<PrintWriter> clients = new ArrayList<>();
 
     /**
      * Sends a message to each of the clients in telnet-friendly output.
@@ -13,33 +13,32 @@ public class TelnetServer {
      * @param message The message to send to all connected clients.
      */
     public synchronized void send(final String message) {
-        for (Socket client : clients) {
-            try {
-                OutputStream outputStream = client.getOutputStream();
-                PrintWriter writer = new PrintWriter(outputStream, true);
-                writer.println(message);
-            } catch (Exception e) {
-                // Handle any exceptions, such as client disconnection
-                e.printStackTrace();
-            }
+        for (PrintWriter client : clients) {
+            client.println(message);
+            client.flush();
         }
     }
 
     /**
-     * Adds a client to the list of connected clients.
+     * Adds a new client to the list of connected clients.
      * 
-     * @param client The client socket to add.
+     * @param socket The socket of the connected client.
      */
-    public synchronized void addClient(Socket client) {
-        clients.add(client);
+    public synchronized void addClient(Socket socket) {
+        try {
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            clients.add(writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Removes a client from the list of connected clients.
      * 
-     * @param client The client socket to remove.
+     * @param writer The PrintWriter associated with the client to be removed.
      */
-    public synchronized void removeClient(Socket client) {
-        clients.remove(client);
+    public synchronized void removeClient(PrintWriter writer) {
+        clients.remove(writer);
     }
 }

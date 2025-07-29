@@ -12,17 +12,13 @@ public final class UriMatcher {
         this.pattern = Pattern.compile(regex);
     }
 
-    /**
-     * Match a URI against the pattern.
-     * @param uri the uri to match against the template.
-     * @return the match result, otherwise null if no match occurs.
-     */
     public final MatchResult match(CharSequence uri) {
         Matcher matcher = pattern.matcher(uri);
         if (matcher.matches()) {
             return matcher.toMatchResult();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public static void main(String[] args) {

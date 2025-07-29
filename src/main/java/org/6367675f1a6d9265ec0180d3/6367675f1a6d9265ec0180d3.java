@@ -18,6 +18,6 @@ public class GraphUtils {
         for (V vertex : graph.vertexSet()) {
             vertexMap.put(vertex, vertex);
         }
-        return new IsomorphicGraphMapping<>(vertexMap, graph, graph);
+        return new IsomorphicGraphMapping<>(vertexMap, new HashMap<>());
     }
 }

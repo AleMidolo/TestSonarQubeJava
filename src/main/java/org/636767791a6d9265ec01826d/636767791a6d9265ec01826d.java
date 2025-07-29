@@ -2,7 +2,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PropertySubstitutor {
+public class PropertySubstitution {
 
     /**
      * Find the value corresponding to <code>key</code> in <code>props</code>. Then perform variable substitution on the found value.
@@ -13,14 +13,14 @@ public class PropertySubstitutor {
             return null;
         }
 
-        // Pattern to match ${...} placeholders
-        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+        // Pattern to match ${variable} in the value
+        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
         Matcher matcher = pattern.matcher(value);
         StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            String placeholder = matcher.group(1);
-            String replacement = props.getProperty(placeholder, "");
+            String variable = matcher.group(1);
+            String replacement = props.getProperty(variable, "");
             matcher.appendReplacement(result, replacement);
         }
         matcher.appendTail(result);

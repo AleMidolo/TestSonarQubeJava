@@ -26,8 +26,8 @@ public class StringUtils {
     public static void main(String[] args) {
         // Example usage
         List<String> searchStrings = List.of("hello", "world");
-        System.out.println(containsAnyIgnoreCase("Hello, World!", searchStrings)); // true
-        System.out.println(containsAnyIgnoreCase("Goodbye, World!", searchStrings)); // true
-        System.out.println(containsAnyIgnoreCase("Hi there!", searchStrings)); // false
+        String input = "Hello, this is a test string.";
+        boolean result = containsAnyIgnoreCase(input, searchStrings);
+        System.out.println(result); // Output: true
     }
 }

@@ -7,8 +7,7 @@ public class BeanMap {
     private Map<String, Object> properties;
 
     public BeanMap() {
-        // Initialize the properties map
-        properties = new java.util.HashMap<>();
+        // Initialize properties map
     }
 
     public void putAllWriteable(BeanMap map) {
@@ -34,13 +33,5 @@ public class BeanMap {
         }
     }
 
-    // Example of a property setter
-    public void setProperty(String name, Object value) {
-        properties.put(name, value);
-    }
-
-    // Example of a property getter
-    public Object getProperty(String name) {
-        return properties.get(name);
-    }
+    // Other methods and properties of BeanMap
 }

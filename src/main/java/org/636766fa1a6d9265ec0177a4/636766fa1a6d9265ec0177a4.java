@@ -1,4 +1,6 @@
-public class ArrayUtils {
+import java.util.Objects;
+
+public class DoubleArrayConverter {
 
     /**
      * <p>Converts an array of primitive doubles to objects.</p> 

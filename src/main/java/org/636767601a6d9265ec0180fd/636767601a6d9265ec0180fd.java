@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Graph<V, E> {
-    private Map<V, Map<V, E>> adjacencyMap;
+public class GraphIndex<V, E> {
+    private Map<V, Map<V, E>> index;
 
-    public Graph() {
-        this.adjacencyMap = new HashMap<>();
+    public GraphIndex() {
+        index = new HashMap<>();
     }
 
     /**
@@ -15,15 +15,17 @@ public class Graph<V, E> {
      * @param e the edge
      */
     protected void addToIndex(V sourceVertex, V targetVertex, E e) {
-        // Ensure the source vertex exists in the adjacency map
-        adjacencyMap.putIfAbsent(sourceVertex, new HashMap<>());
-        
-        // Add the edge to the adjacency map
-        adjacencyMap.get(sourceVertex).put(targetVertex, e);
+        if (!index.containsKey(sourceVertex)) {
+            index.put(sourceVertex, new HashMap<>());
+        }
+        index.get(sourceVertex).put(targetVertex, e);
     }
 
-    // Optional: Method to retrieve the adjacency map for testing or other purposes
-    public Map<V, Map<V, E>> getAdjacencyMap() {
-        return adjacencyMap;
+    // Optional: Method to retrieve an edge from the index
+    public E getEdge(V sourceVertex, V targetVertex) {
+        if (index.containsKey(sourceVertex)) {
+            return index.get(sourceVertex).get(targetVertex);
+        }
+        return null;
     }
 }

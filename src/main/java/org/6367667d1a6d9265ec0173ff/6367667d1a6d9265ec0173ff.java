@@ -8,14 +8,29 @@ public class MeteorLookup {
      * @return a {@link Meteor} or null if not found
      */
     public static Meteor lookup(HttpServletRequest r) {
-        // Assuming Meteor is a class that can be retrieved from the request attributes
-        // or some other mechanism based on the request.
-        // This is a placeholder implementation.
-        return (Meteor) r.getAttribute("meteor");
+        // Assuming Meteor is a class with a constructor or factory method
+        // Here we check for a specific attribute in the request to determine if a Meteor instance exists
+        Object meteorObj = r.getAttribute("meteor");
+        if (meteorObj instanceof Meteor) {
+            return (Meteor) meteorObj;
+        }
+        return null;
     }
 }
 
-// Assuming Meteor class is defined elsewhere
 class Meteor {
-    // Class implementation
+    // Example Meteor class implementation
+    private String name;
+
+    public Meteor(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

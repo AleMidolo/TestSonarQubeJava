@@ -1,6 +1,6 @@
-import java.util.Arrays;
+import java.util.Objects;
 
-public class HashCodeUtil {
+public class ArrayUtils {
 
     /**
      * Return a hash code based on the contents of the specified array. If <code>array</code> is <code>null</code>, this method returns 0.
@@ -11,7 +11,11 @@ public class HashCodeUtil {
         if (array == null) {
             return 0;
         }
-        return Arrays.hashCode(array);
+        int result = 1;
+        for (long element : array) {
+            result = 31 * result + Long.hashCode(element);
+        }
+        return result;
     }
 
     public static void main(String[] args) {

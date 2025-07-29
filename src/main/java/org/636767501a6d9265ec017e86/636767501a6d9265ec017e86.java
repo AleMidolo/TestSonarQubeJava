@@ -23,6 +23,20 @@ public class LinkedList<E> {
         current = null;
     }
 
+    public void add(E element) {
+        ListNode<E> newNode = new ListNode<>(element, null, tail);
+        if (tail != null) {
+            tail.next = newNode;
+        } else {
+            head = newNode;
+        }
+        tail = newNode;
+    }
+
+    public void setCurrent(ListNode<E> node) {
+        current = node;
+    }
+
     /**
      * {@inheritDoc}
      */

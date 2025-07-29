@@ -21,9 +21,9 @@ public class StringArrayUtils {
     }
 
     public static void main(String[] args) {
-        String[] testArray = {"  hello ", "  world  ", null, "  java  "};
-        String[] result = trimArrayElements(testArray);
-        for (String str : result) {
+        String[] array = {"  hello ", "  world  ", null, "  java  "};
+        String[] trimmedArray = trimArrayElements(array);
+        for (String str : trimmedArray) {
             System.out.println("'" + str + "'");
         }
     }

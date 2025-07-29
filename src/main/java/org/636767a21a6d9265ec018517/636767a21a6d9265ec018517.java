@@ -12,12 +12,20 @@ public final class Buffer {
         try {
             buffer.write(data);
         } catch (IOException e) {
-            // Handle the exception, though ByteArrayOutputStream.write(byte[]) does not throw IOException
+            // Handle the exception, though ByteArrayOutputStream.write() does not throw IOException
             e.printStackTrace();
         }
     }
 
     public final byte[] toByteArray() {
         return buffer.toByteArray();
+    }
+
+    public static void main(String[] args) {
+        Buffer buffer = new Buffer();
+        buffer.write("Hello".getBytes());
+        buffer.write("World".getBytes());
+        byte[] result = buffer.toByteArray();
+        System.out.println(new String(result)); // Outputs: HelloWorld
     }
 }

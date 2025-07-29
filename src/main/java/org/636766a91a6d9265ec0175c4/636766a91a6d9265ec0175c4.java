@@ -3,61 +3,72 @@ import org.objectweb.asm.Type;
 private void pop(final String descriptor) {
     Type[] types;
     if (descriptor.charAt(0) == '(') {
-        // It's a method descriptor, get argument types
+        // It's a method descriptor, so we need to extract the argument types
         types = Type.getArgumentTypes(descriptor);
     } else {
         // It's a single type descriptor
         types = new Type[] { Type.getType(descriptor) };
     }
 
+    // Pop each type from the output frame stack
     for (Type type : types) {
         switch (type.getSort()) {
             case Type.BOOLEAN:
-            case Type.CHAR:
             case Type.BYTE:
+            case Type.CHAR:
             case Type.SHORT:
             case Type.INT:
-                // Pop 1 slot for int, boolean, char, byte, short
-                pop(1);
+                // Pop an int from the stack
+                // Assuming a method popInt() exists to pop an int
+                popInt();
                 break;
             case Type.FLOAT:
-                // Pop 1 slot for float
-                pop(1);
+                // Pop a float from the stack
+                // Assuming a method popFloat() exists to pop a float
+                popFloat();
                 break;
             case Type.LONG:
-                // Pop 2 slots for long
-                pop(2);
+                // Pop a long from the stack
+                // Assuming a method popLong() exists to pop a long
+                popLong();
                 break;
             case Type.DOUBLE:
-                // Pop 2 slots for double
-                pop(2);
+                // Pop a double from the stack
+                // Assuming a method popDouble() exists to pop a double
+                popDouble();
                 break;
             case Type.ARRAY:
             case Type.OBJECT:
-                // Pop 1 slot for array or object reference
-                pop(1);
+                // Pop a reference from the stack
+                // Assuming a method popReference() exists to pop a reference
+                popReference();
                 break;
             case Type.VOID:
-                // No action for void
+                // No action needed for void
                 break;
             default:
-                throw new IllegalArgumentException("Unknown type sort: " + type.getSort());
+                throw new IllegalArgumentException("Unknown type: " + type);
         }
     }
 }
 
-private void pop(int slots) {
-    // Implementation of popping 'slots' number of slots from the output frame stack
-    // This is a placeholder implementation, as the actual stack manipulation logic
-    // depends on the context in which this method is used.
-    // For example, if you're using a stack data structure, you might do:
-    // for (int i = 0; i < slots; i++) {
-    //     stack.pop();
-    // }
-    // Here, we assume a method 'pop()' exists that pops one slot from the stack.
-    // Adjust according to your actual stack implementation.
-    for (int i = 0; i < slots; i++) {
-        // Pop one slot from the stack
-        // stack.pop();
-    }
+// Placeholder methods for popping specific types from the stack
+private void popInt() {
+    // Implementation for popping an int from the stack
+}
+
+private void popFloat() {
+    // Implementation for popping a float from the stack
+}
+
+private void popLong() {
+    // Implementation for popping a long from the stack
+}
+
+private void popDouble() {
+    // Implementation for popping a double from the stack
+}
+
+private void popReference() {
+    // Implementation for popping a reference from the stack
 }

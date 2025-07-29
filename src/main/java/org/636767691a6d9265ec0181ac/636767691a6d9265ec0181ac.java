@@ -15,35 +15,52 @@ public class PathUtils {
         path = path.replace('\\', '/');
         relativePath = relativePath.replace('\\', '/');
         
-        // Eliminar el separador final si existe
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-        
-        // Si la ruta relativa comienza con /, tratarla como ruta absoluta
+        // Si la ruta relativa comienza con /, la tratamos como ruta absoluta
         if (relativePath.startsWith("/")) {
             return relativePath;
         }
         
-        // Dividir la ruta relativa en componentes
-        String[] components = relativePath.split("/");
+        // Dividir la ruta en componentes
+        String[] pathComponents = path.split("/");
+        String[] relativeComponents = relativePath.split("/");
         
-        // Convertir la ruta base a Path
-        Path basePath = Paths.get(path);
+        // Crear una lista para almacenar los componentes finales
+        java.util.ArrayList<String> finalComponents = new java.util.ArrayList<>();
         
-        // Procesar cada componente de la ruta relativa
-        for (String component : components) {
-            if (component.equals("..")) {
-                basePath = basePath.getParent();
-                if (basePath == null) {
-                    return "/";
-                }
-            } else if (!component.equals(".") && !component.isEmpty()) {
-                basePath = basePath.resolve(component);
+        // Agregar los componentes de la ruta base
+        for (String component : pathComponents) {
+            if (!component.isEmpty()) {
+                finalComponents.add(component);
             }
         }
         
-        // Convertir el resultado final a String y normalizar los separadores
-        return basePath.toString().replace('\\', '/');
+        // Procesar los componentes relativos
+        for (String component : relativeComponents) {
+            if (component.equals("..")) {
+                if (!finalComponents.isEmpty()) {
+                    finalComponents.remove(finalComponents.size() - 1);
+                }
+            } else if (!component.equals(".") && !component.isEmpty()) {
+                finalComponents.add(component);
+            }
+        }
+        
+        // Construir la ruta final
+        StringBuilder result = new StringBuilder();
+        
+        // Agregar el separador inicial si la ruta original comenzaba con uno
+        if (path.startsWith("/")) {
+            result.append("/");
+        }
+        
+        // Unir los componentes con separadores
+        for (int i = 0; i < finalComponents.size(); i++) {
+            result.append(finalComponents.get(i));
+            if (i < finalComponents.size() - 1) {
+                result.append("/");
+            }
+        }
+        
+        return result.toString();
     }
 }

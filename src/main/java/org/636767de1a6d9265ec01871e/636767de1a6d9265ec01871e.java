@@ -25,19 +25,19 @@ public class ShardingValidator {
                 throw new IllegalStateException("Shard index cannot be negative: " + modelName);
             }
 
-            // Check if shard number is not continuous with previous shards
+            // Check if shard number is continuous with previous shards
             // This assumes shard numbers should start from 0 and be continuous
             if (shardNumber > 0) {
                 String previousShardName = modelName.substring(0, modelName.lastIndexOf('_')) + "_" + (shardNumber - 1);
-                if (!previousShardExists(previousShardName)) {
+                if (!shardExists(previousShardName)) {
                     throw new IllegalStateException("Non-continuous shard index detected in: " + modelName);
                 }
             }
         }
     }
 
-    // Helper method to check if previous shard exists
-    private boolean previousShardExists(String shardName) {
+    // Helper method to check if a shard exists
+    private boolean shardExists(String shardName) {
         // Implementation would depend on how shards are stored/managed
         // This is just a placeholder
         return true;

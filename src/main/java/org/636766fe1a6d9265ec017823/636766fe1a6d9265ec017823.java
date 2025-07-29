@@ -29,7 +29,7 @@ public class SymbolTable {
     }
     
     private Symbol lookupSymbol(int hashCode) {
-        for (int i = 1; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             if (symbols[i] != null && symbols[i].hashCode == hashCode) {
                 return symbols[i]; 
             }
@@ -38,12 +38,12 @@ public class SymbolTable {
     }
     
     private Symbol addConstant(Symbol symbol) {
-        if (size + 1 > symbols.length) {
+        if (size >= symbols.length) {
             Symbol[] newSymbols = new Symbol[symbols.length * 2];
             System.arraycopy(symbols, 0, newSymbols, 0, symbols.length);
             symbols = newSymbols;
         }
-        symbols[size] = symbol;
+        symbols[size - 1] = symbol;
         return symbol;
     }
     

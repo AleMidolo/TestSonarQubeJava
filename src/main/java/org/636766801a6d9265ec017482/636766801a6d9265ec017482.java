@@ -27,22 +27,15 @@ public class ClassFileBuffer {
         while ((bytesRead = in.read(buffer, totalBytesRead, buffer.length - totalBytesRead)) != -1) {
             totalBytesRead += bytesRead;
             
-            // If buffer is full, resize it
-            if (totalBytesRead == buffer.length) {
+            // If buffer is full but there's more data, resize buffer
+            if (totalBytesRead == buffer.length && in.available() > 0) {
                 byte[] newBuffer = new byte[buffer.length * 2];
                 System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
                 buffer = newBuffer;
             }
         }
         
-        // Set final length
+        // Set the actual length of data read
         length = totalBytesRead;
-        
-        // If buffer is significantly larger than needed, trim it
-        if (buffer.length > length * 2) {
-            byte[] trimmedBuffer = new byte[length];
-            System.arraycopy(buffer, 0, trimmedBuffer, 0, length);
-            buffer = trimmedBuffer;
-        }
     }
 }

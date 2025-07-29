@@ -1,11 +1,11 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ByteArrayBuffer {
-    private ByteArrayOutputStream buffer;
+public class ByteArrayBuilder {
+    private ByteArrayOutputStream outputStream;
 
-    public ByteArrayBuffer() {
-        buffer = new ByteArrayOutputStream();
+    public ByteArrayBuilder() {
+        outputStream = new ByteArrayOutputStream();
     }
 
     /**
@@ -13,12 +13,23 @@ public class ByteArrayBuffer {
      */
     public final byte[] toByteArray() {
         try {
-            buffer.flush();
-            return buffer.toByteArray();
+            outputStream.flush();
+            return outputStream.toByteArray();
         } catch (IOException e) {
             return new byte[0];
         }
     }
 
-    // Other methods for writing to buffer would go here
+    // Other methods to write data to the buffer would go here
+    public void write(byte[] data) throws IOException {
+        outputStream.write(data);
+    }
+
+    public void write(int b) throws IOException {
+        outputStream.write(b);
+    }
+
+    public void write(byte[] data, int offset, int length) throws IOException {
+        outputStream.write(data, offset, length);
+    }
 }

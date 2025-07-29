@@ -32,8 +32,7 @@ public class CustomAppender extends AppenderSkeleton {
             
             writer.flush();
         } catch (IOException e) {
-            errorHandler.error("Error writing to output writer", e, 
-                             ErrorCode.WRITE_FAILURE);
+            errorHandler.error("Failed to write log event", e, 1);
         }
     }
 

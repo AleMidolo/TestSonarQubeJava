@@ -5,7 +5,7 @@ import org.atmosphere.cpr.AtmosphereResourceImpl;
 
 public class RequestWrapper {
 
-    /**
+    /** 
      * Envuelve un {@link HttpServletRequest}.
      * @param request {@link HttpServletRequest}
      * @return un {@link AtmosphereRequest}

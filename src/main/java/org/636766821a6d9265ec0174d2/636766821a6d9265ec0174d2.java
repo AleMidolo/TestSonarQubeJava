@@ -15,9 +15,8 @@ public class RequestWrapper {
             return (AtmosphereRequest) request;
         }
 
-        return AtmosphereRequest.wrap(request)
-                .build()
-                .configure(AtmosphereConfig.newInstance())
-                .request(request);
+        return new AtmosphereRequest.Builder()
+                .request(request)
+                .build();
     }
 }

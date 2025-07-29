@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class URIPathDecoder {
-    
+
     public static class PathSegmentImpl {
-        private String path;
+        private final String path;
         
         public PathSegmentImpl(String path) {
             this.path = path;
@@ -25,10 +25,16 @@ public class URIPathDecoder {
             return segments;
         }
 
-        // Get path and remove leading slash if present
         String path = u.getPath();
+        
+        // Remove leading '/' for absolute paths
         if (path.startsWith("/")) {
             path = path.substring(1);
+        }
+
+        // Handle empty path
+        if (path.isEmpty()) {
+            return segments;
         }
 
         // Split path into segments
@@ -40,16 +46,17 @@ public class URIPathDecoder {
                 continue;
             }
             
-            if (decode) {
-                try {
-                    // Decode the segment using UTF-8 encoding
-                    segment = URLDecoder.decode(segment, StandardCharsets.UTF_8.name());
-                } catch (Exception e) {
-                    // If decoding fails, use the raw segment
-                }
+            try {
+                // Decode segment if requested
+                String processedSegment = decode ? 
+                    URLDecoder.decode(segment, StandardCharsets.UTF_8.toString()) : 
+                    segment;
+                    
+                segments.add(new PathSegmentImpl(processedSegment));
+            } catch (Exception e) {
+                // If decoding fails, add raw segment
+                segments.add(new PathSegmentImpl(segment));
             }
-            
-            segments.add(new PathSegmentImpl(segment));
         }
 
         return segments;

@@ -34,7 +34,7 @@ public class StringEscapeUtils {
                             String hex = str.substring(i + 2, i + 6);
                             try {
                                 result.append((char) Integer.parseInt(hex, 16));
-                                i += 5; // Skip the unicode sequence
+                                i += 5;
                                 continue;
                             } catch (NumberFormatException e) {
                                 throw new Exception("Invalid unicode escape sequence: \\u" + hex);

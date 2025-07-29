@@ -25,7 +25,7 @@ public class ConfigurationManager {
             boolean created = configDir.mkdirs();
             if (!created) {
                 throw new RuntimeException("Failed to create configuration directory at: " + 
-                                         configDir.getAbsolutePath());
+                                        configDir.getAbsolutePath());
             }
         }
     }

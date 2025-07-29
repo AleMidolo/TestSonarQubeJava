@@ -31,10 +31,10 @@ public class CustomLayout extends Layout {
         // Add new line
         sb.append(System.lineSeparator());
         
-        // Add throwable if exists
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
-            for (String line : throwableStrRep) {
+        // Add throwable info if exists
+        String[] throwableInfo = event.getThrowableStrRep();
+        if (throwableInfo != null) {
+            for (String line : throwableInfo) {
                 sb.append(line).append(System.lineSeparator());
             }
         }

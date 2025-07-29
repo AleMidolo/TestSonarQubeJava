@@ -11,21 +11,29 @@ public class ShardingKeyValidator {
             throw new IllegalStateException("Model name cannot be null or empty");
         }
         
-        // Assuming this is part of a larger class that validates sharding keys
-        // This is a basic implementation that checks if model name exists
-        // Additional validation logic for sharding key indices continuity would go here
-        // based on the specific requirements of the sharding implementation
+        // Assuming sharding key indices are stored in a list/array
+        // This is a placeholder implementation - actual logic would depend on
+        // how sharding keys are maintained
+        int[] shardingKeyIndices = getShardingKeyIndices(modelName);
         
-        try {
-            validateShardingIndices(modelName);
-        } catch (Exception e) {
-            throw new IllegalStateException("Sharding key indices are not continuous for model: " + modelName);
+        if (shardingKeyIndices.length == 0) {
+            return; // No sharding keys to validate
+        }
+        
+        // Check if indices are continuous
+        for (int i = 0; i < shardingKeyIndices.length - 1; i++) {
+            if (shardingKeyIndices[i + 1] - shardingKeyIndices[i] != 1) {
+                throw new IllegalStateException(
+                    "Sharding key indices must be continuous for model: " + modelName
+                );
+            }
         }
     }
     
-    // Helper method to validate sharding indices
-    private void validateShardingIndices(String modelName) {
-        // Implementation would depend on how sharding indices are stored/managed
+    // Helper method to get sharding key indices
+    private int[] getShardingKeyIndices(String modelName) {
+        // Implementation would depend on how indices are stored
         // This is just a placeholder
+        return new int[0];
     }
 }

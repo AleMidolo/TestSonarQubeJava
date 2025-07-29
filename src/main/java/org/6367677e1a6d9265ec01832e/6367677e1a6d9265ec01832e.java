@@ -15,7 +15,7 @@ public class LoggerManager {
             // Get the logger if it exists, without creating a new one
             Logger logger = Logger.getLogger(name);
             
-            // Check if logger exists by seeing if it has any handlers or parent
+            // Check if logger exists by seeing if it has any handlers or parent loggers
             if (logger.getHandlers().length > 0 || logger.getParent() != null) {
                 return logger;
             }

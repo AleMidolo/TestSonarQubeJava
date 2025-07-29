@@ -5,15 +5,18 @@ public class ClassPathUtil {
      * Returns the class path of the current JVM instance as an array of {@link File} objects.
      */
     private static File[] classPath() {
-        String classPath = System.getProperty("java.class.path");
-        String pathSeparator = System.getProperty("path.separator");
-        String[] paths = classPath.split(pathSeparator);
+        // Get the class path string from system property
+        String classPathString = System.getProperty("java.class.path");
         
-        File[] files = new File[paths.length];
+        // Split the class path string by path separator
+        String[] paths = classPathString.split(File.pathSeparator);
+        
+        // Convert string paths to File objects
+        File[] classPathFiles = new File[paths.length];
         for (int i = 0; i < paths.length; i++) {
-            files[i] = new File(paths[i]);
+            classPathFiles[i] = new File(paths[i]);
         }
         
-        return files;
+        return classPathFiles;
     }
 }

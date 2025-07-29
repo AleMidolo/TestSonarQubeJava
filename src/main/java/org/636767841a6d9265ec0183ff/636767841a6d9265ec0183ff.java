@@ -20,10 +20,6 @@ public class TableUtils {
 
         // Get the rectangle for the selected row
         Rectangle rect = table.getCellRect(row, 0, true);
-        
-        // Convert table coordinates to viewport coordinates
-        Rectangle viewRect = table.getVisibleRect();
-        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
 
         // Scroll to make the rectangle visible
         table.scrollRectToVisible(rect);
@@ -32,11 +28,11 @@ public class TableUtils {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // Revalidate and repaint both the table and scrollpane
-                table.revalidate();
+                // Scroll the viewport to show the selected row
+                pane.getViewport().scrollRectToVisible(rect);
+                
+                // Force a repaint
                 table.repaint();
-                pane.revalidate();
-                pane.repaint();
             }
         });
     }

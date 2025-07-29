@@ -1,9 +1,9 @@
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContentBuilder {
 
@@ -26,10 +26,10 @@ public class ContentBuilder {
         if (jsonObject.has("ats") && !jsonObject.get("ats").isJsonNull()) {
             JsonArray atsArray = jsonObject.getAsJsonArray("ats");
             if (atsArray != null && atsArray.size() > 0) {
-                ArrayList<String> atsList = new ArrayList<>();
-                for (JsonElement element : atsArray) {
-                    if (!element.isJsonNull()) {
-                        atsList.add(element.getAsString());
+                List<String> atsList = new ArrayList<>();
+                for (int i = 0; i < atsArray.size(); i++) {
+                    if (!atsArray.get(i).isJsonNull()) {
+                        atsList.add(atsArray.get(i).getAsString());
                     }
                 }
                 if (!atsList.isEmpty()) {

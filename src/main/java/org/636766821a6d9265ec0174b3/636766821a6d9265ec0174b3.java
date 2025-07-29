@@ -1,31 +1,31 @@
 import javax.servlet.ServletContext;
 import org.eclipse.jetty.websocket.api.Session;
 
-public class BroadcastFilterHandler {
+public class BroadcastFilterImpl {
 
-    private BroadcastFilter filter;
+    private BroadcastFilter broadcastFilter;
     private ServletContext context;
 
-    public BroadcastFilterHandler(ServletContext context) {
-        this.context = context;
-        this.filter = new BroadcastFilter();
+    public BroadcastFilterImpl(BroadcastFilter filter, ServletContext servletContext) {
+        this.broadcastFilter = filter;
+        this.context = servletContext;
     }
 
-    /**
+    /** 
      * Invoke the {@link BroadcastFilter}
-     * @param msg Message to be filtered
-     * @return Filtered message object
+     * @param msg The message to be filtered
+     * @return The filtered message object
      */
     protected Object filter(Object msg) {
-        if (filter == null || msg == null) {
+        if (broadcastFilter == null) {
             return msg;
         }
-
+        
         try {
-            return filter.filter(msg);
+            return broadcastFilter.filter(msg);
         } catch (Exception e) {
             // Log error and return original message if filter fails
-            context.log("Error filtering broadcast message", e);
+            context.log("Broadcast filter error", e);
             return msg;
         }
     }

@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class ObjectDetailer {
+public class ObjectDetailAppender {
 
     /**
      * <p>Append to the <code>toString</code> the detail of a <code>byte</code> array.</p>

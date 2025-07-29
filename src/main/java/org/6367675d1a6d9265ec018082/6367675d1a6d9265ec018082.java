@@ -14,12 +14,7 @@ public class Graph {
         public Node(int id) {
             this.id = id;
             this.isVirtual = false;
-        }
-        
-        public Node(int id, Node realNode) {
-            this.id = id;
-            this.isVirtual = true;
-            this.realCounterpart = realNode;
+            this.realCounterpart = null;
         }
     }
     
@@ -47,11 +42,11 @@ public class Graph {
         Node currentNode = nodes.get(currentNodeIndex);
         Node nextNode = nodes.get(currentNodeIndex + 1);
         
-        // If nodes are virtual, get their real counterparts
+        // If nodes are virtual, use their real counterparts
         Node sourceNode = currentNode.isVirtual ? currentNode.realCounterpart : currentNode;
         Node destNode = nextNode.isVirtual ? nextNode.realCounterpart : nextNode;
         
-        // Find edge connecting these nodes
+        // Find the edge connecting these nodes
         for (Edge edge : edges) {
             if ((edge.source == sourceNode && edge.destination == destNode) ||
                 (edge.source == destNode && edge.destination == sourceNode)) {

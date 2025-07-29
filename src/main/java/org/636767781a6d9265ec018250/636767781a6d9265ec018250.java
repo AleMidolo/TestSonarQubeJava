@@ -1,7 +1,7 @@
-import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class LoggingFilter extends Filter {
+public class LogEventFilter extends Filter {
 
     @Override
     public int decide(LoggingEvent event) {

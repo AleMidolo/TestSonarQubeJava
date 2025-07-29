@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class BinaryTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> {
 
     private class TreeNode<T> {
         T data;

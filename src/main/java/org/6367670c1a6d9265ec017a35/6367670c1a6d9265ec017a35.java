@@ -1,4 +1,4 @@
-import java.util.Objects;
+package org.apache.commons.lang3;
 
 public class StringUtils {
     /**
@@ -16,10 +16,13 @@ public class StringUtils {
         if (suffix.length() > str.length()) {
             return false;
         }
-        int strOffset = str.length() - suffix.length();
         
-        return ignoreCase 
-            ? str.regionMatches(true, strOffset, suffix, 0, suffix.length())
-            : str.regionMatches(false, strOffset, suffix, 0, suffix.length());
+        if (ignoreCase) {
+            String strLower = str.toLowerCase();
+            String suffixLower = suffix.toLowerCase();
+            return strLower.endsWith(suffixLower);
+        } else {
+            return str.endsWith(suffix);
+        }
     }
 }

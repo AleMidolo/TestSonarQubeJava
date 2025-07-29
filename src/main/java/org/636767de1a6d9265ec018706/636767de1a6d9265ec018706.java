@@ -25,15 +25,15 @@ public class MappingDiffer {
         Map<String, Object> properties = new HashMap<>();
         
         // Copy properties excluding _source
-        Map<String, Object> existingProperties = (Map<String, Object>) sourceMap.get("properties");
-        for (Map.Entry<String, Object> entry : existingProperties.entrySet()) {
+        Map<String, Object> inputProperties = (Map<String, Object>) sourceMap.get("properties");
+        for (Map.Entry<String, Object> entry : inputProperties.entrySet()) {
             String fieldName = entry.getKey();
             if (!fieldName.equals("_source")) {
                 properties.put(fieldName, entry.getValue());
             }
         }
 
-        // Build new mapping
+        // Build new mapping structure
         newMappings.put("properties", properties);
         
         // Create new Mappings object

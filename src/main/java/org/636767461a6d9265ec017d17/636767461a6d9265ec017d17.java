@@ -2,6 +2,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class DotUtils {
+
     /**
      * Unescape a string DOT identifier.
      * @param input the input
@@ -12,12 +13,12 @@ public class DotUtils {
             return input;
         }
 
-        // Check if the string starts and ends with quotes
+        // Handle quoted strings
         if (input.startsWith("\"") && input.endsWith("\"")) {
-            // Remove the surrounding quotes
+            // Remove quotes
             String unquoted = input.substring(1, input.length() - 1);
             
-            // Replace escaped quotes with regular quotes
+            // Replace escaped quotes
             unquoted = unquoted.replace("\\\"", "\"");
             
             // Replace escaped newlines
@@ -26,13 +27,23 @@ public class DotUtils {
             // Replace escaped tabs
             unquoted = unquoted.replace("\\t", "\t");
             
-            // Replace escaped backslashes
+            // Replace double backslashes
             unquoted = unquoted.replace("\\\\", "\\");
             
             return unquoted;
         }
 
-        // If not quoted, return as is
-        return input;
+        // Handle HTML-like escapes
+        Pattern pattern = Pattern.compile("&#([0-9]+);");
+        Matcher matcher = pattern.matcher(input);
+        StringBuffer result = new StringBuffer();
+        
+        while (matcher.find()) {
+            String replacement = String.valueOf((char)Integer.parseInt(matcher.group(1)));
+            matcher.appendReplacement(result, replacement);
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 }

@@ -25,6 +25,6 @@ public class UTF8SizeCalculator {
         int index = 0;
         int len = 4;
         int size = computeUTF8Size(str, index, len);
-        System.out.println("Dimensione UTF-8: " + size + " byte");
+        System.out.println("UTF-8 size: " + size); // Output: UTF-8 size: 4
     }
 }

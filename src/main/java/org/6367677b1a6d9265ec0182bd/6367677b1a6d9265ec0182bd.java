@@ -8,29 +8,28 @@ public class LogFormatter {
      * @return la stringa formattata rappresentante l'evento di logging.
      */
     public String format(final LoggingEvent event) {
-        StringBuilder formattedMessage = new StringBuilder();
-
+        StringBuilder formattedEvent = new StringBuilder();
+        
         // Aggiungi il timestamp
-        formattedMessage.append("[").append(event.getTimeStamp()).append("] ");
-
+        formattedEvent.append("Timestamp: ").append(event.getTimeStamp()).append(" - ");
+        
         // Aggiungi il livello di log
-        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
-
-        // Aggiungi il nome del logger
-        formattedMessage.append("[").append(event.getLoggerName()).append("] ");
-
+        formattedEvent.append("Level: ").append(event.getLevel().toString()).append(" - ");
+        
         // Aggiungi il messaggio di log
-        formattedMessage.append(event.getRenderedMessage());
-
-        // Aggiungi l'eventuale stack trace se presente
-        String[] throwableStrRep = event.getThrowableStrRep();
-        if (throwableStrRep != null) {
-            formattedMessage.append("\n");
-            for (String line : throwableStrRep) {
-                formattedMessage.append(line).append("\n");
+        formattedEvent.append("Message: ").append(event.getRenderedMessage());
+        
+        // Aggiungi il nome del logger
+        formattedEvent.append(" - Logger: ").append(event.getLoggerName());
+        
+        // Aggiungi l'eccezione, se presente
+        if (event.getThrowableStrRep() != null) {
+            formattedEvent.append(" - Exception: ");
+            for (String line : event.getThrowableStrRep()) {
+                formattedEvent.append(line).append("\n");
             }
         }
-
-        return formattedMessage.toString();
+        
+        return formattedEvent.toString();
     }
 }

@@ -1,4 +1,5 @@
-public class SubstringMatch {
+public class SubstringMatcher {
+
     /**
      * Restituisce {@code true} se la stringa fornita corrisponde alla sottostringa fornita all'indice specificato, {@code false} altrimenti.
      * @param str la stringa originale (o StringBuilder)
@@ -32,5 +33,6 @@ public class SubstringMatch {
         System.out.println(substringMatch(str, 0, substring2)); // true
         System.out.println(substringMatch(str, 10, substring3)); // true
         System.out.println(substringMatch(str, 5, substring1)); // false
+        System.out.println(substringMatch(str, 7, substring2)); // false
     }
 }

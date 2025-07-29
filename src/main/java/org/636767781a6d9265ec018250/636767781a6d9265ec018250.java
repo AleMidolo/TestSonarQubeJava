@@ -5,6 +5,11 @@ public class Filter {
 
     public int decide(LoggingEvent event) {
         // Implementazione di esempio: restituisce NEUTRAL se non c'è corrispondenza con la stringa
-        return NEUTRAL;
+        String message = event.getMessage().toString();
+        if (!message.contains("specific string")) {
+            return NEUTRAL;
+        }
+        // Altrimenti, restituisce un altro valore (ad esempio 1 per indicare una corrispondenza)
+        return 1;
     }
 }

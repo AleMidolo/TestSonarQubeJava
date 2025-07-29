@@ -1,10 +1,10 @@
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestContentLength {
+public class ContentLengthExample {
 
     private HttpServletRequest request;
 
-    public RequestContentLength(HttpServletRequest request) {
+    public ContentLengthExample(HttpServletRequest request) {
         this.request = request;
     }
 
@@ -14,6 +14,6 @@ public class RequestContentLength {
      * @since 1.3
      */
     public long contentLength() {
-        return request.getContentLengthLong();
+        return request.getContentLength();
     }
 }

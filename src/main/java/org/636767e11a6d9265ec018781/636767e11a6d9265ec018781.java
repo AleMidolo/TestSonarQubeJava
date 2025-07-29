@@ -1,12 +1,8 @@
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Cache {
-
-    private METRICS existingData;
-
-    public Cache(METRICS initialData) {
-        this.existingData = initialData;
-    }
+public class MetricsCache {
+    private Map<String, METRICS> cache = new HashMap<>();
 
     /**
      * Accetta i dati nella cache e li unisce con il valore esistente. Questo metodo non è thread-safe, si dovrebbe evitare di chiamarlo in concorrenza.
@@ -14,33 +10,41 @@ public class Cache {
      */
     @Override
     public void accept(final METRICS data) {
-        Objects.requireNonNull(data, "Data cannot be null");
-        if (existingData == null) {
-            existingData = data;
-        } else {
-            // Assuming METRICS has a method to merge with another METRICS object
-            existingData.merge(data);
+        if (data == null) {
+            return;
         }
-    }
 
-    public METRICS getExistingData() {
-        return existingData;
+        String key = data.getKey(); // Assuming METRICS has a getKey() method
+        METRICS existingData = cache.get(key);
+
+        if (existingData == null) {
+            cache.put(key, data);
+        } else {
+            // Merge the existing data with the new data
+            existingData.merge(data); // Assuming METRICS has a merge() method
+        }
     }
 }
 
-// Assuming METRICS is a class with a merge method
+// Assuming METRICS class has the following methods:
 class METRICS {
+    private String key;
     private int value;
 
-    public METRICS(int value) {
+    public METRICS(String key, int value) {
+        this.key = key;
         this.value = value;
     }
 
-    public void merge(METRICS other) {
-        this.value += other.value;
+    public String getKey() {
+        return key;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public void merge(METRICS other) {
+        this.value += other.getValue();
     }
 }

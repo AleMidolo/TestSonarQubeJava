@@ -6,10 +6,6 @@ import java.util.Map;
 
 public class TypeResolver {
 
-    /**
-     * Risolve gli argomenti per il {@code genericType} utilizzando le informazioni sulle variabili di tipo per il {@code targetType}. 
-     * Restituisce {@code null} se {@code genericType} non è parametrizzato o se gli argomenti non possono essere risolti.
-     */
     public static Class<?>[] resolveArguments(Type genericType, Class<?> targetType) {
         if (!(genericType instanceof ParameterizedType)) {
             return null;
@@ -41,10 +37,7 @@ public class TypeResolver {
         TypeVariable<?>[] typeParameters = targetType.getTypeParameters();
 
         for (TypeVariable<?> typeParameter : typeParameters) {
-            Type[] bounds = typeParameter.getBounds();
-            if (bounds.length > 0 && bounds[0] instanceof Class<?>) {
-                typeVariableMap.put(typeParameter.getName(), (Class<?>) bounds[0]);
-            }
+            typeVariableMap.put(typeParameter.getName(), Object.class); // Default to Object if no specific type is found
         }
 
         return typeVariableMap;

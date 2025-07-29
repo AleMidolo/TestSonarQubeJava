@@ -7,26 +7,24 @@ public class ConfigurationDirectoryCreator {
      */
     public static void createConfigurationDirectory() {
         String userHome = System.getProperty("user.home");
-        String directoryPath;
-
-        // Check if the OS is Windows 2000
+        String directoryName = "lf5";
+        
+        File configDir;
         if (System.getProperty("os.name").toLowerCase().contains("windows 2000")) {
-            directoryPath = userHome + "\\Documenti e Impostazioni\\lf5";
+            configDir = new File(userHome + "\\Documenti e Impostazioni\\" + directoryName);
         } else {
-            directoryPath = userHome + File.separator + "lf5";
+            configDir = new File(userHome + File.separator + directoryName);
         }
-
-        File directory = new File(directoryPath);
-
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
+        
+        if (!configDir.exists()) {
+            boolean created = configDir.mkdirs();
             if (created) {
-                System.out.println("Directory created: " + directoryPath);
+                System.out.println("Directory created: " + configDir.getAbsolutePath());
             } else {
-                System.out.println("Failed to create directory: " + directoryPath);
+                System.out.println("Failed to create directory: " + configDir.getAbsolutePath());
             }
         } else {
-            System.out.println("Directory already exists: " + directoryPath);
+            System.out.println("Directory already exists: " + configDir.getAbsolutePath());
         }
     }
 

@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class StackMapTableWriter {
+public class StackMapTable {
     private List<VerificationTypeInfo> currentFrame;
     private List<VerificationTypeInfo> stackMapTableEntries;
 
@@ -20,8 +20,8 @@ public class StackMapTableWriter {
         }
     }
 
-    // Assuming VerificationTypeInfo is a class or interface representing the verification type info
+    // Assuming VerificationTypeInfo is a class or interface that represents the verification type info
     private static class VerificationTypeInfo {
-        // Implementation details of VerificationTypeInfo
+        // Implementation of VerificationTypeInfo
     }
 }

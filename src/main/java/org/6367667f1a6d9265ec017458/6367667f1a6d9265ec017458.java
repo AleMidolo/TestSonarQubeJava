@@ -34,20 +34,21 @@ public class AtmosphereFrameworkImpl extends AtmosphereFramework {
             }
             
             // Remove any associated interceptors
-            removeInterceptorFromHandler(normalizedMapping);
+            removeInterceptor(normalizedMapping);
             
             // Remove any associated broadcasters
-            removeBroadcasterFromHandler(normalizedMapping);
+            removeBroadcaster(normalizedMapping);
         }
 
         return this;
     }
 
-    private void removeInterceptorFromHandler(String mapping) {
-        // Implementation to remove interceptors
+    // Helper methods
+    private void removeInterceptor(String mapping) {
+        // Implementation for removing associated interceptors
     }
 
-    private void removeBroadcasterFromHandler(String mapping) {
-        // Implementation to remove broadcasters
+    private void removeBroadcaster(String mapping) {
+        // Implementation for removing associated broadcasters
     }
 }

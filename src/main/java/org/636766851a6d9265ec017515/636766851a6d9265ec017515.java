@@ -2,44 +2,27 @@ import org.atmosphere.cpr.Action;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceImpl;
 import org.atmosphere.cpr.AtmosphereHandler;
-import org.atmosphere.cpr.AtmosphereResource.TRANSPORT;
+import org.atmosphere.cpr.AtmosphereInterceptorAdapter;
 
-public class AtmosphereResourceInspector implements AtmosphereHandler {
-
+public class TransportInterceptor extends AtmosphereInterceptorAdapter {
+    
     @Override
     public Action inspect(AtmosphereResource r) {
-        if (r == null) {
-            return Action.CONTINUE;
-        }
-
-        switch (r.transport()) {
+        AtmosphereResource.TRANSPORT transport = r.transport();
+        
+        switch (transport) {
             case WEBSOCKET:
             case SSE:
             case STREAMING:
                 r.suspend();
                 break;
             case LONG_POLLING:
-                r.suspend(r.getAtmosphereConfig().getPropertyValue("polling.timeout", 5000L));
+                r.suspend(r.getAtmosphereConfig().getInitParameter("maxLongPollTimeout", 30000));
                 break;
             default:
                 break;
         }
-
+        
         return Action.CONTINUE;
-    }
-
-    @Override
-    public void onRequest(AtmosphereResource resource) throws IOException {
-        // Required by AtmosphereHandler interface
-    }
-
-    @Override 
-    public void onStateChange(AtmosphereResourceEvent event) throws IOException {
-        // Required by AtmosphereHandler interface
-    }
-
-    @Override
-    public void destroy() {
-        // Required by AtmosphereHandler interface
     }
 }

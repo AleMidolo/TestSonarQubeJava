@@ -1,12 +1,12 @@
 import org.objectweb.asm.Frame;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodWriter;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.SymbolTable;
+import org.objectweb.asm.ByteVector;
 
 public class StackMapTableWriter {
-    private byte[] stackMapTableEntries;
+    private ByteVector stackMapTableEntries;
     private Frame currentFrame;
-    private int currentIndex = 0;
+    private SymbolTable symbolTable;
     
     private void putAbstractTypes(final int start, final int end) {
         for (int i = start; i < end; ++i) {
@@ -15,36 +15,41 @@ public class StackMapTableWriter {
     }
     
     private void putAbstractType(final int abstractType) {
-        int type = abstractType & Frame.DIM_MASK;
-        if (type == Frame.OBJECT) {
-            stackMapTableEntries[currentIndex++] = Frame.ITEM_OBJECT;
-            putClass(abstractType & Frame.VALUE_MASK);
-        } else if (type == Frame.UNINITIALIZED) {
-            stackMapTableEntries[currentIndex++] = Frame.ITEM_UNINITIALIZED;
-            putUnsignedShort(abstractType & Frame.VALUE_MASK);
-        } else {
-            stackMapTableEntries[currentIndex++] = ITEM_TYPES[type];
+        int type = abstractType >>> 32;
+        int typeInfo = abstractType & 0xFFFFFFFFL;
+        
+        switch (type) {
+            case Frame.ITEM_TOP:
+                stackMapTableEntries.putByte(0);
+                break;
+            case Frame.ITEM_INTEGER:
+                stackMapTableEntries.putByte(1);
+                break;
+            case Frame.ITEM_FLOAT:
+                stackMapTableEntries.putByte(2);
+                break;
+            case Frame.ITEM_DOUBLE:
+                stackMapTableEntries.putByte(3);
+                break;
+            case Frame.ITEM_LONG:
+                stackMapTableEntries.putByte(4);
+                break;
+            case Frame.ITEM_NULL:
+                stackMapTableEntries.putByte(5);
+                break;
+            case Frame.ITEM_UNINITIALIZED_THIS:
+                stackMapTableEntries.putByte(6);
+                break;
+            case Frame.ITEM_OBJECT:
+                stackMapTableEntries.putByte(7);
+                stackMapTableEntries.putShort(symbolTable.addConstantClass((String)typeInfo).index);
+                break;
+            case Frame.ITEM_UNINITIALIZED:
+                stackMapTableEntries.putByte(8);
+                stackMapTableEntries.putShort(((Label)typeInfo).bytecodeOffset);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid abstract type: " + abstractType);
         }
     }
-    
-    private void putClass(final int symbolTableIndex) {
-        putUnsignedShort(symbolTableIndex);
-    }
-    
-    private void putUnsignedShort(final int value) {
-        stackMapTableEntries[currentIndex++] = (byte)(value >>> 8);
-        stackMapTableEntries[currentIndex++] = (byte)value;
-    }
-    
-    private static final int[] ITEM_TYPES = {
-        Frame.ITEM_TOP,
-        Frame.ITEM_INTEGER,
-        Frame.ITEM_FLOAT,
-        Frame.ITEM_DOUBLE,
-        Frame.ITEM_LONG,
-        Frame.ITEM_NULL,
-        Frame.ITEM_UNINITIALIZED_THIS,
-        Frame.ITEM_OBJECT,
-        Frame.ITEM_UNINITIALIZED
-    };
 }

@@ -14,7 +14,7 @@ public class StackMapFrameVisitor {
         // Store offset at start of frame
         currentFrame[0] = offset;
         
-        // Reset current index to start after offset
+        // Reset frame index to start after offset
         currentFrameIndex = 1;
         
         // Return next available index for writing

@@ -13,9 +13,9 @@ public class CharUtils {
      * CharUtils.toChar('A', 'X')  = 'A'
      * </pre>
      *
-     * @param ch 要转换的字符
-     * @param defaultValue 如果 Character 为空时使用的默认值
-     * @return Character 的 char 值，如果为空则返回默认值
+     * @param ch Character to convert
+     * @param defaultValue default value to return if Character is null
+     * @return char value of Character or defaultValue if null
      */
     public static char toChar(final Character ch, final char defaultValue) {
         if (ch == null) {

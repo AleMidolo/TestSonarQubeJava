@@ -15,13 +15,15 @@ public class BroadcastHandler {
      * @return 过滤后的消息对象
      */
     protected Object filter(Object msg) {
+        if (msg == null || filters.isEmpty()) {
+            return msg;
+        }
+
         Object result = msg;
-        if (filters != null && !filters.isEmpty()) {
-            for (BroadcastFilter filter : filters) {
-                result = filter.doFilter(result);
-                if (result == null) {
-                    break;
-                }
+        for (BroadcastFilter filter : filters) {
+            result = filter.doFilter(result);
+            if (result == null) {
+                break;
             }
         }
         return result;
@@ -30,5 +32,12 @@ public class BroadcastHandler {
     // Inner interface for filter implementation
     public interface BroadcastFilter {
         Object doFilter(Object msg);
+    }
+
+    // Method to add filters
+    public void addFilter(BroadcastFilter filter) {
+        if (filter != null) {
+            filters.add(filter);
+        }
     }
 }

@@ -4,7 +4,7 @@ public class Graph {
     private class Node {
         int id;
         boolean isVirtual;
-        Node realNode;
+        Node realNode; // 对应的真实节点
         List<Edge> edges;
         
         Node(int id) {
@@ -28,26 +28,26 @@ public class Graph {
 
     private Node currentNode;
     private Node nextNode;
-    
+
     public Edge edgeToNext() {
         if (currentNode == null || nextNode == null) {
             return null;
         }
-        
-        // Get real nodes if virtual
-        Node realSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
-        Node realTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
-        
-        // Find edge between real nodes
-        for (Edge edge : realSource.edges) {
-            if (edge.target == realTarget) {
+
+        // 获取实际的源节点和目标节点
+        Node actualSource = currentNode.isVirtual ? currentNode.realNode : currentNode;
+        Node actualTarget = nextNode.isVirtual ? nextNode.realNode : nextNode;
+
+        // 在源节点的边列表中查找连接到目标节点的边
+        for (Edge edge : actualSource.edges) {
+            if (edge.target == actualTarget) {
                 return edge;
             }
         }
-        
-        // Create new edge if none exists
-        Edge newEdge = new Edge(realSource, realTarget);
-        realSource.edges.add(newEdge);
+
+        // 如果没有找到边，创建一个新的边
+        Edge newEdge = new Edge(actualSource, actualTarget);
+        actualSource.edges.add(newEdge);
         return newEdge;
     }
 }

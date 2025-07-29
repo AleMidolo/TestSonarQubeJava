@@ -33,38 +33,58 @@ public class CodedInputStream {
             return false;
         }
         
-        int read = input.read(buffer);
-        if (read <= 0) {
+        int n = input.read(buffer);
+        if (n <= 0) {
             return true;
         }
-        
         pos = 0;
-        bufferSize = read;
+        bufferSize = n;
         return false;
     }
 
     private int readRawVarint32() throws IOException {
-        int result = 0;
-        int shift = 0;
-        
-        while (shift < 32) {
-            if (pos >= bufferSize) {
-                int read = input.read(buffer);
-                if (read <= 0) {
-                    throw new IOException("Truncated message");
-                }
-                pos = 0;
-                bufferSize = read;
-            }
-            
-            byte b = buffer[pos++];
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
-            }
-            shift += 7;
+        byte tmp = readRawByte();
+        if (tmp >= 0) {
+            return tmp;
         }
-        
-        throw new IOException("Malformed varint");
+        int result = tmp & 0x7f;
+        if ((tmp = readRawByte()) >= 0) {
+            result |= tmp << 7;
+        } else {
+            result |= (tmp & 0x7f) << 7;
+            if ((tmp = readRawByte()) >= 0) {
+                result |= tmp << 14;
+            } else {
+                result |= (tmp & 0x7f) << 14;
+                if ((tmp = readRawByte()) >= 0) {
+                    result |= tmp << 21;
+                } else {
+                    result |= (tmp & 0x7f) << 21;
+                    result |= (tmp = readRawByte()) << 28;
+                    if (tmp < 0) {
+                        // Discard upper 32 bits.
+                        for (int i = 0; i < 5; i++) {
+                            if (readRawByte() >= 0) {
+                                return result;
+                            }
+                        }
+                        throw new IOException("Malformed varint");
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private byte readRawByte() throws IOException {
+        if (pos == bufferSize) {
+            int n = input.read(buffer);
+            if (n <= 0) {
+                throw new IOException("End of input");
+            }
+            pos = 0;
+            bufferSize = n;
+        }
+        return buffer[pos++];
     }
 }

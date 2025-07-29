@@ -7,9 +7,14 @@ public class ArrayUtils {
      * @param j 第二个元素的索引
      */
     public static final <V> void swap(V[] arr, int i, int j) {
-        if (arr == null || i < 0 || j < 0 || i >= arr.length || j >= arr.length) {
+        if (arr == null || arr.length == 0) {
             return;
         }
+        
+        if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
+            throw new IndexOutOfBoundsException("Invalid array indices");
+        }
+        
         V temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

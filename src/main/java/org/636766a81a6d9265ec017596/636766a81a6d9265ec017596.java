@@ -1,35 +1,37 @@
 import java.util.Arrays;
 
 public class ByteVector {
-    private byte[] buffer;
+    private byte[] data;
     private int size;
 
     public ByteVector() {
-        this.buffer = new byte[16]; // Initial capacity
+        this.data = new byte[10]; // 初始容量
         this.size = 0;
     }
 
     public ByteVector putInt(final int intValue) {
-        ensureCapacity(size + 4); // Ensure space for 4 bytes
+        ensureCapacity(size + 4); // 确保有足够的空间存放4个字节的整数
 
-        // Write the int value in big-endian order
-        buffer[size++] = (byte) (intValue >> 24);
-        buffer[size++] = (byte) (intValue >> 16);
-        buffer[size++] = (byte) (intValue >> 8);
-        buffer[size++] = (byte) intValue;
+        // 将整数按大端序写入字节数组
+        data[size++] = (byte) (intValue >> 24);
+        data[size++] = (byte) (intValue >> 16);
+        data[size++] = (byte) (intValue >> 8);
+        data[size++] = (byte) intValue;
 
         return this;
     }
 
-    private void ensureCapacity(int requiredCapacity) {
-        if (requiredCapacity > buffer.length) {
-            int newCapacity = Math.max(buffer.length * 2, requiredCapacity);
-            buffer = Arrays.copyOf(buffer, newCapacity);
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > data.length) {
+            int newCapacity = data.length * 2;
+            if (newCapacity < minCapacity) {
+                newCapacity = minCapacity;
+            }
+            data = Arrays.copyOf(data, newCapacity);
         }
     }
 
-    // Optional: Add a method to get the current buffer
     public byte[] toByteArray() {
-        return Arrays.copyOf(buffer, size);
+        return Arrays.copyOf(data, size);
     }
 }

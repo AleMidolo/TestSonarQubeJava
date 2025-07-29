@@ -9,8 +9,7 @@ public class Logger {
     }
 
     /**
-     * Returns true if the message should be printed in the given timestamp, otherwise returns false.
-     * If this method returns false, the message will not be printed. The timestamp is in seconds granularity.
+     * 如果在给定的时间戳下应该打印消息，则返回真，否则返回假。如果此方法返回假，则消息将不会被打印。时间戳的粒度为秒。
      */
     public boolean shouldPrintMessage(int timestamp, String message) {
         if (messageTimestamps.containsKey(message)) {

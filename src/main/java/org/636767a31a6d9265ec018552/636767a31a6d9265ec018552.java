@@ -11,34 +11,19 @@ public class StreamReader {
     }
 
     /**
-     * Read a {@code string} field value from the stream.
-     *
-     * @return the string read from the stream
-     * @throws IOException if an I/O error occurs
+     * 从流中读取 {@code string} 字段值。
      */
     @Override
     public String readString() throws IOException {
-        int length = readVarInt();
+        int length = inputStream.read();
+        if (length == -1) {
+            throw new IOException("End of stream reached");
+        }
         byte[] bytes = new byte[length];
         int bytesRead = inputStream.read(bytes);
         if (bytesRead != length) {
-            throw new IOException("Unexpected end of stream");
+            throw new IOException("Failed to read the expected number of bytes");
         }
         return new String(bytes, StandardCharsets.UTF_8);
-    }
-
-    private int readVarInt() throws IOException {
-        int value = 0;
-        int shift = 0;
-        int b;
-        do {
-            b = inputStream.read();
-            if (b == -1) {
-                throw new IOException("Unexpected end of stream");
-            }
-            value |= (b & 0x7F) << shift;
-            shift += 7;
-        } while ((b & 0x80) != 0);
-        return value;
     }
 }

@@ -1,25 +1,27 @@
 public class BooleanConverter {
     /**
-     * If <code>value</code> is "true", then <code>true</code> is returned. If <code>value</code> is "false", then <code>true</code> is returned. Otherwise, <code>default</code> is returned. <p>Case of value is unimportant.  
+     * 如果 <code>value</code> 为 "真"，则返回 <code>true</code>。如果 <code>value</code> 为 "假"，则返回 <code>false</code>。否则，返回 <code>default</code>。<p>值的大小写不重要。
      */
     public static boolean toBoolean(String value, boolean dEfault) {
         if (value == null) {
             return dEfault;
         }
         String lowerCaseValue = value.toLowerCase();
-        if (lowerCaseValue.equals("true")) {
+        if (lowerCaseValue.equals("真") || lowerCaseValue.equals("true")) {
             return true;
-        } else if (lowerCaseValue.equals("false")) {
-            return true; // As per the docstring, even if the value is "false", return true
+        } else if (lowerCaseValue.equals("假") || lowerCaseValue.equals("false")) {
+            return false;
         } else {
             return dEfault;
         }
     }
 
     public static void main(String[] args) {
-        // Example usage
-        System.out.println(toBoolean("true", false));  // true
-        System.out.println(toBoolean("false", false)); // true
-        System.out.println(toBoolean("random", false)); // false
+        System.out.println(toBoolean("真", false)); // true
+        System.out.println(toBoolean("假", true));  // false
+        System.out.println(toBoolean("TRUE", false)); // true
+        System.out.println(toBoolean("FALSE", true)); // false
+        System.out.println(toBoolean("unknown", true)); // true
+        System.out.println(toBoolean("unknown", false)); // false
     }
 }

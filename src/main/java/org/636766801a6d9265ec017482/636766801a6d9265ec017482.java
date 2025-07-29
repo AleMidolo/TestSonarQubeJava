@@ -6,11 +6,14 @@ public class ClassFileBuffer {
     private int readPointer;
 
     public void readFrom(final InputStream in) throws IOException {
-        // Clear the existing buffer
-        buffer = null;
-        readPointer = 0;
+        // Clear the buffer by setting it to null
+        this.buffer = null;
+        this.readPointer = 0;
 
-        // Read all bytes from the input stream
-        buffer = in.readAllBytes();
+        // Read all bytes from the InputStream
+        this.buffer = in.readAllBytes();
+
+        // Reset the read pointer to the start of the buffer
+        this.readPointer = 0;
     }
 }

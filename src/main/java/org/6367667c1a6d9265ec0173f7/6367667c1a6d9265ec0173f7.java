@@ -1,25 +1,15 @@
-import java.util.Objects;
+/**
+ * 如果主体是字节数组，则返回真
+ * @return 如果主体是字节数组，则返回真
+ */
+public boolean hasBytes() {
+    // 假设主体是一个字节数组
+    byte[] body = getBody(); // 假设getBody()方法返回主体的字节数组
+    return body != null && body instanceof byte[];
+}
 
-public class Example {
-    private Object body;
-
-    public Example(Object body) {
-        this.body = body;
-    }
-
-    /**
-     * True if the body is a byte array
-     * @return True if the body is a byte array
-     */
-    public boolean hasBytes() {
-        return body instanceof byte[];
-    }
-
-    public static void main(String[] args) {
-        Example example1 = new Example(new byte[]{1, 2, 3});
-        System.out.println(example1.hasBytes()); // Output: true
-
-        Example example2 = new Example("Not a byte array");
-        System.out.println(example2.hasBytes()); // Output: false
-    }
+// 假设的getBody方法，用于获取主体
+private byte[] getBody() {
+    // 这里返回一个示例字节数组
+    return new byte[0];
 }

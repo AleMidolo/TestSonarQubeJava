@@ -1,9 +1,7 @@
 /**
- * <p> Gets the String built by this builder. </p>
- * @return the built string
+ * <p> 获取由此构建器构建的字符串。 </p>
+ * @return 构建的字符串
  */
 public String toString() {
-    // Assuming this builder has a StringBuilder or similar internal structure
-    // For example, let's assume the builder has a StringBuilder named 'builder'
-    return builder.toString();
+    return this.builder.toString();
 }

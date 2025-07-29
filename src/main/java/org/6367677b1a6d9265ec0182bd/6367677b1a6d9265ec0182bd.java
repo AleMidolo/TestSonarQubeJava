@@ -1,37 +1,23 @@
-import java.io.StringWriter;
-import java.io.PrintWriter;
+import org.apache.log4j.spi.LoggingEvent;
 
 public class LogFormatter {
 
     /**
-     * Formats a logging event to a writer.
-     * @param event logging event to be formatted.
-     * @return the formatted logging event as a String.
+     * 将日志事件格式化为写入器。
+     * @param event 要格式化的日志事件。
+     * @return 格式化后的日志字符串。
      */
     public String format(final LoggingEvent event) {
-        StringWriter writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
-
-        // Example formatting: Log level, message, and timestamp
-        printWriter.printf("[%s] %s - %s%n", 
-            event.getLevel(), 
-            event.getTimestamp(), 
-            event.getMessage());
-
-        // If there's a throwable, append its stack trace
-        if (event.getThrowable() != null) {
-            event.getThrowable().printStackTrace(printWriter);
+        if (event == null) {
+            return "";
         }
 
-        printWriter.flush();
-        return writer.toString();
+        StringBuilder formattedMessage = new StringBuilder();
+        formattedMessage.append("[").append(event.getLevel().toString()).append("] ");
+        formattedMessage.append(event.getTimeStamp()).append(" - ");
+        formattedMessage.append(event.getLoggerName()).append(" - ");
+        formattedMessage.append(event.getRenderedMessage());
+
+        return formattedMessage.toString();
     }
 }
-
-// Assuming LoggingEvent class has the following methods:
-// class LoggingEvent {
-//     String getLevel();
-//     long getTimestamp();
-//     String getMessage();
-//     Throwable getThrowable();
-// }

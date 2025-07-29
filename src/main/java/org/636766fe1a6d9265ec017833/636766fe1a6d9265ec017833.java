@@ -4,40 +4,26 @@ import java.io.IOException;
 public class FileUtils {
 
     /**
-     * Schedules a file to be deleted when JVM exits. If file is directory delete it and all sub-directories.
-     * @param file  file or directory to delete, must not be {@code null}
-     * @throws NullPointerException if the file is {@code null}
-     * @throws IOException in case deletion is unsuccessful
+     * 安排在JVM退出时删除指定文件。如果文件是目录，则删除该目录及所有子目录。
+     * @param file 要删除的文件或目录，不能为空 {@code null}
+     * @throws NullPointerException 如果文件为 {@code null}
+     * @throws IOException 如果删除不成功
      */
     public static void forceDeleteOnExit(File file) throws IOException {
         if (file == null) {
             throw new NullPointerException("File must not be null");
         }
 
+        file.deleteOnExit();
+
         if (file.isDirectory()) {
-            deleteDirectoryOnExit(file);
-        } else {
-            file.deleteOnExit();
-        }
-    }
-
-    private static void deleteDirectoryOnExit(File directory) throws IOException {
-        if (!directory.exists()) {
-            return;
-        }
-
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectoryOnExit(file);
-                } else {
-                    file.deleteOnExit();
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File subFile : files) {
+                    forceDeleteOnExit(subFile);
                 }
             }
         }
-
-        directory.deleteOnExit();
     }
 
     public static void main(String[] args) {

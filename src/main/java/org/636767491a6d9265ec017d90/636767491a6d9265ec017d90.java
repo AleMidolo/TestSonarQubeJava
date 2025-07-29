@@ -3,16 +3,16 @@ import java.util.Objects;
 public class ArrayUtils {
 
     /**
-     * Reverses the order of the elements in the specified range within the given array.
-     * @param <V> the type of elements in the array
-     * @param arr the array
-     * @param from the index of the first element (inclusive) inside the range to reverse
-     * @param to the index of the last element (inclusive) inside the range to reverse
+     * 反转给定数组中指定范围内元素的顺序。
+     * @param <V> 数组中元素的类型
+     * @param arr 数组
+     * @param from 要反转的范围内第一个元素的索引（包含）
+     * @param to 要反转的范围内最后一个元素的索引（包含）
      */
     public static final <V> void reverse(V[] arr, int from, int to) {
-        Objects.requireNonNull(arr, "The input array must not be null.");
+        Objects.requireNonNull(arr, "数组不能为空");
         if (from < 0 || to >= arr.length || from > to) {
-            throw new IllegalArgumentException("Invalid range: from=" + from + ", to=" + to);
+            throw new IllegalArgumentException("索引范围无效");
         }
 
         while (from < to) {
@@ -25,12 +25,11 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        // Example usage
-        Integer[] array = {1, 2, 3, 4, 5, 6, 7};
-        reverse(array, 2, 5);
-        for (Integer num : array) {
+        Integer[] arr = {1, 2, 3, 4, 5};
+        reverse(arr, 1, 3);
+        for (Integer num : arr) {
             System.out.print(num + " ");
         }
-        // Output: 1 2 6 5 4 3 7
+        // 输出: 1 4 3 2 5
     }
 }

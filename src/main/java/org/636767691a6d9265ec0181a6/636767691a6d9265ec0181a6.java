@@ -19,8 +19,8 @@ public class StringSplitter {
     public static void main(String[] args) {
         String[] result = split("Hello,World", ",");
         if (result != null) {
-            System.out.println("Before delimiter: " + result[0]);
-            System.out.println("After delimiter: " + result[1]);
+            System.out.println("Part 1: " + result[0]);
+            System.out.println("Part 2: " + result[1]);
         } else {
             System.out.println("Delimiter not found.");
         }

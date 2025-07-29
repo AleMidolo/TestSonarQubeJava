@@ -5,9 +5,9 @@ public class AtmosphereFramework {
     private java.util.Map<String, AtmosphereHandler> handlers = new java.util.HashMap<>();
 
     /**
-     * Remove an {@link AtmosphereHandler}.
-     * @param mapping the mapping used when invoking {@link #addAtmosphereHandler(String, AtmosphereHandler)};
-     * @return true if removed
+     * 移除一个 {@link AtmosphereHandler}。
+     * @param mapping 在调用 {@link #addAtmosphereHandler(String, AtmosphereHandler)} 时使用的映射；
+     * @return 如果成功移除则返回真
      */
     public boolean removeAtmosphereHandler(String mapping) {
         if (handlers.containsKey(mapping)) {
@@ -18,11 +18,13 @@ public class AtmosphereFramework {
     }
 
     /**
-     * Add an {@link AtmosphereHandler}.
-     * @param mapping the mapping to associate with the handler
-     * @param handler the handler to add
+     * 添加一个 {@link AtmosphereHandler}。
+     * @param mapping 映射
+     * @param handler 处理器
      */
     public void addAtmosphereHandler(String mapping, AtmosphereHandler handler) {
         handlers.put(mapping, handler);
     }
+
+    // Other methods and fields of AtmosphereFramework...
 }

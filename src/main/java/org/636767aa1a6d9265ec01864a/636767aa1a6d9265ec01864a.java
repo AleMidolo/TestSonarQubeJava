@@ -1,23 +1,23 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class ByteArrayConverter {
-
-    /**
-     * Copies bytes to a {@code byte[]}.
-     *
-     * @return a byte array containing the copied bytes
-     * @throws IOException if an I/O error occurs
-     */
-    public byte[] toByteArray(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nRead;
-        byte[] data = new byte[1024];
-        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, nRead);
-        }
-        buffer.flush();
-        return buffer.toByteArray();
+/**
+ * 将字节复制到 {@code byte[]} 中。
+ */
+public byte[] toByteArray() {
+    // 假设我们有一个输入流或其他数据源
+    // 这里我们使用 ByteArrayOutputStream 来模拟数据的复制
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    
+    // 假设我们有一些数据要写入
+    byte[] data = "Hello, World!".getBytes();
+    
+    try {
+        outputStream.write(data);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    
+    // 返回复制后的字节数组
+    return outputStream.toByteArray();
 }

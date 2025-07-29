@@ -1,60 +1,62 @@
-import java.nio.charset.StandardCharsets;
+import io.protostuff.LinkedBuffer;
+import io.protostuff.Output;
+import io.protostuff.WriteSession;
 
-public class LinkedBuffer {
-    private byte[] buffer;
-    private int position;
+public class UTF8Writer {
 
-    public LinkedBuffer(int capacity) {
-        this.buffer = new byte[capacity];
-        this.position = 0;
-    }
-
-    public void write(byte[] data) {
-        for (byte b : data) {
-            if (position >= buffer.length) {
-                // Resize buffer if needed
-                byte[] newBuffer = new byte[buffer.length * 2];
-                System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
-                buffer = newBuffer;
-            }
-            buffer[position++] = b;
-        }
-    }
-
-    public byte[] toByteArray() {
-        byte[] result = new byte[position];
-        System.arraycopy(buffer, 0, result, 0, position);
-        return result;
-    }
-}
-
-public class WriteSession {
-    // Placeholder for WriteSession class
-}
-
-public class Utf8Writer {
     /**
-     * Writes the utf8-encoded bytes from the string into the {@link LinkedBuffer}.
+     * 将字符串中的 UTF-8 编码字节写入 {@link LinkedBuffer}。
      */
     public static LinkedBuffer writeUTF8(final CharSequence str, final WriteSession session, final LinkedBuffer lb) {
-        if (str == null || lb == null) {
-            throw new IllegalArgumentException("Input parameters cannot be null.");
+        if (str == null) {
+            return lb;
         }
 
-        byte[] utf8Bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-        lb.write(utf8Bytes);
+        int length = str.length();
+        int utf8Length = 0;
+
+        // 计算 UTF-8 编码后的字节长度
+        for (int i = 0; i < length; i++) {
+            char c = str.charAt(i);
+            if (c <= 0x7F) {
+                utf8Length++;
+            } else if (c <= 0x7FF) {
+                utf8Length += 2;
+            } else if (Character.isHighSurrogate(c)) {
+                utf8Length += 4;
+                i++; // 跳过低代理项
+            } else {
+                utf8Length += 3;
+            }
+        }
+
+        // 确保 LinkedBuffer 有足够的空间
+        if (lb.offset + utf8Length > lb.buffer.length) {
+            lb = new LinkedBuffer(lb.buffer.length, lb);
+        }
+
+        // 写入 UTF-8 编码的字节
+        for (int i = 0; i < length; i++) {
+            char c = str.charAt(i);
+            if (c <= 0x7F) {
+                lb.buffer[lb.offset++] = (byte) c;
+            } else if (c <= 0x7FF) {
+                lb.buffer[lb.offset++] = (byte) (0xC0 | (c >> 6));
+                lb.buffer[lb.offset++] = (byte) (0x80 | (c & 0x3F));
+            } else if (Character.isHighSurrogate(c)) {
+                int codePoint = Character.toCodePoint(c, str.charAt(i + 1));
+                lb.buffer[lb.offset++] = (byte) (0xF0 | (codePoint >> 18));
+                lb.buffer[lb.offset++] = (byte) (0x80 | ((codePoint >> 12) & 0x3F));
+                lb.buffer[lb.offset++] = (byte) (0x80 | ((codePoint >> 6) & 0x3F));
+                lb.buffer[lb.offset++] = (byte) (0x80 | (codePoint & 0x3F));
+                i++; // 跳过低代理项
+            } else {
+                lb.buffer[lb.offset++] = (byte) (0xE0 | (c >> 12));
+                lb.buffer[lb.offset++] = (byte) (0x80 | ((c >> 6) & 0x3F));
+                lb.buffer[lb.offset++] = (byte) (0x80 | (c & 0x3F));
+            }
+        }
 
         return lb;
-    }
-
-    public static void main(String[] args) {
-        LinkedBuffer buffer = new LinkedBuffer(1024);
-        WriteSession session = new WriteSession();
-        CharSequence str = "Hello, UTF-8!";
-
-        writeUTF8(str, session, buffer);
-
-        byte[] result = buffer.toByteArray();
-        System.out.println(new String(result, StandardCharsets.UTF_8));
     }
 }

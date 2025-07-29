@@ -3,28 +3,25 @@ import java.util.List;
 
 public class TimeRangeSplitter {
 
-    private static final long FETCH_DATA_DURATION = 3600 * 1000; // 1 hour in milliseconds
+    // Assuming FETCH_DATA_DURATION is a constant representing the maximum duration in milliseconds
+    private static final long FETCH_DATA_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
     /**
-     * Split time ranges to ensure the start time and end time is smaller than {@link #FETCH_DATA_DURATION}
-     *
-     * @param start The start time in milliseconds.
-     * @param end The end time in milliseconds.
-     * @return A list of TimeRange objects representing the split time ranges.
+     * 拆分时间范围以确保开始时间和结束时间小于 {@link #FETCH_DATA_DURATION}
      */
     protected List<TimeRange> buildTimeRanges(long start, long end) {
         List<TimeRange> timeRanges = new ArrayList<>();
-        long currentStart = start;
-
-        while (currentStart < end) {
-            long currentEnd = Math.min(currentStart + FETCH_DATA_DURATION, end);
-            timeRanges.add(new TimeRange(currentStart, currentEnd));
-            currentStart = currentEnd;
+        
+        while (start < end) {
+            long nextEnd = Math.min(start + FETCH_DATA_DURATION, end);
+            timeRanges.add(new TimeRange(start, nextEnd));
+            start = nextEnd;
         }
-
+        
         return timeRanges;
     }
 
+    // Assuming TimeRange is a class that represents a time range with start and end times
     public static class TimeRange {
         private final long start;
         private final long end;
@@ -48,6 +45,17 @@ public class TimeRangeSplitter {
                     "start=" + start +
                     ", end=" + end +
                     '}';
+        }
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        TimeRangeSplitter splitter = new TimeRangeSplitter();
+        long start = System.currentTimeMillis() - 3 * FETCH_DATA_DURATION; // 3 days ago
+        long end = System.currentTimeMillis(); // now
+        List<TimeRange> timeRanges = splitter.buildTimeRanges(start, end);
+        for (TimeRange range : timeRanges) {
+            System.out.println(range);
         }
     }
 }

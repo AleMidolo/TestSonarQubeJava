@@ -1,30 +1,49 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
-public class FileAdder {
+public class FileReverser {
 
     /**
-     * Add the specified files in reverse order.
+     * 以逆序添加指定的文件。
+     * @param files 输入流数组，表示要逆序添加的文件
      */
     private void addReverse(final InputStream[] files) {
-        if (files == null || files.length == 0) {
-            return;
+        if (files == null) {
+            throw new IllegalArgumentException("Files array cannot be null");
         }
 
-        // Convert the array to a list for easier manipulation
-        List<InputStream> fileList = new ArrayList<>();
-        Collections.addAll(fileList, files);
+        List<byte[]> fileContents = new ArrayList<>();
 
-        // Reverse the list
-        Collections.reverse(fileList);
+        // 读取所有文件内容到内存
+        for (InputStream file : files) {
+            if (file == null) {
+                throw new IllegalArgumentException("File input stream cannot be null");
+            }
 
-        // Process the files in reverse order
-        for (InputStream file : fileList) {
-            // Add your logic here to process each file
-            // For example, you might want to read from the InputStream
-            // or perform some other operation.
+            try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+                int nRead;
+                byte[] data = new byte[1024];
+                while ((nRead = file.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+                buffer.flush();
+                fileContents.add(buffer.toByteArray());
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read file content", e);
+            }
+        }
+
+        // 逆序文件内容
+        Collections.reverse(fileContents);
+
+        // 处理逆序后的文件内容（例如写入到输出流或进行其他操作）
+        for (byte[] content : fileContents) {
+            // 这里可以根据需要处理逆序后的文件内容
+            // 例如：System.out.write(content);
         }
     }
 }
